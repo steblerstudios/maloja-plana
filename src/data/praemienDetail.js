@@ -20,6 +20,24 @@ export function detailJahr(stichtag = new Date()) {
   return j < DETAIL_JAHRE[0] ? DETAIL_JAHRE[0] : DETAIL_JAHRE[DETAIL_JAHRE.length - 1];
 }
 
+// Wechselzeit: Kasse wechseln (KVG Art. 7 Abs. 2) und Franchise ändern (KVV Art. 94) wirken auf den 1. Januar.
+// Ab der BAG-Publikation der Prämien des Folgejahres bis 31.12. rechnen Kassenvergleich und Franchise-Vorschlag
+// darum schon mit dem Folgejahr — was man heute bezahlt (Barometer, Budget, eigene Prämie), bleibt beim Kalenderjahr.
+// Datum je Jahr: BAG-Medienmitteilung (2027: 29.09.2026, «Krankenkassenprämien steigen durchschnittlich um 5,0 Prozent»,
+// https://www.bag.admin.ch/de/newnsb/BfuGvedj0OOX — im Browser gelesen 25.10.2026, siehe praemienRegionen.js).
+export const DETAIL_VEROEFFENTLICHT = Object.freeze({ 2027: '2026-09-29' });
+
+// Stichtag für Vergleiche: in der Wechselzeit der 1. Januar des Folgejahres, sonst der Tag selbst.
+export function vergleichsStichtag(heute = new Date()) {
+  const folge = heute.getFullYear() + 1;
+  const ab = DETAIL_VEROEFFENTLICHT[folge];
+  if (!ab || !DETAIL_JAHRE.includes(folge)) return heute;
+  const [y, m, d] = ab.split('-').map(Number);
+  return heute >= new Date(y, m - 1, d) ? new Date(folge, 0, 1) : heute;
+}
+
+export const istWechselzeit = (heute = new Date()) => vergleichsStichtag(heute) !== heute;
+
 const daten = (stichtag) => DETAIL[detailJahr(stichtag)];
 
 function eintrag(versNr, kanton, region, stichtag) {

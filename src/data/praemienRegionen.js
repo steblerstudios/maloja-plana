@@ -7,6 +7,7 @@
 // Region 0 = Kanton hat nur eine Region.
 
 import { GEMEINDEN, PRAEMIEN, PRAEMIEN_QUELLEN } from './praemienRegionenDaten.js';
+import { ageClassFromBirth } from './franchiseTacho.js';
 
 export const PRAEMIEN_JAHRE = Object.keys(PRAEMIEN).map(Number).sort((a, b) => a - b);
 
@@ -76,18 +77,11 @@ export function nationalAvgPremium(stichtag = new Date()) {
 // nationalAvgPremium(stichtag), damit Jahr und Region nicht auseinanderlaufen.
 export const NATIONAL_AVG_PREMIUM = nationalAvgPremium();
 
-// Bildet ein Geburtsdatum auf die Prämien-Altersklasse ab (kinder/junge/erwachsene).
-// Fehlt das Datum, wird Erwachsene angenommen (häufigster Fall).
-function ageKeyFromBirth(dateStr) {
-  if (!dateStr) return 'erwachsene';
-  const birth = new Date(dateStr);
-  if (isNaN(birth)) return 'erwachsene';
-  const now = new Date();
-  const age = now.getFullYear() - birth.getFullYear() -
-    (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
-  if (age < 19) return 'kinder';
-  if (age < 26) return 'junge';
-  return 'erwachsene';
+// Bildet ein Geburtsdatum auf die Prämien-Altersklasse ab (kinder/junge/erwachsene) — nach Jahrgang, wie
+// ageClassFromBirth in franchiseTacho.js (BAG-Gesamtbericht 2027 S. 24). Fehlt das Datum, gilt Erwachsene.
+const AGE_KEY = { kind: 'kinder', jung: 'junge', erwachsen: 'erwachsene' };
+function ageKeyFromBirth(dateStr, stichtag) {
+  return AGE_KEY[ageClassFromBirth(dateStr, stichtag)];
 }
 
 // Vergleicht die regionale mittlere Prämie mit dem Schweizer Schnitt desselben Jahres —
@@ -96,7 +90,7 @@ function ageKeyFromBirth(dateStr) {
 export function getRegionalComparison(bfsNr, dateOfBirth, stichtag = new Date()) {
   const info = getRegionInfo(bfsNr, stichtag);
   if (!info) return null;
-  const key = ageKeyFromBirth(dateOfBirth);
+  const key = ageKeyFromBirth(dateOfBirth, stichtag);
   const regional = info.praemien[key];
   const nat = nationalAvgPremium(stichtag);
   const national = nat?.[key];

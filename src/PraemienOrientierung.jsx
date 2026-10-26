@@ -3,12 +3,12 @@ import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
-import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA, detailJahr } from './data/praemienDetail.js';
+import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA, detailJahr, vergleichsStichtag } from './data/praemienDetail.js';
 import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
-import { ageClassFromBirth, parseFranchise, franchiseOptimierer, gesundheitskostenBisher } from './data/franchiseTacho.js';
+import { ageClassFromBirth, parseFranchise, franchiseOptimierer, gesundheitskostenBisher, kvgFristVorbei } from './data/franchiseTacho.js';
 import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
 import { zahl, betrag } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
@@ -70,21 +70,38 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
   const insurer = data.versicherungen?.kkInsurer || '';
   const insurerNr = useMemo(() => insurer ? insurerNrFromName(insurer) : null, [insurer]);
-  const ageClass = ageClassFromBirth(data.basis?.dateOfBirth);
   const userFranchise = parseFranchise(data.versicherungen?.franchise);
   const userPremium = data.versicherungen?.kkPremium ? Number(data.versicherungen.kkPremium) : null;
+
+  // Wechselzeit (Ende September bis 31.12.): Franchise-Stufen, Franchise-Vorschlag und Kassenvergleich rechnen mit den
+  // Prämien des Folgejahres — Wechsel und Franchise gelten ab 1. Januar. Region und Barometer bleiben beim laufenden Jahr.
+  const vergleichsTag = useMemo(() => vergleichsStichtag(), []);
+  const vergleichsJahr = detailJahr(vergleichsTag);
+  const laufendesJahr = detailJahr();
+  const wechselzeit = vergleichsJahr !== laufendesJahr;
+  // Altersklasse je Prämienjahr (nach Jahrgang): wer 2027 19 wird, ist für 2027 junge Erwachsene, für 2026 noch Kind.
+  const ageClass = ageClassFromBirth(data.basis?.dateOfBirth, vergleichsTag);
+  const ageClassHeute = ageClassFromBirth(data.basis?.dateOfBirth);
 
   const referenceData = useMemo(() => {
     if (!insurerNr || !regionInfo) return null;
     const kanton = regionInfo.kanton;
     const region = regionInfo.region;
-    const allFra = getInsurerAllFranchises(insurerNr, kanton, region, ageClass);
-    const specificPremium = userFranchise ? getInsurerPremium(insurerNr, kanton, region, ageClass, userFranchise) : null;
+    const allFra = getInsurerAllFranchises(insurerNr, kanton, region, ageClass, true, vergleichsTag);
     // UVG: Referenzprämien ohne Unfalldeckung (nur Erw/Jung; Kinder haben keinen Ohne-Tarif)
-    const allFraOhne = ageClass !== 'kind' ? getInsurerAllFranchises(insurerNr, kanton, region, ageClass, false) : null;
-    const specificOhne = userFranchise && ageClass !== 'kind' ? getInsurerPremium(insurerNr, kanton, region, ageClass, userFranchise, false) : null;
-    return { allFranchises: allFra, allFranchisesOhne: allFraOhne, specificPremium, specificOhne };
-  }, [insurerNr, regionInfo, ageClass, userFranchise]);
+    const allFraOhne = ageClass !== 'kind' ? getInsurerAllFranchises(insurerNr, kanton, region, ageClass, false, vergleichsTag) : null;
+    // Referenz zur eingetragenen Prämie: laufendes Jahr. In der Wechselzeit zusätzlich das Folgejahr — ab Oktober tragen
+    // viele schon die Prämie aus der Prämienmitteilung ein; verglichen wird dann mit dem Jahr, dem sie näher liegt
+    // (sonst meldete die Seite die Prämienerhöhung als «über der Referenz», Fachprüfung 26.10.2026).
+    const ref = (klasse, tag) => ({
+      mit: userFranchise ? getInsurerPremium(insurerNr, kanton, region, klasse, userFranchise, true, tag) : null,
+      ohne: userFranchise && klasse !== 'kind' ? getInsurerPremium(insurerNr, kanton, region, klasse, userFranchise, false, tag) : null,
+    });
+    const jetzt = { ...ref(ageClassHeute, new Date()), jahr: laufendesJahr };
+    const folge = wechselzeit ? { ...ref(ageClass, vergleichsTag), jahr: vergleichsJahr } : null;
+    const naeher = folge?.mit && userPremium && (!jetzt.mit || Math.abs(userPremium - folge.mit) < Math.abs(userPremium - jetzt.mit)) ? folge : jetzt;
+    return { allFranchises: allFra, allFranchisesOhne: allFraOhne, specificPremium: naeher.mit, specificOhne: naeher.ohne, specificJahr: naeher.jahr };
+  }, [insurerNr, regionInfo, ageClass, ageClassHeute, userFranchise, userPremium, vergleichsTag, wechselzeit, laufendesJahr, vergleichsJahr]);
 
   // ── Franchise-Optimierer: lohnt sich eine höhere Franchise? ──
   // Vergleicht tiefste vs höchste verfügbare Franchise (Mit-Unfall) der eigenen Kasse:
@@ -121,15 +138,15 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const allInsurers = useMemo(() => {
     if (!regionInfo) return [];
     const { kanton, region } = regionInfo;
-    return allInsurerNrs()
+    return allInsurerNrs(vergleichsTag)
       .map(nr => ({
         nr, name: insurerNameFromNr(nr),
-        premium: getInsurerPremium(nr, kanton, region, ageClass, compFranchise),
-        premiumOhne: ageClass !== 'kind' ? getInsurerPremium(nr, kanton, region, ageClass, compFranchise, false) : null,
+        premium: getInsurerPremium(nr, kanton, region, ageClass, compFranchise, true, vergleichsTag),
+        premiumOhne: ageClass !== 'kind' ? getInsurerPremium(nr, kanton, region, ageClass, compFranchise, false, vergleichsTag) : null,
       }))
       .filter(x => x.premium != null && x.premium > 0)
       .sort((a, b) => a.premium - b.premium);
-  }, [regionInfo, ageClass, compFranchise]);
+  }, [regionInfo, ageClass, compFranchise, vergleichsTag]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -178,6 +195,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   // Kündigungstermin nach der Prämienmitteilung (KVG Art. 7 Abs. 2): Eingang bei der Kasse bis 30. November, am
   // Wochenende der Werktag davor — dieselbe Rechnung wie der Ablauf «Krankenkasse wechseln» (Fachprüfung 25.10.2026).
   const kuendigungIso = nextNov30(heute);
+  // In der Wechselzeit über Franchise-Stufen und Kassenvergleich: welches Jahr hier steht und welche Frist gilt — über
+  // den Kassen die Kündigung, über den Stufen die Franchise (Wortlaut wie #594, KVV Art. 94 Abs. 1/2). Nach dem
+  // Kündigungstermin (Werktag am oder vor dem 30.11.) ohne Datum.
+  const fristVorbei = kvgFristVorbei(heute);
+  // In der Wechselzeit stehen zwei Prämienjahre auf der Seite — die Referenz zur eingetragenen Prämie nennt ihres.
+  const refJahr = wechselzeit && referenceData?.specificJahr ? ' · ' + t('po.refJahr', { jahr: referenceData.specificJahr }) : '';
+  const wechselzeitHinweis = (key, stufen) => wechselzeit && h('div', { key, 'data-wechselzeit': vergleichsJahr, style: { fontSize: text.xs, color: palette.text, marginBottom: space.sm + 'px' } },
+    t('po.wechselzeit' + (stufen ? 'Stufen' : '') + (fristVorbei ? 'NachFrist' : ''), { jahr: vergleichsJahr, datum: fristKnopfDatum(kuendigungIso) }));
   // IPV: was ankommt, sagt ipvAbzug — nie den rohen Anspruch aus calculateIPV (Frist vorbei, nur auf Gesuch, Verfügung; Fachprüfung).
   const ipv = calculateIPV(data);
   const abzug = ipvAbzug(data, ipv);
@@ -208,7 +233,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       // Reicht das Polster nicht, steht der Vorbehalt in der Zeile — nicht nur im zugeklappten Kreuz (Fachprüfung).
       sub: vorschlag && vorschlag.polster
         ? (vorschlag.art === 'wechsel' ? t('instrumente.kreuzWechselPolster', { franchise: zahl(vorschlag.franchise) }) : t('instrumente.kreuzPasstPolster'))
-        : franchiseOpt && franchiseOpt.breakEven != null ? t('vu.franchiseSub', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }), jahr: franchiseOpt.praemienJahr || heute.getFullYear() }) : t('vu.franchiseOhne'),
+        : franchiseOpt && franchiseOpt.breakEven != null ? t('vu.franchiseSub', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }), jahr: vergleichsJahr }) : t('vu.franchiseOhne'),
       gehe: () => (franchiseOpt ? zuTeil('mp-vu-kreuz') : onNavigate && onNavigate('chapter', 3)) },
     { key: 'wechsel', titel: t('vu.wechsel'), wert: t('vu.kuendigung', { datum: fristKnopfDatum(kuendigungIso) }), sub: t('vu.wechselSub'), gehe: () => onNavigate && onNavigate('kvgwechsel') },
     { key: 'ipv', titel: t('nav.kvgIpv'),
@@ -392,7 +417,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       })
     )
       ]),
-      regionInfo && teil('mp-vu-vergleich', t('vu.vergleich'), referenceData && referenceData.specificPremium ? t('vu.referenz', { betrag: zahl(referenceData.specificPremium, { hoechstens: 2 }) }) : '', [
+      regionInfo && teil('mp-vu-vergleich', t('vu.vergleich'), referenceData && referenceData.specificPremium ? t('vu.referenz', { betrag: zahl(referenceData.specificPremium, { hoechstens: 2 }) }) + refJahr : '', [
         h(UvgHinweis, { key: 'uvg', palette, t, data }),
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
@@ -432,7 +457,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           )
         ),
         React.createElement('div', { style: { fontSize: text.sm } },
-          t('po.refPremium', { amount: shownRef.toFixed(2), franchise: userFranchise })
+          t('po.refPremium', { amount: shownRef.toFixed(2), franchise: userFranchise }) + refJahr
         ),
         canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginTop: '2px' } },
           t('po.unfallSaving', { diff: saving.toFixed(2) })
@@ -453,6 +478,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } },
           t('po.franchiseTable', { insurer: insurer })
         ),
+        wechselzeitHinweis('wz-stufen', true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
           t('po.pickFranchiseHint')),
         React.createElement('table', { style: s.table },
@@ -507,6 +533,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ]),
       regionInfo && allInsurers.length > 0 && teil('mp-vu-kassen', t('po.allInsurersTitle'), t('vu.kassenZahl', { n: allInsurers.length }), [
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
+      wechselzeitHinweis('wz-kassen'),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
         t('po.compareFranchiseNote', { franchise: zahl(compFranchise, { hoechstens: 2 }) }) + ' ' + (onUpdateData ? t('po.chooseByPrice') : '')),
       // Franchise direkt hier wählbar (verschiedene Franchisen vergleichen) — treibt dieselbe Vergleichs-Franchise
@@ -569,8 +596,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
               )
             ];
             if (isOpen) {
-              const ladderMit = getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass) || [];
-              const ladderOhne = ageClass !== 'kind' ? (getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass, false) || []) : null;
+              const ladderMit = getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass, true, vergleichsTag) || [];
+              const ladderOhne = ageClass !== 'kind' ? (getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass, false, vergleichsTag) || []) : null;
               const ohneMap = ladderOhne ? Object.fromEntries(ladderOhne.map(f => [f.franchise, f.premium])) : null;
               out.push(React.createElement('tr', { key: ins.nr + '-d' },
                 React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: cols },
@@ -615,7 +642,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),
-    h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } }, renderSource(t('po.source', { jahr: detailJahr() }), null, t))
+    h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } }, renderSource(t('po.source', { jahr: wechselzeit ? laufendesJahr + ' / ' + vergleichsJahr : vergleichsJahr }), null, t))
   );
 };
 

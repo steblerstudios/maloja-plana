@@ -9,7 +9,7 @@ export async function ladeFranchiseOpt(data) {
   const plz = String(data?.wohnen?.postalCode || '').trim();
   const kasse = data?.versicherungen?.kkInsurer;
   if (plz.length !== 4 || !kasse) return null;
-  const [{ lookupPLZ }, { getRegionInfo }, { getInsurerAllFranchises, insurerNrFromName, detailJahr }] = await Promise.all([
+  const [{ lookupPLZ }, { getRegionInfo }, { getInsurerAllFranchises, insurerNrFromName, detailJahr, vergleichsStichtag }] = await Promise.all([
     import('./plzGemeinde.js'), import('./praemienRegionen.js'), import('./praemienDetail.js'),
   ]);
   const nr = insurerNrFromName(kasse);
@@ -21,8 +21,10 @@ export async function ladeFranchiseOpt(data) {
   }
   if (regionen.size !== 1) return null;
   const { kanton, region } = [...regionen.values()][0];
-  const ageClass = ageClassFromBirth(data?.basis?.dateOfBirth);
-  const opt = franchiseOptimierer(getInsurerAllFranchises(nr, kanton, region, ageClass), ageClass);
+  // Die Franchise gilt ab 1. Januar: in der Wechselzeit mit den Prämien und der Altersklasse des Folgejahres rechnen.
+  const tag = vergleichsStichtag();
+  const ageClass = ageClassFromBirth(data?.basis?.dateOfBirth, tag);
+  const opt = franchiseOptimierer(getInsurerAllFranchises(nr, kanton, region, ageClass, true, tag), ageClass);
   // Prämienjahr mitgeben: der Vorschlag nennt, mit welchen Prämien er rechnet (Rechts-Prüfung 25.09.2026).
-  return opt && { ...opt, praemienJahr: String(detailJahr()) };
+  return opt && { ...opt, praemienJahr: String(detailJahr(tag)) };
 }
