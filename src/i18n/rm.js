@@ -5314,7 +5314,8 @@ export default {
     ipvGesuch: 'mo sin dumonda',
   },
   po: {
-    franchiseChangeWhen: 'La franchisa po vegnir midada ina giada l\'onn — cun effect dal 1. da schaner, communicaziun fin la fin da november (midada da cassa: 30 da november). Funtauna: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (neu gefasst 25.10.2026).
+    franchiseChangeWhen: 'Ina franchisa pli auta vala pir a partir dal 1. da schaner; il termin fixescha la cassa en sias condiziuns. Ina franchisa pli bassa è pussaivla mo per la fin da l\'onn, cun ils medems termins sco ina midada da cassa: suenter la communicaziun da la nova prima sto la dumonda entrar tar la cassa fin ils 30 da november. Funtauna: [[LAMal art. 7 al. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[OAMal art. 94 al. 1 e 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptSaving: { sie: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnais Vus var CHF {saving}/onn da premias.', du: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.' },
