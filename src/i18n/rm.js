@@ -3820,6 +3820,8 @@ export default {
     sectionContact: "Contact d'urgenza",
     sectionMedical: 'Indicaziuns medicalas',
     sectionCare: 'Tractament medical',
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    weitereAerzte: 'Ulteriurs medis',
     sectionProvision: 'Prevenziun & disposiziuns',
     sectionInsurance: 'Assicuranza',
     footerPrivacy: "Quest dossier cuntegna infurmaziuns persunalas da sanadad. Per plaschair conservar cun attenziun.",

@@ -16,7 +16,7 @@ import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { organListe } from './utils/organspende.js';
-import { hausarztName, hausarztTelefon } from './utils/hausarzt.js';
+import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
 
 // ─── Druckfarben (K53) ────────────────────────────────────
@@ -415,6 +415,28 @@ function medikamenteText(notfall, t) {
   return typeof notfall?.medications === 'string' ? notfall.medications : '';
 }
 
+// «Weitere Ärzte» (Entscheid Stebler Studios 26.10.2026): Fachärztinnen und Fachärzte aus der Liste, je
+// «Name (Fachrichtung), Telefon». «Andere Fachrichtung» und unbekannte Werte ohne Klammer — ein Wort wie
+// «Andere Fachrichtung» hilft Helfenden nicht.
+function weitereAerzteText(notfall, t) {
+  return weitereAerzteAusListe(notfall).map((x) => {
+    const spec = String(x.specialty || '').toLowerCase();
+    const key = 'doctors.specialties.' + spec;
+    const fach = spec && spec !== 'other' && t(key) !== key ? t(key) : '';
+    const tel = typeof x.phone === 'string' ? x.phone.trim() : '';
+    return x.name.trim() + (fach ? ' (' + fach + ')' : '') + (tel ? ', ' + tel : '');
+  }).join('; ');
+}
+
+// Für den Notfall-QR: Name und Telefon, keine Fachrichtung (Prüfung rechts-pruefer 26.10.2026, s. NOTFALL_QR_FELDER).
+// Je Eintrag eine Zeile, damit bei knappem Platz einzelne wegfallen statt der ganzen Liste.
+function weitereAerzteQr(notfall) {
+  return weitereAerzteAusListe(notfall).map((x) => ({
+    label: x.name.trim(),
+    value: typeof x.phone === 'string' ? x.phone.trim() : '',
+  }));
+}
+
 function erkrankungenText(notfall) {
   const liste = Array.isArray(notfall?.chronicDiseasesList) ? notfall.chronicDiseasesList.filter(x => x && x.name) : [];
   if (liste.length) return liste.map(x => x.name + (x.code ? ' (' + x.code + ')' : '')).join(', ');
@@ -475,6 +497,8 @@ function getNotfallSections(data, chapters, t) {
         { feld: 'notfall.doctor', label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
         { feld: 'notfall.doctorPhone', label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
         { feld: 'notfall.hospital', label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
+        // `qrZeilen`: die Fassung für den Notfall-QR — je Ärztin/Arzt eine Zeile, OHNE Fachrichtung (s. NOTFALL_QR_FELDER).
+        { feld: 'notfall.weitereAerzte', label: t('notfallDossier.weitereAerzte'), value: weitereAerzteText(data.notfall, t), qrZeilen: weitereAerzteQr(data.notfall) },
       ].filter(r => r.value),
     },
     {
@@ -516,11 +540,15 @@ function getNotfallSections(data, chapters, t) {
 // Verbotsliste: ein neues Dossier-Feld kommt erst in den Code, wenn es hier steht.
 // Bewusst NICHT hier (27.09.2026): notfall.organVertrauensperson — Name und Nummer einer
 // Drittperson stehen im gedruckten Dossier und im Organspende-QR, nicht im allgemeinen Notfall-QR.
+// notfall.weitereAerzte (Entscheid Stebler Studios 26.10.2026): im QR nur Name und Telefon, OHNE
+// Fachrichtung. Die Fachrichtung ist selbst eine Gesundheitsangabe (sie zeigt eine Behandlung an,
+// z. B. Psychiatrie) und wurde im Kapitel als Adressbuch erfasst, nicht für den Notfall; für Helfende
+// reicht Name und Nummer. Das gedruckte Dossier behält die Fachrichtung. Offene Frage dazu: K48 H7.
 export const NOTFALL_QR_FELDER = Object.freeze([
   'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
   'notfall.emergencyContact', 'notfall.emergencyPhone',
   'notfall.bloodType', 'notfall.allergies', 'notfall.medications', 'notfall.chronicDiseases',
-  'notfall.doctor', 'notfall.doctorPhone', 'notfall.hospital',
+  'notfall.doctor', 'notfall.doctorPhone', 'notfall.hospital', 'notfall.weitereAerzte',
   'notfall.organDonor', 'notfall.patientenverfuegung', 'notfall.vorsorgeauftrag', 'notfall.bestattungswuensche',
   'versicherungen.kkInsurer', 'versicherungen.kkCardNumber',
 ]);
@@ -528,12 +556,24 @@ export const NOTFALL_QR_FELDER = Object.freeze([
 // Abschnitte für den Notfall-QR: Reihenfolge Medizin zuerst (Entscheid 17.09.2026), nur Felder
 // aus NOTFALL_QR_FELDER, leere Abschnitte fallen weg.
 const NOTFALL_QR_REIHENFOLGE = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
+// Ganz ans Ende (26.10.2026): «weitere Ärzte» kann lang werden. Der QR füllt sein Budget der Reihe nach;
+// stünde die Zeile in «Ärztliche Betreuung», könnte sie Krankenkasse und Kartennummer (danach) verdrängen.
+// Eigener Schlussabschnitt mit dem Titel der Zeile und je Ärztin/Arzt einer Zeile aus `qrZeilen`: passt
+// nicht alles, fallen einzelne Einträge weg, und «Nicht enthalten» nennt die Zeile, nicht die Namen.
+const QR_ZULETZT = ['notfall.weitereAerzte'];
 export function notfallQrAbschnitte(sections) {
   const rang = key => { const i = NOTFALL_QR_REIHENFOLGE.indexOf(key); return i === -1 ? NOTFALL_QR_REIHENFOLGE.length : i; };
-  return [...sections]
+  const geordnet = [...sections]
     .sort((a, b) => rang(a.key) - rang(b.key))
-    .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }))
-    .filter(s => s.rows.length > 0);
+    .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }));
+  const zuletzt = geordnet.flatMap(s => s.rows.filter(r => QR_ZULETZT.includes(r.feld)).map(r => ({ r, s })));
+  const ohne = geordnet.map(s => ({ ...s, rows: s.rows.filter(r => !QR_ZULETZT.includes(r.feld)) }));
+  const schluss = zuletzt.map(({ r }) => ({
+    key: 'weitereAerzte',
+    title: r.label,
+    rows: (r.qrZeilen || []).map(z => ({ feld: r.feld, label: z.label, value: z.value, fehltAls: r.label })),
+  }));
+  return ohne.concat(schluss).filter(s => s.rows.length > 0);
 }
 
 // ─── Notfall Preview Data (for React rendering) ─────────

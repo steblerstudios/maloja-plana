@@ -5536,6 +5536,7 @@ export default {
     sectionContact: 'Notfallkontakt',
     sectionMedical: 'Medizinische Angaben',
     sectionCare: 'Ärztliche Betreuung',
+    weitereAerzte: 'Weitere Ärztinnen und Ärzte',
     sectionProvision: 'Vorsorge & Verfügungen',
     sectionInsurance: 'Versicherung',
     footerPrivacy: 'Dieses Dossier enthält persönliche Gesundheitsinformationen. Bitte sorgfältig aufbewahren.',
