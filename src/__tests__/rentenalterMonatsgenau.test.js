@@ -9,7 +9,7 @@ describe('alterUndRentenalter: ab Folgemonat, AHV 21', () => {
   const heute = new Date(2026, 9, 25); // 25.10.2026
 
   it('Frau JG 1962 (64 J 6 M), im September erreicht → im Oktober Rentenalter (vorher erst mit 65)', () => {
-    expect(alterUndRentenalter({ dateOfBirth: '1962-03-15', gender: 'female' }, heute)).toEqual({ alter: 64, rentenalter: true });
+    expect(alterUndRentenalter({ dateOfBirth: '1962-03-15', gender: 'female' }, heute)).toEqual({ alter: 64, rentenalter: true, beitragsfrei: false });
   });
 
   it('Frau JG 1962, im Oktober erreicht → im selben Monat noch nicht', () => {
@@ -23,7 +23,7 @@ describe('alterUndRentenalter: ab Folgemonat, AHV 21', () => {
   });
 
   it('ohne Geburtsdatum wie bisher', () => {
-    expect(alterUndRentenalter({}, heute)).toEqual({ alter: undefined, rentenalter: false });
+    expect(alterUndRentenalter({}, heute)).toEqual({ alter: undefined, rentenalter: false, beitragsfrei: false });
   });
 
   it('Netto-Richtwert: im Folgemonat ohne ALV/PK → höher als im Monat des Erreichens', () => {

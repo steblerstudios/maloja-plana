@@ -22,10 +22,14 @@ export function alterUndRentenalter(basis, heute = new Date()) {
   // Datum aus dem Text, lokal gebaut: `new Date('1962-04-01')` ist UTC und läge westlich davon im Vormonat.
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(basis?.dateOfBirth || ''));
   const g = m ? new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])) : null;
-  if (!g || isNaN(g.getTime())) return { alter: undefined, rentenalter: false };
+  if (!g || isNaN(g.getTime())) return { alter: undefined, rentenalter: false, beitragsfrei: false };
   const alter = heute.getFullYear() - g.getFullYear() - (heute < new Date(heute.getFullYear(), g.getMonth(), g.getDate()) ? 1 : 0);
   const monatErreicht = g.getFullYear() * 12 + g.getMonth() + referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: g.getFullYear() });
-  return { alter, rentenalter: heute.getFullYear() * 12 + heute.getMonth() > monatErreicht };
+  // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a): bis 31.12. des Jahres, in dem 17 vollendet — nach Jahrgang.
+  // Offen, nicht belegt (Fachprüfung 26.10.2026): Geburt am 1.1. — gilt das Altersjahr schon am Vortag als vollendet,
+  // begänne die Pflicht ein Jahr früher. Wie beim Rentenalter oben bei der Ausgleichskasse / BSV-Wegleitung (WBB) zu klären.
+  const beitragsfrei = heute.getFullYear() - g.getFullYear() <= 17;
+  return { alter, rentenalter: heute.getFullYear() * 12 + heute.getMonth() > monatErreicht, beitragsfrei };
 }
 
 // Referenzalter erreicht — monatsgenau, weil AHV 21 in 3-Monats-Schritten läuft (Frauen JG 1961–63).
@@ -41,6 +45,6 @@ export function referenzalterErreicht(basis, heute = new Date()) {
 export function nettoMonatAusProfil(betrag, art, basis, heute = new Date()) {
   const wert = Math.max(0, Number(betrag) || 0);
   if (art !== 'brutto' || wert <= 0) return { netto: wert, geschaetzt: false, offen: art !== 'netto' && art !== 'brutto' && wert > 0 };
-  const { alter, rentenalter } = alterUndRentenalter(basis, heute);
-  return { netto: bruttoZuNettoRichtwert(wert, alter, rentenalter), geschaetzt: true, offen: false };
+  const { alter, rentenalter, beitragsfrei } = alterUndRentenalter(basis, heute);
+  return { netto: bruttoZuNettoRichtwert(wert, alter, rentenalter, undefined, beitragsfrei), geschaetzt: true, offen: false };
 }

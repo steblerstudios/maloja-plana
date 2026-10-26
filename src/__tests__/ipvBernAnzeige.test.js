@@ -87,3 +87,17 @@ describe('K31 IPV-Rechner, Kanton Bern', () => {
     expect(render(profil(1500))).not.toContain('Single: CHF');
   });
 });
+
+// ⟨26.10.2026⟩ Der Vorbehalt sagte «Beim Amt … ist nachgefragt, eine Antwort steht aus». Belegt war das Gegenteil:
+// stebler-studios/KANTONS-NACHFRAGEN-ENTWURF-2026-10.md, «Nichts davon ist gesendet», ASV Bern (A2) ohne Haken.
+// Kein Text darf eine Anfrage behaupten, solange keine verschickt ist. Wird gesendet: Text UND diesen Test ändern.
+describe('ipv.vorbehaltBE3aDeckel behauptet keine Anfrage', () => {
+  it('in keiner der fünf Sprachen', async () => {
+    const ANFRAGE = /nachgefragt|angefragt|question a été posée|réponse est en attente|domanda è stata posta|risposta è in attesa|has been put to|answer is pending|dumonda è vegnida fatga|resposta manca/i;
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const text = (await import(`../i18n/${l}.js`)).default.ipv.vorbehaltBE3aDeckel;
+      expect(text, l).toBeTruthy();
+      expect(text, l).not.toMatch(ANFRAGE);
+    }
+  });
+});

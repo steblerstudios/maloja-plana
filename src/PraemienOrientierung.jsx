@@ -15,6 +15,7 @@ import { Brotkrume } from './components/Brotkrume.jsx';
 import { VersicherungenInstrument } from './components/VersicherungenInstrument.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
+import { absicherungJeRisiko } from './data/absicherungRisiko.js';
 import { franchiseVorschlag } from './data/franchiseTacho.js';
 import { calculateIPV, getCantonName, ladeIPVModelle } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
@@ -79,6 +80,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const vergleichsJahr = detailJahr(vergleichsTag);
   const laufendesJahr = detailJahr();
   const wechselzeit = vergleichsJahr !== laufendesJahr;
+  const praemienVeraltet = vergleichsTag.getFullYear() > vergleichsJahr;
   // Altersklasse je Prämienjahr (nach Jahrgang): wer 2027 19 wird, ist für 2027 junge Erwachsene, für 2026 noch Kind.
   const ageClass = ageClassFromBirth(data.basis?.dateOfBirth, vergleichsTag);
   const ageClassHeute = ageClassFromBirth(data.basis?.dateOfBirth);
@@ -245,6 +247,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     { key: 'kvg', titel: t('nav.kvgLeistungen'), wert: '', sub: t('vu.kvgSub'), gehe: () => onNavigate && onNavigate('kvg') },
     { key: 'vorsorge', titel: t('vu.vorsorge'), wert: pk ? t('vu.pkGuthaben', { betrag: zahl(pk) }) : '', sub: t('vu.vorsorgeSub'), gehe: () => onNavigate && onNavigate('vorsorge') },
   ];
+  const risikoListe = absicherungJeRisiko(data);
   const zeileKnopf = (z) => h('button', {
     key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe, 'data-zeile': z.key,
     style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
@@ -280,6 +283,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     marken.length > 0 && h('div', { 'data-teil': 'vu-marken', style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px', marginBottom: space.md + 'px' } },
       marken.map((m) => h('span', { key: m, style: { fontSize: text.xs, color: palette.text, padding: '4px 10px', borderRadius: radius.full + 'px', border: '1px solid ' + palette.border, background: palette.up } }, m))),
+
+    // Daten älter als das Kalenderjahr (z. B. 2028 ohne Import): detailJahr nimmt still das letzte vorhandene Jahr —
+    // das sagt die Seite hier offen, statt alte Prämien als aktuelle zu zeigen (Übergabe 26.10.2026, Punkt 5).
+    praemienVeraltet && h('div', { 'data-teil': 'vu-veraltet', style: s.warn },
+      h('div', { style: { fontSize: text.sm, color: palette.text } }, hinweisZeichen(), t('po.veraltet', { jahr: vergleichsJahr, aktuell: vergleichsTag.getFullYear() }))),
 
     // Ohne Prämienregion: die PLZ zuerst (sonst steht sie unter «Prämie regional»).
     !regionInfo && React.createElement('div', { style: s.section },
@@ -326,6 +334,17 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(data) }),
 
     h('div', { style: { marginTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+      // Absicherung je Risiko (Sophie 26.10.2026: Liste statt Netz) — was eingetragen ist und was das Gesetz vorsieht,
+      // ohne Anteil und ohne Wertung (Logik und Belege in data/absicherungRisiko.js).
+      teil('mp-vu-risiken', t('vu.risiko.titel'), risikoListe.offen ? t('vu.risiko.subOffen', { n: risikoListe.offen }) : t('vu.risiko.subKeins'), [
+        h('dl', { key: 'liste', style: { margin: 0 } }, risikoListe.risiken.map((r) => h(React.Fragment, { key: r.key },
+          h('dt', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } }, t('vu.risiko.' + r.key)),
+          r.zeilen.map((z) => h('dd', { key: z.key, 'data-art': z.art, style: { margin: '2px 0 0', fontSize: text.sm, lineHeight: leading.normal, color: z.art === 'hinweis' ? palette.mid : palette.text } },
+            z.art === 'erfasst' && erledigtZeichen(true, ''),
+            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.goldDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '6px' } }, t('vu.risiko.marke.' + z.art)),
+            t('vu.risiko.' + z.key, z.p)))))),
+        h('p', { key: 'satz', style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal } }, t('vu.risiko.satz')),
+      ]),
       franchiseOpt && teil('mp-vu-kreuz', t('po.franchiseOptTitle'), franchiseOpt.breakEven != null ? t('vu.breakEven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) }) : '', [
     franchiseOpt && React.createElement('div', {
       style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },

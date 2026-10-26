@@ -275,7 +275,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
   const f = data.finanzen || {};
   const rentKnown = Number(data.wohnen?.rentAmount || 0) > 0;
   // Eine Regel mit Barometer und Netto-Richtwert: im Rentenalter ohne ALV/PK (alterUndRentenalter).
-  const { alter, rentenalter } = alterUndRentenalter(data.basis);
+  const { alter, rentenalter, beitragsfrei } = alterUndRentenalter(data.basis);
   const personenAb16 = hh.adults + (hh.children || []).filter(c => (Number(c.age) || 0) >= 16).length;
   const armutsgrenze = berechneArmutsgrenze({
     grundbedarf: sozialhilfe.grundbedarf,
@@ -307,7 +307,8 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
         renderSource(t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }), null, t)),
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
-      React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+      // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a) keine AHV/ALV/PK-Abzüge — dann kein Brutto-Hinweis.
+      !beitragsfrei && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
         // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
         t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
           brutto: formatCHF(nettoZuBruttoRichtwert(income, alter, rentenalter)),
@@ -325,7 +326,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
         hoursPerWeek: data.ausbildung?.workHoursPerWeek,
         incomeType: data.finanzen?.incomeType, dreizehnter: data.finanzen?.dreizehnter,
         // Wie das Barometer (LohnEinordnung): sonst färbten die Chips gegen ein Brutto ohne PK-Anteil.
-        alter, rentenalter,
+        alter, rentenalter, beitragsfrei,
       }).incomeVergleich || income;
       return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
         React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
