@@ -179,12 +179,51 @@ describe('Kalender: Band über der Tagesleiste', () => {
       React.createElement(CalendarReminders, { palette: pal, t: tKal, data: {}, onNavigate: () => {} })));
   };
 
-  it('laufender Umzug: Band mit «Umzug · Schritt 2 von 4» über den Tagen', async () => {
+  it('laufender Umzug: Band mit «Umzug · Schritt 2 von 4» unter den Tagen (Entwurf G)', async () => {
     localStorage.setItem(ablaufStandKey('umzug'), JSON.stringify({ schritt: 1, fertig: false }));
     const html = await render();
     expect(html).toContain('data-ablauf-band="umzug"');
     expect(html).toContain('Umzug · Schritt 2 von 4');
-    expect(html.indexOf('data-ablauf-band')).toBeLessThan(html.indexOf('data-heute="true"'));
+    expect(html.indexOf('data-ablauf-band')).toBeGreaterThan(html.indexOf('data-heute="true"'));
+    expect(html.indexOf('data-ablauf-band')).toBeLessThan(html.indexOf('data-legende'));
+  });
+
+  it('Fassung G: Kopf, Monatsknöpfe, Legende, «Ganzer Monat» und «Ganzes Jahr» mit dem Jahreskreis', async () => {
+    const html = await render();
+    expect(html).toContain('Übersicht');
+    expect(html).toContain('in der Reihenfolge der Zeit');
+    expect((html.match(/data-monatsknoepfe[\s\S]*?<\/div>/)[0].match(/<button/g) || []).length).toBe(12);
+    expect(html).toContain('data-legende');
+    const monat = html.indexOf('Ganzer Monat');
+    const jahr = html.indexOf('Ganzes Jahr');
+    expect(monat).toBeGreaterThan(html.indexOf('data-legende'));
+    expect(jahr).toBeGreaterThan(monat);
+    // Der Jahreskreis liegt im aufklappbaren «Ganzes Jahr», nicht mehr offen über der Tagesleiste.
+    const ganzesJahr = html.slice(html.indexOf('data-ganzes-jahr'));
+    expect(ganzesJahr).toMatch(/<svg[^>]*viewBox="0 0 240 240"/);
+    expect(html.slice(0, html.indexOf('data-ganzes-jahr'))).not.toMatch(/viewBox="0 0 240 240"/);
+  });
+
+  it('«Als Nächstes»: der früheste offene Eintrag mit Herkunft; ohne Einträge kein Block', async () => {
+    expect(await render()).not.toContain('data-als-naechstes');
+    localStorage.setItem('or5_reminders', JSON.stringify([
+      { id: 'a', title: 'Später', dueDate: inDays(20), category: 'personal', recurrence: 'once', done: false },
+      { id: 'f', title: 'Bei der neuen Gemeinde anmelden', dueDate: inDays(9), category: 'admin', recurrence: 'once', ablauf: 'umzug', done: false },
+    ]));
+    const html = await render();
+    const block = html.slice(html.indexOf('data-als-naechstes'), html.indexOf('data-als-naechstes') + 600);
+    expect(block).toContain('in 9 Tagen');
+    expect(block).toContain('Bei der neuen Gemeinde anmelden · aus dem Ablauf Umzug');
+  });
+
+  it('Liste: «Frist · Fällig in … · aus dem Ablauf Umzug», runder Kreis zum Abhaken', async () => {
+    localStorage.setItem('or5_reminders', JSON.stringify([
+      { id: 'f', title: 'Bei der neuen Gemeinde anmelden', dueDate: inDays(9), category: 'admin', recurrence: 'once', ablauf: 'umzug', done: false },
+    ]));
+    const html = await render();
+    expect(html).toMatch(/data-zeile="frist"/);
+    expect(html).toMatch(/Frist · <span[^>]*>Fällig in 9 Tagen<\/span> · aus dem Ablauf Umzug/);
+    expect(html).toContain('aria-label="Als erledigt markieren: Bei der neuen Gemeinde anmelden"');
   });
 
   it('mit Frist im Kalender: zusätzlich der Bogen im Jahreskreis', async () => {

@@ -85,8 +85,9 @@ describe('ein Weg zurück', () => {
   it('main.jsx lässt in diesen Ansichten «Übersicht» weg und navigiert sonst über handleNavigate', () => {
     const main = lies('main.jsx');
     // Fassung 5: der Umzug zeichnet seine Brotkrume im eigenen Kopf (AblaufSchale `kopf`); seit dem Muster
-    // M5 (25.10.2026) auch die Kapitel («Übersicht › Kapitel» im Band, ChapterView).
-    expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && view !== 'umzug' && view !== 'chapter' && React\.createElement\('button', \{\s*onClick: \(\) => \(herkunft && herkunft\.view === 'dashboard' \? window\.history\.back\(\) : handleNavigate\('dashboard'\)\)/);
+    // M5 (25.10.2026) auch die Kapitel («Übersicht › Kapitel» im Band, ChapterView), seit Fassung G
+    // (27.10.2026) auch «Was ansteht» (CalendarReminders).
+    expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React\.createElement\('button', \{\s*onClick: \(\) => \(herkunft && herkunft\.view === 'dashboard' \? window\.history\.back\(\) : handleNavigate\('dashboard'\)\)/);
   });
   it('die Darstellung liegt NICHT im Hauptbündel: main.jsx importiert nur die Pfade', () => {
     const main = lies('main.jsx');

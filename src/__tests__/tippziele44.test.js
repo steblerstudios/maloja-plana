@@ -21,7 +21,8 @@ const STELLEN = [
   ['ArztkofferView.jsx', "t('arztkoffer.back')", 'vor'],
   ['LegalView.jsx', "t('common.back')", 'vor'],
   ['NotfallDossier.jsx', "t('notfallpass.dossierVerweis')", 'vor'],
-  ['CalendarReminders.jsx', "t('calendar.ganzerMonat')", 'vor'],
+  // Fassung G (27.10.2026): «Ganzer Monat» und «Ganzes Jahr» teilen den Stil `aufklapp`.
+  ['CalendarReminders.jsx', 'const aufklapp = {', 'nach'],
   ['CalendarReminders.jsx', 'const knopfRuhig', 'nach'],
   ['CalendarReminders.jsx', 'const dayCell', 'nach'],
   ['NotfallVorlesekarte.jsx', 'locMap: {', 'nach'],
@@ -41,9 +42,11 @@ describe('Tippziele ≥ 44 px an den Stellen aus dem Seitenrundgang', () => {
     });
   }
 
+  // Seit Fassung G (27.10.2026) teilen Abhak-Kreis und leises × den Stil `leiseKnopf`.
   it('Kalender: Erledigt- und Löschen-Knopf je 44 × 44', () => {
     const src = quelle('CalendarReminders.jsx');
-    expect(src.match(/padding: '6px 10px', minWidth: '44px', minHeight: '44px'/g)).toHaveLength(2);
+    expect(src).toMatch(/const leiseKnopf = \{ minWidth: '44px', minHeight: '44px'/);
+    expect(src.match(/style: leiseKnopf \}|style: \{ \.\.\.leiseKnopf,/g)).toHaveLength(2);
   });
 
   it('Schublade «Ansicht & Sprache»: Schliessen 44 × 44 statt 24', () => {
