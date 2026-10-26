@@ -1336,6 +1336,9 @@ export default {
     remove: 'Posten entfernen',
   },
   common: {
+    clear: 'Suche leeren',
+    anredeLabel: 'Anrede: {form}',
+    anredeTooltip: 'Anrede: {formell} / {informell}',
     betraegeVerordnung: 'Beträge {jahr}: [[Verordnung vom {datum}|https://www.fedlex.admin.ch/{eli}/de]].',
     qrFehler: 'Der QR-Code liess sich gerade nicht erzeugen.',
     qrErstellt: "QR-Code erstellt.",
@@ -4077,6 +4080,7 @@ export default {
     },
   },
   budgetImport: {
+    importFailed: 'Der Import ist nicht gelungen. Bitte die Datei prüfen und nochmals versuchen.',
     title: 'Budget Import',
     fileFormat: 'Dateiformat',
     csv: 'CSV (Komma-getrennt)',
@@ -5150,6 +5154,7 @@ export default {
     linkBudget: 'Im Budget ansehen',
   },
   calendar: {
+    nicelyDone: 'Erledigt',
     aufgabe: 'Aufgabe',
     ausMerkliste: 'aus der Merkliste',
     ganzerMonat: 'Ganzer Monat',

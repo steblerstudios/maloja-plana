@@ -253,7 +253,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
     },
       isJustDone && React.createElement('div', {
         style: { textAlign: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
-      }, hinweisZeichen('check'), (t('calendar.nicelyDone') || 'Erledigt')),
+      }, hinweisZeichen('check'), t('calendar.nicelyDone')),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' } },
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.xs } },
@@ -294,7 +294,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   };
 
   // ─── Merkliste im Kalender (Fassung 5) ───────────────────────
-  const LOCALE = t('calendar.locale') || 'de-CH';
+  const LOCALE = t('calendar.locale');
   const datumVon = (iso) => new Date(iso + 'T00:00:00');
   const datumLang = (iso) => datumVon(iso).toLocaleDateString(LOCALE, { day: 'numeric', month: 'long' });
   // Offene Aufgaben am geplanten Tag; erledigte am Tag, an dem sie erledigt wurden

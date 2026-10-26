@@ -1629,6 +1629,10 @@ export default {
     remove: 'Allontanar posiziun',
   },
   common: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    clear: 'Stizzar la tschertga',
+    anredeLabel: 'Furma da curtaschia: {form}',
+    anredeTooltip: 'Furma da curtaschia: {formell} / {informell}',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     betraegeVerordnung: 'Beträge {jahr}: [[Verordnung vom {datum}|https://www.fedlex.admin.ch/{eli}/de]].',
     // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
@@ -6161,6 +6165,8 @@ export default {
     },
   },
   budgetImport: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    importFailed: 'L’import n’ha betg funcziunà. Controllar la datoteca e empruvar anc ina giada.',
     title: 'Import da budget',
     fileFormat: 'Format da datoteca',
     csv: 'CSV (separà cun comma)',
@@ -6971,6 +6977,8 @@ export default {
     linkBudget: 'Vesair en il budget',
   },
   calendar: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    nicelyDone: 'Fatg',
     // rm ungeprüft F5
     aufgabe: 'Incumbensa',
     // rm ungeprüft F5

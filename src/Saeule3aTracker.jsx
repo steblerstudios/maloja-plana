@@ -113,7 +113,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
           ),
           React.createElement('button', {
             onClick: () => removeDeposit(idx),
-            'aria-label': t('common.delete') || 'Entfernen',
+            'aria-label': t('common.delete'),
             style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px' }
           }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         )

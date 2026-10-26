@@ -1087,11 +1087,11 @@ const AppInner = ({ demo }) => {
     (lang === 'de' || lang === 'it' || lang === 'rm') ? (() => {
       const formal = lang === 'it' ? 'Lei' : lang === 'rm' ? 'Vus' : 'Sie';
       const informal = lang === 'it' ? 'Tu' : lang === 'rm' ? 'Ti' : 'Du';
-      const tooltip = lang === 'it' ? 'Forma di cortesia: Lei / Tu' : lang === 'rm' ? 'Furma da curtaschia: Vus / Ti' : 'Anrede: Sie / Du';
+      const tooltip = t('common.anredeTooltip', { formell: formal, informell: informal });
       const current = anrede === 'du' ? informal : formal;
       return React.createElement('button', {
         key: 'anrede',
-        'aria-label': 'Anrede: ' + current,
+        'aria-label': t('common.anredeLabel', { form: current }),
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
         style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
@@ -1255,7 +1255,7 @@ const AppInner = ({ demo }) => {
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
   React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
-    React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
+    React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent')),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
     // und der Gewinn wäre keiner. `fallback: null` statt Ladeanzeige: die Schublade
     // soll auftauchen, wenn sie da ist, nicht erst ein Warte-Rechteck zeigen.
