@@ -2,6 +2,8 @@
 // lag die Mindesthöhe darunter (Notruf-Links und Standort-Knopf ~30 px, gerade im Ernstfall; Schublade 24 px;
 // Merkliste, Kalender 32 px; Ablage-Filter, Notfallpass 36 px; zwei Zurück-Knöpfe ohne Mindesthöhe).
 // Gemessen im Browser am 26.10.2026; hier gehalten, damit niemand die Werte unbemerkt zurücknimmt.
+// Bewusst NICHT 44 px (WCAG 2.5.8 «inline» ausgenommen, AA ≥ 24 px erfüllt): Glossar-«ⓘ» im Fliesstext
+// (~29 px) und Hilfelinks im Fliesstext des Notfallpasses. Dieser Wächter deckt nur die Stellen unten ab.
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -21,6 +23,9 @@ const STELLEN = [
   ['NotfallDossier.jsx', "t('notfallpass.dossierVerweis')", 'vor'],
   ['CalendarReminders.jsx', "t('calendar.ganzerMonat')", 'vor'],
   ['CalendarReminders.jsx', 'const knopfRuhig', 'nach'],
+  ['CalendarReminders.jsx', 'const dayCell', 'nach'],
+  ['NotfallVorlesekarte.jsx', 'locMap: {', 'nach'],
+  ['main.jsx', "t('demo.leave'))", 'vor'],
 ];
 
 describe('Tippziele ≥ 44 px an den Stellen aus dem Seitenrundgang', () => {

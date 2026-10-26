@@ -89,7 +89,9 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     locResult: { marginTop: space.sm + 'px', padding: '10px 14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
     locCoords: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, letterSpacing: '0.3px' },
     locAcc: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
-    locMap: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, textDecoration: 'none', fontFamily: 'inherit' },
+    // Eigenständiger Link im Notfall-Ablauf, kein Fliesstext: 44 px und unterstrichen, damit er nicht nur über
+    // die Farbe als Link erkennbar ist (a11y-Prüfung 26.10.2026; vorher ~21 px).
+    locMap: { display: 'inline-flex', alignItems: 'center', minHeight: '44px', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, textDecoration: 'underline', fontFamily: 'inherit' },
     locNote: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px' },
   };
 

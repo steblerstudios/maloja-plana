@@ -1438,7 +1438,7 @@ const AppInner = ({ demo }) => {
         style: {
           padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          color: palette.text, fontFamily: 'inherit', flexShrink: 0,
+          color: palette.text, fontFamily: 'inherit', flexShrink: 0, minHeight: '44px', // a11y-Prüfung 26.10.2026: vorher 31 px
         }
       }, t('demo.leave'))
     ),
