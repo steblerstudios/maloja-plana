@@ -18,6 +18,7 @@ import { werktagAmOderDavor } from './utils/fristen.js';
 import { naechsterTermin, bisHeuteWeiter, INTERVALLE } from './utils/wiederholung.js';
 import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
+import { laufendeAblaeufe, bandImMonat } from './utils/laufendeAblaeufe.js';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -196,6 +197,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   const today = todayISO();
   const upcoming = reminders.filter(r => !r.done).sort((a, b) => a.dueDate.localeCompare(b.dueDate));
   const completed = reminders.filter(r => r.done).sort((a, b) => (b.completedDate || '').localeCompare(a.completedDate || ''));
+  // Begonnene, nicht fertige Abläufe (z. B. Umzug): grünes Band über der Tagesleiste, Bogen im Jahreskreis.
+  const laufend = laufendeAblaeufe(reminders, vorlaeufig, today);
+  const bandText = (a) => t(a.titelKey) + ' · ' + t('onboarding.stepOf', { current: a.schritt, total: a.total });
 
   const getDueLabel = (dueDate) => {
     const days = daysBetween(today, dueDate);
@@ -466,12 +470,35 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
             { key: 'fest-kvg', iso: werktagAmOderDavor(calYear + '-11-30'), art: 'frist', auslauf: 61, merke: calYear + '-10-31', farbe: bereichZeichenFarbe(kategorieBereich('insurance'), palette), titel: t('calendar.jahreskreis.kvgTitle'), quelle: t('calendar.jahreskreis.kvgSource') },
             data?.behoerden?.taxFilingDeadline && { key: 'fest-steuer', iso: data.behoerden.taxFilingDeadline, art: 'frist', farbe: bereichZeichenFarbe(kategorieBereich('finance'), palette), titel: t('calendar.templates.taxDeadline'), quelle: t('calendar.jahreskreis.taxSource') },
           ].filter(Boolean),
+          // Nur Abläufe mit Frist: der Bogen braucht ein Ende. Anfang ist heute (kein Startdatum gespeichert).
+          baender: laufend.filter(a => a.frist).map(a => ({ key: a.name, von: today, bis: a.frist, farbe: palette.sage })),
         }),
-        // Tagesleiste: die Tage des Monats, wischbar
+        // Tagesleiste: die Tage des Monats, wischbar. Darüber je laufender Ablauf ein grünes Band
+        // (Entwurf «Zeitleiste»): von heute bis zur Frist des Ablaufs, ohne Frist bis Monatsende
+        // auslaufend. Ein Tag ist 46 px breit plus 2 px Abstand — das Band rechnet in diesem Raster.
         React.createElement('div', {
           ref: leisteRef, role: 'group', 'aria-label': monatJahr(calYear, calMonth),
-          style: { display: 'flex', gap: '2px', overflowX: 'auto', padding: '4px 2px', border: '1px solid ' + verteilRand, borderRadius: radius.sm, scrollbarWidth: 'thin' },
+          style: { overflowX: 'auto', padding: '4px 2px', border: '1px solid ' + verteilRand, borderRadius: radius.sm, scrollbarWidth: 'thin' },
         },
+          ...laufend.map(a => {
+            const lage = bandImMonat(a, calYear, calMonth, today);
+            if (!lage) return null;
+            const gruen = palette.sage + '8C'; // 55 %: im Dunkeln noch deutlich grün, Text bleibt lesbar
+            return React.createElement('div', { key: 'band-' + a.name, 'data-ablauf-band': a.name, style: { position: 'relative', height: '24px', width: (dim * 48 - 2) + 'px', marginBottom: '2px' } },
+              React.createElement('div', {
+                title: bandText(a),
+                style: {
+                  position: 'absolute', top: 0, bottom: 0, left: ((lage.vonTag - 1) * 48) + 'px', width: ((lage.bisTag - lage.vonTag + 1) * 48 - 2) + 'px',
+                  boxSizing: 'border-box', padding: '0 8px', lineHeight: '24px', fontSize: text.xs, fontWeight: weight.semi, color: palette.text,
+                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                  background: lage.weiterRechts ? 'linear-gradient(to right, ' + gruen + ' 65%, transparent)' : gruen,
+                  // Rund, wo das Band beginnt oder an der Frist endet; gerade, wo es weiterläuft.
+                  borderRadius: [lage.weiterLinks ? 0 : radius.xs, lage.weiterRechts ? 0 : radius.xs, lage.weiterRechts ? 0 : radius.xs, lage.weiterLinks ? 0 : radius.xs].map(r => r + 'px').join(' '),
+                },
+              }, bandText(a))
+            );
+          }),
+          React.createElement('div', { style: { display: 'flex', gap: '2px' } },
           ...Array.from({ length: dim }, (_, i) => {
             const d = i + 1, iso = isoOf(d), isToday = iso === today;
             const wd = new Date(calYear, calMonth, d).toLocaleDateString(LOCALE, { weekday: 'short' });
@@ -484,7 +511,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
               React.createElement('span', { style: { fontSize: text.sm, fontWeight: isToday ? weight.semi : weight.normal, color: palette.text } }, d),
               markenReihe(iso)
             );
-          })
+          }))
         ),
         // Ganzer Monat — das bisherige Monatsraster, aufklappbar
         React.createElement('details', { style: { marginTop: space.sm + 'px' }, open: verteilen ? true : undefined },

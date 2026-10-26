@@ -14,6 +14,7 @@ const MITTE = 120;
 const RING_AUSSEN = 112;
 const RING_INNEN = 88;
 const SPUR = 100;            // Radius, auf dem die Marken liegen
+const BAND_SPUR = 80;        // eigene Spur der Ablauf-Bögen, innen am Ring — nicht unter dem KVG-Fenster
 const STAPEL = [0, -9, 9];   // mehrere Marken am selben Tag: auf der Spur, innen, aussen
 const MAX_LISTE = 8;
 
@@ -70,7 +71,20 @@ const ListenMarke = ({ art, farbe }) => {
   return React.createElement('span', { 'aria-hidden': 'true', style: { ...basis, ...form } });
 };
 
-export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMonat, locale, palette, t, eingebettet }) => {
+// Laufende Abläufe als Bogen auf der Spur (27.10.2026, Entwurf «Zeitleiste»): von `von` bis `bis`,
+// auf das gezeigte Jahr beschnitten. In Grad; null, wenn der Bogen in diesem Jahr nicht liegt.
+export const bandBogen = (von, bis, jahr) => {
+  if (typeof von !== 'string' || typeof bis !== 'string' || bis < von) return null;
+  const vj = Number(von.slice(0, 4));
+  const bj = Number(bis.slice(0, 4));
+  if (vj > jahr || bj < jahr) return null;
+  const a = vj < jahr ? 0 : winkelFuerTag(von, jahr);
+  const b = bj > jahr ? 359.9 : winkelFuerTag(bis, jahr); // 360 fiele mit 0 zusammen, der Bogen verschwände
+  if (a === null || b === null) return null;
+  return { von: a, bis: Math.max(b, a + 1) };
+};
+
+export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMonat, locale, palette, t, eingebettet, baender = [] }) => {
   const punkte = jahreskreisPunkte(eintraege, jahr);
   const heuteWinkel = winkelFuerTag(heuteIso, jahr);
   const monName = (m) => new Date(2024, m, 1).toLocaleDateString(locale, { month: 'short' });
@@ -115,6 +129,18 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
     return React.createElement('g', { key: 'f' + p.key }, ...teile, strich);
   });
 
+  // Grüne Bögen der laufenden Abläufe, auf eigener Spur innen am Ring (auf der Marken-Spur gingen
+  // sie unter dem KVG-Fenster unter, Browser-Prüfung 27.10.2026). Der Text dazu steht im Band über
+  // der Tagesleiste, die Frist selbst als Punkt auf dem Ring und in der Liste.
+  const boegen = baender.map((b) => {
+    const w = bandBogen(b.von, b.bis, jahr);
+    if (!w) return null;
+    const [ax, ay] = punkt(w.von, BAND_SPUR);
+    const [bx, by] = punkt(w.bis, BAND_SPUR);
+    const gross = w.bis - w.von > 180 ? 1 : 0;
+    return React.createElement('path', { key: 'b' + b.key, 'data-ablauf-bogen': b.key, d: `M ${ax} ${ay} A ${BAND_SPUR} ${BAND_SPUR} 0 ${gross} 1 ${bx} ${by}`, fill: 'none', stroke: b.farbe, strokeWidth: 6, strokeOpacity: 0.9, strokeLinecap: 'round' });
+  });
+
   return React.createElement('div', { style: huelle },
     React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, t('calendar.jahreskreis.title', { year: jahr })),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px', alignItems: 'center' } },
@@ -141,6 +167,7 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
           return React.createElement('line', { x1: ax, y1: ay, x2: bx, y2: by, stroke: palette.text, strokeWidth: 1.5, strokeLinecap: 'round', 'aria-hidden': 'true' });
         })(),
         React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, ...fenster),
+        React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, ...boegen),
         React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, punkte.map((p) => React.createElement(Marke, { key: p.key, p, palette }))),
         React.createElement('text', { x: MITTE, y: MITTE - 6, textAnchor: 'middle', fontSize: 18, fontWeight: 600, fill: palette.text, 'aria-hidden': 'true' }, String(jahr)),
         React.createElement('text', { x: MITTE, y: MITTE + 12, textAnchor: 'middle', fontSize: 10, fill: palette.mid, 'aria-hidden': 'true' },
