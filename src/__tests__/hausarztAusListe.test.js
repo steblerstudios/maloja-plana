@@ -31,6 +31,18 @@ describe('utils/hausarzt.js', () => {
     expect(hausarztTelefon(n)).toBe('2');
     expect(hausarztName({ doctorsList: [{ name: 'Dr. Zahn', specialty: 'zahnarzt' }] })).toBe('');
   });
+  it('Hausarzt in der Liste ohne Nummer: die alte Nummer gilt weiter', () => {
+    expect(hausarztTelefon({ doctorsList: [{ name: 'H', specialty: 'hausarzt' }], doctorPhone: '044 111 11 11' })).toBe('044 111 11 11');
+    expect(feldHatWert({ doctorsList: [{ name: 'H' }], doctorPhone: '044 111 11 11' }, 'doctorPhone')).toBe(true);
+  });
+  it('mehrere Hausärzte mit Nummer: Name bleibt bei der Nummer', () => {
+    const n = { doctorsList: [{ name: 'Dr. A', phone: '1' }, { name: 'Dr. B' }, { name: 'Dr. C', phone: '3' }] };
+    expect(hausarztName(n)).toBe('Dr. A, Dr. B, Dr. C');
+    expect(hausarztTelefon(n)).toBe('Dr. A: 1, Dr. C: 3');
+  });
+  it('Fachrichtung ohne Rücksicht auf Gross-/Kleinschreibung (Fremd-Import)', () => {
+    expect(hausarztName({ doctorsList: [{ name: 'Dr. H', specialty: 'Hausarzt' }], doctor: 'Dr. Alt' })).toBe('Dr. H');
+  });
   it('leere Einträge und fehlende Daten', () => {
     expect(hausarztName({ doctorsList: [{ name: '  ', specialty: 'hausarzt' }] })).toBe('');
     expect(hausarztName(undefined)).toBe('');
@@ -49,6 +61,13 @@ describe('Ausgänge lesen den Hausarzt aus der Liste', () => {
     expect(zeile(sections, 'notfall.doctorPhone')?.value).toBe('+41 44 242 80 00');
     const qr = notfallQrAbschnitte(sections);
     expect(zeile(qr, 'notfall.doctor')?.value).toBe('Dr. med. Lisa Brunner');
+  });
+
+  it('nur Fachärzte in der Liste: das alte Feld erscheint im Dossier', () => {
+    const alt = { notfall: { doctor: 'Dr. Alt', doctorPhone: '044 000 00 00', doctorsList: [{ name: 'Dr. Zahn', specialty: 'zahnarzt', phone: '9' }] } };
+    const { sections } = getNotfallDossierPreview(alt, chapters, tk);
+    expect(zeile(sections, 'notfall.doctor')?.value).toBe('Dr. Alt');
+    expect(zeile(sections, 'notfall.doctorPhone')?.value).toBe('044 000 00 00');
   });
 
   it('Lebensmappe', () => {
