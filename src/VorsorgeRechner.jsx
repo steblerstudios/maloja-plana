@@ -38,7 +38,8 @@ function currentAge(dateStr) {
 export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const isMobile = useIsMobile();
   const birthYear = parseYear(data.basis?.dateOfBirth);
-  // Geburtsmonat nur für die volle Beitragsdauer der Frauen JG 1961–63 (Merkblatt 3.01 Ziff. 12).
+  // Geburtsmonat für die volle Beitragsdauer der Frauen JG 1961–63 (Merkblatt 3.01 Ziff. 12) und seit 26.10.2026 für
+  // die monatsgenaue Restzeit der BVG-Hochrechnung (berechneBVGGuthaben). Erwartet JJJJ-MM-TT, sonst volle Jahre.
   const birthMonth = Number(String(data.basis?.dateOfBirth || '').split('-')[1]) || undefined;
   const alter = currentAge(data.basis?.dateOfBirth);
   // Echtes Referenzalter (AHV 21) für diese Person — für Frauen der Übergangsgeneration
@@ -208,8 +209,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       austrittsalter: parsedBezugAlter,
       umwandlungssatz: Number(bvgUmwandlung) || undefined,
       geburtsjahr: birthYear || undefined,
+      geburtsmonat: birthMonth,
     });
-  }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung, birthYear]);
+  }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung, birthYear, birthMonth]);
 
   const projektion = useMemo(() => {
     if (!alter) return null;
