@@ -19,6 +19,16 @@ export function alterUndRentenalter(basis, heute = new Date()) {
   return { alter, rentenalter };
 }
 
+// Referenzalter erreicht — monatsgenau, weil AHV 21 in 3-Monats-Schritten läuft (Frauen JG 1961–63).
+// null ohne gültiges Geburtsdatum: dann ist es offen, nicht «nein».
+export function referenzalterErreicht(basis, heute = new Date()) {
+  const g = basis?.dateOfBirth ? new Date(basis.dateOfBirth) : null;
+  if (!g || isNaN(g.getTime())) return null;
+  let monate = (heute.getFullYear() - g.getFullYear()) * 12 + (heute.getMonth() - g.getMonth());
+  if (heute.getDate() < g.getDate()) monate -= 1;
+  return monate >= referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: g.getFullYear() });
+}
+
 export function nettoMonatAusProfil(betrag, art, basis, heute = new Date()) {
   const wert = Math.max(0, Number(betrag) || 0);
   if (art !== 'brutto' || wert <= 0) return { netto: wert, geschaetzt: false, offen: art !== 'netto' && art !== 'brutto' && wert > 0 };
