@@ -16,7 +16,7 @@ import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { organListe } from './utils/organspende.js';
-import { hausarztName, hausarztTelefon } from './utils/hausarzt.js';
+import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
 
 // ─── Druckfarben (K53) ────────────────────────────────────
@@ -415,6 +415,19 @@ function medikamenteText(notfall, t) {
   return typeof notfall?.medications === 'string' ? notfall.medications : '';
 }
 
+// «Weitere Ärzte» (Entscheid Stebler Studios 26.10.2026): Fachärztinnen und Fachärzte aus der Liste, je
+// «Name (Fachrichtung), Telefon». «Andere Fachrichtung» und unbekannte Werte ohne Klammer — ein Wort wie
+// «Andere Fachrichtung» hilft Helfenden nicht.
+function weitereAerzteText(notfall, t) {
+  return weitereAerzteAusListe(notfall).map((x) => {
+    const spec = String(x.specialty || '').toLowerCase();
+    const key = 'doctors.specialties.' + spec;
+    const fach = spec && spec !== 'other' && t(key) !== key ? t(key) : '';
+    const tel = typeof x.phone === 'string' ? x.phone.trim() : '';
+    return x.name.trim() + (fach ? ' (' + fach + ')' : '') + (tel ? ', ' + tel : '');
+  }).join('; ');
+}
+
 function erkrankungenText(notfall) {
   const liste = Array.isArray(notfall?.chronicDiseasesList) ? notfall.chronicDiseasesList.filter(x => x && x.name) : [];
   if (liste.length) return liste.map(x => x.name + (x.code ? ' (' + x.code + ')' : '')).join(', ');
@@ -475,6 +488,7 @@ function getNotfallSections(data, chapters, t) {
         { feld: 'notfall.doctor', label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
         { feld: 'notfall.doctorPhone', label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
         { feld: 'notfall.hospital', label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
+        { feld: 'notfall.weitereAerzte', label: t('notfallDossier.weitereAerzte'), value: weitereAerzteText(data.notfall, t) },
       ].filter(r => r.value),
     },
     {
@@ -520,7 +534,7 @@ export const NOTFALL_QR_FELDER = Object.freeze([
   'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
   'notfall.emergencyContact', 'notfall.emergencyPhone',
   'notfall.bloodType', 'notfall.allergies', 'notfall.medications', 'notfall.chronicDiseases',
-  'notfall.doctor', 'notfall.doctorPhone', 'notfall.hospital',
+  'notfall.doctor', 'notfall.doctorPhone', 'notfall.hospital', 'notfall.weitereAerzte',
   'notfall.organDonor', 'notfall.patientenverfuegung', 'notfall.vorsorgeauftrag', 'notfall.bestattungswuensche',
   'versicherungen.kkInsurer', 'versicherungen.kkCardNumber',
 ]);
@@ -528,12 +542,19 @@ export const NOTFALL_QR_FELDER = Object.freeze([
 // Abschnitte für den Notfall-QR: Reihenfolge Medizin zuerst (Entscheid 17.09.2026), nur Felder
 // aus NOTFALL_QR_FELDER, leere Abschnitte fallen weg.
 const NOTFALL_QR_REIHENFOLGE = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
+// Ganz ans Ende (26.10.2026): «weitere Ärzte» kann lang werden. Der QR füllt sein Budget der Reihe nach;
+// stünde die Zeile in «Ärztliche Betreuung», könnte sie Krankenkasse und Kartennummer (danach) verdrängen.
+// Eigener Schlussabschnitt mit demselben Titel.
+const QR_ZULETZT = ['notfall.weitereAerzte'];
 export function notfallQrAbschnitte(sections) {
   const rang = key => { const i = NOTFALL_QR_REIHENFOLGE.indexOf(key); return i === -1 ? NOTFALL_QR_REIHENFOLGE.length : i; };
-  return [...sections]
+  const geordnet = [...sections]
     .sort((a, b) => rang(a.key) - rang(b.key))
-    .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }))
-    .filter(s => s.rows.length > 0);
+    .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }));
+  const zuletzt = geordnet.flatMap(s => s.rows.filter(r => QR_ZULETZT.includes(r.feld)).map(r => ({ r, s })));
+  const ohne = geordnet.map(s => ({ ...s, rows: s.rows.filter(r => !QR_ZULETZT.includes(r.feld)) }));
+  const schluss = zuletzt.length ? [{ key: zuletzt[0].s.key + 'Weitere', title: zuletzt[0].s.title, rows: zuletzt.map(x => x.r) }] : [];
+  return ohne.concat(schluss).filter(s => s.rows.length > 0);
 }
 
 // ─── Notfall Preview Data (for React rendering) ─────────

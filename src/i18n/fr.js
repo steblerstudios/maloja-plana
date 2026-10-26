@@ -5493,6 +5493,7 @@ export default {
     sectionContact: 'Contact d\'urgence',
     sectionMedical: 'Données médicales',
     sectionCare: 'Soins médicaux',
+    weitereAerzte: 'Autres médecins',
     sectionProvision: 'Dispositions personnelles',
     sectionInsurance: 'Assurance',
     footerPrivacy: 'Ce dossier contient des informations de santé personnelles. Veuillez le conserver avec soin.',

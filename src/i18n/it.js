@@ -5466,6 +5466,7 @@ export default {
     sectionContact: 'Contatto di emergenza',
     sectionMedical: 'Dati medici',
     sectionCare: 'Cure mediche',
+    weitereAerzte: 'Altri medici',
     sectionProvision: 'Disposizioni personali',
     sectionInsurance: 'Assicurazione',
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
