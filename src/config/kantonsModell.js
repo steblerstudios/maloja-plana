@@ -217,9 +217,13 @@ export const SAEULE_3A = Object.freeze({
     // zu Recht bemängelte, dass mit dem Entfernen von `offen` die Frage ans ASV unsichtbar
     // wurde — obwohl sie in FRAGEN-AN-DIE-AEMTER.md weiter offen steht.)
     vorbehalt: 'Gerechnet nach der Lesart «ein fester Betrag, das Maximum mit 2. Säule, aus '
-      + 'dem Bemessungsjahr». Wortlaut und Frankenwerte sind belegt, die Lesart ist beim ASV '
-      + 'Bern angefragt und nicht bestätigt (FRAGEN-AN-DIE-AEMTER.md, Frage 2). Betroffen '
-      + 'sind nur Einzahlungen ÜBER dem Maximum.',
+      + 'dem Bemessungsjahr». Wortlaut und Frankenwerte sind belegt, die Lesart ist nicht '
+      + 'bestätigt; die Frage ans ASV Bern liegt als Entwurf vor (FRAGEN-AN-DIE-AEMTER.md, '
+      + 'Frage 2), nicht gesendet. Betroffen sind nur Einzahlungen ÜBER dem Maximum.',
+    // ⟨26.10.2026⟩ Hier stand «beim ASV Bern angefragt». Belegt ist das Gegenteil:
+    // stebler-studios/KANTONS-NACHFRAGEN-ENTWURF-2026-10.md, «Nichts davon ist gesendet», Zeile A2
+    // (ASV Bern, IPV + 3a) ohne Haken. Senden ist Sophies Hand. Wird gesendet, hier und in
+    // `ipv.vorbehaltBE3aDeckel` nachziehen.
     maximumFuer: (bemessungsjahr) => saeule3aMaximum(bemessungsjahr),
     // Das rohe Nettoeinkommen trägt die 3a voll, der Kanton rechnet sie nur bis zum Maximum
     // auf ⇒ abzuziehen ist der Überschuss. Gegengerechnet am Erlassweg, Nettoeinkommen
