@@ -6645,7 +6645,8 @@ export default {
     nebenOffen: 'Beim Nebenerwerb ist nicht angegeben, ob er brutto oder netto ist — darum nicht mitgezählt. Hier den Netto-Betrag ergänzen.',
   },
   sh: {
-    gblNichtBelegt: 'Der SKOS-Grundbedarf ist in dieser App für {jahr} belegt. Die Werte für {laufend} sind noch nicht nachgeführt; gerechnet wird mit denen von {jahr}. Beim Sozialdienst nachfragen.',
+    gblNichtBelegt: 'Der Grundbedarf ist in dieser App nach der SKOS-Empfehlung für {jahr} amtlich belegt. Ob er für {laufend} angepasst wurde, ist hier noch nicht nachgeführt; der Kanton kann ausserdem abweichen. Gerechnet wird mit {jahr}. Auskunft gibt der Sozialdienst.',
+    gblStandKurz: 'Grundbedarf Stand {jahr}',
     title: 'Sozialhilfe-Rechner',
     haushalt: 'Haushaltsgrösse',
     erwachsene: 'Erwachsene',
@@ -6694,7 +6695,7 @@ export default {
     vermoegenHinweis: 'Vermögen übersteigt Freibetrag – kein Anspruch',
     freibetrag: 'Freibetrag',
     eingeben: { sie: 'Geben Sie Miete und KVG-Prämie ein, um den Anspruch zu berechnen.', du: 'Gib Miete und KVG-Prämie ein, um den Anspruch zu berechnen.' },
-    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
+    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.{jahr}), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
   dl: {
     lang: 'de',
@@ -6801,7 +6802,7 @@ export default {
     anspruchValue: "{n} Taggelder (≈ {m} Monate)",
     anspruchUnklar: "Unter 12 Monaten Beitragszeit in den letzten zwei Jahren meist kein Anspruch. Es gibt Ausnahmen: Wer wegen Trennung, Scheidung, Invalidität oder Tod der Ehepartnerin oder des Ehepartners (auch in eingetragener Partnerschaft) eine Stelle suchen muss und damals in der Schweiz wohnte, kann von der Beitragszeit befreit sein — bis zu 90 Taggelder, wenn das Ereignis höchstens ein Jahr zurückliegt (AVIG Art. 14 Abs. 2, Art. 27 Abs. 4). Befreiungen gibt es auch nach Ausbildung, Krankheit oder Wegfall einer IV-Rente. Die Arbeitslosenkasse klärt es ab.",
     gedeckeltHint: "Verdienst über CHF {max}/Monat wird auf das Maximum gedeckelt.",
-    satz80NichtBelegt: "Der Grenzbetrag für den Satz von 80 % (CHF {betrag} pro Monat) ist in dieser App für {jahr} belegt. Die Anpassung für {laufend} ist noch nicht nachgeführt; massgebend ist die Arbeitslosenkasse.",
+    satz80NichtBelegt: "Der Grenzbetrag für den Satz von 80 % (CHF {betrag} pro Monat) ist in dieser App für {jahr} amtlich belegt. Ob und wie das WBF ihn für {laufend} angepasst hat, ist hier noch nicht nachgeführt. Verbindlich rechnet die Arbeitslosenkasse.",
     disclaimer: { sie: "Orientierung ohne Gewähr. Verbindlich rechnet das RAV bzw. die Arbeitslosenkasse — abhängig von Ihrer konkreten Situation.", du: "Orientierung ohne Gewähr. Verbindlich rechnet das RAV bzw. die Arbeitslosenkasse — abhängig von Deiner konkreten Situation." },
     ravTitle: { sie: "Wo Sie sich anmelden", du: "Wo Du Dich anmeldest" },
     ravBody: { sie: "Melden Sie sich so früh wie möglich beim RAV (Regionales Arbeitsvermittlungszentrum) — am besten am ersten Tag der Arbeitslosigkeit. Der Anspruch beginnt nicht rückwirkend.", du: "Melde Dich so früh wie möglich beim RAV (Regionales Arbeitsvermittlungszentrum) — am besten am ersten Tag der Arbeitslosigkeit. Der Anspruch beginnt nicht rückwirkend." },

@@ -6581,7 +6581,8 @@ export default {
     nebenOffen: 'Your profile doesn’t say whether the side income is gross or net — so it isn’t counted. Add the net amount here.',
   },
   sh: {
-    gblNichtBelegt: 'The SKOS basic needs amount in this app is verified for {jahr}. The figures for {laufend} have not been added yet; the calculation uses those for {jahr}. Check with the social services office.',
+    gblNichtBelegt: 'The basic needs amount in this app is verified against the SKOS recommendation for {jahr}. Whether it was adjusted for {laufend} has not been entered yet; the canton may also deviate. The calculation uses {jahr}. The social services office can tell you more.',
+    gblStandKurz: 'basic needs as of {jahr}',
     title: 'Social Assistance Calculator',
     haushalt: 'Household size',
     erwachsene: 'Adults',
@@ -6630,7 +6631,7 @@ export default {
     vermoegenHinweis: 'Assets exceed exemption – no entitlement',
     freibetrag: 'exemption',
     eingeben: 'Enter rent and health insurance premium to calculate entitlement.',
-    source: 'Basic needs based on [[SKOS guidelines|skos.ch]] (1.1.2026), asset allowance by canton. Not included: the municipality’s rent limits, premium reduction, situation-related benefits (except extra costs of working you enter) and cantonal deviations, including the income exemption. The social services office assesses the entitlement. Not legally binding.',
+    source: 'Basic needs based on [[SKOS guidelines|skos.ch]] (1.1.{jahr}), asset allowance by canton. Not included: the municipality’s rent limits, premium reduction, situation-related benefits (except extra costs of working you enter) and cantonal deviations, including the income exemption. The social services office assesses the entitlement. Not legally binding.',
   },
   dl: {
     lang: 'en',
@@ -6839,7 +6840,7 @@ export default {
     anspruchValue: "{n} daily allowances (≈ {m} months)",
     anspruchUnklar: "Under 12 contribution months in the last two years usually no entitlement. There are exceptions: anyone who has to look for work because of separation, divorce, invalidity or the death of their spouse (also in a registered partnership) and lived in Switzerland at the time may be exempt from the contribution period — up to 90 daily allowances if the event was no more than a year ago (AVIG Art. 14 para. 2, Art. 27 para. 4). Other exemptions apply e.g. after education, illness or the end of an IV pension. The unemployment fund will check.",
     gedeckeltHint: "Earnings above CHF {max}/month are capped at the maximum.",
-    satz80NichtBelegt: "The threshold for the 80% rate (CHF {betrag} per month) is verified in this app for {jahr}. The adjustment for {laufend} has not been added yet; the unemployment fund decides.",
+    satz80NichtBelegt: "The threshold for the 80% rate (CHF {betrag} per month) is verified in this app against official sources for {jahr}. Whether the EAER adjusted it for {laufend} has not been entered yet. The binding calculation is made by the unemployment fund.",
     disclaimer: "Orientation without guarantee. The RAV / unemployment fund calculates the binding amount, depending on your situation.",
     ravTitle: "Where to register",
     ravBody: "Register with the RAV (regional employment centre) as early as possible — ideally on your first day of unemployment. Entitlement does not start retroactively.",

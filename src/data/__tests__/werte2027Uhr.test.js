@@ -23,7 +23,10 @@ describe('Uhr 15.01.2027: die Konstanten zeigen die Werte 2027', () => {
     expect(r.monatsrente).toBe(1280);
     expect(r.werteJahr).toBe(2027);
   });
-  it('BVG — eine Quelle für die Eintrittsschwelle, Mindestzins unverändert', () => {
+  // Mindestzins: 1.25 % ist der Satz, der bis zu einem Entscheid des Bundesrats gilt — NICHT ein belegter
+  // Wert 2027 (Entscheid am 22.10.2026 offen, BVG-Kommission empfiehlt 1.75 %; ahvRechner.js:400–403).
+  // Vor dem Dezember-Deploy gegen den Entscheid prüfen (Fachprüfung 26.10.2026).
+  it('BVG — eine Quelle für die Eintrittsschwelle; Mindestzins gilt bis Entscheid (nicht Wert 2027)', () => {
     expect(BVG_PARAMS.eintrittsschwelle).toBe(23040);
     expect(BVG_EINTRITTSSCHWELLE_JAHR).toBe(23040);
     expect(BVG_PARAMS.koordinationsabzug).toBe(26880);

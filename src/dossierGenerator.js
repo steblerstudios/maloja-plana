@@ -788,6 +788,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
+      // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.
+      sozialhilfe.gblBelegt === false && t('sh.gblNichtBelegt', { jahr: sozialhilfe.gblJahr, laufend: new Date().getFullYear() }),
     ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')

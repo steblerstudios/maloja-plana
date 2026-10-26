@@ -3,11 +3,14 @@
 // Schnellrechnung (config/cantonalData.js: Dashboard, Pegel, Schnellcheck, Dossiers).
 //
 // Warum (Seitenrundgang 26.10.2026, Werte 2027): Der GBL stand zweimal als feste Konstante im Code,
-// ohne Jahr. Laut SODK/SKOS ist die nächste Anpassung auf den 1.1.2027 vorgesehen (an die
-// EL-Teuerung gekoppelt). Ohne Tabelle rechnete die App ab Januar still mit dem Stand 2026 weiter und
-// nannte ihn «Stand 1.1.2026». Mit der Tabelle schaltet sie am 1.1. selbst um, sobald ein Jahr
-// eingetragen ist; fehlt es, liefert `gblStand()` das letzte belegte Jahr mit `belegt: false`, und die
-// Ansicht sagt das (sh.gblNichtBelegt).
+// ohne Jahr. Laut Vermerk vom 19.07.2026 (data/sozialhilfeRechner.js) ist die nächste Anpassung auf den
+// 1.1.2027 vorgesehen, an die EL-Teuerung gekoppelt — Quelle dort nicht genannt, vor dem Nachtrag prüfen
+// (SODK-Entscheid, Termin 27.11.2026). Die SKOS-Werte sind Empfehlungen; die Kantone übernehmen sie
+// zu verschiedenen Zeitpunkten. Darum rechnet die App im Jahr ohne Eintrag mit dem Vorjahr weiter und sagt
+// es, statt keine Zahl zu zeigen (anders als beim Mindestlohn mit Rechtsanspruch, lohnCheck.js).
+// Ohne Tabelle rechnete die App ab Januar still mit dem Stand 2026 weiter und nannte ihn «Stand 1.1.2026».
+// Mit der Tabelle schaltet sie am 1.1. selbst um, sobald ein Jahr eingetragen ist; fehlt es, liefert
+// `gblStand()` das letzte belegte Jahr mit `belegt: false`, und die Ansicht sagt das (sh.gblNichtBelegt).
 //
 // Werte 2026: SODK/SKOS empfahlen 1061 «spätestens ab 1.1.2026» (gegengeprüft 2026-07-19, siehe
 // data/sozialhilfeRechner.js); bestätigt via Sozialhilfehandbuch Kanton ZH + AG.

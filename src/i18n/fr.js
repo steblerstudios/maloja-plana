@@ -6581,7 +6581,8 @@ export default {
     nebenOffen: 'Le profil n’indique pas si le revenu accessoire est brut ou net — il n’est donc pas compté. Ajoutez ici le montant net.',
   },
   sh: {
-    gblNichtBelegt: 'Les besoins de base CSIAS sont vérifiés dans cette application pour {jahr}. Les valeurs pour {laufend} ne sont pas encore reprises ; le calcul utilise celles de {jahr}. Se renseigner auprès du service social.',
+    gblNichtBelegt: 'Le forfait pour l’entretien est vérifié dans cette application d’après les normes CSIAS pour {jahr}. Une éventuelle adaptation pour {laufend} n’est pas encore saisie ; le canton peut en outre s’en écarter. Le calcul utilise {jahr}. Le service social renseigne.',
+    gblStandKurz: 'forfait pour l’entretien état {jahr}',
     title: 'Calculateur d\'aide sociale',
     haushalt: 'Taille du ménage',
     erwachsene: 'Adultes',
@@ -6630,7 +6631,7 @@ export default {
     vermoegenHinweis: 'La fortune dépasse la franchise – pas de droit',
     freibetrag: 'franchise',
     eingeben: { sie: 'Saisissez le loyer et la prime LAMal pour calculer le droit.', du: 'Saisis le loyer et la prime LAMal pour calculer le droit.' },
-    source: 'Forfait pour l’entretien selon les [[normes CSIAS|skos.ch]] (1.1.2026), franchise sur la fortune selon le canton. Non pris en compte : plafonds de loyer de la commune, réduction des primes, prestations circonstancielles (sauf les frais liés au travail saisis) et écarts cantonaux, y compris pour la franchise sur le revenu. Le service social examine le droit. Sans valeur juridique.',
+    source: 'Forfait pour l’entretien selon les [[normes CSIAS|skos.ch]] (1.1.{jahr}), franchise sur la fortune selon le canton. Non pris en compte : plafonds de loyer de la commune, réduction des primes, prestations circonstancielles (sauf les frais liés au travail saisis) et écarts cantonaux, y compris pour la franchise sur le revenu. Le service social examine le droit. Sans valeur juridique.',
   },
   dl: {
     lang: 'fr',
@@ -6839,7 +6840,7 @@ export default {
     anspruchValue: "{n} indemnités journalières (≈ {m} mois)",
     anspruchUnklar: "En dessous de 12 mois de cotisation au cours des deux dernières années, en général pas de droit. Il existe des exceptions : qui doit chercher un emploi à la suite d’une séparation, d’un divorce, de l’invalidité ou du décès de son conjoint ou de sa conjointe (aussi en partenariat enregistré) et habitait alors en Suisse peut être libéré de la période de cotisation — jusqu’à 90 indemnités journalières si l’événement remonte à un an au plus (LACI art. 14 al. 2, art. 27 al. 4). D’autres libérations existent, p. ex. après une formation, une maladie ou la suppression d’une rente AI. La caisse de chômage le vérifie.",
     gedeckeltHint: "Les gains supérieurs à CHF {max}/mois sont plafonnés au maximum.",
-    satz80NichtBelegt: "Le montant limite pour le taux de 80 % (CHF {betrag} par mois) est vérifié dans cette application pour {jahr}. L’adaptation pour {laufend} n’est pas encore reprise ; c’est la caisse de chômage qui fait foi.",
+    satz80NichtBelegt: "Le montant limite pour le taux de 80 % (CHF {betrag} par mois) est vérifié dans cette application d’après les sources officielles pour {jahr}. Une éventuelle adaptation par le DEFR pour {laufend} n’est pas encore saisie. C’est la caisse de chômage qui calcule de manière contraignante.",
     disclaimer: { sie: "Orientation sans garantie. L'ORP / la caisse de chômage calcule le montant contraignant, selon votre situation.", du: "Orientation sans garantie. L'ORP / la caisse de chômage calcule le montant contraignant, selon ta situation." },
     ravTitle: { sie: "Où vous annoncer", du: "Où t'annoncer" },
     ravBody: { sie: "Annoncez-vous à l'ORP (office régional de placement) le plus tôt possible — idéalement le premier jour de chômage. Le droit ne commence pas rétroactivement.", du: "Annonce-toi à l'ORP (office régional de placement) le plus tôt possible — idéalement le premier jour de chômage. Le droit ne commence pas rétroactivement." },

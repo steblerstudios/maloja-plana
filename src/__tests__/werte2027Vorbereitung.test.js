@@ -105,10 +105,27 @@ describe('ALV: nicht als 2027 ausweisen, solange der Grenzbetrag 80 % fehlt', ()
   });
 });
 
+describe('Hinweis auch dort, wo der Grundbedarf weitergeht (Fachprüfung 26.10.2026)', () => {
+  it('Behörden-Dossier nennt den Grundbedarf eines Vorjahres in den Hinweisen', async () => {
+    const { getBehoerdenDossierPreview } = await mitUhr('2027-01-15T10:00:00', '../dossierGenerator.js');
+    const { getChapters } = await import('../config/constants.js');
+    const t = (k, p) => (p ? k + JSON.stringify(p) : k);
+    const data = { basis: { canton: 'ZH', firstName: 'A' }, wohnen: { rentAmount: 1500 }, versicherungen: { kkPremium: 400 }, finanzen: { monthlyIncome: 500, incomeType: 'netto' } };
+    const { calculateSozialhilfe } = await import('../config/cantonalData.js');
+    const vorschau = getBehoerdenDossierPreview(data, getChapters(t), t, { sozialhilfe: calculateSozialhilfe(data) });
+    const soz = (vorschau.sections || []).find((s) => s.key === 'sozialhilfe');
+    expect(soz.notes).toContain('sh.gblNichtBelegt{"jahr":2026,"laufend":2027}');
+  });
+  it('Quellenzeile trägt das Jahr der Tabelle, nicht fest 2026', () => {
+    for (const s of [de, en, fr, itSprache, rm]) expect(s.sh.source).toMatch(/1\.1\.\{jahr\}/);
+  });
+});
+
 describe('Hinweistexte in allen fünf Sprachen', () => {
   it('sh.gblNichtBelegt und alv.satz80NichtBelegt mit Platzhaltern', () => {
     for (const s of [de, en, fr, itSprache, rm]) {
       expect(s.sh.gblNichtBelegt).toMatch(/\{jahr\}[\s\S]*\{laufend\}/);
+      expect(s.sh.gblStandKurz).toContain('{jahr}');
       expect(s.alv.satz80NichtBelegt).toMatch(/\{betrag\}[\s\S]*\{jahr\}[\s\S]*\{laufend\}/);
     }
   });

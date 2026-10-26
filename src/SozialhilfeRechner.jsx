@@ -8,6 +8,7 @@ import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { zahl } from './utils/geld.js';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
+import { gblStand } from './data/skosGrundbedarf.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const isMobile = useIsMobile();
@@ -291,7 +292,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() })),
     // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026), leere Felder zählen als fehlend.
     React.createElement(ErgebnisArt, { palette, t, ergebnis: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }) }),
-    React.createElement('div', { style: s.source }, renderSource(t('sh.source'), null, t))
+    React.createElement('div', { style: s.source }, renderSource(t('sh.source', { jahr: gblStand().jahr }), null, t))
   );
 };
 
