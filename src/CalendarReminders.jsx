@@ -15,6 +15,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
+import { naechsterTermin } from './utils/wiederholung.js';
 import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 
@@ -29,23 +30,14 @@ const daysBetween = (a, b) => {
 // gestern: eine heute fällige Frist galt als morgen, eine gestrige als heute.
 const todayISO = () => inDays(0);
 
-const INTERVALS = {
-  once: null,
-  daily: 1,
-  weekly: 7,
-  monthly: 30,
-  quarterly: 91,
-  halfYearly: 182,
-  yearly: 365,
-};
+// Wiederholungen nach Kalender (utils/wiederholung.js): bis 26.10.2026 feste Tageszahlen (30 / 365)
+// und das Ergebnis in UTC — Termine wanderten, nachts kam der Vortag heraus.
 
 // Aus letztem Besuch + Intervall den nächsten empfohlenen Termin ableiten —
 // damit man egal wann im Jahr startet sinnvoll geplant wird. Standard: jährlich.
 const nextDueFrom = (lastVisit, recurrence) => {
   if (!lastVisit) return '';
-  const interval = INTERVALS[recurrence] || 365;
-  const next = new Date(new Date(lastVisit).getTime() + interval * 86400000);
-  return isNaN(next.getTime()) ? '' : next.toISOString().split('T')[0];
+  return naechsterTermin(lastVisit, recurrence === 'once' ? 'yearly' : recurrence) || '';
 };
 
 // Pre-built templates for Swiss life
@@ -134,10 +126,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
     let changed = false;
     const updated = reminders.map(r => {
       if (r.done && r.recurrence !== 'once' && r.dueDate <= today) {
-        const interval = INTERVALS[r.recurrence];
-        if (interval) {
-          const nextDate = new Date(new Date(r.dueDate).getTime() + interval * 86400000);
-          const nextISO = nextDate.toISOString().split('T')[0];
+        const nextISO = naechsterTermin(r.dueDate, r.recurrence);
+        if (nextISO) {
           changed = true;
           return { ...r, dueDate: nextISO, done: false, completedDate: null };
         }

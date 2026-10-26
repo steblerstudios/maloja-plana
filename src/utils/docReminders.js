@@ -4,6 +4,7 @@
 // Local-first: reads or5_docs, writes to or5_reminders.
 
 import { inDays } from './helpers.js';
+import { plusTage } from './fristen.js';
 
 const REMINDERS_KEY = 'or5_reminders';
 const DOC_REMINDER_PREFIX = 'doc_expiry_';
@@ -57,10 +58,10 @@ export const syncDocumentReminders = (documents, t) => {
     const id = docReminderId(doc.id);
     const existing = updatedReminders.find(r => r.id === id);
 
-    // Calculate reminder date: 30 days before expiry
-    const expiryDate = new Date(doc.expiryDate);
-    const reminderDate = new Date(expiryDate.getTime() - 30 * 86400000);
-    const reminderISO = reminderDate.toISOString().split('T')[0];
+    // 30 Tage vor Ablauf, nach Kalendertagen wie alle Fristen (utils/fristen.js). Unlesbares Ablaufdatum
+    // → kein Termin; vorher entstand dann ein Eintrag mit «NaN» bzw. eine Ausnahme bei toISOString().
+    const reminderISO = plusTage(String(doc.expiryDate || '').slice(0, 10), -30);
+    if (!reminderISO) continue;
 
     const title = t
       ? t('docReminder.title', { name: doc.fileName || doc.docType || 'Document' })

@@ -46,7 +46,11 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   let letzteSicherung = null;
   try {
     const roh = localStorage.getItem('or5_lastBackup');
-    if (roh) letzteSicherung = new Date(roh).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+    if (roh) {
+      // App-Sprache statt Gerätesprache (Seitenrundgang 26.10.2026, S3); unlesbar → kein Datum.
+      const d = new Date(roh);
+      if (!isNaN(d.getTime())) letzteSicherung = d.toLocaleDateString(/^[a-z]{2}-[A-Z]{2}$/.test(t('calendar.locale')) ? t('calendar.locale') : 'de-CH', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
   } catch { /* Speicher gesperrt — dann eben ohne Datum */ }
 
   const knopf = (extra) => ({
