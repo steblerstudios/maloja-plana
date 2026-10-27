@@ -5628,16 +5628,34 @@ export default {
       above: 'circa {pct} % sur la media svizra',
       below: 'circa {pct} % sut la media svizra',
       equal: 'circa en la media svizra',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionAbove: { sie: 'Vossa regiun è circa {pct} % sur la media svizra.', du: 'Tia regiun è circa {pct} % sur la media svizra.' },
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionBelow: { sie: 'Vossa regiun è circa {pct} % sut la media svizra.', du: 'Tia regiun è circa {pct} % sut la media svizra.' },
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionEqual: { sie: 'Vossa regiun è circa en la media svizra.', du: 'Tia regiun è circa en la media svizra.' },
       aria: { sie: 'Vossa regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.', du: 'Tia regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.' },
       premium: {
         title: 'Premia regiunala vs. Svizra',
         yourVal: { sie: 'Vossa premia: CHF {amount}', du: 'Tia premia: CHF {amount}' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userAbove: { sie: 'Vossa premia è circa {pct} % sur la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sur la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userBelow: { sie: 'Vossa premia è circa {pct} % sut la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sut la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userEqual: { sie: 'Vossa premia è circa en la media da Vossa regiun.', du: 'Tia premia è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — regiuns cun pli blers medis ed ospitals pli chars han premias pli autas. Midar la cassa permetta da spargnar mo entaifer la regiun.',
         source: 'Funtauna: [[BAG|priminfo.admin.ch]], premia media {year} · media da tut ils assicuraders',
       },
       rent: {
         title: 'Fittanza regiunala vs. Svizra',
         yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userAbove: { sie: 'Vossa fittanza è circa {pct} % sur la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sur la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userBelow: { sie: 'Vossa fittanza è circa {pct} % sut la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sut la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userEqual: { sie: 'Vossa fittanza è circa en la media da Vossa regiun.', du: 'Tia fittanza è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
         thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
         source: 'Funtauna: [[UST|www.bfs.admin.ch]], enquista structurala davart ils tschains {year} · tschains net, senza cuosts secundars',

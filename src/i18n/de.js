@@ -6221,16 +6221,25 @@ export default {
       above: 'rund {pct} % über dem Schweizer Schnitt',
       below: 'rund {pct} % unter dem Schweizer Schnitt',
       equal: 'etwa im Schweizer Schnitt',
+      regionAbove: { sie: 'Ihre Region liegt rund {pct} % über dem Schweizer Schnitt.', du: 'Deine Region liegt rund {pct} % über dem Schweizer Schnitt.' },
+      regionBelow: { sie: 'Ihre Region liegt rund {pct} % unter dem Schweizer Schnitt.', du: 'Deine Region liegt rund {pct} % unter dem Schweizer Schnitt.' },
+      regionEqual: { sie: 'Ihre Region liegt etwa im Schweizer Schnitt.', du: 'Deine Region liegt etwa im Schweizer Schnitt.' },
       aria: { sie: 'Ihre Region: CHF {regional} pro Monat, Schweizer Schnitt: CHF {national}. {diff}.', du: 'Deine Region: CHF {regional} pro Monat, Schweizer Schnitt: CHF {national}. {diff}.' },
       premium: {
         title: 'Prämie regional vs. Schweiz',
         yourVal: { sie: 'Ihre Prämie: CHF {amount}', du: 'Deine Prämie: CHF {amount}' },
+        userAbove: { sie: 'Ihre Prämie liegt rund {pct} % über dem Schnitt Ihrer Region.', du: 'Deine Prämie liegt rund {pct} % über dem Schnitt deiner Region.' },
+        userBelow: { sie: 'Ihre Prämie liegt rund {pct} % unter dem Schnitt Ihrer Region.', du: 'Deine Prämie liegt rund {pct} % unter dem Schnitt deiner Region.' },
+        userEqual: { sie: 'Ihre Prämie liegt etwa im Schnitt Ihrer Region.', du: 'Deine Prämie liegt etwa im Schnitt deiner Region.' },
         structural: 'Das ist vor allem strukturell — Regionen mit höherer Arztdichte und teureren Spitälern haben höhere Prämien. Mit der Kassenwahl lässt sich nur innerhalb der Region sparen.',
         source: 'Quelle: [[BAG|priminfo.admin.ch]], mittlere Prämie {year} · Durchschnitt aller Versicherer',
       },
       rent: {
         title: 'Miete regional vs. Schweiz',
         yourVal: { sie: 'Ihre Miete: CHF {amount}', du: 'Deine Miete: CHF {amount}' },
+        userAbove: { sie: 'Ihre Miete liegt rund {pct} % über dem Schnitt Ihrer Region.', du: 'Deine Miete liegt rund {pct} % über dem Schnitt deiner Region.' },
+        userBelow: { sie: 'Ihre Miete liegt rund {pct} % unter dem Schnitt Ihrer Region.', du: 'Deine Miete liegt rund {pct} % unter dem Schnitt deiner Region.' },
+        userEqual: { sie: 'Ihre Miete liegt etwa im Schnitt Ihrer Region.', du: 'Deine Miete liegt etwa im Schnitt deiner Region.' },
         structural: 'Das ist vor allem strukturell — in Städten und nachgefragten Regionen sind Bauland und Wohnungen knapper und teurer. Der Schweizer Schnitt ist dort oft gar nicht zu finden.',
         // Die Überschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
         // Im Budget gibt es keine Nachbarzeile, die sie auffängt — dort war das rote „!“ der
