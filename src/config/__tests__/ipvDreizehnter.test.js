@@ -406,11 +406,12 @@ describe('Mietzinsbeiträge BS: Frage «in Erstausbildung?»', () => {
     expect(html).toContain('mietzinsView.result_jungeErwachseneOffen');
     expect(await render(data(), undefined)).not.toContain('mz-ausb-');
   });
+  // Seit der Rechner-Form X (F7-A2, 27.10.2026) steht die Frage unter «Ihre Angaben» (RechnerForm `angaben.inhalt`).
   it('die Antwort landet am Kind im Haushalt, die anderen Kinder bleiben unverändert', async () => {
     const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
     const aufrufe = [];
     const el = MietzinsOrientierung({ palette, t, data: data(), onUpdateData: (...a) => aufrufe.push(a) });
-    const finde = (n) => { if (!n || typeof n !== 'object') return null; if (Array.isArray(n)) { for (const c of n) { const r = finde(c); if (r) return r; } return null; } if (n.props?.id === 'mz-ausb-1') return n; for (const c of [].concat(n.props?.children || [])) { const r = finde(c); if (r) return r; } return null; };
+    const finde = (n) => { if (!n || typeof n !== 'object') return null; if (Array.isArray(n)) { for (const c of n) { const r = finde(c); if (r) return r; } return null; } if (n.props?.id === 'mz-ausb-1') return n; for (const c of [].concat(n.props?.children || [], n.props?.angaben?.inhalt || [])) { const r = finde(c); if (r) return r; } return null; };
     finde(el).props.onChange({ target: { value: 'ja' } });
     expect(aufrufe).toEqual([['basis', 'household', { adults: 1, children: [{ age: 5 }, { age: 20, name: 'Lea', erstausbildung: 'ja' }] }]]);
   });

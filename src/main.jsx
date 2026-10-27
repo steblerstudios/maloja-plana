@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
-import { PFADE } from './config/brotkrumePfade.js';
+import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
 import { herkunftName } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
@@ -1528,9 +1528,10 @@ const AppInner = ({ demo }) => {
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
       // Der Umzug (Fassung 5) und seit dem Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im
-      // eigenen Kopf (AblaufSchale `kopf`, ChapterView), seit Fassung G (27.10.2026) auch «Was ansteht». Als
-      // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
-      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
+      // eigenen Kopf (AblaufSchale `kopf`, ChapterView), seit Fassung G (27.10.2026) auch «Was ansteht».
+      // Als Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026). Ebenso ohne «Übersicht»:
+      // die Rechner in der Form X (RECHNER_KAPITEL, components/RechnerForm.jsx, F7-A2 27.10.2026).
+      view !== 'dashboard' && !PFADE[view] && !RECHNER_KAPITEL[view] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
@@ -1702,8 +1703,8 @@ const AppInner = ({ demo }) => {
         view === 'premium' && React.createElement(PremiumSubsidy, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
-        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData }),
-        view === 'stundenlohn' && React.createElement(Stundenlohn, { palette, t, data: activeData, onUpdateData: updateData }),
+        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
+        view === 'stundenlohn' && React.createElement(Stundenlohn, { palette, t, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Design-Vorschau des Tresor-LockScreens (nur DEV; onUnlock ist ein Stub —
         // Passphrase „test1234" = Erfolg, sonst Fehler). Noch NICHT an secureStore verdrahtet.
@@ -1752,7 +1753,7 @@ const AppInner = ({ demo }) => {
         // key: datenModus — wie beim Kalender: nach «Beispiel verlassen» keine Beispiel-Liste über die echte.
         view === 'merkliste' && React.createElement(MerklisteView, { key: datenModus, palette, t, onNavigate: handleNavigate }),
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
-        view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
+        view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Seit 27.09.2026 eine Seite: Leistungs-Kompass und Anspruchs-Landkarte zusammen.
         // Beide alten Adressen bleiben gültig und zeigen dasselbe.

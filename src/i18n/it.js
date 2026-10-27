@@ -1439,7 +1439,7 @@ export default {
     vorsorge: 'Calcolatore previdenza',
     eo: 'Indennità per perdita di guadagno (IPG)',
     stipendien: 'Borse di studio',
-    alv: "Indennità disoccupazione",
+    alv: "Indennità di disoccupazione",
     asyl: "Asilo e protezione",
     direktlinks: 'Link ufficiali',
     cv: 'Creazione CV',
@@ -6794,6 +6794,7 @@ export default {
     bruttolohn: "Salario lordo mensile precedente (CHF)",
     bruttolohnHint: { sie: "Il Suo salario lordo soggetto all'AVS degli ultimi 6 mesi. Massimo assicurato: CHF 12’350/mese.", du: "Il tuo salario lordo soggetto all'AVS degli ultimi 6 mesi. Massimo assicurato: CHF 12’350/mese." },
     bruttoNettoHint: "Il reddito salvato è indicato come netto — inserire qui il salario lordo per l'AD.",
+    bruttoGeschaetzt: { sie: "Stimato dal salario netto del profilo (CHF {netto}). Inserisca il salario lordo se lo conosce: ha la precedenza.", du: "Stimato dal salario netto del profilo (CHF {netto}). Inserisci il salario lordo se lo conosci: ha la precedenza." },
     beitragsmonate: "Mesi di contribuzione",
     beitragsmonateHint: { sie: 'Quanti mesi ha lavorato negli ultimi 2 anni? Di norma il diritto sussiste da 12 mesi.', du: 'Quanti mesi hai lavorato negli ultimi 2 anni? Di norma il diritto sussiste da 12 mesi.' },
     kinder: "Obbligo di mantenimento per figli sotto i 25 anni?",
@@ -6986,5 +6987,13 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Manca ancora un dato.',
     fehltMehrere: '{satz}. Mancano ancora {n} dati.',
+  },
+  // Forma del calcolatore X (F7-A2, 27.10.2026): components/RechnerForm.jsx.
+  rechnerForm: {
+    angaben: { sie: 'I Suoi dati', du: 'I tuoi dati' },
+    vonN: '{x} di {n}',
+    tun: 'Cosa fare',
+    quelle: 'Fonte: {q}',
+    geschaetzt: 'stimato',
   },
 };
