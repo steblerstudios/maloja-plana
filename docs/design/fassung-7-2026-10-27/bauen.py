@@ -145,6 +145,33 @@ SEITEN = [
    'bildtext': 'Heute: elf Knöpfe, keine Antwort mit Marias Angaben.',
    'intro': 'Diese Seite ist einer von vier Ankern in der Leiste unten. Laut O sollte sie oben mit Marias Zahlen antworten: IPV und Sozialhilfe als zwei Pegel. Siehe F7-A3.',
    'befunde': []},
+  {'id': 'runde3-ablage', 'titel': 'Runde 3 · Ablage und Dossiers', 'bild': bild('r3-ablage.jpg'),
+   'bildtext': 'Dokumentenablage im Beispiel: «Ihr Ordner ist bereit» steht zweimal, darunter «Meine Unterlagen» als Abschnitt.',
+   'intro': 'Lebensmappe, Behörden-Dossier und Notfall-Dossier entstehen alle aus demselben Generator. Dazu kommen Notfallkarte, Notfallpass und Portemonnaie-Karte.',
+   'befunde': [
+     b('F7-S1', 'fehler', '<b>In der Lebensmappe fehlt das Kapitel Behörden & Rechtliches ganz</b>: Steuerkanton, Steuernummer, Frist, Betreibungsregister, Testament. Dabei verspricht sie «Alle Kapitel auf einen Blick», und Maria hat das Kapitel zu 80 % ausgefüllt. Die Ursache: <code>getSections</code> in <code>dossierGenerator.js</code> kennt nur sechs Kapitel.', 'den Abschnitt Behörden ergänzen, für die Vorschau und für den Druck. Ein kleiner, klarer Fix.'),
+     b('F7-S2', 'fusion', '<b>Drei Dossiers aus demselben Generator</b>: Lebensmappe (alles), Behörden-Dossier (Person, Finanzen, Ansprüche, Steuern) und Notfall-Dossier (Person, Notfall, QR).', 'eine Seite «Unterlagen drucken» mit drei Auswahlen: Alles, Für ein Amt, Für den Notfall. Alle mit derselben Vorschau.'),
+     b('F7-S3', 'sprache', '<b>Vier Namen für die Sicherung</b>: «Jetzt sichern», «Datensicherung», «Sicherung & Wiederherstellung» und «Export».', 'ein Name: «Sicherung».'),
+     b('F7-S4', 'sprache', '«Meine Unterlagen» ist in der Brotkrume eine eigene Stufe, auf der Ablage nur ein Abschnitt. Im Rucksack stehen «Dokumentenablage» und «Meine Unterlagen» nebeneinander.', 'ein Ort, ein Name.'),
+     b('F7-S6', 'fehler', 'Das Behörden-Dossier zeigt Feldnamen mit doppelter Währung: «Monatliches Einkommen CHF · CHF 6’200», «Franchise CHF · 1’500». Dieses Blatt geht an ein Amt.', 'Bezeichnungen ohne «CHF», die Beträge immer mit «CHF».'),
+     b('F7-S7', 'fehler', 'Auf dem Handy (375 px) ist das Behörden-Dossier 10 px zu breit, die Seite lässt sich seitwärts schieben. Die anderen 27 geprüften Seiten passen.', 'die Ursache suchen, vermutlich die Vorschau-Tabelle.'),
+   ]},
+  {'id': 'runde3-obstgarten', 'titel': 'Obstgarten', 'bild': bild('r3-obstgarten.jpg'),
+   'bildtext': 'Elf Bäumchen. Vier davon sind «kommt später»: Gesundheit, Arbeit, Familie, Vorsorge.',
+   'intro': 'Das schönste der drei Fortschritts-Bilder, aber mit eigenen Bereichen und einer eigenen Zählung.',
+   'befunde': [
+     b('F7-S5', 'aufbau', 'Der Obstgarten hat <b>andere Bereiche als die Kapitel</b>: Person, Bildung, Gesundheit, Arbeit, Familie, Vorsorge … Die App sagt Basis, Ausbildung & Arbeit. Er zählt in «Wuchsstufen», das Dashboard in Prozent.', 'mit F7-L4: ein Fortschritts-Bild mit denselben Bereichen wie die Kapitel. «Familie» hängt an F7-L3.'),
+   ]},
+  {'id': 'runde3-rahmen', 'titel': 'Notfall-Seiten, Einstellungen, Rahmen', 'bild': '',
+   'bildtext': '',
+   'intro': 'Die Notfallkarte ist ruhig und klar: Nummern, «Was Sie sagen» mit Marias Adresse, «Bleiben Sie am Telefon». Bei den Einstellungen ist die Barrierefreiheit vollständig.',
+   'befunde': [
+     b('F7-S8', 'flow', 'Die Wegmarken in der Landschaft (Dashboard) sind auf dem Handy 26 × 26 px gross. Die Regel verlangt mindestens 44 px.', 'prüfen, ob die Tippfläche grösser ist als das Bild, sonst vergrössern.'),
+     b('F7-S9', 'sprache', 'Die Suche ohne Eingabe zeigt interne Namen: «CSV Budget», «Budget-Sync CSV-Import», «KK-Scanner».', 'zusammen mit F7-R1 die Namen angleichen.'),
+     b('F7-S10', 'flow', 'Die Formulare Patientenverfügung und Bestattung enden mit «Weiter» und führen danach nicht zurück ins Kapitel Notfall. Organspende, Export, Benachrichtigungen und Flyer sind Sackgassen.', 'nach dem Speichern zurück zu Notfall › Vorsorge.'),
+     b('F7-S12', 'fehler', 'Die Notfallkarte sagt: «Die 112 erreichen Sie … nicht aber ohne SIM-Karte.» Für diese Aussage steht auf der Karte keine Quelle.', 'vom Prüfer für Schweizer Fachlogik gegen BAKOM prüfen lassen.'),
+     b('F7-S11', 'gut', 'Notfallkarte und Barrierefreiheit in den Einstellungen sind so, wie sie sein sollen.'),
+   ]},
 ]
 
 html = (HIER / 'vorlage.html').read_text(encoding='utf-8')

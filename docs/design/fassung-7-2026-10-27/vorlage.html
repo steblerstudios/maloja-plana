@@ -44,6 +44,8 @@ table.matrix { border-collapse: collapse; width: 100%; min-width: 760px; font-si
 .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--border); }
 .dot.ist { background: var(--soft); }
 .dot.soll { background: var(--sage); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 25%, transparent); }
+ol.plan { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 78ch; color: var(--mid); }
+ol.plan b { color: var(--text); font-weight: 500; }
 .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--mid); margin-top: 8px; align-items: center; }
 .legend span { display: inline-flex; gap: 6px; align-items: center; }
 
@@ -84,7 +86,7 @@ textarea#ausgabe { width: 100%; min-height: 120px; font: 13px/1.5 ui-monospace, 
 
 <main>
   <div class="lead">
-    <span class="meta">Maloja Plana · Rundgang für Fassung 7 · Runden 1 und 2 von 4, Landkarte · Stand 27.10.2026, 02:07 · <code>main d9aa8e06</code></span>
+    <span class="meta">Maloja Plana · Rundgang für Fassung 7 · Runden 1 bis 3 und Landkarte · Stand 27.10.2026, 02:19 · <code>main d9aa8e06</code></span>
     <h1>Fassung 7 · Rundgang durch die App</h1>
     <p>Im Browser durchgegangen, Beispiel Maria Muster, Desktop. Je Seite sechs Fragen. Nichts davon ist gebaut: Bei jedem Punkt «Ja», «Nein» oder «Besprechen» wählen, unten die Entscheide kopieren und in den Chat legen.</p>
     <div class="fragen"><span>Umgesetzt?</span><span>Stimmt es?</span><span>Flow</span><span>Aufbau &amp; Logik</span><span>Fusionieren</span><span>Stärker zeigen</span></div>
@@ -94,6 +96,15 @@ textarea#ausgabe { width: 100%; min-height: 120px; font: 13px/1.5 ui-monospace, 
   <p>Gestalterisch hält das Kapitel-Muster aus Fassung 6. Die Wiederholungen sind inhaltlich: dieselbe Zahl, dasselbe Bild an zwei bis vier Orten. Vorschlag: Jedes Thema hat ein Besitzer-Kapitel (grün). Alle anderen Stellen zeigen nur noch eine Zeile mit derselben Zahl und einem Link.</p>
   <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
   <div class="legend"><span><i class="dot ist"></i>steht heute dort</span><span><i class="dot soll"></i>Vorschlag: hier gehört es hin</span><span><i class="dot"></i>nicht dort</span></div>
+
+  <h2>Vorschlag: in dieser Reihenfolge bauen</h2>
+  <p>Aus 85 Punkten ein Plan. Jeder Schritt ist ein eigener Zweig und kommt erst nach deinem Entscheid.</p>
+  <ol class="plan">
+    <li><b>Fehler, die man sieht</b>: Lebensmappe ohne Behörden (F7-S1), Mietbarometer (F7-K1-1), zwei Bruttowerte (F7-K2-3), Beträge ohne CHF (F7-D6, F7-D7, F7-S6), Deko-Schrift in Titeln (F7-A12, F7-D8), Beispiel Maria (F7-K1-2, F7-K4-2). Klein, unabhängig, vor oder kurz nach dem Deploy möglich.</li>
+    <li><b>Was schon entschieden ist, bauen</b>: Ablauf-Schale W (F7-A1), Rechner-Form X (F7-A2), «Was steht mir zu?» O (F7-A3), Versicherungs-Übersicht §11 (F7-L6). Damit erledigen sich rund 15 weitere Punkte.</li>
+    <li><b>Je Thema ein Ort</b>: die Tabelle oben, also Lohn, KK-Last, Franchise, Steuern, Vorsorge, Dossiers, Sicherung.</li>
+    <li><b>Neu entscheiden</b>: Fortschritts-Bild (F7-L4, F7-S5), Kapitel Familie (F7-L3), Spinnennetz (F7-K3-6), Dashboard in fünf Teilen (F7-D9).</li>
+  </ol>
 
   <div id="seiten"></div>
 
