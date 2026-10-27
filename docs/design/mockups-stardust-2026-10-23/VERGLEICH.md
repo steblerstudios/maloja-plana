@@ -1477,3 +1477,14 @@ Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7
 
 **Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 ·
 F7-L9 · F7-K5-1
+
+**F7-K6-2 geklärt (Sophie, 27.10.2026):** Compendium-Link wie heute, dazu der Preis aus der BAG-Spezialitätenliste.
+Zuerst zeigen, wie der Preis aktuell bleibt. Vorschlag von Claude (noch nicht entschieden), Belege BAG-Seite «Elektronische
+Plattform Leistungen (ePL)», gelesen 27.10.2026: SL unter sl.bag.admin.ch, ohne Login; Excel- und FHIR-Dateien «jeweils am
+ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-Anbieter angekündigt, noch nicht offen.
+1. Von Hand wie bei den Prämien: Excel-Datei ablegen in `src/data/raw/`, Skript `scripts/build-sl-preise.mjs` holt nur die
+   rund 100 Medikamente aus `medicationData.js` heraus → `src/data/medikamentPreise.js` mit Stand und Quelle.
+2. Nachgeladen nur im Medikamenten-Teil, nicht im Startbündel. Die App holt zur Laufzeit nichts aus dem Netz.
+3. Takt: vierteljährlich und beim Werte-Wechsel im Dezember; `/maloja-predeploy` warnt, wenn der Stand älter als 4 Monate ist.
+4. Anzeige: «Publikumspreis laut Spezialitätenliste, Stand …», nicht «Sie zahlen»; ohne Treffer kein Preis, nur Compendium.
+5. Vor dem Bau: swiss-precision-pruefer zu Publikumspreis vs. Selbstbehalt und zum Satz bei Medikamenten ausserhalb der SL.
