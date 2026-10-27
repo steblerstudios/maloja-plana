@@ -6260,7 +6260,8 @@ export default {
     freiwillig: 'facultatif',
     nochOffen: 'Pas encore couvert : {liste}.',
     ganz: 'Toutes les parties sont couvertes.',
-    kurz: { kk: 'Caisse maladie', uvg: 'Accidents', bvg: 'Caisse de pension', haftpflicht: 'RC privée', hausrat: 'Ménage' },
+    kurz: { kk: 'Caisse maladie', uvg: 'Accidents', bvg: 'Caisse de pension', haftpflicht: 'RC privée', hausrat: 'Ménage', leben: 'Vie' },
+    lang: { leben: 'Assurance-vie' },
   },
   schutzschild: {
     intro: 'Ce que la loi exige — et ce qui vaut la peine en plus.',

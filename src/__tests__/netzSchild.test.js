@@ -19,14 +19,26 @@ const nurText = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 const angestellt = { employed: true, annualIncome: 80000, lohnBasis: 'brutto' };
 
 describe('Teile', () => {
-  it('Haftpflicht unten an der Spitze, dann im Uhrzeigersinn Hausrat, Pensionskasse, Krankenkasse, Unfall', () => {
+  it('Leben oben in der Mitte, Haftpflicht unten an der Spitze (Sophie 27.10.2026)', () => {
     const { teile } = netzSchildTeile({ kkInsurer: 'CSS' }, angestellt);
-    expect(teile.map((p) => p.key)).toEqual(['haftpflicht', 'hausrat', 'bvg', 'kk', 'uvg']);
-    expect(teilWinkel(0, 5)).toBe(90);
+    expect(teile.map((p) => p.key)).toEqual(['haftpflicht', 'hausrat', 'bvg', 'leben', 'kk', 'uvg']);
+    expect(teilWinkel(3, 6, 3)).toBe(270);
+    expect(teilWinkel(0, 6, 3)).toBe(90);
+  });
+  it('Leben steht auch mit weniger Teilen genau oben', () => {
+    const { teile } = netzSchildTeile({ kkInsurer: 'CSS' }, { employed: true, annualIncome: 10000, lohnBasis: 'brutto' });
+    const i = teile.findIndex((p) => p.key === 'leben');
+    expect(teilWinkel(i, teile.length, i)).toBe(270);
+  });
+  it('Leben: «Ja» gedeckt, sonst noch nicht gedeckt, freiwillig', () => {
+    const leben = (v) => netzSchildTeile(v, {}).teile.find((p) => p.key === 'leben');
+    expect(leben({ kkInsurer: 'CSS', lifeInsurance: 'yes' }).stufe).toBe(2);
+    expect(leben({ kkInsurer: 'CSS', lifeInsurance: 'no' }).stufe).toBe(0);
+    expect(leben({ kkInsurer: 'CSS' }).pflicht).toBe(false);
   });
   it('ohne Anstellung keine Teile für Unfall und Pensionskasse — keine falsche Lücke', () => {
     const { teile } = netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false });
-    expect(teile.map((p) => p.key)).toEqual(['haftpflicht', 'hausrat', 'kk']);
+    expect(teile.map((p) => p.key)).toEqual(['haftpflicht', 'hausrat', 'leben', 'kk']);
   });
   it('Krankenkasse in zwei Stufen: Grundversicherung, mit Zusatz', () => {
     const stufe = (v) => netzSchildTeile(v, {}).teile.find((p) => p.key === 'kk').stufe;
@@ -37,7 +49,7 @@ describe('Teile', () => {
   it('andere Teile: noch nicht gedeckt oder gedeckt', () => {
     const { teile, offen } = netzSchildTeile({ kkInsurer: 'CSS', liabilityInsurance: 'yes', householdInsurance: 'no' }, {});
     expect(teile.find((p) => p.key === 'haftpflicht').stufe).toBe(2);
-    expect(offen).toEqual(['hausrat']);
+    expect(offen).toEqual(['hausrat', 'leben']);
   });
 });
 
@@ -48,22 +60,23 @@ describe('Bild und Text', () => {
   });
   it('Satz «Noch nicht gedeckt: …» und je Teil eine Zeile mit Wort, nicht nur Farbe', () => {
     const text = nurText(html({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }));
-    expect(text).toContain('Noch nicht gedeckt: Hausrat.');
+    expect(text).toContain('Noch nicht gedeckt: Hausrat, Leben.');
+    expect(text).toContain('Lebensversicherung · freiwillig noch nicht gedeckt');
     expect(text).toContain('Grundversicherung');
     expect(text).toContain('Privathaftpflicht · freiwillig gedeckt');
   });
   it('alles gedeckt: still vollständig', () => {
-    expect(nurText(html({ kkInsurer: 'CSS', kkZusatz: 'x', liabilityInsurance: 'yes', householdInsurance: 'yes' }))).toContain('Alle Teile gedeckt.');
+    expect(nurText(html({ kkInsurer: 'CSS', kkZusatz: 'x', liabilityInsurance: 'yes', householdInsurance: 'yes', lifeInsurance: 'yes' }))).toContain('Alle Teile gedeckt.');
   });
   it('das Bild hat einen Namen für Bildschirmleser mit dem Stand je Teil', () => {
-    expect(html({ kkInsurer: 'CSS' })).toMatch(/aria-label="Schild aus Versicherungsteilen\. Haftpflicht: noch nicht gedeckt; Hausrat: noch nicht gedeckt; Krankenkasse: Grundversicherung\."/);
+    expect(html({ kkInsurer: 'CSS' })).toMatch(/aria-label="Schild aus Versicherungsteilen\. Haftpflicht: noch nicht gedeckt; Hausrat: noch nicht gedeckt; Leben: noch nicht gedeckt; Krankenkasse: Grundversicherung\."/);
   });
   it('Beispiel Maria zeigt das Schild', () => {
     expect(html(DEMO_DATA.versicherungen, schildOptionen(DEMO_DATA))).toContain('data-schild="netz"');
   });
   it('alle Texte in fünf Sprachen', () => {
     const blatt = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
-    const keys = ['intro', 'aria', 'offen', 'grund', 'zusatz', 'gedeckt', 'pflicht', 'freiwillig', 'nochOffen', 'ganz', 'kurz.kk', 'kurz.uvg', 'kurz.bvg', 'kurz.haftpflicht', 'kurz.hausrat'];
+    const keys = ['intro', 'aria', 'offen', 'grund', 'zusatz', 'gedeckt', 'pflicht', 'freiwillig', 'nochOffen', 'ganz', 'kurz.kk', 'kurz.uvg', 'kurz.bvg', 'kurz.haftpflicht', 'kurz.hausrat', 'kurz.leben', 'lang.leben'];
     for (const sprache of [de, en, fr, it_, rm]) for (const k of keys) expect(blatt(sprache, 'netzSchild.' + k)).toBeTruthy();
   });
 });

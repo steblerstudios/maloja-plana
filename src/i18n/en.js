@@ -6260,7 +6260,8 @@ export default {
     freiwillig: 'voluntary',
     nochOffen: 'Not yet covered: {liste}.',
     ganz: 'All parts covered.',
-    kurz: { kk: 'Health', uvg: 'Accident', bvg: 'Pension fund', haftpflicht: 'Liability', hausrat: 'Household' },
+    kurz: { kk: 'Health', uvg: 'Accident', bvg: 'Pension fund', haftpflicht: 'Liability', hausrat: 'Household', leben: 'Life' },
+    lang: { leben: 'Life insurance' },
   },
   schutzschild: {
     intro: 'What the law requires — and what else is worth having.',

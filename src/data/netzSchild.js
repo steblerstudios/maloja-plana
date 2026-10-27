@@ -6,16 +6,17 @@ import { schildState } from './schutzschild.js';
 //
 // Welche Teile es gibt, entscheidet weiter schildState (data/schutzschild.js) — mit allen Regeln dort (Unfall nur
 // für Angestellte, Pensionskasse erst ab Eintrittsschwelle und Mindestalter …). So entsteht keine falsche Lücke.
-// Bewusst ohne «Leben»: keine Pflicht und für viele nicht nötig (offene Frage 3 im Konzept) — kein Teil, das
-// als «noch nicht gedeckt» dasteht, obwohl nichts fehlt.
+// «Leben» oben in der Mitte (Stebler Studios 27.10.2026, offene Frage 3 im Konzept): freiwillig, aus dem Feld
+// lifeInsurance («Ja» = gedeckt). Ohne Angabe oder «Nein» steht es als «noch nicht gedeckt» da — der Satz unter
+// dem Bild sagt dazu «freiwillig», wie bei Haftpflicht und Hausrat.
 //
 // Stufen: 0 = noch nicht gedeckt (kleiner Kern), 1 = Grundversicherung (nur Krankenkasse: KVG ohne Zusatz),
 // 2 = gedeckt. Die Krankenkasse hat zwei Stufen, weil sie zwei Versicherungen ist (KVG Pflicht, VVG Zusatz
 // freiwillig); alle anderen eine.
 
-// Reihenfolge im Uhrzeigersinn, beginnend unten an der Spitze (Haftpflicht, wie im Konzept), dann links
-// Hausrat, oben links Pensionskasse, oben Krankenkasse, rechts Unfall.
-const REIHE = ['haftpflicht', 'hausrat', 'bvg', 'kk', 'uvg'];
+// Reihenfolge im Uhrzeigersinn, beginnend unten an der Spitze (Haftpflicht, wie im Konzept): links Hausrat,
+// oben links Pensionskasse, oben in der Mitte Leben, oben rechts Krankenkasse, rechts Unfall.
+const REIHE = ['haftpflicht', 'hausrat', 'bvg', 'leben', 'kk', 'uvg'];
 export const SCHILD_STUFEN = [0.34, 0.67, 1];
 
 const has = (x) => x != null && String(x).trim() !== '';
@@ -23,7 +24,7 @@ const has = (x) => x != null && String(x).trim() !== '';
 export function netzSchildTeile(v = {}, opts = {}) {
   const st = schildState(v, opts);
   const pflicht = new Set(st.pflicht.items.map((p) => p.key));
-  const items = [...st.pflicht.items, ...st.empfohlen.items];
+  const items = [...st.pflicht.items, ...st.empfohlen.items, { key: 'leben', covered: v.lifeInsurance === 'yes' }];
   const teile = REIHE
     .map((key) => items.find((p) => p.key === key))
     .filter(Boolean)
@@ -35,5 +36,6 @@ export function netzSchildTeile(v = {}, opts = {}) {
   return { teile, offen: teile.filter((t) => t.stufe === 0).map((t) => t.key), st };
 }
 
-// Mittelwinkel (Grad, 0 = rechts, 90 = unten) je Teil: der erste Teil zeigt nach unten zur Spitze.
-export const teilWinkel = (i, n) => 90 + (360 / n) * i;
+// Mittelwinkel (Grad, 0 = rechts, 90 = unten, 270 = oben) je Teil: «Leben» steht immer genau oben in der
+// Mitte, die übrigen gleichmässig im Uhrzeigersinn darum; Haftpflicht landet so unten an oder nahe der Spitze.
+export const teilWinkel = (i, n, iLeben) => 270 + (360 / n) * (i - iLeben);

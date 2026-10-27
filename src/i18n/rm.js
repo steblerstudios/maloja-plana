@@ -7212,7 +7212,8 @@ export default {
     freiwillig: 'facultativ',
     nochOffen: 'Anc betg cuvrì: {liste}.',
     ganz: 'Tut las parts èn cuvridas.',
-    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', bvg: 'Cassa da pensiun', haftpflicht: 'Responsabladad', hausrat: 'Inventari' },
+    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', bvg: 'Cassa da pensiun', haftpflicht: 'Responsabladad', hausrat: 'Inventari', leben: 'Vita' },
+    lang: { leben: 'Assicuranza da vita' },
   },
   schutzschild: {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',

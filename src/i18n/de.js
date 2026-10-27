@@ -6324,7 +6324,8 @@ export default {
     freiwillig: 'freiwillig',
     nochOffen: 'Noch nicht gedeckt: {liste}.',
     ganz: 'Alle Teile gedeckt.',
-    kurz: { kk: 'Krankenkasse', uvg: 'Unfall', bvg: 'Pensionskasse', haftpflicht: 'Haftpflicht', hausrat: 'Hausrat' },
+    kurz: { kk: 'Krankenkasse', uvg: 'Unfall', bvg: 'Pensionskasse', haftpflicht: 'Haftpflicht', hausrat: 'Hausrat', leben: 'Leben' },
+    lang: { leben: 'Lebensversicherung' },
   },
   schutzschild: {
     intro: 'Was das Gesetz verlangt — und was sich zusätzlich lohnt.',

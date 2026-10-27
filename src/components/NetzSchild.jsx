@@ -34,6 +34,8 @@ export const NetzSchild = ({ palette, t, versicherungen, employed, annualIncome,
   const h = React.createElement;
   const n = teile.length;
   const breite = 360 / n;
+  const iLeben = teile.findIndex((p) => p.key === 'leben');
+  const winkel = (i) => teilWinkel(i, n, iLeben);
   // Grundversicherung: dasselbe Salbei wie «gedeckt», halb so dicht — im hellen wie im dunklen Modus klar
   // als «weniger» lesbar (im Browser verglichen 27.10.2026; ein eigenes helles Grün verschwand dunkel fast).
   const salbei = palette.sageDeep || palette.sage;
@@ -45,7 +47,7 @@ export const NetzSchild = ({ palette, t, versicherungen, employed, annualIncome,
   const bild = h('svg', { viewBox: `0 0 ${B} ${H}`, width: '100%', role: 'img', 'aria-label': aria, style: { maxWidth: '300px', height: 'auto', display: 'block', margin: '0 auto' } },
     h('defs', null,
       h('clipPath', { id: 'ns-schild' }, h('path', { d: SCHILD })),
-      teile.map((p, i) => h('clipPath', { key: p.key, id: 'ns-keil-' + p.key }, h('polygon', { points: keil(teilWinkel(i, n), breite) })))),
+      teile.map((p, i) => h('clipPath', { key: p.key, id: 'ns-keil-' + p.key }, h('polygon', { points: keil(winkel(i), breite) })))),
     h('g', { clipPath: 'url(#ns-schild)' },
       h('path', { d: SCHILD, fill: palette.up }),
       teile.map((p) => h('path', {
@@ -56,22 +58,23 @@ export const NetzSchild = ({ palette, t, versicherungen, employed, annualIncome,
       SCHILD_STUFEN.slice(0, 2).map((s) => h('path', { key: s, d: SCHILD, fill: 'none', stroke: palette.mid, strokeOpacity: 0.35, strokeWidth: 1, vectorEffect: 'non-scaling-stroke', transform: skaliert(s) })),
       // Fugen zwischen den Teilen, in der Farbe des Grunds.
       teile.map((p, i) => {
-        const [x, y] = punkt(teilWinkel(i, n) + breite / 2, 420);
+        const [x, y] = punkt(winkel(i) + breite / 2, 420);
         return h('line', { key: p.key, x1: CX, y1: CY, x2: x, y2: y, stroke: palette.surface, strokeWidth: 5, strokeLinecap: 'round' });
       }),
       h('circle', { cx: CX, cy: CY, r: 6, fill: palette.surface })),
     h('path', { d: SCHILD, fill: 'none', stroke: palette.border, strokeWidth: 1.5 }),
     // Namen im Teil; auf vollem Salbei hell, sonst dunkel (wie im Schutzschild, a11y Abnahme F6).
     teile.map((p, i) => {
-      const g = teilWinkel(i, n);
-      const [x, y] = punkt(g, Math.abs(g - 90) < 1 ? 118 : 96);
+      const g = (winkel(i) % 360 + 360) % 360;
+      // Unten an der Spitze ist mehr Platz, oben in der Mitte weniger.
+      const [x, y] = punkt(g, Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96);
       return h('text', { key: p.key, 'aria-hidden': true, x, y, textAnchor: 'middle', dominantBaseline: 'central',
         style: { fontSize: '14px', fontWeight: weight.semi, fill: p.stufe === 2 ? palette.surface : palette.text } }, t('netzSchild.kurz.' + p.key));
     }));
 
   const zeile = (p) => h('div', { key: p.key, role: 'listitem', style: { display: 'flex', alignItems: 'baseline', gap: '6px', fontSize: text.xs, padding: '2px 0', color: p.stufe ? palette.text : palette.mid } },
     h('span', { 'aria-hidden': true, style: { color: p.stufe ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(p.stufe ? 'check' : 'kaestchen', 12)),
-    h('span', { style: { minWidth: 0 } }, t('schutzschild.' + p.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + (p.pflicht ? t('netzSchild.pflicht') : t('netzSchild.freiwillig')))),
+    h('span', { style: { minWidth: 0 } }, p.key === 'leben' ? t('netzSchild.lang.leben') : t('schutzschild.' + p.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + (p.pflicht ? t('netzSchild.pflicht') : t('netzSchild.freiwillig')))),
     h('span', { style: { marginLeft: 'auto', color: p.stufe ? (palette.sageDeep || palette.sage) : palette.mid, whiteSpace: 'nowrap' } }, stand(p)));
 
   return h('div', { 'data-schild': 'netz', style: { marginBottom: space.sm + 'px' } },

@@ -6234,7 +6234,8 @@ export default {
     freiwillig: 'facoltativa',
     nochOffen: 'Non ancora coperto: {liste}.',
     ganz: 'Tutte le parti sono coperte.',
-    kurz: { kk: 'Cassa malati', uvg: 'Infortuni', bvg: 'Cassa pensione', haftpflicht: 'RC privata', hausrat: 'Economia domestica' },
+    kurz: { kk: 'Cassa malati', uvg: 'Infortuni', bvg: 'Cassa pensione', haftpflicht: 'RC privata', hausrat: 'Economia domestica', leben: 'Vita' },
+    lang: { leben: 'Assicurazione sulla vita' },
   },
   schutzschild: {
     intro: 'Ciò che la legge richiede — e ciò che conviene avere in più.',
