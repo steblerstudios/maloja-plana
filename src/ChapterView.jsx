@@ -61,6 +61,7 @@ import { calculateMonthlyBudget } from './budgetSync.js';
 // Quelle, eine Regel. Seit 19.10.2026 dort, damit auch der Stundenlohn-Rechner sie nutzt.
 
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
+const MedikamentPreisKurz = React.lazy(() => import('./MedicationManager.jsx').then((m) => ({ default: m.MedikamentPreisKurz })));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
@@ -1028,7 +1029,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
           React.createElement(React.Suspense, { fallback: null },
           React.createElement(MedicationManager, {
-            palette, t: tr, medications: medList,
+            palette, t: tr, lang, medications: medList,
             onChange: (list) => onUpdate('medicationsList', list),
           })
         )
@@ -1820,9 +1821,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       return o ? o.label : String(v);
     }
     if (f.type === 'date') return formatDE(v);
-    // Listen-Felder (Medikamente, Vorerkrankungen): die Namen, wie sie in der Liste stehen.
+    // Listen-Felder (Medikamente, Vorerkrankungen): die Namen, wie sie in der Liste stehen — Medikamente mit Dosis.
     const posten = Array.isArray(data[f.k + 'List']) ? data[f.k + 'List'].filter((x) => x && x.name) : [];
-    if (posten.length) return posten.map((x) => x.name).join(', ');
+    if (posten.length) return posten.map((x) => x.name + (f.k === 'medications' && x.dose ? ' ' + x.dose + (x.unit ? ' ' + x.unit : '') : '')).join(', ');
     return String(v);
   };
   // Von oben direkt zu einem Feld (Notfall, «Bereit für den Ernstfall» und Vorsorge, Runde 9 AE): den
@@ -1901,7 +1902,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const linkKnopf = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' };
   const zeile = (z) => React.createElement('div', { key: 'z-' + z.k, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '3px 0 3px ' + space.sm + 'px' } },
     React.createElement('dt', { style: { color: palette.mid, margin: 0, flex: '1 1 0', minWidth: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, z.name),
-    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word', ...(z.amStueck ? { whiteSpace: 'nowrap' } : {}) } }, z.wert));
+    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word', ...(z.amStueck ? { whiteSpace: 'nowrap' } : {}) } }, z.wert,
+      // Publikumspreis aus der Spezialitätenliste, nachgeladen (F7-K6-2)
+      z.k === 'medications' && chapter.key === 'notfall' && Array.isArray(data.medicationsList) && data.medicationsList.some((m) => m && m.name) &&
+        React.createElement(React.Suspense, { fallback: null }, React.createElement(MedikamentPreisKurz, { palette, t: tr, lang, medications: data.medicationsList }))));
   const abschnittsliste = () => {
     const gruppen = abschnittGruppen(chapter.fields, chapter.title);
     const abschnitt = (g) => {

@@ -125,6 +125,8 @@ export const DEMO_DATA = {
     bloodType: 'aPos',
     allergies: 'Penicillin',
     medications: '',
+    // Ein Eintrag, damit das Beispiel kein leeres Feld zeigt und der SL-Preis sichtbar wird (F7-K6-2, 27.10.2026).
+    medicationsList: [{ name: 'Euthyrox', substance: 'Levothyroxin', dose: '50', unit: 'µg', frequency: ['morgens'], notes: '' }],
     chronicDiseases: '',
     // Hausarzt in der Liste, die das Kapitel zeigt (DoctorManager). Das alte Feld bleibt für Dossier,
     // Notfallkarte und Rucksack, die noch nur `doctor` lesen — ohne Liste erschien das Beispiel als
