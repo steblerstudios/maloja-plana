@@ -10,6 +10,7 @@ import rm from '../i18n/rm.js';
 import { RECHNER_KAPITEL } from '../config/brotkrumePfade.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { AlvRechner } from '../AlvRechner.jsx';
+import { EOrechner } from '../EOrechner.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
 // steht das Ergebnis ZUERST (role="status"), dann «Ihre Angaben», dann was zu tun ist, die offizielle Stelle und
@@ -24,6 +25,7 @@ const maria = { basis: { canton: 'ZH', dateOfBirth: '1992-03-14' }, finanzen: { 
 // [Ansicht, Komponente, Profil mit Ergebnis]
 const RECHNER = [
   ['alv', AlvRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
+  ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
 const TEILE = ['kopf', 'ergebnis', 'angaben', 'tun', 'stelle', 'quelle'];

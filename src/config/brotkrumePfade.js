@@ -31,6 +31,7 @@ export const ELTERN_TITEL = Object.freeze({
 // selbst; main.jsx lässt darum «← Übersicht» weg. Ein Eintrag hier = der Rechner ist umgestellt.
 export const RECHNER_KAPITEL = Object.freeze({
   alv: 'finanzen',
+  eo: 'finanzen',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.
