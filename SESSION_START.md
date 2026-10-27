@@ -17,6 +17,40 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> ✅ **Nachtrag 27.10.2026, 02:20 — Merge-Nacht: zwölf PRs der Reihenfolge + #624 «Was ansteht» nach Entwurf G
+> gemergt, #561 geschlossen. NICHT live.** (Sitzung «Maloja Plana Aufräumen», Fortsetzung, alle Merges auf Sophies Zuruf.)
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 02:20): main = `d9aa8e06` (27.10. 01:38) · live = `4299bfb9` (0.1.48-beta,
+> 23.10.) · **155 Commits** zwischen live und main · offene PRs: **keine**. Startbündel auf main **64,48 von 65 kB**,
+> Volltest auf main 7232 grün (01:40).
+> - **Reihenfolge** (Plan und Beleg je Schritt: `../MERGE-REIHENFOLGE-2026-10-26.md`, liegt **ausserhalb von git** im
+>   Ordner `maloja plana`): #623 → #610 → #618 → #622 → #613 → #614 → #616 → #619 → #620 → #621 → #563 → #612, je Squash
+>   nach grüner CI. #614 und #620 vor dem Merge auf `main` nachgezogen (Konflikte aus dem Squash von #613 bzw. #619 in
+>   `MobileNav.jsx`, aufgelöst wie in der Probe). #563 und #612 vorher lokal gegen das damalige main geprüft (CI war alt).
+>   #561 geschlossen (überholt durch #585/#615), Zweig bleibt.
+> - **#624 `d9aa8e06`** Seite «Was ansteht» wie Entwurf G (`docs/design/mockups-stardust-2026-10-23/seiten-v5.html`,
+>   Abschnitt G, war **nie gebaut** — `abgleich.html` nennt die Zeitleiste «übernommen», das gilt nur für den Entwurf):
+>   Kopf mit Landschaftsband, «Als Nächstes · in N Tagen», Monatsknöpfe, durchgehende Tagesleiste (42 Tage), laufender
+>   Ablauf als **Pille unter den Tagen** («Umzug · Schritt 2 von 4»), Legende, aufklappbar «Ganzer Monat» und **«Ganzes
+>   Jahr»** (Jahreskreis mit Bogen bis zur Frist), Liste als Zeilen, Löschen im Tagespanel. Entscheide Sophie 27.10.:
+>   Du-Form im calendar-Abschnitt **gross** (Wächter `duGrossKalender.test.js`) · Kopf-Titel **30 px Display auch in den
+>   Kapiteln** (Wächter `kopfTitelGleich.test.js`) · verpasst oben ruhig **«verpasst» + «Was jetzt? ›»** (führt in den
+>   Ablauf der Frist, sonst zum Tag) · Hinweis **«Zum Löschen den Tag oben antippen.»**. a11y-, Copy- und
+>   Polygrafin-Prüfung gelaufen, Befunde behoben (Bandschrift 4,5:1 in allen Paletten, Test; sandDeep statt sand als Text).
+> - **Ehrlich zu den Daten:** der Ablauf-Stand speichert kein Startdatum → das Band beginnt **heute**. Ende an der Frist,
+>   die der Ablauf selbst einträgt (Erinnerung trägt `ablauf: 'umzug'`, gesetzt in `fristSichern`); ältere
+>   Gemeinde-Erinnerungen haben das nicht. Im Beispiel Maria **kein Band** (Beispiel ohne Fristen mit Rechtsfolge, 24.10.).
+> - **Startbündel-Merker (gemessen):** ein Modul, das zwei nachgeladene Teile teilen, wird zu einer eigenen Datei, deren
+>   Name in der Nachladeliste des Startbündels steht (+0,01–0,02 kB). Darum liest der Kalender den Ablauf-Stand ohne
+>   `ablaufStand.js` und die Frist-Zuordnung steht in `AblaufSchale` statt in `addReminder` (Startbündel).
+> - **Offen:** (1) Deploy 29.10.: zuerst `/maloja-predeploy` auf `d9aa8e06`, aus frischem Worktree (siehe Merker
+>   «sauber: false» unten). «Was ansteht» und die Kapitel-Köpfe sehen danach anders aus als heute live. (2) Gegenlesung
+>   der neuen calendar-Texte fr/it/en/rm; **rm `umzug.title` ist noch deutsch**, darum «Umzug» im Band. (3) Später:
+>   42 Tab-Stopps in der Tagesleiste (Pfeiltasten), Markenformen 6 px → 8, Token-Stufe für 44/30/20 px. (4) Ungemergte
+>   Doku-Zweige ohne PR: `docs/changelog-f5`, `docs/auswertungen-uebersicht`; `docs/mockups-stardust` ist überholt (main
+>   neuer). (5) Der Arbeitsordner `_werkbank/ablauf-band` von #624 war beim Abschluss schon entfernt (nicht von dieser
+>   Sitzung); der Inhalt ist vollständig auf main.
+
 > ✅ **Nachtrag 26.10.2026, 17:50 — #611 und #609 gemergt (Sophie: «ja dann lass und comitten mergen pushen usw
 > was wir alles können»). NICHT live.**
 >
