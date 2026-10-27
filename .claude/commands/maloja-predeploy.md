@@ -27,6 +27,10 @@ Führe das **Maloja-Deploy-Gate** aus. Wichtig: Dieser Loop **deployt nie**. Dep
      gescheitert (Netz/Schnittstelle) → «keine Aussage», **nie** als «gleich» melden. Anzahl
      erfolgreicher Abrufe immer mit ausgeben. Prüft nur Löhne ohne Kinder (siehe
      `docs/sources/kantonssteuer-tabelle-2026.md`, Abschnitt «Stichprobe»).
+   - **SL-Preise** (Entscheid Stebler Studios 27.10.2026, F7-K6-2: von Hand je Quartal und beim Werte-Wechsel
+     im Dezember): `node scripts/build-sl-preise.mjs --pruefen`. **Exit 0** = ✅ Stand jünger als 4 Monate.
+     **Exit 1** = ⚠️ sollte — Stand nennen und neu holen empfehlen (Anleitung im Kopf des Skripts); kein Blocker,
+     weil der Stand in der App sichtbar ist — aber vor dem Deploy entscheiden lassen.
    - CSP self-only — keine externen Referenzen dazugekommen.
    - `git status` sauber / keine ungewollten Dateien; `git diff package.json` → keine neuen Dependencies ohne Freigabe.
 3. **de-Chunk-Verifikation:** Nach `npm run build` die gebauten Sprach-Chunks (`dist/assets/de-*.js` usw.) auf die zuletzt geänderten Strings greppen — bestätigen, dass neue Texte wirklich im Bundle sind (bekannter Verifikations-Schritt).
