@@ -138,3 +138,48 @@ Dossier offen · E, F, H gebaut · I (Reste Finanzen: budget, taxImport) offen.
 | F7-L10 | Fusion | Merkliste ist laut §2 H Teil von «Was ansteht», hat aber noch eine eigene Seite. | Merkliste als Reiter in «Was ansteht». |
 | F7-L11 | Hygiene | Rucksack zeigt Doppel-Einträge mit demselben Ziel (tresor/unterlagen; finanzuebersicht/charts/mindestlohn; stelleverloren/aussteuerung). 9 Links zielen noch auf die umgeleitete Adresse `finanzuebersicht`. `FinanzUebersicht.jsx` ist tot (nirgends importiert). | aufräumen (ordnungshueter). |
 | F7-L12 | Zeigen | Seite `anspruchcheck` hat keinen eigenen Titel; `notfalldossier`, `behoerdendossier` zeigen kein «Zurück zu …». | Titel und Brotkrume. |
+
+## Nachtrag zu Runde 1 (beim Lesen von VERGLEICH.md, 27.10. 02:20)
+
+- **F7-D2** (63 % gegen 70 %) ist schon seit 23.10. als offene Frage «Übersicht» notiert (UEBERGABE-FASSUNG-6, «Noch
+  offen»). Nicht neu, aber weiter offen.
+- **F7-K2-4** (IPV: Kapitel «kein Anspruch», Dashboard «hängt ab») ist in Entscheid O als «beobachtet, unbestätigt»
+  notiert (Schnellcheck zeigte einmal «prüfenswert»). Heute wiederholbar auf dem Dashboard.
+
+## Runde 2 · Abläufe (33) und Rechner/Werkzeuge (24)
+
+Struktur aller Seiten per Skript im Browser erfasst (Titel, Schritte, Länge, Quellen, «Als Nächstes»), dann Stichproben
+im Bild: Krankenkasse wechseln, Umzug, ALV, Steuern, Was steht mir zu?, Lebenslauf.
+
+### Umgesetzt? — drei entschiedene Formen sind nicht gebaut
+
+| # | Frage | Befund | Vorschlag |
+|---|---|---|---|
+| F7-A1 | **Umgesetzt?** | **Entscheid W (Ablauf-Schale) ist nicht gebaut.** 32 von 33 Abläufen zeigen alle Schritte untereinander; nur Umzug geht Schritt für Schritt. Die Passstrasse ist weiter fest auf 4 Stationen (`AblaufSchale.jsx:275-277`), nicht «n Kehren». Kein «Ablauf abschliessen». | W bauen — eine Änderung an der Schale wirkt auf alle. Grösster Hebel der Runde. |
+| F7-A2 | **Umgesetzt?** | **Entscheid X (Rechner-Form) ist nicht gebaut.** ALV, EO, Vorsorge, Sozialhilfe usw.: Eingaben zuerst, Kartenwand, Ergebnis unten. Offen dazu: Name «Arbeitslosenentschädigung» oder «ALV-Taggeld». | X bauen (Gilt-für-Liste in VERGLEICH Runde 8). |
+| F7-A3 | **Umgesetzt?** | **Entscheid O («Was steht mir zu?» als eine Seite) ist nicht gebaut.** Die Anker-Seite zeigt nur die elf Lebenslagen als Knöpfe, kein «Mit Ihren Angaben», keine Pegel. Für Maria steht dort nichts über IPV oder Sozialhilfe, obwohl die App beides rechnet. Hängt an Gruppe A (zurückgestellt). | O bauen; löst F7-D5, F7-K2-4, F7-L5 zusammen. |
+
+### Abläufe
+
+| # | Frage | Befund | Vorschlag |
+|---|---|---|---|
+| F7-A4 | Flow | **Kein Ablauf hat «Als Nächstes».** Nur 6 von 33 haben «Verwandte Ereignisse» (Heirat, Kind, Bewilligung, Führerausweis, Zuzug, Krankenkasse zum ersten Mal), obwohl W «immer unten» sagt. Die Seiten enden mit Quelle und Hinweis. | Mit W: «Verwandte Ereignisse» in allen, dazu das Kapitel, zu dem der Ablauf gehört. |
+| F7-A5 | **Fusion** | **Krankenkasse wechseln** und **Zusatzversicherung wechseln**: Schritt 3 «Kündigung schreiben» und 4 «Frist sichern» gleich; die Zusatz-Seite ist in KVG-Wechsel schon verlinkt. | Ein Ablauf «Krankenkasse wechseln» mit Weiche in Schritt 1 (Grund- / Zusatzversicherung). |
+| F7-A6 | **Fusion** | **Vorsorge an drei Orten**: Ablauf «Vorsorgeauftrag und Patientenverfügung» (7 Schritte, inkl. Testament), Formular «Patientenverfügung erstellen», Block «Vorsorge» im Kapitel Notfall (+ Behörden, F7-K5-2). | Der Ablauf wird der Ort; Notfall zeigt den Stand und führt hin; Formular als Schritt im Ablauf. |
+| F7-A7 | Fusion | **Krank sein zweimal**: «Unfall oder Krankheit» (4 Schritte) und «Krankheit & IV» (5) — beide mit Lohnfortzahlung/Taggeld. | prüfen: ein Ablauf mit zwei Wegen (kurz krank / länger krank → IV). |
+| F7-A8 | Fusion | **Ins Alter**: «Pensionierung» Schritt 4 heisst «Ergänzungsleistungen prüfen», daneben steht der eigene Ablauf «Ergänzungsleistungen beantragen». | Pensionierung verlinkt nur; EL bleibt eigener Ablauf (auch für IV-Rente). Kein Zusammenlegen. |
+| F7-A9 | Aufbau | **Junge Leute verteilt**: «18 werden» (Schritt 5 = Dienst), «Militär- oder Zivildienst — der Weg ab 18», «Lehre beginnen». Alle drei ohne Eingang aus einem Kapitel (F7-L1). | Zusammen als Gruppe «Erwachsen werden» im Rucksack und im Kapitel Basis/Ausbildung. |
+| F7-A10 | Aufbau | **Länge sehr ungleich**: Umzug 940 Zeichen, Mahnung/Zahlungsbefehl 10’890 (7 Schritte, darunter «Umgekehrt: Ihnen schuldet jemand Geld»). | Mahnung teilen: «Ich habe eine Mahnung» / «Mir schuldet jemand Geld». |
+| F7-A11 | Umgesetzt? | «Asyl & Schutz» steht ausserhalb der Schale (eigene Gliederung, keine Nummern). W sagte «eigener Entscheid» — noch nicht getroffen. | entscheiden. |
+| F7-A12 | Sprache/a11y | Deko-Schrift steht **im Seitentitel** von 11 Abläufen: «Fr Pensionierung», «HELVETIA Betreibungsauszug bestellen», «HELVETIA Einbürgerung» … Bildschirmleser lesen den Titel so vor. | wie F7-D8, hier dringender (Titel). |
+
+### Rechner und Werkzeuge
+
+| # | Frage | Befund | Vorschlag |
+|---|---|---|---|
+| F7-R1 | Sprache | **Namen weichen ab** zwischen Menü/Rucksack und Seitentitel: Steuern ↔ «Steuer-Orientierung», Sozialhilfe ↔ «Soziale Sicherung», Budget ↔ «CSV Budget Import», Lebenslauf ↔ «Lebenslauf-Generator», Gesundheit ↔ «Arztkoffer», KK-Scanner ↔ «KK-Karte scannen», Anspruch-Check ↔ «Leistungs-Schnellcheck». Regel «eine Seite, ein Name» (O). | je Seite ein Name, Copy-Prüfer. |
+| F7-R2 | Fusion | **«Soziale Sicherung»** (sozialhilfe) enthält SKOS-Bedarf, IPV und EL in einem — dieselben Themen wie IPV-Rechner, EL-Ablauf und «Was steht mir zu?». | Mit O/Gruppe A klären: Sozialhilfe-Seite nur Sozialhilfe. |
+| F7-R3 | Zeigen | Rechner zeigen ihr Ergebnis als Text; Bilder gibt es nur in der Versicherungs-Übersicht. Die Kapitel haben Instrumente (Barometer, Pegel, Tank). | X umsetzen und je Rechner **das Instrument aus seinem Kapitel** wiederverwenden (ALV → Pegel Taggeld 70/80 %, Vorsorge → Zukunftsgrafik, Stundenlohn → Mindestlohn-Barometer). |
+| F7-R4 | Logik | ALV im Beispiel: «Das hinterlegte Einkommen ist als Netto markiert — bitte Bruttolohn eintragen», Feld leer. Die App schätzt Brutto aber überall sonst selbst (Dashboard «≈ brutto CHF 6’796»). | Geschätztes Brutto vorbelegen, als «geschätzt» markiert (wie im Entwurf X mit 6’796). |
+| F7-R5 | Flow | **Lebenslauf-Generator** ist eine Datenmaske mit «HTML Download / Vorschau / JSON (ATS)», viel schwächer als die Lebenslauf-Vorschau im Kapitel Ausbildung (F7-K4-3). | Generator = Vorschau aus dem Kapitel + PDF; «JSON (ATS)» weg oder klein. |
+| F7-R6 | Stimmt | Quellen sind da, aber jede Seite zeigt sie anders: Steuern als Fliesstext («ESTV (Steuerjahr 2026)») und Link, Vorsorge als «Stand 2026.» und sechs Links, Abläufe als «Quelle: … (geprüft im September 2026)». Nachgeprüft 02:25 für Steuern und Vorsorge. | Mit X eine feste Zeile «Quelle · Stand» an derselben Stelle. |
