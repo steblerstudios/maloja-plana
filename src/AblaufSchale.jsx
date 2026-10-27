@@ -186,7 +186,8 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
   const info = istInfoSchritt(schritte[nr]);
 
   return React.createElement(React.Fragment, null,
-    React.createElement(AblaufPass, { palette, name, total, aktuell: nr, fertig: stand.fertig, namen: passNamen }),
+    // Ein einziger Schritt (z. B. «Jemand schuldet Geld») braucht keine Strasse — nur eine leere Fläche mit einem Punkt.
+    total > 1 && React.createElement(AblaufPass, { palette, name, total, aktuell: nr, fertig: stand.fertig, namen: passNamen }),
     React.createElement('div', { ref: flaeche, tabIndex: -1, 'data-ablauf-flaeche': '', style: { outline: 'none' } },
       stand.fertig && React.createElement('div', { 'data-ablauf-schritt': 'fertig' },
         React.createElement('span', { style: { display: 'inline-flex', color: markenFarbe } }, React.createElement(Icon, { name: 'check', size: 28 })),

@@ -40,6 +40,7 @@ describe('eigener Ablauf «Jemand schuldet Geld»', () => {
     expect(html).toContain('#art_102');
     expect(html).toContain('#art_104');
     expect(html).toContain('Schritt 1 von 1');
+    expect(html).not.toContain('data-ablauf-pass'); // ein Schritt, keine Strasse
   });
   it('die Mahnung hat den Teil nicht mehr', () => {
     const html = renderToStaticMarkup(React.createElement(RechnungOffen, { palette: LIGHT_PALETTE, t, onNavigate: () => {}, stufe: 'mahnung' }));
