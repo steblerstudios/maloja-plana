@@ -1760,6 +1760,7 @@ export default {
     portemonnaieSub: 'Da stampare e tenere con sé',
     portemonnaieLeer: 'Servono prima i dati qui sotto',
     vorsorgeTitel: 'Previdenza',
+    zurueckVorsorge: 'Torna alla previdenza',
     vorsorgeSatz: { sie: 'Cosa vale se non può più decidere da sé.', du: 'Cosa vale se non puoi più decidere da te.' },
     geregelt: '{n} di {total} regolati.',
     vorsorge: { organDonor: 'Donazione di organi', patientenverfuegung: 'Direttive del paziente', vorsorgeauftrag: 'Mandato precauzionale', bestattungswuensche: 'Volontà funerarie' },

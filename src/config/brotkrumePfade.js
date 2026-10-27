@@ -12,6 +12,10 @@ export const PFADE = Object.freeze({
   briefe:           { eltern: 'unterlagen',      titel: 'briefe.title' },
   notfallpass:      { eltern: 'notfalleinstieg', titel: 'notfallpass.title' },
   notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
+  // F7-S10 (27.10.2026): die drei Vorsorge-Formulare unter Notfall — die Stufe führt zum Block «Vorsorge».
+  patientenverfuegung: { eltern: 'notfallvorsorge', titel: 'pv.ui.title' },
+  bestattung:       { eltern: 'notfallvorsorge', titel: 'bw.ui.title' },
+  organ:            { eltern: 'notfallvorsorge', titel: 'organ.title' },
   // Runde 9 AB (25.10.2026): Versicherungs-Übersicht unter dem Kapitel Versicherungen.
   praemien:         { eltern: 'versicherungskapitel', titel: 'po.title' },
 });
@@ -22,6 +26,7 @@ export const ELTERN_TITEL = Object.freeze({
   unterlagen: 'nav.unterlagen',
   notfalleinstieg: 'chapters.notfall.title',
   versicherungskapitel: 'chapters.versicherungen.title',
+  notfallvorsorge: 'chapters.notfall.title',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

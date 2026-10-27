@@ -1760,6 +1760,7 @@ export default {
     portemonnaieSub: 'À imprimer, à emporter',
     portemonnaieLeer: 'Il faut d’abord les indications ci-dessous',
     vorsorgeTitel: 'Prévoyance',
+    zurueckVorsorge: 'Retour à la prévoyance',
     vorsorgeSatz: { sie: 'Ce qui s’applique si vous ne pouvez plus décider vous-même.', du: 'Ce qui s’applique si tu ne peux plus décider toi-même.' },
     geregelt: '{n} sur {total} réglés.',
     vorsorge: { organDonor: 'Don d’organes', patientenverfuegung: 'Directives anticipées', vorsorgeauftrag: 'Mandat pour cause d’inaptitude', bestattungswuensche: 'Volontés funéraires' },

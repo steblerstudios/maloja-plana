@@ -1769,6 +1769,7 @@ export default {
     portemonnaieSub: 'Zum Drucken, für unterwegs',
     portemonnaieLeer: 'Braucht zuerst Angaben unten',
     vorsorgeTitel: 'Vorsorge',
+    zurueckVorsorge: 'Zurück zur Vorsorge',
     vorsorgeSatz: { sie: 'Was gilt, wenn Sie selbst nicht mehr entscheiden können.', du: 'Was gilt, wenn du selbst nicht mehr entscheiden kannst.' },
     geregelt: '{n} von {total} geregelt.',
     // Weiche Trennstriche (\u00AD): in der schmalen Kachel bricht das Wort an der Fuge, nicht mitten in der Silbe.

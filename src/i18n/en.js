@@ -1760,6 +1760,7 @@ export default {
     portemonnaieSub: 'To print, for on the go',
     portemonnaieLeer: 'Needs details below first',
     vorsorgeTitel: 'Advance planning',
+    zurueckVorsorge: 'Back to advance planning',
     vorsorgeSatz: 'What applies if you can no longer decide for yourself.',
     geregelt: '{n} of {total} settled.',
     vorsorge: { organDonor: 'Organ donation', patientenverfuegung: 'Patient decree', vorsorgeauftrag: 'Advance care directive', bestattungswuensche: 'Funeral wishes' },

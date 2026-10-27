@@ -21,7 +21,13 @@ const hol = (w, k) => k.split('.').reduce((o, s) => o?.[s], w);
 const t = (k) => { const v = hol(de, k); return v && typeof v === 'object' ? v.sie : (v ?? k); };
 
 // F7-S2 (27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier sind eine Seite «Unterlagen drucken» (drucken).
-const ANSICHTEN = { drucken: 'UnterlagenDrucken.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx', praemien: 'PraemienOrientierung.jsx' };
+const ANSICHTEN = { drucken: 'UnterlagenDrucken.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx', praemien: 'PraemienOrientierung.jsx',
+  // F7-S10 (27.10.2026): die drei Vorsorge-Formulare unter «Notfall» (Stufe → Block Vorsorge).
+  patientenverfuegung: 'Patientenverfuegung.jsx', bestattung: 'Bestattung.jsx', organ: 'OrganDonation.jsx' };
+// Diese Formulare haben AM SCHLUSS bewusst einen zweiten Weg zur Eltern-Stufe: «Zurück zur Vorsorge» nach
+// Vorschau bzw. Speichern (F7-S10, Entscheid Stebler Studios 27.10.2026 — vorher Sackgassen). Kein Zurück-Knopf
+// oben neben der Brotkrume; der bleibt verboten (zurueckZeichen).
+const RUECKWEG_AM_SCHLUSS = new Set(['patientenverfuegung', 'bestattung', 'organ']);
 
 describe('Pfade', () => {
   // Seit Runde 9 AE («ein Ort», 25.10.2026) auch die Notfallkarte; das Notfall-Dossier hängt unter Notfall.
@@ -104,7 +110,7 @@ describe('ein Weg zurück', () => {
   it('die fünf Ansichten haben keinen eigenen Zurück-Knopf mehr', () => {
     for (const [v, datei] of Object.entries(ANSICHTEN)) {
       const q = lies(datei);
-      expect(q, datei).not.toMatch(new RegExp("onNavigate\\('" + PFADE[v].eltern + "'\\)"));
+      if (!RUECKWEG_AM_SCHLUSS.has(v)) expect(q, datei).not.toMatch(new RegExp("onNavigate\\('" + PFADE[v].eltern + "'\\)"));
       expect(q, datei).not.toMatch(/zurueckZeichen\(\)/);
     }
   });

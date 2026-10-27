@@ -4408,6 +4408,8 @@ export default {
     portemonnaieSub: 'Per stampar, per prender cun sai',
     portemonnaieLeer: 'L’emprim endatar las indicaziuns sutvart',
     vorsorgeTitel: 'Prevenziun',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    zurueckVorsorge: 'Turnar a la prevenziun',
     vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
     geregelt: '{n} da {total} reglads.',
     vorsorge: { organDonor: 'Donaziun d’organs', patientenverfuegung: 'Disposiziun dal pazient', vorsorgeauftrag: 'Mandat da prevenziun', bestattungswuensche: 'Giavischs da sepultura' },

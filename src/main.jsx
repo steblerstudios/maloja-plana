@@ -1692,7 +1692,7 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
-          palette, t, vorlaeufig,
+          palette, t, vorlaeufig, onNavigate: handleNavigate,
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
@@ -1730,8 +1730,8 @@ const AppInner = ({ demo }) => {
         view === 'zusammenziehen' && React.createElement(Zusammenziehen, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'ergaenzungsleistungen' && React.createElement(Ergaenzungsleistungen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, lang, data: activeData, chapters, onNavigate: handleNavigate, onUpdateData: updateData }),
-        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
-        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
+        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
+        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),

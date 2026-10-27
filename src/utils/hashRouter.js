@@ -15,6 +15,8 @@
 //   #/kk               → view='kk'
 //   etc. for all 18 views
 
+import { CHAPTER_KEYS } from '../config/constants.js';
+
 // All known view names (must match the view === 'x' checks in main.jsx).
 // Exported so a guard test can assert every main.jsx view is deep-linkable.
 export const VALID_VIEWS = new Set([
@@ -23,7 +25,7 @@ export const VALID_VIEWS = new Set([
   'sozialhilfe', 'direktlinks', 'unterlagen', 'drucken', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
   'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
-  'versicherungskapitel',
+  'versicherungskapitel', 'notfallvorsorge',
 ]);
 // Nur Design-Vorschau (Tresor 2b-UI): der Eintrag existiert ausschliesslich in DEV,
 // damit der Prod-Build byte-neutral bleibt (der Render-Branch in main.jsx ist ebenso DEV-gated).
@@ -54,8 +56,13 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //   lebensmappe, behoerdendossier, notfalldossier → «Unterlagen drucken», passende Auswahl (27.10.2026, F7-S2,
 //                      Gruppe H; Wächter: unterlagenDrucken.test.js). Abläufe, Kapitel und Merkpunkte rufen die
 //                      alten Namen weiter auf.
+//   notfallvorsorge  → Kapitel Notfall, Block «Vorsorge» (27.10.2026, F7-S10), keine frühere Seite: die Stufe
+//                      «Notfall» der Brotkrume und der Rückweg nach Patientenverfügung, Bestattungswünschen und
+//                      Organspende. Kapitel-Index aus CHAPTER_KEYS, Sprungmarke = Titel des Blocks in
+//                      components/NotfallImKapitel.jsx (Wächter: vorsorgeRueckweg.test.js).
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
+  notfallvorsorge: { view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-notfall-vorsorge' },
   lebensmappe: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'alles' },
   behoerdendossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'amt' },
   notfalldossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'notfall' },
