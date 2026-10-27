@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { PageTitle } from './components/Heading.jsx';
-import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
+import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
+import { hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
@@ -49,40 +49,6 @@ const StatusBadge = ({ status, label, palette }) => {
     }, label)
   );
 };
-
-const TabButton = ({ active, label, onClick, palette }) =>
-  React.createElement('button', {
-    onClick,
-    style: {
-      padding: '8px 14px',
-      background: active ? palette.sand : 'transparent',
-      color: active ? '#000' : palette.mid,
-      border: 'none',
-      borderRadius: radius.sm,
-      cursor: 'pointer',
-      fontSize: text.sm,
-      fontWeight: active ? weight.semi : weight.medium,
-      fontFamily: 'inherit',
-      whiteSpace: 'nowrap',
-    }
-  }, label);
-
-const CatButton = ({ active, label, onClick, palette }) =>
-  React.createElement('button', {
-    onClick,
-    style: {
-      padding: '4px 10px',
-      background: active ? palette.sand + '25' : 'transparent',
-      color: active ? palette.sandDeep : palette.soft,
-      border: active ? '1px solid ' + palette.sand + '40' : '1px solid ' + palette.border,
-      borderRadius: radius.full,
-      cursor: 'pointer',
-      fontSize: text.xs,
-      fontWeight: weight.medium,
-      fontFamily: 'inherit',
-      whiteSpace: 'nowrap',
-    }
-  }, label);
 
 // ─── Katalog Tab ───────────────────────────────────────────
 // Eine Katalog-Zeile (Faden 3-II/1c): kein Box-pro-Eintrag mehr, sondern ruhiger
@@ -315,7 +281,7 @@ const KatalogTab = ({ palette, t, filterCat, canton }) => {
 };
 
 // ─── Franchise Tab ─────────────────────────────────────────
-const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehmen }) => {
+const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehmen, form }) => {
   const currentYear = new Date().getFullYear();
   const storedFranchise = (() => {
     const f = data.versicherungen?.franchise;
@@ -433,8 +399,74 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     transition: `width ${duration.slow}ms ${ease}`,
   });
 
-  return React.createElement('div', null,
-    React.createElement('div', {
+  // Form X: der Stand der Franchise zuerst (sobald etwas erfasst ist), dann Franchise und Belege als «Ihre Angaben»,
+  // die Belege je Jahr darunter.
+  return form({
+    ergebnis: hasInput && React.createElement('div', {
+      style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+    },
+      statusMsg && React.createElement('div', {
+        style: {
+          padding: '10px 12px', background: statusMsg.color + '15',
+          borderRadius: radius.sm, border: '1px solid ' + statusMsg.color + '30',
+          fontSize: text.sm, color: statusMsg.color, marginBottom: '14px',
+          lineHeight: leading.normal,
+        }
+      }, hinweisZeichen(statusMsg.icon), statusMsg.text),
+
+      React.createElement('div', { style: { marginBottom: '14px' } },
+        React.createElement('div', {
+          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
+        },
+          React.createElement('span', { style: { color: palette.mid } }, t('kvg.franchiseUsed')),
+          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.franchiseVerbraucht, { hoechstens: 2 }))
+        ),
+        React.createElement('div', { style: barStyle() },
+          React.createElement('div', { style: barFill(result.franchiseVerbraucht, result.franchise, palette.sand) })
+        ),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.soft }
+        }, t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 }))
+      ),
+
+      React.createElement('div', { style: { marginBottom: '14px' } },
+        React.createElement('div', {
+          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
+        },
+          React.createElement('span', { style: { color: palette.mid } }, t('kvg.selbstbehalt')),
+          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.selbstbehalt))
+        ),
+        React.createElement('div', { style: barStyle() },
+          React.createElement('div', { style: barFill(result.selbstbehalt, result.selbstbehaltMax, palette.sage || '#5a7a5a') })
+        ),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.soft }
+        }, t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
+      ),
+
+      React.createElement('div', {
+        style: { height: '1px', background: palette.border, marginBottom: '14px' }
+      }),
+
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
+      },
+        React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
+        React.createElement('span', {
+          style: { fontWeight: weight.semi, color: palette.goldDeep || '#c47a20' }
+        }, betrag(result.eigenanteil))
+      ),
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm }
+      },
+        React.createElement('span', { style: { color: palette.mid } }, t('kvg.kasseZahlt')),
+        React.createElement('span', {
+          style: { fontWeight: weight.semi, color: palette.sageDeep || '#5a7a5a' }
+        }, betrag(result.kasseZahlt))
+      )
+    ) || null,
+    ohneErgebnis: t('kvg.franchiseExplain'),
+    angaben: { erfasst: 0, gesamt: 0, inhalt: React.createElement('div', {
       style: { padding: '14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       React.createElement('div', {
@@ -660,9 +692,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           cursor: Number(newBetrag) > 0 ? 'pointer' : 'default',
         }
       }, '+ ' + t('kvg.belegAdd'))
-    ),
-
-    React.createElement('div', {
+    ) },
+    weiteres: React.createElement('div', {
       style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       availableYears.length > 1 && React.createElement('div', {
@@ -783,75 +814,11 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: '12px', paddingTop: '10px', borderTop: '1px solid ' + palette.border }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.belegRueckwirkend')))
     ),
-
-    hasInput && React.createElement('div', {
-      style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border }
-    },
-      statusMsg && React.createElement('div', {
-        style: {
-          padding: '10px 12px', background: statusMsg.color + '15',
-          borderRadius: radius.sm, border: '1px solid ' + statusMsg.color + '30',
-          fontSize: text.sm, color: statusMsg.color, marginBottom: '14px',
-          lineHeight: leading.normal,
-        }
-      }, hinweisZeichen(statusMsg.icon), statusMsg.text),
-
-      React.createElement('div', { style: { marginBottom: '14px' } },
-        React.createElement('div', {
-          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
-        },
-          React.createElement('span', { style: { color: palette.mid } }, t('kvg.franchiseUsed')),
-          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.franchiseVerbraucht, { hoechstens: 2 }))
-        ),
-        React.createElement('div', { style: barStyle() },
-          React.createElement('div', { style: barFill(result.franchiseVerbraucht, result.franchise, palette.sand) })
-        ),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 }))
-      ),
-
-      React.createElement('div', { style: { marginBottom: '14px' } },
-        React.createElement('div', {
-          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
-        },
-          React.createElement('span', { style: { color: palette.mid } }, t('kvg.selbstbehalt')),
-          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.selbstbehalt))
-        ),
-        React.createElement('div', { style: barStyle() },
-          React.createElement('div', { style: barFill(result.selbstbehalt, result.selbstbehaltMax, palette.sage || '#5a7a5a') })
-        ),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
-      ),
-
-      React.createElement('div', {
-        style: { height: '1px', background: palette.border, marginBottom: '14px' }
-      }),
-
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
-      },
-        React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
-        React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.goldDeep || '#c47a20' }
-        }, betrag(result.eigenanteil))
-      ),
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm }
-      },
-        React.createElement('span', { style: { color: palette.mid } }, t('kvg.kasseZahlt')),
-        React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.sageDeep || '#5a7a5a' }
-        }, betrag(result.kasseZahlt))
-      )
-    )
-  );
+  });
 };
 
 // ─── Rechnung Tab ──────────────────────────────────────────
-const RechnungTab = ({ palette, t, data }) => {
+const RechnungTab = ({ palette, t, data, form }) => {
   const canton = data.basis?.canton || '';
   const [tp, setTp] = useState('');
   // K103: unbekannter Profil-Kanton → Auswahl leer statt eines Werts, den die Liste nicht kennt.
@@ -860,8 +827,44 @@ const RechnungTab = ({ palette, t, data }) => {
   const cantons = Object.keys(TAXPUNKTWERT).sort();
   const result = tp ? berechneArztrechnung(Number(tp), selCanton) : null;
 
-  return React.createElement('div', null,
-    React.createElement('div', {
+  // Form X: der Betrag zuerst, die Eingabe als «Ihre Angaben», die Quellen je Kanton darunter.
+  return form({
+    ergebnis: result ? result && React.createElement('div', {
+      style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
+    },
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
+      },
+        React.createElement('span', { style: { color: palette.mid } }, t('kvg.taxpunkte')),
+        React.createElement('span', { style: { fontWeight: weight.semi } }, result.taxpunkte)
+      ),
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
+      },
+        React.createElement('span', { style: { color: palette.mid } }, t('kvg.taxpunktwert')),
+        React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.taxpunktwert, { stellen: 2 }))
+      ),
+      React.createElement('div', {
+        style: { height: '1px', background: palette.border, marginBottom: '8px' }
+      }),
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.body }
+      },
+        React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.berechneterBetrag')),
+        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, betrag(result.betrag, { stellen: 2 }))
+      ),
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwNote', { kantone: TAXPUNKTWERT_UNBELEGT_2026.join(', ') }))),
+      // Versicherergruppe, Stand 2025 bzw. Datenstand — dieselben Zeilen wie im Franchise-Tab.
+      React.createElement(TpwErgebnisHinweise, { palette, t, canton: selCanton, mitDatenstand: true })
+    ) : null,
+    ohneErgebnis: t('kvg.rechnungExplain'),
+    vorbehalt: tp && !result && React.createElement('div', {
+      'data-testid': 'tpw-ohne-kanton',
+      style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwOhneKanton'))),
+    angaben: { erfasst: (tp ? 1 : 0) + (selCanton ? 1 : 0), gesamt: 2, inhalt: React.createElement('div', {
       style: { padding: '14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       React.createElement('div', {
@@ -912,49 +915,9 @@ const RechnungTab = ({ palette, t, data }) => {
           style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
         }, aufklappZeichen(true))
       )
-    ),
-
-    // K103: Taxpunkte eingetragen, aber kein Kanton gewählt → keine Zahl, ein ruhiger Hinweis.
-    tp && !result && React.createElement('div', {
-      'data-testid': 'tpw-ohne-kanton',
-      style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
-    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwOhneKanton'))),
-
-    result && React.createElement('div', {
-      style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
-    },
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
-      },
-        React.createElement('span', { style: { color: palette.mid } }, t('kvg.taxpunkte')),
-        React.createElement('span', { style: { fontWeight: weight.semi } }, result.taxpunkte)
-      ),
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
-      },
-        React.createElement('span', { style: { color: palette.mid } }, t('kvg.taxpunktwert')),
-        React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.taxpunktwert, { stellen: 2 }))
-      ),
-      React.createElement('div', {
-        style: { height: '1px', background: palette.border, marginBottom: '8px' }
-      }),
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', fontSize: text.body }
-      },
-        React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.berechneterBetrag')),
-        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, betrag(result.betrag, { stellen: 2 }))
-      ),
-      React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
-      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwNote', { kantone: TAXPUNKTWERT_UNBELEGT_2026.join(', ') }))),
-      // Versicherergruppe, Stand 2025 bzw. Datenstand — dieselben Zeilen wie im Franchise-Tab.
-      React.createElement(TpwErgebnisHinweise, { palette, t, canton: selCanton, mitDatenstand: true })
-    ),
-
-    // E41: die Quelle je Kanton, verlinkt. Kantone ohne belegten Wert 2026 haben keinen Link
-    // (die Fussnote kvg.tpwNote nennt sie).
-    React.createElement(TpwQuellen, { palette, t })
-  );
+    ) },
+    weiteres: React.createElement(TpwQuellen, { palette, t }),
+  });
 };
 
 // Deploy-Gate 0.1.37 (1+2): ruhige Zeilen direkt beim berechneten Taxpunkt-Ergebnis — im Tab
@@ -1030,56 +993,36 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
     divers: t('kvg.catDivers'),
   };
 
-  return React.createElement('div', { style: { maxWidth: '580px' } },
-
-    React.createElement('div', {
-      style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
-        border: '1px solid ' + palette.border, marginBottom: '16px',
-      }
-    },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'health', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('kvg.title')),
-      React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
-      }, t('kvg.subtitle'))
-    ),
-
-    React.createElement('div', {
-      style: {
-        display: 'flex', gap: '4px', background: palette.up, borderRadius: radius.sm,
-        padding: '4px', marginBottom: '16px', overflowX: 'auto',
-      }
-    },
-      React.createElement(TabButton, { active: tab === 'katalog', label: t('kvg.tabKatalog'), onClick: () => setTab('katalog'), palette }),
-      React.createElement(TabButton, { active: tab === 'franchise', label: t('kvg.tabFranchise'), onClick: () => setTab('franchise'), palette }),
-      React.createElement(TabButton, { active: tab === 'rechnung', label: t('kvg.tabRechnung'), onClick: () => setTab('rechnung'), palette })
-    ),
-
-    tab === 'katalog' && React.createElement(React.Fragment, null,
-      React.createElement('div', {
-        style: {
-          display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px',
-        }
-      },
-        React.createElement(CatButton, { active: filterCat === 'all', label: catLabels.all, onClick: () => setFilterCat('all'), palette }),
-        KVG_CATEGORIES.map(cat =>
-          React.createElement(CatButton, { key: cat, active: filterCat === cat, label: catLabels[cat], onClick: () => setFilterCat(cat), palette })
-        )
-      ),
-      React.createElement(KatalogTab, { palette, t, filterCat, canton: data.basis?.canton || '' })
-    ),
-
-    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate, onUebernehmen }),
-    tab === 'rechnung' && React.createElement(RechnungTab, { palette, t, data }),
-
-    React.createElement('div', {
-      style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
-    },
+  // Rechner-Form X (F7-A2, 27.10.2026): Kopf, die drei Reiter über die gemeinsame Tabs-Komponente (Pfeiltasten),
+  // Hinweis und Quelle fest unten. Jeder Reiter liefert seine Teile (Ergebnis zuerst, dann «Ihre Angaben») über
+  // `form` — so bleiben die Zustände in den Reiter-Komponenten. Rechnung und Texte unverändert.
+  const form = ({ weiteres, ...teile }) => React.createElement(RechnerForm, {
+    palette, t, view: 'kvg', onNavigate,
+    titel: t('kvg.title'), satz: t('kvg.subtitle'),
+    reiter: { id: 'kvg', label: t('kvg.title'), aktiv: tab, onWahl: setTab, liste: [
+      { key: 'katalog', label: t('kvg.tabKatalog') },
+      { key: 'franchise', label: t('kvg.tabFranchise') },
+      { key: 'rechnung', label: t('kvg.tabRechnung') },
+    ] },
+    quelle: React.createElement(React.Fragment, null,
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.disclaimer')),
       React.createElement('br'),
-      hinweisZeichen(), renderSource(t('kvg.source'), null, t), ' · v' + KVG_DATA_VERSION
-    )
-  );
+      hinweisZeichen(), renderSource(t('kvg.source'), null, t), ' · v' + KVG_DATA_VERSION),
+    ...teile,
+  }, weiteres || null);
+
+  if (tab === 'franchise') return React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate, onUebernehmen, form });
+  if (tab === 'rechnung') return React.createElement(RechnungTab, { palette, t, data, form });
+  // Katalog: ein Nachschlagewerk. Die Kategorie ist die Angabe (radiogroup), die Liste steht als Instrument
+  // unter der Live-Region — sonst würde jeder Filterwechsel die ganze Liste ansagen.
+  return form({
+    instrument: React.createElement(KatalogTab, { palette, t, filterCat, canton: data.basis?.canton || '' }),
+    angaben: { erfasst: 0, gesamt: 0, inhalt: React.createElement(Einzelwahl, {
+      palette, id: 'kvg-kategorie', label: t('kvg.tabKatalog'), wert: filterCat, onWahl: setFilterCat,
+      optionen: [{ wert: 'all', label: catLabels.all }, ...KVG_CATEGORIES.map((cat) => ({ wert: cat, label: catLabels[cat] }))],
+    }) },
+  });
 };
+
 
 export default KVGLeistungen;

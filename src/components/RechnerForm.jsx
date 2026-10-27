@@ -54,7 +54,7 @@ export const RechnerForm = ({
     React.createElement('section', { 'aria-labelledby': etikett ? id('ergebnis') : undefined, style: { padding: space.sm + 'px 0 ' + space.md + 'px', borderBottom: '1px solid ' + palette.border } },
       React.createElement('div', { 'data-teil': 'ergebnis', role: 'status', 'aria-live': 'polite' },
         etikett && React.createElement('div', { id: id('ergebnis'), style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs + 'px' } }, etikett),
-        ergebnis || React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, ohneErgebnis),
+        ergebnis || (ohneErgebnis && React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, ohneErgebnis)),
         vorbehalt,
         React.createElement(ErgebnisArt, { palette, t, ergebnis: art })
       ),

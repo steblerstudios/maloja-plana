@@ -39,6 +39,7 @@ export const RECHNER_KAPITEL = Object.freeze({
   vorsorge: 'versicherungen',
   schulden: 'finanzen',
   sozialhilfe: 'finanzen',
+  kvg: 'versicherungen',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

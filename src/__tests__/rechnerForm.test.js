@@ -18,6 +18,7 @@ import { StipendienView } from '../StipendienView.jsx';
 import { VorsorgeRechner } from '../VorsorgeRechner.jsx';
 import { SchuldenManager } from '../SchuldenManager.jsx';
 import { SozialhilfeView } from '../SozialhilfeView.jsx';
+import { KVGLeistungen } from '../KVGLeistungen.jsx';
 import { Tabs } from '../components/RechnerForm.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
@@ -40,12 +41,15 @@ const RECHNER = [
   ['vorsorge', VorsorgeRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
   ['schulden', SchuldenManager, { schulden: [{ id: 1, creditor: 'Test AG', amount: '500', status: 'open', category: 'sonstige' }] }],
   ['sozialhilfe', SozialhilfeView, { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 2000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } }],
+  ['kvg', KVGLeistungen, { ...maria, versicherungen: { franchise: '300' } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
 // Schulden: der Start-Reiter «Übersicht» hat keine Eingaben — «Ihre Angaben» steht in den Reitern Plan und
 // Forderungen (eigener Test unten).
 const OHNE_ANGABEN_START = new Set(['schulden']);
+// KVG-Katalog: ein Nachschlagewerk — die Kategorie ist die Angabe, ein «x von n» ergibt dort keinen Sinn.
+const OHNE_ZAEHLER = new Set(['kvg']);
 
 const TEILE = ['kopf', 'ergebnis', 'angaben', 'tun', 'stelle', 'quelle'];
 const reihenfolge = (html) => TEILE.map((teil) => html.indexOf('data-teil="' + teil + '"')).filter((i) => i >= 0);
@@ -66,7 +70,7 @@ describe('Rechner-Form X: Ergebnis vor den Angaben, role=status', () => {
         expect(html).toMatch(/data-teil="ergebnis" role="status" aria-live="polite"/);
         if (OHNE_ANGABEN_START.has(view)) return;
         expect(html).toMatch(/<details data-teil="angaben" open=""/);
-        expect(html).toMatch(/\d+ von \d+/);
+        if (!OHNE_ZAEHLER.has(view)) expect(html).toMatch(/\d+ von \d+/);
       });
       it(`${view} (${fall}): Quelle als feste letzte Zeile`, () => {
         const html = render(C, data);
@@ -241,5 +245,19 @@ describe('Sozialhilfe in der Form X', () => {
   it('ohne Kanton rechnet der Rechner trotzdem, der Hinweis steht darunter', () => {
     const html = render(SozialhilfeView, leer);
     expect(html).toContain('data-rechner-form="sozialhilfe"');
+  });
+});
+
+describe('KVG-Leistungen in der Form X', () => {
+  it('drei Reiter über die Tabs-Komponente; im Reiter Arztrechnung der Betrag vor den Angaben', () => {
+    const html = render(KVGLeistungen, maria, { initialTab: 'rechnung' });
+    expect((html.match(/role="tab"/g) || []).length).toBe(3);
+    expect(html).toMatch(/id="kvg-tab-rechnung"[^>]*aria-selected="true"/);
+    expect(html.indexOf('data-teil="ergebnis"')).toBeLessThan(html.indexOf('data-teil="angaben"'));
+  });
+  it('Franchise: Ergebnis-Teil vor «Ihre Angaben»; Katalog-Kategorie als radiogroup', () => {
+    const fr = render(KVGLeistungen, maria, { initialTab: 'franchise' });
+    expect(fr.indexOf('data-teil="ergebnis"')).toBeLessThan(fr.indexOf('data-teil="angaben"'));
+    expect(render(KVGLeistungen, maria)).toContain('aria-labelledby="kvg-kategorie-label"');
   });
 });
