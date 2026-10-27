@@ -1379,3 +1379,19 @@ F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9
 ohne Behörden).
 
 **Nichts gebaut.**
+
+### Stand 2 der Entscheide (Sophie, 27.10.2026, 02:54)
+
+Zweite Liste aus der Vergleichsseite, ersetzt die Zählung von Stand 1 (Stand 1 bleibt als Beleg oben stehen).
+61 von 71 Punkten gewählt: **39 Ja · 1 Nein · 21 Besprechen**.
+Besprechen erst, wenn alle Punkte gewählt sind (Sophie: «wir wollen warten mit dem besprechen bis wir alle ja und nein s haben»).
+
+**Ja:** F7-K1-1 · F7-K1-2 · F7-K1-3 · F7-K2-3 · F7-K2-4 · F7-K2-5 · F7-K2-6 · F7-K3-3 · F7-L5 · F7-L6 · F7-L7 · F7-L10 · F7-L11 · F7-L12 · F7-A1 · F7-A2 · F7-A3 · F7-A4 · F7-A5 · F7-A6 · F7-A7 · F7-A9 · F7-A10 · F7-A11 · F7-A12 · F7-R1 · F7-R3 · F7-R4 · F7-R6 · F7-S1 · F7-S2 · F7-S3 · F7-S4 · F7-S6 · F7-S7 · F7-S8 · F7-S9 · F7-S10 · F7-S12
+
+**Nein:** F7-K0-2 (Basis bleibt ohne Instrument)
+
+**Besprechen:** F7-K2-1 · F7-K2-2 · F7-K3-6 · F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 · F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9 · F7-R2 · F7-R5 · F7-S5
+
+**Noch nicht gewählt:** F7-D1 · F7-D2 · F7-D3 · F7-D4 · F7-D5 · F7-D6 · F7-D7 · F7-D8 · F7-D9 · F7-D10
+
+**Nichts gebaut.**
