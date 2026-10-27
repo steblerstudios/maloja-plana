@@ -1528,9 +1528,9 @@ const AppInner = ({ demo }) => {
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
       // Der Umzug (Fassung 5) und seit dem Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im
-      // eigenen Kopf (AblaufSchale `kopf`, ChapterView). Als
+      // eigenen Kopf (AblaufSchale `kopf`, ChapterView), seit Fassung G (27.10.2026) auch «Was ansteht». Als
       // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
-      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && view !== 'chapter' && React.createElement('button', {
+      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',

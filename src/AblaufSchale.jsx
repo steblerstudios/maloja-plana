@@ -3,7 +3,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, fontFamilyDisplay } from './config/tokens.js';
 import landschaft from './assets/berge/landschaft.webp?url';
-import { erinnerungSichern } from './utils/reminders.js';
+import { erinnerungSichern, loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { renderSource } from './utils/renderSource.js';
@@ -139,6 +139,21 @@ export const AblaufLink = ({ palette, label, onClick }) => {
     React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
 };
 
+// Nach dem Speichern einer Frist aus einem Ablauf (`reminder.ablauf`, z. B. 'umzug'): die gespeicherte
+// Erinnerung — offen, gleicher Titel und gleiches Datum, wie addReminder sie findet — trägt danach
+// `ablauf`. Der Kalender lässt das grüne Band des Ablaufs an ihr enden (utils/laufendeAblaeufe.js).
+// Bewusst hier und nicht in addReminder: das liegt im Startbündel, die Ablauf-Schale nicht (27.10.2026).
+export const fristDemAblaufZuordnen = (reminder) => {
+  if (!reminder || !reminder.ablauf) return;
+  let geaendert = false;
+  const neu = loadReminders().map((r) => {
+    if (r.done || r.title !== reminder.title || r.dueDate !== reminder.dueDate || r.ablauf === reminder.ablauf) return r;
+    geaendert = true;
+    return { ...r, ablauf: reminder.ablauf };
+  });
+  if (geaendert) saveReminders(neu);
+};
+
 // Frist-in-Kalender-Knopf: legt beim Klick eine Erinnerung an, zeigt danach Bestätigung.
 // onSaved (optional): wird nach erfolgreichem Speichern aufgerufen — z.B. um zusätzlich
 // ein Merkliste-Todo anzulegen (KVG-Faden).
@@ -151,6 +166,7 @@ export const AblaufLink = ({ palette, label, onClick }) => {
 // Rückgabe: 'gespeichert' | 'vorlaeufig' | null (Speichern gescheitert).
 export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
   const ergebnis = erinnerungSichern(reminder, vorlaeufig);
+  if (ergebnis === 'gespeichert') fristDemAblaufZuordnen(reminder); // Band im Kalender endet an dieser Frist
   if (ergebnis === 'gespeichert' && onSaved) onSaved(); // nur nach echtem Speichern
   return ergebnis;
 };
@@ -194,14 +210,14 @@ export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel,
 // Rechnung selbst (`frist`) kommt aus utils/fristen.js — nie später als das Gesetz.
 // `wert`/`onWert` optional: wer das Datum auch anderswo braucht, hält es selbst.
 export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey, buttonKey, doneKey, calendarKey,
-  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate, ohneFeld = false, karte = null }) => {
+  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate, ohneFeld = false, karte = null, ablauf = '' }) => {
   const s = styles(palette);
   const [eigen, setEigen] = useState(wert || '');
   const datum = onWert ? (wert || '') : eigen;
   const setze = onWert || setEigen;
   const ziel = frist(datum);
   const vorbei = istVorbei(ziel);
-  const reminder = { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}) };
+  const reminder = { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}), ...(ablauf ? { ablauf } : {}) };
   // `karte` (Fassung 5, bisher nur der Umzug): die Frist als Karte mit Datum —
   // «{titel} · bis {Datum}» und daneben ein ruhiger Knopf «In den Kalender». Danach wie
   // bisher «Im Kalender notiert.» + «Zum Kalender». Vorbei: dieselbe Karte, mit dem

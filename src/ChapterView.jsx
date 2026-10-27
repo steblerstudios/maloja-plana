@@ -7,7 +7,7 @@ import {
 } from './validationUtils.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
+import { text, weight, leading, space, radius, fontFamily, fontFamilyDisplay, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
@@ -2257,7 +2257,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg, display: 'grid', placeItems: 'center', flexShrink: 0, background: kachelGrund, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
           React.createElement(Icon, { name: chapter.key, size: 26 })
         ),
-        React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0 } }, chapter.title)
+        // Titel wie Entwurf G (30 px Display, Stebler Studios 27.10.2026: «die Kapitel-Köpfe genauso angleichen»);
+        // gleich wie der Kopf von «Was ansteht» (CalendarReminders), Wächter: kopfTitelGleich.test.js.
+        React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0, fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-0.015em' } }, chapter.title)
       ),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed, maxWidth: '560px' } }, introText)

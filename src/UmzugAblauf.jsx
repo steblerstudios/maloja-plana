@@ -133,7 +133,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
         labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
         buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
         karte: { titelKey: 'umzug.fristKarteTitel', bisKey: 'umzug.fristKarteBis', knopfKey: 'kvg.addToCalendar' },
-        reminderTitle: t('umzug.reminderTitle'), category: 'admin',
+        reminderTitle: t('umzug.reminderTitle'), category: 'admin', ablauf: 'umzug',
         reminderNotes: t('umzug.reminderNotes'),
       }),
       // Krankenkassen-Verweis ohne Unterzeile (Entscheid 23.10.2026), nur «Krankenkassen-Prämie prüfen ›».
