@@ -1491,3 +1491,10 @@ ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-A
 
 **F7-K6-2 entschieden (Sophie, 27.10.2026):** «Ja, Preis so nachführen wie vorgeschlagen — von Hand je Quartal, Skript,
 Stand sichtbar, Warnung im Predeploy.» Punkte 1–5 oben gelten. Zusammen mit: Maria bekommt einen Medikamenten-Eintrag.
+
+**F7-K3-6 weiter (Sophie, 27.10.2026, beim Ansehen von #636):** «Leben» als Teil oben in der Mitte (gebaut, `79b2855c`).
+Dann: «Schild so umbauen: Vorsorge mit drei Säulen, Unfall mit Zusatz und neuem Feld, Haushalt mit Haftpflicht und
+Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk.» Grundlage Fachprüfung (swiss-precision-pruefer, ohne Webzugriff):
+Hausrat Pflicht (Feuer/Elementar) in NW, FR, JU, VD — Erlasse nicht belegt, darum Prüf-Vermerk bis nachgelesen;
+Haftpflicht gesetzlich nicht vorgeschrieben (Vermieter, Hund); UVG-Zusatz freiwillig (VVG); NBU erst ab 8 Std./Woche
+(UVV Art. 13); Vorsorge AHV → PK → 3a nach BV Art. 111–113, Stufen bauen rechtlich nicht aufeinander auf.
