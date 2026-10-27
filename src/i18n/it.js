@@ -236,11 +236,6 @@ export default {
     step2CalendarLink: 'Al calendario',
     fristKarteTitel: 'Annuncio al comune',
     fristKarteBis: 'entro il {date}',
-    weiter: 'Fatto, avanti ›',
-    abschliessen: 'Concludere il percorso',
-    fertigTitel: 'Il trasloco è in ordine',
-    fertigText: 'Tutti e quattro i passi sono fatti.',
-    nochmals: 'Rivedere il percorso',
     passAdresse: 'Indirizzo',
     passGemeinde: 'Comune',
     passNachfuehren: 'Aggiornare',
@@ -495,9 +490,6 @@ export default {
     step4Text: { sie: 'Di regola dopo dieci anni di soggiorno, di cui gli ultimi cinque ininterrottamente con permesso di dimora, può ottenere il permesso di domicilio (C); in caso di buona integrazione al più presto dopo cinque anni (LStrI art. 34). È illimitato e più sicuro. Contano i criteri di integrazione come lingua, lavoro e nessuna dipendenza dall’aiuto sociale (LStrI art. 58a). Buono a sapersi: nel diritto degli stranieri la riduzione dei premi (RIP) non è considerata aiuto sociale (Istruzioni LStrI della SEM, n. 6.13.1). Non lasci per timore denaro che Le spetta. Se il Suo permesso è legato a mezzi finanziari sufficienti, chiarisca prima con l’ufficio della migrazione o un consultorio.', du: 'Di regola dopo dieci anni di soggiorno, di cui gli ultimi cinque ininterrottamente con permesso di dimora, puoi ottenere il permesso di domicilio (C); in caso di buona integrazione al più presto dopo cinque anni (LStrI art. 34). È illimitato e più sicuro. Contano i criteri di integrazione come lingua, lavoro e nessuna dipendenza dall’aiuto sociale (LStrI art. 58a). Buono a sapersi: nel diritto degli stranieri la riduzione dei premi (RIP) non è considerata aiuto sociale (Istruzioni LStrI della SEM, n. 6.13.1). Non lasciare per timore denaro che ti spetta. Se il tuo permesso è legato a mezzi finanziari sufficienti, chiarisci prima con l’ufficio della migrazione o un consultorio.' },
     step4LinkIpv: 'Verificare la riduzione dei premi (RIP)',
     step4LinkSituation: 'Vedi la situazione «appena arrivato»',
-    relatedTitle: 'Eventi correlati',
-    relatedKkErst: 'Cassa malati per la prima volta',
-    relatedJob: 'Nuovo lavoro',
     footerNote: { sie: 'Non lasci mai scadere il permesso senza aver presentato la domanda. In caso di dubbio, l’autorità cantonale della migrazione o un servizio di consulenza per migranti può aiutare. Questo è orientamento, non consulenza legale.', du: 'Non lasciare mai scadere il permesso senza aver presentato la domanda. In caso di dubbio, l’autorità cantonale della migrazione o un servizio di consulenza per migranti può aiutare. Questo è orientamento, non consulenza legale.' },
   },
   fuehrerausweis: {
@@ -521,9 +513,6 @@ export default {
     step5Title: '5 · Smarrimento o furto',
     step5Text: { sie: 'Se la licenza è sparita, richieda un duplicato all’ufficio cantonale della circolazione. Una copia o una foto nell’archivio aiuta ad avere i dati a portata di mano.', du: 'Se la licenza è sparita, richiedi un duplicato all’ufficio cantonale della circolazione. Una copia o una foto nell’archivio aiuta ad avere i dati a portata di mano.' },
     step5Link: 'Al dossier delle autorità',
-    relatedTitle: 'Eventi collegati',
-    relatedUmzug: 'Trasloco — cambiare indirizzo',
-    relatedPension: 'Pensionamento',
     footerNote: 'Termini e costi possono variare a seconda del Cantone. Fa fede l’ufficio cantonale della circolazione. Questo è orientamento, non consulenza legale.',
   },
   heirat: {
@@ -546,9 +535,6 @@ export default {
     step4Title: '4 · Assicurazioni & previdenza',
     step4Text: { sie: 'La cassa malati resta individuale. Verificate economia domestica e responsabilità civile — spesso basta una polizza comune. Adeguate il beneficiario nel pilastro 3a e nella cassa pensioni, così la persona giusta è protetta in caso di necessità.', du: 'La cassa malati resta individuale. Verificate economia domestica e responsabilità civile — spesso basta una polizza comune. Adeguate il beneficiario nel pilastro 3a e nella cassa pensioni, così la persona giusta è protetta in caso di necessità.' },
     step4Link: 'Vedi la previdenza',
-    relatedTitle: 'Eventi correlati',
-    relatedKind: 'Avere un figlio',
-    relatedTrennung: 'Separazione o divorzio',
     footerNote: 'Un contratto matrimoniale (regime dei beni) è facoltativo ma può essere sensato — soprattutto con proprietà o attività indipendente. Questo è orientamento, non consulenza legale.',
   },
   kind: {
@@ -576,8 +562,6 @@ export default {
     step5Text: { sie: 'Un’economia domestica più grande cambia ciò a cui ha diritto. La Sua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresce il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.', du: 'Un’economia domestica più grande cambia ciò a cui hai diritto. La tua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresci il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.' },
     step5LinkIpv: 'Ricalcola la riduzione dei premi',
     step5LinkSituation: 'Vedi le situazioni corrispondenti in «A cosa ho diritto?»',
-    relatedTitle: 'Eventi correlati',
-    relatedHeirat: 'Matrimonio o unione',
     footerNote: { sie: 'Molto passa tramite datore di lavoro e cassa di compensazione — conservi bene le conferme. Questo è orientamento, non consulenza legale.', du: 'Molto passa tramite datore di lavoro e cassa di compensazione — conserva bene le conferme. Questo è orientamento, non consulenza legale.' },
   },
   trennung: {
@@ -750,9 +734,6 @@ export default {
     step4Link: 'Licenza di condurre: che cos’altro vale',
     step5Title: '5 · Figli e scuola',
     step5Text: { sie: 'L’istruzione di base è obbligatoria e gratuita nelle scuole pubbliche (Cost. art. 19, 62). Sono competenti i cantoni: quando un bambino inizia la scuola, come avviene l’iscrizione e se ci sono corsi di lingua per i nuovi arrivati varia da cantone a cantone e da comune a comune. All’annuncio al comune chieda dell’amministrazione scolastica.', du: 'L’istruzione di base è obbligatoria e gratuita nelle scuole pubbliche (Cost. art. 19, 62). Sono competenti i cantoni: quando un bambino inizia la scuola, come avviene l’iscrizione e se ci sono corsi di lingua per i nuovi arrivati varia da cantone a cantone e da comune a comune. All’annuncio al comune chiedi dell’amministrazione scolastica.' },
-    relatedTitle: 'Eventi correlati',
-    relatedUmzug: 'Traslocare più tardi, all’interno della Svizzera',
-    relatedEinbuergerung: 'Più tardi: naturalizzazione',
     footerNote: { sie: 'Molto dipende dalla Sua nazionalità (UE/AELS o no) e dal cantone. Fanno stato il comune e l’ufficio cantonale della migrazione. Questo è un orientamento, non una consulenza legale.', du: 'Molto dipende dalla tua nazionalità (UE/AELS o no) e dal cantone. Fanno stato il comune e l’ufficio cantonale della migrazione. Questo è un orientamento, non una consulenza legale.' },
     quelle: 'Fonti: [[OASA art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/it#art_10]], [[LStrI art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/it#art_12]], [[LArRa art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/it#art_11]], [[LAMal art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_3]], [[LAVS art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it#art_1_a]], [[OAC art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/it#art_42]], [[Cost. art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/it#art_62]] (verificato a settembre 2026).',
   },
@@ -1132,8 +1113,6 @@ export default {
     step5Text: { sie: 'Chieda presto un pagamento rateale o una dilazione — spesso è possibile se ci si fa vivi. Proponga solo rate che il Suo budget sostiene anche in un mese difficile, e chieda una conferma scritta. Se si accumulano più solleciti, un servizio di consulenza in materia di debiti aiuta a mantenere la visione d’insieme — prima che ne nasca un’esecuzione. Se il reddito non basta durevolmente per il necessario, la consulenza in materia di debiti (schuldeninfo.ch) consiglia di pagare prima le fatture correnti come affitto e cassa malati e di non firmare accordi di pagamento rateale né riconoscimenti di debito — nuovi arretrati pesano più di quelli vecchi.', du: 'Chiedi presto un pagamento rateale o una dilazione — spesso è possibile se ci si fa vivi. Proponi solo rate che il tuo budget sostiene anche in un mese difficile, e chiedi una conferma scritta. Se si accumulano più solleciti, un servizio di consulenza in materia di debiti aiuta a mantenere la visione d’insieme — prima che ne nasca un’esecuzione. Se il reddito non basta durevolmente per il necessario, la consulenza in materia di debiti (schuldeninfo.ch) consiglia di pagare prima le fatture correnti come affitto e cassa malati e di non firmare accordi di pagamento rateale né riconoscimenti di debito — nuovi arretrati pesano più di quelli vecchi.' },
     step5LinkBudget: 'Vedere il budget',
     step5LinkBeratung: 'Trovare una consulenza in materia di debiti',
-    step6Title: { sie: '6 · Al contrario: qualcuno Le deve dei soldi', du: '6 · Al contrario: qualcuno ti deve dei soldi' },
-    step6Text: { sie: 'Con un sollecito costituisce in mora la persona, se il credito è scaduto (CO art. 102 cpv. 1); da quel momento può chiedere interessi moratori del 5 % all’anno (CO art. 104 cpv. 1). Cominci gentilmente con un promemoria di pagamento, fissi un termine chiaro e invii il sollecito in modo da poterne provare l’invio.', du: 'Con un sollecito costituisci in mora la persona, se il credito è scaduto (CO art. 102 cpv. 1); da quel momento puoi chiedere interessi moratori del 5 % all’anno (CO art. 104 cpv. 1). Comincia gentilmente con un promemoria di pagamento, fissa un termine chiaro e invia il sollecito in modo da poterne provare l’invio.' },
     footerNote: 'Un sollecito non è né una sentenza né un’esecuzione. Questo è un orientamento, non una consulenza giuridica. In caso di debiti aiuta una consulenza in materia di debiti.',
     quelle: 'Fonti: [[CO art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_102]], [[CO art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_104]], [[CO art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_105]], [[CO art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_106]], [[CO art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_127]], [[CO art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_128]], [[CO art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_130]], [[CO art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_135]], [[CO art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_137]], [[CO art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_142]], [[CO art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_257_d]], [[LEF art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/it#art_38]], [[LEF art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/it#art_149_a]], [[LAMal art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_64_a]], [[OAMal art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it#art_105_a]], [[OAMal art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it#art_105_b]], [[LIFD art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it#art_2]], [[LIFD art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it#art_163]], [[LIFD art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it#art_164]], [[LIFD art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it#art_166]], [[LIFD art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011, in tedesco)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[CO art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_85]], [[LEF art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/it#art_68]], [[CO art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_86]], [[LEF art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/it#art_149]], [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_35]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_106]], [[K-Tipp Rechtsschutz (2022, in tedesco)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz (2025, in tedesco)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (servizio bernese di consulenza sui debiti), voce «Inkassobüros» (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[LEF art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/it#art_27]] (verificato a settembre 2026).',
   },
@@ -1230,6 +1209,10 @@ export default {
     noReset: { sie: 'Maloja non può reimpostare la sua frase segreta — solo lei la conosce.', du: 'Maloja non può reimpostare la tua frase segreta — solo tu la conosci.' },
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026)
+    weicheFrage: { sie: 'Che cosa desidera cambiare?', du: 'Che cosa vuoi cambiare?' },
+    weicheGrund: 'Assicurazione di base (LAMal)',
+    weicheZusatz: 'Assicurazione complementare (LCA)',
     quelle: 'Fonti: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_7]] (verificato a settembre 2026).',
     checkIntro: 'Un premio più basso da solo non è un motivo per cambiare. Una breve pausa — il cambio è davvero adatto?',
     checkPoint1: { sie: 'L\'assicurazione di base copre le stesse prestazioni previste dalla legge presso tutte le casse. Cambiare non modifica la Sua copertura e non interrompe alcuna cura in corso.', du: 'L\'assicurazione di base copre le stesse prestazioni previste dalla legge presso tutte le casse. Cambiare non modifica la tua copertura e non interrompe alcuna cura in corso.' },
@@ -1514,6 +1497,7 @@ export default {
       kkerst: 'Assicurarsi arrivando in Svizzera',
       pensionierung: 'AVS, cassa pensioni, 3° pilastro',
       mahnung: 'Verificare, contestare, chiedere un pagamento rateale',
+      selbstmahnen: 'Sollecito, mora, interesse di mora',
       betreibung: 'Reagire con calma',
       dienst: 'Reclutamento, servizio civile, IPG, tassa',
       volljaehrig: 'Contratti, cassa malati, imposte, diritto di voto',
@@ -6179,6 +6163,10 @@ export default {
     b: { wohnen: 'Abitare', finanzen: 'Finanze', person: 'Persona', versicherungen: 'Assicurazione', gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza', bildung: 'Formazione', notfall: 'Emergenza', behoerden: 'Autorità' },
   },
   gepaeck: {
+    // F7-A9 (27.10.2026): Gruppe im Rucksack.
+    gruppe: {
+      erwachsen: 'Diventare adulti',
+    },
     intro: { sie: 'Ogni ambito della vita è un attrezzo nello zaino. Disfaccia il bagaglio, apra un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.', du: 'Ogni ambito della vita è un attrezzo nello zaino. Disfa il bagaglio, apri un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.' },
     ctaSub: 'Gli eventi della vita come attrezzatura — disfare, guardare dentro.',
     unpack: 'Disfare',
@@ -6200,7 +6188,7 @@ export default {
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',
     obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata', geld: 'Portamonete' },
     objSub: { wohnen: 'Arrivare & abitare', arbeit: 'Lavoro & reddito', familie: 'Famiglia & relazione', gesundheit: 'Salute & assicurazione', alter: 'Età & previdenza', abschied: 'Congedo', geld: 'Denaro & imposte' },
-    w: { bestattung: 'Mettere per iscritto i desideri funebri', mahnung: 'Sollecito ricevuto', dienst: 'Servizio militare o civile', volljaehrig: 'Compiere 18 anni', lehre: 'Iniziare un tirocinio', betreibungsauszug: 'Ordinare un estratto esecuzioni', ausweis: 'Passaporto o carta d’identità', wegzug: 'Partenza all’estero', adoption: 'Adozione', zusammenziehen: 'Andare a vivere insieme senza essere sposati', ergaenzungsleistungen: 'Chiedere le prestazioni complementari', vorsorgeauftrag: 'Mandato precauzionale e direttive del paziente', einbuergerung: 'Naturalizzazione', aussteuerung: 'Esaurimento del diritto', quellensteuer: 'Imposta alla fonte', wohnunggekuendigt: 'Disdetta dell’appartamento', umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', mietzins: 'Verificare l’affitto', fuehrerausweis: 'Licenza di condurre', asyl: 'Asilo e protezione', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', betreibung: 'Precetto esecutivo', stipendien: 'Formazione & borse di studio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', kkerst: 'Cassa malati per la prima volta', zusatz: 'Cambiare assicurazione complementare', iv: 'Invalidità (AI)', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso', organ: 'Donazione di organi' },
+    w: { selbstmahnen: 'Qualcuno mi deve dei soldi', bestattung: 'Mettere per iscritto i desideri funebri', mahnung: 'Sollecito ricevuto', dienst: 'Servizio militare o civile', volljaehrig: 'Compiere 18 anni', lehre: 'Iniziare un tirocinio', betreibungsauszug: 'Ordinare un estratto esecuzioni', ausweis: 'Passaporto o carta d’identità', wegzug: 'Partenza all’estero', adoption: 'Adozione', zusammenziehen: 'Andare a vivere insieme senza essere sposati', ergaenzungsleistungen: 'Chiedere le prestazioni complementari', vorsorgeauftrag: 'Mandato precauzionale e direttive del paziente', einbuergerung: 'Naturalizzazione', aussteuerung: 'Esaurimento del diritto', quellensteuer: 'Imposta alla fonte', wohnunggekuendigt: 'Disdetta dell’appartamento', umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', mietzins: 'Verificare l’affitto', fuehrerausweis: 'Licenza di condurre', asyl: 'Asilo e protezione', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', betreibung: 'Precetto esecutivo', stipendien: 'Formazione & borse di studio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', kkerst: 'Cassa malati per la prima volta', zusatz: 'Cambiare assicurazione complementare', iv: 'Invalidità (AI)', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso', organ: 'Donazione di organi' },
   },
   instrumente: {
     title: { sie: 'I Suoi strumenti', du: 'I tuoi strumenti' },
@@ -6986,5 +6974,26 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Manca ancora un dato.',
     fehltMehrere: '{satz}. Mancano ancora {n} dati.',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026.
+  ablauf: {
+    weiter: 'Fatto, avanti ›',
+    weiterInfo: 'Avanti ›',
+    abschliessen: 'Concludere il percorso',
+    fertigTitel: 'Tutti i {n} passi sono fatti',
+    zurUebersicht: 'Alla panoramica',
+    nochmals: 'Rivedere il percorso',
+    erledigt: 'Passi fatti',
+    fristBis: 'entro il {date}',
+    fristErinnerung: 'Promemoria il {date}',
+    verwandtTitel: 'Eventi correlati',
+    kapitelLink: 'Al capitolo {name}',
+  },
+  // F7-A10 (27.10.2026): eigener Ablauf «Jemand schuldet Geld» — Text und Quellen 1:1 aus mahnung.step6*.
+  selbstMahnen: {
+    title: { sie: 'Qualcuno Le deve dei soldi', du: 'Qualcuno ti deve dei soldi' },
+    step1Title: '1 · Inviare un sollecito',
+    step1Text: { sie: 'Con un sollecito costituisce in mora la persona, se il credito è scaduto (CO art. 102 cpv. 1); da quel momento può chiedere interessi moratori del 5 % all’anno (CO art. 104 cpv. 1). Cominci gentilmente con un promemoria di pagamento, fissi un termine chiaro e invii il sollecito in modo da poterne provare l’invio.', du: 'Con un sollecito costituisci in mora la persona, se il credito è scaduto (CO art. 102 cpv. 1); da quel momento puoi chiedere interessi moratori del 5 % all’anno (CO art. 104 cpv. 1). Comincia gentilmente con un promemoria di pagamento, fissa un termine chiaro e invia il sollecito in modo da poterne provare l’invio.' },
+    quelle: 'Fonti: [[CO art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_102]], [[CO art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_104]] (verificato a settembre 2026).',
   },
 };

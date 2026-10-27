@@ -298,16 +298,6 @@ export default {
     // rm ungeprüft F5
     fristKarteBis: 'fin ils {date}',
     // rm ungeprüft F5
-    weiter: 'Fatg, vinavant ›',
-    // rm ungeprüft F5
-    abschliessen: 'Terminar il decurs',
-    // rm ungeprüft F5
-    fertigTitel: 'Il midar da chasa è en urden',
-    // rm ungeprüft F5
-    fertigText: 'Tut ils quatter pass èn fatgs.',
-    // rm ungeprüft F5
-    nochmals: 'Guardar puspè il decurs',
-    // rm ungeprüft F5
     passAdresse: 'Adressa',
     // rm ungeprüft F5
     passGemeinde: 'Vischnanca',
@@ -632,9 +622,6 @@ export default {
     step4Text: { sie: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, können Sie die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lassen Sie aus Sorge kein Geld liegen, das Ihnen zusteht. Ist Ihre Bewilligung an ausreichende eigene Mittel geknüpft, klären Sie das vorher mit dem Migrationsamt oder einer Beratungsstelle.', du: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, kannst du die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lass aus Sorge kein Geld liegen, das dir zusteht. Ist deine Bewilligung an ausreichende eigene Mittel geknüpft, kläre das vorher mit dem Migrationsamt oder einer Beratungsstelle.' },
     step4LinkIpv: 'Verifitgar la reducziun da premias (RIP)',
     step4LinkSituation: 'Guardar la situaziun «nov arrivà»',
-    relatedTitle: 'Eveniments parents',
-    relatedKkErst: 'Cassa da malsauns per l’emprima giada',
-    relatedJob: 'Nov plaz',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Na laschai mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.', du: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -663,9 +650,6 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step5Text: { sie: 'Sch’il permess è svanì, dumandai in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.', du: 'Sch’il permess è svanì, dumonda in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.' },
     step5Link: 'Al dossier da las autoritads',
-    relatedTitle: 'Eveniments parentads',
-    relatedUmzug: 'Midada da domicil — midar l’adressa',
-    relatedPension: 'Pensiun',
     footerNote: 'Termins e custs pon variar tenor chantun. Fa fide l’uffizi chantunal da traffic. Quai è orientaziun, betg cussegl giuridic.',
   },
   heirat: {
@@ -694,9 +678,6 @@ export default {
     // Gleicher Text: der Vus-Imperativ (2. Pl.) deckt «Sie» und de-du «ihr» ab (K124, 24.09.2026).
     step4Text: { sie: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.', du: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.' },
     step4Link: 'Guardar la prevenziun',
-    relatedTitle: 'Eveniments parents',
-    relatedKind: 'Avair in uffant',
-    relatedTrennung: 'Separaziun u divorzi',
     footerNote: 'In contract da maridaglia (regim dals bains) è facultativ, ma po esser sensà — surtut cun proprietad u independenza. Quai è orientaziun, betg cussegl giuridic.',
   },
   kind: {
@@ -735,8 +716,6 @@ export default {
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     // rm ungeprüft (23.10.2026, Seite heisst «Was steht mir zu?»)
     step5LinkSituation: 'Guardar las situaziuns correspundentas sut «A tge hai jau dretg?»',
-    relatedTitle: 'Eveniments parents',
-    relatedHeirat: 'Maridaglia u partenariat',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Bler va via il patrun e la cassa da cumpensaziun — conservai bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.', du: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -927,9 +906,6 @@ export default {
     step4Link: 'Führerausweis: was sonst noch gilt',
     step5Title: '5 · Kinder und Schule',
     step5Text: { sie: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Fragen Sie bei der Anmeldung in der Gemeinde nach der Schulverwaltung.', du: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Frag bei der Anmeldung in der Gemeinde nach der Schulverwaltung.' },
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Später umziehen, innerhalb der Schweiz',
-    relatedEinbuergerung: 'Später: Einbürgerung',
     footerNote: { sie: 'Quai è orientaziun, betg cussegl giuridic. Vieles hängt von Ihrer Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.', du: 'Quai è orientaziun, betg cussegl giuridic. Vieles hängt von deiner Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.' },
     quelle: 'Quellen: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (geprüft im September 2026).',
   },
@@ -1322,8 +1298,6 @@ export default {
     step5Text: { sie: 'Dumandai baud per in pajament en ratas u ina proroga — quai è savens pussaivel, sch’ins s’annunzia. Proponai mo ratas che Voss budget porta er en in mais difficil, e dumandai ina conferma en scrit. Sche pliras admoniziuns vegnan ensemen, gida ina cussegliaziun da debits a survegnir la survista — avant ch’ina scussiun daventa da quai. Sch’il retgav na basta a la lunga betg per il necessari, cusseglia la cussegliaziun da debits (schuldeninfo.ch) da pajar l’emprim ils quints currents sco fittanza e cassa da malsauns e da betg suttascriver cunvegnas da ratas u renconuschientschas da debit — novs retards pesan dapli che vegls.', du: 'Dumonda baud per in pajament en ratas u ina proroga — quai è savens pussaivel, sch’ins s’annunzia. Propona mo ratas che tes budget porta er en in mais difficil, e dumonda ina conferma en scrit. Sche pliras admoniziuns vegnan ensemen, gida ina cussegliaziun da debits a survegnir la survista — avant ch’ina scussiun daventa da quai. Sch’il retgav na basta a la lunga betg per il necessari, cusseglia la cussegliaziun da debits (schuldeninfo.ch) da pajar l’emprim ils quints currents sco fittanza e cassa da malsauns e da betg suttascriver cunvegnas da ratas u renconuschientschas da debit — novs retards pesan dapli che vegls.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step5LinkBudget: 'Guardar il budget', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step5LinkBeratung: 'Chattar ina cussegliaziun da debits', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
-    step6Title: { sie: '6 · Viceversa: insatgi As debita daners', du: '6 · Viceversa: insatgi ta debita daners' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
-    step6Text: { sie: 'Cun in’admoniziun mettais Vus la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pudais Vus pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenzai amiaivlamain cun ina regurdada da pajament, fixai in termin cler e tramettai l’admoniziun uschia che Vus pudais cumprovar la spediziun.', du: 'Cun in’admoniziun mettas ti la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pos ti pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenza amiaivlamain cun ina regurdada da pajament, fixescha in termin cler e tramette l’admoniziun uschia che ti pos cumprovar la spediziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. In’admoniziun n’è nagina sentenzia e nagina scussiun. Tar debits gida ina cussegliaziun da debits.', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     quelle: 'Funtaunas: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz, «Muss ich die Mahngebühren zahlen?» (2022)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz, Inkassogebühren (2025)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (Berner Schuldenberatung), Stichwort «Inkassobüros» (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[SchKG Art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_27]] (controllà en settember 2026).', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
   },
@@ -1461,6 +1435,12 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheFrage: { sie: 'Tge vulais Vus midar?', du: 'Tge vuls ti midar?' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheGrund: 'Assicuranza da basa (LAMal)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheZusatz: 'Assicuranza cumplementara (LCA)',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
@@ -1838,6 +1818,8 @@ export default {
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
       mahnung: 'Controllar, contestar, dumandar ratas', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      selbstmahnen: 'Admonir, retard, tschains da retard',
       betreibung: 'Reagir cun calma',
       // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       dienst: 'Rekrutierung, Zivildienst, EO, Ersatz',
@@ -7148,6 +7130,10 @@ export default {
     b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   gepaeck: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    gruppe: {
+      erwachsen: 'Daventar creschì',
+    },
     intro: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
@@ -7173,7 +7159,8 @@ export default {
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Buorsa' },
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Daners & taglias' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    w: { bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026) — nur w.selbstmahnen
+    w: { selbstmahnen: 'Insatgi ma debita daners', bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -7870,5 +7857,39 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026.
+  ablauf: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weiter: 'Fatg, vinavant ›',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weiterInfo: 'Vinavant ›',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    abschliessen: 'Terminar il decurs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fertigTitel: 'Tut ils {n} pass èn fatgs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    zurUebersicht: 'A la survista',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    nochmals: 'Guardar puspè il decurs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    erledigt: 'Pass fatgs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fristBis: 'fin ils {date}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fristErinnerung: 'Promemoria ils {date}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    verwandtTitel: 'Eveniments parents',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kapitelLink: 'Al chapitel {name}',
+  },
+  // F7-A10 (27.10.2026): eigener Ablauf «Jemand schuldet Geld» — Text und Quellen 1:1 aus mahnung.step6*.
+  selbstMahnen: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: { sie: 'Insatgi As debita daners', du: 'Insatgi ta debita daners' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    step1Title: '1 · Admonir',
+    step1Text: { sie: 'Cun in’admoniziun mettais Vus la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pudais Vus pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenzai amiaivlamain cun ina regurdada da pajament, fixai in termin cler e tramettai l’admoniziun uschia che Vus pudais cumprovar la spediziun.', du: 'Cun in’admoniziun mettas ti la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pos ti pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenza amiaivlamain cun ina regurdada da pajament, fixescha in termin cler e tramette l’admoniziun uschia che ti pos cumprovar la spediziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+    quelle: 'Funtaunas: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]] (controllà en settember 2026).',
   },
 };

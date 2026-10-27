@@ -236,11 +236,6 @@ export default {
     step2CalendarLink: 'Vers le calendrier',
     fristKarteTitel: 'Annonce à la commune',
     fristKarteBis: 'jusqu\'au {date}',
-    weiter: 'Fait, suivant ›',
-    abschliessen: 'Terminer le parcours',
-    fertigTitel: 'Le déménagement est en ordre',
-    fertigText: 'Les quatre étapes sont faites.',
-    nochmals: 'Revoir le parcours',
     passAdresse: 'Adresse',
     passGemeinde: 'Commune',
     passNachfuehren: 'Mettre à jour',
@@ -495,9 +490,6 @@ export default {
     step4Text: { sie: 'En règle générale après dix ans de séjour, dont les cinq derniers sans interruption avec une autorisation de séjour, vous pouvez obtenir l’autorisation d’établissement (C) ; en cas de bonne intégration, au plus tôt après cinq ans (LEI art. 34). Elle est illimitée et plus sûre. Les critères d’intégration comme la langue, le travail et l’absence de dépendance à l’aide sociale comptent (LEI art. 58a). Bon à savoir : en droit des étrangers, la réduction de primes (RIP) n’est pas considérée comme de l’aide sociale (Directives LEI du SEM, ch. 6.13.1). Ne laissez pas par crainte de l’argent qui vous revient. Si votre autorisation est liée à des moyens financiers suffisants, clarifiez-le avant avec le service des migrations ou un service de conseil.', du: 'En règle générale après dix ans de séjour, dont les cinq derniers sans interruption avec une autorisation de séjour, tu peux obtenir l’autorisation d’établissement (C) ; en cas de bonne intégration, au plus tôt après cinq ans (LEI art. 34). Elle est illimitée et plus sûre. Les critères d’intégration comme la langue, le travail et l’absence de dépendance à l’aide sociale comptent (LEI art. 58a). Bon à savoir : en droit des étrangers, la réduction de primes (RIP) n’est pas considérée comme de l’aide sociale (Directives LEI du SEM, ch. 6.13.1). Ne laisse pas par crainte de l’argent qui te revient. Si ton autorisation est liée à des moyens financiers suffisants, clarifie-le avant avec le service des migrations ou un service de conseil.' },
     step4LinkIpv: 'Vérifier la réduction de primes (RIP)',
     step4LinkSituation: 'Voir la situation « nouvellement arrivé »',
-    relatedTitle: 'Événements liés',
-    relatedKkErst: 'Assurance maladie pour la première fois',
-    relatedJob: 'Nouvel emploi',
     footerNote: { sie: 'Ne laissez jamais l’autorisation expirer sans avoir déposé la demande. En cas de doute, l’autorité cantonale des migrations ou un service de conseil aux migrants peut aider. Ceci est une orientation, pas un conseil juridique.', du: 'Ne laisse jamais l’autorisation expirer sans avoir déposé la demande. En cas de doute, l’autorité cantonale des migrations ou un service de conseil aux migrants peut aider. Ceci est une orientation, pas un conseil juridique.' },
   },
   fuehrerausweis: {
@@ -521,9 +513,6 @@ export default {
     step5Title: '5 · Perte ou vol',
     step5Text: { sie: 'Si votre permis a disparu, demandez un duplicata auprès du service cantonal des automobiles. Une copie ou une photo dans le coffre aide à avoir les informations sous la main.', du: 'Si ton permis a disparu, demande un duplicata auprès du service cantonal des automobiles. Une copie ou une photo dans le coffre aide à avoir les informations sous la main.' },
     step5Link: 'Vers le dossier des autorités',
-    relatedTitle: 'Événements liés',
-    relatedUmzug: 'Déménagement — changer d’adresse',
-    relatedPension: 'Retraite',
     footerNote: 'Les délais et les coûts peuvent varier selon le canton. Le service cantonal des automobiles fait foi. Ceci est une orientation, pas un conseil juridique.',
   },
   heirat: {
@@ -546,9 +535,6 @@ export default {
     step4Title: '4 · Assurances & prévoyance',
     step4Text: { sie: 'L’assurance maladie reste individuelle. Vérifiez le ménage et la responsabilité civile — souvent une police commune suffit. Adaptez la clause bénéficiaire du pilier 3a et de la caisse de pension pour que la bonne personne soit protégée le cas échéant.', du: 'L’assurance maladie reste individuelle. À vérifier : le ménage et la responsabilité civile — souvent une police commune suffit. La clause bénéficiaire du pilier 3a et de la caisse de pension est aussi à adapter, pour que la bonne personne soit protégée le cas échéant.' },
     step4Link: 'Voir la prévoyance',
-    relatedTitle: 'Événements liés',
-    relatedKind: 'Avoir un enfant',
-    relatedTrennung: 'Séparation ou divorce',
     footerNote: 'Un contrat de mariage (régime matrimonial) est facultatif mais peut être judicieux — surtout en cas de propriété ou d’indépendance. Ceci est une orientation, pas un conseil juridique.',
   },
   kind: {
@@ -576,8 +562,6 @@ export default {
     step5Text: { sie: 'Un ménage plus grand change ce à quoi vous avez droit. Votre réduction de primes (RIP) est recalculée sur le nouveau ménage — cela vaut la peine de vérifier à nouveau. Si vous élevez l’enfant seul ou avec un budget serré, les situations de vie rassemblent d’autres soutiens en un endroit calme.', du: 'Un ménage plus grand change ce à quoi tu as droit. Ta réduction de primes (RIP) est recalculée sur le nouveau ménage — cela vaut la peine de vérifier à nouveau. Si tu élèves l’enfant seul ou avec un budget serré, les situations de vie rassemblent d’autres soutiens en un endroit calme.' },
     step5LinkIpv: 'Recalculer la réduction de primes',
     step5LinkSituation: 'Voir les situations correspondantes sous « À quoi ai-je droit ? »',
-    relatedTitle: 'Événements liés',
-    relatedHeirat: 'Mariage ou partenariat',
     footerNote: { sie: 'Beaucoup passe par l’employeur et la caisse de compensation — conservez bien les confirmations. Ceci est une orientation, pas un conseil juridique.', du: 'Beaucoup passe par l’employeur et la caisse de compensation — conserve bien les confirmations. Ceci est une orientation, pas un conseil juridique.' },
   },
   trennung: {
@@ -750,9 +734,6 @@ export default {
     step4Link: 'Permis de conduire : ce qui vaut encore',
     step5Title: '5 · Enfants et école',
     step5Text: { sie: 'L’enseignement de base est obligatoire et gratuit dans les écoles publiques (Cst. art. 19, 62). Les cantons sont compétents : l’âge de scolarisation, l’inscription et les cours de langue pour les nouveaux arrivants varient selon le canton et la commune. Lors de l’annonce à la commune, demandez l’administration scolaire.', du: 'L’enseignement de base est obligatoire et gratuit dans les écoles publiques (Cst. art. 19, 62). Les cantons sont compétents : l’âge de scolarisation, l’inscription et les cours de langue pour les nouveaux arrivants varient selon le canton et la commune. Lors de l’annonce à la commune, demande l’administration scolaire.' },
-    relatedTitle: 'Événements liés',
-    relatedUmzug: 'Déménager plus tard, à l’intérieur de la Suisse',
-    relatedEinbuergerung: 'Plus tard : naturalisation',
     footerNote: { sie: 'Beaucoup dépend de votre nationalité (UE/AELE ou non) et du canton. La commune et le service cantonal des migrations font foi. Ceci est une orientation, pas un conseil juridique.', du: 'Beaucoup dépend de ta nationalité (UE/AELE ou non) et du canton. La commune et le service cantonal des migrations font foi. Ceci est une orientation, pas un conseil juridique.' },
     quelle: 'Sources : [[OASA art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/fr#art_10]], [[LEI art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/fr#art_12]], [[LHR art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/fr#art_11]], [[LAMal art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_3]], [[LAVS art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/fr#art_1_a]], [[OAC art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/fr#art_42]], [[Cst. art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/fr#art_62]] (vérifié en septembre 2026).',
   },
@@ -1132,8 +1113,6 @@ export default {
     step5Text: { sie: 'Demandez tôt un paiement échelonné ou un sursis — c’est souvent possible quand on se manifeste. Ne proposez que des acomptes que votre budget supporte même un mois difficile, et demandez une confirmation écrite. Si plusieurs rappels s’accumulent, un service de désendettement vous aide à garder la vue d’ensemble — avant qu’une poursuite n’en résulte. Si le revenu ne suffit durablement pas pour l’essentiel, le désendettement (schuldeninfo.ch) conseille de payer d’abord les factures courantes comme le loyer et la caisse maladie et de ne signer ni arrangement de paiement ni reconnaissance de dette — de nouveaux arriérés pèsent plus lourd que les anciens.', du: 'Demande tôt un paiement échelonné ou un sursis — c’est souvent possible quand on se manifeste. Ne propose que des acomptes que ton budget supporte même un mois difficile, et demande une confirmation écrite. Si plusieurs rappels s’accumulent, un service de désendettement t’aide à garder la vue d’ensemble — avant qu’une poursuite n’en résulte. Si le revenu ne suffit durablement pas pour l’essentiel, le désendettement (schuldeninfo.ch) conseille de payer d’abord les factures courantes comme le loyer et la caisse maladie et de ne signer ni arrangement de paiement ni reconnaissance de dette — de nouveaux arriérés pèsent plus lourd que les anciens.' },
     step5LinkBudget: 'Voir le budget',
     step5LinkBeratung: 'Trouver un service de désendettement',
-    step6Title: { sie: '6 · À l’inverse : quelqu’un vous doit de l’argent', du: '6 · À l’inverse : quelqu’un te doit de l’argent' },
-    step6Text: { sie: 'Par un rappel, vous mettez la personne en demeure si la créance est exigible (CO art. 102, al. 1) ; dès lors, vous pouvez demander un intérêt moratoire de 5 % l’an (CO art. 104, al. 1). Commencez aimablement par un rappel de paiement, fixez un délai clair et envoyez la lettre de manière à pouvoir prouver l’envoi.', du: 'Par un rappel, tu mets la personne en demeure si la créance est exigible (CO art. 102, al. 1) ; dès lors, tu peux demander un intérêt moratoire de 5 % l’an (CO art. 104, al. 1). Commence aimablement par un rappel de paiement, fixe un délai clair et envoie la lettre de manière à pouvoir prouver l’envoi.' },
     footerNote: 'Un rappel n’est ni un jugement ni une poursuite. Ceci est une orientation, pas un conseil juridique. En cas de dettes, un service de désendettement peut aider.',
     quelle: 'Sources : [[CO art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_102]], [[CO art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_104]], [[CO art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_105]], [[CO art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_106]], [[CO art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_127]], [[CO art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_128]], [[CO art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_130]], [[CO art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_135]], [[CO art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_137]], [[CO art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_142]], [[CO art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_257_d]], [[LP art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_38]], [[LP art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_149_a]], [[LAMal art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_64_a]], [[OAMal art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr#art_105_a]], [[OAMal art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr#art_105_b]], [[LIFD art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_2]], [[LIFD art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_163]], [[LIFD art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_164]], [[LIFD art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_166]], [[LIFD art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_167]], [[schuldeninfo.ch, « Weiterleben mit Schulden » (2011, en allemand)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[CO art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_85]], [[LP art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_68]], [[CO art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_86]], [[LP art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_149]], [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_35]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_106]], [[K-Tipp Rechtsschutz (2022, en allemand)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz (2025, en allemand)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (service bernois de conseil en désendettement), entrée « Inkassobüros » (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[LP art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_27]] (vérifié en septembre 2026).',
   },
@@ -1230,6 +1209,10 @@ export default {
     noReset: { sie: 'Maloja ne peut pas réinitialiser votre phrase secrète — vous seul la connaissez.', du: 'Maloja ne peut pas réinitialiser ta phrase secrète — toi seul la connais.' },
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026)
+    weicheFrage: { sie: 'Que souhaitez-vous changer ?', du: 'Que souhaites-tu changer ?' },
+    weicheGrund: 'Assurance de base (LAMal)',
+    weicheZusatz: 'Assurance complémentaire (LCA)',
     quelle: 'Sources : [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_7]] (vérifié en septembre 2026).',
     checkIntro: "Une prime plus basse n'est pas à elle seule une raison de changer. Un instant de réflexion — le changement convient-il vraiment ?",
     checkPoint1: { sie: 'L\'assurance de base couvre les mêmes prestations légales chez tous les assureurs. Changer ne modifie pas votre couverture et n\'interrompt aucun traitement en cours.', du: 'L\'assurance de base couvre les mêmes prestations légales chez tous les assureurs. Changer ne modifie pas ta couverture et n\'interrompt aucun traitement en cours.' },
@@ -1514,6 +1497,7 @@ export default {
       kkerst: 'S’assurer en arrivant en Suisse',
       pensionierung: 'AVS, caisse de pension, 3e pilier',
       mahnung: 'Vérifier, contester, demander un paiement échelonné',
+      selbstmahnen: 'Rappel, demeure, intérêt moratoire',
       betreibung: 'Réagir calmement',
       dienst: 'Recrutement, service civil, APG, taxe',
       volljaehrig: 'Contrats, caisse maladie, impôts, droit de vote',
@@ -6205,6 +6189,10 @@ export default {
     b: { wohnen: 'Logement', finanzen: 'Finances', person: 'Personne', versicherungen: 'Assurance', gesundheit: 'Santé', arbeit: 'Travail', familie: 'Famille', vorsorge: 'Prévoyance', bildung: 'Formation', notfall: 'Urgence', behoerden: 'Autorités' },
   },
   gepaeck: {
+    // F7-A9 (27.10.2026): Gruppe im Rucksack.
+    gruppe: {
+      erwachsen: 'Devenir adulte',
+    },
     intro: { sie: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.', du: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballe, ouvre un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.' },
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
@@ -6226,7 +6214,7 @@ export default {
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Porte-monnaie' },
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Argent & impôts' },
-    w: { bestattung: 'Consigner ses souhaits funéraires', mahnung: 'Rappel reçu', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
+    w: { selbstmahnen: 'On me doit de l’argent', bestattung: 'Consigner ses souhaits funéraires', mahnung: 'Rappel reçu', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
     title: { sie: 'Vos instruments', du: 'Tes instruments' },
@@ -6980,5 +6968,26 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Encore une indication nécessaire.',
     fehltMehrere: '{satz}. Encore {n} indications nécessaires.',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026.
+  ablauf: {
+    weiter: 'Fait, suivant ›',
+    weiterInfo: 'Suivant ›',
+    abschliessen: 'Terminer le parcours',
+    fertigTitel: 'Les {n} étapes sont faites',
+    zurUebersicht: 'Voir la vue d’ensemble',
+    nochmals: 'Revoir le parcours',
+    erledigt: 'Étapes faites',
+    fristBis: 'jusqu’au {date}',
+    fristErinnerung: 'Rappel le {date}',
+    verwandtTitel: 'Événements liés',
+    kapitelLink: 'Vers le chapitre {name}',
+  },
+  // F7-A10 (27.10.2026): eigener Ablauf «Jemand schuldet Geld» — Text und Quellen 1:1 aus mahnung.step6*.
+  selbstMahnen: {
+    title: { sie: 'Quelqu’un vous doit de l’argent', du: 'Quelqu’un te doit de l’argent' },
+    step1Title: '1 · Envoyer un rappel',
+    step1Text: { sie: 'Par un rappel, vous mettez la personne en demeure si la créance est exigible (CO art. 102, al. 1) ; dès lors, vous pouvez demander un intérêt moratoire de 5 % l’an (CO art. 104, al. 1). Commencez aimablement par un rappel de paiement, fixez un délai clair et envoyez la lettre de manière à pouvoir prouver l’envoi.', du: 'Par un rappel, tu mets la personne en demeure si la créance est exigible (CO art. 102, al. 1) ; dès lors, tu peux demander un intérêt moratoire de 5 % l’an (CO art. 104, al. 1). Commence aimablement par un rappel de paiement, fixe un délai clair et envoie la lettre de manière à pouvoir prouver l’envoi.' },
+    quelle: 'Sources : [[CO art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_102]], [[CO art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_104]] (vérifié en septembre 2026).',
   },
 };

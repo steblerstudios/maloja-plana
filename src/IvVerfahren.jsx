@@ -13,7 +13,7 @@ export const IvVerfahren = ({ palette, t, onNavigate }) => {
   const deadline = inDays(30); // IV-Anmeldung früh prüfen (Orientierung, kein fixes Datum)
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'health',
+    palette, t, onNavigate, ablauf: 'iv', icon: 'health',
     title: t('iv.title'),
     intro: t('iv.intro'),
   },

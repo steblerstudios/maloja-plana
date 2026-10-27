@@ -21,7 +21,7 @@ export const VALID_VIEWS = new Set([
   'dashboard', 'chapter', 'tresor', 'kk', 'budget', 'schulden',
   'tax', 'organ', 'sync', 'premium', 'praemien', 'mietzins', 'kreditkarte', 'stundenlohn', 'vorsorge', 'eo', 'cv', 'charts',
   'sozialhilfe', 'direktlinks', 'unterlagen', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
-  'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
+  'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'selbstmahnen', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
   'versicherungskapitel',
 ]);
@@ -54,6 +54,9 @@ export const UMLEITUNGEN = {
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
   unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },
   versicherungskapitel: { view: 'chapter', chapterIndex: 3, anker: null },
+  // F7-A5 (27.10.2026): «Zusatzversicherung wechseln» ist der Weg «Zusatz» in «Krankenkasse wechseln».
+  // Die Sprungmarke ist der Wahlknopf der Weiche (KVGWechsel.jsx ZUSATZ_ANKER) — springeZuAnker wählt ihn.
+  zusatzwechsel: { view: 'kvgwechsel', chapterIndex: null, anker: 'mp-kvg-zusatz' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
@@ -69,8 +72,9 @@ export function springeZuAnker(id, bis = 2000) {
   const schritt = () => {
     if (aus) return;
     const el = document.getElementById(id);
-    // Ein zugeklappter Teil (<details>, z. B. Aussteuerung in «Stelle verloren») geht dabei auf.
-    if (el) { if (el.tagName === 'DETAILS') el.open = true; el.scrollIntoView({ block: 'start' }); return; }
+    // Ein zugeklappter Teil (<details>, z. B. Aussteuerung in «Stelle verloren») geht dabei auf; ein
+    // Wahlknopf mit `data-anker-wahl` (Weiche «Zusatz» im KVG-Wechsel, F7-A5) wird gewählt.
+    if (el) { if (el.tagName === 'DETAILS') el.open = true; if (el.dataset && 'ankerWahl' in el.dataset) el.click(); el.scrollIntoView({ block: 'start' }); return; }
     if (performance.now() < ende) requestAnimationFrame(schritt);
   };
   // Zwei Bilder warten: handleNavigate springt zuerst nach oben (scrollTo 0).
