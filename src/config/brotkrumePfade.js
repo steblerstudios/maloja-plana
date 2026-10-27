@@ -36,6 +36,7 @@ export const RECHNER_KAPITEL = Object.freeze({
   kreditkarte: 'finanzen',
   mietzins: 'wohnen',
   stipendien: 'ausbildung',
+  vorsorge: 'versicherungen',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

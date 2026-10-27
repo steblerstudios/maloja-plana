@@ -15,6 +15,8 @@ import { Stundenlohn } from '../Stundenlohn.jsx';
 import { Kreditkarte } from '../Kreditkarte.jsx';
 import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
 import { StipendienView } from '../StipendienView.jsx';
+import { VorsorgeRechner } from '../VorsorgeRechner.jsx';
+import { Tabs } from '../components/RechnerForm.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
 // steht das Ergebnis ZUERST (role="status"), dann «Ihre Angaben», dann was zu tun ist, die offizielle Stelle und
@@ -33,6 +35,7 @@ const RECHNER = [
   ['kreditkarte', Kreditkarte, { finanzen: { kreditkarten: [{ name: 'Testkarte', jahresgebuehr: '100', ausgabenMonat: '800', cashback: '1' }] } }],
   ['mietzins', MietzinsOrientierung, { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 } }],
   ['stipendien', StipendienView, { basis: { canton: 'BE' } }],
+  ['vorsorge', VorsorgeRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
@@ -160,5 +163,40 @@ describe('Stipendien in der Form X', () => {
     expect((html.match(/role="radiogroup"/g) || []).length).toBe(2);
     expect(ergebnisTeil(html)).toContain(de.stip.checkTitle.sie);
     expect(ergebnisTeil(html)).toContain('data-ergebnis-art="vorpruefung"');
+  });
+});
+
+describe('Tabs (a11y M4): tablist/tab/tabpanel, roving tabindex', () => {
+  const html = renderToStaticMarkup(React.createElement(Tabs, { palette, id: 'x', label: 'Reiter', aktiv: 'b', onWahl: () => {},
+    liste: [{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }] }, 'Inhalt'));
+  it('Rollen und Verknüpfung', () => {
+    expect(html).toContain('role="tablist" aria-label="Reiter"');
+    expect((html.match(/role="tab"/g) || []).length).toBe(2);
+    expect(html).toMatch(/id="x-tab-b"[^>]*role="tab" aria-selected="true" aria-controls="x-panel" tabindex="0"/);
+    expect(html).toMatch(/id="x-tab-a"[^>]*aria-selected="false"[^>]*tabindex="-1"/);
+    expect(html).toContain('role="tabpanel" id="x-panel" aria-labelledby="x-tab-b"');
+  });
+  it('Pfeiltasten wählen den nächsten Reiter (rundum), Pos1/Ende springen', () => {
+    const gewaehlt = [];
+    const el = Tabs({ palette, id: 'y', label: 'R', aktiv: 'a', onWahl: (k) => gewaehlt.push(k), liste: [{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }, { key: 'c', label: 'C' }] });
+    const knoepfe = el.props.children[0].props.children;
+    const druck = (i, key) => knoepfe[i].props.onKeyDown({ key, preventDefault: () => {} });
+    druck(0, 'ArrowRight'); druck(0, 'ArrowLeft'); druck(1, 'End'); druck(2, 'Home');
+    expect(gewaehlt).toEqual(['b', 'c', 'c', 'a']);
+  });
+});
+
+describe('Vorsorge in der Form X', () => {
+  const mit = { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } };
+  it('Reiter über die Tabs-Komponente; Ergebnis (AHV-Rente) vor den Angaben im Reiter-Feld', () => {
+    const html = render(VorsorgeRechner, mit);
+    expect(html).toContain('id="vr-tab-ahv"');
+    const panel = html.indexOf('role="tabpanel"');
+    expect(panel).toBeGreaterThan(0);
+    expect(panel).toBeLessThan(html.indexOf('data-teil="ergebnis"'));
+    expect(ergebnisTeil(html)).toContain(de.vr.ahvRente);
+  });
+  it('Verheiratet als radiogroup', () => {
+    expect(render(VorsorgeRechner, mit)).toContain('aria-labelledby="vr-verheiratet-label"');
   });
 });
