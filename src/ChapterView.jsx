@@ -68,7 +68,6 @@ const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
-const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
@@ -2430,19 +2429,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           tr('trust.chapterTrust')
         )
       ),
-      // Versicherungen: das Netz über den Abschnitten, sobald etwas eingetragen ist. Ein Tipp
-      // auf eine Achse öffnet den Abschnitt darunter und springt hin (id mp-section-<erstes Feld>).
-      chapter.key === 'versicherungen' && filledCount > 0 && React.createElement(React.Suspense, { fallback: null },
-        React.createElement(VersicherungsNetz, {
-          chapter, data, palette, tr,
-          onAbschnitt: (key) => {
-            setOffeneAbschnitte((o) => ({ ...o, [key]: true }));
-            // Erst nach dem Zeichnen des aufgeklappten Abschnitts springen: mit requestAnimationFrame
-            // lief der Sprung zu früh und die Seite blieb stehen (im Browser gemessen 24.10.2026).
-            setTimeout(() => document.getElementById('mp-section-' + key)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
-          },
-        })
-      ),
+      // Versicherungen: das Spinnennetz stand hier bis 27.10.2026; seither zeigt das Netz-Schild oben
+      // (components/NetzSchild.jsx, F7-K3-6), was gedeckt ist.
       abschnittsliste()
     ),
 

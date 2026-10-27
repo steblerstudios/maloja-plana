@@ -46,11 +46,11 @@ describe('Versicherungen pro Monat', () => {
     expect(text).toContain('CHF 570');
     expect(text).toContain('Die Fahrzeugversicherung zählt hier nicht mit');
   });
-  it('ohne Prämie: kein Geld-Teil, das Schutzschild steht trotzdem', () => {
+  it('ohne Prämie: kein Geld-Teil, das Netz-Schild steht trotzdem', () => {
     const v = { kkInsurer: 'CSS', uvg: 'employer', liabilityInsurance: 'yes' };
     const html = instrument(v, { ...DEMO_DATA, versicherungen: v });
     expect(html).not.toContain('Versicherungen pro Monat');
-    expect(html).toContain('data-schild="klein"');
+    expect(html).toContain('data-schild="netz"');
   });
 });
 
@@ -69,9 +69,14 @@ describe('KK-Last', () => {
   });
 });
 
-describe('Schutzschild klein, an einem Ort', () => {
-  it('im Instrument die kleine Fassung', () => {
-    expect(instrument(DEMO_DATA.versicherungen)).toContain('data-schild="klein"');
+describe('Netz-Schild, an einem Ort (F7-K3-6)', () => {
+  it('im Instrument das Netz-Schild statt der zwei kleinen Schilde', () => {
+    const html = instrument(DEMO_DATA.versicherungen);
+    expect(html).toContain('data-schild="netz"');
+    expect(html).not.toContain('data-schild="klein"');
+  });
+  it('das Spinnennetz steht nicht mehr im Kapitel', () => {
+    expect(QUELLE).not.toContain('VersicherungsNetz');
   });
   it('das grosse Schild steht nicht mehr im Kapitel', () => {
     expect(QUELLE).not.toContain('React.createElement(Schutzschild');
@@ -119,9 +124,9 @@ describe('Nachprüfung', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
     expect(text).toContain('WHO / UNO SDG-Indikator 3.8.2');
   });
-  it('kleines Schild: Zahl als Text neben dem Titel, Liste mit Rollen', () => {
+  it('Netz-Schild: Stand als Liste mit Rollen und als Satz, nicht nur im Bild', () => {
     const html = instrument(DEMO_DATA.versicherungen);
-    expect(nurText(html)).toContain('Pflicht · 3/3');
     expect(html).toContain('role="list"');
+    expect(html).toContain('data-teil="netz-schild-satz"');
   });
 });

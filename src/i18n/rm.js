@@ -7200,6 +7200,20 @@ export default {
     steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
     setup: 'tutgar per configurar',
   },
+  // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)
+  netzSchild: {
+    intro: 'Ina part per assicuranza. Ina part plaina vul dir cuvrì, in pitschen nucleus: anc betg cuvrì.',
+    aria: 'Stemma da parts d’assicuranza.',
+    offen: 'anc betg cuvrì',
+    grund: 'assicuranza da basa',
+    zusatz: 'cun supplementara',
+    gedeckt: 'cuvrì',
+    pflicht: 'obligatoric',
+    freiwillig: 'facultativ',
+    nochOffen: 'Anc betg cuvrì: {liste}.',
+    ganz: 'Tut las parts èn cuvridas.',
+    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', bvg: 'Cassa da pensiun', haftpflicht: 'Responsabladad', hausrat: 'Inventari' },
+  },
   schutzschild: {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',

@@ -5,7 +5,7 @@ import { betrag, zahl } from '../utils/geld.js';
 import { schildOptionen, schildState } from '../data/schutzschild.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
-import { Schutzschild } from './Schutzschild.jsx';
+import { NetzSchild } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { calculateIPV } from '../config/cantonalData.js';
@@ -21,7 +21,7 @@ import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 //      Versicherungen» aus dem Kapitel Finanzen. Darunter, was fehlt und was bewusst nicht zählt.
 //   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze,
 //      dieselbe IPV-Entlastung über ipvAbzug, Quelle und «Orientierung» — Fachprüfung 25.10.2026).
-//   3. Schutzschild klein — zwei Schilde mit Listen, offen (statt der grossen Schilde darunter).
+//   3. Netz-Schild (seit 27.10.2026, F7-K3-6) — ein Schild aus Teilen statt der zwei kleinen Schilde und des Netzes.
 //   4. Franchise-Kreuz klein — dieselbe Rechnung wie die Prämien-Seite (ladeFranchiseOpt, erst mit Kasse + PLZ),
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
 const WHO = 10;
@@ -143,7 +143,8 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     ),
 
     !uebersicht && schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
-    !uebersicht && h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(daten) }),
+    // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
+    !uebersicht && h(NetzSchild, { palette, t, versicherungen: v, ...schildOptionen(daten) }),
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h4', { style: kapH }, t('instrumente.tacho')),
