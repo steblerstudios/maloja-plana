@@ -56,7 +56,7 @@ import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
 const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
-const BudgetImport = React.lazy(() => import('./BudgetImport.jsx'));
+// BudgetImport: seit 27.10.2026 keine eigene Seite — Teil «CSV importieren» im Monatsbudget (UMLEITUNGEN, BudgetSync.jsx).
 const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
 const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
 const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
@@ -666,7 +666,8 @@ const AppInner = ({ demo }) => {
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   // ('finanzuebersicht' stand hier bis 24.10.2026; ob der Knopf ins Kapitel Finanzen kommt,
   // ist Bauschritt 6 der Zusammenlegung, docs/entscheide/finanzen-fusion.md.)
-  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
+  // 'sync' statt 'budget' seit 27.10.2026 (F7-L7): der CSV-Import ist ein Teil des Monatsbudgets.
+  const SANDBOX_VIEWS = ['tax', 'sync', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -1663,11 +1664,6 @@ const AppInner = ({ demo }) => {
             });
           }
         }),
-        view === 'budget' && React.createElement(BudgetImport, {
-          palette, t,
-          currentBudget: activeData.finanzen || {},
-          onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
-        }),
         view === 'taxImport' && React.createElement(TaxImport, {
           palette, t,
           currentFinanzen: activeData.finanzen || {},
@@ -1698,7 +1694,7 @@ const AppInner = ({ demo }) => {
         }),
         // isDarkMode: das Miet-Barometer im Budget braucht die Frucht-Farbe („du" trägt die
         // Bereichsfarbe) — ohne den Prop läge `bereichFillColor` im Dunkelmodus stumm daneben.
-        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
+        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode, onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } })) }),
         view === 'premium' && React.createElement(PremiumSubsidy, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),

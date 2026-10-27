@@ -46,8 +46,11 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      über der Versicherungs-Übersicht (Runde 9 AB, 25.10.2026), keine frühere Seite.
 //   unterlagen       → Dokumentenablage, Abschnitt «Meine Unterlagen» unten (24.10.2026, Gruppe H;
 //                      Wächter: unterlagenUmleitung.test.js). Auch die Brotkrumen der Dossiers zeigen hierher.
+//   budget           → Monatsbudget, Teil «CSV importieren» unten (27.10.2026, F7-L7, Gruppe I;
+//                      Wächter: budgetImportUmleitung.test.js). Der Import ist keine eigene Seite mehr.
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
+  budget: { view: 'sync', chapterIndex: null, anker: 'mp-budget-import' },
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },

@@ -17,6 +17,7 @@ import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { gblStand } from './data/skosGrundbedarf.js';
+import { BudgetImport, BUDGET_IMPORT_ANKER } from './BudgetImport.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -25,7 +26,9 @@ const formatCHF = (amount) => {
   return betrag(rounded); // utils/geld.js — eine Quelle
 };
 
-export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
+// `onImport`: der Teil «CSV importieren» unter der Karte (F7-L7, 27.10.2026) — früher die eigene Seite
+// «budget». Ohne `onImport` (Tests, Vorschau) bleibt nur die Karte.
+export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }) => {
   const [budget, setBudget] = useState(null);
   const [showAnnual, setShowAnnual] = useState(false);
   // Faden 4 / Inkr. A — which orientation infos are expanded (default: none = calm)
@@ -268,7 +271,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
   // BVG/AHV reference total
   const bvgAhvTotal = (budget.reference.bvg || 0) + (budget.reference.ahv || 0) + (budget.expenses.uvg || 0);
 
-  return React.createElement('div', {
+  return React.createElement('div', null, React.createElement('div', {
     style: {
       background: palette.surface, padding: '20px', borderRadius: radius.sm,
       border: '1px solid ' + palette.border, maxWidth: '520px',
@@ -500,6 +503,13 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         marginTop: space.sm, fontSize: text.xs, color: palette.soft, lineHeight: '1.4', fontStyle: 'italic'
       }
     }, t('alpha.noAdviceHint'))
+  ),
+
+    // === Teil «CSV importieren» (F7-L7) — Sprungmarke für #/budget ===
+    onImport && React.createElement('section', {
+      id: BUDGET_IMPORT_ANKER, 'aria-labelledby': BUDGET_IMPORT_ANKER + '-titel',
+      style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' },
+    }, React.createElement(BudgetImport, { palette, t, currentBudget: data.finanzen || {}, onImport }))
   );
 };
 

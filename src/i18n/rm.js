@@ -1725,14 +1725,10 @@ export default {
     advanced: 'Avanzà',
     tresor: 'Deposita da documents',
     kkScanner: 'Scanner cassa da malsauns',
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budget: 'Budget',
     debts: 'Debits',
     taxes: 'Taglia',
     finanzUebersicht: 'Finanzas & daners',
     organDonation: "Donaziun d'organs",
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budgetSync: 'Budget-Sync',
     kvgIpv: 'Reducziun da premias (IPV)',
     praemien: 'Survista da las assicuranzas',
     mietzins: 'Contribuziuns a la fittanza',
@@ -6172,6 +6168,8 @@ export default {
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     importFailed: 'L’import n’ha betg funcziunà. Controllar la datoteca e empruvar anc ina giada.',
     title: 'Import da budget',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    teilTitel: 'Importar ina datoteca CSV',
     fileFormat: 'Format da datoteca',
     csv: 'CSV (separà cun comma)',
     excel: 'Excel (.xlsx)',
