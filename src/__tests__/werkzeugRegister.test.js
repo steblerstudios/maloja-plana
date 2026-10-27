@@ -41,6 +41,8 @@ const imGepaeck = () => new Set([
 const imMenue = () => new Set([...MENUE_WERKZEUGE.map(werkzeugKey), 'gepaeck', 'settings']);
 // Über die Einstellungen (SettingsView): Export und Benachrichtigungen.
 const inEinstellungen = () => new Set(WERKZEUGE.filter((w) => w.fach === EINSTELLUNGEN).map(werkzeugKey));
+// F7-L11 (27.10.2026): Ansichten, die nur noch als Umleitung bestehen, gelten als erreichbar, wenn ihr Ziel erreichbar ist.
+const UMGELEITET_NACH = { unterlagen: 'tresor', charts: 'finanzuebersicht', aussteuerung: 'stelleverloren' };
 
 describe('Werkzeug-Register: ein Eintrag je Werkzeug', () => {
   it('jeder Schlüssel steht genau einmal — über Register UND Gepäck-Wege', () => {
@@ -118,7 +120,7 @@ describe('Portemonnaie und Aussenfach', () => {
 
   it('das Aussenfach trägt alle Ablage-Werkzeuge', () => {
     const aussen = werkzeugeImFach(AUSSENFACH).map(werkzeugKey);
-    for (const v of ['tresor', 'unterlagen', 'calendar', 'merkliste', 'cv', 'direktlinks', 'flyer', 'charts']) {
+    for (const v of ['tresor', 'calendar', 'merkliste', 'cv', 'direktlinks', 'flyer']) {
       expect(aussen, `${v} fehlt im Aussenfach`).toContain(v);
     }
   });
@@ -139,7 +141,7 @@ describe('Portemonnaie und Aussenfach', () => {
 describe('Nichts wird unerreichbar', () => {
   it('jede heute im Menü oder auf dem Dashboard erreichbare Ansicht ist nachher über Menü, Gepäck oder Einstellungen erreichbar', () => {
     const nachher = new Set([...imGepaeck(), ...imMenue(), ...inEinstellungen()]);
-    const verloren = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])].filter((v) => !nachher.has(v));
+    const verloren = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])].filter((v) => !nachher.has(v) && !nachher.has(UMGELEITET_NACH[v]));
     expect(verloren, 'unerreichbar: ' + verloren.join(', ')).toEqual([]);
   });
 
