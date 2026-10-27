@@ -1420,3 +1420,28 @@ Im Browser nachgeprüft (Pensionierung, Einbürgerung, Betreibungsauszug).
 ist die sichtbare Beschriftung. F7-L12: die Dossiers hatten schon Brotkrumen; ergänzt ist «Zurück zu …».
 F7-L11: `FinanzUebersicht.jsx` bleibt (sechs Tests prüfen über sie), Links auf `finanzuebersicht` bleiben (Umleitung).
 F7-S12: nur «kostenlos, auch mit leerem Guthaben» belegt (FDV Art. 27 Abs. 2); die SIM-Aussage ist raus.
+
+### Baustand der «Ja», alle acht Pakete (27.10.2026, 12:07)
+
+| Paket | PR | Stand |
+|---|---|---|
+| 1 · sichtbare Fehler | #626 | Entwurf |
+| 2 · Namen und Aufräumen | #627 | Entwurf |
+| 3 · Kapitel Finanzen | #628 | Entwurf |
+| 4 · Ablauf-Schale W (A1, A4–A7, A9–A11) | #633 | Entwurf |
+| 5 · Rechner-Form X, alle zehn (A2, R3, R4, R6) | #631 | Entwurf |
+| 6 · «Was steht mir zu?» O + Gruppe A (A3, L5) | #630 | Entwurf |
+| 7 · Versicherungs-Übersicht §11 (L6) | #629 | Entwurf — war schon gebaut (#580, #601), nur Wächter-Test + Doku |
+| 8 · Budget, Merkliste, Dossiers, Rückweg (L7, L10, S2, S10) | #632 | Entwurf |
+
+**Probe aller Zweige auf main:** 1, 2, 3, 7, 6, 5 führen sich konfliktfrei zusammen (7’370 Tests grün, `size-limit`
+**64.67 kB von 65 kB**). 8 und 4 haben dann Konflikte in den Sprachdateien, `main.jsx`, `hashRouter.js`, Registern und
+Wächter-Tests — alle erweitern dieselben Listen. Vorschlag: in dieser Reihenfolge mergen und 8 und 4 vor ihrem Merge
+auf das neue main nachziehen. **Grösse:** 0.33 kB Luft vor 8 und 4 — vor dem Merge der letzten zwei prüfen, ggf. Teile
+aus dem Startbündel nachladen.
+
+**Weitere Fehlbefunde aus dem Rundgang:** F7-L6 (§11 war gebaut, das Entscheidungsblatt sagte «Noch nichts gebaut»),
+F7-A7 (Verweise an der Gabelung bestanden schon).
+
+**Für die Fachprüfung (#630):** Sozialhilfe-Pegel sagt bei Maria «Vermögen über dem Freibetrag», obwohl das Einkommen den
+Bedarf deckt — Reihenfolge in `src/data/pegel.js` (alt, schon im Schnellcheck).
