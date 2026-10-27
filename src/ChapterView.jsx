@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { feldNameOhneEinheit } from './utils/feldName.js';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
@@ -1873,11 +1874,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // («Anzahl Zimmer (z. B. 3.5)» → «Anzahl Zimmer»).
   const listenName = (f) => {
     if (f.type === 'household') return tr('chapterView.imHaushalt');
-    const roh = String(f.label || '');
-    const ohneChf = f.type === 'currency'
-      ? roh.replace(/CHF(\s*\/\s*[^\s(),]+)?,?\s*/g, '').replace(/\(\s*\)/g, '').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')')
-      : roh.replace(/\s*(CHF(\s*\/\s*\S+)?|\(CHF\))\s*$/, '');
-    return ohneChf.replace(/\s*\((z\. ?B\.|p\. ?ex\.|p\. ?es\.|e\.g\.)[^)]*\)/i, '').replace(/\s{2,}/g, ' ').trim();
+    return feldNameOhneEinheit(f.label, f.type);
   };
   const listenWert = (f) => {
     const w = abschnittWert(f);

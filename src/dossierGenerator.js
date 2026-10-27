@@ -11,6 +11,7 @@
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
 import { getFullName } from './config/constants.js';
+import { feldNameOhneEinheit } from './utils/feldName.js';
 import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
@@ -87,7 +88,8 @@ function fieldLabel(chapters, chapterKey, fieldKey) {
   const chapter = chapters.find(c => c.key === chapterKey);
   if (!chapter) return fieldKey;
   const field = chapter.fields.find(f => f.k === fieldKey);
-  return field ? field.label : fieldKey;
+  // F7-S6: ohne «CHF» im Namen — der Wert trägt die Währung (wie im Kapitel).
+  return field ? feldNameOhneEinheit(field.label, field.type) : fieldKey;
 }
 
 // ─── Lebensmappe Section Definitions ──────────────────────
@@ -145,7 +147,7 @@ function getSections(data, chapters, t) {
         { label: lbl('versicherungen', 'kkInsurer'), value: d('versicherungen', 'kkInsurer') },
         { label: lbl('versicherungen', 'kkModel'), value: sel('versicherungen', 'kkModel') },
         { label: lbl('versicherungen', 'kkPremium'), value: chf('versicherungen', 'kkPremium') },
-        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') },
+        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') ? 'CHF ' + sel('versicherungen', 'franchise') : '' },
         { label: lbl('versicherungen', 'bvgInsurer'), value: d('versicherungen', 'bvgInsurer') },
       ].filter(r => r.value),
     },
@@ -820,7 +822,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
         { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
         { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },
         { label: lbl('versicherungen', 'kkPremium'), value: chf('versicherungen', 'kkPremium') },
-        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') },
+        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') ? 'CHF ' + sel('versicherungen', 'franchise') : '' },
         { label: lbl('finanzen', 'securitiesValue'), value: chf('finanzen', 'securitiesValue') },
         { label: lbl('finanzen', 'otherAssets'), value: chf('finanzen', 'otherAssets') },
         { label: lbl('finanzen', 'savingsAccount'), value: chf('finanzen', 'savingsAccount') },
