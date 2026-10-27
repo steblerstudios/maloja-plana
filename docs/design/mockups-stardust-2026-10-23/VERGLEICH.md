@@ -1359,7 +1359,7 @@ Grundlage: `docs/design/fassung-7-2026-10-27/BEFUNDE.md` und die Vergleichsseite
 Sophie hat 25 von 71 Punkten gewählt und die Liste aus der Seite in den Chat gelegt. Die übrigen 46 sind **noch offen**,
 nicht abgelehnt.
 
-**Ja (11):**
+**Ja (10):**
 - F7-K2-3 — eine Brutto-Schätzung statt zwei (6’796 / 6’472): nachrechnen, welche gilt.
 - F7-K2-4 — Dashboard übernimmt das IPV-Ergebnis aus dem Kapitel Finanzen.
 - F7-K2-6 — Branchenvergleich: eigene Branche hervorheben, Rest aufklappbar.
@@ -1371,7 +1371,7 @@ nicht abgelehnt.
 - F7-L11 — Aufräumen: Rucksack-Doppel, Links auf umgeleitete Adressen, tote `FinanzUebersicht.jsx`.
 - F7-L12 — Titel für den Anspruch-Check, Brotkrume für Notfall- und Behörden-Dossier.
 
-**Besprechen (14):** F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 ·
+**Besprechen (15):** F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 ·
 F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9
 
 **Noch nicht gewählt:** alle F7-D (Dashboard), F7-K0, F7-K1 (u. a. Mietbarometer-Fehler), F7-K2-1/-2/-5, F7-K3-6
