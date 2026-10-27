@@ -34,6 +34,7 @@ export const RECHNER_KAPITEL = Object.freeze({
   eo: 'finanzen',
   stundenlohn: 'finanzen',
   kreditkarte: 'finanzen',
+  mietzins: 'wohnen',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

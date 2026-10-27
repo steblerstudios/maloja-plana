@@ -13,6 +13,7 @@ import { AlvRechner } from '../AlvRechner.jsx';
 import { EOrechner } from '../EOrechner.jsx';
 import { Stundenlohn } from '../Stundenlohn.jsx';
 import { Kreditkarte } from '../Kreditkarte.jsx';
+import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
 // steht das Ergebnis ZUERST (role="status"), dann «Ihre Angaben», dann was zu tun ist, die offizielle Stelle und
@@ -29,6 +30,7 @@ const RECHNER = [
   ['alv', AlvRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
   ['stundenlohn', Stundenlohn, { ...maria, finanzen: { stundenlohnRechner: { betrag: '24', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' } } }],
   ['kreditkarte', Kreditkarte, { finanzen: { kreditkarten: [{ name: 'Testkarte', jahresgebuehr: '100', ausgabenMonat: '800', cashback: '1' }] } }],
+  ['mietzins', MietzinsOrientierung, { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
@@ -135,5 +137,17 @@ describe('Kreditkarte in der Form X', () => {
     const mit = ergebnisTeil(render(Kreditkarte, { finanzen: { kreditkarten: [{ jahresgebuehr: '100', ausgabenMonat: '800', cashback: '1' }] } }));
     expect(mit).toContain(de.kreditkarteView.rechnungTitel);
     expect(ergebnisTeil(render(Kreditkarte, leer))).toContain(de.kreditkarteView.ergebnis_brauchtAusgaben);
+  });
+});
+
+describe('Mietzinsbeiträge in der Form X', () => {
+  const bs = { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 } };
+  it('Einschätzung zuerst, mit dem Miet-Barometer (F7-R3) im Ergebnis', () => {
+    const teil = ergebnisTeil(render(MietzinsOrientierung, bs));
+    expect(teil).toContain(de.mietzinsView.compareTitle.sie || de.mietzinsView.compareTitle);
+    expect(teil.indexOf('data-ergebnis-art')).toBeGreaterThan(0);
+  });
+  it('ohne Kanton: der App-Satz an der Stelle des Ergebnisses', () => {
+    expect(ergebnisTeil(render(MietzinsOrientierung, leer))).toContain(de.mietzinsView.enterCanton.sie || de.mietzinsView.enterCanton);
   });
 });
