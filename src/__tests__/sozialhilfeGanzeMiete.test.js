@@ -101,6 +101,9 @@ describe('Kein Leser zeigt Sozialhilfe ohne Zusatz', () => {
     '../BehoerdenDossier.jsx': 'reicht die Rechnung ans Dossier (sozialhilfe.rentLimitDossier)',
     '../data/pegel.js': 'reicht das Flag an Pegel.jsx weiter',
     '../data/anspruchSignale.js': 'reicht das Flag an Kalender und Lebensbaum weiter',
+    // F7-A3 (27.10.2026): die Gates des Schnellchecks stehen in data/anspruchWege.js, für ihn und «Was steht mir zu?».
+    '../data/anspruchWege.js': 'reicht das Flag an Schnellcheck.jsx weiter; der Pegel trägt es auf «Was steht mir zu?»',
+    '../Lebenssituationen.jsx': 'rechnet nur «knapp» (istKnapp), den Betrag zeigt der Pegel mit dem Zusatz',
   };
   const LESER = [
     '../Schnellcheck.jsx', '../components/Leistungsliste.jsx', '../AnspruchCheck.jsx', '../BudgetSync.jsx',

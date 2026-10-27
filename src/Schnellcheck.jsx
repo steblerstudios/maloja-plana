@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
+import { calculateSozialhilfe, getCantonName, getHouseholdInfo, ladeIPVModelle } from './config/cantonalData.js';
+import { wegeAusProbe } from './data/anspruchWege.js';
 import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { Pegel } from './components/Pegel.jsx';
@@ -11,7 +12,6 @@ import { praemienBelegState } from './data/praemienBeleg.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
-import { LandkarteGruppen } from './AnspruchLandkarte.jsx';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
 // Angaben — auto vorbelegt aus dem Profil, hier frei anpassbar zum Ausprobieren —
@@ -19,10 +19,11 @@ import { LandkarteGruppen } from './AnspruchLandkarte.jsx';
 // ein „Nein"-Verdikt (Würde). Dieselbe Engine wie die Voll-Tools (calculateIPV/
 // calculateSozialhilfe/checkELEligibility), damit Schnellcheck und Rechner nie
 // widersprüchliche Zahlen zeigen.
-// mitLandkarte (seit 27.09.2026): die eine Seite «Ansprüche im Überblick» — unter dem
-// Ergebnis die ganze Landkarte statt der zwei Wegweiser-Listen. Ohne (Schritt 1 im
-// geführten Anspruch-Check) bleibt alles wie vorher.
-export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitLandkarte = false }) => {
+// Seit 27.10.2026 (Entscheid O, F7-A3) keine eigene Seite mehr: #/schnellcheck und #/ansprueche
+// führen auf «Was steht mir zu?» (Lebenssituationen.jsx). Hier bleibt Schritt 1 des geführten
+// Anspruch-Checks (AnspruchCheck.jsx) — dieselbe Rechnung (data/anspruchWege.js), ohne den Titel
+// «Leistungs-Schnellcheck». Die Variante mitLandkarte (27.09.2026) ist mit der eigenen Seite weg.
+export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) => {
   const canton = data?.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   // Brutto oder netto (EinkommenFeld, wie auf dem Dashboard); gerechnet wird mit netto.
@@ -31,6 +32,16 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitL
   const [kk, setKk] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
 
   const fmt = (n) => betrag(n || 0);
+
+  // Die Kantonsmodelle der IPV laden nach (ZH, BE …). Bis dahin sagt calculateIPV «laden» — danach einmal
+  // neu zeichnen, sonst bliebe die Zeile beim ersten Aufruf auf «prüfen» stehen (beobachtet bei Maria,
+  // VERGLEICH.md «Was steht mir zu? (O)»; Muster PraemienOrientierung.jsx).
+  const [, setIpvGeladen] = useState(0);
+  useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
 
   const numIncome = e.nettoMonat;
   const numRent = Number(rent) || 0;
@@ -49,44 +60,28 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitL
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Absicht: bei Änderung der Roh-Eingaben feuern und das abgeleitete `probe` durchreichen. `probe` (jedes Render neu) / `onProbeChange` (Prop) als Dep würden bei jedem Render feuern.
   useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [numIncome, rent, kk, data]);
 
-  // Gedeckte Leistungen sammeln — jede mit eigenem Ehrlichkeits-Gate.
-  const benefits = [];
-  try {
-    // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
-    const ipv = (numIncome > 0 && canton) ? calculateIPV(probe) : null;
-    // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
-    // B-1/E22: die hier eingetippten Zahlen gehen beim Klick an den IPV-Rechner mit.
-    // Eine aus brutto GESCHÄTZTE Zahl geht nicht mit — nur eingetippte (25.09.2026).
-    const uebergabe = uebergabeAusProbe(e.geschaetzt ? { ...probe, finanzen: { ...probe.finanzen, monthlyIncome: 0 } } : probe);
-    if (ipv && ipv.eligible) benefits.push({
+  // Gedeckte Leistungen sammeln — dieselben Gates wie auf «Was steht mir zu?» (data/anspruchWege.js).
+  // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
+  // B-1/E22: die hier eingetippten Zahlen gehen beim Klick an den IPV-Rechner mit.
+  // Eine aus brutto GESCHÄTZTE Zahl geht nicht mit — nur eingetippte (25.09.2026).
+  const uebergabe = uebergabeAusProbe(e.geschaetzt ? { ...probe, finanzen: { ...probe.finanzen, monthlyIncome: 0 } } : probe);
+  const benefits = wegeAusProbe(probe).wege.map((w) => (
+    w.key === 'ipv' ? {
       key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep, uebergabe,
-      label: t('schnellcheck.ipv'), monthly: ipv.amount, note: t('schnellcheck.ipvNote'),
-    });
-    else if (ipv && ipv.anspruchMoeglich) benefits.push({
-      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep, uebergabe,
-      label: t('schnellcheck.ipv'), qualitative: true, note: t('schnellcheck.ipvOhneBetragNote'),
-    });
-    // Sozialhilfe: nur mit Mietkontext (sonst Bedarf unvollständig) + ungedecktem
-    // Bedarf + Vermögen unter Freibetrag — sonst wäre „Anspruch" unehrlich.
-    if (numRent > 0) {
-      const sh = calculateSozialhilfe(probe);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
-        key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
-        label: t('nav.sozialhilfe'), monthly: sh.deficit,
-        // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
-        note: t('schnellcheck.sozNote') + (sh.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
-          // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
-          + (sh.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : ''),
-      });
-    }
-    // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
-    const el = checkELEligibility(probe);
-    if (el?.eligible) benefits.push({
+      label: t('schnellcheck.ipv'), monthly: w.monthly, qualitative: w.qualitative,
+      note: t(w.qualitative ? 'schnellcheck.ipvOhneBetragNote' : 'schnellcheck.ipvNote'),
+    } : w.key === 'soz' ? {
+      key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
+      label: t('nav.sozialhilfe'), monthly: w.monthly,
+      // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
+      note: t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
+        // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
+        + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : ''),
+    } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
       key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,
       label: t('schnellcheck.el'), qualitative: true, note: t('schnellcheck.elNote'),
-    });
-  } catch { /* Orientierung, nie blockierend */ }
+    }));
 
   // Instrument-Zustände (Beleg/Pegel) im selben Ehrlichkeits-/Crash-Gate berechnen
   // wie die Leistungsliste: werfen calculateIPV/calculateSozialhilfe, degradiert die
@@ -210,7 +205,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitL
   }, label);
 
   return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t(mitLandkarte ? 'anspruch.pageTitle' : 'schnellcheck.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('anspruchCheck.stepIncome')),
     React.createElement('p', { style: s.intro }, t('schnellcheck.intro')),
 
     // Angaben — auto vorbelegt, frei anpassbar
@@ -261,23 +256,13 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitL
               React.createElement('div', { style: { marginTop: space.md + 'px' } }, benefits.map(benefitRow))
             )
           : React.createElement('div', { style: { ...s.section, color: palette.mid, fontSize: text.sm, lineHeight: leading.relaxed } },
-              canton ? t('schnellcheck.noResult') : t('schnellcheck.noResultNoCanton'))
+              canton ? t('wasStehtMirZu.ergebnisKeiner') : t('schnellcheck.noResultNoCanton'))
         )
       : React.createElement('div', { style: { ...s.section, color: palette.mid, fontSize: text.sm } }, t('schnellcheck.enterIncome')),
 
-    // Zusammengelegt: die ganze Landkarte — ohne was oben schon gerechnet steht
-    // (Schlüssel der Landkarte: ipv, sozialhilfe, el). Sie deckt die zwei Listen
-    // darunter vollständig ab (Situationen, Stipendien, Mietzins, IV, ALV, EO, Kinder).
-    mitLandkarte && React.createElement('div', { style: { marginTop: space.lg + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.md + 'px' } }, t('schnellcheck.moreWays')),
-      React.createElement(LandkarteGruppen, {
-        palette, t, onNavigate,
-        ohne: benefits.map((b) => ({ ipv: 'ipv', soz: 'sozialhilfe', el: 'el' })[b.key]).filter(Boolean),
-      })),
-
     // Weitere Wege (versteckte Berechtigungen / Stipendien) — immer sichtbar,
     // weil vieles nicht rein einkommensabhängig ist.
-    !mitLandkarte && React.createElement('div', { style: { marginTop: space.lg + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { marginTop: space.lg + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, t('schnellcheck.moreWays')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px', alignItems: 'flex-start' } },
         wegeItem('situationen', t('schnellcheck.waySituationen')),
@@ -289,7 +274,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitL
     // Lage-abhängige Leistungen: hängen nicht am Einkommen, sondern an einer
     // Lebenslage → nur Wegweiser, keine Berechnung (Ehrlichkeit/Haftung). Genau
     // die Trennung, die der Schnellcheck sonst nur implizit macht, sichtbar gemacht.
-    !mitLandkarte && React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, t('schnellcheck.lageTitle')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed } }, t('schnellcheck.lageIntro')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px', alignItems: 'flex-start' } },
