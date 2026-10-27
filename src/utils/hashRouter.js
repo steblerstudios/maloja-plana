@@ -48,8 +48,12 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      Wächter: unterlagenUmleitung.test.js). Auch die Brotkrumen der Dossiers zeigen hierher.
 //   budget           → Monatsbudget, Teil «CSV importieren» unten (27.10.2026, F7-L7, Gruppe I;
 //                      Wächter: budgetImportUmleitung.test.js). Der Import ist keine eigene Seite mehr.
+//   merkliste        → «Was ansteht», Reiter «Merkliste» (27.10.2026, F7-L10, Gruppe H; Wächter:
+//                      merklisteReiter.test.js). `wahl` sagt der Zielseite, welcher Reiter offen ist —
+//                      main.jsx reicht sie als `reiter` weiter (Zustand `wahl`).
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
+  merkliste: { view: 'calendar', chapterIndex: null, anker: null, wahl: 'merkliste' },
   budget: { view: 'sync', chapterIndex: null, anker: 'mp-budget-import' },
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },

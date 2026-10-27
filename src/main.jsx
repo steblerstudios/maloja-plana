@@ -136,7 +136,7 @@ const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
 const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
-const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
+// MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
@@ -576,6 +576,9 @@ const AppInner = ({ demo }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
+  // Reiter bzw. Auswahl einer Seite, die frühere Seiten bündelt (F7, 27.10.2026): «Merkliste» in «Was ansteht»,
+  // «Alles / Für ein Amt / Für den Notfall» in «Unterlagen drucken». Kommt aus UMLEITUNGEN (`wahl`) oder `extra`.
+  const [wahl, setWahl] = useState(() => (parseHash() || {}).wahl);
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
@@ -723,6 +726,7 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
+        setWahl(parsed.wahl);
         setHerkunft(leseHerkunft());
       });
       // Ein alter Eintrag (#/finanzuebersicht) kommt als Kapitel mit Sprungmarke zurück — dorthin,
@@ -1002,7 +1006,7 @@ const AppInner = ({ demo }) => {
     // Eine Ansicht, die es nicht mehr als eigene Seite gibt (utils/hashRouter.js): an ihr Ziel,
     // dort zur Sprungmarke. finanzuebersicht → Kapitel Finanzen, Auswertung (24.10.2026).
     if (umleitung) {
-      handleNavigate(umleitung.view, umleitung.chapterIndex, extra);
+      handleNavigate(umleitung.view, umleitung.chapterIndex, umleitung.wahl || extra);
       springeZuAnker(umleitung.anker);
       return;
     }
@@ -1010,6 +1014,7 @@ const AppInner = ({ demo }) => {
     stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
+    setWahl(extra);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
       setActiveChapter(chapterIdx);
     }
@@ -1746,7 +1751,6 @@ const AppInner = ({ demo }) => {
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
         // key: datenModus — wie beim Kalender: nach «Beispiel verlassen» keine Beispiel-Liste über die echte.
-        view === 'merkliste' && React.createElement(MerklisteView, { key: datenModus, palette, t, onNavigate: handleNavigate }),
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1774,7 +1778,7 @@ const AppInner = ({ demo }) => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
         // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
-        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel' }),
+        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: setWahl }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
