@@ -99,9 +99,10 @@ export const SEARCH_VIEWS = [
 const WEITERE_NAMEN = {
   search: 'nav.search',
   settings: 'nav.settings',
-  ansprueche: 'anspruch.pageTitle',
+  // ansprueche und schnellcheck führen seit 27.10.2026 hierher (UMLEITUNGEN) — derselbe Name.
+  ansprueche: 'dashboard.anspruchTitle',
   situationen: 'dashboard.anspruchTitle',
-  schnellcheck: 'anspruch.pageTitle', // seit 27.09.2026 dieselbe Seite wie «ansprueche»
+  schnellcheck: 'dashboard.anspruchTitle',
   notfalleinstieg: 'chapters.notfall.title',
   notfallkarte: 'notfallkarte.title',
   gesundheit: 'arztkoffer.title',
