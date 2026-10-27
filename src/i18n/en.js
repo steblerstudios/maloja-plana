@@ -5418,7 +5418,10 @@ export default {
     title: 'Emergency card',
     intro: 'If something happens, you don’t have to remember anything. This card tells you what to say — and reads out the details you’ve saved.',
     step1Title: 'Dial the number',
-    step1Text: 'Tap a number to call. You can reach 112 from a mobile even without credit and via another network — but not without a SIM card.',
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    step1Text: 'Tap a number to call. Emergency numbers are free of charge — even with no credit left.',
+    quelle: 'Source: [[TSO Art. 27 para. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/en#art_27]] (as of 1 July 2026, checked in October 2026).',
     num_sani: 'Ambulance',
     num_police: 'Police',
     num_fire: 'Fire brigade',

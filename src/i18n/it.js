@@ -5391,7 +5391,10 @@ export default {
     title: 'Scheda d’emergenza',
     intro: { sie: 'Se succede qualcosa, non deve ricordare nulla. Questa scheda le dice cosa dire — e mostra i dati che ha salvato.', du: 'Se succede qualcosa, non devi ricordare nulla. Questa scheda ti dice cosa dire — e mostra i dati che hai salvato.' },
     step1Title: 'Comporre il numero',
-    step1Text: { sie: 'Tocchi un numero per chiamare. Il 112 è raggiungibile con il cellulare anche senza credito e tramite un’altra rete — ma non senza scheda SIM.', du: 'Tocca un numero per chiamare. Il 112 è raggiungibile con il cellulare anche senza credito e tramite un’altra rete — ma non senza scheda SIM.' },
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    step1Text: { sie: 'Tocchi un numero per chiamare. I numeri d’emergenza sono gratuiti — anche senza credito.', du: 'Tocca un numero per chiamare. I numeri d’emergenza sono gratuiti — anche senza credito.' },
+    quelle: 'Fonte: [[OST art. 27 cpv. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/it#art_27]] (stato 1° luglio 2026, verificato a ottobre 2026).',
     num_sani: 'Ambulanza',
     num_police: 'Polizia',
     num_fire: 'Pompieri',

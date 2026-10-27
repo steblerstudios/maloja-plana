@@ -3706,8 +3706,12 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Sche insatge capita, na stuais Vus betg tegnair endament nagut. Questa carta As di tge dir — e mussa las indicaziuns che Vus avais memorisà.', du: 'Sche insatge capita, na stos ti betg tegnair endament nagut. Questa carta ti di tge dir — e mussa las indicaziuns che ti has memorisà.' },
     step1Title: 'Tscherner il numer',
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step1Text: { sie: 'Tutgai sin in numer per telefonar. Il 112 funcziunescha era senza credit.', du: 'Tutga sin in numer per telefonar. Il 112 funcziunescha era senza credit.' },
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    step1Text: { sie: 'Tutgai sin in numer per telefonar. Ils numers d\'urgenza èn gratuits — era senza credit.', du: 'Tutga sin in numer per telefonar. Ils numers d\'urgenza èn gratuits — era senza credit.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    quelle: 'Funtauna: [[FDV Art. 27 al. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/de#art_27]] (stadi 1. fanadur 2026, controllà en october 2026).',
     num_sani: 'Ambulanza',
     num_police: 'Polizia',
     num_fire: 'Pumpiers',

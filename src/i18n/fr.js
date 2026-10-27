@@ -5418,7 +5418,10 @@ export default {
     title: 'Carte d’urgence',
     intro: { sie: 'Si quelque chose arrive, vous n’avez rien à retenir. Cette carte vous dit quoi dire — et affiche les informations que vous avez enregistrées.', du: 'Si quelque chose arrive, tu n’as rien à retenir. Cette carte te dit quoi dire — et affiche les informations que tu as enregistrées.' },
     step1Title: 'Composer le numéro',
-    step1Text: { sie: 'Touchez un numéro pour appeler. Le 112 est joignable avec un portable même sans crédit et via un autre réseau — mais pas sans carte SIM.', du: 'Touche un numéro pour appeler. Le 112 est joignable avec un portable même sans crédit et via un autre réseau — mais pas sans carte SIM.' },
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    step1Text: { sie: 'Touchez un numéro pour appeler. Les numéros d\'urgence sont gratuits — même sans crédit.', du: 'Touche un numéro pour appeler. Les numéros d\'urgence sont gratuits — même sans crédit.' },
+    quelle: 'Source : [[OST art. 27, al. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/fr#art_27]] (état au 1er juillet 2026, vérifié en octobre 2026).',
     num_sani: 'Ambulance',
     num_police: 'Police',
     num_fire: 'Pompiers',

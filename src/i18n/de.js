@@ -5461,7 +5461,10 @@ export default {
     title: 'Notfallkarte',
     intro: { sie: 'Wenn etwas passiert, müssen Sie sich nichts merken. Diese Karte sagt Ihnen, was Sie sagen — und liest Ihre hinterlegten Angaben ab.', du: 'Wenn etwas passiert, musst du dir nichts merken. Diese Karte sagt dir, was du sagst — und liest deine hinterlegten Angaben ab.' },
     step1Title: 'Nummer wählen',
-    step1Text: { sie: 'Tippen Sie auf eine Nummer, um anzurufen. Die 112 erreichen Sie mit dem Handy auch ohne Guthaben und über ein fremdes Netz — nicht aber ohne SIM-Karte.', du: 'Tippe auf eine Nummer, um anzurufen. Die 112 erreichst du mit dem Handy auch ohne Guthaben und über ein fremdes Netz — nicht aber ohne SIM-Karte.' },
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    step1Text: { sie: 'Tippen Sie auf eine Nummer, um anzurufen. Die Notrufnummern sind kostenlos — auch mit leerem Guthaben.', du: 'Tippe auf eine Nummer, um anzurufen. Die Notrufnummern sind kostenlos — auch mit leerem Guthaben.' },
+    quelle: 'Quelle: [[FDV Art. 27 Abs. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/de#art_27]] (Stand 1. Juli 2026, geprüft im Oktober 2026).',
     num_sani: 'Sanität',
     num_police: 'Polizei',
     num_fire: 'Feuerwehr',
