@@ -2462,7 +2462,7 @@ export default {
   wohnenInstrument: {
     titel: 'Frais de logement par mois',
     titelAusprobiert: 'Frais de logement par mois · à l\'essai',
-    anteil: '{pct} % du revenu (CHF {einkommen})',
+    anteil: '{pct} % du revenu net (CHF {einkommen})',
     anteilBrutto: '{pct} % du revenu brut (CHF {einkommen})',
     drittel: 'un tiers',
     faustregel: 'Repère approximatif souvent utilisé : des frais de logement jusqu\'à environ un tiers du revenu. Ce n\'est pas une limite fixe — avec un petit revenu, moins peut déjà être serré.',
@@ -3158,6 +3158,7 @@ export default {
     zoneLowSub: 'bas salaires',
     zoneHighSub: 'hauts salaires',
     yourWage: { sie: 'Votre salaire : CHF {amount}', du: 'Ton salaire : CHF {amount}' },
+    yourWage40: { sie: 'Votre salaire, calculé sur 40 h par semaine : CHF {amount}', du: 'Ton salaire, calculé sur 40 h par semaine : CHF {amount}' },
     geschaetztAusNetto: 'Estimé depuis un net de CHF {netto} — la barre montre le brut approximatif (le contrôle du salaire minimum ne s\'applique qu\'avec le vrai brut).',
     readoutNear: { sie: 'Votre salaire est proche de la médiane suisse.', du: 'Ton salaire est proche de la médiane suisse.' },
     readoutAbove: { sie: 'Votre salaire est supérieur à la médiane suisse.', du: 'Ton salaire est supérieur à la médiane suisse.' },

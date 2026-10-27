@@ -2472,7 +2472,7 @@ export default {
   wohnenInstrument: {
     titel: 'Wohnkosten pro Monat',
     titelAusprobiert: 'Wohnkosten pro Monat · ausprobiert',
-    anteil: '{pct} % des Einkommens (CHF {einkommen})',
+    anteil: '{pct} % des Nettoeinkommens (CHF {einkommen})',
     anteilBrutto: '{pct} % des Bruttoeinkommens (CHF {einkommen})',
     drittel: 'ein Drittel',
     faustregel: 'Als grobe Orientierung gilt oft: Wohnkosten bis rund einen Drittel des Einkommens. Eine feste Grenze ist das nicht — bei kleinem Einkommen kann auch weniger schon knapp werden.',
@@ -3170,6 +3170,7 @@ export default {
     zoneLowSub: 'Tieflohn',
     zoneHighSub: 'Spitzenlohn',
     yourWage: { sie: 'Ihr Lohn: CHF {amount}', du: 'Dein Lohn: CHF {amount}' },
+    yourWage40: { sie: 'Ihr Lohn, auf 40 Std. pro Woche gerechnet: CHF {amount}', du: 'Dein Lohn, auf 40 Std. pro Woche gerechnet: CHF {amount}' },
     geschaetztAusNetto: 'Aus Netto CHF {netto} geschätzt — der Balken zeigt das ungefähre Brutto (die Mindestlohn-Prüfung greift nur mit echtem Bruttolohn).',
     readoutNear: { sie: 'Ihr Lohn liegt nahe am Schweizer Median.', du: 'Dein Lohn liegt nahe am Schweizer Median.' },
     readoutAbove: { sie: 'Ihr Lohn liegt über dem Schweizer Median.', du: 'Dein Lohn liegt über dem Schweizer Median.' },

@@ -271,9 +271,12 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.xs, color: palette.mid },
     },
-      React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium, whiteSpace: 'nowrap' } },
+      // Der längere Eintrag «… auf 40 Std. pro Woche gerechnet …» darf umbrechen, sonst wird er auf 375 px zu breit.
+      React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium, whiteSpace: (partTime || overFullTime) ? 'normal' : 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'fuellung', color: arbeitColor, palette }),
-        t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
+        // F7-K2-3 (27.10.2026): Der Wert hier ist auf 40 Std. umgerechnet (BFS-Norm). Ohne diesen Zusatz las
+        // man neben dem Dashboard («≈ brutto CHF 6’796») eine zweite, scheinbar widersprüchliche Bruttozahl.
+        t((partTime || overFullTime) ? 'lohnEinordnung.yourWage40' : 'lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
       React.createElement('span', { style: { color: readoutColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: valenceColor, palette }),
         t('lohnEinordnung.median') + ': CHF ' + fmt(median))

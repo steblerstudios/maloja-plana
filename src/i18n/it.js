@@ -2462,7 +2462,7 @@ export default {
   wohnenInstrument: {
     titel: 'Costi abitativi al mese',
     titelAusprobiert: 'Costi abitativi al mese · in prova',
-    anteil: '{pct}% del reddito (CHF {einkommen})',
+    anteil: '{pct}% del reddito netto (CHF {einkommen})',
     anteilBrutto: '{pct}% del reddito lordo (CHF {einkommen})',
     drittel: 'un terzo',
     faustregel: 'Un orientamento approssimativo spesso usato: costi abitativi fino a circa un terzo del reddito. Non è un limite fisso — con un reddito basso anche meno può già essere stretto.',
@@ -3460,6 +3460,7 @@ export default {
     zoneLowSub: 'bassi salari',
     zoneHighSub: 'alti salari',
     yourWage: { sie: 'Il Suo salario: CHF {amount}', du: 'Il tuo salario: CHF {amount}' },
+    yourWage40: { sie: 'Il Suo salario, calcolato su 40 ore settimanali: CHF {amount}', du: 'Il tuo salario, calcolato su 40 ore settimanali: CHF {amount}' },
     geschaetztAusNetto: 'Stimato da un netto di CHF {netto} — la barra mostra il lordo approssimativo (la verifica del salario minimo vale solo con il lordo reale).',
     readoutNear: { sie: 'Il Suo salario è vicino alla mediana svizzera.', du: 'Il tuo salario è vicino alla mediana svizzera.' },
     readoutAbove: { sie: 'Il Suo salario è superiore alla mediana svizzera.', du: 'Il tuo salario è superiore alla mediana svizzera.' },

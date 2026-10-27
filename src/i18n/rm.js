@@ -4518,7 +4518,8 @@ export default {
   wohnenInstrument: {
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",
-    anteil: "{pct} % da l'entrada (CHF {einkommen})",
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    anteil: "{pct} % da l'entrada netta (CHF {einkommen})",
     anteilBrutto: "{pct} % da l'entrada bruta (CHF {einkommen})",
     drittel: 'in terz',
     faustregel: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
@@ -4558,6 +4559,8 @@ export default {
     zoneLowSub: 'bass salaris',
     zoneHighSub: 'auts salaris',
     yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    yourWage40: { sie: 'Voss salari, quintà sin 40 uras l\'emna: CHF {amount}', du: 'Tes salari, quintà sin 40 uras l\'emna: CHF {amount}' },
     geschaetztAusNetto: 'Stimà d\'in net da CHF {netto} — la balla mussa il brut proximativ (la controlla dal salari minim vala mo cun il brut real).',
     readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },

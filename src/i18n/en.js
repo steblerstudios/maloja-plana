@@ -2462,7 +2462,7 @@ export default {
   wohnenInstrument: {
     titel: 'Housing costs per month',
     titelAusprobiert: 'Housing costs per month · trying out',
-    anteil: '{pct}% of income (CHF {einkommen})',
+    anteil: '{pct}% of net income (CHF {einkommen})',
     anteilBrutto: '{pct}% of gross income (CHF {einkommen})',
     drittel: 'one third',
     faustregel: 'A rough guide often used: housing costs up to about a third of income. It is not a fixed limit — on a small income, less can already be tight.',
@@ -3158,6 +3158,7 @@ export default {
     zoneLowSub: 'low pay',
     zoneHighSub: 'top pay',
     yourWage: 'Your wage: CHF {amount}',
+    yourWage40: 'Your wage, based on 40 hours a week: CHF {amount}',
     geschaetztAusNetto: 'Estimated from net CHF {netto} — the bar shows the approximate gross (the minimum-wage check only applies with real gross).',
     readoutNear: 'Your wage is close to the Swiss median.',
     readoutAbove: 'Your wage is above the Swiss median.',
