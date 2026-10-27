@@ -11,6 +11,7 @@ import { RECHNER_KAPITEL } from '../config/brotkrumePfade.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { AlvRechner } from '../AlvRechner.jsx';
 import { EOrechner } from '../EOrechner.jsx';
+import { Stundenlohn } from '../Stundenlohn.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
 // steht das Ergebnis ZUERST (role="status"), dann «Ihre Angaben», dann was zu tun ist, die offizielle Stelle und
@@ -25,6 +26,7 @@ const maria = { basis: { canton: 'ZH', dateOfBirth: '1992-03-14' }, finanzen: { 
 // [Ansicht, Komponente, Profil mit Ergebnis]
 const RECHNER = [
   ['alv', AlvRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
+  ['stundenlohn', Stundenlohn, { ...maria, finanzen: { stundenlohnRechner: { betrag: '24', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' } } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
@@ -106,5 +108,22 @@ describe('ALV in der Form X', () => {
     for (const sprache of [de, en, fr, itTranslations, rm]) expect(sprache.nav.alv).toBe(sprache.alv.title);
     const { SEARCH_VIEWS } = await import('../config/ansichtenRegister.js');
     expect(SEARCH_VIEWS.find((v) => v.view === 'alv').aliases).toContain('alv-taggeld');
+  });
+});
+
+const ergebnisTeil = (html) => html.slice(html.indexOf('data-teil="ergebnis"'), html.indexOf('data-teil="angaben"'));
+
+describe('Stundenlohn in der Form X', () => {
+  const mit = { finanzen: { stundenlohnRechner: { betrag: '24', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' } } };
+  it('Rechnung und Mindestlohn-Einordnung stehen im Ergebnis, vor den Angaben', () => {
+    const teil = ergebnisTeil(render(Stundenlohn, mit));
+    expect(teil).toContain(de.stundenlohnView.rechnungTitel);
+    expect(teil).toContain(de.stundenlohnView.einordnungTitel);
+  });
+  it('ohne Betrag: der App-Satz an der Stelle des Ergebnisses', () => {
+    expect(ergebnisTeil(render(Stundenlohn, leer))).toContain(de.stundenlohnView.brauchtBetrag);
+  });
+  it('Ja/Nein/Weiss-nicht-Fragen als radiogroup', () => {
+    expect((render(Stundenlohn, mit).match(/role="radiogroup"/g) || []).length).toBeGreaterThanOrEqual(3);
   });
 });

@@ -32,6 +32,7 @@ export const ELTERN_TITEL = Object.freeze({
 export const RECHNER_KAPITEL = Object.freeze({
   alv: 'finanzen',
   eo: 'finanzen',
+  stundenlohn: 'finanzen',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.
