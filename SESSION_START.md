@@ -17,6 +17,29 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧭 **Nachtrag 27.10.2026, 12:08 — Fassung 7: Rundgang durch alle Seiten, 39 «Ja» als acht Entwurfs-PRs gebaut. Nichts gemergt, NICHT live.**
+> (Sitzung «Maloja Plana Aufräumen», Fortsetzung in einer neuen Sitzung, weil das Kontextfeld der alten voll war.)
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 12:08): main = `98539e99` (27.10. 02:32) · live = `4299bfb9` (0.1.48-beta,
+> 23.10.) · **156 Commits** zwischen live und main · offene PRs: #626–#633, alle **Entwurf**.
+> - **Rundgang** (Dashboard, 7 Kapitel, 33 Abläufe, 24 Rechner, 20 weitere Seiten, Handy 375 px) mit Befunden und
+>   Bildern: `docs/design/fassung-7-2026-10-27/BEFUNDE.md`, Vergleichsseite `fassung-7.html` (gebaut mit `bauen.py`).
+>   Entscheide von Stebler Studios: `docs/design/mockups-stardust-2026-10-23/VERGLEICH.md`, Abschnitt «Fassung 7».
+>   Stand 2: 61 von 71 gewählt — **39 Ja · 1 Nein · 21 Besprechen**; die 10 Dashboard-Punkte (F7-D1–D10) noch offen.
+> - **Gebaut, je Entwurfs-PR, je geprüft** (Tests, Lint, Build, `size-limit`, Browser-Stichproben):
+>   #626 sichtbare Fehler · #627 Namen/Aufräumen · #628 Kapitel Finanzen · #629 Versicherungs-Übersicht (war gebaut,
+>   nur Wächter + Doku) · #630 «Was steht mir zu?» (O) + Gruppe A · #631 Rechner-Form X, alle zehn · #632 Budget-Import,
+>   Merkliste als Reiter, «Unterlagen drucken», Rückweg Vorsorge · #633 Ablauf-Schale W.
+> - **Merge-Reihenfolge (Vorschlag, nach dem Deploy vom 29.10.):** 626 → 627 → 628 → 629 → 630 → 631, dann 632 und 633
+>   **vor ihrem Merge auf das neue main nachziehen** (Konflikte in i18n, `main.jsx`, `hashRouter.js`, Registern). Probe
+>   der ersten sechs: 7’370 Tests grün, `size-limit` **64,67 von 65 kB** — vor 632/633 die Grösse neu messen.
+> - **Fehlbefunde des Rundgangs (nichts zu bauen):** F7-A12/D8 (Deko-Schrift ist `aria-hidden`), F7-L6 (§11 war gebaut),
+>   F7-A7 (Verweise bestanden). **Anders als befundet:** F7-K2-3 (kein Rechenfehler, 6’472 = Brutto auf 40 Std.),
+>   F7-S12 (112: nur «kostenlos» belegt, FDV Art. 27 Abs. 2; SIM-Aussage entfernt).
+> - **Offen:** die 21 «Besprechen» + 10 Dashboard-Punkte · Fachprüfung Sozialhilfe-Pegel (`data/pegel.js` meldet
+>   «Vermögen über Freibetrag» vor «Einkommen deckt Bedarf», siehe #630) · Copy-Prüfer und rm-Gegenlese für alle neuen
+>   Texte (`TODO(rm)`) · Deploy 29.10. bleibt bei `98539e99`-Stand bzw. dem, was bis dahin gemergt ist (Stebler Studios).
+
 > ✅ **Nachtrag 27.10.2026, 02:20 — Merge-Nacht: zwölf PRs der Reihenfolge + #624 «Was ansteht» nach Entwurf G
 > gemergt, #561 geschlossen. NICHT live.** (Sitzung «Maloja Plana Aufräumen», Fortsetzung, alle Merges auf Zuruf von Stebler Studios.)
 >
