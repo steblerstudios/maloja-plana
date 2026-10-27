@@ -1211,6 +1211,10 @@ export default {
     noReset: "Maloja can't reset your passphrase — only you know it.",
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026)
+    weicheFrage: 'What would you like to switch?',
+    weicheGrund: 'Basic insurance (KVG)',
+    weicheZusatz: 'Supplementary insurance (VVG)',
     quelle: 'Sources: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (German text where no English exists, checked September 2026).',
     checkIntro: "A lower premium alone isn't a reason to switch. Pause for a moment — does the switch really fit?",
     checkPoint1: "Basic insurance covers the same legally defined benefits at every insurer. Switching doesn't change your coverage and doesn't interrupt ongoing treatment.",

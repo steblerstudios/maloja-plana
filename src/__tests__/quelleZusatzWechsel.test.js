@@ -8,7 +8,7 @@ import fr from '../i18n/fr.js';
 import itTranslations from '../i18n/it.js'; // nicht `it` — kollidiert mit vitest it()
 import rm from '../i18n/rm.js';
 import { renderSource } from '../utils/renderSource.js';
-import { ZusatzWechsel } from '../ZusatzWechsel.jsx';
+import { ZusatzWechsel } from '../KVGWechsel.jsx'; // seit F7-A5 der Weg «Zusatz» in «Krankenkasse wechseln»
 import { ohneNummer } from '../AblaufSchale.jsx';
 
 // K1 + K2 der Bau-Liste (30.09.2026):

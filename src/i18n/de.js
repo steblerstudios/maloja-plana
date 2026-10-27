@@ -1212,6 +1212,10 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026): Weiche in Schritt 1 — ein Ablauf für Grund- und Zusatzversicherung.
+    weicheFrage: { sie: 'Was möchten Sie wechseln?', du: 'Was möchtest du wechseln?' },
+    weicheGrund: 'Grundversicherung (KVG)',
+    weicheZusatz: 'Zusatzversicherung (VVG)',
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
     checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },

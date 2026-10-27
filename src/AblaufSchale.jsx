@@ -340,6 +340,9 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // das Datum, daneben ein ruhiger Knopf «In den Kalender». Vorher stand bei allen Abläufen ausser dem
 // Umzug ein Hauptknopf «Frist «…» in den Kalender (Datum)». `kompakt`: nur der ruhige Knopf (für
 // eine Karte, die EreignisFrist selbst zeichnet).
+// `art` ('frist' | sonst Erinnerung, Entscheid 27.09.2026 «Frist oder Erinnerung»): rechtliche Frist →
+// «bis Datum», Erinnerung → «Erinnerung am Datum». `buttonLabel` (der bisherige ausführliche Knopftext,
+// «Frist «…» in den Kalender (Datum)») bleibt als zugänglicher Name des Knopfs — was in den Kalender geht.
 // a11y (Entwurf W): nach «In den Kalender» verschwindet der Knopf; der Fokus geht auf die Bestätigung
 // (Live-Region), statt verloren zu gehen.
 const kartenStil = (palette, vorbei) => ({
@@ -347,7 +350,7 @@ const kartenStil = (palette, vorbei) => ({
   border: '1px solid ' + (vorbei ? palette.gold || palette.border : palette.border),
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
-export const FristButton = ({ palette, t, doneLabel, calendarLabel, reminder: reminderRoh, onNavigate, onSaved, kompakt = false }) => {
+export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarLabel, reminder: reminderRoh, onNavigate, onSaved, kompakt = false }) => {
   const s = styles(palette);
   const vorlaeufig = useVorlaeufig();
   const ablauf = useContext(AblaufNameContext);
@@ -364,7 +367,7 @@ export const FristButton = ({ palette, t, doneLabel, calendarLabel, reminder: re
         ? React.createElement('button', { type: 'button', className: 'mp-link', style: s.link, onClick: () => onNavigate('calendar') }, calendarLabel)
         : null)
     : React.createElement('button', {
-      type: 'button', onClick: handle,
+      type: 'button', onClick: handle, 'aria-label': buttonLabel || undefined,
       style: {
         display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
         padding: '0 ' + space.md + 'px', background: 'none', border: '1.5px solid ' + palette.sand, borderRadius: radius.sm,
@@ -375,7 +378,7 @@ export const FristButton = ({ palette, t, doneLabel, calendarLabel, reminder: re
   return React.createElement('div', { 'data-frist-karte': 'offen', style: kartenStil(palette, false) },
     React.createElement('div', { style: { minWidth: 0 } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, reminder.title),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('ablauf.fristErinnerung', { date: formatDE(reminder.dueDate) }))),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(reminder.dueDate) }))),
     inhalt);
 };
 
@@ -384,10 +387,11 @@ export const FristButton = ({ palette, t, doneLabel, calendarLabel, reminder: re
 // Termin, sondern der ruhige Satz «vorbei — bei der Stelle nachfragen». Die
 // Rechnung selbst (`frist`) kommt aus utils/fristen.js — nie später als das Gesetz.
 // `wert`/`onWert` optional: wer das Datum auch anderswo braucht, hält es selbst.
-// Seit Entwurf W (F7-A1) immer als Karte: «{Titel der Erinnerung} · bis {Datum}» mit «In den Kalender»,
+// Seit Entwurf W (F7-A1) immer als Karte: «{Titel der Erinnerung} · bis {Datum}» (bzw. «Erinnerung am …»,
+// wenn `art` nicht 'frist' ist) mit «In den Kalender»,
 // darüber der Satz mit Gesetzesartikel (`hinweisKey`) wie bisher. `karte` (Umzug, Fassung 5) setzt
 // eigene Texte: { titelKey, bisKey, knopfKey }. Vorbei: dieselbe Karte mit dem ruhigen Satz statt Knopf.
-export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey, doneKey, calendarKey,
+export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbeiKey, buttonKey, doneKey, calendarKey,
   reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate, ohneFeld = false, karte = null, ablauf = '' }) => {
   const s = styles(palette);
   const [eigen, setEigen] = useState(wert || '');
@@ -402,10 +406,11 @@ export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey,
       : React.createElement(React.Fragment, null,
         React.createElement('div', { style: { minWidth: 0 } },
           React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, karte ? t(karte.titelKey) : reminderTitle),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(karte ? karte.bisKey : 'ablauf.fristBis', { date: formatDE(ziel) }))),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(karte ? karte.bisKey : art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(ziel) }))),
         React.createElement(FristButton, {
           // Ein neues Datum ist ein neuer Termin — der Knopf beginnt wieder unbestätigt.
           key: ziel, palette, t, onNavigate, kompakt: true, reminder,
+          buttonLabel: buttonKey ? t(buttonKey, { date: formatDE(ziel) }) : null,
           doneLabel: t(doneKey),
           calendarLabel: calendarKey ? t(calendarKey) : null,
         }))

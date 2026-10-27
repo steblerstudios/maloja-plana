@@ -1211,6 +1211,10 @@ export default {
     noReset: { sie: 'Maloja ne peut pas réinitialiser votre phrase secrète — vous seul la connaissez.', du: 'Maloja ne peut pas réinitialiser ta phrase secrète — toi seul la connais.' },
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026)
+    weicheFrage: { sie: 'Que souhaitez-vous changer ?', du: 'Que souhaites-tu changer ?' },
+    weicheGrund: 'Assurance de base (LAMal)',
+    weicheZusatz: 'Assurance complémentaire (LCA)',
     quelle: 'Sources : [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_7]] (vérifié en septembre 2026).',
     checkIntro: "Une prime plus basse n'est pas à elle seule une raison de changer. Un instant de réflexion — le changement convient-il vraiment ?",
     checkPoint1: { sie: 'L\'assurance de base couvre les mêmes prestations légales chez tous les assureurs. Changer ne modifie pas votre couverture et n\'interrompt aucun traitement en cours.', du: 'L\'assurance de base couvre les mêmes prestations légales chez tous les assureurs. Changer ne modifie pas ta couverture et n\'interrompt aucun traitement en cours.' },

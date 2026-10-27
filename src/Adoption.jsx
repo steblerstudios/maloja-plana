@@ -32,7 +32,7 @@ export const Adoption = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'adoption-frist', frist: (d) => plusTage(plusMonate(d, 12), -1),
         labelKey: 'adoption.fristLabel', hinweisKey: 'adoption.fristHinweis', vorbeiKey: 'adoption.fristVorbei',
-        buttonKey: 'adoption.step5Button', doneKey: 'adoption.step5Done', calendarKey: 'adoption.step5CalendarLink',
+        art: 'frist', buttonKey: 'adoption.step5Button', doneKey: 'adoption.step5Done', calendarKey: 'adoption.step5CalendarLink',
         reminderTitle: t('adoption.reminderTitle'), category: 'insurance',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('adoption.step5LinkEo'), onClick: () => onNavigate('eo') })

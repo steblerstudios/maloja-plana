@@ -41,5 +41,4 @@ export const VERWANDTE = {
   volljaehrig: ['lehre', 'dienst', 'kkerst'],
   dienst: ['volljaehrig', 'lehre'],
   todesfall: ['vorsorgeauftrag', 'pensionierung'],
-  zusatzwechsel: ['kvgwechsel', 'kkerst'],
 };

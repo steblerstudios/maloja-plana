@@ -26,7 +26,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'zuzug-einreise', frist: (d) => plusTage(d, 14), wert: einreise, onWert: setEinreise,
         labelKey: 'zuzug.fristLabel', hinweisKey: 'zuzug.fristHinweis', vorbeiKey: 'zuzug.fristVorbei',
-        buttonKey: 'zuzug.step1Button', doneKey: 'zuzug.step1Done', calendarKey: 'zuzug.step1CalendarLink',
+        art: 'frist', buttonKey: 'zuzug.step1Button', doneKey: 'zuzug.step1Done', calendarKey: 'zuzug.step1CalendarLink',
         reminderTitle: t('zuzug.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step1LinkBewilligung'), onClick: () => onNavigate('bewilligung') }),
@@ -49,7 +49,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
         palette, t, onNavigate, id: 'zuzug-fuehrerausweis', ohneFeld: true, wert: einreise, onWert: setEinreise,
         frist: (d) => plusTage(plusMonate(d, 12), -1),
         labelKey: 'zuzug.fristLabel', hinweisKey: 'zuzug.fristHinweisFa', vorbeiKey: 'zuzug.fristVorbeiFa',
-        buttonKey: 'zuzug.step4Button', doneKey: 'zuzug.step4Done', calendarKey: 'zuzug.step1CalendarLink',
+        art: 'frist', buttonKey: 'zuzug.step4Button', doneKey: 'zuzug.step4Done', calendarKey: 'zuzug.step1CalendarLink',
         reminderTitle: t('zuzug.reminderTitleFa'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step4Link'), onClick: () => onNavigate('fuehrerausweis') })

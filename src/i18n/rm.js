@@ -1437,6 +1437,12 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheFrage: { sie: 'Tge vulais Vus midar?', du: 'Tge vuls ti midar?' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheGrund: 'Assicuranza da basa (LAMal)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheZusatz: 'Assicuranza cumplementara (LCA)',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)

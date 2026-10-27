@@ -28,7 +28,7 @@ export const Dienst = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'dienst-frist', frist: (d) => plusTage(plusMonate(d, -3), -1),
         labelKey: 'dienst.fristLabel', hinweisKey: 'dienst.fristHinweis', vorbeiKey: 'dienst.fristVorbei',
-        buttonKey: 'dienst.step3Button', doneKey: 'dienst.step3Done', calendarKey: 'dienst.step3CalendarLink',
+        art: 'frist', buttonKey: 'dienst.step3Button', doneKey: 'dienst.step3Done', calendarKey: 'dienst.step3CalendarLink',
         reminderTitle: t('dienst.reminderTitle'), category: 'admin',
       })
     ),
@@ -43,7 +43,7 @@ export const Dienst = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'dienst-ersatz', frist: (d) => plusTage(d, 30),
         labelKey: 'dienst.ersatzLabel', hinweisKey: 'dienst.ersatzHinweis', vorbeiKey: 'dienst.ersatzVorbei',
-        buttonKey: 'dienst.step5Button', doneKey: 'dienst.step5Done', calendarKey: 'dienst.step5CalendarLink',
+        art: 'frist', buttonKey: 'dienst.step5Button', doneKey: 'dienst.step5Done', calendarKey: 'dienst.step5CalendarLink',
         reminderTitle: t('dienst.ersatzReminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('dienst.step5Link'), onClick: () => onNavigate('tax') })

@@ -181,7 +181,7 @@ describe('Umzug — ein Schritt nach dem anderen', () => {
 describe('EreignisFrist ohne eigene Karten-Texte (alle anderen Abläufe): Satz + Karte', () => {
   it('Satz mit Datum, Karte «Titel · bis Datum» mit «In den Kalender»', () => {
     const html = renderToStaticMarkup(React.createElement(EreignisFrist, {
-      palette, t, id: 'x', frist: () => '2099-01-24', wert: '2099-01-10',
+      palette, t, art: 'frist', id: 'x', frist: () => '2099-01-24', wert: '2099-01-10',
       labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
       buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
       reminderTitle: 'X',
@@ -191,6 +191,7 @@ describe('EreignisFrist ohne eigene Karten-Texte (alle anderen Abläufe): Satz +
     expect(html).toContain('>X<');
     expect(html).toContain('bis ' + formatDE('2099-01-24'));
     expect(html).toContain('In den Kalender');
-    expect(html).not.toContain('Frist «Anmeldung Gemeinde» in den Kalender');
+    // Der ausführliche Knopftext bleibt als zugänglicher Name (was in den Kalender geht), nicht als Aufschrift.
+    expect(html).toContain('aria-label="Frist «Anmeldung Gemeinde» in den Kalender (' + formatDE('2099-01-24') + ')"');
   });
 });

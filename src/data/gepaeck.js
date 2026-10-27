@@ -55,7 +55,7 @@ export const GEGENSTAENDE = [
       { key: 'unfall', view: 'unfallkrankheit', g: ['M12 5v14', 'M5 12h14'] },
       { key: 'kkwechsel', view: 'kvgwechsel', g: ['M4 12a8 8 0 0 1 13-6l3 3', 'M20 12a8 8 0 0 1-13 6l-3-3', 'M20 3v6h-6', 'M4 21v-6h6'] },
       { key: 'kkerst', view: 'kkerst', g: ['M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z', 'M12 8.5v5', 'M9.5 11h5'] },
-      { key: 'zusatz', view: 'zusatzwechsel', g: ['M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z', 'M9 11.5h6', 'M12 8.5v6', 'M17.5 16.5l2 2', 'M19.5 16.5l-2 2'] },
+      // «Zusatzversicherung wechseln» ist seit F7-A5 (27.10.2026) der Weg «Zusatz» in «Krankenkasse wechseln».
       { key: 'iv', view: 'iv', g: ['M12 4.5a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8', 'M12 8v5h4.5', 'M8 11l4 1.2', 'M10 13a3.8 3.8 0 1 0 5.4 3.4'] },
     ],
   },

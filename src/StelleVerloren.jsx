@@ -62,7 +62,7 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
           : t(coverVorbei ? 'stelleVerloren.step2Vorbei' : 'stelleVerloren.step2Hinweis', { date: formatDE(coverEnd) })),
       coverEnd && !coverVorbei && React.createElement(FristButton, {
         key: coverEnd, palette, t,
-        buttonLabel: t('stelleVerloren.step2Button', { date: formatDE(coverEnd) }),
+        art: 'frist', buttonLabel: t('stelleVerloren.step2Button', { date: formatDE(coverEnd) }),
         doneLabel: t('stelleVerloren.step2Done'),
         calendarLabel: t('stelleVerloren.step2CalendarLink'),
         onNavigate,

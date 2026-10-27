@@ -24,7 +24,7 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'kind-frist', frist: (d) => plusMonate(d, 3),
         labelKey: 'kind.fristLabel', hinweisKey: 'kind.fristHinweis', vorbeiKey: 'kind.fristVorbei',
-        buttonKey: 'kind.step2Button', doneKey: 'kind.step2Done', calendarKey: 'kind.step2CalendarLink',
+        art: 'frist', buttonKey: 'kind.step2Button', doneKey: 'kind.step2Done', calendarKey: 'kind.step2CalendarLink',
         reminderTitle: t('kind.reminderTitle'), category: 'insurance',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step2Link'), onClick: () => onNavigate('praemien') })

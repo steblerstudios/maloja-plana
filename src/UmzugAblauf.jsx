@@ -117,7 +117,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
         palette, t, onNavigate, id: 'umzug-frist', frist: (d) => plusTage(d, 14),
         wert: umzugsDatum, onWert: setUmzugsDatum,
         labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
-        buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
+        art: 'frist', buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
         karte: { titelKey: 'umzug.fristKarteTitel', bisKey: 'umzug.fristKarteBis', knopfKey: 'kvg.addToCalendar' },
         reminderTitle: t('umzug.reminderTitle'), category: 'admin', ablauf: 'umzug',
         reminderNotes: t('umzug.reminderNotes'),

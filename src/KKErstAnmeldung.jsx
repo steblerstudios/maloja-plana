@@ -27,7 +27,7 @@ export const KKErstAnmeldung = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'kkErst-frist', frist: (d) => plusMonate(d, 3),
         labelKey: 'kkErst.fristLabel', hinweisKey: 'kkErst.fristHinweis', vorbeiKey: 'kkErst.fristVorbei',
-        buttonKey: 'kkErst.step1Button', doneKey: 'kkErst.step1Done', calendarKey: 'kkErst.step1CalendarLink',
+        art: 'frist', buttonKey: 'kkErst.step1Button', doneKey: 'kkErst.step1Done', calendarKey: 'kkErst.step1CalendarLink',
         reminderTitle: t('kkErst.reminderTitle'), category: 'insurance',
       })
     ),

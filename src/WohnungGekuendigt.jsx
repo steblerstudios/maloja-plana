@@ -24,7 +24,7 @@ export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'wohnungGekuendigt-frist', frist: (d) => plusTage(d, 30),
         labelKey: 'wohnungGekuendigt.fristLabel', hinweisKey: 'wohnungGekuendigt.fristHinweis', vorbeiKey: 'wohnungGekuendigt.fristVorbei',
-        buttonKey: 'wohnungGekuendigt.step1Button', doneKey: 'wohnungGekuendigt.step1Done', calendarKey: 'wohnungGekuendigt.step1CalendarLink',
+        art: 'frist', buttonKey: 'wohnungGekuendigt.step1Button', doneKey: 'wohnungGekuendigt.step1Done', calendarKey: 'wohnungGekuendigt.step1CalendarLink',
         reminderTitle: t('wohnungGekuendigt.reminderTitle'), category: 'admin',
       }),
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('wohnungGekuendigt.step1Befristet'))

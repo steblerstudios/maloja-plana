@@ -27,13 +27,13 @@ export const Ergaenzungsleistungen = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'ergaenzungsleistungen-frist', frist: (d) => plusMonate(d, 6),
         labelKey: 'ergaenzungsleistungen.fristLabel', hinweisKey: 'ergaenzungsleistungen.fristHinweis', vorbeiKey: 'ergaenzungsleistungen.fristVorbei',
-        buttonKey: 'ergaenzungsleistungen.step3Button', doneKey: 'ergaenzungsleistungen.step3Done', calendarKey: 'ergaenzungsleistungen.step3CalendarLink',
+        art: 'frist', buttonKey: 'ergaenzungsleistungen.step3Button', doneKey: 'ergaenzungsleistungen.step3Done', calendarKey: 'ergaenzungsleistungen.step3CalendarLink',
         reminderTitle: t('ergaenzungsleistungen.reminderTitle'), category: 'insurance',
       }),
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'ergaenzungsleistungen-heim', frist: (d) => plusMonate(d, 6),
         labelKey: 'ergaenzungsleistungen.heimLabel', hinweisKey: 'ergaenzungsleistungen.heimHinweis', vorbeiKey: 'ergaenzungsleistungen.heimVorbei',
-        buttonKey: 'ergaenzungsleistungen.heimButton', doneKey: 'ergaenzungsleistungen.step3Done', calendarKey: 'ergaenzungsleistungen.step3CalendarLink',
+        art: 'frist', buttonKey: 'ergaenzungsleistungen.heimButton', doneKey: 'ergaenzungsleistungen.step3Done', calendarKey: 'ergaenzungsleistungen.step3CalendarLink',
         reminderTitle: t('ergaenzungsleistungen.heimReminderTitle'), category: 'insurance',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('ergaenzungsleistungen.step3LinkPension'), onClick: () => onNavigate('pensionierung') }),

@@ -83,7 +83,6 @@ const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx
 const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
 const Stundenlohn = React.lazy(() => import('./Stundenlohn.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
-const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
 // (ternär mit import.meta.env.DEV) → im Prod-Build wird der Import wegoptimiert,
 // Haupt-Bundle bleibt byte-neutral.
@@ -1712,7 +1711,6 @@ const AppInner = ({ demo }) => {
           onUnlock: async (pp) => { if (pp !== 'test1234') { const e = new Error('wrong'); throw e; } alert('Entsperrt (Stub) — echte Verdrahtung folgt in Phase 2b-UI.'); },
           onLegal: () => handleNavigate('legal'),
         }),
-        view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate, datenModus }),
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),

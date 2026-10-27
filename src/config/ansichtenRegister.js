@@ -25,8 +25,8 @@ import { SUCHBARE_WERKZEUGE } from '../data/werkzeugRegister.js';
 // Balken oben und Zeichen im Kopf (Entscheid Stebler Studios 27.09.2026, Probe).
 export const ABLAEUFE = [
   { view: 'kkerst', bereich: 'versicherungen', nav: 'nav.kkerst', sub: 'nav.sub.kkerst', icon: 'insurance', aliases: ['krankenkasse', 'grundversicherung', 'neu in der schweiz', 'caisse maladie', 'cassa malati', 'health insurance'] },
-  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa'] },
-  { view: 'zusatzwechsel', bereich: 'versicherungen', nav: 'zusatzWechsel.title', sub: 'nav.sub.zusatzwechsel', icon: 'insurance', aliases: ['zusatzversicherung', 'vvg', 'kündigung', 'complémentaire', 'complementare'] },
+  // F7-A5 (27.10.2026): ein Ablauf für Grund- und Zusatzversicherung; `#/zusatzwechsel` ist eine Umleitung hierher.
+  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa', 'zusatzversicherung', 'vvg', 'complémentaire', 'complementare'] },
   { view: 'neuerjob', bereich: 'arbeit', nav: 'nav.neuerjob', sub: 'nav.sub.neuerjob', icon: 'lebenslauf', aliases: ['job', 'stelle', 'arbeitsvertrag', 'erste stelle', 'emploi', 'lavoro'] },
   { view: 'stelleverloren', bereich: 'arbeit', nav: 'nav.stelleverloren', sub: 'nav.sub.stelleverloren', icon: 'lebenslauf', aliases: ['kündigung', 'arbeitslos', 'rav', 'chômage', 'disoccupazione', 'unemployed'] },
   { view: 'unfallkrankheit', bereich: 'gesundheit', nav: 'nav.unfallkrankheit', sub: 'nav.sub.unfallkrankheit', icon: 'notfall', aliases: ['unfall', 'krank', 'uvg', 'taggeld', 'arbeitsunfähig', 'accident', 'infortunio'] },

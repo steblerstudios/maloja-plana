@@ -23,7 +23,7 @@ export const BewilligungFristen = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'bewilligung-frist', frist: (d) => plusTage(d, -14),
         labelKey: 'bewilligung.fristLabel', hinweisKey: 'bewilligung.fristHinweis', vorbeiKey: 'bewilligung.fristVorbei',
-        buttonKey: 'bewilligung.step1Button', doneKey: 'bewilligung.step1Done', calendarKey: 'bewilligung.step1CalendarLink',
+        art: 'frist', buttonKey: 'bewilligung.step1Button', doneKey: 'bewilligung.step1Done', calendarKey: 'bewilligung.step1CalendarLink',
         reminderTitle: t('bewilligung.reminderTitle'), category: 'admin',
       })
     ),
