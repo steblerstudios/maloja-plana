@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Schnellcheck } from './Schnellcheck.jsx';
-import Lebenssituationen from './Lebenssituationen.jsx';
+import { LebenslagenAuswahl } from './Lebenssituationen.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from './config/cantonalData.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
@@ -13,6 +13,9 @@ import { zurueckZeichen } from './IconSystem.jsx';
 // (Lebenssituationen) — ohne Zurück-Navigieren. Beide Bausteine unverändert
 // wiederverwendet; der Wrapper fügt nur einen ruhigen Schritt-Indikator und die
 // Weiter/Zurück-Führung hinzu. Keim des späteren Wizards (#4.4.3).
+// Seit 27.10.2026 (Entscheid O): eigener Ablauf, nur von «Was steht mir zu?» erreichbar
+// («Lieber Schritt für Schritt?»); Schritt 2 ist dieselbe Auswahl wie dort (LebenslagenAuswahl),
+// «Fertig» führt dorthin zurück.
 export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
   const [step, setStep] = useState(1);
   // Die in Schritt 1 (Schnellcheck) frei angepassten Zahlen — anfangs das Profil,
@@ -106,7 +109,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         : emptyLine(t('anspruchCheck.resultEmptySituation')),
 
       React.createElement('button', {
-        type: 'button', onClick: () => onNavigate('ansprueche'),
+        type: 'button', onClick: () => onNavigate('situationen'),
         style: {
           display: 'block', marginTop: space.md + 'px', background: 'none', border: 'none', padding: 0,
           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
@@ -172,7 +175,10 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     indicator,
 
     step === 1 && React.createElement(Schnellcheck, { palette, t, data, onNavigate, onProbeChange: setProbe }),
-    step === 2 && React.createElement(Lebenssituationen, { palette, t, data, onNavigate }),
+    step === 2 && React.createElement('div', null,
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruchCheck.stepSituation')),
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: leading.relaxed } }, t('lebenszustaende.sectionIntro')),
+      React.createElement(LebenslagenAuswahl, { palette, t, data, onNavigate })),
     step === 3 && renderResult(),
 
     React.createElement('div', {
@@ -188,7 +194,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       ),
       step === 3 && React.createElement(React.Fragment, null,
         secondaryBtn(zurueckZeichen(), t('anspruchCheck.zurueck'), () => setStep(2)),
-        React.createElement(PrimaryButton, { palette, onClick: () => onNavigate('ansprueche') }, t('anspruchCheck.fertig'))
+        React.createElement(PrimaryButton, { palette, onClick: () => onNavigate('situationen') }, t('anspruchCheck.fertig'))
       )
     )
   );

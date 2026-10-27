@@ -124,7 +124,8 @@ const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
 const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
 const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
-const Schnellcheck = React.lazy(() => import('./Schnellcheck.jsx').then(m => ({ default: m.Schnellcheck })));
+// Schnellcheck: seit 27.10.2026 keine eigene Seite — #/schnellcheck und #/ansprueche führen auf «Was steht mir zu?»
+// (UMLEITUNGEN); er bleibt Schritt 1 des geführten Anspruch-Checks (AnspruchCheck.jsx).
 const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
 const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
 const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
@@ -666,7 +667,7 @@ const AppInner = ({ demo }) => {
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   // ('finanzuebersicht' stand hier bis 24.10.2026; ob der Knopf ins Kapitel Finanzen kommt,
   // ist Bauschritt 6 der Zusammenlegung, docs/entscheide/finanzen-fusion.md.)
-  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
+  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'situationen', 'anspruchcheck'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -1756,7 +1757,6 @@ const AppInner = ({ demo }) => {
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Seit 27.09.2026 eine Seite: Leistungs-Kompass und Anspruchs-Landkarte zusammen.
         // Beide alten Adressen bleiben gültig und zeigen dasselbe.
-        (view === 'schnellcheck' || view === 'ansprueche') && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate, mitLandkarte: true }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),

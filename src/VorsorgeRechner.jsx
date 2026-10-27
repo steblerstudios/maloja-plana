@@ -960,7 +960,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement(OfficialLinkBox, { palette, t, data, ids: ['praemienverbilligung'] }),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
         onNavigate && React.createElement('button', {
-          onClick: () => onNavigate('schnellcheck'),
+          onClick: () => onNavigate('situationen'),
           style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
         }, t('vr.altersHilfenCheck'))
       ),

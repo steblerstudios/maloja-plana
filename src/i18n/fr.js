@@ -1666,6 +1666,24 @@ export default {
     footNote: { sie: 'Cet aperçu ne juge rien et ne promet rien — il montre seulement ce qui pourrait vous concerner. C’est l’organe compétent qui établit le droit réel.', du: 'Cet aperçu ne juge rien et ne promet rien — il montre seulement ce qui pourrait te concerner. C’est l’organe compétent qui établit le droit réel.' },
   },
 
+  // «Was steht mir zu?» en une seule page (décision O, VERGLEICH.md ; construit le 27.10.2026, F7-A3).
+  wasStehtMirZu: {
+    intro: { sie: 'Beaucoup de personnes ont droit à des prestations sans le savoir. Vous voyez ici ce qui entre en ligne de compte avec vos données — et ce qui correspond à votre situation de vie. Tout reste sur votre appareil — pas de profil, pas d’évaluation.', du: 'Beaucoup de personnes ont droit à des prestations sans le savoir. Tu vois ici ce qui entre en ligne de compte avec tes données — et ce qui correspond à ta situation de vie. Tout reste sur ton appareil — pas de profil, pas d’évaluation.' },
+    mitAngaben: { sie: 'Avec vos données', du: 'Avec tes données' },
+    anpassen: 'Adapter les données pour faire un essai',
+    lebenslage: { sie: 'Selon votre situation de vie', du: 'Selon ta situation de vie' },
+    ergebnisKeiner: 'Avec ces données, aucun droit financier clair n’apparaît — les pistes ci-dessous couvrent davantage ; la plupart ne dépendent pas uniquement du revenu.',
+    ergebnisEiner: 'Avec ces données, une piste possible apparaît : {weg}.',
+    ergebnisMehrere: 'Avec ces données, des pistes possibles apparaissent : {wege}.',
+    markeNetto: 'Net {betrag} / mois',
+    markeNettoGeschaetzt: 'Net ≈ {betrag} / mois (estimé)',
+    markeMiete: 'Loyer {betrag}',
+    markeKK: 'Caisse-maladie {betrag}',
+    markeHaushalt: '{canton} · {size} personne(s)',
+    schrittTitel: 'Plutôt pas à pas ?',
+    schrittSub: { sie: 'Vérification guidée — revenu, situation de vie, votre aperçu', du: 'Vérification guidée — revenu, situation de vie, ton aperçu' },
+  },
+
   anspruchCheck: {
     stepWord: 'Étape',
     stepIncome: 'Selon le revenu',
@@ -3053,7 +3071,7 @@ export default {
     eligibleAntrag: 'Montant possible — uniquement sur demande',
     disclaimer: 'À titre indicatif. Le droit effectif est vérifié par l\'autorité compétente.',
     notEligible: 'Non éligible',
-    schnellcheckGerechnet: 'Calculé avec les chiffres de la vérification rapide',
+    schnellcheckGerechnet: 'Calculé avec les chiffres de « À quoi ai-je droit ? »',
     schnellcheckProfilBleibt: { sie: 'Votre profil reste inchangé tant que vous n’y reprenez pas les chiffres.', du: 'Ton profil reste inchangé tant que tu n’y reprends pas les chiffres.' },
     schnellcheckUebernehmen: 'Reprendre dans le profil',
     schnellcheckUebernommen: 'Repris dans le profil',
