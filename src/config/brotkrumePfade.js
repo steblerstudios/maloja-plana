@@ -26,6 +26,13 @@ export const ELTERN_TITEL = Object.freeze({
   versicherungskapitel: 'chapters.versicherungen.title',
 });
 
+// Rechner in der Form X (F7-A2, Entscheid 24.10./27.10.2026): Ansicht → Kapitel (CHAPTER_KEYS), unter dem
+// sie in der Brotkrume steht. Die Hülle components/RechnerForm.jsx zeichnet «Übersicht › Kapitel › Rechner»
+// selbst; main.jsx lässt darum «← Übersicht» weg. Ein Eintrag hier = der Rechner ist umgestellt.
+export const RECHNER_KAPITEL = Object.freeze({
+  alv: 'finanzen',
+});
+
 // Die Stufen als Daten — prüfbar ohne DOM.
 export const stufen = (view) => {
   const pfad = PFADE[view];

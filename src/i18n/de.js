@@ -1439,7 +1439,7 @@ export default {
     vorsorge: 'Vorsorge-Rechner',
     eo: 'Erwerbsersatz (EO)',
     stipendien: 'Stipendien',
-    alv: "ALV-Taggeld",
+    alv: "Arbeitslosenentschädigung",
     sozialhilfe: 'Sozialhilfe',
     direktlinks: 'Offizielle Links',
     cv: 'Lebenslauf',
@@ -6808,6 +6808,7 @@ export default {
     bruttolohn: "Bisheriger Bruttolohn pro Monat (CHF)",
     bruttolohnHint: { sie: "Ihr AHV-pflichtiger Bruttolohn der letzten 6 Monate. Versichert sind max. CHF 12’350/Monat.", du: "Dein AHV-pflichtiger Bruttolohn der letzten 6 Monate. Versichert sind max. CHF 12’350/Monat." },
     bruttoNettoHint: "Das hinterlegte Einkommen ist als Netto markiert — für die ALV bitte den Bruttolohn eintragen.",
+    bruttoGeschaetzt: { sie: "Geschätzt aus dem Nettolohn im Profil (CHF {netto}). Tragen Sie den Bruttolohn ein, wenn Sie ihn kennen — er hat Vorrang.", du: "Geschätzt aus dem Nettolohn im Profil (CHF {netto}). Trag den Bruttolohn ein, wenn Du ihn kennst — er hat Vorrang." },
     beitragsmonate: "Beitragsmonate",
     beitragsmonateHint: { sie: "Wie viele Monate haben Sie in den letzten 2 Jahren gearbeitet? Ab 12 Monaten besteht meist Anspruch.", du: "Wie viele Monate hast Du in den letzten 2 Jahren gearbeitet? Ab 12 Monaten besteht meist Anspruch." },
     kinder: "Unterhaltspflicht für Kinder unter 25?",
@@ -7079,5 +7080,13 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
+  // Rechner-Form X (F7-A2, 27.10.2026): Teile der einen Hülle components/RechnerForm.jsx.
+  rechnerForm: {
+    angaben: { sie: 'Ihre Angaben', du: 'Deine Angaben' },
+    vonN: '{x} von {n}',
+    tun: 'Was zu tun ist',
+    quelle: 'Quelle: {q}',
+    geschaetzt: 'geschätzt',
   },
 };
