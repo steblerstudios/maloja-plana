@@ -17,6 +17,7 @@ import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
 import { StipendienView } from '../StipendienView.jsx';
 import { VorsorgeRechner } from '../VorsorgeRechner.jsx';
 import { SchuldenManager } from '../SchuldenManager.jsx';
+import { SozialhilfeView } from '../SozialhilfeView.jsx';
 import { Tabs } from '../components/RechnerForm.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
@@ -38,6 +39,7 @@ const RECHNER = [
   ['stipendien', StipendienView, { basis: { canton: 'BE' } }],
   ['vorsorge', VorsorgeRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
   ['schulden', SchuldenManager, { schulden: [{ id: 1, creditor: 'Test AG', amount: '500', status: 'open', category: 'sonstige' }] }],
+  ['sozialhilfe', SozialhilfeView, { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 2000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
@@ -226,5 +228,18 @@ describe('Schulden in der Form X', () => {
   it('ohne Forderungen: der Leer-Satz an der Stelle des Ergebnisses', () => {
     expect(ergebnisTeil(render(SchuldenManager, leer, { onSave: () => {} })).length).toBeGreaterThan(0);
     expect(render(SchuldenManager, leer, { onSave: () => {} })).toContain(de.schulden.emptyDebts.sie || de.schulden.emptyDebts);
+  });
+});
+
+describe('Sozialhilfe in der Form X', () => {
+  const mit = { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 2000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } };
+  it('Anspruch aus dem Rechner zuerst; der Pegel (R3) steht bei der Orientierung aus dem Profil', () => {
+    const html = render(SozialhilfeView, mit);
+    expect(ergebnisTeil(html)).toContain(de.sh.anspruch);
+    expect(html.indexOf('pegel-aufstockung')).toBeGreaterThan(html.indexOf('data-teil="angaben"'));
+  });
+  it('ohne Kanton rechnet der Rechner trotzdem, der Hinweis steht darunter', () => {
+    const html = render(SozialhilfeView, leer);
+    expect(html).toContain('data-rechner-form="sozialhilfe"');
   });
 });
