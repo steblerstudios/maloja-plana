@@ -350,7 +350,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
     },
       // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
-      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
+      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate, eigeneFranchise: userFranchise }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
         t('po.franchiseOptSaving', { high: zahl(franchiseOpt.highFra, { hoechstens: 2 }), low: zahl(franchiseOpt.lowFra, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) })),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },

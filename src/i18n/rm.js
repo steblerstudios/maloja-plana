@@ -5557,6 +5557,12 @@ export default {
     kreuzAchse: 'Custs da sanadad per onn',
     kreuzKosten: 'Custs per onn',
     kreuzLinie: 'Franchisa {franchise}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzLinieEigen: { sie: 'Vossa franchisa {franchise}', du: 'Tia franchisa {franchise}' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzLegendEigen: { sie: 'Vossa franchisa actuala ({franchise})', du: 'Tia franchisa actuala ({franchise})' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzAriaEigen: { sie: 'Vossa franchisa actuala da {franchise} è marcada sco terza lingia.', du: 'Tia franchisa actuala da {franchise} è marcada sco terza lingia.' },
     kreuzBisher: 'fin ussa',
     kreuzHochrechnung: 'Projecziun',
     kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',

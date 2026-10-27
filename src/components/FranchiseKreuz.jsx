@@ -23,7 +23,8 @@ const W_MAX = 560, W_MIN = 240, H_GROSS = 236, T = 22, B = 34;
 // `klein` (Kapitel Versicherungen, Fassung 6 Runde 9 AA): dieselbe Rechnung, niedrigere Zeichenfläche.
 const H_KLEIN = 176;
 
-export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, heute, klein }) => {
+// `eigeneFranchise` (F7-K3-3): die heutige Franchise als dritte, graphitfarbene Linie mit Raute am Ende.
+export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, heute, klein, eigeneFranchise }) => {
   const H = klein ? H_KLEIN : H_GROSS;
   const [hoverC, setHoverC] = useState(null);
   const [W, setW] = useState(W_MAX);
@@ -35,7 +36,7 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
-  const st = kreuzState(franchiseOpt, costs, heute);
+  const st = kreuzState(franchiseOpt, costs, heute, eigeneFranchise);
   if (!st.show) return null;
   const h = React.createElement;
   const num = (n) => zahl(Math.round(n || 0));
@@ -47,12 +48,14 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
   const linie = (key) => st.kurve.map((p) => x(p.c).toFixed(1) + ',' + y(p[key]).toFixed(1)).join(' ');
   const ende = st.kurve[st.kurve.length - 1];
   const farbeHoch = palette.sky, farbeTief = palette.sand;
-  // Namen am Linienende mindestens 16 px auseinander, damit sie sich nicht überdecken.
+  // Namen am Linienende mindestens 16 px auseinander, damit sie sich nicht überdecken (mit eigener Linie: drei).
   const labelY = (() => {
-    let a = y(ende.tief), b = y(ende.hoch);
-    if (Math.abs(a - b) < 16) { const m = (a + b) / 2, s = a <= b ? -8 : 8; a = m + s; b = m - s; }
-    return { tief: a, hoch: b };
+    const keys = st.eigeneFra ? ['tief', 'hoch', 'eigen'] : ['tief', 'hoch'];
+    const pos = keys.map((k) => ({ k, v: y(ende[k]) })).sort((p, q) => p.v - q.v);
+    for (let i = 1; i < pos.length; i++) if (pos[i].v - pos[i - 1].v < 16) pos[i].v = pos[i - 1].v + 16;
+    return Object.fromEntries(pos.map((p) => [p.k, p.v]));
   })();
+  const farbeEigen = palette.text;
 
   const readout =
     st.mode === 'orientation' ? t('po.kreuzOrientation')
@@ -76,13 +79,14 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
   const swatch = (color, label, form) => h('span', {
     key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid },
   },
-    h('span', { 'aria-hidden': true, style: { width: '10px', height: '10px', borderRadius: (form === 'kreis' ? radius.full : radius.hair) + 'px', background: color, flexShrink: 0 } }),
+    h('span', { 'aria-hidden': true, style: { width: '10px', height: '10px', borderRadius: (form === 'kreis' ? radius.full : radius.hair) + 'px', background: color, flexShrink: 0, transform: form === 'raute' ? 'rotate(45deg) scale(0.85)' : undefined } }),
     label);
 
   return h('div', { ref: huelle, style: { marginBottom: space.md + 'px' } },
     h('svg', {
       viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, role: 'img',
-      'aria-label': t('po.kreuzAria', { low: num(st.low), high: num(st.high), be: num(st.breakEven) }),
+      'aria-label': t('po.kreuzAria', { low: num(st.low), high: num(st.high), be: num(st.breakEven) })
+        + (st.eigeneFra ? ' ' + t('po.kreuzAriaEigen', { franchise: num(st.eigeneFra) }) : ''),
       style: { display: 'block', maxWidth: '100%', margin: '0 auto', overflow: 'visible', touchAction: 'pan-y' },
       onMouseMove: onMove, onMouseLeave: () => setHoverC(null),
     },
@@ -103,6 +107,11 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
       // die zwei Linien, 2 px, Enden mit Form + Name
       h('polyline', { points: linie('tief'), fill: 'none', stroke: farbeTief, strokeWidth: 2, strokeLinejoin: 'round' }),
       h('polyline', { points: linie('hoch'), fill: 'none', stroke: farbeHoch, strokeWidth: 2, strokeLinejoin: 'round' }),
+      st.eigeneFra && h('polyline', { points: linie('eigen'), fill: 'none', stroke: farbeEigen, strokeWidth: 1.5, strokeLinejoin: 'round' }),
+      st.eigeneFra && h('rect', { x: x(ende.c) - 4, y: y(ende.eigen) - 4, width: 8, height: 8, fill: farbeEigen, stroke: palette.surface, strokeWidth: 2, transform: 'rotate(45 ' + x(ende.c) + ' ' + y(ende.eigen) + ')' }),
+      st.eigeneFra && (schmal
+        ? h('text', { x: x(ende.c) - 8, y: labelY.eigen + 4, fontSize: 11, fill: palette.text, textAnchor: 'end' }, num(st.eigeneFra))
+        : h('text', { x: x(ende.c) + 10, y: labelY.eigen + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinieEigen', { franchise: num(st.eigeneFra) }))),
       h('rect', { x: x(ende.c) - 4, y: y(ende.tief) - 4, width: 8, height: 8, fill: farbeTief, stroke: palette.surface, strokeWidth: 2 }),
       h('circle', { cx: x(ende.c), cy: y(ende.hoch), r: 4.5, fill: farbeHoch, stroke: palette.surface, strokeWidth: 2 }),
       schmal
@@ -118,11 +127,13 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
       hv && h('g', { pointerEvents: 'none' },
         h('line', { x1: x(hoverC), x2: x(hoverC), y1: T, y2: H - B, stroke: palette.mid, strokeWidth: 1 }),
         h('circle', { cx: x(hoverC), cy: y(hv.tief), r: 3.5, fill: farbeTief }),
-        h('circle', { cx: x(hoverC), cy: y(hv.hoch), r: 3.5, fill: farbeHoch }))
+        h('circle', { cx: x(hoverC), cy: y(hv.hoch), r: 3.5, fill: farbeHoch }),
+        hv.eigen != null && h('circle', { cx: x(hoverC), cy: y(hv.eigen), r: 3, fill: farbeEigen }))
     ),
     h('div', { style: { display: 'flex', justifyContent: 'center', gap: space.md + 'px', flexWrap: 'wrap', margin: space.xs + 'px 0 ' + space.sm + 'px' } },
       swatch(farbeHoch, t('po.tachoLegendHigh'), 'kreis'),
-      swatch(farbeTief, t('po.tachoLegendLow'), 'quadrat')),
+      swatch(farbeTief, t('po.tachoLegendLow'), 'quadrat'),
+      st.eigeneFra && swatch(farbeEigen, t('po.kreuzLegendEigen', { franchise: num(st.eigeneFra) }), 'raute')),
     // Hover-/Tipp-Wert als Text unter der Grafik (bricht auf dem Handy um); Höhe reserviert,
     // damit nichts springt.
     h('div', { style: { minHeight: '1.4em', fontSize: text.xs, color: palette.text, textAlign: 'center', marginBottom: space.xs + 'px', fontVariantNumeric: 'tabular-nums' } },
