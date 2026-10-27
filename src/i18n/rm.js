@@ -4747,7 +4747,8 @@ export default {
     disclaimer: "Agid d'orientaziun. Il dretg effectiv vegn examinà da la post cumpetenta.",
     notEligible: 'Betg autorisà',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (B-1, 16.09.2026).
-    schnellcheckGerechnet: 'Calculà cun las cifras da la verifica svelta',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    schnellcheckGerechnet: 'Calculà cun las cifras da «A tge hai jau dretg?»',
     schnellcheckProfilBleibt: { sie: 'Voss profil resta nunmidà, uschè ditg che Vus na surpigliais betg las cifras.', du: 'Tes profil resta nunmidà, uschè ditg che ti na surpiglias betg las cifras.' },
     schnellcheckUebernehmen: 'Surpigliar en il profil',
     schnellcheckUebernommen: 'Surpiglià en il profil',

@@ -3083,7 +3083,7 @@ export default {
     eligibleAntrag: 'Möglicher Betrag — nur auf Antrag',
     disclaimer: 'Orientierungshilfe. Der tatsächliche Anspruch wird von der zuständigen Stelle geprüft.',
     notEligible: 'Nicht berechtigt',
-    schnellcheckGerechnet: 'Gerechnet mit den Zahlen aus dem Schnellcheck',
+    schnellcheckGerechnet: 'Gerechnet mit den Zahlen aus «Was steht mir zu?»',
     schnellcheckProfilBleibt: { sie: 'Ihr Profil bleibt unverändert, solange Sie die Zahlen nicht übernehmen.', du: 'Dein Profil bleibt unverändert, solange Du die Zahlen nicht übernimmst.' },
     schnellcheckUebernehmen: 'Ins Profil übernehmen',
     schnellcheckUebernommen: 'Ins Profil übernommen',

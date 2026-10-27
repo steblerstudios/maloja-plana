@@ -3071,7 +3071,7 @@ export default {
     eligibleAntrag: 'Possible amount — only on application',
     disclaimer: 'For orientation only. Actual entitlement is determined by the responsible authority.',
     notEligible: 'Not eligible',
-    schnellcheckGerechnet: 'Calculated with the figures from the quick check',
+    schnellcheckGerechnet: 'Calculated with the figures from «What am I entitled to?»',
     schnellcheckProfilBleibt: 'Your profile stays unchanged unless you add the figures to it.',
     schnellcheckUebernehmen: 'Add to profile',
     schnellcheckUebernommen: 'Added to profile',

@@ -3071,7 +3071,7 @@ export default {
     eligibleAntrag: 'Montant possible — uniquement sur demande',
     disclaimer: 'À titre indicatif. Le droit effectif est vérifié par l\'autorité compétente.',
     notEligible: 'Non éligible',
-    schnellcheckGerechnet: 'Calculé avec les chiffres de la vérification rapide',
+    schnellcheckGerechnet: 'Calculé avec les chiffres de « À quoi ai-je droit ? »',
     schnellcheckProfilBleibt: { sie: 'Votre profil reste inchangé tant que vous n’y reprenez pas les chiffres.', du: 'Ton profil reste inchangé tant que tu n’y reprends pas les chiffres.' },
     schnellcheckUebernehmen: 'Reprendre dans le profil',
     schnellcheckUebernommen: 'Repris dans le profil',

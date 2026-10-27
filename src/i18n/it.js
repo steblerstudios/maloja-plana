@@ -3071,7 +3071,7 @@ export default {
     eligibleAntrag: 'Importo possibile — solo su domanda',
     disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
     notEligible: 'Non avente diritto',
-    schnellcheckGerechnet: 'Calcolato con le cifre della verifica rapida',
+    schnellcheckGerechnet: 'Calcolato con le cifre di «A cosa ho diritto?»',
     schnellcheckProfilBleibt: { sie: 'Il Suo profilo resta invariato finché non vi riprende le cifre.', du: 'Il tuo profilo resta invariato finché non vi riprendi le cifre.' },
     schnellcheckUebernehmen: 'Riprendere nel profilo',
     schnellcheckUebernommen: 'Ripreso nel profilo',
