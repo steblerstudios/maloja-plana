@@ -1,12 +1,12 @@
 // Laufende Abläufe im Kalender (Entwurf «Zeitleiste», Abschnitt G, Mockups 23.10.2026; gebaut auf
-// Zuruf von Stebler Studios 27.10.2026): ein begonnener, nicht fertiger Ablauf liegt als grünes
-// Band über der Tagesleiste und, wenn er eine Frist im Kalender hat, als grüner Bogen im Jahreskreis.
+// Zuruf von Stebler Studios 27.10.2026): ein begonnener, nicht fertiger Ablauf liegt als Band in der
+// Farbe seines Bereichs unter der Tagesleiste und, wenn er eine Frist hat, als Bogen im Jahreskreis.
 //
 // Was der Kalender weiss, und nicht mehr: der Stand speichert nur «Schritt n» und «fertig»
 // (utils/ablaufStand.js), kein Anfangsdatum. Das Band beginnt darum heute — ein früherer Anfang
 // wäre erfunden. Es endet an der Frist, die der Ablauf selbst in den Kalender gelegt hat
-// (Erinnerung mit `ablauf: name`, seit 27.10.2026). Ohne Frist läuft es nur im laufenden Monat
-// bis zum Monatsende aus; in späteren Monaten steht es nicht, weil niemand weiss, wie lange.
+// (Erinnerung mit `ablauf: name`, seit 27.10.2026). Ohne Frist reicht es bis zum Ende des laufenden
+// Monats; weiter nicht, weil niemand weiss, wie lange.
 //
 // «Begonnen» heisst: es gibt einen gespeicherten Stand. Er entsteht erst, wenn man im Ablauf
 // weiterblättert (UmzugAblauf: setStand). Nur ansehen legt nichts an.
@@ -47,22 +47,26 @@ export const laufendeAblaeufe = (reminders, vorlaeufig, heute) => {
   });
 };
 
-const iso = (jahr, monat, tag) => jahr + '-' + String(monat + 1).padStart(2, '0') + '-' + String(tag).padStart(2, '0');
+const zuIso = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const tagePlus = (isoTag, n) => { const [j, m, t] = isoTag.split('-').map(Number); return zuIso(new Date(j, m - 1, t + n)); };
+const tageZwischen = (a, b) => { const [j1, m1, t1] = a.split('-').map(Number); const [j2, m2, t2] = b.split('-').map(Number); return Math.round((new Date(j2, m2 - 1, t2) - new Date(j1, m1 - 1, t1)) / 86400000); };
 
-// Lage des Bands im Monat (monat 0–11) als Tage: { vonTag, bisTag, weiterLinks, weiterRechts }.
-// weiterLinks: kommt aus dem Vormonat; weiterRechts: läuft über den Monat hinaus oder ohne Frist aus.
-// null: in diesem Monat kein Band.
-export const bandImMonat = (ablauf, jahr, monat, heute) => {
-  const erster = iso(jahr, monat, 1);
-  const letzter = iso(jahr, monat, new Date(jahr, monat + 1, 0).getDate());
-  if (!ablauf.frist && heute.slice(0, 7) !== erster.slice(0, 7)) return null;
-  const von = heute > erster ? heute : erster;
-  const bis = ablauf.frist && ablauf.frist < letzter ? ablauf.frist : letzter;
-  if (von > letzter || bis < von) return null;
-  return {
-    vonTag: Number(von.slice(8)),
-    bisTag: Number(bis.slice(8)),
-    weiterLinks: von === erster && heute < erster,
-    weiterRechts: !ablauf.frist || ablauf.frist > letzter,
-  };
+// Die Tagesleiste wie im Entwurf G: ein durchgehendes Fenster über den Monatswechsel, das drei
+// Tage vor heute beginnt (im laufenden Monat) bzw. drei Tage vor dem Ersten des gewählten Monats.
+export const FENSTER_TAGE = 42;
+export const fensterStart = (jahr, monat, heute) => {
+  const erster = zuIso(new Date(jahr, monat, 1));
+  return tagePlus(erster.slice(0, 7) === heute.slice(0, 7) ? heute : erster, -3);
+};
+export const fensterTage = (start) => Array.from({ length: FENSTER_TAGE }, (_, i) => tagePlus(start, i));
+
+// Lage des Bands im Fenster als Index der Tage: { von, bis, weiterLinks, weiterRechts }. null: kein Band.
+// Anfang ist heute (kein Startdatum gespeichert). Ende ist die Frist; ohne Frist das Ende des laufenden
+// Monats, weil niemand weiss, wie lange der Ablauf noch dauert.
+export const bandImFenster = (ablauf, start, heute) => {
+  const ende = ablauf.frist || zuIso(new Date(Number(heute.slice(0, 4)), Number(heute.slice(5, 7)), 0));
+  const von = Math.max(0, tageZwischen(start, heute));
+  const bis = Math.min(FENSTER_TAGE - 1, tageZwischen(start, ende));
+  if (von > FENSTER_TAGE - 1 || bis < 0 || bis < von) return null;
+  return { von, bis, weiterLinks: tageZwischen(start, heute) < 0, weiterRechts: tageZwischen(start, ende) > FENSTER_TAGE - 1 };
 };

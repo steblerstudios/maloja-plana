@@ -5,7 +5,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { laufendeAblaeufe, bandImMonat, ABLAEUFE_MIT_STAND, gespeicherterStand } from '../utils/laufendeAblaeufe.js';
+import { laufendeAblaeufe, bandImFenster, fensterStart, fensterTage, FENSTER_TAGE, ABLAEUFE_MIT_STAND, gespeicherterStand } from '../utils/laufendeAblaeufe.js';
 import { ablaufStandKey, ablaufStandSichern, ablaufStandLaden } from '../utils/ablaufStand.js';
 import { PASS_SCHRITTE, fristDemAblaufZuordnen } from '../AblaufSchale.jsx';
 import { Jahreskreis, bandBogen } from '../components/Jahreskreis.jsx';
@@ -85,34 +85,36 @@ describe('laufendeAblaeufe', () => {
   });
 });
 
-describe('bandImMonat', () => {
-  const mitFrist = { frist: '2026-11-10' };
-  const ohneFrist = { frist: null };
-
-  it('Monat mit heute: von heute bis Monatsende, läuft weiter', () => {
-    expect(bandImMonat(mitFrist, 2026, 9, HEUTE)).toEqual({ vonTag: 27, bisTag: 31, weiterLinks: false, weiterRechts: true });
+describe('Fenster der Tagesleiste und Lage des Bands (Entwurf G)', () => {
+  it('Fenster: im laufenden Monat drei Tage vor heute, sonst drei Tage vor dem Ersten; 42 Tage', () => {
+    expect(fensterStart(2026, 9, HEUTE)).toBe('2026-10-24');
+    expect(fensterStart(2026, 10, HEUTE)).toBe('2026-10-29');
+    expect(fensterStart(2027, 0, HEUTE)).toBe('2026-12-29');
+    const tage = fensterTage('2026-10-24');
+    expect(tage).toHaveLength(FENSTER_TAGE);
+    expect(tage[8]).toBe('2026-11-01');
   });
 
-  it('Monat mit der Frist: vom Monatsanfang (aus dem Vormonat) bis zur Frist, endet dort', () => {
-    expect(bandImMonat(mitFrist, 2026, 10, HEUTE)).toEqual({ vonTag: 1, bisTag: 10, weiterLinks: true, weiterRechts: false });
+  it('von heute bis zur Frist, über den Monatswechsel, rund an beiden Enden', () => {
+    expect(bandImFenster({ frist: '2026-11-05' }, '2026-10-24', HEUTE)).toEqual({ von: 3, bis: 12, weiterLinks: false, weiterRechts: false });
   });
 
-  it('Frist im selben Monat: von heute bis zur Frist', () => {
-    expect(bandImMonat({ frist: '2026-10-30' }, 2026, 9, HEUTE)).toEqual({ vonTag: 27, bisTag: 30, weiterLinks: false, weiterRechts: false });
+  it('Fenster beginnt nach heute: Band kommt von links herein', () => {
+    expect(bandImFenster({ frist: '2026-11-05' }, '2026-10-29', HEUTE)).toEqual({ von: 0, bis: 7, weiterLinks: true, weiterRechts: false });
   });
 
-  it('nach der Frist und vor heute: kein Band', () => {
-    expect(bandImMonat(mitFrist, 2026, 11, HEUTE)).toBeNull();
-    expect(bandImMonat(mitFrist, 2026, 8, HEUTE)).toBeNull();
+  it('Frist hinter dem Fenster: läuft rechts hinaus', () => {
+    expect(bandImFenster({ frist: '2027-02-01' }, '2026-10-24', HEUTE)).toMatchObject({ von: 3, bis: FENSTER_TAGE - 1, weiterRechts: true });
   });
 
-  it('ohne Frist: nur im laufenden Monat, bis Monatsende auslaufend', () => {
-    expect(bandImMonat(ohneFrist, 2026, 9, HEUTE)).toEqual({ vonTag: 27, bisTag: 31, weiterLinks: false, weiterRechts: true });
-    expect(bandImMonat(ohneFrist, 2026, 10, HEUTE)).toBeNull();
+  it('ohne Frist: bis Ende des laufenden Monats, nicht weiter', () => {
+    expect(bandImFenster({ frist: null }, '2026-10-24', HEUTE)).toEqual({ von: 3, bis: 7, weiterLinks: false, weiterRechts: false });
+    expect(bandImFenster({ frist: null }, '2026-11-29', HEUTE)).toBeNull();
   });
 
-  it('über den Jahreswechsel', () => {
-    expect(bandImMonat({ frist: '2027-01-08' }, 2027, 0, '2026-12-28')).toEqual({ vonTag: 1, bisTag: 8, weiterLinks: true, weiterRechts: false });
+  it('Fenster ganz vor heute oder nach der Frist: kein Band', () => {
+    expect(bandImFenster({ frist: '2026-11-05' }, '2026-08-29', HEUTE)).toBeNull();
+    expect(bandImFenster({ frist: '2026-11-05' }, '2026-11-28', HEUTE)).toBeNull();
   });
 });
 
@@ -222,7 +224,7 @@ describe('Kalender: Band über der Tagesleiste', () => {
     ]));
     const html = await render();
     expect(html).toMatch(/data-zeile="frist"/);
-    expect(html).toMatch(/Frist · <span[^>]*>Fällig in 9 Tagen<\/span> · aus dem Ablauf Umzug/);
+    expect(html).toMatch(/>Frist<\/span> · <span[^>]*>Fällig in 9 Tagen<\/span> · aus dem Ablauf Umzug/);
     expect(html).toContain('aria-label="Als erledigt markieren: Bei der neuen Gemeinde anmelden"');
   });
 
