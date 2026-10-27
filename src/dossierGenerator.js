@@ -163,6 +163,24 @@ function getSections(data, chapters, t) {
         { label: lbl('ausbildung', 'languages'), value: d('ausbildung', 'languages') },
       ].filter(r => r.value),
     },
+    // F7-S1 (Sophie 27.10.2026): Die Lebensmappe verspricht «Alle Kapitel auf einen Blick», liess aber Behörden &
+    // Rechtliches ganz weg (darum «6 Bereiche mit Angaben»). Felder wie im Kapitel, in derselben Reihenfolge.
+    {
+      key: 'behoerden',
+      title: t('chapters.behoerden.title'),
+      rows: [
+        { label: lbl('behoerden', 'cantoneOfTaxation'), value: sel('behoerden', 'cantoneOfTaxation') },
+        { label: lbl('behoerden', 'taxId'), value: d('behoerden', 'taxId') },
+        { label: lbl('behoerden', 'taxFilingDeadline'), value: dt('behoerden', 'taxFilingDeadline') },
+        { label: lbl('behoerden', 'pendingTaxReturns'), value: String(d('behoerden', 'pendingTaxReturns')) },
+        { label: lbl('behoerden', 'registryOffice'), value: d('behoerden', 'registryOffice') },
+        { label: lbl('behoerden', 'betreibungsStatus'), value: sel('behoerden', 'betreibungsStatus') },
+        { label: lbl('behoerden', 'courtCases'), value: sel('behoerden', 'courtCases') },
+        { label: lbl('behoerden', 'legalRepresentative'), value: d('behoerden', 'legalRepresentative') },
+        { label: lbl('behoerden', 'representativePhone'), value: d('behoerden', 'representativePhone') },
+        { label: lbl('behoerden', 'willMade'), value: sel('behoerden', 'willMade') },
+      ].filter(r => r.value),
+    },
     {
       key: 'notfall',
       title: t('chapters.notfall.title'),
