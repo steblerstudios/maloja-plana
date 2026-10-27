@@ -18,7 +18,7 @@
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
 > ✅ **Nachtrag 27.10.2026, 02:20 — Merge-Nacht: zwölf PRs der Reihenfolge + #624 «Was ansteht» nach Entwurf G
-> gemergt, #561 geschlossen. NICHT live.** (Sitzung «Maloja Plana Aufräumen», Fortsetzung, alle Merges auf Sophies Zuruf.)
+> gemergt, #561 geschlossen. NICHT live.** (Sitzung «Maloja Plana Aufräumen», Fortsetzung, alle Merges auf Zuruf von Stebler Studios.)
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 02:20): main = `d9aa8e06` (27.10. 01:38) · live = `4299bfb9` (0.1.48-beta,
 > 23.10.) · **155 Commits** zwischen live und main · offene PRs: **keine**. Startbündel auf main **64,48 von 65 kB**,
@@ -32,7 +32,7 @@
 >   Abschnitt G, war **nie gebaut** — `abgleich.html` nennt die Zeitleiste «übernommen», das gilt nur für den Entwurf):
 >   Kopf mit Landschaftsband, «Als Nächstes · in N Tagen», Monatsknöpfe, durchgehende Tagesleiste (42 Tage), laufender
 >   Ablauf als **Pille unter den Tagen** («Umzug · Schritt 2 von 4»), Legende, aufklappbar «Ganzer Monat» und **«Ganzes
->   Jahr»** (Jahreskreis mit Bogen bis zur Frist), Liste als Zeilen, Löschen im Tagespanel. Entscheide Sophie 27.10.:
+>   Jahr»** (Jahreskreis mit Bogen bis zur Frist), Liste als Zeilen, Löschen im Tagespanel. Entscheide Stebler Studios 27.10.:
 >   Du-Form im calendar-Abschnitt **gross** (Wächter `duGrossKalender.test.js`) · Kopf-Titel **30 px Display auch in den
 >   Kapiteln** (Wächter `kopfTitelGleich.test.js`) · verpasst oben ruhig **«verpasst» + «Was jetzt? ›»** (führt in den
 >   Ablauf der Frist, sonst zum Tag) · Hinweis **«Zum Löschen den Tag oben antippen.»**. a11y-, Copy- und
