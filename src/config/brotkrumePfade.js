@@ -6,14 +6,16 @@
 // Alle Beschriftungen gibt es schon in fünf Sprachen; neu ist nur der Name der
 // Navigation für Screenreader (`nav.pfad`).
 export const PFADE = Object.freeze({
-  lebensmappe:      { eltern: 'unterlagen',      titel: 'lebensmappe.title' },
-  behoerdendossier: { eltern: 'unterlagen',      titel: 'behoerdenDossier.title' },
-  // Runde 5 (S) und «ein Ort» (24.10.2026): das Notfall-Dossier hängt unter Notfall; in «Meine Unterlagen»
-  // steht es weiter als Eintrag.
-  notfalldossier:   { eltern: 'notfalleinstieg', titel: 'notfallDossier.title' },
+  // F7-S2 (27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier sind eine Seite «Unterlagen drucken» mit drei
+  // Auswahlen. Bis dahin standen hier drei Pfade; das Notfall-Dossier hing unter Notfall (Runde 5, «ein Ort»).
+  drucken:          { eltern: 'unterlagen',      titel: 'unterlagen.drucken.title' },
   briefe:           { eltern: 'unterlagen',      titel: 'briefe.title' },
   notfallpass:      { eltern: 'notfalleinstieg', titel: 'notfallpass.title' },
   notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
+  // F7-S10 (27.10.2026): die drei Vorsorge-Formulare unter Notfall — die Stufe führt zum Block «Vorsorge».
+  patientenverfuegung: { eltern: 'notfallvorsorge', titel: 'pv.ui.title' },
+  bestattung:       { eltern: 'notfallvorsorge', titel: 'bw.ui.title' },
+  organ:            { eltern: 'notfallvorsorge', titel: 'organ.title' },
   // Runde 9 AB (25.10.2026): Versicherungs-Übersicht unter dem Kapitel Versicherungen.
   praemien:         { eltern: 'versicherungskapitel', titel: 'po.title' },
 });
@@ -24,6 +26,7 @@ export const ELTERN_TITEL = Object.freeze({
   unterlagen: 'nav.unterlagen',
   notfalleinstieg: 'chapters.notfall.title',
   versicherungskapitel: 'chapters.versicherungen.title',
+  notfallvorsorge: 'chapters.notfall.title',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

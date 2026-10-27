@@ -70,6 +70,10 @@ describe('Merkliste im Beispiel', () => {
   });
   it('vorläufig: speichert nie; ein Moduswechsel hängt sie neu ein', () => {
     expect(lies('MerklisteView.jsx')).toMatch(/if \(vorlaeufig\) return;/);
-    expect(lies('main.jsx')).toMatch(/React\.createElement\(MerklisteView, \{ key: datenModus,/);
+    // Seit 27.10.2026 (F7-L10) ein Reiter in «Was ansteht»: der Kalender hängt beim Moduswechsel neu ein
+    // und führt die Liste für beide Reiter (gespeichert nur dort, nie im Beispiel).
+    expect(lies('main.jsx')).toMatch(/React\.createElement\(CalendarReminders, \{ key: datenModus,/);
+    expect(lies('CalendarReminders.jsx')).toContain('React.createElement(MerklisteView, { palette, t, onNavigate, punkte: todos, aendere: aendereTodos })');
+    expect(lies('CalendarReminders.jsx')).toMatch(/if \(!vorlaeufig\) saveTodos\(neu\)/);
   });
 });

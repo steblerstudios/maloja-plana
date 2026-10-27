@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, EINSTELLUNGEN, OBEN } from '../data/werkzeugRegister.js';
 import { GEGENSTAENDE, alleWege } from '../data/gepaeck.js';
-import { VALID_VIEWS } from '../utils/hashRouter.js';
+import { VALID_VIEWS, UMLEITUNGEN } from '../utils/hashRouter.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -100,7 +100,8 @@ describe('Portemonnaie und Aussenfach', () => {
     expect(GEGENSTAND_KEYS).toHaveLength(7);
     expect(GEGENSTAND_KEYS).toContain('geld');
     expect(werkzeugeImFach('geld').map(werkzeugKey).sort()).toEqual(
-      ['alv', 'budget', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'stundenlohn', 'sync', 'tax', 'taxImport'],
+      // 'budget' seit 27.10.2026 nicht mehr (F7-L7): der Import ist ein Teil von 'sync'.
+      ['alv', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'stundenlohn', 'sync', 'tax', 'taxImport'],
     );
   });
 
@@ -139,7 +140,10 @@ describe('Portemonnaie und Aussenfach', () => {
 describe('Nichts wird unerreichbar', () => {
   it('jede heute im Menü oder auf dem Dashboard erreichbare Ansicht ist nachher über Menü, Gepäck oder Einstellungen erreichbar', () => {
     const nachher = new Set([...imGepaeck(), ...imMenue(), ...inEinstellungen()]);
-    const verloren = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])].filter((v) => !nachher.has(v));
+    // Eine Ansicht, die keine eigene Seite mehr ist (UMLEITUNGEN), ist erreichbar, wenn ihr Ziel es ist —
+    // seit 27.10.2026 (F7-L7) der CSV-Import «budget» als Teil des Monatsbudgets «sync».
+    const erreichbar = (v) => nachher.has(v) || Boolean(UMLEITUNGEN[v] && nachher.has(UMLEITUNGEN[v].view));
+    const verloren = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])].filter((v) => !erreichbar(v));
     expect(verloren, 'unerreichbar: ' + verloren.join(', ')).toEqual([]);
   });
 

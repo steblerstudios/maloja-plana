@@ -56,7 +56,7 @@ import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
 const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
-const BudgetImport = React.lazy(() => import('./BudgetImport.jsx'));
+// BudgetImport: seit 27.10.2026 keine eigene Seite — Teil «CSV importieren» im Monatsbudget (UMLEITUNGEN, BudgetSync.jsx).
 const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
 const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
 const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
@@ -67,10 +67,9 @@ const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
 const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
 // MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
-const Lebensmappe = React.lazy(() => import('./Lebensmappe.jsx'));
-const NotfallDossier = React.lazy(() => import('./NotfallDossier.jsx'));
+// Lebensmappe, Notfall- und Behörden-Dossier: seit 27.10.2026 eine Seite mit drei Auswahlen (F7-S2, UMLEITUNGEN).
+const UnterlagenDrucken = React.lazy(() => import('./UnterlagenDrucken.jsx'));
 const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
-const BehoerdenDossier = React.lazy(() => import('./BehoerdenDossier.jsx'));
 const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
@@ -136,7 +135,7 @@ const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
 const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
-const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
+// MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
@@ -576,6 +575,9 @@ const AppInner = ({ demo }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
+  // Reiter bzw. Auswahl einer Seite, die frühere Seiten bündelt (F7, 27.10.2026): «Merkliste» in «Was ansteht»,
+  // «Alles / Für ein Amt / Für den Notfall» in «Unterlagen drucken». Kommt aus UMLEITUNGEN (`wahl`) oder `extra`.
+  const [wahl, setWahl] = useState(() => (parseHash() || {}).wahl);
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
@@ -666,7 +668,8 @@ const AppInner = ({ demo }) => {
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   // ('finanzuebersicht' stand hier bis 24.10.2026; ob der Knopf ins Kapitel Finanzen kommt,
   // ist Bauschritt 6 der Zusammenlegung, docs/entscheide/finanzen-fusion.md.)
-  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
+  // 'sync' statt 'budget' seit 27.10.2026 (F7-L7): der CSV-Import ist ein Teil des Monatsbudgets.
+  const SANDBOX_VIEWS = ['tax', 'sync', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -722,6 +725,7 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
+        setWahl(parsed.wahl);
         setHerkunft(leseHerkunft());
       });
       // Ein alter Eintrag (#/finanzuebersicht) kommt als Kapitel mit Sprungmarke zurück — dorthin,
@@ -1001,7 +1005,7 @@ const AppInner = ({ demo }) => {
     // Eine Ansicht, die es nicht mehr als eigene Seite gibt (utils/hashRouter.js): an ihr Ziel,
     // dort zur Sprungmarke. finanzuebersicht → Kapitel Finanzen, Auswertung (24.10.2026).
     if (umleitung) {
-      handleNavigate(umleitung.view, umleitung.chapterIndex, extra);
+      handleNavigate(umleitung.view, umleitung.chapterIndex, umleitung.wahl || extra);
       springeZuAnker(umleitung.anker);
       return;
     }
@@ -1009,6 +1013,7 @@ const AppInner = ({ demo }) => {
     stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
+    setWahl(extra);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
       setActiveChapter(chapterIdx);
     }
@@ -1663,11 +1668,6 @@ const AppInner = ({ demo }) => {
             });
           }
         }),
-        view === 'budget' && React.createElement(BudgetImport, {
-          palette, t,
-          currentBudget: activeData.finanzen || {},
-          onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
-        }),
         view === 'taxImport' && React.createElement(TaxImport, {
           palette, t,
           currentFinanzen: activeData.finanzen || {},
@@ -1692,13 +1692,13 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
-          palette, t, vorlaeufig,
+          palette, t, vorlaeufig, onNavigate: handleNavigate,
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
         // isDarkMode: das Miet-Barometer im Budget braucht die Frucht-Farbe („du" trägt die
         // Bereichsfarbe) — ohne den Prop läge `bereichFillColor` im Dunkelmodus stumm daneben.
-        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
+        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode, onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } })) }),
         view === 'premium' && React.createElement(PremiumSubsidy, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
@@ -1730,8 +1730,8 @@ const AppInner = ({ demo }) => {
         view === 'zusammenziehen' && React.createElement(Zusammenziehen, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'ergaenzungsleistungen' && React.createElement(Ergaenzungsleistungen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, lang, data: activeData, chapters, onNavigate: handleNavigate, onUpdateData: updateData }),
-        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
-        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
+        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
+        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1750,7 +1750,6 @@ const AppInner = ({ demo }) => {
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
         // key: datenModus — wie beim Kalender: nach «Beispiel verlassen» keine Beispiel-Liste über die echte.
-        view === 'merkliste' && React.createElement(MerklisteView, { key: datenModus, palette, t, onNavigate: handleNavigate }),
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1768,9 +1767,7 @@ const AppInner = ({ demo }) => {
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
-        view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
-        view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: setWahl }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
@@ -1778,7 +1775,7 @@ const AppInner = ({ demo }) => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
         // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
-        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel' }),
+        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: setWahl }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),

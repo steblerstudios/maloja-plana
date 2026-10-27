@@ -32,8 +32,10 @@ export const WERKZEUGE = [
   // ── Portemonnaie (Geld) — Entscheid 25.09.2026 ──
   { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot'] },
   { view: 'taxImport', nav: 'nav.taxImport', sub: 'nav.sub.taxImport', icon: 'document', fach: 'geld', aliases: ['steuerimport', 'import', 'steuererklärung'] },
-  { view: 'budget', nav: 'nav.budget', icon: 'csv', fach: 'geld', aliases: ['budget', 'haushalt', 'ausgaben'] },
-  { view: 'sync', nav: 'nav.budgetSync', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben'] },
+  // Seit 27.10.2026 (F7-L7) ein Eintrag: der CSV-Import ist ein Teil des Monatsbudgets; `budget` ist ein
+  // Alias (utils/hashRouter.js UMLEITUNGEN). Seine Suchwörter stehen jetzt hier. Name wie der Seitentitel
+  // («Monatsbudget», budgetSync.title) — vorher hiess der Eintrag «Budget-Sync» (nav.budgetSync, entfernt).
+  { view: 'sync', nav: 'budgetSync.title', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben', 'haushalt', 'csv', 'import'] },
   { view: 'schulden', nav: 'nav.debts', icon: 'debt', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
   { view: 'kreditkarte', nav: 'nav.kreditkarte', sub: 'nav.sub.kreditkarte', icon: 'money', fach: 'geld', aliases: ['kreditkarte', 'cashback', 'jahresgebühr', 'credit card', 'carte de crédit', 'carta di credito'] },
   // Seit 24.10.2026 keine eigene Seite: der View ist ein Alias (utils/hashRouter.js UMLEITUNGEN) und

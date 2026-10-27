@@ -4,12 +4,15 @@ import { text, weight, radius, space, leading } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
 import { FRAGEN_BW, bestattungDokument, bestattungHtml } from './data/bestattung.js';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Bestattungswünsche — eine Frage pro Seite, Vorschau, Druck (Skizze Stebler Studios 27.09.2026, F–I).
 // Regeln: data/bestattung.js · Grundlage: docs/design/vorsorge-dokumente-2026-09-27.md.
 // Antworten unter notfall.bwAntworten — getrennt vom Feld notfall.bestattungswuensche («festgehalten?»).
 
-export const Bestattung = ({ palette, t, data, onUpdateData, lang }) => {
+// Rückweg (F7-S10, 27.10.2026): Brotkrume «Übersicht › Notfall › Bestattungswünsche» und am Schluss
+// «Zurück zur Vorsorge» — ins Kapitel Notfall zum Block Vorsorge (UMLEITUNGEN notfallvorsorge).
+export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate }) => {
   const [antworten, setAntworten] = useState(() => data?.notfall?.bwAntworten || {});
   const setzen = (patch) => {
     const next = { ...antworten, ...patch };
@@ -36,12 +39,15 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang }) => {
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(bestattungHtml(antworten, data, t, lang)) },
           React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
-        React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('bw.ui.aendern'))
+        React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('bw.ui.aendern')),
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge'))
       )
     );
   };
 
-  return React.createElement(FragenAblauf, { palette, t, ns: 'bw', fragen: FRAGEN_BW, antworten, setzen, titel: t('bw.ui.title'), hinweis: t('bw.ui.hinweis'), kopf, vorschau });
+  return React.createElement(React.Fragment, null,
+    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'bestattung', onNavigate }),
+    React.createElement(FragenAblauf, { palette, t, ns: 'bw', fragen: FRAGEN_BW, antworten, setzen, titel: t('bw.ui.title'), hinweis: t('bw.ui.hinweis'), kopf, vorschau }));
 };
 
 export default Bestattung;

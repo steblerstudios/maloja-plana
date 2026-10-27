@@ -8,6 +8,7 @@ import { getChapters, LIGHT_PALETTE, CHAPTER_KEYS } from '../config/constants.js
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import { DEMO_DATA } from '../config/demoData.js';
+import { UMLEITUNGEN } from '../utils/hashRouter.js';
 import { sumAllExpenses, sumTotalIncome } from '../utils/monatsrechnung.js';
 
 // Fassung 5 · Kapitel Finanzen (Entscheide Stebler Studios 23.10.2026, VERGLEICH.md
@@ -123,7 +124,9 @@ describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
 
   it('die Ziele sind Ansichten, die die App wirklich zeigt (main.jsx)', () => {
     const main = fs.readFileSync(path.resolve(__dirname, '../main.jsx'), 'utf8');
-    for (const v of ['neuerjob', 'sync', 'behoerdendossier', 'tresor']) expect(main).toContain("view === '" + v + "' && React.createElement(");
+    // 'behoerdendossier' ist seit 27.10.2026 (F7-S2) eine Umleitung auf «Unterlagen drucken» (drucken).
+    for (const v of ['neuerjob', 'sync', 'drucken', 'tresor']) expect(main).toContain("view === '" + v + "' && React.createElement(");
+    expect(UMLEITUNGEN.behoerdendossier).toMatchObject({ view: 'drucken', wahl: 'amt' });
   });
 
   it('«Als Nächstes» mit Titel, Satz und dem Weiter-Knopf', () => {

@@ -20,6 +20,7 @@ import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, ABLAEUFE_MIT_STAND } from './utils/laufendeAblaeufe.js';
 import landschaft from './assets/berge/landschaft.webp?url';
+import { MerklisteView } from './MerklisteView.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -83,7 +84,19 @@ const ArtMarke = ({ art, farbe, erledigt, palette, gross }) => {
 
 // ─── Component ──────────────────────────────────────────────
 // isMobile brauchte nur das alte Monatsraster (6 statt 12 Spalten); seit dem Jahreskreis ungenutzt.
-export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) => {
+// Zwei Reiter (F7-L10, 27.10.2026): «Was ansteht» (die Seite, wie sie war) und «Merkliste» (früher eine
+// eigene Seite, #/merkliste leitet hierher). `reiter`/`onReiter` aus main.jsx (Zustand `wahl`); ohne
+// `onReiter` (Tests) merkt sich die Seite den Reiter selbst.
+export const REITER = ['ansicht', 'merkliste'];
+// Pfeiltasten wie bei jeder Reiterleiste (WAI-ARIA Tabs): links/rechts wechseln (rundum), Pos1/Ende
+// springen. Gibt den neuen Reiter zurück — oder null bei einer anderen Taste.
+export const reiterNachTaste = (aktuell, taste) => {
+  const i = REITER.indexOf(aktuell);
+  const ziel = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: REITER.length - 1 }[taste];
+  return ziel === undefined ? null : REITER[(ziel + REITER.length) % REITER.length];
+};
+
+export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reiter: wahl, onReiter }) => {
   // Im Beispiel und beim Ausprobieren (Entscheid 18.10.2026): der Kalender beginnt leer, was
   // man einträgt, liegt nur im Arbeitsspeicher. Die echten Erinnerungen bleiben unsichtbar
   // und unberührt. main.jsx hängt den Kalender beim Moduswechsel neu ein (key: datenModus).
@@ -120,6 +133,17 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   // Orten, gleicher Zustand. Gespeichert wird nur bei einer Änderung, nie im Beispiel.
   const [todos, setTodos] = useState(() => (vorlaeufig ? [] : loadTodos()));
   const aendereTodos = (fn) => setTodos(prev => { const neu = fn(prev); if (!vorlaeufig) saveTodos(neu); return neu; });
+  const [eigenerReiter, setEigenerReiter] = useState(wahl);
+  const offen = (onReiter ? wahl : eigenerReiter) === 'merkliste' ? 'merkliste' : 'ansicht';
+  const zeigeReiter = onReiter || setEigenerReiter;
+  const reiterTaste = (e) => {
+    const neu = reiterNachTaste(offen, e.key);
+    if (!neu) return;
+    e.preventDefault();
+    zeigeReiter(neu);
+    const el = document.getElementById('mp-reiter-' + neu);
+    if (el) el.focus();
+  };
   const [verteilen, setVerteilen] = useState(null); // id des Merkpunkts, der gerade einen Tag bekommt
   const leisteRef = useRef(null);
   const monateRef = useRef(null);
@@ -389,6 +413,19 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
       ),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, t('calendar.untertitel'))
     ),
+
+    // Reiter «Was ansteht · Merkliste» (F7-L10). Der erste zeigt die Seite unverändert (Entwurf G).
+    React.createElement('div', { role: 'tablist', 'aria-label': t('nav.wasAnsteht'), onKeyDown: reiterTaste, style: { display: 'flex', gap: '4px', borderBottom: '1px solid ' + palette.border, marginBottom: space.md + 'px' } },
+      REITER.map((k) => React.createElement('button', {
+        key: k, type: 'button', role: 'tab', id: 'mp-reiter-' + k, 'aria-selected': offen === k, 'aria-controls': 'mp-reiter-' + k + '-teil',
+        tabIndex: offen === k ? 0 : -1, style: reiter(offen === k), onClick: () => zeigeReiter(k),
+      }, t(k === 'merkliste' ? 'nav.merkliste' : 'nav.wasAnsteht')))
+    ),
+
+    offen === 'merkliste'
+      ? React.createElement('div', { role: 'tabpanel', id: 'mp-reiter-merkliste-teil', 'aria-labelledby': 'mp-reiter-merkliste' },
+          React.createElement(MerklisteView, { palette, t, onNavigate, punkte: todos, aendere: aendereTodos }))
+      : React.createElement('div', { role: 'tabpanel', id: 'mp-reiter-ansicht-teil', 'aria-labelledby': 'mp-reiter-ansicht' },
 
     // Als Nächstes — nur, wenn etwas offen ist (sonst sagt die leere Liste unten genug).
     // Gross wie im Entwurf (44 px). Verpasst steht ruhig als «verpasst», darunter «Was jetzt?» als Weg
@@ -839,6 +876,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
     React.createElement('div', { style: { marginTop: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('calendar.disclaimer'))
     )
+      )
   );
 };
 

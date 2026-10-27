@@ -40,7 +40,10 @@ describe('der Abschnitt in der Ablage', () => {
     expect(html).toContain(esc(t('unterlagen.subtitle')));
   });
 
+  // Seit 27.10.2026 (F7-S2) stehen Lebensmappe, Notfall- und Behörden-Dossier als eine Zeile «Unterlagen drucken»
+  // da; ihre Namen stehen in deren Unterzeile.
   it('alle Wege der früheren Seite sind da — ausser der Ablage selbst', () => {
+    expect(html).toContain(esc(t('unterlagen.drucken.title')));
     for (const k of ['lebensmappe', 'notfall', 'behoerden', 'briefe']) expect(html).toContain(esc(t('unterlagen.dossier.' + k + '.title')));
     expect(html).toContain(esc(t('unterlagen.backup.title')));
     expect(html).not.toContain('>' + esc(t('tresor.title')) + '<');
@@ -48,14 +51,14 @@ describe('der Abschnitt in der Ablage', () => {
 
   it('die Ziele stimmen', () => {
     const src = quelle('components/UnterlagenWege.jsx');
-    for (const v of ['lebensmappe', 'notfalldossier', 'behoerdendossier', 'briefe', 'export']) {
+    for (const v of ['drucken', 'briefe', 'export']) {
       expect(src).toContain(`onNavigate('${v}')`);
       expect(VALID_VIEWS.has(v)).toBe(true);
     }
   });
 
   it('jeder Weg ist ein echter Knopf', () => {
-    expect((html.match(/<button type="button"/g) || []).length).toBe(5);
+    expect((html.match(/<button type="button"/g) || []).length).toBe(3);
   });
 
   it('die Ablage zeigt den Abschnitt — auch leer', () => {
