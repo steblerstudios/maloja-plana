@@ -1395,3 +1395,28 @@ Besprechen erst, wenn alle Punkte gewählt sind (Sophie: «wir wollen warten mit
 **Noch nicht gewählt:** F7-D1 · F7-D2 · F7-D3 · F7-D4 · F7-D5 · F7-D6 · F7-D7 · F7-D8 · F7-D9 · F7-D10
 
 **Nichts gebaut.**
+
+### Baustand der «Ja» (27.10.2026, 03:51)
+
+Sophie: «alle ja darfst du gerne mal erledigen». Je Paket ein Zweig und ein **Entwurfs-PR**, nichts gemergt.
+Zusammen geprüft (Probe aus main + #626 + #627 + #628): 7’248 Tests grün, `size-limit` 64.54 kB von 65 kB.
+
+| Paket | PR | Punkte |
+|---|---|---|
+| 1 · sichtbare Fehler | #626 | F7-K1-1, K1-2, K1-3, K2-3, K2-4, K3-3, S1, S6, S7, S8, L12, S12 |
+| 2 · Namen und Aufräumen | #627 | F7-R1, S3, S4, S9, L11 |
+| 3 · Kapitel Finanzen | #628 | F7-K2-5, K2-6 |
+| 4 · Ablauf-Schale W | – | F7-A1, A4, A5, A6, A7, A9, A10, A11 — offen |
+| 5 · Rechner-Form X | – | F7-A2, R3, R4, R6 — offen |
+| 6 · «Was steht mir zu?» O | – | F7-A3, L5 — offen |
+| 7 · Versicherungs-Übersicht §11 | – | F7-L6 — offen |
+| 8 · Budget, Merkliste, Dossiers | – | F7-L7, L10, S2, S10 — offen |
+
+**Fehlbefunde, nichts gebaut:** F7-A12 und F7-D8 — die Deko-Schrift («HELVETIA», «Fr», «5 FR. 2026») steckt in
+Icons mit `aria-hidden`; ein Bildschirmleser liest sie nicht. Der Rundgang hatte mit `innerText` gemessen.
+Im Browser nachgeprüft (Pensionierung, Einbürgerung, Betreibungsauszug).
+
+**Teilweise anders als im Befund:** F7-K2-3 war kein Rechenfehler (CHF 6’472 = Brutto 6’796 auf 40 Std.) — gebaut
+ist die sichtbare Beschriftung. F7-L12: die Dossiers hatten schon Brotkrumen; ergänzt ist «Zurück zu …».
+F7-L11: `FinanzUebersicht.jsx` bleibt (sechs Tests prüfen über sie), Links auf `finanzuebersicht` bleiben (Umleitung).
+F7-S12: nur «kostenlos, auch mit leerem Guthaben» belegt (FDV Art. 27 Abs. 2); die SIM-Aussage ist raus.
