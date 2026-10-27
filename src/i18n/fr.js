@@ -1424,13 +1424,13 @@ export default {
     tools: 'Outils',
     advanced: 'Avancé',
     tresor: 'Classeur documents',
-    kkScanner: 'Scanner assurance',
+    kkScanner: 'Scanner de carte d\'assurance',
     budget: 'Budget',
     debts: 'Dettes',
     taxes: 'Impôts',
     finanzUebersicht: 'Finances',
     organDonation: 'Don d\'organes',
-    budgetSync: 'Sync budget',
+    budgetSync: 'Budget mensuel',
     kvgIpv: 'Réduction de primes (IPV)',
     praemien: 'Vue d’ensemble des assurances',
     mietzins: 'Aides au loyer',
@@ -1446,7 +1446,7 @@ export default {
     charts: 'Graphiques',
     unterlagen: 'Mes documents',
     flyer: 'Flyer à partager',
-    export: 'Export',
+    export: 'Sauvegarde',
     merkliste: 'Mon aide-mémoire',
     umzug: 'Déménagement',
     unfallkrankheit: 'Accident ou maladie',
@@ -1504,7 +1504,7 @@ export default {
     iv: 'Maladie & AI',
     pflege: 'Aider un proche',
     todesfall: 'Un décès dans l’entourage',
-    arztkoffer: 'Santé',
+    arztkoffer: 'Trousse santé',
     sub: {
       patientenverfuegung: 'En questions, à imprimer',
       kreditkarte: 'Coûts et avantages par année',
@@ -1549,7 +1549,7 @@ export default {
       stelleverloren: 'ORP, assurances, prévoyance',
       taxImport: 'Reprendre les valeurs clés de la déclaration d\'impôt',
       search: 'Trouver outils & chapitres',
-      budgetSync: 'Import CSV',
+      budgetSync: 'Revenus et dépenses en détail',
       kvgIpv: 'Vérifier le droit',
       praemien: 'Primes, franchise, caisses',
       mietzins: 'Droit et vérification rapide',
@@ -3083,7 +3083,7 @@ export default {
   },
 
   sozialhilfe: {
-    title: 'Sécurité sociale',
+    title: 'Aide sociale',
     intro: { sie: 'Cet aperçu vous aide à mieux comprendre les aides disponibles. La sécurité sociale fait partie de la Suisse — elle est là pour les personnes en situation difficile.', du: 'Cet aperçu t\'aide à mieux comprendre les aides disponibles. La sécurité sociale fait partie de la Suisse — elle est là pour les personnes en situation difficile.' },
     householdSize: 'Taille du ménage : {count} personne(s)',
     enterCanton: 'Veuillez entrer le canton pour le calcul cantonal.',
@@ -3196,7 +3196,7 @@ export default {
 
   tax: {
     abzuegeGeschaetzt: 'Déductions (estimation)',
-    title: 'Orientation fiscale',
+    title: 'Impôts',
     intro: { sie: 'Cet aperçu vous donne une estimation approximative de votre charge fiscale — à titre indicatif, pas de conseil fiscal. Vous pouvez essayer différentes déductions et voir comment votre situation évolue.', du: 'Cet aperçu te donne une estimation approximative de ta charge fiscale — à titre indicatif, pas de conseil fiscal. Tu peux essayer différentes déductions et voir comment ta situation évolue.' },
     inputs: 'Données',
     taxCanton: 'Canton d\'imposition',
@@ -5310,7 +5310,7 @@ export default {
   },
 
   unterlagen: {
-    title: 'Mes documents',
+    title: 'Dossiers et modèles',
     subtitle: { sie: 'Vos dossiers de vie, calmement organisés.', du: 'Tes dossiers de vie, calmement organisés.' },
     dossier: {
       lebensmappe: {
@@ -5332,15 +5332,15 @@ export default {
       },
     },
     backup: {
-      title: 'Sauvegarde des données',
+      title: 'Sauvegarde',
       description: { sie: 'Sauvegarder ou restaurer vos données localement.', du: 'Sauvegarder ou restaurer tes données localement.' },
-      action: 'Sauvegarde et restauration',
+      action: 'Ouvrir la sauvegarde',
     },
     note: { sie: 'Tous les documents restent sur votre appareil. Rien n\'est téléchargé.', du: 'Tous les documents restent sur ton appareil. Rien n\'est téléchargé.' },
   },
 
   backup: {
-    title: 'Sauvegarde et restauration',
+    title: 'Sauvegarde',
     exportPlain: 'Export (JSON)',
     exportEncrypted: 'Export (chiffré)',
     importFile: 'Importer une sauvegarde',

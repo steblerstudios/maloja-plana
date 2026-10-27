@@ -6,12 +6,12 @@
 // Alle Beschriftungen gibt es schon in fünf Sprachen; neu ist nur der Name der
 // Navigation für Screenreader (`nav.pfad`).
 export const PFADE = Object.freeze({
-  lebensmappe:      { eltern: 'unterlagen',      titel: 'lebensmappe.title' },
-  behoerdendossier: { eltern: 'unterlagen',      titel: 'behoerdenDossier.title' },
+  lebensmappe:      { eltern: 'tresor',          titel: 'lebensmappe.title' },
+  behoerdendossier: { eltern: 'tresor',          titel: 'behoerdenDossier.title' },
   // Runde 5 (S) und «ein Ort» (24.10.2026): das Notfall-Dossier hängt unter Notfall; in «Meine Unterlagen»
   // steht es weiter als Eintrag.
   notfalldossier:   { eltern: 'notfalleinstieg', titel: 'notfallDossier.title' },
-  briefe:           { eltern: 'unterlagen',      titel: 'briefe.title' },
+  briefe:           { eltern: 'tresor',          titel: 'briefe.title' },
   notfallpass:      { eltern: 'notfalleinstieg', titel: 'notfallpass.title' },
   notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
   // Runde 9 AB (25.10.2026): Versicherungs-Übersicht unter dem Kapitel Versicherungen.
@@ -20,8 +20,10 @@ export const PFADE = Object.freeze({
 
 // Kurze Namen der Eltern-Ansichten. «Notfall» statt des Einstiegs-Titels, der eine Frage ist
 // («Was brauchen Sie im Notfall?») und als Stufe zu lang wäre.
+// F7-S4 (Sophie 27.10.2026): Die Dossiers und Briefe hängen unter der «Dokumentenablage» — vorher eine Stufe
+// «Meine Unterlagen», die es als eigenen Ort nicht gibt (nur eine Umleitung auf die Ablage).
 export const ELTERN_TITEL = Object.freeze({
-  unterlagen: 'nav.unterlagen',
+  tresor: 'nav.tresor',
   notfalleinstieg: 'chapters.notfall.title',
   versicherungskapitel: 'chapters.versicherungen.title',
 });

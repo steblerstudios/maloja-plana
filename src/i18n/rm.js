@@ -1724,7 +1724,8 @@ export default {
     tools: 'Utensils',
     advanced: 'Avanzà',
     tresor: 'Deposita da documents',
-    kkScanner: 'Scanner cassa da malsauns',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kkScanner: 'Scanner carta CM',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     budget: 'Budget',
     debts: 'Debits',
@@ -1732,7 +1733,7 @@ export default {
     finanzUebersicht: 'Finanzas & daners',
     organDonation: "Donaziun d'organs",
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budgetSync: 'Budget-Sync',
+    budgetSync: 'Budget mensil',
     kvgIpv: 'Reducziun da premias (IPV)',
     praemien: 'Survista da las assicuranzas',
     mietzins: 'Contribuziuns a la fittanza',
@@ -1749,7 +1750,7 @@ export default {
     unterlagen: 'Mes documents',
     flyer: 'Flyer per derasar',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    export: 'Export',
+    export: 'Segirezza',
     merkliste: 'Mia glista da memoria',
     umzug: 'Midada da domicil',
     unfallkrankheit: 'Accident u malsauna',
@@ -1827,7 +1828,8 @@ export default {
     iv: 'Malsogna & AI',
     pflege: 'Tgirar confamigliars',
     todesfall: 'In mortori en il conturn',
-    arztkoffer: 'Sanadad',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    arztkoffer: 'Vossa valisch da sanadad',
     sub: {
       patientenverfuegung: 'En dumondas, per stampar',
       kreditkarte: 'Custs ed avantatgs per onn',
@@ -1888,7 +1890,8 @@ export default {
       stelleverloren: 'URC, assicuranzas, prevenziun',
       taxImport: 'Surpigliar las valurs centralas da la decleraziun da taglia',
       search: 'Chattar utensils & chapitels',
-      budgetSync: 'Import CSV',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      budgetSync: 'Entradas ed expensas en detagl',
       kvgIpv: 'Examinar il dretg',
       praemien: 'Premias, franchisa, cassas',
       mietzins: 'Dretg e test svelt',
@@ -3672,7 +3675,8 @@ export default {
   },
 
   unterlagen: {
-    title: 'Mes documents',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Dossiers e models',
     subtitle: { sie: 'Voss dossiers da vita, ordinads cun quaid.', du: 'Tes dossiers da vita, ordinads cun quaid.' },
     dossier: {
       lebensmappe: {
@@ -3694,9 +3698,11 @@ export default {
       },
     },
     backup: {
-      title: 'Segirezza da datas',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      title: 'Segirezza',
       description: { sie: 'Memorisar u restituir Vossas datas localmain.', du: 'Memorisar u restituir Tes datas localmain.' },
-      action: 'Segirezza & restituziun',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      action: 'Avrir la segirezza',
     },
     note: { sie: 'Tut ils documents restan sin Voss apparat. Nagut vegn chargiada si.', du: 'Tut ils documents restan sin Tes apparat. Nagut vegn chargiada si.' },
   },
@@ -3868,6 +3874,7 @@ export default {
   },
 
   backup: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     title: 'Segirezza',
     download: 'Telechargiar la segirezza',
     restore: 'Restituir la segirezza',
@@ -4745,7 +4752,8 @@ export default {
   },
 
   sozialhilfe: {
-    title: 'Segirezza sociala',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Agid social',
     intro: { sie: "Questa survista As gida d'ordinar meglier il sustegn pussaivel. La segirezza sociala fa part da la Svizra — ella stat a disposiziun a persunas en situaziuns difficultusas.", du: "Questa survista Ta gida d'ordinar meglier il sustegn pussaivel. La segirezza sociala fa part da la Svizra — ella stat a disposiziun a persunas en situaziuns difficultusas." },
     householdSize: 'Grondezza dal ménaschi: {count} persuna(s)',
     enterCanton: 'Per plaschair endatar il chantun per la calculaziun chantunalas.',
@@ -4816,7 +4824,8 @@ export default {
   tax: {
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     abzuegeGeschaetzt: 'Deducziuns (stima)',
-    title: 'Orientaziun da taglia',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Taglia',
     intro: { sie: "Quest survista As dat ina stima approximativa da Vossa chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Vus pudais empruvar differentas deducziuns e vesair co che Vossa situaziun sa mida.", du: "Quest survista ta dat ina stima approximativa da Tia chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Ti pos empruvar differentas deducziuns e vesair co che Tia situaziun sa mida." },
     inputs: 'Endataziuns',
     taxCanton: 'Chantun da taglia',
@@ -4948,7 +4957,8 @@ export default {
   },
 
   cv: {
-    title: 'Generator da curriculum vitae',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Curriculum vitae',
     name: 'Num',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     phone: 'Telefon',

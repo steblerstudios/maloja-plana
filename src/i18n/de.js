@@ -1425,13 +1425,13 @@ export default {
     tools: 'Werkzeuge',
     advanced: 'Erweitert',
     tresor: 'Dokumentenablage',
-    kkScanner: 'KK-Scanner',
+    kkScanner: 'KK-Karte scannen',
     budget: 'Budget',
     debts: 'Schulden',
     taxes: 'Steuern',
     finanzUebersicht: 'Finanzen & Geld',
     organDonation: 'Organspende',
-    budgetSync: 'Budget-Sync',
+    budgetSync: 'Monatsbudget',
     kvgIpv: 'Prämienverbilligung (IPV)',
     praemien: 'Versicherungs-Übersicht',
     mietzins: 'Mietzinsbeiträge',
@@ -1445,7 +1445,7 @@ export default {
     cv: 'Lebenslauf',
     charts: 'Charts',
     unterlagen: 'Meine Unterlagen',
-    export: 'Export',
+    export: 'Sicherung',
     notifications: 'Benachrichtigungen',
     installApp: 'Als App installieren',
     asyl: 'Asyl & Schutz',
@@ -1505,7 +1505,7 @@ export default {
     iv: 'Krankheit & IV',
     pflege: 'Angehörige pflegen',
     todesfall: 'Todesfall im Umfeld',
-    arztkoffer: 'Gesundheit',
+    arztkoffer: 'Arztkoffer',
     sub: {
       patientenverfuegung: 'In Fragen, zum Drucken',
       kreditkarte: 'Kosten und Vorteile pro Jahr',
@@ -1552,7 +1552,7 @@ export default {
       taxImport: 'Eckwerte aus der Steuererklärung übernehmen',
       search: 'Werkzeuge & Kapitel finden',
       calendar: 'Fristen & Termine',
-      budgetSync: 'CSV-Import',
+      budgetSync: 'Einnahmen und Ausgaben im Detail',
       kvgIpv: 'Anspruch prüfen',
       praemien: 'Prämien, Franchise, Kassen',
       mietzins: 'Anspruch & Schnellcheck',
@@ -3095,7 +3095,7 @@ export default {
   },
 
   sozialhilfe: {
-    title: 'Soziale Sicherung',
+    title: 'Sozialhilfe',
     intro: { sie: 'Diese Übersicht hilft Ihnen, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu.', du: 'Diese Übersicht hilft dir, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu.' },
     householdSize: 'Haushaltgrösse: {count} Person(en)',
     enterCanton: 'Bitte Kanton eingeben für kantonale Berechnung.',
@@ -3230,7 +3230,7 @@ export default {
 
   tax: {
     abzuegeGeschaetzt: 'Abzüge (geschätzt)',
-    title: 'Steuer-Orientierung',
+    title: 'Steuern',
     intro: { sie: 'Diese Übersicht zeigt Ihnen eine grobe Einschätzung Ihrer Steuerbelastung — als Orientierung, nicht als Steuerberatung. Sie können Abzüge ausprobieren und sehen, wie sich Ihre Situation verändert.', du: 'Diese Übersicht zeigt dir eine grobe Einschätzung deiner Steuerbelastung — als Orientierung, nicht als Steuerberatung. Du kannst Abzüge ausprobieren und sehen, wie sich deine Situation verändert.' },
     inputs: 'Eingaben',
     taxCanton: 'Steuerkanton',
@@ -3532,7 +3532,7 @@ export default {
   },
 
   cv: {
-    title: 'Lebenslauf-Generator',
+    title: 'Lebenslauf',
     name: 'Name',
     phone: 'Telefon',
     profession: 'Beruf',
@@ -5353,7 +5353,7 @@ export default {
   },
 
   unterlagen: {
-    title: 'Meine Unterlagen',
+    title: 'Dossiers und Vorlagen',
     subtitle: { sie: 'Ihre Lebensdossiers, ruhig geordnet.', du: 'Deine Lebensdossiers, ruhig geordnet.' },
     dossier: {
       lebensmappe: {
@@ -5375,15 +5375,15 @@ export default {
       },
     },
     backup: {
-      title: 'Datensicherung',
+      title: 'Sicherung',
       description: { sie: 'Ihre Daten lokal sichern oder wiederherstellen.', du: 'Deine Daten lokal sichern oder wiederherstellen.' },
-      action: 'Sicherung & Wiederherstellung',
+      action: 'Sicherung öffnen',
     },
     note: { sie: 'Alle Unterlagen bleiben auf Ihrem Gerät. Nichts wird hochgeladen.', du: 'Alle Unterlagen bleiben auf deinem Gerät. Nichts wird hochgeladen.' },
   },
 
   backup: {
-    title: 'Sicherung & Wiederherstellung',
+    title: 'Sicherung',
     exportPlain: 'Export (JSON)',
     exportEncrypted: 'Export (verschlüsselt)',
     importFile: 'Sicherung importieren',

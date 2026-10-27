@@ -1424,13 +1424,13 @@ export default {
     tools: 'Strumenti',
     advanced: 'Avanzato',
     tresor: 'Archivio documenti',
-    kkScanner: 'Scanner assicurazione',
+    kkScanner: 'Scanner tessera assicurazione',
     budget: 'Budget',
     debts: 'Debiti',
     taxes: 'Imposte',
     finanzUebersicht: 'Finanze',
     organDonation: 'Donazione di organi',
-    budgetSync: 'Sincr. budget',
+    budgetSync: 'Budget mensile',
     kvgIpv: 'Riduzione dei premi (IPV)',
     sozialhilfe: 'Assistenza sociale',
     praemien: 'Panoramica delle assicurazioni',
@@ -1445,7 +1445,7 @@ export default {
     cv: 'Creazione CV',
     charts: 'Grafici',
     unterlagen: 'I miei documenti',
-    export: 'Esportazione',
+    export: 'Backup',
     notifications: 'Notifiche',
     installApp: 'Installare come app',
     flyer: 'Volantino da condividere',
@@ -1504,7 +1504,7 @@ export default {
     iv: 'Malattia & AI',
     pflege: 'Assistere i propri cari',
     todesfall: 'Un lutto nella cerchia',
-    arztkoffer: 'Salute',
+    arztkoffer: 'La valigetta della salute',
     sub: {
       patientenverfuegung: 'In domande, da stampare',
       kreditkarte: 'Costi e vantaggi all’anno',
@@ -1550,7 +1550,7 @@ export default {
       taxImport: 'Riprendere i valori chiave dalla dichiarazione d\'imposta',
       search: 'Trova strumenti e capitoli',
       calendar: 'Scadenze e appuntamenti',
-      budgetSync: 'Importazione CSV',
+      budgetSync: 'Entrate e uscite nel dettaglio',
       kvgIpv: 'Verifica il diritto',
       praemien: 'Premi, franchigia, casse',
       mietzins: 'Diritto e verifica rapida',
@@ -3083,7 +3083,7 @@ export default {
   },
 
   sozialhilfe: {
-    title: 'Sicurezza sociale',
+    title: 'Assistenza sociale',
     intro: { sie: 'Questa panoramica La aiuta a comprendere meglio quale supporto potrebbe essere disponibile. La sicurezza sociale fa parte della Svizzera — esiste per le persone in situazioni difficili.', du: 'Questa panoramica ti aiuta a comprendere meglio quale supporto potrebbe essere disponibile. La sicurezza sociale fa parte della Svizzera — esiste per le persone in situazioni difficili.' },
     householdSize: 'Dimensione del nucleo familiare: {count} persona/e',
     enterCanton: 'Indicare il cantone per il calcolo cantonale.',
@@ -3149,7 +3149,7 @@ export default {
 
   tax: {
     abzuegeGeschaetzt: 'Deduzioni (stima)',
-    title: 'Orientamento fiscale',
+    title: 'Imposte',
     intro: { sie: 'Questa panoramica Le offre una stima approssimativa del Suo carico fiscale — come orientamento, non come consulenza fiscale. Può provare diverse deduzioni e vedere come cambia la Sua situazione.', du: 'Questa panoramica ti offre una stima approssimativa del tuo carico fiscale — come orientamento, non come consulenza fiscale. Puoi provare diverse deduzioni e vedere come cambia la tua situazione.' },
     inputs: 'Dati',
     taxCanton: 'Cantone fiscale',
@@ -5283,7 +5283,7 @@ export default {
   },
 
   unterlagen: {
-    title: 'I miei documenti',
+    title: 'Dossier e modelli',
     subtitle: { sie: 'I Suoi dossier di vita, ordinati con calma.', du: 'I tuoi dossier di vita, ordinati con calma.' },
     dossier: {
       lebensmappe: {
@@ -5305,15 +5305,15 @@ export default {
       },
     },
     backup: {
-      title: 'Backup dei dati',
+      title: 'Backup',
       description: { sie: 'Salvi o ripristini i Suoi dati localmente.', du: 'Salva o ripristina i tuoi dati localmente.' },
-      action: 'Backup e ripristino',
+      action: 'Apri il backup',
     },
     note: { sie: 'Tutti i documenti restano sul Suo dispositivo. Nulla viene caricato.', du: 'Tutti i documenti restano sul tuo dispositivo. Nulla viene caricato.' },
   },
 
   backup: {
-    title: 'Backup e ripristino',
+    title: 'Backup',
     exportPlain: 'Esporta (JSON)',
     exportEncrypted: 'Esporta (crittografato)',
     importFile: 'Importa backup',

@@ -30,7 +30,7 @@ export const GEGENSTAENDE = [
     wege: [
       { key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
       { key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
-      { key: 'aussteuerung', view: 'aussteuerung', g: ['M4 12h16', 'M12 4v16', 'M6 6l12 12'] },
+      // F7-L11: «Ausgesteuert» ist seit Gruppe F ein Teil von «Stelle verloren» (Umleitung) — kein eigener Weg mehr.
       { key: 'quellensteuer', view: 'quellensteuer', g: ['M5 3h14v18H5z', 'M8 7h8', 'M8 11h8', 'M8 15h4', 'M15.5 15.5l2 2'] },
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
       { key: 'stelleweg', view: 'stelleverloren', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M12 7v5l3 2'] },

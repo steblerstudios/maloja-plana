@@ -47,7 +47,7 @@ describe('Pfade', () => {
     }
   });
   it('drei Stufen: Übersicht › Eltern › hier', () => {
-    expect(stufen('briefe').map((s) => s.ziel)).toEqual(['dashboard', 'unterlagen', null]);
+    expect(stufen('briefe').map((s) => s.ziel)).toEqual(['dashboard', 'tresor', null]);
     expect(stufen('notfallpass').map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
     expect(stufen('notfalldossier').map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
     expect(stufen('dashboard')).toBeNull();
@@ -65,7 +65,7 @@ describe('Darstellung', () => {
   it('die Stufen davor sind Knöpfe, die letzte nicht', () => {
     expect((html.match(/<button/g) || []).length).toBe(2);
     expect(html).toContain('>Übersicht</button>');
-    expect(html).toContain('>Meine Unterlagen</button>');
+    expect(html).toContain('>Dokumentenablage</button>'); // F7-S4
   });
   it('Tippfläche mindestens 44 px (App-Massstab; WCAG 2.5.8 verlangt 24)', () => {
     expect(html).toMatch(/<button[^>]*min-height:44px/);
