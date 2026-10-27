@@ -5102,6 +5102,7 @@ export default {
     legende: { frist: 'Scadenza', termin: 'Appuntamento', erledigt: 'fatto', heute: 'oggi' },
     verpasst: 'passato',
     wasJetzt: 'E adesso?',
+    loeschHinweis: { sie: 'Per rimuovere una voce, tocchi il suo giorno qui sopra.', du: 'Per rimuovere una voce, tocca il suo giorno qui sopra.' },
     nochOhneTag: 'Ancora senza giorno',
     aufTagLegen: 'Assegnare a un giorno',
     jetztTagAntippen: { sie: 'Ora tocchi un giorno qui sopra.', du: 'Ora tocca un giorno qui sopra.' },

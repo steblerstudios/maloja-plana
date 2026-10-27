@@ -5172,6 +5172,7 @@ export default {
     // «Als Nächstes» bei verpasstem Eintrag, ruhig wie im Entwurf G («verpasst — was jetzt?», nie rot), 27.10.2026
     verpasst: 'verpasst',
     wasJetzt: 'Was jetzt?',
+    loeschHinweis: 'Zum Löschen den Tag oben antippen.',
     nochOhneTag: 'Noch ohne Tag',
     aufTagLegen: 'Auf einen Tag legen',
     jetztTagAntippen: 'Jetzt oben einen Tag antippen.',

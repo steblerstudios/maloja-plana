@@ -7000,6 +7000,7 @@ export default {
     // rm ungeprüft (27.10.2026)
     verpasst: 'passà',
     wasJetzt: 'E ussa?',
+    loeschHinweis: { sie: 'Per allontanar, tutgai il di survart.', du: 'Per allontanar, tutga il di survart.' },
     // rm ungeprüft F5
     nochOhneTag: 'Anc senza di',
     // rm ungeprüft F5

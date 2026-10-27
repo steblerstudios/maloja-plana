@@ -5201,6 +5201,7 @@ export default {
     legende: { frist: 'Deadline', termin: 'Appointment', erledigt: 'done', heute: 'today' },
     verpasst: 'missed',
     wasJetzt: 'What now?',
+    loeschHinweis: 'To remove an entry, tap its day above.',
     nochOhneTag: 'No day yet',
     aufTagLegen: 'Put on a day',
     jetztTagAntippen: 'Now tap a day above.',

@@ -5129,6 +5129,7 @@ export default {
     legende: { frist: 'Échéance', termin: 'Rendez-vous', erledigt: 'fait', heute: 'aujourd’hui' },
     verpasst: 'passé',
     wasJetzt: 'Et maintenant\u202F?',
+    loeschHinweis: { sie: 'Pour retirer une entrée, touchez son jour ci-dessus.', du: 'Pour retirer une entrée, touche son jour ci-dessus.' },
     nochOhneTag: 'Pas encore de jour',
     aufTagLegen: 'Attribuer un jour',
     jetztTagAntippen: { sie: 'Touchez maintenant un jour ci-dessus.', du: 'Touche maintenant un jour ci-dessus.' },

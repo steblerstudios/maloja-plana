@@ -608,6 +608,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
       React.createElement('button', { type: 'button', 'aria-pressed': view === 'upcoming', style: reiter(view === 'upcoming'), onClick: () => setView('upcoming') }, offenAlle.length + ' ' + t('calendar.upcoming')),
       React.createElement('button', { type: 'button', 'aria-pressed': view === 'completed', style: reiter(view === 'completed'), onClick: () => setView('completed') }, erledigtAlle.length + ' ' + t('calendar.completed'))
     ),
+    // Ruhiger Hinweis, wo gelöscht wird (Stebler Studios 27.10.2026): seit Entwurf G nicht mehr als × in der
+    // Liste, sondern im Tagespanel. Nur, wenn es etwas zu löschen gibt.
+    upcoming.length + completed.length > 0 && React.createElement('p', { 'data-loesch-hinweis': 'true', style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal } }, t('calendar.loeschHinweis')),
     React.createElement('button', {
       type: 'button', 'aria-expanded': view === 'add',
       style: { padding: '10px 16px', minHeight: '44px', marginTop: '12px', marginBottom: space.sm, background: view === 'add' ? palette.sand : 'none', color: view === 'add' ? palette.onSand : palette.text, border: '1px solid ' + (view === 'add' ? palette.sand : palette.border), borderRadius: radius.full, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: weight.semi },
