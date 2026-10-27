@@ -69,8 +69,9 @@ Weitere Ansprüche · Passend · Drucken. Geldfluss erscheint erst ab zwei Einna
 ## Runde 1 · Kapitel Versicherungen & Vorsorge
 
 Reihenfolge: «Versicherungen pro Monat CHF 570» · KK-Last · Schutzschild (Pflicht 3/3, Empfohlen 2/2) · Franchise-Kreuz ·
-Angaben mit Unterreitern (Krankenkasse, Pensionskasse, Weitere, Hausrat & Reise, Auto, AHV) · Passend. Das Spinnennetz
-(AA-6) erscheint nicht mehr. CHF 570 = 540.30 + 20 + 10 stimmt.
+**Spinnennetz** (6 Achsen: Krankenkasse, Pensionskasse, Weitere, Hausrat & Reise, Auto, AHV) · Angaben mit Unterreitern · Passend.
+CHF 570 = 540.30 + 20 + 10 stimmt. ⟨korrigiert 02:05: hier stand zuerst «Spinnennetz erscheint nicht mehr». Es ist reine
+Grafik ohne Text und fehlte darum in der Textauswertung; im Bild ist es da, `ChapterView.jsx:2433-2445`.⟩
 
 | # | Frage | Befund | Vorschlag |
 |---|---|---|---|
@@ -78,6 +79,7 @@ Angaben mit Unterreitern (Krankenkasse, Pensionskasse, Weitere, Hausrat & Reise,
 | F7-K3-2 | Fusion | **Franchise-Kreuz** an drei Orten: Dashboard-Instrument, Kapitel, Versicherungs-Übersicht («Alles zur Franchise»). | Ganz nur in der Übersicht; Kapitel zeigt die Empfehlung in einer Zeile mit Link. |
 | F7-K3-3 | Logik | Kreuz vergleicht nur Franchise 300 und 2’500. Marias **eigene Franchise 1’500** kommt im Bild nicht vor. | Eigene Franchise als dritte Linie oder als Punkt. |
 | F7-K3-4 | Zeigen | Drei Instrumente untereinander (Monatssumme, Last, Schild, Kreuz) vor den Angaben, die Angaben selbst kommen spät. | Schild als Kopf-Instrument, Rest einklappbar. |
+| F7-K3-6 | **Umgesetzt? / Zeigen** | **Das Spinnennetz steht noch.** Entscheid AA-6 war «Netz nur bis M2»; M2 steht seit #581 (im Rundgang 26.10. als «vergessen» gemeldet). Dazu offen: «Spinnennetz Versicherungen · offene Frage» in VERGLEICH.md. Das Netz zeigt, **wie viel eingetragen** ist; das Schutzschild direkt darüber zeigt, **was gedeckt** ist. Zwei Bilder für zwei ähnliche Fragen, die Leute verwechseln werden. | Entscheiden: Netz weg (wie AA-6), oder Netz behalten und dafür Schild + Netz zu **einem** Bild verbinden (Achse = Versicherung, Füllung = gedeckt, Rand = vollständig erfasst). |
 | F7-K3-5 | Sprache/a11y | «Fr» (Deko auf Münz-Symbol) vor «Vorsorge-Rechner» als Text gelesen. | wie F7-D8 |
 
 ## Runde 1 · Kapitel Ausbildung & Arbeit
@@ -114,3 +116,25 @@ drei Szenarien, vier Unterlagen (Karte, Pass, Dossier, Portemonnaie-Karte), Vors
 | F7-Q1 | Muster ist einheitlich gebaut (Satz · Instrument · Angaben/Dokumente · Passend · Als Nächstes · Schlusssatz). Fassung 6 «Muster M1–M8» hält. | – |
 | F7-Q2 | Die grossen Wiederholungen sind **inhaltlich**, nicht gestalterisch: Lohn (2×), KK-Last (2×), Franchise-Kreuz (3×), Steuern (4×), Vorsorge (2×), Kapitel-Liste auf dem Dashboard (3×), Brutto-Schätzung (2 Werte). | Je Thema **ein Besitzer-Kapitel**, alle anderen Stellen zeigen eine Zeile mit derselben Zahl und Link. Das ist der Kern von Fassung 7. |
 | F7-Q3 | Lebensbaum (alle Kapitel) steht im Kapitel Finanzen. | aufs Dashboard, siehe F7-K2-1 |
+
+## Landkarte · alle Seiten (Code-Lesung 27.10.2026, Explore-Agent, geprüft wo markiert)
+
+Vollständig mit Fundstellen in der Agenten-Antwort dieser Sitzung; hier das, was für Fassung 7 zählt. **Vorhandenes
+Entscheidungsblatt beachten: `docs/entscheide/seiten-buendeln.md`** (Gruppen A–I). Stand dort: A Ansprüche
+zurückgestellt · B Versicherungs-Übersicht neu entschieden (§11), **nicht gebaut** · D Notfall Schritt 1 gebaut, Pass und
+Dossier offen · E, F, H gebaut · I (Reste Finanzen: budget, taxImport) offen.
+
+| # | Frage | Befund | Vorschlag |
+|---|---|---|---|
+| F7-L1 | Flow | **Waisen**: «Lehre beginnen», «Selbständig werden», «18 werden» und «Organspende» haben **keinen** Eingang aus einem Kapitel oder Ablauf, nur über Listen (Rucksack, Suche). Weitere mit nur einem Eingang: Merkliste, Obstgarten, Gesundheit/Arztkoffer, Kreditkarte, Stundenlohn, Quellensteuer, Zusammenziehen, Adoption, Zuzug, Wegzug, Dienst, Betreibungsauszug, Flyer. | Lehre und Selbständigkeit ins «Passend» von Ausbildung; 18 werden in Basis; Organspende in Notfall-Vorsorge. |
+| F7-L2 | Flow | **14 Sackgassen**: kk, budget, organ, sync, kreditkarte, stundenlohn, patientenverfuegung, bestattung, flyer, eo, cv, direktlinks, export, notifications bekommen in `main.jsx` kein `onNavigate` → kein nächster Schritt, nur «Übersicht». | Jede Seite bekommt «Als Nächstes» wie die Kapitel. |
+| F7-L3 | Aufbau | **Familie hat kein Kapitel.** Heirat, Kind, Trennung, Adoption, Zusammenziehen, Todesfall sind nur über Abläufe/Listen erreichbar; in Basis führt ein Rucksack-Sprung hin. | Entscheiden: achtes Kapitel «Familie» oder Familie als Abschnitt in Basis mit diesen Abläufen. |
+| F7-L4 | Fusion | **Drei Fortschritts-Bilder**: Berglandschaft (Dashboard), Lebensbaum (im Kapitel Finanzen), Obstgarten (eigene Seite). Alle zeigen Vollständigkeit aus denselben Daten. | Eines als Hauptbild. Vorschlag: Berglandschaft bleibt Einstieg; Baum und Obstgarten werden eins («Mein Garten») und ersetzen auf dem Dashboard die Fortschrittsbalken. |
+| F7-L5 | Fusion | **Ansprüche an fünf Orten** (situationen, schnellcheck, anspruchcheck, Dashboard-Kompass, Baum-Signale), dieselben Rechnungen sechsmal aufgerufen. Gruppe A ist **zurückgestellt**. | Gruppe A jetzt wieder aufnehmen — deckt F7-D5 und F7-K2-4 mit ab. |
+| F7-L6 | Fusion | **Krankenkasse an sechs Orten** (praemien, premium, kvg, kk, Arztkoffer, Kapitel). §11 (Versicherungs-Übersicht als eigene Seite) ist entschieden, **nicht gebaut**. | §11 bauen; deckt F7-K3-1/2 mit ab. |
+| F7-L7 | Fusion | Budget zweimal als Seite: `sync` («Monatsbudget») und `budget` (CSV-Import). Gruppe I offen. Der Dashboard-Tipp nennt «Budget-Sync» (F7-D3). | budget in sync (§2 I). |
+| F7-L8 | Fusion | Steuern: tax, taxImport, Quellensteuer, Kantonssteuer-Orientierung (2×), Säule-3a-Tracker (2×), Frist in Behörden. | taxImport in tax (§2 I); mit F7-K5-1 ein Faden. |
+| F7-L9 | Fusion | Lohn: stundenlohn, Mindestlohn (im Kapitel Finanzen), LohnEinordnung (2×), NeuerJob teilen dieselbe Rechnung. | Lohn-Faden in Ausbildung & Arbeit (F7-K4-1), Stundenlohn als Werkzeug dort verlinkt. |
+| F7-L10 | Fusion | Merkliste ist laut §2 H Teil von «Was ansteht», hat aber noch eine eigene Seite. | Merkliste als Reiter in «Was ansteht». |
+| F7-L11 | Hygiene | Rucksack zeigt Doppel-Einträge mit demselben Ziel (tresor/unterlagen; finanzuebersicht/charts/mindestlohn; stelleverloren/aussteuerung). 9 Links zielen noch auf die umgeleitete Adresse `finanzuebersicht`. `FinanzUebersicht.jsx` ist tot (nirgends importiert). | aufräumen (ordnungshueter). |
+| F7-L12 | Zeigen | Seite `anspruchcheck` hat keinen eigenen Titel; `notfalldossier`, `behoerdendossier` zeigen kein «Zurück zu …». | Titel und Brotkrume. |
