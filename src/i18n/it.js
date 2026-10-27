@@ -6164,6 +6164,10 @@ export default {
     b: { wohnen: 'Abitare', finanzen: 'Finanze', person: 'Persona', versicherungen: 'Assicurazione', gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza', bildung: 'Formazione', notfall: 'Emergenza', behoerden: 'Autorità' },
   },
   gepaeck: {
+    // F7-A9 (27.10.2026): Gruppe im Rucksack.
+    gruppe: {
+      erwachsen: 'Diventare adulti',
+    },
     intro: { sie: 'Ogni ambito della vita è un attrezzo nello zaino. Disfaccia il bagaglio, apra un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.', du: 'Ogni ambito della vita è un attrezzo nello zaino. Disfa il bagaglio, apri un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.' },
     ctaSub: 'Gli eventi della vita come attrezzatura — disfare, guardare dentro.',
     unpack: 'Disfare',

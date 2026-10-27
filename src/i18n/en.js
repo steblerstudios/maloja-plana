@@ -6190,6 +6190,10 @@ export default {
     b: { wohnen: 'Home', finanzen: 'Finances', person: 'Person', versicherungen: 'Insurance', gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension', bildung: 'Education', notfall: 'Emergency', behoerden: 'Authorities' },
   },
   gepaeck: {
+    // F7-A9 (27.10.2026): Gruppe im Rucksack.
+    gruppe: {
+      erwachsen: 'Coming of age',
+    },
     intro: 'Each area of life is a piece of gear in the backpack. Unpack it, open an item — inside are the paths through life. A path leads into its guided flow.',
     ctaSub: 'Life events as gear — unpack, look inside.',
     unpack: 'Unpack',

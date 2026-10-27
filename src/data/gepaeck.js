@@ -28,8 +28,12 @@ export const GEGENSTAENDE = [
   {
     key: 'arbeit', ill: 'toolroll',
     wege: [
-      { key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
-      { key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
+      // Gruppe «Erwachsen werden» (F7-A9, Entscheid Stebler Studios 27.10.2026): 18 werden, Militär- oder
+      // Zivildienst, Lehre — zusammen und zuoberst in der Werkzeugrolle. «18 werden» lag vorher in der
+      // Erinnerungskiste; hier steht es bei den zwei Wegen, die meist im selben Alter kommen.
+      { gruppe: 'erwachsen', key: 'volljaehrig', view: 'volljaehrig', g: ['M7.5 16.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z', 'M11 13h9', 'M17 13v3', 'M20 13v2'] },
+      { gruppe: 'erwachsen', key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
+      { gruppe: 'erwachsen', key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
       { key: 'aussteuerung', view: 'aussteuerung', g: ['M4 12h16', 'M12 4v16', 'M6 6l12 12'] },
       { key: 'quellensteuer', view: 'quellensteuer', g: ['M5 3h14v18H5z', 'M8 7h8', 'M8 11h8', 'M8 15h4', 'M15.5 15.5l2 2'] },
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
@@ -41,7 +45,6 @@ export const GEGENSTAENDE = [
   {
     key: 'familie', ill: 'box',
     wege: [
-      { key: 'volljaehrig', view: 'volljaehrig', g: ['M7.5 16.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z', 'M11 13h9', 'M17 13v3', 'M20 13v2'] },
       { key: 'adoption', view: 'adoption', g: ['M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z', 'M3.5 20v-4.5a4.5 4.5 0 0 1 9 0V20', 'M17 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M14 20v-2.5a3 3 0 0 1 6 0V20'] },
       { key: 'zusammenziehen', view: 'zusammenziehen', g: ['M4 11l8-7 8 7', 'M6 10v10h12V10', 'M12 17.5l-2.3-2.2a1.4 1.4 0 0 1 2.3-1.8 1.4 1.4 0 0 1 2.3 1.8z'] },
       { key: 'heirat', view: 'heirat', g: ['M7 15a5 5 0 1 0 10 0 5 5 0 0 0-10 0', 'M9.5 8.5l2.5-3 2.5 3-2.5 2.5z'] },
@@ -85,6 +88,9 @@ export const GEGENSTAENDE = [
     ],
   },
 ];
+
+// Gruppen innerhalb eines Gegenstands (`gruppe` am Weg): Name i18n `gepaeck.gruppe.<key>`.
+export const GRUPPEN = ['erwachsen'];
 
 // Flache Liste aller Wege — für Tests und einfache Iteration.
 export const alleWege = () => GEGENSTAENDE.flatMap((g) => g.wege.map((w) => ({ ...w, gegenstand: g.key })));
