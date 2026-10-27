@@ -16,6 +16,7 @@ import { Kreditkarte } from '../Kreditkarte.jsx';
 import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
 import { StipendienView } from '../StipendienView.jsx';
 import { VorsorgeRechner } from '../VorsorgeRechner.jsx';
+import { SchuldenManager } from '../SchuldenManager.jsx';
 import { Tabs } from '../components/RechnerForm.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
@@ -36,8 +37,13 @@ const RECHNER = [
   ['mietzins', MietzinsOrientierung, { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 } }],
   ['stipendien', StipendienView, { basis: { canton: 'BE' } }],
   ['vorsorge', VorsorgeRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
+  ['schulden', SchuldenManager, { schulden: [{ id: 1, creditor: 'Test AG', amount: '500', status: 'open', category: 'sonstige' }] }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
+
+// Schulden: der Start-Reiter «Übersicht» hat keine Eingaben — «Ihre Angaben» steht in den Reitern Plan und
+// Forderungen (eigener Test unten).
+const OHNE_ANGABEN_START = new Set(['schulden']);
 
 const TEILE = ['kopf', 'ergebnis', 'angaben', 'tun', 'stelle', 'quelle'];
 const reihenfolge = (html) => TEILE.map((teil) => html.indexOf('data-teil="' + teil + '"')).filter((i) => i >= 0);
@@ -51,11 +57,12 @@ describe('Rechner-Form X: Ergebnis vor den Angaben, role=status', () => {
         const pos = reihenfolge(html);
         expect(pos.length).toBeGreaterThanOrEqual(4);
         expect([...pos].sort((a, b) => a - b)).toEqual(pos);
-        expect(html.indexOf('data-teil="ergebnis"')).toBeLessThan(html.indexOf('data-teil="angaben"'));
+        if (!OHNE_ANGABEN_START.has(view)) expect(html.indexOf('data-teil="ergebnis"')).toBeLessThan(html.indexOf('data-teil="angaben"'));
       });
       it(`${view} (${fall}): Ergebnis ist eine Live-Region, Angaben aufgeklappt mit «x von n»`, () => {
         const html = render(C, data);
         expect(html).toMatch(/data-teil="ergebnis" role="status" aria-live="polite"/);
+        if (OHNE_ANGABEN_START.has(view)) return;
         expect(html).toMatch(/<details data-teil="angaben" open=""/);
         expect(html).toMatch(/\d+ von \d+/);
       });
@@ -198,5 +205,26 @@ describe('Vorsorge in der Form X', () => {
   });
   it('Verheiratet als radiogroup', () => {
     expect(render(VorsorgeRechner, mit)).toContain('aria-labelledby="vr-verheiratet-label"');
+  });
+});
+
+describe('Schulden in der Form X', () => {
+  const mit = { schulden: [{ id: 1, creditor: 'Test AG', amount: '500', status: 'open', category: 'sonstige' }] };
+  it('fünf Reiter über die Tabs-Komponente, Beratung als «was zu tun ist»', () => {
+    const html = render(SchuldenManager, mit, { onSave: () => {} });
+    expect((html.match(/role="tab"/g) || []).length).toBe(5);
+    expect(html).toContain('id="schulden-tab-overview"');
+    expect(html.slice(html.indexOf('data-teil="tun"'))).toContain('0800 708 708');
+  });
+  it('Reiter «Forderungen» und «Plan»: Ergebnis vor «Ihre Angaben»', () => {
+    for (const startView of ['debts', 'plan']) {
+      const html = render(SchuldenManager, mit, { onSave: () => {}, startView });
+      expect(html).toMatch(/<details data-teil="angaben" open=""/);
+      expect(html.indexOf('data-teil="ergebnis"')).toBeLessThan(html.indexOf('data-teil="angaben"'));
+    }
+  });
+  it('ohne Forderungen: der Leer-Satz an der Stelle des Ergebnisses', () => {
+    expect(ergebnisTeil(render(SchuldenManager, leer, { onSave: () => {} })).length).toBeGreaterThan(0);
+    expect(render(SchuldenManager, leer, { onSave: () => {} })).toContain(de.schulden.emptyDebts.sie || de.schulden.emptyDebts);
   });
 });

@@ -228,10 +228,11 @@ describe('① AusserdemOffen / ② OffenePosten', () => {
   });
   it('① ② erscheinen auch ohne Schulden, nur mit Arztbelegen (SchuldenManager)', () => {
     const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
-    const ov = q.slice(q.indexOf("view === 'overview'"), q.indexOf("betreibung.length > 0 && React.createElement('div', { style: { padding"));
-    const zweig = ov.slice(ov.indexOf('prioritized.length === 0 && debtStatus.paid === 0'), ov.indexOf('React.createElement(AusserdemOffen'));
-    expect(zweig).toMatch(/: React\.createElement\(OffenBalken,[^\n]*\),\s*$/);
-    expect(ov).toMatch(/createElement\(AusserdemOffen,/);
+    // Seit der Rechner-Form X (F7-A2, 27.10.2026): der Balken ist das Ergebnis des Reiters «Übersicht», ① ② stehen
+    // im Rest des Reiters — beide ohne Bedingung an die Forderungen.
+    expect(q).toMatch(/overview: prioritized\.length === 0 && debtStatus\.paid === 0 \? null : React\.createElement\(OffenBalken,/);
+    const ov = q.slice(q.indexOf('const weiteresJeReiter = {'), q.indexOf("betreibung.length > 0 && React.createElement('div', { style: { padding"));
+    expect(ov).toMatch(/overview: React\.createElement\(React\.Fragment, null,\s*React\.createElement\(AusserdemOffen,/);
     expect(ov).toMatch(/createElement\(OffenePosten,/);
     const nurArzt = offenePosten({ versicherungen: { kkBelege: [{ id: 'z', datum: '2026-09-01', betrag: 75, status: 'offen' }] }, schulden: [] }, heute);
     expect(render(AusserdemOffen, nurArzt)).toContain('schulden.posten.ausserdemEins');
