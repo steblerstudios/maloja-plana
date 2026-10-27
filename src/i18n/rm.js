@@ -6991,7 +6991,7 @@ export default {
     ganzerMonat: 'L’entir mais',
     // rm ungeprüft, Fassung G (27.10.2026)
     ganzesJahr: 'L’entir onn',
-    untertitel: { sie: 'Termins, inscunters e quai che Vus avais notà — en l’urden dal temp.', du: 'Termins, inscunters e quai che ti has notà — en l’urden dal temp.' },
+    untertitel: { sie: 'Termins, inscunters e quai che Vus avais notà — en l’urden dal temp.', du: 'Termins, inscunters e quai che Ti has notà — en l’urden dal temp.' },
     alsNaechstes: 'Sco proxim',
     inTagen: 'en {days} dis',
     morgen: 'Damaun',
@@ -7025,7 +7025,7 @@ export default {
       taxSource: 'Dal chapitel Autoritads',
     },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    exportIcsHint: { sie: 'Surpigliai Vossas commemoraziuns en il chalender da Voss telefon u computer.', du: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.' },
+    exportIcsHint: { sie: 'Surpigliai Vossas commemoraziuns en il chalender da Voss telefon u computer.', du: 'Surpiglia Tias commemoraziuns en il chalender da Tes telefon u computer.' },
     editReminder: 'Modifitgar la commemoraziun',
     noRemindersTitle: 'Anc nagut planisà',
     noReminders: { sie: 'Anc naginas commemoraziuns. Agiuntai Vossa emprima commemoraziun per restar organisà.', du: 'Anc naginas commemoraziuns. Agiunta Tia emprima commemoraziun per restar organisà.' },
