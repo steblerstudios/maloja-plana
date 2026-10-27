@@ -14,6 +14,7 @@ import { EOrechner } from '../EOrechner.jsx';
 import { Stundenlohn } from '../Stundenlohn.jsx';
 import { Kreditkarte } from '../Kreditkarte.jsx';
 import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
+import { StipendienView } from '../StipendienView.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
 // steht das Ergebnis ZUERST (role="status"), dann «Ihre Angaben», dann was zu tun ist, die offizielle Stelle und
@@ -31,6 +32,7 @@ const RECHNER = [
   ['stundenlohn', Stundenlohn, { ...maria, finanzen: { stundenlohnRechner: { betrag: '24', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' } } }],
   ['kreditkarte', Kreditkarte, { finanzen: { kreditkarten: [{ name: 'Testkarte', jahresgebuehr: '100', ausgabenMonat: '800', cashback: '1' }] } }],
   ['mietzins', MietzinsOrientierung, { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 } }],
+  ['stipendien', StipendienView, { basis: { canton: 'BE' } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
@@ -149,5 +151,14 @@ describe('Mietzinsbeiträge in der Form X', () => {
   });
   it('ohne Kanton: der App-Satz an der Stelle des Ergebnisses', () => {
     expect(ergebnisTeil(render(MietzinsOrientierung, leer))).toContain(de.mietzinsView.enterCanton.sie || de.mietzinsView.enterCanton);
+  });
+});
+
+describe('Stipendien in der Form X', () => {
+  it('Kurz-Check: Fragen als radiogroup, ohne Antwort die Frage an der Stelle des Ergebnisses', () => {
+    const html = render(StipendienView, leer);
+    expect((html.match(/role="radiogroup"/g) || []).length).toBe(2);
+    expect(ergebnisTeil(html)).toContain(de.stip.checkTitle.sie);
+    expect(ergebnisTeil(html)).toContain('data-ergebnis-art="vorpruefung"');
   });
 });
