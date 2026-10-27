@@ -64,12 +64,14 @@ describe('Umzug — ein Schritt nach dem anderen', () => {
   it('Start: Schritt 1 von 4, nur dieser Schritt, «Erledigt, weiter ›»', () => {
     const html = render();
     expect(html).toContain('Schritt 1 von 4');
-    expect(html).toContain('data-umzug-schritt="1"');
+    // Seit der Ablauf-Schale W (F7-A1, 27.10.2026) stehen alle Schritte im DOM, die übrigen `hidden`
+    // (Eingaben bleiben beim Blättern). «Nur dieser Schritt» heisst darum: nur er ist sichtbar.
+    expect(html).toContain('data-ablauf-schritt="1"><');
+    expect(html).toContain('data-ablauf-schritt="3" hidden=""');
     expect(html).toContain(ohneNummer(de.umzug.step1Title));
     expect(html).not.toContain(de.umzug.step1Title); // Nummer steht schon in «Schritt 1 von 4»
     expect(html).toContain('Erledigt, weiter ›');
     expect(html).not.toContain('Zurück');
-    expect(html).not.toContain(de.umzug.step3Post);
     expect(html).toContain('data-ablauf-pass="0"');
   });
 
@@ -156,10 +158,13 @@ describe('Umzug — ein Schritt nach dem anderen', () => {
     expect(html).not.toContain('Erledigt, weiter ›');
   });
 
-  it('abgeschlossen: «Der Umzug ist geordnet» mit Satz, Ablauf wieder ansehbar', () => {
+  // Entwurf W (F7-A1): der Abschluss ist für alle Abläufe derselbe — «Alle N Schritte sind erledigt» +
+  // «Zur Übersicht» + «Ablauf nochmals ansehen». Der eigene Satz des Umzugs («Der Umzug ist geordnet») entfällt.
+  it('abgeschlossen: «Alle 4 Schritte sind erledigt», zur Übersicht, Ablauf wieder ansehbar', () => {
     const html = render({ stand: { schritt: 3, fertig: true } });
-    expect(html).toContain('Der Umzug ist geordnet');
-    expect(html).toContain(de.umzug.fertigText);
+    expect(html).toContain('Alle 4 Schritte sind erledigt');
+    expect(html).toContain('Zur Übersicht');
+    expect(html).toContain('data-ablauf-schritt="fertig"');
     expect(html).toContain('Ablauf nochmals ansehen');
     expect(html).toContain('data-ablauf-pass="fertig"');
   });
@@ -171,8 +176,10 @@ describe('Umzug — ein Schritt nach dem anderen', () => {
   });
 });
 
-describe('EreignisFrist ohne Karte (alle anderen Abläufe) bleibt wie bisher', () => {
-  it('Satz + Hauptknopf mit Datum', () => {
+// Entwurf W (F7-A1): «Frist als Karte in jedem Ablauf». Ohne eigene Karten-Texte trägt die Karte den
+// Titel der Erinnerung und «bis Datum»; der Satz mit dem Gesetzesartikel bleibt darüber.
+describe('EreignisFrist ohne eigene Karten-Texte (alle anderen Abläufe): Satz + Karte', () => {
+  it('Satz mit Datum, Karte «Titel · bis Datum» mit «In den Kalender»', () => {
     const html = renderToStaticMarkup(React.createElement(EreignisFrist, {
       palette, t, id: 'x', frist: () => '2099-01-24', wert: '2099-01-10',
       labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
@@ -180,7 +187,10 @@ describe('EreignisFrist ohne Karte (alle anderen Abläufe) bleibt wie bisher', (
       reminderTitle: 'X',
     }));
     expect(html).toContain('Anmelden bis spätestens ' + formatDE('2099-01-24'));
-    expect(html).toContain('Frist «Anmeldung Gemeinde» in den Kalender (' + formatDE('2099-01-24') + ')');
-    expect(html).not.toContain('data-frist-karte');
+    expect(html).toContain('data-frist-karte="offen"');
+    expect(html).toContain('>X<');
+    expect(html).toContain('bis ' + formatDE('2099-01-24'));
+    expect(html).toContain('In den Kalender');
+    expect(html).not.toContain('Frist «Anmeldung Gemeinde» in den Kalender');
   });
 });

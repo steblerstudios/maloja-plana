@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufVerwandt, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
 
 // Heirat / eingetragene Partnerschaft — geführter Ablauf. Trauung anmelden (inkl.
@@ -13,7 +13,7 @@ export const Heirat = ({ palette, t, onNavigate }) => {
   const deadline = inDays(30); // frühzeitig beim Zivilstandsamt anmelden (Orientierung)
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'heart',
+    palette, t, onNavigate, ablauf: 'heirat', icon: 'heart',
     title: t('heirat.title'),
     intro: t('heirat.intro'),
   },
@@ -42,7 +42,7 @@ export const Heirat = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('heirat.step4Link'), onClick: () => onNavigate('vorsorge') })
     ),
     // Verwandte Ereignisse (Matrix-Ebene)
-    onNavigate && React.createElement(AblaufStep, { palette, title: t('heirat.relatedTitle') },
+    onNavigate && React.createElement(AblaufVerwandt, { palette, title: t('heirat.relatedTitle') },
       React.createElement(AblaufLink, { palette, label: t('heirat.relatedKind'), onClick: () => onNavigate('kind') }),
       React.createElement(AblaufLink, { palette, label: t('heirat.relatedTrennung'), onClick: () => onNavigate('trennung') })
     ),

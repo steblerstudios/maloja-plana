@@ -9,6 +9,7 @@ import itTranslations from '../i18n/it.js'; // nicht `it` — kollidiert mit vit
 import rm from '../i18n/rm.js';
 import { renderSource } from '../utils/renderSource.js';
 import { ZusatzWechsel } from '../ZusatzWechsel.jsx';
+import { ohneNummer } from '../AblaufSchale.jsx';
 
 // K1 + K2 der Bau-Liste (30.09.2026):
 // K1 — der Armutsgrenzen-Befund verlinkt die BFS-METHODIK (Erhebung Armutsstatistik), nicht
@@ -62,6 +63,7 @@ describe('K2 · Zusatzversicherung: «Vor dem Wechsel prüfen» mit VVG-Belegen'
     expect((html.match(/rel="noopener noreferrer"/g) || []).length).toBe(3);
     expect(html).not.toContain('[[');
     // Die Prüfliste steht VOR Schritt 2 (Aufnahme) — innehalten, bevor gekündigt wird.
-    expect(html.indexOf('Vor dem Wechsel prüfen')).toBeLessThan(html.indexOf(t('zusatzWechsel.step2Title')));
+    // Seit der Ablauf-Schale W (F7-A1) ohne «2 · » im Titel.
+    expect(html.indexOf('Vor dem Wechsel prüfen')).toBeLessThan(html.indexOf(ohneNummer(t('zusatzWechsel.step2Title'))));
   });
 });

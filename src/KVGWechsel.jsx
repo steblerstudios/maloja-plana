@@ -76,7 +76,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   const target = wunschKasse.trim();
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'insurance',
+    palette, t, onNavigate, ablauf: 'kvgwechsel', icon: 'insurance',
     title: t('kvgWechsel.title'),
     intro: t('kvgWechsel.intro'),
   },

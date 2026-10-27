@@ -33,7 +33,7 @@ export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
   const deadlineYear = deadline.slice(0, 4);
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'insurance',
+    palette, t, onNavigate, ablauf: 'zusatzwechsel', icon: 'insurance',
     title: t('zusatzWechsel.title'),
     intro: t('zusatzWechsel.intro'),
   },

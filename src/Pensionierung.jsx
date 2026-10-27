@@ -27,7 +27,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
   }
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'vorsorge',
+    palette, t, onNavigate, ablauf: 'pensionierung', icon: 'vorsorge',
     title: t('pensionierung.title'),
     intro: t('pensionierung.intro'),
   },

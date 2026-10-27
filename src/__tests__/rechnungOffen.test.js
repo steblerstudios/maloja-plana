@@ -4,6 +4,7 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { RechnungOffen, STUFEN } from '../RechnungOffen.jsx';
+import { ohneNummer } from '../AblaufSchale.jsx';
 import { ABLAEUFE } from '../config/ansichtenRegister.js';
 import { VALID_VIEWS } from '../utils/hashRouter.js';
 import { LIGHT_PALETTE } from '../config/constants.js';
@@ -24,6 +25,8 @@ const esc = (x) => String(x).replace(/&/g, '&amp;').replace(/'/g, '&#x27;').repl
 const zeichne = (stufe, onNavigate = () => {}) =>
   renderToStaticMarkup(React.createElement(RechnungOffen, { palette: LIGHT_PALETTE, t, onNavigate, stufe }));
 
+// Seit der Ablauf-Schale W (F7-A1, 27.10.2026) stehen die Schritt-Titel ohne «1 · » — die Nummer steht in
+// «Schritt 1 von N» darüber. Darum hier ohneNummer().
 describe('eine Seite, zwei Stufen', () => {
   it('beide Adressen bleiben gültig und stehen im Register', () => {
     for (const v of STUFEN) {
@@ -62,17 +65,17 @@ describe('eine Seite, zwei Stufen', () => {
 
   it('Stufe Mahnung: nur der Mahnungs-Teil', () => {
     const html = zeichne('mahnung');
-    expect(html).toContain(esc(t('mahnung.step1Title')));
+    expect(html).toContain(esc(ohneNummer(t('mahnung.step1Title'))));
     expect(html).toContain(esc(t('mahnung.intro')));
-    expect(html).not.toContain(esc(t('betreibung.step1Title')));
+    expect(html).not.toContain(esc(ohneNummer(t('betreibung.step1Title'))));
   });
 
   it('Stufe Betreibung: die 10-Tage-Frist steht als erster Schritt da', () => {
     const html = zeichne('betreibung');
-    const frist = html.indexOf(esc(t('betreibung.step1Title')));
+    const frist = html.indexOf(esc(ohneNummer(t('betreibung.step1Title'))));
     expect(frist).toBeGreaterThan(0);
     expect(html).toContain('id="betreibung-frist"');
-    expect(html).not.toContain(esc(t('mahnung.step1Title')));
+    expect(html).not.toContain(esc(ohneNummer(t('mahnung.step1Title'))));
     expect(html).not.toContain('<details');
   });
 
@@ -81,7 +84,7 @@ describe('eine Seite, zwei Stufen', () => {
   });
 
   it('eine unbekannte Stufe fällt auf die Mahnung zurück', () => {
-    expect(zeichne('unsinn')).toContain(esc(t('mahnung.step1Title')));
+    expect(zeichne('unsinn')).toContain(esc(ohneNummer(t('mahnung.step1Title'))));
   });
 });
 

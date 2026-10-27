@@ -10,7 +10,7 @@ import { plusMonate, plusTage } from './utils/fristen.js';
 export const Dienst = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'dienst', icon: 'behoerden',
     title: t('dienst.title'),
     intro: t('dienst.intro'),
   },

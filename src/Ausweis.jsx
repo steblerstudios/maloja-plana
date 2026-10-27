@@ -10,7 +10,7 @@ import { plusTage } from './utils/fristen.js';
 export const Ausweis = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'ausweis', icon: 'behoerden',
     title: t('ausweis.title'),
     intro: t('ausweis.intro'),
   },

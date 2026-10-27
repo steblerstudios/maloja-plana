@@ -12,7 +12,7 @@ import { endeMaerzFolgejahr } from './utils/fristen.js';
 export const Quellensteuer = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'money',
+    palette, t, onNavigate, ablauf: 'quellensteuer', icon: 'money',
     title: t('quellensteuer.title'),
     intro: t('quellensteuer.intro'),
   },

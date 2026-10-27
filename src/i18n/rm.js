@@ -298,16 +298,6 @@ export default {
     // rm ungeprüft F5
     fristKarteBis: 'fin ils {date}',
     // rm ungeprüft F5
-    weiter: 'Fatg, vinavant ›',
-    // rm ungeprüft F5
-    abschliessen: 'Terminar il decurs',
-    // rm ungeprüft F5
-    fertigTitel: 'Il midar da chasa è en urden',
-    // rm ungeprüft F5
-    fertigText: 'Tut ils quatter pass èn fatgs.',
-    // rm ungeprüft F5
-    nochmals: 'Guardar puspè il decurs',
-    // rm ungeprüft F5
     passAdresse: 'Adressa',
     // rm ungeprüft F5
     passGemeinde: 'Vischnanca',
@@ -7870,5 +7860,30 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026.
+  ablauf: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weiter: 'Fatg, vinavant ›',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weiterInfo: 'Vinavant ›',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    abschliessen: 'Terminar il decurs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fertigTitel: 'Tut ils {n} pass èn fatgs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    zurUebersicht: 'A la survista',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    nochmals: 'Guardar puspè il decurs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    erledigt: 'Pass fatgs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fristBis: 'fin ils {date}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fristErinnerung: 'Promemoria ils {date}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    verwandtTitel: 'Eveniments parents',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kapitelLink: 'Al chapitel {name}',
   },
 };

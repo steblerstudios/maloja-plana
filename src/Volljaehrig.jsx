@@ -10,7 +10,7 @@ import { plusTage } from './utils/fristen.js';
 export const Volljaehrig = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'heart',
+    palette, t, onNavigate, ablauf: 'volljaehrig', icon: 'heart',
     title: t('volljaehrig.title'),
     intro: t('volljaehrig.intro'),
   },

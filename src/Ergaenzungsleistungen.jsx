@@ -10,7 +10,7 @@ import { plusMonate } from './utils/fristen.js';
 export const Ergaenzungsleistungen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'vorsorge',
+    palette, t, onNavigate, ablauf: 'ergaenzungsleistungen', icon: 'vorsorge',
     title: t('ergaenzungsleistungen.title'),
     intro: t('ergaenzungsleistungen.intro'),
   },

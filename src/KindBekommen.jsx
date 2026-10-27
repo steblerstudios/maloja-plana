@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufVerwandt, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusMonate } from './utils/fristen.js';
 
 // Kind bekommen — geführter Ablauf. Geburt/Vaterschaft anmelden, Kind versichern (KK
@@ -12,7 +12,7 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'family',
+    palette, t, onNavigate, ablauf: 'kind', icon: 'family',
     title: t('kind.title'),
     intro: t('kind.intro'),
   },
@@ -41,7 +41,7 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step5LinkIpv'), onClick: () => onNavigate('premium') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step5LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
-    onNavigate && React.createElement(AblaufStep, { palette, title: t('kind.relatedTitle') },
+    onNavigate && React.createElement(AblaufVerwandt, { palette, title: t('kind.relatedTitle') },
       React.createElement(AblaufLink, { palette, label: t('kind.relatedHeirat'), onClick: () => onNavigate('heirat') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('kind.quelle'), notes: [t('kind.footerNote'), t('trust.localOnly')] })

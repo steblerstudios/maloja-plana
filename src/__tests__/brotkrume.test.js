@@ -86,8 +86,9 @@ describe('ein Weg zurück', () => {
     const main = lies('main.jsx');
     // Fassung 5: der Umzug zeichnet seine Brotkrume im eigenen Kopf (AblaufSchale `kopf`); seit dem Muster
     // M5 (25.10.2026) auch die Kapitel («Übersicht › Kapitel» im Band, ChapterView), seit Fassung G
-    // (27.10.2026) auch «Was ansteht» (CalendarReminders).
-    expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React\.createElement\('button', \{\s*onClick: \(\) => \(herkunft && herkunft\.view === 'dashboard' \? window\.history\.back\(\) : handleNavigate\('dashboard'\)\)/);
+    // (27.10.2026) auch «Was ansteht» (CalendarReminders). Seit Entwurf W (F7-A1, 27.10.2026) zeichnen alle
+    // Abläufe im Register ihre Brotkrume selbst (AblaufSchale) — darum `!ablaufBereich(view)` statt nur Umzug.
+    expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && !ablaufBereich\(view\) && view !== 'chapter' && view !== 'calendar' && React\.createElement\('button', \{\s*onClick: \(\) => \(herkunft && herkunft\.view === 'dashboard' \? window\.history\.back\(\) : handleNavigate\('dashboard'\)\)/);
   });
   it('die Darstellung liegt NICHT im Hauptbündel: main.jsx importiert nur die Pfade', () => {
     const main = lies('main.jsx');

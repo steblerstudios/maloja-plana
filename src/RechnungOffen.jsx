@@ -31,7 +31,7 @@ export const RechnungOffen = ({ palette, t, onNavigate, stufe = 'mahnung' }) => 
   }, t(key === 'betreibung' ? 'rechnungOffen.stufeBetreibung' : 'rechnungOffen.stufeMahnung'));
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'money',
+    palette, t, onNavigate, ablauf: aktiv, icon: 'money',
     title: t('rechnungOffen.title'),
     intro: t('rechnungOffen.intro'),
   },
@@ -41,9 +41,12 @@ export const RechnungOffen = ({ palette, t, onNavigate, stufe = 'mahnung' }) => 
     ),
     // Die Einleitung des gewählten Teils — wie bisher oben auf seiner eigenen Seite.
     React.createElement('p', { 'data-teil': 'stufe-intro', style: { ...s.stepText, marginBottom: space.sm + 'px' } }, t(aktiv + '.intro')),
+    // Als Aufruf statt als Bauteil (F7-A1, 27.10.2026): die Ablauf-Schale zählt die Schritte des Teils als
+    // ihre eigenen. Die Hooks des Teils (Zustelldatum) gehören damit zu dieser Seite — main.jsx gibt ihr
+    // je Stufe einen eigenen `key`, die Reihenfolge der Hooks bleibt also je Mount gleich.
     aktiv === 'betreibung'
-      ? React.createElement(BetreibungTeil, { palette, t, onNavigate })
-      : React.createElement(MahnungTeil, { palette, t, onNavigate })
+      ? BetreibungTeil({ palette, t, onNavigate })
+      : MahnungTeil({ palette, t, onNavigate })
   );
 };
 

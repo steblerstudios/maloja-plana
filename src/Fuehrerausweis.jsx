@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufVerwandt, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays } from './utils/helpers.js';
 
 // Führerausweis — ruhiger Orientierungs-Ablauf (keine Rechner, keine Rechtsberatung).
@@ -17,7 +17,7 @@ export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
   const kontrolle = inDays(730); // ~2 Jahre — Orientierungs-Rhythmus der 75+-Untersuchung (verschiebbar)
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'fuehrerausweis', icon: 'behoerden',
     title: t('fuehrerausweis.title'),
     intro: t('fuehrerausweis.intro'),
   },
@@ -53,7 +53,7 @@ export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.step5Link'), onClick: () => onNavigate('behoerdendossier') })
     ),
     // Verwandte Ereignisse (Matrix-Ebene)
-    onNavigate && React.createElement(AblaufStep, { palette, title: t('fuehrerausweis.relatedTitle') },
+    onNavigate && React.createElement(AblaufVerwandt, { palette, title: t('fuehrerausweis.relatedTitle') },
       React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.relatedUmzug'), onClick: () => onNavigate('umzug') }),
       React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.relatedPension'), onClick: () => onNavigate('pensionierung') })
     ),

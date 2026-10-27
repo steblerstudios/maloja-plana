@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE } from './config/brotkrumePfade.js';
-import { herkunftName } from './config/ansichtenRegister.js';
+import { herkunftName, ablaufBereich } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -1527,10 +1527,10 @@ const AppInner = ({ demo }) => {
       // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
-      // Der Umzug (Fassung 5) und seit dem Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im
-      // eigenen Kopf (AblaufSchale `kopf`, ChapterView), seit Fassung G (27.10.2026) auch «Was ansteht». Als
-      // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
-      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
+      // Die Abläufe (Fassung 5 Umzug, seit Entwurf W alle im Register, F7-A1 27.10.2026) und seit dem
+      // Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im eigenen Kopf (AblaufSchale, ChapterView),
+      // seit Fassung G (27.10.2026) auch «Was ansteht».
+      view !== 'dashboard' && !PFADE[view] && !ablaufBereich(view) && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',

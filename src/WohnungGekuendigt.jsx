@@ -15,7 +15,7 @@ import { plusTage } from './utils/fristen.js';
 export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'home',
+    palette, t, onNavigate, ablauf: 'wohnunggekuendigt', icon: 'home',
     title: t('wohnungGekuendigt.title'),
     intro: t('wohnungGekuendigt.intro'),
   },

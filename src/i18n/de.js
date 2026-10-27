@@ -236,11 +236,6 @@ export default {
     step2CalendarLink: 'Zum Kalender',
     fristKarteTitel: 'Anmeldung Gemeinde',
     fristKarteBis: 'bis {date}',
-    weiter: 'Erledigt, weiter ›',
-    abschliessen: 'Ablauf abschliessen',
-    fertigTitel: 'Der Umzug ist geordnet',
-    fertigText: 'Alle vier Schritte sind erledigt.',
-    nochmals: 'Ablauf nochmals ansehen',
     // Namen der vier Stationen auf der Passstrasse (Fassung 5, wörtlich aus dem Mockup)
     passAdresse: 'Adresse',
     passGemeinde: 'Gemeinde',
@@ -7079,5 +7074,19 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026 — gemeinsame Texte aller Abläufe (vorher umzug.weiter …).
+  ablauf: {
+    weiter: 'Erledigt, weiter ›',
+    weiterInfo: 'Weiter ›',
+    abschliessen: 'Ablauf abschliessen',
+    fertigTitel: 'Alle {n} Schritte sind erledigt',
+    zurUebersicht: 'Zur Übersicht',
+    nochmals: 'Ablauf nochmals ansehen',
+    erledigt: 'Erledigte Schritte',
+    fristBis: 'bis {date}',
+    fristErinnerung: 'Erinnerung am {date}',
+    verwandtTitel: 'Verwandte Ereignisse',
+    kapitelLink: 'Zum Kapitel {name}',
   },
 };

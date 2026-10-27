@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufVerwandt, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage, plusMonate } from './utils/fristen.js';
 
 // Neu in der Schweiz (Zuzug aus dem Ausland) — geführter Ablauf, gebaut 24.09.2026 auf
@@ -17,7 +17,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   const [einreise, setEinreise] = useState('');
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'zuzug', icon: 'behoerden',
     title: t('zuzug.title'),
     intro: t('zuzug.intro'),
   },
@@ -57,7 +57,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('zuzug.step5Title') },
       React.createElement('p', { style: s.stepText }, t('zuzug.step5Text'))
     ),
-    onNavigate && React.createElement(AblaufStep, { palette, title: t('zuzug.relatedTitle') },
+    onNavigate && React.createElement(AblaufVerwandt, { palette, title: t('zuzug.relatedTitle') },
       React.createElement(AblaufLink, { palette, label: t('zuzug.relatedUmzug'), onClick: () => onNavigate('umzug') }),
       React.createElement(AblaufLink, { palette, label: t('zuzug.relatedEinbuergerung'), onClick: () => onNavigate('einbuergerung') })
     ),

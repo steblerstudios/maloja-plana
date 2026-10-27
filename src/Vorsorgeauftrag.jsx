@@ -53,7 +53,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
   const s = ablaufStyles(palette);
   const chapterIdx = (key) => (chapters ? chapters.findIndex((ch) => ch.key === key) : -1);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'document',
+    palette, t, onNavigate, ablauf: 'vorsorgeauftrag', icon: 'document',
     title: t('vorsorgeauftrag.title'),
     intro: t('vorsorgeauftrag.intro'),
   },
