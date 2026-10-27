@@ -4293,6 +4293,38 @@ export default {
     footNote: { sie: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar Vus. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.', du: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar tai. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.' },
   },
 
+  // «Was steht mir zu?» sco ina pagina (decisiun O, VERGLEICH.md; construida ils 27.10.2026, F7-A3).
+  wasStehtMirZu: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    intro: { sie: 'Bleras persunas han dretg sin agid senza savair quai. Qua vesais Vus tge che vegn en dumonda cun Vossas indicaziuns — e tge che correspunda a Vossa situaziun da vita. Quai resta sin Voss apparat — nagin profil, nagina valitaziun.', du: 'Bleras persunas han dretg sin agid senza savair quai. Qua vesas ti tge che vegn en dumonda cun tias indicaziuns — e tge che correspunda a tia situaziun da vita. Quai resta sin tes apparat — nagin profil, nagina valitaziun.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    mitAngaben: { sie: 'Cun Vossas indicaziuns', du: 'Cun tias indicaziuns' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    anpassen: 'Adattar las indicaziuns per empruvar',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    lebenslage: { sie: 'Tenor Vossa situaziun da vita', du: 'Tenor tia situaziun da vita' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    ergebnisKeiner: 'Cun questas indicaziuns na sa mussa nagin cler dretg sin daners — las vias sutvart cuvran dapli; il pli na dependa betg mo da l’entrada.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    ergebnisEiner: 'Cun questas indicaziuns sa mussa ina via pussaivla: {weg}.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    ergebnisMehrere: 'Cun questas indicaziuns sa mussan vias pussaivlas: {wege}.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeNetto: 'Net {betrag} / mais',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeNettoGeschaetzt: 'Net ≈ {betrag} / mais (stimà)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeMiete: 'Fit {betrag}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeKK: 'Cassa da malsauns {betrag}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeHaushalt: '{canton} · {size} persuna(s)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    schrittTitel: 'Gugent pass per pass?',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    schrittSub: { sie: 'Controlla guidada — entrada, situaziun da vita, Vossa survista', du: 'Controlla guidada — entrada, situaziun da vita, tia survista' },
+  },
+
   anspruchCheck: {
     stepWord: 'Pass',
     stepIncome: 'Tenor l’entrada',

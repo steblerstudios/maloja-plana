@@ -1671,6 +1671,24 @@ export default {
     footNote: { sie: 'Diese Übersicht bewertet nichts und verspricht nichts — sie zeigt nur, was Sie betreffen könnte. Ob wirklich ein Anspruch besteht, klärt die jeweilige Stelle.', du: 'Diese Übersicht bewertet nichts und verspricht nichts — sie zeigt nur, was dich betreffen könnte. Ob wirklich ein Anspruch besteht, klärt die jeweilige Stelle.' },
   },
 
+  // «Was steht mir zu?» als eine Seite (Entscheid O, VERGLEICH.md; gebaut 27.10.2026, F7-A3).
+  wasStehtMirZu: {
+    intro: { sie: 'Vieles steht Menschen zu, ohne dass sie davon wissen. Hier sehen Sie, was mit Ihren Angaben infrage kommt — und was zu Ihrer Lebenslage passt. Das bleibt auf Ihrem Gerät — kein Profil, keine Bewertung.', du: 'Vieles steht Menschen zu, ohne dass sie davon wissen. Hier siehst du, was mit deinen Angaben infrage kommt — und was zu deiner Lebenslage passt. Das bleibt auf deinem Gerät — kein Profil, keine Bewertung.' },
+    mitAngaben: { sie: 'Mit Ihren Angaben', du: 'Mit deinen Angaben' },
+    anpassen: 'Angaben anpassen, um durchzuspielen',
+    lebenslage: { sie: 'Nach Ihrer Lebenslage', du: 'Nach deiner Lebenslage' },
+    ergebnisKeiner: 'Mit diesen Angaben zeigt sich kein klarer Geld-Anspruch — die Wege unten decken mehr ab, das meiste ist nicht allein vom Einkommen abhängig.',
+    ergebnisEiner: 'Mit diesen Angaben zeigt sich ein möglicher Weg: {weg}.',
+    ergebnisMehrere: 'Mit diesen Angaben zeigen sich mögliche Wege: {wege}.',
+    markeNetto: 'Netto {betrag} / Mt.',
+    markeNettoGeschaetzt: 'Netto ≈ {betrag} / Mt. (geschätzt)',
+    markeMiete: 'Miete {betrag}',
+    markeKK: 'KK {betrag}',
+    markeHaushalt: '{canton} · {size} Person(en)',
+    schrittTitel: 'Lieber Schritt für Schritt?',
+    schrittSub: { sie: 'Geführter Anspruch-Check — Einkommen, Lebenslage, Ihr Überblick', du: 'Geführter Anspruch-Check — Einkommen, Lebenslage, dein Überblick' },
+  },
+
   anspruchCheck: {
     stepWord: 'Schritt',
     stepIncome: 'Nach Einkommen',

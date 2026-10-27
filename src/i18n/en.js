@@ -1666,6 +1666,24 @@ export default {
     footNote: 'This overview judges nothing and promises nothing — it only shows what might apply to you. Whether you are actually entitled is determined by the relevant office.',
   },
 
+  // «Was steht mir zu?» as one page (decision O, VERGLEICH.md; built 27.10.2026, F7-A3).
+  wasStehtMirZu: {
+    intro: 'Many people are entitled to support without knowing it. Here you can see what may apply with your details — and what fits your life situation. This stays on your device — no profile, no assessment.',
+    mitAngaben: 'With your details',
+    anpassen: 'Adjust the details to try things out',
+    lebenslage: 'By your life situation',
+    ergebnisKeiner: 'With these details, no clear financial entitlement shows up — the paths below cover more; most do not depend on income alone.',
+    ergebnisEiner: 'With these details, one possible path shows up: {weg}.',
+    ergebnisMehrere: 'With these details, possible paths show up: {wege}.',
+    markeNetto: 'Net {betrag} / mo.',
+    markeNettoGeschaetzt: 'Net ≈ {betrag} / mo. (estimated)',
+    markeMiete: 'Rent {betrag}',
+    markeKK: 'Health insurance {betrag}',
+    markeHaushalt: '{canton} · {size} person(s)',
+    schrittTitel: 'Prefer step by step?',
+    schrittSub: 'Guided check — income, life situation, your overview',
+  },
+
   anspruchCheck: {
     stepWord: 'Step',
     stepIncome: 'By income',
