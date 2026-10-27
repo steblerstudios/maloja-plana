@@ -5094,8 +5094,8 @@ export default {
     ganzerMonat: 'Tutto il mese',
     // Versione G «linea del tempo» con il cerchio dell’anno (27.10.2026, prima della revisione)
     ganzesJahr: 'Tutto l’anno',
-    untertitel: { sie: 'Scadenze, appuntamenti e ciò che ha annotato — in ordine di tempo.', du: 'Scadenze, appuntamenti e ciò che hai annotato — in ordine di tempo.' },
-    alsNaechstes: 'Prossima scadenza',
+    untertitel: { sie: 'Scadenze, appuntamenti e ciò che ha annotato — in ordine cronologico.', du: 'Scadenze, appuntamenti e ciò che hai annotato — in ordine cronologico.' },
+    alsNaechstes: 'In arrivo',
     inTagen: 'tra {days} giorni',
     morgen: 'Domani',
     ausAblauf: 'dal percorso {name}',

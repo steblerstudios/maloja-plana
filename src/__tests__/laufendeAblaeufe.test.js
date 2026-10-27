@@ -5,7 +5,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { laufendeAblaeufe, bandImFenster, fensterStart, fensterTage, FENSTER_TAGE, ABLAEUFE_MIT_STAND, gespeicherterStand } from '../utils/laufendeAblaeufe.js';
+import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, FENSTER_TAGE, ABLAEUFE_MIT_STAND, gespeicherterStand } from '../utils/laufendeAblaeufe.js';
 import { ablaufStandKey, ablaufStandSichern, ablaufStandLaden } from '../utils/ablaufStand.js';
 import { PASS_SCHRITTE, fristDemAblaufZuordnen } from '../AblaufSchale.jsx';
 import { Jahreskreis, bandBogen } from '../components/Jahreskreis.jsx';
@@ -14,6 +14,8 @@ import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import { VorlaeufigContext } from '../hooks/vorlaeufigContext.js';
 import { inDays } from '../utils/helpers.js';
+import { kontrast } from '../utils/lebensbereichFruechte.js';
+import * as K from '../config/constants.js';
 
 beforeEach(() => {
   const store = new Map();
@@ -172,6 +174,29 @@ describe('Jahreskreis: Bogen des laufenden Ablaufs', () => {
   });
 });
 
+describe('Lesbarkeit (a11y-Prüfung 27.10.2026)', () => {
+  // Alle Paletten der App: hell, dunkel, Kontrast.
+  const paletten = Object.entries(K).filter(([, v]) => v && typeof v === 'object' && v.bg && v.text && v.sage && v.mid);
+  const BEREICHE = ['wohnen', 'finanzen', 'versicherungen', 'basis', 'behoerden', 'ausbildung', 'notfall'];
+
+  it('findet die Paletten', () => {
+    expect(paletten.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('Bandschrift (Grundfarbe) hält 4.5:1 auf der Bandfarbe jedes Bereichs', () => {
+    const zuWenig = paletten.flatMap(([name, p]) => BEREICHE.map((b) => [name, b, kontrast(bandFarbe(b, p), p.bg)]))
+      .filter(([, , k]) => k < 4.5).map(([n, b, k]) => n + '/' + b + ' ' + k.toFixed(2));
+    expect(zuWenig).toEqual([]);
+  });
+
+  it('überfällig (sandDeep) als Text 4.5:1, leerer Abhak-Kreis (mid) 3:1', () => {
+    for (const [, p] of paletten) {
+      expect(kontrast(p.sandDeep || p.sand, p.bg)).toBeGreaterThanOrEqual(4.5);
+      expect(kontrast(p.mid, p.bg)).toBeGreaterThanOrEqual(3);
+    }
+  });
+});
+
 describe('Kalender: Band über der Tagesleiste', () => {
   const tKal = createT({ de }, 'de', 'sie');
   const pal = new Proxy({}, { get: () => '#888888' });
@@ -225,7 +250,8 @@ describe('Kalender: Band über der Tagesleiste', () => {
     const html = await render();
     expect(html).toMatch(/data-zeile="frist"/);
     expect(html).toMatch(/>Frist<\/span> · <span[^>]*>Fällig in 9 Tagen<\/span> · aus dem Ablauf Umzug/);
-    expect(html).toContain('aria-label="Als erledigt markieren: Bei der neuen Gemeinde anmelden"');
+    // Mit Datum im Namen, weil die Datumsspalte aria-hidden ist (a11y-Prüfung 27.10.2026).
+    expect(html).toMatch(/aria-label="Als erledigt markieren: Bei der neuen Gemeinde anmelden, \d+\. \S+"/);
   });
 
   it('mit Frist im Kalender: zusätzlich der Bogen im Jahreskreis', async () => {

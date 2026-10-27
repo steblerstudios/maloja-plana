@@ -5193,11 +5193,11 @@ export default {
     ganzerMonat: 'Whole month',
     // Version G «timeline» with the year ring (27.10.2026, before copy review)
     ganzesJahr: 'Whole year',
-    untertitel: 'Deadlines, appointments and what you have noted — in order of time.',
+    untertitel: 'Deadlines, appointments and what you’ve noted — in order of time.',
     alsNaechstes: 'Up next',
     inTagen: 'in {days} days',
     morgen: 'Tomorrow',
-    ausAblauf: 'from the {name} steps',
+    ausAblauf: 'from the guided steps: {name}',
     legende: { frist: 'Deadline', termin: 'Appointment', erledigt: 'done', heute: 'today' },
     nochOhneTag: 'No day yet',
     aufTagLegen: 'Put on a day',

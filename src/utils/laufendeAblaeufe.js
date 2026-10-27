@@ -12,6 +12,17 @@
 // weiterblättert (UmzugAblauf: setStand). Nur ansehen legt nichts an.
 // Im Beispiel und beim Ausprobieren (`vorlaeufig`) gibt es keinen gespeicherten Stand — kein Band.
 
+import { bereichZeichenFarbe } from '../data/aufgabenBereiche.js';
+import { kontrast, lesbareFarbe } from './lebensbereichFruechte.js';
+
+// Farbe des Bands: die Bereichsfarbe, so weit abgedunkelt (hell) bzw. aufgehellt (dunkel), dass die
+// Schrift in der Grundfarbe 4.5:1 hält (a11y-Prüfung 27.10.2026: Basis, Finanzen, Ausbildung hell und
+// Behörden dunkel lagen knapp darunter). Der Farbton bleibt. Schrift: immer palette.bg.
+export const bandFarbe = (bereich, palette) => {
+  const dunkel = kontrast(palette.bg, '#FFFFFF') > kontrast(palette.bg, '#000000');
+  return lesbareFarbe(bereichZeichenFarbe(bereich, palette), palette.bg, dunkel);
+};
+
 // Schrittzahl als Zahl statt Import aus AblaufSchale.jsx, damit der Kalender die Ablauf-Schale
 // nicht mitlädt. Ein Test hält sie gleich mit PASS_SCHRITTE.
 export const ABLAEUFE_MIT_STAND = [

@@ -5121,8 +5121,8 @@ export default {
     ganzerMonat: 'Tout le mois',
     // Version G « chronologie » avec le cercle de l’année (27.10.2026, avant relecture)
     ganzesJahr: 'Toute l’année',
-    untertitel: { sie: 'Échéances, rendez-vous et ce que vous avez noté — dans l’ordre du temps.', du: 'Échéances, rendez-vous et ce que tu as noté — dans l’ordre du temps.' },
-    alsNaechstes: 'Prochaine échéance',
+    untertitel: { sie: 'Échéances, rendez-vous et ce que vous avez noté — dans l’ordre chronologique.', du: 'Échéances, rendez-vous et ce que tu as noté — dans l’ordre chronologique.' },
+    alsNaechstes: 'À venir',
     inTagen: 'dans {days} jours',
     morgen: 'Demain',
     ausAblauf: 'du parcours {name}',
