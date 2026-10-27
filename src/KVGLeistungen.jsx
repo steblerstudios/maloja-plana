@@ -1013,10 +1013,11 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
 
   if (tab === 'franchise') return React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate, onUebernehmen, form });
   if (tab === 'rechnung') return React.createElement(RechnungTab, { palette, t, data, form });
-  // Katalog: ein Nachschlagewerk. Die Kategorie ist die Angabe (radiogroup), die Liste steht als Instrument
-  // unter der Live-Region — sonst würde jeder Filterwechsel die ganze Liste ansagen.
+  // Katalog: ein Nachschlagewerk ohne Rechnung — die Kategorie ist die Angabe (radiogroup), die Liste folgt ihr
+  // (im Browser geprüft: als Ergebnis oben stand der Filter erst nach der ganzen Liste). Ausserhalb der Live-Region,
+  // sonst würde jeder Filterwechsel die ganze Liste ansagen.
   return form({
-    instrument: React.createElement(KatalogTab, { palette, t, filterCat, canton: data.basis?.canton || '' }),
+    weiteres: React.createElement(KatalogTab, { palette, t, filterCat, canton: data.basis?.canton || '' }),
     angaben: { erfasst: 0, gesamt: 0, inhalt: React.createElement(Einzelwahl, {
       palette, id: 'kvg-kategorie', label: t('kvg.tabKatalog'), wert: filterCat, onWahl: setFilterCat,
       optionen: [{ wert: 'all', label: catLabels.all }, ...KVG_CATEGORIES.map((cat) => ({ wert: cat, label: catLabels[cat] }))],

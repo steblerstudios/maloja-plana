@@ -49,9 +49,11 @@ export const RechnerForm = ({
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.mid, fontSize: text.xs } }, '›');
   const id = (teil) => 'rf-' + view + '-' + teil;
 
+  const ohneInhalt = !ergebnis && !ohneErgebnis && !art && !vorbehalt && !instrument;
   const teile = [
     // (2) Ergebnis zuerst — als Live-Region, damit eine neue Zahl angesagt wird.
-    React.createElement('section', { 'aria-labelledby': etikett ? id('ergebnis') : undefined, style: { padding: space.sm + 'px 0 ' + space.md + 'px', borderBottom: '1px solid ' + palette.border } },
+    // Ein Nachschlagewerk ohne Rechnung (KVG-Katalog) hat keinen Ergebnis-Inhalt: dann ohne Rand und Abstand.
+    React.createElement('section', { 'aria-labelledby': etikett ? id('ergebnis') : undefined, style: ohneInhalt ? {} : { padding: space.sm + 'px 0 ' + space.md + 'px', borderBottom: '1px solid ' + palette.border } },
       React.createElement('div', { 'data-teil': 'ergebnis', role: 'status', 'aria-live': 'polite' },
         etikett && React.createElement('div', { id: id('ergebnis'), style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs + 'px' } }, etikett),
         ergebnis || (ohneErgebnis && React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, ohneErgebnis)),
