@@ -110,6 +110,10 @@ const WEITERE_NAMEN = {
   gepaeck: 'nav.rucksack',
   legal: 'legal.title',
   mietzins: 'nav.mietzins',
+  // F7-L12 (27.10.2026): ohne Namen gab es von hier aus kein «Zurück zu …».
+  anspruchcheck: 'schnellcheck.title',
+  notfalldossier: 'notfallDossier.title',
+  behoerdendossier: 'behoerdenDossier.title',
 };
 export const ansichtName = (view) => {
   const e = SEARCH_VIEWS.find((v) => v.view === view);

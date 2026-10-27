@@ -3706,8 +3706,12 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Sche insatge capita, na stuais Vus betg tegnair endament nagut. Questa carta As di tge dir — e mussa las indicaziuns che Vus avais memorisà.', du: 'Sche insatge capita, na stos ti betg tegnair endament nagut. Questa carta ti di tge dir — e mussa las indicaziuns che ti has memorisà.' },
     step1Title: 'Tscherner il numer',
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step1Text: { sie: 'Tutgai sin in numer per telefonar. Il 112 funcziunescha era senza credit.', du: 'Tutga sin in numer per telefonar. Il 112 funcziunescha era senza credit.' },
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    step1Text: { sie: 'Tutgai sin in numer per telefonar. Ils numers d\'urgenza èn gratuits — era senza credit.', du: 'Tutga sin in numer per telefonar. Ils numers d\'urgenza èn gratuits — era senza credit.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    quelle: 'Funtauna: [[FDV Art. 27 al. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/de#art_27]] (stadi 1. fanadur 2026, controllà en october 2026).',
     num_sani: 'Ambulanza',
     num_police: 'Polizia',
     num_fire: 'Pumpiers',
@@ -4518,7 +4522,8 @@ export default {
   wohnenInstrument: {
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",
-    anteil: "{pct} % da l'entrada (CHF {einkommen})",
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    anteil: "{pct} % da l'entrada netta (CHF {einkommen})",
     anteilBrutto: "{pct} % da l'entrada bruta (CHF {einkommen})",
     drittel: 'in terz',
     faustregel: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
@@ -4558,6 +4563,8 @@ export default {
     zoneLowSub: 'bass salaris',
     zoneHighSub: 'auts salaris',
     yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    yourWage40: { sie: 'Voss salari, quintà sin 40 uras l\'emna: CHF {amount}', du: 'Tes salari, quintà sin 40 uras l\'emna: CHF {amount}' },
     geschaetztAusNetto: 'Stimà d\'in net da CHF {netto} — la balla mussa il brut proximativ (la controlla dal salari minim vala mo cun il brut real).',
     readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
@@ -5554,6 +5561,12 @@ export default {
     kreuzAchse: 'Custs da sanadad per onn',
     kreuzKosten: 'Custs per onn',
     kreuzLinie: 'Franchisa {franchise}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzLinieEigen: { sie: 'Vossa franchisa {franchise}', du: 'Tia franchisa {franchise}' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzLegendEigen: { sie: 'Vossa franchisa actuala ({franchise})', du: 'Tia franchisa actuala ({franchise})' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzAriaEigen: { sie: 'Vossa franchisa actuala da {franchise} è marcada sco terza lingia.', du: 'Tia franchisa actuala da {franchise} è marcada sco terza lingia.' },
     kreuzBisher: 'fin ussa',
     kreuzHochrechnung: 'Projecziun',
     kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
@@ -5628,16 +5641,34 @@ export default {
       above: 'circa {pct} % sur la media svizra',
       below: 'circa {pct} % sut la media svizra',
       equal: 'circa en la media svizra',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionAbove: { sie: 'Vossa regiun è circa {pct} % sur la media svizra.', du: 'Tia regiun è circa {pct} % sur la media svizra.' },
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionBelow: { sie: 'Vossa regiun è circa {pct} % sut la media svizra.', du: 'Tia regiun è circa {pct} % sut la media svizra.' },
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionEqual: { sie: 'Vossa regiun è circa en la media svizra.', du: 'Tia regiun è circa en la media svizra.' },
       aria: { sie: 'Vossa regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.', du: 'Tia regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.' },
       premium: {
         title: 'Premia regiunala vs. Svizra',
         yourVal: { sie: 'Vossa premia: CHF {amount}', du: 'Tia premia: CHF {amount}' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userAbove: { sie: 'Vossa premia è circa {pct} % sur la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sur la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userBelow: { sie: 'Vossa premia è circa {pct} % sut la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sut la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userEqual: { sie: 'Vossa premia è circa en la media da Vossa regiun.', du: 'Tia premia è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — regiuns cun pli blers medis ed ospitals pli chars han premias pli autas. Midar la cassa permetta da spargnar mo entaifer la regiun.',
         source: 'Funtauna: [[BAG|priminfo.admin.ch]], premia media {year} · media da tut ils assicuraders',
       },
       rent: {
         title: 'Fittanza regiunala vs. Svizra',
         yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userAbove: { sie: 'Vossa fittanza è circa {pct} % sur la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sur la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userBelow: { sie: 'Vossa fittanza è circa {pct} % sut la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sut la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userEqual: { sie: 'Vossa fittanza è circa en la media da Vossa regiun.', du: 'Tia fittanza è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
         thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
         source: 'Funtauna: [[UST|www.bfs.admin.ch]], enquista structurala davart ils tschains {year} · tschains net, senza cuosts secundars',

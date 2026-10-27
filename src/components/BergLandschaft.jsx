@@ -535,6 +535,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         },
+          // F7-S8 (Sophie 27.10.2026): Tippfläche mindestens 44 px (Regel aus #620), ohne das Bild zu
+          // vergrössern — ein unsichtbarer Rand um die Marke; der Klick landet über das Kind beim Knopf.
+          sz < 44 && React.createElement('span', {
+            'aria-hidden': 'true', 'data-tippflaeche': station.key,
+            style: { position: 'absolute', left: (sz - 44) / 2 + 'px', top: (sz - 44) / 2 + 'px', width: '44px', height: '44px', borderRadius: '50%' },
+          }),
           // Der Fortschrittsring: graue Spur, darauf der Bogen im Verhältnis des Kapitel-Stands.
           React.createElement('svg', {
             'data-ring': station.key, width: sz, height: sz, viewBox: `0 0 ${sz} ${sz}`, 'aria-hidden': 'true',

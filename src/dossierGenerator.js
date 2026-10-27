@@ -11,6 +11,7 @@
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
 import { getFullName } from './config/constants.js';
+import { feldNameOhneEinheit } from './utils/feldName.js';
 import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
@@ -87,7 +88,8 @@ function fieldLabel(chapters, chapterKey, fieldKey) {
   const chapter = chapters.find(c => c.key === chapterKey);
   if (!chapter) return fieldKey;
   const field = chapter.fields.find(f => f.k === fieldKey);
-  return field ? field.label : fieldKey;
+  // F7-S6: ohne «CHF» im Namen — der Wert trägt die Währung (wie im Kapitel).
+  return field ? feldNameOhneEinheit(field.label, field.type) : fieldKey;
 }
 
 // ─── Lebensmappe Section Definitions ──────────────────────
@@ -145,7 +147,7 @@ function getSections(data, chapters, t) {
         { label: lbl('versicherungen', 'kkInsurer'), value: d('versicherungen', 'kkInsurer') },
         { label: lbl('versicherungen', 'kkModel'), value: sel('versicherungen', 'kkModel') },
         { label: lbl('versicherungen', 'kkPremium'), value: chf('versicherungen', 'kkPremium') },
-        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') },
+        { label: lbl('versicherungen', 'franchise'), value: formatCHF(String(d('versicherungen', 'franchise')).replace(/\D/g, '')) },
         { label: lbl('versicherungen', 'bvgInsurer'), value: d('versicherungen', 'bvgInsurer') },
       ].filter(r => r.value),
     },
@@ -161,6 +163,24 @@ function getSections(data, chapters, t) {
         // Wie im Kapitel (Abnahme F6, 25.10.2026): Schweizer Bürgerrecht → «nicht nötig», nicht die Option als Bewilligung.
         { label: lbl('ausbildung', 'workPermit'), value: data?.ausbildung?.workPermit === 'swiss' ? t('chapterView.bewilligungNichtNoetig') : sel('ausbildung', 'workPermit') },
         { label: lbl('ausbildung', 'languages'), value: d('ausbildung', 'languages') },
+      ].filter(r => r.value),
+    },
+    // F7-S1 (Sophie 27.10.2026): Die Lebensmappe verspricht «Alle Kapitel auf einen Blick», liess aber Behörden &
+    // Rechtliches ganz weg (darum «6 Bereiche mit Angaben»). Felder wie im Kapitel, in derselben Reihenfolge.
+    {
+      key: 'behoerden',
+      title: t('chapters.behoerden.title'),
+      rows: [
+        { label: lbl('behoerden', 'cantoneOfTaxation'), value: sel('behoerden', 'cantoneOfTaxation') },
+        { label: lbl('behoerden', 'taxId'), value: d('behoerden', 'taxId') },
+        { label: lbl('behoerden', 'taxFilingDeadline'), value: dt('behoerden', 'taxFilingDeadline') },
+        { label: lbl('behoerden', 'pendingTaxReturns'), value: String(d('behoerden', 'pendingTaxReturns')) },
+        { label: lbl('behoerden', 'registryOffice'), value: d('behoerden', 'registryOffice') },
+        { label: lbl('behoerden', 'betreibungsStatus'), value: sel('behoerden', 'betreibungsStatus') },
+        { label: lbl('behoerden', 'courtCases'), value: sel('behoerden', 'courtCases') },
+        { label: lbl('behoerden', 'legalRepresentative'), value: d('behoerden', 'legalRepresentative') },
+        { label: lbl('behoerden', 'representativePhone'), value: d('behoerden', 'representativePhone') },
+        { label: lbl('behoerden', 'willMade'), value: sel('behoerden', 'willMade') },
       ].filter(r => r.value),
     },
     {
@@ -802,7 +822,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
         { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
         { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },
         { label: lbl('versicherungen', 'kkPremium'), value: chf('versicherungen', 'kkPremium') },
-        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') },
+        { label: lbl('versicherungen', 'franchise'), value: formatCHF(String(d('versicherungen', 'franchise')).replace(/\D/g, '')) },
         { label: lbl('finanzen', 'securitiesValue'), value: chf('finanzen', 'securitiesValue') },
         { label: lbl('finanzen', 'otherAssets'), value: chf('finanzen', 'otherAssets') },
         { label: lbl('finanzen', 'savingsAccount'), value: chf('finanzen', 'savingsAccount') },

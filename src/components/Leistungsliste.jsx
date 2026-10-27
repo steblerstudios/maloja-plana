@@ -4,7 +4,7 @@ import { text, weight, leading, space, radius, ease, duration } from '../config/
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf } from '../config/cantonalData.js';
+import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf, ladeIPVModelle } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
@@ -14,6 +14,15 @@ import { gblStand } from '../data/skosGrundbedarf.js';
 // lazy geladen — vorher in Dashboard.jsx). Name QuickCheck bleibt: Tests und Übergabe-Logik
 // (B-1/E22) hängen daran.
 export const QuickCheck = ({ palette, t, onNavigate, data }) => {
+  // F7-K2-4: Die IPV-Kantonsmodelle laden nach (cantonalData.js IPV_MODULE). Bis dahin sagt calculateIPV
+  // «Orientierung offen»; danach einmal neu zeichnen — sonst blieb hier stehen, was vor dem Laden galt, und
+  // Dashboard und Kapitel widersprachen sich (Entscheid O, «beobachtet, unbestätigt»). Muster wie PraemienOrientierung.
+  const [, setIpvGeladen] = React.useState(0);
+  React.useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
   // Brutto oder netto (EinkommenFeld); gerechnet wird mit netto.
   const e = useEinkommen(data);
   const income = e.nettoMonat;
@@ -34,6 +43,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const found = {};
   let sozPegel = null;
   let knappSoz = false;
+  let ipvLage = null;
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
@@ -51,6 +61,13 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
           + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
         : t(ipv.noteKey),
     };
+    // F7-K2-4 (Sophie 27.10.2026): Ohne Anspruch stand hier «Hängt von Kanton und Einkommen ab — im
+    // Rechner eingeben», während das Kapitel Finanzen aus denselben Daten «Einkommen über Grenze (CHF …)»
+    // zeigte. Jetzt dieselbe sachliche Lage wie im Kapitel (FinanzAuswertung ipvKarte), kein Urteil.
+    // Ohne amtlich belegten Kanton (belegt === false) bleibt der allgemeine Untertitel.
+    else if (ipv && ipv.belegt !== false && ipv.canton) ipvLage = ipv.cantonData?.maxIncome != null
+      ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
+      : t(ipv.noteKey, ipv.noteParams);
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
     // sonst wäre ein „Anspruch möglich" unehrlich.
@@ -128,7 +145,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, l.label),
         React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
           f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
-            : (l.key === 'soz' && sozPegel) ? sozPegel.detail : l.sub,
+            : (l.key === 'soz' && sozPegel) ? sozPegel.detail : (l.key === 'ipv' && ipvLage) ? ipvLage : l.sub,
           l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.sandDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
       ),
       // Pegel: Balken = Einkommen, Strich = SKOS-Bedarf, gemeinsame Skala (das Grössere).
