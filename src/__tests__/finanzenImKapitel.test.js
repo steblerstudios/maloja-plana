@@ -92,15 +92,16 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
     onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, ...extra,
   }));
 
-  it('Formular → Auswertung oben → Passend → Auswertung unten → Als Nächstes', () => {
+  // F7-K2-5 (Sophie 27.10.2026): die Auswertung steht vor dem Formular (vorher danach, finanzen-fusion.md §3).
+  it('Auswertung oben → Formular → Passend → Auswertung unten → Als Nächstes', () => {
     const i = (s) => { const n = QUELLE.indexOf(s); expect(n, s).toBeGreaterThan(-1); return n; };
     const formular = i('abschnittsliste()\n');
     const oben = i("renderAuswertung('oben')");
     const passend = i('    renderPassend(),');  // seit Fassung 6 in jedem Kapitel
     const unten = i("renderAuswertung('unten')");
     const naechstes = i('renderAlsNaechstes() :');
-    expect(formular).toBeLessThan(oben);
-    expect(oben).toBeLessThan(passend);
+    expect(oben).toBeLessThan(formular);
+    expect(formular).toBeLessThan(passend);
     expect(passend).toBeLessThan(unten);
     expect(unten).toBeLessThan(naechstes);
   });

@@ -196,3 +196,10 @@ stehengebliebenen Betrag nicht mehr zählen; negative Einträge verkleinern die 
 mit altem Mietbetrag) · Quellensteuer kann unter «Steuern monatlich» doppelt zählen (Feld-Hinweis
 warnt nicht) · Familienzulagen zählen doppelt, falls schon im eingetragenen Lohn · Säule 3a ohne
 Plausibilitätsprüfung (Feld wurde schon mit Mehrjahresbetrag befüllt, `kantonsModell.js:114-134`).
+
+
+## Nachtrag Fassung 7 (27.10.2026)
+
+Sophie hat F7-K2-5 mit «Ja» entschieden: Die Auswertung steht **vor** dem Formular, wie die Instrumente der
+anderen Kapitel. Damit ist §3, Entscheid 2 («nach den Angaben, vor der Rechnung») überholt. Grundlage:
+`docs/design/fassung-7-2026-10-27/BEFUNDE.md` (Zweig `docs/fassung-7-rundgang`).
