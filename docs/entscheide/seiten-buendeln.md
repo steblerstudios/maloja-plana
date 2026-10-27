@@ -348,3 +348,21 @@ Was damit gilt (Entwurf `seiten-v5.html?nur=ab`, Beschreibung in `VERGLEICH.md` 
   «Alle Versicherungen auf einen Blick» → Versicherungs-Übersicht.
 
 **Noch nichts gebaut.**
+
+## 12 · Fassung 7: Importe, Merkliste, Dossiers, Vorsorge-Rückweg gebaut (27.10.2026)
+
+Entscheide Stebler Studios 27.10.2026 (alle «Ja»), Zweig `feat/f7-budget-merkliste-dossiers`. Nicht gepusht, kein PR.
+
+- **F7-L7 (Gruppe I, Importe):** `budget` ist ein Teil «CSV importieren» unten im Monatsbudget (`sync`),
+  `#/budget` → `UMLEITUNGEN` mit Sprungmarke `mp-budget-import`. Register, Rucksack, Dashboard und Suche kennen nur
+  noch «Monatsbudget» (`budgetSync.title`); `csv`, `import`, `budget` sind Suchwörter von `sync`. `taxImport` offen.
+- **F7-L10 (Gruppe H, Merkliste):** Reiter «Merkliste» in «Was ansteht» (role=tablist, Pfeiltasten). `#/merkliste`
+  → `UMLEITUNGEN` mit `wahl: 'merkliste'`; main.jsx führt `wahl` als Zustand. Eine Liste für beide Reiter.
+- **F7-S2 (Gruppe H, Dossiers):** «Unterlagen drucken» (`drucken`) mit drei Auswahlen (radiogroup): Alles ·
+  Für ein Amt · Für den Notfall. `#/lebensmappe`, `#/behoerdendossier`, `#/notfalldossier` öffnen die passende
+  Auswahl. Ablage: eine Zeile statt drei. Notfall-QR und Hinweise unverändert.
+- **F7-S10:** Patientenverfügung, Bestattungswünsche, Organspende mit Brotkrume «Übersicht › Notfall › …» und
+  «Zurück zur Vorsorge» am Schluss → `notfallvorsorge` (Kapitel Notfall, Block Vorsorge, `mp-notfall-vorsorge`).
+
+Wächter: `budgetImportUmleitung`, `merklisteReiter`, `unterlagenDrucken`, `vorsorgeRueckweg`.
+Offen: rm-Texte (Gegenlese-Marke F7), Copy-Prüfung der neuen Texte.
