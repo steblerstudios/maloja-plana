@@ -1,11 +1,14 @@
 // Netz-Schild (F7-K3-6, Stebler Studios 27.10.2026): ein Schild aus Teilen statt Spinnennetz und zwei Schilden.
+// Umbau am selben Tag: Vorsorge mit drei Säulen, Unfall mit Zusatz (neues Feld), Haushalt mit Haftpflicht und
+// Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk, Leben oben in der Mitte.
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { netzSchildTeile, teilWinkel } from '../data/netzSchild.js';
+import { netzSchildTeile, teilWinkel, fuellung, SCHILD_KERN } from '../data/netzSchild.js';
+import { hausratPflicht, HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { NetzSchild } from '../components/NetzSchild.jsx';
 import { schildOptionen } from '../data/schutzschild.js';
-import { LIGHT_PALETTE } from '../config/constants.js';
+import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -16,40 +19,76 @@ import { DEMO_DATA } from '../config/demoData.js';
 
 const t = createT({ de }, 'de', 'sie');
 const nurText = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-const angestellt = { employed: true, annualIncome: 80000, lohnBasis: 'brutto' };
+const angestellt = { employed: true, annualIncome: 80000, lohnBasis: 'brutto', finanzen: { employmentType: 'employed' } };
+const teil = (r, key) => r.teile.find((p) => p.key === key);
 
-describe('Teile', () => {
-  it('Leben oben in der Mitte, Haftpflicht unten an der Spitze (Sophie 27.10.2026)', () => {
-    const { teile } = netzSchildTeile({ kkInsurer: 'CSS' }, angestellt);
-    expect(teile.map((p) => p.key)).toEqual(['haftpflicht', 'hausrat', 'bvg', 'leben', 'kk', 'uvg']);
-    expect(teilWinkel(3, 6, 3)).toBe(270);
-    expect(teilWinkel(0, 6, 3)).toBe(90);
+describe('Teile und Reihenfolge', () => {
+  it('Leben oben in der Mitte; Haushalt, Vorsorge, Leben, Krankenkasse, Unfall im Uhrzeigersinn', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS' }, angestellt);
+    expect(r.teile.map((p) => p.key)).toEqual(['haushalt', 'vorsorge', 'leben', 'kk', 'uvg']);
+    expect(teilWinkel(2, 5, 2)).toBe(270);
   });
-  it('Leben steht auch mit weniger Teilen genau oben', () => {
-    const { teile } = netzSchildTeile({ kkInsurer: 'CSS' }, { employed: true, annualIncome: 10000, lohnBasis: 'brutto' });
-    const i = teile.findIndex((p) => p.key === 'leben');
-    expect(teilWinkel(i, teile.length, i)).toBe(270);
+  it('ohne Anstellung kein Teil Unfall (die Krankenkasse deckt Unfälle) — Leben bleibt oben', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false });
+    expect(r.teile.map((p) => p.key)).toEqual(['haushalt', 'vorsorge', 'leben', 'kk']);
+    const i = r.teile.findIndex((p) => p.key === 'leben');
+    expect(teilWinkel(i, r.teile.length, i)).toBe(270);
   });
-  it('Leben: «Ja» gedeckt, sonst noch nicht gedeckt, freiwillig', () => {
-    const leben = (v) => netzSchildTeile(v, {}).teile.find((p) => p.key === 'leben');
-    expect(leben({ kkInsurer: 'CSS', lifeInsurance: 'yes' }).stufe).toBe(2);
-    expect(leben({ kkInsurer: 'CSS', lifeInsurance: 'no' }).stufe).toBe(0);
-    expect(leben({ kkInsurer: 'CSS' }).pflicht).toBe(false);
+  it('Füllung: kleiner Kern ohne Erfülltes, anteilig, ganz', () => {
+    expect(fuellung({ erreicht: 0, n: 3 })).toBe(SCHILD_KERN);
+    expect(fuellung({ erreicht: 3, n: 3 })).toBe(1);
+    expect(fuellung({ erreicht: 1, n: 2 })).toBeCloseTo(0.67, 2);
   });
-  it('ohne Anstellung keine Teile für Unfall und Pensionskasse — keine falsche Lücke', () => {
-    const { teile } = netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false });
-    expect(teile.map((p) => p.key)).toEqual(['haftpflicht', 'hausrat', 'leben', 'kk']);
+});
+
+describe('Krankenkasse und Unfall mit Zusatz', () => {
+  it('Krankenkasse: KVG, dann Zusatz', () => {
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, {}), 'kk').erreicht).toBe(1);
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS', kkZusatz: 'Spital' }, {}), 'kk').erreicht).toBe(2);
   });
-  it('Krankenkasse in zwei Stufen: Grundversicherung, mit Zusatz', () => {
-    const stufe = (v) => netzSchildTeile(v, {}).teile.find((p) => p.key === 'kk').stufe;
-    expect(stufe({ liabilityInsurance: 'yes' })).toBe(0);
-    expect(stufe({ kkInsurer: 'CSS' })).toBe(1);
-    expect(stufe({ kkInsurer: 'CSS', kkZusatz: 'Spital halbprivat' })).toBe(2);
+  it('Unfall: UVG Pflicht, Zusatz freiwillig aus dem neuen Feld uvgZusatz', () => {
+    const u = teil(netzSchildTeile({ kkInsurer: 'CSS', uvg: 'employer', uvgZusatz: 'yes' }, angestellt), 'uvg');
+    expect(u.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['uvg', 'pflicht', true], ['uvgZusatz', 'freiwillig', true]]);
+    expect(u.erreicht).toBe(2);
   });
-  it('andere Teile: noch nicht gedeckt oder gedeckt', () => {
-    const { teile, offen } = netzSchildTeile({ kkInsurer: 'CSS', liabilityInsurance: 'yes', householdInsurance: 'no' }, {});
-    expect(teile.find((p) => p.key === 'haftpflicht').stufe).toBe(2);
-    expect(offen).toEqual(['hausrat', 'leben']);
+  it('das Feld «Unfall-Zusatzversicherung» steht im Kapitel, direkt nach UVG', () => {
+    const felder = getChapters(t).find((c) => c.key === 'versicherungen').fields.map((f) => f.k);
+    expect(felder.indexOf('uvgZusatz')).toBe(felder.indexOf('uvg') + 1);
+  });
+});
+
+describe('Vorsorge in drei Säulen', () => {
+  it('angestellt über der Schwelle: AHV, Pensionskasse, Säule 3a', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS', bvgInsurer: 'PK' }, { ...angestellt, finanzen: { employmentType: 'employed', pension3a: '7000' } });
+    const vs = teil(r, 'vorsorge');
+    expect(vs.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['ahv', 'pflicht', true], ['bvg', 'pflicht', true], ['saeule3a', 'freiwillig', true]]);
+    expect(vs.erreicht).toBe(3);
+  });
+  it('ohne Erwerb: nur AHV (Pflicht auch ohne Erwerb, AHVG Art. 10) — ohne Beitrag noch nicht gedeckt', () => {
+    const vs = teil(netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false }), 'vorsorge');
+    expect(vs.versicherungen.map((x) => x.key)).toEqual(['ahv']);
+    expect(vs.erreicht).toBe(0);
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS', ahvContribution: '530' }, {}), 'vorsorge').erreicht).toBe(1);
+  });
+  it('im Ruhestand ist die AHV keine Lücke', () => {
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { finanzen: { employmentType: 'retired' } }), 'vorsorge').erreicht).toBe(1);
+  });
+});
+
+describe('Haushalt und Hausrat-Pflicht je Kanton', () => {
+  it('Haftpflicht und Hausrat in einem Teil', () => {
+    const hh = teil(netzSchildTeile({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }, { kanton: 'ZH' }), 'haushalt');
+    expect(hh.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['haftpflicht', 'haftpflicht', true], ['hausrat', 'freiwillig', false]]);
+    expect(hh.erreicht).toBe(1);
+  });
+  it('Hausrat Pflicht in NW, FR, JU, VD; ohne Kanton «je nach Kanton»', () => {
+    expect(['NW', 'FR', 'JU', 'VD', 'vd'].map(hausratPflicht)).toEqual(['pflicht', 'pflicht', 'pflicht', 'pflicht', 'pflicht']);
+    expect(hausratPflicht('ZH')).toBe('freiwillig');
+    expect(hausratPflicht('')).toBe('unbekannt');
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'VD' }), 'haushalt').versicherungen[1].art).toBe('kantonPflicht');
+  });
+  it('Prüf-Vermerk, solange die Erlasse nicht nachgelesen sind', () => {
+    expect(HAUSRAT_PFLICHT.verify).toBe(true);
   });
 });
 
@@ -58,25 +97,37 @@ describe('Bild und Text', () => {
   it('nichts eingetragen: kein Schild', () => {
     expect(html({})).toBe('');
   });
-  it('Satz «Noch nicht gedeckt: …» und je Teil eine Zeile mit Wort, nicht nur Farbe', () => {
-    const text = nurText(html({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }));
-    expect(text).toContain('Noch nicht gedeckt: Hausrat, Leben.');
-    expect(text).toContain('Lebensversicherung · freiwillig noch nicht gedeckt');
-    expect(text).toContain('Grundversicherung');
-    expect(text).toContain('Privathaftpflicht · freiwillig gedeckt');
+  it('Satz und je Versicherung eine Zeile mit Wort, nicht nur Farbe', () => {
+    const text = nurText(html({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }, { kanton: 'VD' }));
+    expect(text).toContain('Noch nicht gedeckt: Vorsorge, Leben.');
+    expect(text).toContain('Teilweise: Haushalt, Krankenkasse.');
+    expect(text).toContain('Hausrat · Pflicht in VD (Feuer und Elementar) noch nicht gedeckt');
+    expect(text).toContain('Bitte bei der kantonalen Gebäudeversicherung bestätigen');
+    expect(text).toContain('Privathaftpflicht · gesetzlich nicht vorgeschrieben gedeckt');
   });
-  it('alles gedeckt: still vollständig', () => {
-    expect(nurText(html({ kkInsurer: 'CSS', kkZusatz: 'x', liabilityInsurance: 'yes', householdInsurance: 'yes', lifeInsurance: 'yes' }))).toContain('Alle Teile gedeckt.');
+  it('unter 8 Stunden pro Woche: Hinweis zur Freizeit (UVV Art. 13)', () => {
+    const v = { kkInsurer: 'CSS', uvg: 'employer' };
+    expect(html(v, { ...angestellt, stunden: '6' })).toContain('data-teil="unfall-8h"');
+    expect(html(v, { ...angestellt, stunden: '42' })).not.toContain('data-teil="unfall-8h"');
   });
-  it('das Bild hat einen Namen für Bildschirmleser mit dem Stand je Teil', () => {
-    expect(html({ kkInsurer: 'CSS' })).toMatch(/aria-label="Schild aus Versicherungsteilen\. Haftpflicht: noch nicht gedeckt; Hausrat: noch nicht gedeckt; Leben: noch nicht gedeckt; Krankenkasse: Grundversicherung\."/);
+  it('das Bild nennt für Bildschirmleser je Teil «x von n»', () => {
+    expect(html({ kkInsurer: 'CSS' }, { kanton: 'ZH' })).toContain('aria-label="Schild aus Versicherungsbereichen. Haushalt: 0 von 2; Vorsorge: 0 von 1; Leben: 0 von 1; Krankenkasse: 1 von 2."');
   });
-  it('Beispiel Maria zeigt das Schild', () => {
-    expect(html(DEMO_DATA.versicherungen, schildOptionen(DEMO_DATA))).toContain('data-schild="netz"');
+  it('Beispiel Maria zeigt das Schild mit Vorsorge 3 von 3', () => {
+    const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton, stunden: DEMO_DATA.ausbildung.workHoursPerWeek };
+    const out = html(DEMO_DATA.versicherungen, o);
+    expect(out).toContain('data-schild="netz"');
+    expect(out).toContain('data-erreicht="3/3"');
   });
   it('alle Texte in fünf Sprachen', () => {
     const blatt = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
-    const keys = ['intro', 'aria', 'offen', 'grund', 'zusatz', 'gedeckt', 'pflicht', 'freiwillig', 'nochOffen', 'ganz', 'kurz.kk', 'kurz.uvg', 'kurz.bvg', 'kurz.haftpflicht', 'kurz.hausrat', 'kurz.leben', 'lang.leben'];
-    for (const sprache of [de, en, fr, it_, rm]) for (const k of keys) expect(blatt(sprache, 'netzSchild.' + k)).toBeTruthy();
+    const keys = ['intro', 'aria', 'offen', 'gedeckt', 'vonN', 'nochOffen', 'teilweise', 'ganz', 'haftpflichtHinweis', 'hausratPruefen', 'unfall8h',
+      ...['kk', 'uvg', 'vorsorge', 'haushalt', 'leben'].map((k) => 'kurz.' + k),
+      ...['kvg', 'kkZusatz', 'uvg', 'uvgZusatz', 'ahv', 'bvg', 'saeule3a', 'haftpflicht', 'hausrat', 'leben'].map((k) => 'vers.' + k),
+      ...['pflicht', 'freiwillig', 'haftpflicht', 'kantonPflicht', 'jeNachKanton'].map((k) => 'art.' + k)];
+    for (const sprache of [de, en, fr, it_, rm]) {
+      for (const k of keys) expect(blatt(sprache, 'netzSchild.' + k)).toBeTruthy();
+      expect(blatt(sprache, 'chapters.versicherungen.fields.uvgZusatz.label')).toBeTruthy();
+    }
   });
 });

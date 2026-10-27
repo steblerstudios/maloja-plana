@@ -1,5 +1,6 @@
 import React from 'react';
-import { netzSchildTeile, teilWinkel, SCHILD_STUFEN } from '../data/netzSchild.js';
+import { netzSchildTeile, teilWinkel, fuellung, SCHILD_KERN } from '../data/netzSchild.js';
+import { HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { shieldPath } from './shieldShape.js';
 import { text, weight, space, leading } from '../config/tokens.js';
 import { hinweisZeichen } from '../IconSystem.jsx';
@@ -27,22 +28,25 @@ const keil = (mitte, breite) => {
   return pts.map((p) => p.map((x) => Math.round(x * 10) / 10).join(',')).join(' ');
 };
 
-export const NetzSchild = ({ palette, t, versicherungen, employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter }) => {
+export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stunden, employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter }) => {
   const v = versicherungen || {};
-  const { teile, offen, st } = netzSchildTeile(v, { employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter });
+  const { teile, offen, teilweise, st } = netzSchildTeile(v, { employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter, finanzen, kanton });
   if (!st.touched || !teile.length) return null;
   const h = React.createElement;
   const n = teile.length;
   const breite = 360 / n;
   const iLeben = teile.findIndex((p) => p.key === 'leben');
   const winkel = (i) => teilWinkel(i, n, iLeben);
-  // Grundversicherung: dasselbe Salbei wie «gedeckt», halb so dicht — im hellen wie im dunklen Modus klar
-  // als «weniger» lesbar (im Browser verglichen 27.10.2026; ein eigenes helles Grün verschwand dunkel fast).
+  // Teilweise: dasselbe Salbei wie «ganz», halb so dicht — im hellen wie im dunklen Modus klar als «weniger»
+  // lesbar (im Browser verglichen 27.10.2026; ein eigenes helles Grün verschwand dunkel fast).
   const salbei = palette.sageDeep || palette.sage;
-  const farbe = [palette.sand, salbei, salbei];
-  const deckung = [0.5, 0.5, 0.9];
-  const stand = (p) => p.stufe === 0 ? t('netzSchild.offen') : p.stufe === 1 ? t('netzSchild.grund') : p.zweiStufen ? t('netzSchild.zusatz') : t('netzSchild.gedeckt');
-  const aria = t('netzSchild.aria') + ' ' + teile.map((p) => t('netzSchild.kurz.' + p.key) + ': ' + stand(p)).join('; ') + '.';
+  const ganz = (p) => p.erreicht === p.n;
+  const farbe = (p) => p.erreicht === 0 ? palette.sand : salbei;
+  const dichte = (p) => p.erreicht === 0 ? 0.5 : ganz(p) ? 0.9 : 0.5;
+  const kurz = (p) => t('netzSchild.kurz.' + p.key);
+  const aria = t('netzSchild.aria') + ' ' + teile.map((p) => kurz(p) + ': ' + t('netzSchild.vonN', { n: p.erreicht, total: p.n })).join('; ') + '.';
+  // Stufen-Linien je Teil: der Kern und jede Zwischenstufe, in Schildform, nur im eigenen Keil.
+  const linien = (p) => [SCHILD_KERN, ...Array.from({ length: p.n - 1 }, (_, k) => fuellung({ erreicht: k + 1, n: p.n }))];
 
   const bild = h('svg', { viewBox: `0 0 ${B} ${H}`, width: '100%', role: 'img', 'aria-label': aria, style: { maxWidth: '300px', height: 'auto', display: 'block', margin: '0 auto' } },
     h('defs', null,
@@ -50,12 +54,9 @@ export const NetzSchild = ({ palette, t, versicherungen, employed, annualIncome,
       teile.map((p, i) => h('clipPath', { key: p.key, id: 'ns-keil-' + p.key }, h('polygon', { points: keil(winkel(i), breite) })))),
     h('g', { clipPath: 'url(#ns-schild)' },
       h('path', { d: SCHILD, fill: palette.up }),
-      teile.map((p) => h('path', {
-        key: p.key, 'data-teil': p.key, 'data-stufe': p.stufe, d: SCHILD, clipPath: 'url(#ns-keil-' + p.key + ')',
-        transform: skaliert(SCHILD_STUFEN[p.stufe]), fill: farbe[p.stufe], fillOpacity: deckung[p.stufe],
-      })),
-      // Feine Linien in Schildform zwischen den Stufen, durch alle Teile.
-      SCHILD_STUFEN.slice(0, 2).map((s) => h('path', { key: s, d: SCHILD, fill: 'none', stroke: palette.mid, strokeOpacity: 0.35, strokeWidth: 1, vectorEffect: 'non-scaling-stroke', transform: skaliert(s) })),
+      teile.map((p) => h('g', { key: p.key, clipPath: 'url(#ns-keil-' + p.key + ')' },
+        h('path', { 'data-teil': p.key, 'data-erreicht': p.erreicht + '/' + p.n, d: SCHILD, transform: skaliert(fuellung(p)), fill: farbe(p), fillOpacity: dichte(p) }),
+        linien(p).map((s) => h('path', { key: s, d: SCHILD, fill: 'none', stroke: palette.mid, strokeOpacity: 0.35, strokeWidth: 1, vectorEffect: 'non-scaling-stroke', transform: skaliert(s) })))),
       // Fugen zwischen den Teilen, in der Farbe des Grunds.
       teile.map((p, i) => {
         const [x, y] = punkt(winkel(i) + breite / 2, 420);
@@ -66,26 +67,39 @@ export const NetzSchild = ({ palette, t, versicherungen, employed, annualIncome,
     // Namen im Teil; auf vollem Salbei hell, sonst dunkel (wie im Schutzschild, a11y Abnahme F6).
     teile.map((p, i) => {
       const g = (winkel(i) % 360 + 360) % 360;
-      // Unten an der Spitze ist mehr Platz, oben in der Mitte weniger.
       const [x, y] = punkt(g, Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96);
       return h('text', { key: p.key, 'aria-hidden': true, x, y, textAnchor: 'middle', dominantBaseline: 'central',
-        style: { fontSize: '14px', fontWeight: weight.semi, fill: p.stufe === 2 ? palette.surface : palette.text } }, t('netzSchild.kurz.' + p.key));
+        style: { fontSize: '14px', fontWeight: weight.semi, fill: ganz(p) ? palette.surface : palette.text } }, kurz(p));
     }));
 
-  const zeile = (p) => h('div', { key: p.key, role: 'listitem', style: { display: 'flex', alignItems: 'baseline', gap: '6px', fontSize: text.xs, padding: '2px 0', color: p.stufe ? palette.text : palette.mid } },
-    h('span', { 'aria-hidden': true, style: { color: p.stufe ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(p.stufe ? 'check' : 'kaestchen', 12)),
-    h('span', { style: { minWidth: 0 } }, p.key === 'leben' ? t('netzSchild.lang.leben') : t('schutzschild.' + p.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + (p.pflicht ? t('netzSchild.pflicht') : t('netzSchild.freiwillig')))),
-    h('span', { style: { marginLeft: 'auto', color: p.stufe ? (palette.sageDeep || palette.sage) : palette.mid, whiteSpace: 'nowrap' } }, stand(p)));
+  const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);
+  const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
+  const versZeile = (x) => h('div', { key: x.key, role: 'listitem', style: { display: 'flex', alignItems: 'baseline', gap: '6px', fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
+    h('span', { 'aria-hidden': true, style: { color: x.ok ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
+    h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
+    h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, x.ok ? t('netzSchild.gedeckt') : t('netzSchild.offen')));
+  const teilBlock = (p) => h('div', { key: p.key, 'data-gruppe': p.key, style: { marginBottom: space.xs + 'px' } },
+    h('div', { style: { display: 'flex', alignItems: 'baseline', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+      kurz(p), h('span', { style: { marginLeft: 'auto', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, t('netzSchild.vonN', { n: p.erreicht, total: p.n }))),
+    h('div', { role: 'list', 'aria-label': kurz(p) }, p.versicherungen.map(versZeile)),
+    p.key === 'uvg' && Number(stunden) > 0 && Number(stunden) < 8 && h('p', { 'data-teil': 'unfall-8h', style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t('netzSchild.unfall8h')),
+    p.key === 'haushalt' && h('p', { style: { ...klein, margin: '2px 0 0 24px' } }, t('netzSchild.haftpflichtHinweis')),
+    p.key === 'haushalt' && HAUSRAT_PFLICHT.verify && p.versicherungen.some((x) => x.art === 'kantonPflicht' || x.art === 'jeNachKanton') &&
+      h('p', { 'data-teil': 'hausrat-pruefen', style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t('netzSchild.hausratPruefen')));
+
+  const satz = [
+    offen.length && t('netzSchild.nochOffen', { liste: offen.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
+    teilweise.length && t('netzSchild.teilweise', { liste: teilweise.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
+  ].filter(Boolean).join(' ') || t('netzSchild.ganz');
 
   return h('div', { 'data-schild': 'netz', style: { marginBottom: space.sm + 'px' } },
-    h('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.normal } }, t('netzSchild.intro')),
+    h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px 0' } }, t('netzSchild.intro')),
     bild,
-    h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } },
-      offen.length ? t('netzSchild.nochOffen', { liste: offen.map((k) => t('netzSchild.kurz.' + k)).join(', ') }) : t('netzSchild.ganz')),
-    h('div', { role: 'list', style: { maxWidth: '360px', margin: '0 auto' } }, teile.map(zeile)),
-    st.bvgUnklar && h('p', { style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal } },
+    h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } }, satz),
+    h('div', { style: { maxWidth: '380px', margin: '0 auto' } }, teile.map(teilBlock)),
+    st.bvgUnklar && h('p', { style: { ...klein, margin: space.sm + 'px 0 0' } },
       hinweisZeichen(), t(st.bvgUnklarGrund === 'dreizehnter' ? 'schutzschild.bvgUnklar13' : 'schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) })),
-    st.bvgNa && h('p', { 'data-teil': 'bvg-na', style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal } },
+    st.bvgNa && h('p', { 'data-teil': 'bvg-na', style: { ...klein, margin: space.sm + 'px 0 0' } },
       hinweisZeichen(), t('schutzschild.bvgNa', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) })));
 };
 

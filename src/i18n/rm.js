@@ -2404,6 +2404,7 @@ export default {
         bvgBalance: 'Avair LPP actual CHF',
         // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
+        uvgZusatz: { label: 'Assicuranza supplementara d’accident', options: { yes: 'Gea', no: 'Na / nunenconuschent' } }, // TODO(rm): provisorisch
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
@@ -7202,19 +7203,22 @@ export default {
   },
   // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)
   netzSchild: {
-    intro: 'Ina part per assicuranza. Ina part plaina vul dir cuvrì, in pitschen nucleus: anc betg cuvrì.',
-    aria: 'Stemma da parts d’assicuranza.',
+    intro: 'Ina part per sectur. Pli bler ch’è cuvrì, pli fitg s’empleni ella; in pitschen nucleus vul dir: anc nagut cuvrì.',
+    aria: 'Stemma da secturs d’assicuranza.',
     offen: 'anc betg cuvrì',
-    grund: 'assicuranza da basa',
-    zusatz: 'cun supplementara',
     gedeckt: 'cuvrì',
-    pflicht: 'obligatoric',
-    freiwillig: 'facultativ',
+    vonN: '{n} da {total}',
     nochOffen: 'Anc betg cuvrì: {liste}.',
-    ganz: 'Tut las parts èn cuvridas.',
-    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', bvg: 'Cassa da pensiun', haftpflicht: 'Responsabladad', hausrat: 'Inventari', leben: 'Vita' },
-    lang: { leben: 'Assicuranza da vita' },
+    teilweise: 'Per part: {liste}.',
+    ganz: 'Tut las parts èn cuvridas cumplainamain.',
+    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
+    vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad privata', hausrat: 'Inventari', leben: 'Assicuranza da vita' },
+    art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
+    haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens, cun in chaun è ella obligatorica en blers chantuns.',
+    hausratPruefen: 'Obligaziun d’inventari: p.pl. confermar tar l’assicuranza chantunala d’edifizis — la funtauna n’è anc betg verifitgada.',
+    unfall8h: 'Sut 8 uras per emna tar il medem patrun n’èn ils accidents en il temp liber betg assicurads tras el, mabain tras la cassa da malsauns (OAINF art. 13).',
   },
+
   schutzschild: {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',

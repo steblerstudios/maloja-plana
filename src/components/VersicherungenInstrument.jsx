@@ -144,7 +144,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
 
     !uebersicht && schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
     // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
-    !uebersicht && h(NetzSchild, { palette, t, versicherungen: v, ...schildOptionen(daten) }),
+    !uebersicht && h(NetzSchild, { palette, t, versicherungen: v, finanzen: daten.finanzen, kanton: daten.basis?.canton, stunden: daten.ausbildung?.workHoursPerWeek, ...schildOptionen(daten) }),
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h4', { style: kapH }, t('instrumente.tacho')),
