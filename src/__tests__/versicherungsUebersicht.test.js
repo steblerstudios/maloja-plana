@@ -94,6 +94,37 @@ describe('Schutzschild und aufklappbare Teile', () => {
   });
 });
 
+// F7-L6 (Sophie 27.10.2026, «§11 bauen»): Abgleich ergab, dass §11 mit #580/#601 gebaut ist — hier wacht der Aufbau
+// als Ganzes, damit ein späterer Umbau Reihenfolge und Zeilen nicht still verschiebt.
+describe('Aufbau wie die Finanz-Auswertung (F7-L6)', () => {
+  const reihenfolge = (html) => [...html.matchAll(/data-(teil|zeile)="([^"]+)"/g)].map((m) => m[2]);
+  it('Teile in der Reihenfolge von §11: Marken · pro Monat · Zeilen · Schutzschild · aufklappbar · Wege', () => {
+    const html = seite();
+    const teile = reihenfolge(html);
+    const pos = (id) => { const i = teile.indexOf(id); expect(i, id).toBeGreaterThan(-1); return i; };
+    const kette = ['vu-marken', 'versicherungen-instrument', 'vu-zeilen', 'mp-vu-risiken', 'mp-vu-kreuz', 'mp-vu-region', 'mp-vu-vergleich', 'mp-vu-kassen', 'vu-wege'].map(pos);
+    expect([...kette].sort((a, b) => a - b)).toEqual(kette);
+    // Schutzschild zwischen Zeilen und aufklappbaren Teilen
+    expect(html.indexOf('id="schild-pflicht"')).toBeGreaterThan(html.indexOf('data-teil="vu-zeilen"'));
+    expect(html.indexOf('id="schild-pflicht"')).toBeLessThan(html.indexOf('data-teil="mp-vu-risiken"'));
+  });
+  it('Zeilen mit Wert: Franchise, Wechsel, IPV, Gesundheitskosten, KVG-Leistungen, Vorsorge — in dieser Reihenfolge', () => {
+    const zeilen = reihenfolge(seite()).filter((id) => ['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner'].includes(id));
+    expect(zeilen).toEqual(['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner']);
+  });
+  it('Franchise-Zeile mit Wert, KVG-Leistungen als Zeile (eigene Seite bleibt)', () => {
+    const text = nurText(seite());
+    expect(text).toMatch(/Franchise Eher 2’500/);
+    expect(text).toContain(t('nav.kvgLeistungen'));
+    expect(VALID_VIEWS.has('kvg')).toBe(true);
+    expect(VALID_VIEWS.has('premium')).toBe(true);
+  });
+  it('alle aufklappbaren Teile sind beim Öffnen zu', () => {
+    const html = seite();
+    expect(html).not.toMatch(/<details id="mp-vu-[a-z]+" open/);
+  });
+});
+
 describe('Ohne Angaben', () => {
   it('ohne PLZ steht die Postleitzahl oben, nichts bricht', () => {
     const leer = { basis: {}, wohnen: {}, finanzen: {}, versicherungen: {} };
