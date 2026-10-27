@@ -13,9 +13,11 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-**Stand:** 2026-10-26 17:50 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `758da6c7` (+ #611 Patch-Updates, #609 Beta-Feedback ehrlich) gebaut, nicht deployt.
+**Stand:** 2026-10-27 02:20 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `d9aa8e06` (Merge-Nacht #563, #610, #612–#614, #616, #618–#623 + #624 «Was ansteht» nach Entwurf G) gebaut, nicht deployt.
 
 *Vorheriger Stand (bleibt als Beleg):*
+**Stand:** 2026-10-26 17:50 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `758da6c7` (+ #611 Patch-Updates, #609 Beta-Feedback ehrlich) gebaut, nicht deployt.
+
 **Stand:** 2026-10-25 21:30 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `2db4d4ee` (Fassung 6 + Muster, #571–#584) gebaut, nicht deployt.
 
 *Vorheriger Stand (bleibt als Beleg):*
@@ -52,6 +54,7 @@
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
+| **«Was ansteht» nach Entwurf G** — Kopf mit Band, «Als Nächstes» (verpasst + «Was jetzt?»), Monatsknöpfe, durchgehende Tagesleiste mit Ablauf-Pille, Legende, «Ganzer Monat» / **«Ganzes Jahr»** (Jahreskreis mit Bogen), Liste als Zeilen, Lösch-Hinweis · Kapitel-Titel 30 px Display | `built` | #624 · main `d9aa8e06` | Volltest 7232, Lint, Build, Startbündel 64,48 kB; Browser 375 px hell/dunkel mit echten lokalen Daten; a11y-/Copy-/Polygrafin-Prüfung, Befunde behoben. **Nicht live.** Gegenlesung fr/it/en/rm offen, rm `umzug.title` deutsch. |
 | **Fassung 6** — Abnahme Seite für Seite (Wohnen, Finanzen, Basis, Versicherungen inkl. Übersicht, Ausbildung, Behörden, Notfall «ein Ort») + **Muster M1–M8** für alle Kapitel | `built` | #571–#581 · main `d2943f23` | Volltest + Build + CI je Merge; Browser 375 px dunkel (alle Kapitel), hell nur Kopf. Fachprüfung 0 Blocker. Nicht live |
 | **Nachträge Fachprüfung** — Wochenaufenthalt-Hinweise sichtbar (vorher nie), «trifft nicht zu» Pensionskasse/Familienzulagen/Kinderbetreuung, AHV «/ Jahr», Schutzschild-BVG-Satz, AHV-Orientierung Selbständige, Fachbegriffe it/en nach fedlex | `built` | #582–#584 · main `2db4d4ee` | Tests `nachtragFachpruefungM`, `nachtragZwei`, `englischFedlex`; CI main grün. Nicht live; rm ungeprüft |
 | **Fassung 5** — Ablage, Umzug Schritt für Schritt, Menü mit Karten + Icons, Kapitel-Kopf links + Finanzen, Merkliste ↔ «Was ansteht» mit Tag, IPV-Weg mit «Jährlich erinnern» | `built` | #539–#544 · main `412d11bb` · Release `c88ee519` | Je Zweig Copy-Prüfer, Browser 375 px im Beispiel, Suite auf zusammengeführtem Stand, CI grün; Tor 23.10.: 0 🔴. Verknüpfung Merkliste→Kalender mit echten Daten nur per Tests. rm «ungeprüft F5». |
