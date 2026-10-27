@@ -2464,6 +2464,8 @@ export default {
         certifications: 'Ulteriurs certificats',
         employmentStart: 'Engaschà dapi',
         workPermit: { label: 'Permissiun da dimora', options: { swiss: 'Svizzer/a', b: 'B', c: 'C', l: 'L', g: 'G' } },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        branche: { label: 'Branscha', options: { it: 'IT', pharma: 'Farma', finanz: 'Finanzas', versicherung: 'Assicuranza', beratung: 'Cussegliaziun', telekom: 'Telekom', energie: 'Energia', oeffentlich: 'Admin. publica', bildung: 'Furmaziun', gesundheit: 'Sanadad', bau: 'Construcziun', industrie: 'Industria', handel: 'Commerzi', transport: 'Transport', gastro: 'Gastronomia', reinigung: 'Nettegiament', landwirtschaft: 'Agricultura', detailhandel: 'Commerzi al detail' } },
         workHoursPerWeek: "Uras da lavur per l'emna",
         languages: 'Linguas',
       },
@@ -4084,6 +4086,14 @@ export default {
     householdDetail: '{adults} creschids, {children} uffants',
     adults: 'creschids',
     branchenvergleich: { sie: 'Voss salari en cumparegliaziun da la branscha (salari brut median):', du: 'Tes salari en cumparegliaziun da la branscha (salari brut median):' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    eigeneBranche: { sie: 'Vossa branscha:', du: 'Tia branscha:' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    andereBranchen: 'Autras branschas ({n})',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    brancheVergleichen: 'Cumparar cun autras branschas ({n})',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    brancheAngeben: { sie: 'Vossa branscha pudais Vus inditgar en il chapitel Furmaziun & lavur.', du: 'Tia branscha pos ti inditgar en il chapitel Furmaziun & lavur.' },
     branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022/2024',
   },
 

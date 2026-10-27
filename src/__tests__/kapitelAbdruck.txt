@@ -107,7 +107,7 @@ de   doc k=bvg_cert label~88abb78c
 de   doc k=ahv_confirmation label~2afe4119
 de   doc k=household_policy label~ef2ca267
 de   doc k=auto_policy label~b2d4d9c9
-de kapitel=ausbildung title~481c54e8 short~eaab6a9f description~eeb30453 felder=11 docs=3
+de kapitel=ausbildung title~481c54e8 short~eaab6a9f description~eeb30453 felder=12 docs=3
 de   k=schoolName type="text" section~cbdaf340 label~2778e109 sectionIntro~abdd9795
 de   k=educationLevel type="select" label~32a9109a options=7 optWerte~fde3f0aa optLabels~71fa8490
 de   k=efzNumber type="text" label~9a6aa984
@@ -115,6 +115,7 @@ de   k=certifications type="textarea" label~4edaf2ae
 de   k=employer type="text" naOk=true section~81dea24a label~29d7414b sectionIntro~6965924c
 de   k=employerAddress type="textarea" naOk=true label~902f77eb
 de   k=jobTitle type="text" mvo=true naOk=true orientation~29fa1707 label~36ea3f94
+de   k=branche type="select" naOk=true label~fd7fc200 options=18 optWerte~d59d16bb optLabels~a84c7fcc
 de   k=employmentStart type="date" naOk=true label~61333009
 de   k=workPermit type="select" orientation~16448996 label~d08cbc7b options=5 optWerte~14b89076 optLabels~1de4e09b
 de   k=workHoursPerWeek type="text" naOk=true label~034f1a25
@@ -263,7 +264,7 @@ fr   doc k=bvg_cert label~bfe675a1
 fr   doc k=ahv_confirmation label~75494ae1
 fr   doc k=household_policy label~fa628240
 fr   doc k=auto_policy label~f036b99e
-fr kapitel=ausbildung title~f48b5f55 short~b08ae58c description~afd4da82 felder=11 docs=3
+fr kapitel=ausbildung title~f48b5f55 short~b08ae58c description~afd4da82 felder=12 docs=3
 fr   k=schoolName type="text" section~b08ae58c label~6e198f2c sectionIntro~71ba23b1
 fr   k=educationLevel type="select" label~173704c6 options=7 optWerte~fde3f0aa optLabels~9ec1ea17
 fr   k=efzNumber type="text" label~a3028d61
@@ -271,6 +272,7 @@ fr   k=certifications type="textarea" label~02d521b0
 fr   k=employer type="text" naOk=true section~05caadbf label~375760d9 sectionIntro~7d398bdf
 fr   k=employerAddress type="textarea" naOk=true label~1cbb3c6e
 fr   k=jobTitle type="text" mvo=true naOk=true orientation~09629125 label~dded5583
+fr   k=branche type="select" naOk=true label~fd7fc200 options=18 optWerte~d59d16bb optLabels~65c464db
 fr   k=employmentStart type="date" naOk=true label~ee585ba1
 fr   k=workPermit type="select" orientation~6f20cae6 label~1fcaa2be options=5 optWerte~14b89076 optLabels~e473da76
 fr   k=workHoursPerWeek type="text" naOk=true label~4734a2a6
@@ -419,7 +421,7 @@ it   doc k=bvg_cert label~a2a32982
 it   doc k=ahv_confirmation label~71f7f2ca
 it   doc k=household_policy label~389b382a
 it   doc k=auto_policy label~c443b1d5
-it kapitel=ausbildung title~981288c5 short~dda0b741 description~ed4e3de7 felder=11 docs=3
+it kapitel=ausbildung title~981288c5 short~dda0b741 description~ed4e3de7 felder=12 docs=3
 it   k=schoolName type="text" section~dda0b741 label~8369f760 sectionIntro~665cbfa9
 it   k=educationLevel type="select" label~69e80ce0 options=7 optWerte~fde3f0aa optLabels~459e0025
 it   k=efzNumber type="text" label~a5e891c1
@@ -427,6 +429,7 @@ it   k=certifications type="textarea" label~ab1fea66
 it   k=employer type="text" naOk=true section~a0e10c7d label~b93da698 sectionIntro~2c2bd7bd
 it   k=employerAddress type="textarea" naOk=true label~4f9570c9
 it   k=jobTitle type="text" mvo=true naOk=true orientation~31e87c07 label~1439496e
+it   k=branche type="select" naOk=true label~bb0a1663 options=18 optWerte~d59d16bb optLabels~6e3fee31
 it   k=employmentStart type="date" naOk=true label~aa810e8f
 it   k=workPermit type="select" orientation~1c5b2455 label~1113a949 options=5 optWerte~14b89076 optLabels~02f7955e
 it   k=workHoursPerWeek type="text" naOk=true label~279a7c7a
@@ -575,7 +578,7 @@ en   doc k=bvg_cert label~c9936b59
 en   doc k=ahv_confirmation label~0a6f64f3
 en   doc k=household_policy label~238623a0
 en   doc k=auto_policy label~8ec73e47
-en kapitel=ausbildung title~b1f0b6b5 short~1697d235 description~110a15f1 felder=11 docs=3
+en kapitel=ausbildung title~b1f0b6b5 short~1697d235 description~110a15f1 felder=12 docs=3
 en   k=schoolName type="text" section~1697d235 label~ff8ed21c sectionIntro~d0f73232
 en   k=educationLevel type="select" label~fbe72e22 options=7 optWerte~fde3f0aa optLabels~81563b6b
 en   k=efzNumber type="text" label~54eb190e
@@ -583,6 +586,7 @@ en   k=certifications type="textarea" label~4b699ef7
 en   k=employer type="text" naOk=true section~b6d8b2d3 label~a9dd48a4 sectionIntro~eb0c0f1d
 en   k=employerAddress type="textarea" naOk=true label~85dee87c
 en   k=jobTitle type="text" mvo=true naOk=true orientation~0c147156 label~fb1d97e2
+en   k=branche type="select" naOk=true label~0c6c13df options=18 optWerte~d59d16bb optLabels~2aa65dd0
 en   k=employmentStart type="date" naOk=true label~90628f1c
 en   k=workPermit type="select" orientation~b84133b7 label~22ede7b2 options=5 optWerte~14b89076 optLabels~17a4f41e
 en   k=workHoursPerWeek type="text" naOk=true label~0fe02418
@@ -731,7 +735,7 @@ rm   doc k=bvg_cert label~bfe675a1
 rm   doc k=ahv_confirmation label~71f7f2ca
 rm   doc k=household_policy label~54bb275b
 rm   doc k=auto_policy label~761d8cdb
-rm kapitel=ausbildung title~e5e735d4 short~0b659f5e description~38016dfc felder=11 docs=3
+rm kapitel=ausbildung title~e5e735d4 short~0b659f5e description~38016dfc felder=12 docs=3
 rm   k=schoolName type="text" section~0b659f5e label~4e704d48 sectionIntro~dcb20faf
 rm   k=educationLevel type="select" label~c526f347 options=9 optWerte~a331cdd8 optLabels~cab4d38c
 rm   k=efzNumber type="text" label~f02fd5c6
@@ -739,6 +743,7 @@ rm   k=certifications type="textarea" label~45a82a6f
 rm   k=employer type="text" naOk=true section~26b41c7f label~ae80e17b sectionIntro~d8cd068b
 rm   k=employerAddress type="textarea" naOk=true label~3b999ae7
 rm   k=jobTitle type="text" mvo=true naOk=true orientation~3ce61019 label~fb50b2e5
+rm   k=branche type="select" naOk=true label~8b92d5ef options=18 optWerte~d59d16bb optLabels~ad20a69a
 rm   k=employmentStart type="date" naOk=true label~9cc6d84c
 rm   k=workPermit type="select" orientation~0d4856c9 label~cca5b62b options=5 optWerte~14b89076 optLabels~c8e02ec6
 rm   k=workHoursPerWeek type="text" naOk=true label~94f62bd4
