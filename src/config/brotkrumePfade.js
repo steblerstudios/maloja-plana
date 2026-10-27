@@ -33,6 +33,7 @@ export const RECHNER_KAPITEL = Object.freeze({
   alv: 'finanzen',
   eo: 'finanzen',
   stundenlohn: 'finanzen',
+  kreditkarte: 'finanzen',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

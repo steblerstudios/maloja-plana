@@ -12,6 +12,7 @@ import { CHAPTER_KEYS } from '../config/constants.js';
 import { AlvRechner } from '../AlvRechner.jsx';
 import { EOrechner } from '../EOrechner.jsx';
 import { Stundenlohn } from '../Stundenlohn.jsx';
+import { Kreditkarte } from '../Kreditkarte.jsx';
 
 // Rechner-Form X (Entscheid Stebler Studios 24.10.2026, gebaut F7-A2 27.10.2026): in jedem umgestellten Rechner
 // steht das Ergebnis ZUERST (role="status"), dann «Ihre Angaben», dann was zu tun ist, die offizielle Stelle und
@@ -27,6 +28,7 @@ const maria = { basis: { canton: 'ZH', dateOfBirth: '1992-03-14' }, finanzen: { 
 const RECHNER = [
   ['alv', AlvRechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
   ['stundenlohn', Stundenlohn, { ...maria, finanzen: { stundenlohnRechner: { betrag: '24', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' } } }],
+  ['kreditkarte', Kreditkarte, { finanzen: { kreditkarten: [{ name: 'Testkarte', jahresgebuehr: '100', ausgabenMonat: '800', cashback: '1' }] } }],
   ['eo', EOrechner, { ...maria, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } }],
 ];
 
@@ -125,5 +127,13 @@ describe('Stundenlohn in der Form X', () => {
   });
   it('Ja/Nein/Weiss-nicht-Fragen als radiogroup', () => {
     expect((render(Stundenlohn, mit).match(/role="radiogroup"/g) || []).length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+describe('Kreditkarte in der Form X', () => {
+  it('Ergebnis-Satz und Balken vor den Angaben; ohne Ausgaben der App-Satz', () => {
+    const mit = ergebnisTeil(render(Kreditkarte, { finanzen: { kreditkarten: [{ jahresgebuehr: '100', ausgabenMonat: '800', cashback: '1' }] } }));
+    expect(mit).toContain(de.kreditkarteView.rechnungTitel);
+    expect(ergebnisTeil(render(Kreditkarte, leer))).toContain(de.kreditkarteView.ergebnis_brauchtAusgaben);
   });
 });
