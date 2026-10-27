@@ -1488,3 +1488,6 @@ ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-A
 3. Takt: vierteljährlich und beim Werte-Wechsel im Dezember; `/maloja-predeploy` warnt, wenn der Stand älter als 4 Monate ist.
 4. Anzeige: «Publikumspreis laut Spezialitätenliste, Stand …», nicht «Sie zahlen»; ohne Treffer kein Preis, nur Compendium.
 5. Vor dem Bau: swiss-precision-pruefer zu Publikumspreis vs. Selbstbehalt und zum Satz bei Medikamenten ausserhalb der SL.
+
+**F7-K6-2 entschieden (Sophie, 27.10.2026):** «Ja, Preis so nachführen wie vorgeschlagen — von Hand je Quartal, Skript,
+Stand sichtbar, Warnung im Predeploy.» Punkte 1–5 oben gelten. Zusammen mit: Maria bekommt einen Medikamenten-Eintrag.
