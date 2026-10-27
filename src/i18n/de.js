@@ -5169,6 +5169,9 @@ export default {
     morgen: 'Morgen',
     ausAblauf: 'aus dem Ablauf {name}',
     legende: { frist: 'Frist', termin: 'Termin', erledigt: 'erledigt', heute: 'heute' },
+    // «Als Nächstes» bei verpasstem Eintrag, ruhig wie im Entwurf G («verpasst — was jetzt?», nie rot), 27.10.2026
+    verpasst: 'verpasst',
+    wasJetzt: 'Was jetzt?',
     nochOhneTag: 'Noch ohne Tag',
     aufTagLegen: 'Auf einen Tag legen',
     jetztTagAntippen: 'Jetzt oben einen Tag antippen.',

@@ -5127,6 +5127,8 @@ export default {
     morgen: 'Demain',
     ausAblauf: 'du parcours {name}',
     legende: { frist: 'Échéance', termin: 'Rendez-vous', erledigt: 'fait', heute: 'aujourd’hui' },
+    verpasst: 'passé',
+    wasJetzt: 'Et maintenant\u202F?',
     nochOhneTag: 'Pas encore de jour',
     aufTagLegen: 'Attribuer un jour',
     jetztTagAntippen: { sie: 'Touchez maintenant un jour ci-dessus.', du: 'Touche maintenant un jour ci-dessus.' },

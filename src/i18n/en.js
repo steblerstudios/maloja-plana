@@ -5199,6 +5199,8 @@ export default {
     morgen: 'Tomorrow',
     ausAblauf: 'from the guided steps: {name}',
     legende: { frist: 'Deadline', termin: 'Appointment', erledigt: 'done', heute: 'today' },
+    verpasst: 'missed',
+    wasJetzt: 'What now?',
     nochOhneTag: 'No day yet',
     aufTagLegen: 'Put on a day',
     jetztTagAntippen: 'Now tap a day above.',

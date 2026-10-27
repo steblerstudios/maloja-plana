@@ -6997,6 +6997,9 @@ export default {
     morgen: 'Damaun',
     ausAblauf: 'ord il decurs {name}',
     legende: { frist: 'Termin', termin: 'Inscunter', erledigt: 'fatg', heute: 'oz' },
+    // rm ungeprüft (27.10.2026)
+    verpasst: 'passà',
+    wasJetzt: 'E ussa?',
     // rm ungeprüft F5
     nochOhneTag: 'Anc senza di',
     // rm ungeprüft F5

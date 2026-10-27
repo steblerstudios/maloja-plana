@@ -5100,6 +5100,8 @@ export default {
     morgen: 'Domani',
     ausAblauf: 'dal percorso {name}',
     legende: { frist: 'Scadenza', termin: 'Appuntamento', erledigt: 'fatto', heute: 'oggi' },
+    verpasst: 'passato',
+    wasJetzt: 'E adesso?',
     nochOhneTag: 'Ancora senza giorno',
     aufTagLegen: 'Assegnare a un giorno',
     jetztTagAntippen: { sie: 'Ora tocchi un giorno qui sopra.', du: 'Ora tocca un giorno qui sopra.' },

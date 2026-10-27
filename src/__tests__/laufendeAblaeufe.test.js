@@ -243,6 +243,30 @@ describe('Kalender: Band über der Tagesleiste', () => {
     expect(block).toContain('Bei der neuen Gemeinde anmelden · aus dem Ablauf Umzug');
   });
 
+  it('«Als Nächstes» verpasst: ruhig «verpasst» und «Was jetzt?», keine Tageszahl, nie rot (Entwurf G)', async () => {
+    localStorage.setItem('or5_reminders', JSON.stringify([
+      { id: 'v', title: 'Bei der neuen Gemeinde anmelden', dueDate: inDays(-2), category: 'admin', recurrence: 'once', ablauf: 'umzug', done: false },
+      { id: 's', title: 'Später', dueDate: inDays(9), category: 'personal', recurrence: 'once', done: false },
+    ]));
+    const html = await render();
+    const i = html.indexOf('data-als-naechstes="verpasst"');
+    expect(i).toBeGreaterThan(-1);
+    const block = html.slice(i, html.indexOf('</button>', i) + 9);
+    expect(block).toContain('>verpasst<');
+    expect(block).toContain('Bei der neuen Gemeinde anmelden · aus dem Ablauf Umzug');
+    expect(block).toContain('Was jetzt? ›');
+    expect(block).not.toMatch(/überfällig|roseDeep/);
+  });
+
+  it('«Als Nächstes» künftig: kein «Was jetzt?»', async () => {
+    localStorage.setItem('or5_reminders', JSON.stringify([
+      { id: 's', title: 'Später', dueDate: inDays(9), category: 'personal', recurrence: 'once', done: false },
+    ]));
+    const html = await render();
+    expect(html).toContain('data-als-naechstes="true"');
+    expect(html).not.toContain('Was jetzt?');
+  });
+
   it('Liste: «Frist · Fällig in … · aus dem Ablauf Umzug», runder Kreis zum Abhaken', async () => {
     localStorage.setItem('or5_reminders', JSON.stringify([
       { id: 'f', title: 'Bei der neuen Gemeinde anmelden', dueDate: inDays(9), category: 'admin', recurrence: 'once', ablauf: 'umzug', done: false },

@@ -26,7 +26,8 @@ export const bandFarbe = (bereich, palette) => {
 // Schrittzahl als Zahl statt Import aus AblaufSchale.jsx, damit der Kalender die Ablauf-Schale
 // nicht mitlädt. Ein Test hält sie gleich mit PASS_SCHRITTE.
 export const ABLAEUFE_MIT_STAND = [
-  { name: 'umzug', total: 4, titelKey: 'umzug.title', bereich: 'wohnen' },
+  // view: wohin «Was jetzt?» bei einer verpassten Frist des Ablaufs führt (dort steht, was dann gilt).
+  { name: 'umzug', total: 4, titelKey: 'umzug.title', bereich: 'wohnen', view: 'umzug' },
 ];
 
 // Liest den Stand wie ablaufStandLaden (utils/ablaufStand.js), aber ohne Import: sonst würde

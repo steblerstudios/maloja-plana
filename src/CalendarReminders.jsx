@@ -336,7 +336,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   // Bevorstehend: Erinnerungen und Aufgaben zusammen nach Datum; Erledigt: neueste zuerst.
   // `titel`/`herkunft` tragen «Als Nächstes» oben auf der Seite.
   const offenAlle = [
-    ...upcoming.map(r => ({ datum: r.dueDate, titel: r.title, herkunft: r.ablauf ? t('calendar.ausAblauf', { name: ablaufName(r.ablauf) }) : '', el: () => renderReminderCard(r) })),
+    ...upcoming.map(r => ({ datum: r.dueDate, titel: r.title, ablauf: r.ablauf || '', herkunft: r.ablauf ? t('calendar.ausAblauf', { name: ablaufName(r.ablauf) }) : '', el: () => renderReminderCard(r) })),
     ...aufgabenOffen.map(m => ({ datum: m.tag, titel: m.text, herkunft: t('calendar.ausMerkliste'), el: () => renderAufgabe(m) })),
   ].sort((a, b) => a.datum.localeCompare(b.datum));
   const erledigtAlle = [
@@ -358,7 +358,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   const naechst = offenAlle[0];
   const naechstWann = (iso) => {
     const days = daysBetween(today, iso);
-    if (days < 0) return t('calendar.overdueDays', { days: Math.abs(days) });
+    if (days < 0) return t('calendar.verpasst');
     if (days === 0) return t('calendar.today');
     if (days === 1) return t('calendar.morgen');
     return t('calendar.inTagen', { days });
@@ -391,11 +391,25 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
     ),
 
     // Als Nächstes — nur, wenn etwas offen ist (sonst sagt die leere Liste unten genug).
-    // Gross wie im Entwurf (44 px); vorbei steht ruhig, nie rot («Kein Countdown, kein Rot», Entwurf G).
-    naechst && React.createElement('div', { 'data-als-naechstes': 'true', style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, padding: '18px 0 22px', marginBottom: '18px' } },
+    // Gross wie im Entwurf (44 px). Verpasst steht ruhig als «verpasst», darunter «Was jetzt?» als Weg
+    // (Entwurf G: «verpasst — was jetzt?», nie rot; Stebler Studios 27.10.2026). Der Weg führt in den
+    // Ablauf, aus dem die Frist kommt (dort steht, was nach der Frist gilt), sonst zum Tag im Kalender.
+    naechst && React.createElement('div', { 'data-als-naechstes': naechst.datum < today ? 'verpasst' : 'true', style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, padding: '18px 0 22px', marginBottom: '18px' } },
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft } }, t('calendar.alsNaechstes')),
       React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontWeight: weight.bold, fontSize: '44px', lineHeight: 1, letterSpacing: '-0.025em', margin: '8px 0 6px', color: palette.text, fontVariantNumeric: 'tabular-nums' } }, naechstWann(naechst.datum)),
-      React.createElement('p', { style: { fontSize: '14px', color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, naechst.titel + (naechst.herkunft ? ' · ' + naechst.herkunft : ''))
+      React.createElement('p', { style: { fontSize: '14px', color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, naechst.titel + (naechst.herkunft ? ' · ' + naechst.herkunft : '')),
+      naechst.datum < today && React.createElement('button', {
+        type: 'button', className: 'mp-link', 'aria-label': t('calendar.wasJetzt') + ' ' + naechst.titel,
+        style: { ...knopfRuhig, borderRadius: radius.full, marginTop: space.sm + 'px', padding: '8px 16px', fontSize: text.sm, color: palette.text },
+        onClick: () => {
+          const ablauf = ABLAEUFE_MIT_STAND.find(a => a.name === naechst.ablauf);
+          if (ablauf && ablauf.view && onNavigate) { onNavigate(ablauf.view); return; }
+          const [j, m] = naechst.datum.split('-').map(Number);
+          setCalYear(j); setCalMonth(m - 1); setSelDate(naechst.datum);
+          const el = leisteRef.current;
+          if (el && el.scrollIntoView) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        },
+      }, t('calendar.wasJetzt') + ' ›')
     ),
 
     // Möglicherweise für dich (Anspruch-Signale, Variante C, #4.4): ruhiger Hinweis
