@@ -5354,6 +5354,15 @@ export default {
   unterlagen: {
     title: 'Meine Unterlagen',
     subtitle: { sie: 'Ihre Lebensdossiers, ruhig geordnet.', du: 'Deine Lebensdossiers, ruhig geordnet.' },
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Unterlagen drucken',
+      beschreibung: 'Alles, für ein Amt oder für den Notfall — erst die Vorschau, dann drucken.',
+      legende: 'Was soll aufs Papier?',
+      alles: 'Alles',
+      amt: 'Für ein Amt',
+      notfall: 'Für den Notfall',
+    },
     dossier: {
       lebensmappe: {
         title: 'Lebensmappe',

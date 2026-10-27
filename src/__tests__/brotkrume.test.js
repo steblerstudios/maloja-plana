@@ -20,12 +20,13 @@ const lies = (p) => fs.readFileSync(path.join(SRC, p), 'utf8');
 const hol = (w, k) => k.split('.').reduce((o, s) => o?.[s], w);
 const t = (k) => { const v = hol(de, k); return v && typeof v === 'object' ? v.sie : (v ?? k); };
 
-const ANSICHTEN = { lebensmappe: 'Lebensmappe.jsx', behoerdendossier: 'BehoerdenDossier.jsx', notfalldossier: 'NotfallDossier.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx', praemien: 'PraemienOrientierung.jsx' };
+// F7-S2 (27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier sind eine Seite «Unterlagen drucken» (drucken).
+const ANSICHTEN = { drucken: 'UnterlagenDrucken.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx', praemien: 'PraemienOrientierung.jsx' };
 
 describe('Pfade', () => {
   // Seit Runde 9 AE («ein Ort», 25.10.2026) auch die Notfallkarte; das Notfall-Dossier hängt unter Notfall.
   // Seit Runde 9 AB (25.10.2026) auch die Versicherungs-Übersicht, unter dem Kapitel Versicherungen.
-  it('genau die sieben entschiedenen Ansichten', () => {
+  it('genau die entschiedenen Ansichten', () => {
     expect(Object.keys(PFADE).sort()).toEqual(Object.keys(ANSICHTEN).sort());
   });
   it('jede Stufe hat eine Beschriftung in allen fünf Sprachen', () => {
@@ -49,18 +50,19 @@ describe('Pfade', () => {
   it('drei Stufen: Übersicht › Eltern › hier', () => {
     expect(stufen('briefe').map((s) => s.ziel)).toEqual(['dashboard', 'unterlagen', null]);
     expect(stufen('notfallpass').map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
-    expect(stufen('notfalldossier').map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+    expect(stufen('drucken').map((s) => s.ziel)).toEqual(['dashboard', 'unterlagen', null]);
+    for (const alt of ['lebensmappe', 'behoerdendossier', 'notfalldossier']) expect(stufen(alt)).toBeNull();
     expect(stufen('dashboard')).toBeNull();
     expect(stufen('tax')).toBeNull();
   });
 });
 
 describe('Darstellung', () => {
-  const html = renderToStaticMarkup(React.createElement(Brotkrume, { palette: { mid: '#555', text: '#111', border: '#ccc' }, t, view: 'behoerdendossier', onNavigate: () => {} }));
+  const html = renderToStaticMarkup(React.createElement(Brotkrume, { palette: { mid: '#555', text: '#111', border: '#ccc' }, t, view: 'drucken', onNavigate: () => {} }));
   it('nav mit Namen, geordnete Liste, aktuelle Seite markiert', () => {
     expect(html).toMatch(/^<nav aria-label="Pfad"/);
     expect(html).toContain('<ol');
-    expect(html).toMatch(/aria-current="page"[^>]*>Behörden-Dossier|aria-current="page"[^>]*>[^<]+<\/span><\/li><\/ol>/);
+    expect(html).toMatch(/aria-current="page"[^>]*>Unterlagen drucken|aria-current="page"[^>]*>[^<]+<\/span><\/li><\/ol>/);
   });
   it('die Stufen davor sind Knöpfe, die letzte nicht', () => {
     expect((html.match(/<button/g) || []).length).toBe(2);

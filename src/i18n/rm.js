@@ -3670,6 +3670,16 @@ export default {
   unterlagen: {
     title: 'Mes documents',
     subtitle: { sie: 'Voss dossiers da vita, ordinads cun quaid.', du: 'Tes dossiers da vita, ordinads cun quaid.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Stampar documents',
+      beschreibung: 'Tut, per in uffizi u per in cas d’urgenza — l’emprim la prevista, alura stampar.',
+      legende: 'Tge duai vegnir sin palpiri?',
+      alles: 'Tut',
+      amt: 'Per in uffizi',
+      notfall: 'Per in cas d’urgenza',
+    },
     dossier: {
       lebensmappe: {
         title: 'Mappa da vita',

@@ -67,10 +67,9 @@ const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
 const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
 // MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
-const Lebensmappe = React.lazy(() => import('./Lebensmappe.jsx'));
-const NotfallDossier = React.lazy(() => import('./NotfallDossier.jsx'));
+// Lebensmappe, Notfall- und Behörden-Dossier: seit 27.10.2026 eine Seite mit drei Auswahlen (F7-S2, UMLEITUNGEN).
+const UnterlagenDrucken = React.lazy(() => import('./UnterlagenDrucken.jsx'));
 const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
-const BehoerdenDossier = React.lazy(() => import('./BehoerdenDossier.jsx'));
 const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
@@ -1768,9 +1767,7 @@ const AppInner = ({ demo }) => {
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
-        view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
-        view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: setWahl }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),

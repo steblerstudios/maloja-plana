@@ -20,7 +20,7 @@
 export const VALID_VIEWS = new Set([
   'dashboard', 'chapter', 'tresor', 'kk', 'budget', 'schulden',
   'tax', 'organ', 'sync', 'premium', 'praemien', 'mietzins', 'kreditkarte', 'stundenlohn', 'vorsorge', 'eo', 'cv', 'charts',
-  'sozialhilfe', 'direktlinks', 'unterlagen', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
+  'sozialhilfe', 'direktlinks', 'unterlagen', 'drucken', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
   'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
   'versicherungskapitel',
@@ -51,8 +51,14 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //   merkliste        → «Was ansteht», Reiter «Merkliste» (27.10.2026, F7-L10, Gruppe H; Wächter:
 //                      merklisteReiter.test.js). `wahl` sagt der Zielseite, welcher Reiter offen ist —
 //                      main.jsx reicht sie als `reiter` weiter (Zustand `wahl`).
+//   lebensmappe, behoerdendossier, notfalldossier → «Unterlagen drucken», passende Auswahl (27.10.2026, F7-S2,
+//                      Gruppe H; Wächter: unterlagenDrucken.test.js). Abläufe, Kapitel und Merkpunkte rufen die
+//                      alten Namen weiter auf.
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
+  lebensmappe: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'alles' },
+  behoerdendossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'amt' },
+  notfalldossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'notfall' },
   merkliste: { view: 'calendar', chapterIndex: null, anker: null, wahl: 'merkliste' },
   budget: { view: 'sync', chapterIndex: null, anker: 'mp-budget-import' },
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },

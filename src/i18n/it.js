@@ -5284,6 +5284,15 @@ export default {
   unterlagen: {
     title: 'I miei documenti',
     subtitle: { sie: 'I Suoi dossier di vita, ordinati con calma.', du: 'I tuoi dossier di vita, ordinati con calma.' },
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Stampare documenti',
+      beschreibung: 'Tutto, per un’autorità o per un’emergenza — prima l’anteprima, poi la stampa.',
+      legende: 'Che cosa va su carta?',
+      alles: 'Tutto',
+      amt: 'Per un’autorità',
+      notfall: 'Per un’emergenza',
+    },
     dossier: {
       lebensmappe: {
         title: 'Cartella della vita',
