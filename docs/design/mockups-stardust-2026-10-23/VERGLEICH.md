@@ -1350,3 +1350,32 @@ Stebler Studios zu #580: «Das Spinnennetz bleibt im Kapitel.» — danach: «wo
 (Krankenkasse · Pensionskasse · Weitere · Hausrat & Reise · Auto · AHV, «Zeigt, wie viel … eingetragen ist»), in keinem Entwurf
 (weder AA noch AB), nicht in der Übersicht. Es zeigt Vollständigkeit — dasselbe, was Muster M2 («x von n erfasst» je Abschnitt)
 leisten wird. **Zu entscheiden:** behalten (wo, wozu), in die Übersicht, oder weg, sobald M2 gebaut ist.
+
+---
+
+## Fassung 7 · Rundgang 27.10.2026 · erste Entscheide (Sophie, 27.10.2026, 02:42)
+
+Grundlage: `docs/design/fassung-7-2026-10-27/BEFUNDE.md` und die Vergleichsseite (Artifact «Fassung 7 Rundgang»).
+Sophie hat 25 von 71 Punkten gewählt und die Liste aus der Seite in den Chat gelegt. Die übrigen 46 sind **noch offen**,
+nicht abgelehnt.
+
+**Ja (11):**
+- F7-K2-3 — eine Brutto-Schätzung statt zwei (6’796 / 6’472): nachrechnen, welche gilt.
+- F7-K2-4 — Dashboard übernimmt das IPV-Ergebnis aus dem Kapitel Finanzen.
+- F7-K2-6 — Branchenvergleich: eigene Branche hervorheben, Rest aufklappbar.
+- F7-K3-3 — Franchise-Kreuz zeigt die eigene Franchise als Punkt.
+- F7-L5 — Gruppe A (Ansprüche) wieder aufnehmen.
+- F7-L6 — §11 Versicherungs-Übersicht als eigene Seite bauen.
+- F7-L7 — Budget-Import ins Monatsbudget (§2 I).
+- F7-L10 — Merkliste als Reiter in «Was ansteht».
+- F7-L11 — Aufräumen: Rucksack-Doppel, Links auf umgeleitete Adressen, tote `FinanzUebersicht.jsx`.
+- F7-L12 — Titel für den Anspruch-Check, Brotkrume für Notfall- und Behörden-Dossier.
+
+**Besprechen (14):** F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 ·
+F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9
+
+**Noch nicht gewählt:** alle F7-D (Dashboard), F7-K0, F7-K1 (u. a. Mietbarometer-Fehler), F7-K2-1/-2/-5, F7-K3-6
+(Spinnennetz), alle F7-A (Abläufe, u. a. W bauen), alle F7-R (Rechner, u. a. X bauen), alle F7-S (u. a. Lebensmappe
+ohne Behörden).
+
+**Nichts gebaut.**
