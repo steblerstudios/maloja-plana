@@ -85,6 +85,8 @@ export const GEGENSTAENDE = [
   { key: 'geld', ill: 'wallet', wege: [
       { key: 'mahnung', view: 'mahnung', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M12 16.5v.01'] },
       { key: 'betreibung', view: 'betreibung', g: ['M5 3h10l4 4v14H5z', 'M15 3v4h4', 'M8 12h8', 'M8 16h5'] },
+      // F7-A10 (27.10.2026): eigener Weg, vorher Schritt 6 von «Mahnung erhalten».
+      { key: 'selbstmahnen', view: 'selbstmahnen', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M17 17l3-3-3-3'] },
     ],
   },
 ];

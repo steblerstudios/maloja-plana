@@ -33,6 +33,8 @@ export const ABLAEUFE = [
   { view: 'umzug', bereich: 'wohnen', nav: 'nav.umzug', sub: 'nav.sub.umzug', icon: 'home', aliases: ['umzug', 'zügeln', 'adresse', 'anmelden', 'déménagement', 'trasloco', 'moving'] },
   { view: 'pensionierung', bereich: 'vorsorge', nav: 'nav.pensionierung', sub: 'nav.sub.pensionierung', icon: 'vorsorge', aliases: ['pension', 'rente', 'ruhestand', 'ahv', 'retraite', 'pensione', 'retirement'] },
   { view: 'mahnung', bereich: 'finanzen', nav: 'nav.mahnung', sub: 'nav.sub.mahnung', icon: 'money', aliases: ['mahnung', 'zahlungserinnerung', 'rechnung', 'offene rechnung', 'inkasso', 'verzugszins', 'ratenzahlung', 'rappel', 'sommation', 'sollecito', 'diffida', 'reminder', 'overdue'] },
+  // F7-A10 (27.10.2026): vorher Schritt 6 von «Mahnung erhalten».
+  { view: 'selbstmahnen', bereich: 'finanzen', nav: 'selbstMahnen.title', sub: 'nav.sub.selbstmahnen', icon: 'money', aliases: ['mahnen', 'schuldet mir', 'geld zurück', 'verzugszins', 'in verzug setzen', 'schuldner', 'mettre en demeure', 'débiteur', 'costituire in mora', 'debitore', 'owes me money', 'debtor'] },
   { view: 'betreibung', bereich: 'finanzen', nav: 'nav.betreibung', sub: 'nav.sub.betreibung', icon: 'behoerden', aliases: ['betreibung', 'zahlungsbefehl', 'rechtsvorschlag', 'poursuite', 'esecuzione'] },
   { view: 'selbstaendigkeit', bereich: 'arbeit', nav: 'nav.selbstaendigkeit', sub: 'nav.sub.selbstaendigkeit', icon: 'lebenslauf', aliases: ['selbständig', 'selbstständig', 'firma', 'gründen', 'indépendant', 'indipendente', 'self-employed'] },
   { view: 'heirat', bereich: 'familie', nav: 'nav.heirat', sub: 'nav.sub.heirat', icon: 'heart', aliases: ['heirat', 'hochzeit', 'ehe', 'partnerschaft', 'mariage', 'matrimonio', 'marriage'] },
