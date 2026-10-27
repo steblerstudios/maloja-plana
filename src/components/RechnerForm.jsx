@@ -40,14 +40,46 @@ const abschnittTitel = (palette, id, inhalt) => React.createElement('h3', {
 
 export const RechnerForm = ({
   palette, t, view, onNavigate, titel, satz,
-  etikett, ergebnis, ohneErgebnis, art, vorbehalt,
-  angaben, tun, stelle, quelle, children,
+  etikett, ergebnis, ohneErgebnis, art, vorbehalt, instrument,
+  angaben, tun, stelle, quelle, children, reiter,
 }) => {
   const kapitel = RECHNER_KAPITEL[view] || null;
   const farbe = kapitel ? zeichenFarbe(palette, kapitel) : null;
   const stufe = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.mid, padding: 0, minHeight: '44px', textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: palette.border };
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.mid, fontSize: text.xs } }, '›');
   const id = (teil) => 'rf-' + view + '-' + teil;
+
+  const teile = [
+    // (2) Ergebnis zuerst — als Live-Region, damit eine neue Zahl angesagt wird.
+    React.createElement('section', { 'aria-labelledby': etikett ? id('ergebnis') : undefined, style: { padding: space.sm + 'px 0 ' + space.md + 'px', borderBottom: '1px solid ' + palette.border } },
+      React.createElement('div', { 'data-teil': 'ergebnis', role: 'status', 'aria-live': 'polite' },
+        etikett && React.createElement('div', { id: id('ergebnis'), style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs + 'px' } }, etikett),
+        ergebnis || React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, ohneErgebnis),
+        vorbehalt,
+        React.createElement(ErgebnisArt, { palette, t, ergebnis: art })
+      ),
+      // Ein Instrument (Grafik mit Regler) steht unter der Live-Region: sonst würde jede Bewegung angesagt.
+      instrument || null
+    ),
+
+    // (3) Ihre Angaben — aufgeklappt, mit «x von n».
+    angaben && React.createElement('details', { 'data-teil': 'angaben', open: true, style: { borderBottom: '1px solid ' + palette.border, padding: '0 0 ' + space.sm + 'px' } },
+      React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.body, fontWeight: weight.semi, color: palette.text } },
+        React.createElement('span', null, t('rechnerForm.angaben')),
+        angaben.gesamt > 0 && React.createElement('b', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, fontVariantNumeric: 'tabular-nums' } }, t('rechnerForm.vonN', { x: angaben.erfasst, n: angaben.gesamt }))
+      ),
+      angaben.inhalt
+    ),
+
+    // (4) Was zu tun ist / wo man sich meldet
+    tun && React.createElement('section', { 'data-teil': 'tun', 'aria-labelledby': id('tun'), style: { padding: space.md + 'px 0', borderBottom: '1px solid ' + palette.border } },
+      abschnittTitel(palette, id('tun'), tun.titel || t('rechnerForm.tun')),
+      tun.inhalt
+    ),
+
+    // Was ein Rechner darüber hinaus zeigt (Erklärungen, Listen) — nach der Form, vor der Stelle.
+    children || null
+  ];
 
   return React.createElement('div', { 'data-rechner-form': view, style: { maxWidth: '720px', color: palette.text } },
     // (1) Kopf links
@@ -70,33 +102,8 @@ export const RechnerForm = ({
       satz && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.md + 'px', maxWidth: '560px' } }, satz)
     ),
 
-    // (2) Ergebnis zuerst — als Live-Region, damit eine neue Zahl angesagt wird.
-    React.createElement('section', { 'aria-labelledby': etikett ? id('ergebnis') : undefined, style: { padding: space.sm + 'px 0 ' + space.md + 'px', borderBottom: '1px solid ' + palette.border } },
-      React.createElement('div', { 'data-teil': 'ergebnis', role: 'status', 'aria-live': 'polite' },
-        etikett && React.createElement('div', { id: id('ergebnis'), style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs + 'px' } }, etikett),
-        ergebnis || React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, ohneErgebnis),
-        vorbehalt,
-        React.createElement(ErgebnisArt, { palette, t, ergebnis: art })
-      )
-    ),
-
-    // (3) Ihre Angaben — aufgeklappt, mit «x von n».
-    angaben && React.createElement('details', { 'data-teil': 'angaben', open: true, style: { borderBottom: '1px solid ' + palette.border, padding: '0 0 ' + space.sm + 'px' } },
-      React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.body, fontWeight: weight.semi, color: palette.text } },
-        React.createElement('span', null, t('rechnerForm.angaben')),
-        angaben.gesamt > 0 && React.createElement('b', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, fontVariantNumeric: 'tabular-nums' } }, t('rechnerForm.vonN', { x: angaben.erfasst, n: angaben.gesamt }))
-      ),
-      angaben.inhalt
-    ),
-
-    // (4) Was zu tun ist / wo man sich meldet
-    tun && React.createElement('section', { 'data-teil': 'tun', 'aria-labelledby': id('tun'), style: { padding: space.md + 'px 0', borderBottom: '1px solid ' + palette.border } },
-      abschnittTitel(palette, id('tun'), tun.titel || t('rechnerForm.tun')),
-      tun.inhalt
-    ),
-
-    // Was ein Rechner darüber hinaus zeigt (Erklärungen, Listen) — nach der Form, vor der Stelle.
-    children,
+    // Reiter (Schulden, KVG, Vorsorge): Teile 2–4 sind das Reiter-Feld; Stelle und Quelle gelten für alle.
+    reiter ? React.createElement(Tabs, { palette, ...reiter }, ...teile) : React.createElement(React.Fragment, null, ...teile),
 
     // (5) Offizielle Stelle & Antrag
     stelle && React.createElement('section', { 'data-teil': 'stelle', 'aria-labelledby': id('stelle'), style: { padding: space.md + 'px 0 0' } },
@@ -159,6 +166,42 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
         }, o.label);
       })
     )
+  );
+};
+
+// Reiter (a11y M4, Entscheid X: «Reiter/Tabs werden eine Tabs-Komponente mit Pfeiltasten»): tablist/tab/tabpanel,
+// Pfeil links/rechts wandern und wählen, Pos1/Ende springen; nur der aktive Reiter ist im Tab-Weg.
+// `liste`: [{ key, label }]. Der Inhalt (children) ist das eine Reiter-Feld, es beschriftet sich nach dem aktiven Reiter.
+export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => {
+  const taste = (e, i) => {
+    const ziel = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: liste.length - 1 }[e.key];
+    if (ziel == null) return;
+    e.preventDefault();
+    const n = (ziel + liste.length) % liste.length;
+    onWahl(liste[n].key);
+    const el = typeof document !== 'undefined' && document.getElementById(id + '-tab-' + liste[n].key);
+    if (el) el.focus();
+  };
+  return React.createElement(React.Fragment, null,
+    React.createElement('div', { role: 'tablist', 'aria-label': label, style: { display: 'flex', gap: '6px', overflowX: 'auto', padding: '2px 0 ' + space.sm + 'px', margin: '0 0 ' + space.xs + 'px' } },
+      liste.map((r, i) => {
+        const an = r.key === aktiv;
+        return React.createElement('button', {
+          key: r.key, id: id + '-tab-' + r.key, type: 'button', role: 'tab',
+          'aria-selected': an, 'aria-controls': id + '-panel', tabIndex: an ? 0 : -1,
+          onClick: () => onWahl(r.key), onKeyDown: (e) => taste(e, i),
+          style: {
+            flexShrink: 0, minHeight: '44px', padding: '8px 14px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
+            borderRadius: radius.full + 'px', whiteSpace: 'nowrap',
+            fontWeight: an ? weight.semi : weight.medium,
+            border: '1px solid ' + (an ? palette.sage : palette.border),
+            background: an ? palette.sage + '22' : 'transparent',
+            color: an ? (palette.sageDeep || palette.text) : palette.text,
+          },
+        }, r.label);
+      })
+    ),
+    React.createElement('div', { role: 'tabpanel', id: id + '-panel', 'aria-labelledby': id + '-tab-' + aktiv, tabIndex: 0 }, children)
   );
 };
 
