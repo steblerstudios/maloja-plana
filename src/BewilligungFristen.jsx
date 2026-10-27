@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufVerwandt, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage } from './utils/fristen.js';
 
 // Aufenthaltsbewilligung verlängern (B/L) — geführter Ablauf, on-mission für Zugewanderte.
@@ -39,11 +39,6 @@ export const BewilligungFristen = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('bewilligung.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('bewilligung.step4LinkIpv'), onClick: () => onNavigate('premium') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('bewilligung.step4LinkSituation'), onClick: () => onNavigate('situationen') })
-    ),
-    // Verwandte Ereignisse (Matrix-Ebene)
-    onNavigate && React.createElement(AblaufVerwandt, { palette, title: t('bewilligung.relatedTitle') },
-      React.createElement(AblaufLink, { palette, label: t('bewilligung.relatedKkErst'), onClick: () => onNavigate('kkerst') }),
-      React.createElement(AblaufLink, { palette, label: t('bewilligung.relatedJob'), onClick: () => onNavigate('neuerjob') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('bewilligung.quelle'), notes: [t('bewilligung.footerNote'), t('trust.localOnly')] })
   );

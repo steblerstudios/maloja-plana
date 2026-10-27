@@ -622,9 +622,6 @@ export default {
     step4Text: { sie: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, können Sie die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lassen Sie aus Sorge kein Geld liegen, das Ihnen zusteht. Ist Ihre Bewilligung an ausreichende eigene Mittel geknüpft, klären Sie das vorher mit dem Migrationsamt oder einer Beratungsstelle.', du: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, kannst du die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lass aus Sorge kein Geld liegen, das dir zusteht. Ist deine Bewilligung an ausreichende eigene Mittel geknüpft, kläre das vorher mit dem Migrationsamt oder einer Beratungsstelle.' },
     step4LinkIpv: 'Verifitgar la reducziun da premias (RIP)',
     step4LinkSituation: 'Guardar la situaziun «nov arrivà»',
-    relatedTitle: 'Eveniments parents',
-    relatedKkErst: 'Cassa da malsauns per l’emprima giada',
-    relatedJob: 'Nov plaz',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Na laschai mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.', du: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -653,9 +650,6 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step5Text: { sie: 'Sch’il permess è svanì, dumandai in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.', du: 'Sch’il permess è svanì, dumonda in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.' },
     step5Link: 'Al dossier da las autoritads',
-    relatedTitle: 'Eveniments parentads',
-    relatedUmzug: 'Midada da domicil — midar l’adressa',
-    relatedPension: 'Pensiun',
     footerNote: 'Termins e custs pon variar tenor chantun. Fa fide l’uffizi chantunal da traffic. Quai è orientaziun, betg cussegl giuridic.',
   },
   heirat: {
@@ -684,9 +678,6 @@ export default {
     // Gleicher Text: der Vus-Imperativ (2. Pl.) deckt «Sie» und de-du «ihr» ab (K124, 24.09.2026).
     step4Text: { sie: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.', du: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.' },
     step4Link: 'Guardar la prevenziun',
-    relatedTitle: 'Eveniments parents',
-    relatedKind: 'Avair in uffant',
-    relatedTrennung: 'Separaziun u divorzi',
     footerNote: 'In contract da maridaglia (regim dals bains) è facultativ, ma po esser sensà — surtut cun proprietad u independenza. Quai è orientaziun, betg cussegl giuridic.',
   },
   kind: {
@@ -725,8 +716,6 @@ export default {
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     // rm ungeprüft (23.10.2026, Seite heisst «Was steht mir zu?»)
     step5LinkSituation: 'Guardar las situaziuns correspundentas sut «A tge hai jau dretg?»',
-    relatedTitle: 'Eveniments parents',
-    relatedHeirat: 'Maridaglia u partenariat',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Bler va via il patrun e la cassa da cumpensaziun — conservai bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.', du: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -917,9 +906,6 @@ export default {
     step4Link: 'Führerausweis: was sonst noch gilt',
     step5Title: '5 · Kinder und Schule',
     step5Text: { sie: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Fragen Sie bei der Anmeldung in der Gemeinde nach der Schulverwaltung.', du: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Frag bei der Anmeldung in der Gemeinde nach der Schulverwaltung.' },
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Später umziehen, innerhalb der Schweiz',
-    relatedEinbuergerung: 'Später: Einbürgerung',
     footerNote: { sie: 'Quai è orientaziun, betg cussegl giuridic. Vieles hängt von Ihrer Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.', du: 'Quai è orientaziun, betg cussegl giuridic. Vieles hängt von deiner Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.' },
     quelle: 'Quellen: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (geprüft im September 2026).',
   },

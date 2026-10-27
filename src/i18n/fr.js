@@ -490,9 +490,6 @@ export default {
     step4Text: { sie: 'En règle générale après dix ans de séjour, dont les cinq derniers sans interruption avec une autorisation de séjour, vous pouvez obtenir l’autorisation d’établissement (C) ; en cas de bonne intégration, au plus tôt après cinq ans (LEI art. 34). Elle est illimitée et plus sûre. Les critères d’intégration comme la langue, le travail et l’absence de dépendance à l’aide sociale comptent (LEI art. 58a). Bon à savoir : en droit des étrangers, la réduction de primes (RIP) n’est pas considérée comme de l’aide sociale (Directives LEI du SEM, ch. 6.13.1). Ne laissez pas par crainte de l’argent qui vous revient. Si votre autorisation est liée à des moyens financiers suffisants, clarifiez-le avant avec le service des migrations ou un service de conseil.', du: 'En règle générale après dix ans de séjour, dont les cinq derniers sans interruption avec une autorisation de séjour, tu peux obtenir l’autorisation d’établissement (C) ; en cas de bonne intégration, au plus tôt après cinq ans (LEI art. 34). Elle est illimitée et plus sûre. Les critères d’intégration comme la langue, le travail et l’absence de dépendance à l’aide sociale comptent (LEI art. 58a). Bon à savoir : en droit des étrangers, la réduction de primes (RIP) n’est pas considérée comme de l’aide sociale (Directives LEI du SEM, ch. 6.13.1). Ne laisse pas par crainte de l’argent qui te revient. Si ton autorisation est liée à des moyens financiers suffisants, clarifie-le avant avec le service des migrations ou un service de conseil.' },
     step4LinkIpv: 'Vérifier la réduction de primes (RIP)',
     step4LinkSituation: 'Voir la situation « nouvellement arrivé »',
-    relatedTitle: 'Événements liés',
-    relatedKkErst: 'Assurance maladie pour la première fois',
-    relatedJob: 'Nouvel emploi',
     footerNote: { sie: 'Ne laissez jamais l’autorisation expirer sans avoir déposé la demande. En cas de doute, l’autorité cantonale des migrations ou un service de conseil aux migrants peut aider. Ceci est une orientation, pas un conseil juridique.', du: 'Ne laisse jamais l’autorisation expirer sans avoir déposé la demande. En cas de doute, l’autorité cantonale des migrations ou un service de conseil aux migrants peut aider. Ceci est une orientation, pas un conseil juridique.' },
   },
   fuehrerausweis: {
@@ -516,9 +513,6 @@ export default {
     step5Title: '5 · Perte ou vol',
     step5Text: { sie: 'Si votre permis a disparu, demandez un duplicata auprès du service cantonal des automobiles. Une copie ou une photo dans le coffre aide à avoir les informations sous la main.', du: 'Si ton permis a disparu, demande un duplicata auprès du service cantonal des automobiles. Une copie ou une photo dans le coffre aide à avoir les informations sous la main.' },
     step5Link: 'Vers le dossier des autorités',
-    relatedTitle: 'Événements liés',
-    relatedUmzug: 'Déménagement — changer d’adresse',
-    relatedPension: 'Retraite',
     footerNote: 'Les délais et les coûts peuvent varier selon le canton. Le service cantonal des automobiles fait foi. Ceci est une orientation, pas un conseil juridique.',
   },
   heirat: {
@@ -541,9 +535,6 @@ export default {
     step4Title: '4 · Assurances & prévoyance',
     step4Text: { sie: 'L’assurance maladie reste individuelle. Vérifiez le ménage et la responsabilité civile — souvent une police commune suffit. Adaptez la clause bénéficiaire du pilier 3a et de la caisse de pension pour que la bonne personne soit protégée le cas échéant.', du: 'L’assurance maladie reste individuelle. À vérifier : le ménage et la responsabilité civile — souvent une police commune suffit. La clause bénéficiaire du pilier 3a et de la caisse de pension est aussi à adapter, pour que la bonne personne soit protégée le cas échéant.' },
     step4Link: 'Voir la prévoyance',
-    relatedTitle: 'Événements liés',
-    relatedKind: 'Avoir un enfant',
-    relatedTrennung: 'Séparation ou divorce',
     footerNote: 'Un contrat de mariage (régime matrimonial) est facultatif mais peut être judicieux — surtout en cas de propriété ou d’indépendance. Ceci est une orientation, pas un conseil juridique.',
   },
   kind: {
@@ -571,8 +562,6 @@ export default {
     step5Text: { sie: 'Un ménage plus grand change ce à quoi vous avez droit. Votre réduction de primes (RIP) est recalculée sur le nouveau ménage — cela vaut la peine de vérifier à nouveau. Si vous élevez l’enfant seul ou avec un budget serré, les situations de vie rassemblent d’autres soutiens en un endroit calme.', du: 'Un ménage plus grand change ce à quoi tu as droit. Ta réduction de primes (RIP) est recalculée sur le nouveau ménage — cela vaut la peine de vérifier à nouveau. Si tu élèves l’enfant seul ou avec un budget serré, les situations de vie rassemblent d’autres soutiens en un endroit calme.' },
     step5LinkIpv: 'Recalculer la réduction de primes',
     step5LinkSituation: 'Voir les situations correspondantes sous « À quoi ai-je droit ? »',
-    relatedTitle: 'Événements liés',
-    relatedHeirat: 'Mariage ou partenariat',
     footerNote: { sie: 'Beaucoup passe par l’employeur et la caisse de compensation — conservez bien les confirmations. Ceci est une orientation, pas un conseil juridique.', du: 'Beaucoup passe par l’employeur et la caisse de compensation — conserve bien les confirmations. Ceci est une orientation, pas un conseil juridique.' },
   },
   trennung: {
@@ -745,9 +734,6 @@ export default {
     step4Link: 'Permis de conduire : ce qui vaut encore',
     step5Title: '5 · Enfants et école',
     step5Text: { sie: 'L’enseignement de base est obligatoire et gratuit dans les écoles publiques (Cst. art. 19, 62). Les cantons sont compétents : l’âge de scolarisation, l’inscription et les cours de langue pour les nouveaux arrivants varient selon le canton et la commune. Lors de l’annonce à la commune, demandez l’administration scolaire.', du: 'L’enseignement de base est obligatoire et gratuit dans les écoles publiques (Cst. art. 19, 62). Les cantons sont compétents : l’âge de scolarisation, l’inscription et les cours de langue pour les nouveaux arrivants varient selon le canton et la commune. Lors de l’annonce à la commune, demande l’administration scolaire.' },
-    relatedTitle: 'Événements liés',
-    relatedUmzug: 'Déménager plus tard, à l’intérieur de la Suisse',
-    relatedEinbuergerung: 'Plus tard : naturalisation',
     footerNote: { sie: 'Beaucoup dépend de votre nationalité (UE/AELE ou non) et du canton. La commune et le service cantonal des migrations font foi. Ceci est une orientation, pas un conseil juridique.', du: 'Beaucoup dépend de ta nationalité (UE/AELE ou non) et du canton. La commune et le service cantonal des migrations font foi. Ceci est une orientation, pas un conseil juridique.' },
     quelle: 'Sources : [[OASA art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/fr#art_10]], [[LEI art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/fr#art_12]], [[LHR art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/fr#art_11]], [[LAMal art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_3]], [[LAVS art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/fr#art_1_a]], [[OAC art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/fr#art_42]], [[Cst. art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/fr#art_62]] (vérifié en septembre 2026).',
   },

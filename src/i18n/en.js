@@ -490,9 +490,6 @@ export default {
     step4Text: 'As a rule, after ten years of residence, the last five without interruption on a residence permit, you can obtain a settlement permit (C); with good integration at the earliest after five years (AIG Art. 34). It is unlimited and more secure. Integration criteria such as language, work and not relying on social assistance matter (AIG Art. 58a). Good to know: under foreign-nationals law, premium reduction (IPV) does not count as social assistance (SEM Directives AIG, section 6.13.1). Don’t leave money you are entitled to on the table out of worry. If your permit is tied to sufficient own means, clarify this beforehand with the migration office or an advice centre.',
     step4LinkIpv: 'Check premium reduction (IPV)',
     step4LinkSituation: 'View the “new in Switzerland” situation',
-    relatedTitle: 'Related events',
-    relatedKkErst: 'Health insurance for the first time',
-    relatedJob: 'New job',
     footerNote: 'Never let the permit expire without having applied. If unsure, the cantonal migration authority or a counselling service for migrants can help. This is orientation, not legal advice.',
   },
   fuehrerausweis: {
@@ -516,9 +513,6 @@ export default {
     step5Title: '5 · Loss or theft',
     step5Text: 'If your licence is gone, apply for a replacement at your cantonal road traffic office. A copy or photo in the vault helps you have the details at hand.',
     step5Link: 'To the authorities dossier',
-    relatedTitle: 'Related events',
-    relatedUmzug: 'Moving — change of address',
-    relatedPension: 'Retirement',
     footerNote: 'Deadlines and costs can vary by canton. The cantonal road traffic office is authoritative. This is orientation, not legal advice.',
   },
   heirat: {
@@ -541,9 +535,6 @@ export default {
     step4Title: '4 · Insurance & pension',
     step4Text: 'Health insurance stays individual. Review household and liability insurance — often one shared policy is enough. Adjust the beneficiary in pillar 3a and the pension fund so the right person is protected if something happens.',
     step4Link: 'View pension',
-    relatedTitle: 'Related events',
-    relatedKind: 'Having a child',
-    relatedTrennung: 'Separation or divorce',
     footerNote: 'A marriage contract (matrimonial property regime) is optional but can be sensible — especially with home ownership or self-employment. This is orientation, not legal advice.',
   },
   kind: {
@@ -571,8 +562,6 @@ export default {
     step5Text: 'A larger household changes what you may be entitled to. Your premium reduction (IPV) is recalculated on the new household — worth checking again. If you are raising the child alone or on a tight budget, the life situations gather further support in one calm place.',
     step5LinkIpv: 'Recalculate premium reduction',
     step5LinkSituation: 'View matching situations under “What am I entitled to?”',
-    relatedTitle: 'Related events',
-    relatedHeirat: 'Marriage or partnership',
     footerNote: 'Much goes through the employer and compensation office — keep confirmations safe. This is orientation, not legal advice.',
   },
   trennung: {
@@ -745,9 +734,6 @@ export default {
     step4Link: 'Driving licence: what else applies',
     step5Title: '5 · Children and school',
     step5Text: 'Basic schooling is compulsory and free at public schools (BV Art. 19, 62). The cantons are responsible: school entry age, registration and language courses for newcomers vary by canton and commune. When registering with the commune, ask for the school administration.',
-    relatedTitle: 'Related events',
-    relatedUmzug: 'Moving later, within Switzerland',
-    relatedEinbuergerung: 'Later: naturalisation',
     footerNote: 'Much depends on your nationality (EU/EFTA or not) and the canton. The commune and the cantonal migration office are authoritative. This is orientation, not legal advice.',
     quelle: 'Sources: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (German text where no English exists, checked September 2026).',
   },

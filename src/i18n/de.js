@@ -491,9 +491,6 @@ export default {
     step4Text: { sie: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, können Sie die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lassen Sie aus Sorge kein Geld liegen, das Ihnen zusteht. Ist Ihre Bewilligung an ausreichende eigene Mittel geknüpft, klären Sie das vorher mit dem Migrationsamt oder einer Beratungsstelle.', du: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, kannst du die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lass aus Sorge kein Geld liegen, das dir zusteht. Ist deine Bewilligung an ausreichende eigene Mittel geknüpft, kläre das vorher mit dem Migrationsamt oder einer Beratungsstelle.' },
     step4LinkIpv: 'Prämienverbilligung (IPV) prüfen',
     step4LinkSituation: 'Situation „Frisch zugezogen" ansehen',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedKkErst: 'Krankenkasse zum ersten Mal',
-    relatedJob: 'Neuer Job',
     footerNote: { sie: 'Lassen Sie die Bewilligung nie ablaufen, ohne den Antrag gestellt zu haben. Bei Unsicherheit hilft die kantonale Migrationsbehörde oder eine Beratungsstelle für Migrantinnen und Migranten. Dies ist Orientierung, keine Rechtsberatung.', du: 'Lass die Bewilligung nie ablaufen, ohne den Antrag gestellt zu haben. Bei Unsicherheit hilft die kantonale Migrationsbehörde oder eine Beratungsstelle für Migrantinnen und Migranten. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   fuehrerausweis: {
@@ -517,9 +514,6 @@ export default {
     step5Title: '5 · Verlust oder Diebstahl',
     step5Text: { sie: 'Ist der Ausweis weg, beantragen Sie beim kantonalen Strassenverkehrsamt einen Ersatz. Eine Kopie oder ein Foto im Tresor hilft, die Angaben schnell zur Hand zu haben.', du: 'Ist der Ausweis weg, beantrag beim kantonalen Strassenverkehrsamt einen Ersatz. Eine Kopie oder ein Foto im Tresor hilft, die Angaben schnell zur Hand zu haben.' },
     step5Link: 'Zum Behörden-Dossier',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Umzug — Adresse ändern',
-    relatedPension: 'Pensionierung',
     footerNote: 'Fristen und Kosten können je nach Kanton abweichen. Verbindlich ist das kantonale Strassenverkehrsamt. Dies ist Orientierung, keine Rechtsberatung.',
   },
   heirat: {
@@ -542,9 +536,6 @@ export default {
     step4Title: '4 · Versicherungen & Vorsorge',
     step4Text: { sie: 'Die Krankenkasse bleibt individuell. Prüfen Sie Hausrat und Haftpflicht — oft genügt eine gemeinsame Police. Passen Sie die Begünstigung in Säule 3a und Pensionskasse an, damit im Ernstfall die richtige Person abgesichert ist.', du: 'Die Krankenkasse bleibt individuell. Prüft Hausrat und Haftpflicht — oft genügt eine gemeinsame Police. Passt die Begünstigung in Säule 3a und Pensionskasse an, damit im Ernstfall die richtige Person abgesichert ist.' },
     step4Link: 'Vorsorge ansehen',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedKind: 'Kind bekommen',
-    relatedTrennung: 'Trennung oder Scheidung',
     footerNote: 'Ein Ehevertrag (Güterstand) ist freiwillig, kann aber sinnvoll sein — besonders bei Wohneigentum oder Selbständigkeit. Dies ist Orientierung, keine Rechtsberatung.',
   },
   kind: {
@@ -572,8 +563,6 @@ export default {
     step5Text: { sie: 'Ein grösserer Haushalt ändert, was Ihnen zusteht. Ihre Prämienverbilligung (IPV) wird auf den neuen Haushalt neu berechnet — ein zweiter Blick lohnt sich. Wenn Sie das Kind allein grossziehen oder mit knappem Budget, sammeln die Lebenszustände weitere Unterstützung an einem ruhigen Ort.', du: 'Ein grösserer Haushalt ändert, was dir zusteht. Deine Prämienverbilligung (IPV) wird auf den neuen Haushalt neu berechnet — ein zweiter Blick lohnt sich. Wenn du das Kind allein grossziehst oder mit knappem Budget, sammeln die Lebenszustände weitere Unterstützung an einem ruhigen Ort.' },
     step5LinkIpv: 'Prämienverbilligung neu berechnen',
     step5LinkSituation: 'Passende Situationen unter «Was steht mir zu?» ansehen',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedHeirat: 'Heirat oder Partnerschaft',
     footerNote: { sie: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahren Sie Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.', du: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahre Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   trennung: {
@@ -746,9 +735,6 @@ export default {
     step4Link: 'Führerausweis: was sonst noch gilt',
     step5Title: '5 · Kinder und Schule',
     step5Text: { sie: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Fragen Sie bei der Anmeldung in der Gemeinde nach der Schulverwaltung.', du: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Frag bei der Anmeldung in der Gemeinde nach der Schulverwaltung.' },
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Später umziehen, innerhalb der Schweiz',
-    relatedEinbuergerung: 'Später: Einbürgerung',
     footerNote: { sie: 'Vieles hängt von Ihrer Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.', du: 'Vieles hängt von deiner Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.' },
     quelle: 'Quellen: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (geprüft im September 2026).',
   },

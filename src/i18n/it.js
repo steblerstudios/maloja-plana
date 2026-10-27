@@ -490,9 +490,6 @@ export default {
     step4Text: { sie: 'Di regola dopo dieci anni di soggiorno, di cui gli ultimi cinque ininterrottamente con permesso di dimora, può ottenere il permesso di domicilio (C); in caso di buona integrazione al più presto dopo cinque anni (LStrI art. 34). È illimitato e più sicuro. Contano i criteri di integrazione come lingua, lavoro e nessuna dipendenza dall’aiuto sociale (LStrI art. 58a). Buono a sapersi: nel diritto degli stranieri la riduzione dei premi (RIP) non è considerata aiuto sociale (Istruzioni LStrI della SEM, n. 6.13.1). Non lasci per timore denaro che Le spetta. Se il Suo permesso è legato a mezzi finanziari sufficienti, chiarisca prima con l’ufficio della migrazione o un consultorio.', du: 'Di regola dopo dieci anni di soggiorno, di cui gli ultimi cinque ininterrottamente con permesso di dimora, puoi ottenere il permesso di domicilio (C); in caso di buona integrazione al più presto dopo cinque anni (LStrI art. 34). È illimitato e più sicuro. Contano i criteri di integrazione come lingua, lavoro e nessuna dipendenza dall’aiuto sociale (LStrI art. 58a). Buono a sapersi: nel diritto degli stranieri la riduzione dei premi (RIP) non è considerata aiuto sociale (Istruzioni LStrI della SEM, n. 6.13.1). Non lasciare per timore denaro che ti spetta. Se il tuo permesso è legato a mezzi finanziari sufficienti, chiarisci prima con l’ufficio della migrazione o un consultorio.' },
     step4LinkIpv: 'Verificare la riduzione dei premi (RIP)',
     step4LinkSituation: 'Vedi la situazione «appena arrivato»',
-    relatedTitle: 'Eventi correlati',
-    relatedKkErst: 'Cassa malati per la prima volta',
-    relatedJob: 'Nuovo lavoro',
     footerNote: { sie: 'Non lasci mai scadere il permesso senza aver presentato la domanda. In caso di dubbio, l’autorità cantonale della migrazione o un servizio di consulenza per migranti può aiutare. Questo è orientamento, non consulenza legale.', du: 'Non lasciare mai scadere il permesso senza aver presentato la domanda. In caso di dubbio, l’autorità cantonale della migrazione o un servizio di consulenza per migranti può aiutare. Questo è orientamento, non consulenza legale.' },
   },
   fuehrerausweis: {
@@ -516,9 +513,6 @@ export default {
     step5Title: '5 · Smarrimento o furto',
     step5Text: { sie: 'Se la licenza è sparita, richieda un duplicato all’ufficio cantonale della circolazione. Una copia o una foto nell’archivio aiuta ad avere i dati a portata di mano.', du: 'Se la licenza è sparita, richiedi un duplicato all’ufficio cantonale della circolazione. Una copia o una foto nell’archivio aiuta ad avere i dati a portata di mano.' },
     step5Link: 'Al dossier delle autorità',
-    relatedTitle: 'Eventi collegati',
-    relatedUmzug: 'Trasloco — cambiare indirizzo',
-    relatedPension: 'Pensionamento',
     footerNote: 'Termini e costi possono variare a seconda del Cantone. Fa fede l’ufficio cantonale della circolazione. Questo è orientamento, non consulenza legale.',
   },
   heirat: {
@@ -541,9 +535,6 @@ export default {
     step4Title: '4 · Assicurazioni & previdenza',
     step4Text: { sie: 'La cassa malati resta individuale. Verificate economia domestica e responsabilità civile — spesso basta una polizza comune. Adeguate il beneficiario nel pilastro 3a e nella cassa pensioni, così la persona giusta è protetta in caso di necessità.', du: 'La cassa malati resta individuale. Verificate economia domestica e responsabilità civile — spesso basta una polizza comune. Adeguate il beneficiario nel pilastro 3a e nella cassa pensioni, così la persona giusta è protetta in caso di necessità.' },
     step4Link: 'Vedi la previdenza',
-    relatedTitle: 'Eventi correlati',
-    relatedKind: 'Avere un figlio',
-    relatedTrennung: 'Separazione o divorzio',
     footerNote: 'Un contratto matrimoniale (regime dei beni) è facoltativo ma può essere sensato — soprattutto con proprietà o attività indipendente. Questo è orientamento, non consulenza legale.',
   },
   kind: {
@@ -571,8 +562,6 @@ export default {
     step5Text: { sie: 'Un’economia domestica più grande cambia ciò a cui ha diritto. La Sua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresce il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.', du: 'Un’economia domestica più grande cambia ciò a cui hai diritto. La tua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresci il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.' },
     step5LinkIpv: 'Ricalcola la riduzione dei premi',
     step5LinkSituation: 'Vedi le situazioni corrispondenti in «A cosa ho diritto?»',
-    relatedTitle: 'Eventi correlati',
-    relatedHeirat: 'Matrimonio o unione',
     footerNote: { sie: 'Molto passa tramite datore di lavoro e cassa di compensazione — conservi bene le conferme. Questo è orientamento, non consulenza legale.', du: 'Molto passa tramite datore di lavoro e cassa di compensazione — conserva bene le conferme. Questo è orientamento, non consulenza legale.' },
   },
   trennung: {
@@ -745,9 +734,6 @@ export default {
     step4Link: 'Licenza di condurre: che cos’altro vale',
     step5Title: '5 · Figli e scuola',
     step5Text: { sie: 'L’istruzione di base è obbligatoria e gratuita nelle scuole pubbliche (Cost. art. 19, 62). Sono competenti i cantoni: quando un bambino inizia la scuola, come avviene l’iscrizione e se ci sono corsi di lingua per i nuovi arrivati varia da cantone a cantone e da comune a comune. All’annuncio al comune chieda dell’amministrazione scolastica.', du: 'L’istruzione di base è obbligatoria e gratuita nelle scuole pubbliche (Cost. art. 19, 62). Sono competenti i cantoni: quando un bambino inizia la scuola, come avviene l’iscrizione e se ci sono corsi di lingua per i nuovi arrivati varia da cantone a cantone e da comune a comune. All’annuncio al comune chiedi dell’amministrazione scolastica.' },
-    relatedTitle: 'Eventi correlati',
-    relatedUmzug: 'Traslocare più tardi, all’interno della Svizzera',
-    relatedEinbuergerung: 'Più tardi: naturalizzazione',
     footerNote: { sie: 'Molto dipende dalla Sua nazionalità (UE/AELS o no) e dal cantone. Fanno stato il comune e l’ufficio cantonale della migrazione. Questo è un orientamento, non una consulenza legale.', du: 'Molto dipende dalla tua nazionalità (UE/AELS o no) e dal cantone. Fanno stato il comune e l’ufficio cantonale della migrazione. Questo è un orientamento, non una consulenza legale.' },
     quelle: 'Fonti: [[OASA art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/it#art_10]], [[LStrI art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/it#art_12]], [[LArRa art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/it#art_11]], [[LAMal art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_3]], [[LAVS art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it#art_1_a]], [[OAC art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/it#art_42]], [[Cost. art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/it#art_62]] (verificato a settembre 2026).',
   },

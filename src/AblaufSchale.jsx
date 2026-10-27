@@ -10,7 +10,8 @@ import { renderSource } from './utils/renderSource.js';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
-import { ablaufBereich } from './config/ansichtenRegister.js';
+import { ablaufBereich, ansichtName } from './config/ansichtenRegister.js';
+import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
@@ -270,7 +271,13 @@ export const AblaufContainer = ({ palette, t, onNavigate, ablauf, icon, title, i
         ...vorne,
         React.createElement(Schritte, { palette, t, onNavigate, name, schritte, stand, setStand, passNamen, abschlussText }),
         ...hinten,
-        ...kinder.filter((k) => k.type === AblaufVerwandt),
+        // «Verwandte Ereignisse» und der Weg ins Kapitel (F7-A4): in jedem Ablauf, aus config/ablaufVerwandte.js.
+        // Ein Ablauf kann eigene mitgeben (AblaufVerwandt als Kind) — dann gelten die.
+        ...(kinder.some((k) => k.type === AblaufVerwandt) ? kinder.filter((k) => k.type === AblaufVerwandt) : [
+          React.createElement(AblaufVerwandt, { key: 'verwandt', palette, title: t('ablauf.verwandtTitel') },
+            onNavigate && (VERWANDTE[name] || []).map((v) => React.createElement(AblaufLink, { key: v, palette, label: t(ansichtName(v)), onClick: () => onNavigate(v) })),
+            onNavigate && kapitelIdx >= 0 && React.createElement(AblaufLink, { key: 'kapitel', palette, label: t('ablauf.kapitelLink', { name: t('chapters.' + kapitel + '.title') }), onClick: () => onNavigate('chapter', kapitelIdx) })),
+        ]),
         ...kinder.filter((k) => k.type === AblaufFooter))
     )
   );
@@ -290,7 +297,7 @@ export const AblaufStep = ({ palette, title, icon, titelStyle, children }) => {
 };
 
 // «Verwandte Ereignisse» (Entwurf W): keine Station, steht immer unten über dem Fuss.
-export const AblaufVerwandt = ({ palette, title, children }) => React.createElement('div', { 'data-ablauf-verwandt': '', style: { marginTop: space.xl + 'px' } },
+export const AblaufVerwandt = ({ palette, title, children }) => React.createElement('div', { 'data-ablauf-verwandt': '', style: { marginTop: space.xl + 'px', borderTop: '1px solid ' + palette.border, paddingTop: space.md + 'px' } },
   React.createElement(PanelTitle, { palette, style: { fontSize: text.body, margin: '0 0 ' + space.xs + 'px' } }, title),
   children);
 

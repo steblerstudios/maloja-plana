@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufVerwandt, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays } from './utils/helpers.js';
 
 // Führerausweis — ruhiger Orientierungs-Ablauf (keine Rechner, keine Rechtsberatung).
@@ -51,11 +51,6 @@ export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('fuehrerausweis.step5Title') },
       React.createElement('p', { style: s.stepText }, t('fuehrerausweis.step5Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.step5Link'), onClick: () => onNavigate('behoerdendossier') })
-    ),
-    // Verwandte Ereignisse (Matrix-Ebene)
-    onNavigate && React.createElement(AblaufVerwandt, { palette, title: t('fuehrerausweis.relatedTitle') },
-      React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.relatedUmzug'), onClick: () => onNavigate('umzug') }),
-      React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.relatedPension'), onClick: () => onNavigate('pensionierung') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('fuehrerausweis.quelle'), notes: [t('fuehrerausweis.footerNote'), t('trust.localOnly')] })
   );
