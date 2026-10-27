@@ -70,7 +70,7 @@ Weitere Ansprüche · Passend · Drucken. Geldfluss erscheint erst ab zwei Einna
 
 Reihenfolge: «Versicherungen pro Monat CHF 570» · KK-Last · Schutzschild (Pflicht 3/3, Empfohlen 2/2) · Franchise-Kreuz ·
 **Spinnennetz** (6 Achsen: Krankenkasse, Pensionskasse, Weitere, Hausrat & Reise, Auto, AHV) · Angaben mit Unterreitern · Passend.
-CHF 570 = 540.30 + 20 + 10 stimmt. ⟨korrigiert 02:05: hier stand zuerst «Spinnennetz erscheint nicht mehr». Es ist reine
+CHF 570 = 540.30 + 20 + 10 stimmt. ⟨korrigiert 27.10. um 01:58: hier stand zuerst «Spinnennetz erscheint nicht mehr». Es ist reine
 Grafik ohne Text und fehlte darum in der Textauswertung; im Bild ist es da, `ChapterView.jsx:2433-2445`.⟩
 
 | # | Frage | Befund | Vorschlag |
@@ -139,7 +139,7 @@ Dossier offen · E, F, H gebaut · I (Reste Finanzen: budget, taxImport) offen.
 | F7-L11 | Hygiene | Rucksack zeigt Doppel-Einträge mit demselben Ziel (tresor/unterlagen; finanzuebersicht/charts/mindestlohn; stelleverloren/aussteuerung). 9 Links zielen noch auf die umgeleitete Adresse `finanzuebersicht`. `FinanzUebersicht.jsx` ist tot (nirgends importiert). | aufräumen (ordnungshueter). |
 | F7-L12 | Zeigen | Seite `anspruchcheck` hat keinen eigenen Titel; `notfalldossier`, `behoerdendossier` zeigen kein «Zurück zu …». | Titel und Brotkrume. |
 
-## Nachtrag zu Runde 1 (beim Lesen von VERGLEICH.md, 27.10. 02:20)
+## Nachtrag zu Runde 1 (beim Lesen von VERGLEICH.md, 27.10. um 02:00)
 
 - **F7-D2** (63 % gegen 70 %) ist schon seit 23.10. als offene Frage «Übersicht» notiert (UEBERGABE-FASSUNG-6, «Noch
   offen»). Nicht neu, aber weiter offen.
@@ -182,4 +182,4 @@ im Bild: Krankenkasse wechseln, Umzug, ALV, Steuern, Was steht mir zu?, Lebensla
 | F7-R3 | Zeigen | Rechner zeigen ihr Ergebnis als Text; Bilder gibt es nur in der Versicherungs-Übersicht. Die Kapitel haben Instrumente (Barometer, Pegel, Tank). | X umsetzen und je Rechner **das Instrument aus seinem Kapitel** wiederverwenden (ALV → Pegel Taggeld 70/80 %, Vorsorge → Zukunftsgrafik, Stundenlohn → Mindestlohn-Barometer). |
 | F7-R4 | Logik | ALV im Beispiel: «Das hinterlegte Einkommen ist als Netto markiert — bitte Bruttolohn eintragen», Feld leer. Die App schätzt Brutto aber überall sonst selbst (Dashboard «≈ brutto CHF 6’796»). | Geschätztes Brutto vorbelegen, als «geschätzt» markiert (wie im Entwurf X mit 6’796). |
 | F7-R5 | Flow | **Lebenslauf-Generator** ist eine Datenmaske mit «HTML Download / Vorschau / JSON (ATS)», viel schwächer als die Lebenslauf-Vorschau im Kapitel Ausbildung (F7-K4-3). | Generator = Vorschau aus dem Kapitel + PDF; «JSON (ATS)» weg oder klein. |
-| F7-R6 | Stimmt | Quellen sind da, aber jede Seite zeigt sie anders: Steuern als Fliesstext («ESTV (Steuerjahr 2026)») und Link, Vorsorge als «Stand 2026.» und sechs Links, Abläufe als «Quelle: … (geprüft im September 2026)». Nachgeprüft 02:25 für Steuern und Vorsorge. | Mit X eine feste Zeile «Quelle · Stand» an derselben Stelle. |
+| F7-R6 | Stimmt | Quellen sind da, aber jede Seite zeigt sie anders: Steuern als Fliesstext («ESTV (Steuerjahr 2026)») und Link, Vorsorge als «Stand 2026.» und sechs Links, Abläufe als «Quelle: … (geprüft im September 2026)». Nachgeprüft 27.10. um 02:05 für Steuern und Vorsorge. | Mit X eine feste Zeile «Quelle · Stand» an derselben Stelle. |
