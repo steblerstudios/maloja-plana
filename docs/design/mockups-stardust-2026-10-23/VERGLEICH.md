@@ -1445,3 +1445,35 @@ F7-A7 (Verweise an der Gabelung bestanden schon).
 
 **Für die Fachprüfung (#630):** Sozialhilfe-Pegel sagt bei Maria «Vermögen über dem Freibetrag», obwohl das Einkommen den
 Bedarf deckt — Reihenfolge in `src/data/pegel.js` (alt, schon im Schnellcheck).
+
+### Besprechen, Runde 1 (Sophie, 27.10.2026, Seite «Fassung 7 Besprechen»)
+
+Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7 Besprechen»), je Punkt «wie empfohlen»,
+«anders» oder «später». 11 von 31 Punkten gewählt. **Nichts gebaut.**
+
+**Wie empfohlen (9):**
+- F7-K3-6 — Das Spinnennetz fällt weg. Das Netz-Schild (Prototyp `_werkbank/versicherung-schild-2026-10-27/`) ersetzt
+  Netz und Schutzschild als ein Bild, vorher in Maloja-Tönen nachgezeichnet. Vor dem Bau offen: welche Bereiche zwei
+  Stufen haben (Vorsorge: BVG + 3a?), ob «Leben» oben in die Mitte gehört.
+- F7-K4-2 — Maria bleibt beim Bachelor (ZHAW); Berufsbezeichnung «Pflegefachfrau HF» → «Pflegefachfrau FH» (`demoData.js`).
+- F7-K5-2 — Vorsorge ganz in den Notfall; in Behörden bleibt das Testament mit Verweis.
+- F7-K6-1 — Patientenverfügung im Notfall nur im Block «Vorsorge»; «Bereit» verlinkt dorthin, nicht mehr in den Angaben.
+- F7-L1 — Nach dem Merge Seiten ohne Eingang nachzählen; Organspende unter «Passend» bei Notfall › Vorsorge, falls nötig.
+- F7-L2 — Nach dem Merge Sackgassen nachzählen; jede verbliebene Seite bekommt «Als Nächstes».
+- F7-L3 — Familie als Abschnitt in Persönliche Basis, kein achtes Kapitel. Abläufe hängen dort unter «Passend».
+- F7-R2 — Sozialhilfe-Seite zeigt nur Sozialhilfe; IPV und EL je eine Zeile mit Link auf «Was steht mir zu?».
+- F7-R5 — Lebenslauf-Generator wird die Vorschau aus dem Kapitel plus «Als PDF drucken»; «JSON (ATS)» klein unter
+  «Weitere Formate».
+
+**Anders (2):**
+- F7-L8 — Ja zum Bündeln: Steuer-Import in den Steuer-Rechner (§2 I), Doppel (Kantonssteuer, Säule 3a) zusammenlegen.
+  **Nicht** wie vorgeschlagen beim Import: Sophie: «das müssen wir geschickter lösen». Offen: wie der Import ins
+  Rechner-Bild kommt, ohne das Startbündel zu belasten — Vorschlag von Claude ausstehend.
+- F7-K6-2 — Maria bekommt einen Medikamenten-Eintrag, damit das Feld im Beispiel gefüllt ist. Gezeigt werden soll, dass
+  die App zu einem Medikament weiterführende Information zeigt; Sophie nennt PubMed, TARDOC und «vielleicht der Preis».
+  **Offen, vor dem Bau klären:** Die App verlinkt heute schon auf compendium.ch (`MedicationManager.jsx`).
+  PubMed ist Fachliteratur, keine Patienteninformation; TARDOC ist der Arzttarif und enthält keine Medikamentenpreise —
+  die stehen in der Spezialitätenliste des BAG. Ein Preis in der App wäre ein Datenbestand, der gepflegt werden muss.
+
+**Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 ·
+F7-L9 · F7-K5-1
