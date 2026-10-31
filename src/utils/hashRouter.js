@@ -15,15 +15,17 @@
 //   #/kk               → view='kk'
 //   etc. for all 18 views
 
+import { CHAPTER_KEYS } from '../config/constants.js';
+
 // All known view names (must match the view === 'x' checks in main.jsx).
 // Exported so a guard test can assert every main.jsx view is deep-linkable.
 export const VALID_VIEWS = new Set([
   'dashboard', 'chapter', 'tresor', 'kk', 'budget', 'schulden',
   'tax', 'organ', 'sync', 'premium', 'praemien', 'mietzins', 'kreditkarte', 'stundenlohn', 'vorsorge', 'eo', 'cv', 'charts',
-  'sozialhilfe', 'direktlinks', 'unterlagen', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
-  'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
+  'sozialhilfe', 'direktlinks', 'unterlagen', 'drucken', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
+  'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'selbstmahnen', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
-  'versicherungskapitel',
+  'versicherungskapitel', 'notfallvorsorge',
 ]);
 // Nur Design-Vorschau (Tresor 2b-UI): der Eintrag existiert ausschliesslich in DEV,
 // damit der Prod-Build byte-neutral bleibt (der Render-Branch in main.jsx ist ebenso DEV-gated).
@@ -46,14 +48,42 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      über der Versicherungs-Übersicht (Runde 9 AB, 25.10.2026), keine frühere Seite.
 //   unterlagen       → Dokumentenablage, Abschnitt «Meine Unterlagen» unten (24.10.2026, Gruppe H;
 //                      Wächter: unterlagenUmleitung.test.js). Auch die Brotkrumen der Dossiers zeigen hierher.
+//   schnellcheck,    → «Was steht mir zu?» (situationen), Sprungmarke «Mit Ihren Angaben» (Entscheid O, 24.10.2026;
+//   ansprueche         gebaut 27.10.2026, F7-A3/L5 Gruppe A; Wächter: anspruchUmleitung.test.js). Die Marke
+//                      steht als Literal hier — Lebenssituationen.jsx lädt erst bei Bedarf (MIT_ANGABEN_ANKER).
+//   budget           → Monatsbudget, Teil «CSV importieren» unten (27.10.2026, F7-L7, Gruppe I;
+//                      Wächter: budgetImportUmleitung.test.js). Der Import ist keine eigene Seite mehr.
+//   merkliste        → «Was ansteht», Reiter «Merkliste» (27.10.2026, F7-L10, Gruppe H; Wächter:
+//                      merklisteReiter.test.js). `wahl` sagt der Zielseite, welcher Reiter offen ist —
+//                      main.jsx reicht sie als `reiter` weiter (Zustand `wahl`).
+//   lebensmappe, behoerdendossier, notfalldossier → «Unterlagen drucken», passende Auswahl (27.10.2026, F7-S2,
+//                      Gruppe H; Wächter: unterlagenDrucken.test.js). Abläufe, Kapitel und Merkpunkte rufen die
+//                      alten Namen weiter auf.
+//   notfallvorsorge  → Kapitel Notfall, Block «Vorsorge» (27.10.2026, F7-S10), keine frühere Seite: die Stufe
+//                      «Notfall» der Brotkrume und der Rückweg nach Patientenverfügung, Bestattungswünschen und
+//                      Organspende. Kapitel-Index aus CHAPTER_KEYS, Sprungmarke = Titel des Blocks in
+//                      components/NotfallImKapitel.jsx (Wächter: vorsorgeRueckweg.test.js).
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
+  // F7-L8 (31.10.2026): der Steuer-Import ist ein Teil des Steuer-Rechners (TaxCalculator.jsx, <details>).
+  taxImport: { view: 'tax', chapterIndex: null, anker: 'mp-steuer-import' },
+  notfallvorsorge: { view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-notfall-vorsorge' },
+  lebensmappe: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'alles' },
+  behoerdendossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'amt' },
+  notfalldossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'notfall' },
+  merkliste: { view: 'calendar', chapterIndex: null, anker: null, wahl: 'merkliste' },
+  budget: { view: 'sync', chapterIndex: null, anker: 'mp-budget-import' },
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
   unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },
   versicherungskapitel: { view: 'chapter', chapterIndex: 3, anker: null },
+  schnellcheck: { view: 'situationen', chapterIndex: null, anker: 'mp-mit-angaben' },
+  ansprueche: { view: 'situationen', chapterIndex: null, anker: 'mp-mit-angaben' },
+  // F7-A5 (27.10.2026): «Zusatzversicherung wechseln» ist der Weg «Zusatz» in «Krankenkasse wechseln».
+  // Die Sprungmarke ist der Wahlknopf der Weiche (KVGWechsel.jsx ZUSATZ_ANKER) — springeZuAnker wählt ihn.
+  zusatzwechsel: { view: 'kvgwechsel', chapterIndex: null, anker: 'mp-kvg-zusatz' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
@@ -69,8 +99,9 @@ export function springeZuAnker(id, bis = 2000) {
   const schritt = () => {
     if (aus) return;
     const el = document.getElementById(id);
-    // Ein zugeklappter Teil (<details>, z. B. Aussteuerung in «Stelle verloren») geht dabei auf.
-    if (el) { if (el.tagName === 'DETAILS') el.open = true; el.scrollIntoView({ block: 'start' }); return; }
+    // Ein zugeklappter Teil (<details>, z. B. Aussteuerung in «Stelle verloren») geht dabei auf; ein
+    // Wahlknopf mit `data-anker-wahl` (Weiche «Zusatz» im KVG-Wechsel, F7-A5) wird gewählt.
+    if (el) { if (el.tagName === 'DETAILS') el.open = true; if (el.dataset && 'ankerWahl' in el.dataset) el.click(); el.scrollIntoView({ block: 'start' }); return; }
     if (performance.now() < ende) requestAnimationFrame(schritt);
   };
   // Zwei Bilder warten: handleNavigate springt zuerst nach oben (scrollTo 0).

@@ -9,7 +9,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 export const BetreibungsAuszug = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'betreibungsauszug', icon: 'behoerden',
     title: t('betreibungsAuszug.title'),
     intro: t('betreibungsAuszug.intro'),
   },

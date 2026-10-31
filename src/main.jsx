@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
-import { PFADE } from './config/brotkrumePfade.js';
-import { herkunftName } from './config/ansichtenRegister.js';
+import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
+import { herkunftName, ablaufBereich } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -56,21 +56,21 @@ import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
 const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
-const BudgetImport = React.lazy(() => import('./BudgetImport.jsx'));
-const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
+// BudgetImport: seit 27.10.2026 keine eigene Seite — Teil «CSV importieren» im Monatsbudget (UMLEITUNGEN, BudgetSync.jsx).
 const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
 const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
 const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
 const BudgetSync = React.lazy(() => import('./BudgetSync.jsx'));
 const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
 const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
+const SeitenSchluss = React.lazy(() => import('./components/SeitenSchluss.jsx'));
+const MIT_SEITENSCHLUSS = ['kk', 'sync', 'flyer', 'direktlinks', 'export', 'notifications', 'installApp'];
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
 const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
 // MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
-const Lebensmappe = React.lazy(() => import('./Lebensmappe.jsx'));
-const NotfallDossier = React.lazy(() => import('./NotfallDossier.jsx'));
+// Lebensmappe, Notfall- und Behörden-Dossier: seit 27.10.2026 eine Seite mit drei Auswahlen (F7-S2, UMLEITUNGEN).
+const UnterlagenDrucken = React.lazy(() => import('./UnterlagenDrucken.jsx'));
 const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
-const BehoerdenDossier = React.lazy(() => import('./BehoerdenDossier.jsx'));
 const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
@@ -83,7 +83,6 @@ const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx
 const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
 const Stundenlohn = React.lazy(() => import('./Stundenlohn.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
-const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
 // (ternär mit import.meta.env.DEV) → im Prod-Build wird der Import wegoptimiert,
 // Haupt-Bundle bleibt byte-neutral.
@@ -97,6 +96,7 @@ const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 // Mahnung und Betreibung: seit 24.10.2026 eine Seite «Rechnung nicht bezahlt», die Adresse wählt die Stufe.
 const RechnungOffen = React.lazy(() => import('./RechnungOffen.jsx'));
+const SelbstMahnen = React.lazy(() => import('./SelbstMahnen.jsx'));
 const Dienst = React.lazy(() => import('./Dienst.jsx'));
 const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
 const Lehre = React.lazy(() => import('./Lehre.jsx'));
@@ -124,7 +124,8 @@ const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
 const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
 const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
-const Schnellcheck = React.lazy(() => import('./Schnellcheck.jsx').then(m => ({ default: m.Schnellcheck })));
+// Schnellcheck: seit 27.10.2026 keine eigene Seite — #/schnellcheck und #/ansprueche führen auf «Was steht mir zu?»
+// (UMLEITUNGEN); er bleibt Schritt 1 des geführten Anspruch-Checks (AnspruchCheck.jsx).
 const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
 const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
 const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
@@ -136,7 +137,7 @@ const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
 const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
-const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
+// MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
@@ -576,6 +577,9 @@ const AppInner = ({ demo }) => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
+  // Reiter bzw. Auswahl einer Seite, die frühere Seiten bündelt (F7, 27.10.2026): «Merkliste» in «Was ansteht»,
+  // «Alles / Für ein Amt / Für den Notfall» in «Unterlagen drucken». Kommt aus UMLEITUNGEN (`wahl`) oder `extra`.
+  const [wahl, setWahl] = useState(() => (parseHash() || {}).wahl);
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
@@ -666,7 +670,8 @@ const AppInner = ({ demo }) => {
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   // ('finanzuebersicht' stand hier bis 24.10.2026; ob der Knopf ins Kapitel Finanzen kommt,
   // ist Bauschritt 6 der Zusammenlegung, docs/entscheide/finanzen-fusion.md.)
-  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
+  // 'sync' statt 'budget' seit 27.10.2026 (F7-L7): der CSV-Import ist ein Teil des Monatsbudgets.
+  const SANDBOX_VIEWS = ['tax', 'sync', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'situationen', 'anspruchcheck'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -722,6 +727,7 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
+        setWahl(parsed.wahl);
         setHerkunft(leseHerkunft());
       });
       // Ein alter Eintrag (#/finanzuebersicht) kommt als Kapitel mit Sprungmarke zurück — dorthin,
@@ -1001,7 +1007,7 @@ const AppInner = ({ demo }) => {
     // Eine Ansicht, die es nicht mehr als eigene Seite gibt (utils/hashRouter.js): an ihr Ziel,
     // dort zur Sprungmarke. finanzuebersicht → Kapitel Finanzen, Auswertung (24.10.2026).
     if (umleitung) {
-      handleNavigate(umleitung.view, umleitung.chapterIndex, extra);
+      handleNavigate(umleitung.view, umleitung.chapterIndex, umleitung.wahl || extra);
       springeZuAnker(umleitung.anker);
       return;
     }
@@ -1009,6 +1015,7 @@ const AppInner = ({ demo }) => {
     stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
+    setWahl(extra);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
       setActiveChapter(chapterIdx);
     }
@@ -1527,10 +1534,11 @@ const AppInner = ({ demo }) => {
       // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
-      // Der Umzug (Fassung 5) und seit dem Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im
-      // eigenen Kopf (AblaufSchale `kopf`, ChapterView), seit Fassung G (27.10.2026) auch «Was ansteht». Als
-      // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
-      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
+      // Die Abläufe (Fassung 5 Umzug, seit Entwurf W alle im Register, F7-A1 27.10.2026) und seit dem
+      // Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im eigenen Kopf (AblaufSchale, ChapterView),
+      // seit Fassung G (27.10.2026) auch «Was ansteht». Ebenso ohne «Übersicht»: die Rechner in der Form X
+      // (RECHNER_KAPITEL, components/RechnerForm.jsx, F7-A2 27.10.2026).
+      view !== 'dashboard' && !PFADE[view] && !RECHNER_KAPITEL[view] && !ablaufBereich(view) && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
@@ -1663,17 +1671,6 @@ const AppInner = ({ demo }) => {
             });
           }
         }),
-        view === 'budget' && React.createElement(BudgetImport, {
-          palette, t,
-          currentBudget: activeData.finanzen || {},
-          onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
-        }),
-        view === 'taxImport' && React.createElement(TaxImport, {
-          palette, t,
-          currentFinanzen: activeData.finanzen || {},
-          onImport: (merged) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...merged } })),
-          onNavigate: handleNavigate,
-        }),
         view === 'schulden' && React.createElement(SchuldenManager, {
           key: datenModus,
           palette, t, vorlaeufig,
@@ -1688,22 +1685,23 @@ const AppInner = ({ demo }) => {
           key: datenModus,
           palette, t, vorlaeufig,
           data: activeData,
+          onImport: (merged) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...merged } })),
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
-          palette, t, vorlaeufig,
+          palette, t, vorlaeufig, onNavigate: handleNavigate,
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
         // isDarkMode: das Miet-Barometer im Budget braucht die Frucht-Farbe („du" trägt die
         // Bereichsfarbe) — ohne den Prop läge `bereichFillColor` im Dunkelmodus stumm daneben.
-        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
+        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode, onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } })) }),
         view === 'premium' && React.createElement(PremiumSubsidy, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
-        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData }),
-        view === 'stundenlohn' && React.createElement(Stundenlohn, { palette, t, data: activeData, onUpdateData: updateData }),
+        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
+        view === 'stundenlohn' && React.createElement(Stundenlohn, { palette, t, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Design-Vorschau des Tresor-LockScreens (nur DEV; onUnlock ist ein Stub —
         // Passphrase „test1234" = Erfolg, sonst Fehler). Noch NICHT an secureStore verdrahtet.
@@ -1712,7 +1710,6 @@ const AppInner = ({ demo }) => {
           onUnlock: async (pp) => { if (pp !== 'test1234') { const e = new Error('wrong'); throw e; } alert('Entsperrt (Stub) — echte Verdrahtung folgt in Phase 2b-UI.'); },
           onLegal: () => handleNavigate('legal'),
         }),
-        view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate, datenModus }),
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),
@@ -1720,6 +1717,7 @@ const AppInner = ({ demo }) => {
         view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         (view === 'mahnung' || view === 'betreibung') && React.createElement(RechnungOffen, { key: view, palette, t, onNavigate: handleNavigate, stufe: view }),
+        view === 'selbstmahnen' && React.createElement(SelbstMahnen, { palette, t, onNavigate: handleNavigate }),
         view === 'dienst' && React.createElement(Dienst, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'volljaehrig' && React.createElement(Volljaehrig, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'lehre' && React.createElement(Lehre, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1730,8 +1728,8 @@ const AppInner = ({ demo }) => {
         view === 'zusammenziehen' && React.createElement(Zusammenziehen, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'ergaenzungsleistungen' && React.createElement(Ergaenzungsleistungen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, lang, data: activeData, chapters, onNavigate: handleNavigate, onUpdateData: updateData }),
-        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
-        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
+        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
+        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData, onNavigate: handleNavigate }),
         view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1750,27 +1748,23 @@ const AppInner = ({ demo }) => {
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
         // key: datenModus — wie beim Kalender: nach «Beispiel verlassen» keine Beispiel-Liste über die echte.
-        view === 'merkliste' && React.createElement(MerklisteView, { key: datenModus, palette, t, onNavigate: handleNavigate }),
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
-        view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
+        view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Seit 27.09.2026 eine Seite: Leistungs-Kompass und Anspruchs-Landkarte zusammen.
         // Beide alten Adressen bleiben gültig und zeigen dasselbe.
-        (view === 'schnellcheck' || view === 'ansprueche') && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate, mitLandkarte: true }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
+        view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // chapters/onSelectChapter/isMobile seit 21.09.: der Lebensbaum steht jetzt
         // hier statt auf dem Dashboard und braucht die Kapitel für seine Äste.
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
-        view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
-        view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: setWahl }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
@@ -1778,11 +1772,12 @@ const AppInner = ({ demo }) => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
         // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
-        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel' }),
+        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: setWahl }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
         }),
+        MIT_SEITENSCHLUSS.includes(view) && React.createElement(SeitenSchluss, { palette, t, view, onNavigate: handleNavigate }),
         view === 'settings' && React.createElement(SettingsView, {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),

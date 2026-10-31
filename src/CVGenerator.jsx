@@ -1,115 +1,86 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { generateCVTemplate, generateJSONResume, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
+import { generateCVTemplate, generateCVHTML, generateJSONResume, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
+import { LebenslaufBlatt, lebenslaufInhalt } from './components/LebenslaufVorschau.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
+import { CHAPTER_KEYS } from './config/constants.js';
 import { ZielHinweis } from './components/ExternerLink.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { openPrintWindow } from './utils/helpers.js';
 import PrimaryButton from './components/PrimaryButton.jsx';
 
-export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
-  const [preview, setPreview] = useState(false);
-  // Export-Vorschau (K20): null | 'html' | 'json' — erst zeigen, was in der Datei steht.
+// Lebenslauf (F7-R5, 31.10.2026): das Blatt aus dem Kapitel Ausbildung, «Als PDF drucken» als Hauptweg, HTML und
+// JSON klein unter «Weitere Formate». Vorher eine Datenmaske mit drei gleich lauten Knöpfen.
+export const CVGenerator = ({ palette, t, data, onNavigate }) => {
+  // Export-Vorschau (K20): null | 'druck' | 'html' | 'json' — erst zeigen, was im Dokument steht. Das Blatt zeigt
+  // weniger als der Druck (Geburtsdatum, Nationalität, Zivilstand): darum auch vor dem Drucken.
   const [vorschau, setVorschau] = useState(null);
-  const zweitKnopf = { flex: 1, minHeight: '44px', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
-  // Abschnitts-Überschriften optisch in Versalien, aber im Markup normale
-  // Schreibweise (Screenreader liest Wörter statt Buchstaben) — text-transform.
-  const headStyle = { textTransform: 'uppercase', letterSpacing: '0.5px' };
+  const zweitKnopf = { minHeight: '44px', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   const cv = generateCVTemplate(data, t);
+  const inhalt = lebenslaufInhalt(t, data.ausbildung, data);
 
-  const handleDownload = () => {
-    downloadCVAsHTML(cv, t);
+  // Aus dem App-Fenster drucken (die CSP sperrt Inline-Handler im Druckfenster), wie beim Flyer.
+  const drucken = () => {
+    const win = openPrintWindow(generateCVHTML(cv, t));
+    if (win) {
+      const bereit = win.document.fonts ? win.document.fonts.ready : Promise.resolve();
+      bereit.then(() => { win.focus(); win.print(); });
+    }
   };
+  const weiter = () => {
+    const art = vorschau;
+    setVorschau(null);
+    if (art === 'json') downloadCVAsJSON(data, t);
+    else if (art === 'html') downloadCVAsHTML(cv, t);
+    else drucken();
+  };
+  const ergaenzen = onNavigate && React.createElement('button', {
+    type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    style: { ...zweitKnopf, display: 'block', marginTop: space.sm + 'px' },
+  }, t('cv.ergaenzen') + ' ›');
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('cv'), size: 22 }), style: { marginBottom: space.md } }, t('cv.title')),
 
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: space.md } },
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('cv.name')),
-        React.createElement('div', { style: { fontWeight: weight.semi } }, cv.header.name)
-      ),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('cv.phone')),
-        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.header.phone)
-      ),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('cv.profession')),
-        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.experience.current.title || '—')
-      ),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('cv.qualification')),
-        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.education.highest || '—')
-      )
-    ),
+    !inhalt && React.createElement('div', { 'data-teil': 'lebenslauf-leer' },
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, margin: 0 } }, t('cv.leer')),
+      ergaenzen),
 
-    // EIN Hauptknopf: der Lebenslauf als Datei (Seitenrundgang 27.09.2026 — vorher standen
-    // «Vorschau» in Sand und «HTML» in Salbei gleich laut nebeneinander).
-    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: vorschau ? 0 : space.md } },
+    inhalt && React.createElement(React.Fragment, null,
+      React.createElement(LebenslaufBlatt, { palette, inhalt }),
       React.createElement(PrimaryButton, {
-        palette, onClick: () => setVorschau('html'),
-        style: { flex: 1, minHeight: '44px' },
-      }, React.createElement(ZielHinweis, { t, art: 'download' }), t('cv.downloadHtml')),
-      React.createElement('button', {
-        type: 'button',
-        onClick: () => setPreview(!preview),
-        style: zweitKnopf,
-      }, preview
-        ? React.createElement(React.Fragment, null, hinweisZeichen('kreuz'), t('common.close'))
-        : t('cv.preview')),
-      React.createElement('button', {
-        type: 'button',
-        onClick: () => setVorschau('json'),
-        title: t('cv.downloadJsonHint'),
-        style: zweitKnopf,
-      }, '{ } ' + t('cv.downloadJson'))
-    ),
+        palette, onClick: () => setVorschau('druck'),
+        style: { width: '100%', minHeight: '44px', margin: space.md + 'px 0 ' + space.xs + 'px' },
+      }, t('cv.pdfDrucken')),
+      React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, t('cv.pdfHinweis')),
+      vorschau === 'druck' && vorschauBox(),
+      React.createElement('details', { 'data-teil': 'weitere-formate', style: { marginBottom: space.sm + 'px' } },
+        React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, color: palette.mid } }, t('cv.weitereFormate')),
+        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.sm + 'px' } },
+          React.createElement('button', { type: 'button', onClick: () => setVorschau('html'), style: zweitKnopf },
+            React.createElement(ZielHinweis, { t, art: 'download' }), t('cv.downloadHtml')),
+          React.createElement('button', { type: 'button', onClick: () => setVorschau('json'), title: t('cv.downloadJsonHint'), style: zweitKnopf },
+            '{ } ' + t('cv.downloadJson'))),
+        (vorschau === 'html' || vorschau === 'json') && vorschauBox()),
+      ergaenzen),
 
-    // Export-Vorschau (K20) direkt unter den Knöpfen, die sie geöffnet haben.
-    vorschau && React.createElement('div', { style: { marginBottom: space.md } },
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.md + 'px' } }, hinweisZeichen(), t('trust.localOnly'))
+  );
+
+  // Export-Vorschau (K20) direkt unter dem Knopf, der sie geöffnet hat.
+  function vorschauBox() {
+    return React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement(ExportVorschau, {
         palette, t,
         art: vorschau === 'json' ? 'cvJson' : 'cvHtml',
         quelle: vorschau === 'json' ? { resume: generateJSONResume(data, t) } : { cv, data },
-        onWeiter: () => {
-          const json = vorschau === 'json';
-          setVorschau(null);
-          if (json) downloadCVAsJSON(data, t); else handleDownload();
-        },
+        onWeiter: weiter,
         onZurueck: () => setVorschau(null),
-      })
-    ),
-
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px' } }, hinweisZeichen(), t('trust.localOnly')),
-
-    preview && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, maxHeight: '500px', overflowY: 'auto', fontSize: text.sm, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
-      React.createElement('div', null,
-        React.createElement('h3', { style: { marginBottom: space.sm } }, cv.header.name),
-        React.createElement('div', { style: { color: palette.mid, marginBottom: '12px' } }, cv.header.phone + ' | ' + cv.header.email),
-        React.createElement('div', { style: { color: palette.mid, marginBottom: space.md } }, cv.header.address + ', ' + cv.header.city),
-        React.createElement('hr', { style: { border: 'none', borderTop: '1px solid ' + palette.border, marginBottom: '12px' } }),
-        React.createElement('strong', { style: headStyle }, t('cv.personalData')),
-        React.createElement('div', { style: { marginBottom: '12px' } },
-          React.createElement('div', null, cv.personal.dateOfBirth),
-          React.createElement('div', null, cv.personal.nationality),
-          React.createElement('div', null, cv.personal.maritalStatus)
-        ),
-        React.createElement('strong', { style: headStyle }, t('cv.experience')),
-        React.createElement('div', { style: { marginBottom: '12px' } },
-          React.createElement('div', null, cv.experience.current.title + ' — ' + cv.experience.current.company),
-          React.createElement('div', { style: { color: palette.mid } }, cv.experience.current.startDate)
-        ),
-        React.createElement('strong', { style: headStyle }, t('cv.education')),
-        React.createElement('div', { style: { marginBottom: '12px' } },
-          React.createElement('div', null, cv.education.highest + ' — ' + cv.education.school)
-        ),
-        React.createElement('strong', { style: headStyle }, t('cv.languages')),
-        React.createElement('div', null, cv.languages.list)
-      )
-    )
-  );
+      }));
+  }
 };
 
 export default CVGenerator;

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, EINSTELLUNGEN, OBEN } from '../data/werkzeugRegister.js';
 import { GEGENSTAENDE, alleWege } from '../data/gepaeck.js';
-import { VALID_VIEWS } from '../utils/hashRouter.js';
+import { VALID_VIEWS, UMLEITUNGEN } from '../utils/hashRouter.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -28,7 +28,7 @@ const HEUTE_IM_MENUE = [
   'tax', 'sozialhilfe', 'organ', 'calendar', 'sync', 'premium', 'cv', 'charts', 'export', 'notifications',
 ];
 const HEUTE_AUF_DEM_DASHBOARD = [
-  'gesundheit', 'situationen', 'tax', 'taxImport', 'sync', 'mietzins', 'vorsorge', 'mindestlohn',
+  'gesundheit', 'situationen', 'tax', 'sync', 'mietzins', 'vorsorge', 'mindestlohn',
   'premium', 'praemien', 'kvg', 'tresor', 'unterlagen', 'direktlinks', 'flyer',
   'search', 'merkliste', 'calendar', 'cv',
 ];
@@ -41,6 +41,8 @@ const imGepaeck = () => new Set([
 const imMenue = () => new Set([...MENUE_WERKZEUGE.map(werkzeugKey), 'gepaeck', 'settings']);
 // Über die Einstellungen (SettingsView): Export und Benachrichtigungen.
 const inEinstellungen = () => new Set(WERKZEUGE.filter((w) => w.fach === EINSTELLUNGEN).map(werkzeugKey));
+// F7-L11 (27.10.2026): Ansichten, die nur noch als Umleitung bestehen, gelten als erreichbar, wenn ihr Ziel erreichbar ist.
+const UMGELEITET_NACH = { unterlagen: 'tresor', charts: 'finanzuebersicht', aussteuerung: 'stelleverloren' };
 
 describe('Werkzeug-Register: ein Eintrag je Werkzeug', () => {
   it('jeder Schlüssel steht genau einmal — über Register UND Gepäck-Wege', () => {
@@ -100,13 +102,15 @@ describe('Portemonnaie und Aussenfach', () => {
     expect(GEGENSTAND_KEYS).toHaveLength(7);
     expect(GEGENSTAND_KEYS).toContain('geld');
     expect(werkzeugeImFach('geld').map(werkzeugKey).sort()).toEqual(
-      ['alv', 'budget', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'stundenlohn', 'sync', 'tax', 'taxImport'],
+      // 'budget' seit 27.10.2026 nicht mehr (F7-L7): der Import ist ein Teil von 'sync'.
+      ['alv', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'stundenlohn', 'sync', 'tax'],
     );
   });
 
   it('Mahnung und Betreibung sind Wege im Portemonnaie, nicht mehr in der Werkzeugrolle (27.09.)', () => {
     const wege = (key) => GEGENSTAENDE.find((g) => g.key === key).wege.map((w) => w.view);
-    expect(wege('geld')).toEqual(['mahnung', 'betreibung']);
+    // F7-A10 (27.10.2026): «Jemand schuldet Geld» ist ein eigener Weg daneben (vorher Schritt 6 der Mahnung).
+    expect(wege('geld')).toEqual(['mahnung', 'betreibung', 'selbstmahnen']);
     expect(wege('arbeit')).not.toContain('mahnung');
     expect(wege('arbeit')).not.toContain('betreibung');
   });
@@ -118,7 +122,7 @@ describe('Portemonnaie und Aussenfach', () => {
 
   it('das Aussenfach trägt alle Ablage-Werkzeuge', () => {
     const aussen = werkzeugeImFach(AUSSENFACH).map(werkzeugKey);
-    for (const v of ['tresor', 'unterlagen', 'calendar', 'merkliste', 'cv', 'direktlinks', 'flyer', 'charts']) {
+    for (const v of ['tresor', 'calendar', 'merkliste', 'cv', 'direktlinks', 'flyer']) {
       expect(aussen, `${v} fehlt im Aussenfach`).toContain(v);
     }
   });
@@ -139,7 +143,10 @@ describe('Portemonnaie und Aussenfach', () => {
 describe('Nichts wird unerreichbar', () => {
   it('jede heute im Menü oder auf dem Dashboard erreichbare Ansicht ist nachher über Menü, Gepäck oder Einstellungen erreichbar', () => {
     const nachher = new Set([...imGepaeck(), ...imMenue(), ...inEinstellungen()]);
-    const verloren = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])].filter((v) => !nachher.has(v));
+    // Eine Ansicht, die keine eigene Seite mehr ist (UMLEITUNGEN), ist erreichbar, wenn ihr Ziel es ist —
+    // seit 27.10.2026 (F7-L7) der CSV-Import «budget» als Teil des Monatsbudgets «sync».
+    const erreichbar = (v) => nachher.has(v) || nachher.has(UMGELEITET_NACH[v]) || Boolean(UMLEITUNGEN[v] && nachher.has(UMLEITUNGEN[v].view));
+    const verloren = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])].filter((v) => !erreichbar(v));
     expect(verloren, 'unerreichbar: ' + verloren.join(', ')).toEqual([]);
   });
 

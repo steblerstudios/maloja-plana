@@ -5,7 +5,7 @@ import { betrag, zahl } from '../utils/geld.js';
 import { schildOptionen, schildState } from '../data/schutzschild.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
-import { Schutzschild } from './Schutzschild.jsx';
+import { NetzSchild } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { calculateIPV } from '../config/cantonalData.js';
@@ -21,7 +21,7 @@ import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 //      Versicherungen» aus dem Kapitel Finanzen. Darunter, was fehlt und was bewusst nicht zählt.
 //   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze,
 //      dieselbe IPV-Entlastung über ipvAbzug, Quelle und «Orientierung» — Fachprüfung 25.10.2026).
-//   3. Schutzschild klein — zwei Schilde mit Listen, offen (statt der grossen Schilde darunter).
+//   3. Netz-Schild (seit 27.10.2026, F7-K3-6) — ein Schild aus Teilen statt der zwei kleinen Schilde und des Netzes.
 //   4. Franchise-Kreuz klein — dieselbe Rechnung wie die Prämien-Seite (ladeFranchiseOpt, erst mit Kasse + PLZ),
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
 const WHO = 10;
@@ -32,7 +32,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const v = versicherungen || {};
   const daten = { ...(allData || {}), versicherungen: v };
   const p = monatsAusgaben(daten);
-  const summe = p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
+  const summe = p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
 
   const [franchiseOpt, setFranchiseOpt] = useState(null);
   const plz = daten.wohnen?.postalCode, kasse = v.kkInsurer, geburt = daten.basis?.dateOfBirth;
@@ -56,6 +56,9 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   // Was erfasst ist, als Zeilen. Jahresprämien mit dem Jahresbetrag in Klammern, damit die ÷ 12 nachvollziehbar ist.
   const posten = [
     p.healthInsurance > 0 && { key: 'kk', name: t('versInstrument.kk'), wert: p.healthInsurance },
+    p.kkZusatz > 0 && { key: 'kkZusatz', name: t('versInstrument.kkZusatz'), wert: p.kkZusatz },
+    p.uvgZusatz > 0 && { key: 'uvgZusatz', name: t('versInstrument.uvgZusatz', { jahr: zahl(Number(v.uvgZusatzPremium)) }), wert: p.uvgZusatz },
+    p.lifeInsurance > 0 && { key: 'leben', name: t('versInstrument.leben', { jahr: zahl(Number(v.lifeInsurancePremium)) }), wert: p.lifeInsurance },
     p.householdInsurance > 0 && { key: 'hausrat', name: t('versInstrument.hausrat', { jahr: zahl(Number(v.householdInsuranceAmount)) }), wert: p.householdInsurance },
     p.liabilityInsurance > 0 && { key: 'haftpflicht', name: t('versInstrument.haftpflicht', { jahr: zahl(Number(v.liabilityPremium)) }), wert: p.liabilityInsurance },
     p.otherInsurance > 0 && { key: 'weitere', name: t('versInstrument.weitere'), wert: p.otherInsurance },
@@ -65,6 +68,8 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const fehlt = [
     v.householdInsurance === 'yes' && !(Number(v.householdInsuranceAmount) > 0) && t('versInstrument.nameHausrat'),
     v.liabilityInsurance === 'yes' && !(Number(v.liabilityPremium) > 0) && t('versInstrument.nameHaftpflicht'),
+    v.kkZusatz && !(Number(v.kkZusatzPremium) > 0) && t('versInstrument.nameKkZusatz'),
+    v.lifeInsurance === 'yes' && !(Number(v.lifeInsurancePremium) > 0) && t('versInstrument.nameLeben'),
   ].filter(Boolean);
   // Die Krankenkasse ist Pflicht: ist eine Kasse erfasst, aber keine Prämie, steht sie zuerst (Fachprüfung).
   if (v.kkInsurer && !(Number(v.kkPremium) > 0)) fehlt.unshift(t('versInstrument.nameKK'));
@@ -143,11 +148,12 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     ),
 
     !uebersicht && schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
-    !uebersicht && h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(daten) }),
+    // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
+    !uebersicht && h(NetzSchild, { palette, t, versicherungen: v, finanzen: daten.finanzen, kanton: daten.basis?.canton, stunden: daten.ausbildung?.workHoursPerWeek, ...schildOptionen(daten) }),
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h4', { style: kapH }, t('instrumente.tacho')),
-      h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true }),
+      h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true, eigeneFranchise: parseFranchise(v.franchise) }),
       vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal, textAlign: 'center' } }, vorschlagSatz),
       onNavigate && h('button', {
         type: 'button', className: 'mp-link', 'data-teil': 'zur-uebersicht', onClick: () => onNavigate('praemien'),

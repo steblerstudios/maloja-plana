@@ -25,14 +25,16 @@ import { SUCHBARE_WERKZEUGE } from '../data/werkzeugRegister.js';
 // Balken oben und Zeichen im Kopf (Entscheid Stebler Studios 27.09.2026, Probe).
 export const ABLAEUFE = [
   { view: 'kkerst', bereich: 'versicherungen', nav: 'nav.kkerst', sub: 'nav.sub.kkerst', icon: 'insurance', aliases: ['krankenkasse', 'grundversicherung', 'neu in der schweiz', 'caisse maladie', 'cassa malati', 'health insurance'] },
-  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa'] },
-  { view: 'zusatzwechsel', bereich: 'versicherungen', nav: 'zusatzWechsel.title', sub: 'nav.sub.zusatzwechsel', icon: 'insurance', aliases: ['zusatzversicherung', 'vvg', 'kündigung', 'complémentaire', 'complementare'] },
+  // F7-A5 (27.10.2026): ein Ablauf für Grund- und Zusatzversicherung; `#/zusatzwechsel` ist eine Umleitung hierher.
+  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa', 'zusatzversicherung', 'vvg', 'complémentaire', 'complementare'] },
   { view: 'neuerjob', bereich: 'arbeit', nav: 'nav.neuerjob', sub: 'nav.sub.neuerjob', icon: 'lebenslauf', aliases: ['job', 'stelle', 'arbeitsvertrag', 'erste stelle', 'emploi', 'lavoro'] },
   { view: 'stelleverloren', bereich: 'arbeit', nav: 'nav.stelleverloren', sub: 'nav.sub.stelleverloren', icon: 'lebenslauf', aliases: ['kündigung', 'arbeitslos', 'rav', 'chômage', 'disoccupazione', 'unemployed'] },
   { view: 'unfallkrankheit', bereich: 'gesundheit', nav: 'nav.unfallkrankheit', sub: 'nav.sub.unfallkrankheit', icon: 'notfall', aliases: ['unfall', 'krank', 'uvg', 'taggeld', 'arbeitsunfähig', 'accident', 'infortunio'] },
   { view: 'umzug', bereich: 'wohnen', nav: 'nav.umzug', sub: 'nav.sub.umzug', icon: 'home', aliases: ['umzug', 'zügeln', 'adresse', 'anmelden', 'déménagement', 'trasloco', 'moving'] },
   { view: 'pensionierung', bereich: 'vorsorge', nav: 'nav.pensionierung', sub: 'nav.sub.pensionierung', icon: 'vorsorge', aliases: ['pension', 'rente', 'ruhestand', 'ahv', 'retraite', 'pensione', 'retirement'] },
   { view: 'mahnung', bereich: 'finanzen', nav: 'nav.mahnung', sub: 'nav.sub.mahnung', icon: 'money', aliases: ['mahnung', 'zahlungserinnerung', 'rechnung', 'offene rechnung', 'inkasso', 'verzugszins', 'ratenzahlung', 'rappel', 'sommation', 'sollecito', 'diffida', 'reminder', 'overdue'] },
+  // F7-A10 (27.10.2026): vorher Schritt 6 von «Mahnung erhalten».
+  { view: 'selbstmahnen', bereich: 'finanzen', nav: 'selbstMahnen.title', sub: 'nav.sub.selbstmahnen', icon: 'money', aliases: ['mahnen', 'schuldet mir', 'geld zurück', 'verzugszins', 'in verzug setzen', 'schuldner', 'mettre en demeure', 'débiteur', 'costituire in mora', 'debitore', 'owes me money', 'debtor'] },
   { view: 'betreibung', bereich: 'finanzen', nav: 'nav.betreibung', sub: 'nav.sub.betreibung', icon: 'behoerden', aliases: ['betreibung', 'zahlungsbefehl', 'rechtsvorschlag', 'poursuite', 'esecuzione'] },
   { view: 'selbstaendigkeit', bereich: 'arbeit', nav: 'nav.selbstaendigkeit', sub: 'nav.sub.selbstaendigkeit', icon: 'lebenslauf', aliases: ['selbständig', 'selbstständig', 'firma', 'gründen', 'indépendant', 'indipendente', 'self-employed'] },
   { view: 'heirat', bereich: 'familie', nav: 'nav.heirat', sub: 'nav.sub.heirat', icon: 'heart', aliases: ['heirat', 'hochzeit', 'ehe', 'partnerschaft', 'mariage', 'matrimonio', 'marriage'] },
@@ -82,7 +84,11 @@ export const SEARCH_VIEWS = [
   { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
   { view: 'notfallpass', nav: 'notfallpass.title', icon: 'health', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
-  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'dossier', 'cartella', 'life folder'] },
+  // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
+  // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
+  // jetzt auf die ganze Seite.
+  { view: 'drucken', nav: 'unterlagen.drucken.title', icon: 'documents', aliases: ['drucken', 'dossier', 'behördendossier', 'notfalldossier', 'imprimer', 'stampare', 'print'] },
+  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'cartella', 'life folder'] },
   // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
   // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
   // sucht, sucht mit genau diesen Wörtern.
@@ -99,9 +105,10 @@ export const SEARCH_VIEWS = [
 const WEITERE_NAMEN = {
   search: 'nav.search',
   settings: 'nav.settings',
-  ansprueche: 'anspruch.pageTitle',
+  // ansprueche und schnellcheck führen seit 27.10.2026 hierher (UMLEITUNGEN) — derselbe Name.
+  ansprueche: 'dashboard.anspruchTitle',
   situationen: 'dashboard.anspruchTitle',
-  schnellcheck: 'anspruch.pageTitle', // seit 27.09.2026 dieselbe Seite wie «ansprueche»
+  schnellcheck: 'dashboard.anspruchTitle',
   notfalleinstieg: 'chapters.notfall.title',
   notfallkarte: 'notfallkarte.title',
   gesundheit: 'arztkoffer.title',
@@ -110,6 +117,10 @@ const WEITERE_NAMEN = {
   gepaeck: 'nav.rucksack',
   legal: 'legal.title',
   mietzins: 'nav.mietzins',
+  // F7-L12 (27.10.2026): ohne Namen gab es von hier aus kein «Zurück zu …».
+  anspruchcheck: 'schnellcheck.title',
+  notfalldossier: 'notfallDossier.title',
+  behoerdendossier: 'behoerdenDossier.title',
 };
 export const ansichtName = (view) => {
   const e = SEARCH_VIEWS.find((v) => v.view === view);

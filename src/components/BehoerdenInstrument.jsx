@@ -10,8 +10,8 @@ import { steuerfristVorbei } from '../utils/steuerfrist.js';
 //      (belegt DBG/StHG, Fachprüfung 21.10.2026) bleibt.
 //   2. Behördengänge offen, mit Wegen zu den Werkzeugen. «Steuererklärung eingereicht» gilt als erledigt, wenn
 //      «Offene Steuererklärungen» 0 ist — bis man es selbst abwählt. Die Patientenverfügung steht nicht mehr hier.
-//   3. «Für den Fall der Fälle»: Testament (dieses Kapitel), Vorsorgeauftrag und Patientenverfügung (eingetragen im
-//      Kapitel Notfall, hier nur angezeigt), mit Weg zu «Vorsorgeauftrag & Patientenverfügung».
+//   3. «Für den Fall der Fälle»: nur das Testament, mit Verweis auf die Vorsorge im Kapitel Notfall (F7-K5-2,
+//      31.10.2026; vorher standen Vorsorgeauftrag und Patientenverfügung hier und dort).
 
 const SPRACHE = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH' };
 
@@ -28,7 +28,7 @@ const relativ = (tr, iso) => {
   return tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
 };
 
-export const BehoerdenInstrument = ({ palette, t: tr, behoerden, allData, onNavigate, checked = {}, onToggle, lang = 'de' }) => {
+export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, checked = {}, onToggle, lang = 'de' }) => {
   const d = behoerden || {};
   const h = React.createElement;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
@@ -93,22 +93,15 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, allData, onNavi
   );
 
   // 3. Für den Fall der Fälle
-  const nf = allData?.notfall || {};
-  const opt = (kap, feld, wert) => (wert ? (tr('chapters.' + kap + '.fields.' + feld + '.options.' + wert) || wert) : tr('behoerdenInstrument.nichtErfasst'));
-  const vorsorge = [
-    { key: 'testament', name: tr('behördenStatus.will'), wert: opt('behoerden', 'willMade', d.willMade) },
-    { key: 'vorsorgeauftrag', name: tr('behoerdenInstrument.vorsorgeauftrag'), wert: opt('notfall', 'vorsorgeauftrag', nf.vorsorgeauftrag) },
-    { key: 'patientenverfuegung', name: tr('behoerdenInstrument.patientenverfuegung'), wert: opt('notfall', 'patientenverfuegung', nf.patientenverfuegung) },
-  ];
+  const testament = d.willMade ? (tr('chapters.behoerden.fields.willMade.options.' + d.willMade) || d.willMade) : tr('behoerdenInstrument.nichtErfasst');
   const fall = h('section', { 'data-teil': 'fall-der-faelle', 'aria-labelledby': 'mp-fall-der-faelle' },
     h('h4', { id: 'mp-fall-der-faelle', style: kapH }, tr('behoerdenInstrument.fallTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, tr('behoerdenInstrument.fallSatz')),
-    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: space.sm + 'px' } },
-      ...vorsorge.map((x) => h('div', { key: x.key, style: { padding: space.sm + 'px', borderRadius: radius.sm, background: palette.up, minWidth: 0 } },
-        h('div', { style: { fontSize: text.xs, color: palette.mid, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, x.name),
-        h('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, overflowWrap: 'break-word' } }, x.wert)))),
+    h('div', { style: { padding: space.sm + 'px', borderRadius: radius.sm, background: palette.up } },
+      h('div', { style: { fontSize: text.xs, color: palette.mid } }, tr('behördenStatus.will')),
+      h('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, overflowWrap: 'break-word' } }, testament)),
     onNavigate && h('div', { style: { marginTop: space.sm + 'px' } },
-      zeilenKnopf('vorsorge', tr('behoerdenInstrument.vorsorgeWeg'), tr('behoerdenInstrument.vorsorgeWegSub'), () => onNavigate('vorsorgeauftrag')))
+      zeilenKnopf('vorsorge', tr('behoerdenInstrument.vorsorgeImNotfall'), tr('behoerdenInstrument.vorsorgeWegSub'), () => onNavigate('notfallvorsorge')))
   );
 
   return h('div', { 'data-teil': 'behoerden-instrument', style: { marginBottom: space.lg + 'px' } }, frist, gaenge, fall);

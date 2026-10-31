@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { PageTitle } from './components/Heading.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
-import { Brotkrume } from './components/Brotkrume.jsx';
 
 // ─── Lebensmappe View ─────────────────────────────────────
 // Calm preview of the personal life overview dossier.
 // Print via browser-native window.print() in a standalone HTML window.
 
-export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate }) => {
+// Seit 27.10.2026 (F7-S2) keine eigene Seite mehr, sondern eine Auswahl in «Unterlagen drucken»
+// (UnterlagenDrucken.jsx): dort stehen Brotkrume und Seitentitel, hier ein Abschnittstitel.
+// Inhalt, Vorschau und Hinweise unverändert.
+export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
 
   const preview = getLebensMappePreview(data, chapters, t, documents);
   const hasSections = preview.sections.length > 0;
@@ -73,8 +75,6 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
   return React.createElement('div', {
     style: { maxWidth: '520px' }
   },
-    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
-    React.createElement(Brotkrume, { palette, t, view: 'lebensmappe', onNavigate }),
 
     // ─── Header ─────────────────────────────────────────
     React.createElement('div', {
@@ -83,7 +83,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('lebensmappe.title')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('lebensmappe.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('lebensmappe.subtitle')),

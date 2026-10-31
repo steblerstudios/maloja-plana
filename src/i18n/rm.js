@@ -298,16 +298,6 @@ export default {
     // rm ungeprüft F5
     fristKarteBis: 'fin ils {date}',
     // rm ungeprüft F5
-    weiter: 'Fatg, vinavant ›',
-    // rm ungeprüft F5
-    abschliessen: 'Terminar il decurs',
-    // rm ungeprüft F5
-    fertigTitel: 'Il midar da chasa è en urden',
-    // rm ungeprüft F5
-    fertigText: 'Tut ils quatter pass èn fatgs.',
-    // rm ungeprüft F5
-    nochmals: 'Guardar puspè il decurs',
-    // rm ungeprüft F5
     passAdresse: 'Adressa',
     // rm ungeprüft F5
     passGemeinde: 'Vischnanca',
@@ -632,9 +622,6 @@ export default {
     step4Text: { sie: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, können Sie die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lassen Sie aus Sorge kein Geld liegen, das Ihnen zusteht. Ist Ihre Bewilligung an ausreichende eigene Mittel geknüpft, klären Sie das vorher mit dem Migrationsamt oder einer Beratungsstelle.', du: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, kannst du die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lass aus Sorge kein Geld liegen, das dir zusteht. Ist deine Bewilligung an ausreichende eigene Mittel geknüpft, kläre das vorher mit dem Migrationsamt oder einer Beratungsstelle.' },
     step4LinkIpv: 'Verifitgar la reducziun da premias (RIP)',
     step4LinkSituation: 'Guardar la situaziun «nov arrivà»',
-    relatedTitle: 'Eveniments parents',
-    relatedKkErst: 'Cassa da malsauns per l’emprima giada',
-    relatedJob: 'Nov plaz',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Na laschai mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.', du: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -663,9 +650,6 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step5Text: { sie: 'Sch’il permess è svanì, dumandai in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.', du: 'Sch’il permess è svanì, dumonda in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.' },
     step5Link: 'Al dossier da las autoritads',
-    relatedTitle: 'Eveniments parentads',
-    relatedUmzug: 'Midada da domicil — midar l’adressa',
-    relatedPension: 'Pensiun',
     footerNote: 'Termins e custs pon variar tenor chantun. Fa fide l’uffizi chantunal da traffic. Quai è orientaziun, betg cussegl giuridic.',
   },
   heirat: {
@@ -694,9 +678,6 @@ export default {
     // Gleicher Text: der Vus-Imperativ (2. Pl.) deckt «Sie» und de-du «ihr» ab (K124, 24.09.2026).
     step4Text: { sie: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.', du: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.' },
     step4Link: 'Guardar la prevenziun',
-    relatedTitle: 'Eveniments parents',
-    relatedKind: 'Avair in uffant',
-    relatedTrennung: 'Separaziun u divorzi',
     footerNote: 'In contract da maridaglia (regim dals bains) è facultativ, ma po esser sensà — surtut cun proprietad u independenza. Quai è orientaziun, betg cussegl giuridic.',
   },
   kind: {
@@ -735,8 +716,6 @@ export default {
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     // rm ungeprüft (23.10.2026, Seite heisst «Was steht mir zu?»)
     step5LinkSituation: 'Guardar las situaziuns correspundentas sut «A tge hai jau dretg?»',
-    relatedTitle: 'Eveniments parents',
-    relatedHeirat: 'Maridaglia u partenariat',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Bler va via il patrun e la cassa da cumpensaziun — conservai bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.', du: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -927,9 +906,6 @@ export default {
     step4Link: 'Führerausweis: was sonst noch gilt',
     step5Title: '5 · Kinder und Schule',
     step5Text: { sie: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Fragen Sie bei der Anmeldung in der Gemeinde nach der Schulverwaltung.', du: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Frag bei der Anmeldung in der Gemeinde nach der Schulverwaltung.' },
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Später umziehen, innerhalb der Schweiz',
-    relatedEinbuergerung: 'Später: Einbürgerung',
     footerNote: { sie: 'Quai è orientaziun, betg cussegl giuridic. Vieles hängt von Ihrer Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.', du: 'Quai è orientaziun, betg cussegl giuridic. Vieles hängt von deiner Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.' },
     quelle: 'Quellen: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (geprüft im September 2026).',
   },
@@ -1322,8 +1298,6 @@ export default {
     step5Text: { sie: 'Dumandai baud per in pajament en ratas u ina proroga — quai è savens pussaivel, sch’ins s’annunzia. Proponai mo ratas che Voss budget porta er en in mais difficil, e dumandai ina conferma en scrit. Sche pliras admoniziuns vegnan ensemen, gida ina cussegliaziun da debits a survegnir la survista — avant ch’ina scussiun daventa da quai. Sch’il retgav na basta a la lunga betg per il necessari, cusseglia la cussegliaziun da debits (schuldeninfo.ch) da pajar l’emprim ils quints currents sco fittanza e cassa da malsauns e da betg suttascriver cunvegnas da ratas u renconuschientschas da debit — novs retards pesan dapli che vegls.', du: 'Dumonda baud per in pajament en ratas u ina proroga — quai è savens pussaivel, sch’ins s’annunzia. Propona mo ratas che tes budget porta er en in mais difficil, e dumonda ina conferma en scrit. Sche pliras admoniziuns vegnan ensemen, gida ina cussegliaziun da debits a survegnir la survista — avant ch’ina scussiun daventa da quai. Sch’il retgav na basta a la lunga betg per il necessari, cusseglia la cussegliaziun da debits (schuldeninfo.ch) da pajar l’emprim ils quints currents sco fittanza e cassa da malsauns e da betg suttascriver cunvegnas da ratas u renconuschientschas da debit — novs retards pesan dapli che vegls.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step5LinkBudget: 'Guardar il budget', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step5LinkBeratung: 'Chattar ina cussegliaziun da debits', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
-    step6Title: { sie: '6 · Viceversa: insatgi As debita daners', du: '6 · Viceversa: insatgi ta debita daners' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
-    step6Text: { sie: 'Cun in’admoniziun mettais Vus la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pudais Vus pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenzai amiaivlamain cun ina regurdada da pajament, fixai in termin cler e tramettai l’admoniziun uschia che Vus pudais cumprovar la spediziun.', du: 'Cun in’admoniziun mettas ti la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pos ti pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenza amiaivlamain cun ina regurdada da pajament, fixescha in termin cler e tramette l’admoniziun uschia che ti pos cumprovar la spediziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. In’admoniziun n’è nagina sentenzia e nagina scussiun. Tar debits gida ina cussegliaziun da debits.', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     quelle: 'Funtaunas: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz, «Muss ich die Mahngebühren zahlen?» (2022)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz, Inkassogebühren (2025)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (Berner Schuldenberatung), Stichwort «Inkassobüros» (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[SchKG Art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_27]] (controllà en settember 2026).', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
   },
@@ -1461,6 +1435,12 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheFrage: { sie: 'Tge vulais Vus midar?', du: 'Tge vuls ti midar?' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheGrund: 'Assicuranza da basa (LAMal)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weicheZusatz: 'Assicuranza cumplementara (LCA)',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
@@ -1724,15 +1704,12 @@ export default {
     tools: 'Utensils',
     advanced: 'Avanzà',
     tresor: 'Deposita da documents',
-    kkScanner: 'Scanner cassa da malsauns',
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budget: 'Budget',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kkScanner: 'Scanner carta CM',
     debts: 'Debits',
     taxes: 'Taglia',
     finanzUebersicht: 'Finanzas & daners',
     organDonation: "Donaziun d'organs",
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budgetSync: 'Budget-Sync',
     kvgIpv: 'Reducziun da premias (IPV)',
     praemien: 'Survista da las assicuranzas',
     mietzins: 'Contribuziuns a la fittanza',
@@ -1749,13 +1726,12 @@ export default {
     unterlagen: 'Mes documents',
     flyer: 'Flyer per derasar',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    export: 'Export',
+    export: 'Segirezza',
     merkliste: 'Mia glista da memoria',
     umzug: 'Midada da domicil',
     unfallkrankheit: 'Accident u malsauna',
     neuerjob: 'Nov job',
     stelleverloren: 'Plazza persa',
-    taxImport: 'Import da taglia',
     search: 'Tschertgar',
     notifications: 'Communicaziuns',
     installApp: 'Installar sco app',
@@ -1827,7 +1803,8 @@ export default {
     iv: 'Malsogna & AI',
     pflege: 'Tgirar confamigliars',
     todesfall: 'In mortori en il conturn',
-    arztkoffer: 'Sanadad',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    arztkoffer: 'Vossa valisch da sanadad',
     sub: {
       patientenverfuegung: 'En dumondas, per stampar',
       kreditkarte: 'Custs ed avantatgs per onn',
@@ -1838,6 +1815,8 @@ export default {
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
       mahnung: 'Controllar, contestar, dumandar ratas', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      selbstmahnen: 'Admonir, retard, tschains da retard',
       betreibung: 'Reagir cun calma',
       // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       dienst: 'Rekrutierung, Zivildienst, EO, Ersatz',
@@ -1886,9 +1865,9 @@ export default {
       unfallkrankheit: 'Tge far — e tgi paja',
       neuerjob: 'Contract, prevenziun, taglias, termins',
       stelleverloren: 'URC, assicuranzas, prevenziun',
-      taxImport: 'Surpigliar las valurs centralas da la decleraziun da taglia',
       search: 'Chattar utensils & chapitels',
-      budgetSync: 'Import CSV',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      budgetSync: 'Entradas ed expensas en detagl',
       kvgIpv: 'Examinar il dretg',
       praemien: 'Premias, franchisa, cassas',
       mietzins: 'Dretg e test svelt',
@@ -2251,7 +2230,7 @@ export default {
         eigenFehlen: "Cun l'atgna entrada mancan mintga mais",
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
-        doppeltVersichert: "Èn ménaschi u responsabladad civila era cuntegnids en «Ulteriuras assicuranzas»? Lura po l’import là vegnir reducì. En il budget quintan els gia sur il chapitel Assicuranzas.",
+        doppeltVersichert: "Èn premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) era cuntegnidas en «Ulteriuras assicuranzas»? Lura po l’import là vegnir reducì. En il budget quintan ellas gia sur il chapitel Assicuranzas.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         // rm ungeprüft F5
         vonEinkommenNetto: "da {betrag} entrada netta",
         // rm ungeprüft F5
@@ -2348,7 +2327,7 @@ export default {
         communication: 'Internet, telefon mobil, telefon fix per mais.',
         mobility: 'AG, Halbtax, abunament u custs dad auto per mais.',
         childcare: "Cresch, scola da di, mamma da di — custs mensils.",
-        otherInsurance: "Protecziun giuridica, supplement CM ed autras ensemen per mais. Ménaschi e responsabladad civila èn gia en il budget sur il chapitel Assicuranzas.",
+        otherInsurance: "Protecziun giuridica ed autras ensemen per mais. Premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) èn gia en il budget.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         alimenteReceived: { sie: 'Contribuziuns da mantegniment che Vus retschavais per mais.', du: 'Contribuziuns da mantegniment che Ti retschaivas per mais.' },
         alimentePaid: { sie: 'Contribuziuns da mantegniment che Vus pajais per mais.', du: 'Contribuziuns da mantegniment che Ti pajas per mais.' },
         debtPayments: 'Ratas mensualas per debits currents u pajaments.',
@@ -2396,7 +2375,9 @@ export default {
         kkCardNumber: 'Nr. da la carta CM',
         policyNumber: 'Numer da polissa',
         kkZusatz: 'Assicuranza cumplementara',
+        kkZusatzPremium: "Premia supplementara per mais CHF", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         lifeInsurance: { label: 'Assicuranza da vita', options: { no: 'Na', yes: 'Gea' } },
+        lifeInsurancePremium: "Premia d’assicuranza da vita CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         freizuegigkeit: 'Conto/polissa da liber passadi',
         legalInsurance: { label: 'Assicuranza da protecziun giuridica', options: { no: 'Na', yes: 'Gea' } },
         childInsurance: { label: 'Assicuranzas per uffants', options: { no: 'Na', yes: 'Gea' } },
@@ -2404,6 +2385,8 @@ export default {
         bvgBalance: 'Avair LPP actual CHF',
         // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
+        uvgZusatz: { label: 'Assicuranza supplementara d’accident', options: { yes: 'Gea', no: 'Na / nunenconuschent' } }, // TODO(rm): provisorisch
+        uvgZusatzPremium: "Premia supplementara d’accident CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
@@ -2430,6 +2413,7 @@ export default {
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
         ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Voss salari en cas da malsogna.", du: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Tes salari en cas da malsogna." },
+        uvgZusatzPremium: { sie: "Inditgar mo sche Vus pajais la premia sezs. Quai che vegn deducì dal salari è gia en il salari net.", du: "Inditgar mo sche ti pajas la premia sez. Quai che vegn deducì dal salari è gia en il salari net." }, // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       },
       docs: {
         kkPolice: 'Polizza da la cassa da malsauns',
@@ -2464,6 +2448,8 @@ export default {
         certifications: 'Ulteriurs certificats',
         employmentStart: 'Engaschà dapi',
         workPermit: { label: 'Permissiun da dimora', options: { swiss: 'Svizzer/a', b: 'B', c: 'C', l: 'L', g: 'G' } },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        branche: { label: 'Branscha', options: { it: 'IT', pharma: 'Farma', finanz: 'Finanzas', versicherung: 'Assicuranza', beratung: 'Cussegliaziun', telekom: 'Telekom', energie: 'Energia', oeffentlich: 'Admin. publica', bildung: 'Furmaziun', gesundheit: 'Sanadad', bau: 'Construcziun', industrie: 'Industria', handel: 'Commerzi', transport: 'Transport', gastro: 'Gastronomia', reinigung: 'Nettegiament', landwirtschaft: 'Agricultura', detailhandel: 'Commerzi al detail' } },
         workHoursPerWeek: "Uras da lavur per l'emna",
         languages: 'Linguas',
       },
@@ -3672,8 +3658,19 @@ export default {
   },
 
   unterlagen: {
-    title: 'Mes documents',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Dossiers e models',
     subtitle: { sie: 'Voss dossiers da vita, ordinads cun quaid.', du: 'Tes dossiers da vita, ordinads cun quaid.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Stampar documents',
+      beschreibung: 'Tut, per in uffizi u per in cas d’urgenza — l’emprim la prevista, alura stampar.',
+      legende: 'Tge duai vegnir sin palpiri?',
+      alles: 'Tut',
+      amt: 'Per in uffizi',
+      notfall: 'Per in cas d’urgenza',
+    },
     dossier: {
       lebensmappe: {
         title: 'Mappa da vita',
@@ -3694,9 +3691,11 @@ export default {
       },
     },
     backup: {
-      title: 'Segirezza da datas',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      title: 'Segirezza',
       description: { sie: 'Memorisar u restituir Vossas datas localmain.', du: 'Memorisar u restituir Tes datas localmain.' },
-      action: 'Segirezza & restituziun',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      action: 'Avrir la segirezza',
     },
     note: { sie: 'Tut ils documents restan sin Voss apparat. Nagut vegn chargiada si.', du: 'Tut ils documents restan sin Tes apparat. Nagut vegn chargiada si.' },
   },
@@ -3706,8 +3705,12 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Sche insatge capita, na stuais Vus betg tegnair endament nagut. Questa carta As di tge dir — e mussa las indicaziuns che Vus avais memorisà.', du: 'Sche insatge capita, na stos ti betg tegnair endament nagut. Questa carta ti di tge dir — e mussa las indicaziuns che ti has memorisà.' },
     step1Title: 'Tscherner il numer',
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step1Text: { sie: 'Tutgai sin in numer per telefonar. Il 112 funcziunescha era senza credit.', du: 'Tutga sin in numer per telefonar. Il 112 funcziunescha era senza credit.' },
+    // F7-S12 (27.10.2026): nur das Belegte — FDV Art. 27 Abs. 2 «unentgeltlich». «Über ein fremdes Netz» und
+    // «nicht ohne SIM-Karte» waren nicht belegt (Fachprüfung; die TAV-Ziffer aus 7b29d548 liess sich nicht prüfen).
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    step1Text: { sie: 'Tutgai sin in numer per telefonar. Ils numers d\'urgenza èn gratuits — era senza credit.', du: 'Tutga sin in numer per telefonar. Ils numers d\'urgenza èn gratuits — era senza credit.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    quelle: 'Funtauna: [[FDV Art. 27 al. 2|https://www.fedlex.admin.ch/eli/cc/2007/166/de#art_27]] (stadi 1. fanadur 2026, controllà en october 2026).',
     num_sani: 'Ambulanza',
     num_police: 'Polizia',
     num_fire: 'Pumpiers',
@@ -3868,6 +3871,7 @@ export default {
   },
 
   backup: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     title: 'Segirezza',
     download: 'Telechargiar la segirezza',
     restore: 'Restituir la segirezza',
@@ -4084,6 +4088,14 @@ export default {
     householdDetail: '{adults} creschids, {children} uffants',
     adults: 'creschids',
     branchenvergleich: { sie: 'Voss salari en cumparegliaziun da la branscha (salari brut median):', du: 'Tes salari en cumparegliaziun da la branscha (salari brut median):' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    eigeneBranche: { sie: 'Vossa branscha:', du: 'Tia branscha:' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    andereBranchen: 'Autras branschas ({n})',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    brancheVergleichen: 'Cumparar cun autras branschas ({n})',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    brancheAngeben: { sie: 'Vossa branscha pudais Vus inditgar en il chapitel Furmaziun & lavur.', du: 'Tia branscha pos ti inditgar en il chapitel Furmaziun & lavur.' },
     branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022/2024',
   },
 
@@ -4176,8 +4188,6 @@ export default {
     // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
     // rm ungeprüft F6
     passend: {
-      familie: "Il stadi civil sa mida",
-      familieSub: "Maridaglia, viver ensemen, uffant, separaziun · en il satg «Famiglia»",
       lebensmappeSub: "Tut ils chapitels en ina survista · per stampar",
       briefeSub: "Prolungaziun dal termin, disditga da l’abitaziun, midada da la cassa da malsauns",
       bestattungSub: { sie: "Fixar quai che Vus è impurtant", du: "Fixar quai che ta è impurtant" },
@@ -4293,6 +4303,38 @@ export default {
     footNote: { sie: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar Vus. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.', du: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar tai. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.' },
   },
 
+  // «Was steht mir zu?» sco ina pagina (decisiun O, VERGLEICH.md; construida ils 27.10.2026, F7-A3).
+  wasStehtMirZu: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    intro: { sie: 'Bleras persunas han dretg sin agid senza savair quai. Qua vesais Vus tge che vegn en dumonda cun Vossas indicaziuns — e tge che correspunda a Vossa situaziun da vita. Quai resta sin Voss apparat — nagin profil, nagina valitaziun.', du: 'Bleras persunas han dretg sin agid senza savair quai. Qua vesas ti tge che vegn en dumonda cun tias indicaziuns — e tge che correspunda a tia situaziun da vita. Quai resta sin tes apparat — nagin profil, nagina valitaziun.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    mitAngaben: { sie: 'Cun Vossas indicaziuns', du: 'Cun tias indicaziuns' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    anpassen: 'Adattar las indicaziuns per empruvar',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    lebenslage: { sie: 'Tenor Vossa situaziun da vita', du: 'Tenor tia situaziun da vita' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    ergebnisKeiner: 'Cun questas indicaziuns na sa mussa nagin cler dretg sin daners — las vias sutvart cuvran dapli; il pli na dependa betg mo da l’entrada.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    ergebnisEiner: 'Cun questas indicaziuns sa mussa ina via pussaivla: {weg}.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    ergebnisMehrere: 'Cun questas indicaziuns sa mussan vias pussaivlas: {wege}.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeNetto: 'Net {betrag} / mais',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeNettoGeschaetzt: 'Net ≈ {betrag} / mais (stimà)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeMiete: 'Fit {betrag}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeKK: 'Cassa da malsauns {betrag}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    markeHaushalt: '{canton} · {size} persuna(s)',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    schrittTitel: 'Gugent pass per pass?',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    schrittSub: { sie: 'Controlla guidada — entrada, situaziun da vita, Vossa survista', du: 'Controlla guidada — entrada, situaziun da vita, tia survista' },
+  },
+
   anspruchCheck: {
     stepWord: 'Pass',
     stepIncome: 'Tenor l’entrada',
@@ -4388,6 +4430,8 @@ export default {
     vonN: '{n} da {total}',
     fehltFuer: 'manca per {lagen}',
     ergaenzenUnten: 'cumplettar ↓',
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    zurVorsorge: 'tar la prevenziun ↓',
     medikamentPlatzhalter: 'p. ex. num e dosa',
     speichern: 'Memorisar',
     keineMedikamente: 'Jau na prend nagins',
@@ -4402,6 +4446,8 @@ export default {
     portemonnaieSub: 'Per stampar, per prender cun sai',
     portemonnaieLeer: 'L’emprim endatar las indicaziuns sutvart',
     vorsorgeTitel: 'Prevenziun',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    zurueckVorsorge: 'Turnar a la prevenziun',
     vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
     geregelt: '{n} da {total} reglads.',
     vorsorge: { organDonor: 'Donaziun d’organs', patientenverfuegung: 'Disposiziun dal pazient', vorsorgeauftrag: 'Mandat da prevenziun', bestattungswuensche: 'Giavischs da sepultura' },
@@ -4479,14 +4525,14 @@ export default {
     wegSoGehts: "Uschia vai",
     wegAblauf: "Andament",
     fallTitel: "Per il cas dals cas",
-    fallSatz: { sie: "Tgi che agescha per Vus e tge che vala, sche Vus na pudais betg pli decider sez.", du: "Tgi che agescha per tai e tge che vala, sche ti na pos betg pli decider sez." },
-    vorsorgeauftrag: "Mandat da precauziun",
-    patientenverfuegung: "Disposiziun da pazient",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    fallSatz: { sie: "Voss testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza.", du: "Tes testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza." },
     nichtErfasst: "betg endatà",
-    vorsorgeWeg: "Mandat da precauziun & disposiziun da pazient",
     steuererklaerungJahr: "Decleraziun da taglia {jahr} inoltrada",
     vorschlag: "Proposta da «Decleraziuns avertas: 0»",
     vorsorgeWegSub: "Tgi che agescha, tge che vala medicalmain",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    vorsorgeImNotfall: "Prevenziun en il chapitel Urgenza",
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
@@ -4505,9 +4551,14 @@ export default {
     hausrat: "Ménaschi (CHF {jahr} / onn)",
     haftpflicht: "Responsabladad civila (CHF {jahr} / onn)",
     weitere: "Ulteriuras assicuranzas (chapitel Finanzas)",
+    kkZusatz: "Cassa da malsauns (supplement)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    uvgZusatz: "Supplement d’accident (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    leben: "Assicuranza da vita (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nichtErfasst: "{liste}: premia betg endatada.",
     nameHausrat: "Ménaschi",
     nameHaftpflicht: "Responsabladad civila",
+    nameKkZusatz: "Supplement CM", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    nameLeben: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nameKK: "Cassa da malsauns",
     fahrzeug: "L’assicuranza dal vehichel na quinta betg qua — ils custs da l’auto tutgan en il chapitel Finanzas tar «Mobilitad».",
     pk: "La cassa da pensiun (CHF {betrag}) è gia deducida da la paja.",
@@ -4518,7 +4569,8 @@ export default {
   wohnenInstrument: {
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",
-    anteil: "{pct} % da l'entrada (CHF {einkommen})",
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    anteil: "{pct} % da l'entrada netta (CHF {einkommen})",
     anteilBrutto: "{pct} % da l'entrada bruta (CHF {einkommen})",
     drittel: 'in terz',
     faustregel: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
@@ -4558,6 +4610,8 @@ export default {
     zoneLowSub: 'bass salaris',
     zoneHighSub: 'auts salaris',
     yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    yourWage40: { sie: 'Voss salari, quintà sin 40 uras l\'emna: CHF {amount}', du: 'Tes salari, quintà sin 40 uras l\'emna: CHF {amount}' },
     geschaetztAusNetto: 'Stimà d\'in net da CHF {netto} — la balla mussa il brut proximativ (la controlla dal salari minim vala mo cun il brut real).',
     readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
@@ -4715,7 +4769,8 @@ export default {
     disclaimer: "Agid d'orientaziun. Il dretg effectiv vegn examinà da la post cumpetenta.",
     notEligible: 'Betg autorisà',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (B-1, 16.09.2026).
-    schnellcheckGerechnet: 'Calculà cun las cifras da la verifica svelta',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    schnellcheckGerechnet: 'Calculà cun las cifras da «A tge hai jau dretg?»',
     schnellcheckProfilBleibt: { sie: 'Voss profil resta nunmidà, uschè ditg che Vus na surpigliais betg las cifras.', du: 'Tes profil resta nunmidà, uschè ditg che ti na surpiglias betg las cifras.' },
     schnellcheckUebernehmen: 'Surpigliar en il profil',
     schnellcheckUebernommen: 'Surpiglià en il profil',
@@ -4745,7 +4800,8 @@ export default {
   },
 
   sozialhilfe: {
-    title: 'Segirezza sociala',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Agid social',
     intro: { sie: "Questa survista As gida d'ordinar meglier il sustegn pussaivel. La segirezza sociala fa part da la Svizra — ella stat a disposiziun a persunas en situaziuns difficultusas.", du: "Questa survista Ta gida d'ordinar meglier il sustegn pussaivel. La segirezza sociala fa part da la Svizra — ella stat a disposiziun a persunas en situaziuns difficultusas." },
     householdSize: 'Grondezza dal ménaschi: {count} persuna(s)',
     enterCanton: 'Per plaschair endatar il chantun per la calculaziun chantunalas.',
@@ -4814,9 +4870,14 @@ export default {
   },
 
   tax: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    aus3aUebernehmen: "Surpigliar {betrag} dal chapitel Finanzas ›",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    ausSteuererklaerung: "Surpigliar da la decleraziun da taglia",
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     abzuegeGeschaetzt: 'Deducziuns (stima)',
-    title: 'Orientaziun da taglia',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Taglia',
     intro: { sie: "Quest survista As dat ina stima approximativa da Vossa chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Vus pudais empruvar differentas deducziuns e vesair co che Vossa situaziun sa mida.", du: "Quest survista ta dat ina stima approximativa da Tia chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Ti pos empruvar differentas deducziuns e vesair co che Tia situaziun sa mida." },
     inputs: 'Endataziuns',
     taxCanton: 'Chantun da taglia',
@@ -4948,13 +5009,19 @@ export default {
   },
 
   cv: {
-    title: 'Generator da curriculum vitae',
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    pdfDrucken: "Stampar sco PDF",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    pdfHinweis: "En la fanestra da stampa pon ins memorisar il curriculum sco PDF.",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    weitereFormate: "Ulteriurs formats",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    ergaenzen: "Cumplettar las indicaziuns",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    leer: { sie: "Per in curriculum dovri Voss num ed almain ina indicaziun davart lavur, furmaziun u linguas.", du: "Per in curriculum dovri tes num ed almain ina indicaziun davart lavur, furmaziun u linguas." },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: 'Curriculum vitae',
     name: 'Num',
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    phone: 'Telefon',
-    profession: 'Professiun',
-    qualification: 'Diplom',
-    preview: 'Prevista',
     downloadHtml: 'Download HTML',
     downloadJson: 'JSON (ATS)',
     downloadJsonHint: 'Curriculum legibel da maschina en il standard JSON Resume — vegn legì da sistems da candidatura (ATS) ed utensils da carriera.',
@@ -5554,6 +5621,12 @@ export default {
     kreuzAchse: 'Custs da sanadad per onn',
     kreuzKosten: 'Custs per onn',
     kreuzLinie: 'Franchisa {franchise}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzLinieEigen: { sie: 'Vossa franchisa {franchise}', du: 'Tia franchisa {franchise}' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzLegendEigen: { sie: 'Vossa franchisa actuala ({franchise})', du: 'Tia franchisa actuala ({franchise})' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kreuzAriaEigen: { sie: 'Vossa franchisa actuala da {franchise} è marcada sco terza lingia.', du: 'Tia franchisa actuala da {franchise} è marcada sco terza lingia.' },
     kreuzBisher: 'fin ussa',
     kreuzHochrechnung: 'Projecziun',
     kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
@@ -5628,16 +5701,34 @@ export default {
       above: 'circa {pct} % sur la media svizra',
       below: 'circa {pct} % sut la media svizra',
       equal: 'circa en la media svizra',
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionAbove: { sie: 'Vossa regiun è circa {pct} % sur la media svizra.', du: 'Tia regiun è circa {pct} % sur la media svizra.' },
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionBelow: { sie: 'Vossa regiun è circa {pct} % sut la media svizra.', du: 'Tia regiun è circa {pct} % sut la media svizra.' },
+      // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+      regionEqual: { sie: 'Vossa regiun è circa en la media svizra.', du: 'Tia regiun è circa en la media svizra.' },
       aria: { sie: 'Vossa regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.', du: 'Tia regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.' },
       premium: {
         title: 'Premia regiunala vs. Svizra',
         yourVal: { sie: 'Vossa premia: CHF {amount}', du: 'Tia premia: CHF {amount}' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userAbove: { sie: 'Vossa premia è circa {pct} % sur la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sur la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userBelow: { sie: 'Vossa premia è circa {pct} % sut la media da Vossa regiun.', du: 'Tia premia è circa {pct} % sut la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userEqual: { sie: 'Vossa premia è circa en la media da Vossa regiun.', du: 'Tia premia è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — regiuns cun pli blers medis ed ospitals pli chars han premias pli autas. Midar la cassa permetta da spargnar mo entaifer la regiun.',
         source: 'Funtauna: [[BAG|priminfo.admin.ch]], premia media {year} · media da tut ils assicuraders',
       },
       rent: {
         title: 'Fittanza regiunala vs. Svizra',
         yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userAbove: { sie: 'Vossa fittanza è circa {pct} % sur la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sur la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userBelow: { sie: 'Vossa fittanza è circa {pct} % sut la media da Vossa regiun.', du: 'Tia fittanza è circa {pct} % sut la media da tia regiun.' },
+        // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+        userEqual: { sie: 'Vossa fittanza è circa en la media da Vossa regiun.', du: 'Tia fittanza è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
         thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
         source: 'Funtauna: [[UST|www.bfs.admin.ch]], enquista structurala davart ils tschains {year} · tschains net, senza cuosts secundars',
@@ -6109,6 +6200,9 @@ export default {
       householdInsurance: "Ménaschi",
       liabilityInsurance: "Responsabladad civila",
       otherInsurance: 'Ulteriuras assicuranzas',
+      kkZusatz: "Supplement CM", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+      uvgZusatz: "Supplement d’accident", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+      lifeInsurance: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       groceries: 'Vivondas & menaschi',
       communication: 'Internet & telefon',
       childcare: "Tgira d'uffants",
@@ -6142,6 +6236,8 @@ export default {
   },
 
   taxImport: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    uebernommen: "Surpiglià. Las indicaziuns èn en il chapitel Finanzas.",
     title: 'Import da datas da taglia',
     intro: 'Surpigliar las valurs centralas da la decleraziun da taglia — entrada, facultad ed import da taglia. Tut resta sin l\'apparat; la datoteca vegn legida mo localmain.',
     selectFile: 'Tscherner datoteca',
@@ -6172,6 +6268,8 @@ export default {
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     importFailed: 'L’import n’ha betg funcziunà. Controllar la datoteca e empruvar anc ina giada.',
     title: 'Import da budget',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    teilTitel: 'Importar ina datoteca CSV',
     fileFormat: 'Format da datoteca',
     csv: 'CSV (separà cun comma)',
     excel: 'Excel (.xlsx)',
@@ -7148,6 +7246,10 @@ export default {
     b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   gepaeck: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    gruppe: {
+      erwachsen: 'Daventar creschì',
+    },
     intro: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
@@ -7173,7 +7275,8 @@ export default {
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Buorsa' },
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Daners & taglias' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    w: { bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026) — nur w.selbstmahnen
+    w: { selbstmahnen: 'Insatgi ma debita daners', bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -7200,6 +7303,25 @@ export default {
     steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
     setup: 'tutgar per configurar',
   },
+  // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)
+  netzSchild: {
+    intro: 'Ina part per sectur. Pli bler ch’è cuvrì, pli fitg s’empleni ella; in pitschen nucleus vul dir: anc nagut cuvrì.',
+    aria: 'Stemma da secturs d’assicuranza.',
+    offen: 'anc betg cuvrì',
+    gedeckt: 'cuvrì',
+    vonN: '{n} da {total}',
+    nochOffen: 'Anc betg cuvrì: {liste}.',
+    teilweise: 'Per part: {liste}.',
+    ganz: 'Tut las parts èn cuvridas cumplainamain.',
+    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
+    vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad privata', hausrat: 'Inventari', leben: 'Assicuranza da vita' },
+    art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
+    haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens, cun in chaun è ella obligatorica en blers chantuns.',
+    hausratPruefen: 'Obligaziun d’inventari: p.pl. confermar tar l’assicuranza chantunala d’edifizis — la funtauna n’è anc betg verifitgada.',
+    unfall8h: 'Sut 8 uras per emna tar il medem patrun n’èn ils accidents en il temp liber betg assicurads tras el, mabain tras la cassa da malsauns (OAINF art. 13).',
+    betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari', arbeitgeber: 'via il patrun' },
+  },
+
   schutzschild: {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',
@@ -7572,6 +7694,19 @@ export default {
     notes: 'Remartga',
     notesPlaceholder: 'p. ex. cun mangiar, betg cun latg...',
     compendiumLink: 'Tschertgar en il compendi da medicaments',
+    // TODO(rm): provisorisch — Gegenlese (SL-Preis, F7-K6-2, 27.10.2026)
+    preis: {
+      eins: 'Pretsch public tenor la glista da specialitads: {chf} ({packung})',
+      gleich: 'Pretsch public tenor la glista da specialitads: {chf} per pachet',
+      spanne: 'Pretsch public tenor la glista da specialitads: {von} fin {bis}, tenor il pachet',
+      sb40Alle: 'En la glista da specialitads è notada qua ina part da 40 % empè da 10 %, perquai ch\'i dat preparats pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva quest preparat per motivs medicinals, resta la part da 10 %.',
+      sb40Einige: 'Tenor il preparat ed il pachet è notada en la glista da specialitads ina part da 40 % empè da 10 %, perquai ch\'i dat pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva in tal preparat per motivs medicinals, resta la part da 10 %.',
+      hinweis: { sie: 'Quai che Vus pajais sezs, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en Voss cas.', du: 'Quai che ti pajas sez, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en tes cas.' },
+      quelle: 'UFSP, glista da specialitads',
+      stand: 'Stadi {datum}',
+      kurz: '{name}: {chf} tenor la glista da specialitads, stadi {datum}',
+      kurzSpanne: '{name}: {von} fin {bis} tenor la glista da specialitads, stadi {datum}',
+    },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     hint: { sie: 'Cumenzai a tippar — medicaments frequents vegnan proponids.', du: 'Cumenza a tippar — medicaments frequents vegnan proponids.' },
     migrated: 'Anteriura endataziun en text liber:',
@@ -7728,6 +7863,8 @@ export default {
     bruttolohn: "Salari brut mensil fin ussa (CHF)",
     bruttolohnHint: { sie: "Voss salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais.", du: "Tes salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais." },
     bruttoNettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari brut per l'AC.",
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    bruttoGeschaetzt: { sie: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgai la paja brutta, sche Vus la enconuschais — ella ha la prioritad.", du: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgescha la paja brutta, sche ti la enconuschas — ella ha la prioritad." },
     beitragsmonate: "Mais da contribuziun",
     beitragsmonateHint: { sie: "Quants mais avais Vus lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais.", du: "Quants mais has ti lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais." },
     kinder: "Obligaziun da mantegniment per uffants sut 25 onns?",
@@ -7870,5 +8007,52 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
+  // Furma dal quintader X (F7-A2, 27.10.2026): components/RechnerForm.jsx.
+  rechnerForm: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    angaben: { sie: 'Vossas indicaziuns', du: 'Tias indicaziuns' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    vonN: '{x} da {n}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    tun: 'Tge far',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    quelle: 'Funtauna: {q}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    geschaetzt: 'stimà',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026.
+  ablauf: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weiter: 'Fatg, vinavant ›',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    weiterInfo: 'Vinavant ›',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    abschliessen: 'Terminar il decurs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fertigTitel: 'Tut ils {n} pass èn fatgs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    zurUebersicht: 'A la survista',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    nochmals: 'Guardar puspè il decurs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    erledigt: 'Pass fatgs',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fristBis: 'fin ils {date}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    fristErinnerung: 'Promemoria ils {date}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    verwandtTitel: 'Eveniments parents',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    kapitelLink: 'Al chapitel {name}',
+  },
+  // F7-A10 (27.10.2026): eigener Ablauf «Jemand schuldet Geld» — Text und Quellen 1:1 aus mahnung.step6*.
+  selbstMahnen: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    title: { sie: 'Insatgi As debita daners', du: 'Insatgi ta debita daners' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    step1Title: '1 · Admonir',
+    step1Text: { sie: 'Cun in’admoniziun mettais Vus la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pudais Vus pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenzai amiaivlamain cun ina regurdada da pajament, fixai in termin cler e tramettai l’admoniziun uschia che Vus pudais cumprovar la spediziun.', du: 'Cun in’admoniziun mettas ti la persuna en retard, sche la pretensiun è scadida (OR art. 102 al. 1); a partir da lura pos ti pretender tschains da retard da 5 % l’onn (OR art. 104 al. 1). Cumenza amiaivlamain cun ina regurdada da pajament, fixescha in termin cler e tramette l’admoniziun uschia che ti pos cumprovar la spediziun.' }, // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
+    quelle: 'Funtaunas: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]] (controllà en settember 2026).',
   },
 };

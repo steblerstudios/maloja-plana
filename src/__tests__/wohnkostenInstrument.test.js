@@ -51,13 +51,13 @@ describe('Kapitel Wohnen · Ort im Kapitel', () => {
 });
 
 describe('Kapitel Wohnen · Rechnung aus der einen Monatsrechnung', () => {
-  it('Beispiel Maria: CHF 1’830, 29.5 % von 6’200, frei 2’274 wie im Kapitel Finanzen', () => {
+  it('Beispiel Maria: CHF 1’830, 29.5 % von 6’200, frei 2’185 wie im Kapitel Finanzen', () => {
     const r = wohnkostenRechnung(DEMO_DATA.wohnen, DEMO_DATA);
     expect(r.kosten).toBe(1830);
     expect(r.einkommen).toBe(6200);
     expect(r.anteil.toFixed(1)).toBe('29.5');
     expect(r.ueberDrittel).toBe(false);
-    expect(Math.round(r.frei)).toBe(2274);
+    expect(Math.round(r.frei)).toBe(2185);
   });
 
   it('Nebenerwerb zählt zum Einkommen (eigeneEinnahmen), nicht nur der Lohn', () => {

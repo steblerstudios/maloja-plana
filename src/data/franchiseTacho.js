@@ -55,11 +55,16 @@ const tagImJahr = (d) => {
   return Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - start) / 86400000) + 1;
 };
 
-export function kreuzState(franchiseOpt, costs, heute = new Date()) {
+// `eigeneFranchise` (F7-K3-3, Sophie 27.10.2026): die heutige Franchise als dritte Linie, mit der Prämie derselben
+// Kasse und desselben Prämienjahrs wie die zwei Enden (aus `franchiseOpt.alle`) — nie die erfasste Prämie des
+// laufenden Jahres, sonst stünden zwei Jahre im selben Bild. Nur wenn sie zwischen den Enden liegt und belegt ist.
+export function kreuzState(franchiseOpt, costs, heute = new Date(), eigeneFranchise = null) {
   const st = tachoState(franchiseOpt, costs);
   if (!st.show || !(franchiseOpt.lowPremium > 0) || !(franchiseOpt.highPremium > 0)) return { show: false };
   const { lowFra, highFra, lowPremium, highPremium, sbMax } = franchiseOpt;
   const gesamt = (fra, praemie, c) => praemie * 12 + berechneFranchise(fra, c, sbMax).eigenanteil;
+  const eigen = eigeneFranchise != null && eigeneFranchise !== lowFra && eigeneFranchise !== highFra
+    ? (franchiseOpt.alle || []).find((f) => f.franchise === eigeneFranchise && f.premium > 0) : null;
 
   const tag = tagImJahr(heute);
   const tageImJahr = tagImJahr(new Date(heute.getFullYear(), 11, 31));
@@ -70,17 +75,17 @@ export function kreuzState(franchiseOpt, costs, heute = new Date()) {
   const schritt = Math.max(50, Math.round(scaleMax / 120 / 50) * 50);
   const kurve = [];
   for (let c = 0; c <= scaleMax; c += schritt) {
-    kurve.push({ c, tief: gesamt(lowFra, lowPremium, c), hoch: gesamt(highFra, highPremium, c) });
+    kurve.push({ c, tief: gesamt(lowFra, lowPremium, c), hoch: gesamt(highFra, highPremium, c), ...(eigen && { eigen: gesamt(eigen.franchise, eigen.premium, c) }) });
   }
   // Linien brauchen keine Null-Grundlinie (Säulen schon): die y-Achse läuft vom tiefsten
   // zum höchsten Gesamtwert, auf 500 gerundet — sonst kleben beide Linien oben und das Kreuz
   // verschwindet (Prämien ≈ 6–9 Tsd., Unterschied ≈ 1–2 Tsd.).
-  const alle = kurve.flatMap((p) => [p.tief, p.hoch]);
+  const alle = kurve.flatMap((p) => (eigen ? [p.tief, p.hoch, p.eigen] : [p.tief, p.hoch]));
   const yMin = Math.floor(Math.min(...alle) / 500) * 500;
   const yMax = Math.ceil(Math.max(...alle) / 500) * 500;
   return {
-    ...st, scaleMax, kurve, yMin, yMax, hochrechnung,
-    gesamtBei: (c) => ({ tief: gesamt(lowFra, lowPremium, c), hoch: gesamt(highFra, highPremium, c) }),
+    ...st, scaleMax, kurve, yMin, yMax, hochrechnung, eigeneFra: eigen ? eigen.franchise : null,
+    gesamtBei: (c) => ({ tief: gesamt(lowFra, lowPremium, c), hoch: gesamt(highFra, highPremium, c), ...(eigen && { eigen: gesamt(eigen.franchise, eigen.premium, c) }) }),
   };
 }
 
@@ -134,7 +139,8 @@ export function franchiseOptimierer(allFranchises, ageClass) {
     const totalHigh = high.premium * 12 + berechneFranchise(high.franchise, c, sbMax).eigenanteil;
     if (totalHigh > totalLow) { breakEven = c; break; }
   }
-  return { lowFra: low.franchise, highFra: high.franchise, lowPremium: low.premium, highPremium: high.premium, annualSaving, reserve, sbMax, breakEven };
+  return { lowFra: low.franchise, highFra: high.franchise, lowPremium: low.premium, highPremium: high.premium, annualSaving, reserve, sbMax, breakEven,
+    alle: fras.map((f) => ({ franchise: f.franchise, premium: f.premium })) };
 }
 
 // Laufende, KVG-anrechenbare Gesundheitskosten dieses Jahres (aus den KK-Belegen).

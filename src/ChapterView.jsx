@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { feldNameOhneEinheit } from './utils/feldName.js';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
@@ -61,6 +62,7 @@ import { calculateMonthlyBudget } from './budgetSync.js';
 // Quelle, eine Regel. Seit 19.10.2026 dort, damit auch der Stundenlohn-Rechner sie nutzt.
 
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
+const MedikamentPreisKurz = React.lazy(() => import('./MedicationManager.jsx').then((m) => ({ default: m.MedikamentPreisKurz })));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
@@ -68,7 +70,6 @@ const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
-const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
@@ -1028,7 +1029,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
           React.createElement(React.Suspense, { fallback: null },
           React.createElement(MedicationManager, {
-            palette, t: tr, medications: medList,
+            palette, t: tr, lang, medications: medList,
             onChange: (list) => onUpdate('medicationsList', list),
           })
         )
@@ -1772,14 +1773,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
             }, tr('nav.crosslink.bwHint') + ' ›'));
           }
-          // Patientenverfügung in Fragen erstellen (27.09.2026) — immer, auch wenn schon «Ja».
-          if (field.k === 'patientenverfuegung' && chapter.key === 'notfall' && onNavigate) {
-            elements.push(React.createElement('button', {
-              key: 'crosslink-pv', type: 'button', className: 'mp-link',
-              onClick: () => onNavigate('patientenverfuegung'),
-              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
-            }, tr('nav.crosslink.pvHint') + ' ›'));
-          }
           return elements;
         };
 
@@ -1820,9 +1813,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       return o ? o.label : String(v);
     }
     if (f.type === 'date') return formatDE(v);
-    // Listen-Felder (Medikamente, Vorerkrankungen): die Namen, wie sie in der Liste stehen.
+    // Listen-Felder (Medikamente, Vorerkrankungen): die Namen, wie sie in der Liste stehen — Medikamente mit Dosis.
     const posten = Array.isArray(data[f.k + 'List']) ? data[f.k + 'List'].filter((x) => x && x.name) : [];
-    if (posten.length) return posten.map((x) => x.name).join(', ');
+    if (posten.length) return posten.map((x) => x.name + (f.k === 'medications' && x.dose ? ' ' + x.dose + (x.unit ? ' ' + x.unit : '') : '')).join(', ');
     return String(v);
   };
   // Von oben direkt zu einem Feld (Notfall, «Bereit für den Ernstfall» und Vorsorge, Runde 9 AE): den
@@ -1847,7 +1840,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // sobald eines Daten trägt, und eingeklappt steht der App-Hinweis «Einige ausgeblendete
   // Bereiche enthalten bereits Daten.». Andere Kapitel bleiben, wie sie waren.
   const istFinanzen = chapter.key === 'finanzen';
-  const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
+  // Prämie ohne ihre Versicherung (31.10.2026): leer ist das Feld weg und zählt nicht als «nicht erfasst» — wer keine
+  // Lebensversicherung hat, dem fehlt keine Prämie. Es erscheint, sobald die Versicherung erfasst ist; ein eingetragener
+  // Betrag verschwindet nie still.
+  const praemieOhneVersicherung = (f) => !feldHatWert(data, f.k) && (
+    (f.k === 'kkZusatzPremium' && !data.kkZusatz) || (f.k === 'uvgZusatzPremium' && data.uvgZusatz !== 'yes') || (f.k === 'lifeInsurancePremium' && data.lifeInsurance !== 'yes'));
+  // F7-K6-1 (31.10.2026): Die Patientenverfügung wird im Block «Vorsorge» beantwortet, nicht in den Angaben.
+  const nurImBlock = (f) => chapter.key === 'notfall' && f.k === 'patientenverfuegung';
+  const feldSichtbar = (f) => !nurImBlock(f) && !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
   // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
   // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),
@@ -1873,11 +1873,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // («Anzahl Zimmer (z. B. 3.5)» → «Anzahl Zimmer»).
   const listenName = (f) => {
     if (f.type === 'household') return tr('chapterView.imHaushalt');
-    const roh = String(f.label || '');
-    const ohneChf = f.type === 'currency'
-      ? roh.replace(/CHF(\s*\/\s*[^\s(),]+)?,?\s*/g, '').replace(/\(\s*\)/g, '').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')')
-      : roh.replace(/\s*(CHF(\s*\/\s*\S+)?|\(CHF\))\s*$/, '');
-    return ohneChf.replace(/\s*\((z\. ?B\.|p\. ?ex\.|p\. ?es\.|e\.g\.)[^)]*\)/i, '').replace(/\s{2,}/g, ' ').trim();
+    return feldNameOhneEinheit(f.label, f.type);
   };
   const listenWert = (f) => {
     const w = abschnittWert(f);
@@ -1901,7 +1897,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const linkKnopf = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' };
   const zeile = (z) => React.createElement('div', { key: 'z-' + z.k, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '3px 0 3px ' + space.sm + 'px' } },
     React.createElement('dt', { style: { color: palette.mid, margin: 0, flex: '1 1 0', minWidth: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, z.name),
-    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word', ...(z.amStueck ? { whiteSpace: 'nowrap' } : {}) } }, z.wert));
+    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word', ...(z.amStueck ? { whiteSpace: 'nowrap' } : {}) } }, z.wert,
+      // Publikumspreis aus der Spezialitätenliste, nachgeladen (F7-K6-2)
+      z.k === 'medications' && chapter.key === 'notfall' && Array.isArray(data.medicationsList) && data.medicationsList.some((m) => m && m.name) &&
+        React.createElement(React.Suspense, { fallback: null }, React.createElement(MedikamentPreisKurz, { palette, t: tr, lang, medications: data.medicationsList }))));
   const abschnittsliste = () => {
     const gruppen = abschnittGruppen(chapter.fields, chapter.title);
     const abschnitt = (g) => {
@@ -2079,7 +2078,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const renderDoppeltVersichert = () => {
     const v = allData?.versicherungen || {};
     const weitere = Number(data.otherInsurance) > 0;
-    const praemie = Number(v.householdInsuranceAmount) > 0 || Number(v.liabilityPremium) > 0;
+    const praemie = [v.householdInsuranceAmount, v.liabilityPremium, v.kkZusatzPremium, v.uvgZusatzPremium, v.lifeInsurancePremium].some((x) => Number(x) > 0);
     return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
       tr('chapters.finanzen.monat.doppeltVersichert'));
   };
@@ -2088,7 +2087,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const teile = [
       // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
+      { key: 'versicherungen', wert: p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
@@ -2153,8 +2152,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung', { sub: P('bewilligungSub') }), weg('einbuergerung', { sub: P('einbuergerungSub') })] : []),
         weg('lebensmappe', { sub: P('lebensmappeSub') }),
         weg('ausweis', { sub: P('ausweisSub') }),
-        weg('gepaeck', { key: 'familie', titel: P('familie'), sub: P('familieSub'), ikon: 'family' }),
+        // F7-A9 (27.10.2026): «Erwachsen werden» aus dem Kapitel erreichbar — Name und Untertitel aus dem Register.
+        weg('volljaehrig'),
         ablage('chapterView.passend.ablageBasis'),
+        // F7-L3 (31.10.2026): Familie ist kein achtes Kapitel, sondern der Abschnitt dieses Kapitels; die Abläufe
+        // stehen hier unter seinem Namen. Vorher ein Sprung in den Rucksack.
+        { key: 'familie', ueberschrift: tr('sections.basis.family') },
+        weg('heirat'), weg('zusammenziehen'), weg('kind'), weg('adoption'), weg('trennung'), weg('todesfall'),
       ];
       case 'wohnen': return [weg('umzug', { sub: schritte(4) }), weg('mietzins', { sub: P('mietzinsSub') }), weg('wohnunggekuendigt', { sub: P('gekuendigtSub') }), ablage('chapterView.passend.ablageWohnen')];
       // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Versicherungs-Übersicht
@@ -2166,6 +2170,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       ];
       case 'ausbildung': return [
         weg('cv', { titel: P('cv'), sub: P('cvSub') }), weg('neuerjob', { titel: P('neueStelle'), sub: schritte(5) }),
+        // F7-A9 (27.10.2026): «Lehre beginnen» und «Selbständig werden» — Name und Untertitel aus dem Register.
+        weg('lehre'), weg('selbstaendigkeit'),
         weg('stelleverloren', { sub: P('stelleverlorenSub') }), weg('stundenlohn', { titel: P('stundenlohn'), sub: P('stundenlohnSub') }),
         ablage('chapterView.passend.ablageAusbildung'),
       ];
@@ -2174,12 +2180,17 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
         weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
-        weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('briefe', { sub: P('briefeSub') }),
+        weg('selbstmahnen'),
+        weg('briefe', { sub: P('briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
-      // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen jetzt aus «Vorsorge»
-      // oben selbst zum Werkzeug — hier bleibt die Ablage, mit den Unterlagen, die dazugehören.
-      case 'notfall': return [ablage('chapterView.passend.ablageDokumente')];
+      // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum
+      // Werkzeug. F7-K5-2 und F7-L1 (31.10.2026): der Ablauf «Vorsorgeauftrag & Patientenverfügung» kommt aus Behörden
+      // hierher, Organspende bekommt hier ihren Eingang aus einem Kapitel.
+      case 'notfall': return [
+        weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
+        ablage('chapterView.passend.ablageDokumente'),
+      ];
       default: return [
         // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5); im Entwurf «Neue Stelle».
         { key: 'neuerjob', titel: P('neueStelle'), sub: schritte(5), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
@@ -2200,7 +2211,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const ziele = passendZiele();
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
       React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 4px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
-      ...ziele.map((z) => React.createElement('button', {
+      ...ziele.map((z) => (z.ueberschrift ? React.createElement('h4', { key: z.key, 'data-teil': 'passend-' + z.key, style: { margin: space.md + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, z.ueberschrift) : React.createElement('button', {
         key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe,
         style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
       },
@@ -2210,7 +2221,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
         ),
         React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
-      ))
+      )))
     );
   };
   // Muster M6 (Fassung 6, Sophie 25.10.2026): «Als Nächstes» ruhig wie im Entwurf — zentriert über
@@ -2307,7 +2318,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // «Für den Fall der Fälle». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
     chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
       React.createElement(BehoerdenInstrument, {
-        palette, t: tr, behoerden: data, allData, onNavigate, lang, checked: checklistChecked,
+        palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked,
         onToggle: (id, wert) => {
           const next = { ...checklistChecked, [id]: wert };
           setChecklistChecked(next);
@@ -2384,6 +2395,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextFamilienzulagen'))),
 
+    // F7-K2-5 (Sophie 27.10.2026): Die Auswertung (Lebensbaum, Lohn, Steuern, IPV, KK-Last, Vermögen) steht vor
+    // den Angaben, wie die Instrumente der anderen Kapitel — vorher kam sie erst nach dem ganzen Formular
+    // (finanzen-fusion.md §3, Entscheid 2 «nach den Angaben»; damit überholt).
+    istFinanzen && renderAuswertung('oben'),
+
     // Tabs
     // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
     // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
@@ -2430,19 +2446,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           tr('trust.chapterTrust')
         )
       ),
-      // Versicherungen: das Netz über den Abschnitten, sobald etwas eingetragen ist. Ein Tipp
-      // auf eine Achse öffnet den Abschnitt darunter und springt hin (id mp-section-<erstes Feld>).
-      chapter.key === 'versicherungen' && filledCount > 0 && React.createElement(React.Suspense, { fallback: null },
-        React.createElement(VersicherungsNetz, {
-          chapter, data, palette, tr,
-          onAbschnitt: (key) => {
-            setOffeneAbschnitte((o) => ({ ...o, [key]: true }));
-            // Erst nach dem Zeichnen des aufgeklappten Abschnitts springen: mit requestAnimationFrame
-            // lief der Sprung zu früh und die Seite blieb stehen (im Browser gemessen 24.10.2026).
-            setTimeout(() => document.getElementById('mp-section-' + key)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
-          },
-        })
-      ),
+      // Versicherungen: das Spinnennetz stand hier bis 27.10.2026; seither zeigt das Netz-Schild oben
+      // (components/NetzSchild.jsx, F7-K3-6), was gedeckt ist.
       abschnittsliste()
     ),
 
@@ -2586,7 +2591,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Fassung 5 · Finanzen: «Passend zu diesem Bereich» und «Als Nächstes» (Entscheid 23.10.2026).
     // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
     // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
-    istFinanzen && renderAuswertung('oben'),
     // Fassung 6 (Runde 9): «Passend» und «Als Nächstes» in jedem Kapitel. Notfall: die drei Lagen
     // stehen seit AE zugeklappt in «Bereit für den Ernstfall»; das letzte Kapitel endet mit «Alle
     // Kapitel durchgegangen».

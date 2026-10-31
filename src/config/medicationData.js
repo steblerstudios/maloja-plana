@@ -60,7 +60,7 @@ export const MEDICATIONS = [
   ['Levothyrox', 'Levothyroxin', '25-150', 'µg'],
   ['Euthyrox', 'Levothyroxin', '50-100', 'µg'],
   ['Prednisolon', 'Prednisolon', '5-20', 'mg'],
-  ['Spiricort', 'Dexamethason', '0.5-4', 'mg'],
+  ['Spiricort', 'Prednisolon', '5-50', 'mg'],
   ['Symbicort', 'Budesonid/Formoterol', '200/6', 'µg'],
   ['Ventolin', 'Salbutamol', '100', 'µg'],
   ['Seretide', 'Fluticason/Salmeterol', '250/50', 'µg'],

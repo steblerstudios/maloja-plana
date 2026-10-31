@@ -10,7 +10,7 @@ import { plusMonate, plusTage } from './utils/fristen.js';
 export const Wegzug = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'home',
+    palette, t, onNavigate, ablauf: 'wegzug', icon: 'home',
     title: t('wegzug.title'),
     intro: t('wegzug.intro'),
   },
@@ -33,7 +33,7 @@ export const Wegzug = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'wegzug-frist', frist: (d) => plusTage(plusMonate(d, 12), -1),
         labelKey: 'wegzug.fristLabel', hinweisKey: 'wegzug.fristHinweis', vorbeiKey: 'wegzug.fristVorbei',
-        buttonKey: 'wegzug.step3Button', doneKey: 'wegzug.step3Done', calendarKey: 'wegzug.step3CalendarLink',
+        art: 'frist', buttonKey: 'wegzug.step3Button', doneKey: 'wegzug.step3Done', calendarKey: 'wegzug.step3CalendarLink',
         reminderTitle: t('wegzug.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wegzug.step3LinkVorsorge'), onClick: () => onNavigate('vorsorge') })
@@ -45,7 +45,7 @@ export const Wegzug = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'wegzug-fristRueck', frist: (d) => plusTage(plusMonate(d, 36), -1),
         labelKey: 'wegzug.fristRueckLabel', hinweisKey: 'wegzug.fristRueckHinweis', vorbeiKey: 'wegzug.fristRueckVorbei',
-        buttonKey: 'wegzug.step4Button', doneKey: 'wegzug.step4Done', calendarKey: 'wegzug.step4CalendarLink',
+        art: 'frist', buttonKey: 'wegzug.step4Button', doneKey: 'wegzug.step4Done', calendarKey: 'wegzug.step4CalendarLink',
         reminderTitle: t('wegzug.reminderRueckTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wegzug.step4LinkVorsorge'), onClick: () => onNavigate('vorsorge') }),

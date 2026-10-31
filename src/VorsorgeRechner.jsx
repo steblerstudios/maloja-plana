@@ -1,14 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { PageTitle } from './components/Heading.jsx';
+import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, volleBeitragsdauer, AHV_PARAMS, ahvWerte, lohnWerte, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
-import { Icon, hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
+import { hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
-import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -292,7 +291,6 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   }, [projektion, kbKanton, kbTranchen, verheiratet]);
 
   const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
@@ -305,15 +303,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
-    // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
-    // gleiches Verhalten wie in den Finanzen-Kapiteln). Die Leiste hängt sich unter die
-    // klebende Kopfzeile (--mp-kopf-h, in main.jsx gemessen); vorher stand hier -24px als
-    // Ausgleich für das padding-top des alten Scroll-Containers #mp-main, den es nicht
-    // mehr gibt — das Dokument selbst scrollt.
-    // Sticky Wrapper hält die Leiste oben; das Scrollen passiert im inneren tabRow.
-    // Die dynamische Rand-Verblendung (ScrollFadeStrip) signalisiert „hier geht's weiter".
-    tabWrap: { position: 'sticky', top: 'var(--mp-kopf-h, 73px)', zIndex: 5, marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
-    tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
+    // Schalter-Stil (IK «vorbelegen»). Die Reiter selbst kommen seit F7-A2 aus RechnerForm `Tabs`.
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sageDeep : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) },
@@ -490,40 +480,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     { key: 'zukunft', label: t('vr.tabZukunft') },
     { key: 'fz', label: t('vr.tabFreizuegigkeit') },
   ];
-  // Pfeiltasten/Home/End bewegen die Auswahl UND den Fokus (WAI-ARIA „roving tabindex").
-  const onTabKey = (e, idx) => {
-    const targets = { ArrowRight: idx + 1, ArrowLeft: idx - 1, Home: 0, End: TABS.length - 1 };
-    if (!(e.key in targets)) return;
-    e.preventDefault();
-    const next = (targets[e.key] + TABS.length) % TABS.length;
-    setActiveTab(TABS[next].key);
-    const el = document.getElementById('vrtab-' + TABS[next].key);
-    if (el) el.focus();
-  };
 
-  return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'vorsorge', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('vr.title')),
-
-    // Tab row (sticky Wrapper + scrollender Inhalt + dynamische Rand-Verblendung)
-    React.createElement(ScrollFadeStrip, { palette, containerStyle: s.tabWrap, style: s.tabRow, role: 'tablist', 'aria-label': t('vr.title'), fadeWidth: 28 },
-      TABS.map((tab, i) => {
-        const active = activeTab === tab.key;
-        return React.createElement('button', {
-          key: tab.key,
-          id: 'vrtab-' + tab.key,
-          role: 'tab',
-          'aria-selected': active,
-          'aria-controls': 'vr-tabpanel',
-          tabIndex: active ? 0 : -1,
-          onClick: (e) => { setActiveTab(tab.key); e.currentTarget.scrollIntoView({ inline: 'nearest', block: 'nearest' }); },
-          onKeyDown: (e) => onTabKey(e, i),
-          style: s.tab(active),
-        }, tab.label);
-      })
-    ),
-
-    // Input fields
-    React.createElement('div', { style: s.section },
+  // ── Rechner-Form X (F7-A2, 27.10.2026) ─────────────────────────────────────────────────────────────
+  // Die Reiter sind die gemeinsame Tabs-Komponente (Pfeiltasten, RechnerForm `reiter`). Je Reiter: Ergebnis zuerst
+  // (Live-Region), dann «Ihre Angaben» (die gemeinsamen Felder + die des Reiters), dann was der Reiter sonst zeigt.
+  // Die Zukunftsgrafik ist das Instrument des Reiters (F7-R3) und steht unter der Live-Region. Rechnung unverändert.
+  const angabenGemeinsam = React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
         field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint') }),
         field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(Math.min(beitragsjahreReferenzalter, volleDauer)), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
@@ -532,173 +494,17 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       React.createElement('div', { style: s.row },
         field(t('vr.erziehungsjahre'), erziehungsjahre, setErziehungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.erziehungsjahreHint') }),
         field(t('vr.betreuungsjahre'), betreuungsjahre, setBetreuungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.betreuungsjahreHint') }),
-        React.createElement('div', null,
-          React.createElement('div', { style: { ...s.label, display: 'flex', alignItems: 'center', gap: '6px' } },
-            t('vr.verheiratet'),
-            verheiratet && React.createElement(TwoRingsIcon, { size: 15, color: palette.sage })
-          ),
-          React.createElement('div', { style: { display: 'flex', gap: '6px' } },
-            [{ v: false, l: t('common.no') }, { v: true, l: t('common.yes') }].map((o, i) =>
-              React.createElement('button', {
-                key: i, type: 'button',
-                onClick: () => setVerheiratet(o.v),
-                style: s.tab(verheiratet === o.v)
-              }, o.l)
-            )
-          )
-        ),
+        React.createElement(Einzelwahl, {
+          palette, id: 'vr-verheiratet',
+          label: React.createElement(React.Fragment, null, t('vr.verheiratet'), verheiratet && React.createElement('span', { style: { marginLeft: '6px', verticalAlign: '-2px', display: 'inline-block' } }, React.createElement(TwoRingsIcon, { size: 15, color: palette.sage }))),
+          optionen: [{ wert: false, label: t('common.no') }, { wert: true, label: t('common.yes') }],
+          wert: verheiratet, onWahl: setVerheiratet,
+        }),
         verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000', sublabel: partnerNettoImProfil ? t('vr.partnerNettoHint') : undefined })
       )
-    ),
+    );
 
-    // Reiter-Inhalt als ein tabpanel (relabelt sich nach aktivem Reiter) — die
-    // geteilten Elemente darunter (Amtslinks/Quelle/Nav) bleiben bewusst aussen.
-    React.createElement('div', { role: 'tabpanel', id: 'vr-tabpanel', 'aria-labelledby': 'vrtab-' + activeTab, tabIndex: 0 },
-
-    // AHV Tab
-    activeTab === 'ahv' && ahvResult && React.createElement(React.Fragment, null,
-      React.createElement('div', { 'aria-live': 'polite', style: s.highlight },
-        React.createElement('div', { style: s.label }, t('vr.ahvRente')),
-        React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente) + ' / ' + t('vr.monat')),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-          'CHF ' + fmt(ahvResult.jahresrente) + ' / ' + t('vr.jahr')
-        ),
-        // Vorbezug: im Referenzalter neu berechnet, der Kürzungsbetrag bleibt (Merkblatt 3.04 Ziff. 5).
-        ahvResult.kuerzungsbetrag > 0 && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } },
-          t('vr.renteAbReferenzalter', { alter: fmtAlterMonate(ahvResult.referenzalterMonate), betrag: fmt(ahvResult.monatsrenteReferenzalter) }) + ' / ' + t('vr.monat')
-        ),
-        ahvResult.kuerzungsbetrag > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
-          t('vr.vorbezugNeuberechnung')
-        )
-      ),
-      React.createElement('div', { style: s.section },
-        React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + ahvResult.volleBeitragsdauer + ' ' + t('vr.jahre') + ')',
-          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
-        ),
-        beitragsjahreAngenommen && !ikResult && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-          annahmeText()
-        ),
-        ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.goldDeep } },
-          t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
-        ),
-        ahvResult.vorbezugAufschub !== 0 && React.createElement('div', null,
-          (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + '%'
-            + (ahvResult.kuerzungsbetrag > 0 ? ' = CHF ' + fmt(ahvResult.kuerzungsbetrag) + ' / ' + t('vr.monat') : '')
-        ),
-        // Frauen JG 1961–1969 haben tiefere, einkommensabhängige Kürzungssätze (Merkblatt 3.04 Ziff. 4),
-        // die der Rechner nicht abbildet — die Franken-Kürzung oben ist für sie zu hoch.
-        ahvResult.vorbezugAufschub < 0 && data.basis?.gender === 'female' && birthYear >= 1961 && birthYear <= 1969
-          && React.createElement('div', { style: { fontSize: text.xs, color: palette.goldDeep, marginTop: '2px' } }, t('vr.vorbezugFrauenUebergang')),
-        // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
-        // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
-        ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
-          t('vr.referenzalter') + ': ' + fmtAlterMonate(ahvResult.referenzalterMonate)
-        ),
-        ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
-          t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')
-        ),
-        ahvResult.gutschriftGeteilt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
-          t('vr.gutschriftGeteilt')
-        ),
-        ahvResult.erziehungsjahre > 0 && ahvResult.betreuungsjahre > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
-          t('vr.gutschriftHinweis')
-        ),
-        ahvResult.plafoniert && React.createElement('div', { style: { color: palette.goldDeep } },
-          t('vr.plafoniert') + ': CHF ' + fmt(ahvResult.totalEhepaar) + ' / ' + t('vr.monat') + ' (' + t('vr.ehepaar') + ')'
-        ),
-        React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.mid, fontSize: text.xs } },
-          t('vr.minMax') + ': CHF ' + fmt(ahvWerteHeute.minRente) + ' – ' + fmt(ahvWerteHeute.maxRente) + ' / ' + t('vr.monat') + ' (' + t('vr.stand', { jahr: ahvWerteHeute.jahr }) + ')'
-        )
-      )
-    ),
-
-    // IK-Auszug nachstellen (echte Beitragshistorie statt Annahme) — immer im AHV-Tab
-    activeTab === 'ahv' && renderIKAuszug(),
-
-    // AHV mit Auslandbezug (Orientierung) — immer im AHV-Tab, einklappbar
-    activeTab === 'ahv' && React.createElement('details', { style: s.intlDetails },
-      React.createElement('summary', { style: s.intlSummary }, t('vr.intlTitle')),
-      React.createElement('p', { style: s.intlIntro }, t('vr.intlIntro')),
-      [
-        { key: 'leaving', title: 'vr.intlLeavingTitle', text: 'vr.intlLeavingText', url: 'https://www.zas.admin.ch/de/verlassen-der-schweiz' },
-        { key: 'voluntary', title: 'vr.intlVoluntaryTitle', text: 'vr.intlVoluntaryText', url: 'https://www.zas.admin.ch/de/freiwillige-ahviv' },
-        { key: 'refund', title: 'vr.intlRefundTitle', text: 'vr.intlRefundText', url: 'https://www.zas.admin.ch/de/rueckverguetungen' },
-      ].map(sit =>
-        React.createElement('div', { key: sit.key, style: s.intlSit },
-          React.createElement('div', { style: s.intlSitTitle }, t(sit.title)),
-          React.createElement('div', { style: s.intlSitText }, t(sit.text)),
-          React.createElement(ExternerLink, { t, href: sit.url, style: s.intlLink }, t('vr.intlMore'))
-        )
-      ),
-      React.createElement('div', { style: s.intlContact }, t('vr.intlContact'))
-    ),
-
-    // BVG Tab
-    activeTab === 'bvg' && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: { ...s.section, display: 'flex', gap: space.md, flexWrap: 'wrap' } },
-        field(t('vr.bvgGuthaben'), bvgGuthaben, setBvgGuthaben, { placeholder: '0', sublabel: t('vr.bvgGuthabenHint') }),
-        field(t('vr.umwandlungssatzEigen'), bvgUmwandlung, setBvgUmwandlung, { placeholder: '6.8', sublabel: t('vr.umwandlungssatzHint'), width: '110px', min: 1, max: 10 })
-      ),
-      bvgResult && bvgResult.versichert && React.createElement(React.Fragment, null,
-        React.createElement('div', { style: s.highlight },
-          React.createElement('div', { style: s.label }, t('vr.bvgRente')),
-          React.createElement('div', { style: s.big }, 'CHF ' + fmt(bvgResult.monatsrente) + ' / ' + t('vr.monat')),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-            t('vr.bvgGuthabenBei') + ' ' + parsedBezugAlter + ': CHF ' + fmt(bvgResult.guthaben)
-          )
-        ),
-        React.createElement('div', { style: s.section },
-          React.createElement('div', null, t('vr.koordinierterLohn') + ': CHF ' + fmt(bvgResult.koordinierterLohn)),
-          React.createElement('div', null, t('vr.umwandlungssatz') + ': ' + bvgResult.umwandlungssatz + '% ' +
-            ((Number(bvgUmwandlung) >= 1 && Number(bvgUmwandlung) <= 10) ? t('vr.umwandlungssatzEigenMarker') : t('vr.umwandlungssatzMindest'))),
-          React.createElement('div', null, t('vr.mindestzins') + ': ' + bvgResult.zinssatz + '%')
-        )
-      ),
-      bvgResult && !bvgResult.versichert && React.createElement('div', { style: { ...s.section, color: palette.goldDeep } },
-        t('vr.bvgNichtVersichert') + ' (' + t('vr.bvgSchwelle', { schwelle: lohnWerteHeute.eintrittsschwelle, jahr: lohnWerteHeute.jahr }) + ')'
-      ),
-      !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt'))
-    ),
-
-    // Zukunft Tab — Projektion 2./3. Säule bis zum Rücktritt
-    activeTab === 'zukunft' && React.createElement(React.Fragment, null,
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' } }, t('vr.zukunftIntro')),
-
-      // AHV-Grundlage: die IK-Historie auch hier (Prinzip „nie zurück-navigieren müssen").
-      // Ehrliche Kontext-Zeile + glanceable Kennzahl, aufklappbar der ECHTE Editor
-      // (renderIKAuszug, gleicher State = eine Wahrheit, kein Doppel-Eintrag) + Sprung.
-      React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
-        React.createElement('div', { style: s.label }, t('vr.zukunftIkTitle')),
-        (ikActive && ikResult)
-          ? React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.xs + 'px', flexWrap: 'wrap' } },
-              React.createElement('span', { style: { color: palette.sage } }, hinweisZeichen('check', 10)),
-              React.createElement('span', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
-                t('vr.zukunftIkAktiv', { jahre: ikResult.beitragsjahre, eink: fmt(ikResult.durchschnittlichesJahreseinkommen) }))
-            )
-          : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftIkInaktiv')),
-        React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
-          React.createElement('button', {
-            onClick: () => setZukunftIkOpen(o => !o),
-            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', fontFamily: 'inherit' }
-          }, zukunftIkOpen ? t('vr.zukunftIkHide') : t('vr.zukunftIkEdit')),
-          React.createElement('button', {
-            onClick: () => setActiveTab('ahv'),
-            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.mid, textDecoration: 'underline', fontFamily: 'inherit' }
-          }, t('vr.zukunftIkJump'))
-        ),
-        zukunftIkOpen && React.createElement('div', { style: { marginTop: space.sm + 'px' } }, renderIKAuszug())
-      ),
-
-      React.createElement('div', { style: s.section },
-        React.createElement('div', { style: s.row },
-          field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
-          field(t('vr.s3aAnnual'), saeule3aAnnualInput, setSaeule3aAnnualInput, { placeholder: '0', sublabel: t('vr.s3aAnnualHint') }),
-          field(t('vr.s3bGuthaben'), saeule3bInput, setSaeule3bInput, { placeholder: '0' }),
-          field(t('vr.lebenserwartung'), lebenserwartung, setLebenserwartung, { width: '90px', min: 66, max: 105, sublabel: t('vr.lebenserwartungHint') })
-        )
-      ),
-      !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt')),
-      projektion && projektion.timeline.length > 1 && (() => {
+  const zukunftTeile = (activeTab === 'zukunft' && projektion && projektion.timeline.length > 1 && (() => {
         const tl = projektion.timeline;           // alter..Rücktritt (aus der Engine)
         const end = projektion.endsumme;
         const START = Math.floor(alter);
@@ -773,13 +579,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const s3aMonat = end.s3a > 0 ? end.s3a / drawdownMonate : 0;
         const s3bMonat = end.s3b > 0 ? end.s3b / drawdownMonate : 0;
         const colAhv = cbChart ? '#8A8D92' : palette.soft;  // AHV = ruhiger Granit-Ton (Fundament); CB: neutrales Grau, distinkt zu Blau/Orange/Türkis
-        return React.createElement('div', null,
-          React.createElement('div', { style: s.highlight },
+        return { zahl: React.createElement('div', { style: s.highlight },
             React.createElement('div', { style: s.label }, t('vr.zukunftEnde') + ' (' + end.alter + ')'),
             React.createElement('div', { style: s.big }, 'CHF ' + fmt(end.total)),
             React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
               'BVG ' + fmt(end.bvg) + ' · 3a ' + fmt(end.s3a) + ' · 3b ' + fmt(end.s3b))
           ),
+          grafik: React.createElement('div', null,
           (() => {
             if (!ahvMonat && !bvgMonat && !s3aMonat && !s3bMonat) return null;
             const totMonat = ahvMonat + bvgMonat + s3aMonat + s3bMonat;
@@ -927,12 +733,214 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 } }, t('vr.zukunftAhvFlaeche', { le: parsedLE })),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
-        );
-      })(),
+        ) };
+      })()) || null;
 
-      // Was im Alter auf dich zukommt (Rest von Braindump-32 #1): ehrliche Posten-
-      // Übersicht OHNE erfundene Beträge — die Höhe hängt stark von Situation/Kanton ab.
-      // Pflege ist oft der grösste Posten → Cross-Link in den geführten Ablauf.
+  const ergebnisJeReiter = {
+    ahv: activeTab === 'ahv' && ahvResult && React.createElement(React.Fragment, null,
+      React.createElement('div', { 'aria-live': 'polite', style: s.highlight },
+        React.createElement('div', { style: s.label }, t('vr.ahvRente')),
+        React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente) + ' / ' + t('vr.monat')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+          'CHF ' + fmt(ahvResult.jahresrente) + ' / ' + t('vr.jahr')
+        ),
+        // Vorbezug: im Referenzalter neu berechnet, der Kürzungsbetrag bleibt (Merkblatt 3.04 Ziff. 5).
+        ahvResult.kuerzungsbetrag > 0 && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } },
+          t('vr.renteAbReferenzalter', { alter: fmtAlterMonate(ahvResult.referenzalterMonate), betrag: fmt(ahvResult.monatsrenteReferenzalter) }) + ' / ' + t('vr.monat')
+        ),
+        ahvResult.kuerzungsbetrag > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
+          t('vr.vorbezugNeuberechnung')
+        )
+      ),
+      React.createElement('div', { style: s.section },
+        React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + ahvResult.volleBeitragsdauer + ' ' + t('vr.jahre') + ')',
+          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
+        ),
+        beitragsjahreAngenommen && !ikResult && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+          annahmeText()
+        ),
+        ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.goldDeep } },
+          t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
+        ),
+        ahvResult.vorbezugAufschub !== 0 && React.createElement('div', null,
+          (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + '%'
+            + (ahvResult.kuerzungsbetrag > 0 ? ' = CHF ' + fmt(ahvResult.kuerzungsbetrag) + ' / ' + t('vr.monat') : '')
+        ),
+        // Frauen JG 1961–1969 haben tiefere, einkommensabhängige Kürzungssätze (Merkblatt 3.04 Ziff. 4),
+        // die der Rechner nicht abbildet — die Franken-Kürzung oben ist für sie zu hoch.
+        ahvResult.vorbezugAufschub < 0 && data.basis?.gender === 'female' && birthYear >= 1961 && birthYear <= 1969
+          && React.createElement('div', { style: { fontSize: text.xs, color: palette.goldDeep, marginTop: '2px' } }, t('vr.vorbezugFrauenUebergang')),
+        // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
+        // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
+        ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+          t('vr.referenzalter') + ': ' + fmtAlterMonate(ahvResult.referenzalterMonate)
+        ),
+        ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
+          t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')
+        ),
+        ahvResult.gutschriftGeteilt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
+          t('vr.gutschriftGeteilt')
+        ),
+        ahvResult.erziehungsjahre > 0 && ahvResult.betreuungsjahre > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
+          t('vr.gutschriftHinweis')
+        ),
+        ahvResult.plafoniert && React.createElement('div', { style: { color: palette.goldDeep } },
+          t('vr.plafoniert') + ': CHF ' + fmt(ahvResult.totalEhepaar) + ' / ' + t('vr.monat') + ' (' + t('vr.ehepaar') + ')'
+        ),
+        React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.mid, fontSize: text.xs } },
+          t('vr.minMax') + ': CHF ' + fmt(ahvWerteHeute.minRente) + ' – ' + fmt(ahvWerteHeute.maxRente) + ' / ' + t('vr.monat') + ' (' + t('vr.stand', { jahr: ahvWerteHeute.jahr }) + ')'
+        )
+      )
+    ),
+    bvg: bvgResult ? React.createElement(React.Fragment, null,
+      bvgResult && bvgResult.versichert && React.createElement(React.Fragment, null,
+        React.createElement('div', { style: s.highlight },
+          React.createElement('div', { style: s.label }, t('vr.bvgRente')),
+          React.createElement('div', { style: s.big }, 'CHF ' + fmt(bvgResult.monatsrente) + ' / ' + t('vr.monat')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+            t('vr.bvgGuthabenBei') + ' ' + parsedBezugAlter + ': CHF ' + fmt(bvgResult.guthaben)
+          )
+        ),
+        React.createElement('div', { style: s.section },
+          React.createElement('div', null, t('vr.koordinierterLohn') + ': CHF ' + fmt(bvgResult.koordinierterLohn)),
+          React.createElement('div', null, t('vr.umwandlungssatz') + ': ' + bvgResult.umwandlungssatz + '% ' +
+            ((Number(bvgUmwandlung) >= 1 && Number(bvgUmwandlung) <= 10) ? t('vr.umwandlungssatzEigenMarker') : t('vr.umwandlungssatzMindest'))),
+          React.createElement('div', null, t('vr.mindestzins') + ': ' + bvgResult.zinssatz + '%')
+        )
+      ),
+      bvgResult && !bvgResult.versichert && React.createElement('div', { style: { ...s.section, color: palette.goldDeep } },
+        t('vr.bvgNichtVersichert') + ' (' + t('vr.bvgSchwelle', { schwelle: lohnWerteHeute.eintrittsschwelle, jahr: lohnWerteHeute.jahr }) + ')'
+      )
+    ) : null,
+    zukunft: zukunftTeile && React.createElement(React.Fragment, null,
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' } }, t('vr.zukunftIntro')),
+      zukunftTeile.zahl),
+    vergleich: activeTab === 'vergleich' && vorbezugVergleich.length > 0 && React.createElement(React.Fragment, null,
+      React.createElement('div', { style: { ...s.label, marginBottom: space.sm + 'px' } }, t('vr.vorbezugVergleich')),
+      React.createElement('table', { style: s.table },
+        React.createElement('thead', null,
+          React.createElement('tr', null,
+            React.createElement('th', { style: s.th }, t('vr.bezugAlterLabel')),
+            React.createElement('th', { style: s.th }, t('vr.monatsrenteLabel')),
+            React.createElement('th', { style: s.th }, t('vr.jahresrenteLabel')),
+            React.createElement('th', { style: s.th }, t('vr.anpassungLabel'))
+          )
+        ),
+        React.createElement('tbody', null,
+          vorbezugVergleich.map(row =>
+            React.createElement('tr', { key: row.bezugAlter },
+              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td }, row.bezugAlter),
+              // Vorbezugszeilen: darunter die Rente ab dem Referenzalter (Neuberechnung) — derselbe
+              // Wert wie im AHV-Block, sonst widerspräche die Tabelle dem Ergebnis.
+              ...[['monatsrente', 'monatsrenteReferenzalter'], ['jahresrente', 'jahresrenteReferenzalter']].map(([feld, feldRef]) =>
+                React.createElement('td', { key: feld, style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
+                  'CHF ' + fmt(row[feld]),
+                  row.anpassung < 0 && row[feldRef] !== row[feld] && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.normal } },
+                    t('vr.abAlterKurz', { alter: fmtAlterMonate(refAlterMonate), betrag: fmt(row[feldRef]) }))
+                )),
+              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
+                row.anpassung === 0 ? '–' : (row.anpassung > 0 ? '+' : '') + row.anpassung.toFixed(1) + '%'
+              )
+            )
+          )
+        )
+      ),
+
+      // Combined AHV + BVG total
+      ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { ...s.highlight, marginTop: space.md + 'px' } },
+        React.createElement('div', { style: s.label }, t('vr.totalRente')),
+        React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + ' / ' + t('vr.monat')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+          t('vr.saeulen') + ': AHV CHF ' + fmt(ahvResult.monatsrente) + ' + BVG CHF ' + fmt(bvgResult.monatsrente)
+        ),
+        beitragsjahreAngenommen && !ikResult && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+          annahmeText()
+        )
+      ),
+
+      // 3a forecast
+      (() => {
+        const has3a = saeule3aBalance > 0 || saeule3aAnnual > 0;
+        const yearsLeft = alter ? Math.max(0, parsedBezugAlter - alter) : 0;
+        const projected3a = saeule3aBalance + (saeule3aAnnual * yearsLeft);
+        if (!has3a) return React.createElement('div', { style: { ...s.section, color: palette.mid, marginTop: space.md + 'px' } },
+          hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('vr.saeule3aHint'))
+        );
+        return React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
+          React.createElement('div', { style: s.label }, t('vr.saeule3a')),
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.skyDeep } }, 'CHF ' + fmt(projected3a)),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+            t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aAnnual) })
+          ),
+          ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { marginTop: space.sm + 'px', fontWeight: weight.semi, fontSize: text.sm } },
+            t('vr.totalMitSaeule3a') + ': CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + '/' + t('vr.monat') + ' + CHF ' + fmt(projected3a) + ' ' + t('vr.saeule3a')
+          )
+        );
+      })()
+    ),
+    fz: React.createElement('div', { style: { ...s.section, background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', color: palette.text } }, t('vr.fzTitle')),
+        React.createElement('div', { style: { color: palette.mid, lineHeight: 1.6 } }, t('vr.fzIntro'))
+      ),
+  };
+  const angabenJeReiter = {
+    bvg: React.createElement('div', { style: { ...s.section, display: 'flex', gap: space.md, flexWrap: 'wrap' } },
+        field(t('vr.bvgGuthaben'), bvgGuthaben, setBvgGuthaben, { placeholder: '0', sublabel: t('vr.bvgGuthabenHint') }),
+        field(t('vr.umwandlungssatzEigen'), bvgUmwandlung, setBvgUmwandlung, { placeholder: '6.8', sublabel: t('vr.umwandlungssatzHint'), width: '110px', min: 1, max: 10 })
+      ),
+    zukunft: React.createElement('div', { style: s.section },
+        React.createElement('div', { style: s.row },
+          field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
+          field(t('vr.s3aAnnual'), saeule3aAnnualInput, setSaeule3aAnnualInput, { placeholder: '0', sublabel: t('vr.s3aAnnualHint') }),
+          field(t('vr.s3bGuthaben'), saeule3bInput, setSaeule3bInput, { placeholder: '0' }),
+          field(t('vr.lebenserwartung'), lebenserwartung, setLebenserwartung, { width: '90px', min: 66, max: 105, sublabel: t('vr.lebenserwartungHint') })
+        )
+      ),
+  };
+  const weiteresJeReiter = {
+    ahv: React.createElement(React.Fragment, null,
+      // IK-Auszug nachstellen (echte Beitragshistorie statt Annahme)
+      renderIKAuszug(),
+      // AHV mit Auslandbezug (Orientierung), einklappbar
+    React.createElement('details', { style: s.intlDetails },
+      React.createElement('summary', { style: s.intlSummary }, t('vr.intlTitle')),
+      React.createElement('p', { style: s.intlIntro }, t('vr.intlIntro')),
+      [
+        { key: 'leaving', title: 'vr.intlLeavingTitle', text: 'vr.intlLeavingText', url: 'https://www.zas.admin.ch/de/verlassen-der-schweiz' },
+        { key: 'voluntary', title: 'vr.intlVoluntaryTitle', text: 'vr.intlVoluntaryText', url: 'https://www.zas.admin.ch/de/freiwillige-ahviv' },
+        { key: 'refund', title: 'vr.intlRefundTitle', text: 'vr.intlRefundText', url: 'https://www.zas.admin.ch/de/rueckverguetungen' },
+      ].map(sit =>
+        React.createElement('div', { key: sit.key, style: s.intlSit },
+          React.createElement('div', { style: s.intlSitTitle }, t(sit.title)),
+          React.createElement('div', { style: s.intlSitText }, t(sit.text)),
+          React.createElement(ExternerLink, { t, href: sit.url, style: s.intlLink }, t('vr.intlMore'))
+        )
+      ),
+      React.createElement('div', { style: s.intlContact }, t('vr.intlContact'))
+    )
+    ),
+    zukunft: React.createElement(React.Fragment, null,
+      React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: s.label }, t('vr.zukunftIkTitle')),
+        (ikActive && ikResult)
+          ? React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.xs + 'px', flexWrap: 'wrap' } },
+              React.createElement('span', { style: { color: palette.sage } }, hinweisZeichen('check', 10)),
+              React.createElement('span', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
+                t('vr.zukunftIkAktiv', { jahre: ikResult.beitragsjahre, eink: fmt(ikResult.durchschnittlichesJahreseinkommen) }))
+            )
+          : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftIkInaktiv')),
+        React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
+          React.createElement('button', {
+            onClick: () => setZukunftIkOpen(o => !o),
+            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', fontFamily: 'inherit' }
+          }, zukunftIkOpen ? t('vr.zukunftIkHide') : t('vr.zukunftIkEdit')),
+          React.createElement('button', {
+            onClick: () => setActiveTab('ahv'),
+            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.mid, textDecoration: 'underline', fontFamily: 'inherit' }
+          }, t('vr.zukunftIkJump'))
+        ),
+        zukunftIkOpen && React.createElement('div', { style: { marginTop: space.sm + 'px' } }, renderIKAuszug())
+      ),
       alter && React.createElement('div', { style: { ...s.section, marginTop: space.sm + 'px' } },
         React.createElement('div', { style: s.label }, t('vr.altersKostenTitle')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, marginTop: space.xs + 'px', marginBottom: space.sm + 'px' } }, t('vr.altersKostenIntro')),
@@ -960,7 +968,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement(OfficialLinkBox, { palette, t, data, ids: ['praemienverbilligung'] }),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
         onNavigate && React.createElement('button', {
-          onClick: () => onNavigate('schnellcheck'),
+          onClick: () => onNavigate('situationen'),
           style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
         }, t('vr.altersHilfenCheck'))
       ),
@@ -1038,78 +1046,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource'), null, t))
       )
     ),
-
-    // Vergleich Tab
-    activeTab === 'vergleich' && vorbezugVergleich.length > 0 && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: { ...s.label, marginBottom: space.sm + 'px' } }, t('vr.vorbezugVergleich')),
-      React.createElement('table', { style: s.table },
-        React.createElement('thead', null,
-          React.createElement('tr', null,
-            React.createElement('th', { style: s.th }, t('vr.bezugAlterLabel')),
-            React.createElement('th', { style: s.th }, t('vr.monatsrenteLabel')),
-            React.createElement('th', { style: s.th }, t('vr.jahresrenteLabel')),
-            React.createElement('th', { style: s.th }, t('vr.anpassungLabel'))
-          )
-        ),
-        React.createElement('tbody', null,
-          vorbezugVergleich.map(row =>
-            React.createElement('tr', { key: row.bezugAlter },
-              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td }, row.bezugAlter),
-              // Vorbezugszeilen: darunter die Rente ab dem Referenzalter (Neuberechnung) — derselbe
-              // Wert wie im AHV-Block, sonst widerspräche die Tabelle dem Ergebnis.
-              ...[['monatsrente', 'monatsrenteReferenzalter'], ['jahresrente', 'jahresrenteReferenzalter']].map(([feld, feldRef]) =>
-                React.createElement('td', { key: feld, style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
-                  'CHF ' + fmt(row[feld]),
-                  row.anpassung < 0 && row[feldRef] !== row[feld] && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.normal } },
-                    t('vr.abAlterKurz', { alter: fmtAlterMonate(refAlterMonate), betrag: fmt(row[feldRef]) }))
-                )),
-              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
-                row.anpassung === 0 ? '–' : (row.anpassung > 0 ? '+' : '') + row.anpassung.toFixed(1) + '%'
-              )
-            )
-          )
-        )
-      ),
-
-      // Combined AHV + BVG total
-      ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { ...s.highlight, marginTop: space.md + 'px' } },
-        React.createElement('div', { style: s.label }, t('vr.totalRente')),
-        React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + ' / ' + t('vr.monat')),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-          t('vr.saeulen') + ': AHV CHF ' + fmt(ahvResult.monatsrente) + ' + BVG CHF ' + fmt(bvgResult.monatsrente)
-        ),
-        beitragsjahreAngenommen && !ikResult && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-          annahmeText()
-        )
-      ),
-
-      // 3a forecast
-      (() => {
-        const has3a = saeule3aBalance > 0 || saeule3aAnnual > 0;
-        const yearsLeft = alter ? Math.max(0, parsedBezugAlter - alter) : 0;
-        const projected3a = saeule3aBalance + (saeule3aAnnual * yearsLeft);
-        if (!has3a) return React.createElement('div', { style: { ...s.section, color: palette.mid, marginTop: space.md + 'px' } },
-          hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('vr.saeule3aHint'))
-        );
-        return React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
-          React.createElement('div', { style: s.label }, t('vr.saeule3a')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.skyDeep } }, 'CHF ' + fmt(projected3a)),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-            t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aAnnual) })
-          ),
-          ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { marginTop: space.sm + 'px', fontWeight: weight.semi, fontSize: text.sm } },
-            t('vr.totalMitSaeule3a') + ': CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + '/' + t('vr.monat') + ' + CHF ' + fmt(projected3a) + ' ' + t('vr.saeule3a')
-          )
-        );
-      })()
-    ),
-
-    // Freizügigkeit Tab
-    activeTab === 'fz' && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: { ...s.section, background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', color: palette.text } }, t('vr.fzTitle')),
-        React.createElement('div', { style: { color: palette.mid, lineHeight: 1.6 } }, t('vr.fzIntro'))
-      ),
+    fz: React.createElement(React.Fragment, null,
       [
         { key: 'job', icon: 'work', color: palette.sage },
         { key: 'gap', icon: 'timeline', color: palette.gold },
@@ -1151,16 +1088,26 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           )
         )
       )
-    )),
-
-    activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
-
-    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'] }),
-
-    React.createElement('div', { style: s.source },
-      renderSource(t('vr.source', { jahr: ahvWerteHeute.jahr }) + (ahvWerteHeute.verordnung ? ' ' + t('common.betraegeVerordnung', { jahr: ahvWerteHeute.jahr, ...ahvWerteHeute.verordnung }) : ''), null, t)
     ),
+  };
+  const gemeinsameAngaben = [einkommen, beitragsjahre, bezugAlter, erziehungsjahre, betreuungsjahre];
 
+  return React.createElement(RechnerForm, {
+    palette, t, view: 'vorsorge', onNavigate,
+    titel: t('vr.title'),
+    reiter: { id: 'vr', label: t('vr.title'), liste: TABS, aktiv: activeTab, onWahl: setActiveTab },
+    ergebnis: ergebnisJeReiter[activeTab] || null,
+    ohneErgebnis: t('vr.einkommenEingeben'),
+    vorbehalt: (activeTab === 'bvg' || activeTab === 'zukunft') && !alter && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.sm + 'px 0 0' } }, t('vr.geburtsdatumFehlt')),
+    instrument: activeTab === 'zukunft' && zukunftTeile ? zukunftTeile.grafik : null,
+    angaben: activeTab === 'fz' ? null : {
+      erfasst: gemeinsameAngaben.filter((v) => String(v ?? '').trim() !== '').length, gesamt: gemeinsameAngaben.length,
+      inhalt: React.createElement('div', { style: { paddingTop: space.xs + 'px' } }, angabenGemeinsam, angabenJeReiter[activeTab] || null),
+    },
+    stelle: React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'], alsZeilen: true }),
+    quelle: renderSource(t('vr.source', { jahr: ahvWerteHeute.jahr }) + (ahvWerteHeute.verordnung ? ' ' + t('common.betraegeVerordnung', { jahr: ahvWerteHeute.jahr, ...ahvWerteHeute.verordnung }) : ''), null, t),
+  },
+    weiteresJeReiter[activeTab] || null,
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
       style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }

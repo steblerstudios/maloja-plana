@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { springeZuAnker } from '../utils/hashRouter.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
 import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
@@ -229,13 +230,13 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         titel,
         h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), style: { ...ruhigKnopf, background: 'none' } }, kapitelTitel(f.chapter) + ' ›'));
     }
-    // Patientenverfügung mit «Noch nicht»: die Antwort steht, es fehlt das Dokument — der Weg zum Werkzeug.
-    if (f.k === 'patientenverfuegung' && nf.patientenverfuegung) {
+    // F7-K6-1 (31.10.2026): die Patientenverfügung steht nur noch im Block «Vorsorge» — hier der Sprung dorthin.
+    if (f.k === 'patientenverfuegung') {
       return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
         titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.erstellen')));
+        h('button', { type: 'button', className: 'mp-link', onClick: () => springeZuAnker('mp-notfall-vorsorge'), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.zurVorsorge')));
     }
-    // Auswahl (Blutgruppe, Patientenverfügung ohne Antwort): zum Feld im Formular unten.
+    // Auswahl (Blutgruppe): zum Feld im Formular unten.
     if (!EINGABE[f.k]) {
       return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
         titel,
@@ -338,7 +339,20 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         }
         return h('button', { key: v.k, type: 'button', 'data-vorsorge': v.k, onClick: () => onNavigate(v.weg), style: { ...stil, cursor: 'pointer', color: palette.text } }, ...innen,
           h('span', { key: 'g', style: { display: 'block', fontSize: text.xs, color: palette.sandDeep || palette.mid, marginTop: '2px' } }, t(v.wegKey)));
-      }))
+      })),
+    // F7-K6-1: Die Antwort «vorhanden?» steht hier statt in den Angaben. Das Formular setzt sie nicht selbst — wer
+    // schon eine Verfügung hat, sagt es hier. Bei «Ja» bleibt der Weg zum Formular, die Kachel führt dann nicht hin.
+    h('div', { 'data-teil': 'notfall-pv-antwort', style: { marginTop: space.sm + 'px' } },
+      h('label', { htmlFor: 'mp-notfall-pv', style: { display: 'block', fontSize: text.sm, color: palette.text } }, feldName('notfall', 'patientenverfuegung')),
+      h('select', {
+        id: 'mp-notfall-pv', value: nf.patientenverfuegung || '', disabled: !!demoMode,
+        onChange: (e) => onUpdate && onUpdate('patientenverfuegung', e.target.value),
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '0 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+      },
+        h('option', { value: '' }, t('notfallKapitel.nichtErfasst')),
+        ['yes', 'no'].map((w) => h('option', { key: w, value: w }, t('chapters.notfall.fields.patientenverfuegung.options.' + w)))),
+      h('p', { style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
+      nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none', marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
   return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, bereit, unterlagen, vorsorge);

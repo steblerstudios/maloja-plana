@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { GEGENSTAENDE, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
+import { GEGENSTAENDE, GRUPPEN, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
 import { werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
@@ -266,8 +266,13 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
         },
       },
         h('div', { style: { padding: space.sm + 'px ' + space.sm + 'px ' + space.xs + 'px', borderTop: '1px dashed ' + palette.border, marginBottom: open ? space.sm + 'px' : 0 } },
-          count && werkzeuge.length ? fachZeile('gepaeck.wegeTitel') : null,
-          g.wege.map((w) => chip(w)),
+          // Gruppe zuerst (F7-A9: «Erwachsen werden»), mit eigener Zwischenzeile; dann die übrigen Wege.
+          ...GRUPPEN.flatMap((gr) => {
+            const drin = g.wege.filter((w) => w.gruppe === gr);
+            return drin.length ? [h('p', { key: 'gr-' + gr, 'data-gepaeck-gruppe': gr, style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 ' + space.xs + 'px 2px', letterSpacing: '0.3px' } }, t('gepaeck.gruppe.' + gr)), ...drin.map((w) => chip(w))] : [];
+          }),
+          (count && werkzeuge.length) || g.wege.some((w) => w.gruppe) ? fachZeile('gepaeck.wegeTitel') : null,
+          g.wege.filter((w) => !w.gruppe).map((w) => chip(w)),
           count && werkzeuge.length ? fachZeile('gepaeck.werkzeugeTitel') : null,
           werkzeuge.map((w) => werkzeugChip(w))),
       ),

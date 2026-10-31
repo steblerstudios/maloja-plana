@@ -24,6 +24,8 @@ export const DEMO_DATA = {
     moveInDate: '2021-08-01',
     rentAmount: '1650',
     utilities: '180',
+    // F7-K1-2 (27.10.2026): ohne Zimmerzahl verglich der Mietbarometer mit «angenommen 3 Zimmer».
+    rooms: '2.5',
     landlord: 'Steiner Immobilien AG',
     landlordPhone: '+41 44 312 55 00',
     mortgageStatus: '',
@@ -65,6 +67,11 @@ export const DEMO_DATA = {
     // (BAG/priminfo, data/praemienDetail.js). Bis 25.10.2026 stand hier 385 — unter jeder Referenzprämie.
     // ⚠️ Mit den Prämien 2027 nachziehen.
     kkPremium: '540.30',
+    // Beispielwerte, keine Offerte: damit Zusatz und Leben im Schild mit Beträgen zu sehen sind (F7-K3-6, 31.10.2026).
+    kkZusatz: 'Spital halbprivat',
+    kkZusatzPremium: '38.50',
+    lifeInsurance: 'yes',
+    lifeInsurancePremium: '600',
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
     policyNumber: 'CSS-2024-7788991',
@@ -97,7 +104,8 @@ export const DEMO_DATA = {
     efzNumber: '',
     certifications: 'CAS Notfallpflege',
     employer: 'Kantonsspital Zürich',
-    jobTitle: 'Pflegefachfrau HF',
+    jobTitle: 'Pflegefachfrau FH',
+    branche: 'gesundheit',
     employmentStart: '2019-04-01',
     workPermit: 'swiss',
     workHoursPerWeek: '42',
@@ -125,6 +133,8 @@ export const DEMO_DATA = {
     bloodType: 'aPos',
     allergies: 'Penicillin',
     medications: '',
+    // Ein Eintrag, damit das Beispiel kein leeres Feld zeigt und der SL-Preis sichtbar wird (F7-K6-2, 27.10.2026).
+    medicationsList: [{ name: 'Euthyrox', substance: 'Levothyroxin', dose: '50', unit: 'µg', frequency: ['morgens'], notes: '' }],
     chronicDiseases: '',
     // Hausarzt in der Liste, die das Kapitel zeigt (DoctorManager). Das alte Feld bleibt für Dossier,
     // Notfallkarte und Rucksack, die noch nur `doctor` lesen — ohne Liste erschien das Beispiel als

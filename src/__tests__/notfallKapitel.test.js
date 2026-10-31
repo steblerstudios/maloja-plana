@@ -30,6 +30,9 @@ const kapitelHtml = (data = DEMO_DATA.notfall, allData = DEMO_DATA, extra = {}) 
 const ort = (allData = DEMO_DATA, extra = {}) => renderToStaticMarkup(React.createElement(NotfallImKapitel, {
   palette: LIGHT_PALETTE, t, data: allData, chapters, onNavigate: () => {}, onUpdate: () => {}, zumFeld: () => {}, karteMoeglich: true, ...extra,
 }));
+// Maria ohne Medikament: so stand das Beispiel bis F7-K6-2 (27.10.2026). Bleibt für die Wege, die ein fehlendes
+// Medikament zeigen — das Beispiel selbst hat seither «Euthyrox 50 µg».
+const OHNE_MEDI = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, medicationsList: [] } };
 const QUELLE = (datei) => fs.readFileSync(path.resolve(__dirname, '..', datei), 'utf8');
 
 describe('Bereit für den Ernstfall', () => {
@@ -38,28 +41,34 @@ describe('Bereit für den Ernstfall', () => {
     const alle = SCENARIOS.flatMap((s) => s.fields.map((f) => f.chapter + '.' + f.k));
     expect(new Set(alle).size).toBe(20);
   });
-  it('Maria: 18 von 20 — es fehlen die Medikamente (Unfall) und die Patientenverfügung (Spital)', () => {
-    const b = bereitschaft(DEMO_DATA);
+  it('Maria: 19 von 20 — es fehlt nur die Patientenverfügung (Spital), das Medikament ist erfasst (F7-K6-2)', () => {
+    const maria = bereitschaft(DEMO_DATA);
+    expect([maria.erledigt, maria.gesamt]).toEqual([19, 20]);
+    expect(maria.fehlend.map((f) => f.k)).toEqual(['patientenverfuegung']);
+    expect(nurText(ort())).toContain('19 von 20');
+  });
+  it('ohne Medikament: 18 von 20 — es fehlen die Medikamente (Unfall) und die Patientenverfügung (Spital)', () => {
+    const b = bereitschaft(OHNE_MEDI);
     expect([b.erledigt, b.gesamt]).toEqual([18, 20]);
     expect(b.fehlend.map((f) => f.k)).toEqual(['medications', 'patientenverfuegung']);
     expect(b.fehlend.map((f) => f.lagen)).toEqual([['unfall'], ['spital']]);
-    const text = nurText(ort());
+    const text = nurText(ort(OHNE_MEDI));
     expect(text).toContain('18 von 20');
-    expect(text).toContain('Patientenverfügung vorhanden? · fehlt für «Spitalaufenthalt» erstellen ›');
+    expect(text).toContain('Patientenverfügung vorhanden? · fehlt für «Spitalaufenthalt» zur Vorsorge ↓');
     expect(text).toContain('Regelmässige Medikamente · fehlt für «Unfall»');
     expect(text).toContain('Ich nehme keine');
   });
   it('Medikamente in der Liste zählen (vorher zählte nur das leere Textfeld)', () => {
     expect(feldHatWert({ medications: '', medicationsList: [{ name: 'Levothyroxin' }] }, 'medications')).toBe(true);
     expect(feldHatWert({ medications: '', medicationsList: [{ name: '' }] }, 'medications')).toBe(false);
-    const mit = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, medicationsList: [{ name: 'Levothyroxin', dose: '50', unit: 'µg' }] } };
+    const mit = { ...OHNE_MEDI, notfall: { ...OHNE_MEDI.notfall, medicationsList: [{ name: 'Levothyroxin', dose: '50', unit: 'µg' }] } };
     expect(bereitschaft(mit).erledigt).toBe(19);
     const alles = { ...mit, notfall: { ...mit.notfall, patientenverfuegung: 'yes' } };
     expect(bereitschaft(alles).erledigt).toBe(20);
     expect(nurText(ort(alles))).toContain('Alle Angaben vorhanden.');
   });
   it('«Ich nehme keine» zählt als erledigt', () => {
-    const keine = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, _na: ['medications'] } };
+    const keine = { ...OHNE_MEDI, notfall: { ...OHNE_MEDI.notfall, _na: ['medications'] } };
     expect(bereitschaft(keine).erledigt).toBe(19);
     expect(chapters.find((c) => c.key === 'notfall').fields.find((f) => f.k === 'medications').naOk).toBe(true);
   });
@@ -78,12 +87,18 @@ describe('Bereit für den Ernstfall', () => {
   it('die drei Szenarien zugeklappt mit Stand', () => {
     const html = ort();
     expect(html).toMatch(/<details data-teil="notfall-szenarien"(?![^>]*open)/);
-    expect(nurText(html)).toContain('Unfall 8 von 9 · Spitalaufenthalt 9 von 10 · Behördengang vollständig');
+    expect(nurText(html)).toContain('Unfall vollständig · Spitalaufenthalt 9 von 10 · Behördengang vollständig');
+    expect(nurText(ort(OHNE_MEDI))).toContain('Unfall 8 von 9 · Spitalaufenthalt 9 von 10 · Behördengang vollständig');
   });
   it('im Beispiel: Feld gesperrt, Hinweis statt «Speichern»', () => {
-    const text = nurText(ort(DEMO_DATA, { demoMode: true }));
+    const text = nurText(ort(OHNE_MEDI, { demoMode: true }));
     expect(text).toContain(t('demo.readOnlyHint'));
     expect(text).not.toContain('Speichern');
+  });
+  it('Beispiel Maria zeigt kein leeres Eingabefeld mehr (F7-K6-2)', () => {
+    const text = nurText(ort(DEMO_DATA, { demoMode: true }));
+    expect(text).not.toContain(t('demo.readOnlyHint'));
+    expect(text).not.toContain('Regelmässige Medikamente · fehlt');
   });
 });
 
@@ -153,9 +168,10 @@ describe('Im Kapitel', () => {
   });
   // Muster M2 (25.10.2026): «x von n» am Abschnitt, das Übrige in EINER leisen Zeile «Nicht erfasst: …».
   it('Angaben nennen das Fehlende: Medikamente «ergänzen ›», chronische Erkrankungen «nicht erfasst.»', () => {
-    const html = kapitelHtml();
+    const html = kapitelHtml(OHNE_MEDI.notfall, OHNE_MEDI);
     const text = nurText(html);
     expect(html).toMatch(/data-fehlt="medications"[\s\S]*?Regelmässige Medikamente[\s\S]*?ergänzen ›/);
+    expect(kapitelHtml()).not.toMatch(/data-fehlt="medications"/);
     expect(text).toContain('Nicht erfasst: Chronische Erkrankungen.');
     expect(html).toMatch(/data-erfasst="\d+\/\d+"/);
   });
@@ -164,6 +180,29 @@ describe('Im Kapitel', () => {
     const passend = nurText(html.slice(html.indexOf('data-teil="passend"')));
     expect(passend).toContain('Unterlagen · Patientenverfügung, Organspende-Karte, Blutgruppen-Ausweis');
     expect(passend).not.toContain('Patientenverfügung erstellen');
+  });
+  it('Passend: Ablauf Vorsorge und Organspende als Eingang (F7-K5-2, F7-L1)', () => {
+    const html = kapitelHtml();
+    const passend = nurText(html.slice(html.indexOf('data-teil="passend"')));
+    expect(passend).toContain('Vorsorgeauftrag & Patientenverfügung');
+    expect(passend).toContain('Organspende');
+  });
+  it('Patientenverfügung nur im Block Vorsorge, nicht in den Angaben (F7-K6-1)', () => {
+    const html = kapitelHtml();
+    expect(html.slice(html.indexOf('data-teil="notfall-pv-antwort"'))).toContain('mp-notfall-pv');
+    expect((html.match(/id="mp-notfall-pv"/g) || []).length).toBe(1);
+    expect(html).not.toMatch(/data-fehlt="patientenverfuegung"[^>]*>[\s\S]{0,400}ergänzen ›/);
+    const quelle = QUELLE('ChapterView.jsx');
+    expect(quelle).toMatch(/const feldSichtbar = \(f\) => !nurImBlock\(f\)/);
+    expect(quelle).not.toContain('crosslink-pv');
+  });
+  it('die Antwort lässt sich dort setzen, das Formular bleibt auch nach «Ja» erreichbar (F7-K6-1)', () => {
+    const quelle = QUELLE('components/NotfallImKapitel.jsx');
+    expect(quelle).toContain("onUpdate('patientenverfuegung', e.target.value)");
+    const ja = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, patientenverfuegung: 'yes' } };
+    expect(nurText(ort(ja))).toContain('Patientenverfügung in Fragen erstellen ›');
+    expect(nurText(ort(DEMO_DATA))).not.toContain('Patientenverfügung in Fragen erstellen ›');
+    expect(ort(DEMO_DATA, { demoMode: true })).toMatch(/<select[^>]*id="mp-notfall-pv"[^>]*disabled/);
   });
   it('die drei Lagen stehen nicht mehr offen unten, der alte Druck-Link ist weg', () => {
     const text = nurText(kapitelHtml());
@@ -178,8 +217,10 @@ describe('Namen, Wege, Suche', () => {
     expect(t('notfallpass.title')).toBe('Notfallpass');
     expect(t('notfallKapitel.portemonnaie')).toBe('Portemonnaie-Karte');
   });
-  it('Brotkrume «Übersicht › Notfall › …» für Notfallkarte, Notfallpass und Notfall-Dossier', () => {
-    for (const v of ['notfallkarte', 'notfallpass', 'notfalldossier']) expect(stufen(v).map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+  // Das Notfall-Dossier ist seit 27.10.2026 (F7-S2) eine Auswahl in «Unterlagen drucken» — Brotkrume dort
+  // «Übersicht › Meine Unterlagen › Unterlagen drucken» (brotkrume.test.js); die Kachel hier bleibt.
+  it('Brotkrume «Übersicht › Notfall › …» für Notfallkarte und Notfallpass', () => {
+    for (const v of ['notfallkarte', 'notfallpass']) expect(stufen(v).map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
     expect(QUELLE('NotfallVorlesekarte.jsx')).toContain("view: 'notfallkarte'");
   });
   it('Übersichtskarte heisst nicht mehr «Notfallkarte vorbereiten»', () => {

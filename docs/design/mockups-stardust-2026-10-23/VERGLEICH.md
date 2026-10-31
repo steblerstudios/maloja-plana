@@ -1350,3 +1350,187 @@ Stebler Studios zu #580: «Das Spinnennetz bleibt im Kapitel.» — danach: «wo
 (Krankenkasse · Pensionskasse · Weitere · Hausrat & Reise · Auto · AHV, «Zeigt, wie viel … eingetragen ist»), in keinem Entwurf
 (weder AA noch AB), nicht in der Übersicht. Es zeigt Vollständigkeit — dasselbe, was Muster M2 («x von n erfasst» je Abschnitt)
 leisten wird. **Zu entscheiden:** behalten (wo, wozu), in die Übersicht, oder weg, sobald M2 gebaut ist.
+
+---
+
+## Fassung 7 · Rundgang 27.10.2026 · erste Entscheide (Sophie, 27.10.2026, 02:42)
+
+Grundlage: `docs/design/fassung-7-2026-10-27/BEFUNDE.md` und die Vergleichsseite (Artifact «Fassung 7 Rundgang»).
+Sophie hat 25 von 71 Punkten gewählt und die Liste aus der Seite in den Chat gelegt. Die übrigen 46 sind **noch offen**,
+nicht abgelehnt.
+
+**Ja (10):**
+- F7-K2-3 — eine Brutto-Schätzung statt zwei (6’796 / 6’472): nachrechnen, welche gilt.
+- F7-K2-4 — Dashboard übernimmt das IPV-Ergebnis aus dem Kapitel Finanzen.
+- F7-K2-6 — Branchenvergleich: eigene Branche hervorheben, Rest aufklappbar.
+- F7-K3-3 — Franchise-Kreuz zeigt die eigene Franchise als Punkt.
+- F7-L5 — Gruppe A (Ansprüche) wieder aufnehmen.
+- F7-L6 — §11 Versicherungs-Übersicht als eigene Seite bauen.
+- F7-L7 — Budget-Import ins Monatsbudget (§2 I).
+- F7-L10 — Merkliste als Reiter in «Was ansteht».
+- F7-L11 — Aufräumen: Rucksack-Doppel, Links auf umgeleitete Adressen, tote `FinanzUebersicht.jsx`.
+- F7-L12 — Titel für den Anspruch-Check, Brotkrume für Notfall- und Behörden-Dossier.
+
+**Besprechen (15):** F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 ·
+F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9
+
+**Noch nicht gewählt:** alle F7-D (Dashboard), F7-K0, F7-K1 (u. a. Mietbarometer-Fehler), F7-K2-1/-2/-5, F7-K3-6
+(Spinnennetz), alle F7-A (Abläufe, u. a. W bauen), alle F7-R (Rechner, u. a. X bauen), alle F7-S (u. a. Lebensmappe
+ohne Behörden).
+
+**Nichts gebaut.**
+
+### Stand 2 der Entscheide (Sophie, 27.10.2026, 02:54)
+
+Zweite Liste aus der Vergleichsseite, ersetzt die Zählung von Stand 1 (Stand 1 bleibt als Beleg oben stehen).
+61 von 71 Punkten gewählt: **39 Ja · 1 Nein · 21 Besprechen**.
+Besprechen erst, wenn alle Punkte gewählt sind (Sophie: «wir wollen warten mit dem besprechen bis wir alle ja und nein s haben»).
+
+**Ja:** F7-K1-1 · F7-K1-2 · F7-K1-3 · F7-K2-3 · F7-K2-4 · F7-K2-5 · F7-K2-6 · F7-K3-3 · F7-L5 · F7-L6 · F7-L7 · F7-L10 · F7-L11 · F7-L12 · F7-A1 · F7-A2 · F7-A3 · F7-A4 · F7-A5 · F7-A6 · F7-A7 · F7-A9 · F7-A10 · F7-A11 · F7-A12 · F7-R1 · F7-R3 · F7-R4 · F7-R6 · F7-S1 · F7-S2 · F7-S3 · F7-S4 · F7-S6 · F7-S7 · F7-S8 · F7-S9 · F7-S10 · F7-S12
+
+**Nein:** F7-K0-2 (Basis bleibt ohne Instrument)
+
+**Besprechen:** F7-K2-1 · F7-K2-2 · F7-K3-6 · F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 · F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9 · F7-R2 · F7-R5 · F7-S5
+
+**Noch nicht gewählt:** F7-D1 · F7-D2 · F7-D3 · F7-D4 · F7-D5 · F7-D6 · F7-D7 · F7-D8 · F7-D9 · F7-D10
+
+**Nichts gebaut.**
+
+### Baustand der «Ja» (27.10.2026, 03:51)
+
+Sophie: «alle ja darfst du gerne mal erledigen». Je Paket ein Zweig und ein **Entwurfs-PR**, nichts gemergt.
+Zusammen geprüft (Probe aus main + #626 + #627 + #628): 7’248 Tests grün, `size-limit` 64.54 kB von 65 kB.
+
+| Paket | PR | Punkte |
+|---|---|---|
+| 1 · sichtbare Fehler | #626 | F7-K1-1, K1-2, K1-3, K2-3, K2-4, K3-3, S1, S6, S7, S8, L12, S12 |
+| 2 · Namen und Aufräumen | #627 | F7-R1, S3, S4, S9, L11 |
+| 3 · Kapitel Finanzen | #628 | F7-K2-5, K2-6 |
+| 4 · Ablauf-Schale W | – | F7-A1, A4, A5, A6, A7, A9, A10, A11 — offen |
+| 5 · Rechner-Form X | – | F7-A2, R3, R4, R6 — offen |
+| 6 · «Was steht mir zu?» O | – | F7-A3, L5 — offen |
+| 7 · Versicherungs-Übersicht §11 | – | F7-L6 — offen |
+| 8 · Budget, Merkliste, Dossiers | – | F7-L7, L10, S2, S10 — offen |
+
+**Fehlbefunde, nichts gebaut:** F7-A12 und F7-D8 — die Deko-Schrift («HELVETIA», «Fr», «5 FR. 2026») steckt in
+Icons mit `aria-hidden`; ein Bildschirmleser liest sie nicht. Der Rundgang hatte mit `innerText` gemessen.
+Im Browser nachgeprüft (Pensionierung, Einbürgerung, Betreibungsauszug).
+
+**Teilweise anders als im Befund:** F7-K2-3 war kein Rechenfehler (CHF 6’472 = Brutto 6’796 auf 40 Std.) — gebaut
+ist die sichtbare Beschriftung. F7-L12: die Dossiers hatten schon Brotkrumen; ergänzt ist «Zurück zu …».
+F7-L11: `FinanzUebersicht.jsx` bleibt (sechs Tests prüfen über sie), Links auf `finanzuebersicht` bleiben (Umleitung).
+F7-S12: nur «kostenlos, auch mit leerem Guthaben» belegt (FDV Art. 27 Abs. 2); die SIM-Aussage ist raus.
+
+### Baustand der «Ja», alle acht Pakete (27.10.2026, 12:07)
+
+| Paket | PR | Stand |
+|---|---|---|
+| 1 · sichtbare Fehler | #626 | Entwurf |
+| 2 · Namen und Aufräumen | #627 | Entwurf |
+| 3 · Kapitel Finanzen | #628 | Entwurf |
+| 4 · Ablauf-Schale W (A1, A4–A7, A9–A11) | #633 | Entwurf |
+| 5 · Rechner-Form X, alle zehn (A2, R3, R4, R6) | #631 | Entwurf |
+| 6 · «Was steht mir zu?» O + Gruppe A (A3, L5) | #630 | Entwurf |
+| 7 · Versicherungs-Übersicht §11 (L6) | #629 | Entwurf — war schon gebaut (#580, #601), nur Wächter-Test + Doku |
+| 8 · Budget, Merkliste, Dossiers, Rückweg (L7, L10, S2, S10) | #632 | Entwurf |
+
+**Probe aller Zweige auf main:** 1, 2, 3, 7, 6, 5 führen sich konfliktfrei zusammen (7’370 Tests grün, `size-limit`
+**64.67 kB von 65 kB**). 8 und 4 haben dann Konflikte in den Sprachdateien, `main.jsx`, `hashRouter.js`, Registern und
+Wächter-Tests — alle erweitern dieselben Listen. Vorschlag: in dieser Reihenfolge mergen und 8 und 4 vor ihrem Merge
+auf das neue main nachziehen. **Grösse:** 0.33 kB Luft vor 8 und 4 — vor dem Merge der letzten zwei prüfen, ggf. Teile
+aus dem Startbündel nachladen.
+
+**Weitere Fehlbefunde aus dem Rundgang:** F7-L6 (§11 war gebaut, das Entscheidungsblatt sagte «Noch nichts gebaut»),
+F7-A7 (Verweise an der Gabelung bestanden schon).
+
+**Für die Fachprüfung (#630):** Sozialhilfe-Pegel sagt bei Maria «Vermögen über dem Freibetrag», obwohl das Einkommen den
+Bedarf deckt — Reihenfolge in `src/data/pegel.js` (alt, schon im Schnellcheck).
+
+### Besprechen, Runde 1 (Sophie, 27.10.2026, Seite «Fassung 7 Besprechen»)
+
+Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7 Besprechen»), je Punkt «wie empfohlen»,
+«anders» oder «später». 11 von 31 Punkten gewählt. **Nichts gebaut.**
+
+**Wie empfohlen (9):**
+- F7-K3-6 — Das Spinnennetz fällt weg. Das Netz-Schild (Prototyp `_werkbank/versicherung-schild-2026-10-27/`) ersetzt
+  Netz und Schutzschild als ein Bild, vorher in Maloja-Tönen nachgezeichnet. Vor dem Bau offen: welche Bereiche zwei
+  Stufen haben (Vorsorge: BVG + 3a?), ob «Leben» oben in die Mitte gehört.
+- F7-K4-2 — Maria bleibt beim Bachelor (ZHAW); Berufsbezeichnung «Pflegefachfrau HF» → «Pflegefachfrau FH» (`demoData.js`).
+- F7-K5-2 — Vorsorge ganz in den Notfall; in Behörden bleibt das Testament mit Verweis.
+- F7-K6-1 — Patientenverfügung im Notfall nur im Block «Vorsorge»; «Bereit» verlinkt dorthin, nicht mehr in den Angaben.
+- F7-L1 — Nach dem Merge Seiten ohne Eingang nachzählen; Organspende unter «Passend» bei Notfall › Vorsorge, falls nötig.
+- F7-L2 — Nach dem Merge Sackgassen nachzählen; jede verbliebene Seite bekommt «Als Nächstes».
+- F7-L3 — Familie als Abschnitt in Persönliche Basis, kein achtes Kapitel. Abläufe hängen dort unter «Passend».
+- F7-R2 — Sozialhilfe-Seite zeigt nur Sozialhilfe; IPV und EL je eine Zeile mit Link auf «Was steht mir zu?».
+- F7-R5 — Lebenslauf-Generator wird die Vorschau aus dem Kapitel plus «Als PDF drucken»; «JSON (ATS)» klein unter
+  «Weitere Formate».
+
+**Anders (2):**
+- F7-L8 — Ja zum Bündeln: Steuer-Import in den Steuer-Rechner (§2 I), Doppel (Kantonssteuer, Säule 3a) zusammenlegen.
+  **Nicht** wie vorgeschlagen beim Import: Sophie: «das müssen wir geschickter lösen». Offen: wie der Import ins
+  Rechner-Bild kommt, ohne das Startbündel zu belasten — Vorschlag von Claude ausstehend.
+- F7-K6-2 — Maria bekommt einen Medikamenten-Eintrag, damit das Feld im Beispiel gefüllt ist. Gezeigt werden soll, dass
+  die App zu einem Medikament weiterführende Information zeigt; Sophie nennt PubMed, TARDOC und «vielleicht der Preis».
+  **Offen, vor dem Bau klären:** Die App verlinkt heute schon auf compendium.ch (`MedicationManager.jsx`).
+  PubMed ist Fachliteratur, keine Patienteninformation; TARDOC ist der Arzttarif und enthält keine Medikamentenpreise —
+  die stehen in der Spezialitätenliste des BAG. Ein Preis in der App wäre ein Datenbestand, der gepflegt werden muss.
+
+**Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 ·
+F7-L9 · F7-K5-1
+
+**F7-K6-2 geklärt (Sophie, 27.10.2026):** Compendium-Link wie heute, dazu der Preis aus der BAG-Spezialitätenliste.
+Zuerst zeigen, wie der Preis aktuell bleibt. Vorschlag von Claude (noch nicht entschieden), Belege BAG-Seite «Elektronische
+Plattform Leistungen (ePL)», gelesen 27.10.2026: SL unter sl.bag.admin.ch, ohne Login; Excel- und FHIR-Dateien «jeweils am
+ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-Anbieter angekündigt, noch nicht offen.
+1. Von Hand wie bei den Prämien: Excel-Datei ablegen in `src/data/raw/`, Skript `scripts/build-sl-preise.mjs` holt nur die
+   rund 100 Medikamente aus `medicationData.js` heraus → `src/data/medikamentPreise.js` mit Stand und Quelle.
+2. Nachgeladen nur im Medikamenten-Teil, nicht im Startbündel. Die App holt zur Laufzeit nichts aus dem Netz.
+3. Takt: vierteljährlich und beim Werte-Wechsel im Dezember; `/maloja-predeploy` warnt, wenn der Stand älter als 4 Monate ist.
+4. Anzeige: «Publikumspreis laut Spezialitätenliste, Stand …», nicht «Sie zahlen»; ohne Treffer kein Preis, nur Compendium.
+5. Vor dem Bau: swiss-precision-pruefer zu Publikumspreis vs. Selbstbehalt und zum Satz bei Medikamenten ausserhalb der SL.
+
+**F7-K6-2 entschieden (Sophie, 27.10.2026):** «Ja, Preis so nachführen wie vorgeschlagen — von Hand je Quartal, Skript,
+Stand sichtbar, Warnung im Predeploy.» Punkte 1–5 oben gelten. Zusammen mit: Maria bekommt einen Medikamenten-Eintrag.
+
+**F7-K3-6 weiter (Sophie, 27.10.2026, beim Ansehen von #636):** «Leben» als Teil oben in der Mitte (gebaut, `79b2855c`).
+Dann: «Schild so umbauen: Vorsorge mit drei Säulen, Unfall mit Zusatz und neuem Feld, Haushalt mit Haftpflicht und
+Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk.» Grundlage Fachprüfung (swiss-precision-pruefer, ohne Webzugriff):
+Hausrat Pflicht (Feuer/Elementar) in NW, FR, JU, VD — Erlasse nicht belegt, darum Prüf-Vermerk bis nachgelesen;
+Haftpflicht gesetzlich nicht vorgeschrieben (Vermieter, Hund); UVG-Zusatz freiwillig (VVG); NBU erst ab 8 Std./Woche
+(UVV Art. 13); Vorsorge AHV → PK → 3a nach BV Art. 111–113, Stufen bauen rechtlich nicht aufeinander auf.
+
+### Netz-Schild und Medikamentenpreis, Stand 31.10.2026 (Sophie)
+
+- **F7-K6-2 gebaut:** Entwurfs-PR #635 (`3261283f`).
+- **F7-K3-6 gebaut:** Entwurfs-PR #636 (`bc2ed1b9`). Teile: Leben (oben Mitte) · Krankenkasse (KVG · Zusatz) · Unfall (UVG ·
+  Zusatz, nur für Angestellte) · Haushalt (Privathaftpflicht · Hausrat) · Vorsorge (AHV · Pensionskasse · Säule 3a).
+- **Zahlen im Schild** (Sophie: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon drin ist»):
+  je Versicherung Monat und Jahr, Guthaben, Versicherungssumme. Nur erfasste Felder, nie geschätzt.
+- **Neue Prämien-Felder** (Sophie: «Ja, dazubauen»): `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`. Sie zählen in
+  der einen Monatsrechnung und damit im Budget.
+- **Beispiel Maria** (Sophie: «Ja, Maria ergänzen»): KK-Zusatz CHF 38.50/Mt., Leben CHF 600/Jahr. Versicherungen CHF 659,
+  frei CHF 2’185. Folge: Der sandfarbene Kern «noch nicht gedeckt» ist bei Maria nicht mehr zu sehen; offen, ob das so bleibt.
+
+**Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 · F7-L9 · F7-K5-1.
+Hinweis: F7-K3-4 ist mit dem Netz-Schild zum Teil überholt, D10 und K3-2 hängen am alten Schild auf Dashboard und Übersicht.
+
+### Gebaut auf dem Sammelzweig (31.10.2026, Sophie: «Ja, weiterbauen»)
+
+Zweig `integration/f7-sammel`, nicht gepusht, nicht in `main`. Je ein Commit, Wächter im selben Commit.
+
+- **F7-K4-2:** Maria ist «Pflegefachfrau FH».
+- **F7-K6-1:** Patientenverfügung nur im Block «Vorsorge». Die Antwort «vorhanden?» zog dorthin um, weil das Formular sie
+  nicht setzt; «Bereit» springt dorthin. Bei «Ja» bleibt der Weg zum Formular.
+- **F7-K5-2:** Behörden zeigt nur das Testament mit Verweis auf Notfall › Vorsorge; der Ablauf steht unter «Passend» im Notfall.
+  Die Unterlagen-Liste von Behörden (`power_of_attorney`, `patientenverfuegung`) blieb unverändert: Ablage-Schlüssel.
+- **F7-R2:** Sozialhilfe rechnet IPV und EL nicht mehr; je eine Zeile nach «Was steht mir zu?».
+- **F7-R5:** Lebenslauf zeigt das Blatt aus dem Kapitel, «Als PDF drucken» mit Export-Vorschau, HTML und JSON unter «Weitere Formate».
+- **F7-L3:** Sechs Familien-Abläufe unter dem Abschnitt «Familie» bei «Passend» in Persönliche Basis.
+- **F7-L8:** Vorschlag gebaut: Import als `<details>` im Steuer-Rechner, erst beim Aufklappen geladen; `#/taxImport` leitet um und
+  klappt auf. Säule 3a: Abzug im Rechner bleibt eigene Eingabe, neu Knopf «aus dem Kapitel Finanzen übernehmen» (auf Klick, nie
+  still, weil es die Schätzung ändert). **Nicht zusammengelegt:** Kantonssteuer-Orientierung. Rechner und Finanzen nutzen dieselbe
+  Komponente; ohne sie stünde in Finanzen eine fehlende Kantonszahl ohne Begründung (`ERKLAERT_IN_ORIENTIERUNG`). Gehört zu F7-K5-1.
+- **F7-L1:** Nachgezählt. Ohne Kapitel-Eingang waren Organspende (neu Notfall › Passend) und «Jemand schuldet Geld» (neu Behörden ›
+  Passend). `aussteuerung` ist Umleitung, `notifications` kommt über die Einstellungen.
+- **F7-L2:** Nachgezählt: sieben Seiten ohne Weg. `components/SeitenSchluss.jsx`, nachgeladen, eine Tabelle: kk, sync, direktlinks,
+  export, notifications, flyer, installApp. Einstellungen bleiben ohne, das ist ein Systemziel.

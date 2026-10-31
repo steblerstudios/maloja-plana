@@ -126,9 +126,9 @@ export const ausgabenPosten = (data, t, palette) => {
     healthInsurance: vers, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6F6A99',
     childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', debtPayments: palette.rose,
     alimentePaid: palette.sage, otherInsurance: '#A89F94',
-    householdInsurance: mischeHex(vers, weg, 0.3), liabilityInsurance: mischeHex(vers, weg, 0.55),
+    kkZusatz: mischeHex(vers, weg, 0.15), uvgZusatz: mischeHex(vers, weg, 0.2), lifeInsurance: mischeHex(vers, weg, 0.25), householdInsurance: mischeHex(vers, weg, 0.3), liabilityInsurance: mischeHex(vers, weg, 0.55),
   };
-  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'householdInsurance', 'liabilityInsurance', 'tax', 'groceries',
+  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'kkZusatz', 'uvgZusatz', 'lifeInsurance', 'householdInsurance', 'liabilityInsurance', 'tax', 'groceries',
     'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];
   return reihenfolge.map((k) => ({
     key: k, label: t(k === 'rent' ? 'budgetSync.housingCosts' : 'budgetSync.field.' + k), value: posten[k], color: farbe[k],
