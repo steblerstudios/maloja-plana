@@ -1433,7 +1433,6 @@ export default {
     unfallkrankheit: 'Accident ou maladie',
     neuerjob: 'Nouvel emploi',
     stelleverloren: 'Perte d\'emploi',
-    taxImport: 'Import fiscal',
     search: 'Recherche',
     notifications: 'Notifications',
     installApp: 'Installer comme application',
@@ -1529,7 +1528,6 @@ export default {
       unfallkrankheit: 'Que faire — et qui paie',
       neuerjob: 'Contrat, prévoyance, impôts, délais',
       stelleverloren: 'ORP, assurances, prévoyance',
-      taxImport: 'Reprendre les valeurs clés de la déclaration d\'impôt',
       search: 'Trouver outils & chapitres',
       budgetSync: 'Revenus et dépenses en détail',
       kvgIpv: 'Vérifier le droit',
@@ -3208,6 +3206,8 @@ export default {
   },
 
   tax: {
+    aus3aUebernehmen: "Reprendre {betrag} du chapitre Finances ›",
+    ausSteuererklaerung: "Reprendre de la déclaration d’impôts",
     abzuegeGeschaetzt: 'Déductions (estimation)',
     title: 'Impôts',
     intro: { sie: 'Cet aperçu vous donne une estimation approximative de votre charge fiscale — à titre indicatif, pas de conseil fiscal. Vous pouvez essayer différentes déductions et voir comment votre situation évolue.', du: 'Cet aperçu te donne une estimation approximative de ta charge fiscale — à titre indicatif, pas de conseil fiscal. Tu peux essayer différentes déductions et voir comment ta situation évolue.' },
@@ -4023,6 +4023,7 @@ export default {
   },
 
   taxImport: {
+    uebernommen: "Repris. Les indications figurent dans le chapitre Finances.",
     title: 'Import des données fiscales',
     intro: 'Reprendre les valeurs clés de la déclaration d’impôt — revenu, fortune et montant d’impôt. Tout reste sur l’appareil ; le fichier est lu uniquement en local.',
     selectFile: 'Choisir un fichier',

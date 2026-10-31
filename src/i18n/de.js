@@ -1436,7 +1436,6 @@ export default {
     unfallkrankheit: 'Unfall oder Krankheit',
     neuerjob: 'Neuer Job',
     stelleverloren: 'Stelle verloren',
-    taxImport: 'Steuer-Import',
     search: 'Suche',
     menu: 'Menü',
     erfassen: 'Erfassen',
@@ -1531,7 +1530,6 @@ export default {
       unfallkrankheit: 'Was tun — und wer zahlt',
       neuerjob: 'Vertrag, Vorsorge, Steuern, Fristen',
       stelleverloren: 'RAV, Versicherungen, Vorsorge',
-      taxImport: 'Eckwerte aus der Steuererklärung übernehmen',
       search: 'Werkzeuge & Kapitel finden',
       calendar: 'Fristen & Termine',
       budgetSync: 'Einnahmen und Ausgaben im Detail',
@@ -3242,6 +3240,8 @@ export default {
   },
 
   tax: {
+    aus3aUebernehmen: "{betrag} aus dem Kapitel Finanzen übernehmen ›",
+    ausSteuererklaerung: "Aus der Steuererklärung übernehmen",
     abzuegeGeschaetzt: 'Abzüge (geschätzt)',
     title: 'Steuern',
     intro: { sie: 'Diese Übersicht zeigt Ihnen eine grobe Einschätzung Ihrer Steuerbelastung — als Orientierung, nicht als Steuerberatung. Sie können Abzüge ausprobieren und sehen, wie sich Ihre Situation verändert.', du: 'Diese Übersicht zeigt dir eine grobe Einschätzung deiner Steuerbelastung — als Orientierung, nicht als Steuerberatung. Du kannst Abzüge ausprobieren und sehen, wie sich deine Situation verändert.' },
@@ -4070,6 +4070,7 @@ export default {
   },
 
   taxImport: {
+    uebernommen: "Übernommen. Die Angaben stehen im Kapitel Finanzen.",
     title: 'Steuerdaten-Import',
     intro: 'Eckwerte aus der Steuererklärung übernehmen — Einkommen, Vermögen und Steuerbetrag. Alles bleibt auf dem Gerät; die Datei wird nur lokal gelesen.',
     selectFile: 'Datei wählen',

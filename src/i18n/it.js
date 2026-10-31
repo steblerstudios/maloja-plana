@@ -1435,7 +1435,6 @@ export default {
     unfallkrankheit: 'Infortunio o malattia',
     neuerjob: 'Nuovo lavoro',
     stelleverloren: 'Perso il lavoro',
-    taxImport: 'Import fiscale',
     search: 'Cerca',
     menu: 'Menu',
     erfassen: 'Aggiungi',
@@ -1529,7 +1528,6 @@ export default {
       unfallkrankheit: 'Cosa fare — e chi paga',
       neuerjob: 'Contratto, previdenza, imposte, scadenze',
       stelleverloren: 'URC, assicurazioni, previdenza',
-      taxImport: 'Riprendere i valori chiave dalla dichiarazione d\'imposta',
       search: 'Trova strumenti e capitoli',
       calendar: 'Scadenze e appuntamenti',
       budgetSync: 'Entrate e uscite nel dettaglio',
@@ -3160,6 +3158,8 @@ export default {
   },
 
   tax: {
+    aus3aUebernehmen: "Riprendere {betrag} dal capitolo Finanze ›",
+    ausSteuererklaerung: "Riprendere dalla dichiarazione d’imposta",
     abzuegeGeschaetzt: 'Deduzioni (stima)',
     title: 'Imposte',
     intro: { sie: 'Questa panoramica Le offre una stima approssimativa del Suo carico fiscale — come orientamento, non come consulenza fiscale. Può provare diverse deduzioni e vedere come cambia la Sua situazione.', du: 'Questa panoramica ti offre una stima approssimativa del tuo carico fiscale — come orientamento, non come consulenza fiscale. Puoi provare diverse deduzioni e vedere come cambia la tua situazione.' },
@@ -4024,6 +4024,7 @@ export default {
   },
 
   taxImport: {
+    uebernommen: "Ripreso. I dati si trovano nel capitolo Finanze.",
     title: 'Importazione dati fiscali',
     intro: 'Riprendere i valori chiave dalla dichiarazione d\'imposta — reddito, patrimonio e importo d\'imposta. Tutto rimane sul dispositivo; il file viene letto solo localmente.',
     selectFile: 'Scegli file',

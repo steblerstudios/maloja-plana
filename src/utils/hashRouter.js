@@ -65,6 +65,8 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      components/NotfallImKapitel.jsx (Wächter: vorsorgeRueckweg.test.js).
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
+  // F7-L8 (31.10.2026): der Steuer-Import ist ein Teil des Steuer-Rechners (TaxCalculator.jsx, <details>).
+  taxImport: { view: 'tax', chapterIndex: null, anker: 'mp-steuer-import' },
   notfallvorsorge: { view: 'chapter', chapterIndex: CHAPTER_KEYS.indexOf('notfall'), anker: 'mp-notfall-vorsorge' },
   lebensmappe: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'alles' },
   behoerdendossier: { view: 'drucken', chapterIndex: null, anker: null, wahl: 'amt' },

@@ -16,7 +16,7 @@ import rm from '../i18n/rm.js';
 // vergessen) ab. 'search' selbst und Kapitel-Aktionen (mindestlohn) ausgenommen.
 const SEARCHABLE_TOOLS = [
   'finanzuebersicht', 'merkliste', 'calendar', 'sync', 'premium', 'praemien',
-  'kvg', 'vorsorge', 'eo', 'stipendien', 'tax', 'taxImport', 'sozialhilfe',
+  'kvg', 'vorsorge', 'eo', 'stipendien', 'tax', 'sozialhilfe',
   'alv', 'asyl', 'direktlinks', 'tresor', 'cv', 'flyer',
   'kk', 'schulden', 'organ', 'export', 'notifications',
 ];

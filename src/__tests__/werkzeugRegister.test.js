@@ -28,7 +28,7 @@ const HEUTE_IM_MENUE = [
   'tax', 'sozialhilfe', 'organ', 'calendar', 'sync', 'premium', 'cv', 'charts', 'export', 'notifications',
 ];
 const HEUTE_AUF_DEM_DASHBOARD = [
-  'gesundheit', 'situationen', 'tax', 'taxImport', 'sync', 'mietzins', 'vorsorge', 'mindestlohn',
+  'gesundheit', 'situationen', 'tax', 'sync', 'mietzins', 'vorsorge', 'mindestlohn',
   'premium', 'praemien', 'kvg', 'tresor', 'unterlagen', 'direktlinks', 'flyer',
   'search', 'merkliste', 'calendar', 'cv',
 ];
@@ -103,7 +103,7 @@ describe('Portemonnaie und Aussenfach', () => {
     expect(GEGENSTAND_KEYS).toContain('geld');
     expect(werkzeugeImFach('geld').map(werkzeugKey).sort()).toEqual(
       // 'budget' seit 27.10.2026 nicht mehr (F7-L7): der Import ist ein Teil von 'sync'.
-      ['alv', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'stundenlohn', 'sync', 'tax', 'taxImport'],
+      ['alv', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'stundenlohn', 'sync', 'tax'],
     );
   });
 

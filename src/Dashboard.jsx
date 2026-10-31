@@ -931,7 +931,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           ] },
           { label: t('dashboard.toolGroups.money'), items: [
             { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
-            { label: t('nav.taxImport'), sub: t('nav.sub.taxImport'), view: 'taxImport', icon: 'document' },
             { label: t('budgetSync.title'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
             { label: t('nav.mietzins'), sub: t('nav.sub.mietzins'), view: 'mietzins', icon: 'home' },
             { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },

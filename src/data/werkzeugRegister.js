@@ -30,8 +30,7 @@ export const OBEN = 'oben';
 // Links «globe», Flyer «qr» statt dreimal «dokumentTresor». Wächter: zeichenEineQuelle.test.js.
 export const WERKZEUGE = [
   // ── Portemonnaie (Geld) — Entscheid 25.09.2026 ──
-  { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot'] },
-  { view: 'taxImport', nav: 'nav.taxImport', sub: 'nav.sub.taxImport', icon: 'document', fach: 'geld', aliases: ['steuerimport', 'import', 'steuererklärung'] },
+  { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot', 'steuerimport', 'import', 'steuererklärung'] },
   // Seit 27.10.2026 (F7-L7) ein Eintrag: der CSV-Import ist ein Teil des Monatsbudgets; `budget` ist ein
   // Alias (utils/hashRouter.js UMLEITUNGEN). Seine Suchwörter stehen jetzt hier. Name wie der Seitentitel
   // («Monatsbudget», budgetSync.title) — vorher hiess der Eintrag «Budget-Sync» (nav.budgetSync, entfernt).

@@ -20,6 +20,9 @@ import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
 
+const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
+const TAX_IMPORT_ANKER = 'mp-steuer-import';
+
 // E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
 // docs/sources/kantonssteuer-tabelle-2026.md) — dieselbe Regel wie FinanzUebersicht und
 // BehoerdenDossier. Zahl nur, wo die Tabelle trägt; sonst der Weg zum amtlichen Rechner.
@@ -76,7 +79,7 @@ export const steuerAnsageText = (t, teile) => teile.length
   ? t('tax.ansageHinweis', { teile: teile.map((k) => t(TEIL_TEXT[k])).join(', ') })
   : t('tax.ansageZahlen');
 
-export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig }) => {
+export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, vorlaeufig }) => {
   const isMobile = useIsMobile();
   const hh = getHouseholdInfo(data);
   const deductions = [
@@ -93,6 +96,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
   const [canton, setCanton] = useState(() => steuerkantonVorbelegung(data));
   const [frage, setFrage] = useState(false);
   const [uebernommen, setUebernommen] = useState(false);
+  const [importOffen, setImportOffen] = useState(false);
   const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
   const [kinder, setKinder] = useState(hh.childrenCount);
   // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete: nur mit ausdrücklicher Bestätigung
@@ -143,6 +147,18 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
   const taxResult = steuern.bund;
   const taxableIncome = steuern.steuerbar ?? 0;
   const estimatedTax = taxResult ? taxResult.steuer : 0;
+
+  // F7-L8: Der Import schreibt ins Kapitel Finanzen; was der Rechner aus dem Profil liest, kommt damit von selbst.
+  // Nur das steuerbare Einkommen hält er in eigenem Zustand — es zählt ab jetzt, wenn das Feld leer war.
+  const importUebernehmen = (merged) => {
+    onImport(merged);
+    if (!taxableInput && merged.taxableIncome) {
+      setTaxableInput(String(merged.taxableIncome));
+      setUseEnteredTaxable(true);
+    }
+  };
+
+  const erfasst3a = (max) => Math.min(Number(data.finanzen?.pension3a) || 0, max);
 
   const handleInputChange = (key, value) => {
     setTaxData(prev => ({ ...prev, [key]: Number(value) || 0 }));
@@ -204,6 +220,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: space.md, marginBottom: '20px' } },
       // Left side: Input
       React.createElement('div', null,
+        // F7-L8 (31.10.2026): der Steuer-Import als ruhige Zeile. `springeZuAnker` klappt sie für den alten Link
+        // `#/taxImport` auf; erst offen wird TaxImport geladen.
+        onImport && React.createElement('details', { id: TAX_IMPORT_ANKER, onToggle: (e) => setImportOffen(e.currentTarget.open), style: { marginBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
+          React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, color: palette.text } }, t('tax.ausSteuererklaerung')),
+          importOffen && React.createElement(React.Suspense, { fallback: null },
+            React.createElement(TaxImport, { palette, t, currentFinanzen: data.finanzen || {}, onImport: importUebernehmen }))),
         React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('tax.inputs')),
 
         React.createElement(LabeledField, { palette, label: t('tax.taxCanton'), style: { marginBottom: space.md } },
@@ -299,7 +321,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
               style: inputStyle
             })
           ),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, 'Max: ' + betrag(ded.max, { hoechstens: 2 }))
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, 'Max: ' + betrag(ded.max, { hoechstens: 2 })),
+          // F7-L8: Die Einzahlungen stehen im Kapitel Finanzen (Säule-3a-Tracker). Hier auf Klick, nicht still —
+          // der Abzug ändert die Schätzung, und im Rechner darf man bewusst etwas anderes durchspielen.
+          ded.key === 'pension3a' && erfasst3a(ded.max) > 0 && Number(taxData.pension3a) !== erfasst3a(ded.max) && React.createElement('button', {
+            type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker', onClick: () => handleInputChange('pension3a', erfasst3a(ded.max)),
+            style: { minHeight: '44px', padding: 0, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep, textAlign: 'left' },
+          }, t('tax.aus3aUebernehmen', { betrag: betrag(erfasst3a(ded.max), { hoechstens: 2 }) }))
         ))
       ),
 

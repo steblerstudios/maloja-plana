@@ -57,7 +57,6 @@ import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
 const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
 // BudgetImport: seit 27.10.2026 keine eigene Seite — Teil «CSV importieren» im Monatsbudget (UMLEITUNGEN, BudgetSync.jsx).
-const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
 const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
 const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
 const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
@@ -1670,12 +1669,6 @@ const AppInner = ({ demo }) => {
             });
           }
         }),
-        view === 'taxImport' && React.createElement(TaxImport, {
-          palette, t,
-          currentFinanzen: activeData.finanzen || {},
-          onImport: (merged) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...merged } })),
-          onNavigate: handleNavigate,
-        }),
         view === 'schulden' && React.createElement(SchuldenManager, {
           key: datenModus,
           palette, t, vorlaeufig,
@@ -1690,6 +1683,7 @@ const AppInner = ({ demo }) => {
           key: datenModus,
           palette, t, vorlaeufig,
           data: activeData,
+          onImport: (merged) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...merged } })),
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
           onNavigate: handleNavigate,
         }),

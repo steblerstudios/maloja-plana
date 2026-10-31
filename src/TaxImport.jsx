@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { betrag } from './utils/geld.js';
 
-// Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung.
+// Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung. Seit F7-L8 (31.10.2026) ein
+// aufklappbarer Teil des Steuer-Rechners: er wird erst beim Aufklappen geladen und belastet das Startbündel nicht.
 // Spiegelt das Muster von BudgetImport: Datei wählen -> Vorschau -> bestätigen.
 // Überschreibt bewusst nie bestehende Werte (fill-if-empty).
-export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNavigate }) => {
+export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport }) => {
   const [importing, setImporting] = useState(false);
   const [preview, setPreview] = useState(null);
   const [importError, setImportError] = useState(null);
+  const [uebernommen, setUebernommen] = useState(false);
 
   const fmt = (n) => betrag(n, { hoechstens: 2 });
 
@@ -22,6 +24,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
     setImporting(true);
     setImportError(null);
     setPreview(null);
+    setUebernommen(false);
     try {
       const { matched, unmatched } = await importTaxFromFile(file);
       const { applied, kept } = applyTaxToFinanzen(matched, currentFinanzen);
@@ -39,10 +42,10 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
     const { merged } = applyTaxToFinanzen(preview.matched, currentFinanzen);
     onImport(merged);
     setPreview(null);
-    if (onNavigate) onNavigate('finanzuebersicht');
+    setUebernommen(true);
   };
 
-  const card = { background: palette.surface, padding: '20px', borderRadius: radius.md, border: '1px solid ' + palette.border };
+  const card = { minWidth: 0 };
 
   const fieldRow = (f, mode) => React.createElement('div', {
     key: mode + f.target,
@@ -61,11 +64,9 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
   return React.createElement('div', { style: { maxWidth: '760px' } },
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px 0' } }, t('taxImport.intro')),
 
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' } },
       // Upload
       React.createElement('div', { style: card },
-        React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('taxImport.title')),
-
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: '.csv,.txt,.tsv,.xml,.tax', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('taxImport.selectFile')),
@@ -112,6 +113,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
       )
     ),
 
+    uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.text, marginTop: space.md + 'px' } }, hinweisZeichen('check'), t('taxImport.uebernommen')),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '16px' } }, hinweisZeichen(), t('trust.localOnly'))
   );
 };

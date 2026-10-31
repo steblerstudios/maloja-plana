@@ -1435,7 +1435,6 @@ export default {
     unfallkrankheit: 'Accident or illness',
     neuerjob: 'New job',
     stelleverloren: 'Lost your job',
-    taxImport: 'Tax import',
     search: 'Search',
     menu: 'Menu',
     erfassen: 'Add',
@@ -1529,7 +1528,6 @@ export default {
       unfallkrankheit: 'What to do — and who pays',
       neuerjob: 'Contract, pension, taxes, deadlines',
       stelleverloren: 'RAV, insurances, pension',
-      taxImport: 'Transfer key figures from your tax return',
       search: 'Find tools & chapters',
       budgetSync: 'Income and expenses in detail',
       kvgIpv: 'Check eligibility',
@@ -3208,6 +3206,8 @@ export default {
   },
 
   tax: {
+    aus3aUebernehmen: "Take over {betrag} from the Finances chapter ›",
+    ausSteuererklaerung: "Take over from the tax return",
     abzuegeGeschaetzt: 'Deductions (estimate)',
     title: 'Taxes',
     intro: 'This overview gives you a rough estimate of your tax burden — as orientation, not tax advice. You can try different deductions and see how your situation changes.',
@@ -4023,6 +4023,7 @@ export default {
   },
 
   taxImport: {
+    uebernommen: "Taken over. The details are in the Finances chapter.",
     title: 'Tax data import',
     intro: 'Transfer the key figures from your tax return — income, assets and tax amount. Everything stays on your device; the file is only read locally.',
     selectFile: 'Choose file',

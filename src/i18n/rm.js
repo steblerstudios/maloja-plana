@@ -1732,7 +1732,6 @@ export default {
     unfallkrankheit: 'Accident u malsauna',
     neuerjob: 'Nov job',
     stelleverloren: 'Plazza persa',
-    taxImport: 'Import da taglia',
     search: 'Tschertgar',
     notifications: 'Communicaziuns',
     installApp: 'Installar sco app',
@@ -1866,7 +1865,6 @@ export default {
       unfallkrankheit: 'Tge far — e tgi paja',
       neuerjob: 'Contract, prevenziun, taglias, termins',
       stelleverloren: 'URC, assicuranzas, prevenziun',
-      taxImport: 'Surpigliar las valurs centralas da la decleraziun da taglia',
       search: 'Chattar utensils & chapitels',
       // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
       budgetSync: 'Entradas ed expensas en detagl',
@@ -4872,6 +4870,10 @@ export default {
   },
 
   tax: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    aus3aUebernehmen: "Surpigliar {betrag} dal chapitel Finanzas ›",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    ausSteuererklaerung: "Surpigliar da la decleraziun da taglia",
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     abzuegeGeschaetzt: 'Deducziuns (stima)',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
@@ -6234,6 +6236,8 @@ export default {
   },
 
   taxImport: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    uebernommen: "Surpiglià. Las indicaziuns èn en il chapitel Finanzas.",
     title: 'Import da datas da taglia',
     intro: 'Surpigliar las valurs centralas da la decleraziun da taglia — entrada, facultad ed import da taglia. Tut resta sin l\'apparat; la datoteca vegn legida mo localmain.',
     selectFile: 'Tscherner datoteca',
