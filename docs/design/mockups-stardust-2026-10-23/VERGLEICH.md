@@ -1513,3 +1513,24 @@ Haftpflicht gesetzlich nicht vorgeschrieben (Vermieter, Hund); UVG-Zusatz freiwi
 
 **Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 · F7-L9 · F7-K5-1.
 Hinweis: F7-K3-4 ist mit dem Netz-Schild zum Teil überholt, D10 und K3-2 hängen am alten Schild auf Dashboard und Übersicht.
+
+### Gebaut auf dem Sammelzweig (31.10.2026, Sophie: «Ja, weiterbauen»)
+
+Zweig `integration/f7-sammel`, nicht gepusht, nicht in `main`. Je ein Commit, Wächter im selben Commit.
+
+- **F7-K4-2:** Maria ist «Pflegefachfrau FH».
+- **F7-K6-1:** Patientenverfügung nur im Block «Vorsorge». Die Antwort «vorhanden?» zog dorthin um, weil das Formular sie
+  nicht setzt; «Bereit» springt dorthin. Bei «Ja» bleibt der Weg zum Formular.
+- **F7-K5-2:** Behörden zeigt nur das Testament mit Verweis auf Notfall › Vorsorge; der Ablauf steht unter «Passend» im Notfall.
+  Die Unterlagen-Liste von Behörden (`power_of_attorney`, `patientenverfuegung`) blieb unverändert: Ablage-Schlüssel.
+- **F7-R2:** Sozialhilfe rechnet IPV und EL nicht mehr; je eine Zeile nach «Was steht mir zu?».
+- **F7-R5:** Lebenslauf zeigt das Blatt aus dem Kapitel, «Als PDF drucken» mit Export-Vorschau, HTML und JSON unter «Weitere Formate».
+- **F7-L3:** Sechs Familien-Abläufe unter dem Abschnitt «Familie» bei «Passend» in Persönliche Basis.
+- **F7-L8:** Vorschlag gebaut: Import als `<details>` im Steuer-Rechner, erst beim Aufklappen geladen; `#/taxImport` leitet um und
+  klappt auf. Säule 3a: Abzug im Rechner bleibt eigene Eingabe, neu Knopf «aus dem Kapitel Finanzen übernehmen» (auf Klick, nie
+  still, weil es die Schätzung ändert). **Nicht zusammengelegt:** Kantonssteuer-Orientierung. Rechner und Finanzen nutzen dieselbe
+  Komponente; ohne sie stünde in Finanzen eine fehlende Kantonszahl ohne Begründung (`ERKLAERT_IN_ORIENTIERUNG`). Gehört zu F7-K5-1.
+- **F7-L1:** Nachgezählt. Ohne Kapitel-Eingang waren Organspende (neu Notfall › Passend) und «Jemand schuldet Geld» (neu Behörden ›
+  Passend). `aussteuerung` ist Umleitung, `notifications` kommt über die Einstellungen.
+- **F7-L2:** Nachgezählt: sieben Seiten ohne Weg. `components/SeitenSchluss.jsx`, nachgeladen, eine Tabelle: kk, sync, direktlinks,
+  export, notifications, flyer, installApp. Einstellungen bleiben ohne, das ist ein Systemziel.
