@@ -143,10 +143,12 @@ describe('Beträge je Versicherung (Sophie 27.10.2026)', () => {
     expect(text).toContain('CHF 420 / Mt. · CHF 5’040 / Jahr · Guthaben CHF 45’000 · über den Lohn abgezogen');
     expect(text).toContain('CHF 10 / Mt. · CHF 120 / Jahr · Versicherungssumme CHF 5’000’000');
     expect(text).toContain('CHF 20 / Mt. · CHF 240 / Jahr');
+    expect(text).toContain('CHF 38.50 / Mt. · CHF 462 / Jahr · Spital halbprivat');
+    expect(text).toContain('CHF 50 / Mt. · CHF 600 / Jahr');
     expect(html).toMatch(/data-betrag="uvg"[^>]*>läuft über den Arbeitgeber</);
   });
   it('ohne erfassten Betrag keine Zahl — nie geschätzt', () => {
-    expect(html).not.toContain('data-betrag="leben"');
+    expect(html).not.toContain('data-betrag="uvgZusatz"');
   });
   it('Texte in fünf Sprachen', () => {
     for (const sprache of [de, en, fr, it_, rm]) for (const k of ['kosten', 'guthaben', 'summe', 'lohn', 'arbeitgeber']) expect(sprache.netzSchild.betrag[k]).toBeTruthy();

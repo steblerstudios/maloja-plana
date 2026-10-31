@@ -32,7 +32,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const v = versicherungen || {};
   const daten = { ...(allData || {}), versicherungen: v };
   const p = monatsAusgaben(daten);
-  const summe = p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
+  const summe = p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
 
   const [franchiseOpt, setFranchiseOpt] = useState(null);
   const plz = daten.wohnen?.postalCode, kasse = v.kkInsurer, geburt = daten.basis?.dateOfBirth;
