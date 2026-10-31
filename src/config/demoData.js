@@ -100,6 +100,7 @@ export const DEMO_DATA = {
     certifications: 'CAS Notfallpflege',
     employer: 'Kantonsspital Zürich',
     jobTitle: 'Pflegefachfrau HF',
+    branche: 'gesundheit',
     employmentStart: '2019-04-01',
     workPermit: 'swiss',
     workHoursPerWeek: '42',

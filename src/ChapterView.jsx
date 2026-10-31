@@ -2381,6 +2381,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextFamilienzulagen'))),
 
+    // F7-K2-5 (Sophie 27.10.2026): Die Auswertung (Lebensbaum, Lohn, Steuern, IPV, KK-Last, Vermögen) steht vor
+    // den Angaben, wie die Instrumente der anderen Kapitel — vorher kam sie erst nach dem ganzen Formular
+    // (finanzen-fusion.md §3, Entscheid 2 «nach den Angaben»; damit überholt).
+    istFinanzen && renderAuswertung('oben'),
+
     // Tabs
     // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
     // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
@@ -2583,7 +2588,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Fassung 5 · Finanzen: «Passend zu diesem Bereich» und «Als Nächstes» (Entscheid 23.10.2026).
     // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
     // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
-    istFinanzen && renderAuswertung('oben'),
     // Fassung 6 (Runde 9): «Passend» und «Als Nächstes» in jedem Kapitel. Notfall: die drei Lagen
     // stehen seit AE zugeklappt in «Bereit für den Ernstfall»; das letzte Kapitel endet mit «Alle
     // Kapitel durchgegangen».

@@ -256,6 +256,7 @@ const generatePrintHTML = (t, data, w) => {
 export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
+  const eigeneBranche = BRANCHENLOHN.find((b) => b.key !== 'gesamt' && b.key === data?.ausbildung?.branche) || null;
   const { income, sozialhilfe, hh, totalIncome, bruttoDabei } = w;
   if (!(income > 0)) return null;
   // Das Lohn-Barometer trägt die Lohnniveau-Einordnung — belegt (LSE 2024:
@@ -315,7 +316,9 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
           freibetrag: formatCHF(AHV_FREIBETRAG_RENTNER_MONAT),
         }))
     ),
-    React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate, aktuellesKapitel }),
+    // F7-K2-6 (Sophie 27.10.2026): Die eigene Branche (Feld im Kapitel Ausbildung & Arbeit) steht als Marke auf dem
+    // Barometer, solange keine andere angetippt ist; die übrigen 17 sind aufklappbar.
+    React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche || eigeneBranche, onNavigate, aktuellesKapitel }),
     (() => {
       const vgl = getBranchenvergleich(income);
       if (!vgl) return null;
@@ -332,11 +335,9 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
         React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
           t('finanzUebersicht.branchenvergleich')
         ),
-        React.createElement('div', {
-          style: { display: 'flex', flexWrap: 'wrap', gap: '4px' }
-        },
-          BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b => {
-            const sel = selBranche && selBranche.key === b.key;
+        (() => {
+          const chip = (b) => {
+            const sel = (selBranche || eigeneBranche) && (selBranche || eigeneBranche).key === b.key;
             const reached = vergleichsLohn >= b.lohn;
             const toggle = () => setSelBranche(sel ? null : b);
             return React.createElement('span', {
@@ -360,8 +361,22 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
                 whiteSpace: 'nowrap',
               }
             }, t('branche.' + b.key) + ' ’' + String(b.jahr).slice(2));
-          })
-        ),
+          };
+          const reihe = (liste) => React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '4px' } }, liste.map(chip));
+          const andere = BRANCHENLOHN.filter((b) => b.key !== 'gesamt' && b.key !== eigeneBranche?.key).sort((a, b) => a.lohn - b.lohn);
+          const zuklapp = (label) => React.createElement('details', { style: { marginTop: eigeneBranche ? '6px' : 0 } },
+            React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.xs, color: palette.sandDeep || palette.text, minHeight: '32px', display: 'flex', alignItems: 'center' } }, label),
+            React.createElement('div', { style: { marginTop: '4px' } }, reihe(andere)));
+          return eigeneBranche
+            ? React.createElement(React.Fragment, null,
+                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
+                  React.createElement('span', { style: { fontSize: text.xs, color: palette.text } }, t('finanzUebersicht.eigeneBranche')),
+                  chip(eigeneBranche)),
+                zuklapp(t('finanzUebersicht.andereBranchen', { n: andere.length })))
+            : React.createElement(React.Fragment, null,
+                zuklapp(t('finanzUebersicht.brancheVergleichen', { n: andere.length })),
+                React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '4px' } }, t('finanzUebersicht.brancheAngeben')));
+        })(),
         React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '6px' } },
           t('finanzUebersicht.branchenQuelle')
         )
