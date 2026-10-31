@@ -204,7 +204,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
           const anspruchLabel = hasAnspruch ? t('anspruch.items.' + sigList[0].key + '.label')
             + (sigList[0].mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : null;
           const anspruchGo = hasAnspruch
-            ? () => (sigList.length === 1 && sigList[0].view ? onNavigate(sigList[0].view) : onNavigate('ansprueche'))
+            ? () => (sigList.length === 1 && sigList[0].view ? onNavigate(sigList[0].view) : onNavigate('situationen'))
             : null;
           return React.createElement('div', { key: b.key, style: { display: 'contents' } },
             React.createElement('button', {

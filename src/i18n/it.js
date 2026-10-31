@@ -1666,6 +1666,24 @@ export default {
     footNote: { sie: 'Questa panoramica non giudica e non promette nulla — mostra solo ciò che potrebbe riguardarla. Il diritto effettivo lo stabilisce l’organo competente.', du: 'Questa panoramica non giudica e non promette nulla — mostra solo ciò che potrebbe riguardarti. Il diritto effettivo lo stabilisce l’organo competente.' },
   },
 
+  // «Was steht mir zu?» in un’unica pagina (decisione O, VERGLEICH.md; costruita il 27.10.2026, F7-A3).
+  wasStehtMirZu: {
+    intro: { sie: 'Molte persone hanno diritto a prestazioni senza saperlo. Qui vede che cosa entra in considerazione con i suoi dati — e che cosa corrisponde alla sua situazione di vita. Tutto resta sul suo dispositivo — nessun profilo, nessuna valutazione.', du: 'Molte persone hanno diritto a prestazioni senza saperlo. Qui vedi che cosa entra in considerazione con i tuoi dati — e che cosa corrisponde alla tua situazione di vita. Tutto resta sul tuo dispositivo — nessun profilo, nessuna valutazione.' },
+    mitAngaben: { sie: 'Con i suoi dati', du: 'Con i tuoi dati' },
+    anpassen: 'Modificare i dati per fare una prova',
+    lebenslage: { sie: 'In base alla sua situazione di vita', du: 'In base alla tua situazione di vita' },
+    ergebnisKeiner: 'Con questi dati non emerge un chiaro diritto a un importo — le vie qui sotto coprono di più; la maggior parte non dipende solo dal reddito.',
+    ergebnisEiner: 'Con questi dati emerge una via possibile: {weg}.',
+    ergebnisMehrere: 'Con questi dati emergono vie possibili: {wege}.',
+    markeNetto: 'Netto {betrag} / mese',
+    markeNettoGeschaetzt: 'Netto ≈ {betrag} / mese (stimato)',
+    markeMiete: 'Affitto {betrag}',
+    markeKK: 'Cassa malati {betrag}',
+    markeHaushalt: '{canton} · {size} persona/e',
+    schrittTitel: 'Meglio passo passo?',
+    schrittSub: { sie: 'Verifica guidata — reddito, situazione di vita, la sua panoramica', du: 'Verifica guidata — reddito, situazione di vita, la tua panoramica' },
+  },
+
   anspruchCheck: {
     stepWord: 'Passo',
     stepIncome: 'In base al reddito',
@@ -3054,7 +3072,7 @@ export default {
     eligibleAntrag: 'Importo possibile — solo su domanda',
     disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
     notEligible: 'Non avente diritto',
-    schnellcheckGerechnet: 'Calcolato con le cifre della verifica rapida',
+    schnellcheckGerechnet: 'Calcolato con le cifre di «A cosa ho diritto?»',
     schnellcheckProfilBleibt: { sie: 'Il Suo profilo resta invariato finché non vi riprende le cifre.', du: 'Il tuo profilo resta invariato finché non vi riprendi le cifre.' },
     schnellcheckUebernehmen: 'Riprendere nel profilo',
     schnellcheckUebernommen: 'Ripreso nel profilo',

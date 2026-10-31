@@ -46,6 +46,9 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      über der Versicherungs-Übersicht (Runde 9 AB, 25.10.2026), keine frühere Seite.
 //   unterlagen       → Dokumentenablage, Abschnitt «Meine Unterlagen» unten (24.10.2026, Gruppe H;
 //                      Wächter: unterlagenUmleitung.test.js). Auch die Brotkrumen der Dossiers zeigen hierher.
+//   schnellcheck,    → «Was steht mir zu?» (situationen), Sprungmarke «Mit Ihren Angaben» (Entscheid O, 24.10.2026;
+//   ansprueche         gebaut 27.10.2026, F7-A3/L5 Gruppe A; Wächter: anspruchUmleitung.test.js). Die Marke
+//                      steht als Literal hier — Lebenssituationen.jsx lädt erst bei Bedarf (MIT_ANGABEN_ANKER).
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
@@ -54,6 +57,8 @@ export const UMLEITUNGEN = {
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
   unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },
   versicherungskapitel: { view: 'chapter', chapterIndex: 3, anker: null },
+  schnellcheck: { view: 'situationen', chapterIndex: null, anker: 'mp-mit-angaben' },
+  ansprueche: { view: 'situationen', chapterIndex: null, anker: 'mp-mit-angaben' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
