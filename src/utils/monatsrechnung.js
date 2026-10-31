@@ -32,7 +32,7 @@ const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x :
 
 // Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG
 // fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur als
-// Referenz). Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Säule 3a) sind durch 12 geteilt.
+// Referenz). Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Unfall-Zusatz, Leben, Säule 3a) sind durch 12 geteilt.
 export function monatsAusgaben(profilDaten) {
   const data = profilDaten || {};
   return {
@@ -46,6 +46,12 @@ export function monatsAusgaben(profilDaten) {
     // «Versicherung vorhanden? Nein» — ein stehengebliebener Betrag zählt nicht.
     householdInsurance: data.versicherungen?.householdInsurance === 'no' ? 0 : n(data.versicherungen?.householdInsuranceAmount) / 12,
     liabilityInsurance: data.versicherungen?.liabilityInsurance === 'no' ? 0 : n(data.versicherungen?.liabilityPremium) / 12,
+    // Prämien aus dem Kapitel Versicherungen, seit 31.10.2026 (F7-K3-6, Sophie «überall die Zahlen»): Zusatz monatlich,
+    // Leben und Unfall-Zusatz als Jahresbetrag. Der Unfall-Zusatz nur, wenn selbst bezahlt — das sagt der Hinweis am
+    // Feld; ein Abzug vom Lohn steckt schon im Nettolohn wie BVG und AHV.
+    kkZusatz: n(data.versicherungen?.kkZusatzPremium),
+    uvgZusatz: data.versicherungen?.uvgZusatz === 'no' ? 0 : n(data.versicherungen?.uvgZusatzPremium) / 12,
+    lifeInsurance: data.versicherungen?.lifeInsurance === 'no' ? 0 : n(data.versicherungen?.lifeInsurancePremium) / 12,
     otherInsurance: n(data.finanzen?.otherInsurance),
     groceries: n(data.finanzen?.groceries),
     communication: n(data.finanzen?.communication),

@@ -70,7 +70,6 @@ const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
-const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
@@ -1849,7 +1848,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // sobald eines Daten trägt, und eingeklappt steht der App-Hinweis «Einige ausgeblendete
   // Bereiche enthalten bereits Daten.». Andere Kapitel bleiben, wie sie waren.
   const istFinanzen = chapter.key === 'finanzen';
-  const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
+  // Prämie ohne ihre Versicherung (31.10.2026): leer ist das Feld weg und zählt nicht als «nicht erfasst» — wer keine
+  // Lebensversicherung hat, dem fehlt keine Prämie. Es erscheint, sobald die Versicherung erfasst ist; ein eingetragener
+  // Betrag verschwindet nie still.
+  const praemieOhneVersicherung = (f) => !feldHatWert(data, f.k) && (
+    (f.k === 'kkZusatzPremium' && !data.kkZusatz) || (f.k === 'uvgZusatzPremium' && data.uvgZusatz !== 'yes') || (f.k === 'lifeInsurancePremium' && data.lifeInsurance !== 'yes'));
+  const feldSichtbar = (f) => !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
   // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
   // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),
@@ -2080,7 +2084,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const renderDoppeltVersichert = () => {
     const v = allData?.versicherungen || {};
     const weitere = Number(data.otherInsurance) > 0;
-    const praemie = Number(v.householdInsuranceAmount) > 0 || Number(v.liabilityPremium) > 0;
+    const praemie = [v.householdInsuranceAmount, v.liabilityPremium, v.kkZusatzPremium, v.uvgZusatzPremium, v.lifeInsurancePremium].some((x) => Number(x) > 0);
     return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
       tr('chapters.finanzen.monat.doppeltVersichert'));
   };
@@ -2089,7 +2093,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const teile = [
       // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
+      { key: 'versicherungen', wert: p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
@@ -2440,19 +2444,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           tr('trust.chapterTrust')
         )
       ),
-      // Versicherungen: das Netz über den Abschnitten, sobald etwas eingetragen ist. Ein Tipp
-      // auf eine Achse öffnet den Abschnitt darunter und springt hin (id mp-section-<erstes Feld>).
-      chapter.key === 'versicherungen' && filledCount > 0 && React.createElement(React.Suspense, { fallback: null },
-        React.createElement(VersicherungsNetz, {
-          chapter, data, palette, tr,
-          onAbschnitt: (key) => {
-            setOffeneAbschnitte((o) => ({ ...o, [key]: true }));
-            // Erst nach dem Zeichnen des aufgeklappten Abschnitts springen: mit requestAnimationFrame
-            // lief der Sprung zu früh und die Seite blieb stehen (im Browser gemessen 24.10.2026).
-            setTimeout(() => document.getElementById('mp-section-' + key)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
-          },
-        })
-      ),
+      // Versicherungen: das Spinnennetz stand hier bis 27.10.2026; seither zeigt das Netz-Schild oben
+      // (components/NetzSchild.jsx, F7-K3-6), was gedeckt ist.
       abschnittsliste()
     ),
 

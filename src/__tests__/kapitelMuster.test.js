@@ -63,9 +63,17 @@ describe('M1 · Feldnamen ohne das, was der Wert schon sagt', () => {
 
 describe('M2 · «x von n» und das Fehlende', () => {
   it('am Abschnitt «x von n», das Übrige leise in «Nicht erfasst: …»', () => {
-    const html = render('versicherungen');
+    const html = render('versicherungen', { ...DEMO_DATA.versicherungen, kkZusatz: '', kkZusatzPremium: '' });
     expect(html).toMatch(/data-erfasst="6\/7"[^>]*><span aria-hidden="true">6 von 7<\/span><span[^>]*>6 von 7 Angaben erfasst</);
     expect(nurText(html)).toContain('Nicht erfasst: Zusatzversicherung.');
+  });
+  it('Prämie nur mit ihrer Versicherung: ohne Lebensversicherung fehlt keine Prämie (31.10.2026)', () => {
+    const ohne = { ...DEMO_DATA.versicherungen, lifeInsurance: 'no', lifeInsurancePremium: '' };
+    expect(nurText(render('versicherungen', ohne))).not.toContain('Lebensversicherung Prämie');
+    const mit = nurText(render('versicherungen', { ...ohne, lifeInsurance: 'yes' }));
+    expect(mit).toContain('Lebensversicherung Prämie');
+    const betrag = nurText(render('versicherungen', { ...DEMO_DATA.versicherungen, lifeInsurance: 'no', lifeInsurancePremium: '600' }));
+    expect(betrag).toContain('Lebensversicherung Prämie');
   });
   it('wichtige leere Felder (Grundordnung, empfohlen) mit «ergänzen ›»', () => {
     const html = render('basis', { ...DEMO_DATA.basis, phone: '' });

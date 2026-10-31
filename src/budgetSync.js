@@ -11,7 +11,7 @@ import { monatsAusgaben } from './utils/monatsrechnung.js';
 // See docs/product/budget-light-v1.md for product definition
 export const BUDGET_GROUPS = [
   { key: 'housing', fields: ['rent', 'utilities', 'mortgage', 'buildingsInsurance'] },
-  { key: 'insuranceHealth', fields: ['healthInsurance', 'householdInsurance', 'liabilityInsurance', 'otherInsurance'] },
+  { key: 'insuranceHealth', fields: ['healthInsurance', 'kkZusatz', 'uvgZusatz', 'lifeInsurance', 'householdInsurance', 'liabilityInsurance', 'otherInsurance'] },
   { key: 'living', fields: ['groceries', 'communication', 'childcare'] },
   { key: 'mobility', fields: ['mobility'] },
   { key: 'taxProvision', fields: ['tax', 'pension3a'] },
@@ -305,7 +305,7 @@ export const createBudgetReport = (data, t) => {
       },
       expenses: {
         housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0) + (budget.expenses.buildingsInsurance || 0),
-        insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.householdInsurance || 0) + (budget.expenses.liabilityInsurance || 0) + (budget.expenses.otherInsurance || 0),
+        insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.kkZusatz || 0) + (budget.expenses.uvgZusatz || 0) + (budget.expenses.lifeInsurance || 0) + (budget.expenses.householdInsurance || 0) + (budget.expenses.liabilityInsurance || 0) + (budget.expenses.otherInsurance || 0),
         living: (budget.expenses.groceries || 0) + (budget.expenses.communication || 0) + (budget.expenses.childcare || 0),
         mobility: budget.expenses.mobility || 0,
         taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0),

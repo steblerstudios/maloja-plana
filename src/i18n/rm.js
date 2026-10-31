@@ -2232,7 +2232,7 @@ export default {
         eigenFehlen: "Cun l'atgna entrada mancan mintga mais",
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
-        doppeltVersichert: "Èn ménaschi u responsabladad civila era cuntegnids en «Ulteriuras assicuranzas»? Lura po l’import là vegnir reducì. En il budget quintan els gia sur il chapitel Assicuranzas.",
+        doppeltVersichert: "Èn premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) era cuntegnidas en «Ulteriuras assicuranzas»? Lura po l’import là vegnir reducì. En il budget quintan ellas gia sur il chapitel Assicuranzas.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         // rm ungeprüft F5
         vonEinkommenNetto: "da {betrag} entrada netta",
         // rm ungeprüft F5
@@ -2329,7 +2329,7 @@ export default {
         communication: 'Internet, telefon mobil, telefon fix per mais.',
         mobility: 'AG, Halbtax, abunament u custs dad auto per mais.',
         childcare: "Cresch, scola da di, mamma da di — custs mensils.",
-        otherInsurance: "Protecziun giuridica, supplement CM ed autras ensemen per mais. Ménaschi e responsabladad civila èn gia en il budget sur il chapitel Assicuranzas.",
+        otherInsurance: "Protecziun giuridica ed autras ensemen per mais. Premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) èn gia en il budget.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         alimenteReceived: { sie: 'Contribuziuns da mantegniment che Vus retschavais per mais.', du: 'Contribuziuns da mantegniment che Ti retschaivas per mais.' },
         alimentePaid: { sie: 'Contribuziuns da mantegniment che Vus pajais per mais.', du: 'Contribuziuns da mantegniment che Ti pajas per mais.' },
         debtPayments: 'Ratas mensualas per debits currents u pajaments.',
@@ -2377,7 +2377,9 @@ export default {
         kkCardNumber: 'Nr. da la carta CM',
         policyNumber: 'Numer da polissa',
         kkZusatz: 'Assicuranza cumplementara',
+        kkZusatzPremium: "Premia supplementara per mais CHF", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         lifeInsurance: { label: 'Assicuranza da vita', options: { no: 'Na', yes: 'Gea' } },
+        lifeInsurancePremium: "Premia d’assicuranza da vita CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         freizuegigkeit: 'Conto/polissa da liber passadi',
         legalInsurance: { label: 'Assicuranza da protecziun giuridica', options: { no: 'Na', yes: 'Gea' } },
         childInsurance: { label: 'Assicuranzas per uffants', options: { no: 'Na', yes: 'Gea' } },
@@ -2385,6 +2387,8 @@ export default {
         bvgBalance: 'Avair LPP actual CHF',
         // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
+        uvgZusatz: { label: 'Assicuranza supplementara d’accident', options: { yes: 'Gea', no: 'Na / nunenconuschent' } }, // TODO(rm): provisorisch
+        uvgZusatzPremium: "Premia supplementara d’accident CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
@@ -2411,6 +2415,7 @@ export default {
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
         ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Voss salari en cas da malsogna.", du: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Tes salari en cas da malsogna." },
+        uvgZusatzPremium: { sie: "Inditgar mo sche Vus pajais la premia sezs. Quai che vegn deducì dal salari è gia en il salari net.", du: "Inditgar mo sche ti pajas la premia sez. Quai che vegn deducì dal salari è gia en il salari net." }, // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       },
       docs: {
         kkPolice: 'Polizza da la cassa da malsauns',
@@ -4548,9 +4553,14 @@ export default {
     hausrat: "Ménaschi (CHF {jahr} / onn)",
     haftpflicht: "Responsabladad civila (CHF {jahr} / onn)",
     weitere: "Ulteriuras assicuranzas (chapitel Finanzas)",
+    kkZusatz: "Cassa da malsauns (supplement)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    uvgZusatz: "Supplement d’accident (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    leben: "Assicuranza da vita (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nichtErfasst: "{liste}: premia betg endatada.",
     nameHausrat: "Ménaschi",
     nameHaftpflicht: "Responsabladad civila",
+    nameKkZusatz: "Supplement CM", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    nameLeben: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nameKK: "Cassa da malsauns",
     fahrzeug: "L’assicuranza dal vehichel na quinta betg qua — ils custs da l’auto tutgan en il chapitel Finanzas tar «Mobilitad».",
     pk: "La cassa da pensiun (CHF {betrag}) è gia deducida da la paja.",
@@ -6183,6 +6193,9 @@ export default {
       householdInsurance: "Ménaschi",
       liabilityInsurance: "Responsabladad civila",
       otherInsurance: 'Ulteriuras assicuranzas',
+      kkZusatz: "Supplement CM", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+      uvgZusatz: "Supplement d’accident", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+      lifeInsurance: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       groceries: 'Vivondas & menaschi',
       communication: 'Internet & telefon',
       childcare: "Tgira d'uffants",
@@ -7281,6 +7294,25 @@ export default {
     steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
     setup: 'tutgar per configurar',
   },
+  // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)
+  netzSchild: {
+    intro: 'Ina part per sectur. Pli bler ch’è cuvrì, pli fitg s’empleni ella; in pitschen nucleus vul dir: anc nagut cuvrì.',
+    aria: 'Stemma da secturs d’assicuranza.',
+    offen: 'anc betg cuvrì',
+    gedeckt: 'cuvrì',
+    vonN: '{n} da {total}',
+    nochOffen: 'Anc betg cuvrì: {liste}.',
+    teilweise: 'Per part: {liste}.',
+    ganz: 'Tut las parts èn cuvridas cumplainamain.',
+    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
+    vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad privata', hausrat: 'Inventari', leben: 'Assicuranza da vita' },
+    art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
+    haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens, cun in chaun è ella obligatorica en blers chantuns.',
+    hausratPruefen: 'Obligaziun d’inventari: p.pl. confermar tar l’assicuranza chantunala d’edifizis — la funtauna n’è anc betg verifitgada.',
+    unfall8h: 'Sut 8 uras per emna tar il medem patrun n’èn ils accidents en il temp liber betg assicurads tras el, mabain tras la cassa da malsauns (OAINF art. 13).',
+    betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari', arbeitgeber: 'via il patrun' },
+  },
+
   schutzschild: {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',
