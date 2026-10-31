@@ -3,7 +3,7 @@ import { zahl } from './utils/geld.js';
 import { PanelTitle } from './components/Heading.jsx';
 import { Pegel } from './components/Pegel.jsx';
 import { sozialhilfePegelState } from './data/pegel.js';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
+import { calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
 import { rueckerstattungsFreibetrag } from './data/sozialhilfeRechner.js';
 import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -18,7 +18,6 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const canton = data.basis?.canton || '';
   const sozialhilfe = calculateSozialhilfe(data);
-  const ipv = calculateIPV(data);
   const el = checkELEligibility(data);
   // Rückerstattungs-Rechner (Orientierung): eigener, höherer Freibetrag als beim
   // laufenden Bezug (30/50/+15). Haushalt aus dem Profil vorbelegt. Erbschafts-
@@ -46,7 +45,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     );
 
   // Rechner-Form X (F7-A2, 27.10.2026): die Seite IST der Rechner. Kopf, Ergebnis und Angaben kommen aus
-  // SozialhilfeRechner (RechnerForm); die Orientierung aus dem Profil, IPV, EL und Rückerstattung stehen
+  // SozialhilfeRechner (RechnerForm); die Orientierung aus dem Profil und die Rückerstattung stehen
   // darunter (`weiteres`), «Nächste Schritte» als «was zu tun ist», die Stelle als Zeilen. Texte unverändert.
   const satz = React.createElement(React.Fragment, null, t('sozialhilfe.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('sozialhilfe.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') }));
   const stelle = React.createElement(OfficialLinkBox, { palette, t, data, ids: 'sozialhilfe', cantonalKey: 'sozialdienst', alsZeilen: true });
@@ -199,34 +198,15 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       )
     ),
 
-    // IPV Info
-    React.createElement('div', { style: { marginBottom: space.md } },
-      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'rechner', size: 20 }), style: { marginBottom: space.sm + 4 } }, t('sozialhilfe.ipvSection')),
-      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
-        ipv.eligible
-          ? React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs, fontSize: text.sm } }, hinweisZeichen('check'), t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
-              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipv.noteKey, ipv.noteParams))
-            )
-          : React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs, fontSize: text.sm } }, hinweisZeichen(), t(ipv.noteKey, ipv.noteParams))
-            )
-      )
-    ),
-
-    // EL Info
-    React.createElement('div', { style: { marginBottom: space.md } },
-      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'rechner', size: 20 }), style: { marginBottom: space.sm + 4 } }, t('sozialhilfe.elSection')),
-      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: el.eligible ? (palette.sageDeep || palette.sage) : palette.mid, marginBottom: space.xs, fontSize: text.sm } },
-          hinweisZeichen(el.eligible ? 'check' : 'info'),
-          el.eligible ? t('sozialhilfe.elPossible') : t(el.noteKey, el.noteParams)
-        ),
-        el.isAHVIV && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } },
-          t('sozialhilfe.totalIncome', { value: el.totalIncome }) + ' | ' + t('sozialhilfe.totalExpenses', { value: el.totalExpenses })
-        )
-      )
-    ),
+    // F7-R2 (31.10.2026): IPV und EL je eine Zeile, die Antwort steht in «Was steht mir zu?». Vorher rechnete diese
+    // Seite beide selbst, dieselben Themen wie dort.
+    onNavigate && React.createElement('div', { 'data-teil': 'auch-pruefen', style: { marginBottom: space.md } },
+      [['ipv', t('sozialhilfe.ipvSection')], ['el', t('sozialhilfe.elSection')]].map(([key, titel]) => React.createElement('button', {
+        key, type: 'button', className: 'mp-link', onClick: () => onNavigate('situationen'),
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text },
+      },
+        React.createElement('span', { style: { minWidth: 0 } }, titel),
+        React.createElement('span', { style: { color: palette.sandDeep, whiteSpace: 'nowrap' } }, t('dashboard.anspruchTitle') + ' ›')))),
 
     // Orientation note — visually distinct so users don't overlook it
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.md, padding: space.md + 'px', background: palette.gold + '15', borderRadius: radius.sm + 'px', borderLeft: '3px solid ' + palette.gold } },

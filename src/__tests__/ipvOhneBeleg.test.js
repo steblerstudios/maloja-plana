@@ -181,9 +181,10 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     expect(ipvZeile).not.toContain('finanzUebersicht.notEligible');
   });
 
-  it('Sozialhilfe-Ansicht: Orientierung, kein «Berechtigt: CHF …»', () => {
-    const html = render(SozialhilfeView, { data: profil() });
-    expect(html).toContain('ipv.orientierungOffen');
+  it('Sozialhilfe-Ansicht: kein «Berechtigt: CHF …», die IPV ist seit F7-R2 eine Zeile nach «Was steht mir zu?»', () => {
+    const html = render(SozialhilfeView, { data: profil(), onNavigate: () => {} });
+    expect(html).toContain('sozialhilfe.ipvSection');
+    expect(html).toContain('dashboard.anspruchTitle');
     expect(html).not.toContain('premium.eligible');
   });
 
