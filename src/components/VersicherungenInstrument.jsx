@@ -56,6 +56,9 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   // Was erfasst ist, als Zeilen. Jahresprämien mit dem Jahresbetrag in Klammern, damit die ÷ 12 nachvollziehbar ist.
   const posten = [
     p.healthInsurance > 0 && { key: 'kk', name: t('versInstrument.kk'), wert: p.healthInsurance },
+    p.kkZusatz > 0 && { key: 'kkZusatz', name: t('versInstrument.kkZusatz'), wert: p.kkZusatz },
+    p.uvgZusatz > 0 && { key: 'uvgZusatz', name: t('versInstrument.uvgZusatz', { jahr: zahl(Number(v.uvgZusatzPremium)) }), wert: p.uvgZusatz },
+    p.lifeInsurance > 0 && { key: 'leben', name: t('versInstrument.leben', { jahr: zahl(Number(v.lifeInsurancePremium)) }), wert: p.lifeInsurance },
     p.householdInsurance > 0 && { key: 'hausrat', name: t('versInstrument.hausrat', { jahr: zahl(Number(v.householdInsuranceAmount)) }), wert: p.householdInsurance },
     p.liabilityInsurance > 0 && { key: 'haftpflicht', name: t('versInstrument.haftpflicht', { jahr: zahl(Number(v.liabilityPremium)) }), wert: p.liabilityInsurance },
     p.otherInsurance > 0 && { key: 'weitere', name: t('versInstrument.weitere'), wert: p.otherInsurance },
@@ -65,6 +68,8 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const fehlt = [
     v.householdInsurance === 'yes' && !(Number(v.householdInsuranceAmount) > 0) && t('versInstrument.nameHausrat'),
     v.liabilityInsurance === 'yes' && !(Number(v.liabilityPremium) > 0) && t('versInstrument.nameHaftpflicht'),
+    v.kkZusatz && !(Number(v.kkZusatzPremium) > 0) && t('versInstrument.nameKkZusatz'),
+    v.lifeInsurance === 'yes' && !(Number(v.lifeInsurancePremium) > 0) && t('versInstrument.nameLeben'),
   ].filter(Boolean);
   // Die Krankenkasse ist Pflicht: ist eine Kasse erfasst, aber keine Prämie, steht sie zuerst (Fachprüfung).
   if (v.kkInsurer && !(Number(v.kkPremium) > 0)) fehlt.unshift(t('versInstrument.nameKK'));

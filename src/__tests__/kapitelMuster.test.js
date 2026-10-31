@@ -67,6 +67,13 @@ describe('M2 · «x von n» und das Fehlende', () => {
     expect(html).toMatch(/data-erfasst="6\/7"[^>]*><span aria-hidden="true">6 von 7<\/span><span[^>]*>6 von 7 Angaben erfasst</);
     expect(nurText(html)).toContain('Nicht erfasst: Zusatzversicherung.');
   });
+  it('Prämie nur mit ihrer Versicherung: ohne Lebensversicherung fehlt keine Prämie (31.10.2026)', () => {
+    expect(nurText(render('versicherungen'))).not.toContain('Lebensversicherung Prämie');
+    const mit = nurText(render('versicherungen', { ...DEMO_DATA.versicherungen, lifeInsurance: 'yes' }));
+    expect(mit).toContain('Lebensversicherung Prämie');
+    const betrag = nurText(render('versicherungen', { ...DEMO_DATA.versicherungen, lifeInsurance: 'no', lifeInsurancePremium: '600' }));
+    expect(betrag).toContain('Lebensversicherung Prämie');
+  });
   it('wichtige leere Felder (Grundordnung, empfohlen) mit «ergänzen ›»', () => {
     const html = render('basis', { ...DEMO_DATA.basis, phone: '' });
     expect(html).toMatch(/data-fehlt="phone"[\s\S]*?ergänzen ›/);

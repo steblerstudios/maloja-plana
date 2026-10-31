@@ -2251,7 +2251,7 @@ export default {
         eigenFehlen: "Cun l'atgna entrada mancan mintga mais",
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
-        doppeltVersichert: "Èn ménaschi u responsabladad civila era cuntegnids en «Ulteriuras assicuranzas»? Lura po l’import là vegnir reducì. En il budget quintan els gia sur il chapitel Assicuranzas.",
+        doppeltVersichert: "Èn premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) era cuntegnidas en «Ulteriuras assicuranzas»? Lura po l’import là vegnir reducì. En il budget quintan ellas gia sur il chapitel Assicuranzas.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         // rm ungeprüft F5
         vonEinkommenNetto: "da {betrag} entrada netta",
         // rm ungeprüft F5
@@ -2348,7 +2348,7 @@ export default {
         communication: 'Internet, telefon mobil, telefon fix per mais.',
         mobility: 'AG, Halbtax, abunament u custs dad auto per mais.',
         childcare: "Cresch, scola da di, mamma da di — custs mensils.",
-        otherInsurance: "Protecziun giuridica, supplement CM ed autras ensemen per mais. Ménaschi e responsabladad civila èn gia en il budget sur il chapitel Assicuranzas.",
+        otherInsurance: "Protecziun giuridica ed autras ensemen per mais. Premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) èn gia en il budget.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         alimenteReceived: { sie: 'Contribuziuns da mantegniment che Vus retschavais per mais.', du: 'Contribuziuns da mantegniment che Ti retschaivas per mais.' },
         alimentePaid: { sie: 'Contribuziuns da mantegniment che Vus pajais per mais.', du: 'Contribuziuns da mantegniment che Ti pajas per mais.' },
         debtPayments: 'Ratas mensualas per debits currents u pajaments.',
@@ -2396,7 +2396,9 @@ export default {
         kkCardNumber: 'Nr. da la carta CM',
         policyNumber: 'Numer da polissa',
         kkZusatz: 'Assicuranza cumplementara',
+        kkZusatzPremium: "Premia supplementara per mais CHF", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         lifeInsurance: { label: 'Assicuranza da vita', options: { no: 'Na', yes: 'Gea' } },
+        lifeInsurancePremium: "Premia d’assicuranza da vita CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         freizuegigkeit: 'Conto/polissa da liber passadi',
         legalInsurance: { label: 'Assicuranza da protecziun giuridica', options: { no: 'Na', yes: 'Gea' } },
         childInsurance: { label: 'Assicuranzas per uffants', options: { no: 'Na', yes: 'Gea' } },
@@ -2405,6 +2407,7 @@ export default {
         // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
         uvgZusatz: { label: 'Assicuranza supplementara d’accident', options: { yes: 'Gea', no: 'Na / nunenconuschent' } }, // TODO(rm): provisorisch
+        uvgZusatzPremium: "Premia supplementara d’accident CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
@@ -2431,6 +2434,7 @@ export default {
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
         ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Voss salari en cas da malsogna.", du: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Tes salari en cas da malsogna." },
+        uvgZusatzPremium: { sie: "Inditgar mo sche Vus pajais la premia sezs. Quai che vegn deducì dal salari è gia en il salari net.", du: "Inditgar mo sche ti pajas la premia sez. Quai che vegn deducì dal salari è gia en il salari net." }, // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       },
       docs: {
         kkPolice: 'Polizza da la cassa da malsauns',
@@ -4506,9 +4510,14 @@ export default {
     hausrat: "Ménaschi (CHF {jahr} / onn)",
     haftpflicht: "Responsabladad civila (CHF {jahr} / onn)",
     weitere: "Ulteriuras assicuranzas (chapitel Finanzas)",
+    kkZusatz: "Cassa da malsauns (supplement)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    uvgZusatz: "Supplement d’accident (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    leben: "Assicuranza da vita (CHF {jahr} / onn)", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nichtErfasst: "{liste}: premia betg endatada.",
     nameHausrat: "Ménaschi",
     nameHaftpflicht: "Responsabladad civila",
+    nameKkZusatz: "Supplement CM", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+    nameLeben: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
     nameKK: "Cassa da malsauns",
     fahrzeug: "L’assicuranza dal vehichel na quinta betg qua — ils custs da l’auto tutgan en il chapitel Finanzas tar «Mobilitad».",
     pk: "La cassa da pensiun (CHF {betrag}) è gia deducida da la paja.",
@@ -6110,6 +6119,9 @@ export default {
       householdInsurance: "Ménaschi",
       liabilityInsurance: "Responsabladad civila",
       otherInsurance: 'Ulteriuras assicuranzas',
+      kkZusatz: "Supplement CM", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+      uvgZusatz: "Supplement d’accident", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+      lifeInsurance: "Assicuranza da vita", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       groceries: 'Vivondas & menaschi',
       communication: 'Internet & telefon',
       childcare: "Tgira d'uffants",

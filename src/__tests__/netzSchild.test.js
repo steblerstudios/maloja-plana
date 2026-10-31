@@ -4,7 +4,9 @@
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { netzSchildTeile, teilWinkel, fuellung, SCHILD_KERN } from '../data/netzSchild.js';
+import { netzSchildTeile, teilWinkel, fuellung, betraegeFuer, SCHILD_KERN } from '../data/netzSchild.js';
+import { monatsAusgaben } from '../utils/monatsrechnung.js';
+import { BUDGET_GROUPS } from '../budgetSync.js';
 import { hausratPflicht, HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { NetzSchild } from '../components/NetzSchild.jsx';
 import { schildOptionen } from '../data/schutzschild.js';
@@ -148,5 +150,38 @@ describe('Beträge je Versicherung (Sophie 27.10.2026)', () => {
   });
   it('Texte in fünf Sprachen', () => {
     for (const sprache of [de, en, fr, it_, rm]) for (const k of ['kosten', 'guthaben', 'summe', 'lohn', 'arbeitgeber']) expect(sprache.netzSchild.betrag[k]).toBeTruthy();
+  });
+});
+
+describe('Prämien für Zusatz, Unfall-Zusatz und Leben (31.10.2026)', () => {
+  const v = { kkInsurer: 'CSS', kkZusatz: 'Spital', kkZusatzPremium: '40', uvg: 'employer', uvgZusatz: 'yes', uvgZusatzPremium: '240', lifeInsurance: 'yes', lifeInsurancePremium: '600' };
+  const profil = { versicherungen: v, finanzen: { employmentType: 'employed', incomeType: 'netto' } };
+  it('zählen in der einen Monatsrechnung, Jahresbeträge ÷ 12', () => {
+    const p = monatsAusgaben(profil);
+    expect([p.kkZusatz, p.uvgZusatz, p.lifeInsurance]).toEqual([40, 20, 50]);
+  });
+  it('«Nein» zählt nicht, auch mit stehengebliebenem Betrag', () => {
+    const p = monatsAusgaben({ versicherungen: { ...v, uvgZusatz: 'no', lifeInsurance: 'no' } });
+    expect([p.uvgZusatz, p.lifeInsurance]).toEqual([0, 0]);
+  });
+  it('das Budget führt sie in der Gruppe Versicherung & Gesundheit', () => {
+    const felder = BUDGET_GROUPS.find((g) => g.key === 'insuranceHealth').fields;
+    for (const k of ['kkZusatz', 'uvgZusatz', 'lifeInsurance']) expect(felder).toContain(k);
+    for (const sprache of [de, en, fr, it_, rm]) for (const k of ['kkZusatz', 'uvgZusatz', 'lifeInsurance']) expect(sprache.budgetSync.field[k]).toBeTruthy();
+  });
+  it('im Schild je Versicherung Monat und Jahr', () => {
+    expect(betraegeFuer('kkZusatz', v)).toEqual({ mt: 40, jahr: 480, name: 'Spital' });
+    expect(betraegeFuer('uvgZusatz', v)).toEqual({ mt: 20, jahr: 240 });
+    expect(betraegeFuer('leben', v)).toEqual({ mt: 50, jahr: 600 });
+  });
+  it('«über den Lohn» nur für Angestellte mit netto erfasstem Lohn', () => {
+    const b = { bvgContribution: '420' };
+    expect(betraegeFuer('bvg', b, { employmentType: 'employed', incomeType: 'netto' }).lohn).toBe(true);
+    expect(betraegeFuer('bvg', b, { employmentType: 'employed', incomeType: 'brutto' }).lohn).toBeUndefined();
+    expect(betraegeFuer('ahv', {}, { employmentType: 'selfEmployed', incomeType: 'netto' }).lohn).toBeUndefined();
+  });
+  it('die drei Felder stehen im Kapitel, je direkt nach ihrer Versicherung', () => {
+    const felder = getChapters(t).find((c) => c.key === 'versicherungen').fields.map((f) => f.k);
+    for (const [a, b] of [['kkZusatz', 'kkZusatzPremium'], ['uvgZusatz', 'uvgZusatzPremium'], ['lifeInsurance', 'lifeInsurancePremium']]) expect(felder.indexOf(b)).toBe(felder.indexOf(a) + 1);
   });
 });

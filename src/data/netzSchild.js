@@ -62,7 +62,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
   const teile = REIHE
     .filter((key) => roh[key].length)
     .map((key) => {
-      const teile = roh[key].map((x) => ({ ...x, betrag: betraegeFuer(x.key, v, opts.finanzen || {}, erwerb) }));
+      const teile = roh[key].map((x) => ({ ...x, betrag: betraegeFuer(x.key, v, opts.finanzen || {}) }));
       const erreicht = teile.filter((x) => x.ok).length;
       return { key, versicherungen: teile, n: teile.length, erreicht };
     });
@@ -78,18 +78,23 @@ export function netzSchildTeile(v = {}, opts = {}) {
 // drin ist»). Nur aus erfassten Feldern, nie geschätzt; dieselben Felder und Umrechnungen wie die eine Monatsrechnung
 // (utils/monatsrechnung.js: Jahresprämien ÷ 12). mt/jahr = Kosten, guthaben = was angespart ist, summe = Deckung,
 // lohn = wird über den Lohn abgezogen, arbeitgeber = läuft über den Arbeitgeber (beides ohne eigenen Betrag).
-export function betraegeFuer(key, v = {}, finanzen = {}, erwerb = false) {
+export function betraegeFuer(key, v = {}, finanzen = {}) {
+  // «Über den Lohn» stimmt nur für Angestellte mit netto erfasstem Lohn (Regel aus VersicherungenInstrument,
+  // Fachprüfung 25.10.2026): bei brutto steckt der Beitrag noch im Betrag, Selbständige zahlen selbst.
+  const lohnAbzug = finanzen.employmentType === 'employed' && finanzen.incomeType === 'netto' ? { lohn: true } : {};
   const monat = (x) => { const m = zahl(x); return m > 0 ? { mt: m, jahr: Math.round(m * 12 * 100) / 100 } : {}; };
   const jahr = (x) => { const j = zahl(x); return j > 0 ? { mt: Math.round((j / 12) * 100) / 100, jahr: j } : {}; };
   const mehr = (o, k, x) => (zahl(x) > 0 ? { ...o, [k]: zahl(x) } : o);
   switch (key) {
     case 'kvg': return monat(v.kkPremium);
-    case 'kkZusatz': return has(v.kkZusatz) ? { name: String(v.kkZusatz).trim() } : {};
+    case 'kkZusatz': return { ...monat(v.kkZusatzPremium), ...(has(v.kkZusatz) ? { name: String(v.kkZusatz).trim() } : {}) };
+    case 'uvgZusatz': return v.uvgZusatz === 'no' ? {} : jahr(v.uvgZusatzPremium);
+    case 'leben': return v.lifeInsurance === 'no' ? {} : jahr(v.lifeInsurancePremium);
     // Nicht «Lohnabzug»: die Berufsunfall-Prämie trägt der Arbeitgeber (UVG Art. 91), nur die Nichtberufsunfall-Prämie
     // kann vom Lohn abgehen. Ein Betrag ist nicht erfasst.
     case 'uvg': return v.uvg === 'employer' ? { arbeitgeber: true } : {};
-    case 'ahv': return zahl(v.ahvContribution) > 0 ? jahr(v.ahvContribution) : erwerb && finanzen.employmentType === 'employed' ? { lohn: true } : {};
-    case 'bvg': return mehr({ ...monat(v.bvgContribution), ...(zahl(v.bvgContribution) > 0 ? { lohn: true } : {}) }, 'guthaben', v.bvgBalance);
+    case 'ahv': return zahl(v.ahvContribution) > 0 ? jahr(v.ahvContribution) : lohnAbzug;
+    case 'bvg': return mehr({ ...monat(v.bvgContribution), ...(zahl(v.bvgContribution) > 0 ? lohnAbzug : {}) }, 'guthaben', v.bvgBalance);
     case 'saeule3a': return mehr(jahr(finanzen.pension3a), 'guthaben', finanzen.pension3aBalance);
     case 'haftpflicht': return mehr(v.liabilityInsurance === 'no' ? {} : jahr(v.liabilityPremium), 'summe', v.liabilityAmount);
     case 'hausrat': return v.householdInsurance === 'no' ? {} : jahr(v.householdInsuranceAmount);

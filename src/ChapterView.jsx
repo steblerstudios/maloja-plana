@@ -1846,7 +1846,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // sobald eines Daten trägt, und eingeklappt steht der App-Hinweis «Einige ausgeblendete
   // Bereiche enthalten bereits Daten.». Andere Kapitel bleiben, wie sie waren.
   const istFinanzen = chapter.key === 'finanzen';
-  const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
+  // Prämie ohne ihre Versicherung (31.10.2026): leer ist das Feld weg und zählt nicht als «nicht erfasst» — wer keine
+  // Lebensversicherung hat, dem fehlt keine Prämie. Es erscheint, sobald die Versicherung erfasst ist; ein eingetragener
+  // Betrag verschwindet nie still.
+  const praemieOhneVersicherung = (f) => !feldHatWert(data, f.k) && (
+    (f.k === 'kkZusatzPremium' && !data.kkZusatz) || (f.k === 'uvgZusatzPremium' && data.uvgZusatz !== 'yes') || (f.k === 'lifeInsurancePremium' && data.lifeInsurance !== 'yes'));
+  const feldSichtbar = (f) => !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
   // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
   // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),
@@ -2078,7 +2083,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const renderDoppeltVersichert = () => {
     const v = allData?.versicherungen || {};
     const weitere = Number(data.otherInsurance) > 0;
-    const praemie = Number(v.householdInsuranceAmount) > 0 || Number(v.liabilityPremium) > 0;
+    const praemie = [v.householdInsuranceAmount, v.liabilityPremium, v.kkZusatzPremium, v.uvgZusatzPremium, v.lifeInsurancePremium].some((x) => Number(x) > 0);
     return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
       tr('chapters.finanzen.monat.doppeltVersichert'));
   };
@@ -2087,7 +2092,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const teile = [
       // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
+      { key: 'versicherungen', wert: p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });

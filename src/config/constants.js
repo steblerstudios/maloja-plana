@@ -335,16 +335,19 @@ export function getChapters(t) {
         { k: 'kkCardNumber', type: 'text' },
         { k: 'policyNumber', type: 'text', hint: 1 },
         { k: 'kkZusatz', type: 'text', ph: 1 },
+        { k: 'kkZusatzPremium', type: 'currency' },
         // «trifft nicht zu» (Selbständige, tiefe Einkommen ohne BVG-Pflicht) — Beitrag und Guthaben gehen mit;
         // sonst blieb «Berufliche Vorsorge x von 5» für immer offen (Fachprüfung Muster M2, 25.10.2026).
         { k: 'bvgInsurer', type: 'text', sec: 'occupational', hint: 1, naOk: true, naMit: ['bvgContribution', 'bvgBalance'], orientation: or(t, 'bvg') },
         { k: 'bvgContribution', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'bvgBalance', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'lifeInsurance', type: 'select', sel: 1 },
+        { k: 'lifeInsurancePremium', type: 'currency', jahr: true },
         { k: 'freizuegigkeit', type: 'text', ph: 1 },
         { k: 'uvg', type: 'select', sel: 1, sec: 'additional', orientation: or(t, 'uvg') },
         // Freiwillige Zusatzversicherung zum UVG (VVG, meist über den Arbeitgeber) — zweite Stufe «Unfall» im Netz-Schild (F7-K3-6, 27.10.2026).
         { k: 'uvgZusatz', type: 'select', sel: 1 },
+        { k: 'uvgZusatzPremium', type: 'currency', hint: 1, jahr: true },
         { k: 'ktg', type: 'select', sel: 1, hint: 1 },
         { k: 'liabilityInsurance', type: 'select', sel: 1 },
         { k: 'liabilityAmount', type: 'currency' },
@@ -465,7 +468,7 @@ export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'residenceType', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'wfgWohnung'],
   finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
-  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'uvgZusatz', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
+  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'kkZusatzPremium', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'lifeInsurancePremium', 'freizuegigkeit', 'uvg', 'uvgZusatz', 'uvgZusatzPremium', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],
