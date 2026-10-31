@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, hinweisZeichen, erledigtZeichen } from '../IconSystem.jsx';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from '../config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, ladeIPVModelle } from '../config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from '../data/ipvAbzug.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from '../data/kantonaleSteuerdaten.js';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './KantonssteuerOrientierung.jsx';
@@ -562,6 +562,15 @@ export const auswertungsHinweis = ({ palette, t }) =>
 // `onEnterSandbox` (nur oben, nur ausserhalb von Beispiel und laufendem Probiermodus — main.jsx):
 // der Knopf «neben dem eigenen Stand rechnen», der bis 24.10.2026 auf der Finanz-Übersicht stand.
 export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMode, chapters = [], onSelectChapter, isMobile, lang = 'de', onEnterSandbox }) => {
+  // F7-K2-4: Die IPV-Kantonsmodelle laden nach (cantonalData.js IPV_MODULE). Bis dahin sagt calculateIPV
+  // «Orientierung offen»; danach einmal neu zeichnen — sonst blieb hier stehen, was vor dem Laden galt, und
+  // Dashboard und Kapitel widersprachen sich (Entscheid O, «beobachtet, unbestätigt»). Muster wie PraemienOrientierung.
+  const [, setIpvGeladen] = React.useState(0);
+  React.useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
   const w = finanzWerte(data, t);
   const p = { palette, t, data, onNavigate, w };
   if (teil === 'unten') {

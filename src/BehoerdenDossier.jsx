@@ -109,6 +109,8 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
             style: {
               fontWeight: row.bold ? weight.semi : weight.medium,
               textAlign: 'right', maxWidth: '50%',
+              // F7-S7: Eine E-Mail-Adresse hat keine Umbruchstelle und machte die Seite auf 375 px 10 px zu breit.
+              overflowWrap: 'anywhere', minWidth: 0,
             }
           }, row.value)
         )

@@ -24,6 +24,8 @@ export const DEMO_DATA = {
     moveInDate: '2021-08-01',
     rentAmount: '1650',
     utilities: '180',
+    // F7-K1-2 (27.10.2026): ohne Zimmerzahl verglich der Mietbarometer mit «angenommen 3 Zimmer».
+    rooms: '2.5',
     landlord: 'Steiner Immobilien AG',
     landlordPhone: '+41 44 312 55 00',
     mortgageStatus: '',
