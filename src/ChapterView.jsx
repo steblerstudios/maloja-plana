@@ -1773,14 +1773,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
             }, tr('nav.crosslink.bwHint') + ' ›'));
           }
-          // Patientenverfügung in Fragen erstellen (27.09.2026) — immer, auch wenn schon «Ja».
-          if (field.k === 'patientenverfuegung' && chapter.key === 'notfall' && onNavigate) {
-            elements.push(React.createElement('button', {
-              key: 'crosslink-pv', type: 'button', className: 'mp-link',
-              onClick: () => onNavigate('patientenverfuegung'),
-              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
-            }, tr('nav.crosslink.pvHint') + ' ›'));
-          }
           return elements;
         };
 
@@ -1853,7 +1845,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Betrag verschwindet nie still.
   const praemieOhneVersicherung = (f) => !feldHatWert(data, f.k) && (
     (f.k === 'kkZusatzPremium' && !data.kkZusatz) || (f.k === 'uvgZusatzPremium' && data.uvgZusatz !== 'yes') || (f.k === 'lifeInsurancePremium' && data.lifeInsurance !== 'yes'));
-  const feldSichtbar = (f) => !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
+  // F7-K6-1 (31.10.2026): Die Patientenverfügung wird im Block «Vorsorge» beantwortet, nicht in den Angaben.
+  const nurImBlock = (f) => chapter.key === 'notfall' && f.k === 'patientenverfuegung';
+  const feldSichtbar = (f) => !nurImBlock(f) && !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
   // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
   // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),
@@ -2183,12 +2177,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
         weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
-        weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('briefe', { sub: P('briefeSub') }),
+        weg('briefe', { sub: P('briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
-      // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen jetzt aus «Vorsorge»
-      // oben selbst zum Werkzeug — hier bleibt die Ablage, mit den Unterlagen, die dazugehören.
-      case 'notfall': return [ablage('chapterView.passend.ablageDokumente')];
+      // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum
+      // Werkzeug. F7-K5-2 und F7-L1 (31.10.2026): der Ablauf «Vorsorgeauftrag & Patientenverfügung» kommt aus Behörden
+      // hierher, Organspende bekommt hier ihren Eingang aus einem Kapitel.
+      case 'notfall': return [
+        weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
+        ablage('chapterView.passend.ablageDokumente'),
+      ];
       default: return [
         // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5); im Entwurf «Neue Stelle».
         { key: 'neuerjob', titel: P('neueStelle'), sub: schritte(5), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
@@ -2316,7 +2314,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // «Für den Fall der Fälle». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
     chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
       React.createElement(BehoerdenInstrument, {
-        palette, t: tr, behoerden: data, allData, onNavigate, lang, checked: checklistChecked,
+        palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked,
         onToggle: (id, wert) => {
           const next = { ...checklistChecked, [id]: wert };
           setChecklistChecked(next);

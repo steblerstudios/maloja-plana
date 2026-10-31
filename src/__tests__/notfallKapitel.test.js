@@ -54,7 +54,7 @@ describe('Bereit für den Ernstfall', () => {
     expect(b.fehlend.map((f) => f.lagen)).toEqual([['unfall'], ['spital']]);
     const text = nurText(ort(OHNE_MEDI));
     expect(text).toContain('18 von 20');
-    expect(text).toContain('Patientenverfügung vorhanden? · fehlt für «Spitalaufenthalt» erstellen ›');
+    expect(text).toContain('Patientenverfügung vorhanden? · fehlt für «Spitalaufenthalt» zur Vorsorge ↓');
     expect(text).toContain('Regelmässige Medikamente · fehlt für «Unfall»');
     expect(text).toContain('Ich nehme keine');
   });
@@ -180,6 +180,29 @@ describe('Im Kapitel', () => {
     const passend = nurText(html.slice(html.indexOf('data-teil="passend"')));
     expect(passend).toContain('Unterlagen · Patientenverfügung, Organspende-Karte, Blutgruppen-Ausweis');
     expect(passend).not.toContain('Patientenverfügung erstellen');
+  });
+  it('Passend: Ablauf Vorsorge und Organspende als Eingang (F7-K5-2, F7-L1)', () => {
+    const html = kapitelHtml();
+    const passend = nurText(html.slice(html.indexOf('data-teil="passend"')));
+    expect(passend).toContain('Vorsorgeauftrag & Patientenverfügung');
+    expect(passend).toContain('Organspende');
+  });
+  it('Patientenverfügung nur im Block Vorsorge, nicht in den Angaben (F7-K6-1)', () => {
+    const html = kapitelHtml();
+    expect(html.slice(html.indexOf('data-teil="notfall-pv-antwort"'))).toContain('mp-notfall-pv');
+    expect((html.match(/id="mp-notfall-pv"/g) || []).length).toBe(1);
+    expect(html).not.toMatch(/data-fehlt="patientenverfuegung"[^>]*>[\s\S]{0,400}ergänzen ›/);
+    const quelle = QUELLE('ChapterView.jsx');
+    expect(quelle).toMatch(/const feldSichtbar = \(f\) => !nurImBlock\(f\)/);
+    expect(quelle).not.toContain('crosslink-pv');
+  });
+  it('die Antwort lässt sich dort setzen, das Formular bleibt auch nach «Ja» erreichbar (F7-K6-1)', () => {
+    const quelle = QUELLE('components/NotfallImKapitel.jsx');
+    expect(quelle).toContain("onUpdate('patientenverfuegung', e.target.value)");
+    const ja = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, patientenverfuegung: 'yes' } };
+    expect(nurText(ort(ja))).toContain('Patientenverfügung in Fragen erstellen ›');
+    expect(nurText(ort(DEMO_DATA))).not.toContain('Patientenverfügung in Fragen erstellen ›');
+    expect(ort(DEMO_DATA, { demoMode: true })).toMatch(/<select[^>]*id="mp-notfall-pv"[^>]*disabled/);
   });
   it('die drei Lagen stehen nicht mehr offen unten, der alte Druck-Link ist weg', () => {
     const text = nurText(kapitelHtml());

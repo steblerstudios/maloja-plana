@@ -4434,6 +4434,8 @@ export default {
     vonN: '{n} da {total}',
     fehltFuer: 'manca per {lagen}',
     ergaenzenUnten: 'cumplettar ↓',
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    zurVorsorge: 'tar la prevenziun ↓',
     medikamentPlatzhalter: 'p. ex. num e dosa',
     speichern: 'Memorisar',
     keineMedikamente: 'Jau na prend nagins',
@@ -4527,14 +4529,14 @@ export default {
     wegSoGehts: "Uschia vai",
     wegAblauf: "Andament",
     fallTitel: "Per il cas dals cas",
-    fallSatz: { sie: "Tgi che agescha per Vus e tge che vala, sche Vus na pudais betg pli decider sez.", du: "Tgi che agescha per tai e tge che vala, sche ti na pos betg pli decider sez." },
-    vorsorgeauftrag: "Mandat da precauziun",
-    patientenverfuegung: "Disposiziun da pazient",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    fallSatz: { sie: "Voss testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza.", du: "Tes testament tutga qua. Mandat da precauziun e disposiziun da pazient èn en il chapitel Urgenza." },
     nichtErfasst: "betg endatà",
-    vorsorgeWeg: "Mandat da precauziun & disposiziun da pazient",
     steuererklaerungJahr: "Decleraziun da taglia {jahr} inoltrada",
     vorschlag: "Proposta da «Decleraziuns avertas: 0»",
     vorsorgeWegSub: "Tgi che agescha, tge che vala medicalmain",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    vorsorgeImNotfall: "Prevenziun en il chapitel Urgenza",
   },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {

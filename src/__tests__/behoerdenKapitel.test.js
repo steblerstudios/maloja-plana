@@ -26,7 +26,7 @@ const kapitel = (key, data, allData = DEMO_DATA) => nurText(renderToStaticMarkup
   onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
 })));
 const instrument = (behoerden = DEMO_DATA.behoerden, checked = {}) => nurText(renderToStaticMarkup(React.createElement(BehoerdenInstrument, {
-  palette: LIGHT_PALETTE, t, behoerden, allData: DEMO_DATA, onNavigate: () => {}, checked, onToggle: () => {},
+  palette: LIGHT_PALETTE, t, behoerden, onNavigate: () => {}, checked, onToggle: () => {},
 })));
 const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
 
@@ -67,12 +67,13 @@ describe('Instrument oben', () => {
     expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '1' })).toBe(false);
     expect(instrument()).toContain('1 von 5 erledigt.');
   });
-  it('«Für den Fall der Fälle»: Testament, Vorsorgeauftrag, Patientenverfügung', () => {
+  it('«Für den Fall der Fälle»: nur das Testament, die Vorsorge steht im Notfall (F7-K5-2)', () => {
     const text = instrument();
     expect(text).toContain('Für den Fall der Fälle');
     expect(text).toMatch(/Testament Nein/);
-    expect(text).toMatch(/Vorsorgeauftrag Noch nicht/);
-    expect(text).toMatch(/Patientenverfügung Noch nicht/);
+    expect(text).toContain('Vorsorge im Kapitel Notfall');
+    expect(text).not.toMatch(/Vorsorgeauftrag Noch nicht/);
+    expect(text).not.toMatch(/Patientenverfügung Noch nicht/);
   });
 });
 
