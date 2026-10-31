@@ -1427,12 +1427,10 @@ export default {
     installApp: 'Install as an app',
     tresor: 'Documents',
     kkScanner: 'Insurance card scanner',
-    budget: 'Budget',
     debts: 'Debts',
     taxes: 'Taxes',
     finanzUebersicht: 'Finances',
     organDonation: 'Organ donation',
-    budgetSync: 'Monthly budget',
     kvgIpv: 'Premium subsidy (IPV)',
     praemien: 'Insurance overview',
     mietzins: 'Rent subsidies',
@@ -1780,6 +1778,7 @@ export default {
     portemonnaieSub: 'To print, for on the go',
     portemonnaieLeer: 'Needs details below first',
     vorsorgeTitel: 'Advance planning',
+    zurueckVorsorge: 'Back to advance planning',
     vorsorgeSatz: 'What applies if you can no longer decide for yourself.',
     geregelt: '{n} of {total} settled.',
     vorsorge: { organDonor: 'Organ donation', patientenverfuegung: 'Patient decree', vorsorgeauftrag: 'Advance care directive', bestattungswuensche: 'Funeral wishes' },
@@ -4058,6 +4057,7 @@ export default {
   budgetImport: {
     importFailed: 'The import was not successful. Please check the file and try again.',
     title: 'Budget import',
+    teilTitel: 'Import a CSV file',
     fileFormat: 'File format',
     csv: 'CSV (comma-separated)',
     excel: 'Excel (.xlsx)',
@@ -5332,6 +5332,15 @@ export default {
   unterlagen: {
     title: 'Dossiers and templates',
     subtitle: 'Your life dossiers, calmly organised.',
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Print documents',
+      beschreibung: 'Everything, for an authority or for an emergency — preview first, then print.',
+      legende: 'What should go on paper?',
+      alles: 'Everything',
+      amt: 'For an authority',
+      notfall: 'For an emergency',
+    },
     dossier: {
       lebensmappe: {
         title: 'Life folder',

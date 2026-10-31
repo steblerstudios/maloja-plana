@@ -178,8 +178,10 @@ describe('Namen, Wege, Suche', () => {
     expect(t('notfallpass.title')).toBe('Notfallpass');
     expect(t('notfallKapitel.portemonnaie')).toBe('Portemonnaie-Karte');
   });
-  it('Brotkrume «Übersicht › Notfall › …» für Notfallkarte, Notfallpass und Notfall-Dossier', () => {
-    for (const v of ['notfallkarte', 'notfallpass', 'notfalldossier']) expect(stufen(v).map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+  // Das Notfall-Dossier ist seit 27.10.2026 (F7-S2) eine Auswahl in «Unterlagen drucken» — Brotkrume dort
+  // «Übersicht › Meine Unterlagen › Unterlagen drucken» (brotkrume.test.js); die Kachel hier bleibt.
+  it('Brotkrume «Übersicht › Notfall › …» für Notfallkarte und Notfallpass', () => {
+    for (const v of ['notfallkarte', 'notfallpass']) expect(stufen(v).map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
     expect(QUELLE('NotfallVorlesekarte.jsx')).toContain("view: 'notfallkarte'");
   });
   it('Übersichtskarte heisst nicht mehr «Notfallkarte vorbereiten»', () => {

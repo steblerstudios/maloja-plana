@@ -1726,14 +1726,10 @@ export default {
     tresor: 'Deposita da documents',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     kkScanner: 'Scanner carta CM',
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budget: 'Budget',
     debts: 'Debits',
     taxes: 'Taglia',
     finanzUebersicht: 'Finanzas & daners',
     organDonation: "Donaziun d'organs",
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    budgetSync: 'Budget mensil',
     kvgIpv: 'Reducziun da premias (IPV)',
     praemien: 'Survista da las assicuranzas',
     mietzins: 'Contribuziuns a la fittanza',
@@ -3680,6 +3676,16 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     title: 'Dossiers e models',
     subtitle: { sie: 'Voss dossiers da vita, ordinads cun quaid.', du: 'Tes dossiers da vita, ordinads cun quaid.' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Stampar documents',
+      beschreibung: 'Tut, per in uffizi u per in cas d’urgenza — l’emprim la prevista, alura stampar.',
+      legende: 'Tge duai vegnir sin palpiri?',
+      alles: 'Tut',
+      amt: 'Per in uffizi',
+      notfall: 'Per in cas d’urgenza',
+    },
     dossier: {
       lebensmappe: {
         title: 'Mappa da vita',
@@ -4455,6 +4461,8 @@ export default {
     portemonnaieSub: 'Per stampar, per prender cun sai',
     portemonnaieLeer: 'L’emprim endatar las indicaziuns sutvart',
     vorsorgeTitel: 'Prevenziun',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    zurueckVorsorge: 'Turnar a la prevenziun',
     vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
     geregelt: '{n} da {total} reglads.',
     vorsorge: { organDonor: 'Donaziun d’organs', patientenverfuegung: 'Disposiziun dal pazient', vorsorgeauftrag: 'Mandat da prevenziun', bestattungswuensche: 'Giavischs da sepultura' },
@@ -6256,6 +6264,8 @@ export default {
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     importFailed: 'L’import n’ha betg funcziunà. Controllar la datoteca e empruvar anc ina giada.',
     title: 'Import da budget',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    teilTitel: 'Importar ina datoteca CSV',
     fileFormat: 'Format da datoteca',
     csv: 'CSV (separà cun comma)',
     excel: 'Excel (.xlsx)',

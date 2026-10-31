@@ -1425,12 +1425,10 @@ export default {
     advanced: 'Avancé',
     tresor: 'Classeur documents',
     kkScanner: 'Scanner de carte d\'assurance',
-    budget: 'Budget',
     debts: 'Dettes',
     taxes: 'Impôts',
     finanzUebersicht: 'Finances',
     organDonation: 'Don d\'organes',
-    budgetSync: 'Budget mensuel',
     kvgIpv: 'Réduction de primes (IPV)',
     praemien: 'Vue d’ensemble des assurances',
     mietzins: 'Aides au loyer',
@@ -1780,6 +1778,7 @@ export default {
     portemonnaieSub: 'À imprimer, à emporter',
     portemonnaieLeer: 'Il faut d’abord les indications ci-dessous',
     vorsorgeTitel: 'Prévoyance',
+    zurueckVorsorge: 'Retour à la prévoyance',
     vorsorgeSatz: { sie: 'Ce qui s’applique si vous ne pouvez plus décider vous-même.', du: 'Ce qui s’applique si tu ne peux plus décider toi-même.' },
     geregelt: '{n} sur {total} réglés.',
     vorsorge: { organDonor: 'Don d’organes', patientenverfuegung: 'Directives anticipées', vorsorgeauftrag: 'Mandat pour cause d’inaptitude', bestattungswuensche: 'Volontés funéraires' },
@@ -4058,6 +4057,7 @@ export default {
   budgetImport: {
     importFailed: 'L’importation n’a pas fonctionné. Vérifier le fichier et réessayer.',
     title: 'Importation du budget',
+    teilTitel: 'Importer un fichier CSV',
     fileFormat: 'Format de fichier',
     csv: 'CSV (séparé par des virgules)',
     excel: 'Excel (.xlsx)',
@@ -5332,6 +5332,15 @@ export default {
   unterlagen: {
     title: 'Dossiers et modèles',
     subtitle: { sie: 'Vos dossiers de vie, calmement organisés.', du: 'Tes dossiers de vie, calmement organisés.' },
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Imprimer des documents',
+      beschreibung: 'Tout, pour une autorité ou pour une urgence — d’abord l’aperçu, puis l’impression.',
+      legende: 'Que faut-il mettre sur papier ?',
+      alles: 'Tout',
+      amt: 'Pour une autorité',
+      notfall: 'Pour une urgence',
+    },
     dossier: {
       lebensmappe: {
         title: 'Dossier de vie',

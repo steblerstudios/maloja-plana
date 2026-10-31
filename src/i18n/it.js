@@ -1425,12 +1425,10 @@ export default {
     advanced: 'Avanzato',
     tresor: 'Archivio documenti',
     kkScanner: 'Scanner tessera assicurazione',
-    budget: 'Budget',
     debts: 'Debiti',
     taxes: 'Imposte',
     finanzUebersicht: 'Finanze',
     organDonation: 'Donazione di organi',
-    budgetSync: 'Budget mensile',
     kvgIpv: 'Riduzione dei premi (IPV)',
     sozialhilfe: 'Assistenza sociale',
     praemien: 'Panoramica delle assicurazioni',
@@ -1780,6 +1778,7 @@ export default {
     portemonnaieSub: 'Da stampare e tenere con sé',
     portemonnaieLeer: 'Servono prima i dati qui sotto',
     vorsorgeTitel: 'Previdenza',
+    zurueckVorsorge: 'Torna alla previdenza',
     vorsorgeSatz: { sie: 'Cosa vale se non può più decidere da sé.', du: 'Cosa vale se non puoi più decidere da te.' },
     geregelt: '{n} di {total} regolati.',
     vorsorge: { organDonor: 'Donazione di organi', patientenverfuegung: 'Direttive del paziente', vorsorgeauftrag: 'Mandato precauzionale', bestattungswuensche: 'Volontà funerarie' },
@@ -4059,6 +4058,7 @@ export default {
   budgetImport: {
     importFailed: 'L’importazione non è riuscita. Controllare il file e riprovare.',
     title: 'Importazione budget',
+    teilTitel: 'Importare un file CSV',
     fileFormat: 'Formato file',
     csv: 'CSV (separato da virgola)',
     excel: 'Excel (.xlsx)',
@@ -5305,6 +5305,15 @@ export default {
   unterlagen: {
     title: 'Dossier e modelli',
     subtitle: { sie: 'I Suoi dossier di vita, ordinati con calma.', du: 'I tuoi dossier di vita, ordinati con calma.' },
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Stampare documenti',
+      beschreibung: 'Tutto, per un’autorità o per un’emergenza — prima l’anteprima, poi la stampa.',
+      legende: 'Che cosa va su carta?',
+      alles: 'Tutto',
+      amt: 'Per un’autorità',
+      notfall: 'Per un’emergenza',
+    },
     dossier: {
       lebensmappe: {
         title: 'Cartella della vita',

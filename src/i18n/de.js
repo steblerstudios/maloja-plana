@@ -1426,12 +1426,10 @@ export default {
     advanced: 'Erweitert',
     tresor: 'Dokumentenablage',
     kkScanner: 'KK-Karte scannen',
-    budget: 'Budget',
     debts: 'Schulden',
     taxes: 'Steuern',
     finanzUebersicht: 'Finanzen & Geld',
     organDonation: 'Organspende',
-    budgetSync: 'Monatsbudget',
     kvgIpv: 'Prämienverbilligung (IPV)',
     praemien: 'Versicherungs-Übersicht',
     mietzins: 'Mietzinsbeiträge',
@@ -1789,6 +1787,7 @@ export default {
     portemonnaieSub: 'Zum Drucken, für unterwegs',
     portemonnaieLeer: 'Braucht zuerst Angaben unten',
     vorsorgeTitel: 'Vorsorge',
+    zurueckVorsorge: 'Zurück zur Vorsorge',
     vorsorgeSatz: { sie: 'Was gilt, wenn Sie selbst nicht mehr entscheiden können.', du: 'Was gilt, wenn du selbst nicht mehr entscheiden kannst.' },
     geregelt: '{n} von {total} geregelt.',
     // Weiche Trennstriche (\u00AD): in der schmalen Kachel bricht das Wort an der Fuge, nicht mitten in der Silbe.
@@ -4105,6 +4104,7 @@ export default {
   budgetImport: {
     importFailed: 'Der Import ist nicht gelungen. Bitte die Datei prüfen und nochmals versuchen.',
     title: 'Budget Import',
+    teilTitel: 'CSV importieren',
     fileFormat: 'Dateiformat',
     csv: 'CSV (Komma-getrennt)',
     excel: 'Excel (.xlsx)',
@@ -5375,6 +5375,15 @@ export default {
   unterlagen: {
     title: 'Dossiers und Vorlagen',
     subtitle: { sie: 'Ihre Lebensdossiers, ruhig geordnet.', du: 'Deine Lebensdossiers, ruhig geordnet.' },
+    // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite.
+    drucken: {
+      title: 'Unterlagen drucken',
+      beschreibung: 'Alles, für ein Amt oder für den Notfall — erst die Vorschau, dann drucken.',
+      legende: 'Was soll aufs Papier?',
+      alles: 'Alles',
+      amt: 'Für ein Amt',
+      notfall: 'Für den Notfall',
+    },
     dossier: {
       lebensmappe: {
         title: 'Lebensmappe',

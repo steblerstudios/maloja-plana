@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PageTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
@@ -31,12 +30,19 @@ export const LINK_TARGETS = [
 // «Entfernt · Rückgängig» bleibt rund fünf Sekunden stehen (Entscheid C, §15).
 const RUECKGAENGIG_MS = 5000;
 
-export const MerklisteView = ({ palette, t, onNavigate }) => {
+// Seit 27.10.2026 (F7-L10, docs/entscheide/seiten-buendeln.md §2 H) keine eigene Seite mehr, sondern der
+// Reiter «Merkliste» in «Was ansteht» (CalendarReminders.jsx). Dort führt der Kalender die Liste:
+// `punkte` + `aendere` (eine Liste für beide Reiter, gespeichert wird nur dort). Der Seitentitel ist
+// «Was ansteht», der Reiter heisst «Merkliste» — darum hier kein eigener Titel und keine Karte.
+// Ohne `punkte` (Tests) führt die Ansicht ihre Liste selbst, wie bisher.
+export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
   // Im Beispiel und beim Ausprobieren (Entscheid 18.10.2026, wie der Kalender): beginnt leer,
-  // speichert nie; die echten Punkte bleiben unsichtbar und unberührt. main.jsx hängt die
-  // Ansicht beim Moduswechsel neu ein (key: datenModus).
+  // speichert nie; die echten Punkte bleiben unsichtbar und unberührt. main.jsx hängt «Was
+  // ansteht» beim Moduswechsel neu ein (key: datenModus), damit auch diesen Reiter.
   const vorlaeufig = useVorlaeufig();
-  const [items, setItems] = useState(() => (vorlaeufig ? [] : loadTodos()));
+  const [eigene, setEigene] = useState(() => (punkte || vorlaeufig ? [] : loadTodos()));
+  const items = punkte || eigene;
+  const setItems = punkte ? aendere : setEigene;
   const [newText, setNewText] = useState('');
   const [newLink, setNewLink] = useState('');
   const [tagOffen, setTagOffen] = useState(null); // id des Punkts, dessen Tag-Feld offen ist
@@ -45,8 +51,8 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
 
   useEffect(() => {
     if (vorlaeufig) return;
-    saveTodos(items);
-  }, [items, vorlaeufig]);
+    if (!punkte) saveTodos(eigene);
+  }, [eigene, vorlaeufig, punkte]);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
@@ -92,7 +98,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
   const done = items.filter(i => i.done);
 
   const s = {
-    card: { maxWidth: '680px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
+    card: { maxWidth: '680px', paddingTop: space.md + 'px' },
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.6, marginBottom: space.lg + 'px', maxWidth: '520px' },
     addRow: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', alignItems: 'center', marginBottom: space.lg + 'px' },
     input: { flex: '1 1 200px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
@@ -160,7 +166,6 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'check', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('merkliste.title')),
     React.createElement('p', { style: s.intro }, t('merkliste.intro')),
 
     React.createElement('div', { style: s.addRow },
