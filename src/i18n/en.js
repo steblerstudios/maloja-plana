@@ -1426,13 +1426,13 @@ export default {
     notifications: 'Notifications',
     installApp: 'Install as an app',
     tresor: 'Documents',
-    kkScanner: 'Insurance scanner',
+    kkScanner: 'Insurance card scanner',
     budget: 'Budget',
     debts: 'Debts',
     taxes: 'Taxes',
     finanzUebersicht: 'Finances',
     organDonation: 'Organ donation',
-    budgetSync: 'Budget sync',
+    budgetSync: 'Monthly budget',
     kvgIpv: 'Premium subsidy (IPV)',
     praemien: 'Insurance overview',
     mietzins: 'Rent subsidies',
@@ -1448,7 +1448,7 @@ export default {
     charts: 'Charts',
     unterlagen: 'My Documents',
     flyer: 'Flyer to share',
-    export: 'Export',
+    export: 'Backup',
     merkliste: 'My checklist',
     umzug: 'Moving home',
     unfallkrankheit: 'Accident or illness',
@@ -1504,7 +1504,7 @@ export default {
     iv: 'Illness & IV',
     pflege: 'Caring for relatives',
     todesfall: 'A death in your circle',
-    arztkoffer: 'Health',
+    arztkoffer: 'Your health case',
     sub: {
       patientenverfuegung: 'In questions, to print',
       kreditkarte: 'Costs and benefits per year',
@@ -1549,7 +1549,7 @@ export default {
       stelleverloren: 'RAV, insurances, pension',
       taxImport: 'Transfer key figures from your tax return',
       search: 'Find tools & chapters',
-      budgetSync: 'CSV import',
+      budgetSync: 'Income and expenses in detail',
       kvgIpv: 'Check eligibility',
       praemien: 'Premiums, deductible, insurers',
       mietzins: 'Entitlement & quick check',
@@ -3083,7 +3083,7 @@ export default {
   },
 
   sozialhilfe: {
-    title: 'Social security',
+    title: 'Social assistance',
     intro: 'This overview helps you understand what support may be available to you. Social security is part of Switzerland — it exists for people in difficult situations.',
     householdSize: 'Household size: {count} person(s)',
     enterCanton: 'Please enter canton for cantonal calculation.',
@@ -3197,7 +3197,7 @@ export default {
 
   tax: {
     abzuegeGeschaetzt: 'Deductions (estimate)',
-    title: 'Tax orientation',
+    title: 'Taxes',
     intro: 'This overview gives you a rough estimate of your tax burden — as orientation, not tax advice. You can try different deductions and see how your situation changes.',
     inputs: 'Inputs',
     taxCanton: 'Tax canton',
@@ -5311,7 +5311,7 @@ export default {
   },
 
   unterlagen: {
-    title: 'My Documents',
+    title: 'Dossiers and templates',
     subtitle: 'Your life dossiers, calmly organised.',
     dossier: {
       lebensmappe: {
@@ -5333,15 +5333,15 @@ export default {
       },
     },
     backup: {
-      title: 'Data backup',
+      title: 'Backup',
       description: 'Back up or restore your data locally.',
-      action: 'Backup & restore',
+      action: 'Open backup',
     },
     note: 'All documents stay on your device. Nothing is uploaded.',
   },
 
   backup: {
-    title: 'Backup & Restore',
+    title: 'Backup',
     exportPlain: 'Export (JSON)',
     exportEncrypted: 'Export (encrypted)',
     importFile: 'Import backup',

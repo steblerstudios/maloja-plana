@@ -44,9 +44,11 @@ describe('main.jsx: keine eigene Charts-Seite mehr', () => {
 });
 
 describe('Werkzeug-Register', () => {
-  it('der Eintrag führt weiter über die Umleitung (Menü, Suche, Gepäck bleiben gleich)', () => {
-    const eintrag = WERKZEUGE.find((w) => w.view === 'charts');
-    expect(eintrag).toBeTruthy();
-    expect(UMLEITUNGEN[eintrag.view]).toBeTruthy();
+  // F7-L11 (Sophie 27.10.2026): kein eigener Eintrag mehr; die Adresse bleibt als Umleitung, das Suchwort hängt
+  // am Eintrag «Finanzen & Geld».
+  it('kein eigener Eintrag, die Adresse bleibt als Umleitung', () => {
+    expect(WERKZEUGE.find((w) => w.view === 'charts')).toBeFalsy();
+    expect(UMLEITUNGEN.charts).toBeTruthy();
+    expect(WERKZEUGE.find((w) => w.view === 'finanzuebersicht').aliases).toContain('charts');
   });
 });
