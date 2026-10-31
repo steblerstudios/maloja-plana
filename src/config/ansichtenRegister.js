@@ -25,14 +25,16 @@ import { SUCHBARE_WERKZEUGE } from '../data/werkzeugRegister.js';
 // Balken oben und Zeichen im Kopf (Entscheid Stebler Studios 27.09.2026, Probe).
 export const ABLAEUFE = [
   { view: 'kkerst', bereich: 'versicherungen', nav: 'nav.kkerst', sub: 'nav.sub.kkerst', icon: 'insurance', aliases: ['krankenkasse', 'grundversicherung', 'neu in der schweiz', 'caisse maladie', 'cassa malati', 'health insurance'] },
-  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa'] },
-  { view: 'zusatzwechsel', bereich: 'versicherungen', nav: 'zusatzWechsel.title', sub: 'nav.sub.zusatzwechsel', icon: 'insurance', aliases: ['zusatzversicherung', 'vvg', 'kündigung', 'complémentaire', 'complementare'] },
+  // F7-A5 (27.10.2026): ein Ablauf für Grund- und Zusatzversicherung; `#/zusatzwechsel` ist eine Umleitung hierher.
+  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa', 'zusatzversicherung', 'vvg', 'complémentaire', 'complementare'] },
   { view: 'neuerjob', bereich: 'arbeit', nav: 'nav.neuerjob', sub: 'nav.sub.neuerjob', icon: 'lebenslauf', aliases: ['job', 'stelle', 'arbeitsvertrag', 'erste stelle', 'emploi', 'lavoro'] },
   { view: 'stelleverloren', bereich: 'arbeit', nav: 'nav.stelleverloren', sub: 'nav.sub.stelleverloren', icon: 'lebenslauf', aliases: ['kündigung', 'arbeitslos', 'rav', 'chômage', 'disoccupazione', 'unemployed'] },
   { view: 'unfallkrankheit', bereich: 'gesundheit', nav: 'nav.unfallkrankheit', sub: 'nav.sub.unfallkrankheit', icon: 'notfall', aliases: ['unfall', 'krank', 'uvg', 'taggeld', 'arbeitsunfähig', 'accident', 'infortunio'] },
   { view: 'umzug', bereich: 'wohnen', nav: 'nav.umzug', sub: 'nav.sub.umzug', icon: 'home', aliases: ['umzug', 'zügeln', 'adresse', 'anmelden', 'déménagement', 'trasloco', 'moving'] },
   { view: 'pensionierung', bereich: 'vorsorge', nav: 'nav.pensionierung', sub: 'nav.sub.pensionierung', icon: 'vorsorge', aliases: ['pension', 'rente', 'ruhestand', 'ahv', 'retraite', 'pensione', 'retirement'] },
   { view: 'mahnung', bereich: 'finanzen', nav: 'nav.mahnung', sub: 'nav.sub.mahnung', icon: 'money', aliases: ['mahnung', 'zahlungserinnerung', 'rechnung', 'offene rechnung', 'inkasso', 'verzugszins', 'ratenzahlung', 'rappel', 'sommation', 'sollecito', 'diffida', 'reminder', 'overdue'] },
+  // F7-A10 (27.10.2026): vorher Schritt 6 von «Mahnung erhalten».
+  { view: 'selbstmahnen', bereich: 'finanzen', nav: 'selbstMahnen.title', sub: 'nav.sub.selbstmahnen', icon: 'money', aliases: ['mahnen', 'schuldet mir', 'geld zurück', 'verzugszins', 'in verzug setzen', 'schuldner', 'mettre en demeure', 'débiteur', 'costituire in mora', 'debitore', 'owes me money', 'debtor'] },
   { view: 'betreibung', bereich: 'finanzen', nav: 'nav.betreibung', sub: 'nav.sub.betreibung', icon: 'behoerden', aliases: ['betreibung', 'zahlungsbefehl', 'rechtsvorschlag', 'poursuite', 'esecuzione'] },
   { view: 'selbstaendigkeit', bereich: 'arbeit', nav: 'nav.selbstaendigkeit', sub: 'nav.sub.selbstaendigkeit', icon: 'lebenslauf', aliases: ['selbständig', 'selbstständig', 'firma', 'gründen', 'indépendant', 'indipendente', 'self-employed'] },
   { view: 'heirat', bereich: 'familie', nav: 'nav.heirat', sub: 'nav.sub.heirat', icon: 'heart', aliases: ['heirat', 'hochzeit', 'ehe', 'partnerschaft', 'mariage', 'matrimonio', 'marriage'] },

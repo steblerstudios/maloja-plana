@@ -29,7 +29,7 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
   const coverVorbei = istVorbei(coverEnd);
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'lebenslauf',
+    palette, t, onNavigate, ablauf: 'stelleverloren', icon: 'lebenslauf',
     title: t('stelleVerloren.title'),
     intro: t('stelleVerloren.intro'),
   },
@@ -62,7 +62,7 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
           : t(coverVorbei ? 'stelleVerloren.step2Vorbei' : 'stelleVerloren.step2Hinweis', { date: formatDE(coverEnd) })),
       coverEnd && !coverVorbei && React.createElement(FristButton, {
         key: coverEnd, palette, t,
-        buttonLabel: t('stelleVerloren.step2Button', { date: formatDE(coverEnd) }),
+        art: 'frist', buttonLabel: t('stelleVerloren.step2Button', { date: formatDE(coverEnd) }),
         doneLabel: t('stelleVerloren.step2Done'),
         calendarLabel: t('stelleVerloren.step2CalendarLink'),
         onNavigate,

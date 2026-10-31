@@ -236,11 +236,6 @@ export default {
     step2CalendarLink: 'Zum Kalender',
     fristKarteTitel: 'Anmeldung Gemeinde',
     fristKarteBis: 'bis {date}',
-    weiter: 'Erledigt, weiter ›',
-    abschliessen: 'Ablauf abschliessen',
-    fertigTitel: 'Der Umzug ist geordnet',
-    fertigText: 'Alle vier Schritte sind erledigt.',
-    nochmals: 'Ablauf nochmals ansehen',
     // Namen der vier Stationen auf der Passstrasse (Fassung 5, wörtlich aus dem Mockup)
     passAdresse: 'Adresse',
     passGemeinde: 'Gemeinde',
@@ -496,9 +491,6 @@ export default {
     step4Text: { sie: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, können Sie die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lassen Sie aus Sorge kein Geld liegen, das Ihnen zusteht. Ist Ihre Bewilligung an ausreichende eigene Mittel geknüpft, klären Sie das vorher mit dem Migrationsamt oder einer Beratungsstelle.', du: 'In der Regel nach zehn Jahren Aufenthalt, davon die letzten fünf ununterbrochen mit Aufenthaltsbewilligung, kannst du die Niederlassungsbewilligung (C) erhalten; bei guter Integration frühestens nach fünf Jahren (AIG Art. 34). Sie ist unbefristet und sicherer. Wichtig sind die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit (AIG Art. 58a). Gut zu wissen: Die Prämienverbilligung (IPV) gilt im Ausländerrecht nicht als Sozialhilfe (SEM-Weisungen AIG, Ziff. 6.13.1). Lass aus Sorge kein Geld liegen, das dir zusteht. Ist deine Bewilligung an ausreichende eigene Mittel geknüpft, kläre das vorher mit dem Migrationsamt oder einer Beratungsstelle.' },
     step4LinkIpv: 'Prämienverbilligung (IPV) prüfen',
     step4LinkSituation: 'Situation „Frisch zugezogen" ansehen',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedKkErst: 'Krankenkasse zum ersten Mal',
-    relatedJob: 'Neuer Job',
     footerNote: { sie: 'Lassen Sie die Bewilligung nie ablaufen, ohne den Antrag gestellt zu haben. Bei Unsicherheit hilft die kantonale Migrationsbehörde oder eine Beratungsstelle für Migrantinnen und Migranten. Dies ist Orientierung, keine Rechtsberatung.', du: 'Lass die Bewilligung nie ablaufen, ohne den Antrag gestellt zu haben. Bei Unsicherheit hilft die kantonale Migrationsbehörde oder eine Beratungsstelle für Migrantinnen und Migranten. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   fuehrerausweis: {
@@ -522,9 +514,6 @@ export default {
     step5Title: '5 · Verlust oder Diebstahl',
     step5Text: { sie: 'Ist der Ausweis weg, beantragen Sie beim kantonalen Strassenverkehrsamt einen Ersatz. Eine Kopie oder ein Foto im Tresor hilft, die Angaben schnell zur Hand zu haben.', du: 'Ist der Ausweis weg, beantrag beim kantonalen Strassenverkehrsamt einen Ersatz. Eine Kopie oder ein Foto im Tresor hilft, die Angaben schnell zur Hand zu haben.' },
     step5Link: 'Zum Behörden-Dossier',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Umzug — Adresse ändern',
-    relatedPension: 'Pensionierung',
     footerNote: 'Fristen und Kosten können je nach Kanton abweichen. Verbindlich ist das kantonale Strassenverkehrsamt. Dies ist Orientierung, keine Rechtsberatung.',
   },
   heirat: {
@@ -547,9 +536,6 @@ export default {
     step4Title: '4 · Versicherungen & Vorsorge',
     step4Text: { sie: 'Die Krankenkasse bleibt individuell. Prüfen Sie Hausrat und Haftpflicht — oft genügt eine gemeinsame Police. Passen Sie die Begünstigung in Säule 3a und Pensionskasse an, damit im Ernstfall die richtige Person abgesichert ist.', du: 'Die Krankenkasse bleibt individuell. Prüft Hausrat und Haftpflicht — oft genügt eine gemeinsame Police. Passt die Begünstigung in Säule 3a und Pensionskasse an, damit im Ernstfall die richtige Person abgesichert ist.' },
     step4Link: 'Vorsorge ansehen',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedKind: 'Kind bekommen',
-    relatedTrennung: 'Trennung oder Scheidung',
     footerNote: 'Ein Ehevertrag (Güterstand) ist freiwillig, kann aber sinnvoll sein — besonders bei Wohneigentum oder Selbständigkeit. Dies ist Orientierung, keine Rechtsberatung.',
   },
   kind: {
@@ -577,8 +563,6 @@ export default {
     step5Text: { sie: 'Ein grösserer Haushalt ändert, was Ihnen zusteht. Ihre Prämienverbilligung (IPV) wird auf den neuen Haushalt neu berechnet — ein zweiter Blick lohnt sich. Wenn Sie das Kind allein grossziehen oder mit knappem Budget, sammeln die Lebenszustände weitere Unterstützung an einem ruhigen Ort.', du: 'Ein grösserer Haushalt ändert, was dir zusteht. Deine Prämienverbilligung (IPV) wird auf den neuen Haushalt neu berechnet — ein zweiter Blick lohnt sich. Wenn du das Kind allein grossziehst oder mit knappem Budget, sammeln die Lebenszustände weitere Unterstützung an einem ruhigen Ort.' },
     step5LinkIpv: 'Prämienverbilligung neu berechnen',
     step5LinkSituation: 'Passende Situationen unter «Was steht mir zu?» ansehen',
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedHeirat: 'Heirat oder Partnerschaft',
     footerNote: { sie: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahren Sie Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.', du: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahre Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   trennung: {
@@ -751,9 +735,6 @@ export default {
     step4Link: 'Führerausweis: was sonst noch gilt',
     step5Title: '5 · Kinder und Schule',
     step5Text: { sie: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Fragen Sie bei der Anmeldung in der Gemeinde nach der Schulverwaltung.', du: 'Der Grundschulunterricht ist obligatorisch und an öffentlichen Schulen unentgeltlich (BV Art. 19, 62). Zuständig sind die Kantone: Wann ein Kind eingeschult wird, wie die Anmeldung läuft und ob es Sprachkurse für Neuankommende gibt, ist je nach Kanton und Gemeinde verschieden. Frag bei der Anmeldung in der Gemeinde nach der Schulverwaltung.' },
-    relatedTitle: 'Verwandte Ereignisse',
-    relatedUmzug: 'Später umziehen, innerhalb der Schweiz',
-    relatedEinbuergerung: 'Später: Einbürgerung',
     footerNote: { sie: 'Vieles hängt von Ihrer Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.', du: 'Vieles hängt von deiner Staatsangehörigkeit (EU/EFTA oder nicht) und vom Kanton ab. Verbindlich sind die Gemeinde und das kantonale Migrationsamt. Dies ist Orientierung, keine Rechtsberatung.' },
     quelle: 'Quellen: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (geprüft im September 2026).',
   },
@@ -1133,8 +1114,6 @@ export default {
     step5Text: { sie: 'Fragen Sie früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlagen Sie nur Raten vor, die Ihr Budget auch in einem schwierigen Monat trägt, und bitten Sie um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird. Reicht das Einkommen auf Dauer nicht für das Nötige, rät die Schuldenberatung (schuldeninfo.ch), zuerst die laufenden Rechnungen wie Miete und Krankenkasse zu bezahlen und keine Ratenvereinbarungen oder Schuldanerkennungen zu unterschreiben — neue Rückstände wiegen schwerer als alte.', du: 'Frag früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlag nur Raten vor, die dein Budget auch in einem schwierigen Monat trägt, und bitte um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird. Reicht das Einkommen auf Dauer nicht für das Nötige, rät die Schuldenberatung (schuldeninfo.ch), zuerst die laufenden Rechnungen wie Miete und Krankenkasse zu bezahlen und keine Ratenvereinbarungen oder Schuldanerkennungen zu unterschreiben — neue Rückstände wiegen schwerer als alte.' },
     step5LinkBudget: 'Budget ansehen',
     step5LinkBeratung: 'Schuldenberatung finden',
-    step6Title: { sie: '6 · Umgekehrt: Ihnen schuldet jemand Geld', du: '6 · Umgekehrt: dir schuldet jemand Geld' },
-    step6Text: { sie: 'Mit einer Mahnung setzen Sie die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann können Sie Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginnen Sie freundlich mit einer Zahlungserinnerung, setzen Sie eine klare Frist und schicken Sie die Mahnung so, dass Sie den Versand belegen können.', du: 'Mit einer Mahnung setzt du die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann kannst du Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginne freundlich mit einer Zahlungserinnerung, setz eine klare Frist und schick die Mahnung so, dass du den Versand belegen kannst.' },
     footerNote: 'Eine Mahnung ist kein Urteil und keine Betreibung. Dies ist Orientierung, keine Rechtsberatung. Bei Schulden hilft eine Schuldenberatung.',
     quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz, «Muss ich die Mahngebühren zahlen?» (2022)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz, Inkassogebühren (2025)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (Berner Schuldenberatung), Stichwort «Inkassobüros» (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[SchKG Art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_27]] (geprüft im September 2026).',
   },
@@ -1231,6 +1210,10 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026): Weiche in Schritt 1 — ein Ablauf für Grund- und Zusatzversicherung.
+    weicheFrage: { sie: 'Was möchten Sie wechseln?', du: 'Was möchtest du wechseln?' },
+    weicheGrund: 'Grundversicherung (KVG)',
+    weicheZusatz: 'Zusatzversicherung (VVG)',
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
     checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },
@@ -1513,6 +1496,7 @@ export default {
       kkerst: 'Neu in der Schweiz versichern',
       pensionierung: 'AHV, Pensionskasse, 3. Säule',
       mahnung: 'Prüfen, bestreiten, Raten anfragen',
+      selbstmahnen: 'Mahnen, Verzug, Verzugszins',
       betreibung: 'Zahlungsbefehl — ruhig reagieren',
       dienst: 'Rekrutierung, Zivildienst, EO, Ersatz',
       volljaehrig: 'Verträge, Krankenkasse, Steuern, Stimme',
@@ -6317,6 +6301,10 @@ export default {
     b: { wohnen: 'Wohnen', finanzen: 'Finanzen', person: 'Person', versicherungen: 'Versicherung', gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge', bildung: 'Bildung', notfall: 'Notfall', behoerden: 'Behörden' },
   },
   gepaeck: {
+    // F7-A9 (27.10.2026): Gruppe im Rucksack.
+    gruppe: {
+      erwachsen: 'Erwachsen werden',
+    },
     intro: { sie: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Packen Sie aus, öffnen Sie einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.', du: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Pack aus, öffne einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.' },
     ctaSub: 'Lebensereignisse als Ausrüstung — auspacken, hineinschauen.',
     unpack: 'Auspacken',
@@ -6338,7 +6326,7 @@ export default {
     legend: 'Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.',
     obj: { wohnen: 'Schlüsselbund', arbeit: 'Werkzeugrolle', familie: 'Erinnerungskiste', gesundheit: 'Arztkoffer', alter: 'Feldflasche', abschied: 'Versiegelter Brief', geld: 'Portemonnaie' },
     objSub: { wohnen: 'Ankommen & Wohnen', arbeit: 'Arbeit & Einkommen', familie: 'Familie & Beziehung', gesundheit: 'Gesundheit & Kasse', alter: 'Alter & Vorsorge', abschied: 'Abschied', geld: 'Geld & Steuern' },
-    w: { bestattung: 'Bestattungswünsche festhalten', mahnung: 'Mahnung erhalten', dienst: 'Militär- oder Zivildienst', volljaehrig: '18 werden', lehre: 'Lehre beginnen', betreibungsauszug: 'Betreibungsauszug bestellen', ausweis: 'Pass oder Identitätskarte', wegzug: 'Wegzug ins Ausland', adoption: 'Adoption', zusammenziehen: 'Zusammenziehen ohne Trauschein', ergaenzungsleistungen: 'Ergänzungsleistungen beantragen', vorsorgeauftrag: 'Vorsorgeauftrag & Patientenverfügung', einbuergerung: 'Einbürgerung', aussteuerung: 'Ausgesteuert', quellensteuer: 'Quellensteuer', wohnunggekuendigt: 'Wohnung gekündigt', umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', mietzins: 'Mietzins prüfen', fuehrerausweis: 'Führerausweis', asyl: 'Asyl & Schutz', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', betreibung: 'Betreibung erhalten', stipendien: 'Ausbildung & Stipendien', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', kkerst: 'Krankenkasse zum ersten Mal', zusatz: 'Zusatzversicherung wechseln', iv: 'Invalidität (IV)', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall', organ: 'Organspende' },
+    w: { selbstmahnen: 'Jemand schuldet mir Geld', bestattung: 'Bestattungswünsche festhalten', mahnung: 'Mahnung erhalten', dienst: 'Militär- oder Zivildienst', volljaehrig: '18 werden', lehre: 'Lehre beginnen', betreibungsauszug: 'Betreibungsauszug bestellen', ausweis: 'Pass oder Identitätskarte', wegzug: 'Wegzug ins Ausland', adoption: 'Adoption', zusammenziehen: 'Zusammenziehen ohne Trauschein', ergaenzungsleistungen: 'Ergänzungsleistungen beantragen', vorsorgeauftrag: 'Vorsorgeauftrag & Patientenverfügung', einbuergerung: 'Einbürgerung', aussteuerung: 'Ausgesteuert', quellensteuer: 'Quellensteuer', wohnunggekuendigt: 'Wohnung gekündigt', umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', mietzins: 'Mietzins prüfen', fuehrerausweis: 'Führerausweis', asyl: 'Asyl & Schutz', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', betreibung: 'Betreibung erhalten', stipendien: 'Ausbildung & Stipendien', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', kkerst: 'Krankenkasse zum ersten Mal', zusatz: 'Zusatzversicherung wechseln', iv: 'Invalidität (IV)', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall', organ: 'Organspende' },
   },
   instrumente: {
     title: { sie: 'Ihre Instrumente', du: 'Deine Instrumente' },
@@ -7136,5 +7124,26 @@ export default {
     tun: 'Was zu tun ist',
     quelle: 'Quelle: {q}',
     geschaetzt: 'geschätzt',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026 — gemeinsame Texte aller Abläufe (vorher umzug.weiter …).
+  ablauf: {
+    weiter: 'Erledigt, weiter ›',
+    weiterInfo: 'Weiter ›',
+    abschliessen: 'Ablauf abschliessen',
+    fertigTitel: 'Alle {n} Schritte sind erledigt',
+    zurUebersicht: 'Zur Übersicht',
+    nochmals: 'Ablauf nochmals ansehen',
+    erledigt: 'Erledigte Schritte',
+    fristBis: 'bis {date}',
+    fristErinnerung: 'Erinnerung am {date}',
+    verwandtTitel: 'Verwandte Ereignisse',
+    kapitelLink: 'Zum Kapitel {name}',
+  },
+  // F7-A10 (27.10.2026): eigener Ablauf «Jemand schuldet Geld» — Text und Quellen 1:1 aus mahnung.step6*.
+  selbstMahnen: {
+    title: { sie: 'Ihnen schuldet jemand Geld', du: 'Dir schuldet jemand Geld' },
+    step1Title: '1 · Mahnen',
+    step1Text: { sie: 'Mit einer Mahnung setzen Sie die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann können Sie Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginnen Sie freundlich mit einer Zahlungserinnerung, setzen Sie eine klare Frist und schicken Sie die Mahnung so, dass Sie den Versand belegen können.', du: 'Mit einer Mahnung setzt du die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann kannst du Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginne freundlich mit einer Zahlungserinnerung, setz eine klare Frist und schick die Mahnung so, dass du den Versand belegen kannst.' },
+    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]] (geprüft im September 2026).',
   },
 };

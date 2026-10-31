@@ -5,7 +5,7 @@ import { inDays, formatDE } from './utils/helpers.js';
 // Heirat / eingetragene Partnerschaft — geführter Ablauf. Trauung anmelden (inkl.
 // Familiennachzug/Bewilligung für ausländische Partner:innen), Name & Zivilstand,
 // Steuern (gemeinsame Veranlagung + IPV neu aufs Paar-Einkommen), Versicherungen &
-// Vorsorge. Am Ende die „Verwandte Ereignisse"-Ebene (Kind, Trennung). Kein Rat —
+// Vorsorge. «Verwandte Ereignisse» setzt die Ablauf-Schale (config/ablaufVerwandte.js, F7-A4). Kein Rat —
 // Orientierung.
 
 export const Heirat = ({ palette, t, onNavigate }) => {
@@ -13,7 +13,7 @@ export const Heirat = ({ palette, t, onNavigate }) => {
   const deadline = inDays(30); // frühzeitig beim Zivilstandsamt anmelden (Orientierung)
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'heart',
+    palette, t, onNavigate, ablauf: 'heirat', icon: 'heart',
     title: t('heirat.title'),
     intro: t('heirat.intro'),
   },
@@ -40,11 +40,6 @@ export const Heirat = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('heirat.step4Title') },
       React.createElement('p', { style: s.stepText }, t('heirat.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('heirat.step4Link'), onClick: () => onNavigate('vorsorge') })
-    ),
-    // Verwandte Ereignisse (Matrix-Ebene)
-    onNavigate && React.createElement(AblaufStep, { palette, title: t('heirat.relatedTitle') },
-      React.createElement(AblaufLink, { palette, label: t('heirat.relatedKind'), onClick: () => onNavigate('kind') }),
-      React.createElement(AblaufLink, { palette, label: t('heirat.relatedTrennung'), onClick: () => onNavigate('trennung') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('heirat.quelle'), notes: [t('heirat.footerNote'), t('trust.localOnly')] })
   );

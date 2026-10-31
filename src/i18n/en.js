@@ -236,11 +236,6 @@ export default {
     step2CalendarLink: 'To the calendar',
     fristKarteTitel: 'Registration with the municipality',
     fristKarteBis: 'by {date}',
-    weiter: 'Done, next ›',
-    abschliessen: 'Finish',
-    fertigTitel: 'Your move is in order',
-    fertigText: 'All four steps are done.',
-    nochmals: 'View the steps again',
     passAdresse: 'Address',
     passGemeinde: 'Municipality',
     passNachfuehren: 'Update',
@@ -495,9 +490,6 @@ export default {
     step4Text: 'As a rule, after ten years of residence, the last five without interruption on a residence permit, you can obtain a settlement permit (C); with good integration at the earliest after five years (AIG Art. 34). It is unlimited and more secure. Integration criteria such as language, work and not relying on social assistance matter (AIG Art. 58a). Good to know: under foreign-nationals law, premium reduction (IPV) does not count as social assistance (SEM Directives AIG, section 6.13.1). Don’t leave money you are entitled to on the table out of worry. If your permit is tied to sufficient own means, clarify this beforehand with the migration office or an advice centre.',
     step4LinkIpv: 'Check premium reduction (IPV)',
     step4LinkSituation: 'View the “new in Switzerland” situation',
-    relatedTitle: 'Related events',
-    relatedKkErst: 'Health insurance for the first time',
-    relatedJob: 'New job',
     footerNote: 'Never let the permit expire without having applied. If unsure, the cantonal migration authority or a counselling service for migrants can help. This is orientation, not legal advice.',
   },
   fuehrerausweis: {
@@ -521,9 +513,6 @@ export default {
     step5Title: '5 · Loss or theft',
     step5Text: 'If your licence is gone, apply for a replacement at your cantonal road traffic office. A copy or photo in the vault helps you have the details at hand.',
     step5Link: 'To the authorities dossier',
-    relatedTitle: 'Related events',
-    relatedUmzug: 'Moving — change of address',
-    relatedPension: 'Retirement',
     footerNote: 'Deadlines and costs can vary by canton. The cantonal road traffic office is authoritative. This is orientation, not legal advice.',
   },
   heirat: {
@@ -546,9 +535,6 @@ export default {
     step4Title: '4 · Insurance & pension',
     step4Text: 'Health insurance stays individual. Review household and liability insurance — often one shared policy is enough. Adjust the beneficiary in pillar 3a and the pension fund so the right person is protected if something happens.',
     step4Link: 'View pension',
-    relatedTitle: 'Related events',
-    relatedKind: 'Having a child',
-    relatedTrennung: 'Separation or divorce',
     footerNote: 'A marriage contract (matrimonial property regime) is optional but can be sensible — especially with home ownership or self-employment. This is orientation, not legal advice.',
   },
   kind: {
@@ -576,8 +562,6 @@ export default {
     step5Text: 'A larger household changes what you may be entitled to. Your premium reduction (IPV) is recalculated on the new household — worth checking again. If you are raising the child alone or on a tight budget, the life situations gather further support in one calm place.',
     step5LinkIpv: 'Recalculate premium reduction',
     step5LinkSituation: 'View matching situations under “What am I entitled to?”',
-    relatedTitle: 'Related events',
-    relatedHeirat: 'Marriage or partnership',
     footerNote: 'Much goes through the employer and compensation office — keep confirmations safe. This is orientation, not legal advice.',
   },
   trennung: {
@@ -750,9 +734,6 @@ export default {
     step4Link: 'Driving licence: what else applies',
     step5Title: '5 · Children and school',
     step5Text: 'Basic schooling is compulsory and free at public schools (BV Art. 19, 62). The cantons are responsible: school entry age, registration and language courses for newcomers vary by canton and commune. When registering with the commune, ask for the school administration.',
-    relatedTitle: 'Related events',
-    relatedUmzug: 'Moving later, within Switzerland',
-    relatedEinbuergerung: 'Later: naturalisation',
     footerNote: 'Much depends on your nationality (EU/EFTA or not) and the canton. The commune and the cantonal migration office are authoritative. This is orientation, not legal advice.',
     quelle: 'Sources: [[VZAE Art. 10|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_10]], [[AIG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_12]], [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[AHVG Art. 1a|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_1_a]], [[VZV Art. 42|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_42]], [[BV Art. 62|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_62]] (German text where no English exists, checked September 2026).',
   },
@@ -1132,8 +1113,6 @@ export default {
     step5Text: 'Ask early for instalments or a deferral — this is often possible if you get in touch. Only propose instalments your budget can carry even in a difficult month, and ask for written confirmation. If several reminders pile up, a debt advice service helps you keep the overview — before debt collection follows. If income is permanently not enough for the essentials, debt advice (schuldeninfo.ch) recommends paying current bills such as rent and health insurance first and not signing instalment agreements or acknowledgements of debt — new arrears weigh more than old ones.',
     step5LinkBudget: 'View budget',
     step5LinkBeratung: 'Find debt advice',
-    step6Title: '6 · The other way round: someone owes you money',
-    step6Text: 'With a reminder you put the person in default, provided the claim is due (OR Art. 102 para. 1); from then on you may charge default interest of 5 % a year (OR Art. 104 para. 1). Start kindly with a payment reminder, set a clear deadline and send the reminder in a way that lets you prove it was sent.',
     footerNote: 'A reminder is neither a judgment nor debt collection. This is guidance, not legal advice. If you are in debt, a debt advice service can help.',
     quelle: 'Sources: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, “Weiterleben mit Schulden” (2011, German)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz (2022, German)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz (2025, German)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (Bern debt counselling service), entry “Inkassobüros” (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[SchKG Art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_27]] (German text where no English exists, checked September 2026).',
   },
@@ -1230,6 +1209,10 @@ export default {
     noReset: "Maloja can't reset your passphrase — only you know it.",
   },
   kvgWechsel: {
+    // F7-A5 (27.10.2026)
+    weicheFrage: 'What would you like to switch?',
+    weicheGrund: 'Basic insurance (KVG)',
+    weicheZusatz: 'Supplementary insurance (VVG)',
     quelle: 'Sources: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (German text where no English exists, checked September 2026).',
     checkIntro: "A lower premium alone isn't a reason to switch. Pause for a moment — does the switch really fit?",
     checkPoint1: "Basic insurance covers the same legally defined benefits at every insurer. Switching doesn't change your coverage and doesn't interrupt ongoing treatment.",
@@ -1512,6 +1495,7 @@ export default {
       kkerst: 'Get insured when new to Switzerland',
       pensionierung: 'AHV, pension fund, third pillar',
       mahnung: 'Check, dispute, ask for instalments',
+      selbstmahnen: 'Reminder, default, default interest',
       betreibung: 'Payment order — react calmly',
       dienst: 'Recruitment, civilian service, EO, exemption tax',
       volljaehrig: 'Contracts, health insurance, taxes, vote',
@@ -6253,6 +6237,10 @@ export default {
     b: { wohnen: 'Home', finanzen: 'Finances', person: 'Person', versicherungen: 'Insurance', gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension', bildung: 'Education', notfall: 'Emergency', behoerden: 'Authorities' },
   },
   gepaeck: {
+    // F7-A9 (27.10.2026): Gruppe im Rucksack.
+    gruppe: {
+      erwachsen: 'Coming of age',
+    },
     intro: 'Each area of life is a piece of gear in the backpack. Unpack it, open an item — inside are the paths through life. A path leads into its guided flow.',
     ctaSub: 'Life events as gear — unpack, look inside.',
     unpack: 'Unpack',
@@ -6274,7 +6262,7 @@ export default {
     legend: 'Every area a real object — keyring, doctor’s bag, tool roll. A path leads into its guided flow. Alongside the tree and the orchard.',
     obj: { wohnen: 'Keyring', arbeit: 'Tool roll', familie: 'Keepsake box', gesundheit: 'Doctor’s bag', alter: 'Field flask', abschied: 'Sealed letter', geld: 'Wallet' },
     objSub: { wohnen: 'Arriving & living', arbeit: 'Work & income', familie: 'Family & relationship', gesundheit: 'Health & insurance', alter: 'Age & pension', abschied: 'Farewell', geld: 'Money & taxes' },
-    w: { bestattung: 'Record funeral wishes', mahnung: 'Payment reminder received', dienst: 'Military or civilian service', volljaehrig: 'Turning 18', lehre: 'Starting an apprenticeship', betreibungsauszug: 'Ordering a debt enforcement extract', ausweis: 'Passport or identity card', wegzug: 'Moving abroad', adoption: 'Adoption', zusammenziehen: 'Moving in together unmarried', ergaenzungsleistungen: 'Applying for supplementary benefits', vorsorgeauftrag: 'Advance care directive & patient decree', einbuergerung: 'Naturalisation', aussteuerung: 'Benefits exhausted', quellensteuer: 'Withholding tax', wohnunggekuendigt: 'Flat notice received', umzug: 'Moving', neuch: 'New to Switzerland', bewilligung: 'Residence & permit', mietzins: 'Check your rent', fuehrerausweis: 'Driving licence', asyl: 'Asylum & protection', job: 'First job', stelleweg: 'Job loss', selbst: 'Becoming self-employed', betreibung: 'Debt-collection notice', stipendien: 'Education & grants', heirat: 'Marriage', geburt: 'Birth', trennung: 'Separation', unfall: 'Illness or accident', kkwechsel: 'Changing health insurer', kkerst: 'Health insurance for the first time', zusatz: 'Switch supplementary insurance', iv: 'Disability (IV)', pension: 'Retirement', pflege: 'When care is needed', todesfall: 'Death of a loved one', organ: 'Organ donation' },
+    w: { selbstmahnen: 'Someone owes me money', bestattung: 'Record funeral wishes', mahnung: 'Payment reminder received', dienst: 'Military or civilian service', volljaehrig: 'Turning 18', lehre: 'Starting an apprenticeship', betreibungsauszug: 'Ordering a debt enforcement extract', ausweis: 'Passport or identity card', wegzug: 'Moving abroad', adoption: 'Adoption', zusammenziehen: 'Moving in together unmarried', ergaenzungsleistungen: 'Applying for supplementary benefits', vorsorgeauftrag: 'Advance care directive & patient decree', einbuergerung: 'Naturalisation', aussteuerung: 'Benefits exhausted', quellensteuer: 'Withholding tax', wohnunggekuendigt: 'Flat notice received', umzug: 'Moving', neuch: 'New to Switzerland', bewilligung: 'Residence & permit', mietzins: 'Check your rent', fuehrerausweis: 'Driving licence', asyl: 'Asylum & protection', job: 'First job', stelleweg: 'Job loss', selbst: 'Becoming self-employed', betreibung: 'Debt-collection notice', stipendien: 'Education & grants', heirat: 'Marriage', geburt: 'Birth', trennung: 'Separation', unfall: 'Illness or accident', kkwechsel: 'Changing health insurer', kkerst: 'Health insurance for the first time', zusatz: 'Switch supplementary insurance', iv: 'Disability (IV)', pension: 'Retirement', pflege: 'When care is needed', todesfall: 'Death of a loved one', organ: 'Organ donation' },
   },
   instrumente: {
     title: 'Your instruments',
@@ -7037,5 +7025,26 @@ export default {
     tun: 'What to do',
     quelle: 'Source: {q}',
     geschaetzt: 'estimated',
+  },
+  // Ablauf-Schale (W), F7-A1/A4, 27.10.2026.
+  ablauf: {
+    weiter: 'Done, next ›',
+    weiterInfo: 'Next ›',
+    abschliessen: 'Finish',
+    fertigTitel: 'All {n} steps are done',
+    zurUebersicht: 'Go to the overview',
+    nochmals: 'View the steps again',
+    erledigt: 'Completed steps',
+    fristBis: 'by {date}',
+    fristErinnerung: 'Reminder on {date}',
+    verwandtTitel: 'Related events',
+    kapitelLink: 'Go to the {name} chapter',
+  },
+  // F7-A10 (27.10.2026): eigener Ablauf «Jemand schuldet Geld» — Text und Quellen 1:1 aus mahnung.step6*.
+  selbstMahnen: {
+    title: 'Someone owes you money',
+    step1Title: '1 · Sending a reminder',
+    step1Text: 'With a reminder you put the person in default, provided the claim is due (OR Art. 102 para. 1); from then on you may charge default interest of 5 % a year (OR Art. 104 para. 1). Start kindly with a payment reminder, set a clear deadline and send the reminder in a way that lets you prove it was sent.',
+    quelle: 'Sources: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]] (German text where no English exists, checked September 2026).',
   },
 };

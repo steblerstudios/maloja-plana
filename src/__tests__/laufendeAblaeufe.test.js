@@ -7,7 +7,8 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, FENSTER_TAGE, ABLAEUFE_MIT_STAND, gespeicherterStand } from '../utils/laufendeAblaeufe.js';
 import { ablaufStandKey, ablaufStandSichern, ablaufStandLaden } from '../utils/ablaufStand.js';
-import { PASS_SCHRITTE, fristDemAblaufZuordnen } from '../AblaufSchale.jsx';
+import { fristDemAblaufZuordnen } from '../AblaufSchale.jsx';
+import { UmzugAblauf } from '../UmzugAblauf.jsx';
 import { Jahreskreis, bandBogen } from '../components/Jahreskreis.jsx';
 import { addReminder, loadReminders } from '../utils/reminders.js';
 import { createT } from '../i18n/index.js';
@@ -31,8 +32,13 @@ const HEUTE = '2026-10-27';
 const frist = (dueDate, extra = {}) => ({ id: 'f', title: 'Bei der neuen Gemeinde anmelden', dueDate, ablauf: 'umzug', done: false, ...extra });
 
 describe('laufendeAblaeufe', () => {
-  it('Umzug hat so viele Schritte wie die Passstrasse', () => {
-    expect(ABLAEUFE_MIT_STAND.find((a) => a.name === 'umzug').total).toBe(PASS_SCHRITTE);
+  // Seit Entwurf W (F7-A1, 27.10.2026) rechnet die Passstrasse ihre Kehren aus der Zahl der Schritte;
+  // PASS_SCHRITTE gibt es nicht mehr. Gezählt werden die Schritte, die der Umzug wirklich zeichnet.
+  it('Umzug hat so viele Schritte, wie er zeichnet', () => {
+    const html = renderToStaticMarkup(React.createElement(UmzugAblauf, { palette: new Proxy({}, { get: () => '#888888' }), t: createT({ de }, 'de', 'sie'), data: {}, chapters: [], onNavigate: () => {} }));
+    const n = (html.match(/data-ablauf-schritt="\d+"/g) || []).length;
+    expect(n).toBeGreaterThan(0);
+    expect(ABLAEUFE_MIT_STAND.find((a) => a.name === 'umzug').total).toBe(n);
   });
 
   it('liest den Stand wie ablaufStandLaden (gleicher Schlüssel, gleiche Regeln)', () => {

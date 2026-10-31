@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
-import { herkunftName } from './config/ansichtenRegister.js';
+import { herkunftName, ablaufBereich } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -82,7 +82,6 @@ const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx
 const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
 const Stundenlohn = React.lazy(() => import('./Stundenlohn.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
-const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
 // (ternär mit import.meta.env.DEV) → im Prod-Build wird der Import wegoptimiert,
 // Haupt-Bundle bleibt byte-neutral.
@@ -96,6 +95,7 @@ const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 // Mahnung und Betreibung: seit 24.10.2026 eine Seite «Rechnung nicht bezahlt», die Adresse wählt die Stufe.
 const RechnungOffen = React.lazy(() => import('./RechnungOffen.jsx'));
+const SelbstMahnen = React.lazy(() => import('./SelbstMahnen.jsx'));
 const Dienst = React.lazy(() => import('./Dienst.jsx'));
 const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
 const Lehre = React.lazy(() => import('./Lehre.jsx'));
@@ -1533,11 +1533,11 @@ const AppInner = ({ demo }) => {
       // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
-      // Der Umzug (Fassung 5) und seit dem Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im
-      // eigenen Kopf (AblaufSchale `kopf`, ChapterView), seit Fassung G (27.10.2026) auch «Was ansteht».
-      // Als Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026). Ebenso ohne «Übersicht»:
-      // die Rechner in der Form X (RECHNER_KAPITEL, components/RechnerForm.jsx, F7-A2 27.10.2026).
-      view !== 'dashboard' && !PFADE[view] && !RECHNER_KAPITEL[view] && view !== 'umzug' && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
+      // Die Abläufe (Fassung 5 Umzug, seit Entwurf W alle im Register, F7-A1 27.10.2026) und seit dem
+      // Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im eigenen Kopf (AblaufSchale, ChapterView),
+      // seit Fassung G (27.10.2026) auch «Was ansteht». Ebenso ohne «Übersicht»: die Rechner in der Form X
+      // (RECHNER_KAPITEL, components/RechnerForm.jsx, F7-A2 27.10.2026).
+      view !== 'dashboard' && !PFADE[view] && !RECHNER_KAPITEL[view] && !ablaufBereich(view) && view !== 'chapter' && view !== 'calendar' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
@@ -1714,7 +1714,6 @@ const AppInner = ({ demo }) => {
           onUnlock: async (pp) => { if (pp !== 'test1234') { const e = new Error('wrong'); throw e; } alert('Entsperrt (Stub) — echte Verdrahtung folgt in Phase 2b-UI.'); },
           onLegal: () => handleNavigate('legal'),
         }),
-        view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate, datenModus }),
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),
@@ -1722,6 +1721,7 @@ const AppInner = ({ demo }) => {
         view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         (view === 'mahnung' || view === 'betreibung') && React.createElement(RechnungOffen, { key: view, palette, t, onNavigate: handleNavigate, stufe: view }),
+        view === 'selbstmahnen' && React.createElement(SelbstMahnen, { palette, t, onNavigate: handleNavigate }),
         view === 'dienst' && React.createElement(Dienst, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'volljaehrig' && React.createElement(Volljaehrig, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'lehre' && React.createElement(Lehre, { palette, t, data: activeData, onNavigate: handleNavigate }),

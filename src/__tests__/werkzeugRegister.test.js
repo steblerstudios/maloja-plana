@@ -109,7 +109,8 @@ describe('Portemonnaie und Aussenfach', () => {
 
   it('Mahnung und Betreibung sind Wege im Portemonnaie, nicht mehr in der Werkzeugrolle (27.09.)', () => {
     const wege = (key) => GEGENSTAENDE.find((g) => g.key === key).wege.map((w) => w.view);
-    expect(wege('geld')).toEqual(['mahnung', 'betreibung']);
+    // F7-A10 (27.10.2026): «Jemand schuldet Geld» ist ein eigener Weg daneben (vorher Schritt 6 der Mahnung).
+    expect(wege('geld')).toEqual(['mahnung', 'betreibung', 'selbstmahnen']);
     expect(wege('arbeit')).not.toContain('mahnung');
     expect(wege('arbeit')).not.toContain('betreibung');
   });

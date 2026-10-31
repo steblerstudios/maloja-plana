@@ -2150,6 +2150,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung', { sub: P('bewilligungSub') }), weg('einbuergerung', { sub: P('einbuergerungSub') })] : []),
         weg('lebensmappe', { sub: P('lebensmappeSub') }),
         weg('ausweis', { sub: P('ausweisSub') }),
+        // F7-A9 (27.10.2026): «Erwachsen werden» aus dem Kapitel erreichbar — Name und Untertitel aus dem Register.
+        weg('volljaehrig'),
         weg('gepaeck', { key: 'familie', titel: P('familie'), sub: P('familieSub'), ikon: 'family' }),
         ablage('chapterView.passend.ablageBasis'),
       ];
@@ -2163,6 +2165,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       ];
       case 'ausbildung': return [
         weg('cv', { titel: P('cv'), sub: P('cvSub') }), weg('neuerjob', { titel: P('neueStelle'), sub: schritte(5) }),
+        // F7-A9 (27.10.2026): «Lehre beginnen» und «Selbständig werden» — Name und Untertitel aus dem Register.
+        weg('lehre'), weg('selbstaendigkeit'),
         weg('stelleverloren', { sub: P('stelleverlorenSub') }), weg('stundenlohn', { titel: P('stundenlohn'), sub: P('stundenlohnSub') }),
         ablage('chapterView.passend.ablageAusbildung'),
       ];

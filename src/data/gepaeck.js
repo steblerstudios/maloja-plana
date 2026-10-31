@@ -28,8 +28,12 @@ export const GEGENSTAENDE = [
   {
     key: 'arbeit', ill: 'toolroll',
     wege: [
-      { key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
-      { key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
+      // Gruppe «Erwachsen werden» (F7-A9, Entscheid Stebler Studios 27.10.2026): 18 werden, Militär- oder
+      // Zivildienst, Lehre — zusammen und zuoberst in der Werkzeugrolle. «18 werden» lag vorher in der
+      // Erinnerungskiste; hier steht es bei den zwei Wegen, die meist im selben Alter kommen.
+      { gruppe: 'erwachsen', key: 'volljaehrig', view: 'volljaehrig', g: ['M7.5 16.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z', 'M11 13h9', 'M17 13v3', 'M20 13v2'] },
+      { gruppe: 'erwachsen', key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
+      { gruppe: 'erwachsen', key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
       // F7-L11: «Ausgesteuert» ist seit Gruppe F ein Teil von «Stelle verloren» (Umleitung) — kein eigener Weg mehr.
       { key: 'quellensteuer', view: 'quellensteuer', g: ['M5 3h14v18H5z', 'M8 7h8', 'M8 11h8', 'M8 15h4', 'M15.5 15.5l2 2'] },
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
@@ -41,7 +45,6 @@ export const GEGENSTAENDE = [
   {
     key: 'familie', ill: 'box',
     wege: [
-      { key: 'volljaehrig', view: 'volljaehrig', g: ['M7.5 16.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z', 'M11 13h9', 'M17 13v3', 'M20 13v2'] },
       { key: 'adoption', view: 'adoption', g: ['M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z', 'M3.5 20v-4.5a4.5 4.5 0 0 1 9 0V20', 'M17 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M14 20v-2.5a3 3 0 0 1 6 0V20'] },
       { key: 'zusammenziehen', view: 'zusammenziehen', g: ['M4 11l8-7 8 7', 'M6 10v10h12V10', 'M12 17.5l-2.3-2.2a1.4 1.4 0 0 1 2.3-1.8 1.4 1.4 0 0 1 2.3 1.8z'] },
       { key: 'heirat', view: 'heirat', g: ['M7 15a5 5 0 1 0 10 0 5 5 0 0 0-10 0', 'M9.5 8.5l2.5-3 2.5 3-2.5 2.5z'] },
@@ -55,7 +58,7 @@ export const GEGENSTAENDE = [
       { key: 'unfall', view: 'unfallkrankheit', g: ['M12 5v14', 'M5 12h14'] },
       { key: 'kkwechsel', view: 'kvgwechsel', g: ['M4 12a8 8 0 0 1 13-6l3 3', 'M20 12a8 8 0 0 1-13 6l-3-3', 'M20 3v6h-6', 'M4 21v-6h6'] },
       { key: 'kkerst', view: 'kkerst', g: ['M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z', 'M12 8.5v5', 'M9.5 11h5'] },
-      { key: 'zusatz', view: 'zusatzwechsel', g: ['M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z', 'M9 11.5h6', 'M12 8.5v6', 'M17.5 16.5l2 2', 'M19.5 16.5l-2 2'] },
+      // «Zusatzversicherung wechseln» ist seit F7-A5 (27.10.2026) der Weg «Zusatz» in «Krankenkasse wechseln».
       { key: 'iv', view: 'iv', g: ['M12 4.5a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8', 'M12 8v5h4.5', 'M8 11l4 1.2', 'M10 13a3.8 3.8 0 1 0 5.4 3.4'] },
     ],
   },
@@ -82,9 +85,14 @@ export const GEGENSTAENDE = [
   { key: 'geld', ill: 'wallet', wege: [
       { key: 'mahnung', view: 'mahnung', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M12 16.5v.01'] },
       { key: 'betreibung', view: 'betreibung', g: ['M5 3h10l4 4v14H5z', 'M15 3v4h4', 'M8 12h8', 'M8 16h5'] },
+      // F7-A10 (27.10.2026): eigener Weg, vorher Schritt 6 von «Mahnung erhalten».
+      { key: 'selbstmahnen', view: 'selbstmahnen', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M17 17l3-3-3-3'] },
     ],
   },
 ];
+
+// Gruppen innerhalb eines Gegenstands (`gruppe` am Weg): Name i18n `gepaeck.gruppe.<key>`.
+export const GRUPPEN = ['erwachsen'];
 
 // Flache Liste aller Wege — für Tests und einfache Iteration.
 export const alleWege = () => GEGENSTAENDE.flatMap((g) => g.wege.map((w) => ({ ...w, gegenstand: g.key })));
