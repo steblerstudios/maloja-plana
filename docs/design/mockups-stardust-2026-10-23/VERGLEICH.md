@@ -1498,3 +1498,18 @@ Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk.» Grundlage Fachprüfung (
 Hausrat Pflicht (Feuer/Elementar) in NW, FR, JU, VD — Erlasse nicht belegt, darum Prüf-Vermerk bis nachgelesen;
 Haftpflicht gesetzlich nicht vorgeschrieben (Vermieter, Hund); UVG-Zusatz freiwillig (VVG); NBU erst ab 8 Std./Woche
 (UVV Art. 13); Vorsorge AHV → PK → 3a nach BV Art. 111–113, Stufen bauen rechtlich nicht aufeinander auf.
+
+### Netz-Schild und Medikamentenpreis, Stand 31.10.2026 (Sophie)
+
+- **F7-K6-2 gebaut:** Entwurfs-PR #635 (`3261283f`).
+- **F7-K3-6 gebaut:** Entwurfs-PR #636 (`bc2ed1b9`). Teile: Leben (oben Mitte) · Krankenkasse (KVG · Zusatz) · Unfall (UVG ·
+  Zusatz, nur für Angestellte) · Haushalt (Privathaftpflicht · Hausrat) · Vorsorge (AHV · Pensionskasse · Säule 3a).
+- **Zahlen im Schild** (Sophie: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon drin ist»):
+  je Versicherung Monat und Jahr, Guthaben, Versicherungssumme. Nur erfasste Felder, nie geschätzt.
+- **Neue Prämien-Felder** (Sophie: «Ja, dazubauen»): `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`. Sie zählen in
+  der einen Monatsrechnung und damit im Budget.
+- **Beispiel Maria** (Sophie: «Ja, Maria ergänzen»): KK-Zusatz CHF 38.50/Mt., Leben CHF 600/Jahr. Versicherungen CHF 659,
+  frei CHF 2’185. Folge: Der sandfarbene Kern «noch nicht gedeckt» ist bei Maria nicht mehr zu sehen; offen, ob das so bleibt.
+
+**Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 · F7-L9 · F7-K5-1.
+Hinweis: F7-K3-4 ist mit dem Netz-Schild zum Teil überholt, D10 und K3-2 hängen am alten Schild auf Dashboard und Übersicht.

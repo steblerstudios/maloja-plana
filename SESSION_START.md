@@ -17,6 +17,24 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🛡️ **Nachtrag 31.10.2026, 12:30 — Fassung 7: Netz-Schild und Medikamentenpreis als Entwurfs-PRs #635 und #636. Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 31.10. 12:26): main = `98539e99` · live = `4299bfb9` (0.1.48-beta, 23.10.) ·
+> **156 Commits** zwischen live und main · offene PRs #626–#636, alle Entwurf. **Der Deploy vom 29.10. ist nicht erfolgt.**
+> - **#635** `feat/f7-medikament-preis` (`3261283f`, F7-K6-2): Publikumspreis aus der BAG-Spezialitätenliste, Stand 06.10.2026,
+>   83 von 96 Medikamenten, nachgeladen. Skript `scripts/build-sl-preise.mjs`, `--pruefen` im Predeploy. Maria: Euthyrox 50 µg.
+>   Spiricort-Wirkstoff korrigiert. Fachprüfung eingearbeitet. Rohdatei `_werkbank/_sl-roh/`, nächster Stand spätestens Februar 2027.
+> - **#636** `feat/f7-netz-schild` (`bc2ed1b9`, F7-K3-6): ein Schild aus fünf Teilen statt Spinnennetz und zwei kleinen Schilden,
+>   Beträge je Versicherung, neue Felder `uvgZusatz`, `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`, in der
+>   Monatsrechnung und im Budget. Maria: Versicherungen CHF 659, frei CHF 2’185 (vorher 570 / 2’274).
+> - **Geprüft:** #636 7’252 Tests, Lint, 64.54 von 65 kB; #635 7’245 Tests, Lint, 64.47 kB; Browser bei Maria. Je einzeln auf main,
+>   **noch nicht zusammen mit #626–#634**. CI-Ergebnis nicht abgewartet.
+> - **Vor Live offen:** Hausrat-Pflicht NW/FR/JU/VD steht mit `verify: true` (`src/data/hausratPflicht.js`), die vier Erlasse sind
+>   nicht nachgelesen. Fachprüfung für die Betragstexte und den Hinweis am Unfall-Zusatz fehlt. Artikel aus der Fachprüfung (ohne
+>   Webzugriff) in fedlex nachlesen. en/rm-Gegenlese.
+> - **Merge:** #635 und #636 nach #626–#633. Erwartete Konflikte: i18n, `budgetSync`/Budget wie #632, `demoData.js`, Tests mit
+>   Marias alten Summen. Grösse neu messen (#626–#631 allein 64.67 kB). Offene Besprechen-Punkte: 20, siehe VERGLEICH.md.
+
 > 🧭 **Nachtrag 27.10.2026, 12:08 — Fassung 7: Rundgang durch alle Seiten, 39 «Ja» als acht Entwurfs-PRs gebaut. Nichts gemergt, NICHT live.**
 > (Sitzung «Maloja Plana Aufräumen», Fortsetzung in einer neuen Sitzung, weil das Kontextfeld der alten voll war.)
 >
