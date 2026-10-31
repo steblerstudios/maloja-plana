@@ -2519,8 +2519,6 @@ export default {
     alsNaechstes: "Up next",
     // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
     passend: {
-      familie: "Your civil status changes",
-      familieSub: "Marriage, moving in together, a child, separation · in the backpack «Family»",
       lebensmappeSub: "All chapters at a glance · to print",
       briefeSub: "Deadline extension, terminating a lease, switching health insurer",
       bestattungSub: "Write down what matters to you",

@@ -2529,8 +2529,6 @@ export default {
     alsNaechstes: "Als Nächstes",
     // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
     passend: {
-      familie: "Zivilstand ändert sich",
-      familieSub: "Heirat, Zusammenziehen, Kind, Trennung · im Rucksack «Familie»",
       lebensmappeSub: "Alle Kapitel auf einen Blick · zum Ausdrucken",
       briefeSub: "Fristverlängerung, Wohnungskündigung, Krankenkassenwechsel",
       bestattungSub: { sie: "Festhalten, was Ihnen wichtig ist", du: "Festhalten, was dir wichtig ist" },

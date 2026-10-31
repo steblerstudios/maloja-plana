@@ -4190,8 +4190,6 @@ export default {
     // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
     // rm ungeprüft F6
     passend: {
-      familie: "Il stadi civil sa mida",
-      familieSub: "Maridaglia, viver ensemen, uffant, separaziun · en il satg «Famiglia»",
       lebensmappeSub: "Tut ils chapitels en ina survista · per stampar",
       briefeSub: "Prolungaziun dal termin, disditga da l’abitaziun, midada da la cassa da malsauns",
       bestattungSub: { sie: "Fixar quai che Vus è impurtant", du: "Fixar quai che ta è impurtant" },

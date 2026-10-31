@@ -2517,8 +2517,6 @@ export default {
     alsNaechstes: "Prossimo passo",
     // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
     passend: {
-      familie: "Lo stato civile cambia",
-      familieSub: "Matrimonio, convivenza, figlio, separazione · nello zaino «Famiglia»",
       lebensmappeSub: "Tutti i capitoli in un colpo d’occhio · da stampare",
       briefeSub: "Proroga del termine, disdetta dell’abitazione, cambio di cassa malati",
       bestattungSub: { sie: "Annotare ciò che Le sta a cuore", du: "Annotare ciò che ti sta a cuore" },

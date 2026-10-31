@@ -2519,8 +2519,6 @@ export default {
     alsNaechstes: "Et ensuite",
     // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
     passend: {
-      familie: "L’état civil change",
-      familieSub: "Mariage, vie commune, enfant, séparation · dans le sac à dos «Famille»",
       lebensmappeSub: "Tous les chapitres en un coup d’œil · à imprimer",
       briefeSub: "Prolongation de délai, résiliation du logement, changement de caisse maladie",
       bestattungSub: { sie: "Noter ce qui vous importe", du: "Noter ce qui t’importe" },

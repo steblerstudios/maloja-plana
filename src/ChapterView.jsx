@@ -2154,8 +2154,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         weg('ausweis', { sub: P('ausweisSub') }),
         // F7-A9 (27.10.2026): «Erwachsen werden» aus dem Kapitel erreichbar — Name und Untertitel aus dem Register.
         weg('volljaehrig'),
-        weg('gepaeck', { key: 'familie', titel: P('familie'), sub: P('familieSub'), ikon: 'family' }),
         ablage('chapterView.passend.ablageBasis'),
+        // F7-L3 (31.10.2026): Familie ist kein achtes Kapitel, sondern der Abschnitt dieses Kapitels; die Abläufe
+        // stehen hier unter seinem Namen. Vorher ein Sprung in den Rucksack.
+        { key: 'familie', ueberschrift: tr('sections.basis.family') },
+        weg('heirat'), weg('zusammenziehen'), weg('kind'), weg('adoption'), weg('trennung'), weg('todesfall'),
       ];
       case 'wohnen': return [weg('umzug', { sub: schritte(4) }), weg('mietzins', { sub: P('mietzinsSub') }), weg('wohnunggekuendigt', { sub: P('gekuendigtSub') }), ablage('chapterView.passend.ablageWohnen')];
       // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Versicherungs-Übersicht
@@ -2207,7 +2210,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const ziele = passendZiele();
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
       React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 4px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
-      ...ziele.map((z) => React.createElement('button', {
+      ...ziele.map((z) => (z.ueberschrift ? React.createElement('h4', { key: z.key, 'data-teil': 'passend-' + z.key, style: { margin: space.md + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, z.ueberschrift) : React.createElement('button', {
         key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe,
         style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
       },
@@ -2217,7 +2220,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
         ),
         React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
-      ))
+      )))
     );
   };
   // Muster M6 (Fassung 6, Sophie 25.10.2026): «Als Nächstes» ruhig wie im Entwurf — zentriert über
