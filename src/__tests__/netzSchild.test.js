@@ -131,3 +131,21 @@ describe('Bild und Text', () => {
     }
   });
 });
+
+describe('Beträge je Versicherung (Sophie 27.10.2026)', () => {
+  const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton };
+  const html = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: DEMO_DATA.versicherungen, ...o }));
+  const text = nurText(html);
+  it('Maria: Kosten pro Monat und Jahr, Guthaben, Versicherungssumme — nur aus erfassten Feldern', () => {
+    expect(text).toContain('CHF 540.30 / Mt. · CHF 6’483.60 / Jahr');
+    expect(text).toContain('CHF 420 / Mt. · CHF 5’040 / Jahr · Guthaben CHF 45’000 · über den Lohn abgezogen');
+    expect(text).toContain('CHF 10 / Mt. · CHF 120 / Jahr · Versicherungssumme CHF 5’000’000');
+    expect(text).toContain('CHF 20 / Mt. · CHF 240 / Jahr');
+  });
+  it('ohne erfassten Betrag keine Zahl — nie geschätzt', () => {
+    expect(html).not.toContain('data-betrag="leben"');
+  });
+  it('Texte in fünf Sprachen', () => {
+    for (const sprache of [de, en, fr, it_, rm]) for (const k of ['kosten', 'guthaben', 'summe', 'lohn']) expect(sprache.netzSchild.betrag[k]).toBeTruthy();
+  });
+});

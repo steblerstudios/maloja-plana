@@ -6239,6 +6239,7 @@ export default {
     haftpflichtHinweis: 'RC privata: spesso richiesta dal locatore, obbligatoria in molti cantoni per chi tiene cani.',
     hausratPruefen: 'Obbligo economia domestica: da confermare presso l’assicurazione cantonale degli stabili — la fonte non è ancora verificata.',
     unfall8h: 'Sotto le 8 ore settimanali presso lo stesso datore di lavoro, gli infortuni non professionali non sono assicurati tramite lui, ma tramite la cassa malati (OAINF art. 13).',
+    betrag: { kosten: '{mt} / mese · {jahr} / anno', guthaben: 'avere {chf}', summe: 'somma assicurata {chf}', lohn: 'dedotto dal salario' },
   },
 
   schutzschild: {

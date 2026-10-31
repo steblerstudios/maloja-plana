@@ -6329,6 +6329,7 @@ export default {
     haftpflichtHinweis: 'Privathaftpflicht: Vermieter verlangen sie oft, mit Hund ist sie in vielen Kantonen Pflicht.',
     hausratPruefen: 'Hausrat-Pflicht: Bitte bei der kantonalen Gebäudeversicherung bestätigen — die Quelle ist noch nicht nachgelesen.',
     unfall8h: 'Unter 8 Stunden pro Woche beim selben Arbeitgeber sind Unfälle in der Freizeit nicht über ihn versichert, sondern über die Krankenkasse (UVV Art. 13).',
+    betrag: { kosten: '{mt} / Mt. · {jahr} / Jahr', guthaben: 'Guthaben {chf}', summe: 'Versicherungssumme {chf}', lohn: 'über den Lohn abgezogen' },
   },
 
   schutzschild: {

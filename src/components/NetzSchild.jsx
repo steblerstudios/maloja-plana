@@ -4,7 +4,7 @@ import { HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { shieldPath } from './shieldShape.js';
 import { text, weight, space, leading } from '../config/tokens.js';
 import { hinweisZeichen } from '../IconSystem.jsx';
-import { zahl } from '../utils/geld.js';
+import { zahl, betrag } from '../utils/geld.js';
 
 // Netz-Schild (F7-K3-6, Stebler Studios 27.10.2026): ersetzt im Kapitel Versicherungen das Spinnennetz und die
 // zwei kleinen Schilde «Pflicht / Empfohlen». Logik: data/netzSchild.js. Die Form ist dieselbe wie überall
@@ -74,10 +74,21 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
 
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const versZeile = (x) => h('div', { key: x.key, role: 'listitem', style: { display: 'flex', alignItems: 'baseline', gap: '6px', fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
-    h('span', { 'aria-hidden': true, style: { color: x.ok ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
-    h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
-    h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, x.ok ? t('netzSchild.gedeckt') : t('netzSchild.offen')));
+  // Franken: ganze Beträge ohne Rappen, sonst immer zwei Stellen («CHF 540.30», nie «540.3» — F7-D7).
+  const chf = (n) => betrag(n, Number.isInteger(n) ? {} : { stellen: 2 });
+  const zahlen = (b) => [
+    b.mt && t('netzSchild.betrag.kosten', { mt: chf(b.mt), jahr: chf(b.jahr) }),
+    b.guthaben && t('netzSchild.betrag.guthaben', { chf: chf(b.guthaben) }),
+    b.summe && t('netzSchild.betrag.summe', { chf: chf(b.summe) }),
+    b.lohn && t('netzSchild.betrag.lohn'),
+    b.name,
+  ].filter(Boolean).join(' · ');
+  const versZeile = (x) => h('div', { key: x.key, role: 'listitem', style: { fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
+    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: '6px' } },
+      h('span', { 'aria-hidden': true, style: { color: x.ok ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
+      h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
+      h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, x.ok ? t('netzSchild.gedeckt') : t('netzSchild.offen'))),
+    zahlen(x.betrag) && h('div', { 'data-betrag': x.key, style: { color: palette.mid, paddingLeft: '20px', fontVariantNumeric: 'tabular-nums' } }, zahlen(x.betrag)));
   const teilBlock = (p) => h('div', { key: p.key, 'data-gruppe': p.key, style: { marginBottom: space.xs + 'px' } },
     h('div', { style: { display: 'flex', alignItems: 'baseline', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
       kurz(p), h('span', { style: { marginLeft: 'auto', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, t('netzSchild.vonN', { n: p.erreicht, total: p.n }))),

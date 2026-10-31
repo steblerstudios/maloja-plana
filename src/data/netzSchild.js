@@ -62,7 +62,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
   const teile = REIHE
     .filter((key) => roh[key].length)
     .map((key) => {
-      const teile = roh[key];
+      const teile = roh[key].map((x) => ({ ...x, betrag: betraegeFuer(x.key, v, opts.finanzen || {}, erwerb) }));
       const erreicht = teile.filter((x) => x.ok).length;
       return { key, versicherungen: teile, n: teile.length, erreicht };
     });
@@ -72,6 +72,27 @@ export function netzSchildTeile(v = {}, opts = {}) {
     teilweise: teile.filter((t) => t.erreicht > 0 && t.erreicht < t.n).map((t) => t.key),
     st,
   };
+}
+
+// Beträge je Versicherung (Sophie 27.10.2026: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon
+// drin ist»). Nur aus erfassten Feldern, nie geschätzt; dieselben Felder und Umrechnungen wie die eine Monatsrechnung
+// (utils/monatsrechnung.js: Jahresprämien ÷ 12). mt/jahr = Kosten, guthaben = was angespart ist, summe = Deckung,
+// lohn = wird über den Lohn abgezogen (ohne erfassten Betrag).
+export function betraegeFuer(key, v = {}, finanzen = {}, erwerb = false) {
+  const monat = (x) => { const m = zahl(x); return m > 0 ? { mt: m, jahr: Math.round(m * 12 * 100) / 100 } : {}; };
+  const jahr = (x) => { const j = zahl(x); return j > 0 ? { mt: Math.round((j / 12) * 100) / 100, jahr: j } : {}; };
+  const mehr = (o, k, x) => (zahl(x) > 0 ? { ...o, [k]: zahl(x) } : o);
+  switch (key) {
+    case 'kvg': return monat(v.kkPremium);
+    case 'kkZusatz': return has(v.kkZusatz) ? { name: String(v.kkZusatz).trim() } : {};
+    case 'uvg': return v.uvg === 'employer' ? { lohn: true } : {};
+    case 'ahv': return zahl(v.ahvContribution) > 0 ? jahr(v.ahvContribution) : erwerb && finanzen.employmentType === 'employed' ? { lohn: true } : {};
+    case 'bvg': return mehr({ ...monat(v.bvgContribution), ...(zahl(v.bvgContribution) > 0 ? { lohn: true } : {}) }, 'guthaben', v.bvgBalance);
+    case 'saeule3a': return mehr(jahr(finanzen.pension3a), 'guthaben', finanzen.pension3aBalance);
+    case 'haftpflicht': return mehr(v.liabilityInsurance === 'no' ? {} : jahr(v.liabilityPremium), 'summe', v.liabilityAmount);
+    case 'hausrat': return v.householdInsurance === 'no' ? {} : jahr(v.householdInsuranceAmount);
+    default: return {};
+  }
 }
 
 // Mittelwinkel (Grad, 0 = rechts, 90 = unten, 270 = oben) je Teil: «Leben» steht immer genau oben in der
