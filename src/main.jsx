@@ -1761,7 +1761,7 @@ const AppInner = ({ demo }) => {
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
+        view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // chapters/onSelectChapter/isMobile seit 21.09.: der Lebensbaum steht jetzt
         // hier statt auf dem Dashboard und braucht die Kapitel für seine Äste.
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),

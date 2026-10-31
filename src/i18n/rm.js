@@ -5009,14 +5009,19 @@ export default {
   },
 
   cv: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    pdfDrucken: "Stampar sco PDF",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    pdfHinweis: "En la fanestra da stampa pon ins memorisar il curriculum sco PDF.",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    weitereFormate: "Ulteriurs formats",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    ergaenzen: "Cumplettar las indicaziuns",
+    // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
+    leer: { sie: "Per in curriculum dovri Voss num ed almain ina indicaziun davart lavur, furmaziun u linguas.", du: "Per in curriculum dovri tes num ed almain ina indicaziun davart lavur, furmaziun u linguas." },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     title: 'Curriculum vitae',
     name: 'Num',
-    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    phone: 'Telefon',
-    profession: 'Professiun',
-    qualification: 'Diplom',
-    preview: 'Prevista',
     downloadHtml: 'Download HTML',
     downloadJson: 'JSON (ATS)',
     downloadJsonHint: 'Curriculum legibel da maschina en il standard JSON Resume — vegn legì da sistems da candidatura (ATS) ed utensils da carriera.',

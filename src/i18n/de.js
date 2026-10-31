@@ -3547,12 +3547,13 @@ export default {
   },
 
   cv: {
+    pdfDrucken: "Als PDF drucken",
+    pdfHinweis: "Im Druckfenster lässt sich der Lebenslauf als PDF speichern.",
+    weitereFormate: "Weitere Formate",
+    ergaenzen: "Angaben ergänzen",
+    leer: { sie: "Für einen Lebenslauf braucht es Ihren Namen und mindestens eine Angabe zu Arbeit, Ausbildung oder Sprachen.", du: "Für einen Lebenslauf braucht es deinen Namen und mindestens eine Angabe zu Arbeit, Ausbildung oder Sprachen." },
     title: 'Lebenslauf',
     name: 'Name',
-    phone: 'Telefon',
-    profession: 'Beruf',
-    qualification: 'Abschluss',
-    preview: 'Vorschau',
     downloadHtml: 'HTML Download',
     downloadJson: 'JSON (ATS)',
     downloadJsonHint: 'Maschinenlesbarer Lebenslauf im JSON-Resume-Standard — wird von Bewerbungssystemen (ATS) und Karriere-Tools gelesen.',

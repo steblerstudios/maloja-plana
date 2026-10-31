@@ -3512,12 +3512,13 @@ export default {
   },
 
   cv: {
+    pdfDrucken: "Imprimer en PDF",
+    pdfHinweis: "Dans la fenêtre d’impression, le CV peut être enregistré en PDF.",
+    weitereFormate: "Autres formats",
+    ergaenzen: "Compléter les indications",
+    leer: { sie: "Pour un CV, il faut votre nom et au moins une indication sur le travail, la formation ou les langues.", du: "Pour un CV, il faut ton nom et au moins une indication sur le travail, la formation ou les langues." },
     title: 'Créateur de CV',
     name: 'Nom',
-    phone: 'Téléphone',
-    profession: 'Profession',
-    qualification: 'Qualification',
-    preview: 'Aperçu',
     downloadHtml: 'Télécharger HTML',
     downloadJson: 'JSON (ATS)',
     downloadJsonHint: 'CV lisible par machine au standard JSON Resume — lu par les systèmes de recrutement (ATS) et les outils de carrière.',

@@ -3512,12 +3512,13 @@ export default {
   },
 
   cv: {
+    pdfDrucken: "Stampare come PDF",
+    pdfHinweis: "Nella finestra di stampa il curriculum si può salvare come PDF.",
+    weitereFormate: "Altri formati",
+    ergaenzen: "Completare i dati",
+    leer: { sie: "Per un curriculum servono il Suo nome e almeno un dato su lavoro, formazione o lingue.", du: "Per un curriculum servono il tuo nome e almeno un dato su lavoro, formazione o lingue." },
     title: 'Creazione CV',
     name: 'Nome',
-    phone: 'Telefono',
-    profession: 'Professione',
-    qualification: 'Qualifica',
-    preview: 'Anteprima',
     downloadHtml: 'Scarica HTML',
     downloadJson: 'JSON (ATS)',
     downloadJsonHint: 'CV leggibile da macchina nello standard JSON Resume — letto dai sistemi di selezione (ATS) e dagli strumenti per la carriera.',
