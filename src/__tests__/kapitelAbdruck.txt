@@ -55,7 +55,7 @@ de   k=groceries type="currency" hint~7ade268d label~df1e6174 weitere=itemized
 de   k=communication type="currency" hint~00951ccf label~0cb95b8e weitere=itemized
 de   k=mobility type="currency" hint~3651fe84 label~de6ba476
 de   k=childcare type="currency" naOk=true hint~2a713569 label~c3160dfc
-de   k=otherInsurance type="currency" hint~0ce52ca3 label~d79c84c5
+de   k=otherInsurance type="currency" hint~9a801c94 label~d79c84c5
 de   k=debtPayments type="currency" section~814ae527 orientation~585fa5b1 hint~67b38874 label~90013432 sectionIntro~669d2066
 de   k=alimentePaid type="currency" naOk=true hint~f0a343e6 label~6ef147fd
 de   k=savingsGoal type="currency" section~ed62852a label~e04a31f6 sectionIntro~657a9e98
@@ -75,7 +75,7 @@ de   k=investmentFunds type="select" label~b27a4fc5 options=2 optWerte~2bfd19fd 
 de   doc k=tax_return label~1ae7994f
 de   doc k=income_proof label~27624eea
 de   doc k=bank_statement label~67623951
-de kapitel=versicherungen title~ef27b74c short~dca3d9ce description~deb8fbd8 felder=26 docs=5
+de kapitel=versicherungen title~ef27b74c short~dca3d9ce description~deb8fbd8 felder=30 docs=5
 de   k=kkInsurer type="text" mvo=true section~a6b6d59a orientation~73f99cd4 link~8ce59537 placeholder~3cd655d7 label~308f6858 sectionIntro~bcc4d385
 de   k=kkModel type="select" label~86df66a1 options=7 optWerte~8aa6d6ea optLabels~83eac850
 de   k=kkPremium type="currency" mvo=true label~8a67ec89
@@ -83,12 +83,16 @@ de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b opti
 de   k=kkCardNumber type="text" label~8fdb99db
 de   k=policyNumber type="text" hint~d822c8ff label~45658792
 de   k=kkZusatz type="text" placeholder~e363faf1 label~32e009c5
+de   k=kkZusatzPremium type="currency" label~ac0efafe
 de   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~a6cafb55 orientation~d8d2f012 hint~212c7267 label~1e2c6667 sectionIntro~1da37530
 de   k=bvgContribution type="currency" naVon="bvgInsurer" hint~035e422c label~8e69d0e5
 de   k=bvgBalance type="currency" naVon="bvgInsurer" hint~eb9360bd label~fdb3b6f8
 de   k=lifeInsurance type="select" label~7c765337 options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=lifeInsurancePremium type="currency" label~3bdf2de5 weitere=jahr
 de   k=freizuegigkeit type="text" placeholder~f95f5578 label~16fd9aeb
 de   k=uvg type="select" section~737d6896 orientation~a55470cd label~3aebc309 sectionIntro~bc27e17c options=4 optWerte~7a7294d0 optLabels~8f7142fd
+de   k=uvgZusatz type="select" label~b9948766 options=2 optWerte~ed5d4f23 optLabels~870b37f1
+de   k=uvgZusatzPremium type="currency" hint~88cbb248 label~d3545f63 weitere=jahr
 de   k=ktg type="select" hint~26ef1d64 label~e368f0c6 options=3 optWerte~b282c309 optLabels~b84eabf0
 de   k=liabilityInsurance type="select" label~35689dfd options=2 optWerte~2bfd19fd optLabels~b50f42dc
 de   k=liabilityAmount type="currency" label~60667f87
@@ -211,7 +215,7 @@ fr   k=groceries type="currency" hint~b3cc4ce6 label~839ae437 weitere=itemized
 fr   k=communication type="currency" hint~bd489fc6 label~287f4ea4 weitere=itemized
 fr   k=mobility type="currency" hint~0bee7f96 label~b750c7e6
 fr   k=childcare type="currency" naOk=true hint~1d5a0ee9 label~ce523916
-fr   k=otherInsurance type="currency" hint~fb2c5800 label~c6bf8ccb
+fr   k=otherInsurance type="currency" hint~2722588b label~c6bf8ccb
 fr   k=debtPayments type="currency" section~bd90d24e orientation~b77bc473 hint~5452b16a label~6e2d7107 sectionIntro~72bff012
 fr   k=alimentePaid type="currency" naOk=true hint~c7a20d97 label~24820529
 fr   k=savingsGoal type="currency" section~cc648e45 label~952818fa sectionIntro~2c644048
@@ -231,7 +235,7 @@ fr   k=investmentFunds type="select" label~9ebd6846 options=2 optWerte~2bfd19fd 
 fr   doc k=tax_return label~aca212a3
 fr   doc k=income_proof label~2f308946
 fr   doc k=bank_statement label~eedff1ab
-fr kapitel=versicherungen title~c74bd01f short~c74bd01f description~9a4e9a92 felder=26 docs=5
+fr kapitel=versicherungen title~c74bd01f short~c74bd01f description~9a4e9a92 felder=30 docs=5
 fr   k=kkInsurer type="text" mvo=true section~4384b172 orientation~23c37a17 link~f91795de placeholder~3f2cceb8 label~14a71ffc sectionIntro~199947b7
 fr   k=kkModel type="select" label~7fc82fe8 options=7 optWerte~8aa6d6ea optLabels~dc6d42f3
 fr   k=kkPremium type="currency" mvo=true label~5d1cd9b4
@@ -239,12 +243,16 @@ fr   k=franchise type="select" mvo=true orientation~1148922f label~41fbffa6 opti
 fr   k=kkCardNumber type="text" label~527590eb
 fr   k=policyNumber type="text" hint~d07b68a9 label~57ba1e46
 fr   k=kkZusatz type="text" placeholder~2e1ce55e label~0e5cafc1
+fr   k=kkZusatzPremium type="currency" label~93818452
 fr   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~05df8781 orientation~62af339c hint~bd037b92 label~ec62308d sectionIntro~231c6da0
 fr   k=bvgContribution type="currency" naVon="bvgInsurer" hint~0ed643ae label~bc7757e2
 fr   k=bvgBalance type="currency" naVon="bvgInsurer" hint~9a0b9e08 label~efff73bc
 fr   k=lifeInsurance type="select" label~05c2d09e options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=lifeInsurancePremium type="currency" label~0caa9fb6 weitere=jahr
 fr   k=freizuegigkeit type="text" placeholder~2d156349 label~eda8d82d
 fr   k=uvg type="select" section~2b64d29b orientation~4ac28821 label~b2088c18 sectionIntro~ca83d236 options=4 optWerte~7a7294d0 optLabels~2234d15c
+fr   k=uvgZusatz type="select" label~74a3bd37 options=2 optWerte~ed5d4f23 optLabels~bd6b0c06
+fr   k=uvgZusatzPremium type="currency" hint~fa795765 label~0509d43d weitere=jahr
 fr   k=ktg type="select" hint~0f86480f label~8295ffd9 options=3 optWerte~b282c309 optLabels~663c7233
 fr   k=liabilityInsurance type="select" label~06f30d53 options=2 optWerte~2bfd19fd optLabels~b74e5823
 fr   k=liabilityAmount type="currency" label~28d0e1d7
@@ -367,7 +375,7 @@ it   k=groceries type="currency" hint~19dc01fc label~d30b8455 weitere=itemized
 it   k=communication type="currency" hint~3bfdb4f6 label~f386de48 weitere=itemized
 it   k=mobility type="currency" hint~549d7cbb label~7d5e32cd
 it   k=childcare type="currency" naOk=true hint~507e65f6 label~c5e96f88
-it   k=otherInsurance type="currency" hint~9dd5c447 label~6ffdbe9b
+it   k=otherInsurance type="currency" hint~3f18bc40 label~6ffdbe9b
 it   k=debtPayments type="currency" section~e67d2d6d orientation~675ed400 hint~48b2bbe1 label~5f38e06f sectionIntro~11c2f449
 it   k=alimentePaid type="currency" naOk=true hint~3c4ce8be label~2679b4af
 it   k=savingsGoal type="currency" section~079ba5b7 label~b58a4c93 sectionIntro~5a74b490
@@ -387,7 +395,7 @@ it   k=investmentFunds type="select" label~6be024fe options=2 optWerte~2bfd19fd 
 it   doc k=tax_return label~cd4bc8e0
 it   doc k=income_proof label~24ec9a21
 it   doc k=bank_statement label~9bbe904f
-it kapitel=versicherungen title~5da62723 short~5da62723 description~28100566 felder=26 docs=5
+it kapitel=versicherungen title~5da62723 short~5da62723 description~28100566 felder=30 docs=5
 it   k=kkInsurer type="text" mvo=true section~e24dd047 orientation~033581a1 link~503f51a9 placeholder~fc5f0a41 label~14bab828 sectionIntro~c33f5d4f
 it   k=kkModel type="select" label~466790b4 options=7 optWerte~8aa6d6ea optLabels~eaa4b72c
 it   k=kkPremium type="currency" mvo=true label~b97636a8
@@ -395,12 +403,16 @@ it   k=franchise type="select" mvo=true orientation~95d3602b label~dd2b8bed opti
 it   k=kkCardNumber type="text" label~c8cc9310
 it   k=policyNumber type="text" hint~f2c42569 label~2ccc2ea9
 it   k=kkZusatz type="text" placeholder~4dd9e6e3 label~3a2c1215
+it   k=kkZusatzPremium type="currency" label~a60820cc
 it   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~757bc421 orientation~47f63c40 hint~e8dbc795 label~d886a320 sectionIntro~d616286e
 it   k=bvgContribution type="currency" naVon="bvgInsurer" hint~66d767ef label~faffbd49
 it   k=bvgBalance type="currency" naVon="bvgInsurer" hint~be03c0fd label~73e86460
 it   k=lifeInsurance type="select" label~3952c95e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=lifeInsurancePremium type="currency" label~3557e173 weitere=jahr
 it   k=freizuegigkeit type="text" placeholder~c98d4c38 label~2a79744a
 it   k=uvg type="select" section~fe0e343d orientation~93b7615c label~c047e296 sectionIntro~59f41538 options=4 optWerte~7a7294d0 optLabels~7cadb9b3
+it   k=uvgZusatz type="select" label~b10eabe1 options=2 optWerte~ed5d4f23 optLabels~b22e0a85
+it   k=uvgZusatzPremium type="currency" hint~f68bec3e label~40fd8b8e weitere=jahr
 it   k=ktg type="select" hint~85e81e6f label~f6e05be4 options=3 optWerte~b282c309 optLabels~5ad21f72
 it   k=liabilityInsurance type="select" label~bd521a5e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=liabilityAmount type="currency" label~2bc08c79
@@ -523,7 +535,7 @@ en   k=groceries type="currency" hint~a4262461 label~cd013009 weitere=itemized
 en   k=communication type="currency" hint~3b510aa6 label~3912546c weitere=itemized
 en   k=mobility type="currency" hint~26f89099 label~18770456
 en   k=childcare type="currency" naOk=true hint~225b9602 label~b115dde6
-en   k=otherInsurance type="currency" hint~9d39eb8e label~2123c78f
+en   k=otherInsurance type="currency" hint~2e730df8 label~2123c78f
 en   k=debtPayments type="currency" section~bd90d24e orientation~2a8d3ede hint~fb1dcbdd label~eca9c344 sectionIntro~37be6d07
 en   k=alimentePaid type="currency" naOk=true hint~28931b2f label~79e3743d
 en   k=savingsGoal type="currency" section~3edeeb10 label~4d4544c9 sectionIntro~dc5d0292
@@ -543,7 +555,7 @@ en   k=investmentFunds type="select" label~c8095fad options=2 optWerte~2bfd19fd 
 en   doc k=tax_return label~5413f028
 en   doc k=income_proof label~51d8d3fd
 en   doc k=bank_statement label~921df5a6
-en kapitel=versicherungen title~1ed7e947 short~1ed7e947 description~200e0c22 felder=26 docs=5
+en kapitel=versicherungen title~1ed7e947 short~1ed7e947 description~200e0c22 felder=30 docs=5
 en   k=kkInsurer type="text" mvo=true section~8e278f01 orientation~819945ad link~8ce59537 placeholder~8408ec55 label~d79e62d3 sectionIntro~b45c3f12
 en   k=kkModel type="select" label~0093873a options=7 optWerte~8aa6d6ea optLabels~290129ca
 en   k=kkPremium type="currency" mvo=true label~feb677c9
@@ -551,12 +563,16 @@ en   k=franchise type="select" mvo=true orientation~680a9a69 label~7c145cb0 opti
 en   k=kkCardNumber type="text" label~75df6208
 en   k=policyNumber type="text" hint~3f6eab70 label~fab0da68
 en   k=kkZusatz type="text" placeholder~2c2048e7 label~984042b4
+en   k=kkZusatzPremium type="currency" label~a900069a
 en   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~ff4e9269 orientation~bdf1872b hint~5077b930 label~4cd38100 sectionIntro~54bc6b88
 en   k=bvgContribution type="currency" naVon="bvgInsurer" hint~867f3ee0 label~880d440f
 en   k=bvgBalance type="currency" naVon="bvgInsurer" hint~160eef79 label~46a3a5f9
 en   k=lifeInsurance type="select" label~04f0d58f options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=lifeInsurancePremium type="currency" label~37e96b3a weitere=jahr
 en   k=freizuegigkeit type="text" placeholder~6d88eaff label~f3bd5ac4
 en   k=uvg type="select" section~019da748 orientation~34eb183f label~5a7cec5f sectionIntro~a5a559c3 options=4 optWerte~7a7294d0 optLabels~fef33285
+en   k=uvgZusatz type="select" label~fc5aba3d options=2 optWerte~ed5d4f23 optLabels~f8320f0c
+en   k=uvgZusatzPremium type="currency" hint~b6b992c4 label~e833ce04 weitere=jahr
 en   k=ktg type="select" hint~3d51fb60 label~29c913ff options=3 optWerte~b282c309 optLabels~361d012b
 en   k=liabilityInsurance type="select" label~96d0b360 options=2 optWerte~2bfd19fd optLabels~ea0983bd
 en   k=liabilityAmount type="currency" label~9495ad6b
@@ -679,7 +695,7 @@ rm   k=groceries type="currency" hint~96a2baab label~0ea7c630 weitere=itemized
 rm   k=communication type="currency" hint~c0da8267 label~865f462e weitere=itemized
 rm   k=mobility type="currency" hint~e1116852 label~bb5d7a87
 rm   k=childcare type="currency" naOk=true hint~4d6c8b35 label~20c81933
-rm   k=otherInsurance type="currency" hint~d9551097 label~39b0be85
+rm   k=otherInsurance type="currency" hint~0d740441 label~39b0be85
 rm   k=debtPayments type="currency" section~d2cd2dde orientation~c14b0328 hint~4691c531 label~261014b0 sectionIntro~680cae36
 rm   k=alimentePaid type="currency" naOk=true hint~b5d07461 label~c7569653
 rm   k=savingsGoal type="currency" section~ed670258 label~6e17cfc1 sectionIntro~10de038a
@@ -699,7 +715,7 @@ rm   k=investmentFunds type="select" label~2905109f options=2 optWerte~2bfd19fd 
 rm   doc k=tax_return label~3f24d8d0
 rm   doc k=income_proof label~7074109f
 rm   doc k=bank_statement label~c8787c08
-rm kapitel=versicherungen title~f6230c0e short~93d1bf3b description~33573315 felder=26 docs=5
+rm kapitel=versicherungen title~f6230c0e short~93d1bf3b description~33573315 felder=30 docs=5
 rm   k=kkInsurer type="text" mvo=true section~6200cabf orientation~55cd8b83 link~8ce59537 placeholder~72b164ea label~fc7dfbfd sectionIntro~bda20a42
 rm   k=kkModel type="select" label~8285e8fa options=7 optWerte~e61b141c optLabels~bd304914
 rm   k=kkPremium type="currency" mvo=true label~45705432
@@ -707,12 +723,16 @@ rm   k=franchise type="select" mvo=true orientation~b80db104 label~c5887ae4 opti
 rm   k=kkCardNumber type="text" label~dcc7ad86
 rm   k=policyNumber type="text" hint~e509e3b0 label~655a1464
 rm   k=kkZusatz type="text" placeholder~f2b6e130 label~0104df8f
+rm   k=kkZusatzPremium type="currency" label~15e4a47c
 rm   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~4c4badb1 orientation~89ab7ff7 hint~06aca0aa label~d316306d sectionIntro~f7185a40
 rm   k=bvgContribution type="currency" naVon="bvgInsurer" hint~e71c40c5 label~8496554b
 rm   k=bvgBalance type="currency" naVon="bvgInsurer" hint~5c37bdec label~2f73bf1b
 rm   k=lifeInsurance type="select" label~edfe7cec options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=lifeInsurancePremium type="currency" label~b297fa70 weitere=jahr
 rm   k=freizuegigkeit type="text" placeholder~81d1e23c label~b3d2ed86
 rm   k=uvg type="select" section~60e418d6 orientation~87e1a4b4 label~b0dcebd1 sectionIntro~9fd788ea options=4 optWerte~7a7294d0 optLabels~26828a85
+rm   k=uvgZusatz type="select" label~89c9f246 options=2 optWerte~ed5d4f23 optLabels~3404c696
+rm   k=uvgZusatzPremium type="currency" hint~11cc33ee label~f7568ebb weitere=jahr
 rm   k=ktg type="select" hint~cb20bf4e label~e3e6cd98 options=3 optWerte~b282c309 optLabels~49de47f4
 rm   k=liabilityInsurance type="select" label~5a1e266e options=2 optWerte~2bfd19fd optLabels~1534032f
 rm   k=liabilityAmount type="currency" label~87e338d0

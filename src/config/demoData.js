@@ -65,6 +65,11 @@ export const DEMO_DATA = {
     // (BAG/priminfo, data/praemienDetail.js). Bis 25.10.2026 stand hier 385 — unter jeder Referenzprämie.
     // ⚠️ Mit den Prämien 2027 nachziehen.
     kkPremium: '540.30',
+    // Beispielwerte, keine Offerte: damit Zusatz und Leben im Schild mit Beträgen zu sehen sind (F7-K3-6, 31.10.2026).
+    kkZusatz: 'Spital halbprivat',
+    kkZusatzPremium: '38.50',
+    lifeInsurance: 'yes',
+    lifeInsurancePremium: '600',
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
     policyNumber: 'CSS-2024-7788991',
