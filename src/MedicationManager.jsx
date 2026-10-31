@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { Icon } from './IconSystem.jsx';
+import { preisFuer } from './utils/medikamentPreis.js';
+import { betrag } from './utils/geld.js';
+import { kalenderdatum } from './utils/datumAnzeige.js';
 
 let _searchMedications = null;
 const getSearch = async () => {
@@ -12,9 +15,35 @@ const getSearch = async () => {
   return _searchMedications;
 };
 
+// SL-Preise (F7-K6-2) erst laden, wenn ein Medikament einen Namen hat — nicht im Startbündel.
+let _slPreise = null;
+const getPreise = () => (_slPreise ||= import('./data/medikamentPreise.js'));
+
 const FREQ_OPTIONS = ['morgens', 'mittags', 'abends', 'nachts', 'beiB'];
 
-export const MedicationManager = ({ palette, t, medications, onChange }) => {
+// Kurzfassung für die Lese-Ansicht des Kapitels («Regelmässige Medikamente  Euthyrox 50 µg»): eine leise Zeile
+// je Medikament mit Preis. Erklärung, Selbstbehalt und Quelle stehen in der Bearbeitung (MedCard).
+export const MedikamentPreisKurz = ({ palette, t, lang, medications }) => {
+  const [sl, setSl] = useState(null);
+  useEffect(() => {
+    let aktiv = true;
+    getPreise().then((m) => { if (aktiv) setSl(m); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
+  if (!sl) return null;
+  const zeilen = (Array.isArray(medications) ? medications : [])
+    .map((m) => ({ m, p: preisFuer(m, sl.SL_PREISE) }))
+    .filter((x) => x.p);
+  if (!zeilen.length) return null;
+  const datum = kalenderdatum(sl.SL_STAND.datum, lang);
+  return React.createElement('div', { 'data-sl-preis-kurz': '', style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.normal, marginTop: '2px' } },
+    zeilen.map(({ m, p }) => React.createElement('div', { key: m.name },
+      p.min === p.max
+        ? t('medications.preis.kurz', { name: m.name, chf: betrag(p.min, { stellen: 2 }), datum })
+        : t('medications.preis.kurzSpanne', { name: m.name, von: betrag(p.min, { stellen: 2 }), bis: betrag(p.max, { stellen: 2 }), datum }))));
+};
+
+export const MedicationManager = ({ palette, t, lang, medications, onChange }) => {
   const meds = Array.isArray(medications) ? medications : [];
 
   const addMed = () => {
@@ -45,7 +74,7 @@ export const MedicationManager = ({ palette, t, medications, onChange }) => {
 
     meds.length > 0 && meds.map((med, idx) =>
       React.createElement(MedCard, {
-        key: idx, palette, t, med, idx,
+        key: idx, palette, t, lang, med, idx,
         inputStyle, labelStyle,
         onUpdate: (patch) => updateMed(idx, patch),
         onRemove: () => removeMed(idx),
@@ -65,7 +94,15 @@ export const MedicationManager = ({ palette, t, medications, onChange }) => {
   );
 };
 
-const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRemove }) => {
+const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate, onRemove }) => {
+  const [sl, setSl] = useState(null);
+  useEffect(() => {
+    if (!med.name || sl) return undefined;
+    let aktiv = true;
+    getPreise().then((m) => { if (aktiv) setSl(m); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, [med.name, sl]);
+  const preis = sl ? preisFuer(med, sl.SL_PREISE) : null;
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(-1);
@@ -270,6 +307,28 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         placeholder: t('medications.notesPlaceholder'),
         style: inputStyle,
       })
+    ),
+
+    // Publikumspreis aus der Spezialitätenliste — nur wenn der Name dort vorkommt (F7-K6-2)
+    preis && React.createElement('div', {
+      'data-sl-preis': '',
+      style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm, display: 'grid', gap: '2px' }
+    },
+      React.createElement('div', { style: { color: palette.text } },
+        preis.packungen.length === 1
+          ? t('medications.preis.eins', { chf: betrag(preis.min, { stellen: 2 }), packung: preis.packungen[0][0] + ', ' + preis.packungen[0][1] })
+          : preis.min === preis.max
+            ? t('medications.preis.gleich', { chf: betrag(preis.min, { stellen: 2 }) })
+            : t('medications.preis.spanne', { von: betrag(preis.min, { stellen: 2 }), bis: betrag(preis.max, { stellen: 2 }) })),
+      preis.selbstbehalt40 !== 'keine' && React.createElement('div', null,
+        t(preis.selbstbehalt40 === 'alle' ? 'medications.preis.sb40Alle' : 'medications.preis.sb40Einige')),
+      React.createElement('div', null, t('medications.preis.hinweis')),
+      React.createElement('div', null,
+        React.createElement(ExternerLink, {
+          t, href: sl.SL_STAND.url,
+          style: { color: palette.mid, textDecoration: 'underline', textUnderlineOffset: '2px' }
+        }, t('medications.preis.quelle')),
+        ' · ' + t('medications.preis.stand', { datum: kalenderdatum(sl.SL_STAND.datum, lang) }))
     ),
 
     // Compendium link

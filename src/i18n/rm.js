@@ -7653,6 +7653,19 @@ export default {
     notes: 'Remartga',
     notesPlaceholder: 'p. ex. cun mangiar, betg cun latg...',
     compendiumLink: 'Tschertgar en il compendi da medicaments',
+    // TODO(rm): provisorisch — Gegenlese (SL-Preis, F7-K6-2, 27.10.2026)
+    preis: {
+      eins: 'Pretsch public tenor la glista da specialitads: {chf} ({packung})',
+      gleich: 'Pretsch public tenor la glista da specialitads: {chf} per pachet',
+      spanne: 'Pretsch public tenor la glista da specialitads: {von} fin {bis}, tenor il pachet',
+      sb40Alle: 'En la glista da specialitads è notada qua ina part da 40 % empè da 10 %, perquai ch\'i dat preparats pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva quest preparat per motivs medicinals, resta la part da 10 %.',
+      sb40Einige: 'Tenor il preparat ed il pachet è notada en la glista da specialitads ina part da 40 % empè da 10 %, perquai ch\'i dat pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva in tal preparat per motivs medicinals, resta la part da 10 %.',
+      hinweis: { sie: 'Quai che Vus pajais sezs, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en Voss cas.', du: 'Quai che ti pajas sez, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en tes cas.' },
+      quelle: 'UFSP, glista da specialitads',
+      stand: 'Stadi {datum}',
+      kurz: '{name}: {chf} tenor la glista da specialitads, stadi {datum}',
+      kurzSpanne: '{name}: {von} fin {bis} tenor la glista da specialitads, stadi {datum}',
+    },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     hint: { sie: 'Cumenzai a tippar — medicaments frequents vegnan proponids.', du: 'Cumenza a tippar — medicaments frequents vegnan proponids.' },
     migrated: 'Anteriura endataziun en text liber:',
