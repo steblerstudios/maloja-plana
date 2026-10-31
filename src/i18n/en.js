@@ -6884,6 +6884,7 @@ export default {
     bruttolohn: "Previous gross salary per month (CHF)",
     bruttolohnHint: "Your AHV-liable gross salary over the last 6 months. Max insured: CHF 12,350/month.",
     bruttoNettoHint: "The saved income is marked as net — please enter the gross salary for unemployment insurance here.",
+    bruttoGeschaetzt: "Estimated from the net wage in your profile (CHF {netto}). Enter your gross wage if you know it — it takes priority.",
     beitragsmonate: "Contribution months",
     beitragsmonateHint: "How many months did you work in the last 2 years? You usually qualify from 12 months.",
     kinder: "Maintenance obligation for children under 25?",
@@ -7019,5 +7020,13 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. One more entry needed.',
     fehltMehrere: '{satz}. {n} more entries needed.',
+  },
+  // Calculator form X (F7-A2, 27.10.2026): parts of the one shell components/RechnerForm.jsx.
+  rechnerForm: {
+    angaben: 'Your details',
+    vonN: '{x} of {n}',
+    tun: 'What to do',
+    quelle: 'Source: {q}',
+    geschaetzt: 'estimated',
   },
 };

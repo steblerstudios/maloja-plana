@@ -7812,6 +7812,8 @@ export default {
     bruttolohn: "Salari brut mensil fin ussa (CHF)",
     bruttolohnHint: { sie: "Voss salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais.", du: "Tes salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais." },
     bruttoNettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari brut per l'AC.",
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    bruttoGeschaetzt: { sie: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgai la paja brutta, sche Vus la enconuschais — ella ha la prioritad.", du: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgescha la paja brutta, sche ti la enconuschas — ella ha la prioritad." },
     beitragsmonate: "Mais da contribuziun",
     beitragsmonateHint: { sie: "Quants mais avais Vus lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais.", du: "Quants mais has ti lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais." },
     kinder: "Obligaziun da mantegniment per uffants sut 25 onns?",
@@ -7954,5 +7956,18 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
+  // Furma dal quintader X (F7-A2, 27.10.2026): components/RechnerForm.jsx.
+  rechnerForm: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    angaben: { sie: 'Vossas indicaziuns', du: 'Tias indicaziuns' },
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    vonN: '{x} da {n}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    tun: 'Tge far',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    quelle: 'Funtauna: {q}',
+    // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    geschaetzt: 'stimà',
   },
 };

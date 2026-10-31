@@ -1438,7 +1438,7 @@ export default {
     vorsorge: 'Calculateur de prévoyance',
     eo: 'Allocations perte de gain (APG)',
     stipendien: 'Bourses',
-    alv: "Indemnités chômage",
+    alv: "Indemnités de chômage",
     asyl: "Asile & protection",
     sozialhilfe: 'Aide sociale',
     direktlinks: 'Liens officiels',
@@ -6884,6 +6884,7 @@ export default {
     bruttolohn: "Salaire brut mensuel précédent (CHF)",
     bruttolohnHint: { sie: "Votre salaire brut soumis à l'AVS des 6 derniers mois. Maximum assuré : CHF 12’350/mois.", du: "Ton salaire brut soumis à l'AVS des 6 derniers mois. Maximum assuré : CHF 12’350/mois." },
     bruttoNettoHint: "Le revenu enregistré est indiqué comme net — veuillez saisir ici le salaire brut pour l'AC.",
+    bruttoGeschaetzt: { sie: "Estimé à partir du salaire net du profil (CHF {netto}). Indiquez le salaire brut si vous le connaissez — il a la priorité.", du: "Estimé à partir du salaire net du profil (CHF {netto}). Indique le salaire brut si tu le connais — il a la priorité." },
     beitragsmonate: "Mois de cotisation",
     beitragsmonateHint: { sie: "Combien de mois avez-vous travaillé ces 2 dernières années ? Un droit existe en général dès 12 mois.", du: "Combien de mois as-tu travaillé ces 2 dernières années ? Un droit existe en général dès 12 mois." },
     kinder: "Obligation d'entretien pour des enfants de moins de 25 ans ?",
@@ -7019,5 +7020,13 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Encore une indication nécessaire.',
     fehltMehrere: '{satz}. Encore {n} indications nécessaires.',
+  },
+  // Forme de calculateur X (F7-A2, 27.10.2026) : components/RechnerForm.jsx.
+  rechnerForm: {
+    angaben: { sie: 'Vos indications', du: 'Tes indications' },
+    vonN: '{x} sur {n}',
+    tun: 'Que faire',
+    quelle: 'Source : {q}',
+    geschaetzt: 'estimé',
   },
 };

@@ -61,7 +61,8 @@ export const WERKZEUGE = [
 
   // ── Geldleistungen, bisher nur über die Suche erreichbar ──
   // Entscheid Stebler Studios 27.09.2026: ALV-Taggeld und EO ins Portemonnaie.
-  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'work', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav'] },
+  // Ein Name für Titel, Menü und Suche: «Arbeitslosenentschädigung» (F7, 27.10.2026); «ALV-Taggeld» bleibt Suchwort.
+  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'work', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav', 'alv-taggeld', 'taggeld', 'arbeitslosenentschädigung'] },
   { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', fach: 'geld', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
 
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
