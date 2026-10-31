@@ -6265,7 +6265,7 @@ export default {
     haftpflichtHinweis: 'Personal liability: landlords often require it; with a dog it is mandatory in many cantons.',
     hausratPruefen: 'Household contents obligation: please confirm with the cantonal building insurer — the source has not been checked yet.',
     unfall8h: 'Below 8 hours a week with the same employer, non-work accidents are not insured through them but through your health insurer (UVV Art. 13).',
-    betrag: { kosten: '{mt} / month · {jahr} / year', guthaben: 'balance {chf}', summe: 'sum insured {chf}', lohn: 'deducted from salary' },
+    betrag: { kosten: '{mt} / month · {jahr} / year', guthaben: 'balance {chf}', summe: 'sum insured {chf}', lohn: 'deducted from salary', arbeitgeber: 'through your employer' },
   },
 
   schutzschild: {

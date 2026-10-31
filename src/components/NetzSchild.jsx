@@ -81,6 +81,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
     b.guthaben && t('netzSchild.betrag.guthaben', { chf: chf(b.guthaben) }),
     b.summe && t('netzSchild.betrag.summe', { chf: chf(b.summe) }),
     b.lohn && t('netzSchild.betrag.lohn'),
+    b.arbeitgeber && t('netzSchild.betrag.arbeitgeber'),
     b.name,
   ].filter(Boolean).join(' · ');
   const versZeile = (x) => h('div', { key: x.key, role: 'listitem', style: { fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },

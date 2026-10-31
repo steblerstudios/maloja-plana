@@ -6265,7 +6265,7 @@ export default {
     haftpflichtHinweis: 'RC privée : souvent exigée par le bailleur, obligatoire dans de nombreux cantons pour les détenteurs de chiens.',
     hausratPruefen: 'Obligation ménage : à confirmer auprès de l’assurance immobilière cantonale — la source n’a pas encore été vérifiée.',
     unfall8h: 'En dessous de 8 heures par semaine chez le même employeur, les accidents non professionnels ne sont pas assurés par lui, mais par la caisse maladie (OLAA art. 13).',
-    betrag: { kosten: '{mt} / mois · {jahr} / an', guthaben: 'avoir {chf}', summe: 'somme d’assurance {chf}', lohn: 'déduit du salaire' },
+    betrag: { kosten: '{mt} / mois · {jahr} / an', guthaben: 'avoir {chf}', summe: 'somme d’assurance {chf}', lohn: 'déduit du salaire', arbeitgeber: 'passe par l’employeur' },
   },
 
   schutzschild: {

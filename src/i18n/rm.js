@@ -7217,7 +7217,7 @@ export default {
     haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens, cun in chaun è ella obligatorica en blers chantuns.',
     hausratPruefen: 'Obligaziun d’inventari: p.pl. confermar tar l’assicuranza chantunala d’edifizis — la funtauna n’è anc betg verifitgada.',
     unfall8h: 'Sut 8 uras per emna tar il medem patrun n’èn ils accidents en il temp liber betg assicurads tras el, mabain tras la cassa da malsauns (OAINF art. 13).',
-    betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari' },
+    betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari', arbeitgeber: 'via il patrun' },
   },
 
   schutzschild: {
