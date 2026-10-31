@@ -104,7 +104,7 @@ export const DEMO_DATA = {
     efzNumber: '',
     certifications: 'CAS Notfallpflege',
     employer: 'Kantonsspital Zürich',
-    jobTitle: 'Pflegefachfrau HF',
+    jobTitle: 'Pflegefachfrau FH',
     branche: 'gesundheit',
     employmentStart: '2019-04-01',
     workPermit: 'swiss',
