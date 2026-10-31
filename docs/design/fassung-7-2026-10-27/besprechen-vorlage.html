@@ -1,0 +1,175 @@
+<title>Fassung 7 Besprechen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Lexend:wght@400;500&display=swap">
+<style>
+/* Gleiche Lesespalte wie «Fassung 7 Rundgang»; je Thema Bild links, Punkte rechts, je Punkt Heute · Neuer Stand · Empfehlung. */
+:root {
+  --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6;
+  --text: #24262A; --mid: #5E6167; --soft: #5A5D63;
+  --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #3D5A78; --rose: #8A3B3B;
+  --display: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #A4A7AC; --soft: #9CA0A6;
+  --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D89A92; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #A4A7AC; --soft: #9CA0A6;
+  --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D89A92; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 1120px; margin: 0 auto; padding-block: 32px 72px; display: grid; gap: 8px; }
+h1 { font-family: var(--display); font-size: 32px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 23px; margin: 0; text-wrap: balance; }
+p { color: var(--mid); max-width: 72ch; margin: 0; }
+code { font-size: 13px; background: var(--up); padding: 1px 5px; border-radius: 4px; }
+.lead { display: grid; gap: 10px; margin-bottom: 8px; }
+.meta { font-size: 13px; color: var(--soft); }
+nav.themen { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+nav.themen a { border: 1px solid var(--border); border-radius: 999px; padding: 4px 11px; font-size: 13px; color: var(--text); text-decoration: none; }
+nav.themen a:hover { border-color: var(--soft); }
+
+section.thema { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 22px; padding-top: 18px; border-top: 1px solid var(--border); margin-top: 26px; }
+section.thema figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+section.thema figure img { width: 100%; border-radius: 8px; border: 1px solid var(--border); display: block; }
+section.thema figcaption { font-size: 12.5px; color: var(--soft); margin-bottom: 8px; }
+.kopf { display: grid; gap: 4px; margin-bottom: 12px; }
+.nr { font-size: 12.5px; color: var(--soft); }
+.punkte { display: grid; gap: 10px; }
+.pkt { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.pkt .zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.pkt h3 { font-family: var(--display); font-size: 16px; margin: 0; flex: 1 1 260px; }
+.id { font-size: 12px; color: var(--soft); font-variant-numeric: tabular-nums; }
+.chip { font-size: 12px; border-radius: 999px; padding: 1px 9px; border: 1px solid currentColor; }
+.chip.offen { color: var(--gold); } .chip.teil { color: var(--sky); } .chip.erledigt { color: var(--sage); } .chip.fehlbefund { color: var(--soft); border-style: dashed; }
+dl { margin: 0; display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 4px 12px; font-size: 14px; }
+dt { color: var(--soft); font-size: 13px; padding-top: 1px; }
+dd { margin: 0; color: var(--mid); }
+dd.empf { color: var(--text); }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.wahl button { font: inherit; font-size: 13px; color: var(--text); background: var(--up); border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px; cursor: pointer; min-height: 36px; }
+.wahl button:hover { border-color: var(--soft); }
+.wahl button:focus-visible, textarea:focus-visible { outline: 2px solid var(--sand); outline-offset: 2px; }
+.wahl button[aria-pressed="true"].ja { background: var(--sage); border-color: var(--sage); color: var(--bg); }
+.wahl button[aria-pressed="true"].anders { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+.wahl button[aria-pressed="true"].spaeter { background: var(--soft); border-color: var(--soft); color: var(--bg); }
+.pkt textarea { font: inherit; font-size: 14px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; min-height: 64px; width: 100%; }
+
+.schild { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px; display: grid; gap: 6px; }
+.schild iframe { width: 100%; height: 470px; border: 0; border-radius: 6px; background: transparent; }
+.schild p { font-size: 13px; }
+
+.leiste { position: sticky; bottom: 0; margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.leiste .stand { font-size: 14px; font-variant-numeric: tabular-nums; }
+.leiste button { font: inherit; font-size: 14px; background: var(--sand); color: var(--bg); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; min-height: 40px; }
+.leiste button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+textarea#ausgabe { width: 100%; min-height: 140px; font: 13px/1.5 ui-monospace, Menlo, monospace; color: var(--text); background: var(--up); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+@media (max-width: 760px) { section.thema { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 27px; } dl { grid-template-columns: minmax(0, 1fr); } dt { padding-top: 6px; } .schild iframe { height: 400px; } }
+</style>
+
+<main>
+  <div class="lead">
+    <span class="meta">Maloja Plana · Fassung 7 · die offenen Punkte · Stand 27.10.2026 · Bilder vom Rundgang auf <code>main</code>, also vor den acht Entwurfs-PRs #626–#633</span>
+    <h1>Fassung 7 · Besprechen</h1>
+    <p>Die 31 Punkte, die noch keinen Entscheid haben: die 21 «Besprechen» und die 10 Dashboard-Punkte, nach Thema geordnet. Je Punkt: wie es heute ist, was sich durch die gebauten Pakete schon verändert hat, und meine Empfehlung. Wähle «Wie empfohlen», «Anders» (mit einem Satz dazu) oder «Später», dann unten kopieren und in den Chat legen.</p>
+    <nav class="themen" id="themen" aria-label="Themen"></nav>
+  </div>
+
+  <div id="inhalt"></div>
+
+  <div class="leiste" aria-live="polite">
+    <span class="stand" id="stand">0 von 0 entschieden</span>
+    <button type="button" id="kopieren">Entscheide kopieren</button>
+  </div>
+  <textarea id="ausgabe" hidden readonly aria-label="Entscheide als Text"></textarea>
+</main>
+
+<script>
+const THEMEN = {{THEMEN}};
+const SCHILD = {{SCHILD}};
+const STAND = { offen: 'noch wie im Rundgang', teil: 'teilweise erledigt', erledigt: 'durch ein Paket erledigt', fehlbefund: 'Fehlbefund' };
+const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
+let wahl = {};
+try { wahl = JSON.parse(localStorage.getItem('f7-besprechen') || '{}'); } catch (e) { wahl = {}; }
+const speichern = () => { try { localStorage.setItem('f7-besprechen', JSON.stringify(wahl)); } catch (e) {} };
+
+function bauen() {
+  document.getElementById('themen').innerHTML = THEMEN.map((t, i) => `<a href="#${t.id}">${i + 1} · ${t.titel}</a>`).join('');
+  document.getElementById('inhalt').innerHTML = THEMEN.map((t, i) => `
+    <section class="thema" id="${t.id}">
+      <figure>${t.bilder.map(b => `<img src="${b.src}" alt="Bildschirm heute: ${esc(b.alt)}" loading="lazy"><figcaption>${b.text}</figcaption>`).join('')}
+        ${t.schild ? `<div class="schild"><iframe title="Prototyp: Schild aus Teilen" srcdoc="${esc(SCHILD)}"></iframe>
+          <p><b>Netz-Schild, Prototyp vom 27.10.</b> Krankenkasse umschalten und Hausrat ergänzen probieren. Farben noch die eigenen des Prototyps, nicht die Maloja-Töne.</p></div>` : ''}
+      </figure>
+      <div>
+        <div class="kopf"><span class="nr">Thema ${i + 1} von ${THEMEN.length}</span><h2>${t.titel}</h2><p>${t.intro}</p></div>
+        <div class="punkte">${t.punkte.map(p => `
+          <article class="pkt" data-id="${p.id}">
+            <div class="zeile"><h3>${p.titel}</h3><span class="id">${p.id}</span><span class="chip ${p.stand}">${STAND[p.stand]}</span></div>
+            <dl>
+              <dt>Heute</dt><dd>${p.heute}</dd>
+              ${p.neu ? `<dt>Neuer Stand</dt><dd>${p.neu}</dd>` : ''}
+              <dt>Empfehlung</dt><dd class="empf">${p.empf}</dd>
+            </dl>
+            <div class="wahl" role="group" aria-label="Entscheid zu ${p.id}">
+              <button type="button" class="ja" data-w="ja">Wie empfohlen</button>
+              <button type="button" class="anders" data-w="anders">Anders</button>
+              <button type="button" class="spaeter" data-w="spaeter">Später</button>
+            </div>
+            <textarea hidden aria-label="Wie anders, zu ${p.id}" placeholder="Wie anders? Ein Satz genügt."></textarea>
+          </article>`).join('')}
+        </div>
+      </div>
+    </section>`).join('');
+}
+
+function zeigen() {
+  document.querySelectorAll('.pkt').forEach(el => {
+    const w = wahl[el.dataset.id] || {};
+    el.querySelectorAll('.wahl button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.w === w.w)));
+    const ta = el.querySelector('textarea');
+    ta.hidden = w.w !== 'anders';
+    if (document.activeElement !== ta) ta.value = w.notiz || '';
+  });
+  const alle = document.querySelectorAll('.pkt').length;
+  const n = Object.values(wahl).filter(w => w && w.w).length;
+  document.getElementById('stand').textContent = `${n} von ${alle} entschieden`;
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('.wahl button');
+  if (!b) return;
+  const id = b.closest('.pkt').dataset.id;
+  const alt = wahl[id] || {};
+  if (alt.w === b.dataset.w) delete wahl[id]; else wahl[id] = { w: b.dataset.w, notiz: alt.notiz || '' };
+  speichern(); zeigen();
+  if (b.dataset.w === 'anders' && wahl[id]) b.closest('.pkt').querySelector('textarea').focus();
+});
+document.addEventListener('input', e => {
+  if (!e.target.matches('.pkt textarea')) return;
+  const id = e.target.closest('.pkt').dataset.id;
+  if (wahl[id]) { wahl[id].notiz = e.target.value; speichern(); }
+});
+
+document.getElementById('kopieren').addEventListener('click', async () => {
+  const W = { ja: 'wie empfohlen', anders: 'anders', spaeter: 'später' };
+  const zeilen = THEMEN.flatMap(t => t.punkte.filter(p => wahl[p.id]).map(p => {
+    const w = wahl[p.id];
+    return `${p.id}: ${W[w.w]}${w.w === 'anders' && w.notiz.trim() ? ' — ' + w.notiz.trim() : ''}`;
+  }));
+  const text = 'Fassung 7, Besprechen:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
+  const ta = document.getElementById('ausgabe');
+  ta.value = text; ta.hidden = false;
+  const btn = document.getElementById('kopieren');
+  try { await navigator.clipboard.writeText(text); btn.textContent = 'Kopiert'; }
+  catch (e) { ta.focus(); ta.select(); btn.textContent = 'Text markiert, bitte kopieren'; }
+  setTimeout(() => { btn.textContent = 'Entscheide kopieren'; }, 2500);
+});
+
+bauen(); zeigen();
+</script>
