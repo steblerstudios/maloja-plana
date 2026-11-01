@@ -2338,7 +2338,7 @@ export default {
         communication: 'Internet, telefon mobil, telefon fix per mais.',
         mobility: 'AG, Halbtax, abunament u custs dad auto per mais.',
         childcare: "Cresch, scola da di, mamma da di — custs mensils.",
-        otherInsurance: "Protecziun giuridica ed autras ensemen per mais. Premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) èn gia en il budget.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
+        otherInsurance: "Protecziun giuridica ed autras ensemen per mais. Premias dal chapitel Assicuranzas (ménaschi, responsabladad civila, supplements, vita) èn gia en il budget. AVS e cassa da pensiun na tutgan betg en quest champ.", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
         alimenteReceived: { sie: 'Contribuziuns da mantegniment che Vus retschavais per mais.', du: 'Contribuziuns da mantegniment che Ti retschaivas per mais.' },
         alimentePaid: { sie: 'Contribuziuns da mantegniment che Vus pajais per mais.', du: 'Contribuziuns da mantegniment che Ti pajas per mais.' },
         debtPayments: 'Ratas mensualas per debits currents u pajaments.',
@@ -2413,7 +2413,8 @@ export default {
         householdInsuranceAmount: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
         bvgInsurer: 'Nagina cassa da pensiun? Lura tscherner «Na concerna betg». En intgins chantuns vala quai per la reducziun da premias sco «nagina 2. pitga».',
-        bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
+        bvgContribution: "Tar in engaschament mo per la survista: na vegn betg anc ina giada deducì dal salari net en il budget. Tar ina activitad independenta dumbra la contribuziun en il budget. Endatar l’entrada avant questa contribuziun.", // TODO(rm): provisorisch — Gegenlese (Selbständige, 01.11.2026)
+        ahvContribution: "Tar in engaschament mo per la survista. Tar ina activitad independenta dumbra la contribuziun en il budget. Endatar l’entrada avant questa contribuziun.", // TODO(rm): provisorisch — Gegenlese (Selbständige, 01.11.2026)
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
         ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Voss salari en cas da malsogna.", du: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Tes salari en cas da malsogna." },
@@ -6171,6 +6172,8 @@ export default {
     skosNote: "Valur indicativa da la Conferenza svizra per l'agid social. Serva sco orientaziun, betg sco evaluaziun.",
     autoUpdateNote: { sie: 'Vegn actualisà automaticamain, sche Vus midais datas en auters chapitels.', du: 'Vegn actualisà automaticamain, sche Ti midas datas en auters chapitels.' },
     bvgReferenceNote: "LPP e AVS èn gia deducids dal salari net — qua mo per la survista.",
+    bvgSelbstNote: "AVS e cassa da pensiun pajadas sez dumbran qua. Endatar l’entrada avant questas contribuziuns.", // TODO(rm): provisorisch — Gegenlese (Selbständige, 01.11.2026)
+    bvgNichtGezaehltNote: "Contribuziuns endatadas per l’AVS e la cassa da pensiun n’èn betg quintadas en quest total.", // TODO(rm): provisorisch — Gegenlese (Selbständige, 01.11.2026)
     housingCosts: 'Abitar',
     healthInsurance: 'Cassa da malsauns',
     group: {
@@ -6199,6 +6202,8 @@ export default {
       mobility: 'Mobilitad',
       tax: 'Taglia',
       pension3a: 'Pitga 3a',
+      ahvSelbst: "AVS/AI (pajà sez)",
+      bvgSelbst: "Cassa da pensiun (pajà sez)",
       debtPayments: 'Ratas da debits',
       alimentePaid: 'Aliments pajads',
     },
