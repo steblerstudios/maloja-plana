@@ -97,6 +97,7 @@ const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 const RechnungOffen = React.lazy(() => import('./RechnungOffen.jsx'));
 const SelbstMahnen = React.lazy(() => import('./SelbstMahnen.jsx'));
 const Dienst = React.lazy(() => import('./Dienst.jsx'));
+const DigitaleOrdnung = React.lazy(() => import('./DigitaleOrdnung.jsx'));
 const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
 const Lehre = React.lazy(() => import('./Lehre.jsx'));
 const BetreibungsAuszug = React.lazy(() => import('./BetreibungsAuszug.jsx'));
@@ -1719,6 +1720,7 @@ const AppInner = ({ demo }) => {
         (view === 'mahnung' || view === 'betreibung') && React.createElement(RechnungOffen, { key: view, palette, t, onNavigate: handleNavigate, stufe: view }),
         view === 'selbstmahnen' && React.createElement(SelbstMahnen, { palette, t, onNavigate: handleNavigate }),
         view === 'dienst' && React.createElement(Dienst, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'digitaleordnung' && React.createElement(DigitaleOrdnung, { palette, t, onNavigate: handleNavigate }),
         view === 'volljaehrig' && React.createElement(Volljaehrig, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'lehre' && React.createElement(Lehre, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'betreibungsauszug' && React.createElement(BetreibungsAuszug, { palette, t, data: activeData, onNavigate: handleNavigate }),

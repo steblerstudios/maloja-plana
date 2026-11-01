@@ -1,8 +1,10 @@
 # Grundstück & zwei Modi — die visuelle Vision
 
 > **Detailblatt zu [`../IDEEN.md`](../IDEEN.md) §2** (seit 24.09.2026). Die Landkarte zählt
-> die Visionen auf, dieses Blatt führt eine aus. Offen ist dort ein Widerspruch: House of
-> Life (19.07.) schliesst Gamification aus, dieses Blatt erlaubt sie als abschaltbare Haut.
+> die Visionen auf, dieses Blatt führt eine aus. Der Widerspruch zu House of Life (19.07.)
+> ist **entschieden, 01.11.2026 (Stebler Studios): abschaltbare Haut, wie hier beschrieben.**
+> Bau erst nach Fassung 7/8. Offen bleibt §5: Die Garage spiegelt heute die Finanzierungslage;
+> der Vorschlag «aufgeräumter, nie reicher» (IDEEN §1) würde das ändern.
 
 > **Status:** Vision / Design-Kanon (noch nicht gebaut). Diese Datei ist die *eine*
 > Quelle für die räumliche Metapher und das Verhältnis von Normal- zu Spiel-Modus.

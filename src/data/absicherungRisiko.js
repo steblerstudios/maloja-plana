@@ -1,5 +1,6 @@
 import { schildState, bvgAktiv, schildOptionen } from './schutzschild.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Absicherung je Lebensrisiko — Liste in der Versicherungs-Übersicht (Stebler Studios 26.10.2026: «Liste je Risiko statt Netz»).
 // Je Risiko Zeilen: was eingetragen ist, was das Gesetz vorsieht, freiwillig Erfasstes als Zusatz. Bewusst KEIN Anteil
@@ -28,7 +29,7 @@ export function absicherungJeRisiko(data = {}, heute = new Date()) {
   const v = data.versicherungen || {};
   const f = data.finanzen || {};
   const art = f.employmentType;
-  const angestellt = art === 'employed';
+  const angestellt = istAngestellt(f);
   const selbstaendig = art === 'selfEmployed' || art === 'freelance';
   const ahvRente = alterUndRentenalter(data.basis, heute).rentenalter === true;
   // Rente für die Pensionskasse: Anstellungstyp «Rentner» oder Referenzalter. Für die IV nur das Alter — wer früh

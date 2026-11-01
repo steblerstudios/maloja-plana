@@ -12,6 +12,7 @@ export const GEGENSTAENDE = [
   {
     key: 'wohnen', ill: 'key',
     wege: [
+      { key: 'digitaleordnung', view: 'digitaleordnung', g: ['M7 11V8a5 5 0 0 1 10 0v3', 'M5 11h14v10H5z', 'M12 15v2'] },
       { key: 'betreibungsauszug', view: 'betreibungsauszug', g: ['M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z', 'M14 3v4h4', 'M9 11h6M9 14h6M9 17h4'] },
       { key: 'ausweis', view: 'ausweis', g: ['M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z', 'M9 12.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M6 16c.5-1.3 1.6-2 3-2s2.5.7 3 2', 'M14.5 10h3.5M14.5 13h2.5'] },
       { key: 'wegzug', view: 'wegzug', g: ['M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z', 'M9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2', 'M9 12v4M15 12v4'] },

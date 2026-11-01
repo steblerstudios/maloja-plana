@@ -1,12 +1,13 @@
 import React from 'react';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Ruhiger UVG-Hinweis: Angestellte sind über den Arbeitgeber unfallversichert
 // (ab 8 Std./Woche auch Nichtberufsunfälle) und können die Unfalldeckung bei der
 // Krankenkasse abwählen → tiefere Prämie. Würdevoll, kein Druck. Zeigt nichts,
 // wenn die Person nicht angestellt ist (dann greift dieser Spar-Weg nicht).
 export const UvgHinweis = ({ palette, t, data }) => {
-  if (data?.finanzen?.employmentType !== 'employed') return null;
+  if (!istAngestellt(data?.finanzen)) return null;
 
   return React.createElement('div', {
     style: {

@@ -15,7 +15,7 @@ const DATEI = {
   umzug: 'UmzugAblauf.jsx', pensionierung: 'Pensionierung.jsx', betreibung: 'BetreibungErhalten.jsx', mahnung: 'MahnungErhalten.jsx', selbstmahnen: 'SelbstMahnen.jsx',
   selbstaendigkeit: 'Selbstaendigkeit.jsx', heirat: 'Heirat.jsx', kind: 'KindBekommen.jsx',
   trennung: 'Trennung.jsx', bewilligung: 'BewilligungFristen.jsx', fuehrerausweis: 'Fuehrerausweis.jsx',
-  asyl: 'AsylView.jsx', dienst: 'Dienst.jsx', volljaehrig: 'Volljaehrig.jsx', lehre: 'Lehre.jsx', betreibungsauszug: 'BetreibungsAuszug.jsx', ausweis: 'Ausweis.jsx', wegzug: 'Wegzug.jsx', adoption: 'Adoption.jsx', zusammenziehen: 'Zusammenziehen.jsx', ergaenzungsleistungen: 'Ergaenzungsleistungen.jsx', vorsorgeauftrag: 'Vorsorgeauftrag.jsx', einbuergerung: 'Einbuergerung.jsx', zuzug: 'ZuzugAusland.jsx', aussteuerung: 'Aussteuerung.jsx', quellensteuer: 'Quellensteuer.jsx', wohnunggekuendigt: 'WohnungGekuendigt.jsx', iv: 'IvVerfahren.jsx', pflege: 'PflegeAblauf.jsx', todesfall: 'Todesfall.jsx',
+  asyl: 'AsylView.jsx', dienst: 'Dienst.jsx', digitaleordnung: 'DigitaleOrdnung.jsx', volljaehrig: 'Volljaehrig.jsx', lehre: 'Lehre.jsx', betreibungsauszug: 'BetreibungsAuszug.jsx', ausweis: 'Ausweis.jsx', wegzug: 'Wegzug.jsx', adoption: 'Adoption.jsx', zusammenziehen: 'Zusammenziehen.jsx', ergaenzungsleistungen: 'Ergaenzungsleistungen.jsx', vorsorgeauftrag: 'Vorsorgeauftrag.jsx', einbuergerung: 'Einbuergerung.jsx', zuzug: 'ZuzugAusland.jsx', aussteuerung: 'Aussteuerung.jsx', quellensteuer: 'Quellensteuer.jsx', wohnunggekuendigt: 'WohnungGekuendigt.jsx', iv: 'IvVerfahren.jsx', pflege: 'PflegeAblauf.jsx', todesfall: 'Todesfall.jsx',
 };
 
 const ziele = (datei) => {

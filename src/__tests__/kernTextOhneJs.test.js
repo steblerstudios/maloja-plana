@@ -102,3 +102,18 @@ describe('Kern-Text ohne JavaScript — was ein JS-loser Crawler liest', () => {
     expect(altText).not.toContain('Lebensordner');
   });
 });
+
+// Search Console 01.11.2026: die Erklärseiten standen auf «Gefunden – zurzeit nicht indexiert».
+// Von der einzigen indexierten Seite führte kein Link dorthin, weder ohne JavaScript noch auf
+// der Code-Wand. Beide Wege müssen stehen: Crawler ohne JS lesen den noscript-Block, Google
+// sieht nach dem Rendern die Code-Wand.
+describe('Startseite verlinkt die öffentlichen Erklärseiten', () => {
+  const betaGate = fs.readFileSync(path.resolve(process.cwd(), 'src/BetaGate.jsx'), 'utf8');
+  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'sozialhilfe', 'steuern'];
+
+  it.each(seiten)('/%s/ existiert, steht im noscript-Block und auf der Code-Wand', (seite) => {
+    expect(fs.existsSync(path.resolve(process.cwd(), 'public', seite, 'index.html'))).toBe(true);
+    expect(noscript).toContain(`href="/${seite}/"`);
+    expect(betaGate).toContain(`'/${seite}/'`);
+  });
+});

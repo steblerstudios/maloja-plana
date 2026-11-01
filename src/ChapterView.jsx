@@ -15,7 +15,7 @@ import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
+import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
@@ -39,7 +39,8 @@ import { kalenderdatum } from './utils/datumAnzeige.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import landschaft from './assets/berge/landschaft.webp?url';
-import { einkommenIstKeinLohn, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
+import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
+import { istAngestellt } from './utils/anstellung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -1014,7 +1015,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
         // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
-        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && allData.finanzen.employmentType === 'employed' &&
+        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && istAngestellt(allData.finanzen) &&
           React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('uvgHint.fieldSuggest'))),
         renderOrientation(field)
       );
@@ -1358,12 +1359,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             const hrs = parseFloat(String(data.workHoursPerWeek || '').replace(',', '.')) || 0;
             // Über der Plausibilitätsgrenze (lohnCheck.js) keine Umrechnung, sondern die Frage
             // nach dem Pensum — Barometer und Mindestlohn-Prüfung rechnen dann nicht mit.
-            if (wochenstundenUnplausibel(hrs)) {
+            if (wochenstundenUnplausibel(hrs) || wochenstundenZuTiefFuerMonatslohn(hrs)) {
               elements.push(
                 React.createElement('div', {
                   key: 'hours-implausible',
                   style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
-                }, tr('lohnEinordnung.hoursImplausibleNote', { hours: String(hrs) }))
+                }, tr(wochenstundenZuTiefFuerMonatslohn(hrs) ? 'lohnEinordnung.hoursTooLowNote' : 'lohnEinordnung.hoursImplausibleNote', { hours: String(hrs) }))
               );
             } else if (hrs > 0) {
               const perMonth = stundenAufMonat(hrs);
@@ -1374,7 +1375,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
               // korrekt schweigt. Fünf Stellen rechneten diesen Befund, jede etwas anders.
               // Der Mindestlohn gilt für Arbeitsverhältnisse: bei Rente oder Geschäftsgewinn kein Befund.
-              const check = monthlyIncome > 0 && !einkommenIstKeinLohn(allData)
+              const check = monthlyIncome > 0 && !mindestlohnNichtAnwendbar(allData)
                 ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType, allData?.finanzen?.dreizehnter)
                 : null;
               elements.push(
@@ -1556,14 +1557,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ['sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint'],
             ], ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint']);
             const kanton = allData && allData.basis && allData.basis.canton;
-            if (kanton && kantonHatMindestlohn(kanton) && !einkommenIstKeinLohn(allData)) {
+            if (kanton && kantonHatMindestlohn(kanton) && !mindestlohnNichtAnwendbar(allData)) {
               const lohn = parseFloat(data[field.k]) || 0;
               if (lohn > 0) {
                 // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme mehr. Bei Teilzeit erzeugte sie
                 // einen Fehlalarm (CHF 3000 bei 50% = 32.97/Std., nicht 16.48/Std.) — und der Befund
                 // führt neu zu einem Brief an den Arbeitgeber. Ohne echte Stunden lieber ruhig
                 // nachfragen als raten; `pruefeStundenlohn` meldet das selbst als 'unvollstaendig'.
-                const wHrs = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
+                const wHrsRoh = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
+                // Unter der Untergrenze gelten die Stunden als nicht erfasst: sonst stünde der Lohn als konform da.
+                const wHrs = wochenstundenZuTiefFuerMonatslohn(wHrsRoh) ? 0 : wHrsRoh;
                 // Einkommensart mitgeben: der Mindestlohn ist ein BRUTTO-Stundenlohn, und der
                 // Feld-Hinweis rät zu Netto. Ohne bekannte Basis kein Befund ('basisUnklar').
                 const result = pruefeStundenlohn(lohn, wHrs, kanton, data.incomeType, data.dreizehnter);
