@@ -4621,6 +4621,8 @@ export default {
     ketteMit13: 'Cun 13avel salari ≈ CHF {betrag}',
     ketteMedian: 'Median svizzer {jahr} CHF {betrag}, brut, temp plain, cun part dal 13avel salari e da pajaments spezials',
     ketteHinweis13: { sie: 'Sche Vus survegnis in 13avel salari, è Voss valur da cumparegliaziun var 8 % pli aut.', du: 'Sche ti survegns in 13avel salari, è tia valur da cumparegliaziun var 8 % pli auta.' },
+    // TODO(rm): provisorisch, Gegenlese offen
+    ketteLernende: 'Las pajas dad emprendistas ed emprendists sco era da praticantas e praticants na quintan betg en il median. Per els di questa cumparegliaziun pauc.',
     spiegel: 'Net {netto}, ≈ {brutto} brut (stimà).',
     spiegelOhnePk: 'Net {netto}, ≈ {brutto} brut (stimà senza cassa da pensiun).',
     sperre_keinLohn: { sie: 'La cumparegliaziun cun il median svizzer vala per salaris d’emploiads, perquai na la mussain nus betg qua. Sch’igl è in salari, tscherni en il chapitel Finanzas «Emploià» sco tip d’engaschament.', du: 'La cumparegliaziun cun il median svizzer vala per salaris d’emploiads, perquai na la mussain nus betg qua. Sch’igl è in salari, tscherna en il chapitel Finanzas «Emploià» sco tip d’engaschament.' },
@@ -4633,6 +4635,8 @@ export default {
     overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },
     hoursImplausibleNote: { sie: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatai per plaschair Vossas uras d'emna — fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatescha per plaschair tias uras d'emna — fin lura na quintain nus betg cun quai." },
+    // TODO(rm): provisorisch, Gegenlese offen
+    hoursTooLowNote: { sie: "{hours} uras per emna èn fitg paucas. Èsi forsa manegià in pensum, per exempel 0.8 per 80 %? Lura endatai per plaschair Vossas uras d'emna. Fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn fitg paucas. Èsi forsa manegià in pensum, per exempel 0.8 per 80 %? Lura endatescha per plaschair tias uras d'emna. Fin lura na quintain nus betg cun quai." },
     aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
     source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}, incl. 13avel salari proporziunal).',
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
