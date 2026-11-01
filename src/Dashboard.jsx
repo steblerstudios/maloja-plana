@@ -84,9 +84,10 @@ export function buildSnippet(chapterKey, chData, allData, t, lang) {
   if (chapterKey === 'versicherungen') {
     if (!chData.kkInsurer) return null;
     const parts = [chData.kkInsurer];
-    const prem = fmtCHF(chData.kkPremium);
-    if (prem) parts.push(prem);
-    if (chData.franchise) parts.push(t('synthesis.franchise', { value: auswahlLabel('versicherungen', 'franchise', chData.franchise, t) }));
+    // F7-D7: immer zwei Rappenstellen und «/ Mt.», die Franchise mit CHF.
+    const prem = Number(chData.kkPremium);
+    if (prem > 0) parts.push(betrag(prem, { stellen: 2 }) + ' ' + t('common.perMonth'));
+    if (chData.franchise) parts.push(t('synthesis.franchise', { value: betrag(Number(String(chData.franchise).replace(/\D/g, ''))) }));
     if (chData.kkModel) parts.push(auswahlLabel('versicherungen', 'kkModel', chData.kkModel, t));
     return parts.join(', ') + '.';
   }
@@ -333,7 +334,7 @@ const bergKleben = (el) => {
   return () => { ro.disconnect(); window.removeEventListener('resize', setzen); };
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte, hatDokumente = false }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
@@ -513,6 +514,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
+        // F7-D3 (Stebler Studios 01.11.2026): statt fester Tipps schlägt dieser eine Wegweiser auch Dokumente und Budget vor,
+        // aber nur, was noch fehlt. Im gesperrten Beispiel lässt sich nichts ablegen, dort nicht.
+        const schritt = !demoMode && !hatDokumente ? { text: 'dashboard.nextUpDokumente', view: 'tresor' }
+          : !(Number(data.finanzen?.monthlyIncome) > 0) ? { text: 'dashboard.nextUpBudget', view: 'sync' } : null;
         // Grundordnung steht: weiter mit dem Kapitel, das am wenigsten ausgefüllt ist.
         const weiterIdx = chapterCompletions.reduce((best, pct, i) =>
           (pct < 100 && (best < 0 || pct < chapterCompletions[best]) ? i : best), -1);
@@ -522,11 +527,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           React.createElement('p', {
             style: { fontSize: text.sm, color: palette.sageDeep, margin: 0, fontWeight: weight.medium },
           }, t('dashboard.nextUpAllDone')),
-          weiterIdx >= 0 && React.createElement('button', {
+          (schritt || weiterIdx >= 0) && React.createElement('button', {
             type: 'button',
-            onClick: () => onSelectChapter(weiterIdx),
+            onClick: () => (schritt ? onNavigate(schritt.view) : onSelectChapter(weiterIdx)),
             style: { ...ctaFlaeche, border: 'none', cursor: 'pointer', fontFamily: 'inherit' },
-          }, t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
+          }, schritt ? t(schritt.text) : t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
         );
       })(),
       mvo.fields.some((f) => !f.done) && React.createElement('p', {
@@ -565,6 +570,21 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           // Sicherungsdatei ein eigener Satz, der Datei und Gerät nicht vermischt.
           lastBackup ? part(t('dashboard.glanceSaved'), lastBackup) : React.createElement('span', null, t('dashboard.glanceNeverSaved')),
         );
+      })()
+      ,
+      // F7-D4: Die Sicherung steht nur noch hier. Wann sie erscheint, ist gleich geblieben: Daten da, älter als 7 Tage oder keine.
+      (() => {
+        const hasData = chapters.some((ch) => { const d = data[ch.key] || {}; return ch.fields.some((f) => feldHatWert(d, f.k)); });
+        const zuletzt = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
+        if (!hasData || (zuletzt && Date.now() - zuletzt <= 7 * 24 * 60 * 60 * 1000)) return null;
+        return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', marginTop: space.sm + 'px' } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' } },
+            t('dashboard.exportReminder')),
+          React.createElement(PrimaryButton, {
+            palette, onClick: () => onNavigate('export'),
+            style: { minHeight: '44px', alignSelf: 'flex-end' },
+            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
+          }, t('dashboard.exportReminderAction'), ' ›'));
       })()
     ),
 
@@ -991,63 +1011,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           ))
         );
       })()
-    ),
-
-    // ─── Export reminder — calm data safety nudge ────────────
-    (() => {
-      const hasData = chapters.some(ch => {
-        const d = data[ch.key] || {};
-        return ch.fields.some(f => feldHatWert(d, f.k));
-      });
-      if (!hasData) return null;
-      const lastBackupMs = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
-      const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
-      if (daysSince <= 7) return null;
-      const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
-      // 25.09.2026: gefüllter Knopf mit Sicherungs-Zeichen (vorher nackter Textlink,
-      // Stebler Studios: «sollte ein CTA haben und ein Icon»). Das Zeichen steht NUR im
-      // Knopf, nicht noch einmal vor dem Text (Entscheid gleicher Abend).
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.xl,
-          padding: '16px 20px',
-          background: palette.sageMist || palette.sage + '08',
-          borderRadius: radius.md,
-          border: '1px solid ' + palette.sage + '25',
-        }
-      },
-        React.createElement('div', { style: { minWidth: 0, display: 'flex', flexDirection: 'column' } },
-          React.createElement('div', {
-            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
-          }, reason + ' ' + t('dashboard.exportReminder')),
-          React.createElement(PrimaryButton, {
-            palette, onClick: () => onNavigate('export'),
-            style: { minHeight: '44px', alignSelf: 'flex-end' }, // rechtsbündig, 25.09.2026
-            icon: React.createElement('span', {
-              'aria-hidden': 'true',
-              style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand },
-            }, Icons.sicherung()),
-          }, t('dashboard.exportReminderAction'), ' ›')
-        )
-      );
-    })(),
-
-    // ─── Tips — open editorial section ─────────────────────
-    React.createElement('div', {
-      style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
-    },
-      React.createElement(Eyebrow, {
-        palette, as: 'h3',
-        style: { color: palette.soft, fontWeight: weight.medium, marginBottom: space.sm + 4 }
-      }, t('dashboard.tipsTitle')),
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
-        [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
-          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
-            React.createElement('span', { style: { color: palette.sageDeep, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
-            tip
-          )
-        )
-      )
     ),
 
     !demoMode && React.createElement(BetaFeedback, { palette, t })

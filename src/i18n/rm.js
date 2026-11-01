@@ -2066,15 +2066,10 @@ export default {
     nextUpAction: 'Cumplettar: {feld}',
     nextUpCta: 'Ussa', // Verb steht schon im Titel (Cumplettar: …), 25.09.
     nextUpWeiter: 'Cuntinuar cun {name}',
-    tipsTitle: 'Tips per cumenzar:',
-    tip1: { sie: 'Cumenzai cun il chapitel "Basa persunala"', du: 'Cumenza cun il chapitel "Basa persunala"' },
-    tip2: { sie: 'Chargiai si Voss documents impurtants', du: 'Chargia si Tes documents impurtants' },
-    tip3: { sie: 'Dovrai Budget-Sync per avair ina survista da Vossas finanzas', du: 'Dovra Budget-Sync per avair ina survista da Tias finanzas' },
-    tip4: { sie: 'Exportai regularmain Vossas datas sco segirezza', du: 'Exportescha regularmain Tes datas sco segirezza' },
+    nextUpDokumente: 'Deponer documents', // TODO(rm): provisorisch
+    nextUpBudget: 'Endrizzar il budget', // TODO(rm): provisorisch
     exportReminder: { sie: "Vossas datas sa chattan mo sin quest apparat. Ina segirezza As protegia en cas da perdita da l'apparat.", du: "Tes datas sa chattan mo sin quest apparat. Ina segirezza Ta protegia en cas da perdita da l'apparat." },
     exportReminderAction: 'Far ina segirezza ussa',
-    exportReminderNever: { sie: "Vus n'avais anc fatg nagina segirezza.", du: "Ti n'has anc fatg nagina segirezza." },
-    exportReminderOld: { sie: 'Vossa ultima segirezza è pli veglia che ina emna.', du: 'Tia ultima segirezza è pli veglia che ina emna.' },
     openChapter: 'Avrir',
     fieldsCount: '{filled}/{total} champs',
     highlightFinanz: 'Finanzas & daners',

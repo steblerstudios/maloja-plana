@@ -1591,6 +1591,7 @@ const AppInner = ({ demo }) => {
           // 25.09.2026, vorher ein Kasten über den Bergen). Eigene, nachgeladene Datei — das
           // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
           // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
+          hatDokumente: (docs || []).length > 0,
           installKarte: (klein) => React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstallHinweis, {
               palette, t, onNavigate: handleNavigate, installPrompt, klein,
