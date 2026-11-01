@@ -1957,6 +1957,7 @@ export default {
     quickCheckAllLeistungen: 'Alle Leistungen prüfen',
     quickCheckIncome: 'Monatseinkommen (brutto)',
     quickCheckResult: 'Bei CHF {income}/Jahr: mögliche Verbilligung ca. CHF {amount}/Jahr.',
+    quickCheckDurchspielen: "Anderes Einkommen durchspielen",
     quickCheckHint: 'Grobe Orientierung — der genaue Betrag hängt vom Kanton ab.',
     quickCheckMore: 'Zum vollständigen IPV-Rechner',
     quickCheckPlaceholder: 'z.B. 4500',

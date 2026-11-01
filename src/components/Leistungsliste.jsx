@@ -196,7 +196,12 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('div', {
       style: { display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: space.md + 'px', marginBottom: space.md + 'px' }
     },
-      React.createElement(EinkommenFeld, { palette, t, e }),
+      // F7-D5 (Stebler Studios 01.11.2026: Kombi): Mit Einkommen im Profil stehen die Ergebnisse vorne, durchspielen lässt es sich aufgeklappt.
+      Number(data?.finanzen?.monthlyIncome) > 0
+        ? React.createElement('details', { 'data-teil': 'kompass-durchspielen', style: { flex: '1 1 220px', minWidth: 0 } },
+            React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', lineHeight: '44px', fontSize: text.sm, color: palette.text } }, t('dashboard.quickCheckDurchspielen')),
+            React.createElement(EinkommenFeld, { palette, t, e }))
+        : React.createElement(EinkommenFeld, { palette, t, e }),
       // Die eine Kennzahl: geschätzte Entlastung pro Monat — nur wenn etwas gezählt wird.
       totalMonthly > 0 && React.createElement('div', { style: { textAlign: 'right' } },
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('dashboard.quickCheckWithIncome')),
@@ -207,7 +212,11 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('div', { style: { borderBottom: '1px solid ' + palette.border + '55' } }, leistungen.map(row)),
     React.createElement('div', {
       style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm, lineHeight: leading.relaxed }
-    }, annual > 0 ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome'))
+    }, annual > 0 ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome')),
+    React.createElement('button', {
+      type: 'button', className: 'mp-link', 'data-teil': 'kompass-weg', onClick: () => onNavigate('situationen'),
+      style: { minHeight: '44px', padding: 0, marginTop: space.xs + 'px', background: 'none', border: 'none', fontSize: text.sm, color: palette.sageDeep || palette.text, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' },
+    }, t('dashboard.anspruchTitle'), ' ›')
   );
 };
 

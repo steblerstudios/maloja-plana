@@ -1947,6 +1947,7 @@ export default {
     quickCheckAllLeistungen: 'Check all benefits',
     quickCheckIncome: 'Monthly income (gross)',
     quickCheckResult: 'At CHF {income}/year: possible reduction approx. CHF {amount}/year.',
+    quickCheckDurchspielen: "Try a different income",
     quickCheckHint: 'Rough estimate — the exact amount depends on your canton.',
     quickCheckMore: 'Go to full premium calculator',
     quickCheckPlaceholder: 'e.g. 4500',

@@ -2087,6 +2087,7 @@ export default {
     quickCheckAllLeistungen: 'Verifitgar tuttas prestaziuns',
     quickCheckIncome: 'Entrada per mais (brut)',
     quickCheckResult: "Tar CHF {income}/onn: reducziun pussaivla da ca. CHF {amount}/onn.",
+    quickCheckDurchspielen: "Empruvar in’autra entrada", // TODO(rm): provisorisch
     quickCheckHint: "Orientaziun grossa — l'import exact dependa dal chantun.",
     quickCheckMore: 'Tar il calculatur IPV cumplet',
     quickCheckPlaceholder: 'p.ex. 4500',

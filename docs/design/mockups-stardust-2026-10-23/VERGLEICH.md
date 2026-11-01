@@ -1648,7 +1648,7 @@ F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 u
 
 - **F7-K3-1 erledigt:** `KKLastSpiegel` in Finanzen, Regel Zuhause, Spiegel, Wegweiser. Stebler Studios zur kurzen Fassung: «1 ist gut».
 - **F7-K3-2 gebaut (Stebler Studios, 01.11.2026: «kombi von a b c»):** Im Kapitel oben Empfehlung und bisher, die Grafik zugeklappt, darunter der Link zur Versicherungs-Übersicht. Dashboard-Kachel und Übersicht unverändert. Im Beispiel Maria im Browser gesehen, Grafik aufgeklappt in voller Grösse. Nur Deutsch und Desktop-Breite.
-- **F7-D5 offen:** Varianten A bis C gezeigt, Stebler Studios «noch nicht ganz glücklich».
+- **F7-D5 gebaut (Stebler Studios, 01.11.2026: «koombi von abc»):** Der Kompass bleibt mit den Ergebnissen auf dem Dashboard. Mit Einkommen im Profil ist das Feld unter «Anderes Einkommen durchspielen» zugeklappt, ohne Einkommen offen. Darunter der Link zu «Was steht mir zu?». Im Beispiel Maria gesehen, Link geprüft.
 
 **Wiedervorlage März 2027:** Status S ohne Lageänderung nicht vor dem 04.03.2027 aufgehoben, ab fünf Jahren besteht Anspruch auf eine Aufenthaltsbewilligung. Die Hinweise zu S dann prüfen.
 

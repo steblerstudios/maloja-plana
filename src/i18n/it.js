@@ -1947,6 +1947,7 @@ export default {
     quickCheckAllLeistungen: 'Verifica tutte le prestazioni',
     quickCheckIncome: 'Reddito mensile (lordo)',
     quickCheckResult: 'Con CHF {income}/anno: riduzione possibile ca. CHF {amount}/anno.',
+    quickCheckDurchspielen: "Provare un altro reddito",
     quickCheckHint: 'Stima approssimativa — l\'importo esatto dipende dal cantone.',
     quickCheckMore: 'Vai al calcolatore completo',
     quickCheckPlaceholder: 'es. 4500',

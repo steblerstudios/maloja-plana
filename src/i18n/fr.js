@@ -1948,6 +1948,7 @@ export default {
     quickCheckAllLeistungen: 'Vérifier toutes les prestations',
     quickCheckIncome: 'Revenu mensuel (brut)',
     quickCheckResult: 'Avec CHF {income}/an : réduction possible env. CHF {amount}/an.',
+    quickCheckDurchspielen: "Essayer un autre revenu",
     quickCheckHint: 'Estimation approximative — le montant exact dépend du canton.',
     quickCheckMore: 'Vers le calculateur complet',
     quickCheckPlaceholder: 'p. ex. 4500',
