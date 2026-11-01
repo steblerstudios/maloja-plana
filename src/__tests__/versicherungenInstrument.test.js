@@ -132,17 +132,16 @@ describe('Nachprüfung', () => {
   });
 });
 
-// F7-K3-4 (Stebler Studios 01.11.2026): im Kapitel das Schild zuerst, Liste und Posten eingeklappt.
+// F7-K3-4 (Stebler Studios 01.11.2026): grosse Summe oben, Posten und Liste eingeklappt, Schild vor der KK-Last.
 describe('Kapitel Versicherungen: Aufbau', () => {
-  const html = renderToStaticMarkup(React.createElement(VersicherungenInstrument, { palette: LIGHT_PALETTE, t, versicherungen: DEMO_DATA.versicherungen, allData: DEMO_DATA, onNavigate: () => {} }));
-  it('Schild vor Summe, Summe vor KK-Last', () => {
-    expect(html.indexOf('data-schild="netz"')).toBeGreaterThan(-1);
-    expect(html.indexOf('data-schild="netz"')).toBeLessThan(html.indexOf('data-teil="versicherungen-darin"'));
-    expect(html.indexOf('data-teil="versicherungen-darin"')).toBeLessThan(html.indexOf('data-teil="kk-last-balken"'));
+  const html = instrument(DEMO_DATA.versicherungen);
+  it('Summe vor Schild, Schild vor KK-Last', () => {
+    expect(nurText(html).trim().startsWith('Versicherungen pro Monat CHF 609')).toBe(true);
+    expect(html.indexOf('data-teil="versicherungen-darin"')).toBeLessThan(html.indexOf('data-schild="netz"'));
+    expect(html.indexOf('data-schild="netz"')).toBeLessThan(html.indexOf('data-teil="kk-last-balken"'));
   });
-  it('Liste und Posten sind eingeklappt, die Summe bleibt sichtbar', () => {
+  it('Liste und Posten sind eingeklappt', () => {
     expect(html).toMatch(/<details[^>]*data-teil="netz-schild-liste"(?![^>]*open)/);
     expect(html).toMatch(/<details[^>]*data-teil="versicherungen-darin"(?![^>]*open)/);
-    expect(html.slice(html.indexOf('<summary', html.indexOf('versicherungen-darin'))).replace(/<[^>]+>/g, '')).toContain('Versicherungen pro Monat CHF 609');
   });
 });

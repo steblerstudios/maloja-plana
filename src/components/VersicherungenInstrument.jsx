@@ -22,7 +22,7 @@ import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 //   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze,
 //      dieselbe IPV-Entlastung über ipvAbzug, Quelle und «Orientierung» — Fachprüfung 25.10.2026).
 //   3. Netz-Schild (seit 27.10.2026, F7-K3-6) — ein Schild aus Teilen statt der zwei kleinen Schilde und des Netzes.
-//      Seit F7-K3-4 steht es im Kapitel zuoberst, Summe und Liste sind eingeklappt.
+//      Seit F7-K3-4 folgt es direkt auf die Summe, Posten und Liste sind eingeklappt.
 //   4. Franchise-Kreuz klein — dieselbe Rechnung wie die Prämien-Seite (ladeFranchiseOpt, erst mit Kasse + PLZ),
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
 const WHO = 10;
@@ -115,27 +115,22 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
 
   const schild = !uebersicht && h(React.Fragment, null,
-    schildDa && h('h4', { style: { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
+    schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
     // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
     h(NetzSchild, { palette, t, versicherungen: v, finanzen: daten.finanzen, kanton: daten.basis?.canton, stunden: daten.ausbildung?.workHoursPerWeek, ...schildOptionen(daten) }));
 
   return h('section', { 'data-teil': 'versicherungen-instrument', style: { marginBottom: space.lg + 'px' } },
-    // F7-K3-4 (Stebler Studios 01.11.2026): im Kapitel zuerst das Schild, die Summe ist eine Zeile, die Posten liegen darin.
-    schild,
-    hatGeld && !uebersicht && h('details', { 'data-teil': 'versicherungen-darin', style: { borderBottom: '1px solid ' + palette.border + '88' } },
-      h('summary', { style: { cursor: 'pointer', minHeight: '44px', paddingTop: '10px', fontSize: text.sm, color: palette.text } },
-        h('span', { style: { color: palette.text } }, t('versInstrument.titel'), ' '),
-        h('span', { style: { fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(Math.round(summe)))),
-      postenZeilen()),
-    hatGeld && !uebersicht && postenHinweise(),
-    hatGeld && uebersicht && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
-    hatGeld && uebersicht && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.round(summe))),
-    hatGeld && uebersicht && h('details', { 'data-teil': 'versicherungen-darin', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginBottom: space.sm + 'px' } },
+    // F7-K3-4 (Stebler Studios 01.11.2026): die grosse Summe bleibt zuoberst, die Posten liegen eingeklappt darunter, dann das Schild.
+    hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
+    hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.round(summe))),
+    hatGeld && h('details', { 'data-teil': 'versicherungen-darin', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginBottom: space.sm + 'px' } },
       // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
       h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '10px' } },
         h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t('vu.darin')),
         h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: posten.length }))),
-      postenZeilen(), postenHinweise()),
+      postenZeilen(), uebersicht && postenHinweise()),
+    hatGeld && !uebersicht && postenHinweise(),
+    schild,
 
     // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
     anteil != null && h(React.Fragment, null,

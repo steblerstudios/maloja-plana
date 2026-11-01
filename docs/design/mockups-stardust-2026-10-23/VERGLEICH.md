@@ -1603,5 +1603,5 @@ Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192
 
 ### F7-K3-4 gebaut (Stebler Studios, 01.11.2026: «Ja, wie empfohlen»)
 
-Im Kapitel Versicherungen steht das Netz-Schild zuoberst, die Liste aller Versicherungen ist eingeklappt, «Versicherungen pro Monat» ist eine Zeile mit den Posten darin. KK-Last und Franchise-Kreuz
+Im Kapitel Versicherungen bleibt die grosse Summe zuoberst (Stebler Studios nachträglich: «hat mir irgendwie noch gefallen»), die Posten sind darunter eingeklappt, dann folgt das Netz-Schild mit eingeklappter Liste. KK-Last und Franchise-Kreuz
 bleiben unverändert an ihrem Platz, weil F7-K3-1 und F7-K3-2 zurückgestellt sind; die Angaben beginnen darum noch nicht gleich nach der Summe. Die Versicherungs-Übersicht ist unverändert.
