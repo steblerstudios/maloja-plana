@@ -66,8 +66,8 @@ function groupStat(list) {
 
 // «Aktiv» = Kasse oder laufender Beitrag. Ein blosses Guthaben (Freizügigkeit) ist keine laufende Pensionskasse: es zählt
 // fürs Alter, nicht für Invalidität und Tod (Fachprüfung 26.10.2026, Rechts-Prüfung 01.11.2026).
-const zahlWert = (x) => Number(String(x ?? '').replace(/[’'\s]/g, '')) || 0;
-export const bvgAktiv = (v = {}) => has(v.bvgInsurer) || zahlWert(v.bvgContribution) > 0;
+export const zahl = (x) => Number(String(x ?? '').replace(/[’'\s]/g, '')) || 0;
+export const bvgAktiv = (v = {}) => has(v.bvgInsurer) || zahl(v.bvgContribution) > 0;
 
 export function schildState(v = {}, opts = {}) {
   const employed = opts.employed === true;

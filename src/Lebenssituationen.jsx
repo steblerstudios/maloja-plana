@@ -334,7 +334,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, t('wasStehtMirZu.intro')),
 
     // (1) Mit Ihren Angaben
-    h('h2', { id: MIT_ANGABEN_ANKER, tabIndex: -1, className: 'mp-sprungziel', style: { ...s.h2, marginTop: space.lg + 'px' } }, t('wasStehtMirZu.mitAngaben')),
+    h('h2', { id: MIT_ANGABEN_ANKER, className: 'mp-sprungziel', style: { ...s.h2, marginTop: space.lg + 'px' } }, t('wasStehtMirZu.mitAngaben')),
     marken.length > 0 && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: space.xs + 'px' } },
       marken.map((m) => h('span', { key: m, style: s.marke }, m))),
     h('details', { open: anpassenOffen || undefined, onToggle: (ev) => { const auf = ev.currentTarget.open; if (auf !== anpassenOffen) setAnpassenOffen(auf); } },

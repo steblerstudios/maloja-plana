@@ -26,7 +26,8 @@ export function dosisAusForm(form) {
 export function preisFuer(med, preise) {
   const alle = med && med.name ? preise[med.name] : null;
   if (!alle || !alle.length) return null;
-  const soll = dosisInMg(med.dose, med.unit);
+  // Das Feld ist Freitext: auch «50 µg» ist eine Dosis.
+  const soll = dosisInMg(med.dose, med.unit) ?? dosisAusForm(med.dose);
   const packungen = soll === null ? alle : alle.filter(([form]) => dosisAusForm(form) === soll);
   if (!packungen.length) return null;
   const chf = packungen.map((p) => p[2]);

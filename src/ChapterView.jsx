@@ -2086,7 +2086,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
       { key: 'versicherungen', wert: p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
-      { key: 'steuern', wert: p.tax, farbe: palette.sandDeep },
+      { key: 'steuern', wert: p.tax, farbe: palette.mid },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
     const basis = Math.max(m.einkommen, m.verplant) || 1;
@@ -2229,7 +2229,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const ruhigerKnopf = { display: 'inline-flex', alignItems: 'center', gap: '8px', minHeight: '44px', padding: '10px 16px', border: '1px solid ' + palette.mid, borderRadius: radius.full, background: 'transparent', color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium };
   const ruhigesEnde = (etikett, titel, satz, knopf, onClick, fuss) => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.lg + 'px 0 ' + space.xs + 'px', borderTop: '1px solid ' + palette.border, textAlign: 'center' } },
     React.createElement('h3', { style: { margin: '0 0 4px', fontSize: text.xs, fontWeight: weight.normal, fontFamily: 'inherit', color: palette.mid } }, etikett),
-    React.createElement('h4', { style: { margin: '0 0 4px', fontSize: text.xl, fontWeight: weight.semi, color: palette.text } }, titel),
+    React.createElement('h4', { style: { margin: '0 0 4px', fontFamily: fontFamilyDisplay, fontSize: text.xl, fontWeight: weight.semi, color: palette.text } }, titel),
     satz && React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, satz),
     React.createElement('button', { type: 'button', className: 'mp-link', onClick, style: ruhigerKnopf }, knopf, ' ›'),
     fuss && React.createElement('p', { style: { margin: space.md + 'px 0 0', fontSize: text.xs, color: palette.mid } }, fuss)

@@ -1,4 +1,4 @@
-import { schildState, bvgAktiv } from './schutzschild.js';
+import { schildState, bvgAktiv, zahl } from './schutzschild.js';
 import { hausratPflicht } from './hausratPflicht.js';
 
 // Netz-Schild (Fassung 7, F7-K3-6, Entscheid Stebler Studios 27.10.2026): EIN Bild statt Spinnennetz und zwei
@@ -27,7 +27,6 @@ const REIHE = ['haushalt', 'vorsorge', 'leben', 'kk', 'uvg'];
 export const SCHILD_KERN = 0.34;
 
 const has = (x) => x != null && String(x).trim() !== '';
-const zahl = (x) => Number(String(x ?? '').replace(/[’'\s]/g, '')) || 0;
 const ERWERB = ['employed', 'selfEmployed', 'freelance'];
 
 // Füllung 0..1: ohne Erfülltes ein kleiner Kern, sonst anteilig bis ganz.

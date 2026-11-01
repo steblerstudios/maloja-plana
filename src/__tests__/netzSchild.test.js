@@ -165,6 +165,19 @@ describe('Bild und Text', () => {
   });
 });
 
+describe('Wörter und Platz im Schild', () => {
+  const sprachen = { de, en, fr, it_, rm };
+  it('die Kurznamen passen ins Feld: höchstens 14 Zeichen (gemessen 01.11.2026 bei 15 px)', () => {
+    for (const [name, s] of Object.entries(sprachen)) {
+      for (const wert of Object.values(s.netzSchild.kurz)) expect(wert.length, name + ': ' + wert).toBeLessThanOrEqual(14);
+    }
+  });
+  it('die Kachel behauptet keine Deckung (Entscheid 01.11.2026: «eingetragen»)', () => {
+    expect(de.instrumente.schildCount).toContain('eingetragen');
+    for (const s of Object.values(sprachen)) expect(s.instrumente.schildCount.replace(/\{\w+\}/g, '')).not.toMatch(/gedeckt|covered|couvert|copert|cuvert/i);
+  });
+});
+
 describe('Beträge je Versicherung (Stebler Studios 27.10.2026)', () => {
   const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton };
   const html = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: DEMO_DATA.versicherungen, ...o }));

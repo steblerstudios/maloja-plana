@@ -159,9 +159,8 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
           onClick: () => onWahl(o.wert),
           onKeyDown: (e) => taste(e, i),
           style: {
-            minHeight: '44px', padding: an ? '7px 15px' : '8px 16px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.sm + 'px',
+            minHeight: '44px', ...auswahlRahmen(an, palette, 8, 16), fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.sm + 'px',
             fontWeight: an ? weight.semi : weight.normal,
-            border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border,
             background: an ? palette.sage + '22' : palette.surface,
             color: an ? (palette.sageDeep || palette.text) : palette.text,
           },
@@ -170,6 +169,12 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
     )
   );
 };
+
+// Gewählt: 2-px-Rand statt nur Farbe (WCAG 1.4.1); das Padding gleicht ihn aus, die Fläche springt nicht.
+export const auswahlRahmen = (an, palette, y, x) => ({
+  padding: an ? (y - 1) + 'px ' + (x - 1) + 'px' : y + 'px ' + x + 'px',
+  border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border,
+});
 
 // Reiter (a11y M4, Entscheid X: «Reiter/Tabs werden eine Tabs-Komponente mit Pfeiltasten»): tablist/tab/tabpanel,
 // Pfeil links/rechts wandern und wählen, Pos1/Ende springen; nur der aktive Reiter ist im Tab-Weg.
@@ -193,10 +198,9 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
           'aria-selected': an, 'aria-controls': id + '-panel', tabIndex: an ? 0 : -1,
           onClick: () => onWahl(r.key), onKeyDown: (e) => taste(e, i),
           style: {
-            flexShrink: 0, minHeight: '44px', padding: an ? '7px 13px' : '8px 14px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
+            flexShrink: 0, minHeight: '44px', ...auswahlRahmen(an, palette, 8, 14), fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
             borderRadius: radius.full + 'px', whiteSpace: 'nowrap',
             fontWeight: an ? weight.semi : weight.medium,
-            border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border,
             background: an ? palette.sage + '22' : 'transparent',
             color: an ? (palette.sageDeep || palette.text) : palette.text,
           },

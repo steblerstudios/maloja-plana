@@ -6278,7 +6278,7 @@ export default {
     teilweise: 'Saisi en partie : {liste}.',
     ganz: 'Aucune saisie obligatoire n’est ouverte dans cette liste.',
     kurz: { kk: 'Caisse maladie', uvg: 'Accidents', vorsorge: 'Prévoyance', haushalt: 'Ménage', leben: 'Vie' },
-    vers: { kvg: 'Assurance de base (LAMal)', kkZusatz: 'Assurance complémentaire', uvg: 'Assurance-accidents (LAA)', uvgZusatz: 'Complémentaire accidents', ahv: '1er pilier · AVS/AI', bvg: '2e pilier · caisse de pension', saeule3a: '3e pilier · pilier 3a', haftpflicht: 'RC privée', hausrat: 'Ménage', leben: 'Assurance-vie' },
+    vers: { kvg: 'Assurance de base (LAMal)', kkZusatz: 'Assurance complémentaire', uvg: 'Assurance-accidents (LAA)', uvgZusatz: 'Complémentaire accidents', ahv: '1er pilier · AVS/AI', bvg: '2e pilier · caisse de pension', saeule3a: '3e pilier · pilier 3a', haftpflicht: 'RC privée', hausrat: 'Assurance ménage', leben: 'Assurance-vie' },
     art: { pflicht: 'obligatoire', freiwillig: 'facultatif', haftpflicht: 'pas obligatoire selon la loi', kantonPflicht: 'obligatoire dans le canton {kanton} (incendie et éléments naturels)', jeNachKanton: 'obligatoire selon le canton' },
     haftpflichtHinweis: 'RC privée : souvent exigée par le bailleur.',
     hausratPruefen: 'Obligation ménage dans le canton : à confirmer auprès de l’assurance immobilière cantonale — les textes n’ont pas été vérifiés pour tous les cantons.',

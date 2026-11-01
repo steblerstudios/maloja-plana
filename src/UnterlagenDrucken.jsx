@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
+import { auswahlRahmen } from './components/RechnerForm.jsx';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { Lebensmappe } from './Lebensmappe.jsx';
@@ -38,9 +39,9 @@ export const UnterlagenDrucken = ({ palette, t, data, chapters, documents, onNav
       key: w.key,
       style: {
         display: 'flex', alignItems: 'center', gap: '12px', minHeight: '44px', boxSizing: 'border-box',
-        padding: an ? '9px 13px' : '10px 14px', marginBottom: space.sm + 'px', cursor: 'pointer',
+        ...auswahlRahmen(an, palette, 10, 14), marginBottom: space.sm + 'px', cursor: 'pointer',
         background: an ? palette.sage + '22' : palette.up, color: palette.text,
-        border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border, borderRadius: radius.sm,
+        borderRadius: radius.sm,
       },
     },
       React.createElement('input', {

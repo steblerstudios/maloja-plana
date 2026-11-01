@@ -37,6 +37,10 @@ describe('Preis zu einem Medikament', () => {
     expect(preisFuer({ name: 'Testa', dose: '', unit: 'mg' }, preise).packungen).toHaveLength(3);
     expect(preisFuer({ name: 'Testa', dose: '50-100', unit: 'mg' }, preise).packungen).toHaveLength(3);
   });
+  it('liest eine Dosis mit Einheit im Feld', () => {
+    expect(preisFuer({ name: 'Testa', dose: '100 mg', unit: 'mg' }, preise).packungen).toHaveLength(preisFuer({ name: 'Testa', dose: '100', unit: 'mg' }, preise).packungen.length);
+    expect(preisFuer({ name: 'Testa', dose: '75 mg', unit: 'mg' }, preise)).toBeNull();
+  });
   it('zeigt keinen Preis, wenn die erfasste Dosis in der SL nicht vorkommt (Fachprüfung 27.10.2026)', () => {
     expect(preisFuer({ name: 'Testa', dose: '75', unit: 'mg' }, preise)).toBeNull();
   });

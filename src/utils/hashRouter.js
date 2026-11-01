@@ -100,9 +100,9 @@ export function springeZuAnker(id, bis = 2000) {
     if (aus) return;
     const el = document.getElementById(id);
     // Ein zugeklappter Teil (<details>, z. B. Aussteuerung in «Stelle verloren») geht dabei auf; ein
-    // Wahlknopf mit `data-anker-wahl` (Weiche «Zusatz» im KVG-Wechsel, F7-A5) wird gewählt. Fokus folgt, wo das Ziel ihn
-    // nimmt (tabIndex -1), sonst landen Tastatur und Screenreader nicht dort.
-    if (el) { if (el.tagName === 'DETAILS') el.open = true; if (el.dataset && 'ankerWahl' in el.dataset) el.click(); el.scrollIntoView({ block: 'start' }); el.focus({ preventScroll: true }); return; }
+    // Wahlknopf mit `data-anker-wahl` (Weiche «Zusatz» im KVG-Wechsel, F7-A5) wird gewählt. Jedes Ziel nimmt den Fokus
+    // (tabIndex -1, wo es keinen hat), sonst landen Tastatur und Screenreader nicht dort.
+    if (el) { if (el.tagName === 'DETAILS') el.open = true; if (el.dataset && 'ankerWahl' in el.dataset) el.click(); el.scrollIntoView({ block: 'start' }); if (el.tabIndex < 0) el.tabIndex = -1; el.focus({ preventScroll: true }); return; }
     if (performance.now() < ende) requestAnimationFrame(schritt);
   };
   // Zwei Bilder warten: handleNavigate springt zuerst nach oben (scrollTo 0).
