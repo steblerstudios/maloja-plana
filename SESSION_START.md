@@ -17,6 +17,19 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🛡️ **Nachtrag 01.11.2026, 17:00 — Fassung 7 zusammengeführt: Sammelzweig `integration/f7-sammel`, PR #637 (Entwurf). Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 01.11.): main = `98539e99` · live = `4299bfb9` (0.1.48-beta) · 156 Commits dazwischen.
+> - **Inhalt:** #626–#636 zusammengeführt, dazu F7-K4-2, K6-1, K5-2, R2, R5, L3, L8, L1, L2 (siehe `VERGLEICH.md`, «Gebaut auf dem Sammelzweig»).
+>   Die Konfliktlösungen stehen nur dort: Merge von #637, nicht PR für PR.
+> - **Predeploy gelaufen:** Prüfer, `/code-review`, `/simplify`. Blocker behoben: Netz-Schild zeigt Einträge statt Deckung, SL-Preise ohne fremde
+>   Kombinationen, 40-%-Ausnahme nach KLV Art. 38a Abs. 7. Vorname in getrackten Dateien ersetzt (PII-Scan). `main` hat noch 51 Treffer, die Git-Historie den Namen.
+> - **Geprüft:** 7'551 Tests, Lint, Build, SEO 0/0, ESTV 156/156, PII. **Grösse 64.96 von 65 kB.** Die Sprachtexte liegen nicht im Hauptbündel,
+>   Texte streichen spart dort nichts.
+> - **Offen vor live:** Ultrareview, acht a11y-Punkte, Design-Reviews, Copy über den ganzen Diff, Geheimnis-Suche über die Historie, Service Worker auf dem
+>   echten Server, Hausrat FR/JU/VD-Erlass und 22 Kantone, Apotheken-Tarif, Datenschutzerklärung zum Compendium-Link (Juristin).
+> - **Reihenfolge:** Ultrareview · Merge #637 · Freigabe-Marke auf dem main-Stand (Produktion geht nur von `main`) · Deploy. Merge und Deploy: Stebler Studios.
+
 > 🛡️ **Nachtrag 31.10.2026, 12:30 — Fassung 7: Netz-Schild und Medikamentenpreis als Entwurfs-PRs #635 und #636. Nichts gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 31.10. 12:26): main = `98539e99` · live = `4299bfb9` (0.1.48-beta, 23.10.) ·
