@@ -153,7 +153,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     )
   );
 
-// Beta-Feedback (26.10.2026, Entscheid Sophie): der Knopf hiess «Feedback senden», schickte
+// Beta-Feedback (26.10.2026, Entscheid Stebler Studios): der Knopf hiess «Feedback senden», schickte
 // aber nichts — die Antworten lagen nur im Gerätespeicher, wo sie niemand liest. Jetzt wird
 // daraus ein Mail-Entwurf, der vor dem Klick sichtbar dasteht. Gesendet wird erst mit dem
 // eigenen Klick im Mailprogramm; wer keins hat, kopiert den Text. Auf dem Gerät bleibt nur

@@ -5,7 +5,7 @@ import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 import { ladeIPVModelle } from '../config/cantonalData.js';
 
-// F7-K2-4 (Sophie, 27.10.2026): Dashboard und Kapitel Finanzen sagen aus denselben Daten dasselbe zur IPV.
+// F7-K2-4 (Stebler Studios, 27.10.2026): Dashboard und Kapitel Finanzen sagen aus denselben Daten dasselbe zur IPV.
 // Vorher: Kapitel «Einkommen über Grenze (CHF 61’090)», Dashboard «Hängt von Kanton und Einkommen ab».
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);

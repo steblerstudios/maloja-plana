@@ -73,7 +73,7 @@ export const WERKZEUGE = [
   // Zeichen seit Fassung 5 (23.10.2026): Ablage = Ordner, Kalender = Blatt mit dem
   // heutigen Tag (Europe/Zurich), Merkliste = Haken. Im Menü steht der Kalender seither
   // als Anker «Was ansteht» oben, nicht mehr unter den Werkzeugen.
-  // F7-L11 (Sophie 27.10.2026): «Meine Unterlagen» und «Charts» standen als eigene Einträge im Rucksack,
+  // F7-L11 (Stebler Studios 27.10.2026): «Meine Unterlagen» und «Charts» standen als eigene Einträge im Rucksack,
   // führten aber nur über eine Umleitung auf die Dokumentenablage bzw. ins Kapitel Finanzen — doppelt mit
   // «Dokumentenablage» und «Finanzen & Geld». Die Adressen bleiben (UMLEITUNGEN), die Suchwörter wandern mit.
   { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'ordner', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor', 'unterlagen', 'dossier', 'lebensmappe'] },

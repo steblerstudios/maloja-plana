@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { LohnStandort, finanzWerte } from '../components/FinanzAuswertung.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 
-// F7-K2-6 (Sophie, 27.10.2026): 18 Branchen als Liste, für Maria zählt eine — die eigene hervorheben, Rest aufklappbar.
+// F7-K2-6 (Stebler Studios, 27.10.2026): 18 Branchen als Liste, für Maria zählt eine — die eigene hervorheben, Rest aufklappbar.
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const render = (data) => renderToStaticMarkup(React.createElement(LohnStandort, { palette, t, data, w: finanzWerte(data, t), onNavigate: () => {} }));

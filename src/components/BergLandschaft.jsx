@@ -535,7 +535,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         },
-          // F7-S8 (Sophie 27.10.2026): Tippfläche mindestens 44 px (Regel aus #620), ohne das Bild zu
+          // F7-S8 (Stebler Studios 27.10.2026): Tippfläche mindestens 44 px (Regel aus #620), ohne das Bild zu
           // vergrössern — ein unsichtbarer Rand um die Marke; der Klick landet über das Kind beim Knopf.
           sz < 44 && React.createElement('span', {
             'aria-hidden': 'true', 'data-tippflaeche': station.key,

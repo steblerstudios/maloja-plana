@@ -1,6 +1,6 @@
 # Fassung 7 · Rundgang durch alle Seiten · Befunde
 
-Angefangen 27.10.2026, 01:50, auf Sophies Zuruf («wir wollen sauber weiter durch alle Seiten … weiter mit unserer Fassung»).
+Angefangen 27.10.2026, 01:50, auf Stebler Studios’ Zuruf («wir wollen sauber weiter durch alle Seiten … weiter mit unserer Fassung»).
 Grundlage: `main` `d9aa8e06`, im Browser (Vite dev, Beispiel Maria Muster, 1280 px). Vergleich gegen
 `docs/design/mockups-stardust-2026-10-23/VERGLEICH.md` (Fassung 5/6) und `docs/audits/SEITENRUNDGANG-2026-10.md`.
 
@@ -8,7 +8,7 @@ Je Seite sechs Fragen: **Umgesetzt?** (Entscheid aus VERGLEICH gebaut) · **Stim
 **Flow** (woher, wohin, nächster Schritt) · **Aufbau/Logik** · **Fusion** (doppelt, zusammenlegen) ·
 **Zeigen** (Graph, Netz, Band statt Text — oder weniger).
 
-Nichts davon ist gebaut. Jeder Punkt wartet auf Sophies Entscheid.
+Nichts davon ist gebaut. Jeder Punkt wartet auf Stebler Studios’ Entscheid.
 
 ## Runde 1 · Dashboard
 

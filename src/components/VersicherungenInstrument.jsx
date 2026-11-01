@@ -14,7 +14,7 @@ import { renderSource } from '../utils/renderSource.js';
 import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 
-// Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Sophie 24.10.2026,
+// Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Stebler Studios 24.10.2026,
 // nachgebessert am selben Tag). Wie das Wohnkosten-Instrument: unter der ruhigen Zusammenfassung, vor den Angaben.
 //   1. «Versicherungen pro Monat» — aus der einen Monatsrechnung (utils/monatsrechnung.js), also dieselbe Zahl wie
 //      die Budget-Gruppe «Versicherung & Gesundheit»: Krankenkasse, Hausrat ÷ 12, Haftpflicht ÷ 12, «Weitere

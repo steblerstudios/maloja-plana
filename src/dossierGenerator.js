@@ -165,7 +165,7 @@ function getSections(data, chapters, t) {
         { label: lbl('ausbildung', 'languages'), value: d('ausbildung', 'languages') },
       ].filter(r => r.value),
     },
-    // F7-S1 (Sophie 27.10.2026): Die Lebensmappe verspricht «Alle Kapitel auf einen Blick», liess aber Behörden &
+    // F7-S1 (Stebler Studios 27.10.2026): Die Lebensmappe verspricht «Alle Kapitel auf einen Blick», liess aber Behörden &
     // Rechtliches ganz weg (darum «6 Bereiche mit Angaben»). Felder wie im Kapitel, in derselben Reihenfolge.
     {
       key: 'behoerden',

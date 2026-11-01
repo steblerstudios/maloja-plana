@@ -29,7 +29,7 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
 // `userLabel` (optional): ersetzt «Ihre Miete: CHF …» — im Kapitel Wohnen beim Regler «Ausprobierte
 // Miete: CHF …» (Fassung 6), damit niemand die ausprobierte Zahl für die erfasste hält.
-// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Sophie 25.10.2026 «Barometer
+// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Stebler Studios 25.10.2026 «Barometer
 // ruhiger»). Ohne die strukturelle Erklärung, und der Zimmer-Hinweis zeigt auf das Feld unten im
 // Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
 export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {
@@ -211,7 +211,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontSize: text.xs, color: palette.roseDeep, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, React.createElement(LegendenMarke, { form: 'schwelle', color: palette.roseDeep, palette }), breachLine),
 
-    // Fassung 7 (F7-K1-1, Sophie 27.10.2026): Mit eigenem Wert sagt der erste Satz, wo DER EIGENE
+    // Fassung 7 (F7-K1-1, Stebler Studios 27.10.2026): Mit eigenem Wert sagt der erste Satz, wo DER EIGENE
     // Wert zur Region liegt — vorher stand unter «Ihre Miete: CHF 1’650» nur «rund 20 % über dem
     // Schweizer Schnitt», und das war die Region, nicht die Miete. Die Region-gegen-Schweiz-Zeile
     // folgt darunter mit eigenem Subjekt.

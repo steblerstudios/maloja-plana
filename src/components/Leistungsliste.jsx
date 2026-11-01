@@ -61,7 +61,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
           + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
         : t(ipv.noteKey),
     };
-    // F7-K2-4 (Sophie 27.10.2026): Ohne Anspruch stand hier «Hängt von Kanton und Einkommen ab — im
+    // F7-K2-4 (Stebler Studios 27.10.2026): Ohne Anspruch stand hier «Hängt von Kanton und Einkommen ab — im
     // Rechner eingeben», während das Kapitel Finanzen aus denselben Daten «Einkommen über Grenze (CHF …)»
     // zeigte. Jetzt dieselbe sachliche Lage wie im Kapitel (FinanzAuswertung ipvKarte), kein Urteil.
     // Ohne amtlich belegten Kanton (belegt === false) bleibt der allgemeine Untertitel.

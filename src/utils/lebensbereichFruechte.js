@@ -109,7 +109,7 @@ export const lesbareFarbe = (farbe, grund, isDarkMode, min = 4.5) => {
   return ziel;
 };
 
-// Muster M8 (Fassung 6, Sophie 25.10.2026): EINE Bereichsfarbe je Kapitel überall — die
+// Muster M8 (Fassung 6, Stebler Studios 25.10.2026): EINE Bereichsfarbe je Kapitel überall — die
 // Fruchtfarbe des Bereichs, je nach Grund hell oder dunkel. Für Grafiken, die nur die Palette
 // kennen (Balken, Kuchen, Geldfluss): dunkel ist, was einen dunklen Seitengrund hat.
 // Vorher war Wohnen im Finanzen-Balken rose und im Kapitel Wohnen grün.

@@ -5,7 +5,7 @@ import { hausratPflicht } from './hausratPflicht.js';
 // Schutzschilden. Ein Schild aus Teilen, das sich je Teil von der Mitte nach aussen füllt.
 // Konzept: _werkbank/versicherung-schild-2026-10-27/ (Prototyp).
 //
-// Umbau am selben Tag (Sophie: «Vorsorge mit drei Säulen, Unfall mit Zusatz und neuem Feld, Haushalt mit Haftpflicht
+// Umbau am selben Tag (Stebler Studios: «Vorsorge mit drei Säulen, Unfall mit Zusatz und neuem Feld, Haushalt mit Haftpflicht
 // und Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk»). Jedes Teil besteht aus Versicherungen; es füllt sich nach
 // der ZAHL der erfüllten, die für die Person gelten — die Stufen bauen rechtlich nicht aufeinander auf (eine 3a geht
 // auch ohne Pensionskasse, Fachprüfung 27.10.2026):
@@ -74,7 +74,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
   };
 }
 
-// Beträge je Versicherung (Sophie 27.10.2026: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon
+// Beträge je Versicherung (Stebler Studios 27.10.2026: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon
 // drin ist»). Nur aus erfassten Feldern, nie geschätzt; dieselben Felder und Umrechnungen wie die eine Monatsrechnung
 // (utils/monatsrechnung.js: Jahresprämien ÷ 12). mt/jahr = Kosten, guthaben = was angespart ist, summe = Deckung,
 // lohn = wird über den Lohn abgezogen, arbeitgeber = läuft über den Arbeitgeber (beides ohne eigenen Betrag).

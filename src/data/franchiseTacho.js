@@ -55,7 +55,7 @@ const tagImJahr = (d) => {
   return Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - start) / 86400000) + 1;
 };
 
-// `eigeneFranchise` (F7-K3-3, Sophie 27.10.2026): die heutige Franchise als dritte Linie, mit der Prämie derselben
+// `eigeneFranchise` (F7-K3-3, Stebler Studios 27.10.2026): die heutige Franchise als dritte Linie, mit der Prämie derselben
 // Kasse und desselben Prämienjahrs wie die zwei Enden (aus `franchiseOpt.alle`) — nie die erfasste Prämie des
 // laufenden Jahres, sonst stünden zwei Jahre im selben Bild. Nur wenn sie zwischen den Enden liegt und belegt ist.
 export function kreuzState(franchiseOpt, costs, heute = new Date(), eigeneFranchise = null) {

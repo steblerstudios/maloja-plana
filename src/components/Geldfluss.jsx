@@ -164,7 +164,7 @@ export const geldflussDaten = (data, t, palette) => {
 export const GeldflussImKapitel = ({ data, t, palette }) => {
   const { quellen, ziele, beschreibung, brutto } = geldflussDaten(data, t, palette);
   // Erst mit zwei oder mehr Einnahmequellen sagt der Fluss mehr als der Kuchen: mit einem Lohn
-  // ist er ein Strom, der sich auffächert (Sophie: «komisch»). «Nicht gedeckt» zählt nicht als Quelle.
+  // ist er ein Strom, der sich auffächert (Stebler Studios: «komisch»). «Nicht gedeckt» zählt nicht als Quelle.
   const echteQuellen = quellen.filter((q) => q.label !== t('chapters.finanzen.geldfluss.uncovered')).length;
   if (brutto || echteQuellen < 2) return null;
   return React.createElement(Geldfluss, {

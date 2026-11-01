@@ -11,7 +11,7 @@ import i18nFr from '../i18n/fr.js';
 import i18nIt from '../i18n/it.js';
 import i18nRm from '../i18n/rm.js';
 
-// Fassung 6 · Kapitel Wohnen (Runde 9, Entwurf Z, Entscheid Sophie 24.10.2026): Wohnkosten pro Monat
+// Fassung 6 · Kapitel Wohnen (Runde 9, Entwurf Z, Entscheid Stebler Studios 24.10.2026): Wohnkosten pro Monat
 // mit Drittel-Marke, Regional-Barometer, «Ausprobieren: andere Miete». Ersetzt den Kasten
 // «Wohnkosten / Einkommen / Anteil» und im Kapitel den MietVergleich (bis 24.10.2026 lag hier der
 // Wächter mietVergleichImKapitelWohnen.test.js — «direkt unter dem Wohnkostenanteil»).
@@ -199,7 +199,7 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
   });
 });
 
-// Offene Befunde der Fachprüfung, nachgezogen 24.10.2026 abends (auf Sophies Zuruf).
+// Offene Befunde der Fachprüfung, nachgezogen 24.10.2026 abends (auf Stebler Studios’ Zuruf).
 describe('Kapitel Wohnen · Nachzug Fachprüfung', () => {
   it('kein unbelegter Vermieter-Satz mehr, in keiner Sprache', () => {
     for (const l of [i18nDe, i18nEn, i18nFr, i18nIt, i18nRm]) {
@@ -245,7 +245,7 @@ describe('Kapitel Wohnen · Barometer nennt die Vergleichsgrösse', () => {
 });
 
 
-// Abnahme Fassung 6 (Sophie 25.10.2026): Barometer im Kapitel ruhiger, Zimmer-Hinweis zeigt auf die
+// Abnahme Fassung 6 (Stebler Studios 25.10.2026): Barometer im Kapitel ruhiger, Zimmer-Hinweis zeigt auf die
 // Angaben darunter statt «im Kapitel Wohnen», Tausender-Zeichen, «›» an der Ausprobieren-Zeile.
 describe('Kapitel Wohnen · Abnahme F6', () => {
   it('ohne strukturelle Erklärung, mit dem Zimmer-Hinweis fürs Kapitel', () => {

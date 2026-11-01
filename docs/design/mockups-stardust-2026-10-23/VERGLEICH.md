@@ -1353,10 +1353,10 @@ leisten wird. **Zu entscheiden:** behalten (wo, wozu), in die Übersicht, oder w
 
 ---
 
-## Fassung 7 · Rundgang 27.10.2026 · erste Entscheide (Sophie, 27.10.2026, 02:42)
+## Fassung 7 · Rundgang 27.10.2026 · erste Entscheide (Stebler Studios, 27.10.2026, 02:42)
 
 Grundlage: `docs/design/fassung-7-2026-10-27/BEFUNDE.md` und die Vergleichsseite (Artifact «Fassung 7 Rundgang»).
-Sophie hat 25 von 71 Punkten gewählt und die Liste aus der Seite in den Chat gelegt. Die übrigen 46 sind **noch offen**,
+Stebler Studios hat 25 von 71 Punkten gewählt und die Liste aus der Seite in den Chat gelegt. Die übrigen 46 sind **noch offen**,
 nicht abgelehnt.
 
 **Ja (10):**
@@ -1380,11 +1380,11 @@ ohne Behörden).
 
 **Nichts gebaut.**
 
-### Stand 2 der Entscheide (Sophie, 27.10.2026, 02:54)
+### Stand 2 der Entscheide (Stebler Studios, 27.10.2026, 02:54)
 
 Zweite Liste aus der Vergleichsseite, ersetzt die Zählung von Stand 1 (Stand 1 bleibt als Beleg oben stehen).
 61 von 71 Punkten gewählt: **39 Ja · 1 Nein · 21 Besprechen**.
-Besprechen erst, wenn alle Punkte gewählt sind (Sophie: «wir wollen warten mit dem besprechen bis wir alle ja und nein s haben»).
+Besprechen erst, wenn alle Punkte gewählt sind (Stebler Studios: «wir wollen warten mit dem besprechen bis wir alle ja und nein s haben»).
 
 **Ja:** F7-K1-1 · F7-K1-2 · F7-K1-3 · F7-K2-3 · F7-K2-4 · F7-K2-5 · F7-K2-6 · F7-K3-3 · F7-L5 · F7-L6 · F7-L7 · F7-L10 · F7-L11 · F7-L12 · F7-A1 · F7-A2 · F7-A3 · F7-A4 · F7-A5 · F7-A6 · F7-A7 · F7-A9 · F7-A10 · F7-A11 · F7-A12 · F7-R1 · F7-R3 · F7-R4 · F7-R6 · F7-S1 · F7-S2 · F7-S3 · F7-S4 · F7-S6 · F7-S7 · F7-S8 · F7-S9 · F7-S10 · F7-S12
 
@@ -1398,7 +1398,7 @@ Besprechen erst, wenn alle Punkte gewählt sind (Sophie: «wir wollen warten mit
 
 ### Baustand der «Ja» (27.10.2026, 03:51)
 
-Sophie: «alle ja darfst du gerne mal erledigen». Je Paket ein Zweig und ein **Entwurfs-PR**, nichts gemergt.
+Stebler Studios: «alle ja darfst du gerne mal erledigen». Je Paket ein Zweig und ein **Entwurfs-PR**, nichts gemergt.
 Zusammen geprüft (Probe aus main + #626 + #627 + #628): 7’248 Tests grün, `size-limit` 64.54 kB von 65 kB.
 
 | Paket | PR | Punkte |
@@ -1446,7 +1446,7 @@ F7-A7 (Verweise an der Gabelung bestanden schon).
 **Für die Fachprüfung (#630):** Sozialhilfe-Pegel sagt bei Maria «Vermögen über dem Freibetrag», obwohl das Einkommen den
 Bedarf deckt — Reihenfolge in `src/data/pegel.js` (alt, schon im Schnellcheck).
 
-### Besprechen, Runde 1 (Sophie, 27.10.2026, Seite «Fassung 7 Besprechen»)
+### Besprechen, Runde 1 (Stebler Studios, 27.10.2026, Seite «Fassung 7 Besprechen»)
 
 Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7 Besprechen»), je Punkt «wie empfohlen»,
 «anders» oder «später». 11 von 31 Punkten gewählt. **Nichts gebaut.**
@@ -1467,10 +1467,10 @@ Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7
 
 **Anders (2):**
 - F7-L8 — Ja zum Bündeln: Steuer-Import in den Steuer-Rechner (§2 I), Doppel (Kantonssteuer, Säule 3a) zusammenlegen.
-  **Nicht** wie vorgeschlagen beim Import: Sophie: «das müssen wir geschickter lösen». Offen: wie der Import ins
+  **Nicht** wie vorgeschlagen beim Import: Stebler Studios: «das müssen wir geschickter lösen». Offen: wie der Import ins
   Rechner-Bild kommt, ohne das Startbündel zu belasten — Vorschlag von Claude ausstehend.
 - F7-K6-2 — Maria bekommt einen Medikamenten-Eintrag, damit das Feld im Beispiel gefüllt ist. Gezeigt werden soll, dass
-  die App zu einem Medikament weiterführende Information zeigt; Sophie nennt PubMed, TARDOC und «vielleicht der Preis».
+  die App zu einem Medikament weiterführende Information zeigt; Stebler Studios nennt PubMed, TARDOC und «vielleicht der Preis».
   **Offen, vor dem Bau klären:** Die App verlinkt heute schon auf compendium.ch (`MedicationManager.jsx`).
   PubMed ist Fachliteratur, keine Patienteninformation; TARDOC ist der Arzttarif und enthält keine Medikamentenpreise —
   die stehen in der Spezialitätenliste des BAG. Ein Preis in der App wäre ein Datenbestand, der gepflegt werden muss.
@@ -1478,7 +1478,7 @@ Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7
 **Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 ·
 F7-L9 · F7-K5-1
 
-**F7-K6-2 geklärt (Sophie, 27.10.2026):** Compendium-Link wie heute, dazu der Preis aus der BAG-Spezialitätenliste.
+**F7-K6-2 geklärt (Stebler Studios, 27.10.2026):** Compendium-Link wie heute, dazu der Preis aus der BAG-Spezialitätenliste.
 Zuerst zeigen, wie der Preis aktuell bleibt. Vorschlag von Claude (noch nicht entschieden), Belege BAG-Seite «Elektronische
 Plattform Leistungen (ePL)», gelesen 27.10.2026: SL unter sl.bag.admin.ch, ohne Login; Excel- und FHIR-Dateien «jeweils am
 ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-Anbieter angekündigt, noch nicht offen.
@@ -1489,32 +1489,32 @@ ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-A
 4. Anzeige: «Publikumspreis laut Spezialitätenliste, Stand …», nicht «Sie zahlen»; ohne Treffer kein Preis, nur Compendium.
 5. Vor dem Bau: swiss-precision-pruefer zu Publikumspreis vs. Selbstbehalt und zum Satz bei Medikamenten ausserhalb der SL.
 
-**F7-K6-2 entschieden (Sophie, 27.10.2026):** «Ja, Preis so nachführen wie vorgeschlagen — von Hand je Quartal, Skript,
+**F7-K6-2 entschieden (Stebler Studios, 27.10.2026):** «Ja, Preis so nachführen wie vorgeschlagen — von Hand je Quartal, Skript,
 Stand sichtbar, Warnung im Predeploy.» Punkte 1–5 oben gelten. Zusammen mit: Maria bekommt einen Medikamenten-Eintrag.
 
-**F7-K3-6 weiter (Sophie, 27.10.2026, beim Ansehen von #636):** «Leben» als Teil oben in der Mitte (gebaut, `79b2855c`).
+**F7-K3-6 weiter (Stebler Studios, 27.10.2026, beim Ansehen von #636):** «Leben» als Teil oben in der Mitte (gebaut, `79b2855c`).
 Dann: «Schild so umbauen: Vorsorge mit drei Säulen, Unfall mit Zusatz und neuem Feld, Haushalt mit Haftpflicht und
 Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk.» Grundlage Fachprüfung (swiss-precision-pruefer, ohne Webzugriff):
 Hausrat Pflicht (Feuer/Elementar) in NW, FR, JU, VD — Erlasse nicht belegt, darum Prüf-Vermerk bis nachgelesen;
 Haftpflicht gesetzlich nicht vorgeschrieben (Vermieter, Hund); UVG-Zusatz freiwillig (VVG); NBU erst ab 8 Std./Woche
 (UVV Art. 13); Vorsorge AHV → PK → 3a nach BV Art. 111–113, Stufen bauen rechtlich nicht aufeinander auf.
 
-### Netz-Schild und Medikamentenpreis, Stand 31.10.2026 (Sophie)
+### Netz-Schild und Medikamentenpreis, Stand 31.10.2026 (Stebler Studios)
 
 - **F7-K6-2 gebaut:** Entwurfs-PR #635 (`3261283f`).
 - **F7-K3-6 gebaut:** Entwurfs-PR #636 (`bc2ed1b9`). Teile: Leben (oben Mitte) · Krankenkasse (KVG · Zusatz) · Unfall (UVG ·
   Zusatz, nur für Angestellte) · Haushalt (Privathaftpflicht · Hausrat) · Vorsorge (AHV · Pensionskasse · Säule 3a).
-- **Zahlen im Schild** (Sophie: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon drin ist»):
+- **Zahlen im Schild** (Stebler Studios: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon drin ist»):
   je Versicherung Monat und Jahr, Guthaben, Versicherungssumme. Nur erfasste Felder, nie geschätzt.
-- **Neue Prämien-Felder** (Sophie: «Ja, dazubauen»): `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`. Sie zählen in
+- **Neue Prämien-Felder** (Stebler Studios: «Ja, dazubauen»): `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`. Sie zählen in
   der einen Monatsrechnung und damit im Budget.
-- **Beispiel Maria** (Sophie: «Ja, Maria ergänzen»): KK-Zusatz CHF 38.50/Mt., Leben CHF 600/Jahr. Versicherungen CHF 659,
+- **Beispiel Maria** (Stebler Studios: «Ja, Maria ergänzen»): KK-Zusatz CHF 38.50/Mt., Leben CHF 600/Jahr. Versicherungen CHF 659,
   frei CHF 2’185. Folge: Der sandfarbene Kern «noch nicht gedeckt» ist bei Maria nicht mehr zu sehen; offen, ob das so bleibt.
 
 **Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 · F7-L9 · F7-K5-1.
 Hinweis: F7-K3-4 ist mit dem Netz-Schild zum Teil überholt, D10 und K3-2 hängen am alten Schild auf Dashboard und Übersicht.
 
-### Gebaut auf dem Sammelzweig (31.10.2026, Sophie: «Ja, weiterbauen»)
+### Gebaut auf dem Sammelzweig (31.10.2026, Stebler Studios: «Ja, weiterbauen»)
 
 Zweig `integration/f7-sammel`, nicht gepusht, nicht in `main`. Je ein Commit, Wächter im selben Commit.
 

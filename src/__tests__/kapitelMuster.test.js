@@ -1,4 +1,4 @@
-// Muster für alle Kapitel M1–M8 (Fassung 6, Sophie 25.10.2026: «Bau M1 bis M8»).
+// Muster für alle Kapitel M1–M8 (Fassung 6, Stebler Studios 25.10.2026: «Bau M1 bis M8»).
 // Befunde und Entscheid: docs/design/mockups-stardust-2026-10-23/VERGLEICH.md «Muster für alle Kapitel»
 // (Zweig docs/mockups-stardust). Entwurf: seiten-v5.html?nur=z (Wohnen) und die anderen Kapitel.
 import { describe, it, expect } from 'vitest';

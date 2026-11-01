@@ -92,7 +92,7 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
     onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, ...extra,
   }));
 
-  // F7-K2-5 (Sophie 27.10.2026): die Auswertung steht vor dem Formular (vorher danach, finanzen-fusion.md §3).
+  // F7-K2-5 (Stebler Studios 27.10.2026): die Auswertung steht vor dem Formular (vorher danach, finanzen-fusion.md §3).
   it('Auswertung oben → Formular → Passend → Auswertung unten → Als Nächstes', () => {
     const i = (s) => { const n = QUELLE.indexOf(s); expect(n, s).toBeGreaterThan(-1); return n; };
     const formular = i('abschnittsliste()\n');
@@ -147,7 +147,7 @@ describe('Probiermodus-Knopf bei der Auswertung', () => {
   });
 });
 
-// Abnahme F6 (Sophie 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
+// Abnahme F6 (Stebler Studios 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
 // Kapitel kurz und ohne Verweis «ins Kapitel Finanzen & Geld».
 describe('Kapitel Finanzen · Abnahme F6', () => {
   it('die Lohn-Hinweise stecken hinter «So ist gerechnet»', () => {

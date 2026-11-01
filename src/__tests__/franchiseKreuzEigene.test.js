@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { kreuzState, franchiseOptimierer } from '../data/franchiseTacho.js';
 import { FranchiseKreuz } from '../components/FranchiseKreuz.jsx';
 
-// F7-K3-3 (Sophie, 27.10.2026): Das Franchise-Kreuz verglich nur 300 und 2’500; Marias eigene Franchise 1’500
+// F7-K3-3 (Stebler Studios, 27.10.2026): Das Franchise-Kreuz verglich nur 300 und 2’500; Marias eigene Franchise 1’500
 // kam im Bild nicht vor. Jetzt als dritte Linie — mit der Prämie derselben Kasse und desselben Jahres.
 const fras = [300, 500, 1000, 1500, 2000, 2500].map((f, i) => ({ franchise: f, premium: 560 - i * 30 }));
 const opt = franchiseOptimierer(fras, 'erwachsen');

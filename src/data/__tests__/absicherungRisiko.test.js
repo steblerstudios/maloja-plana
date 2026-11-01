@@ -6,7 +6,7 @@ import fr from '../../i18n/fr.js';
 import itSprache from '../../i18n/it.js'; // nicht «it» — das überschriebe vitests it()
 import rm from '../../i18n/rm.js';
 
-// Absicherung je Risiko (Sophie 26.10.2026: Liste statt Netz). Gehalten wird: AHV/IV nie als «erfasst», Freiwilliges
+// Absicherung je Risiko (Stebler Studios 26.10.2026: Liste statt Netz). Gehalten wird: AHV/IV nie als «erfasst», Freiwilliges
 // nie als Lücke, Selbständige ohne falsche Pensionskassen-Lücke, Mindestalter und Rentenalter berücksichtigt.
 const heute = new Date(2026, 9, 26);
 const keys = (r, risiko) => r.risiken.find((x) => x.key === risiko).zeilen.map((z) => z.key + ':' + z.art);

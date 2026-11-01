@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { RegionalBarometer } from '../components/RegionalBarometer.jsx';
 
-// Fassung 7 · F7-K1-1 (Sophie, 27.10.2026): Unter «Ihre Miete: CHF 1’650» stand «rund 20 % über dem
+// Fassung 7 · F7-K1-1 (Stebler Studios, 27.10.2026): Unter «Ihre Miete: CHF 1’650» stand «rund 20 % über dem
 // Schweizer Schnitt». Die 20 % waren Region gegen Schweiz (1’732 zu 1’446), Marias Miete lag aber unter
 // dem Schnitt ihrer Region. Jetzt sagt der erste Satz, wo der EIGENE Wert zur Region liegt.
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });

@@ -22,7 +22,7 @@ export const PFADE = Object.freeze({
 
 // Kurze Namen der Eltern-Ansichten. «Notfall» statt des Einstiegs-Titels, der eine Frage ist
 // («Was brauchen Sie im Notfall?») und als Stufe zu lang wäre.
-// F7-S4 (Sophie 27.10.2026): Die Dossiers und Briefe hängen unter der «Dokumentenablage» — vorher eine Stufe
+// F7-S4 (Stebler Studios 27.10.2026): Die Dossiers und Briefe hängen unter der «Dokumentenablage» — vorher eine Stufe
 // «Meine Unterlagen», die es als eigenen Ort nicht gibt (nur eine Umleitung auf die Ablage).
 export const ELTERN_TITEL = Object.freeze({
   tresor: 'nav.tresor',

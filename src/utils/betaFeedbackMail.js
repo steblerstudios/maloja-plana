@@ -1,4 +1,4 @@
-// Beta-Feedback als Mail-Entwurf (26.10.2026, Entscheid Sophie).
+// Beta-Feedback als Mail-Entwurf (26.10.2026, Entscheid Stebler Studios).
 //
 // Gleiche Bauweise wie der Feedback-Link in der Fusszeile (main.jsx) und der Melde-Weg
 // am Fehlerschirm: Betreff + abgetrennter Kontext-Block. Nichts wird automatisch

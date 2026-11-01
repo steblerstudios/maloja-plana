@@ -134,7 +134,7 @@ describe('Bild und Text', () => {
   });
 });
 
-describe('Beträge je Versicherung (Sophie 27.10.2026)', () => {
+describe('Beträge je Versicherung (Stebler Studios 27.10.2026)', () => {
   const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton };
   const html = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: DEMO_DATA.versicherungen, ...o }));
   const text = nurText(html);

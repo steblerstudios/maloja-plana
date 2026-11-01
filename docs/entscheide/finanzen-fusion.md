@@ -200,6 +200,6 @@ Plausibilitätsprüfung (Feld wurde schon mit Mehrjahresbetrag befüllt, `kanton
 
 ## Nachtrag Fassung 7 (27.10.2026)
 
-Sophie hat F7-K2-5 mit «Ja» entschieden: Die Auswertung steht **vor** dem Formular, wie die Instrumente der
+Stebler Studios hat F7-K2-5 mit «Ja» entschieden: Die Auswertung steht **vor** dem Formular, wie die Instrumente der
 anderen Kapitel. Damit ist §3, Entscheid 2 («nach den Angaben, vor der Rechnung») überholt. Grundlage:
 `docs/design/fassung-7-2026-10-27/BEFUNDE.md` (Zweig `docs/fassung-7-rundgang`).

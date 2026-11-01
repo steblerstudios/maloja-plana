@@ -9,7 +9,7 @@ import fr from '../i18n/fr.js';
 import itTranslations from '../i18n/it.js';
 import rm from '../i18n/rm.js';
 
-// F7-S1 (Sophie, 27.10.2026): «Alle Kapitel auf einen Blick» — die Lebensmappe liess Behörden & Rechtliches weg.
+// F7-S1 (Stebler Studios, 27.10.2026): «Alle Kapitel auf einen Blick» — die Lebensmappe liess Behörden & Rechtliches weg.
 const t = createT({ de, en, fr, it: itTranslations, rm }, 'de');
 const chapters = getChapters(t);
 

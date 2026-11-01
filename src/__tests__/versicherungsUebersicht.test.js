@@ -1,4 +1,4 @@
-// Fassung 6 · Versicherungs-Übersicht (Runde 9 AB, Schritt 3; Sophie 25.10.2026 «Baue Versicherungs-Übersicht 1 bis 9,
+// Fassung 6 · Versicherungs-Übersicht (Runde 9 AB, Schritt 3; Stebler Studios 25.10.2026 «Baue Versicherungs-Übersicht 1 bis 9,
 // gestapelt auf #576»): die Prämien-Orientierung als Übersicht — Name und Brotkrume, Marken, Versicherungen pro Monat mit
 // KK-Last, Zeilen mit Wert, Schutzschild, vier aufklappbare Teile, Zusatz-Wechsel und KK-Scanner, Schlusssatz.
 import { describe, it, expect } from 'vitest';
@@ -94,7 +94,7 @@ describe('Schutzschild und aufklappbare Teile', () => {
   });
 });
 
-// F7-L6 (Sophie 27.10.2026, «§11 bauen»): Abgleich ergab, dass §11 mit #580/#601 gebaut ist — hier wacht der Aufbau
+// F7-L6 (Stebler Studios 27.10.2026, «§11 bauen»): Abgleich ergab, dass §11 mit #580/#601 gebaut ist — hier wacht der Aufbau
 // als Ganzes, damit ein späterer Umbau Reihenfolge und Zeilen nicht still verschiebt.
 describe('Aufbau wie die Finanz-Auswertung (F7-L6)', () => {
   const reihenfolge = (html) => [...html.matchAll(/data-(teil|zeile)="([^"]+)"/g)].map((m) => m[2]);

@@ -349,7 +349,7 @@ Was damit gilt (Entwurf `seiten-v5.html?nur=ab`, Beschreibung in `VERGLEICH.md` 
 
 **Noch nichts gebaut.** ⟨überholt, Stand 25.10.2026 früh⟩
 
-> **Nachtrag 27.10.2026 (F7-L6, Sophie «Ja» zu «§11 bauen»):** Abgleich gegen den Code ergab, dass §11 **vollständig gebaut**
+> **Nachtrag 27.10.2026 (F7-L6, Stebler Studios «Ja» zu «§11 bauen»):** Abgleich gegen den Code ergab, dass §11 **vollständig gebaut**
 > ist — mit #580 (`0bf9fbf6`, Schritt 3: Name, Brotkrume über das Kapitel, Marken, Versicherungen pro Monat + KK-Last,
 > Zeilen mit Wert, Schutzschild, vier aufklappbare Teile, Zusatz-Wechsel, KK-Scanner, Schlusssatz) und #601 (`ebd7a2ff`,
 > Absicherung je Risiko als fünfter aufklappbarer Teil). `kvg` und IPV bleiben eigene Seiten, als Zeile erreicht; im Kapitel

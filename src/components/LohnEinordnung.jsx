@@ -304,7 +304,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, t('lohnEinordnung.mindestlohnJahrNichtBelegt', { jahr: mindestlohnNichtBelegt.jahr, laufend: mindestlohnNichtBelegt.laufendesJahr })),
 
-    // «So ist gerechnet» (Entscheid Sophie 23.10.2026, «Barometer und Ruhe»; gebaut Abnahme F6, 25.10.2026):
+    // «So ist gerechnet» (Entscheid Stebler Studios 23.10.2026, «Barometer und Ruhe»; gebaut Abnahme F6, 25.10.2026):
     // die drei langen Hinweise zur Rechnung zugeklappt, Texte unverändert. Der Mindestlohn bleibt offen.
     React.createElement('details', { 'data-teil': 'lohn-so-gerechnet', style: { marginTop: space.sm + 'px' } },
       React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.xs, color: palette.mid, fontWeight: weight.medium } },

@@ -44,7 +44,7 @@ describe('main.jsx: keine eigene Charts-Seite mehr', () => {
 });
 
 describe('Werkzeug-Register', () => {
-  // F7-L11 (Sophie 27.10.2026): kein eigener Eintrag mehr; die Adresse bleibt als Umleitung, das Suchwort hängt
+  // F7-L11 (Stebler Studios 27.10.2026): kein eigener Eintrag mehr; die Adresse bleibt als Umleitung, das Suchwort hängt
   // am Eintrag «Finanzen & Geld».
   it('kein eigener Eintrag, die Adresse bleibt als Umleitung', () => {
     expect(WERKZEUGE.find((w) => w.view === 'charts')).toBeFalsy();
