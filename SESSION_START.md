@@ -17,6 +17,12 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧭 **Nachtrag 01.11.2026, später — Entscheid geändert (Stebler Studios): kein Merge und kein Deploy zwischen Fassung 7 und 8. Der Nachtrag 17:45 ist damit in diesem Punkt überholt.**
+>
+> - **Reihenfolge jetzt:** Fassung 7 auf dem Sammelzweig abschliessen · Fassung 8 · dann vergleichen: was haben wir, was fehlt, was geht besser · erst danach Merge und Deploy.
+> - **Stage:** `57785fa7` liegt als Stand Fassung 7 auf stage.malojaplana.ch. Service Worker aktiv, 23 Adressen ohne Fehler. Stage hat keine Content-Security-Policy; das ist nur live prüfbar.
+> - **Bewusste Folge:** Live bleibt bis dahin 0.1.48-beta vom 23.10., also ohne die Prämien 2027 aus `main`.
+
 > 🧾 **Nachtrag 01.11.2026, 17:45 — Deploy vor Fassung 8 entschieden (Stebler Studios: «Ja, vorher deployen»). Nichts gemergt, NICHT live.**
 >
 > - **Sozialhilfe-Pegel:** deckt das Einkommen den Bedarf, nennt er das Vermögen nicht mehr als Grund (`pegel.js`, Wächter in `anspruchInstrumente.test.js`).
