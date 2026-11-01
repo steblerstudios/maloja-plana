@@ -202,9 +202,8 @@ describe('Im Kapitel', () => {
     expect(html.slice(html.indexOf('data-teil="notfall-pv-antwort"'))).toContain('mp-notfall-pv');
     expect((html.match(/id="mp-notfall-pv"/g) || []).length).toBe(1);
     expect(html).not.toMatch(/data-fehlt="patientenverfuegung"[^>]*>[\s\S]{0,400}ergänzen ›/);
-    const quelle = QUELLE('ChapterView.jsx');
-    expect(quelle).toMatch(/const feldSichtbar = \(f\) => !nurImBlock\(f\)/);
-    expect(quelle).not.toContain('crosslink-pv');
+    expect(chapters.find((c) => c.key === 'notfall').fields.find((f) => f.k === 'patientenverfuegung').nurImBlock).toBe(true);
+    expect(QUELLE('ChapterView.jsx')).toContain('!f.nurImBlock');
   });
   it('die Antwort lässt sich dort setzen, das Formular bleibt auch nach «Ja» erreichbar (F7-K6-1)', () => {
     const quelle = QUELLE('components/NotfallImKapitel.jsx');

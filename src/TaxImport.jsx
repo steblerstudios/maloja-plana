@@ -10,7 +10,7 @@ import { betrag } from './utils/geld.js';
 // aufklappbarer Teil des Steuer-Rechners: er wird erst beim Aufklappen geladen und belastet das Startbündel nicht.
 // Spiegelt das Muster von BudgetImport: Datei wählen -> Vorschau -> bestätigen.
 // Überschreibt bewusst nie bestehende Werte (fill-if-empty).
-export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport }) => {
+export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeufig }) => {
   const [importing, setImporting] = useState(false);
   const [preview, setPreview] = useState(null);
   const [importError, setImportError] = useState(null);
@@ -117,7 +117,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport }) => {
     ),
 
     // Die Region steht immer da, nur der Text kommt dazu — sonst wird er oft nicht vorgelesen.
-    React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.text, marginTop: space.md + 'px' } }, uebernommen && React.createElement(React.Fragment, null, hinweisZeichen('check'), t('taxImport.uebernommen'))),
+    React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.text, marginTop: space.md + 'px' } }, uebernommen && React.createElement(React.Fragment, null, hinweisZeichen('check'), t(vorlaeufig ? 'common.savedTemporary' : 'taxImport.uebernommen'))),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '16px' } }, hinweisZeichen(), t('trust.localOnly'))
   );
 };

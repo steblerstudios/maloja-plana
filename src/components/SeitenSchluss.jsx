@@ -1,24 +1,12 @@
 import React from 'react';
 import { text, weight, radius, space } from '../config/tokens.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { ansichtName } from '../config/ansichtenRegister.js';
+import { ansichtName, SCHLUSS_ZIELE } from '../config/ansichtenRegister.js';
 
-// F7-L2 (31.10.2026): «Als Nächstes» für die Seiten, die selbst keinen Weg weiter kennen (bis dahin nur «Übersicht»).
-// Eine Tabelle statt sieben Änderungen in sieben Komponenten; main.jsx lädt das erst auf diesen Seiten. Die Liste dort
-// (MIT_SEITENSCHLUSS) und diese Tabelle hält der Test seitenSchluss.test.js gleich.
-export const SCHLUSS_ZIELE = {
-  kk: { kapitel: 'versicherungen' },
-  sync: { kapitel: 'finanzen' },
-  direktlinks: { ziel: 'situationen' },
-  export: { ziel: 'tresor' },
-  notifications: { ziel: 'calendar' },
-  flyer: {},
-  installApp: {},
-};
-
+// F7-L2 (31.10.2026): «Als Nächstes» für die Seiten, die selbst keinen Weg weiter kennen. Die Ziele stehen in
+// ansichtenRegister.js (SCHLUSS_ZIELE), main.jsx lädt das hier erst auf diesen Seiten.
 export const SeitenSchluss = ({ palette, t, view, onNavigate }) => {
   const z = SCHLUSS_ZIELE[view];
-  if (!z) return null;
   const name = z.kapitel ? t('chapters.' + z.kapitel + '.title') : z.ziel ? t(ansichtName(z.ziel)) : null;
   const gehe = () => (z.kapitel ? onNavigate('chapter', CHAPTER_KEYS.indexOf(z.kapitel)) : onNavigate(z.ziel || 'dashboard'));
   const h = React.createElement;

@@ -158,7 +158,15 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     }
   };
 
-  const erfasst3a = (max) => Math.min(Number(data.finanzen?.pension3a) || 0, max);
+  const aus3aKnopf = (max) => {
+    const wert = Math.min(Number(data.finanzen?.pension3a) || 0, max);
+    if (wert <= 0 || Number(taxData.pension3a) === wert) return null;
+    return React.createElement('button', {
+      type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker',
+      onClick: () => { handleInputChange('pension3a', wert); document.querySelector('[data-abzug="pension3a"]')?.focus(); }, // Der Knopf verschwindet danach: Fokus ins Feld.
+      style: { minHeight: '44px', padding: 0, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep, textAlign: 'left' },
+    }, t('tax.aus3aUebernehmen', { betrag: betrag(wert, { hoechstens: 2 }) }));
+  };
 
   const handleInputChange = (key, value) => {
     setTaxData(prev => ({ ...prev, [key]: Number(value) || 0 }));
@@ -225,7 +233,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         onImport && React.createElement('details', { id: TAX_IMPORT_ANKER, onToggle: (e) => setImportOffen(e.currentTarget.open), style: { marginBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
           React.createElement('summary', { style: { cursor: 'pointer', padding: '12px 0', fontSize: text.sm, color: palette.text } }, t('tax.ausSteuererklaerung')),
           importOffen && React.createElement(React.Suspense, { fallback: null },
-            React.createElement(TaxImport, { palette, t, currentFinanzen: data.finanzen || {}, onImport: importUebernehmen }))),
+            React.createElement(TaxImport, { palette, t, currentFinanzen: data.finanzen || {}, onImport: importUebernehmen, vorlaeufig }))),
         React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('tax.inputs')),
 
         React.createElement(LabeledField, { palette, label: t('tax.taxCanton'), style: { marginBottom: space.md } },
@@ -325,10 +333,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, 'Max: ' + betrag(ded.max, { hoechstens: 2 })),
           // F7-L8: Die Einzahlungen stehen im Kapitel Finanzen (Säule-3a-Tracker). Hier auf Klick, nicht still —
           // der Abzug ändert die Schätzung, und im Rechner darf man bewusst etwas anderes durchspielen.
-          ded.key === 'pension3a' && erfasst3a(ded.max) > 0 && Number(taxData.pension3a) !== erfasst3a(ded.max) && React.createElement('button', {
-            type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker', onClick: () => { handleInputChange('pension3a', erfasst3a(ded.max)); document.querySelector('[data-abzug="pension3a"]')?.focus(); }, // Der Knopf verschwindet danach: Fokus ins Feld.
-            style: { minHeight: '44px', padding: 0, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep, textAlign: 'left' },
-          }, t('tax.aus3aUebernehmen', { betrag: betrag(erfasst3a(ded.max), { hoechstens: 2 }) }))
+          ded.key === 'pension3a' && aus3aKnopf(ded.max)
         ))
       ),
 

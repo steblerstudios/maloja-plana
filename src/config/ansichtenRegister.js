@@ -122,6 +122,17 @@ const WEITERE_NAMEN = {
   notfalldossier: 'notfallDossier.title',
   behoerdendossier: 'behoerdenDossier.title',
 };
+// «Als Nächstes» der Seiten ohne eigenen Weg weiter (F7-L2): Kapitel, Ansicht oder, ohne Ziel, die Übersicht.
+export const SCHLUSS_ZIELE = {
+  kk: { kapitel: 'versicherungen' },
+  sync: { kapitel: 'finanzen' },
+  direktlinks: { ziel: 'situationen' },
+  export: { ziel: 'tresor' },
+  notifications: { ziel: 'calendar' },
+  flyer: {},
+  installApp: {},
+};
+
 export const ansichtName = (view) => {
   const e = SEARCH_VIEWS.find((v) => v.view === view);
   return (e && e.nav) || WEITERE_NAMEN[view] || null;

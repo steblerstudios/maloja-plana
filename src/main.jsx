@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
-import { herkunftName, ablaufBereich } from './config/ansichtenRegister.js';
+import { herkunftName, ablaufBereich, SCHLUSS_ZIELE } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -64,7 +64,6 @@ const BudgetSync = React.lazy(() => import('./BudgetSync.jsx'));
 const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
 const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
 const SeitenSchluss = React.lazy(() => import('./components/SeitenSchluss.jsx'));
-const MIT_SEITENSCHLUSS = ['kk', 'sync', 'flyer', 'direktlinks', 'export', 'notifications', 'installApp'];
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
 const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
 // MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
@@ -1777,7 +1776,8 @@ const AppInner = ({ demo }) => {
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
         }),
-        MIT_SEITENSCHLUSS.includes(view) && React.createElement(SeitenSchluss, { palette, t, view, onNavigate: handleNavigate }),
+        // Eigene Grenze: die Seite wartet nicht auf ihren Schluss.
+        SCHLUSS_ZIELE[view] && React.createElement(React.Suspense, { fallback: null }, React.createElement(SeitenSchluss, { palette, t, view, onNavigate: handleNavigate })),
         view === 'settings' && React.createElement(SettingsView, {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),

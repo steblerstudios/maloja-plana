@@ -1845,9 +1845,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Betrag verschwindet nie still.
   const praemieOhneVersicherung = (f) => !feldHatWert(data, f.k) && (
     (f.k === 'kkZusatzPremium' && !data.kkZusatz) || (f.k === 'uvgZusatzPremium' && data.uvgZusatz !== 'yes') || (f.k === 'lifeInsurancePremium' && data.lifeInsurance !== 'yes'));
-  // F7-K6-1 (31.10.2026): Die Patientenverfügung wird im Block «Vorsorge» beantwortet, nicht in den Angaben.
-  const nurImBlock = (f) => chapter.key === 'notfall' && f.k === 'patientenverfuegung';
-  const feldSichtbar = (f) => !nurImBlock(f) && !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
+  const feldSichtbar = (f) => !f.nurImBlock && !praemieOhneVersicherung(f) && (!istFinanzen || showSecondary || !f.secondary);
   // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Stebler Studios 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
   // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),

@@ -433,7 +433,8 @@ export function getChapters(t) {
         { k: 'doctorPhone', type: 'tel' },
         { k: 'hospital', type: 'text' },
         { k: 'organDonor', type: 'select', sel: 1, sec: 'provision', secondary: true },
-        { k: 'patientenverfuegung', type: 'select', sel: 1, hint: 1, orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
+        // nurImBlock: beantwortet im Block «Vorsorge» (NotfallImKapitel), nicht in den Angaben (F7-K6-1).
+        { k: 'patientenverfuegung', type: 'select', sel: 1, hint: 1, nurImBlock: true, orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
         { k: 'vorsorgeauftrag', type: 'select', sel: 1, hint: 1, orientation: or(t, 'vorsorgeauftrag'), secondary: true },
         { k: 'bestattungswuensche', type: 'select', sel: 1, hint: 1, secondary: true },
       ],

@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
+import { auswahlLabel } from '../utils/auswahlLabel.js';
 
 // Kapitel Behörden · oben (Fassung 6, Runde 9, Entwurf AD, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme 25.10.2026).
 // Ersetzt den Kasten «Folgende Stände und Fristen sind erfasst» (er wiederholte die Angaben) und die zugeklappte
@@ -93,7 +94,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
   );
 
   // 3. Für den Fall der Fälle
-  const testament = d.willMade ? (tr('chapters.behoerden.fields.willMade.options.' + d.willMade) || d.willMade) : tr('behoerdenInstrument.nichtErfasst');
+  const testament = auswahlLabel('behoerden', 'willMade', d.willMade, tr) || tr('behoerdenInstrument.nichtErfasst');
   const fall = h('section', { 'data-teil': 'fall-der-faelle', 'aria-labelledby': 'mp-fall-der-faelle' },
     h('h4', { id: 'mp-fall-der-faelle', style: kapH }, tr('behoerdenInstrument.fallTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, tr('behoerdenInstrument.fallSatz')),

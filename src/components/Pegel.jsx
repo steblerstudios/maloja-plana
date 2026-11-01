@@ -84,7 +84,7 @@ export const Pegel = ({ palette, t, state }) => {
   const headline = soz ? t('pegel.deckt', { amount: fmtCHF(state.amount) })
     : t('pegel.perMonthPossible', { amount: fmtCHF(state.amount) });
   const statusText = empty ? t('pegel.empty')
-    : soz ? (mode === 'gap' ? t('pegel.gap') : mode === 'vermoegen' ? t('pegel.vermoegen') : mode === 'efb' ? t('sozialhilfe.efbEntscheidet') : mode === 'offen' ? t('pegel.coveredOffen') : t('pegel.covered'))
+    : soz ? t({ gap: 'pegel.gap', vermoegen: 'pegel.vermoegen', efb: 'sozialhilfe.efbEntscheidet', offen: 'pegel.coveredOffen' }[mode] || 'pegel.covered')
     : (mode === 'clear' ? t('pegel.clear') : mode === 'edge' ? t('pegel.edge') : t('pegel.over'));
   const statusColor = empty ? palette.mid
     : (soz ? (mode === 'gap' ? palette.sageDeep : palette.mid)

@@ -176,11 +176,8 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const alle = data || {};
   const nf = alle.notfall || {};
   const kapitelListe = chapters || [];
-  const feldName = (kap, k) => {
-    const ch = kapitelListe.find((c) => c.key === kap);
-    const f = ch && ch.fields.find((x) => x.k === k);
-    return f ? f.label : k;
-  };
+  const feld = (kap, k) => kapitelListe.find((c) => c.key === kap)?.fields.find((x) => x.k === k);
+  const feldName = (kap, k) => feld(kap, k)?.label || k;
   const kapitelTitel = (kap) => (kapitelListe.find((c) => c.key === kap) || {}).title || kap;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
@@ -206,8 +203,6 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const stand = bereitschaft(alle);
   const pct = Math.round((stand.erledigt / stand.gesamt) * 100);
   const lagenName = (keys) => keys.map((k) => '«' + t('notfallEinstieg.' + k + '.title') + '»').join(', ');
-  // Nicht nur scrollen: Tastatur und Screenreader landen sonst nicht im Block (a11y-Prüfung 01.11.2026).
-  const zurVorsorge = () => { springeZuAnker('mp-notfall-vorsorge'); document.getElementById('mp-notfall-vorsorge')?.focus({ preventScroll: true }); };
   const speichern = (f) => {
     const wert = String(eingaben[f.k] || '').trim();
     if (!wert || demoMode || !onUpdate) return;
@@ -227,23 +222,20 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     const titel = h('span', { style: { fontSize: text.sm, color: palette.text } }, hinweisZeichen('kaestchen', 12), feldName(f.chapter, f.k), ' ',
       h('small', { style: { fontSize: text.xs, color: palette.mid } }, '· ' + t('notfallKapitel.fehltFuer', { lagen: lagenName(f.lagen) })));
     const rahmen = { border: '1px dashed ' + notfallRot, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', marginBottom: space.sm + 'px' };
+    const wegZeile = (key, onClick, beschriftung) => h('div', { key, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+      titel,
+      h('button', { type: 'button', className: 'mp-link', onClick, style: { ...ruhigKnopf, background: 'none' } }, beschriftung));
     // Aus einem anderen Kapitel: der Weg dorthin.
     if (f.chapter !== 'notfall') {
-      return h('div', { key: f.chapter + '.' + f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), style: { ...ruhigKnopf, background: 'none' } }, kapitelTitel(f.chapter) + ' ›'));
+      return wegZeile(f.chapter + '.' + f.k, () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), kapitelTitel(f.chapter) + ' ›');
     }
     // F7-K6-1 (31.10.2026): die Patientenverfügung steht nur noch im Block «Vorsorge» — hier der Sprung dorthin.
     if (f.k === 'patientenverfuegung') {
-      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: zurVorsorge, style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.zurVorsorge')));
+      return wegZeile(f.k, () => springeZuAnker('mp-notfall-vorsorge'), t('notfallKapitel.zurVorsorge'));
     }
     // Auswahl (Blutgruppe): zum Feld im Formular unten.
     if (!EINGABE[f.k]) {
-      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => zumFeld && zumFeld(f.k), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.ergaenzenUnten')));
+      return wegZeile(f.k, () => zumFeld && zumFeld(f.k), t('notfallKapitel.ergaenzenUnten'));
     }
     return h('div', { key: f.k, 'data-fehlt': f.k, style: rahmen },
       h('label', { htmlFor: id, style: { display: 'block' } }, titel),
@@ -314,7 +306,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
 
   // 4. Vorsorge
   const geregelt = VORSORGE.filter((v) => vorsorgeGeregelt(nf, v.k)).length;
-  const pvFeld = (kapitelListe.find((c) => c.key === 'notfall') || { fields: [] }).fields.find((f) => f.k === 'patientenverfuegung');
+  const pvFeld = feld('notfall', 'patientenverfuegung');
   const vorsorgeWert = (k) => {
     const v = nf[k];
     if (!v) return t('notfallKapitel.nichtErfasst');
@@ -354,7 +346,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '0 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
       },
         h('option', { value: '' }, t('notfallKapitel.nichtErfasst')),
-        ['yes', 'no'].map((w) => h('option', { key: w, value: w }, t('chapters.notfall.fields.patientenverfuegung.options.' + w)))),
+        (pvFeld?.options || []).map((o) => h('option', { key: o.value, value: o.value }, o.label))),
       h('p', { id: 'mp-notfall-pv-hinweis', style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
       pvFeld?.orientation && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, pvFeld.orientation),
       pvFeld?.link && h(ExternerLink, { t, href: pvFeld.link.url, style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, pvFeld.link.label),

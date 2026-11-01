@@ -1,4 +1,4 @@
-import { schildState, schildOptionen } from './schutzschild.js';
+import { schildState, bvgAktiv, schildOptionen } from './schutzschild.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 
 // Absicherung je Lebensrisiko — Liste in der Versicherungs-Übersicht (Stebler Studios 26.10.2026: «Liste je Risiko statt Netz»).
@@ -36,16 +36,14 @@ export function absicherungJeRisiko(data = {}, heute = new Date()) {
   const rente = art === 'retired' || ahvRente;
   const jahrAlter = jahrAlterAus(data.basis, heute);
   const schild = schildState(v, schildOptionen(data));
-  // «Aktiv» = Kasse oder laufender Beitrag. Ein reines Guthaben (z. B. Freizügigkeit) zählt fürs Alter, nicht für
-  // Invalidität und Tod (Fachprüfung 26.10.2026).
-  const bvgAktiv = has(v.bvgInsurer) || Number(v.bvgContribution) > 0;
+  const bvgLaeuft = bvgAktiv(v);
   const bvgGuthaben = Number(v.bvgBalance) > 0;
   const bvgPflicht = schild.pflicht.items.some((p) => p.key === 'bvg');
   const kkErfasst = has(v.kkInsurer);
 
   // Pensionskasse je Risiko: erfasst, oder warum (noch) nicht.
   const pk = (risiko) => {
-    const erfasst = bvgAktiv || (risiko === 'alter' && bvgGuthaben);
+    const erfasst = bvgLaeuft || (risiko === 'alter' && bvgGuthaben);
     if (erfasst) return [has(v.bvgInsurer) ? zeile('pkErfasst', 'erfasst', { name: v.bvgInsurer }) : zeile('pkErfasstOhneName', 'erfasst')];
     const guthaben = bvgGuthaben ? zeile('pkGuthaben', 'hinweis') : null;
     if (rente) return [guthaben];

@@ -1,4 +1,4 @@
-import { schildState } from './schutzschild.js';
+import { schildState, bvgAktiv } from './schutzschild.js';
 import { hausratPflicht } from './hausratPflicht.js';
 
 // Netz-Schild (Fassung 7, F7-K3-6, Entscheid Stebler Studios 27.10.2026): EIN Bild statt Spinnennetz und zwei
@@ -39,7 +39,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
   const art = opts.finanzen?.employmentType;
   const erwerb = ERWERB.includes(art) || opts.employed === true;
   const bvg = pflichtItem('bvg');
-  const bvgKasse = has(v.bvgInsurer) || zahl(v.bvgContribution) > 0;
+  const bvgKasse = bvgAktiv(v);
   const bvgErfasst = bvgKasse || zahl(v.bvgBalance) > 0;
   const hausrat = hausratPflicht(opts.kanton);
 
@@ -55,7 +55,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
     vorsorge: [
       // AHV: wer erwerbstätig ist, zahlt über Lohn bzw. Ausgleichskasse; im Ruhestand keine Lücke.
       // `abgeleitet`: kein Beitrag erfasst, der Stand folgt aus dem Erwerbsstatus — die Zeile sagt «laut Angaben», nicht «eingetragen».
-      { key: 'ahv', art: 'pflicht', ok: erwerb || art === 'retired' || zahl(v.ahvContribution) > 0, abgeleitet: !(zahl(v.ahvContribution) > 0) },
+      { key: 'ahv', art: 'pflicht', ok: erwerb || art === 'retired' || zahl(v.ahvContribution) > 0, abgeleitet: !(zahl(v.ahvContribution) > 0), luecke: false },
       (bvg || bvgErfasst) && { key: 'bvg', art: bvg ? 'pflicht' : 'freiwillig', ok: bvgKasse },
       (erwerb || zahl(opts.finanzen?.pension3a) > 0) && { key: 'saeule3a', art: 'freiwillig', ok: zahl(opts.finanzen?.pension3a) > 0 },
     ].filter(Boolean),
@@ -71,7 +71,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
     .map((key) => {
       const teile = roh[key].map((x) => ({ ...x, betrag: betraegeFuer(x.key, v, opts.finanzen || {}) }));
       const erreicht = teile.filter((x) => x.ok).length;
-      const zaehlt = (x) => x.ok || ((x.art === 'pflicht' || x.art === 'kantonPflicht') && x.key !== 'ahv');
+      const zaehlt = (x) => x.ok || (x.luecke !== false && (x.art === 'pflicht' || x.art === 'kantonPflicht'));
       return { key, versicherungen: teile, n: teile.filter(zaehlt).length, erreicht };
     });
   return {

@@ -49,7 +49,7 @@ export function monatsAusgaben(profilDaten) {
     // Prämien aus dem Kapitel Versicherungen, seit 31.10.2026 (F7-K3-6, Stebler Studios «überall die Zahlen»): Zusatz monatlich,
     // Leben und Unfall-Zusatz als Jahresbetrag. Der Unfall-Zusatz nur, wenn selbst bezahlt — das sagt der Hinweis am
     // Feld; ein Abzug vom Lohn steckt schon im Nettolohn wie BVG und AHV.
-    // Ohne Namen ist das Prämienfeld ausgeblendet (ChapterView): ein stehengebliebener Betrag zählt nicht.
+    // Ohne Namen zählt ein stehengebliebener Betrag nicht (wie «Nein» bei Leben und Unfall-Zusatz).
     kkZusatz: data.versicherungen?.kkZusatz ? n(data.versicherungen?.kkZusatzPremium) : 0,
     uvgZusatz: data.versicherungen?.uvgZusatz === 'no' ? 0 : n(data.versicherungen?.uvgZusatzPremium) / 12,
     lifeInsurance: data.versicherungen?.lifeInsurance === 'no' ? 0 : n(data.versicherungen?.lifeInsurancePremium) / 12,
