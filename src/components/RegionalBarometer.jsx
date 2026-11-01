@@ -7,7 +7,7 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
 //   • Punkt    = Regions-Durchschnitt
-//   • Strich   = Schweizer Schnitt (Referenz-Marke, wie der 10%-WHO-Strich)
+//   • Strich   = Schweizer Schnitt (Referenz-Marke, wie der Strich der Vergleichsmarke 10 %)
 // Bewusst calm — eine Abweichung ist eine strukturelle Tatsache, kein Alarm.
 // Ohne eigenen Wert füllt der Balken bis zum Regions-Durchschnitt (kein leerer Balken).
 //

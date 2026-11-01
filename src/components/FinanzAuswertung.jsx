@@ -544,7 +544,7 @@ export const gesundheitKarte = ({ palette, t, onNavigate, w }) =>
     onClick: () => onNavigate('kvg', undefined, 'franchise'),
   });
 
-// Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
+// Faden 3 / 3-I: KK-Last als % des Einkommens gegen Vergleichsmarke 10 %
 export const kkLastKarte = ({ palette, t, data, onNavigate }) => React.createElement(KKLastCard, { palette, t, data, onNavigate });
 
 // Die Karten in der Reihenfolge der Übersicht — ein Fragment.
