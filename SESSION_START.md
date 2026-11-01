@@ -17,6 +17,15 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 01.11.2026, 21:05, Sitzungsende «Feinschliff Schild und Selbständige» — in `integration/f7-sammel` gemergt, nichts auf `main`, NICHT live.**
+>
+> **Gemessen:** main = `98539e99` · live = `4299bfb9` · Sammelzweig `a8d9a6d6` (lokal 3 Docs-Commits einer anderen Sitzung voraus; `60c8833b` ist auf origin, weil jene Sitzung bis `e6ee7665` gepusht hat). Startbündel an `a8d9a6d6`: 64.62 von 65 kB.
+> - **Gebaut:** Schild: offene Stelle schraffiert (Sand und Gold haben 1.07:1), Schrift hell lesbar, Handy-Umbruch in der Liste. Liste «Nicht einzeln in dieser Summe» nach Fachprüfung. FR/IT/RM «total» statt «somme». Selbständige: AHV und BVG zählen als Posten unter «Steuern & Vorsorge», Notiz «vom Nettolohn abgezogen» nur noch bei Anstellung mit Netto-Lohn, auch bei den Steuern. Einzelheiten: `VERGLEICH.md`, F7-K3-4.
+> - **Geprüft:** 7'611 Tests am Merge `60c8833b`; eslint nur an den geänderten Hauptdateien. Browser: Beispiel Maria hell auf Desktop und 375 px, offene Stelle hell und dunkel auf einer Probeseite. **Nicht gesehen:** Budget-Seite für Selbständige, FR/IT auf dem Handy, unter 375 px.
+> - **Bekanntes Risiko:** Die Rechnung nimmt an, dass Selbständige das Einkommen vor den Beiträgen erfassen. Bestehende Profile mit Einkommen nach Beiträgen zählen sie doppelt, bis das Einkommen angepasst ist; nur die Hinweise sagen das. Eine eigene Abfrage wurde nicht gebaut, Entscheid Stebler Studios offen.
+> - **Offen:** Rumantsch-Gegenlese durch eine Person, die Rumantsch kann · FR/IT/EN der nach der Gegenlese geschriebenen Texte · Armutsgrenzen-Befund ohne AHV (BFS-Methodik nicht belegt) · Rentner und leerer Anstellungstyp zählen nicht, keine Option für Nichterwerbstätige · GmbH mit eigenem Lohn, Freiberufliche mit Abzug durch den Auftraggeber: nicht belegt · KTG-Hinweis «zahlt 80% Ihres Lohns» ungeändert.
+> - **Liegen geblieben:** Arbeitsbäume `_werkbank/f7-feinschliff` und `_werkbank/f7-selbstaendig` (beide gemergt, nicht aufgeräumt), Eintrag `f7-feinschliff` in `.claude/launch.json` im Projektstamm.
+
 > 🧾 **Nachtrag 01.11.2026, Sitzungsende «Fassung 7 abschliessen» — Runde 2 gebaut. Nichts gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 19:00): main = `98539e99` · live = `4299bfb9` (0.1.48-beta, 23.10., `sauber: false`) · 156 Commits dazwischen · offene PRs #626–#637, alle Entwurf.
