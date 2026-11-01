@@ -106,7 +106,7 @@ export const SEITEN = [
         titel: 'Quels chiffres comptent',
         absaetze: [
           'Les cantons se fondent en règle générale sur les données fiscales — et souvent non pas sur celles de l’année en cours, mais sur une taxation antérieure déjà entrée en force. Cela a une conséquence qui surprend : une personne qui gagne nettement moins cette année ne le voit pas apparaître d’elle-même dans de nombreux cantons — d’autres en tiennent compte seulement lors du décompte définitif ultérieur.',
-          'Plusieurs cantons connaissent pour de tels cas une procédure propre, dans laquelle un changement essentiel de situation est pris en compte après coup. Si et comment, cela se trouve auprès de l’organe compétent — le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, mais dans certains cantons l’administration fiscale ou la commune de domicile.',
+          'La LAMal exige toutefois que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle à partir de quel changement cela s’applique, quels justificatifs et délais valent et à partir de quand cela prend effet. Un droit à la réduction n’en découle pas automatiquement. L’organe compétent vous renseigne — le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, mais dans certains cantons l’administration fiscale ou la commune de domicile.',
         ],
       },
       {
@@ -136,10 +136,10 @@ export const SEITEN = [
       {
         frage: 'Et si mon revenu a fortement baissé ?',
         antwort:
-          'Alors il vaut particulièrement la peine de se renseigner. Plusieurs cantons tiennent compte, sur demande, d’un changement essentiel de la situation économique, même si la taxation sous-jacente indique encore un revenu plus élevé.',
+          'Alors il vaut particulièrement la peine de se renseigner. La LAMal exige que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle à partir de quel changement cela s’applique, quels justificatifs et délais valent et à partir de quand cela prend effet. Un droit à la réduction n’en découle pas automatiquement. Renseignez-vous auprès de l’organe compétent, même si la taxation déterminante indique encore un revenu plus élevé.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Aide sociale ─────────────────────────────────────────────────────────

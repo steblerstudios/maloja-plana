@@ -200,6 +200,27 @@ describe('Öffentliche Erklärseiten', () => {
     });
   });
 
+  // ─── Prämienverbilligung: Art. 65 Abs. 3 KVG gilt für alle Kantone ───────
+  // Fachprüfung 01.11.2026: Hier stand «Mehrere Kantone …». Das Gesetz verpflichtet
+  // aber jeden Kanton. Geprüft wird die Sache: Artikel genannt, belegt, und die
+  // Einschränkung auf einen Teil der Kantone ist in keiner Sprache zurück.
+  describe('/praemienverbilligung/', () => {
+    const FASSUNGEN = [
+      ['praemienverbilligung', /Das KVG verlangt[^<]*Art\. 65 Abs\. 3 KVG/, 'Mehrere Kantone'],
+      ['fr/praemienverbilligung', /La LAMal exige[^<]*art\. 65, al\. 3, LAMal/, 'Plusieurs cantons'],
+      ['it/praemienverbilligung', /La LAMal prescrive[^<]*art\. 65 cpv\. 3 LAMal/, 'Diversi Cantoni'],
+      ['en/praemienverbilligung', /KVG requires[^<]*Art\. 65 para\. 3 KVG/, 'Several cantons'],
+      ['rm/praemienverbilligung', /La LAMal pretenda[^<]*art\. 65 al\. 3 LAMal/, 'Plirs chantuns'],
+    ];
+
+    it.each(FASSUNGEN)('%s nennt die Pflicht aller Kantone', (pfad, artikel, alt) => {
+      const html = lies(pfad);
+      expect(html).toMatch(artikel);
+      expect(html).toContain('fedlex.admin.ch/eli/cc/1995/1328_1328_1328');
+      expect(html).not.toContain(alt);
+    });
+  });
+
   // ─── Die Rechtliches-Seite ───────────────────────────────────────────────
   // Sie ist keine Erklärseite: kein FAQ, keine Werbekarte, kein Quellen-Block.
   // Sie ist die Antwort auf den Blocker der Rechtsprüfung — eine öffentlich

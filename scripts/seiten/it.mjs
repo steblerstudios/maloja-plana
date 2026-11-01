@@ -98,7 +98,7 @@ export const SEITEN = [
         titel: 'Quali cifre contano',
         absaetze: [
           'Di regola i Cantoni si basano sui dati fiscali — e spesso non su quelli dell’anno in corso, bensì su una tassazione anteriore già cresciuta in giudicato. Ciò ha una conseguenza che sorprende: chi quest’anno guadagna nettamente meno non lo vede riflesso da sé in molti Cantoni — altri ne tengono conto soltanto con il conteggio definitivo successivo.',
-          'Diversi Cantoni conoscono per questi casi una procedura propria, nella quale un cambiamento essenziale delle condizioni viene considerato a posteriori. Se e come, lo indica il servizio competente — per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni però l’amministrazione delle contribuzioni o il Comune di domicilio.',
+          'La LAMal prescrive tuttavia che, nell’esame delle condizioni d’ottenimento, i Cantoni considerino, su richiesta particolare della persona assicurata, le circostanze economiche e familiari più recenti (art. 65 cpv. 3 LAMal). Il suo Cantone disciplina da quale cambiamento ciò si applica, quali documenti e termini valgono e da quando ha effetto. Un diritto alla riduzione non ne deriva automaticamente. Le informazioni sono fornite dal servizio competente — per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni però l’amministrazione delle contribuzioni o il Comune di domicilio.',
         ],
       },
       {
@@ -128,10 +128,10 @@ export const SEITEN = [
       {
         frage: 'E se il mio reddito è fortemente diminuito?',
         antwort:
-          'Allora vale la pena informarsi in modo particolare. Diversi Cantoni considerano, su richiesta, un cambiamento essenziale delle condizioni economiche, anche se la tassazione alla base indica ancora un reddito più elevato.',
+          'Allora vale la pena informarsi in modo particolare. La LAMal prescrive che, nell’esame delle condizioni d’ottenimento, i Cantoni considerino, su richiesta particolare della persona assicurata, le circostanze economiche e familiari più recenti (art. 65 cpv. 3 LAMal). Il suo Cantone disciplina da quale cambiamento ciò si applica, quali documenti e termini valgono e da quando ha effetto. Un diritto alla riduzione non ne deriva automaticamente. Conviene informarsi presso il servizio competente, anche se la tassazione determinante indica ancora un reddito più elevato.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Aiuto sociale ────────────────────────────────────────────────────────

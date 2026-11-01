@@ -111,7 +111,7 @@ export const SEITEN = [
         titel: 'Tge cifras che quintan',
         absaetze: [
           'Ils chantuns sa basan per regla sin las datas fiscalas — e savens betg sin quellas da l’onn current, mabain sin ina taxaziun pli veglia ch’è gia entrada en vigur. Quai ha ina consequenza che surprenda: tgi che gudogna quest onn considerablamain damain, na vesa quai betg da sasez en blers chantuns — auters quintan quai mo suenter cun il decount definitiv posteriur.',
-          'Plirs chantuns enconuschan per tals cas ina procedura atgna, en la quala ina midada essenziala da las relaziuns vegn resguardada posteriuramain. Sche e co, quai stat tar il post cumpetent — per il pli la cassa da cumpensaziun chantunala u l’institut chantunal d’assicuranzas socialas, en singuls chantuns dentant l’administraziun da taglia u la vischnanca da domicil.',
+          'La LAMal pretenda dentant ch’ils chantuns resguardian, tar la verificaziun dal dretg, las relaziuns d’entrada e da famiglia las pli actualas, en spezial sin dumonda (art. 65 al. 3 LAMal). Voss chantun regla da tge midada davent quai vala, tge mussaments e termins che valan e da cura davent quai ha effect. Da quai na resulta betg automaticamain in dretg a la reducziun. Il post cumpetent dat infurmaziun — per il pli la cassa da cumpensaziun chantunala u l’institut chantunal d’assicuranzas socialas, en singuls chantuns dentant l’administraziun da taglia u la vischnanca da domicil.',
         ],
       },
       {
@@ -141,10 +141,10 @@ export const SEITEN = [
       {
         frage: 'E sche mia entrada è sedruccada fermamain?',
         antwort:
-          'Lura vala ei particularmain la paina da dumandar. Plirs chantuns resguardan, sin dumonda, ina midada essenziala da las relaziuns economicas, era sche la taxaziun da basa mussa anc ina entrada pli auta.',
+          'Lura vala ei particularmain la paina da dumandar. La LAMal pretenda ch’ils chantuns resguardian, tar la verificaziun dal dretg, las relaziuns d’entrada e da famiglia las pli actualas, en spezial sin dumonda (art. 65 al. 3 LAMal). Voss chantun regla da tge midada davent quai vala, tge mussaments e termins che valan e da cura davent quai ha effect. Da quai na resulta betg automaticamain in dretg a la reducziun. Dumandai tar il post cumpetent, era sche la taxaziun determinanta mussa anc ina entrada pli auta.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Agid social ──────────────────────────────────────────────────────────

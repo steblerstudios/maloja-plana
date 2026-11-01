@@ -109,6 +109,25 @@ export const QUELLEN = {
       rm: 'LCSL art. 3 al. 1 lit. s cifra 1 (DS 241, collecziun uffiziala)',
     },
   },
+  // Art. 65 Abs. 3 KVG am 01.11.2026 im Browser gelesen, de/fr/it, Stand 1. Juli 2026
+  // (`curl` bekommt von Fedlex nur die SPA-Hülle, s. o.). 🛑 Die Fassungen decken
+  // sich nicht: de «insbesondere auf Antrag», fr «notamment à la demande», it «su
+  // richiesta particolare». Die italienische Seite folgt deshalb dem italienischen
+  // Wortlaut. `rm` und `en` fehlen aus demselben Grund wie beim UWG.
+  fedlexKvgArt65: {
+    url: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65',
+    text: 'KVG Art. 65 Abs. 3 (SR 832.10, Systematische Rechtssammlung)',
+    sprachen: {
+      fr: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_65',
+      it: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_65',
+    },
+    texte: {
+      fr: 'LAMal art. 65 al. 3 (RS 832.10, recueil systématique)',
+      it: 'LAMal art. 65 cpv. 3 (RS 832.10, raccolta sistematica)',
+      en: 'Swiss Health Insurance Act (KVG), Art. 65 para. 3 (SR 832.10)',
+      rm: 'LAMal art. 65 al. 3 (DS 832.10)',
+    },
+  },
   estvRechner: {
     url: 'https://www.estv.admin.ch/de/steuerrechner-steuern-berechnen',
     text: 'Steuerrechner der Eidgenössischen Steuerverwaltung',
@@ -286,7 +305,7 @@ export const SEITEN = [
         titel: 'Welche Zahlen zählen',
         absaetze: [
           'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.',
-          'Mehrere Kantone kennen für solche Fälle ein eigenes Verfahren, bei dem eine wesentliche Änderung der Verhältnisse nachträglich berücksichtigt wird. Ob und wie, steht bei der zuständigen Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.',
+          'Das KVG verlangt jedoch, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Ab welcher Änderung das greift, welche Nachweise und Fristen gelten und ab wann es wirkt, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Auskunft gibt die zuständige Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.',
         ],
       },
       {
@@ -316,10 +335,10 @@ export const SEITEN = [
       {
         frage: 'Was, wenn mein Einkommen stark gesunken ist?',
         antwort:
-          'Dann lohnt sich die Nachfrage besonders. Mehrere Kantone berücksichtigen eine wesentliche Änderung der wirtschaftlichen Verhältnisse auf Gesuch hin, auch wenn die zugrunde liegende Veranlagung noch ein höheres Einkommen ausweist.',
+          'Dann lohnt sich die Nachfrage besonders. Das KVG verlangt, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Ab welcher Änderung das greift, welche Nachweise und Fristen gelten und ab wann es wirkt, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Fragen Sie bei der zuständigen Stelle nach, auch wenn die massgebende Veranlagung noch ein höheres Einkommen ausweist.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Sozialhilfe ──────────────────────────────────────────────────────────

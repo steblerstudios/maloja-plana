@@ -102,7 +102,7 @@ export const SEITEN = [
         titel: 'Which figures count',
         absaetze: [
           'As a rule the cantons rely on tax data — and often not on that of the current year but on an earlier assessment that has already become legally binding. This has a consequence that surprises people: someone earning considerably less this year will not see that reflected automatically in many cantons — others only take it into account with the later final settlement.',
-          'Several cantons have their own procedure for such cases, in which a substantial change in circumstances is taken into account retrospectively. Whether and how is a matter for the competent office — usually the cantonal social insurance institution (SVA) or the compensation office, but in some cantons the tax administration or the municipality of residence.',
+          'However, the KVG requires the cantons, when reviewing eligibility, to take the most recent income and family circumstances into account, in particular upon request (Art. 65 para. 3 KVG). Your canton sets from what change this applies, which evidence and deadlines count and from when it takes effect. This does not automatically give you a right to a reduction. The competent office can tell you — usually the cantonal social insurance institution (SVA) or the compensation office, but in some cantons the tax administration or the municipality of residence.',
         ],
       },
       {
@@ -132,10 +132,10 @@ export const SEITEN = [
       {
         frage: 'What if my income has fallen sharply?',
         antwort:
-          'Then it is particularly worth asking. Several cantons take a substantial change in economic circumstances into account upon request, even if the underlying assessment still shows a higher income.',
+          'Then it is particularly worth asking. The KVG requires the cantons, when reviewing eligibility, to take the most recent income and family circumstances into account, in particular upon request (Art. 65 para. 3 KVG). Your canton sets from what change this applies, which evidence and deadlines count and from when it takes effect. This does not automatically give you a right to a reduction. Ask the competent office, even if the relevant assessment still shows a higher income.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Social assistance ────────────────────────────────────────────────────
