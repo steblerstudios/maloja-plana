@@ -38,6 +38,7 @@ export const betragText = (b, t) => [
   b.guthaben && t('netzSchild.betrag.guthaben', { chf: chf(b.guthaben) }),
   b.summe && t('netzSchild.betrag.summe', { chf: chf(b.summe) }),
   b.lohn && t('netzSchild.betrag.lohn'),
+  b.lohnRegel && t('netzSchild.betrag.lohnRegel'),
   b.arbeitgeber && t('netzSchild.betrag.arbeitgeber'),
   b.name,
 ].filter(Boolean).join(' · ');

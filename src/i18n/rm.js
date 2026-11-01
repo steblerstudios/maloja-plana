@@ -4533,7 +4533,9 @@ export default {
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     // TODO(rm): provisorisch — Gegenlese (F7-K3-4, 01.11.2026)
-    ausserhalb: "Betg en questa summa",
+    ausserhalb: "Betg specifitgà en quest total",
+    ausserhalbOhneSumme: "Ulteriuras endataziuns",
+    ausserhalbWeitere: "Quai ch’è endatà sut «Ulteriuras assicuranzas» dumbra en il total. Tge assicuranzas che quai cumpiglia n’è betg endatà.",
     titel: "Assicuranzas per mais",
     kk: "Cassa da malsauns (assicuranza da basa)",
     hausrat: "Ménaschi (CHF {jahr} / onn)",
@@ -5547,7 +5549,7 @@ export default {
     },
     satz: { sie: 'Vossas assicuranzas en ina survista — sin basa da Vossas indicaziuns.', du: 'Tias assicuranzas en ina survista — sin basa da tias indicaziuns.' },
     darin: 'Tge che quai cuntegna',
-    erfasst: 'Registradas: {n}',
+    erfasst: 'Endatadas: {n}',
     markeFranchise: 'Franchisa {franchise}',
     markeRegion: 'Regiun da premias {kanton} {region}',
     franchise: 'Franchisa',
@@ -7306,7 +7308,7 @@ export default {
     listeTitel: 'Tut las assicuranzas',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     intro: 'Ina part per sectur. Pli bleras indicaziuns, pli fitg s’emplenescha ella. Il scut mussa tge ch’è endatà, betg sche las prestaziuns bastan. Decisiva è la polizza.',
-    aria: 'Stemma da secturs d’assicuranza.',
+    aria: 'Scut da secturs d’assicuranza.',
     nichtEingetragen: 'betg endatà',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     lautAngaben: 'tenor las indicaziuns',
@@ -7327,7 +7329,7 @@ export default {
     hausratPruefen: 'Obligaziun d’inventari en il chantun: p.pl. confermar tar l’assicuranza chantunala d’edifizis — ils relaschs n’èn betg verifitgads per tut ils chantuns.',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     ahvHinweis: 'Tgi che abitescha u lavura en Svizra è assicurà tar l’AVS/AI (LAVS art. 1a). Avert è qua mo, sche contribuziuns èn endatadas.',
-    betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari', arbeitgeber: 'via il patrun' },
+    betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari', lohnRegel: 'tar in engaschament per regla via il salari', arbeitgeber: 'via il patrun' },
   },
 
   schutzschild: {

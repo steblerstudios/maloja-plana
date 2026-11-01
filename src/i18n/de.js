@@ -2440,7 +2440,9 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
-    ausserhalb: "Nicht in dieser Summe",
+    ausserhalb: "Nicht einzeln in dieser Summe",
+    ausserhalbOhneSumme: "Weitere Einträge",
+    ausserhalbWeitere: "Was unter «Weitere Versicherungen» eingetragen ist, zählt in der Summe. Welche Versicherungen darin stecken, ist nicht erfasst.",
     titel: "Versicherungen pro Monat",
     kk: "Krankenkasse (Grundversicherung)",
     hausrat: "Hausrat (CHF {jahr} / Jahr)",
@@ -6369,7 +6371,7 @@ export default {
     haftpflichtHinweis: 'Privathaftpflicht: Vermietende verlangen sie oft.',
     hausratPruefen: 'Ob Hausrat im Kanton Pflicht ist: bitte bei der kantonalen Gebäudeversicherung bestätigen — die Erlasse sind nicht für alle Kantone nachgelesen.',
     ahvHinweis: 'Wer in der Schweiz wohnt oder arbeitet, ist bei der AHV/IV versichert (AHVG Art. 1a). Offen ist hier nur, ob Beiträge eingetragen sind.',
-    betrag: { kosten: '{mt} / Mt. · {jahr} / Jahr', guthaben: 'Guthaben {chf}', summe: 'Versicherungssumme {chf}', lohn: 'über den Lohn abgezogen', arbeitgeber: 'läuft über den Arbeitgeber' },
+    betrag: { kosten: '{mt} / Mt. · {jahr} / Jahr', guthaben: 'Guthaben {chf}', summe: 'Versicherungssumme {chf}', lohn: 'über den Lohn abgezogen', lohnRegel: 'bei Anstellung in der Regel über den Lohn', arbeitgeber: 'läuft über den Arbeitgeber' },
   },
 
   schutzschild: {

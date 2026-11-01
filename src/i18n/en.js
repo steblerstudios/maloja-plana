@@ -2430,7 +2430,9 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
-    ausserhalb: "Not in this total",
+    ausserhalb: "Not itemised in this total",
+    ausserhalbOhneSumme: "Other entries",
+    ausserhalbWeitere: "What is entered under “Other insurance” counts in the total. Which policies it covers is not recorded.",
     titel: "Insurance per month",
     kk: "Health insurance (basic)",
     hausrat: "Household contents (CHF {jahr} / year)",
@@ -6065,7 +6067,7 @@ export default {
     },
     satz: 'Your insurance at a glance — based on what you have entered.',
     darin: 'What it includes',
-    erfasst: '{n} recorded',
+    erfasst: '{n} entered',
     markeFranchise: 'Deductible {franchise}',
     markeRegion: 'Premium region {kanton} {region}',
     franchise: 'Deductible',
@@ -6305,7 +6307,7 @@ export default {
     haftpflichtHinweis: 'Personal liability: landlords often require it.',
     hausratPruefen: 'Whether household contents insurance is mandatory in your canton: please confirm with the cantonal building insurer — the legislation has not been checked for every canton.',
     ahvHinweis: 'Anyone living or working in Switzerland is insured under AHV/IV (AHVG Art. 1a). The only open point here is whether contributions are entered.',
-    betrag: { kosten: '{mt} / month · {jahr} / year', guthaben: 'balance {chf}', summe: 'sum insured {chf}', lohn: 'deducted from salary', arbeitgeber: 'through your employer' },
+    betrag: { kosten: '{mt} / month · {jahr} / year', guthaben: 'balance {chf}', summe: 'sum insured {chf}', lohn: 'deducted from salary', lohnRegel: 'if employed, usually through your salary', arbeitgeber: 'through your employer' },
   },
 
   schutzschild: {

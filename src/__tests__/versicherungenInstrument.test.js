@@ -154,3 +154,40 @@ describe('Kapitel Versicherungen: eine Karte', () => {
     expect(text).toContain('CHF 609');
   });
 });
+
+// Fachprüfung 01.11.2026: Die Liste behauptet nichts, was die erfassten Felder nicht tragen.
+describe('Nicht einzeln in dieser Summe', () => {
+  const angestellt = { employmentType: 'employed', incomeType: 'brutto' };
+  const aussen = (v, finanzen = angestellt) => {
+    const html = instrument(v, { finanzen });
+    return { html, text: nurText(html.slice(html.indexOf('data-teil="versicherungen-ausserhalb"'))) };
+  };
+  it('AHV ohne Beitrag heisst «laut Angaben» und zählt nicht als eingetragen', () => {
+    const { html, text } = aussen({ kkPremium: '400' });
+    expect(text).toContain('1. Säule · AHV/IV laut Angaben');
+    expect(html).not.toMatch(/\d eingetragen/);
+  });
+  it('AHV sagt «in der Regel» und behält den Hinweis auch mit Beitrag', () => {
+    const { text } = aussen({ kkPremium: '400', ahvContribution: '3600' }, { employmentType: 'employed', incomeType: 'netto' });
+    expect(text).toContain('bei Anstellung in der Regel über den Lohn');
+    expect(text).toContain('CHF 300 / Mt.');
+  });
+  it('«Weitere Versicherungen» in der Summe wird genannt', () => {
+    expect(aussen({ kkPremium: '400', legalInsurance: 'yes' }, { ...angestellt, otherInsurance: '25' }).html).toContain('versicherungen-ausserhalb-weitere');
+    expect(aussen({ kkPremium: '400', legalInsurance: 'yes' }).html).not.toContain('versicherungen-ausserhalb-weitere');
+  });
+  it('Unfall-Zusatz ohne Prämie erscheint hier, mit Prämie unter den Posten', () => {
+    expect(aussen({ kkPremium: '400', uvgZusatz: 'yes' }).text).toContain('Unfall-Zusatzversicherung');
+    expect(aussen({ kkPremium: '400', uvgZusatz: 'yes', uvgZusatzPremium: '120' }).text).not.toContain('Unfall-Zusatzversicherung');
+  });
+  it('Gebäudeversicherung steht mit Betrag in der Liste', () => {
+    const html = renderToStaticMarkup(React.createElement(VersicherungenInstrument, { palette: LIGHT_PALETTE, t, versicherungen: { kkPremium: '400' }, allData: { finanzen: angestellt, wohnen: { buildingsInsurance: '600' } } }));
+    expect(nurText(html)).toContain('Gebäudeversicherung CHF 50 / Mt.');
+  });
+  it('ohne Summe trägt die Liste eine eigene Überschrift', () => {
+    expect(aussen({}).text).toContain('Weitere Einträge');
+  });
+  it('Fahrzeug «Nein» zeigt keinen stehengebliebenen Satz', () => {
+    expect(nurText(instrument({ kkPremium: '400', autoInsurance: 'no', autoInsuranceAmount: '900' }))).not.toContain(t('versInstrument.fahrzeug'));
+  });
+});

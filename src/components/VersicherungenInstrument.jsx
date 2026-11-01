@@ -152,29 +152,37 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const feld = (k) => t('chapters.versicherungen.fields.' + k + '.label');
   const ja = (x) => has(x) && x !== 'no' && x !== 'none';
   const ausserhalb = [
-    (f.employmentType === 'employed' || zahl2(v.ahvContribution) > 0) && { key: 'ahv', farbe: vorsorgeTon, name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f) },
+    // Ohne erfassten Beitrag folgt die AHV nur aus dem Erwerbsstatus: nicht «eingetragen», sondern «laut Angaben», wie im Schild (Fachprüfung 01.11.2026).
+    (f.employmentType === 'employed' || zahl2(v.ahvContribution) > 0) && { key: 'ahv', farbe: vorsorgeTon, name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f), abgeleitet: !(zahl2(v.ahvContribution) > 0) },
     bvgAktiv(v) && { key: 'bvg', farbe: vorsorgeTon, name: t('netzSchild.vers.bvg'), b: betraegeFuer('bvg', v, f) },
     Number(f.pension3a) > 0 && { key: 'saeule3a', farbe: vorsorgeTon, name: t('netzSchild.vers.saeule3a'), b: betraegeFuer('saeule3a', v, f) },
     ja(v.uvg) && { key: 'uvg', name: t('netzSchild.vers.uvg'), b: betraegeFuer('uvg', v, f) },
+    // Ohne eigene Prämie (Abzug vom Lohn) steht der Unfall-Zusatz nicht unter den Posten; das Schild zählt ihn trotzdem.
+    v.uvgZusatz === 'yes' && !(p.uvgZusatz > 0) && { key: 'uvgZusatz', name: t('netzSchild.vers.uvgZusatz'), b: {} },
     ja(v.ktg) && { key: 'ktg', name: feld('ktg'), b: v.ktg === 'employer' ? { arbeitgeber: true } : {} },
     ja(v.legalInsurance) && { key: 'legalInsurance', name: feld('legalInsurance'), b: {} },
     ja(v.travelInsurance) && { key: 'travelInsurance', name: feld('travelInsurance'), b: {} },
     ja(v.cyberInsurance) && { key: 'cyberInsurance', name: feld('cyberInsurance'), b: {} },
+    ja(v.childInsurance) && { key: 'childInsurance', name: feld('childInsurance'), b: {} },
     ja(v.autoInsurance) && { key: 'autoInsurance', name: feld('autoInsurance'), b: Number(v.autoInsuranceAmount) > 0 ? { mt: Math.round((Number(v.autoInsuranceAmount) / 12) * 100) / 100, jahr: Number(v.autoInsuranceAmount) } : {} },
+    p.buildingsInsurance > 0 && { key: 'gebaeude', farbe: wohnTon, name: t('budgetSync.field.buildingsInsurance'), b: { mt: Math.round(p.buildingsInsurance * 100) / 100, jahr: Number(daten.wohnen?.buildingsInsurance) } },
   ].filter(Boolean);
+  const eingetragen = ausserhalb.filter((x) => !x.abgeleitet).length;
   const ausserhalbListe = () => ausserhalb.length > 0 && h('details', { 'data-teil': 'versicherungen-ausserhalb', style: { marginTop: space.xs + 'px', borderTop: '1px solid ' + palette.border + '88' } },
     // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
     h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '10px' } },
-      h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t('versInstrument.ausserhalb')),
-      h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: ausserhalb.length }))),
+      h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t(hatGeld ? 'versInstrument.ausserhalb' : 'versInstrument.ausserhalbOhneSumme')),
+      eingetragen > 0 && h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: eingetragen }))),
+    // «Weitere Versicherungen» ist der einzige Eintragungsort für Rechtsschutz, Reise, Cyber …: dort Eingetragenes zählt in der Summe (Fachprüfung 01.11.2026).
+    p.otherInsurance > 0 && h('p', { 'data-teil': 'versicherungen-ausserhalb-weitere', style: { ...klein, margin: '0 0 ' + space.xs + 'px' } }, t('versInstrument.ausserhalbWeitere')),
     ausserhalb.map((x) => h('div', { key: x.key, style: { ...zeile, alignItems: 'baseline', fontSize: text.xs } },
       h('span', { style: { display: 'flex', alignItems: 'center', gap: '8px', color: palette.text, minWidth: 0 } }, marke(x.farbe || ton), x.name),
-      h('span', { style: { color: palette.mid, textAlign: 'right' } }, betragText(x.b, t) || t('netzSchild.eingetragen'))
+      h('span', { style: { color: palette.mid, textAlign: 'right' } }, betragText(x.b, t) || t(x.abgeleitet ? 'netzSchild.lautAngaben' : 'netzSchild.eingetragen'))
     )));
   const postenHinweise = () => h(React.Fragment, null,
     fehlt.length > 0 && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.nichtErfasst', { liste: fehlt.join(', ') })),
     pk > 0 && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.pk', { betrag: zahl(pk) })),
-    Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
+    ja(v.autoInsurance) && Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
 
   const schild = !uebersicht && h(React.Fragment, null,
     schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
