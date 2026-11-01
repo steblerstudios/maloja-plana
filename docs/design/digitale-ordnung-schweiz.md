@@ -1,7 +1,7 @@
 # Digitale Ordnung — Schweizer Konzept
 
-> **Detailblatt zu [`../IDEEN.md`](../IDEEN.md) §1.** Status: Konzept vom 01.11.2026, nichts
-> gebaut. Anstoss war das Datenschutz-Spiel Reclaim City
+> **Detailblatt zu [`../IDEEN.md`](../IDEEN.md) §1.** Status: Konzept vom 01.11.2026. Der Durchgang
+> ist als Entwurf gebaut (Zweig `feat/digitale-ordnung`), Briefe und Haus nicht. Anstoss war das Datenschutz-Spiel Reclaim City
 > (play.multiversegames.ai/reclaim-city). Übernommen wird der Gedanke, nicht dessen Texte.
 > Die Darstellung als Haus folgt [`grundstueck-und-modi.md`](grundstueck-und-modi.md).
 > Geprüft am 01.11.2026 mit `rechts-pruefer`; seine Befunde sind eingearbeitet. Das ersetzt
