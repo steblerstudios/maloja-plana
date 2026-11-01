@@ -1579,3 +1579,15 @@ Nicht gelöst: Ausweise F, N, S fehlen als Option; Schweizer Bürgerinnen und B�
 ### Nachprüfung «ist alles Entschiedene umgesetzt?» (01.11.2026)
 
 Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finanzen, nannte aber keinen Betrag; jetzt dieselbe Zahl mit «Grobe Schätzung», gleiche Sperren. **E-1:** «Der Schutz ist eingetragen», «Prämie nicht eingetragen» (de, rm). Die übrigen «erfasst» ausserhalb der Versicherungen (Steuer, IPV, Haushalt) bleiben bewusst: E-1 betraf Schild und Versicherungs-Übersicht.
+
+### Besprechen, Runde 3 (Stebler Studios, 01.11.2026)
+
+- **F7-K2-2, anders:** Nicht bloss den Kuchen weglassen, sondern «fusionieren kreativ». Umsetzungsidee von Claude, eingebaut zum Ansehen: der **Monatsring**
+  (`components/Monatsring.jsx`). Der Ring ist das ganze Einkommen, die Stücke sind die Ausgaben, die offene Stelle ist, was bleibt, die Zahl steht in der Mitte.
+  Daneben «Wofür geht es weg?» mit Wohnen, Versicherungen, Steuern, Übriges, aufklappbar zu den Posten. Ersetzt Zahl, Balken und Kuchen. **Wartet auf Abnahme im Bild.**
+- **E-4, anders:** Ein anderes Beispiel als Hausrat. Gemessen: Hausrat wegzulassen hätte bei Maria nichts gezeigt, in Zürich ist er keine Pflicht und damit keine Lücke
+  (`data/netzSchild.js`). Eingebaut: Bei Maria ist die Unfallversicherung nicht eingetragen. Das Schild sagt «Pflicht, noch nicht eingetragen: Unfall», sandfarben, Pflicht 2 von 3.
+  Das Beispiel zeigt damit keinen fehlenden Schutz, sondern einen fehlenden Eintrag. **Wartet auf Abnahme im Bild.**
+- **E-5, wie empfohlen:** Absatz zur Patientenverfügung übersetzt, als provisorisch markiert. Gegenlese durch eine Person, die Rumantsch kann, offen.
+
+Stand: Zweig `feat/f7-runde3` auf `integration/f7-sammel` `eb59b6f7`, Vorschau mit `preview_start f7-runde3` (Port 5192). Geprüft: 7561 Tests, Build, 64.97 von 65 kB, Browser dunkel und hell, 375 px ohne Querscrollen.
