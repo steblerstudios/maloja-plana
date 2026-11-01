@@ -13,7 +13,7 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'document',
+    palette, t, onNavigate, ablauf: 'todesfall', icon: 'document',
     title: t('todesfall.title'),
     intro: t('todesfall.intro'),
   },
@@ -41,7 +41,7 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'todesfall-frist', frist: (d) => plusMonate(d, 3),
         labelKey: 'todesfall.fristLabel', hinweisKey: 'todesfall.fristHinweis', vorbeiKey: 'todesfall.fristVorbei',
-        buttonKey: 'todesfall.step4Button', doneKey: 'todesfall.step4Done', calendarKey: 'todesfall.step4CalendarLink',
+        art: 'frist', buttonKey: 'todesfall.step4Button', doneKey: 'todesfall.step4Done', calendarKey: 'todesfall.step4CalendarLink',
         reminderTitle: t('todesfall.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step4Link'), onClick: () => onNavigate('schulden') })

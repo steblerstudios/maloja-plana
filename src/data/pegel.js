@@ -56,6 +56,10 @@ export function pegelState(data) {
 // Linie = Existenzminimum (totalBedarf), Wasser = Einkommen, die Lücke (deficit)
 // wird als Aufstockung gefüllt. Reine Anzeige über calculateSozialhilfe.
 export function sozialhilfePegelState(data) {
+  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!calculateSozialhilfe(data)?.ansatzTiefer };
+}
+
+function sozialhilfePegelRoh(data) {
   const canton = data?.basis?.canton || '';
   const rent = Number(data?.wohnen?.rentAmount || 0);
   const sh = calculateSozialhilfe(data);
@@ -78,7 +82,10 @@ export function sozialhilfePegelState(data) {
   // 'efb' (Predeploy 25.09.2026): ohne Freibetrag gedeckt, MIT Einkommensfreibetrag (SKOS D.2) ein
   // Anspruch möglich — ob er beim Eintritt zählt, regelt der Kanton. Dann kein «keine Aufstockung
   // nötig» (Nein ohne Grundlage), sondern der offene Satz sozialhilfe.efbEntscheidet.
-  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : 'covered'));
+  // 'offen' (Fachprüfung 01.11.2026): Erwerbsunkosten kennt das Profil nicht, der Bedarf ist dann zu tief — auch das ist kein Nein.
+  // Deckt das Einkommen den Bedarf ohnehin, ist das Vermögen nicht der Grund (Beispiel Maria, Fachpunkt F7 #630): dann 'covered', nicht 'vermoegen'.
+  const einkommenDeckt = deficit <= 0 && !sh?.efbEntscheidet && !sh?.erwerbsunkostenOffen;
+  const mode = vermoegenUeber > 0 && !einkommenDeckt ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : (sh?.erwerbsunkostenOffen ? 'offen' : 'covered')));
   const fraction = Math.max(0, Math.min(PEGEL_SCALE, rawFraction));
   return {
     show: true, variant: 'aufstockung', mode, fraction,

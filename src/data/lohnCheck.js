@@ -181,6 +181,17 @@ export function stundenAufMonat(stundenProWoche) {
 // die Oberfläche fragt nach. (Beispieldaten trugen seit 15.06.2026 genau diese «80».)
 export const WOCHENSTUNDEN_OBERGRENZE = 60;
 
+// Untergrenze nur für die Hochrechnung eines MONATSlohns auf Vollzeit. KEIN Gesetzeswert: sie fängt
+// ein Pensum als Bruchteil («0.8» für 80 %, «1» für 100 %). Mit 0.8 Std. gerechnet würden aus
+// CHF 6000 rund CHF 300'000 auf Vollzeit. Nicht in `wochenstundenUnplausibel`: im Stundenlohn-Rechner
+// ist eine Stunde pro Woche echt möglich (Arbeit auf Abruf), dort wird nichts hochgerechnet.
+export const WOCHENSTUNDEN_UNTERGRENZE_MONATSLOHN = 2;
+
+export function wochenstundenZuTiefFuerMonatslohn(stundenProWoche) {
+  const h = Number(String(stundenProWoche ?? '').replace(',', '.')) || 0;
+  return h > 0 && h < WOCHENSTUNDEN_UNTERGRENZE_MONATSLOHN;
+}
+
 export function wochenstundenUnplausibel(stundenProWoche) {
   return (Number(String(stundenProWoche ?? '').replace(',', '.')) || 0) > WOCHENSTUNDEN_OBERGRENZE;
 }

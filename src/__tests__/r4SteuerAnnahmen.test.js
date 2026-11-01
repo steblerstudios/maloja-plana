@@ -51,7 +51,7 @@ const { getBehoerdenDossierPreview, generateBehoerdenJSON } = await import('../d
 const { renderToStaticMarkup } = await import('react-dom/server');
 const React = (await import('react')).default;
 const {
-  steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil,
+  steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, quellensteuerMoeglich,
 } = await import('../data/kantonaleSteuerdaten.js');
 // Die Regel steht seit 25.09.2026 in utils/dreizehnter.js (eine Quelle für Steuer, IPV, EO).
 const { dreizehnterStatus } = await import('../utils/dreizehnter.js');
@@ -212,12 +212,32 @@ describe('R4-2 · Rentner und Selbständige', () => {
     expect(regel(profil({ canton: 'BE', monat: 3000 })).bund).not.toBeNull();
   });
 
-  it('direkt eingetragenes steuerbares Einkommen rechnet weiter (BE ledig, steuerbar 32 803 → ESTV)', () => {
+  it('Rente mit eingetragenem Wert: Bund rechnet, die Kantons-Tabelle nicht (Fachprüfung 01.11.2026)', () => {
     const soll = estv('BE', 'ledig', 40000);
     const s = regel(profil({ canton: 'BE', monat: 3000, employmentType: 'retired', taxableIncome: soll.steuerbar }));
     expect(s.quelle).toBe('direkt');
     expect(bundWieEstv(s.bund.steuer, soll.bund)).toBe(true);
-    expect(imRahmen(s.kanton.kantonal.kantonalUndGemeinde, soll.kg)).toBe(true);
+    expect(s.kanton.kantonal).toBeNull();
+    expect(s.kanton.grund).toBe('erwerbsartDirekt');
+  });
+
+  it.each([['b', 'quellensteuer'], ['l', 'quellensteuer'], ['f', 'quellensteuer'], ['n', 'quellensteuer'], ['s', 'quellensteuer'], ['g', 'quellensteuerG']])('Ausweis %s: keine Steuerzahl, auch nicht mit eingetragenem Wert', (workPermit, grund) => {
+    const d = { ...profil({ canton: 'BE', monat: 5000, taxableIncome: 50000 }), ausbildung: { workPermit } };
+    const s = steuernFuerProfil(steuerEingabenAusDaten(d));
+    expect(s.bund).toBeNull();
+    expect(s.grund).toBe(grund);
+    expect(s.kanton.kantonal).toBeNull();
+    expect(s.kanton.grund).toBe(grund);
+  });
+
+  it('Quellensteuer: C und Schweiz rechnen, Ausland ohne Ausweis sperrt, selbständig nicht', () => {
+    const basis = profil({ canton: 'BE', monat: 5000 });
+    const mit = (extra) => steuernFuerProfil(steuerEingabenAusDaten({ ...basis, ...extra }));
+    expect(mit({ ausbildung: { workPermit: 'c' } }).bund).not.toBeNull();
+    expect(mit({ basis: { ...basis.basis, nationality: 'swiss' } }).bund).not.toBeNull();
+    expect(mit({ basis: { ...basis.basis, nationality: 'german' } }).grund).toBe('quellensteuer');
+    expect(quellensteuerMoeglich({ ausbildung: { workPermit: 'b' } })).toBe('bl');
+    expect(steuerEingabenAusDaten({ ...basis, ausbildung: { workPermit: 'b' }, finanzen: { ...basis.finanzen, employmentType: 'selfEmployed' } }).quellensteuer).toBeNull();
   });
 
   it('BE Rentner 3 000: Seiten zeigen den ruhigen Hinweis mit ESTV-Link, keinen Betrag', () => {

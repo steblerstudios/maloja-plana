@@ -38,6 +38,8 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = React.lazy(() => import('./BergDetail.jsx'));
+// Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
+const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
 const QuickCheck = React.lazy(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
@@ -84,9 +86,10 @@ export function buildSnippet(chapterKey, chData, allData, t, lang) {
   if (chapterKey === 'versicherungen') {
     if (!chData.kkInsurer) return null;
     const parts = [chData.kkInsurer];
-    const prem = fmtCHF(chData.kkPremium);
-    if (prem) parts.push(prem);
-    if (chData.franchise) parts.push(t('synthesis.franchise', { value: auswahlLabel('versicherungen', 'franchise', chData.franchise, t) }));
+    // F7-D7: immer zwei Rappenstellen und «/ Mt.», die Franchise mit CHF.
+    const prem = Number(chData.kkPremium);
+    if (prem > 0) parts.push(betrag(prem, { stellen: 2 }) + ' ' + t('common.perMonth'));
+    if (chData.franchise) parts.push(t('synthesis.franchise', { value: betrag(Number(String(chData.franchise).replace(/\D/g, ''))) }));
     if (chData.kkModel) parts.push(auswahlLabel('versicherungen', 'kkModel', chData.kkModel, t));
     return parts.join(', ') + '.';
   }
@@ -153,7 +156,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     )
   );
 
-// Beta-Feedback (26.10.2026, Entscheid Sophie): der Knopf hiess «Feedback senden», schickte
+// Beta-Feedback (26.10.2026, Entscheid Stebler Studios): der Knopf hiess «Feedback senden», schickte
 // aber nichts — die Antworten lagen nur im Gerätespeicher, wo sie niemand liest. Jetzt wird
 // daraus ein Mail-Entwurf, der vor dem Klick sichtbar dasteht. Gesendet wird erst mit dem
 // eigenen Klick im Mailprogramm; wer keins hat, kopiert den Text. Auf dem Gerät bleibt nur
@@ -333,7 +336,7 @@ const bergKleben = (el) => {
   return () => { ro.disconnect(); window.removeEventListener('resize', setzen); };
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte, hatDokumente = false }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
@@ -344,35 +347,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   const getChapterStatus = (chapter) => kapitelStatus(chapter, data[chapter.key]);
 
   const chapterAccentColor = astFarben(chapters, palette, isDarkMode);
-
-  const getStatusColor = (pct, chKey) => {
-    if (pct === 0) return chapterAccentColor[chKey] || palette.soft;
-    if (pct < 50) return palette.gold;
-    if (pct < 100) return palette.sage;
-    return palette.sage;
-  };
-
-  const getIconBg = (pct, chKey) => {
-    const accent = chapterAccentColor[chKey] || palette.sand;
-    if (pct === 0) return accent + '18';
-    if (pct < 50) return palette.sand + '22';
-    if (pct < 100) return palette.sand + '30';
-    return palette.sage + '24';
-  };
-
-  const getIconOpacity = (pct) => {
-    if (pct === 0) return 0.7;
-    if (pct < 50) return 0.78;
-    if (pct < 100) return 0.88;
-    return 1;
-  };
-
-  // Chapter icon mapping to SVG system
-  const chapterIcons = {
-    basis: 'basis', wohnen: 'wohnen', finanzen: 'finanzen',
-    versicherungen: 'versicherungen', ausbildung: 'ausbildung',
-    behoerden: 'behoerden', notfall: 'notfall',
-  };
 
   const chapterCompletions = chapters.map(ch => kapitelVollstaendigkeit(ch, data[ch.key]).pct);
 
@@ -513,6 +487,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
+        // F7-D3 (Stebler Studios 01.11.2026): statt fester Tipps schlägt dieser eine Wegweiser auch Dokumente und Budget vor,
+        // aber nur, was noch fehlt. Im gesperrten Beispiel lässt sich nichts ablegen, dort nicht.
+        const schritt = !demoMode && !hatDokumente ? { text: 'dashboard.nextUpDokumente', view: 'tresor' }
+          : !(Number(data.finanzen?.monthlyIncome) > 0) ? { text: 'dashboard.nextUpBudget', view: 'sync' } : null;
         // Grundordnung steht: weiter mit dem Kapitel, das am wenigsten ausgefüllt ist.
         const weiterIdx = chapterCompletions.reduce((best, pct, i) =>
           (pct < 100 && (best < 0 || pct < chapterCompletions[best]) ? i : best), -1);
@@ -522,11 +500,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           React.createElement('p', {
             style: { fontSize: text.sm, color: palette.sageDeep, margin: 0, fontWeight: weight.medium },
           }, t('dashboard.nextUpAllDone')),
-          weiterIdx >= 0 && React.createElement('button', {
+          (schritt || weiterIdx >= 0) && React.createElement('button', {
             type: 'button',
-            onClick: () => onSelectChapter(weiterIdx),
+            onClick: () => (schritt ? onNavigate(schritt.view) : onSelectChapter(weiterIdx)),
             style: { ...ctaFlaeche, border: 'none', cursor: 'pointer', fontFamily: 'inherit' },
-          }, t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
+          }, schritt ? t(schritt.text) : t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
         );
       })(),
       mvo.fields.some((f) => !f.done) && React.createElement('p', {
@@ -566,6 +544,21 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           lastBackup ? part(t('dashboard.glanceSaved'), lastBackup) : React.createElement('span', null, t('dashboard.glanceNeverSaved')),
         );
       })()
+      ,
+      // F7-D4: Die Sicherung steht nur noch hier. Wann sie erscheint, ist gleich geblieben: Daten da, älter als 7 Tage oder keine.
+      (() => {
+        const hasData = chapters.some((ch) => { const d = data[ch.key] || {}; return ch.fields.some((f) => feldHatWert(d, f.k)); });
+        const zuletzt = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
+        if (!hasData || (zuletzt && Date.now() - zuletzt <= 7 * 24 * 60 * 60 * 1000)) return null;
+        return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', marginTop: space.sm + 'px' } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' } },
+            t('dashboard.exportReminder')),
+          React.createElement(PrimaryButton, {
+            palette, onClick: () => onNavigate('export'),
+            style: { minHeight: '44px', alignSelf: 'flex-end' },
+            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
+          }, t('dashboard.exportReminderAction'), ' ›'));
+      })()
     ),
 
     // ─── Fortschritt & Grundordnung — eine Karte, offen (Schicht 1) ──
@@ -573,8 +566,185 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Tester-Feedback: von Anfang an sichtbar, als eine Karte, Kapitel einzeln aufklappbar.
     // Abstand nach unten trägt die Karte selbst (marginBottom in BergDetail).
     React.createElement(React.Suspense, { fallback: null },
-      React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
+      // F7-D1, D9, D10 (Stebler Studios 01.11.2026): ein Block aus Fortschritt und Kapiteln, die Instrumente in ihrer Kapitel-Zeile.
+      React.createElement(BergDetail, {
+        palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo, simpleView,
+        gruppen: [
+          { titel: t('dashboard.tierCore'), kapitel: [0, 1, 2] },
+          { titel: t('dashboard.tierSupporting'), kapitel: [3, 4] },
+          { titel: t('dashboard.tierProtective'), kapitel: [5, 6] },
+        ],
+        zusammenfassung: (key) => buildSnippet(key, data[key] || {}, data, t, lang),
+        instrumentFuer: (key) => INSTRUMENTE_JE_KAPITEL[key] && React.createElement(React.Suspense, { fallback: null },
+          React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key] })),
+      })
     ),
+    // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
+    // Einzelbaum (beide bleiben nebeneinander). Kontrast: Vordergrund-Akzent via
+    // sandDeep statt sand (sand ist im Hellmodus zu hell für Text/Symbol, 2.34:1).
+    React.createElement('button', {
+      onClick: () => onNavigate('obstgarten'),
+      'aria-label': t('obstgarten.link'),
+      style: {
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px',
+        width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
+        padding: space.sm + 'px ' + space.md + 'px',
+        background: 'linear-gradient(' + palette.sage + '08,' + palette.sage + '08),' + palette.bg, border: '1px solid ' + palette.sage + '20',
+        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+        transition: `background ${duration.normal}ms ${ease}`,
+      },
+    },
+      React.createElement('span', {
+        style: {
+          width: '34px', height: '34px', borderRadius: '50%',
+          background: palette.sage + '18', color: palette.sageDeep,
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        },
+      }, React.createElement('div', { style: { width: '18px', height: '18px' } }, Icons.leaf())),
+      React.createElement('span', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('span', {
+          style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text },
+        }, t('obstgarten.link')),
+        React.createElement('span', {
+          style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
+        }, t('obstgarten.ctaSub')),
+      ),
+    ),
+
+    // Der goldene Gepäck-Knopf, der hier stand, ist seit 27.09.2026 weg: der Wanderrucksack
+    // steht oben rechts in «Was steht mir zu?», im Panorama und am Handy in der unteren Leiste
+    // (und das Startbündel brauchte den Platz — Grenze 65 kB).
+
+
+    // ─── Tools — calm grid ─────────────────────────────────
+    React.createElement('div', { style: { marginBottom: '36px' } },
+      React.createElement(Eyebrow, {
+        palette, as: 'h3',
+        style: { marginBottom: space.xs }
+      }, t('dashboard.toolsAndFeatures')),
+      React.createElement('p', {
+        style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
+      }, t('dashboard.toolsSubtitle')),
+      // Werkzeug-Vorschau 27.09.2026: die flache Liste bleibt vorerst (die Hervorhebungen
+      // sind ein eigener, offener Entscheid) — der Weg zu ALLEN Werkzeugen führt ins Gepäck.
+      React.createElement('button', {
+        type: 'button', onClick: () => onNavigate('gepaeck'),
+        style: {
+          display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 2px', margin: '0 0 ' + space.sm + 'px',
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
+        },
+      }, t('gepaeck.menuAlle'), ' ›'),
+      (() => {
+        const renderTool = (tool) => {
+          // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
+          // Offizielle Links und Flyer trugen hier noch das Tresor-Zeichen); sonst das eigene.
+          const IconFn = Icons[tool.view ? ansichtIkon(tool.view, tool.icon) : tool.icon];
+          const iconPx = simpleView ? '40px' : '20px';
+          return React.createElement('button', {
+            key: tool.key || tool.view,
+            onClick: tool.action || (() => onNavigate(tool.view)),
+            style: {
+              padding: simpleView ? '18px 12px' : '14px 16px',
+              background: 'transparent', color: palette.text,
+              border: simpleView ? '1px solid ' + palette.border : 'none',
+              borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+              display: 'flex', flexDirection: simpleView ? 'column' : 'row',
+              alignItems: 'center', justifyContent: simpleView ? 'flex-start' : undefined,
+              gap: simpleView ? '10px' : space.sm,
+              transition: `background ${duration.normal}ms ${ease}`,
+              textAlign: simpleView ? 'center' : 'left',
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+          },
+            React.createElement('div', { style: { color: simpleView ? palette.sand : palette.mid, width: iconPx, height: iconPx, flexShrink: 0 } },
+              IconFn ? React.createElement('div', { style: { width: iconPx, height: iconPx } }, IconFn()) : null
+            ),
+            React.createElement('div', null,
+              React.createElement('div', { style: { fontWeight: simpleView ? weight.semi : weight.medium, fontSize: simpleView ? text.body : text.sm } }, tool.label),
+              (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
+            )
+          );
+        };
+        const groups = [
+          // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
+          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map((a) => (
+            { label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon }
+          )) },
+          { label: t('dashboard.toolGroups.gesundheit'), items: [
+            { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
+          ] },
+          // «Asyl & Migration» stand hier ein zweites Mal — dasselbe Ziel wie in
+          // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
+          // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
+          { label: t('dashboard.toolGroups.support'), items: [
+            { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
+          ] },
+          { label: t('dashboard.toolGroups.money'), items: [
+            { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
+            { label: t('budgetSync.title'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
+            { label: t('nav.mietzins'), sub: t('nav.sub.mietzins'), view: 'mietzins', icon: 'home' },
+            { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
+            { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
+          ] },
+          { label: t('dashboard.toolGroups.insurance'), items: [
+            { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
+            { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
+            { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
+          ] },
+          { label: t('dashboard.toolGroups.documents'), items: [
+            { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },
+            { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
+            { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
+          ] },
+          { label: t('dashboard.toolGroups.organize'), items: [
+            { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
+            { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
+            { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
+            { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
+          ] },
+        ];
+        // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus
+        // «Lebensereignisse» in einen Ablauf ging und «Übersicht» antippt, soll die
+        // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
+        // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
+        const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
+        let offen = [];
+        try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
+        const merkeGruppe = (gi, istOffen) => {
+          try {
+            const rest = offen.filter((i) => i !== gi);
+            offen = istOffen ? rest.concat(gi) : rest;
+            sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
+          } catch { /* ohne Speicher: nichts merken */ }
+        };
+        return React.createElement(React.Fragment, null,
+          ...groups.map((g, gi) => React.createElement('details', {
+            // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
+            // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
+            key: 'tg-' + gi,
+            open: Array.isArray(offen) && offen.includes(gi),
+            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
+            style: { borderTop: '1px solid ' + palette.border + '66' },
+          },
+            React.createElement('summary', {
+              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+            },
+              React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
+                React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),
+                g.label
+              ),
+              React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
+            ),
+            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
+              g.items.map(renderTool)
+            )
+          ))
+        );
+      })()
+    ),
+
     // ─── Was steht mir zu? — ein Block (seit 25.09.2026) ──
     // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
     // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
@@ -684,11 +854,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
             },
           }, t('lebenszustaende.dashboardLink')),
-          // Deine Instrumente — seit 25.09.2026 im selben Block, nach den Leistungen
-          // (Wunsch 25.09.: erst was zusteht, dann der eigene Stand).
-          // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
-          React.createElement(React.Suspense, { fallback: null },
-            React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
           // nichts, dann auch keine leere Linie.
@@ -726,330 +891,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     );
     })(),
-
-    // ─── Life chapters — moved up: the core action, immediately visible ──
-    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
-
-      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
-      ...[
-        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
-        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
-        { label: t('dashboard.tierProtective'), indices: [5, 6] },
-      ].map((tier, tierIdx) =>
-        React.createElement('div', {
-          key: 'tier-' + tierIdx,
-          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
-        },
-          // Die Kapitel-Sektion hat keinen eigenen Titel — die drei Tier-Labels
-          // («Ihr Alltag» …) sind ihre einzige Gliederung. Als h3 werden sie zur
-          // Sprungmarke, statt nur fett auszusehen.
-          React.createElement(PanelTitle, {
-            palette,
-            style: {
-              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
-              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
-              borderBottom: '1px solid ' + palette.border,
-            }
-          }, tier.label),
-
-          ...tier.indices.map((chIdx) => {
-            const ch = chapters[chIdx];
-            if (!ch) return null;
-            const { pct } = kapitelVollstaendigkeit(ch, data[ch.key]);
-            const statusColor = getStatusColor(pct, ch.key);
-            const iconKey = chapterIcons[ch.key];
-            const IconFn = iconKey && Icons[iconKey];
-            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
-            const rowOpacity = pct === 0 ? 0.72 : 1;
-            const status = getChapterStatus(ch);
-            // Deep-Varianten: als 13px-Statustext brauchen sand/sage ≥4.5:1 (roh: 2.34 / 4.34).
-            const statusColors = { leer: palette.soft, begonnen: palette.sandDeep, grundordnung: palette.sageDeep, vertieft: palette.sageDeep };
-
-            return React.createElement('button', {
-              key: ch.key,
-              onClick: () => onSelectChapter(chIdx),
-              style: {
-                display: 'flex', alignItems: 'center', gap: space.md,
-                padding: simpleView ? '26px 4px' : '20px 4px',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
-                borderRadius: 0,
-                cursor: 'pointer',
-                textAlign: 'left',
-                color: palette.text,
-                fontFamily: 'inherit',
-                opacity: rowOpacity,
-                transition: `opacity ${duration.cinematic}ms ${ease}`,
-                width: '100%',
-              },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
-            },
-              React.createElement('div', {
-                style: {
-                  width: simpleView ? '56px' : '40px', height: simpleView ? '56px' : '40px', borderRadius: radius.md,
-                  background: getIconBg(pct, ch.key),
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                  transition: `background ${duration.cinematic}ms ${ease}, opacity ${duration.cinematic}ms ${ease}, box-shadow ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
-                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
-                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
-                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
-                }
-              }, IconFn ? React.createElement('div', { style: { width: simpleView ? '34px' : '24px', height: simpleView ? '34px' : '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
-
-              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-                React.createElement('div', {
-                  style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
-                },
-                  React.createElement('div', { style: { fontSize: simpleView ? text.lg : text.body, fontWeight: weight.semi } }, ch.title),
-                  !simpleView && React.createElement('span', {
-                    style: {
-                      fontSize: text.xs, fontWeight: weight.medium,
-                      color: statusColors[status],
-                      flexShrink: 0, letterSpacing: '0.2px',
-                      transition: `color ${duration.cinematic}ms ${ease}`,
-                    }
-                  }, t('chapterStatus.' + status))
-                ),
-                !simpleView && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
-                !simpleView && status !== 'leer' && (() => {
-                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t, lang);
-                  return snippet ? React.createElement('div', {
-                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
-                  }, snippet) : null;
-                })(),
-              ),
-            );
-          })
-        )
-      )
-    ),
-
-    // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
-    // Einzelbaum (beide bleiben nebeneinander). Kontrast: Vordergrund-Akzent via
-    // sandDeep statt sand (sand ist im Hellmodus zu hell für Text/Symbol, 2.34:1).
-    React.createElement('button', {
-      onClick: () => onNavigate('obstgarten'),
-      'aria-label': t('obstgarten.link'),
-      style: {
-        display: 'flex', alignItems: 'center', gap: space.sm + 'px',
-        width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'linear-gradient(' + palette.sage + '08,' + palette.sage + '08),' + palette.bg, border: '1px solid ' + palette.sage + '20',
-        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
-        transition: `background ${duration.normal}ms ${ease}`,
-      },
-    },
-      React.createElement('span', {
-        style: {
-          width: '34px', height: '34px', borderRadius: '50%',
-          background: palette.sage + '18', color: palette.sageDeep,
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-        },
-      }, React.createElement('div', { style: { width: '18px', height: '18px' } }, Icons.leaf())),
-      React.createElement('span', { style: { flex: 1, minWidth: 0 } },
-        React.createElement('span', {
-          style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text },
-        }, t('obstgarten.link')),
-        React.createElement('span', {
-          style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
-        }, t('obstgarten.ctaSub')),
-      ),
-    ),
-
-    // Der goldene Gepäck-Knopf, der hier stand, ist seit 27.09.2026 weg: der Wanderrucksack
-    // steht oben rechts in «Was steht mir zu?», im Panorama und am Handy in der unteren Leiste
-    // (und das Startbündel brauchte den Platz — Grenze 65 kB).
-
-
-    // ─── Tools — calm grid ─────────────────────────────────
-    React.createElement('div', { style: { marginBottom: '36px' } },
-      React.createElement(Eyebrow, {
-        palette, as: 'h3',
-        style: { marginBottom: space.xs }
-      }, t('dashboard.toolsAndFeatures')),
-      React.createElement('p', {
-        style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
-      }, t('dashboard.toolsSubtitle')),
-      // Werkzeug-Vorschau 27.09.2026: die flache Liste bleibt vorerst (die Hervorhebungen
-      // sind ein eigener, offener Entscheid) — der Weg zu ALLEN Werkzeugen führt ins Gepäck.
-      React.createElement('button', {
-        type: 'button', onClick: () => onNavigate('gepaeck'),
-        style: {
-          display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 2px', margin: '0 0 ' + space.sm + 'px',
-          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
-        },
-      }, t('gepaeck.menuAlle'), ' ›'),
-      (() => {
-        const renderTool = (tool) => {
-          // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
-          // Offizielle Links und Flyer trugen hier noch das Tresor-Zeichen); sonst das eigene.
-          const IconFn = Icons[tool.view ? ansichtIkon(tool.view, tool.icon) : tool.icon];
-          const iconPx = simpleView ? '40px' : '20px';
-          return React.createElement('button', {
-            key: tool.key || tool.view,
-            onClick: tool.action || (() => onNavigate(tool.view)),
-            style: {
-              padding: simpleView ? '18px 12px' : '14px 16px',
-              background: 'transparent', color: palette.text,
-              border: simpleView ? '1px solid ' + palette.border : 'none',
-              borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
-              display: 'flex', flexDirection: simpleView ? 'column' : 'row',
-              alignItems: 'center', justifyContent: simpleView ? 'flex-start' : undefined,
-              gap: simpleView ? '10px' : space.sm,
-              transition: `background ${duration.normal}ms ${ease}`,
-              textAlign: simpleView ? 'center' : 'left',
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
-          },
-            React.createElement('div', { style: { color: simpleView ? palette.sand : palette.mid, width: iconPx, height: iconPx, flexShrink: 0 } },
-              IconFn ? React.createElement('div', { style: { width: iconPx, height: iconPx } }, IconFn()) : null
-            ),
-            React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: simpleView ? weight.semi : weight.medium, fontSize: simpleView ? text.body : text.sm } }, tool.label),
-              (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
-            )
-          );
-        };
-        const groups = [
-          // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
-          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map((a) => (
-            { label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon }
-          )) },
-          { label: t('dashboard.toolGroups.gesundheit'), items: [
-            { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
-          ] },
-          // «Asyl & Migration» stand hier ein zweites Mal — dasselbe Ziel wie in
-          // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
-          // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
-          { label: t('dashboard.toolGroups.support'), items: [
-            { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
-          ] },
-          { label: t('dashboard.toolGroups.money'), items: [
-            { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
-            { label: t('nav.taxImport'), sub: t('nav.sub.taxImport'), view: 'taxImport', icon: 'document' },
-            { label: t('nav.budgetSync'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
-            { label: t('nav.mietzins'), sub: t('nav.sub.mietzins'), view: 'mietzins', icon: 'home' },
-            { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
-            { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
-          ] },
-          { label: t('dashboard.toolGroups.insurance'), items: [
-            { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
-            { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
-            { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
-          ] },
-          { label: t('dashboard.toolGroups.documents'), items: [
-            { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },
-            { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
-            { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
-          ] },
-          { label: t('dashboard.toolGroups.organize'), items: [
-            { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
-            { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
-            { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
-            { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
-          ] },
-        ];
-        // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus
-        // «Lebensereignisse» in einen Ablauf ging und «Übersicht» antippt, soll die
-        // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
-        // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
-        const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
-        let offen = [];
-        try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
-        const merkeGruppe = (gi, istOffen) => {
-          try {
-            const rest = offen.filter((i) => i !== gi);
-            offen = istOffen ? rest.concat(gi) : rest;
-            sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
-          } catch { /* ohne Speicher: nichts merken */ }
-        };
-        return React.createElement(React.Fragment, null,
-          ...groups.map((g, gi) => React.createElement('details', {
-            // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
-            // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
-            key: 'tg-' + gi,
-            open: Array.isArray(offen) && offen.includes(gi),
-            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
-            style: { borderTop: '1px solid ' + palette.border + '66' },
-          },
-            React.createElement('summary', {
-              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-            },
-              React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
-                React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),
-                g.label
-              ),
-              React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
-            ),
-            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
-              g.items.map(renderTool)
-            )
-          ))
-        );
-      })()
-    ),
-
-    // ─── Export reminder — calm data safety nudge ────────────
-    (() => {
-      const hasData = chapters.some(ch => {
-        const d = data[ch.key] || {};
-        return ch.fields.some(f => feldHatWert(d, f.k));
-      });
-      if (!hasData) return null;
-      const lastBackupMs = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
-      const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
-      if (daysSince <= 7) return null;
-      const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
-      // 25.09.2026: gefüllter Knopf mit Sicherungs-Zeichen (vorher nackter Textlink,
-      // Stebler Studios: «sollte ein CTA haben und ein Icon»). Das Zeichen steht NUR im
-      // Knopf, nicht noch einmal vor dem Text (Entscheid gleicher Abend).
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.xl,
-          padding: '16px 20px',
-          background: palette.sageMist || palette.sage + '08',
-          borderRadius: radius.md,
-          border: '1px solid ' + palette.sage + '25',
-        }
-      },
-        React.createElement('div', { style: { minWidth: 0, display: 'flex', flexDirection: 'column' } },
-          React.createElement('div', {
-            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
-          }, reason + ' ' + t('dashboard.exportReminder')),
-          React.createElement(PrimaryButton, {
-            palette, onClick: () => onNavigate('export'),
-            style: { minHeight: '44px', alignSelf: 'flex-end' }, // rechtsbündig, 25.09.2026
-            icon: React.createElement('span', {
-              'aria-hidden': 'true',
-              style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand },
-            }, Icons.sicherung()),
-          }, t('dashboard.exportReminderAction'), ' ›')
-        )
-      );
-    })(),
-
-    // ─── Tips — open editorial section ─────────────────────
-    React.createElement('div', {
-      style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
-    },
-      React.createElement(Eyebrow, {
-        palette, as: 'h3',
-        style: { color: palette.soft, fontWeight: weight.medium, marginBottom: space.sm + 4 }
-      }, t('dashboard.tipsTitle')),
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
-        [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
-          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
-            React.createElement('span', { style: { color: palette.sageDeep, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
-            tip
-          )
-        )
-      )
-    ),
 
     !demoMode && React.createElement(BetaFeedback, { palette, t })
     )

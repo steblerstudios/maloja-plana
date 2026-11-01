@@ -1,10 +1,9 @@
 import React from 'react';
-import { PageTitle } from './components/Heading.jsx';
-import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { RechnerForm } from './components/RechnerForm.jsx';
+import { hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt, istJungErwachsen } from './data/mietzinsbeitraege.js';
-import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
@@ -23,6 +22,8 @@ import { CHAPTER_KEYS } from './config/constants.js';
 // 28.09.2026 nicht mehr: die Tabelle war unbelegt (siehe config/cantonalData.js).
 // Bewusst eine EINSCHÄTZUNG, keine verbindliche Zusage — die Programme sind kantonal/kommunal
 // fragmentiert; verbindlich ist immer die kantonale Stelle (würdevoll, keine falsche Hoffnung).
+// Rechner-Form X (F7-A2, 27.10.2026): Einschätzung zuerst, mit dem Miet-Barometer aus dem Kapitel Wohnen
+// (MietVergleich, F7-R3); darunter die Angaben, was zu tun ist (Kanton, Unterlagen), die Stelle, die Quelle.
 export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateData, isDarkMode }) => {
   const canton = data?.basis?.canton || (() => {
     const plz = (data?.wohnen?.postalCode || '').trim();
@@ -86,138 +87,136 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
     return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
   })();
-  const toneColor = (tone) => tone === 'good' ? palette.sage : (tone === 'soft' ? palette.soft : palette.text);
+  // Grosser Ergebnis-Satz (Form X): «gut» in sageDeep, sonst Textfarbe — soft wäre als Hauptsatz zu blass.
+  const toneColor = (tone) => tone === 'good' ? (palette.sageDeep || palette.text) : palette.text;
   // O3: die Art des Ergebnisses, abgeleitet aus der Einschätzung oben (data/mietzinsbeitraege.js).
   const art = mietzinsErgebnis({ info, assessmentKey: assessment && assessment.key, annualIncome });
 
-  const card = (extra) => ({ padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md + 'px', fontSize: text.sm, ...extra });
-  const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
+  const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: '44px', textAlign: 'left', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'home', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('mietzinsView.title')),
-    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md + 'px', lineHeight: leading.relaxed } }, t('mietzinsView.intro')),
+  const klein = { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal };
+  const auswahlStil = { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' };
+  const fragenLabel = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
 
-    !canton ? React.createElement('div', { style: card() },
-      React.createElement('div', { style: { color: palette.mid } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('mietzinsView.enterCanton'))),
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('praemien') }, t('mietzinsView.enterCantonLink')),
-      React.createElement(ErgebnisArt, { palette, t, ergebnis: art })
-    ) : React.createElement(React.Fragment, null,
-      // Kanton-Verfügbarkeit + kantonsspezifische Besonderheit (belegte Quelle).
-      React.createElement('div', { style: card() },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('mietzinsView.cantonLabel', { name: getCantonName(canton, t) || canton })),
-        React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('mietzins.' + info.state)),
-        hasProgram && info.noteKey && React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal, marginTop: space.xs + 'px' } }, hinweisZeichen(), t(info.noteKey)),
-        info.url && React.createElement(ExternerLink, {
-          t, href: info.url,
-          style: { ...linkBtn, display: 'inline-block', textDecoration: 'underline', textUnderlineOffset: '2px' },
-        }, info.state === 'has' ? t('mietzins.linkCanton') : t('mietzins.linkOverview'))
+  // Ergebnis: die Einschätzung gross, dann das Miet-Barometer. Ohne Kanton/Programm der App-Satz.
+  const ergebnis = hasProgram && assessment && React.createElement(React.Fragment, null,
+    React.createElement('p', { style: { margin: 0, fontSize: text.lg, fontWeight: weight.semi, color: toneColor(assessment.tone), lineHeight: leading.tight } },
+      hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {}))
+  );
+  const ohneErgebnis = !canton
+    ? React.createElement(React.Fragment, null, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('mietzinsView.enterCanton')))
+    : t('mietzins.' + info.state);
+
+  const vorbehalt = React.createElement(React.Fragment, null,
+    // Frage offen, ×12 gerechnet: nur wo es die Einschätzung kippen kann (unter der Grenze).
+    assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: klein }, hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
+    // Bedingung, die die App nicht kennt (ZG: nur WFG-Wohnungen) — beim positiven Ergebnis sichtbar.
+    assessment && assessment.key === 'likely' && info.bedingungKey && !(info.wfgFrage && wfg === 'ja') && React.createElement('div', { style: klein }, hinweisZeichen(), t(info.bedingungKey)),
+    // ZG (steuerbar) / BS (massgebend nach SoHaG) messen ein Einkommen nach Abzügen — meist tiefer als
+    // der Lohn, mit dem hier gerechnet wird. Knapp über der Grenze kann es reichen.
+    assessment && assessment.key === 'incomeHigh' && info.einkommensBasis && React.createElement('div', { style: klein },
+      hinweisZeichen(), t(info.einkommensBasis === 'steuerbar' ? 'mietzinsView.steuerbarTiefer' : 'mietzinsView.massgebendTiefer')),
+    // Ohne Ehe: ob das Einkommen der zweiten Person zählt, entscheidet die Stelle — die Zahlen mit ihr stehen daneben.
+    assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && konkubinatMitPartner != null && React.createElement('div', { style: klein },
+      hinweisZeichen(), grenzeMitPartner != null
+        ? t('mietzinsView.konkubinatPartnerGrenze', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }), grenze: zahl(grenzeMitPartner, { hoechstens: 2 }) })
+        : t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),
+    // BS: ab AHV-Referenzalter kein Anspruch (MBG 890.500 § 4 Abs. 2). Die App kennt nur «pensioniert» —
+    // das kann auch eine Frühpensionierung sein, darum Hinweis statt Ausschluss.
+    assessment && assessment.key === 'likely' && info.limitFormel === 'bs' && hh.isRetired && React.createElement('div', { style: klein }, hinweisZeichen(), t('mietzinsView.referenzalterBS')),
+    // BS: Kind ohne Altersangabe zählt als minderjährig (bsHaushalt) — sichtbar machen.
+    assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && info.limitFormel === 'bs' && (hh.children || []).some((c) => c?.age == null || c?.age === '' || !Number.isFinite(Number(c?.age))) && React.createElement('div', { style: klein },
+      hinweisZeichen(), t('mietzinsView.kindOhneAlter')),
+    // Verheiratet ohne Angabe zum Partnereinkommen: gerechnet ohne — sichtbar.
+    assessment && assessment.key === 'likely' && partnerOffen && React.createElement('div', { style: klein }, hinweisZeichen(), t('mietzinsView.partnerOffen')),
+    // ZG 50'000–60'000: nur bei Mietbelastung über 25 % (nach Verbilligung) — hier nur mit Miete vor Verbilligung prüfbar.
+    assessment && assessment.key === 'likely' && info.mietbelastung && annualIncome > info.mietbelastung.ab && rentMonthly * 12 <= info.mietbelastung.anteil * annualIncome && React.createElement('div', { style: klein },
+      hinweisZeichen(), t('mietzinsView.mietbelastungZG')),
+    // F7-R3: das Instrument des Kapitels Wohnen — «Wo steht Ihre Miete?» (dasselbe Bauteil wie in der Finanz-Übersicht).
+    canton && React.createElement('div', { style: { marginTop: space.md + 'px' } },
+      React.createElement(MietVergleich, { palette, t, data, isDarkMode, canton }))
+  );
+
+  // Angaben: was die Einschätzung verwendet (aus dem Profil), dazu die Rückfragen einzelner Kantone.
+  const angabenInhalt = React.createElement('div', { style: { fontSize: text.sm, color: palette.text, paddingBottom: space.xs + 'px' } },
+    React.createElement('p', { style: { ...klein, marginTop: 0 } },
+      t('mietzinsView.basis', {
+        income: annualIncome ? zahl(annualIncome, { hoechstens: 2 }) : '—',
+        rent: rentMonthly ? zahl(rentMonthly, { hoechstens: 2 }) : '—',
+        size: householdSize,
+      })),
+    // ZG: die WFG-Frage — nur mit Schreibweg (onUpdateData); ohne bleibt es beim Hinweis am Ergebnis.
+    hasProgram && info.wfgFrage && onUpdateData && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+      React.createElement('label', { htmlFor: 'mz-wfg', style: fragenLabel }, t('mietzinsView.wfgFrage')),
+      React.createElement('select', {
+        id: 'mz-wfg', value: wfg || '', 'aria-describedby': 'mz-wfg-hinweis',
+        onChange: (e) => onUpdateData('wohnen', 'wfgWohnung', e.target.value),
+        style: auswahlStil,
+      },
+        React.createElement('option', { value: '' }, t('common.select')),
+        ['ja', 'nein', 'weissNicht'].map((v) => React.createElement('option', { key: v, value: v }, t('mietzinsView.wfg_' + v)))
       ),
-
-      // Schnellcheck — rechnet mit den erfassten Beträgen.
-      hasProgram && React.createElement('div', { style: card() },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, t('mietzinsView.checkTitle')),
-        // Was wir verwenden (transparent, wie ein Rechner).
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.normal } },
-          t('mietzinsView.basis', {
-            income: annualIncome ? zahl(annualIncome, { hoechstens: 2 }) : '—',
-            rent: rentMonthly ? zahl(rentMonthly, { hoechstens: 2 }) : '—',
-            size: householdSize,
-          })),
-        // ZG: die WFG-Frage — nur mit Schreibweg (onUpdateData); ohne bleibt es beim Hinweis am Ergebnis.
-        info.wfgFrage && onUpdateData && React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
-          React.createElement('label', { htmlFor: 'mz-wfg', style: { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' } }, t('mietzinsView.wfgFrage')),
-          React.createElement('select', {
-            id: 'mz-wfg', value: wfg || '', 'aria-describedby': 'mz-wfg-hinweis',
-            onChange: (e) => onUpdateData('wohnen', 'wfgWohnung', e.target.value),
-            style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' },
-          },
-            React.createElement('option', { value: '' }, t('common.select')),
-            ['ja', 'nein', 'weissNicht'].map((v) => React.createElement('option', { key: v, value: v }, t('mietzinsView.wfg_' + v)))
-          ),
-          React.createElement('p', { id: 'mz-wfg-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, t('mietzinsView.wfgHinweis'))
-        ),
-        // BS: je Kind zwischen 18 und 24 — in Erstausbildung? Nur dann zählt es zum Haushalt (SoHaV § 2/§ 3).
-        // Die Antwort steht am Kind im Haushalt (basis.household.children[i].erstausbildung).
-        info.limitFormel === 'bs' && onUpdateData && (hh.children || []).some(istJungErwachsen) && React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
-          (hh.children || []).map((c, i) => istJungErwachsen(c) && React.createElement('div', { key: i, style: { marginBottom: space.xs + 'px' } },
-            React.createElement('label', { htmlFor: 'mz-ausb-' + i, style: { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' } },
-              t('mietzinsView.erstausbildungFrage', { name: (c.name || '').trim() || t('mietzinsView.personAlter', { alter: Number(c.age) }) })),
-            React.createElement('select', {
-              id: 'mz-ausb-' + i, value: c.erstausbildung || '', 'aria-describedby': 'mz-ausb-hinweis',
-              onChange: (e) => {
-                const household = data?.basis?.household || {};
-                const children = (household.children || []).map((k, j) => j === i ? { ...k, erstausbildung: e.target.value || undefined } : k);
-                onUpdateData('basis', 'household', { ...household, children });
-              },
-              style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' },
-            },
-              React.createElement('option', { value: '' }, t('common.select')),
-              React.createElement('option', { value: 'ja' }, t('mietzinsView.wfg_ja')),
-              React.createElement('option', { value: 'nein' }, t('mietzinsView.wfg_nein'))
-            )
-          )),
-          React.createElement('p', { id: 'mz-ausb-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, t('mietzinsView.erstausbildungHinweis'))
-        ),
-        // Ergebnis (mit Zahlen, sofern vorhanden).
-        assessment && React.createElement('div', {
-          style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, fontSize: text.sm, color: toneColor(assessment.tone), lineHeight: leading.normal },
-        }, hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {})),
-        // Frage offen, ×12 gerechnet: nur wo es die Einschätzung kippen kann (unter der Grenze).
-        assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
-        // Bedingung, die die App nicht kennt (ZG: nur WFG-Wohnungen) — beim positiven Ergebnis sichtbar.
-        assessment && assessment.key === 'likely' && info.bedingungKey && !(info.wfgFrage && wfg === 'ja') && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t(info.bedingungKey)),
-        // ZG (steuerbar) / BS (massgebend nach SoHaG) messen ein Einkommen nach Abzügen — meist tiefer als
-        // der Lohn, mit dem hier gerechnet wird. Knapp über der Grenze kann es reichen.
-        assessment && assessment.key === 'incomeHigh' && info.einkommensBasis && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t(info.einkommensBasis === 'steuerbar' ? 'mietzinsView.steuerbarTiefer' : 'mietzinsView.massgebendTiefer')),
-        // Ohne Ehe: ob das Einkommen der zweiten Person zählt, entscheidet die Stelle — die Zahlen mit ihr stehen daneben.
-        assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && konkubinatMitPartner != null && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), grenzeMitPartner != null
-            ? t('mietzinsView.konkubinatPartnerGrenze', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }), grenze: zahl(grenzeMitPartner, { hoechstens: 2 }) })
-            : t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),
-        // BS: ab AHV-Referenzalter kein Anspruch (MBG 890.500 § 4 Abs. 2). Die App kennt nur «pensioniert» —
-        // das kann auch eine Frühpensionierung sein, darum Hinweis statt Ausschluss.
-        assessment && assessment.key === 'likely' && info.limitFormel === 'bs' && hh.isRetired && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.referenzalterBS')),
-        // BS: Kind ohne Altersangabe zählt als minderjährig (bsHaushalt) — sichtbar machen.
-        assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && info.limitFormel === 'bs' && (hh.children || []).some((c) => c?.age == null || c?.age === '' || !Number.isFinite(Number(c?.age))) && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.kindOhneAlter')),
-        // Verheiratet ohne Angabe zum Partnereinkommen: gerechnet ohne — sichtbar.
-        assessment && assessment.key === 'likely' && partnerOffen && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.partnerOffen')),
-        // ZG 50'000–60'000: nur bei Mietbelastung über 25 % (nach Verbilligung) — hier nur mit Miete vor Verbilligung prüfbar.
-        assessment && assessment.key === 'likely' && info.mietbelastung && annualIncome > info.mietbelastung.ab && rentMonthly * 12 <= info.mietbelastung.anteil * annualIncome && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.mietbelastungZG')),
-        React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
-        // Ins Kapitel Finanzen oben zum Formular — nicht über `finanzuebersicht`: dessen Sprungmarke
-        // liegt bei der Auswertung UNTER den Eingabefeldern (Befund Rundgang 24.10.2026).
-        assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('finanzen')) }, t('mietzinsView.enterIncomeLink'))
-      ),
-
-      // Wo steht deine Miete? — jetzt aus dem gemeinsamen Bauteil, damit die Finanz-Übersicht
-      // und diese Ansicht nie auseinanderdriften (eine Wahrheit, ein Rechenweg).
-      React.createElement('div', { style: { marginBottom: space.md + 'px' } },
-        React.createElement(MietVergleich, { palette, t, data, isDarkMode, canton })
-      ),
-
-      // Unterlagen, die meist gebraucht werden.
-      React.createElement('div', { style: card() },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px' } }, React.createElement(Icon, { name: 'kaestchen', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('mietzinsView.docsTitle')),
-        React.createElement('ul', { style: { fontSize: text.sm, color: palette.mid, paddingLeft: '20px', margin: 0 } },
-          [t('mietzinsView.doc1'), t('mietzinsView.doc2'), t('mietzinsView.doc3')].map((d, i) =>
-            React.createElement('li', { key: i, style: { marginBottom: '4px' } }, d))
-        )
-      ),
-
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' } }, renderSource(t('mietzinsView.source'), null, t)),
-
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('sync') }, t('mietzinsView.linkBudget')),
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('nav.finanzUebersicht'))
+      React.createElement('p', { id: 'mz-wfg-hinweis', style: klein }, t('mietzinsView.wfgHinweis'))
     ),
+    // BS: je Kind zwischen 18 und 24 — in Erstausbildung? Nur dann zählt es zum Haushalt (SoHaV § 2/§ 3).
+    // Die Antwort steht am Kind im Haushalt (basis.household.children[i].erstausbildung).
+    hasProgram && info.limitFormel === 'bs' && onUpdateData && (hh.children || []).some(istJungErwachsen) && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+      (hh.children || []).map((c, i) => istJungErwachsen(c) && React.createElement('div', { key: i, style: { marginBottom: space.xs + 'px' } },
+        React.createElement('label', { htmlFor: 'mz-ausb-' + i, style: fragenLabel },
+          t('mietzinsView.erstausbildungFrage', { name: (c.name || '').trim() || t('mietzinsView.personAlter', { alter: Number(c.age) }) })),
+        React.createElement('select', {
+          id: 'mz-ausb-' + i, value: c.erstausbildung || '', 'aria-describedby': 'mz-ausb-hinweis',
+          onChange: (e) => {
+            const household = data?.basis?.household || {};
+            const children = (household.children || []).map((k, j) => j === i ? { ...k, erstausbildung: e.target.value || undefined } : k);
+            onUpdateData('basis', 'household', { ...household, children });
+          },
+          style: auswahlStil,
+        },
+          React.createElement('option', { value: '' }, t('common.select')),
+          React.createElement('option', { value: 'ja' }, t('mietzinsView.wfg_ja')),
+          React.createElement('option', { value: 'nein' }, t('mietzinsView.wfg_nein'))
+        )
+      )),
+      React.createElement('p', { id: 'mz-ausb-hinweis', style: klein }, t('mietzinsView.erstausbildungHinweis'))
+    ),
+    // Fehlt etwas, führt ein Weg dorthin, wo man es einträgt.
+    !canton && onNavigate && React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('praemien') }, t('mietzinsView.enterCantonLink')),
+    // Ins Kapitel Finanzen oben zum Formular — nicht über `finanzuebersicht`: dessen Sprungmarke
+    // liegt bei der Auswertung UNTER den Eingabefeldern (Befund Rundgang 24.10.2026).
+    assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('finanzen')) }, t('mietzinsView.enterIncomeLink'))
+  );
 
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px' } }, hinweisZeichen(), t('trust.localOnly'))
+  return React.createElement(RechnerForm, {
+    palette, t, view: 'mietzins', onNavigate,
+    titel: t('mietzinsView.title'), satz: t('mietzinsView.intro'),
+    ergebnis, ohneErgebnis, art, vorbehalt,
+    angaben: {
+      erfasst: (canton ? 1 : 0) + (annualIncome > 0 ? 1 : 0) + (rentMonthly > 0 ? 1 : 0), gesamt: 3,
+      inhalt: angabenInhalt,
+    },
+    // Was zu tun ist: das Programm im Kanton (belegt) und die Unterlagen, die meist gebraucht werden.
+    tun: canton ? {
+      titel: t('mietzinsView.cantonLabel', { name: getCantonName(canton, t) || canton }),
+      inhalt: React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } },
+        hasProgram && React.createElement('div', null, t('mietzins.' + info.state)),
+        hasProgram && info.noteKey && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, hinweisZeichen(), t(info.noteKey)),
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t('mietzinsView.docsTitle')),
+        React.createElement('ul', { style: { paddingLeft: '20px', margin: 0 } },
+          [t('mietzinsView.doc1'), t('mietzinsView.doc2'), t('mietzinsView.doc3')].map((d, i) =>
+            React.createElement('li', { key: i, style: { marginBottom: '4px' } }, d)))
+      ),
+    } : null,
+    stelle: canton && info.url && React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border } },
+      React.createElement(ExternerLink, { t, href: info.url, style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } },
+        info.state === 'has' ? t('mietzins.linkCanton') : t('mietzins.linkOverview'))),
+    quelle: React.createElement(React.Fragment, null,
+      React.createElement('div', null, renderSource(t('mietzinsView.source'), null, t)),
+      React.createElement('div', { style: { marginTop: space.xs + 'px' } }, hinweisZeichen(), t('trust.localOnly'))),
+  },
+    canton && onNavigate && React.createElement('div', { style: { paddingTop: space.sm + 'px' } },
+      React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('sync') }, t('mietzinsView.linkBudget')),
+      React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('nav.finanzUebersicht')))
   );
 };
 

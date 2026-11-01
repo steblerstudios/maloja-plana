@@ -1,4 +1,4 @@
-// Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC; gebaut Abnahme 25.10.2026, Sophie «Bau Ausbildung 1 bis 5»):
+// Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC; gebaut Abnahme 25.10.2026, Stebler Studios «Bau Ausbildung 1 bis 5»):
 // Zusammenfassung mit Arbeitgeber, Dauer und Stunden · «Wo steht Ihr Lohn?» oben · Vorschau des Lebenslaufs ·
 // Werte nicht mehr über den Kartenrand · «Aufenthaltsbewilligung» bei Schweizer/innen «nicht nötig».
 import { describe, it, expect } from 'vitest';
@@ -28,24 +28,24 @@ const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'u
 
 describe('Zusammenfassung', () => {
   it('Maria: Arbeitgeber, seit wann, wie lange, Stunden', () => {
-    expect(kapitel()).toMatch(/Bachelor\. Aktuell tätig als Pflegefachfrau HF — bei Kantonsspital Zürich seit 01\.04\.2019 \(\d+ Jahre(, \d+ Monate?)?\), 42 Std\.\/Woche\./);
+    expect(kapitel()).toMatch(/Bachelor\. Aktuell tätig als Pflegefachfrau FH — bei Kantonsspital Zürich seit 01\.04\.2019 \(\d+ Jahre(, \d+ Monate?)?\), 42 Std\.\/Woche\./);
   });
   it('ohne Datum und Stunden: nur der Grundsatz mit Arbeitgeber', () => {
     const a = { ...DEMO_DATA.ausbildung, employmentStart: '', workHoursPerWeek: '' };
-    expect(kapitel(a)).toContain('Bachelor. Aktuell tätig als Pflegefachfrau HF — bei Kantonsspital Zürich.');
+    expect(kapitel(a)).toContain('Bachelor. Aktuell tätig als Pflegefachfrau FH — bei Kantonsspital Zürich.');
   });
 });
 
 describe('Oben im Kapitel', () => {
-  it('Lohn-Barometer wie in Finanzen, fest auf «ausbildung»', () => {
-    expect(QUELLE).toContain("const LohnEinordnung = React.lazy(");
-    expect(QUELLE).toContain("aktuellesKapitel: 'ausbildung'");
+  it('F7-K4-1: der Lohnvergleich steht hier, nachgeladen, fest auf «ausbildung»', () => {
+    expect(QUELLE).toContain("const LohnImKapitel = React.lazy(");
+    expect(fs.readFileSync(path.resolve(__dirname, '../components/FinanzAuswertung.jsx'), 'utf8')).toContain("aktuellesKapitel: 'ausbildung', ohneBefund: true");
   });
   it('Vorschau des Lebenslaufs nur aus erfassten Angaben', () => {
     const text = nurText(renderToStaticMarkup(React.createElement(LebenslaufVorschau, { palette: LIGHT_PALETTE, t, ausbildung: DEMO_DATA.ausbildung, allData: DEMO_DATA, onNavigate: () => {} })));
     expect(text).toContain('Maria Muster');
-    expect(text).toContain('Pflegefachfrau HF · Zürich · maria.muster@example.ch');
-    expect(text).toContain('seit 04/2019 · Pflegefachfrau HF, Kantonsspital Zürich');
+    expect(text).toContain('Pflegefachfrau FH · Zürich · maria.muster@example.ch');
+    expect(text).toContain('seit 04/2019 · Pflegefachfrau FH, Kantonsspital Zürich');
     expect(text).toContain('Bachelor, ZHAW · CAS Notfallpflege');
     expect(text).toContain('Lebenslauf erstellen ›');
   });
@@ -56,10 +56,10 @@ describe('Oben im Kapitel', () => {
 
 describe('Angaben', () => {
   it('Schweizer/in: «Aufenthaltsbewilligung nicht nötig (Schweizer Bürgerrecht)»', () => {
-    expect(kapitel()).toContain('Aufenthaltsbewilligung nicht nötig (Schweizer Bürgerrecht)');
+    expect(kapitel()).toContain('Aufenthaltsstatus (Ausweis) nicht nötig (Schweizer Bürgerrecht)');
   });
   it('mit Bewilligung: die Bewilligung wie bisher', () => {
-    expect(kapitel({ ...DEMO_DATA.ausbildung, workPermit: 'b' })).toContain('Aufenthaltsbewilligung B');
+    expect(kapitel({ ...DEMO_DATA.ausbildung, workPermit: 'b' })).toContain('Aufenthaltsstatus (Ausweis) B');
   });
   // Muster M1 (25.10.2026) löst die Spalten 3 : 2 ab: Zeilen wie im Entwurf — die Bezeichnung nimmt den
   // Platz, den der Wert übrig lässt (trennt nach Silben), der Wert höchstens 62 % und bricht nur

@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
-import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import React, { useRef, useState } from 'react';
+import { PanelTitle } from './components/Heading.jsx';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { betrag } from './utils/geld.js';
 
-// Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung.
+// Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung. Seit F7-L8 (31.10.2026) ein
+// aufklappbarer Teil des Steuer-Rechners: er wird erst beim Aufklappen geladen und belastet das Startbündel nicht.
 // Spiegelt das Muster von BudgetImport: Datei wählen -> Vorschau -> bestätigen.
 // Überschreibt bewusst nie bestehende Werte (fill-if-empty).
-export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNavigate }) => {
+export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeufig }) => {
   const [importing, setImporting] = useState(false);
   const [preview, setPreview] = useState(null);
   const [importError, setImportError] = useState(null);
+  const [uebernommen, setUebernommen] = useState(false);
+  // Speichern und Abbrechen nehmen ihre Knöpfe mit: der Fokus geht zurück zur Dateiwahl (a11y-Prüfung 01.11.2026).
+  const dateiRef = useRef(null);
 
   const fmt = (n) => betrag(n, { hoechstens: 2 });
 
@@ -22,6 +26,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
     setImporting(true);
     setImportError(null);
     setPreview(null);
+    setUebernommen(false);
     try {
       const { matched, unmatched } = await importTaxFromFile(file);
       const { applied, kept } = applyTaxToFinanzen(matched, currentFinanzen);
@@ -39,10 +44,11 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
     const { merged } = applyTaxToFinanzen(preview.matched, currentFinanzen);
     onImport(merged);
     setPreview(null);
-    if (onNavigate) onNavigate('finanzuebersicht');
+    setUebernommen(true);
+    dateiRef.current?.focus();
   };
 
-  const card = { background: palette.surface, padding: '20px', borderRadius: radius.md, border: '1px solid ' + palette.border };
+  const card = { minWidth: 0 };
 
   const fieldRow = (f, mode) => React.createElement('div', {
     key: mode + f.target,
@@ -61,19 +67,17 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
   return React.createElement('div', { style: { maxWidth: '760px' } },
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px 0' } }, t('taxImport.intro')),
 
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' } },
       // Upload
       React.createElement('div', { style: card },
-        React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('taxImport.title')),
-
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          React.createElement('input', { type: 'file', accept: '.csv,.txt,.tsv,.xml,.tax', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
+          React.createElement('input', { ref: dateiRef, type: 'file', accept: '.csv,.txt,.tsv,.xml,.tax', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('taxImport.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('taxImport.fileTypes'))
         ),
 
-        importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('taxImport.importing')),
-        importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, hinweisZeichen('kreuz'), importError),
+        importing && React.createElement('div', { role: 'status', style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('taxImport.importing')),
+        importError && React.createElement('div', { role: 'alert', style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, hinweisZeichen('kreuz'), importError),
 
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm, marginTop: space.sm } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('taxImport.formatExample') + ':'),
@@ -102,7 +106,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },
                   preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
-                  React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
+                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { flex: 1, minHeight: '44px', padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
                 )
               )
         ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
@@ -112,6 +116,8 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
       )
     ),
 
+    // Die Region steht immer da, nur der Text kommt dazu — sonst wird er oft nicht vorgelesen.
+    React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.text, marginTop: space.md + 'px' } }, uebernommen && React.createElement(React.Fragment, null, hinweisZeichen('check'), t(vorlaeufig ? 'common.savedTemporary' : 'taxImport.uebernommen'))),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '16px' } }, hinweisZeichen(), t('trust.localOnly'))
   );
 };

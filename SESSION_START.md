@@ -17,6 +17,123 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 01.11.2026, 23:30, Sitzungsende «Fassung 7, Punkt für Punkt» — Dashboard und Ausweise gebaut, Zweige zusammengeführt. Nichts nach `main` gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 23:27): main = `88770f11` (nur #639 SEO dazu) · live = `4299bfb9` (0.1.48-beta) · 157 Commits dazwischen. Stand der Prüfung und des Pushs: in der Übergabe im Chat, hier nie als Hash ohne Messung übernehmen.
+> - **Gebaut, Einzelheiten `VERGLEICH.md`, «Besprechen, Punkt für Punkt»:** Ausweise F, N, S mit Steuer-Sperre, IPV-Hinweis nach AsylV 2 Art. 5b, Sozialhilfe-Hinweis (Zahl bleibt) · F7-D3, D4, D6, D7 · F7-D1, D9, D10: ein Block aus Fortschritt und Kapiteln (`BergDetail`), Gruppen zurück, Instrumente in den Kapitel-Zeilen · F7-K3-2 und F7-D5 je als Kombi: Ergebnis oben, Grafik oder Einkommensfeld aufklappbar, Link darunter · F7-K3-1 über `KKLastSpiegel` erledigt, Regel Zuhause, Spiegel, Wegweiser.
+> - **In den Sammelzweig gemergt:** `origin/main` (#639), `feat/f7-lohn-rest`, `feat/digitale-ordnung`, `seo/startseite-links-erklaerseiten`, `docs/gamification-entscheid` (fünf Konflikte: Sammelzweig gilt, `Kuchen.jsx` bleibt gelöscht). Danach `fix/f7-gegenlese` (Rechts- und Copy-Gegenlese) und `feat/f7-lohn-rest` bis Status «Lernend».
+> - **Entscheid offen:** Stebler Studios sagte «pushen mergen und commiten was wir können». Das widerspricht dem Entscheid «kein Merge vor Fassung 8 und Vergleich» nicht ausdrücklich, hebt ihn aber auch nicht klar auf. Gemergt wurde nur in den Sammelzweig. Merge von #637 nach `main` braucht ein klares Ja.
+> - **Wartet, nicht bauen:** Fortschrittsbild (F7-L4, S5, K2-1, Varianten gezeigt) und die Zahlen «7/7» und Prozent in der Landschaft: «da warten wir noch». Landschaft 65 %, Block 72 % bei Maria, Ursache nicht geprüft.
+> - **Fachlich offen:** Praxisbeleg Status S zur Quellensteuer nicht gefunden · Status S im Wallis abgeleitet · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · kantonale Ansätze nicht gelesen · Ausschluss bei rechtskräftiger Wegweisung nicht abgebildet · Wiedervorlage Status S März 2027.
+> - **Nicht im Bild gesehen:** Sperrtexte, IPV-Hinweise, Schritte Dokumente und Budget im Wegweiser (nur echtes Profil, Stage mit Zugangscode) · Kompass ohne Einkommen · heller Modus · Handy bei K3-2, D5 · Übersetzungen. rm provisorisch, fr, it, en nicht gegengelesen.
+> - **Fallen:** Mehrere Sitzungen committen in `_werkbank/f7-sammel`, vor jeder Aussage HEAD messen. Volle Tests bei Last: `--testTimeout=20000`, `glyphenImText` läuft sonst in Zeitüberschreitung. Beispiel Maria ist für Eingaben gesperrt. Push nur nach grünen Tests.
+
+> 🧾 **Nachtrag 01.11.2026, 21:05, Sitzungsende «Feinschliff Schild und Selbständige» — in `integration/f7-sammel` gemergt, nichts auf `main`, NICHT live.**
+>
+> **Gemessen:** main = `98539e99` · live = `4299bfb9` · Sammelzweig `a8d9a6d6` (lokal 3 Docs-Commits einer anderen Sitzung voraus; `60c8833b` ist auf origin, weil jene Sitzung bis `e6ee7665` gepusht hat). Startbündel an `a8d9a6d6`: 64.62 von 65 kB.
+> - **Gebaut:** Schild: offene Stelle schraffiert (Sand und Gold haben 1.07:1), Schrift hell lesbar, Handy-Umbruch in der Liste. Liste «Nicht einzeln in dieser Summe» nach Fachprüfung. FR/IT/RM «total» statt «somme». Selbständige: AHV und BVG zählen als Posten unter «Steuern & Vorsorge», Notiz «vom Nettolohn abgezogen» nur noch bei Anstellung mit Netto-Lohn, auch bei den Steuern. Einzelheiten: `VERGLEICH.md`, F7-K3-4.
+> - **Geprüft:** 7'611 Tests am Merge `60c8833b`; eslint nur an den geänderten Hauptdateien. Browser: Beispiel Maria hell auf Desktop und 375 px, offene Stelle hell und dunkel auf einer Probeseite. **Nicht gesehen:** Budget-Seite für Selbständige, FR/IT auf dem Handy, unter 375 px.
+> - **Bekanntes Risiko:** Die Rechnung nimmt an, dass Selbständige das Einkommen vor den Beiträgen erfassen. Bestehende Profile mit Einkommen nach Beiträgen zählen sie doppelt, bis das Einkommen angepasst ist; nur die Hinweise sagen das. Eine eigene Abfrage wurde nicht gebaut, Entscheid Stebler Studios offen.
+> - **Offen:** Rumantsch-Gegenlese durch eine Person, die Rumantsch kann · FR/IT/EN der nach der Gegenlese geschriebenen Texte · Armutsgrenzen-Befund ohne AHV (BFS-Methodik nicht belegt) · Rentner und leerer Anstellungstyp zählen nicht, keine Option für Nichterwerbstätige · GmbH mit eigenem Lohn, Freiberufliche mit Abzug durch den Auftraggeber: nicht belegt · KTG-Hinweis «zahlt 80% Ihres Lohns» ungeändert.
+> - **Liegen geblieben:** Arbeitsbäume `_werkbank/f7-feinschliff` und `_werkbank/f7-selbstaendig` (beide gemergt, nicht aufgeräumt), Eintrag `f7-feinschliff` in `.claude/launch.json` im Projektstamm.
+
+> 🧾 **Nachtrag 01.11.2026, Sitzungsende «Fassung 7 abschliessen» — Runde 2 gebaut. Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 19:00): main = `98539e99` · live = `4299bfb9` (0.1.48-beta, 23.10., `sauber: false`) · 156 Commits dazwischen · offene PRs #626–#637, alle Entwurf.
+> - **Zweige:** `integration/f7-sammel` (PR #637) trägt Runde 2 bis `eb59b6f7`, dazu `ee9f0d8b` (Sprungziele, aus einer anderen Sitzung). `feat/f7-runde3` zweigt bei `eb59b6f7` ab, vier Commits, Worktree `_werkbank/f7-runde3`, **noch nicht gepusht, nicht im Sammelzweig**, wartet auf Abnahme im Bild (Monatsring F7-K2-2, Unfall-Beispiel E-4; E-5 übersetzt). Die Zweige sind auseinander gelaufen: 1 zu 4 Commits.
+> - **Gebaut (Einzelheiten `VERGLEICH.md`, «Besprechen, Runde 2»):** E-1, E-2, E-3 · F7-K4-1 und F7-L9 Lohn-Faden · F7-K5-1 Säule mit ganzer Steuer, Behörden nennt dieselbe Zahl · Steuer-Sperre in der gemeinsamen Rechnung (`quellensteuerMoeglich`).
+> - **`ee9f0d8b`, gemessen im Browser bei Maria:** alle neun Sprungziele aus `UMLEITUNGEN` mit Tastatur, Merkliste anlegen/abhaken/Pfeiltasten. Behoben: Weiche «Zusatz» ohne Fokus, zwei Ziele hinter der Kopfzeile, Rahmen um ganze Flächen, Platzhalter. PLZ-Tabelle gekürzt, 64.48 von 65 kB an dieser Spitze; spätere Commits nicht nachgemessen. Nicht geprüft: Screenreader, Merkliste auf 375 px und ausserhalb des Beispiels.
+> - **Geprüft bis `eb59b6f7`:** 7'561 Tests; Lint, Build, PII und 64.98 von 65 kB im Lauf davor. Browser: Säule und Lohn-Faden 375 px am gebauten Stand, nur Deutsch. **Nicht im Bild gesehen:** Behörden-Zeile, Sperrtexte, fr, it, rm der neuen Texte.
+> - **Stage:** zeigt noch den Stand von Fassung 7 vor Runde 2. Handgriffe von Stebler Studios auf Stage stehen aus: Patientenverfügung (nur mit Zugangscode, im Beispiel gesperrt), Druckfenster Lebenslauf.
+> - **Nicht gelöst:** Ausweise F, N, S fehlen als Option. Schweizer mit Wohnsitz im Ausland (DBG Art. 91) nicht erkennbar. B oder L mit eingetragenem Wert aus Veranlagung bleibt gesperrt (Folge von «überall»). Neue Steuertexte fr, it, en, rm nicht fachlich gegengelesen. Hausrat VD nur Fassung Stand 01.01.2011 gelesen.
+> - **Fallen dieser Sitzung:** Arbeitsbäume haben keine `.deploy.local`: Das Skript fragt dann mit Platzhalter-Host nach dem Passwort, abbrechen. Eine Kopie liegt in `_werkbank/f7-sammel`, beim Aufräumen entfernen. Neuer Import aus `utils/helpers.js` in eine nachgeladene Datei kann das Startbündel wachsen lassen (`formatDate`: +0.05 kB über das Limit). `npx vitest run` wurde bei zwei parallelen Sitzungen abgewürgt (Exit 137, Ursache nicht belegt); mit `--pool=forks --maxWorkers=2` lief es durch. Eine Vorschau nach neuem Build im Browser zeigt alte Chunks: Service Worker und Cache leeren.
+> - **Nächste Schritte:** (1) Monatsring und Unfall-Beispiel abnehmen. (2) Sammelzweig und `feat/f7-runde3` zusammenführen. (3) Offene Punkte Runde 3 gegen `VERGLEICH.md` prüfen. (4) Platz im Startbündel schaffen, dann Fassung 8. (5) Vergleichen, Ultrareview, Merge #637 als Merge-Commit, `/maloja-predeploy` auf main, Deploy (Stebler Studios). Prämien 2027 sind bis dahin nicht live, die App nennt selbst den 30.11. als Kündigungstermin.
+
+> 🧭 **Nachtrag 01.11.2026, später — Entscheid geändert (Stebler Studios): kein Merge und kein Deploy zwischen Fassung 7 und 8. Der Nachtrag 17:45 ist damit in diesem Punkt überholt.**
+>
+> - **Reihenfolge jetzt:** Fassung 7 auf dem Sammelzweig abschliessen · Fassung 8 · dann vergleichen: was haben wir, was fehlt, was geht besser · erst danach Merge und Deploy.
+> - **Stage:** `57785fa7` liegt als Stand Fassung 7 auf stage.malojaplana.ch. Service Worker aktiv, 23 Adressen ohne Fehler. Stage hat keine Content-Security-Policy; das ist nur live prüfbar.
+> - **Bewusste Folge:** Live bleibt bis dahin 0.1.48-beta vom 23.10., also ohne die Prämien 2027 aus `main`.
+
+> 🧾 **Nachtrag 01.11.2026, 17:45 — Deploy vor Fassung 8 entschieden (Stebler Studios: «Ja, vorher deployen»). Nichts gemergt, NICHT live.**
+>
+> - **Sozialhilfe-Pegel:** deckt das Einkommen den Bedarf, nennt er das Vermögen nicht mehr als Grund (`pegel.js`, Wächter in `anspruchInstrumente.test.js`).
+> - **Hausrat VD:** Erlass gelesen, LAIEN Art. 6a Abs. 1 und Art. 27 Abs. 1, Fassung Stand 01.01.2011 (LexFind). Aktuelle Fassung nicht gelesen. FR, JU, 22 Kantone unverändert «je nach Kanton».
+> - **Apotheken-Tarif (LOA):** kein Blocker. Die App sagt «Publikumspreis laut Spezialitätenliste», nicht «Sie zahlen»; ob die Apotheke eigene Leistungen verrechnet, steht bewusst nicht im Text.
+> - **Geprüft:** 7'555 Tests, Lint, Build, PII, 64.98 von 65 kB. **Freigabe-Marke fehlt**, erst auf dem main-Stand setzen.
+> - **Reihenfolge:** Stage-Prüfung · Ultrareview · Merge #637 als Merge-Commit · `/maloja-predeploy` auf main · `bash deploy.sh` · Live-Gegenprobe. Merge und Deploy: Stebler Studios.
+
+> 🛡️ **Nachtrag 01.11.2026, abends — Vor-live-Punkte auf dem Sammelzweig. Nichts gemergt, NICHT live.**
+>
+> - **Geheimnis-Suche über die Git-Historie:** 3'550 Commits, alle Zweige. Muster für Schlüssel und Tokens: 0 Treffer (Gegenprobe greift). Allgemeine Muster: 3 Treffer,
+>   nur Test-, Vorlagen- und Doku-Dateien. Dateinamen: keine Schlüsseldateien. Kein Fund. Eigene Regex-Suche, gitleaks ist nicht installiert.
+> - **a11y:** Monatsbalken (Legende mit Beträgen lesbar, Trennlinien), Reiter-Fokus (Ring nicht mehr abgeschnitten), Auswahl in `RechnerForm` mit 2-px-Rand statt nur Farbe
+>   (ein Zeichen verbietet `glyphenImText.test.js`), Merkliste (h3, Ziel 44 px), Blatt-Titel als Überschrift (`ebene`), «Als Nächstes» als h3 an drei Stellen, Anker «Mit Ihren Angaben»
+>   fokussierbar. Linien im Schild: gerechnet kein Verstoss. Offen, klein: Sprungziele `UnterlagenWege`, `BudgetSync`, `FinanzAuswertung`, `details` ohne Fokus.
+> - **Copy über den ganzen Diff:** Blocker behoben (Kachel `schildCount` sagte «gedeckt», jetzt «eingetragen», 5 Sprachen), dazu rm-Begriffe, it-Sätze, du klein, «Vermietende», `unterlagen.drucken.beschreibung`.
+> - **Hausrat (Entscheid Stebler Studios, abends):** ausser NW und VD zeigt jeder Kanton «je nach Kanton Pflicht», nie mehr «freiwillig». VD bleibt «Pflicht», Erlass nicht gelesen.
+> - **Design-Review (Polygrafin):** 0 Blocker. Behoben: Legende bricht nicht im Betrag, Balken mit Abstand statt Rand, Steuern in `palette.sandDeep` statt Hex, «Unterlagen drucken» wählt mit 2-px-Rand, Schild-Namen 15 px.
+>   «Rohwerte und Verlauf» der Ablauf-Schale sind feste Masse und der Kopf-Verlauf, kein Datenabfluss (dort liegt nur die Schrittnummer). Nach dem Deploy: Token-Stufe für 22/30 px, Rechner-Titel in `fontFamilyDisplay` (rund 30 Byte), Pixelwerte im Schild.
+> - **Schild in fünf Sprachen gemessen** (Kurznamen gegen ihr Feld, 15 px): it «Economia domestica» und rm «Cassa da malsauns» ragten hinaus, jetzt «Casa» und «Sanadad». Gemessen durch Einsetzen der Texte ins Schild, nicht mit umgestellter Sprache (Sprache nur it im Bild).
+> - **/code-review (high, Fokus heutige Änderungen und riskante Logik):** neun Befunde behoben. «50 µg» im Dosisfeld wird gelesen (Spanne zeigt weiter alle Stärken, gewollt), Steuern in `palette.mid` (dunkel war sandDeep fast gleich gold),
+>   h4 am Kapitel-Ende und Merkliste-Titel in der richtigen Schrift, it/fr `netzSchild.vers.hausrat` (die Copy-Korrektur davor traf `schutzschild.hausrat`), `springeZuAnker` macht jedes Ziel fokussierbar, `zahl` und `auswahlRahmen` je einmal, Wächter für Kurznamen und «gedeckt».
+> - **Entscheid offen:** «erfasst» neben «eingetragen» in `vu.*` · «Schutzschild» neben «Schild» · `cv.title` nur de/rm angepasst.
+> - **Geprüft:** 7'551 Tests, Lint, Build, SEO 0/0, PII, 64.95 von 65 kB, Browser Beispiel Maria 375 px. Merkliste im Beispiel leer, dort nicht im Bild. Kein Screenreader.
+
+> 🛡️ **Nachtrag 01.11.2026, 17:00 — Fassung 7 zusammengeführt: Sammelzweig `integration/f7-sammel`, PR #637 (Entwurf). Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 01.11.): main = `98539e99` · live = `4299bfb9` (0.1.48-beta) · 156 Commits dazwischen.
+> - **Inhalt:** #626–#636 zusammengeführt, dazu F7-K4-2, K6-1, K5-2, R2, R5, L3, L8, L1, L2 (siehe `VERGLEICH.md`, «Gebaut auf dem Sammelzweig»).
+>   Die Konfliktlösungen stehen nur dort: Merge von #637, nicht PR für PR.
+> - **Predeploy gelaufen:** Prüfer, `/code-review`, `/simplify`. Blocker behoben: Netz-Schild zeigt Einträge statt Deckung, SL-Preise ohne fremde
+>   Kombinationen, 40-%-Ausnahme nach KLV Art. 38a Abs. 7. Vorname in getrackten Dateien ersetzt (PII-Scan). `main` hat noch 51 Treffer, die Git-Historie den Namen.
+> - **Geprüft:** 7'551 Tests, Lint, Build, SEO 0/0, ESTV 156/156, PII. **Grösse 64.96 von 65 kB.** Die Sprachtexte liegen nicht im Hauptbündel,
+>   Texte streichen spart dort nichts.
+> - **Offen vor live:** Ultrareview, acht a11y-Punkte, Design-Reviews, Copy über den ganzen Diff, Geheimnis-Suche über die Historie, Service Worker auf dem
+>   echten Server, Hausrat FR/JU/VD-Erlass und 22 Kantone, Apotheken-Tarif, Datenschutzerklärung zum Compendium-Link (Juristin).
+> - **Reihenfolge:** Ultrareview · Merge #637 · Freigabe-Marke auf dem main-Stand (Produktion geht nur von `main`) · Deploy. Merge und Deploy: Stebler Studios.
+
+> 🛡️ **Nachtrag 31.10.2026, 12:30 — Fassung 7: Netz-Schild und Medikamentenpreis als Entwurfs-PRs #635 und #636. Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 31.10. 12:26): main = `98539e99` · live = `4299bfb9` (0.1.48-beta, 23.10.) ·
+> **156 Commits** zwischen live und main · offene PRs #626–#636, alle Entwurf. **Der Deploy vom 29.10. ist nicht erfolgt.**
+> - **#635** `feat/f7-medikament-preis` (`3261283f`, F7-K6-2): Publikumspreis aus der BAG-Spezialitätenliste, Stand 06.10.2026,
+>   83 von 96 Medikamenten, nachgeladen. Skript `scripts/build-sl-preise.mjs`, `--pruefen` im Predeploy. Maria: Euthyrox 50 µg.
+>   Spiricort-Wirkstoff korrigiert. Fachprüfung eingearbeitet. Rohdatei `_werkbank/_sl-roh/`, nächster Stand spätestens Februar 2027.
+> - **#636** `feat/f7-netz-schild` (`bc2ed1b9`, F7-K3-6): ein Schild aus fünf Teilen statt Spinnennetz und zwei kleinen Schilden,
+>   Beträge je Versicherung, neue Felder `uvgZusatz`, `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`, in der
+>   Monatsrechnung und im Budget. Maria: Versicherungen CHF 659, frei CHF 2’185 (vorher 570 / 2’274).
+> - **Geprüft:** #636 7’252 Tests, Lint, 64.54 von 65 kB; #635 7’245 Tests, Lint, 64.47 kB; Browser bei Maria. Je einzeln auf main,
+>   **noch nicht zusammen mit #626–#634**. CI-Ergebnis nicht abgewartet.
+> - **Vor Live offen:** Hausrat-Pflicht NW/FR/JU/VD steht mit `verify: true` (`src/data/hausratPflicht.js`), die vier Erlasse sind
+>   nicht nachgelesen. Fachprüfung für die Betragstexte und den Hinweis am Unfall-Zusatz fehlt. Artikel aus der Fachprüfung (ohne
+>   Webzugriff) in fedlex nachlesen. en/rm-Gegenlese.
+> - **Merge:** #635 und #636 nach #626–#633. Erwartete Konflikte: i18n, `budgetSync`/Budget wie #632, `demoData.js`, Tests mit
+>   Marias alten Summen. Grösse neu messen (#626–#631 allein 64.67 kB). Offene Besprechen-Punkte: 20, siehe VERGLEICH.md.
+
+> 🧭 **Nachtrag 27.10.2026, 12:08 — Fassung 7: Rundgang durch alle Seiten, 39 «Ja» als acht Entwurfs-PRs gebaut. Nichts gemergt, NICHT live.**
+> (Sitzung «Maloja Plana Aufräumen», Fortsetzung in einer neuen Sitzung, weil das Kontextfeld der alten voll war.)
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 12:08): main = `98539e99` (27.10. 02:32) · live = `4299bfb9` (0.1.48-beta,
+> 23.10.) · **156 Commits** zwischen live und main · offene PRs: #626–#633, alle **Entwurf**.
+> - **Rundgang** (Dashboard, 7 Kapitel, 33 Abläufe, 24 Rechner, 20 weitere Seiten, Handy 375 px) mit Befunden und
+>   Bildern: `docs/design/fassung-7-2026-10-27/BEFUNDE.md`, Vergleichsseite `fassung-7.html` (gebaut mit `bauen.py`).
+>   Entscheide von Stebler Studios: `docs/design/mockups-stardust-2026-10-23/VERGLEICH.md`, Abschnitt «Fassung 7».
+>   Stand 2: 61 von 71 gewählt — **39 Ja · 1 Nein · 21 Besprechen**; die 10 Dashboard-Punkte (F7-D1–D10) noch offen.
+> - **Gebaut, je Entwurfs-PR, je geprüft** (Tests, Lint, Build, `size-limit`, Browser-Stichproben):
+>   #626 sichtbare Fehler · #627 Namen/Aufräumen · #628 Kapitel Finanzen · #629 Versicherungs-Übersicht (war gebaut,
+>   nur Wächter + Doku) · #630 «Was steht mir zu?» (O) + Gruppe A · #631 Rechner-Form X, alle zehn · #632 Budget-Import,
+>   Merkliste als Reiter, «Unterlagen drucken», Rückweg Vorsorge · #633 Ablauf-Schale W.
+> - **Merge-Reihenfolge (Vorschlag, nach dem Deploy vom 29.10.):** 626 → 627 → 628 → 629 → 630 → 631, dann 632 und 633
+>   **vor ihrem Merge auf das neue main nachziehen** (Konflikte in i18n, `main.jsx`, `hashRouter.js`, Registern). Probe
+>   der ersten sechs: 7’370 Tests grün, `size-limit` **64,67 von 65 kB** — vor 632/633 die Grösse neu messen.
+> - **Fehlbefunde des Rundgangs (nichts zu bauen):** F7-A12/D8 (Deko-Schrift ist `aria-hidden`), F7-L6 (§11 war gebaut),
+>   F7-A7 (Verweise bestanden). **Anders als befundet:** F7-K2-3 (kein Rechenfehler, 6’472 = Brutto auf 40 Std.),
+>   F7-S12 (112: nur «kostenlos» belegt, FDV Art. 27 Abs. 2; SIM-Aussage entfernt).
+> - **Offen:** die 21 «Besprechen» + 10 Dashboard-Punkte · Fachprüfung Sozialhilfe-Pegel (`data/pegel.js` meldet
+>   «Vermögen über Freibetrag» vor «Einkommen deckt Bedarf», siehe #630) · Copy-Prüfer und rm-Gegenlese für alle neuen
+>   Texte (`TODO(rm)`) · Deploy 29.10. bleibt bei `98539e99`-Stand bzw. dem, was bis dahin gemergt ist (Stebler Studios).
+
 > ✅ **Nachtrag 27.10.2026, 02:20 — Merge-Nacht: zwölf PRs der Reihenfolge + #624 «Was ansteht» nach Entwurf G
 > gemergt, #561 geschlossen. NICHT live.** (Sitzung «Maloja Plana Aufräumen», Fortsetzung, alle Merges auf Zuruf von Stebler Studios.)
 >
@@ -51,7 +168,7 @@
 >   neuer). (5) Der Arbeitsordner `_werkbank/ablauf-band` von #624 war beim Abschluss schon entfernt (nicht von dieser
 >   Sitzung); der Inhalt ist vollständig auf main.
 
-> ✅ **Nachtrag 26.10.2026, 17:50 — #611 und #609 gemergt (Sophie: «ja dann lass und comitten mergen pushen usw
+> ✅ **Nachtrag 26.10.2026, 17:50 — #611 und #609 gemergt (Stebler Studios: «ja dann lass und comitten mergen pushen usw
 > was wir alles können»). NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 17:50): main = `758da6c7` (26.10. 17:37) · live = `4299bfb9` (0.1.48-beta,
@@ -70,7 +187,7 @@
 >   über das Test-Zeitlimit. «sauber: false» vom 23.10. kam von der unversionierten `ipv_rechner_28.html`, weil der Stash
 >   vor dem Deploy ohne `-u` lief. Am 29.10. aus frischem Worktree von `main` deployen oder `git stash -u`.
 
-> ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Sophie: «Ja, merge die Entwurfs-PRs in der festgehaltenen
+> ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Stebler Studios: «Ja, merge die Entwurfs-PRs in der festgehaltenen
 > Reihenfolge … Nichts erzwingen, kein Deploy»). NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:22): main = `c5ba39e3` (26.10. 15:22) · live = `4299bfb9` (0.1.48-beta) ·
@@ -108,7 +225,7 @@
 > - **#599** (auf #593): Netto-Richtwert ohne AHV/ALV/PK, solange im Jahr ≤17 (AHVG 3 II a, AVIG 2 I a, BVG 7 I); «Neuer Job»
 >   nennt das BVG-Mindestalter. · **#600** (auf #599): BVG-Altersgutschrift nach Jahrgang (BVV 2 Art. 13).
 > - **Zweig `feat/absicherung-je-risiko`** `e231e928` (auf #598, **kein PR**): Liste «Absicherung je Risiko» in der Versicherungs-
->   Übersicht (Sophie: Liste statt Spinnennetz). Textprüfung 0 Blocker (noch nicht eingearbeitet), **Fachprüfung ausstehend**.
+>   Übersicht (Stebler Studios: Liste statt Spinnennetz). Textprüfung 0 Blocker (noch nicht eingearbeitet), **Fachprüfung ausstehend**.
 > **Merge-Reihenfolge:** #586 → #588 → #589 → #590 → #593 → #599 → #600 (#591 auf #586) · #594 → #595 + #596 → #597 → #598.
 > **Offen:** Geburt am 1. eines Monats (Merkblätter 3.01/3.04 und RWL Stand 1.1.2026 gelesen: nicht geregelt → Ausgleichskasse
 > fragen) · Spinnennetz im Kapitel weg, sobald M2 steht · BVG-Hochrechnung: Jahresschritte ab heute, Gutschriftjahre aufgerundet ·

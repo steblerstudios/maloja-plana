@@ -4,14 +4,16 @@ import { ANSPRUCH_GRUPPEN } from './data/anspruchLandkarte.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 
 // Anspruchs-Landkarte (#4.4.1): ruhiger Überblick über alle möglichen
-// Berechtigungen, gruppiert nach Auslöser. Seit 27.09.2026 keine eigene Seite mehr,
-// sondern der untere Teil des Leistungs-Kompasses (Schnellcheck mit mitLandkarte):
+// Berechtigungen, gruppiert nach Auslöser. Seit 27.09.2026 keine eigene Seite mehr; bis
+// 27.10.2026 der untere Teil des Schnellchecks, seither «Weitere Wege» auf «Was steht mir zu?»:
 // oben die eigenen Zahlen, darunter was es sonst gibt. Jeder Punkt öffnet sein bestehendes
 // Zuhause. Nur POSITIVE Orientierung, kein Verdikt (Würde). Bewusst KEIN
 // GlossarText auf den Labels — die Karte ist selbst ein Button/Link, und ein
 // verschachtelter Glossar-Button wäre ungültiges HTML; die Sub-Zeile erklärt.
-// `ohne`: Schlüssel, die der Schnellcheck darüber schon mit Zahlen zeigt — hier nicht doppelt.
-export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [] }) => {
+// `ohne`: Schlüssel, die darüber schon mit Zahlen stehen — hier nicht doppelt.
+// Seit 27.10.2026 die «Weitere Wege» auf «Was steht mir zu?» (Lebenssituationen.jsx). `mitFuss: false`:
+// die Seite trägt den Weg zum geführten Check und den Hinweis selbst, unten — nicht doppelt.
+export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [], mitFuss = true }) => {
   const card = (item) => {
     const base = 'anspruch.items.' + item.key;
     const titel = t(base + '.label');
@@ -69,7 +71,7 @@ export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [] }) => {
     ),
 
     // Wer lieber geführt Schritt für Schritt durchgeht (Zahlen → Lebenslage).
-    React.createElement('button', {
+    mitFuss && React.createElement('button', {
       type: 'button',
       onClick: () => onNavigate('anspruchcheck'),
       style: {
@@ -79,7 +81,7 @@ export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [] }) => {
       },
     }, t('anspruch.gefuehrtLink')),
 
-    React.createElement('p', {
+    mitFuss && React.createElement('p', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', fontStyle: 'italic', lineHeight: leading.relaxed }
     }, t('anspruch.footNote'))
   );

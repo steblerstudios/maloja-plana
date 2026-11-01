@@ -4,7 +4,7 @@
 // Antworten landeten nur im Gerätespeicher (`or5_beta_feedback_data`), wo sie niemand
 // liest. Der Name versprach mehr, als der Knopf tat.
 //
-// Entscheid Sophie, 26.10.2026: Mail-Entwurf, ehrlich bis zum Ende.
+// Entscheid Stebler Studios, 26.10.2026: Mail-Entwurf, ehrlich bis zum Ende.
 // - Knopf «Als E-Mail vorbereiten», darunter: gesendet wird erst mit dem eigenen Klick.
 // - Vor dem Klick steht der Entwurfstext sichtbar da, genau das, was rausgehen würde.
 // - Ausweg «Text kopieren» für alle ohne Mailprogramm.

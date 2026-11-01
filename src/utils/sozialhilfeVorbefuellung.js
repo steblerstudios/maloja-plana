@@ -41,7 +41,7 @@ function alterInMonaten(geburtsdatum, heute) {
   return m;
 }
 
-function kindAlter(kind, heute) {
+export function kindAlter(kind, heute = new Date()) {
   if (kind?.birthDate) {
     const m = alterInMonaten(kind.birthDate, heute);
     if (m != null) return Math.floor(m / 12);

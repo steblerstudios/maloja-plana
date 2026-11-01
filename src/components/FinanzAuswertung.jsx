@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon, hinweisZeichen, erledigtZeichen } from '../IconSystem.jsx';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from '../config/cantonalData.js';
+import { hatAusweisFNS } from '../data/ausweis.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, ladeIPVModelle } from '../config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from '../data/ipvAbzug.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from '../data/kantonaleSteuerdaten.js';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './KantonssteuerOrientierung.jsx';
@@ -12,9 +13,10 @@ import { BRANCHENLOHN, getBranchenvergleich } from '../data/branchenLohn.js';
 import { berechneArmutsgrenze } from '../data/sozialhilfeRechner.js';
 import { nettoZuBruttoRichtwert, AHV_FREIBETRAG_RENTNER_MONAT } from '../data/ahvRechner.js';
 import { LohnEinordnung } from './LohnEinordnung.jsx';
-import { lohnBandState } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnSpiegel, lohnVergleichSperre } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
-import { KKLastCard } from '../KKLastCard.jsx';
+import { CHAPTER_KEYS } from '../config/constants.js';
+import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
 import { renderSource } from '../utils/renderSource.js';
@@ -25,7 +27,6 @@ import { ReserveTank } from './ReserveTank.jsx';
 import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
-import { KuchenImKapitel } from './Kuchen.jsx';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -145,6 +146,7 @@ export const finanzWerte = (data, t) => {
   return {
     income, canton, steuerkanton, hh, hasData: income > 0,
     sozialhilfe, ipv, ipvAbzug: ipvAbzugWert, ipvFristVorbei, ipvVerfuegung, ipvOhneJahr, el,
+    ipvRuht: hatAusweisFNS(data),
     taxResult, steuerOhneZahl, kantonsSchaetzung, kantonal, annahmen, annahmenSatz, steuerAngabeSatz,
     currentYear, gesundheitskosten, gesundheitskostenOffen, hasGesundheitskosten: (gesundheitskosten + gesundheitskostenOffen) > 0,
     savingsAccount, totalAssets, hasAssets: totalAssets > 0,
@@ -191,11 +193,12 @@ export const druckAbschnitte = (t, w) => {
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   // Geschätzter Betrag bei offener Frage nach dem 13. Monatslohn: die Annahme gehört dazu (wie bei der Steuer).
-  const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? ipvAnnahmenTexte(t, w.ipv.annahmen) : [];
+  const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? [...ipvAnnahmenTexte(t, w.ipv.annahmen), ...(w.ipvRuht ? [t('ipv.ruhtMitSozialhilfe')] : [])] : [];
   if (ipvAnnahmen.length) {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  if (w.sozialhilfe.ansatzTiefer) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ansatzTiefer')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
@@ -253,9 +256,12 @@ const generatePrintHTML = (t, data, w) => {
 // Wo steht der Lohn: Armutsgrenzen-Befund, Lohn-Barometer, Branchen-Chips. Nur mit erfasstem Lohn.
 // `aktuellesKapitel` (im Kapitel Finanzen): der «fehlt noch …»-Hinweis des Barometers springt
 // nicht ins eigene Kapitel — die Einkommensart liegt dort (LohnEinordnung).
-export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel }) => {
+// F7-K4-1 (Stebler Studios 01.11.2026): Der Lohnvergleich gehört zur Arbeit. Im Kapitel Finanzen (`nurBefund`) bleibt der
+// Armutsgrenzen-Befund mit dem Weg dorthin; in Ausbildung & Arbeit (LohnImKapitel) steht der Vergleich ohne diesen Befund.
+export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
+  const eigeneBranche = BRANCHENLOHN.find((b) => b.key !== 'gesamt' && b.key === data?.ausbildung?.branche) || null;
   const { income, sozialhilfe, hh, totalIncome, bruttoDabei } = w;
   if (!(income > 0)) return null;
   // Das Lohn-Barometer trägt die Lohnniveau-Einordnung — belegt (LSE 2024:
@@ -291,12 +297,18 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     - Number(data.versicherungen?.kkPremium || 0) - Number(f.alimentePaid || 0));
   const unterArmutsgrenze = f.incomeType === 'netto' && !bruttoDabei && rentKnown
     && armutsgrenze > 0 && verfuegbar < armutsgrenze;
+  // Spiegel des Lohns in Finanzen, aus derselben Schätzung wie das Barometer.
+  const lohnSatz = lohnSpiegel(lohnBandState({
+    income: f.monthlyIncome, canton: data.basis?.canton, hoursPerWeek: data.ausbildung?.workHoursPerWeek,
+    incomeType: f.incomeType, dreizehnter: f.dreizehnter, alter: bvgAlter, rentenalter, beitragsfrei,
+  }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
+
   return React.createElement('div', {
     style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
     // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
     // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.
-    unterArmutsgrenze && React.createElement('div', {
+    unterArmutsgrenze && !ohneBefund && React.createElement('div', {
       style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
     },
       React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
@@ -308,16 +320,24 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a) keine AHV/ALV/PK-Abzüge — dann kein Brutto-Hinweis.
-      !beitragsfrei && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+      !nurBefund && !beitragsfrei && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
         // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
         t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
           brutto: formatCHF(nettoZuBruttoRichtwert(income, bvgAlter, rentenalter)),
           freibetrag: formatCHF(AHV_FREIBETRAG_RENTNER_MONAT),
         }))
     ),
-    React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate, aktuellesKapitel }),
-    (() => {
-      const vgl = getBranchenvergleich(income);
+    // F7-K2-6 (Stebler Studios 27.10.2026): Die eigene Branche (Feld im Kapitel Ausbildung & Arbeit) steht als Marke auf dem
+    // Barometer, solange keine andere angetippt ist; die übrigen 17 sind aufklappbar.
+    nurBefund && lohnSatz && React.createElement('div', { 'data-teil': 'lohn-spiegel', style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+      t('lohnEinordnung.' + lohnSatz.key, { netto: formatCHF(lohnSatz.netto), brutto: formatCHF(lohnSatz.brutto) })),
+    nurBefund && onNavigate && React.createElement('button', {
+      type: 'button', className: 'mp-link', 'data-teil': 'lohn-weg', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+      style: { background: 'none', border: 0, padding: 0, minHeight: '44px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
+    }, t('lohnEinordnung.title') + ' · ' + t('chapters.ausbildung.title') + ' ›'),
+    !nurBefund && React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche || eigeneBranche, onNavigate, aktuellesKapitel }),
+    !nurBefund && (() => {
+      const vgl = lohnVergleichSperre(data, rentenalter) ? null : getBranchenvergleich(income);
       if (!vgl) return null;
       // Chips gegen DENSELBEN Wert färben wie das Barometer (Vollzeit-/13.-normiert),
       // sonst widersprechen sich grüner Chip und Marker-Position (roh 5200 vs. FTE 4952).
@@ -332,11 +352,9 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
         React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
           t('finanzUebersicht.branchenvergleich')
         ),
-        React.createElement('div', {
-          style: { display: 'flex', flexWrap: 'wrap', gap: '4px' }
-        },
-          BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b => {
-            const sel = selBranche && selBranche.key === b.key;
+        (() => {
+          const chip = (b) => {
+            const sel = (selBranche || eigeneBranche) && (selBranche || eigeneBranche).key === b.key;
             const reached = vergleichsLohn >= b.lohn;
             const toggle = () => setSelBranche(sel ? null : b);
             return React.createElement('span', {
@@ -360,8 +378,22 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
                 whiteSpace: 'nowrap',
               }
             }, t('branche.' + b.key) + ' ’' + String(b.jahr).slice(2));
-          })
-        ),
+          };
+          const reihe = (liste) => React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '4px' } }, liste.map(chip));
+          const andere = BRANCHENLOHN.filter((b) => b.key !== 'gesamt' && b.key !== eigeneBranche?.key).sort((a, b) => a.lohn - b.lohn);
+          const zuklapp = (label) => React.createElement('details', { style: { marginTop: eigeneBranche ? '6px' : 0 } },
+            React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.xs, color: palette.sandDeep || palette.text, minHeight: '32px', display: 'flex', alignItems: 'center' } }, label),
+            React.createElement('div', { style: { marginTop: '4px' } }, reihe(andere)));
+          return eigeneBranche
+            ? React.createElement(React.Fragment, null,
+                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
+                  React.createElement('span', { style: { fontSize: text.xs, color: palette.text } }, t('finanzUebersicht.eigeneBranche')),
+                  chip(eigeneBranche)),
+                zuklapp(t('finanzUebersicht.andereBranchen', { n: andere.length })))
+            : React.createElement(React.Fragment, null,
+                zuklapp(t('finanzUebersicht.brancheVergleichen', { n: andere.length })),
+                React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '4px' } }, t('finanzUebersicht.brancheAngeben')));
+        })(),
         React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '6px' } },
           t('finanzUebersicht.branchenQuelle')
         )
@@ -370,9 +402,17 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
   );
 };
 
+// Lohnvergleich im Kapitel Ausbildung & Arbeit (F7-K4-1): mit Lohn Barometer und Branchen, ohne Lohn der Hinweis des Barometers.
+export const LohnImKapitel = ({ palette, t, data, isDarkMode, onNavigate }) => {
+  const w = finanzWerte(data, t);
+  return w.income > 0
+    ? React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'ausbildung', ohneBefund: true })
+    : React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: 'ausbildung' });
+};
+
 // Was daraus folgt: je Karte eine Funktion (siehe oben), alle mit ({ palette, t, data, onNavigate, w }).
 // Die Übersicht zeigt sie in ihrer Reihenfolge (auswertungsKarten), das Kapitel Finanzen in seiner.
-// `imKapitel` (Abnahme F6, Sophie 25.10.2026): im Kapitel Finanzen kürzer — eine Zeile Bund · Kanton und
+// `imKapitel` (Abnahme F6, Stebler Studios 25.10.2026): im Kapitel Finanzen kürzer — eine Zeile Bund · Kanton und
 // Gemeinde mit «grobe Schätzung, Hauptort, ohne Kirchensteuer»; die ganze Herleitung steht auf der Seite
 // Steuern, zu der die Karte führt. Und der 13. Monatslohn verweist nicht «ins Kapitel Finanzen & Geld»,
 // in dem man schon ist, sondern auf «Einkommen» oben.
@@ -436,6 +476,7 @@ export const ipvKarte = ({ palette, t, onNavigate, w }) => {
       : ipv.eligible
       ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
         + ipvAnnahmenTexte(t, ipv.annahmen).map((x) => '. ' + x).join('')
+        + (w.ipvRuht ? '. ' + t('ipv.ruhtMitSozialhilfe') : '')
       : ipv.belegt === false
         ? t(ipv.noteKey, ipv.noteParams)
         // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht
@@ -465,7 +506,8 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
     detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
       + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
-      + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
+      + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf)
+      + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });
 };
@@ -510,7 +552,7 @@ export const gesundheitKarte = ({ palette, t, onNavigate, w }) =>
     onClick: () => onNavigate('kvg', undefined, 'franchise'),
   });
 
-// Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
+// Faden 3 / 3-I: KK-Last als % des Einkommens gegen Vergleichsmarke 10 %
 export const kkLastKarte = ({ palette, t, data, onNavigate }) => React.createElement(KKLastCard, { palette, t, data, onNavigate });
 
 // Die Karten in der Reihenfolge der Übersicht — ein Fragment.
@@ -562,6 +604,15 @@ export const auswertungsHinweis = ({ palette, t }) =>
 // `onEnterSandbox` (nur oben, nur ausserhalb von Beispiel und laufendem Probiermodus — main.jsx):
 // der Knopf «neben dem eigenen Stand rechnen», der bis 24.10.2026 auf der Finanz-Übersicht stand.
 export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMode, chapters = [], onSelectChapter, isMobile, lang = 'de', onEnterSandbox }) => {
+  // F7-K2-4: Die IPV-Kantonsmodelle laden nach (cantonalData.js IPV_MODULE). Bis dahin sagt calculateIPV
+  // «Orientierung offen»; danach einmal neu zeichnen — sonst blieb hier stehen, was vor dem Laden galt, und
+  // Dashboard und Kapitel widersprachen sich (Entscheid O, «beobachtet, unbestätigt»). Muster wie PraemienOrientierung.
+  const [, setIpvGeladen] = React.useState(0);
+  React.useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
   const w = finanzWerte(data, t);
   const p = { palette, t, data, onNavigate, w };
   if (teil === 'unten') {
@@ -594,17 +645,15 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
         onNavigate, bereiche: fruechte, onSelectChapter, isMobile, lang, isDarkMode,
       })
     ),
-    // Fassung 6 (VERGLEICH.md «nachentschieden», 24.10.2026 abends): nach dem Baum erst der Kuchen
-    // («Wofür geht es weg?»), dann der Geldfluss («Woher, wohin?») — dieser nur mit zwei oder mehr
-    // Einnahmequellen (GeldflussImKapitel). Beide rechnen wie «Jeden Monat bleiben».
-    w.hasData && React.createElement(KuchenImKapitel, { data, t, palette }),
+    // Fassung 6 (VERGLEICH.md «nachentschieden», 24.10.2026 abends): nach dem Baum der Geldfluss («Woher, wohin?»),
+    // nur mit zwei oder mehr Einnahmequellen (GeldflussImKapitel). Der Kuchen ist seit F7-K2-2 im Monatsring aufgegangen.
     w.hasData && React.createElement('div', { 'data-teil': 'geldfluss' },
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
-    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen' }),
+    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), kkLastKarte(p), gesundheitKarte(p), vermoegenKarte(p),
+      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p), vermoegenKarte(p),
       // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
       (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
         palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,

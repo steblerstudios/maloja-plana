@@ -183,9 +183,11 @@ describe('Briefgenerator-Ansicht — Hinweis VOR dem Formular', () => {
 
 describe('Ablauf «Mahnung erhalten»', () => {
   const html = renderToStaticMarkup(React.createElement(RechnungOffen, { stufe: 'mahnung', palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
-  it('rendert ohne rohe Schlüssel, mit allen drei Brief-Wegen', () => {
+  // F7-A10 (27.10.2026): «Brief: Mahnung schreiben» gehört zum eigenen Ablauf «Jemand schuldet Geld»
+  // (SelbstMahnen.jsx, vorher Schritt 6 hier) — hier bleiben die zwei Briefe der Schuldnerseite.
+  it('rendert ohne rohe Schlüssel, mit beiden Brief-Wegen der Schuldnerseite', () => {
     expect(html).not.toMatch(/mahnung\.[a-zA-Z]|briefe\.[a-zA-Z]/);
-    for (const k of ['paymentReminder', 'claimDispute', 'installmentRequest']) expect(html).toContain(de.briefe.ablaufLink[k]);
+    for (const k of ['claimDispute', 'installmentRequest']) expect(html).toContain(de.briefe.ablaufLink[k]);
   });
   it.each(['fr', 'it', 'en', 'rm'])('%s: rendert ohne rohe Schlüssel und ohne Platzhalter-Reste', (lang) => {
     for (const anrede of ['sie', 'du']) {

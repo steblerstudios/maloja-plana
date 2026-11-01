@@ -10,7 +10,7 @@ import { plusTage } from './utils/fristen.js';
 export const Volljaehrig = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'heart',
+    palette, t, onNavigate, ablauf: 'volljaehrig', icon: 'heart',
     title: t('volljaehrig.title'),
     intro: t('volljaehrig.intro'),
   },
@@ -20,7 +20,7 @@ export const Volljaehrig = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'volljaehrig-frist', frist: (d) => plusTage(d, 14),
         labelKey: 'volljaehrig.fristLabel', hinweisKey: 'volljaehrig.fristHinweis', vorbeiKey: 'volljaehrig.fristVorbei',
-        buttonKey: 'volljaehrig.step1Button', doneKey: 'volljaehrig.step1Done', calendarKey: 'volljaehrig.step1CalendarLink',
+        art: 'frist', buttonKey: 'volljaehrig.step1Button', doneKey: 'volljaehrig.step1Done', calendarKey: 'volljaehrig.step1CalendarLink',
         reminderTitle: t('volljaehrig.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('volljaehrig.step1Link'), onClick: () => onNavigate('budget') }),

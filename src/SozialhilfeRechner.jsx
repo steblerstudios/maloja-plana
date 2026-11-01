@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
-import { PageTitle } from './components/Heading.jsx';
+import { RechnerForm } from './components/RechnerForm.jsx';
 import { berechneSozialhilfe, sozialhilfeErgebnis } from './data/sozialhilfeRechner.js';
-import { ErgebnisArt } from './components/ErgebnisArt.jsx';
-import { Icon, aufklappZeichen } from './IconSystem.jsx';
+import { aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { zahl } from './utils/geld.js';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 
-export const SozialhilfeRechner = ({ palette, t, data }) => {
+// `titel`, `satz`, `weiteres`, `stelle`: von SozialhilfeView (die Seite um den Rechner), sonst leer.
+export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, weiteres, stelle, tun }) => {
   const isMobile = useIsMobile();
   // Kanton aus dem Profil → kantonaler Vermögensfreibetrag (ohne Kanton: SKOS-Empfehlung).
   const kanton = data?.basis?.canton || '';
@@ -103,10 +103,110 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       t(labelKey)
     );
 
-  return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('sh.title')),
-
-    React.createElement('div', { style: s.section },
+  // Rechner-Form X (F7-A2, 27.10.2026): Anspruch gross zuerst (Live-Region), darunter die Rechnung als Tabelle,
+  // dann «Ihre Angaben». Steht der Rechner in der Sozialhilfe-Seite, bringt sie Titel, Satz, ihre Orientierung
+  // aus dem Profil (`weiteres`) und die offizielle Stelle mit. Rechnung unverändert.
+  const ergebnis = result && React.createElement(React.Fragment, null,
+      React.createElement('div', {
+        style: {
+          ...s.highlight,
+          borderColor: result.hatAnspruch ? palette.sage : palette.border,
+          background: result.hatAnspruch ? palette.sage + '15' : palette.up,
+        }
+      },
+        React.createElement('div', { style: s.label }, t('sh.anspruch')),
+        React.createElement('div', {
+          style: { ...s.big, color: result.hatAnspruch ? (palette.sageDeep || palette.sage) : palette.mid }
+        },
+          result.hatAnspruch
+            ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
+            : t('sh.keinAnspruch')
+        ),
+        result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
+          t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
+        ),
+        // Erst der Einkommensfreibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
+        !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
+          t('sozialhilfe.efbEntscheidet')
+        ),
+        // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
+        // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
+        result.hatAnspruch && result.vfbUnbestaetigt && React.createElement('div', { style: s.hint },
+          t('sozialhilfe.assetLimitUnconfirmedUnder', { freibetrag: 'CHF ' + fmt(result.vermoegensfreibetrag) })
+        )
+      ),
+      React.createElement('table', { style: s.table },
+        React.createElement('thead', null,
+          React.createElement('tr', null,
+            React.createElement('th', { style: s.th }, t('sh.position')),
+            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, 'CHF')
+          )
+        ),
+        React.createElement('tbody', null,
+          React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.gbl') + ' (' + (
+              result.wohnform === 'familienaehnlich' ? t('sh.gblAnteil', { einheit: result.haushaltGroesse, haushalt: result.haushaltGroesse + result.weiterePersonen })
+                : result.wohnform === 'zweckWg' ? t('sh.gblZweckWg', { einheit: result.haushaltGroesse })
+                : result.haushaltGroesse + ' ' + t('sh.personen')) + ')'),
+            React.createElement('td', { style: s.tdRight }, fmt(result.gbl))
+          ),
+          React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.wohnkosten')),
+            React.createElement('td', { style: s.tdRight }, fmt(result.wohnkosten))
+          ),
+          React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.kvgLabel')),
+            React.createElement('td', { style: s.tdRight }, fmt(result.kvgPraemie))
+          ),
+          result.erwerbsunkosten > 0 && React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.erwerbsunkostenZeile')),
+            React.createElement('td', { style: s.tdRight }, fmt(result.erwerbsunkosten))
+          ),
+          React.createElement('tr', null,
+            React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, t('sh.bedarf')),
+            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.semi } }, fmt(result.bedarf))
+          ),
+          result.totalEinkommen > 0 && React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.einkommenTotal')),
+            React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.totalEinkommen))
+          ),
+          // Freibetrag nur, wenn eine Lücke bleibt (er gilt im Bezug) — sonst ginge die Tabelle nicht auf.
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
+            React.createElement('td', { style: { ...s.td, color: palette.sageDeep } }, t('sh.efbLabel')),
+            React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + fmt(result.efb))
+          ),
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
+            React.createElement('td', { colSpan: 2, style: { ...s.td, ...s.hint, paddingTop: 0 } }, t('sozialhilfe.efbGeschaetzt'))
+          ),
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.anrechenbar')),
+            React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.anrechenbaresEinkommen))
+          ),
+          React.createElement('tr', null,
+            React.createElement('td', { style: { ...s.td, fontWeight: weight.bold } }, t('sh.sozialhilfe')),
+            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.bold } }, fmt(result.sozialhilfeAnspruch))
+          )
+        )
+      ),
+      result.anrechenbaresVermoegen > 0 && React.createElement('div', {
+        style: { ...s.section, marginTop: space.md + 'px', color: palette.warn || palette.mid, border: '1px solid ' + (palette.warn || palette.mid), background: (palette.warn || palette.mid) + '15' }
+      },
+        t('sh.vermoegenHinweis') + ' (CHF ' + fmt(result.vermoegensfreibetrag) + ' ' + t('sh.freibetrag') + ', '
+          + (kanton ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + kanton) }) : t('sozialhilfe.assetLimitBasisSkos')) + ')',
+        result.vfbUnbestaetigt && React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('sozialhilfe.assetLimitUnconfirmed'))
+      )
+  );
+  const angabenWerte = [miete, kvg, einkommen, vermoegen];
+  return React.createElement(RechnerForm, {
+    palette, t, view: 'sozialhilfe', onNavigate,
+    titel: titel || t('sh.title'), satz,
+    ergebnis, ohneErgebnis: t('sh.eingeben'),
+    art: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
+    vorbehalt: result && !result.gblBelegt && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
+      t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() })),
+    angaben: {
+      erfasst: angabenWerte.filter((v) => String(v ?? '').trim() !== '').length, gesamt: angabenWerte.length,
+      inhalt: React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.inputRow },
         React.createElement('div', { style: s.inputGroup },
           React.createElement('div', { style: s.label }, t('sh.erwachsene')),
@@ -189,111 +289,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         React.createElement('div', { style: { ...s.hint, marginTop: '2px', marginLeft: '24px' } }, t('sh.integrationHint'))
       )
     ),
-
-    result && React.createElement(React.Fragment, null,
-      React.createElement('div', {
-        'aria-live': 'polite',
-        style: {
-          ...s.highlight,
-          borderColor: result.hatAnspruch ? palette.sage : palette.border,
-          background: result.hatAnspruch ? palette.sage + '15' : palette.up,
-        }
-      },
-        React.createElement('div', { style: s.label }, t('sh.anspruch')),
-        React.createElement('div', {
-          style: { ...s.big, color: result.hatAnspruch ? (palette.sageDeep || palette.sage) : palette.mid }
-        },
-          result.hatAnspruch
-            ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
-            : t('sh.keinAnspruch')
-        ),
-        result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
-          t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
-        ),
-        // Erst der Einkommensfreibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
-        !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
-          t('sozialhilfe.efbEntscheidet')
-        ),
-        // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
-        // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
-        result.hatAnspruch && result.vfbUnbestaetigt && React.createElement('div', { style: s.hint },
-          t('sozialhilfe.assetLimitUnconfirmedUnder', { freibetrag: 'CHF ' + fmt(result.vermoegensfreibetrag) })
-        )
-      ),
-
-      React.createElement('table', { style: s.table },
-        React.createElement('thead', null,
-          React.createElement('tr', null,
-            React.createElement('th', { style: s.th }, t('sh.position')),
-            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, 'CHF')
-          )
-        ),
-        React.createElement('tbody', null,
-          React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.gbl') + ' (' + (
-              result.wohnform === 'familienaehnlich' ? t('sh.gblAnteil', { einheit: result.haushaltGroesse, haushalt: result.haushaltGroesse + result.weiterePersonen })
-                : result.wohnform === 'zweckWg' ? t('sh.gblZweckWg', { einheit: result.haushaltGroesse })
-                : result.haushaltGroesse + ' ' + t('sh.personen')) + ')'),
-            React.createElement('td', { style: s.tdRight }, fmt(result.gbl))
-          ),
-          React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.wohnkosten')),
-            React.createElement('td', { style: s.tdRight }, fmt(result.wohnkosten))
-          ),
-          React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.kvgLabel')),
-            React.createElement('td', { style: s.tdRight }, fmt(result.kvgPraemie))
-          ),
-          result.erwerbsunkosten > 0 && React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.erwerbsunkostenZeile')),
-            React.createElement('td', { style: s.tdRight }, fmt(result.erwerbsunkosten))
-          ),
-          React.createElement('tr', null,
-            React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, t('sh.bedarf')),
-            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.semi } }, fmt(result.bedarf))
-          ),
-          result.totalEinkommen > 0 && React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.einkommenTotal')),
-            React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.totalEinkommen))
-          ),
-          // Freibetrag nur, wenn eine Lücke bleibt (er gilt im Bezug) — sonst ginge die Tabelle nicht auf.
-          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
-            React.createElement('td', { style: { ...s.td, color: palette.sageDeep } }, t('sh.efbLabel')),
-            React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + fmt(result.efb))
-          ),
-          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
-            React.createElement('td', { colSpan: 2, style: { ...s.td, ...s.hint, paddingTop: 0 } }, t('sozialhilfe.efbGeschaetzt'))
-          ),
-          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.anrechenbar')),
-            React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.anrechenbaresEinkommen))
-          ),
-          React.createElement('tr', null,
-            React.createElement('td', { style: { ...s.td, fontWeight: weight.bold } }, t('sh.sozialhilfe')),
-            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.bold } }, fmt(result.sozialhilfeAnspruch))
-          )
-        )
-      ),
-
-      result.anrechenbaresVermoegen > 0 && React.createElement('div', {
-        style: { ...s.section, marginTop: space.md + 'px', color: palette.warn || palette.mid, border: '1px solid ' + (palette.warn || palette.mid), background: (palette.warn || palette.mid) + '15' }
-      },
-        t('sh.vermoegenHinweis') + ' (CHF ' + fmt(result.vermoegensfreibetrag) + ' ' + t('sh.freibetrag') + ', '
-          + (kanton ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + kanton) }) : t('sozialhilfe.assetLimitBasisSkos')) + ')',
-        result.vfbUnbestaetigt && React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('sozialhilfe.assetLimitUnconfirmed'))
-      )
-    ),
-
-    !result && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('sh.eingeben')),
-
-    // Werte 2027 (26.10.2026): fehlt das laufende Jahr in data/skosGrundbedarf.js, sagt die Seite das,
-    // statt still mit dem Vorjahr zu rechnen.
-    result && !result.gblBelegt && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
-      t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() })),
-    // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026), leere Felder zählen als fehlend.
-    React.createElement(ErgebnisArt, { palette, t, ergebnis: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }) }),
-    React.createElement('div', { style: s.source }, renderSource(t('sh.source', { jahr: gblStand().jahr }), null, t))
-  );
+    },
+    tun, stelle,
+    quelle: renderSource(t('sh.source', { jahr: gblStand().jahr }), null, t),
+  }, weiteres || null);
 };
 
 export default SozialhilfeRechner;

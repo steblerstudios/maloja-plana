@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
-import { lohnBandState, lohnEinordnungErgebnis, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnEinordnungErgebnis, lohnKette, lohnVergleichSperre, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
@@ -143,6 +143,16 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     );
   }
 
+  // Rente, Geschäftsgewinn oder Netto mit möglicher Quellensteuer: kein Balken, kein Urteil, keine Mindestlohn-Warnung.
+  const sperre = lohnVergleichSperre(data, rentenalter);
+  if (sperre) {
+    return React.createElement('div', { style: card, 'data-teil': 'lohn-gesperrt' },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),
+      React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('lohnEinordnung.sperre_' + sperre)),
+      artZeile
+    );
+  }
+
   const { incomeFTE, incomeVergleich, hat13, income, incomeRoh, geschaetzt, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mindestlohnNichtBelegt, mlBreached, konformMit13, dreizehnterUnklar, scaleMin, scaleMax } = state;
   // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
   const arbeitColor = bereichFillColor('arbeit', isDarkMode);
@@ -153,7 +163,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
   if (!basisKnown || !hoursKnown) {
     const hinweis = !basisKnown
       ? (einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing')
-      : state.stundenUnplausibel ? 'lohnEinordnung.hoursImplausibleNote' : 'lohnEinordnung.hoursUnknownNote';
+      : state.stundenZuTief ? 'lohnEinordnung.hoursTooLowNote' : state.stundenUnplausibel ? 'lohnEinordnung.hoursImplausibleNote' : 'lohnEinordnung.hoursUnknownNote';
     // Fehlt die Einkommensart → Kapitel Finanzen; fehlen die Wochenstunden → Ausbildung & Arbeit.
     // Index aus CHAPTER_KEYS statt hartcodiert: die Kapitel-Reihenfolge darf sich ändern, ohne dass
     // dieser Hinweis still ins falsche Kapitel führt.
@@ -186,6 +196,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       artZeile
     );
   }
+
+  const kette = lohnKette(state, data, { alter: bvgAlter, rentenalter, beitragsfrei });
 
   // Valenz statt Richtung: gold ist die „engere Seite" — beim Lohn also darunter.
   const valenceColor = rel === 'above' ? palette.sage : rel === 'below' ? palette.gold : palette.mid;
@@ -271,9 +283,12 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.xs, color: palette.mid },
     },
-      React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium, whiteSpace: 'nowrap' } },
+      // Der längere Eintrag «… auf 40 Std. pro Woche gerechnet …» darf umbrechen, sonst wird er auf 375 px zu breit.
+      React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium, whiteSpace: (partTime || overFullTime) ? 'normal' : 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'fuellung', color: arbeitColor, palette }),
-        t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
+        // F7-K2-3 (27.10.2026): Der Wert hier ist auf 40 Std. umgerechnet (BFS-Norm). Ohne diesen Zusatz las
+        // man neben dem Dashboard («≈ brutto CHF 6’796») eine zweite, scheinbar widersprüchliche Bruttozahl.
+        t((partTime || overFullTime) ? 'lohnEinordnung.yourWage40' : 'lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
       React.createElement('span', { style: { color: readoutColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: valenceColor, palette }),
         t('lohnEinordnung.median') + ': CHF ' + fmt(median))
@@ -301,16 +316,24 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, t('lohnEinordnung.mindestlohnJahrNichtBelegt', { jahr: mindestlohnNichtBelegt.jahr, laufend: mindestlohnNichtBelegt.laufendesJahr })),
 
-    // «So ist gerechnet» (Entscheid Sophie 23.10.2026, «Barometer und Ruhe»; gebaut Abnahme F6, 25.10.2026):
+    // «So ist gerechnet» (Entscheid Stebler Studios 23.10.2026, «Barometer und Ruhe»; gebaut Abnahme F6, 25.10.2026):
     // die drei langen Hinweise zur Rechnung zugeklappt, Texte unverändert. Der Mindestlohn bleibt offen.
     React.createElement('details', { 'data-teil': 'lohn-so-gerechnet', style: { marginTop: space.sm + 'px' } },
       React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.xs, color: palette.mid, fontWeight: weight.medium } },
         t('lohnEinordnung.soIstGerechnet')),
+      // Die Kette zeigt, wie die Beträge zusammenhängen. Wo sie nichts Haltbares sagen kann, bleiben die drei Hinweise.
+      kette && React.createElement('ul', { 'data-teil': 'lohn-kette', style: { listStyle: 'none', margin: 0, padding: 0, fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+        kette.zeilen.map((z) => React.createElement('li', { key: z.key, style: { marginTop: space.xs + 'px' } },
+          t('lohnEinordnung.' + z.key, { betrag: fmt(z.betrag), stunden: z.stunden, jahr: z.jahr })))
+      ),
+      kette?.hinweis13 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } }, t('lohnEinordnung.ketteHinweis13')),
+      // BFS: Die Löhne von Lernenden und Praktikant:innen zählen im Median nicht mit.
+      kette && React.createElement('div', { 'data-teil': 'lohn-kette-lernende', style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } }, t('lohnEinordnung.ketteLernende')),
       // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).
-      geschaetzt && React.createElement('div', {
+      !kette && geschaetzt && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal },
       }, t('lohnEinordnung.geschaetztAusNetto', { netto: fmt(incomeRoh) })),
-      React.createElement('div', {
+      !kette && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
       }, partTime ? t('lohnEinordnung.fteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
         : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
@@ -318,7 +341,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       // Die Basis des Vergleichs IMMER ausweisen (Stebler Studios): mit 13. enthält der
       // Vergleichswert den anteiligen 13. (×13/12, standardisiert wie der BFS-Median); ohne 13.
       // wird der Basislohn direkt verglichen — mit Hinweis, dass ein 13. den Wert hebt.
-      React.createElement('div', {
+      !kette && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
       }, hat13
         ? t('lohnEinordnung.dreizehnterNote', { fte: fmt(incomeFTE) })

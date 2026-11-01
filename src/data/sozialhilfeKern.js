@@ -65,7 +65,7 @@ export function einkommensfreibetrag(erwerbseinkommen) {
 // Erwerbstätig heisst: Anstellungstyp angestellt, selbstständig oder freiberuflich. Ist kein
 // Anstellungstyp gewählt, zählt ein eingetragener Arbeitgeber. «Rentner» geht vor einem
 // liegen gebliebenen Arbeitgeber. Dieselbe Regel gilt für die Vorbefüllung des Rechners.
-const ERWERBSTAETIG = ['employed', 'selfEmployed', 'freelance'];
+const ERWERBSTAETIG = ['employed', 'apprentice', 'selfEmployed', 'freelance'];
 export function istErwerbstaetig(finanzen) {
   const typ = finanzen?.employmentType;
   if (typ) return ERWERBSTAETIG.includes(typ);

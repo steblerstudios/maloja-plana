@@ -179,7 +179,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
       onNavigate && React.createElement(AblaufLink, { palette, label: t('notfallkarte.dossierLink'), onClick: () => onNavigate('notfalldossier') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('notfallkarte.footerCalm'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('notfallkarte.quelle'), notes: [t('notfallkarte.footerCalm'), t('trust.localOnly')] })
   ));
 };
 

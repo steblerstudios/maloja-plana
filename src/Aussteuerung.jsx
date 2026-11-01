@@ -37,7 +37,7 @@ export const AussteuerungTeil = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'aussteuerung-frist', frist: (d) => plusTage(d, 31),
         labelKey: 'aussteuerung.fristLabel', hinweisKey: 'aussteuerung.fristHinweis', vorbeiKey: 'aussteuerung.fristVorbei',
-        buttonKey: 'aussteuerung.step2Button', doneKey: 'aussteuerung.step2Done', calendarKey: 'aussteuerung.step2CalendarLink',
+        art: 'frist', buttonKey: 'aussteuerung.step2Button', doneKey: 'aussteuerung.step2Done', calendarKey: 'aussteuerung.step2CalendarLink',
         reminderTitle: t('aussteuerung.reminderTitle'), category: 'insurance',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step2LinkKk'), onClick: () => onNavigate('kk') }),

@@ -1,6 +1,6 @@
 import React from 'react';
-import { PageTitle } from './components/Heading.jsx';
-import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { RechnerForm } from './components/RechnerForm.jsx';
+import { hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
 import { karteRechnen, VORTEILE, VERSICHERUNG_STATUS } from './utils/kreditkarte.js';
@@ -14,7 +14,9 @@ import { karteRechnen, VORTEILE, VERSICHERUNG_STATUS } from './utils/kreditkarte
 
 const LEER = {};
 
-export const Kreditkarte = ({ palette, t, data, onUpdateData }) => {
+// Rechner-Form X (F7-A2, 27.10.2026): das Ergebnis je Karte (E, mit den Balken D) zuerst, die Angaben A–C
+// darunter. Die Balken bleiben das Instrument dieses Rechners (F7-R3). Rechnung unverändert.
+export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const gespeichert = Array.isArray(data?.finanzen?.kreditkarten) ? data.finanzen.kreditkarten : [];
   // Leerzustand: eine leere Karte zum Ausfüllen — gespeichert wird erst beim ersten Eintrag.
   const karten = gespeichert.length ? gespeichert : [LEER];
@@ -26,7 +28,6 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData }) => {
   };
   const saldo = Number(data?.finanzen?.creditCardBalance) || 0;
 
-  const karteStil = { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md + 'px', fontSize: text.sm, color: palette.text };
   const titelStil = { fontWeight: weight.semi, color: palette.text, margin: space.md + 'px 0 ' + space.sm + 'px' };
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const hinweisStil = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
@@ -104,58 +105,73 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData }) => {
     );
   };
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'money', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('kreditkarteView.title')),
-    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md + 'px', lineHeight: leading.relaxed } }, t('kreditkarteView.intro')),
+  const kartenName = (k, i) => (k.name || '').trim() || t('kreditkarteView.karteLabel', { n: i + 1 });
+  const rechnungen = karten.map((k) => karteRechnen(k));
+  const gerechnet = rechnungen.some((r) => r.ergebnis !== 'brauchtAusgaben');
 
-    saldo > 0 && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md + 'px', lineHeight: leading.normal } },
-      hinweisZeichen(), t('kreditkarteView.saldoHinweis', { betrag: betrag(saldo) })),
-
+  // E + D je Karte — im Ergebnis-Teil der Form (role="status" trägt die Hülle).
+  const ergebnis = gerechnet && React.createElement(React.Fragment, null,
     karten.map((k, i) => {
-      const r = karteRechnen(k);
-      return React.createElement('section', { key: i, 'aria-label': (k.name || '').trim() || t('kreditkarteView.karteLabel', { n: i + 1 }), style: karteStil },
-        // A
-        React.createElement('div', { style: { ...titelStil, marginTop: 0 } }, (k.name || '').trim() || t('kreditkarteView.karteLabel', { n: i + 1 })),
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0 ' + space.md + 'px' } },
-          feld(i, 'name', t('kreditkarteView.name'), null, { maxWidth: '300px' }),
-          feld(i, 'jahresgebuehr', t('kreditkarteView.jahresgebuehr'))
-        ),
-        // B
-        React.createElement('div', { style: titelStil }, t('kreditkarteView.ausgabenTitel')),
-        feld(i, 'ausgabenMonat', t('kreditkarteView.ausgabenMonat')),
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0 ' + space.md + 'px' } },
-          feld(i, 'fremdAnteil', t('kreditkarteView.fremdAnteil')),
-          feld(i, 'fremdGebuehr', t('kreditkarteView.fremdGebuehr'), t('kreditkarteView.fremdGebuehrHinweis'))
-        ),
-        feld(i, 'zinsenJahr', t('kreditkarteView.zinsenJahr'), t('kreditkarteView.zinsenHinweis')),
-        // C
-        React.createElement('div', { style: titelStil }, t('kreditkarteView.vorteileTitel')),
-        feld(i, 'cashback', t('kreditkarteView.cashback')),
-        VORTEILE.map((v) => vorteilZeile(i, v)),
-        // D
-        r.ergebnis !== 'brauchtAusgaben' && rechnung(r),
-        // E
-        React.createElement('div', { role: 'status', style: { marginTop: space.md + 'px', padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, lineHeight: leading.normal } },
+      const r = rechnungen[i];
+      return React.createElement('div', { key: i, style: { marginBottom: i < karten.length - 1 ? space.md + 'px' : 0 } },
+        karten.length > 1 && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' } }, kartenName(k, i)),
+        React.createElement('p', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, lineHeight: leading.tight, margin: 0 } },
           hinweisZeichen(r.ergebnis === 'bringt' ? 'check' : 'info'),
-          t('kreditkarteView.ergebnis_' + r.ergebnis, { betrag: betrag(Math.round(Math.abs(r.netto))) }),
-          r.ergebnis !== 'brauchtAusgaben' && React.createElement('div', { style: hinweisStil }, t('kreditkarteView.basis', { ausgaben: betrag(r.jahresAusgaben) })),
-          r.nichtGezaehlt.length > 0 && React.createElement('div', { style: hinweisStil },
-            t('kreditkarteView.nichtGezaehlt', { liste: r.nichtGezaehlt.map((n) => t('kreditkarteView.vorteil_' + n.key)).join(', ') }))
-        ),
-        gespeichert.length > 0 && onUpdateData && React.createElement('button', {
-          type: 'button', onClick: () => speichern(gespeichert.filter((_, j) => j !== i)),
-          style: { ...knopfStil, color: palette.mid, marginTop: space.sm + 'px', minHeight: '32px' },
-        }, t('kreditkarteView.karteWeg'))
+          t('kreditkarteView.ergebnis_' + r.ergebnis, { betrag: betrag(Math.round(Math.abs(r.netto))) })),
+        r.ergebnis !== 'brauchtAusgaben' && React.createElement('div', { style: hinweisStil }, t('kreditkarteView.basis', { ausgaben: betrag(r.jahresAusgaben) })),
+        r.nichtGezaehlt.length > 0 && React.createElement('div', { style: hinweisStil },
+          t('kreditkarteView.nichtGezaehlt', { liste: r.nichtGezaehlt.map((n) => t('kreditkarteView.vorteil_' + n.key)).join(', ') })),
+        r.ergebnis !== 'brauchtAusgaben' && rechnung(r)
       );
-    }),
-
-    onUpdateData && React.createElement('button', {
-      type: 'button', onClick: () => speichern([...karten, {}]),
-      style: { ...knopfStil, minHeight: '32px' },
-    }, t('kreditkarteView.karteDazu')),
-
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px', lineHeight: leading.normal } }, hinweisZeichen(), t('kreditkarteView.vorlaeufig'))
+    })
   );
+
+  // «x von n»: je Karte Jahresgebühr und Ausgaben pro Monat — ohne sie rechnet nichts.
+  const pflicht = ['jahresgebuehr', 'ausgabenMonat'];
+  const erfasst = karten.reduce((n, k) => n + pflicht.filter((f) => String(k[f] ?? '').trim() !== '').length, 0);
+
+  return React.createElement(RechnerForm, {
+    palette, t, view: 'kreditkarte', onNavigate,
+    titel: t('kreditkarteView.title'), satz: t('kreditkarteView.intro'),
+    ergebnis, ohneErgebnis: t('kreditkarteView.ergebnis_brauchtAusgaben'),
+    vorbehalt: saldo > 0 && React.createElement('p', { style: { ...hinweisStil, marginTop: space.sm + 'px' } },
+      hinweisZeichen(), t('kreditkarteView.saldoHinweis', { betrag: betrag(saldo) })),
+    angaben: {
+      erfasst, gesamt: pflicht.length * karten.length,
+      inhalt: React.createElement('div', null,
+        karten.map((k, i) => React.createElement('section', { key: i, 'aria-label': kartenName(k, i), style: { paddingTop: space.xs + 'px', borderTop: i > 0 ? '1px solid ' + palette.border : 'none', fontSize: text.sm, color: palette.text } },
+          // A
+          React.createElement('div', { style: { ...titelStil, marginTop: space.sm + 'px' } }, kartenName(k, i)),
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0 ' + space.md + 'px' } },
+            feld(i, 'name', t('kreditkarteView.name'), null, { maxWidth: '300px' }),
+            feld(i, 'jahresgebuehr', t('kreditkarteView.jahresgebuehr'))
+          ),
+          // B
+          React.createElement('div', { style: titelStil }, t('kreditkarteView.ausgabenTitel')),
+          feld(i, 'ausgabenMonat', t('kreditkarteView.ausgabenMonat')),
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0 ' + space.md + 'px' } },
+            feld(i, 'fremdAnteil', t('kreditkarteView.fremdAnteil')),
+            feld(i, 'fremdGebuehr', t('kreditkarteView.fremdGebuehr'), t('kreditkarteView.fremdGebuehrHinweis'))
+          ),
+          feld(i, 'zinsenJahr', t('kreditkarteView.zinsenJahr'), t('kreditkarteView.zinsenHinweis')),
+          // C
+          React.createElement('div', { style: titelStil }, t('kreditkarteView.vorteileTitel')),
+          feld(i, 'cashback', t('kreditkarteView.cashback')),
+          VORTEILE.map((v) => vorteilZeile(i, v)),
+          gespeichert.length > 0 && onUpdateData && React.createElement('button', {
+            type: 'button', onClick: () => speichern(gespeichert.filter((_, j) => j !== i)),
+            style: { ...knopfStil, color: palette.mid, marginBottom: space.sm + 'px', minHeight: '44px' },
+          }, t('kreditkarteView.karteWeg'))
+        )),
+        onUpdateData && React.createElement('button', {
+          type: 'button', onClick: () => speichern([...karten, {}]),
+          style: { ...knopfStil, minHeight: '44px' },
+        }, t('kreditkarteView.karteDazu'))
+      ),
+    },
+    // Keine Fachquelle: gerechnet wird nur mit den eigenen Angaben — das sagt die feste Zeile.
+    quelle: t('kreditkarteView.vorlaeufig'),
+  });
 };
 
 export default Kreditkarte;

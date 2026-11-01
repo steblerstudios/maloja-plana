@@ -13,7 +13,7 @@ export const PflegeAblauf = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'heart',
+    palette, t, onNavigate, ablauf: 'pflege', icon: 'heart',
     title: t('pflege.title'),
     intro: t('pflege.intro'),
   },

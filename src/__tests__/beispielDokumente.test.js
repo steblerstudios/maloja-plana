@@ -169,7 +169,8 @@ describe('K24 · Verdrahtung in main.jsx', () => {
   it('Tresor, Lebensmappe und Export zeigen im Beispiel die Beispiel-Liste', () => {
     expect(quelle).toMatch(/const docs = demoMode \? demoDocs : documents;/);
     expect(quelle).toMatch(/React\.createElement\(DocumentTresor, \{[^}]*?documents: docs,/);
-    expect(quelle).toMatch(/React\.createElement\(Lebensmappe, \{[^}]*?documents: docs,/);
+    // Die Lebensmappe ist seit 27.10.2026 (F7-S2) die Auswahl «Alles» in «Unterlagen drucken».
+    expect(quelle).toMatch(/React\.createElement\(UnterlagenDrucken, \{[^}]*?documents: docs,/);
     expect(quelle).toMatch(/React\.createElement\(ZipExport, \{[^}]*?documents: docs,/);
   });
 

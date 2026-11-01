@@ -76,10 +76,22 @@ describe('Instrument Steuer-Säulen', () => {
     const { InstrumentePanel } = await import('../components/InstrumentePanel.jsx');
     const { steuernFuerProfil, steuerEingabenAusDaten } = await import('../data/kantonaleSteuerdaten.js');
     const data = { basis: { canton: 'ZH', maritalStatus: 'ledig', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 6200 } };
-    const erwartet = Math.round(steuernFuerProfil(steuerEingabenAusDaten(data)).bund.steuer);
+    const st = steuernFuerProfil(steuerEingabenAusDaten(data));
+    const erwartet = Math.round(st.bund.steuer);
     expect(erwartet).toBeGreaterThan(0);
-    const mit = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data, onNavigate: () => {}, eingebettet: true }));
-    expect(mit).toContain('instrumente.steuerBetrag(' + zahl(erwartet) + ')');
+    const kachel = (d) => renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data: d, onNavigate: () => {}, eingebettet: true }));
+    const mit = kachel(data);
+    // F7-K5-1: die ganze Steuer, dieselbe Zahl wie das Kapitel Finanzen, mit Bund-Anteil.
+    expect(mit).toContain('instrumente.steuerGanz(' + zahl(st.kanton.kantonal.total) + ')');
+    expect(mit).toContain('instrumente.steuerDavon(' + zahl(erwartet) + ')');
+    // Fachprüfung 01.11.2026: mögliche Quellensteuer und pensioniert ohne Zahl (Sperre in der Rechnung selbst).
+    const quelle = kachel({ ...data, ausbildung: { workPermit: 'b' } });
+    expect(quelle).toContain('instrumente.steuerQuelle');
+    expect(quelle).not.toContain('instrumente.steuerGanz');
+    expect(quelle).not.toContain('instrumente.steuerBetrag');
+    const rente = kachel({ ...data, basis: { ...data.basis, household: { ...data.basis.household, isRetired: true } } });
+    expect(rente).not.toContain('instrumente.steuerBetrag');
+    expect(rente).not.toContain('instrumente.steuerGanz');
     const ohne = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data: { basis: {} }, onNavigate: () => {}, eingebettet: true }));
     expect(ohne).not.toContain('instrumente.steuerBetrag');
     expect(ohne).toContain('instrumente.setup');

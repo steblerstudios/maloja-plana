@@ -10,7 +10,7 @@ import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
 
-// Kapitel Wohnen · das Instrument oben (Fassung 6, Runde 9, Entwurf Z, Entscheid Sophie 24.10.2026).
+// Kapitel Wohnen · das Instrument oben (Fassung 6, Runde 9, Entwurf Z, Entscheid Stebler Studios 24.10.2026).
 // Ersetzt den Kasten «Wohnkosten / Einkommen / Anteil» und im Kapitel den MietVergleich:
 //   1. «Wohnkosten pro Monat» gross, darunter der Anteil am Einkommen mit Marke bei einem Drittel.
 //   2. Das Regional-Barometer «Miete regional vs. Schweiz» (RegionalBarometer, kind «rent»). Ohne
@@ -74,7 +74,8 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
 
   const ausprobiert = probe != null && probe !== r.heute;
   const fuell = bereichFillColor('wohnen', isDarkMode) || palette.sage;
-  const pct = r.anteil == null ? null : zahl(r.anteil, { hoechstens: 1 });
+  // Ganze Prozent wie die Monatskarte. Nur knapp über einem Drittel eine Stelle, sonst stünde 33 % neben «mehr als ein Drittel».
+  const pct = r.anteil == null ? null : zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 });
 
   const canton = allData?.basis?.canton || '';
   const hh = getHouseholdInfo(allData) || {};

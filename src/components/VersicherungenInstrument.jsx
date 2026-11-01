@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
-import { monatsAusgaben } from '../utils/monatsrechnung.js';
+import { monatsAusgaben, versicherungenSumme } from '../utils/monatsrechnung.js';
 import { betrag, zahl } from '../utils/geld.js';
-import { schildOptionen, schildState } from '../data/schutzschild.js';
+import { schildOptionen, schildState, bvgAktiv } from '../data/schutzschild.js';
+import { betraegeFuer } from '../data/netzSchild.js';
+import { bereichsTon } from '../utils/lebensbereichFruechte.js';
+import { ausgabenPosten } from './Geldfluss.jsx';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
-import { Schutzschild } from './Schutzschild.jsx';
+import { NetzSchild, betragText } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
-import { calculateIPV } from '../config/cantonalData.js';
-import { ipvAbzug } from '../data/ipvAbzug.js';
-import { renderSource } from '../utils/renderSource.js';
-import { ErgebnisArt } from './ErgebnisArt.jsx';
-import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
+import { KKLastEinordnung, VERGLEICHSMARKE, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
+import { istAngestellt } from '../utils/anstellung.js';
 
-// Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Sophie 24.10.2026,
+// Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Stebler Studios 24.10.2026,
 // nachgebessert am selben Tag). Wie das Wohnkosten-Instrument: unter der ruhigen Zusammenfassung, vor den Angaben.
+// F7-K3-4 (Stebler Studios 01.11.2026, «vereine diese Dinge, ergänze die anderen Versicherungen, dafür haben wir die Farben»): 1 und 2
+// sind eine Karte in der Farbe des Kapitels, die KK-Last steht bei der Krankenkasse. Darunter, was nicht in der Summe zählt.
 //   1. «Versicherungen pro Monat» — aus der einen Monatsrechnung (utils/monatsrechnung.js), also dieselbe Zahl wie
 //      die Budget-Gruppe «Versicherung & Gesundheit»: Krankenkasse, Hausrat ÷ 12, Haftpflicht ÷ 12, «Weitere
 //      Versicherungen» aus dem Kapitel Finanzen. Darunter, was fehlt und was bewusst nicht zählt.
-//   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze,
+//   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen mit der Vergleichsmarke 10 % (wie KKLastCard, dieselben Sätze,
 //      dieselbe IPV-Entlastung über ipvAbzug, Quelle und «Orientierung» — Fachprüfung 25.10.2026).
-//   3. Schutzschild klein — zwei Schilde mit Listen, offen (statt der grossen Schilde darunter).
+//   3. Netz-Schild (seit 27.10.2026, F7-K3-6) — ein Schild aus Teilen statt der zwei kleinen Schilde und des Netzes.
+//      Seit F7-K3-4 folgt es direkt auf die Summe, Posten und Liste sind eingeklappt.
 //   4. Franchise-Kreuz klein — dieselbe Rechnung wie die Prämien-Seite (ladeFranchiseOpt, erst mit Kasse + PLZ),
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
-const WHO = 10;
+const has = (x) => x != null && String(x).trim() !== '';
+const zahl2 = (x) => Number(x) || 0;
 
 // `uebersicht` (Versicherungs-Übersicht, Schritt 3): nur Geld und KK-Last, die Posten zugeklappt unter «Was darin steckt»;
 // Schutzschild und Franchise-Kreuz zeigt die Übersicht selbst.
@@ -32,7 +36,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const v = versicherungen || {};
   const daten = { ...(allData || {}), versicherungen: v };
   const p = monatsAusgaben(daten);
-  const summe = p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
+  const summe = versicherungenSumme(p);
 
   const [franchiseOpt, setFranchiseOpt] = useState(null);
   const plz = daten.wohnen?.postalCode, kasse = v.kkInsurer, geburt = daten.basis?.dateOfBirth;
@@ -55,33 +59,36 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
 
   // Was erfasst ist, als Zeilen. Jahresprämien mit dem Jahresbetrag in Klammern, damit die ÷ 12 nachvollziehbar ist.
   const posten = [
-    p.healthInsurance > 0 && { key: 'kk', name: t('versInstrument.kk'), wert: p.healthInsurance },
-    p.householdInsurance > 0 && { key: 'hausrat', name: t('versInstrument.hausrat', { jahr: zahl(Number(v.householdInsuranceAmount)) }), wert: p.householdInsurance },
-    p.liabilityInsurance > 0 && { key: 'haftpflicht', name: t('versInstrument.haftpflicht', { jahr: zahl(Number(v.liabilityPremium)) }), wert: p.liabilityInsurance },
-    p.otherInsurance > 0 && { key: 'weitere', name: t('versInstrument.weitere'), wert: p.otherInsurance },
+    p.healthInsurance > 0 && { key: 'kk', quelle: 'healthInsurance', name: t('versInstrument.kk'), wert: p.healthInsurance },
+    p.kkZusatz > 0 && { key: 'kkZusatz', quelle: 'kkZusatz', name: t('versInstrument.kkZusatz'), wert: p.kkZusatz },
+    p.uvgZusatz > 0 && { key: 'uvgZusatz', quelle: 'uvgZusatz', name: t('versInstrument.uvgZusatz', { jahr: zahl(Number(v.uvgZusatzPremium)) }), wert: p.uvgZusatz },
+    p.lifeInsurance > 0 && { key: 'leben', quelle: 'lifeInsurance', name: t('versInstrument.leben', { jahr: zahl(Number(v.lifeInsurancePremium)) }), wert: p.lifeInsurance },
+    p.householdInsurance > 0 && { key: 'hausrat', quelle: 'householdInsurance', name: t('versInstrument.hausrat', { jahr: zahl(Number(v.householdInsuranceAmount)) }), wert: p.householdInsurance },
+    p.liabilityInsurance > 0 && { key: 'haftpflicht', quelle: 'liabilityInsurance', name: t('versInstrument.haftpflicht', { jahr: zahl(Number(v.liabilityPremium)) }), wert: p.liabilityInsurance },
+    p.otherInsurance > 0 && { key: 'weitere', quelle: 'otherInsurance', name: t('versInstrument.weitere'), wert: p.otherInsurance },
   ].filter(Boolean);
 
   // Versicherung «Ja», aber keine Prämie erfasst — genannt, nicht geschätzt.
   const fehlt = [
     v.householdInsurance === 'yes' && !(Number(v.householdInsuranceAmount) > 0) && t('versInstrument.nameHausrat'),
     v.liabilityInsurance === 'yes' && !(Number(v.liabilityPremium) > 0) && t('versInstrument.nameHaftpflicht'),
+    v.kkZusatz && !(Number(v.kkZusatzPremium) > 0) && t('versInstrument.nameKkZusatz'),
+    v.lifeInsurance === 'yes' && !(Number(v.lifeInsurancePremium) > 0) && t('versInstrument.nameLeben'),
   ].filter(Boolean);
   // Die Krankenkasse ist Pflicht: ist eine Kasse erfasst, aber keine Prämie, steht sie zuerst (Fachprüfung).
   if (v.kkInsurer && !(Number(v.kkPremium) > 0)) fehlt.unshift(t('versInstrument.nameKK'));
   // «Schon vom Lohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn — bei brutto steckt der
   // Beitrag noch im Betrag, Selbständige zahlen freiwillige Beiträge selbst (Fachprüfung 25.10.2026).
   const f = daten.finanzen || {};
-  const pk = Number(v.bvgContribution) > 0 && f.employmentType === 'employed' && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
+  const pk = Number(v.bvgContribution) > 0 && istAngestellt(f) && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
 
   // KK-Last wie KKLastCard: Grundversicherungs-Prämie ÷ monatliches Einkommen.
   const kkPraemie = Number(v.kkPremium) || 0;
   const einkommen = Number(daten.finanzen?.monthlyIncome) || 0;
   const anteil = kkPraemie > 0 && einkommen > 0 ? (kkPraemie / einkommen) * 100 : null;
   const skala = anteil == null ? 15 : Math.max(15, Math.ceil(anteil / 5) * 5);
-  const ueber = anteil != null && anteil >= WHO;
-  // IPV-Entlastung wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
-  const ipvBetrag = anteil != null ? Math.min(kkPraemie, ipvAbzug(daten, calculateIPV(daten)).betrag || 0) : 0;
-  const effektiv = ipvBetrag > 0 ? Math.round(((kkPraemie - ipvBetrag) / einkommen) * 1000) / 10 : null;
+  // IPV-Stand wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
+  const kkStand = anteil != null ? kkLastIpv(daten, kkPraemie, einkommen) : null;
 
   const schildDa = schildState(v, schildOptionen(daten)).touched;
 
@@ -95,60 +102,102 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     : vorschlag.art === 'wechsel' ? t(vorschlag.polster ? 'instrumente.kreuzWechselPolster' : 'instrumente.kreuzWechsel', { franchise: zahl(vorschlag.franchise), jahr: franchiseOpt?.praemienJahr || '' })
     : null;
 
-  const posteListe = () => h(React.Fragment, null,
-    h('div', { 'data-teil': 'versicherungen-posten' },
-      ...posten.map((x) => h('div', { key: x.key, style: zeile },
-        h('span', { style: { color: palette.mid } }, x.name),
-        h('span', { style: { whiteSpace: 'nowrap' } }, geld(x.wert))
-      ))
+  const ton = bereichsTon('versicherungen', palette) || palette.sky;
+  const farben = Object.fromEntries(ausgabenPosten(daten, t, palette).map((x) => [x.key, x.color]));
+  // Hausrat und Haftpflicht gehören zum Haushalt, also zur Farbe von Wohnen; die Vorsorge zu Finanzen (Stebler Studios 01.11.2026).
+  const wohnTon = bereichsTon('wohnen', palette) || ton;
+  const vorsorgeTon = bereichsTon('finanzen', palette) || ton;
+  const fuelle = (x) => (x.key === 'hausrat' || x.key === 'haftpflicht' ? wohnTon : farben[x.quelle] || ton);
+  // Der Balken zeigt, woraus die Summe besteht; die Zeilen nennen dieselben Posten — für Screenreader stumm.
+  const stapel = () => h('div', { 'aria-hidden': 'true', 'data-teil': 'versicherungen-balken', style: { display: 'flex', gap: '2px', height: '10px', margin: space.sm + 'px 0', borderRadius: radius.full, overflow: 'hidden', background: palette.up } },
+    ...posten.map((x) => h('div', { key: x.key, style: { flex: x.wert + ' 1 0', minWidth: '3px', background: fuelle(x) } })));
+  const marke = (farbe) => h('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: radius.hair, flexShrink: 0, background: farbe } });
+  // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
+  const kkLast = () => anteil != null && h('div', { 'data-teil': 'kk-last', style: { margin: space.xs + 'px 0 ' + space.sm + 'px 18px', padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm } },
+    // In der Übersicht steht die KK-Last direkt unter dem Seitentitel (h2) — darum h3 (A11y-Prüfung).
+    h(uebersicht ? 'h3' : 'h4', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('kkLast.title')),
+    h('div', { 'aria-hidden': 'true', 'data-teil': 'kk-last-balken', style: { position: 'relative', height: '8px', margin: space.sm + 'px 0', borderRadius: radius.full, background: palette.surface } },
+      h('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (anteil / skala) * 100) + '%', background: ton, borderRadius: radius.full } }),
+      h('div', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (VERGLEICHSMARKE / skala) * 100 + '%', width: '2px', background: palette.text } })
     ),
-    (fehlt.length > 0 || pk > 0) && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 ' + (uebersicht ? space.sm : 0) + 'px' } },
-      fehlt.length > 0 ? t('versInstrument.nichtErfasst', { liste: fehlt.join(', ') }) + ' ' : '',
-      pk > 0 ? t('versInstrument.pk', { betrag: zahl(pk) }) : ''
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
+      h('span', { style: { fontWeight: weight.semi, color: palette.text } }, zahl(anteil, { hoechstens: 1 }) + ' %'),
+      h('span', { style: { whiteSpace: 'nowrap' } }, h(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('kkLast.marker'))
     ),
-    Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
+    h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t(kkLastBasisKey(daten))),
+    h(KKLastEinordnung, { palette, t, onNavigate, stand: kkStand })
+  );
+  const postenZeilen = () => h('div', { 'data-teil': 'versicherungen-posten' },
+    ...posten.map((x) => h(React.Fragment, { key: x.key },
+      h('div', { style: zeile },
+        h('span', { style: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, color: palette.text } }, marke(fuelle(x)), x.name),
+        h('span', { style: { whiteSpace: 'nowrap', color: palette.text } }, geld(x.wert))),
+      x.key === 'kk' && kkLast()
+    ))
+  );
+  // Eingetragen, aber nicht in der Summe: über den Lohn, über den Arbeitgeber, anderswo im Budget oder ohne erfasste Prämie.
+  // Nur aus erfassten Feldern, dieselben Beträge wie im Schild (betraegeFuer).
+  const feld = (k) => t('chapters.versicherungen.fields.' + k + '.label');
+  const ja = (x) => has(x) && x !== 'no' && x !== 'none';
+  const ausserhalb = [
+    // Ohne erfassten Beitrag folgt die AHV nur aus dem Erwerbsstatus: nicht «eingetragen», sondern «laut Angaben», wie im Schild (Fachprüfung 01.11.2026).
+    (istAngestellt(f) || zahl2(v.ahvContribution) > 0) && { key: 'ahv', farbe: vorsorgeTon, name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f), abgeleitet: !(zahl2(v.ahvContribution) > 0) },
+    bvgAktiv(v) && { key: 'bvg', farbe: vorsorgeTon, name: t('netzSchild.vers.bvg'), b: betraegeFuer('bvg', v, f) },
+    Number(f.pension3a) > 0 && { key: 'saeule3a', farbe: vorsorgeTon, name: t('netzSchild.vers.saeule3a'), b: betraegeFuer('saeule3a', v, f) },
+    ja(v.uvg) && { key: 'uvg', name: t('netzSchild.vers.uvg'), b: betraegeFuer('uvg', v, f) },
+    // Ohne eigene Prämie (Abzug vom Lohn) steht der Unfall-Zusatz nicht unter den Posten; das Schild zählt ihn trotzdem.
+    v.uvgZusatz === 'yes' && !(p.uvgZusatz > 0) && { key: 'uvgZusatz', name: t('netzSchild.vers.uvgZusatz'), b: {} },
+    ja(v.ktg) && { key: 'ktg', name: feld('ktg'), b: v.ktg === 'employer' ? { arbeitgeber: true } : {} },
+    ja(v.legalInsurance) && { key: 'legalInsurance', name: feld('legalInsurance'), b: {} },
+    ja(v.travelInsurance) && { key: 'travelInsurance', name: feld('travelInsurance'), b: {} },
+    ja(v.cyberInsurance) && { key: 'cyberInsurance', name: feld('cyberInsurance'), b: {} },
+    ja(v.childInsurance) && { key: 'childInsurance', name: feld('childInsurance'), b: {} },
+    ja(v.autoInsurance) && { key: 'autoInsurance', name: feld('autoInsurance'), b: Number(v.autoInsuranceAmount) > 0 ? { mt: Math.round((Number(v.autoInsuranceAmount) / 12) * 100) / 100, jahr: Number(v.autoInsuranceAmount) } : {} },
+    p.buildingsInsurance > 0 && { key: 'gebaeude', farbe: wohnTon, name: t('budgetSync.field.buildingsInsurance'), b: { mt: Math.round(p.buildingsInsurance * 100) / 100, jahr: Number(daten.wohnen?.buildingsInsurance) } },
+  ].filter(Boolean);
+  const eingetragen = ausserhalb.filter((x) => !x.abgeleitet).length;
+  const ausserhalbListe = () => ausserhalb.length > 0 && h('details', { 'data-teil': 'versicherungen-ausserhalb', style: { marginTop: space.xs + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+    // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
+    h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '10px' } },
+      h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t(!hatGeld ? 'versInstrument.ausserhalbOhneSumme' : p.otherInsurance > 0 ? 'versInstrument.ausserhalb' : 'versInstrument.ausserhalbGanz')),
+      eingetragen > 0 && h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: eingetragen }))),
+    // «Weitere Versicherungen» ist der einzige Eintragungsort für Rechtsschutz, Reise, Cyber …: dort Eingetragenes zählt in der Summe (Fachprüfung 01.11.2026).
+    p.otherInsurance > 0 && h('p', { 'data-teil': 'versicherungen-ausserhalb-weitere', style: { ...klein, margin: '0 0 ' + space.xs + 'px' } }, t('versInstrument.ausserhalbWeitere')),
+    // Umbruch statt Quetschen: Auf dem Handy lief der lange Pensionskassen-Betrag sonst in den Namen (Sichtprüfung 01.11.2026).
+    ausserhalb.map((x) => h('div', { key: x.key, style: { ...zeile, flexWrap: 'wrap', gap: '0 ' + space.md + 'px', alignItems: 'baseline', fontSize: text.xs } },
+      h('span', { style: { display: 'flex', alignItems: 'center', gap: '8px', color: palette.text, minWidth: 0 } }, marke(x.farbe || ton), x.name),
+      h('span', { style: { color: palette.mid, textAlign: 'right', marginLeft: 'auto' } }, betragText(x.b, t) || t(x.abgeleitet ? 'netzSchild.lautAngaben' : 'netzSchild.eingetragen'))
+    )));
+  const postenHinweise = () => h(React.Fragment, null,
+    fehlt.length > 0 && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.nichtErfasst', { liste: fehlt.join(', ') })),
+    pk > 0 && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.pk', { betrag: zahl(pk) })),
+    ja(v.autoInsurance) && Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
+
+  const schild = !uebersicht && h(React.Fragment, null,
+    schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
+    // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
+    h(NetzSchild, { palette, t, versicherungen: v, finanzen: daten.finanzen, kanton: daten.basis?.canton, stunden: daten.ausbildung?.workHoursPerWeek, ...schildOptionen(daten) }));
 
   return h('section', { 'data-teil': 'versicherungen-instrument', style: { marginBottom: space.lg + 'px' } },
-    hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
-    hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.round(summe))),
-    hatGeld && (uebersicht
-      ? h('details', { 'data-teil': 'versicherungen-darin', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginBottom: space.sm + 'px' } },
-          // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
-          h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '10px' } },
-            h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t('vu.darin')),
-            h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: posten.length }))),
-          posteListe())
-      : posteListe()),
-
-    // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
-    anteil != null && h(React.Fragment, null,
-      // In der Übersicht steht die KK-Last direkt unter dem Seitentitel (h2) — darum h3 (A11y-Prüfung).
-      h(uebersicht ? 'h3' : 'h4', { style: kapH }, t('kkLast.title')),
-      h('div', { 'aria-hidden': 'true', 'data-teil': 'kk-last-balken', style: { position: 'relative', height: '10px', margin: space.sm + 'px 0', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border } },
-        h('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (anteil / skala) * 100) + '%', background: ueber ? palette.gold : palette.sky, borderRadius: radius.full } }),
-        h('div', { style: { position: 'absolute', top: '-5px', bottom: '-5px', left: (WHO / skala) * 100 + '%', width: '2px', background: palette.text } })
-      ),
-      h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
-        h('span', null, t('versInstrument.anteil', { pct: zahl(anteil, { hoechstens: 1 }) })),
-        h('span', { style: { whiteSpace: 'nowrap' } }, h(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('versInstrument.who'))
-      ),
-      h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t(ueber ? 'kkLast.overNote' : 'kkLast.underNote')),
-      effektiv != null && h('p', { 'data-teil': 'kk-last-ipv', style: { ...klein, margin: space.xs + 'px 0 0', color: palette.skyDeep || palette.text } }, t('kkLast.ipvRelief', { ipv: zahl(ipvBetrag), share: effektiv })),
-      h(ErgebnisArt, { palette, t, ergebnis: KK_LAST_ERGEBNIS, style: { marginTop: space.xs + 'px' } }),
-      h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('kkLast.source'), null, t)),
-      ueber && onNavigate && h('button', {
-        type: 'button', className: 'mp-link', onClick: () => onNavigate('premium'),
-        style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
-      }, t('kkLast.ipvLink'))
-    ),
-
-    !uebersicht && schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
-    !uebersicht && h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(daten) }),
+    (hatGeld || ausserhalb.length > 0) && h('div', { 'data-teil': 'versicherungen-karte', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.md + 'px' } },
+      hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
+      hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.round(summe))),
+      hatGeld && stapel(),
+      hatGeld && postenZeilen(),
+      hatGeld && postenHinweise(),
+      ausserhalbListe()),
+    schild,
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h4', { style: kapH }, t('instrumente.tacho')),
-      h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true }),
-      vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal, textAlign: 'center' } }, vorschlagSatz),
+      // F7-K3-2 (Stebler Studios 01.11.2026: «kombi von a b c»): oben Empfehlung und bisher, die Grafik aufklappbar, darunter die Übersicht.
+      vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.body, fontWeight: weight.medium, color: palette.text, lineHeight: leading.normal } }, vorschlagSatz),
+      h('p', { 'data-teil': 'franchise-bisher', style: { margin: '2px 0 0', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } },
+        [gesundheitskostenBisher(daten) > 0 && t('versInstrument.kreuzBisher', { betrag: betrag(gesundheitskostenBisher(daten)) }),
+          parseFranchise(v.franchise) != null && t('versInstrument.kreuzFranchise', { betrag: betrag(parseFranchise(v.franchise)) })].filter(Boolean).join(' · ')),
+      h('details', { 'data-teil': 'franchise-grafik', style: { marginTop: space.xs + 'px' } },
+        h('summary', { style: { cursor: 'pointer', minHeight: '44px', lineHeight: '44px', fontSize: text.sm, color: palette.text } }, t('versInstrument.kreuzGrafik')),
+        h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true, eigeneFranchise: parseFranchise(v.franchise) })),
       onNavigate && h('button', {
         type: 'button', className: 'mp-link', 'data-teil': 'zur-uebersicht', onClick: () => onNavigate('praemien'),
         style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', marginTop: space.sm + 'px', textAlign: 'left', background: 'none', border: 'none', borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },

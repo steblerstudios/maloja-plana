@@ -3,7 +3,7 @@
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { kuchenDaten, KuchenImKapitel } from '../components/Kuchen.jsx';
+import { ringDaten, Monatsring } from '../components/Monatsring.jsx';
 import { GeldflussImKapitel } from '../components/Geldfluss.jsx';
 import { ChapterViewComplete } from '../ChapterView.jsx';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
@@ -20,35 +20,46 @@ const profil = (finanzen = {}) => ({
   versicherungen: { kkPremium: 400 },
 });
 
-describe('Kuchen: «Wofür geht es weg?»', () => {
-  // Abnahme F6 (Sophie 25.10.2026): nur die Ausgaben — bis dahin lag «bleibt» als Stück darin.
-  it('Stücke = alle Ausgabenposten, ohne «bleibt»; Summe = Ausgaben', () => {
+// F7-K2-2 (Stebler Studios 01.11.2026): Zahl, Balken und Kuchen sind ein Bild.
+describe('Monatsring: «Wofür geht es weg?»', () => {
+  const ring = (d) => {
+    const verplant = sumAllExpenses(d.finanzen, d);
+    return { data: d, t, palette, einkommen: Number(d.finanzen.monthlyIncome) || 0, verplant, titel: 'Jeden Monat bleiben', titelJahr: 'Jedes Jahr bleiben', zahl: (Number(d.finanzen.monthlyIncome) || 0) - verplant };
+  };
+  it('Gruppen = alle Ausgabenposten; ihre Summe sind die Ausgaben, der Rest ist, was bleibt', () => {
     const d = profil();
-    const { stuecke, summe } = kuchenDaten(d, t, palette);
-    expect(stuecke.map((s) => s.key)).toEqual(['rent', 'healthInsurance', 'tax', 'groceries']);
-    expect(summe).toBe(sumAllExpenses(d.finanzen, d));
+    const { gruppen, basis, rest } = ringDaten(ring(d));
+    expect(gruppen.map((g) => g.key)).toEqual(['wohnen', 'uebriges', 'versicherungen', 'steuern']);
+    expect(gruppen.reduce((a, g) => a + g.wert, 0)).toBe(sumAllExpenses(d.finanzen, d));
+    expect(basis).toBe(5000);
+    expect(rest).toBe(2100);
   });
-  it('brutto erfasster Lohn: kein Stück «bleibt»', () => {
-    const { stuecke } = kuchenDaten(profil({ incomeType: 'brutto' }), t, palette);
-    expect(stuecke.some((s) => s.key === 'bleibt')).toBe(false);
+  it('im Minus: nichts bleibt, gemessen an den Ausgaben', () => {
+    const { basis, rest } = ringDaten(ring(profil({ monthlyIncome: 1000 })));
+    expect(rest).toBe(0);
+    expect(basis).toBe(2900);
   });
-  it('im Minus: kein «bleibt», nur die Ausgaben', () => {
-    const { stuecke } = kuchenDaten(profil({ monthlyIncome: 1000 }), t, palette);
-    expect(stuecke.some((s) => s.key === 'bleibt')).toBe(false);
-  });
-  it('ohne Ausgaben: nichts', () => {
-    expect(renderToStaticMarkup(React.createElement(KuchenImKapitel, { data: { finanzen: {} }, t, palette }))).toBe('');
-  });
-  it('Liste mit Betrag und Prozent, Bild für Screenreader stumm', () => {
-    const html = renderToStaticMarkup(React.createElement(KuchenImKapitel, { data: profil(), t, palette }));
-    expect(html).toContain('Wofür geht es weg?');
+  it('Zahl und Anteil in der Mitte, Bereiche mit Betrag, grösster zuerst, Bild für Screenreader stumm', () => {
+    const html = renderToStaticMarkup(React.createElement(Monatsring, ring(profil())));
+    const klar = html.replace(/<[^>]+>/g, '');
     expect(html).toContain('aria-hidden="true"');
-    // 1’500 von 2’900 Ausgaben.
-    expect(html.replace(/<[^>]+>/g, '')).toContain('CHF 1’500 · 52 %');
+    expect(klar).toContain('Jeden Monat bleibenCHF 2’10042 %');
+    // Die Summe macht die Rechnung sichtbar: 5’000 − 2’900 = 2’100.
+    expect(klar).toContain('Wofür geht es weg?CHF 2’900');
+    expect(klar).toContain('CHF 1’50030 %');
+    expect(klar.indexOf('CHF 1’500')).toBeLessThan(klar.indexOf('CHF 600'));
+    // Der Balken misst wie der Ring am Einkommen: 1’500 von 5’000.
+    expect(html).toContain('width:30%');
   });
-  it('kleine Posten als «< 1 %», nicht «0 %»', () => {
-    const html = renderToStaticMarkup(React.createElement(KuchenImKapitel, { data: profil({ pension3a: 120 }), t, palette }));
-    expect(html.replace(/<[^>]+>/g, '')).not.toContain('· 0 %');
+  it('geschlossen je Bereich ein Stück im Ring', () => {
+    const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };
+    const html = renderToStaticMarkup(React.createElement(Monatsring, ring(d)));
+    expect((html.match(/pathLength/gi) || []).length).toBe(ringDaten(ring(d)).gruppen.length + 1); // + was bleibt
+  });
+  it('eine Gruppe mit mehreren Posten lässt sich aufklappen, eine mit einem nicht', () => {
+    const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };
+    const html = renderToStaticMarkup(React.createElement(Monatsring, ring(d)));
+    expect(html.match(/aria-expanded/g) || []).toHaveLength(1);
   });
 });
 
@@ -62,22 +73,5 @@ describe('Sankey: nur mit zwei oder mehr Einnahmequellen', () => {
   });
   it('Lohn + Nebenerwerb (netto): Fluss', () => {
     expect(render(profil({ sideIncome: 800, sideIncomeType: 'netto' }))).not.toBe('');
-  });
-});
-
-describe('Balken unter «Jeden Monat bleiben»: unterteilt', () => {
-  it('Wohnen · Versicherungen · Steuern · Übriges mit Legende', () => {
-    const kapitel = getChapters(t).find((c) => c.key === 'finanzen');
-    const d = profil();
-    const html = renderToStaticMarkup(React.createElement(ChapterViewComplete, {
-      palette, t, chapter: kapitel, data: d.finanzen, allData: d, onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
-    }));
-    const balken = html.slice(html.indexOf('data-teil="monat-balken"'));
-    expect(balken).toContain('Wohnen');
-    expect(balken).toContain('Versicherungen');
-    expect(balken).toContain('Steuern');
-    expect(balken).toContain('Übriges');
-    // Wohnen 1’500 von 5’000 Einkommen = 30 % Breite.
-    expect(balken).toContain('width:30%');
   });
 });

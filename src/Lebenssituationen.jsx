@@ -1,5 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
+import { getCantonName, getHouseholdInfo, calculateSozialhilfe, ladeIPVModelle } from './config/cantonalData.js';
+import { wegeAusProbe, ipvAnzeige, sozialhilfeAnzeige } from './data/anspruchWege.js';
+import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
+import { ANSPRUCH_GRUPPEN } from './data/anspruchLandkarte.js';
+import { useEinkommen, EinkommenFeld, istKnapp } from './components/EinkommenFeld.jsx';
+import { Pegel } from './components/Pegel.jsx';
+import { LandkarteGruppen } from './AnspruchLandkarte.jsx';
+import { aufklappZeichen } from './IconSystem.jsx';
+import { betrag } from './utils/geld.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
 import { getFamilienEL } from './data/familienEL.js';
@@ -8,13 +17,13 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 
-// ─── Lebenssituationen (Subpage) ──────────────────────────
+// ─── Lebenslagen (Auswahl) ─────────────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
 // aufdecken. Selbst gewählt (kein Auto-Erkennen, keine Etikettierung),
 // lokal gespeichert (or5_-Prefix). Reine Daten aus data/lebenszustaende.js.
-// Vom Dashboard auf eine eigene Subpage gezogen (ruhigerer „Ort"):
-// erreichbar über Link in „Was steht mir zu?", Werkzeug und Menü.
-const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
+// Seit 27.10.2026 der zweite Teil von «Was steht mir zu?» (unten) und Schritt 2 des
+// geführten Anspruch-Checks (AnspruchCheck.jsx) — dieselbe Auswahl an beiden Orten.
+export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
   const storageKey = 'or5_lebenszustaende';
 
   // Wohnkanton für kanton-bewusste Angebote — aus der PLZ abgeleitet (wie in UmzugAblauf),
@@ -107,16 +116,10 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     return React.createElement('div', { key: 'regio' }, kids);
   };
 
-  return React.createElement('div', { style: { maxWidth: '640px' } },
-    React.createElement('h1', {
-      style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' }
-    }, t('dashboard.anspruchTitle')),
-    React.createElement('p', {
-      style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: leading.relaxed }
-    }, t('lebenszustaende.sectionIntro')),
-
+  return React.createElement('div', null,
     // Situations-Chips (ruhig, selbst wählbar)
     React.createElement('div', {
+      role: 'group', 'aria-label': t('wasStehtMirZu.lebenslage'),
       style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px' }
     },
       LEBENSZUSTAENDE.map((z) => {
@@ -138,6 +141,9 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
         }, t('lebenszustaende.' + z.key + '.label'));
       })
     ),
+    active.length === 0 && React.createElement('p', {
+      style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed }
+    }, t('lebenszustaende.selectHint')),
 
     // Aufgedeckte Berechtigungen je gewähltem Zustand
     LEBENSZUSTAENDE.filter((z) => active.includes(z.key)).map((z) =>
@@ -204,6 +210,183 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
         z.zeigeRegionaleAngebote && renderRegionalAngebote()
       )
     )
+  );
+};
+
+// ─── Was steht mir zu? (Entscheid O, 24.10.2026 · gebaut 27.10.2026, F7-A3) ──────
+// EIN Ort für die Frage, ein Name. Reihenfolge: (1) Mit Ihren Angaben — Einkommen, Miete,
+// KK, Kanton/Haushalt als Marken, zum Durchspielen aufklappbar; Ergebnis als zwei Pegel
+// (IPV «luft», Sozialhilfe «aufstockung») in einer Live-Region, darunter ein Satz.
+// (2) Nach Ihrer Lebenslage — die elf Situationen. (3) Weitere Wege, zugeklappt — die
+// Landkarte ohne IPV und Sozialhilfe (die stehen oben als Pegel).
+// #/schnellcheck und #/ansprueche führen hierher (utils/hashRouter.js UMLEITUNGEN, Sprungmarke
+// MIT_ANGABEN_ANKER). Rechnung: dieselben Aufrufe wie Schritt 1 des geführten Checks
+// (data/anspruchWege.js) — keine eigene. Der Leistungs-Kompass und der Prämien-Beleg fallen hier
+// weg (VERGLEICH.md «Was steht mir zu? (O)»).
+export const MIT_ANGABEN_ANKER = 'mp-mit-angaben';
+
+const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
+  const h = React.createElement;
+  const canton = data?.basis?.canton || '';
+  const hh = getHouseholdInfo(data);
+  // Brutto oder netto (EinkommenFeld, wie bisher im Schnellcheck); gerechnet wird mit netto.
+  const e = useEinkommen(data);
+  const [rent, setRent] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
+  const [kk, setKk] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
+  // Aufklapp-Zustände (für das Zeichen ▸/▾). «Angaben anpassen» ist ohne Einkommen offen — sonst gäbe
+  // es nichts zu sehen und nichts einzutragen.
+  const [anpassenOffen, setAnpassenOffen] = useState(() => !(e.nettoMonat > 0));
+  const [wegeOffen, setWegeOffen] = useState(false);
+
+  // Die Kantonsmodelle der IPV laden nach (ZH, BE …). Bis dahin sagt calculateIPV «laden» — danach
+  // einmal neu zeichnen (Muster PraemienOrientierung.jsx). Sonst zeigte der Pegel beim ersten Öffnen
+  // «prüfen», nach dem Neuladen etwas anderes (beobachtet bei Maria, VERGLEICH.md).
+  const [, setIpvGeladen] = useState(0);
+  useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
+
+  const numIncome = e.nettoMonat;
+  const numRent = Number(rent) || 0;
+  const numKk = Number(kk) || 0;
+  const probe = {
+    ...data,
+    // incomeType 'netto': das Feld hat schon umgerechnet — nicht nochmals (calculateSozialhilfe).
+    finanzen: { ...(data?.finanzen || {}), monthlyIncome: numIncome, incomeType: 'netto' },
+    wohnen: { ...(data?.wohnen || {}), rentAmount: numRent },
+    versicherungen: { ...(data?.versicherungen || {}), kkPremium: numKk },
+  };
+
+  // Dieselben Ehrlichkeits-/Crash-Gates wie bisher im Schnellcheck: wirft eine Rechnung, bleibt
+  // die Seite stehen und sagt weniger, statt leer zu werden.
+  let w = { wege: [], ipvSubsumed: false, ipvAmount: 0 }, ipvA = { art: 'leer' }, sozPegel = null, knappSoz = false;
+  try {
+    w = wegeAusProbe(probe);
+    ipvA = ipvAnzeige(probe);
+    sozPegel = sozialhilfeAnzeige(probe);
+    if (e.geschaetzt && numRent > 0) knappSoz = istKnapp(calculateSozialhilfe(probe), e.ohneAlter);
+  } catch { /* Orientierung, nie blockierend */ }
+
+  const fmt = (n) => betrag(n || 0);
+  const wegLabel = { ipv: t('schnellcheck.ipv'), soz: t('nav.sozialhilfe'), el: t('schnellcheck.el') };
+  const wegView = { ipv: 'premium', soz: 'sozialhilfe', el: 'ergaenzungsleistungen' };
+  // B-1/E22: eingetippte Zahlen gehen an den IPV-Rechner mit — eine aus brutto GESCHÄTZTE nicht.
+  const uebergabe = uebergabeAusProbe(e.geschaetzt ? { ...probe, finanzen: { ...probe.finanzen, monthlyIncome: 0 } } : probe);
+
+  const s = {
+    h2: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: space.xl + 'px 0 ' + space.sm + 'px 0' },
+    marke: { display: 'inline-block', padding: '4px 10px', borderRadius: radius.full + 'px', background: palette.up, border: '1px solid ' + palette.border, color: palette.text, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' },
+    summary: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px', color: palette.text, fontSize: text.sm, fontWeight: weight.medium, listStyle: 'none' },
+    label: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs + 'px' },
+    input: { width: '100%', padding: '10px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
+    satz: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
+    fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
+    link: { display: 'flex', alignItems: 'center', minHeight: '44px', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.skyDeep, textAlign: 'left' },
+  };
+
+  const feld = (labelText, value, setter, placeholder) => h('label', { style: { flex: '1 1 150px', minWidth: '130px' } },
+    h('span', { style: s.label }, labelText),
+    h('input', { type: 'number', inputMode: 'numeric', placeholder, value, onChange: (ev) => setter(ev.target.value), style: s.input }));
+
+  // Marken: was gerade gerechnet wird — dieselben Zahlen wie die Felder darunter.
+  const marken = [
+    numIncome > 0 && (e.geschaetzt ? t('wasStehtMirZu.markeNettoGeschaetzt', { betrag: fmt(numIncome) }) : t('wasStehtMirZu.markeNetto', { betrag: fmt(numIncome) })),
+    numRent > 0 && t('wasStehtMirZu.markeMiete', { betrag: fmt(numRent) }),
+    numKk > 0 && t('wasStehtMirZu.markeKK', { betrag: fmt(numKk) }),
+    canton && t('wasStehtMirZu.markeHaushalt', { canton: getCantonName(canton, t) || canton, size: hh.householdSize }),
+  ].filter(Boolean);
+
+  // Eine Ablesung ohne Glas — gleiche Form wie der Pegel (Kasten), für die Fälle, in denen ein
+  // Wasserstand nicht ehrlich wäre (data/anspruchWege.js ipvAnzeige).
+  const ablesung = (titel, zeilen) => h('div', {
+    style: { padding: space.md + 'px', marginTop: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border },
+  },
+    h('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginBottom: '4px' } }, titel),
+    ...zeilen.filter(Boolean).map((z, i) => h('div', { key: i, style: { fontSize: i === 0 ? text.sm : text.xs, color: i === 0 ? palette.text : palette.soft, lineHeight: leading.normal, marginTop: i ? '4px' : 0 } }, z)));
+
+  const ipvTitel = t('schnellcheck.ipv');
+  const { ipv } = ipvA;
+  const fristSatz = ipvA.fristVorbei && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: space.xs + 'px' } }, t(ipv.noteKey, ipv.noteParams));
+  const ipvTeil = ipvA.art === 'pegel' ? h(React.Fragment, null, h(Pegel, { palette, t, state: ipvA.pegel }), fristSatz)
+    : ipvA.art === 'verfuegung' ? ablesung(ipvTitel, [fmt(ipvA.betrag) + ' / ' + t('schnellcheck.monat') + ' (' + t(ipvA.bestaetigt ? 'finanzUebersicht.ipvLautVerfuegung' : 'finanzUebersicht.ipvVerfuegungOhneJahr') + ')'])
+    : ipvA.art === 'laden' ? ablesung(ipvTitel, [t('common.loading')])
+    : ipvA.art === 'offen' ? ablesung(ipvTitel, [t(ipv.noteKey, ipv.noteParams)])
+    : ipvA.art === 'ohneGlas' ? ablesung(ipvTitel, ipv.eligible
+      ? [t('pegel.perMonthPossible', { amount: fmt(ipv.amount) }), t('beleg.geschaetzt'), ipvA.fristVorbei && t(ipv.noteKey, ipv.noteParams)]
+      : [ipv.cantonData?.maxIncome != null ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome }) : t(ipv.noteKey, ipv.noteParams)])
+    : null;
+
+  // Der Ergebnis-Satz: «Mit diesen Angaben zeigt sich …» — nur positive Wege, nie ein Verdikt.
+  const labels = w.wege.map((x) => wegLabel[x.key]);
+  const satz = numIncome <= 0 ? t('schnellcheck.enterIncome')
+    : !canton ? t('schnellcheck.noResultNoCanton')
+    : labels.length === 0 ? t('wasStehtMirZu.ergebnisKeiner')
+    : labels.length === 1 ? t('wasStehtMirZu.ergebnisEiner', { weg: labels[0] })
+    : t('wasStehtMirZu.ergebnisMehrere', { wege: labels.join(', ') });
+
+  const zaehlbar = ANSPRUCH_GRUPPEN.flatMap((g) => g.items).filter((i) => i.key !== 'ipv' && i.key !== 'sozialhilfe').length;
+
+  return h('div', { style: { maxWidth: '640px' } },
+    // Kopf links (Fassung 5): Titel und ein Satz für beides.
+    h('h1', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' } }, t('dashboard.anspruchTitle')),
+    h('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, t('wasStehtMirZu.intro')),
+
+    // (1) Mit Ihren Angaben
+    h('h2', { id: MIT_ANGABEN_ANKER, className: 'mp-sprungziel', style: { ...s.h2, marginTop: space.lg + 'px' } }, t('wasStehtMirZu.mitAngaben')),
+    marken.length > 0 && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: space.xs + 'px' } },
+      marken.map((m) => h('span', { key: m, style: s.marke }, m))),
+    h('details', { open: anpassenOffen || undefined, onToggle: (ev) => { const auf = ev.currentTarget.open; if (auf !== anpassenOffen) setAnpassenOffen(auf); } },
+      h('summary', { className: 'mp-summary', style: s.summary }, aufklappZeichen(anpassenOffen), t('wasStehtMirZu.anpassen')),
+      h('div', { style: { padding: space.sm + 'px 0 ' + space.md + 'px' } },
+        h('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap' } },
+          h(EinkommenFeld, { palette, t, e }),
+          feld(t('schnellcheck.rent'), rent, setRent, '1500'),
+          feld(t('schnellcheck.kk'), kk, setKk, '350')),
+        h('div', { style: s.fuss },
+          canton ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, size: hh.householdSize }) : t('schnellcheck.contextNoCanton'),
+          ' ',
+          h('button', { type: 'button', onClick: () => onNavigate && onNavigate('chapter', 0), style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.skyDeep } }, t('schnellcheck.adjustProfile'))))),
+
+    // Ergebnis als Live-Region (a11y-Befund M3): beide Pegel und der Satz.
+    h('div', { role: 'status', 'aria-live': 'polite', 'data-ergebnis': 'anspruch' },
+      ipvTeil,
+      sozPegel && h(Pegel, { palette, t, state: sozPegel }),
+      knappSoz && h('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+      h('p', { style: s.satz }, satz),
+      w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
+    // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
+    w.wege.length > 0 && numIncome > 0 && canton && h('div', { style: { marginTop: space.xs + 'px' } },
+      w.wege.map((x) => h('button', {
+        key: x.key, type: 'button', className: 'mp-link', style: s.link,
+        onClick: () => onNavigate && (x.key === 'ipv' ? onNavigate(wegView.ipv, undefined, uebergabe) : onNavigate(wegView[x.key])),
+      }, wegLabel[x.key] + ' ›'))),
+
+    // (2) Nach Ihrer Lebenslage
+    h('h2', { style: s.h2 }, t('wasStehtMirZu.lebenslage')),
+    h(LebenslagenAuswahl, { palette, t, data, onNavigate }),
+
+    // (3) Weitere Wege — zugeklappt, die Landkarte ohne das, was oben als Pegel steht.
+    h('details', { open: wegeOffen || undefined, onToggle: (ev) => { const auf = ev.currentTarget.open; if (auf !== wegeOffen) setWegeOffen(auf); }, style: { marginTop: space.xl + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+      h('summary', { className: 'mp-summary', style: { ...s.summary, justifyContent: 'space-between', paddingTop: space.xs + 'px' } },
+        h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '6px', color: palette.text, fontWeight: weight.semi } }, aufklappZeichen(wegeOffen), t('schnellcheck.moreWays')),
+        h('span', { style: { fontSize: text.xs, color: palette.mid } }, String(zaehlbar))),
+      h('div', { style: { paddingTop: space.sm + 'px' } },
+        h(LandkarteGruppen, { palette, t, onNavigate, ohne: ['ipv', 'sozialhilfe'], mitFuss: false }))),
+
+    // Der geführte Anspruch-Check bleibt eigener Ablauf — nur von hier erreichbar.
+    h('button', {
+      type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('anspruchcheck'),
+      style: { display: 'block', width: '100%', minHeight: '56px', marginTop: space.md + 'px', padding: space.sm + 'px 0', background: 'none', border: 'none', borderTop: '1px solid ' + palette.border + '88', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' },
+    },
+      h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text } }, t('wasStehtMirZu.schrittTitel') + ' ›'),
+      h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('wasStehtMirZu.schrittSub'))),
+
+    // Hinweise unten (Fassung 5): bewertet nichts · grobe Orientierung · bleibt auf dem Gerät.
+    h('p', { style: { ...s.fuss, marginTop: space.lg + 'px', fontStyle: 'italic' } }, t('anspruch.footNote')),
+    h('p', { style: s.fuss }, t('schnellcheck.disclaimer')),
+    h('p', { style: s.fuss }, t('dashboard.highlightPrivacy'))
   );
 };
 

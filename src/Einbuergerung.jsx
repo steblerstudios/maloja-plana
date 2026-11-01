@@ -15,7 +15,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 export const Einbuergerung = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'einbuergerung', icon: 'behoerden',
     title: t('einbuergerung.title'),
     intro: t('einbuergerung.intro'),
   },

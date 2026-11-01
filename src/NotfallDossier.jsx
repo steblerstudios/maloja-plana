@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { PageTitle } from './components/Heading.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { qrNotfallVcard, qrZeichnen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { getFullName } from './config/constants.js';
@@ -8,8 +8,10 @@ import { getNotfallDossierPreview, generateNotfallDossier, notfallQrAbschnitte }
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
-import { Brotkrume } from './components/Brotkrume.jsx';
 
+// Seit 27.10.2026 (F7-S2) keine eigene Seite mehr, sondern eine Auswahl in «Unterlagen drucken»
+// (UnterlagenDrucken.jsx): dort stehen Brotkrume und Seitentitel, hier ein Abschnittstitel.
+// Inhalt, Vorschau und Hinweise unverändert.
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
   const preview = getNotfallDossierPreview(data, chapters, t);
@@ -121,15 +123,13 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     style: { maxWidth: '520px' }
   },
 
-    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
-    React.createElement(Brotkrume, { palette, t, view: 'notfalldossier', onNavigate }),
     React.createElement('div', {
       style: {
         background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'emergency', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'emergency', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('notfallDossier.subtitle')),

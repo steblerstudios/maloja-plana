@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { LOHN_REFERENZ, mindestlohnBoden, lohnBandState, SCALE_MIN, SCALE_MAX } from '../lohnEinordnung.js';
 import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../branchenLohn.js';
 import { CHAPTER_KEYS, FIELD_KEYS } from '../../config/constants.js';
-import { WOCHENSTUNDEN_OBERGRENZE } from '../lohnCheck.js';
+import { WOCHENSTUNDEN_OBERGRENZE, WOCHENSTUNDEN_UNTERGRENZE_MONATSLOHN, wochenstundenZuTiefFuerMonatslohn } from '../lohnCheck.js';
 import { DEMO_DATA } from '../../config/demoData.js';
 
 describe('lohnEinordnung', () => {
@@ -265,5 +265,22 @@ describe('lohnEinordnung', () => {
     it('die Beispieldaten tragen plausible Wochenstunden', () => {
       expect(Number(DEMO_DATA.ausbildung.workHoursPerWeek)).toBeLessThanOrEqual(WOCHENSTUNDEN_OBERGRENZE);
     });
+  });
+});
+
+describe('Untergrenze Wochenstunden (Pensum als Bruchteil)', () => {
+  const basis = { income: 6000, incomeType: 'brutto', canton: 'ZH' };
+
+  it('rechnet «0.8» nicht auf Vollzeit hoch und urteilt nicht', () => {
+    const s = lohnBandState({ ...basis, hoursPerWeek: '0,8' });
+    expect(s.stundenZuTief).toBe(true);
+    expect(s.hoursKnown).toBe(false);
+    expect(s.rel).toBe(null);
+  });
+
+  it('die Grenze selbst gilt als Angabe, ein leeres Feld nicht als zu tief', () => {
+    expect(lohnBandState({ ...basis, hoursPerWeek: WOCHENSTUNDEN_UNTERGRENZE_MONATSLOHN }).hoursKnown).toBe(true);
+    expect(wochenstundenZuTiefFuerMonatslohn('')).toBe(false);
+    expect(wochenstundenZuTiefFuerMonatslohn(1.9)).toBe(true);
   });
 });

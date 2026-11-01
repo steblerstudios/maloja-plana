@@ -10,7 +10,7 @@ import { plusTage } from './utils/fristen.js';
 export const Ausweis = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'ausweis', icon: 'behoerden',
     title: t('ausweis.title'),
     intro: t('ausweis.intro'),
   },
@@ -31,7 +31,7 @@ export const Ausweis = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'ausweis-frist', frist: (d) => plusTage(d, 30),
         labelKey: 'ausweis.fristLabel', hinweisKey: 'ausweis.fristHinweis', vorbeiKey: 'ausweis.fristVorbei',
-        buttonKey: 'ausweis.step4Button', doneKey: 'ausweis.step4Done', calendarKey: 'ausweis.step4CalendarLink',
+        art: 'frist', buttonKey: 'ausweis.step4Button', doneKey: 'ausweis.step4Done', calendarKey: 'ausweis.step4CalendarLink',
         reminderTitle: t('ausweis.reminderTitle'), category: 'admin',
       })
     ),

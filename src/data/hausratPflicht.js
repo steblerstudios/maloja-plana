@@ -1,0 +1,22 @@
+// Kantone mit obligatorischer Hausrat- bzw. Mobiliarversicherung (nur Feuer und Elementar; Diebstahl, Wasser, Glas
+// bleiben freiwillig). Fachprüfung 01.11.2026:
+//   NW  belegt: NSVG Art. 27 Abs. 1 und Art. 2 Abs. 1 (PDF der Nidwaldner Sachversicherung, Stand 1.10.2020).
+//   VD  belegt: LAIEN (RSV 963.41) Art. 6a Abs. 1 und Art. 27 Abs. 1, gelesen 01.11.2026 in der Fassung Stand 01.01.2011
+//       (LexFind); ECA Vaud nennt die Pflicht heute ebenso. Die aktuelle Fassung des Erlasses ist nicht gelesen.
+//   FR, JU  NICHT belegt: die Anstalten nennen nur Gebäude, die Erlasse waren nicht lesbar.
+//   Übrige 22 Kantone: nicht geprüft.
+// Darum sagt die App ausser bei NW und VD «je nach Kanton Pflicht», bis der Erlass gelesen ist, nie «freiwillig»
+// (Entscheid Stebler Studios 01.11.2026).
+//
+// verify: true — Entscheid Stebler Studios 27.10.2026: «Hausrat-Pflicht je Kanton mit Prüf-Vermerk». Solange das Flag
+// steht, steht der Vermerk bei jedem Kanton. Erst entfernen, wenn alle Erlasse nachgelesen und hier zitiert sind.
+export const HAUSRAT_PFLICHT = {
+  kantone: ['NW', 'VD'],
+  verify: true,
+};
+
+// 'pflicht' | 'unbekannt' (Kanton nicht erfasst oder Erlass nicht gelesen)
+export function hausratPflicht(kanton) {
+  const k = String(kanton || '').trim().toUpperCase();
+  return HAUSRAT_PFLICHT.kantone.includes(k) ? 'pflicht' : 'unbekannt';
+}

@@ -203,13 +203,17 @@ export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
   erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder, konkubinat = false,
-  partnerAngegebenProfil,
+  partnerAngegebenProfil, quellensteuer = null,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
   let grund = null;
+  if (quellensteuer) grund = QUELLENSTEUER_GRUND[quellensteuer];
+  // Rente und Selbständigkeit: die Tabelle ist für Angestellte gemessen, auch ein eingetragener Wert kommt nicht aus ihr
+  // (Fachprüfung 01.11.2026). Die Bundessteuer rechnet mit dem eingetragenen Wert weiter.
+  else if (direkt && ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) grund = 'erwerbsartDirekt';
   // K62.4: ein eingetragener Wert gilt nur für den Zivilstand, zu dem er gehört (siehe unten).
-  if (direkt && direktZivilstandAbweichend(verheiratet, direktVerheiratet)) grund = 'zivilstandDirekt';
+  else if (direkt && direktZivilstandAbweichend(verheiratet, direktVerheiratet)) grund = 'zivilstandDirekt';
   // K87: ebenso nur für die Kinderzahl, zu der er gehört.
   else if (direkt && direktKinderAbweichend(kinder, direktKinder)) grund = 'kinderDirekt';
   // K62.1: ein Partnereinkommen verhindert die Zahl nur, wo es zählt — in der Ehe (Zusammenrechnung)
@@ -333,8 +337,10 @@ export function imKonkubinat({ verheiratet = false, konkubinat = false, partnerE
 export function steuerbaresEinkommenFuerProfil({
   nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, berufsauslagen = 0, weitereAbzuege = 0,
-  erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder,
+  erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder, quellensteuer = null,
 } = {}) {
+  // Vor dem eingetragenen Wert: «überall sperren» (Stebler Studios 01.11.2026), siehe quellensteuerMoeglich().
+  if (quellensteuer) return { steuerbar: null, quelle: null, grund: QUELLENSTEUER_GRUND[quellensteuer] };
   if (Number(direktSteuerbar) > 0) {
     if (direktZivilstandAbweichend(verheiratet, direktVerheiratet)) return { steuerbar: null, quelle: null, grund: 'zivilstandDirekt' };
     if (direktKinderAbweichend(kinder, direktKinder)) return { steuerbar: null, quelle: null, grund: 'kinderDirekt' };
@@ -356,6 +362,21 @@ function direktZivilstandAbweichend(verheiratet, direktVerheiratet) {
 // K87: weicht die gerechnete Kinderzahl von der ab, zu der der eingetragene Wert gehört?
 function direktKinderAbweichend(kinder, direktKinder) {
   return direktKinder !== undefined && (Number(kinder) || 0) !== (Number(direktKinder) || 0);
+}
+
+// Mögliche Quellensteuer: keine Steuerzahl, weder Bund noch Kanton (Stebler Studios 01.11.2026, Prüfung rechts-pruefer,
+// Fedlex gelesen 01.11.2026). 'bl': Arbeitnehmer ohne Niederlassungsbewilligung (DBG Art. 83 Abs. 1, StHG Art. 32 Abs. 1),
+// dazu ausländische Staatsangehörigkeit ohne erfassten Ausweis. 'g': im Ausland wohnhaft (DBG Art. 91, StHG Art. 35).
+// Nur «möglich»: Die Ausnahme nach DBG Art. 83 Abs. 2 (ungetrennte Ehe, Schweizer Bürgerrecht oder Niederlassungsbewilligung)
+// erkennt das Profil nicht. Selbständige fallen nicht darunter; Rente und Selbständigkeit haben ihren eigenen Grund.
+const QUELLENSTEUER_GRUND = { bl: 'quellensteuer', g: 'quellensteuerG' };
+export function quellensteuerMoeglich(data = {}) {
+  const permit = String(data?.ausbildung?.workPermit || '').toLowerCase();
+  const nationalitaet = data?.basis?.nationality;
+  if (permit === 'g') return 'g';
+  // F, N, S (Stebler Studios 01.11.2026): ohne Niederlassungsbewilligung fallen auch sie unter DBG Art. 83 Abs. 1, StHG Art. 32 Abs. 1.
+  if (['b', 'l', 'f', 'n', 's'].includes(permit)) return 'bl';
+  return !permit && nationalitaet && nationalitaet !== 'swiss' ? 'bl' : null;
 }
 
 // R4: Anstellungstyp (Finanzen-Kapitel, Optionen employed/selfEmployed/freelance/retired), für den
@@ -394,7 +415,9 @@ export function steuerEingabenAusDaten(data = {}) {
     dreizehnter,
     direktSteuerbar: data?.taxData?.useEnteredTaxable === false ? 0 : (Number(f.taxableIncome) || 0),
     einkommensart: f.incomeType === 'brutto' || (neben > 0 && f.sideIncomeType === 'brutto') ? 'brutto' : (f.incomeType || null),
-    erwerbsart: f.employmentType || null,
+    // Fachprüfung 01.11.2026: «pensioniert» im Haushalt zählt wie der Anstellungstyp.
+    erwerbsart: data?.basis?.household?.isRetired ? 'retired' : (f.employmentType || null),
+    quellensteuer: ERWERBSART_OHNE_SCHAETZUNG[f.employmentType] || data?.basis?.household?.isRetired ? null : quellensteuerMoeglich(data),
     partnerEinkommen: hh.partnerIncome,
     partnerAngegeben: partnerEinkommenAngegeben(data),
     // Eingetragene Partnerschaft = Ehe (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4) — utils/zivilstand.js.
@@ -464,7 +487,7 @@ export function steuernFuerProfil(p = {}) {
  * @returns {object|null} vergleicheTarife() oder null
  */
 export function tarifvergleichFuerProfil(p = {}) {
-  if (tarifvergleichGrund(p)) return null;
+  if (p.quellensteuer || tarifvergleichGrund(p)) return null;
   const abz = { nettolohnJahr: p.nettolohnJahr, kinder: p.kinder, berufsauslagen: p.berufsauslagen, weitereAbzuege: p.weitereAbzuege };
   return vergleicheTarife(
     steuerbarNachEstv({ ...abz, verheiratet: false }),

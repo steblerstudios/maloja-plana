@@ -1,0 +1,210 @@
+<title>Fassung 7 Rundgang</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Lexend:wght@400;500&display=swap">
+<style>
+/* Layout: eine Lesespalte wie die Vergleichsseiten von Fassung 5/6; je Seite Bild links, Befunde rechts, unten die Entscheide. */
+:root {
+  --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6;
+  --text: #24262A; --mid: #5E6167; --soft: #5A5D63;
+  --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #3D5A78; --rose: #8A3B3B;
+  --display: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #A4A7AC; --soft: #9CA0A6;
+  --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D89A92; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #A4A7AC; --soft: #9CA0A6;
+  --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D89A92; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 1120px; margin: 0 auto; padding-block: 32px 72px; display: grid; gap: 8px; }
+h1 { font-family: var(--display); font-size: 32px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 23px; margin: 36px 0 2px; text-wrap: balance; }
+h3 { font-family: var(--display); font-size: 17px; margin: 0; }
+p { color: var(--mid); max-width: 72ch; margin: 0; }
+code { font-size: 13px; background: var(--up); padding: 1px 5px; border-radius: 4px; }
+.lead { display: grid; gap: 10px; margin-bottom: 8px; }
+.meta { font-size: 13px; color: var(--soft); }
+.fragen { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.fragen span { border: 1px solid var(--border); border-radius: 999px; padding: 4px 11px; font-size: 13px; }
+
+/* Matrix: Thema × Ort */
+.matrix-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-top: 10px; }
+table.matrix { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13.5px; }
+.matrix th, .matrix td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: center; }
+.matrix th { font-weight: 500; color: var(--soft); font-size: 12.5px; }
+.matrix th:first-child, .matrix td:first-child { text-align: left; }
+.matrix td:first-child b { font-weight: 500; }
+.matrix td:first-child small { display: block; color: var(--mid); font-size: 12.5px; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--border); }
+.dot.ist { background: var(--soft); }
+.dot.soll { background: var(--sage); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 25%, transparent); }
+ol.plan { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 78ch; color: var(--mid); }
+ol.plan b { color: var(--text); font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--mid); margin-top: 8px; align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+
+/* Seite */
+section.seite { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 22px; padding-top: 18px; border-top: 1px solid var(--border); margin-top: 18px; }
+section.seite figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+section.seite img { width: 100%; border-radius: 8px; border: 1px solid var(--border); display: block; }
+section.seite figcaption { font-size: 12.5px; color: var(--soft); }
+.kopf { display: grid; gap: 4px; margin-bottom: 10px; }
+.befunde { display: grid; gap: 10px; }
+.bef { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.bef .zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.id { font-size: 12px; color: var(--soft); font-variant-numeric: tabular-nums; }
+.chip { font-size: 12px; border-radius: 999px; padding: 1px 9px; border: 1px solid currentColor; }
+.chip.fehler { color: var(--rose); } .chip.fusion { color: var(--sky); } .chip.aufbau { color: var(--gold); }
+.chip.zeigen { color: var(--sage); } .chip.flow { color: var(--sand); } .chip.gut { color: var(--sage); border-style: dashed; }
+.chip.sprache { color: var(--soft); }
+.bef p.was { color: var(--text); }
+.bef p.vor { font-size: 14px; }
+.bef p.vor b { font-weight: 500; color: var(--text); }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.wahl button { font: inherit; font-size: 13px; color: var(--text); background: var(--up); border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px; cursor: pointer; min-height: 32px; }
+.wahl button:hover { border-color: var(--soft); }
+.wahl button:focus-visible { outline: 2px solid var(--sand); outline-offset: 2px; }
+.wahl button[aria-pressed="true"].ja { background: var(--sage); border-color: var(--sage); color: var(--bg); }
+.wahl button[aria-pressed="true"].nein { background: var(--soft); border-color: var(--soft); color: var(--bg); }
+.wahl button[aria-pressed="true"].reden { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+
+/* Entscheide-Leiste */
+.leiste { position: sticky; bottom: 0; margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.leiste .stand { font-size: 14px; font-variant-numeric: tabular-nums; }
+.leiste button { font: inherit; font-size: 14px; background: var(--sand); color: var(--bg); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; min-height: 40px; }
+.leiste button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+textarea#ausgabe { width: 100%; min-height: 120px; font: 13px/1.5 ui-monospace, Menlo, monospace; color: var(--text); background: var(--up); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+@media (max-width: 720px) { section.seite { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 27px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main>
+  <div class="lead">
+    <span class="meta">Maloja Plana · Rundgang für Fassung 7 · Runden 1 bis 3 und Landkarte · Stand 27.10.2026, 02:19 · <code>main d9aa8e06</code></span>
+    <h1>Fassung 7 · Rundgang durch die App</h1>
+    <p>Im Browser durchgegangen, Beispiel Maria Muster, Desktop. Je Seite sechs Fragen. Nichts davon ist gebaut: Bei jedem Punkt «Ja», «Nein» oder «Besprechen» wählen, unten die Entscheide kopieren und in den Chat legen.</p>
+    <div class="fragen"><span>Umgesetzt?</span><span>Stimmt es?</span><span>Flow</span><span>Aufbau &amp; Logik</span><span>Fusionieren</span><span>Stärker zeigen</span></div>
+  </div>
+
+  <h2>Der Kern von Fassung 7: je Thema ein Ort</h2>
+  <p>Gestalterisch hält das Kapitel-Muster aus Fassung 6. Die Wiederholungen sind inhaltlich: dieselbe Zahl, dasselbe Bild an zwei bis vier Orten. Vorschlag: Jedes Thema hat ein Besitzer-Kapitel (grün). Alle anderen Stellen zeigen nur noch eine Zeile mit derselben Zahl und einem Link.</p>
+  <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
+  <div class="legend"><span><i class="dot ist"></i>steht heute dort</span><span><i class="dot soll"></i>Vorschlag: hier gehört es hin</span><span><i class="dot"></i>nicht dort</span></div>
+
+  <h2>Vorschlag: in dieser Reihenfolge bauen</h2>
+  <p>Aus 71 Punkten zum Entscheiden ein Plan. Jeder Schritt ist ein eigener Zweig und kommt erst nach deinem Entscheid.</p>
+  <ol class="plan">
+    <li><b>Fehler, die man sieht</b>: Lebensmappe ohne Behörden (F7-S1), Mietbarometer (F7-K1-1), zwei Bruttowerte (F7-K2-3), Beträge ohne CHF (F7-D6, F7-D7, F7-S6), Deko-Schrift in Titeln (F7-A12, F7-D8), Beispiel Maria (F7-K1-2, F7-K4-2). Klein, unabhängig, vor oder kurz nach dem Deploy möglich.</li>
+    <li><b>Was schon entschieden ist, bauen</b>: Ablauf-Schale W (F7-A1), Rechner-Form X (F7-A2), «Was steht mir zu?» O (F7-A3), Versicherungs-Übersicht §11 (F7-L6). Damit erledigen sich rund 15 weitere Punkte.</li>
+    <li><b>Je Thema ein Ort</b>: die Tabelle oben, also Lohn, KK-Last, Franchise, Steuern, Vorsorge, Dossiers, Sicherung.</li>
+    <li><b>Neu entscheiden</b>: Fortschritts-Bild (F7-L4, F7-S5), Kapitel Familie (F7-L3), Spinnennetz (F7-K3-6), Dashboard in fünf Teilen (F7-D9).</li>
+  </ol>
+
+  <div id="seiten"></div>
+
+  <div class="leiste" aria-live="polite">
+    <span class="stand" id="stand">0 von 0 entschieden</span>
+    <button type="button" id="kopieren">Entscheide kopieren</button>
+  </div>
+  <textarea id="ausgabe" hidden readonly aria-label="Entscheide als Text"></textarea>
+</main>
+
+<script>
+const ORTE = ['Dashboard', 'Finanzen', 'Versicherungen', 'Ausbildung', 'Behörden', 'Notfall', 'Werkzeug/Übersicht'];
+// [Thema, Erklärung, Orte heute (Indizes), Besitzer-Ort (Index)]
+const MATRIX = [
+  ['Kapitel-Liste', 'Landschaft, Fortschritt, Kapitel-Zeilen', [0, 0, 0], 0, '3× auf dem Dashboard'],
+  ['Lebensbaum', 'alle Kapitel als Baum', [1], 0],
+  ['Lohn-Vergleich', '«Wo steht Ihr Lohn?»', [1, 3], 3],
+  ['Brutto-Schätzung', 'CHF 6’796 und CHF 6’472', [0, 1], 1],
+  ['KK-Last', 'Prämie in % des Einkommens', [1, 2], 2],
+  ['Franchise-Kreuz', 'Break-even 300 / 2’500', [0, 2, 6], 6],
+  ['Steuern', 'Betrag, Frist, Rechner', [0, 1, 4, 6], 1],
+  ['Vorsorge', 'Patientenverfügung, Vorsorgeauftrag', [4, 5], 5],
+  ['IPV', 'Anspruch ja/nein', [0, 1, 6], 1],
+];
+
+const SEITEN = {{SEITEN}};
+
+const K = { fehler: 'Fehler', fusion: 'Fusion', aufbau: 'Aufbau', zeigen: 'Zeigen', flow: 'Flow', gut: 'gut so', sprache: 'Sprache/Zugang' };
+let wahl = {};
+try { wahl = JSON.parse(localStorage.getItem('f7-wahl') || '{}'); } catch (e) { wahl = {}; }
+
+function matrix() {
+  const t = document.getElementById('matrix');
+  let h = '<thead><tr><th>Thema</th>' + ORTE.map(o => `<th>${o}</th>`).join('') + '</tr></thead><tbody>';
+  for (const [thema, erkl, ist, soll, notiz] of MATRIX) {
+    h += `<tr><td><b>${thema}</b><small>${notiz || erkl}</small></td>`;
+    ORTE.forEach((_, i) => {
+      const n = ist.filter(x => x === i).length;
+      const cls = i === soll ? 'soll' : n ? 'ist' : '';
+      const lbl = i === soll ? 'Besitzer' : n ? 'heute hier' : 'nicht hier';
+      h += `<td><i class="dot ${cls}" role="img" aria-label="${ORTE[i]}: ${lbl}"></i></td>`;
+    });
+    h += '</tr>';
+  }
+  t.innerHTML = h + '</tbody>';
+}
+
+function seiten() {
+  const c = document.getElementById('seiten');
+  c.innerHTML = SEITEN.map(s => `
+    <section class="seite" id="${s.id}">
+      <figure>${s.bild ? `<img src="${s.bild}" alt="Bildschirm heute: ${s.titel}" loading="lazy">` : ''}<figcaption>${s.bildtext || ''}</figcaption></figure>
+      <div>
+        <div class="kopf"><h2 style="margin:0">${s.titel}</h2><p>${s.intro}</p></div>
+        <div class="befunde">${s.befunde.map(b => `
+          <article class="bef" data-id="${b.id}">
+            <div class="zeile"><span class="id">${b.id}</span><span class="chip ${b.art}">${K[b.art]}</span></div>
+            <p class="was">${b.was}</p>
+            ${b.vor ? `<p class="vor"><b>Vorschlag:</b> ${b.vor}</p>` : ''}
+            ${b.art === 'gut' ? '' : `<div class="wahl" role="group" aria-label="Entscheid zu ${b.id}">
+              <button type="button" class="ja" data-w="ja">Ja</button>
+              <button type="button" class="nein" data-w="nein">Nein</button>
+              <button type="button" class="reden" data-w="reden">Besprechen</button></div>`}
+          </article>`).join('')}
+        </div>
+      </div>
+    </section>`).join('');
+}
+
+function zeigen() {
+  document.querySelectorAll('.bef').forEach(el => {
+    const w = wahl[el.dataset.id];
+    el.querySelectorAll('.wahl button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.w === w)));
+  });
+  const alle = document.querySelectorAll('.wahl').length;
+  const n = Object.keys(wahl).filter(k => document.querySelector(`.bef[data-id="${k}"] .wahl`)).length;
+  document.getElementById('stand').textContent = `${n} von ${alle} entschieden`;
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('.wahl button');
+  if (!b) return;
+  const id = b.closest('.bef').dataset.id;
+  wahl[id] = wahl[id] === b.dataset.w ? undefined : b.dataset.w;
+  if (!wahl[id]) delete wahl[id];
+  try { localStorage.setItem('f7-wahl', JSON.stringify(wahl)); } catch (e) {}
+  zeigen();
+});
+
+document.getElementById('kopieren').addEventListener('click', async () => {
+  const W = { ja: 'Ja', nein: 'Nein', reden: 'Besprechen' };
+  const zeilen = SEITEN.flatMap(s => s.befunde.filter(b => wahl[b.id]).map(b => `${b.id}: ${W[wahl[b.id]]}`));
+  const text = 'Fassung 7, Entscheide:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
+  const ta = document.getElementById('ausgabe');
+  ta.value = text; ta.hidden = false;
+  const btn = document.getElementById('kopieren');
+  try { await navigator.clipboard.writeText(text); btn.textContent = 'Kopiert'; }
+  catch (e) { ta.focus(); ta.select(); btn.textContent = 'Text markiert, bitte kopieren'; }
+  setTimeout(() => { btn.textContent = 'Entscheide kopieren'; }, 2500);
+});
+
+matrix(); seiten(); zeigen();
+</script>

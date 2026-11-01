@@ -2,6 +2,7 @@ import { BVG_PARAMS } from './ahvRechner.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { lohnBasis } from '../utils/jahreslohnAusProfil.js';
 import { referenzalterErreicht } from '../utils/nettoAusProfil.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Reine Logik für den Versicherungs-Schutzschild — kein React, damit testbar.
 // ZWEI Schilde, weil das Gesetz zwei Dinge unterscheidet:
@@ -31,7 +32,7 @@ export function jahreseinkommenFuerSchild(finanzen = {}) {
 // Die Optionen für schildState aus dem Profil — für beide Aufrufer gleich.
 export function schildOptionen(data = {}) {
   return {
-    employed: data?.finanzen?.employmentType === 'employed',
+    employed: istAngestellt(data?.finanzen),
     annualIncome: jahreseinkommenFuerSchild(data?.finanzen),
     // 13. offen: ×12 gerechnet. Läge erst ×13 über der Schwelle, ist die Pflicht offen, nicht weg.
     annualIncomeMit13: dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen'
@@ -64,6 +65,11 @@ function groupStat(list) {
   };
 }
 
+// «Aktiv» = Kasse oder laufender Beitrag. Ein blosses Guthaben (Freizügigkeit) ist keine laufende Pensionskasse: es zählt
+// fürs Alter, nicht für Invalidität und Tod (Fachprüfung 26.10.2026, Rechts-Prüfung 01.11.2026).
+export const zahl = (x) => Number(String(x ?? '').replace(/[’'\s]/g, '')) || 0;
+export const bvgAktiv = (v = {}) => has(v.bvgInsurer) || zahl(v.bvgContribution) > 0;
+
 export function schildState(v = {}, opts = {}) {
   const employed = opts.employed === true;
   const einkommen = Number(opts.annualIncome) || 0;
@@ -73,7 +79,7 @@ export function schildState(v = {}, opts = {}) {
   const bvgAlter = opts.referenzalterErreicht !== true && opts.vorBvgMindestalter !== true;
   // BVG Art. 7 Abs. 1: Jahreslohn von «mehr als» der Schwelle — wie lohnAbzuege.js (`<=` → nicht versichert).
   const bvgPflicht = employed && bvgAlter && einkommen > BVG_PARAMS.eintrittsschwelle;
-  const bvgErfasst = has(v.bvgInsurer) || Number(v.bvgContribution) > 0 || Number(v.bvgBalance) > 0;
+  const bvgErfasst = bvgAktiv(v);
   // Unter der Schwelle, aber nicht als Brutto erfasst: ob die Pflicht besteht, ist offen (siehe oben).
   // Nicht als Lücke gezählt (keine falsche Lücke), aber benannt. Ist eine Kasse erfasst, erübrigt es sich.
   const bvgUnklarBasis = employed && bvgAlter && !bvgPflicht && einkommen > 0 && opts.lohnBasis !== 'brutto' && !bvgErfasst;

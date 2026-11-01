@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PageTitle } from './components/Heading.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
@@ -7,9 +7,11 @@ import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, inDays } from './utils/helpers.js';
-import { Brotkrume } from './components/Brotkrume.jsx';
 
-export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
+// Seit 27.10.2026 (F7-S2) keine eigene Seite mehr, sondern eine Auswahl in «Unterlagen drucken»
+// (UnterlagenDrucken.jsx): dort stehen Brotkrume und Seitentitel, hier ein Abschnittstitel.
+// Inhalt, Vorschau und Hinweise unverändert.
+export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
   // Export-Vorschau (K3): null | 'druck' | 'json' — erst zeigen, was rausgeht, dann erstellen.
   const [vorschau, setVorschau] = useState(null);
 
@@ -109,6 +111,8 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
             style: {
               fontWeight: row.bold ? weight.semi : weight.medium,
               textAlign: 'right', maxWidth: '50%',
+              // F7-S7: Eine E-Mail-Adresse hat keine Umbruchstelle und machte die Seite auf 375 px 10 px zu breit.
+              overflowWrap: 'anywhere', minWidth: 0,
             }
           }, row.value)
         )
@@ -133,15 +137,13 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
 
   return React.createElement('div', { style: { maxWidth: '520px' } },
 
-    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
-    React.createElement(Brotkrume, { palette, t, view: 'behoerdendossier', onNavigate }),
     React.createElement('div', {
       style: {
         background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'legal', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('behoerdenDossier.title')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'legal', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('behoerdenDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
       }, t('behoerdenDossier.subtitle'))

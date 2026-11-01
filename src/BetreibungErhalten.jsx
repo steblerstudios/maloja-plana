@@ -23,7 +23,7 @@ export const BetreibungTeil = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'betreibung-frist', frist: (d) => plusTage(d, 10),
         labelKey: 'betreibung.fristLabel', hinweisKey: 'betreibung.fristHinweis', vorbeiKey: 'betreibung.fristVorbei',
-        buttonKey: 'betreibung.step1Button', doneKey: 'betreibung.step1Done', calendarKey: 'betreibung.step1CalendarLink',
+        art: 'frist', buttonKey: 'betreibung.step1Button', doneKey: 'betreibung.step1Done', calendarKey: 'betreibung.step1CalendarLink',
         reminderTitle: t('betreibung.reminderTitle'), category: 'admin',
         wert: zustelldatum, onWert: setZustelldatum,
       }),

@@ -19,7 +19,7 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
   const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'lebenslauf',
+    palette, t, onNavigate, ablauf: 'neuerjob', icon: 'lebenslauf',
     title: t('neuerJob.title'),
     intro: t('neuerJob.intro'),
   },

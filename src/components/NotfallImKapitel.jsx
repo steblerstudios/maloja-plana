@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { springeZuAnker } from '../utils/hashRouter.js';
+import { ExternerLink } from './ExternerLink.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
 import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 
-// Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Sophie 24.10.2026; gebaut Abnahme
+// Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme
 // 25.10.2026). Das Kapitel ist der eine Notfall-Ort; der frühere Einstieg (#/notfalleinstieg) leitet hierher.
 // Oben, nach der Zusammenfassung, vier Teile:
 //   1. Im Ernstfall — Knopf zur Notfallkarte (bleibt beim Scrollen oben stehen, ausser während man tippt),
@@ -69,7 +71,7 @@ export const NOTFALL_ANGABEN = SCENARIOS.flatMap((s) => s.fields)
   .filter((f, i, alle) => alle.findIndex((x) => x.chapter === f.chapter && x.k === f.k) === i);
 
 // Eine Angabe ist bereit, wenn sie einen Wert hat oder «trifft nicht zu» trägt. Ausnahme Patientenverfügung: erst
-// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Sophie 25.10.2026, nach der
+// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Stebler Studios 25.10.2026, nach der
 // Fachprüfung; sonst zählte «Bereit» sie als erledigt und «Vorsorge» darunter als nicht geregelt).
 export const angabeBereit = (data, f) => (f.chapter === 'notfall' && f.k === 'patientenverfuegung'
   ? vorsorgeGeregelt((data || {}).notfall, 'patientenverfuegung')
@@ -174,15 +176,12 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const alle = data || {};
   const nf = alle.notfall || {};
   const kapitelListe = chapters || [];
-  const feldName = (kap, k) => {
-    const ch = kapitelListe.find((c) => c.key === kap);
-    const f = ch && ch.fields.find((x) => x.k === k);
-    return f ? f.label : k;
-  };
+  const feld = (kap, k) => kapitelListe.find((c) => c.key === kap)?.fields.find((x) => x.k === k);
+  const feldName = (kap, k) => feld(kap, k)?.label || k;
   const kapitelTitel = (kap) => (kapitelListe.find((c) => c.key === kap) || {}).title || kap;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
+  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
   const notfallRot = palette.roseDeep || palette.rose;
 
   // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
@@ -223,23 +222,20 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     const titel = h('span', { style: { fontSize: text.sm, color: palette.text } }, hinweisZeichen('kaestchen', 12), feldName(f.chapter, f.k), ' ',
       h('small', { style: { fontSize: text.xs, color: palette.mid } }, '· ' + t('notfallKapitel.fehltFuer', { lagen: lagenName(f.lagen) })));
     const rahmen = { border: '1px dashed ' + notfallRot, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', marginBottom: space.sm + 'px' };
+    const wegZeile = (key, onClick, beschriftung) => h('div', { key, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+      titel,
+      h('button', { type: 'button', className: 'mp-link', onClick, style: { ...ruhigKnopf, background: 'none' } }, beschriftung));
     // Aus einem anderen Kapitel: der Weg dorthin.
     if (f.chapter !== 'notfall') {
-      return h('div', { key: f.chapter + '.' + f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), style: { ...ruhigKnopf, background: 'none' } }, kapitelTitel(f.chapter) + ' ›'));
+      return wegZeile(f.chapter + '.' + f.k, () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), kapitelTitel(f.chapter) + ' ›');
     }
-    // Patientenverfügung mit «Noch nicht»: die Antwort steht, es fehlt das Dokument — der Weg zum Werkzeug.
-    if (f.k === 'patientenverfuegung' && nf.patientenverfuegung) {
-      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.erstellen')));
+    // F7-K6-1 (31.10.2026): die Patientenverfügung steht nur noch im Block «Vorsorge» — hier der Sprung dorthin.
+    if (f.k === 'patientenverfuegung') {
+      return wegZeile(f.k, () => springeZuAnker('mp-notfall-vorsorge'), t('notfallKapitel.zurVorsorge'));
     }
-    // Auswahl (Blutgruppe, Patientenverfügung ohne Antwort): zum Feld im Formular unten.
+    // Auswahl (Blutgruppe): zum Feld im Formular unten.
     if (!EINGABE[f.k]) {
-      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => zumFeld && zumFeld(f.k), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.ergaenzenUnten')));
+      return wegZeile(f.k, () => zumFeld && zumFeld(f.k), t('notfallKapitel.ergaenzenUnten'));
     }
     return h('div', { key: f.k, 'data-fehlt': f.k, style: rahmen },
       h('label', { htmlFor: id, style: { display: 'block' } }, titel),
@@ -310,13 +306,14 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
 
   // 4. Vorsorge
   const geregelt = VORSORGE.filter((v) => vorsorgeGeregelt(nf, v.k)).length;
+  const pvFeld = feld('notfall', 'patientenverfuegung');
   const vorsorgeWert = (k) => {
     const v = nf[k];
     if (!v) return t('notfallKapitel.nichtErfasst');
     return t('chapters.notfall.fields.' + k + '.options.' + v) || v;
   };
   const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
-    h('h3', { id: 'mp-notfall-vorsorge', style: kapH }, t('notfallKapitel.vorsorgeTitel')),
+    h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, style: kapH }, t('notfallKapitel.vorsorgeTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.vorsorgeSatz'), ' ',
       h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
@@ -338,7 +335,22 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         }
         return h('button', { key: v.k, type: 'button', 'data-vorsorge': v.k, onClick: () => onNavigate(v.weg), style: { ...stil, cursor: 'pointer', color: palette.text } }, ...innen,
           h('span', { key: 'g', style: { display: 'block', fontSize: text.xs, color: palette.sandDeep || palette.mid, marginTop: '2px' } }, t(v.wegKey)));
-      }))
+      })),
+    // F7-K6-1: Die Antwort «vorhanden?» steht hier statt in den Angaben. Das Formular setzt sie nicht selbst — wer
+    // schon eine Verfügung hat, sagt es hier. Bei «Ja» bleibt der Weg zum Formular, die Kachel führt dann nicht hin.
+    h('div', { 'data-teil': 'notfall-pv-antwort', style: { marginTop: space.sm + 'px' } },
+      h('label', { htmlFor: 'mp-notfall-pv', style: { display: 'block', fontSize: text.sm, color: palette.text } }, feldName('notfall', 'patientenverfuegung')),
+      h('select', {
+        id: 'mp-notfall-pv', 'aria-describedby': 'mp-notfall-pv-hinweis', value: nf.patientenverfuegung || '', disabled: !!demoMode,
+        onChange: (e) => onUpdate && onUpdate('patientenverfuegung', e.target.value),
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '0 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+      },
+        h('option', { value: '' }, t('notfallKapitel.nichtErfasst')),
+        (pvFeld?.options || []).map((o) => h('option', { key: o.value, value: o.value }, o.label))),
+      h('p', { id: 'mp-notfall-pv-hinweis', style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
+      pvFeld?.orientation && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, pvFeld.orientation),
+      pvFeld?.link && h(ExternerLink, { t, href: pvFeld.link.url, style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, pvFeld.link.label),
+      nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none', marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
   return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, bereit, unterlagen, vorsorge);

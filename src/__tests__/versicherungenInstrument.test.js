@@ -1,4 +1,4 @@
-// Fassung 6 · Kapitel Versicherungen, Schritt 2 (Runde 9, Entwurf AA nachgebessert, Sophie 24./25.10.2026):
+// Fassung 6 · Kapitel Versicherungen, Schritt 2 (Runde 9, Entwurf AA nachgebessert, Stebler Studios 24./25.10.2026):
 // Versicherungen pro Monat, KK-Last gegen WHO 10 %, Schutzschild klein, Franchise-Kreuz klein mit Weg zur
 // Übersicht, «Alle Versicherungen auf einen Blick» zuoberst in «Passend».
 import { describe, it, expect } from 'vitest';
@@ -10,12 +10,13 @@ import { VersicherungenInstrument } from '../components/VersicherungenInstrument
 import { ChapterViewComplete } from '../ChapterView.jsx';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
-import { calculateMonthlyBudget } from '../budgetSync.js';
+import { calculateMonthlyBudget, BUDGET_GROUPS } from '../budgetSync.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
 import fr from '../i18n/fr.js';
 import it_ from '../i18n/it.js';
 import rm from '../i18n/rm.js';
+import { KKLastSpiegel, kkLastBasisKey } from '../KKLastCard.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 
 const t = createT({ de }, 'de', 'sie');
@@ -26,52 +27,64 @@ const instrument = (versicherungen, allData = DEMO_DATA) => renderToStaticMarkup
 const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
 
 describe('Versicherungen pro Monat', () => {
-  it('Maria: CHF 570 = KK 540.30 + Hausrat 20 + Haftpflicht 10 — dieselbe Zahl wie die Budget-Gruppe', () => {
+  it('Maria: CHF 609 = KK 540.30 + Zusatz 38.50 + Hausrat 20 + Haftpflicht 10 — dieselbe Zahl wie die Budget-Gruppe', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
-    expect(text).toContain('Versicherungen pro Monat CHF 570');
+    expect(text).toContain('Versicherungen pro Monat CHF 609');
     expect(text).toContain('Krankenkasse (Grundversicherung) CHF 540.30');
+    expect(text).toContain('Krankenkasse (Zusatz) CHF 38.50');
     expect(text).toContain('Hausrat (CHF 240 / Jahr) CHF 20');
     expect(text).toContain('Haftpflicht (CHF 120 / Jahr) CHF 10');
     expect(text).toContain('Die Pensionskasse (CHF 420) ist schon vom Lohn abgezogen.');
     const b = calculateMonthlyBudget(DEMO_DATA, t);
-    expect(Math.round(b.expenses.healthInsurance + b.expenses.householdInsurance + b.expenses.liabilityInsurance + b.expenses.otherInsurance)).toBe(570);
+    expect(Math.round(BUDGET_GROUPS.find((g) => g.key === 'insuranceHealth').fields.reduce((a, k) => a + (b.expenses[k] || 0), 0))).toBe(609);
   });
   it('Versicherung «Ja» ohne Prämie: genannt, nicht geschätzt', () => {
     const v = { ...DEMO_DATA.versicherungen, liabilityPremium: '' };
-    expect(nurText(instrument(v))).toContain('Haftpflicht: Prämie nicht erfasst.');
+    expect(nurText(instrument(v))).toContain('Haftpflicht: Prämie nicht eingetragen.');
   });
   it('Fahrzeugversicherung zählt nicht, mit Satz', () => {
     const v = { ...DEMO_DATA.versicherungen, autoInsurance: 'yes', autoInsuranceAmount: '900' };
     const text = nurText(instrument(v));
-    expect(text).toContain('CHF 570');
+    expect(text).toContain('CHF 609');
     expect(text).toContain('Die Fahrzeugversicherung zählt hier nicht mit');
   });
-  it('ohne Prämie: kein Geld-Teil, das Schutzschild steht trotzdem', () => {
+  it('ohne Prämie: kein Geld-Teil, das Netz-Schild steht trotzdem', () => {
     const v = { kkInsurer: 'CSS', uvg: 'employer', liabilityInsurance: 'yes' };
     const html = instrument(v, { ...DEMO_DATA, versicherungen: v });
     expect(html).not.toContain('Versicherungen pro Monat');
-    expect(html).toContain('data-schild="klein"');
+    expect(html).toContain('data-schild="netz"');
   });
 });
 
 describe('KK-Last', () => {
-  it('Maria: 8.7 % des Einkommens, Marke WHO 10 %, Satz «unter 10 %»', () => {
+  it('Maria: 8.7 %, Basis netto, Vergleichsmarke, Weg zur IPV', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
-    expect(text).toContain('8.7 % des Einkommens');
-    expect(text).toContain('WHO 10 %');
-    expect(text).toContain(de.kkLast.underNote);
-  });
-  it('über 10 %: Satz «über dem Richtwert» und Weg zur IPV', () => {
-    const v = { ...DEMO_DATA.versicherungen, kkPremium: '700' };
-    const text = nurText(instrument(v));
-    expect(text).toContain(de.kkLast.overNote);
+    expect(text).toContain('8.7 %');
+    expect(text).toContain(de.kkLast.basisNetto.sie);
+    expect(text).toContain('Vergleichsmarke 10 %');
+    expect(text).toContain(de.kkLast.zusatzkosten);
+    expect(text).toContain(de.kkLast.kanton);
     expect(text).toContain(de.kkLast.ipvLink);
+    expect(text).not.toContain('WHO 10 %');
+    expect(text).not.toContain('Richtwert');
+  });
+  it('über 10 %: gleiche Sätze, keine Warnfarbe', () => {
+    const v = { ...DEMO_DATA.versicherungen, kkPremium: '700' };
+    const html = instrument(v);
+    expect(nurText(html)).toContain(de.kkLast.markeFrage);
+    expect(nurText(html)).toContain(de.kkLast.ipvLink);
+    expect(html).not.toContain('Richtwert');
   });
 });
 
-describe('Schutzschild klein, an einem Ort', () => {
-  it('im Instrument die kleine Fassung', () => {
-    expect(instrument(DEMO_DATA.versicherungen)).toContain('data-schild="klein"');
+describe('Netz-Schild, an einem Ort (F7-K3-6)', () => {
+  it('im Instrument das Netz-Schild statt der zwei kleinen Schilde', () => {
+    const html = instrument(DEMO_DATA.versicherungen);
+    expect(html).toContain('data-schild="netz"');
+    expect(html).not.toContain('data-schild="klein"');
+  });
+  it('das Spinnennetz steht nicht mehr im Kapitel', () => {
+    expect(QUELLE).not.toContain('VersicherungsNetz');
   });
   it('das grosse Schild steht nicht mehr im Kapitel', () => {
     expect(QUELLE).not.toContain('React.createElement(Schutzschild');
@@ -113,15 +126,92 @@ describe('Nachprüfung', () => {
   });
   it('Kasse erfasst, Prämie nicht: «Krankenkasse» steht zuerst bei «nicht erfasst»', () => {
     const v = { ...DEMO_DATA.versicherungen, kkPremium: '', liabilityPremium: '' };
-    expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht erfasst.');
+    expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht eingetragen.');
+  });
+  it('Spiegel in Finanzen: Blick aufs Budget, ohne Marke und ohne WHO', () => {
+    const tt = (k, p = {}) => k + JSON.stringify(p);
+    const pal = new Proxy({}, { get: () => '#000' });
+    const html = renderToStaticMarkup(React.createElement(KKLastSpiegel, { palette: pal, t: tt, data: DEMO_DATA, onNavigate: () => {} }));
+    expect(html).toContain('kkLast.spiegelSatz');
+    expect(html).toContain('8.7 %');
+    expect(html).not.toContain('kkLast.marker');
+    expect(html).not.toContain('kkLast.kanton');
+  });
+  it('Basis je nach Einkommen: netto, brutto, offen, nicht Lohn', () => {
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'netto' } })).toBe('kkLast.basisNetto');
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'brutto' } })).toBe('kkLast.basisBrutto');
+    expect(kkLastBasisKey({ finanzen: {} })).toBe('kkLast.basisOffen');
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'netto', employmentType: 'selfEmployed' } })).toBe('kkLast.basisEinkommen');
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'netto' }, basis: { household: { isRetired: true } } })).toBe('kkLast.basisEinkommen');
   });
   it('KK-Last mit Quelle (WHO) und Marke «Orientierung»', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
-    expect(text).toContain('WHO / UNO SDG-Indikator 3.8.2');
+    expect(text).toContain('WHO, Indikator 4845');
+    expect(text).toContain('KVG Art. 65 Abs. 1ter');
   });
-  it('kleines Schild: Zahl als Text neben dem Titel, Liste mit Rollen', () => {
+  it('Netz-Schild: Stand als Liste mit Rollen und als Satz, nicht nur im Bild', () => {
     const html = instrument(DEMO_DATA.versicherungen);
-    expect(nurText(html)).toContain('Pflicht · 3/3');
     expect(html).toContain('role="list"');
+    expect(html).toContain('data-teil="netz-schild-satz"');
+  });
+});
+
+// F7-K3-4 (Stebler Studios 01.11.2026): eine Karte mit Summe, Posten und KK-Last, dazu was nicht in der Summe zählt.
+describe('Kapitel Versicherungen: eine Karte', () => {
+  const html = instrument(DEMO_DATA.versicherungen);
+  const text = nurText(html);
+  it('Summe zuerst, KK-Last bei der Krankenkasse, Schild nach der Karte', () => {
+    expect(text.trim().startsWith('Versicherungen pro Monat CHF 609')).toBe(true);
+    expect(html.indexOf('Krankenkasse (Grundversicherung)')).toBeLessThan(html.indexOf('data-teil="kk-last-balken"'));
+    expect(html.indexOf('data-teil="kk-last-balken"')).toBeLessThan(html.indexOf('Krankenkasse (Zusatz)'));
+    expect(html.indexOf('data-teil="versicherungen-ausserhalb"')).toBeLessThan(html.indexOf('data-schild="netz"'));
+  });
+  it('ergänzt, was nicht in der Summe zählt, nur aus erfassten Feldern', () => {
+    expect(text).toContain('Pensionskasse');
+    expect(text).toContain('Reiseversicherung');
+    expect(text).toContain('Krankentaggeld');
+    expect(text).not.toContain('Cyberversicherung eingetragen');
+    expect(html).toMatch(/<details[^>]*data-teil="versicherungen-ausserhalb"(?![^>]*open)/);
+    expect(html).toMatch(/<details[^>]*data-teil="netz-schild-liste"(?![^>]*open)/);
+  });
+  it('die Summe ändert sich nicht durch die Ergänzung', () => {
+    expect(text).toContain('CHF 609');
+  });
+});
+
+// Fachprüfung 01.11.2026: Die Liste behauptet nichts, was die erfassten Felder nicht tragen.
+describe('Nicht einzeln in dieser Summe', () => {
+  const angestellt = { employmentType: 'employed', incomeType: 'brutto' };
+  const aussen = (v, finanzen = angestellt) => {
+    const html = instrument(v, { finanzen });
+    return { html, text: nurText(html.slice(html.indexOf('data-teil="versicherungen-ausserhalb"'))) };
+  };
+  it('AHV ohne Beitrag heisst «laut Angaben» und zählt nicht als eingetragen', () => {
+    const { html, text } = aussen({ kkPremium: '400' });
+    expect(text).toContain('1. Säule · AHV/IV laut Angaben');
+    expect(html).not.toMatch(/\d eingetragen/);
+  });
+  it('AHV sagt «in der Regel» und behält den Hinweis auch mit Beitrag', () => {
+    const { text } = aussen({ kkPremium: '400', ahvContribution: '3600' }, { employmentType: 'employed', incomeType: 'netto' });
+    expect(text).toContain('bei Anstellung in der Regel über den Lohn');
+    expect(text).toContain('CHF 300 / Mt.');
+  });
+  it('«Weitere Versicherungen» in der Summe wird genannt', () => {
+    expect(aussen({ kkPremium: '400', legalInsurance: 'yes' }, { ...angestellt, otherInsurance: '25' }).html).toContain('versicherungen-ausserhalb-weitere');
+    expect(aussen({ kkPremium: '400', legalInsurance: 'yes' }).html).not.toContain('versicherungen-ausserhalb-weitere');
+  });
+  it('Unfall-Zusatz ohne Prämie erscheint hier, mit Prämie unter den Posten', () => {
+    expect(aussen({ kkPremium: '400', uvgZusatz: 'yes' }).text).toContain('Unfall-Zusatzversicherung');
+    expect(aussen({ kkPremium: '400', uvgZusatz: 'yes', uvgZusatzPremium: '120' }).text).not.toContain('Unfall-Zusatzversicherung');
+  });
+  it('Gebäudeversicherung steht mit Betrag in der Liste', () => {
+    const html = renderToStaticMarkup(React.createElement(VersicherungenInstrument, { palette: LIGHT_PALETTE, t, versicherungen: { kkPremium: '400' }, allData: { finanzen: angestellt, wohnen: { buildingsInsurance: '600' } } }));
+    expect(nurText(html)).toContain('Gebäudeversicherung CHF 50 / Mt.');
+  });
+  it('ohne Summe trägt die Liste eine eigene Überschrift', () => {
+    expect(aussen({}).text).toContain('Weitere Einträge');
+  });
+  it('Fahrzeug «Nein» zeigt keinen stehengebliebenen Satz', () => {
+    expect(nurText(instrument({ kkPremium: '400', autoInsurance: 'no', autoInsuranceAmount: '900' }))).not.toContain(t('versInstrument.fahrzeug'));
   });
 });

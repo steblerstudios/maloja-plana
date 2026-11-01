@@ -107,8 +107,8 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
   );
 };
 
-// Die Ausgabenposten mit Namen und Farbe — eine Liste für Geldfluss und Kuchen (Fassung 6:
-// Balken, Kuchen und Sankey im Kapitel Finanzen, VERGLEICH.md «nachentschieden»).
+// Die Ausgabenposten mit Namen und Farbe — eine Liste für Geldfluss und Monatsring (Fassung 6,
+// VERGLEICH.md «nachentschieden»; Ring seit F7-K2-2).
 // Dieselben Posten wie die Rechnung (dazu Hypothek, Gebäudeversicherung, Kinderbetreuung,
 // Säule 3a), sonst ginge der Fluss nicht auf.
 export const ausgabenPosten = (data, t, palette) => {
@@ -124,12 +124,12 @@ export const ausgabenPosten = (data, t, palette) => {
     rent: wohnen, utilities: palette.gold, mortgage: wohnen, buildingsInsurance: '#A89F94',
     // communication bis 25.10.2026 '#6E90B0' — im Kuchen kaum von Krankenkasse (sky) zu unterscheiden (Abnahme F6).
     healthInsurance: vers, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6F6A99',
-    childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', debtPayments: palette.rose,
+    childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', ahvSelbst: mischeHex('#9C8FB0', weg, 0.15), bvgSelbst: mischeHex('#9C8FB0', weg, 0.3), debtPayments: palette.rose,
     alimentePaid: palette.sage, otherInsurance: '#A89F94',
-    householdInsurance: mischeHex(vers, weg, 0.3), liabilityInsurance: mischeHex(vers, weg, 0.55),
+    kkZusatz: mischeHex(vers, weg, 0.15), uvgZusatz: mischeHex(vers, weg, 0.2), lifeInsurance: mischeHex(vers, weg, 0.25), householdInsurance: mischeHex(vers, weg, 0.3), liabilityInsurance: mischeHex(vers, weg, 0.55),
   };
-  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'householdInsurance', 'liabilityInsurance', 'tax', 'groceries',
-    'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];
+  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'kkZusatz', 'uvgZusatz', 'lifeInsurance', 'householdInsurance', 'liabilityInsurance', 'tax', 'groceries',
+    'communication', 'childcare', 'mobility', 'pension3a', 'ahvSelbst', 'bvgSelbst', 'debtPayments', 'alimentePaid', 'otherInsurance'];
   return reihenfolge.map((k) => ({
     key: k, label: t(k === 'rent' ? 'budgetSync.housingCosts' : 'budgetSync.field.' + k), value: posten[k], color: farbe[k],
   })).filter((x) => x.value > 0);
@@ -163,8 +163,8 @@ export const geldflussDaten = (data, t, palette) => {
 
 export const GeldflussImKapitel = ({ data, t, palette }) => {
   const { quellen, ziele, beschreibung, brutto } = geldflussDaten(data, t, palette);
-  // Erst mit zwei oder mehr Einnahmequellen sagt der Fluss mehr als der Kuchen: mit einem Lohn
-  // ist er ein Strom, der sich auffächert (Sophie: «komisch»). «Nicht gedeckt» zählt nicht als Quelle.
+  // Erst mit zwei oder mehr Einnahmequellen sagt der Fluss mehr als der Monatsring: mit einem Lohn
+  // ist er ein Strom, der sich auffächert (Stebler Studios: «komisch»). «Nicht gedeckt» zählt nicht als Quelle.
   const echteQuellen = quellen.filter((q) => q.label !== t('chapters.finanzen.geldfluss.uncovered')).length;
   if (brutto || echteQuellen < 2) return null;
   return React.createElement(Geldfluss, {

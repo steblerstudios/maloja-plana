@@ -17,7 +17,7 @@ export const KKErstAnmeldung = ({ palette, t, onNavigate }) => {
   // Schweiz sein. Vorher: bei verstrichener Frist zeigte der Ablauf «heute + 90» — ein
   // Zeitfenster, das es nicht mehr gibt (Befund 24.09.2026).
   return React.createElement(AblaufContainer, {
-    palette, icon: 'insurance',
+    palette, t, onNavigate, ablauf: 'kkerst', icon: 'insurance',
     title: t('kkErst.title'),
     intro: t('kkErst.intro'),
   },
@@ -27,7 +27,7 @@ export const KKErstAnmeldung = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'kkErst-frist', frist: (d) => plusMonate(d, 3),
         labelKey: 'kkErst.fristLabel', hinweisKey: 'kkErst.fristHinweis', vorbeiKey: 'kkErst.fristVorbei',
-        buttonKey: 'kkErst.step1Button', doneKey: 'kkErst.step1Done', calendarKey: 'kkErst.step1CalendarLink',
+        art: 'frist', buttonKey: 'kkErst.step1Button', doneKey: 'kkErst.step1Done', calendarKey: 'kkErst.step1CalendarLink',
         reminderTitle: t('kkErst.reminderTitle'), category: 'insurance',
       })
     ),

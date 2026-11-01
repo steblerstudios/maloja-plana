@@ -84,7 +84,7 @@ export const Pegel = ({ palette, t, state }) => {
   const headline = soz ? t('pegel.deckt', { amount: fmtCHF(state.amount) })
     : t('pegel.perMonthPossible', { amount: fmtCHF(state.amount) });
   const statusText = empty ? t('pegel.empty')
-    : soz ? (mode === 'gap' ? t('pegel.gap') : mode === 'vermoegen' ? t('pegel.vermoegen') : mode === 'efb' ? t('sozialhilfe.efbEntscheidet') : t('pegel.covered'))
+    : soz ? t({ gap: 'pegel.gap', vermoegen: 'pegel.vermoegen', efb: 'sozialhilfe.efbEntscheidet', offen: 'pegel.coveredOffen' }[mode] || 'pegel.covered')
     : (mode === 'clear' ? t('pegel.clear') : mode === 'edge' ? t('pegel.edge') : t('pegel.over'));
   const statusColor = empty ? palette.mid
     : (soz ? (mode === 'gap' ? palette.sageDeep : palette.mid)
@@ -97,7 +97,8 @@ export const Pegel = ({ palette, t, state }) => {
     // In-Card-Disclaimer wie beim Prämien-Beleg — sobald ein CHF-Betrag steht,
     // ihn sichtbar als Schätzung/Orientierung markieren (nicht nur der Seiten-Fuss).
     hasAmount ? h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' } },
-      t('beleg.geschaetzt') + (state.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')) : null
+      t('beleg.geschaetzt') + (state.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')) : null,
+    state.ansatzTiefer ? h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '4px' } }, t('pegel.ansatzTiefer')) : null
   );
 
   // Kein role='img' am Container: das SVG ist bereits aria-hidden (dekorativ), und

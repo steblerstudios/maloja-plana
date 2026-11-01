@@ -163,6 +163,7 @@ import {
 } from './kantonsModell.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { zahl } from '../utils/geld.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Werte 2026, wörtlich aus [1], [2] und [3]. Grenzen sind Jahresbeträge des RDU, Beträge Monatsbeträge.
 export const IPV_GE = {
@@ -355,7 +356,7 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // GEWÄHLT, weil das Lohnfeld der App nach dem Lohn einer Anstellung fragt und die Mehrheit so
   // arbeitet. (Re-Review 28.09.2026, W-b: vorher galt die Pauschale auch für Selbständige — 54 Fr./Monat
   // zu viel an einer Gruppengrenze.)
-  const unselbstaendig = !f.employmentType || f.employmentType === 'employed';
+  const unselbstaendig = !f.employmentType || istAngestellt(f);
   const rdu = geRdu({
     netto: einkommenJahr(f, SAEULE_3A.voll),
     erwerb: unselbstaendig ? Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) : 0,

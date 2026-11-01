@@ -1,7 +1,8 @@
-import { schildState, schildOptionen } from './schutzschild.js';
+import { schildState, bvgAktiv, schildOptionen } from './schutzschild.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
-// Absicherung je Lebensrisiko — Liste in der Versicherungs-Übersicht (Sophie 26.10.2026: «Liste je Risiko statt Netz»).
+// Absicherung je Lebensrisiko — Liste in der Versicherungs-Übersicht (Stebler Studios 26.10.2026: «Liste je Risiko statt Netz»).
 // Je Risiko Zeilen: was eingetragen ist, was das Gesetz vorsieht, freiwillig Erfasstes als Zusatz. Bewusst KEIN Anteil
 // und keine Fläche: AHV/IV gelten für alle und sind nicht «erfasst», Freiwilliges ist keine Lücke (Fachprüfung des
 // Netz-Konzepts, 26.10.2026). Haftpflicht und Hausrat stehen im Schutzschild «Empfohlen», nicht hier.
@@ -28,7 +29,7 @@ export function absicherungJeRisiko(data = {}, heute = new Date()) {
   const v = data.versicherungen || {};
   const f = data.finanzen || {};
   const art = f.employmentType;
-  const angestellt = art === 'employed';
+  const angestellt = istAngestellt(f);
   const selbstaendig = art === 'selfEmployed' || art === 'freelance';
   const ahvRente = alterUndRentenalter(data.basis, heute).rentenalter === true;
   // Rente für die Pensionskasse: Anstellungstyp «Rentner» oder Referenzalter. Für die IV nur das Alter — wer früh
@@ -36,16 +37,14 @@ export function absicherungJeRisiko(data = {}, heute = new Date()) {
   const rente = art === 'retired' || ahvRente;
   const jahrAlter = jahrAlterAus(data.basis, heute);
   const schild = schildState(v, schildOptionen(data));
-  // «Aktiv» = Kasse oder laufender Beitrag. Ein reines Guthaben (z. B. Freizügigkeit) zählt fürs Alter, nicht für
-  // Invalidität und Tod (Fachprüfung 26.10.2026).
-  const bvgAktiv = has(v.bvgInsurer) || Number(v.bvgContribution) > 0;
+  const bvgLaeuft = bvgAktiv(v);
   const bvgGuthaben = Number(v.bvgBalance) > 0;
   const bvgPflicht = schild.pflicht.items.some((p) => p.key === 'bvg');
   const kkErfasst = has(v.kkInsurer);
 
   // Pensionskasse je Risiko: erfasst, oder warum (noch) nicht.
   const pk = (risiko) => {
-    const erfasst = bvgAktiv || (risiko === 'alter' && bvgGuthaben);
+    const erfasst = bvgLaeuft || (risiko === 'alter' && bvgGuthaben);
     if (erfasst) return [has(v.bvgInsurer) ? zeile('pkErfasst', 'erfasst', { name: v.bvgInsurer }) : zeile('pkErfasstOhneName', 'erfasst')];
     const guthaben = bvgGuthaben ? zeile('pkGuthaben', 'hinweis') : null;
     if (rente) return [guthaben];

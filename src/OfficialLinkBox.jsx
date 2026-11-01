@@ -9,7 +9,9 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 // calculator or section (e.g. the Sozialhilfe link beside the Sozialhilfe view).
 // `ohneRahmen` (Fassung 5, Prämienverbilligung): ohne Kasten und ohne eigenen Titel — für eine
 // Aufklapp-Zeile, die «Offizielle Stelle & Antrag» schon als Überschrift trägt.
-export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey, ohneRahmen = false }) => {
+// `alsZeilen` (Rechner-Form X, F7-A2 27.10.2026): Teil 5 «Offizielle Stelle & Antrag» als Zeilen — Name mit
+// Zeichen (ExternerLink), darunter Beschreibung und Antragsstelle; ohne Versalien und ohne ausgeschriebene Adresse.
+export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey, ohneRahmen = false, alsZeilen = false }) => {
   const lang = t('dl.lang');
   const l = (obj) => (obj && (obj[lang] || obj.de)) || '';
   const links = (Array.isArray(ids) ? ids : [ids]).map(getLinkById).filter(Boolean);
@@ -40,6 +42,20 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey, ohneRahmen
   const urlHintStyle = {
     fontSize: text.xs, color: palette.mid, wordBreak: 'break-all', marginTop: '2px',
   };
+
+  if (alsZeilen) {
+    const zeile = { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border };
+    return React.createElement('div', null,
+      links.map((link) => React.createElement('div', { key: link.id, style: zeile },
+        React.createElement(ExternerLink, { t, href: link.url, style: nameLinkStyle }, l(link.name)),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+          [l(link.beschreibung), t('dl.antragsstelle') + ': ' + l(link.antragsstelle)].filter(Boolean).join(' · '))
+      )),
+      cantonalUrl && React.createElement('div', { style: zeile },
+        React.createElement(ExternerLink, { t, href: cantonalUrl, style: nameLinkStyle },
+          t('dl.cantonalTitle', { canton: getCantonName(canton, t) }) + ' — ' + t('dl.cantonal.' + cantonalKey)))
+    );
+  }
 
   return React.createElement('div', {
     style: ohneRahmen ? { marginTop: space.xs + 'px' } : {

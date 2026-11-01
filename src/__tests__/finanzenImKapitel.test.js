@@ -92,15 +92,16 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
     onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, ...extra,
   }));
 
-  it('Formular → Auswertung oben → Passend → Auswertung unten → Als Nächstes', () => {
+  // F7-K2-5 (Stebler Studios 27.10.2026): die Auswertung steht vor dem Formular (vorher danach, finanzen-fusion.md §3).
+  it('Auswertung oben → Formular → Passend → Auswertung unten → Als Nächstes', () => {
     const i = (s) => { const n = QUELLE.indexOf(s); expect(n, s).toBeGreaterThan(-1); return n; };
     const formular = i('abschnittsliste()\n');
     const oben = i("renderAuswertung('oben')");
     const passend = i('    renderPassend(),');  // seit Fassung 6 in jedem Kapitel
     const unten = i("renderAuswertung('unten')");
     const naechstes = i('renderAlsNaechstes() :');
-    expect(formular).toBeLessThan(oben);
-    expect(oben).toBeLessThan(passend);
+    expect(oben).toBeLessThan(formular);
+    expect(formular).toBeLessThan(passend);
     expect(passend).toBeLessThan(unten);
     expect(unten).toBeLessThan(naechstes);
   });
@@ -114,9 +115,9 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
   });
 
   // Muster M7 (25.10.2026): «Neue Stelle» wie im Entwurf (vorher der Register-Name «Neuer Job»).
-  it('«Passend»: Neue Stelle, Lohnausweis, Monatsbudget, Behörden-Dossier — keine Übersicht, keine IPV mehr', () => {
+  it('«Passend»: Lohnausweis, Monatsbudget, Behörden-Dossier — keine Übersicht, keine IPV mehr', () => {
     const text = nurText(render());
-    for (const s of ['Neue Stelle', 'Lohnausweis ablegen', 'Monatsbudget', 'Einnahmen und Ausgaben im Detail', 'Behörden-Dossier']) expect(text, s).toContain(s);
+    for (const s of ['Lohnausweis ablegen', 'Monatsbudget', 'Einnahmen und Ausgaben im Detail', 'Behörden-Dossier']) expect(text, s).toContain(s);
     expect(text).not.toContain('Alle Berechnungen auf einen Blick');
     expect(text).not.toContain('Prämienverbilligung prüfen');
   });
@@ -146,15 +147,16 @@ describe('Probiermodus-Knopf bei der Auswertung', () => {
   });
 });
 
-// Abnahme F6 (Sophie 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
+// Abnahme F6 (Stebler Studios 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
 // Kapitel kurz und ohne Verweis «ins Kapitel Finanzen & Geld».
 describe('Kapitel Finanzen · Abnahme F6', () => {
-  it('die Lohn-Hinweise stecken hinter «So ist gerechnet»', () => {
+  it('F7-K4-1: kein Lohnvergleich hier, nur der Weg nach Ausbildung & Arbeit', () => {
     const html = teil('oben', DEMO_DATA);
-    const block = html.match(/<details[^>]*data-teil="lohn-so-gerechnet"[^>]*>[\s\S]*?<\/details>/);
-    expect(block).not.toBeNull();
-    expect(block[0]).toContain('So ist gerechnet');
-    expect(nurText(block[0])).toContain('13. Monatslohn');
+    expect(html).not.toContain('data-teil="lohn-so-gerechnet"');
+    expect(nurText(html)).not.toContain('Branchenvergleich');
+    const weg = html.match(/<button[^>]*data-teil="lohn-weg"[^>]*>[\s\S]*?<\/button>/);
+    expect(weg).not.toBeNull();
+    expect(nurText(weg[0])).toContain('Wo steht Ihr Lohn? · Ausbildung & Arbeit');
   });
   it('Steuer-Karte im Kapitel: kurz, ohne Selbstverweis', () => {
     const text = nurText(teil('oben', DEMO_DATA));

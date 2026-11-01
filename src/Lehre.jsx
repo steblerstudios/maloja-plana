@@ -15,7 +15,7 @@ export const Lehre = ({ palette, t, onNavigate }) => {
   const lohn = lohnWerte();
   const ahv = ahvWerte();
   return React.createElement(AblaufContainer, {
-    palette, icon: 'lebenslauf',
+    palette, t, onNavigate, ablauf: 'lehre', icon: 'lebenslauf',
     title: t('lehre.title'),
     intro: t('lehre.intro'),
   },

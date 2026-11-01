@@ -10,6 +10,7 @@ import { text, weight, radius , leading , space } from './config/tokens.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { ORGAN_ENTSCHEIDE, organEntscheid, organOptionen, organListe } from './utils/organspende.js';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Die Etiketten-Liste lebt in utils/organspende.js (Dossier und Export brauchen sie auch).
 export { organOptionen };
@@ -54,7 +55,10 @@ export function organSpendeVcard({ t, data = {}, status, organs = {} }) {
   });
 }
 
-export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
+// Rückweg (F7-S10, 27.10.2026): Brotkrume «Übersicht › Notfall › Organspende» und nach dem Speichern
+// «Zurück zur Vorsorge» unter «Gespeichert» — ins Kapitel Notfall zum Block Vorsorge (UMLEITUNGEN
+// notfallvorsorge). Bewusst ein Knopf, kein Sprung von selbst: «Gespeichert» bleibt lesbar.
+export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate }) => {
   // Eine Wahrheit: notfall.organDonor (seit 27.09.2026). Ohne gespeicherten Entscheid ist
   // nichts vorausgewählt — früher stand hier 'registered', eine Aussage, die niemand gemacht hat.
   const [status, setStatus] = useState(() => organEntscheid(data));
@@ -120,6 +124,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
+   onNavigate && React.createElement(Brotkrume, { palette, t, view: 'organ', onNavigate }),
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
@@ -169,6 +174,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
+      onNavigate && gespeichertAls === stand && React.createElement('button', { type: 'button', 'data-rueckweg': 'vorsorge', onClick: () => onNavigate('notfallvorsorge'), style: { ...zweitKnopf, width: '100%', marginBottom: '12px' } }, t('notfallKapitel.zurueckVorsorge')),
       React.createElement('button', { type: 'button', onClick: handleGenerateQR, style: { ...zweitKnopf, width: '100%' } }, hinweisZeichen(), t('organ.generateQr')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).

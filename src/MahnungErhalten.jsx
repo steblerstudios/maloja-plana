@@ -97,11 +97,8 @@ export const MahnungTeil = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step5LinkBeratung'), onClick: () => onNavigate('direktlinks') })
     ),
 
-    // Schritt 6 — Umgekehrt: selbst mahnen (OR 102 Abs. 1, 104 Abs. 1)
-    React.createElement(AblaufStep, { palette, title: t('mahnung.step6Title') },
-      React.createElement('p', { style: s.stepText }, t('mahnung.step6Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.paymentReminder'), onClick: brief('paymentReminder') })
-    ),
+    // Schritt 6 «Umgekehrt: Ihnen schuldet jemand Geld» ist seit F7-A10 (27.10.2026) ein eigener Ablauf
+    // (SelbstMahnen.jsx, #/selbstmahnen) — unten bei den verwandten Ereignissen.
 
     React.createElement(AblaufFooter, { palette, t, quelle: t('mahnung.quelle'), notes: [t('mahnung.footerNote'), t('trust.localOnly')] })
   );

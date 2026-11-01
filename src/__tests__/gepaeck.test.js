@@ -1,3 +1,4 @@
+import { UMLEITUNGEN } from '../utils/hashRouter.js';
 import { describe, it, expect } from 'vitest';
 import { GEGENSTAENDE, alleWege, wegeCount, gegenstandReadiness } from '../data/gepaeck.js';
 import { ABLAEUFE } from '../config/ansichtenRegister.js';
@@ -49,7 +50,7 @@ describe('Gepäck-Registry', () => {
   });
 
   it('wegeCount zählt echt', () => {
-    expect(wegeCount('wohnen')).toBe(11);
+    expect(wegeCount('wohnen')).toBe(12);
     expect(wegeCount('abschied')).toBe(3);
     expect(wegeCount('gibtsnicht')).toBe(0);
     expect(alleWege().length).toBe(GEGENSTAENDE.reduce((n, g) => n + g.wege.length, 0));
@@ -63,7 +64,8 @@ describe('Gepäck-Registry', () => {
 describe('Gepäck ist vollständig', () => {
   it('jeder geführte Ablauf aus dem Register liegt in einem Gegenstand', () => {
     const imGepaeck = new Set(alleWege().map((w) => w.view));
-    for (const a of ABLAEUFE) expect(imGepaeck.has(a.view), `${a.view} fehlt im Gepäck`).toBe(true);
+    // F7-L11: Abläufe, die nur noch als Umleitung in einen anderen bestehen (Ausgesteuert → Stelle verloren), zählen über ihr Ziel.
+    for (const a of ABLAEUFE) expect(imGepaeck.has(a.view) || imGepaeck.has(UMLEITUNGEN[a.view]?.view), `${a.view} fehlt im Gepäck`).toBe(true);
   });
 });
 

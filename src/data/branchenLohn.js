@@ -22,6 +22,8 @@
 export const BRANCHENLOHN_VERSION = '2022/2024';
 
 // Gesamtwirtschaftliche Verteilungswerte für die Lohn-Einordnung (Barometer).
+// Standardisiert: Jahrestotal, alles inklusive, auf Vollzeit umgerechnet und durch 12 geteilt (Kanton Freiburg, Auswertung LSE,
+// gelesen 01.11.2026). Die Definition im BFS-Glossar selbst ist noch nicht gelesen.
 // LSE 2024 — ALLE drei Werte wörtlich amtlich belegt:
 //   BFS-Medienmitteilung „2024 lag der Medianlohn bei 7024 Franken brutto —
 //   Schweizerische Lohnstrukturerhebung (LSE) im Jahr 2024: Erste Ergebnisse", 25.11.2025
@@ -54,6 +56,9 @@ export const LSE_VERTEILUNG = {
 //   „Präsentiert werden die Ergebnisse als standardisierte Bruttomonatslöhne (Umrechnung
 //   auf ein Vollzeitäquivalent von 4 1/3 Wochen zu 40 Arbeitsstunden)."
 //   → https://www.bfs.admin.ch/asset/de/5933418
+//   Dieselbe Seite, gelesen 01.11.2026: Der Lohn enthält «1/12 vom 13. Monatslohn und 1/12 von den
+//   jährlichen Sonderzahlungen». Lernende und Praktikant:innen: «werden in den Ergebnissen nicht
+//   berücksichtigt» (BFS, LSE 2016, Kap. 11.2, PDF-Seite 34; für 2024 kein eigener Wortlaut gelesen).
 //
 // ⚠️ NICHT mit `VOLLZEIT_STUNDEN_WOCHE` (42) aus `lohnCheck.js` verwechseln — das ist die
 // Mindestlohn-Welt (kantonales Recht, Stundenlohn × 182). Zwei Normen, zwei Konstanten.

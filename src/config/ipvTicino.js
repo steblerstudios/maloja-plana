@@ -1,3 +1,4 @@
+import { istAngestellt } from '../utils/anstellung.js';
 // Prämienverbilligung (IPV / RIPAM) Kanton Tessin — quadratische Formel auf dem verfügbaren
 // Einkommen, Jahr 2026 (K31).
 //
@@ -184,7 +185,7 @@ export function ipvTicino(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Selbständige ohne Angabe +1'009 Fr./Jahr zu hoch (3'000 netto). Jetzt ohne Abzug, und die
   // Anzeige sagt, dass der Betrag bei einer Anstellung HÖHER wäre (`vorbehaltTIangestellt`).⟩
   const lohn = Number(f.monthlyIncome) > 0 ? rohesEinkommenJahr({ monthlyIncome: f.monthlyIncome, dreizehnter: f.dreizehnter }) : 0;
-  const angestellt = lohn > 0 && f.employmentType === 'employed';
+  const angestellt = lohn > 0 && istAngestellt(f);
   const typOffen = lohn > 0 && !f.employmentType;
   const berufsauslagen = angestellt ? Math.min(IPV_TI.berufsauslagenMax, lohn) : 0;
   const rd = tiVerfuegbaresEinkommen({

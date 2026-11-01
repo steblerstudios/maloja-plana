@@ -30,7 +30,7 @@ describe('E43 · keine absolute Privatheits-Werbung', () => {
     for (const alt of ['100% privat, offline-fähig', '100% lokal.', '100% on your device', '100% privé', '100% sul Suo dispositivo']) {
       expect(alt).toMatch(ABSOLUT);
     }
-    expect('auf 100% hochgerechnet').not.toMatch(ABSOLUT);
+    expect('auf 100 % hochgerechnet').not.toMatch(ABSOLUT);
     expect('ab jetzt zahlt die Kasse 100%.').not.toMatch(ABSOLUT);
   });
 });

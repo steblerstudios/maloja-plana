@@ -1,0 +1,272 @@
+// Netz-Schild (F7-K3-6, Stebler Studios 27.10.2026): ein Schild aus Teilen statt Spinnennetz und zwei Schilden.
+// Umbau am selben Tag: Vorsorge mit drei Säulen, Unfall mit Zusatz (neues Feld), Haushalt mit Haftpflicht und
+// Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk, Leben oben in der Mitte.
+import { describe, it, expect } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { netzSchildTeile, teilWinkel, fuellung, betraegeFuer, SCHILD_KERN } from '../data/netzSchild.js';
+import { monatsAusgaben } from '../utils/monatsrechnung.js';
+import { BUDGET_GROUPS } from '../budgetSync.js';
+import { hausratPflicht, HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
+import { NetzSchild } from '../components/NetzSchild.jsx';
+import { schildOptionen } from '../data/schutzschild.js';
+import { getChapters, LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
+import { createT } from '../i18n/index.js';
+import de from '../i18n/de.js';
+import en from '../i18n/en.js';
+import fr from '../i18n/fr.js';
+import it_ from '../i18n/it.js';
+import rm from '../i18n/rm.js';
+import { DEMO_DATA } from '../config/demoData.js';
+
+const t = createT({ de }, 'de', 'sie');
+const nurText = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+const angestellt = { employed: true, annualIncome: 80000, lohnBasis: 'brutto', finanzen: { employmentType: 'employed' } };
+const teil = (r, key) => r.teile.find((p) => p.key === key);
+
+describe('Teile und Reihenfolge', () => {
+  it('Leben oben in der Mitte; Haushalt, Vorsorge, Leben, Krankenkasse, Unfall im Uhrzeigersinn', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS' }, angestellt);
+    expect(r.teile.map((p) => p.key)).toEqual(['haushalt', 'vorsorge', 'leben', 'kk', 'uvg']);
+    expect(teilWinkel(2, 5, 2)).toBe(270);
+  });
+  it('ohne Anstellung kein Teil Unfall (die Krankenkasse deckt Unfälle) — Leben bleibt oben', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false });
+    expect(r.teile.map((p) => p.key)).toEqual(['haushalt', 'vorsorge', 'leben', 'kk']);
+    const i = r.teile.findIndex((p) => p.key === 'leben');
+    expect(teilWinkel(i, r.teile.length, i)).toBe(270);
+  });
+  it('Füllung: kleiner Kern ohne Erfülltes, anteilig, ganz', () => {
+    expect(fuellung({ erreicht: 0, n: 3 })).toBe(SCHILD_KERN);
+    expect(fuellung({ erreicht: 3, n: 3 })).toBe(1);
+    expect(fuellung({ erreicht: 1, n: 2 })).toBeCloseTo(0.67, 2);
+  });
+});
+
+describe('Krankenkasse und Unfall mit Zusatz', () => {
+  it('Krankenkasse: KVG, dann Zusatz', () => {
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, {}), 'kk').erreicht).toBe(1);
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS', kkZusatz: 'Spital' }, {}), 'kk').erreicht).toBe(2);
+  });
+  it('Unfall: UVG Pflicht, Zusatz freiwillig aus dem neuen Feld uvgZusatz', () => {
+    const u = teil(netzSchildTeile({ kkInsurer: 'CSS', uvg: 'employer', uvgZusatz: 'yes' }, angestellt), 'uvg');
+    expect(u.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['uvg', 'pflicht', true], ['uvgZusatz', 'freiwillig', true]]);
+    expect(u.erreicht).toBe(2);
+  });
+  it('das Feld «Unfall-Zusatzversicherung» steht im Kapitel, direkt nach UVG', () => {
+    const felder = getChapters(t).find((c) => c.key === 'versicherungen').fields.map((f) => f.k);
+    expect(felder.indexOf('uvgZusatz')).toBe(felder.indexOf('uvg') + 1);
+  });
+});
+
+describe('Vorsorge in drei Säulen', () => {
+  it('angestellt über der Schwelle: AHV, Pensionskasse, Säule 3a', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS', bvgInsurer: 'PK' }, { ...angestellt, finanzen: { employmentType: 'employed', pension3a: '7000' } });
+    const vs = teil(r, 'vorsorge');
+    expect(vs.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['ahv', 'pflicht', true], ['bvg', 'pflicht', true], ['saeule3a', 'freiwillig', true]]);
+    expect(vs.erreicht).toBe(3);
+  });
+  it('ohne Erwerb: nur AHV, ohne Beitrag keine Lücke — versichert ist, wer hier wohnt (AHVG Art. 1a)', () => {
+    const vs = teil(netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false }), 'vorsorge');
+    expect(vs.versicherungen.map((x) => x.key)).toEqual(['ahv']);
+    expect(vs.erreicht).toBe(0);
+    expect(vs.n).toBe(0);
+    expect(netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false }).offen).not.toContain('vorsorge');
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS', ahvContribution: '530' }, {}), 'vorsorge').erreicht).toBe(1);
+  });
+  it('ein blosses Guthaben ist keine Pensionskasse (Freizügigkeit)', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS', bvgBalance: '20000' }, { ...angestellt, finanzen: { employmentType: 'employed' } });
+    expect(teil(r, 'vorsorge').versicherungen.find((x) => x.key === 'bvg').ok).toBe(false);
+  });
+  it('die AHV aus dem Erwerbsstatus heisst «laut Angaben», ein Guthaben allein bekommt einen Hinweis', () => {
+    const o = { ...angestellt, finanzen: { employmentType: 'employed' }, kanton: 'ZH' };
+    const out = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: { kkInsurer: 'CSS', bvgBalance: '20000' }, ...o }));
+    expect(out).toContain('laut Angaben');
+    expect(out).toContain('data-teil="bvg-nur-guthaben"');
+  });
+  it('Freiwilliges ohne Eintrag ist keine Lücke', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'ZH' });
+    expect(teil(r, 'kk').n).toBe(1);
+    expect(teil(r, 'leben').n).toBe(0);
+    expect(r.offen).toEqual([]);
+    expect(r.teilweise).toEqual([]);
+    // Der Schlusssatz bleibt bei der Liste: Was nicht beurteilt werden kann, steht nicht darin.
+    expect(de.netzSchild.ganz).toContain('In dieser Liste');
+  });
+  it('im Ruhestand ist die AHV keine Lücke', () => {
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { finanzen: { employmentType: 'retired' } }), 'vorsorge').erreicht).toBe(1);
+  });
+});
+
+describe('Haushalt und Hausrat-Pflicht je Kanton', () => {
+  it('Haftpflicht und Hausrat in einem Teil', () => {
+    const hh = teil(netzSchildTeile({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }, { kanton: 'ZH' }), 'haushalt');
+    expect(hh.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['haftpflicht', 'haftpflicht', true], ['hausrat', 'jeNachKanton', false]]);
+    expect(hh.erreicht).toBe(1);
+  });
+  it('Hausrat Pflicht in NW und VD; alle übrigen und ohne Kanton «je nach Kanton», nie «freiwillig»', () => {
+    expect(['NW', 'VD', 'vd'].map(hausratPflicht)).toEqual(['pflicht', 'pflicht', 'pflicht']);
+    expect(['FR', 'JU'].map(hausratPflicht)).toEqual(['unbekannt', 'unbekannt']);
+    expect(['ZH', 'BS', 'TI'].map(hausratPflicht)).toEqual(['unbekannt', 'unbekannt', 'unbekannt']);
+    expect(hausratPflicht('')).toBe('unbekannt');
+    expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'VD' }), 'haushalt').versicherungen[1].art).toBe('kantonPflicht');
+  });
+  it('Prüf-Vermerk, solange die Erlasse nicht nachgelesen sind', () => {
+    expect(HAUSRAT_PFLICHT.verify).toBe(true);
+  });
+});
+
+describe('Bild und Text', () => {
+  const html = (v, o = {}) => renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: v, ...o }));
+  it('nichts eingetragen: kein Schild', () => {
+    expect(html({})).toBe('');
+  });
+  it('Satz und je Versicherung eine Zeile mit Wort, nicht nur Farbe', () => {
+    const text = nurText(html({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }, { kanton: 'VD' }));
+    expect(text).toContain('Teilweise eingetragen: Haushalt.');
+    expect(text).toContain('Hausrat · Pflicht in VD (Feuer und Elementar) nicht eingetragen');
+    expect(text).toContain('bitte bei der kantonalen Gebäudeversicherung bestätigen');
+    expect(text).toContain('Privathaftpflicht · gesetzlich nicht vorgeschrieben eingetragen');
+    expect(text).toContain('nicht, ob die Leistungen reichen');
+    expect(text).not.toMatch(/gedeckt/);
+  });
+  it('Prüf-Vermerk steht bei jedem Kanton, AHV-Hinweis nur ohne Eintrag', () => {
+    const zh = html({ kkInsurer: 'CSS' }, { kanton: 'ZH', employed: false });
+    expect(zh).toContain('data-teil="hausrat-pruefen"');
+    expect(zh).toContain('data-teil="ahv-hinweis"');
+    expect(html({ kkInsurer: 'CSS', ahvContribution: '530' }, { kanton: 'ZH' })).not.toContain('data-teil="ahv-hinweis"');
+  });
+  it('unter 8 Stunden pro Woche: Hinweis zur Freizeit (UVV Art. 13)', () => {
+    const v = { kkInsurer: 'CSS', uvg: 'employer' };
+    expect(html(v, { ...angestellt, stunden: '6' })).toContain('data-teil="unfall-8h"');
+    expect(html(v, { ...angestellt, stunden: '42' })).not.toContain('data-teil="unfall-8h"');
+  });
+  it('das Bild nennt für Bildschirmleser je Teil «x von n»', () => {
+    expect(html({ kkInsurer: 'CSS' }, { kanton: 'ZH' })).toContain('aria-label="Schild aus Versicherungsbereichen. Haushalt: nicht eingetragen; Vorsorge: nicht eingetragen; Leben: nicht eingetragen; Krankenkasse: 1 von 1."');
+  });
+  it('Beispiel Maria zeigt das Schild mit Vorsorge 3 von 3', () => {
+    const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton, stunden: DEMO_DATA.ausbildung.workHoursPerWeek };
+    const out = html(DEMO_DATA.versicherungen, o);
+    expect(out).toContain('data-schild="netz"');
+    expect(out).toContain('data-erreicht="3/3"');
+  });
+  it('alle Texte in fünf Sprachen', () => {
+    const blatt = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
+    const keys = ['intro', 'aria', 'nichtEingetragen', 'eingetragen', 'vonN', 'nochOffen', 'teilweise', 'ganz', 'haftpflichtHinweis', 'hausratPruefen', 'ahvHinweis',
+      ...['kk', 'uvg', 'vorsorge', 'haushalt', 'leben'].map((k) => 'kurz.' + k),
+      ...['kvg', 'kkZusatz', 'uvg', 'uvgZusatz', 'ahv', 'bvg', 'saeule3a', 'haftpflicht', 'hausrat', 'leben'].map((k) => 'vers.' + k),
+      ...['pflicht', 'freiwillig', 'haftpflicht', 'kantonPflicht', 'jeNachKanton'].map((k) => 'art.' + k)];
+    for (const sprache of [de, en, fr, it_, rm]) {
+      for (const k of keys) expect(blatt(sprache, 'netzSchild.' + k)).toBeTruthy();
+      expect(blatt(sprache, 'chapters.versicherungen.fields.uvgZusatz.label')).toBeTruthy();
+    }
+  });
+});
+
+describe('Wörter und Platz im Schild', () => {
+  const sprachen = { de, en, fr, it_, rm };
+  it('die Kurznamen passen ins Feld: höchstens 14 Zeichen (gemessen 01.11.2026 bei 15 px)', () => {
+    for (const [name, s] of Object.entries(sprachen)) {
+      for (const wert of Object.values(s.netzSchild.kurz)) expect(wert.length, name + ': ' + wert).toBeLessThanOrEqual(14);
+    }
+  });
+  it('die Kachel behauptet keine Deckung (Entscheid 01.11.2026: «eingetragen»)', () => {
+    expect(de.instrumente.schildCount).toContain('eingetragen');
+    for (const s of Object.values(sprachen)) expect(s.instrumente.schildCount.replace(/\{\w+\}/g, '')).not.toMatch(/gedeckt|covered|couvert|copert|cuvert/i);
+  });
+});
+
+describe('Beträge je Versicherung (Stebler Studios 27.10.2026)', () => {
+  const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton };
+  // Maria hat seit E-4 keine Lebensversicherung; hier mit Eintrag, damit auch deren Betragszeile geprüft ist.
+  const html = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: { ...DEMO_DATA.versicherungen, lifeInsurance: 'yes', lifeInsurancePremium: '600' }, ...o }));
+  const text = nurText(html);
+  it('Maria: Kosten pro Monat und Jahr, Guthaben, Versicherungssumme — nur aus erfassten Feldern', () => {
+    expect(text).toContain('CHF 540.30 / Mt. · CHF 6’483.60 / Jahr');
+    expect(text).toContain('CHF 420 / Mt. · CHF 5’040 / Jahr · Guthaben CHF 45’000 · über den Lohn abgezogen');
+    expect(text).toContain('CHF 10 / Mt. · CHF 120 / Jahr · Versicherungssumme CHF 5’000’000');
+    expect(text).toContain('CHF 20 / Mt. · CHF 240 / Jahr');
+    expect(text).toContain('CHF 38.50 / Mt. · CHF 462 / Jahr · Spital halbprivat');
+    expect(text).toContain('CHF 50 / Mt. · CHF 600 / Jahr');
+    expect(html).toMatch(/data-betrag="uvg"[^>]*>läuft über den Arbeitgeber</);
+  });
+  it('ohne erfassten Betrag keine Zahl — nie geschätzt', () => {
+    expect(html).not.toContain('data-betrag="uvgZusatz"');
+  });
+  it('Texte in fünf Sprachen', () => {
+    for (const sprache of [de, en, fr, it_, rm]) for (const k of ['kosten', 'guthaben', 'summe', 'lohn', 'arbeitgeber']) expect(sprache.netzSchild.betrag[k]).toBeTruthy();
+  });
+});
+
+describe('Prämien für Zusatz, Unfall-Zusatz und Leben (31.10.2026)', () => {
+  const v = { kkInsurer: 'CSS', kkZusatz: 'Spital', kkZusatzPremium: '40', uvg: 'employer', uvgZusatz: 'yes', uvgZusatzPremium: '240', lifeInsurance: 'yes', lifeInsurancePremium: '600' };
+  const profil = { versicherungen: v, finanzen: { employmentType: 'employed', incomeType: 'netto' } };
+  it('zählen in der einen Monatsrechnung, Jahresbeträge ÷ 12', () => {
+    const p = monatsAusgaben(profil);
+    expect([p.kkZusatz, p.uvgZusatz, p.lifeInsurance]).toEqual([40, 20, 50]);
+  });
+  it('«Nein» zählt nicht, auch mit stehengebliebenem Betrag', () => {
+    const p = monatsAusgaben({ versicherungen: { ...v, uvgZusatz: 'no', lifeInsurance: 'no' } });
+    expect([p.uvgZusatz, p.lifeInsurance]).toEqual([0, 0]);
+  });
+  it('das Budget führt sie in der Gruppe Versicherung & Gesundheit', () => {
+    const felder = BUDGET_GROUPS.find((g) => g.key === 'insuranceHealth').fields;
+    for (const k of ['kkZusatz', 'uvgZusatz', 'lifeInsurance']) expect(felder).toContain(k);
+    for (const sprache of [de, en, fr, it_, rm]) for (const k of ['kkZusatz', 'uvgZusatz', 'lifeInsurance']) expect(sprache.budgetSync.field[k]).toBeTruthy();
+  });
+  it('im Schild je Versicherung Monat und Jahr', () => {
+    expect(betraegeFuer('kkZusatz', v)).toEqual({ mt: 40, jahr: 480, name: 'Spital' });
+    expect(betraegeFuer('uvgZusatz', v)).toEqual({ mt: 20, jahr: 240 });
+    expect(betraegeFuer('leben', v)).toEqual({ mt: 50, jahr: 600 });
+  });
+  it('«über den Lohn» nur für Angestellte mit netto erfasstem Lohn', () => {
+    const b = { bvgContribution: '420' };
+    expect(betraegeFuer('bvg', b, { employmentType: 'employed', incomeType: 'netto' }).lohn).toBe(true);
+    expect(betraegeFuer('bvg', b, { employmentType: 'employed', incomeType: 'brutto' }).lohn).toBeUndefined();
+    expect(betraegeFuer('ahv', {}, { employmentType: 'selfEmployed', incomeType: 'netto' }).lohn).toBeUndefined();
+  });
+  it('die drei Felder stehen im Kapitel, je direkt nach ihrer Versicherung', () => {
+    const felder = getChapters(t).find((c) => c.key === 'versicherungen').fields.map((f) => f.k);
+    for (const [a, b] of [['kkZusatz', 'kkZusatzPremium'], ['uvgZusatz', 'uvgZusatzPremium'], ['lifeInsurance', 'lifeInsurancePremium']]) expect(felder.indexOf(b)).toBe(felder.indexOf(a) + 1);
+  });
+});
+
+describe('Fachprüfung 01.11.2026', () => {
+  it('ein Zusatz-Betrag ohne Namen zählt weder im Budget noch im Schild', () => {
+    expect(monatsAusgaben({ versicherungen: { kkZusatz: '', kkZusatzPremium: '40' } }).kkZusatz).toBe(0);
+    expect(monatsAusgaben({ versicherungen: { kkZusatz: 'Top', kkZusatzPremium: '40' } }).kkZusatz).toBe(40);
+    expect(betraegeFuer('kkZusatz', { kkZusatz: '', kkZusatzPremium: '40' })).toEqual({});
+  });
+  it('der Pegel sagt nicht «keine Aufstockung nötig», solange Erwerbsunkosten fehlen', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../data/pegel.js'), 'utf8');
+    expect(q).toContain("sh?.erwerbsunkostenOffen ? 'offen' : 'covered'");
+  });
+});
+
+// Sand und Gold der Vorsorge trennt die Farbe nicht (1.07:1): Offenes braucht die Form. Hell trug die Schrift auf vollem Gold nur 2:1.
+describe('NetzSchild: offene Stelle und Schrift (F7-K3-4)', () => {
+  const html = (v, palette, o = {}) => renderToStaticMarkup(React.createElement(NetzSchild, { palette, t, versicherungen: v, ...o }));
+  const finanzen = { employmentType: 'employed', pension3a: '7000' };
+  const voll = { kkInsurer: 'CSS', kkZusatz: 'Top', uvg: 'employer', uvgZusatz: 'yes', bvgContribution: '200', liabilityInsurance: 'yes', householdInsurance: 'yes', lifeInsurance: 'yes' };
+  const schrift = (out, name) => out.match(new RegExp('<text[^>]*style="([^"]*)"[^>]*>' + name + '</text>'))[1];
+
+  it('nur ein offenes Teil ist schraffiert, und die Marke beim Satz steht nur dann', () => {
+    const offen = html({ bvgBalance: '1', liabilityInsurance: 'yes' }, LIGHT_PALETTE, { finanzen });
+    expect(offen).toContain('data-offen="kk"');
+    expect(offen).toContain('netz-schild-offen-marke');
+    const ohne = html(voll, LIGHT_PALETTE, { finanzen, employed: true });
+    expect(ohne).not.toContain('data-offen=');
+    expect(ohne).not.toContain('netz-schild-offen-marke');
+  });
+
+  it('auf vollem Gold: hell dunkle Schrift mit Kontur, dunkel Schrift in Grundfarbe', () => {
+    const hell = html(voll, LIGHT_PALETTE, { finanzen, employed: true });
+    expect(hell).toContain('data-erreicht="3/3"');
+    expect(schrift(hell, 'Vorsorge')).toContain('fill:' + LIGHT_PALETTE.text);
+    expect(schrift(hell, 'Vorsorge')).toContain('stroke:' + LIGHT_PALETTE.up);
+    const dunkel = html(voll, DARK_PALETTE, { finanzen, employed: true });
+    expect(schrift(dunkel, 'Vorsorge')).toContain('fill:' + DARK_PALETTE.surface);
+  });
+});

@@ -5,16 +5,16 @@ import { calculateIPV } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 import { haushaltsEinnahmen } from './data/haushaltsEinnahmen.js';
-import { monatsAusgaben } from './utils/monatsrechnung.js';
+import { monatsAusgaben, zahltBeitraegeSelbst } from './utils/monatsrechnung.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
 export const BUDGET_GROUPS = [
   { key: 'housing', fields: ['rent', 'utilities', 'mortgage', 'buildingsInsurance'] },
-  { key: 'insuranceHealth', fields: ['healthInsurance', 'householdInsurance', 'liabilityInsurance', 'otherInsurance'] },
+  { key: 'insuranceHealth', fields: ['healthInsurance', 'kkZusatz', 'uvgZusatz', 'lifeInsurance', 'householdInsurance', 'liabilityInsurance', 'otherInsurance'] },
   { key: 'living', fields: ['groceries', 'communication', 'childcare'] },
   { key: 'mobility', fields: ['mobility'] },
-  { key: 'taxProvision', fields: ['tax', 'pension3a'] },
+  { key: 'taxProvision', fields: ['tax', 'pension3a', 'ahvSelbst', 'bvgSelbst'] },
   { key: 'obligations', fields: ['debtPayments', 'alimentePaid'] },
 ];
 
@@ -147,8 +147,10 @@ const syncBudgetFromChapters = (data) => {
   // (Fassung 6, 24.10.2026: nur das Einkommen von Partner/in trennt die zwei Saldi).
   Object.assign(budget.expenses, monatsAusgaben(data));
 
-  budget.expenses.bvg = Number(data.versicherungen?.bvgContribution || 0);
-  budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
+  // Selbständige: die Beiträge stehen schon unter den Ausgaben (ahvSelbst, bvgSelbst), die Referenz bliebe doppelt.
+  const selbst = zahltBeitraegeSelbst(data.finanzen);
+  budget.expenses.bvg = selbst ? 0 : Number(data.versicherungen?.bvgContribution || 0);
+  budget.expenses.ahv = selbst ? 0 : Number(data.versicherungen?.ahvContribution || 0) / 12;
   // Keine UVG-Zeile: ein Feld «uvgPremium» gab es nie (der Wert war immer 0). Bei Angestellten
   // ab 8 Std./Woche trägt die Arbeitnehmerin die Nichtberufsunfall-Prämie (UVG Art. 91 Abs. 2),
   // der Arbeitgeber zieht sie vom Lohn ab (Abs. 3) — sie steckt im Nettolohn. Selbständige und
@@ -305,10 +307,10 @@ export const createBudgetReport = (data, t) => {
       },
       expenses: {
         housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0) + (budget.expenses.buildingsInsurance || 0),
-        insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.householdInsurance || 0) + (budget.expenses.liabilityInsurance || 0) + (budget.expenses.otherInsurance || 0),
+        insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.kkZusatz || 0) + (budget.expenses.uvgZusatz || 0) + (budget.expenses.lifeInsurance || 0) + (budget.expenses.householdInsurance || 0) + (budget.expenses.liabilityInsurance || 0) + (budget.expenses.otherInsurance || 0),
         living: (budget.expenses.groceries || 0) + (budget.expenses.communication || 0) + (budget.expenses.childcare || 0),
         mobility: budget.expenses.mobility || 0,
-        taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0),
+        taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0) + (budget.expenses.ahvSelbst || 0) + (budget.expenses.bvgSelbst || 0),
         reference: budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
         total: budget.totalExpenses
       },

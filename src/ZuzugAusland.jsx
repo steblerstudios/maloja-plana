@@ -17,7 +17,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   const [einreise, setEinreise] = useState('');
   return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'zuzug', icon: 'behoerden',
     title: t('zuzug.title'),
     intro: t('zuzug.intro'),
   },
@@ -26,7 +26,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'zuzug-einreise', frist: (d) => plusTage(d, 14), wert: einreise, onWert: setEinreise,
         labelKey: 'zuzug.fristLabel', hinweisKey: 'zuzug.fristHinweis', vorbeiKey: 'zuzug.fristVorbei',
-        buttonKey: 'zuzug.step1Button', doneKey: 'zuzug.step1Done', calendarKey: 'zuzug.step1CalendarLink',
+        art: 'frist', buttonKey: 'zuzug.step1Button', doneKey: 'zuzug.step1Done', calendarKey: 'zuzug.step1CalendarLink',
         reminderTitle: t('zuzug.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step1LinkBewilligung'), onClick: () => onNavigate('bewilligung') }),
@@ -49,17 +49,13 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
         palette, t, onNavigate, id: 'zuzug-fuehrerausweis', ohneFeld: true, wert: einreise, onWert: setEinreise,
         frist: (d) => plusTage(plusMonate(d, 12), -1),
         labelKey: 'zuzug.fristLabel', hinweisKey: 'zuzug.fristHinweisFa', vorbeiKey: 'zuzug.fristVorbeiFa',
-        buttonKey: 'zuzug.step4Button', doneKey: 'zuzug.step4Done', calendarKey: 'zuzug.step1CalendarLink',
+        art: 'frist', buttonKey: 'zuzug.step4Button', doneKey: 'zuzug.step4Done', calendarKey: 'zuzug.step1CalendarLink',
         reminderTitle: t('zuzug.reminderTitleFa'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step4Link'), onClick: () => onNavigate('fuehrerausweis') })
     ),
     React.createElement(AblaufStep, { palette, title: t('zuzug.step5Title') },
       React.createElement('p', { style: s.stepText }, t('zuzug.step5Text'))
-    ),
-    onNavigate && React.createElement(AblaufStep, { palette, title: t('zuzug.relatedTitle') },
-      React.createElement(AblaufLink, { palette, label: t('zuzug.relatedUmzug'), onClick: () => onNavigate('umzug') }),
-      React.createElement(AblaufLink, { palette, label: t('zuzug.relatedEinbuergerung'), onClick: () => onNavigate('einbuergerung') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('zuzug.quelle'), notes: [t('zuzug.footerNote'), t('trust.localOnly')] })
   );

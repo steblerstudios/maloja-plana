@@ -330,19 +330,24 @@ export function getChapters(t) {
       fields: [
         { k: 'kkInsurer', type: 'text', ph: 1, mvo: true, sec: 'basic', orientation: or(t, 'kvg'), link: lk(t, 'kkWechsel') },
         { k: 'kkModel', type: 'select', sel: 1 },
-        { k: 'kkPremium', type: 'currency', mvo: true },
+        { k: 'kkPremium', type: 'currency', hint: 1, mvo: true },
         { k: 'franchise', type: 'select', sel: 1, mvo: true, orientation: or(t, 'franchise') },
         { k: 'kkCardNumber', type: 'text' },
         { k: 'policyNumber', type: 'text', hint: 1 },
         { k: 'kkZusatz', type: 'text', ph: 1 },
+        { k: 'kkZusatzPremium', type: 'currency' },
         // «trifft nicht zu» (Selbständige, tiefe Einkommen ohne BVG-Pflicht) — Beitrag und Guthaben gehen mit;
         // sonst blieb «Berufliche Vorsorge x von 5» für immer offen (Fachprüfung Muster M2, 25.10.2026).
         { k: 'bvgInsurer', type: 'text', sec: 'occupational', hint: 1, naOk: true, naMit: ['bvgContribution', 'bvgBalance'], orientation: or(t, 'bvg') },
         { k: 'bvgContribution', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'bvgBalance', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'lifeInsurance', type: 'select', sel: 1 },
+        { k: 'lifeInsurancePremium', type: 'currency', jahr: true },
         { k: 'freizuegigkeit', type: 'text', ph: 1 },
         { k: 'uvg', type: 'select', sel: 1, sec: 'additional', orientation: or(t, 'uvg') },
+        // Freiwillige Zusatzversicherung zum UVG (VVG, meist über den Arbeitgeber) — zweite Stufe «Unfall» im Netz-Schild (F7-K3-6, 27.10.2026).
+        { k: 'uvgZusatz', type: 'select', sel: 1 },
+        { k: 'uvgZusatzPremium', type: 'currency', hint: 1, jahr: true },
         { k: 'ktg', type: 'select', sel: 1, hint: 1 },
         { k: 'liabilityInsurance', type: 'select', sel: 1 },
         { k: 'liabilityAmount', type: 'currency' },
@@ -358,7 +363,7 @@ export function getChapters(t) {
         { k: 'autoInsurance', type: 'select', sel: 1, sec: 'mobility', secondary: true },
         { k: 'autoInsuranceAmount', type: 'currency', secondary: true, jahr: true },
         // Jahresbetrag (Feldname «CHF/Jahr»): in der Liste mit «/ Jahr» (Fachprüfung Muster M4, 25.10.2026).
-        { k: 'ahvContribution', type: 'currency', jahr: true, sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
+        { k: 'ahvContribution', type: 'currency', hint: 1, jahr: true, sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
       ],
       docs: [
         'kkcard',
@@ -380,6 +385,8 @@ export function getChapters(t) {
         // Die Erklärung steht am gekoppelten Feld in Finanzen (Quer-Befüllung, main.jsx).
         { k: 'employerAddress', type: 'textarea', naOk: true },
         { k: 'jobTitle', type: 'text', mvo: true, naOk: true, orientation: or(t, 'beruf') },
+        // F7-K2-6 (27.10.2026): Branche für den Lohnvergleich (dieselben 18 wie data/branchenLohn.js).
+        { k: 'branche', type: 'select', sel: 1, naOk: true },
         { k: 'employmentStart', type: 'date', naOk: true },
         { k: 'workPermit', type: 'select', sel: 1, orientation: or(t, 'bewilligung_b') },
         { k: 'workHoursPerWeek', type: 'text', naOk: true },
@@ -426,7 +433,8 @@ export function getChapters(t) {
         { k: 'doctorPhone', type: 'tel' },
         { k: 'hospital', type: 'text' },
         { k: 'organDonor', type: 'select', sel: 1, sec: 'provision', secondary: true },
-        { k: 'patientenverfuegung', type: 'select', sel: 1, hint: 1, orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
+        // nurImBlock: beantwortet im Block «Vorsorge» (NotfallImKapitel), nicht in den Angaben (F7-K6-1).
+        { k: 'patientenverfuegung', type: 'select', sel: 1, hint: 1, nurImBlock: true, orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
         { k: 'vorsorgeauftrag', type: 'select', sel: 1, hint: 1, orientation: or(t, 'vorsorgeauftrag'), secondary: true },
         { k: 'bestattungswuensche', type: 'select', sel: 1, hint: 1, secondary: true },
       ],
@@ -463,8 +471,8 @@ export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'residenceType', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'wfgWohnung'],
   finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
-  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
-  ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
+  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'kkZusatzPremium', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'lifeInsurancePremium', 'freizuegigkeit', 'uvg', 'uvgZusatz', 'uvgZusatzPremium', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
+  ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'branche', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],
 };

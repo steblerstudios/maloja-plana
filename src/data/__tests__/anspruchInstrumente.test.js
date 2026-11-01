@@ -42,6 +42,13 @@ describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
     expect(state.vermoegenUeber).toBe(sh.vermoegenUeberFreibetrag);
   });
 
+  it('nennt das Vermögen nicht als Grund, wenn das Einkommen den Bedarf ohnehin deckt', () => {
+    const data = { ...gapData, finanzen: { monthlyIncome: 6000, savingsAccount: 30000 } };
+    const sh = calculateSozialhilfe(data);
+    expect(sh.vermoegenUeberFreibetrag).toBeGreaterThan(0);
+    expect(sozialhilfePegelState(data).mode).toBe('covered');
+  });
+
   it('zeigt "covered", wenn das Einkommen den Bedarf erreicht', () => {
     const data = { ...gapData, finanzen: { monthlyIncome: 6000 } };
     const state = sozialhilfePegelState(data);

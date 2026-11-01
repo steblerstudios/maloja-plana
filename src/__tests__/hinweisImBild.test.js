@@ -17,7 +17,7 @@ import { StipendienView } from '../StipendienView.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
 import { AnspruchCheck } from '../AnspruchCheck.jsx';
 import { KVGWechsel } from '../KVGWechsel.jsx';
-import { ZusatzWechsel } from '../ZusatzWechsel.jsx';
+import { ZusatzWechsel } from '../KVGWechsel.jsx'; // seit F7-A5 der Weg «Zusatz» in «Krankenkasse wechseln»
 
 // «15 von 15 Ansichten zeigen einen Hinweis im Bild» war bis zum 23.09.2026 eine
 // Handmessung — und die Rechts-Prüfung hat zu Recht angemerkt, dass ausgerechnet der

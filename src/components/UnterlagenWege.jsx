@@ -11,7 +11,7 @@ import { text, weight, radius, leading, space, ease, duration } from '../config/
 
 export const UNTERLAGEN_ANKER = 'mp-unterlagen';
 
-// Eine Zeile je Dossier — ein echter Knopf (Enter und Leertaste ohne eigenes Tastatur-Handling).
+// Eine Zeile je Weg — ein echter Knopf (Enter und Leertaste ohne eigenes Tastatur-Handling).
 const Weg = ({ palette, title, description, status, icon, onClick }) =>
   React.createElement('button', {
     type: 'button', onClick,
@@ -40,12 +40,11 @@ export const UnterlagenWege = ({ palette, t, onNavigate }) => {
     React.createElement(PanelTitle, { palette, id: 'mp-unterlagen-titel', style: { margin: '0 0 4px 0' } }, t('unterlagen.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal } }, t('unterlagen.subtitle')),
 
-    React.createElement(Weg, { palette, icon: 'home', onClick: () => onNavigate('lebensmappe'),
-      title: t('unterlagen.dossier.lebensmappe.title'), description: t('unterlagen.dossier.lebensmappe.description'), status: t('lebensmappe.openDossier') }),
-    React.createElement(Weg, { palette, icon: 'emergency', onClick: () => onNavigate('notfalldossier'),
-      title: t('unterlagen.dossier.notfall.title'), description: t('unterlagen.dossier.notfall.description'), status: t('notfallDossier.openDossier') }),
-    React.createElement(Weg, { palette, icon: 'legal', onClick: () => onNavigate('behoerdendossier'),
-      title: t('unterlagen.dossier.behoerden.title'), description: t('unterlagen.dossier.behoerden.description'), status: t('behoerdenDossier.openDossier') }),
+    // Eine Zeile statt drei (F7-S2, 27.10.2026): Lebensmappe, Notfall- und Behörden-Dossier sind die drei
+    // Auswahlen der Seite «Unterlagen drucken». Die Unterzeile nennt sie, damit niemand sie sucht.
+    React.createElement(Weg, { palette, icon: 'documents', onClick: () => onNavigate('drucken'),
+      title: t('unterlagen.drucken.title'), description: t('unterlagen.drucken.beschreibung'),
+      status: [t('unterlagen.dossier.lebensmappe.title'), t('unterlagen.dossier.behoerden.title'), t('unterlagen.dossier.notfall.title')].join(' · ') }),
     React.createElement(Weg, { palette, icon: 'documents', onClick: () => onNavigate('briefe'),
       title: t('unterlagen.dossier.briefe.title'), description: t('unterlagen.dossier.briefe.description') }),
     React.createElement(Weg, { palette, icon: 'lock', onClick: () => onNavigate('export'),

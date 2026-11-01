@@ -2,6 +2,7 @@
 // Ein Datei-weiter Datenstand (CANTONAL_DATA_VERSION '2024/2025') wurde am 16.09.2026
 // entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
 // unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
+import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
@@ -339,6 +340,9 @@ export function calculateSozialhilfe(data) {
   const gbl = gblStand();
   return {
     grundbedarf,
+    // F, N, S (Stebler Studios 01.11.2026: Zahl mit Hinweis): Der Ansatz liegt unter dem für Einheimische und ist kantonal
+    // (AsylG Art. 82 Abs. 3, AIG Art. 86 Abs. 1). Diese Rechnung bleibt SKOS, die Anzeigen sagen es (pegel.ansatzTiefer).
+    ansatzTiefer: hatAusweisFNS(data),
     gblJahr: gbl.jahr,
     gblBelegt: gbl.belegt,
     effectiveRent,

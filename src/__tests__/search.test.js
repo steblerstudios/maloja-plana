@@ -16,10 +16,14 @@ import rm from '../i18n/rm.js';
 // vergessen) ab. 'search' selbst und Kapitel-Aktionen (mindestlohn) ausgenommen.
 const SEARCHABLE_TOOLS = [
   'finanzuebersicht', 'merkliste', 'calendar', 'sync', 'premium', 'praemien',
-  'kvg', 'vorsorge', 'eo', 'stipendien', 'tax', 'taxImport', 'sozialhilfe',
-  'alv', 'asyl', 'direktlinks', 'tresor', 'cv', 'unterlagen', 'flyer',
-  'kk', 'budget', 'schulden', 'organ', 'charts', 'export', 'notifications',
+  'kvg', 'vorsorge', 'eo', 'stipendien', 'tax', 'sozialhilfe',
+  'alv', 'asyl', 'direktlinks', 'tresor', 'cv', 'flyer',
+  'kk', 'schulden', 'organ', 'export', 'notifications',
 ];
+// F7-L11 (27.10.2026): «unterlagen» und «charts» sind nur noch Umleitungen; ihre Suchwörter hängen an
+// «Dokumentenablage» bzw. «Finanzen & Geld» (werkzeugRegister.js).
+// 'budget' stand hier bis 27.10.2026: der CSV-Import ist seither ein Teil des Monatsbudgets (F7-L7) —
+// gefunden wird er dort, über «csv», «import» und «budget» (Wächter: budgetImportUmleitung.test.js).
 
 const present = (v) => typeof v === 'string'
   ? v.length > 0

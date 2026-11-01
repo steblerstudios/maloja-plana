@@ -30,9 +30,13 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 // (derselbe Wert wie Kapitel/Brief). Die SKALA/Marke rechnet durchgehend auf der LSE-Norm
 // (40 Std.). Wer die 182 für die Marke oder `incomeFTE` verwendet, holt die Zwei-Welten-
 // Krankheit zurück — siehe `mindestlohnBoden`.
-import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel, mindestlohnJahrNichtBelegt } from './lohnCheck.js';
+import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, mindestlohnJahrNichtBelegt } from './lohnCheck.js';
 import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+import { quellensteuerMoeglich } from './kantonaleSteuerdaten.js';
+import { einkommenIstKeinLohn } from '../utils/monatsrechnung.js';
+import { istAngestellt, istLernend } from '../utils/anstellung.js';
+import { dreizehnterStatus } from '../utils/dreizehnter.js';
 
 export const LOHN_REFERENZ = {
   median: LSE_VERTEILUNG.median,
@@ -111,7 +115,10 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
 
   // Über der Plausibilitätsgrenze (lohnCheck.js) gelten die Stunden als unbekannt — keine
   // Hochrechnung, kein Urteil; die Anzeige fragt nach (meist ein Pensum in Prozent).
-  const stundenUnplausibel = wochenstundenUnplausibel(stunden);
+  // Dasselbe unter der Untergrenze: sonst würde aus einem Pensum als Bruchteil ein Vollzeitlohn
+  // von mehreren Hunderttausend Franken.
+  const stundenZuTief = wochenstundenZuTiefFuerMonatslohn(stunden);
+  const stundenUnplausibel = wochenstundenUnplausibel(stunden) || stundenZuTief;
   const hoursKnown = stunden > 0 && !stundenUnplausibel;
 
   // JEDES Bezugsmass auf diesem Barometer ist BRUTTO: der BFS-Median ist ein
@@ -180,6 +187,7 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
     overFullTime,
     hoursKnown,
     stundenUnplausibel,
+    stundenZuTief,
     basisKnown,
     comparable,
     einkommensart: incomeType || null,
@@ -212,7 +220,43 @@ export function lohnEinordnungErgebnis({ income, incomeType, hoursPerWeek }) {
     fehlend: fehlendeAngaben({
       einkommen: num(income) > 0,
       einkommensart: incomeType === 'brutto' || incomeType === 'netto',
-      wochenstunden: num(hoursPerWeek) > 0 && !wochenstundenUnplausibel(hoursPerWeek),
+      wochenstunden: num(hoursPerWeek) > 0 && !wochenstundenUnplausibel(hoursPerWeek) && !wochenstundenZuTiefFuerMonatslohn(hoursPerWeek),
     }),
   });
+}
+
+// Lohn-Kette (Stebler Studios 01.11.2026): von der Angabe bis zum Vergleich mit dem Median, Zeile für Zeile,
+// aus denselben Werten wie das Barometer. `null`, wenn sie nichts Haltbares sagen kann: Barometer nicht
+// vergleichbar, Rente oder Geschäftsgewinn, oder Netto mit möglicher Quellensteuer (der Richtwert kennt sie nicht).
+// Warum ein Lohn-Vergleich nichts Haltbares sagt, oder null. Eine Regel für Kette, Spiegel, Barometer und Branchen.
+// Im Rentenalter ohne ausdrücklich «angestellt» ist das Einkommen vermutlich eine Rente.
+// Netto mit möglicher Quellensteuer: der Richtwert kennt sie nicht, das geschätzte Brutto läge zu tief.
+export function lohnVergleichSperre(data, rentenalter) {
+  if (einkommenIstKeinLohn(data) || (rentenalter && !istAngestellt(data?.finanzen))) return 'keinLohn';
+  // Der Median zählt Löhne von Lernenden nicht mit (branchenLohn.js).
+  if (istLernend(data?.finanzen)) return 'lernend';
+  if (data?.finanzen?.incomeType === 'netto' && quellensteuerMoeglich(data)) return 'quellensteuer';
+  return null;
+}
+
+export function lohnKette(state, data, { alter, rentenalter, beitragsfrei } = {}) {
+  if (!state?.comparable || lohnVergleichSperre(data, rentenalter)) return null;
+  const zeilen = [];
+  if (state.geschaetzt) {
+    zeilen.push({ key: 'ketteNetto', betrag: state.incomeRoh });
+    zeilen.push({ key: beitragsfrei ? 'ketteBruttoOhneAbzug' : alter == null ? 'ketteBruttoOhnePk' : 'ketteBrutto', betrag: state.income });
+  } else {
+    zeilen.push({ key: 'ketteBruttoAngabe', betrag: state.income });
+  }
+  if (state.partTime || state.overFullTime) zeilen.push({ key: 'ketteAuf40', betrag: state.incomeFTE, stunden: state.hoursPerWeek });
+  if (state.hat13) zeilen.push({ key: 'ketteMit13', betrag: state.incomeVergleich });
+  zeilen.push({ key: 'ketteMedian', betrag: state.median, jahr: LOHN_REFERENZ.jahr });
+  // Nur bei leerem Feld: Bei «Nein» ist der Vergleich richtig, es gibt nichts dazuzurechnen.
+  return { zeilen, hinweis13: dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen' };
+}
+
+// Spiegel im Kapitel Finanzen: Netto und geschätztes Brutto, ohne Median. Nur bei netto erfasstem Lohn.
+export function lohnSpiegel(state, data, { alter, rentenalter, beitragsfrei } = {}) {
+  if (!state?.geschaetzt || beitragsfrei || lohnVergleichSperre(data, rentenalter)) return null;
+  return { key: alter == null ? 'spiegelOhnePk' : 'spiegel', netto: state.incomeRoh, brutto: state.income };
 }

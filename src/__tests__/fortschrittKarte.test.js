@@ -13,7 +13,7 @@ import { BergDetail, KapitelZeile } from '../BergDetail.jsx';
 // Die Zusagen:
 //   1. Eine Karte: Fortschritt und Grundordnung stehen zusammen, beim ersten Bild
 //      ist jedes Kapitel zu (aria-expanded="false") und kein Feld zu sehen.
-//   2. Jede Kapitelzeile ist ein Knopf, der auf- und zuklappt.
+//   2. Jede Kapitelzeile führt ins Kapitel, der Pfeil daneben klappt auf und zu (F7-D1).
 //   3. Aufgeklappt zeigt sie genau die Grundordnungs-Felder DIESES Kapitels,
 //      und jedes Feld wie «Öffnen» führt in genau dieses Kapitel.
 //
@@ -70,14 +70,17 @@ describe('Fortschritts-Karte · eine Karte, Kapitel aufklappbar', () => {
     expect(html).not.toMatch(/undefined/);
   });
 
-  it('zugeklappt: die Zeile ist ein Knopf, der umschaltet, und nichts darunter', () => {
+  it('zugeklappt: die Zeile führt ins Kapitel, der Pfeil schaltet um, nichts darunter', () => {
     let umgeschaltet = 0;
-    const el = zeile(0, false, { umschalten: () => umgeschaltet++ });
+    const aufrufe = [];
+    const el = zeile(0, false, { umschalten: () => umgeschaltet++, kapitel: (i) => aufrufe.push(i) });
     const b = knoepfe(el);
-    expect(b.length).toBe(1);
-    expect(b[0].props['aria-expanded']).toBe(false);
-    expect(b[0].props['aria-controls']).toBeUndefined();
+    expect(b.length).toBe(2);
     b[0].props.onClick();
+    expect(aufrufe).toEqual([0]);
+    expect(b[1].props['aria-expanded']).toBe(false);
+    expect(b[1].props['aria-controls']).toBeUndefined();
+    b[1].props.onClick();
     expect(umgeschaltet).toBe(1);
   });
 
@@ -85,7 +88,7 @@ describe('Fortschritts-Karte · eine Karte, Kapitel aufklappbar', () => {
     chapters.forEach((ch, idx) => {
       const aufrufe = [];
       const el = zeile(idx, true, { kapitel: (i) => aufrufe.push(i) });
-      const [kopf, ...rest] = knoepfe(el);
+      const [, kopf, ...rest] = knoepfe(el);
       const eigene = mvo.fields.filter((f) => f.chapterIdx === idx);
       expect(kopf.props['aria-expanded'], ch.key).toBe(true);
       expect(kopf.props['aria-controls'], ch.key).toBe('fortschritt-kapitel-' + ch.key);

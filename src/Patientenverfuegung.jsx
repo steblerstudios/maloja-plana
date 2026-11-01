@@ -4,6 +4,7 @@ import { text, weight, radius, space, leading } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
 import { FRAGEN, dokument, dokumentHtml } from './data/patientenverfuegung.js';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Patientenverfügung in Fragen — eine Frage pro Seite, am Schluss Vorschau und Druck.
 // Ablauf: components/FragenAblauf.jsx · Dokument und Regeln: data/patientenverfuegung.js ·
@@ -11,7 +12,10 @@ import { FRAGEN, dokument, dokumentHtml } from './data/patientenverfuegung.js';
 // Antworten unter notfall.pvAntworten — getrennt vom Feld notfall.patientenverfuegung («vorhanden?»).
 // Kein trust.localOnly im Fussteil (Rechtsprüfung 27.09.: kein neues «nur auf dem Gerät»-Versprechen).
 
-export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang }) => {
+// Rückweg (F7-S10, 27.10.2026): Brotkrume «Übersicht › Notfall › Patientenverfügung» und am Schluss
+// «Zurück zur Vorsorge» — beides führt ins Kapitel Notfall zum Block Vorsorge (UMLEITUNGEN notfallvorsorge).
+// Vorher endete der Ablauf bei Vorschau und Druck, ohne Weg zurück.
+export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNavigate }) => {
   const [antworten, setAntworten] = useState(() => data?.notfall?.pvAntworten || {});
   const setzen = (patch) => {
     const next = { ...antworten, ...patch };
@@ -43,12 +47,15 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang }) =>
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(dokumentHtml(antworten, data, t, lang)) },
           React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('pv.ui.drucken')),
-        React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('pv.ui.aendern'))
+        React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('pv.ui.aendern')),
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge'))
       )
     );
   };
 
-  return React.createElement(FragenAblauf, { palette, t, ns: 'pv', fragen: FRAGEN, antworten, setzen, titel: t('pv.ui.title'), hinweis: t('pv.ui.hinweis'), kopf, vorschau });
+  return React.createElement(React.Fragment, null,
+    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'patientenverfuegung', onNavigate }),
+    React.createElement(FragenAblauf, { palette, t, ns: 'pv', fragen: FRAGEN, antworten, setzen, titel: t('pv.ui.title'), hinweis: t('pv.ui.hinweis'), kopf, vorschau }));
 };
 
 export default Patientenverfuegung;

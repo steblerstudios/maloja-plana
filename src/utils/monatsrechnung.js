@@ -25,14 +25,21 @@
 // Hinweis die Autokosten schon enthalten. Das wäre ein eigener Entscheid.
 
 import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
+import { istAngestellt, istLernend } from './anstellung.js';
 
 // Nur positive Beträge zählen — wie die Einnahmen (data/haushaltsEinnahmen.js); ein negativer
 // Eintrag soll die Ausgaben nicht still verkleinern (Fachprüfung Fassung 6).
 const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
 
-// Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG
-// fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur als
-// Referenz). Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Säule 3a) sind durch 12 geteilt.
+// Selbständige zahlen AHV und Pensionskasse selbst, es gibt keinen Lohnabzug (Fachprüfung 01.11.2026).
+export const zahltBeitraegeSelbst = (finanzen) => finanzen?.employmentType === 'selfEmployed' || finanzen?.employmentType === 'freelance';
+
+// «Schon vom Nettolohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn (dieselbe Regel wie VersicherungenInstrument).
+export const beitragsNotizKey = (finanzen) => istAngestellt(finanzen) && finanzen?.incomeType === 'netto' ? 'budgetSync.bvgReferenceNote' : 'budgetSync.bvgNichtGezaehltNote';
+
+// Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG von
+// Angestellten fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur
+// als Referenz). Bei Selbständigen zählen sie. Ohne Anstellungstyp wird nichts angenommen. Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Unfall-Zusatz, Leben, Säule 3a) sind durch 12 geteilt.
 export function monatsAusgaben(profilDaten) {
   const data = profilDaten || {};
   return {
@@ -46,6 +53,13 @@ export function monatsAusgaben(profilDaten) {
     // «Versicherung vorhanden? Nein» — ein stehengebliebener Betrag zählt nicht.
     householdInsurance: data.versicherungen?.householdInsurance === 'no' ? 0 : n(data.versicherungen?.householdInsuranceAmount) / 12,
     liabilityInsurance: data.versicherungen?.liabilityInsurance === 'no' ? 0 : n(data.versicherungen?.liabilityPremium) / 12,
+    // Prämien aus dem Kapitel Versicherungen, seit 31.10.2026 (F7-K3-6, Stebler Studios «überall die Zahlen»): Zusatz monatlich,
+    // Leben und Unfall-Zusatz als Jahresbetrag. Der Unfall-Zusatz nur, wenn selbst bezahlt — das sagt der Hinweis am
+    // Feld; ein Abzug vom Lohn steckt schon im Nettolohn wie BVG und AHV.
+    // Ohne Namen zählt ein stehengebliebener Betrag nicht (wie «Nein» bei Leben und Unfall-Zusatz).
+    kkZusatz: data.versicherungen?.kkZusatz ? n(data.versicherungen?.kkZusatzPremium) : 0,
+    uvgZusatz: data.versicherungen?.uvgZusatz === 'no' ? 0 : n(data.versicherungen?.uvgZusatzPremium) / 12,
+    lifeInsurance: data.versicherungen?.lifeInsurance === 'no' ? 0 : n(data.versicherungen?.lifeInsurancePremium) / 12,
     otherInsurance: n(data.finanzen?.otherInsurance),
     groceries: n(data.finanzen?.groceries),
     communication: n(data.finanzen?.communication),
@@ -53,6 +67,8 @@ export function monatsAusgaben(profilDaten) {
     mobility: n(data.finanzen?.mobility),
     tax: n(data.finanzen?.monthlyTax),
     pension3a: n(data.finanzen?.pension3a) / 12,
+    ahvSelbst: zahltBeitraegeSelbst(data.finanzen) ? n(data.versicherungen?.ahvContribution) / 12 : 0,
+    bvgSelbst: zahltBeitraegeSelbst(data.finanzen) ? n(data.versicherungen?.bvgContribution) : 0,
     debtPayments: n(data.finanzen?.debtPayments),
     alimentePaid: n(data.finanzen?.alimentePaid),
   };
@@ -64,6 +80,18 @@ const summe = (o) => Object.values(o).reduce((a, b) => a + b, 0);
 const profil = (finanzen, allData) => ({ ...(allData || {}), finanzen: finanzen || allData?.finanzen || {} });
 
 // Erfasste Lebenskosten: alles ausser Schuldenraten und bezahlten Alimenten.
+// Rente oder Geschäftsgewinn: `monthlyIncome` ist dann kein Lohn, Lohn-Vergleiche und Lohn-Wörter passen nicht.
+export const einkommenIstKeinLohn = (data) => !!data?.basis?.household?.isRetired
+  || ['retired', 'selfEmployed', 'freelance'].includes(data?.finanzen?.employmentType);
+
+// Der kantonale Mindestlohn gilt für Lohn aus Arbeitsverhältnissen, aber nicht für Lehrverhältnisse:
+// GE LIRT Art. 39J · TI LSM Art. 3 · JU RSJU 822.41 Art. 3 al. 2 · NE RSalMin Art. 3 Abs. 2 lit. b (Stand 1.11.2025)
+// · BS Regierungsrat in der Antwort an den Grossen Rat: «Lernende fallen nicht unter das kantonale Mindestlohngesetz».
+export const mindestlohnNichtAnwendbar = (data) => einkommenIstKeinLohn(data) || istLernend(data?.finanzen);
+
+// Summe der Versicherungen pro Monat, wie sie die Versicherungs-Karte zeigt. `p` = monatsAusgaben().
+export const versicherungenSumme = (p) => p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
+
 export function sumExpenses(finanzen, allData) {
   const { debtPayments, alimentePaid, ...leben } = monatsAusgaben(profil(finanzen, allData));
   return summe(leben);

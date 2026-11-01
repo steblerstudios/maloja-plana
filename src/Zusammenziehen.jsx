@@ -10,7 +10,7 @@ export const Zusammenziehen = ({ palette, t, chapters, onNavigate }) => {
   const s = ablaufStyles(palette);
   const chapterIdx = (key) => (chapters ? chapters.findIndex((ch) => ch.key === key) : -1);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'home',
+    palette, t, onNavigate, ablauf: 'zusammenziehen', icon: 'home',
     title: t('zusammenziehen.title'),
     intro: t('zusammenziehen.intro'),
   },

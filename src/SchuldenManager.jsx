@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
-import { EmptyState } from './components/EmptyState.jsx';
-import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import { RechnerForm } from './components/RechnerForm.jsx';
+import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig, verjaehrungVerlustschein, istVor1997 } from './schuldenCalc.js';
 import { heuteIso, alsIsoDatum } from './utils/fristen.js';
 import { offenePosten } from './utils/offenePosten.js';
@@ -267,167 +267,20 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     { key: 'verlustscheine', icon: 'document', label: t('schulden.lossReceipts') },
   ];
 
-  return React.createElement('div', { style: { maxWidth: '720px' } },
-    React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, t('schulden.title')),
-    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('schulden.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
-
-    // Tab Navigation (role=tablist; aktiver Tab via Border+Tint, nicht nur Farbe)
-    React.createElement('div', { role: 'tablist', 'aria-label': t('schulden.title'), style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.md, borderBottom: '1px solid ' + palette.border, paddingBottom: space.sm + 4 } },
-      tabs.map(tab => {
-        const active = view === tab.key;
-        return React.createElement('button', {
-          key: tab.key, role: 'tab', 'aria-selected': active, onClick: () => setView(tab.key),
-          style: { display: 'inline-flex', alignItems: 'center', gap: '4px', padding: space.sm + 'px ' + (space.sm + 4) + 'px', border: '1px solid ' + (active ? palette.sand : palette.border), background: active ? palette.sand + '22' : palette.surface, color: active ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
-        }, React.createElement(Icon, { name: tab.icon, size: 14 }), ' ' + tab.label);
-      })
-    ),
-
-    // Overview — Dataviz-Runde 27.09.2026: ein Balken nach Reihenfolge (A) und die Mahnstufen
-    // aller Forderungen auf einer Leiste (C), statt fünf Zahlenzeilen. Bilder in SchuldenBilder.jsx.
-    view === 'overview' && React.createElement('div', { role: 'tabpanel' },
-      // ① ② stehen unabhängig davon, ob schon Forderungen erfasst sind (Arztrechnungen allein genügen).
-      prioritized.length === 0 && debtStatus.paid === 0
-        ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') })
-        : React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
-      React.createElement(AusserdemOffen, { palette, t, posten, onNavigate }),
-      React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
-      React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate }),
-
-      betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm, color: palette.text } }, t('schulden.debtRegisterAnalysis')),
-        // Neutral statt Wertung (27.09.2026): keine Schwellen ohne Quelle, ohne Einkommen keine Zahl.
-        React.createElement('div', { style: { fontSize: text.sm, marginBottom: space.sm, color: palette.text } },
-          betreibungImpact.monatseinkommen !== null
-            ? t('schulden.betreibungSumme', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }), monate: zahl(betreibungImpact.monatseinkommen, { hoechstens: 1 }) })
-            : t('schulden.betreibungOhneEinkommen', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }) })
-        ),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, t('schulden.helpBody'))
-      )
-    ),
-
-    // Abbau-Plan — neu geordnet 27.09.2026 (Design-Kritik Deploy-Tor: «überladen»): zuerst Rate und
-    // Zeitachse (B), dann die Reihenfolge nach Stufen — Begründung EINMAL je Stufe statt je
-    // Forderung —, dann Beratung, Hintergrund (Bussen, Steuern) eingeklappt.
-    view === 'plan' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: 0, marginBottom: space.md } }, t('schulden.planIntro')),
-
-      prioritized.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') }) : React.createElement('div', null,
-        // Richtwert: wie lange mit einer eigenen Monatsrate (Rechnung in schuldenCalc.createDebtPlan).
-        React.createElement('div', { style: { padding: space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.lg } },
-          React.createElement('label', { htmlFor: 'plan-rate', style: { display: 'block', fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.plan.rateLabel')),
-          React.createElement('input', { id: 'plan-rate', type: 'text', inputMode: 'decimal', autoComplete: 'off', value: planRate, onChange: (e) => setPlanRate(e.target.value), 'aria-describedby': 'plan-rate-hilfe', style: { ...inputStyle, maxWidth: '220px', marginBottom: space.xs } }),
-          React.createElement('div', { id: 'plan-rate-hilfe', style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } },
-            budgetRate.grund === 'ok'
-              ? t('schulden.plan.ausBudget', { einnahmen: betrag(budgetRate.einnahmen, { hoechstens: 2 }), ausgaben: betrag(budgetRate.ausgaben, { hoechstens: 2 }), vorschlag: betrag(budgetRate.vorschlag) })
-              : budgetRate.grund === 'unvollstaendig'
-                ? t('schulden.plan.budgetFehlt', { was: budgetRate.fehlend.map(k => t('schulden.plan.fehlt.' + k)).join(', ') })
-                : t('schulden.plan.budget.' + budgetRate.grund),
-            ' ', t('schulden.plan.rateHilfe'),
-            budgetRate.grund === 'ok' && ' ' + t('schulden.plan.reserve'),
-            budgetRate.grund === 'ok' && budgetRate.steuerFehlt && ' ' + t('schulden.plan.steuerFehlt'),
-            budgetRate.grund === 'ok' && budgetRate.heutigeRaten > 0 && ' ' + t('schulden.plan.heutigeRaten', { amount: betrag(budgetRate.heutigeRaten, { hoechstens: 2 }) })
-          ),
-          // Knöpfe AUSSERHALB der Feld-Beschreibung (a11y-Prüfer Deploy-Tor 27.09.: in
-          // aria-describedby wurden sie als Fliesstext vorgelesen).
-          (budgetRate.grund === 'ok' ? leseBetrag(planRate) !== budgetRate.vorschlag : !!onNavigate) && React.createElement('div', { style: { marginTop: space.xs } },
-            budgetRate.grund === 'ok'
-              ? React.createElement('button', { type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)), style: linkKnopf }, t('schulden.plan.zurueck'))
-              : React.createElement('button', { type: 'button', onClick: () => onNavigate('budget'), style: linkKnopf }, t('schulden.plan.zumBudget'))
-          ),
-          React.createElement('div', { role: 'status', 'aria-live': 'polite', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: space.sm } },
+  // ── Rechner-Form X (F7-A2, 27.10.2026) ─────────────────────────────────────────────────────────────
+  // Die fünf Reiter über die gemeinsame Tabs-Komponente. Je Reiter das Ergebnis zuerst (Übersicht: der Balken;
+  // Plan: der Satz «so lange» mit der Zeitachse als Instrument; Listen: die erfassten Einträge), dann «Ihre Angaben»
+  // (Rate bzw. das Erfassen), dann der Rest. Beratung als «was zu tun ist», Quelle fest unten. Logik unverändert.
+  const leer = { debts: 'schulden.emptyDebts', plan: 'schulden.emptyDebts', overview: 'schulden.emptyDebts', betreibung: 'schulden.emptyBetreibung', verlustscheine: 'schulden.emptyVerlustschein' };
+  const mitPlan = prioritized.length > 0;
+  const ergebnisJeReiter = {
+    overview: prioritized.length === 0 && debtStatus.paid === 0 ? null : React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
+    plan: mitPlan ? React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: space.sm } },
             !plan ? t('schulden.plan.ohne')
               : !plan.machbar ? t(plan.grund === 'zins' ? 'schulden.plan.zuWenig' : 'schulden.plan.zuLang', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), zins: betrag(plan.zinsMonat || 0, { stellen: 2 }) })
               : t(plan.monate === 1 ? 'schulden.plan.ergebnisEins' : 'schulden.plan.ergebnis', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), monate: String(plan.monate), zins: betrag(plan.zinsTotal, { stellen: 2 }) })
-          ),
-          React.createElement(AbbauZeitachse, { palette, t, plan }),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('schulden.plan.vereinfacht'))
-        ),
-
-        // Reihenfolge nach Stufe: Überschrift + Begründung einmal, darunter die Forderungen.
-        [1, 2, 3].filter(tier => prioritized.some(d => d.tier === tier)).map(tier => React.createElement('section', { key: tier, 'aria-labelledby': 'stufe-titel-' + tier, style: { marginBottom: space.md } },
-          React.createElement('div', { id: 'stufe-titel-' + tier, style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' } },
-            React.createElement(LegendenMarke, { form: 'fuellung', color: palette.text + STUFEN_TON[tier], palette }), t(tierLabelKey(tier))),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginBottom: space.xs } }, t('schulden.tier' + tier + 'Reason')),
-          // Die Methode ordnet nur die übrigen Schulden — darum steht die Wahl hier.
-          tier === 3 && React.createElement('div', { role: 'group', 'aria-label': t('schulden.planMethod'), style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', margin: space.xs + 'px 0' } },
-            ['lawine', 'schneeball'].map(m => React.createElement('button', {
-              key: m, type: 'button', onClick: () => setMethod(m), 'aria-pressed': method === m,
-              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
-            }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
-          ),
-          React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },
-            prioritized.filter(d => d.tier === tier).map((d, idx) => React.createElement('li', { key: d.id || idx, style: { padding: '3px 0' } },
-              React.createElement('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm } },
-                React.createElement('span', null, forderungName(d, t)),
-                React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, betrag(Number(d.amount || 0), { stellen: 2 })))
-            ))
-          )
-        )),
-
-        // Beratungs-Box — warm, ohne Wertung
-        React.createElement('div', { style: { padding: space.md + 'px', background: palette.sage + '14', border: '1px solid ' + palette.sage + '55', borderRadius: radius.sm, margin: space.md + 'px 0' } },
-          React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('schulden.helpTitle')),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
-          React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
-            React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sageDeep, textDecoration: 'none' } }, '0800 708 708'),
-            React.createElement(ExternerLink, { t, href: 'https://schulden.ch', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
-          ),
-          onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
-            React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') }),
-            React.createElement(AblaufLink, { palette, label: t('schulden.mahnungLink'), onClick: () => onNavigate('mahnung') })
-          )
-        ),
-
-        // Hintergrund eingeklappt: Bussen (nur bei erfasster Busse) und Steuern (DBG/StHG).
-        prioritized.some(d => d.category === 'bussen') && React.createElement('details', { style: detailsStil },
-          React.createElement('summary', { style: summaryStil }, t('schulden.bussen.title')),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: space.xs } }, t('mahnung.step4Bussen')),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t('schulden.bussen.quelle'), null, t))
-        ),
-        React.createElement('details', { style: detailsStil },
-          React.createElement('summary', { style: summaryStil }, t('schulden.steuer.title')),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: space.xs } }, t('schulden.steuer.text'))
-        ),
-
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: 1.5 } }, renderSource(t('schulden.planQuelle'), null, t))
-      )
-    ),
-
-    // Debts View
-    view === 'debts' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.addDebt')),
-
-      React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
-        React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
-        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: inputStyle }),
-        vorschlag && newDebt.amount === vorschlag.amount && schulden.length === 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.ausProfilHint')),
-        // Pflicht = Gläubiger + Betrag; alles Weitere optional, eingeklappt
-        React.createElement('details', null,
-          React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),
-          React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), 'aria-label': t('schulden.dueSoon') + ' (' + t('common.optional') + ')', style: { ...inputStyle, marginTop: space.sm } }),
-          React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), 'aria-label': t('schulden.interestRate') + ' (' + t('common.optional') + ')', style: inputStyle }),
-          React.createElement('select', { value: newDebt.category, 'aria-describedby': katHilfeSichtbar ? 'kat-hilfe' : undefined, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
-            React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
-            React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
-            React.createElement('option', { value: 'gesundheit' }, t('schulden.catGesundheit')),
-            React.createElement('option', { value: 'alimente' }, t('schulden.catAlimente')),
-            React.createElement('option', { value: 'bussen' }, t('schulden.catBussen')),
-            React.createElement('option', { value: 'steuern' }, t('schulden.catSteuern')),
-            React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
-            React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
-          ),
-          katHilfeSichtbar && React.createElement('div', { id: 'kat-hilfe', 'data-testid': 'kat-hilfe', style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.catHilfe.' + newDebt.category)),
-          React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), 'aria-label': t('schulden.statusField'), style: inputStyle },
-            React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
-            React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
-            React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
-          )
-        ),
-        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
-        React.createElement('button', { onClick: handleAddDebt, style: { ...buttonStyle, marginTop: space.sm } }, '+ ' + t('schulden.addDebt'))
-      ),
-
-      schulden.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') }) : React.createElement('div', null,
+          ) : null,
+    debts: schulden.length === 0 ? null : React.createElement('div', null,
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, forderungName(debt, t)),
@@ -443,26 +296,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           React.createElement('button', { type: 'button', 'aria-label': t(debt.status === 'paid' ? 'schulden.wiederOffen' : 'schulden.alsBezahlt') + ' ' + forderungName(debt, t), onClick: () => wechselStatus(debt), style: { ...zweitKnopf, marginRight: space.sm } }, debt.status === 'paid' ? t('schulden.wiederOffen') : t('schulden.alsBezahlt')),
           React.createElement('button', { 'aria-label': t('common.delete') + ' ' + forderungName(debt, t), onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
-      )
-    ),
-
-    // Betreibung View
-    view === 'betreibung' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.debtCollection')),
-
-      React.createElement('button', { type: 'button', 'data-vs-fokus': 'bt-neu', onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addBetreibung')),
-      // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
-      betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
-        hinweisZeichen(), t('schulden.registerHinweis'), ' ',
-        onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: { background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } }, t('schulden.registerHinweisLink'))
       ),
-
-      // Mahnstufe «Zahlungsbefehl» auf einer Forderung und dieser Tab waren zwei Erfassungen ohne
-      // Verbindung (Rundgang 27.09.). Hier nur der Hinweis — nichts wird automatisch angelegt.
-      mitZahlungsbefehl.length > 0 && React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
-        hinweisZeichen(), t('schulden.bild.ausForderungen', { namen: mitZahlungsbefehl.map(d => forderungName(d, t)).join(', ') })
-      ),
-      betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
+    betreibung: betreibung.length === 0 ? null : React.createElement('div', null,
         React.createElement(BetreibungZeitleiste, { palette, t, eintraege: betreibung, heute: heuteIso() }),
         // SchKG Art. 8a Abs. 4 als Regel in Worten, ohne errechnetes Ende (swiss-precision-pruefer 05.10.2026).
         React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, margin: '0 0 ' + space.lg + 'px' } }, t('schulden.betreibung.auszugRegel')),
@@ -520,18 +355,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             )
           );
         })
-      )
-    ),
-
-    // Verlustscheine View
-    view === 'verlustscheine' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.lossReceipts')),
-      // Was ein Verlustschein bedeutet (SchKG 149, 149a, 265) — 27.09.2026.
-      erklaerKasten('vs', t('schulden.verlustschein.title'), 'schulden.verlustschein.text', 'schulden.verlustschein.quelle'),
-
-      React.createElement('button', { type: 'button', 'data-vs-fokus': 'vs-neu', onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addVerlustschein')),
-
-      verlustscheine.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'document', size: 26, color: palette.mid }), title: t('schulden.emptyVerlustschein') }) : React.createElement('div', null,
+      ),
+    verlustscheine: verlustscheine.length === 0 ? null : React.createElement('div', null,
         React.createElement(VerlustscheinZeitachse, { palette, t, eintraege: verlustscheine, heute: heuteIso() }),
         verlustscheine.map(entry => {
           const rolle = entry.rolle === 'schulde' || entry.rolle === 'geschuldet' ? entry.rolle : null;
@@ -592,15 +417,164 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             )
           );
         })
+      ),
+  };
+  const angabenJeReiter = {
+    plan: mitPlan && React.createElement(React.Fragment, null,
+          React.createElement('label', { htmlFor: 'plan-rate', style: { display: 'block', fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.plan.rateLabel')),
+          React.createElement('input', { id: 'plan-rate', type: 'text', inputMode: 'decimal', autoComplete: 'off', value: planRate, onChange: (e) => setPlanRate(e.target.value), 'aria-describedby': 'plan-rate-hilfe', style: { ...inputStyle, maxWidth: '220px', marginBottom: space.xs } }),
+          React.createElement('div', { id: 'plan-rate-hilfe', style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } },
+            budgetRate.grund === 'ok'
+              ? t('schulden.plan.ausBudget', { einnahmen: betrag(budgetRate.einnahmen, { hoechstens: 2 }), ausgaben: betrag(budgetRate.ausgaben, { hoechstens: 2 }), vorschlag: betrag(budgetRate.vorschlag) })
+              : budgetRate.grund === 'unvollstaendig'
+                ? t('schulden.plan.budgetFehlt', { was: budgetRate.fehlend.map(k => t('schulden.plan.fehlt.' + k)).join(', ') })
+                : t('schulden.plan.budget.' + budgetRate.grund),
+            ' ', t('schulden.plan.rateHilfe'),
+            budgetRate.grund === 'ok' && ' ' + t('schulden.plan.reserve'),
+            budgetRate.grund === 'ok' && budgetRate.steuerFehlt && ' ' + t('schulden.plan.steuerFehlt'),
+            budgetRate.grund === 'ok' && budgetRate.heutigeRaten > 0 && ' ' + t('schulden.plan.heutigeRaten', { amount: betrag(budgetRate.heutigeRaten, { hoechstens: 2 }) })
+          ),
+          // Knöpfe AUSSERHALB der Feld-Beschreibung (a11y-Prüfer Deploy-Tor 27.09.: in
+          // aria-describedby wurden sie als Fliesstext vorgelesen).
+          (budgetRate.grund === 'ok' ? leseBetrag(planRate) !== budgetRate.vorschlag : !!onNavigate) && React.createElement('div', { style: { marginTop: space.xs } },
+            budgetRate.grund === 'ok'
+              ? React.createElement('button', { type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)), style: linkKnopf }, t('schulden.plan.zurueck'))
+              : React.createElement('button', { type: 'button', onClick: () => onNavigate('budget'), style: linkKnopf }, t('schulden.plan.zumBudget'))
+          )
+    ),
+    debts: React.createElement(React.Fragment, null,
+      React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
+        React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
+        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: inputStyle }),
+        vorschlag && newDebt.amount === vorschlag.amount && schulden.length === 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.ausProfilHint')),
+        // Pflicht = Gläubiger + Betrag; alles Weitere optional, eingeklappt
+        React.createElement('details', null,
+          React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),
+          React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), 'aria-label': t('schulden.dueSoon') + ' (' + t('common.optional') + ')', style: { ...inputStyle, marginTop: space.sm } }),
+          React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), 'aria-label': t('schulden.interestRate') + ' (' + t('common.optional') + ')', style: inputStyle }),
+          React.createElement('select', { value: newDebt.category, 'aria-describedby': katHilfeSichtbar ? 'kat-hilfe' : undefined, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
+            React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
+            React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
+            React.createElement('option', { value: 'gesundheit' }, t('schulden.catGesundheit')),
+            React.createElement('option', { value: 'alimente' }, t('schulden.catAlimente')),
+            React.createElement('option', { value: 'bussen' }, t('schulden.catBussen')),
+            React.createElement('option', { value: 'steuern' }, t('schulden.catSteuern')),
+            React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
+            React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
+          ),
+          katHilfeSichtbar && React.createElement('div', { id: 'kat-hilfe', 'data-testid': 'kat-hilfe', style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.catHilfe.' + newDebt.category)),
+          React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), 'aria-label': t('schulden.statusField'), style: inputStyle },
+            React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
+            React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
+            React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
+          )
+        ),
+        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
+        React.createElement('button', { onClick: handleAddDebt, style: { ...buttonStyle, marginTop: space.sm } }, '+ ' + t('schulden.addDebt'))
       )
     ),
+    betreibung: React.createElement(React.Fragment, null,
+      React.createElement('button', { type: 'button', 'data-vs-fokus': 'bt-neu', onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addBetreibung')),
+      // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
+      betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
+        hinweisZeichen(), t('schulden.registerHinweis'), ' ',
+        onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: { background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } }, t('schulden.registerHinweisLink'))
+      ),
 
-    // Privacy note
+      // Mahnstufe «Zahlungsbefehl» auf einer Forderung und dieser Tab waren zwei Erfassungen ohne
+      // Verbindung (Rundgang 27.09.). Hier nur der Hinweis — nichts wird automatisch angelegt.
+      mitZahlungsbefehl.length > 0 && React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
+        hinweisZeichen(), t('schulden.bild.ausForderungen', { namen: mitZahlungsbefehl.map(d => forderungName(d, t)).join(', ') })
+      )
+    ),
+    verlustscheine: React.createElement('button', { type: 'button', 'data-vs-fokus': 'vs-neu', onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addVerlustschein')),
+  };
+  const weiteresJeReiter = {
+    overview: React.createElement(React.Fragment, null,
+      React.createElement(AusserdemOffen, { palette, t, posten, onNavigate }),
+      React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
+      React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate }),
+
+      betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm, color: palette.text } }, t('schulden.debtRegisterAnalysis')),
+        // Neutral statt Wertung (27.09.2026): keine Schwellen ohne Quelle, ohne Einkommen keine Zahl.
+        React.createElement('div', { style: { fontSize: text.sm, marginBottom: space.sm, color: palette.text } },
+          betreibungImpact.monatseinkommen !== null
+            ? t('schulden.betreibungSumme', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }), monate: zahl(betreibungImpact.monatseinkommen, { hoechstens: 1 }) })
+            : t('schulden.betreibungOhneEinkommen', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }) })
+        ),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, t('schulden.helpBody'))
+      )
+    ),
+    plan: React.createElement(React.Fragment, null,
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: 0, marginBottom: space.md } }, t('schulden.planIntro')),
+        mitPlan && React.createElement(React.Fragment, null,
+        // Reihenfolge nach Stufe: Überschrift + Begründung einmal, darunter die Forderungen.
+        [1, 2, 3].filter(tier => prioritized.some(d => d.tier === tier)).map(tier => React.createElement('section', { key: tier, 'aria-labelledby': 'stufe-titel-' + tier, style: { marginBottom: space.md } },
+          React.createElement('div', { id: 'stufe-titel-' + tier, style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' } },
+            React.createElement(LegendenMarke, { form: 'fuellung', color: palette.text + STUFEN_TON[tier], palette }), t(tierLabelKey(tier))),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginBottom: space.xs } }, t('schulden.tier' + tier + 'Reason')),
+          // Die Methode ordnet nur die übrigen Schulden — darum steht die Wahl hier.
+          tier === 3 && React.createElement('div', { role: 'group', 'aria-label': t('schulden.planMethod'), style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', margin: space.xs + 'px 0' } },
+            ['lawine', 'schneeball'].map(m => React.createElement('button', {
+              key: m, type: 'button', onClick: () => setMethod(m), 'aria-pressed': method === m,
+              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
+            }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
+          ),
+          React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },
+            prioritized.filter(d => d.tier === tier).map((d, idx) => React.createElement('li', { key: d.id || idx, style: { padding: '3px 0' } },
+              React.createElement('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm } },
+                React.createElement('span', null, forderungName(d, t)),
+                React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, betrag(Number(d.amount || 0), { stellen: 2 })))
+            ))
+          )
+        )),
+        // Hintergrund eingeklappt: Bussen (nur bei erfasster Busse) und Steuern (DBG/StHG).
+        prioritized.some(d => d.category === 'bussen') && React.createElement('details', { style: detailsStil },
+          React.createElement('summary', { style: summaryStil }, t('schulden.bussen.title')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: space.xs } }, t('mahnung.step4Bussen')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t('schulden.bussen.quelle'), null, t))
+        ),
+        React.createElement('details', { style: detailsStil },
+          React.createElement('summary', { style: summaryStil }, t('schulden.steuer.title')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: space.xs } }, t('schulden.steuer.text'))
+        )
+        )
+    ),
+    verlustscheine: erklaerKasten('vs', t('schulden.verlustschein.title'), 'schulden.verlustschein.text', 'schulden.verlustschein.quelle'),
+  };
+
+  return React.createElement(React.Fragment, null,
+    React.createElement(RechnerForm, {
+      palette, t, view: 'schulden', onNavigate,
+      titel: t('schulden.title'),
+      satz: React.createElement(React.Fragment, null, t('schulden.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('schulden.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
+      reiter: { id: 'schulden', label: t('schulden.title'), liste: tabs, aktiv: view, onWahl: setView },
+      ergebnis: ergebnisJeReiter[view] || null,
+      ohneErgebnis: t(leer[view]),
+      vorbehalt: view === 'plan' && mitPlan && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('schulden.plan.vereinfacht')),
+      instrument: view === 'plan' && mitPlan ? React.createElement(AbbauZeitachse, { palette, t, plan }) : null,
+      angaben: angabenJeReiter[view] ? { erfasst: 0, gesamt: 0, inhalt: React.createElement('div', { style: { paddingTop: space.xs } }, angabenJeReiter[view]) } : null,
+      // Beratung — warm, ohne Wertung: was man tun kann, in jedem Reiter.
+      tun: { titel: t('schulden.helpTitle'), inhalt: React.createElement('div', { style: { padding: space.md + 'px', background: palette.sage + '14', border: '1px solid ' + palette.sage + '55', borderRadius: radius.sm, margin: space.md + 'px 0' } },
+          
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
+          React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
+            React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sageDeep, textDecoration: 'none' } }, '0800 708 708'),
+            React.createElement(ExternerLink, { t, href: 'https://schulden.ch', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
+          ),
+          onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
+            React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') }),
+            React.createElement(AblaufLink, { palette, label: t('schulden.mahnungLink'), onClick: () => onNavigate('mahnung') })
+          )
+        ) },
+      stelle: React.createElement(OfficialLinkBox, { palette, t, data, ids: ['caritas-schulden'], alsZeilen: true }),
+      quelle: React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: 1.5 } }, renderSource(t('schulden.planQuelle'), null, t)),
+    },
+      weiteresJeReiter[view] || null,
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md, padding: 0 } }, hinweisZeichen(), t('trust.localOnly')),
-
-    // Orientierungs-Disclaimer (keine Rechts-/Finanzberatung)
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint')),
-
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint'))
+    ),
     // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
     // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
     React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),

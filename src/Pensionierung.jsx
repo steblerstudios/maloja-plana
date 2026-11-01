@@ -27,7 +27,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
   }
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'vorsorge',
+    palette, t, onNavigate, ablauf: 'pensionierung', icon: 'vorsorge',
     title: t('pensionierung.title'),
     intro: t('pensionierung.intro'),
   },
@@ -36,7 +36,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('pensionierung.step1Text')),
       ahvReminder && React.createElement(FristButton, {
         palette, t,
-        buttonLabel: t('pensionierung.step1Button', { date: formatDE(ahvReminder) }),
+        art: 'frist', buttonLabel: t('pensionierung.step1Button', { date: formatDE(ahvReminder) }),
         doneLabel: t('pensionierung.step1Done'),
         calendarLabel: t('pensionierung.step1CalendarLink'),
         onNavigate,

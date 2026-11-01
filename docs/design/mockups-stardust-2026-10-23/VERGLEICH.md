@@ -1350,3 +1350,342 @@ Stebler Studios zu #580: «Das Spinnennetz bleibt im Kapitel.» — danach: «wo
 (Krankenkasse · Pensionskasse · Weitere · Hausrat & Reise · Auto · AHV, «Zeigt, wie viel … eingetragen ist»), in keinem Entwurf
 (weder AA noch AB), nicht in der Übersicht. Es zeigt Vollständigkeit — dasselbe, was Muster M2 («x von n erfasst» je Abschnitt)
 leisten wird. **Zu entscheiden:** behalten (wo, wozu), in die Übersicht, oder weg, sobald M2 gebaut ist.
+
+---
+
+## Fassung 7 · Rundgang 27.10.2026 · erste Entscheide (Stebler Studios, 27.10.2026, 02:42)
+
+Grundlage: `docs/design/fassung-7-2026-10-27/BEFUNDE.md` und die Vergleichsseite (Artifact «Fassung 7 Rundgang»).
+Stebler Studios hat 25 von 71 Punkten gewählt und die Liste aus der Seite in den Chat gelegt. Die übrigen 46 sind **noch offen**,
+nicht abgelehnt.
+
+**Ja (10):**
+- F7-K2-3 — eine Brutto-Schätzung statt zwei (6’796 / 6’472): nachrechnen, welche gilt.
+- F7-K2-4 — Dashboard übernimmt das IPV-Ergebnis aus dem Kapitel Finanzen.
+- F7-K2-6 — Branchenvergleich: eigene Branche hervorheben, Rest aufklappbar.
+- F7-K3-3 — Franchise-Kreuz zeigt die eigene Franchise als Punkt.
+- F7-L5 — Gruppe A (Ansprüche) wieder aufnehmen.
+- F7-L6 — §11 Versicherungs-Übersicht als eigene Seite bauen.
+- F7-L7 — Budget-Import ins Monatsbudget (§2 I).
+- F7-L10 — Merkliste als Reiter in «Was ansteht».
+- F7-L11 — Aufräumen: Rucksack-Doppel, Links auf umgeleitete Adressen, tote `FinanzUebersicht.jsx`.
+- F7-L12 — Titel für den Anspruch-Check, Brotkrume für Notfall- und Behörden-Dossier.
+
+**Besprechen (15):** F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 ·
+F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9
+
+**Noch nicht gewählt:** alle F7-D (Dashboard), F7-K0, F7-K1 (u. a. Mietbarometer-Fehler), F7-K2-1/-2/-5, F7-K3-6
+(Spinnennetz), alle F7-A (Abläufe, u. a. W bauen), alle F7-R (Rechner, u. a. X bauen), alle F7-S (u. a. Lebensmappe
+ohne Behörden).
+
+**Nichts gebaut.**
+
+### Stand 2 der Entscheide (Stebler Studios, 27.10.2026, 02:54)
+
+Zweite Liste aus der Vergleichsseite, ersetzt die Zählung von Stand 1 (Stand 1 bleibt als Beleg oben stehen).
+61 von 71 Punkten gewählt: **39 Ja · 1 Nein · 21 Besprechen**.
+Besprechen erst, wenn alle Punkte gewählt sind (Stebler Studios: «wir wollen warten mit dem besprechen bis wir alle ja und nein s haben»).
+
+**Ja:** F7-K1-1 · F7-K1-2 · F7-K1-3 · F7-K2-3 · F7-K2-4 · F7-K2-5 · F7-K2-6 · F7-K3-3 · F7-L5 · F7-L6 · F7-L7 · F7-L10 · F7-L11 · F7-L12 · F7-A1 · F7-A2 · F7-A3 · F7-A4 · F7-A5 · F7-A6 · F7-A7 · F7-A9 · F7-A10 · F7-A11 · F7-A12 · F7-R1 · F7-R3 · F7-R4 · F7-R6 · F7-S1 · F7-S2 · F7-S3 · F7-S4 · F7-S6 · F7-S7 · F7-S8 · F7-S9 · F7-S10 · F7-S12
+
+**Nein:** F7-K0-2 (Basis bleibt ohne Instrument)
+
+**Besprechen:** F7-K2-1 · F7-K2-2 · F7-K3-6 · F7-K3-1 · F7-K3-2 · F7-K3-4 · F7-K4-1 · F7-K4-2 · F7-K5-1 · F7-K5-2 · F7-K6-1 · F7-K6-2 · F7-L1 · F7-L2 · F7-L3 · F7-L4 · F7-L8 · F7-L9 · F7-R2 · F7-R5 · F7-S5
+
+**Noch nicht gewählt:** F7-D1 · F7-D2 · F7-D3 · F7-D4 · F7-D5 · F7-D6 · F7-D7 · F7-D8 · F7-D9 · F7-D10
+
+**Nichts gebaut.**
+
+### Baustand der «Ja» (27.10.2026, 03:51)
+
+Stebler Studios: «alle ja darfst du gerne mal erledigen». Je Paket ein Zweig und ein **Entwurfs-PR**, nichts gemergt.
+Zusammen geprüft (Probe aus main + #626 + #627 + #628): 7’248 Tests grün, `size-limit` 64.54 kB von 65 kB.
+
+| Paket | PR | Punkte |
+|---|---|---|
+| 1 · sichtbare Fehler | #626 | F7-K1-1, K1-2, K1-3, K2-3, K2-4, K3-3, S1, S6, S7, S8, L12, S12 |
+| 2 · Namen und Aufräumen | #627 | F7-R1, S3, S4, S9, L11 |
+| 3 · Kapitel Finanzen | #628 | F7-K2-5, K2-6 |
+| 4 · Ablauf-Schale W | – | F7-A1, A4, A5, A6, A7, A9, A10, A11 — offen |
+| 5 · Rechner-Form X | – | F7-A2, R3, R4, R6 — offen |
+| 6 · «Was steht mir zu?» O | – | F7-A3, L5 — offen |
+| 7 · Versicherungs-Übersicht §11 | – | F7-L6 — offen |
+| 8 · Budget, Merkliste, Dossiers | – | F7-L7, L10, S2, S10 — offen |
+
+**Fehlbefunde, nichts gebaut:** F7-A12 und F7-D8 — die Deko-Schrift («HELVETIA», «Fr», «5 FR. 2026») steckt in
+Icons mit `aria-hidden`; ein Bildschirmleser liest sie nicht. Der Rundgang hatte mit `innerText` gemessen.
+Im Browser nachgeprüft (Pensionierung, Einbürgerung, Betreibungsauszug).
+
+**Teilweise anders als im Befund:** F7-K2-3 war kein Rechenfehler (CHF 6’472 = Brutto 6’796 auf 40 Std.) — gebaut
+ist die sichtbare Beschriftung. F7-L12: die Dossiers hatten schon Brotkrumen; ergänzt ist «Zurück zu …».
+F7-L11: `FinanzUebersicht.jsx` bleibt (sechs Tests prüfen über sie), Links auf `finanzuebersicht` bleiben (Umleitung).
+F7-S12: nur «kostenlos, auch mit leerem Guthaben» belegt (FDV Art. 27 Abs. 2); die SIM-Aussage ist raus.
+
+### Baustand der «Ja», alle acht Pakete (27.10.2026, 12:07)
+
+| Paket | PR | Stand |
+|---|---|---|
+| 1 · sichtbare Fehler | #626 | Entwurf |
+| 2 · Namen und Aufräumen | #627 | Entwurf |
+| 3 · Kapitel Finanzen | #628 | Entwurf |
+| 4 · Ablauf-Schale W (A1, A4–A7, A9–A11) | #633 | Entwurf |
+| 5 · Rechner-Form X, alle zehn (A2, R3, R4, R6) | #631 | Entwurf |
+| 6 · «Was steht mir zu?» O + Gruppe A (A3, L5) | #630 | Entwurf |
+| 7 · Versicherungs-Übersicht §11 (L6) | #629 | Entwurf — war schon gebaut (#580, #601), nur Wächter-Test + Doku |
+| 8 · Budget, Merkliste, Dossiers, Rückweg (L7, L10, S2, S10) | #632 | Entwurf |
+
+**Probe aller Zweige auf main:** 1, 2, 3, 7, 6, 5 führen sich konfliktfrei zusammen (7’370 Tests grün, `size-limit`
+**64.67 kB von 65 kB**). 8 und 4 haben dann Konflikte in den Sprachdateien, `main.jsx`, `hashRouter.js`, Registern und
+Wächter-Tests — alle erweitern dieselben Listen. Vorschlag: in dieser Reihenfolge mergen und 8 und 4 vor ihrem Merge
+auf das neue main nachziehen. **Grösse:** 0.33 kB Luft vor 8 und 4 — vor dem Merge der letzten zwei prüfen, ggf. Teile
+aus dem Startbündel nachladen.
+
+**Weitere Fehlbefunde aus dem Rundgang:** F7-L6 (§11 war gebaut, das Entscheidungsblatt sagte «Noch nichts gebaut»),
+F7-A7 (Verweise an der Gabelung bestanden schon).
+
+**Für die Fachprüfung (#630):** Sozialhilfe-Pegel sagt bei Maria «Vermögen über dem Freibetrag», obwohl das Einkommen den
+Bedarf deckt — Reihenfolge in `src/data/pegel.js` (alt, schon im Schnellcheck).
+
+### Besprechen, Runde 1 (Stebler Studios, 27.10.2026, Seite «Fassung 7 Besprechen»)
+
+Quelle: `docs/design/fassung-7-2026-10-27/besprechen.html` (Artifact «Fassung 7 Besprechen»), je Punkt «wie empfohlen»,
+«anders» oder «später». 11 von 31 Punkten gewählt. **Nichts gebaut.**
+
+**Wie empfohlen (9):**
+- F7-K3-6 — Das Spinnennetz fällt weg. Das Netz-Schild (Prototyp `_werkbank/versicherung-schild-2026-10-27/`) ersetzt
+  Netz und Schutzschild als ein Bild, vorher in Maloja-Tönen nachgezeichnet. Vor dem Bau offen: welche Bereiche zwei
+  Stufen haben (Vorsorge: BVG + 3a?), ob «Leben» oben in die Mitte gehört.
+- F7-K4-2 — Maria bleibt beim Bachelor (ZHAW); Berufsbezeichnung «Pflegefachfrau HF» → «Pflegefachfrau FH» (`demoData.js`).
+- F7-K5-2 — Vorsorge ganz in den Notfall; in Behörden bleibt das Testament mit Verweis.
+- F7-K6-1 — Patientenverfügung im Notfall nur im Block «Vorsorge»; «Bereit» verlinkt dorthin, nicht mehr in den Angaben.
+- F7-L1 — Nach dem Merge Seiten ohne Eingang nachzählen; Organspende unter «Passend» bei Notfall › Vorsorge, falls nötig.
+- F7-L2 — Nach dem Merge Sackgassen nachzählen; jede verbliebene Seite bekommt «Als Nächstes».
+- F7-L3 — Familie als Abschnitt in Persönliche Basis, kein achtes Kapitel. Abläufe hängen dort unter «Passend».
+- F7-R2 — Sozialhilfe-Seite zeigt nur Sozialhilfe; IPV und EL je eine Zeile mit Link auf «Was steht mir zu?».
+- F7-R5 — Lebenslauf-Generator wird die Vorschau aus dem Kapitel plus «Als PDF drucken»; «JSON (ATS)» klein unter
+  «Weitere Formate».
+
+**Anders (2):**
+- F7-L8 — Ja zum Bündeln: Steuer-Import in den Steuer-Rechner (§2 I), Doppel (Kantonssteuer, Säule 3a) zusammenlegen.
+  **Nicht** wie vorgeschlagen beim Import: Stebler Studios: «das müssen wir geschickter lösen». Offen: wie der Import ins
+  Rechner-Bild kommt, ohne das Startbündel zu belasten — Vorschlag von Claude ausstehend.
+- F7-K6-2 — Maria bekommt einen Medikamenten-Eintrag, damit das Feld im Beispiel gefüllt ist. Gezeigt werden soll, dass
+  die App zu einem Medikament weiterführende Information zeigt; Stebler Studios nennt PubMed, TARDOC und «vielleicht der Preis».
+  **Offen, vor dem Bau klären:** Die App verlinkt heute schon auf compendium.ch (`MedicationManager.jsx`).
+  PubMed ist Fachliteratur, keine Patienteninformation; TARDOC ist der Arzttarif und enthält keine Medikamentenpreise —
+  die stehen in der Spezialitätenliste des BAG. Ein Preis in der App wäre ein Datenbestand, der gepflegt werden muss.
+
+**Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 ·
+F7-L9 · F7-K5-1
+
+**F7-K6-2 geklärt (Stebler Studios, 27.10.2026):** Compendium-Link wie heute, dazu der Preis aus der BAG-Spezialitätenliste.
+Zuerst zeigen, wie der Preis aktuell bleibt. Vorschlag von Claude (noch nicht entschieden), Belege BAG-Seite «Elektronische
+Plattform Leistungen (ePL)», gelesen 27.10.2026: SL unter sl.bag.admin.ch, ohne Login; Excel- und FHIR-Dateien «jeweils am
+ersten eines Monats»; alte Liste leitet seit 01.06.2026 um; API für Software-Anbieter angekündigt, noch nicht offen.
+1. Von Hand wie bei den Prämien: Excel-Datei ablegen in `src/data/raw/`, Skript `scripts/build-sl-preise.mjs` holt nur die
+   rund 100 Medikamente aus `medicationData.js` heraus → `src/data/medikamentPreise.js` mit Stand und Quelle.
+2. Nachgeladen nur im Medikamenten-Teil, nicht im Startbündel. Die App holt zur Laufzeit nichts aus dem Netz.
+3. Takt: vierteljährlich und beim Werte-Wechsel im Dezember; `/maloja-predeploy` warnt, wenn der Stand älter als 4 Monate ist.
+4. Anzeige: «Publikumspreis laut Spezialitätenliste, Stand …», nicht «Sie zahlen»; ohne Treffer kein Preis, nur Compendium.
+5. Vor dem Bau: swiss-precision-pruefer zu Publikumspreis vs. Selbstbehalt und zum Satz bei Medikamenten ausserhalb der SL.
+
+**F7-K6-2 entschieden (Stebler Studios, 27.10.2026):** «Ja, Preis so nachführen wie vorgeschlagen — von Hand je Quartal, Skript,
+Stand sichtbar, Warnung im Predeploy.» Punkte 1–5 oben gelten. Zusammen mit: Maria bekommt einen Medikamenten-Eintrag.
+
+**F7-K3-6 weiter (Stebler Studios, 27.10.2026, beim Ansehen von #636):** «Leben» als Teil oben in der Mitte (gebaut, `79b2855c`).
+Dann: «Schild so umbauen: Vorsorge mit drei Säulen, Unfall mit Zusatz und neuem Feld, Haushalt mit Haftpflicht und
+Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk.» Grundlage Fachprüfung (swiss-precision-pruefer, ohne Webzugriff):
+Hausrat Pflicht (Feuer/Elementar) in NW, FR, JU, VD — Erlasse nicht belegt, darum Prüf-Vermerk bis nachgelesen;
+Haftpflicht gesetzlich nicht vorgeschrieben (Vermieter, Hund); UVG-Zusatz freiwillig (VVG); NBU erst ab 8 Std./Woche
+(UVV Art. 13); Vorsorge AHV → PK → 3a nach BV Art. 111–113, Stufen bauen rechtlich nicht aufeinander auf.
+
+### Netz-Schild und Medikamentenpreis, Stand 31.10.2026 (Stebler Studios)
+
+- **F7-K6-2 gebaut:** Entwurfs-PR #635 (`3261283f`).
+- **F7-K3-6 gebaut:** Entwurfs-PR #636 (`bc2ed1b9`). Teile: Leben (oben Mitte) · Krankenkasse (KVG · Zusatz) · Unfall (UVG ·
+  Zusatz, nur für Angestellte) · Haushalt (Privathaftpflicht · Hausrat) · Vorsorge (AHV · Pensionskasse · Säule 3a).
+- **Zahlen im Schild** (Stebler Studios: «überall die Zahlen, was es kostet monatlich, jährlich und wie viel schon drin ist»):
+  je Versicherung Monat und Jahr, Guthaben, Versicherungssumme. Nur erfasste Felder, nie geschätzt.
+- **Neue Prämien-Felder** (Stebler Studios: «Ja, dazubauen»): `kkZusatzPremium`, `uvgZusatzPremium`, `lifeInsurancePremium`. Sie zählen in
+  der einen Monatsrechnung und damit im Budget.
+- **Beispiel Maria** (Stebler Studios: «Ja, Maria ergänzen»): KK-Zusatz CHF 38.50/Mt., Leben CHF 600/Jahr. Versicherungen CHF 659,
+  frei CHF 2’185. Folge: Der sandfarbene Kern «noch nicht gedeckt» ist bei Maria nicht mehr zu sehen; offen, ob das so bleibt.
+
+**Noch nicht gewählt (20):** F7-D1–D10 · F7-L4 · F7-K2-1 · F7-S5 · F7-K3-4 · F7-K3-1 · F7-K3-2 · F7-K2-2 · F7-K4-1 · F7-L9 · F7-K5-1.
+Hinweis: F7-K3-4 ist mit dem Netz-Schild zum Teil überholt, D10 und K3-2 hängen am alten Schild auf Dashboard und Übersicht.
+
+### Gebaut auf dem Sammelzweig (31.10.2026, Stebler Studios: «Ja, weiterbauen»)
+
+Zweig `integration/f7-sammel`, PR #637 (Entwurf), nicht in `main`. Je ein Commit, Wächter im selben Commit.
+
+- **F7-K4-2:** Maria ist «Pflegefachfrau FH».
+- **F7-K6-1:** Patientenverfügung nur im Block «Vorsorge». Die Antwort «vorhanden?» zog dorthin um, weil das Formular sie
+  nicht setzt; «Bereit» springt dorthin. Bei «Ja» bleibt der Weg zum Formular.
+- **F7-K5-2:** Behörden zeigt nur das Testament mit Verweis auf Notfall › Vorsorge; der Ablauf steht unter «Passend» im Notfall.
+  Die Unterlagen-Liste von Behörden (`power_of_attorney`, `patientenverfuegung`) blieb unverändert: Ablage-Schlüssel.
+- **F7-R2:** Sozialhilfe rechnet IPV und EL nicht mehr; je eine Zeile nach «Was steht mir zu?».
+- **F7-R5:** Lebenslauf zeigt das Blatt aus dem Kapitel, «Als PDF drucken» mit Export-Vorschau, HTML und JSON unter «Weitere Formate».
+- **F7-L3:** Sechs Familien-Abläufe unter dem Abschnitt «Familie» bei «Passend» in Persönliche Basis.
+- **F7-L8:** Vorschlag gebaut: Import als `<details>` im Steuer-Rechner, erst beim Aufklappen geladen; `#/taxImport` leitet um und
+  klappt auf. Säule 3a: Abzug im Rechner bleibt eigene Eingabe, neu Knopf «aus dem Kapitel Finanzen übernehmen» (auf Klick, nie
+  still, weil es die Schätzung ändert). **Nicht zusammengelegt:** Kantonssteuer-Orientierung. Rechner und Finanzen nutzen dieselbe
+  Komponente; ohne sie stünde in Finanzen eine fehlende Kantonszahl ohne Begründung (`ERKLAERT_IN_ORIENTIERUNG`). Gehört zu F7-K5-1.
+- **F7-L1:** Nachgezählt. Ohne Kapitel-Eingang waren Organspende (neu Notfall › Passend) und «Jemand schuldet Geld» (neu Behörden ›
+  Passend). `aussteuerung` ist Umleitung, `notifications` kommt über die Einstellungen.
+- **F7-L2:** Nachgezählt: sieben Seiten ohne Weg. `components/SeitenSchluss.jsx`, nachgeladen, eine Tabelle: kk, sync, direktlinks,
+  export, notifications, flyer, installApp. Einstellungen bleiben ohne, das ist ein Systemziel.
+
+### Predeploy-Prüfung, behoben (01.11.2026, Stebler Studios: «Ja, wie empfohlen»)
+
+- **Netz-Schild:** zeigt, was eingetragen ist, nicht, was gedeckt ist. Lücke ist nur Pflicht; die AHV ist nie eine Lücke (AHVG Art. 1a), Freiwilliges bleibt
+  neutral, ein Guthaben allein ist keine Pensionskasse. Altes Schutzschild ebenso.
+- **Medikamentenpreis:** Kombinationen zählen nicht zum Einzelwirkstoff (Spalte «Wirkstoffe»). 40-%-Ausnahme nach KLV Art. 38a Abs. 7.
+- **Hausrat:** Pflicht nur NW (NSVG Art. 27 Abs. 1) und VD (über ECA Vaud belegt); FR, JU «je nach Kanton», bis der Erlass gelesen ist.
+
+### Besprechen, Runde 2, erster Teil (Stebler Studios, 01.11.2026, Seite «Fassung 7 Besprechen»)
+
+5 von 24 Punkten gewählt. **Nichts gebaut.** Stebler Studios: «hier mal ein anfang».
+
+**Wie empfohlen (4):**
+- F7-K4-1 — Lohnvergleich nur in Ausbildung & Arbeit; Finanzen zeigt das Einkommen mit Link zum Vergleich.
+- F7-L9 — Alles mit Lohn hängt an Ausbildung & Arbeit; die Rechner bleiben und nutzen dieselbe Brutto-Schätzung.
+- E-1 — Überall «eingetragen», nicht «erfasst».
+- E-2 — Überall «Schild», nicht «Schutzschild».
+
+**Anders (1):**
+- F7-K5-1 — Betrag in Finanzen, Frist in Behörden, beide verweisen mit derselben Zahl aufeinander: ja. **Die Säule auf dem Dashboard bleibt aber.**
+  Stebler Studios: «Für die säule hätt ich gerne eine lösung die möchte ich eigentlich nicht weg aber sie könnte besser sein da stimme ich zu».
+  Befund dazu: Die Säule zeigt bewusst nur die Bundessteuer (`InstrumentePanel.jsx`), bei Maria CHF 977, Finanzen rechnet dagegen CHF 977 + CHF 7’454 Kanton und Gemeinde (grobe Schätzung).
+  **Entschieden (Stebler Studios, 01.11.2026: «Ja, ganze Steuer»):** Die Säule zeigt die ganze Steuer in zwei Teilen: unten satt die Bundessteuer, oben heller Kanton und
+  Gemeinde als Schätzung. Text «≈ CHF 8’431 / Jahr, davon Bund CHF 977» (Beispiel Maria), dieselbe Zahl wie in Finanzen, klein die Frist, Klick nach Finanzen.
+  Die Regel «nur die belegte Bundessteuer als Zahl» (`InstrumentePanel.jsx`) fällt damit. Vor dem Bau: swiss-precision-pruefer zum Satz. Ort der Säule hängt an F7-D10.
+
+**Noch nicht gewählt (19):** F7-D1–D7, D9, D10 · F7-L4 · F7-S5 · F7-K2-1 · F7-K2-2 · F7-K3-1 · F7-K3-2 · F7-K3-4 · E-3 · E-4 · E-5
+
+### Besprechen, Runde 2, gebaut (01.11.2026, Stebler Studios: «lass uns mal die entschiedenen sachen bauen»)
+
+- **E-1, E-2:** «eingetragen» in `vu.*`, «Schild» auf der Kachel, alle Sprachen. **E-3:** Seitenname «CV» in fr, it, en. Der Generator ist nicht verschwunden: seit F7-R5 Vorschau und PDF, HTML und JSON unter «Weitere Formate».
+- **F7-K4-1:** Barometer und Branchen stehen nur in Ausbildung & Arbeit (`LohnImKapitel`). Finanzen behält den Armutsgrenzen-Befund und führt mit einer Zeile dorthin.
+- **F7-L9:** Die Brutto-Schätzung war schon überall dieselbe (`nettoZuBruttoRichtwert`), an der Rechnung ist nichts geändert. «Neue Stelle» ist aus Finanzen › Passend raus, die Brotkrume des Stundenlohns führt nach Ausbildung & Arbeit. Im Rucksack bleibt der Stundenlohn im Portemonnaie.
+- **F7-K5-1:** Säule in zwei Teilen, Klick nach Finanzen. Fachprüfung (swiss-precision-pruefer): Summe nachgerechnet, «≈» allein reicht nicht, darum «Grobe Schätzung für den Hauptort, ohne Kirchensteuer», Annahmen und «Steuererklärung bis» je als eigene Zeile. Gesamtzahl nur mit Lohn, unselbständig, nicht pensioniert. Bei Bewilligung B, L, G keine Zahl.
+
+**Überall gesperrt (Stebler Studios, 01.11.2026: «Ja, überall sperren»), Prüfung rechts-pruefer, Fedlex gelesen 01.11.2026:** Die Sperre sitzt in der gemeinsamen Rechnung (`quellensteuerMoeglich`, `steuernFuerProfil`) und gilt für Dashboard, Finanzen, Steuerrechner und Dossier.
+Bewilligung B, L und ausländische Staatsangehörigkeit ohne Ausweis: keine Steuerzahl (DBG Art. 83, StHG Art. 32). Ausweis G: keine Steuerzahl, eigener Text (DBG Art. 91). Wortlaut «möglich», weil die Ausnahme nach DBG Art. 83 Abs. 2 im Profil nicht erkennbar ist. Das gilt auch mit eingetragenem steuerbarem Wert.
+Rente oder Selbständigkeit mit eingetragenem Wert: Bund rechnet, Kanton und Gemeinde nicht. «Pensioniert» im Haushalt zählt wie der Anstellungstyp.
+Nicht gelöst: Ausweise F, N, S fehlen als Option; Schweizer Bürgerinnen und Bürger mit Wohnsitz im Ausland (Art. 91) sind ohne Wohnsitzfeld nicht erkennbar. Texte fr, it, en, rm von Claude, nicht fachlich gegengelesen, rm mit `TODO(rm)`.
+
+**Überholt:** ~~Offen aus der Fachprüfung, nicht gebaut:~~ Finanzen und Steuerrechner zeigen die Zahl weiter auch bei möglicher Quellensteuer (`workPermit` wird in der Steuerlogik nicht gelesen) und bei Rente oder Selbständigkeit mit direkt eingetragenem Wert (Lohn-Reihe, nicht gemessen; `r4SteuerAnnahmen.test.js:215-221`). Die Sperre gehört in `kantonssteuerFuerProfil`; die Quellensteuer-Regel soll der rechts-pruefer vorher absegnen.
+
+### Nachprüfung «ist alles Entschiedene umgesetzt?» (01.11.2026)
+
+Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finanzen, nannte aber keinen Betrag; jetzt dieselbe Zahl mit «Grobe Schätzung», gleiche Sperren. **E-1:** «Der Schutz ist eingetragen», «Prämie nicht eingetragen» (de, rm). Die übrigen «erfasst» ausserhalb der Versicherungen (Steuer, IPV, Haushalt) bleiben bewusst: E-1 betraf Schild und Versicherungs-Übersicht.
+
+### Besprechen, Runde 3 (Stebler Studios, 01.11.2026)
+
+- **F7-K2-2, anders:** Nicht bloss den Kuchen weglassen, sondern «fusionieren kreativ». Nachgeschärft: Der Kreis mit der Zahl in der Mitte bleibt, dazu der Balken mit Namen
+  (Skizze A), «alles ideal nach UI/UX platziert»; danach «das geht noch besser». Eingebaut als **eine Monatskarte** (`components/Monatsring.jsx`): oben Einkommen und Umschalter
+  Monat / Jahr · Ring mit der Antwort in der Mitte · daneben, auf schmalen Bildschirmen darunter, «Wofür geht es weg?» als Zeilen mit Balken, grösster Bereich zuerst, Klick öffnet die Posten
+  direkt darunter. Die Zeile «verplant von Einkommen» und der Satz «Monatliches Einkommen … Es bleiben …» (`MirrorCards.jsx`) entfallen, wo die Karte steht; bei Brutto bleibt der Satz,
+  offene Kredite nennt er weiterhin. Skizzen B (Abstieg) und C (Flächen) sind verworfen.
+  Verfeinert («noch besser»): Summe der Ausgaben in der Titelzeile, damit die Karte aufgeht (6’200 − 3’965 = 2’235); im Ring je Bereich ein Stück, nur der geöffnete zeigt seine Posten; Balken auf gleich langer Spur.
+  «Jahr» ist der Monat × 12 und sagt das, ein 13. Monatslohn ist nicht eingerechnet. Einen Umschalter für Geld gab es vorher nicht, nur «Ganzes Jahr» im Kalender. **Vorerst abgenommen.**
+- **E-4, anders:** Nicht Hausrat, nicht Unfall (Maria ist als Angestellte versichert, «offen» sähe falsch aus), sondern die **Lebensversicherung** (Stebler Studios). Sie ist freiwillig, der
+  Teil bleibt blass und zählt nicht als Lücke, Pflicht bleibt 3/3. Folge: Maria CHF 609 Versicherungen, CHF 3’965 verplant, CHF 2’235 bleiben. Das kräftige Sand sieht man im Beispiel nicht. **Vorerst abgenommen.**
+- **E-5, wie empfohlen:** Absatz zur Patientenverfügung übersetzt, als provisorisch markiert. Gegenlese durch eine Person, die Rumantsch kann, offen.
+
+**Abnahme (Stebler Studios, 01.11.2026):** «vorerst ok so aber wollen wir noch verbessern». Die Monatskarte darf in den Sammelzweig; sie bleibt als offener Gestaltungspunkt stehen.
+
+**Gestaltungsprüfung und Umbau (Stebler Studios: «Ja, so umbauen»):** Was bleibt war ungefärbt, das satteste Grün war die Miete, Gold hiess «Sonstiges» (entgegen `farb-und-daten-system.md`).
+Was bleibt ist `sage`. Die vier Granit-Stufen für die Ausgaben sind **verworfen** (Stebler Studios: «die Farben wollen wir haben, unsere verschiedenen Farben pro Feld, alles andere super so»); die Bereichsfarben aus Muster M8 bleiben. Dazu feinerer, grösserer Ring (220, Strich 14), Beträge und Anteile auf einer
+Kante, Pfeil «›» statt +/−, Balken messen am Einkommen wie der Ring, Haarlinie, ruhigerer Umschalter. Abweichung von der Prüferin nach Messung: `sage` 0.85 statt 0.22–0.28, weil sonst unter 3:1 (WCAG 1.4.11). **Abgenommen.**
+
+Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192).
+
+### F7-K3-4 gebaut (Stebler Studios, 01.11.2026)
+
+Ablauf: «Ja, wie empfohlen» (Schild zuerst), dann zurückgenommen: Die grosse Summe bleibt zuoberst. Danach: «vereine diese Dinge, ergänze die anderen Versicherungen, schau die ganze Seite mit den Farben an, dafür haben wir die Farben».
+Eingebaut: **eine Versicherungs-Karte** (`VersicherungenInstrument.jsx`, auch auf der Versicherungs-Übersicht) mit grosser Summe, Balken aus den Posten, Zeilen in den Farben aus `ausgabenPosten`, KK-Last direkt bei der Krankenkasse, und eingeklappt «Nicht in dieser Summe»
+(AHV, Pensionskasse, Säule 3a, UVG, KTG, Rechtsschutz, Reise, Cyber, Fahrzeug, nur wenn eingetragen; die Summe selbst bleibt die Budget-Gruppe). Farben nach Lebensbereich (Stebler Studios: «Hausrat gehört doch auch zum Wohnen»): Hausrat, Haftpflicht und das Schild-Teil Haushalt in Wohnen, Vorsorge in Finanzen, Krankenkasse, Unfall und Leben in Versicherungen; die offene Stelle bleibt Sand.
+Schild mit eingeklappter Liste folgt nach der Karte, das Franchise-Kreuz bleibt, F7-K3-1 und K3-2 bleiben zurückgestellt. **Abgenommen** (Stebler Studios: «Ja, passt»).
+Offen: Gold (Vorsorge) und Sand (Pflicht fehlt) liegen nah beieinander; Schrift im Schild hell und Handybreite nicht geprüft; Gegenlese «Nicht in dieser Summe» und «Alle Versicherungen»; Fachprüfung der Liste «Nicht in dieser Summe».
+
+**Abgearbeitet (01.11.2026 abends, Zweig `feat/f7-schild-feinschliff`):**
+- **Gold und Sand:** gemessen 1.07:1, die Farbe trennt sie nicht. Beide Farben bleiben wie entschieden; die offene Stelle ist zusätzlich schraffiert, und beim Satz steht dieselbe Marke.
+- **Hell:** Die Schrift in Grundfarbe hatte auf vollem Gold nur 2:1 (Wohnen 3.5, Versicherungen 3.2). Sie bleibt nur noch ab 4.5:1, sonst dunkle Schrift mit Kontur. Dunkel unverändert.
+- **Handy (375 px):** Kein seitliches Scrollen. In der Liste lief der Pensionskassen-Betrag in den Namen, die Zeile bricht jetzt um; nachgemessen ohne Überlappung. Geprüft mit dem Beispiel Maria Muster hell auf Handybreite und hell auf Desktop, die offene Stelle auf einer Probeseite hell und dunkel. Die schmalste Breite unter 375 px und FR/IT auf dem Handy sind nicht angesehen.
+- **Fachprüfung (swiss-precision-pruefer):** kein falscher Betrag, aber falsche Aussagen, behoben: Überschrift jetzt «Nicht einzeln in dieser Summe», weil Rechtsschutz, Reise, Cyber und Kinderversicherung nur über «Weitere Versicherungen» eine Prämie haben können (dazu ein Hinweis, wenn dort etwas steht); ohne Summe «Weitere Einträge»; AHV ohne Beitrag «laut Angaben» statt «eingetragen», zählt nicht mit; AHV-Text «bei Anstellung in der Regel über den Lohn»; Unfall-Zusatz ohne Prämie, Kinderversicherungen und Gebäudeversicherung ergänzt; Fahrzeug-Satz nicht mehr bei «Nein». Gesetzesartikel hat die Prüfung nicht am Wortlaut nachgelesen.
+- **Gegenlese (copy-pruefer):** FR/IT/RM «total» statt «somme/somma/summa» (dort schon Versicherungssumme), ein Wort je Handlung (`vu.erfasst`), «bouclier» und «scut» durchgehend, zwei holprige Sätze in `ruhtMitSozialhilfe`. EN und FR/IT sonst ok.
+
+**Bleibt offen:** RM gegenlesen durch eine Person, die Rumantsch kann, ist nicht ersetzt, alle neuen RM-Texte sind Vorschläge, darunter `ausserhalb`, `ausserhalbWeitere`, `lohnRegel`, `lohn` («deducì dal salari» oder «da la paja») und `ganz` («nagin endataziun» ist vermutlich falsch im Genus). Die neuen FR/IT/EN-Texte dieser Runde hat nach dem Einbau niemand mehr gegengelesen.
+**Zwei Fachbefunde ausserhalb der Liste, nicht behoben:** Erfasste AHV- und BVG-Beiträge von Selbständigen fehlen in jeder Ausgabensumme, weil «schon vom Nettolohn abgezogen» ohne Bedingung gilt (`monatsrechnung.js`, `budgetSync.js`), «Bleibt» ist dann zu hoch. Der KTG-Hinweis `de.js` sagt ohne Einschränkung «sie zahlt 80% Ihres Lohns»; massgebend ist die Police.
+
+**Selbständige behoben (Stebler Studios «Ja, beheben», Zweig `fix/f7-selbstaendig-beitraege`):** Bei «Selbstständig» und «Freiberufler» zählen AHV (÷ 12) und BVG als Posten unter «Steuern & Vorsorge», in «Bleibt», Ring, Geldfluss, Bericht und Dashboard. Annahme: Das Einkommen steht vor diesen Beiträgen; die App kann das nicht erkennen, darum sagen es die Hinweise an beiden Beitragsfeldern und die Budget-Notiz. Bestehende Profile, die das Einkommen schon nach Beiträgen erfasst haben, zählen sie jetzt doppelt, bis das Einkommen angepasst ist. «Weitere Versicherungen» sagt jetzt, dass AHV und Pensionskasse nicht dorthin gehören. Die Zeilen sehen nur Selbständige. Die Notiz «schon vom Nettolohn abgezogen» steht im Budget und bei den Steuern nur noch bei Anstellung mit Netto-Lohn, sonst ein neutraler Satz.
+**Dazu offen:** Armutsgrenzen-Befund (`FinanzAuswertung.jsx`, verfügbares Einkommen ohne AHV) nicht geändert, die BFS-Methodik ist nicht belegt. Rentner und leerer Anstellungstyp zählen weiter nicht, die Auswahl kennt keine Nichterwerbstätigen. Eigene GmbH mit Lohn und «Freiberufler» mit Abzug durch den Auftraggeber: Einordnung nicht belegt. Der KTG-Hinweis ist weiter offen. Neue FR/IT/EN/RM-Texte nicht gegengelesen, RM mit TODO.
+
+### Besprechen, Punkt für Punkt (Stebler Studios, 01.11.2026 abends)
+
+**Reihenfolge:** «das dash board wollen wir zum schluss machen alles ander davor bitte». Der Aufbau (F7-D1, D2, D9, D10, Skizze mit den Teilen A bis E) ist nicht abgelehnt, er kommt zuletzt.
+F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 und K2-1 hängen am Fortschrittsbild und damit an D1.
+
+- **F7-D6, wie empfohlen:** «Bedarf ≈ CHF 3’431». Ursache `Leistungsliste.jsx`, `fmt` mit `hoechstens: 2`. Nicht gebaut.
+- **F7-D7, wie empfohlen:** «CHF 540.30 / Mt. · Franchise CHF 1’500». Nicht gebaut.
+- **F7-D4, wie empfohlen:** Sicherungs-Hinweis nur oben bei «Was ist jetzt dran?». Nicht gebaut.
+- **F7-D3, anders:** Tipps-Block streichen, «Was ist jetzt dran?» bleibt der eine Wegweiser und schlägt auch Dokumente und Budget vor. Nicht gebaut. Der Block hat keine Bedingung, und `dashboard.tip3` nennt noch «Budget-Sync».
+- **F7-K3-1, K3-2, D5, zurückgestellt:** «warte damit noch bitte». Nicht entschieden.
+- **Ausweise F, N, S, gebaut:** wählbar, Steuerzahl gesperrt wie bei B und L, geprüft vom rechts-pruefer am Gesetzestext (DBG Art. 83, StHG Art. 32). Feld heisst «Aufenthaltsstatus (Ausweis)», der Sperrtext beginnt mit «Ohne Bewilligung C».
+- **IPV bei F, N, S, gebaut:** Die Zahl bleibt, dazu ein Hinweis, dass der Anspruch mit Sozialhilfe ruht (AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2). Nur auf der Seite Prämienverbilligung und in der Lebenssituation «Asylsuchend», nicht in Schnellcheck und Finanzen.
+
+- **Sozialhilfe bei F, N, S, gebaut (Stebler Studios: «Zahl mit Hinweis», gegen die Empfehlung «keine Zahl»):** Die SKOS-Rechnung bleibt, `calculateSozialhilfe` setzt `ansatzTiefer`, jede Anzeige nennt `pegel.ansatzTiefer`: Pegel (Rechner, Schnellcheck, Lebenssituationen), Kompass, Finanzen samt Druck, Budget, Behörden-Dossier. AnspruchCheck zeigt keinen Betrag und führt zum Rechner. Wortlaut AsylG Art. 82, AIG Art. 86 gelesen, kantonale Ansätze nicht. Die Regel kann F als Flüchtling nicht erkennen, der Text sagt es. Ausschluss bei rechtskräftiger Wegweisung (AsylG Art. 82 Abs. 1) nicht abgebildet.
+
+- **Fachprüfung beider Hinweise (swiss-precision-pruefer, 01.11.2026), eingearbeitet:** IPV: Bei F lebt der Anspruch sieben Jahre nach der Einreise wieder auf (AsylV 2 Art. 5b, Wortlaut gelesen, Fassung 14.07.2026), die App kennt das Einreisedatum nicht, der Text sagt es. Für N und S ist der Anspruch bei Sozialhilfe sistiert, nicht «in der Regel». Sozialhilfe: «Die Zahl ist dann zu hoch» zurückgenommen, das Gesetz vergleicht mit Einheimischen, nicht mit SKOS. Liste neben der Summe heisst nur noch «einzeln», wenn «Weitere Versicherungen» eingetragen sind.
+- **Gelesen, Walliser Weisung 2026 Ziff. 6.2:** nennt B, L, N, F, Status S kommt im ganzen Dokument nicht vor. Die Sperre für S im Wallis bleibt abgeleitet.
+
+- **F7-D3, D4, D6, D7 gebaut (01.11.2026 abends):** Tipps-Block und unterer Sicherungs-Block weg, Texte gelöscht. Sicherung oben, gleiche Regel wie vorher (Daten da, keine oder älter als 7 Tage). Wegweiser nach der Grundordnung: Dokumente (nicht im Beispiel), dann Budget, sobald kein Einkommen eingetragen ist, sonst das Kapitel mit dem tiefsten Stand. Im Beispiel Maria im Browser gesehen: D3, D4, D6, D7. Nicht im Bild: die Schritte Dokumente und Budget, sie brauchen ein echtes Profil.
+
+- **Dashboard-Aufbau, entschieden und in Arbeit (Stebler Studios, 01.11.2026):** «nur mit dem 7/7 sollst du warten alles ander soll weiter gehen». Die Zahlen in der Landschaft bleiben vorerst, alles andere wird gebaut. Skizze: A Landschaft · B Was ist jetzt dran · C ein Block aus «Ihr Fortschritt» und den Kapitel-Zeilen, die Stebler Studios zusammenlegen möchte, mit Gesamtstand oben, je Zeile Zusammenfassung, Balken und Instrument · D Werkzeuge · E Was steht mir zu. Offen: Zahlen in der Landschaft («7/7», Prozent), Fortschrittsbild (F7-L4, S5, K2-1).
+- **F7-D1, D9, D10 gebaut (01.11.2026 abends):** `BergDetail` ist der eine Block C, die Kapitel-Liste darunter ist weg, ihre Zusammenfassung steht in der Zeile. Die Zeile führt ins Kapitel, der Pfeil klappt die Grundordnung auf. Instrumente: Finanzen Steuer-Säule und Tankanzeige, je ganze Breite · Versicherungen Schild und Franchise-Kreuz (bleibt, solange F7-K3-2 zurückgestellt ist). Die Gruppen «Ihr Alltag, Absicherung, Schutz» sind damit weg. Obstgarten-Zugang bleibt unter dem Block. Reihenfolge: Landschaft · Was ist jetzt dran · Block C · Obstgarten · Werkzeuge · Was steht mir zu. Startbündel 64.56 auf 63.84 kB.
+- **Fehler aus `30f0e3a9` behoben:** Der Hinweis zur Prämie stand unter `fields.kkPremium` und überschrieb in allen Sprachen den Feldnamen. Er steht jetzt unter `hints`, das Feld trägt `hint: 1`.
+
+- **F7-K3-1 erledigt:** `KKLastSpiegel` in Finanzen, Regel Zuhause, Spiegel, Wegweiser. Stebler Studios zur kurzen Fassung: «1 ist gut».
+- **F7-K3-2 gebaut (Stebler Studios, 01.11.2026: «kombi von a b c»):** Im Kapitel oben Empfehlung und bisher, die Grafik zugeklappt, darunter der Link zur Versicherungs-Übersicht. Dashboard-Kachel und Übersicht unverändert. Im Beispiel Maria im Browser gesehen, Grafik aufgeklappt in voller Grösse. Nur Deutsch und Desktop-Breite.
+- **F7-D5 gebaut (Stebler Studios, 01.11.2026: «koombi von abc»):** Der Kompass bleibt mit den Ergebnissen auf dem Dashboard. Mit Einkommen im Profil ist das Feld unter «Anderes Einkommen durchspielen» zugeklappt, ohne Einkommen offen. Darunter der Link zu «Was steht mir zu?». Im Beispiel Maria gesehen, Link geprüft.
+
+**Wiedervorlage März 2027:** Status S ohne Lageänderung nicht vor dem 04.03.2027 aufgehoben, ab fünf Jahren besteht Anspruch auf eine Aufenthaltsbewilligung. Die Hinweise zu S dann prüfen.
+
+**Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton, gesucht und nicht gefunden (DBG Art. 83 und KS 45 nennen S nicht) · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.
+
+### Regel Zuhause, Spiegel, Wegweiser (Stebler Studios, 01.11.2026: «Ja, Regel gilt»)
+
+Anlass F7-K3-1: «eigentlich gefällt mir das doppelte … ich finde das hilft bei verstehen». Jede Zahl hat ein Zuhause mit Erklärung, Quelle und Eingabe. Anderswo steht sie als Spiegel aus derselben Rechnung mit dem Blick des Kapitels, oder als Wegweiser mit Link. Prüffrage: Sagt die Zahl hier etwas, was sie dort nicht sagt?
+
+- **F7-K3-1, anders:** Die KK-Last bleibt an beiden Orten, Finanzen bekommt einen eigenen Satz. Nicht gebaut.
+- **Danach ansehen:** F7-K3-2, F7-D5, das Dashboard, F7-K4-1.
+
+**Entwürfe, nicht entschieden, nicht gebaut (Beispiel Maria):**
+- **KK-Last, Spiegel in Finanzen:** Titel «Krankenkasse im Budget». «CHF 540.30 von CHF 609 Versicherungen gehen an die Grundversicherung. Das sind 8.7 % Ihres Einkommens.» Link «Einordnung in Versicherungen ›». Der Hinweis auf die Prämienverbilligung bleibt.
+- **Wohnkosten, Zuhause in Wohnen:** «Rund 30 % des Nettoeinkommens (CHF 6’200)». Die Monatskarte zeigt schon ganze Prozent.
+- **Lohn, Zuhause in Ausbildung & Arbeit:** vier Zeilen. «Netto CHF 6’200, Ihre Angabe» · «Brutto ≈ CHF 6’796, geschätzt» · «Auf 40 Std. pro Woche ≈ CHF 6’472, Sie arbeiten 42 Std.» · «Schweizer Median CHF 7’024, brutto, mit anteiligem 13. Monatslohn». Dazu, wenn kein 13. Monatslohn eingetragen ist: «Ein 13. Monatslohn ist bei Ihrem Wert nicht eingerechnet.»
+- **Lohn, Spiegel in Finanzen:** «Netto CHF 6’200, geschätzt ≈ CHF 6’796 brutto.» Link «Lohnvergleich in Ausbildung & Arbeit ›».
+
+**Offen vor dem Bau:** Der Richtwert «10% (WHO)» bei `kkLast.*` ist zu prüfen. Die UN-Metadaten zu SDG 3.8.2 messen Ausgaben aus der eigenen Tasche, Stand Juli 2025 mit einer Schwelle von 40 % des frei verfügbaren Budgets; ob Prämien überhaupt zählen, ist nicht belegt. swiss-precision-pruefer und copy-pruefer, dann fr, it, en, rm.
+
+**Prüfung Richtwert und Entwürfe (01.11.2026, swiss-precision-pruefer, nicht entschieden, nichts gebaut):**
+- **«Richtwert 10% (WHO)» ist für Prämien nicht haltbar.** WHO Global Health Observatory, Indikator 4845, gelesen 01.11.2026: Die Haushaltsausgaben im Indikator «exclude insurance premiums». Die 10 % sind zudem eine Monitoring-Schwelle, kein Richtwert. Gilt für `KKLastCard.jsx`, `VersicherungenInstrument.jsx`, `kkLast.*` in fünf Sprachen, Tests.
+- **Schweiz:** Der Bund gibt keinen Höchstanteil vor, jeder Kanton legt ihn fest (KVG Art. 65 Abs. 1ter, `docs/BEFUND-quellen-kosten-senken-2026-10-24.md`). Vorschlag: Schwelle streichen, IPV-Hinweise nicht mehr an `over` hängen.
+- **Entwürfe:** Für Maria stimmen alle Zahlen. Lohn-Kette und Lohn-Spiegel sind so nicht baubar: Sie brauchen Varianten für Brutto-Eingabe, offene Einkommensart, fehlendes Alter, mögliche Quellensteuer, Rente und Selbständigkeit, 13. Monatslohn (leer, Nein, Ja), 40 Std. und Teilzeit. KK-Last: Basis nennen, nur `monthlyIncome`. Wohnen: Varianten `anteilBrutto`, `anteilTeilsBrutto`, `anteilEigen` bleiben.
+
+**KK-Last, Text entschieden (Stebler Studios, 01.11.2026: «ja passt», Kombination aus heute und Vorschlag):** Zahl, Balken und Marke bleiben. Marke heisst «Marke 10 % zur Orientierung», nicht mehr «Richtwert (WHO)». Keine Goldfarbe über 10 %. «Die Prämie allein liegt unter 10 %» fällt weg, «Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu» bleibt. Neu: WHO-Satz (misst Zahlungen aus der eigenen Tasche, Prämien zählen nicht mit), Kantonssatz (KVG Art. 65 Abs. 1ter), Link zur Prämienverbilligung immer, wenn eine Prämie eingetragen ist. Prüfung durch rechts-pruefer und copy-pruefer vor dem Bau.
+
+**KK-Last, Prüfung des Texts (01.11.2026, rechts-pruefer, copy-pruefer, nichts gebaut):** Berichtigt: Die UN-Metadaten zu SDG 3.8.2 tragen den Stand 27.03.2026, nicht Juli 2025, und nennen 40 % des Budgets nach Abzug einer Armutsgrenze. WHO 4845 nennt in Titel und Definition 25 %, in der Methode 10 % oder 25 %, und schliesst Prämien aus. «Nur ein Vergleich» reicht nicht: Der WHO-Satz muss die Schwelle einordnen, die Marke heisst «Vergleichsmarke 10 %», `gapToTen`, `underWithIpv`, `overNote`, `versInstrument.who` und die Kommentare zu SDG 3.8.2 fallen weg. «Richtwert» bleibt verworfen, auch gegen den Vorschlag des copy-pruefers. Kantonssatz braucht Frist und Bezug auf das verfügbare Einkommen (KVG Art. 65 Abs. 1ter, Übergangsbestimmung Abs. 2 zur Änderung vom 29.9.2023). IPV-Hinweise von `over` lösen, ohne `ipvNoClaim` und den Fristhinweis zu verlieren. Offen: Marke behalten oder streichen, Entscheid von Stebler Studios.
+
+**KK-Last gebaut (Stebler Studios, 01.11.2026: «Marke bleibt», Zweig `feat/f7-kk-last`):** Zahl, Balken und «Vergleichsmarke 10 %» bleiben, Erklärung eingeklappt, keine Goldfarbe, gleicher Text in Finanzen und Versicherungen (`KKLastEinordnung`). Basis je nach Einkommen (`kkLastBasisKey`). Hinweise zur Prämienverbilligung und der Link hängen nicht mehr an 10 %. Feldhinweis `kkPremium`: Prämie vor Abzug der Prämienverbilligung. Texte fr, it, en von Claude, rm provisorisch mit `TODO(rm)`. Offen: Finanzen zeigt noch denselben Text, der eigene Satz nach der Regel Zuhause und Spiegel fehlt. Prüfen, ob die Initiative von 2024 die Marke politisch färbt.
+
+**Spiegel und Korrekturen gebaut (Stebler Studios, 01.11.2026: «ok dann sauber weiter», Zweig `feat/f7-spiegel`):** Finanzen zeigt `KKLastSpiegel` («Krankenkasse im Budget», Marke und Erklärung nur in Versicherungen). Die Übersicht und die Prämien-Seite behalten die ganze Karte. Wohnkosten in ganzen Prozent, knapp über einem Drittel eine Stelle. KTG-Hinweis ohne «80%», massgebend ist die Police. `ipvNoClaim`: «Nach dieser groben Rechnung … Verbindlich entscheidet die zuständige Stelle.» Texte fr, it, en von Claude, rm provisorisch. Nicht gebaut: Lohn-Kette, sie braucht die Varianten aus der Prüfung vom 01.11.
+
+**Lohn-Kette gebaut (Stebler Studios, 01.11.2026: «Ja, Lohn-Kette», Zweig `feat/f7-lohn-kette`):** In «So ist gerechnet» zeigt `lohnKette` Zeile für Zeile den Weg bis zum Median, Varianten: netto, brutto, ohne Alter, ohne Abzüge, 40 Std., Teilzeit, mehr als Vollzeit, 13. leer, Nein, Ja. Schweigt bei Rente, Selbständigkeit, Rentenalter ohne «angestellt», Netto mit möglicher Quellensteuer, unklaren Stunden; dort bleiben die alten Hinweise. Finanzen zeigt `lohnSpiegel`. swiss-precision-pruefer: kein Blocker, Korrekturen eingebaut. **Offen, eigener Punkt:** Das Barometer urteilt weiter über Rente, Selbständigkeit und Quellensteuer-Netto, die Mindestlohn-Warnung auch bei Selbständigen. Definition des Medians im BFS-Glossar nicht selbst gelesen.
+
+**Barometer gesperrt (Stebler Studios, 01.11.2026: «Ja, korrigieren», Zweig `feat/f7-barometer`):** `lohnVergleichSperre` ist die eine Regel für Kette, Spiegel, Barometer und Branchen-Chips. Rente, Selbständigkeit, Rentenalter ohne «angestellt» und Netto mit möglicher Quellensteuer zeigen statt Balken und Urteil einen ruhigen Satz. Die Mindestlohn-Prüfung in `ChapterView.jsx` (zwei Stellen) schweigt bei `einkommenIstKeinLohn`. Texte fr, it, en von Claude, rm provisorisch.
+
+**Median, Untergrenze, Lernende (Stebler Studios, 01.11.2026: «weiter gehts», Zweig `feat/f7-lohn-rest`):** BFS-Definition selbst gelesen, «Definition: Lohn» (asset 5933418): Der Lohn enthält «1/12 vom 13. Monatslohn und 1/12 von den jährlichen Sonderzahlungen», umgerechnet auf 4 1/3 Wochen zu 40 Stunden. Der Zusatz «und Sonderzahlungen» in `ketteMedian` stimmt, Quelle jetzt in `branchenLohn.js`. Lernende und Praktikant:innen «werden in den Ergebnissen nicht berücksichtigt» (LSE 2016, Kap. 11.2, PDF-Seite 34); für 2024 kein eigener Wortlaut gelesen. Untergrenze: Unter 2 Std. pro Woche rechnet ein Monatslohn nicht mehr auf Vollzeit hoch, die App fragt nach dem Pensum (`hoursTooLowNote`). Die 2 ist kein Gesetzeswert. Der Stundenlohn-Rechner bleibt unberührt, dort ist eine Stunde pro Woche echt möglich. «5» für fünf Tage fängt die Grenze nicht. Lernende: kein neuer Status, die Kette sagt nur `ketteLernende`. Ein Status «Lernend» beim Anstellungstyp würde rund zehn Prüfungen auf `employed` ändern und hängt an K31, Entscheid von Stebler Studios. Texte fr, it, en von Claude, rm provisorisch.
+
+**Status «Lernend» gebaut (Stebler Studios, 01.11.2026: «Ja, Status bauen», Zweig `feat/f7-lohn-rest`):** Neue Option `apprentice` beim Anstellungstyp. Lernende zählen als angestellt (`istAngestellt`, ein Wächter-Test verbietet den direkten Vergleich auf `employed`), Versicherungs-, Schild-, IPV- und Sozialhilfe-Regeln bleiben wie bei Angestellten. Anders sind nur zwei Dinge: kein Median-Vergleich (`sperre_lernend`) und keine Mindestlohn-Prüfung (`mindestlohnNichtAnwendbar`). Belege je Kanton in `monatsrechnung.js`; rechts-pruefer hat GE, TI, JU am Volltext gelesen, NE (RSalMin Art. 3) und BS (RRB 25.6.2024, 24.5131.02) habe ich selbst gelesen. NE sagt «peuvent être inférieurs», darum «nicht verbindlich», nicht «gelten nicht». Das BS-Gesetz selbst nicht gelesen, nur die Regierungsantwort. «Massgebend ist Ihr Lehrvertrag» war zu absolut (OR Art. 357), jetzt mit Satz zum GAV. Nicht abgebildet: Einkommensfreibetrag für Lernende in der Sozialhilfe, Lernendenlöhne selbst, Praktikum als eigener Status. Texte fr, it, en von Claude, rm provisorisch.

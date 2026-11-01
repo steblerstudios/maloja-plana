@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
-import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
 import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -11,6 +11,11 @@ import { betrag } from './utils/geld.js';
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
 const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '6px' } });
+
+// Seit 27.10.2026 (F7-L7, docs/entscheide/seiten-buendeln.md §2 I) keine eigene Seite mehr: ein Teil
+// «CSV importieren» unten im Monatsbudget (BudgetSync.jsx). #/budget leitet dorthin (UMLEITUNGEN).
+// Darum trägt der Teil einen Abschnittstitel (PanelTitle) statt eines zweiten Seitentitels.
+export const BUDGET_IMPORT_ANKER = 'mp-budget-import';
 
 export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
   const [importing, setImporting] = useState(false);
@@ -54,7 +59,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Upload
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'csv', size: 22 }), style: { marginBottom: space.md } }, t('budgetImport.title')),
+      React.createElement(PanelTitle, { palette, id: BUDGET_IMPORT_ANKER + '-titel', icon: React.createElement(Icon, { name: 'csv', size: 22 }), style: { marginBottom: space.md } }, t('budgetImport.teilTitel')),
 
       React.createElement(LabeledField, { palette, label: t('budgetImport.fileFormat'), style: { marginBottom: 0 } },
         React.createElement('select', { value: importType, onChange: (e) => setImportType(e.target.value), style: { ...inputStyle, marginBottom: space.md } },

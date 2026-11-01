@@ -1,4 +1,4 @@
-// Fassung 6 · Versicherungs-Übersicht (Runde 9 AB, Schritt 3; Sophie 25.10.2026 «Baue Versicherungs-Übersicht 1 bis 9,
+// Fassung 6 · Versicherungs-Übersicht (Runde 9 AB, Schritt 3; Stebler Studios 25.10.2026 «Baue Versicherungs-Übersicht 1 bis 9,
 // gestapelt auf #576»): die Prämien-Orientierung als Übersicht — Name und Brotkrume, Marken, Versicherungen pro Monat mit
 // KK-Last, Zeilen mit Wert, Schutzschild, vier aufklappbare Teile, Zusatz-Wechsel und KK-Scanner, Schlusssatz.
 import { describe, it, expect } from 'vitest';
@@ -48,8 +48,8 @@ describe('Oben', () => {
   it('Versicherungen pro Monat mit KK-Last, Posten zugeklappt', () => {
     const html = seite();
     expect(nurText(html)).toContain('Versicherungen pro Monat');
-    expect(html).toMatch(/<details data-teil="versicherungen-darin"/);
-    expect(nurText(html)).toContain('Was darin steckt');
+    expect(html).toContain('data-teil="versicherungen-karte"');
+    expect(nurText(html)).toContain('Nicht in dieser Summe');
   });
 });
 
@@ -91,6 +91,37 @@ describe('Schutzschild und aufklappbare Teile', () => {
   });
   it('Schlusssatz', () => {
     expect(nurText(seite())).toContain('Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wenden Sie sich an Ihre Versicherung.');
+  });
+});
+
+// F7-L6 (Stebler Studios 27.10.2026, «§11 bauen»): Abgleich ergab, dass §11 mit #580/#601 gebaut ist — hier wacht der Aufbau
+// als Ganzes, damit ein späterer Umbau Reihenfolge und Zeilen nicht still verschiebt.
+describe('Aufbau wie die Finanz-Auswertung (F7-L6)', () => {
+  const reihenfolge = (html) => [...html.matchAll(/data-(teil|zeile)="([^"]+)"/g)].map((m) => m[2]);
+  it('Teile in der Reihenfolge von §11: Marken · pro Monat · Zeilen · Schutzschild · aufklappbar · Wege', () => {
+    const html = seite();
+    const teile = reihenfolge(html);
+    const pos = (id) => { const i = teile.indexOf(id); expect(i, id).toBeGreaterThan(-1); return i; };
+    const kette = ['vu-marken', 'versicherungen-instrument', 'vu-zeilen', 'mp-vu-risiken', 'mp-vu-kreuz', 'mp-vu-region', 'mp-vu-vergleich', 'mp-vu-kassen', 'vu-wege'].map(pos);
+    expect([...kette].sort((a, b) => a - b)).toEqual(kette);
+    // Schutzschild zwischen Zeilen und aufklappbaren Teilen
+    expect(html.indexOf('id="schild-pflicht"')).toBeGreaterThan(html.indexOf('data-teil="vu-zeilen"'));
+    expect(html.indexOf('id="schild-pflicht"')).toBeLessThan(html.indexOf('data-teil="mp-vu-risiken"'));
+  });
+  it('Zeilen mit Wert: Franchise, Wechsel, IPV, Gesundheitskosten, KVG-Leistungen, Vorsorge — in dieser Reihenfolge', () => {
+    const zeilen = reihenfolge(seite()).filter((id) => ['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner'].includes(id));
+    expect(zeilen).toEqual(['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner']);
+  });
+  it('Franchise-Zeile mit Wert, KVG-Leistungen als Zeile (eigene Seite bleibt)', () => {
+    const text = nurText(seite());
+    expect(text).toMatch(/Franchise Eher 2’500/);
+    expect(text).toContain(t('nav.kvgLeistungen'));
+    expect(VALID_VIEWS.has('kvg')).toBe(true);
+    expect(VALID_VIEWS.has('premium')).toBe(true);
+  });
+  it('alle aufklappbaren Teile sind beim Öffnen zu', () => {
+    const html = seite();
+    expect(html).not.toMatch(/<details id="mp-vu-[a-z]+" open/);
   });
 });
 

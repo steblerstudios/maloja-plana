@@ -7,7 +7,7 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
 //   • Punkt    = Regions-Durchschnitt
-//   • Strich   = Schweizer Schnitt (Referenz-Marke, wie der 10%-WHO-Strich)
+//   • Strich   = Schweizer Schnitt (Referenz-Marke, wie der Strich der Vergleichsmarke 10 %)
 // Bewusst calm — eine Abweichung ist eine strukturelle Tatsache, kein Alarm.
 // Ohne eigenen Wert füllt der Balken bis zum Regions-Durchschnitt (kein leerer Balken).
 //
@@ -29,7 +29,7 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
 // `userLabel` (optional): ersetzt «Ihre Miete: CHF …» — im Kapitel Wohnen beim Regler «Ausprobierte
 // Miete: CHF …» (Fassung 6), damit niemand die ausprobierte Zahl für die erfasste hält.
-// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Sophie 25.10.2026 «Barometer
+// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Stebler Studios 25.10.2026 «Barometer
 // ruhiger»). Ohne die strukturelle Erklärung, und der Zimmer-Hinweis zeigt auf das Feld unten im
 // Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
 export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {
@@ -98,6 +98,11 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   });
   const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: zahl(userValue) })) : null;
   if (hasUser) ariaLabel += ' ' + userText;
+  // Eigener Wert gegen Region, gleiche Schwelle (±2 %) wie die Farbe des Regions-Punkts.
+  const userPct = hasUser && regional > 0 ? Math.round((userValue / regional - 1) * 100) : 0;
+  const userDir = !hasUser ? null : userValue > regional * 1.02 ? 'Above' : userValue < regional * 0.98 ? 'Below' : 'Equal';
+  const userDiffText = userDir ? t(k + 'user' + userDir, { pct: Math.abs(userPct) }) : null;
+  if (userDiffText) ariaLabel += ' ' + userDiffText;
   // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (a11y-Prüfer): Die Schwellen-Überschreitung stand
   // NUR in der Farbe — das „!" schaltet auf roseDeep, das aria-Label nannte sie nicht
   // (WCAG 1.4.1, Level A). In `MietVergleich` fing die Nachbarzeile (Drittel-Regel) das auf;
@@ -206,10 +211,21 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontSize: text.xs, color: palette.roseDeep, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, React.createElement(LegendenMarke, { form: 'schwelle', color: palette.roseDeep, palette }), breachLine),
 
+    // Fassung 7 (F7-K1-1, Stebler Studios 27.10.2026): Mit eigenem Wert sagt der erste Satz, wo DER EIGENE
+    // Wert zur Region liegt — vorher stand unter «Ihre Miete: CHF 1’650» nur «rund 20 % über dem
+    // Schweizer Schnitt», und das war die Region, nicht die Miete. Die Region-gegen-Schweiz-Zeile
+    // folgt darunter mit eigenem Subjekt.
+    userDiffText && React.createElement('div', {
+      'data-teil': 'barometer-eigener-wert',
+      style: { fontSize: text.sm, color: dotTextColor, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal },
+    }, userDiffText),
     // Prozentuale Abweichung (Region vs. Schweiz)
     React.createElement('div', {
-      style: { fontSize: text.sm, color: accentText, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal },
-    }, diffText),
+      'data-teil': 'barometer-region',
+      style: userDiffText
+        ? { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal }
+        : { fontSize: text.sm, color: accentText, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal },
+    }, t(ns + 'region' + dir[0].toUpperCase() + dir.slice(1), { pct: Math.abs(rounded) })),
 
     // Strukturelle Einordnung (neutral, kein Vorwurf) — nur wenn merklich drüber
     dir === 'above' && !imKapitel && React.createElement('div', {

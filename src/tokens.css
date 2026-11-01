@@ -217,6 +217,16 @@ textarea:focus-visible,
   z-index: 1;
 }
 
+/* Grosse Flächen nehmen den Fokus nur, damit Tastatur und Screenreader dort weitermachen (springeZuAnker,
+   Hauptbereich, Schrittfläche der Abläufe). Bedienen lassen sie sich nicht; ein Rahmen um 2'000 px Seite
+   zeigt nichts an. Überschriften als Sprungziel behalten ihren Rahmen. */
+main[tabindex="-1"]:focus-visible,
+section[tabindex="-1"]:focus-visible,
+details[tabindex="-1"]:focus-visible,
+div[tabindex="-1"]:focus-visible {
+  outline: none !important;
+}
+
 /* Nichts darf die Seite seitlich scrollbar machen (u.a. der Nebel unter .mp-blatt, der mit
    100vw eine klassische Scrollleiste mitzählt). `clip`, nicht `hidden`: clip macht keinen
    Scroll-Container, position: sticky funktioniert weiter. */

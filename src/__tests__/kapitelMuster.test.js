@@ -1,4 +1,4 @@
-// Muster für alle Kapitel M1–M8 (Fassung 6, Sophie 25.10.2026: «Bau M1 bis M8»).
+// Muster für alle Kapitel M1–M8 (Fassung 6, Stebler Studios 25.10.2026: «Bau M1 bis M8»).
 // Befunde und Entscheid: docs/design/mockups-stardust-2026-10-23/VERGLEICH.md «Muster für alle Kapitel»
 // (Zweig docs/mockups-stardust). Entwurf: seiten-v5.html?nur=z (Wohnen) und die anderen Kapitel.
 import { describe, it, expect } from 'vitest';
@@ -8,6 +8,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
 import { getChapters, LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
+import { ringDaten } from '../components/Monatsring.jsx';
 import { ausgabenPosten } from '../components/Geldfluss.jsx';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { getBereichForChapter } from '../data/lebensbereiche.js';
@@ -63,9 +64,17 @@ describe('M1 · Feldnamen ohne das, was der Wert schon sagt', () => {
 
 describe('M2 · «x von n» und das Fehlende', () => {
   it('am Abschnitt «x von n», das Übrige leise in «Nicht erfasst: …»', () => {
-    const html = render('versicherungen');
+    const html = render('versicherungen', { ...DEMO_DATA.versicherungen, kkZusatz: '', kkZusatzPremium: '' });
     expect(html).toMatch(/data-erfasst="6\/7"[^>]*><span aria-hidden="true">6 von 7<\/span><span[^>]*>6 von 7 Angaben erfasst</);
     expect(nurText(html)).toContain('Nicht erfasst: Zusatzversicherung.');
+  });
+  it('Prämie nur mit ihrer Versicherung: ohne Lebensversicherung fehlt keine Prämie (31.10.2026)', () => {
+    const ohne = { ...DEMO_DATA.versicherungen, lifeInsurance: 'no', lifeInsurancePremium: '' };
+    expect(nurText(render('versicherungen', ohne))).not.toContain('Lebensversicherung Prämie');
+    const mit = nurText(render('versicherungen', { ...ohne, lifeInsurance: 'yes' }));
+    expect(mit).toContain('Lebensversicherung Prämie');
+    const betrag = nurText(render('versicherungen', { ...DEMO_DATA.versicherungen, lifeInsurance: 'no', lifeInsurancePremium: '600' }));
+    expect(betrag).toContain('Lebensversicherung Prämie');
   });
   it('wichtige leere Felder (Grundordnung, empfohlen) mit «ergänzen ›»', () => {
     const html = render('basis', { ...DEMO_DATA.basis, phone: '' });
@@ -149,7 +158,7 @@ describe('M7 · Passend wie im Entwurf', () => {
 });
 
 describe('M8 · eine Bereichsfarbe je Kapitel', () => {
-  it('Kuchen und Geldfluss: Miete in der Wohnen-Farbe, Krankenkasse in der Versicherungen-Farbe', () => {
+  it('Monatsring und Geldfluss: Miete in der Wohnen-Farbe, Krankenkasse in der Versicherungen-Farbe', () => {
     for (const palette of [LIGHT_PALETTE, DARK_PALETTE]) {
       const posten = ausgabenPosten(DEMO_DATA, t, palette);
       const farbe = (k) => posten.find((p) => p.key === k)?.color || posten.find((p) => p.key === k)?.farbe;
@@ -161,13 +170,17 @@ describe('M8 · eine Bereichsfarbe je Kapitel', () => {
     expect(bereichsTon('wohnen', LIGHT_PALETTE)).toBe(getBereichForChapter('wohnen').lightDeep);
     expect(bereichsTon('wohnen', DARK_PALETTE)).toBe(getBereichForChapter('wohnen').dark);
   });
-  it('der Monatsbalken im Kapitel Finanzen nimmt dieselben Farben', () => {
-    expect(QUELLE).toMatch(/key: 'wohnen', wert: [^\n]*farbe: bereichsTon\('wohnen', palette\)/);
-    expect(QUELLE).toMatch(/key: 'versicherungen', wert: [^\n]*farbe: bereichsTon\('versicherungen', palette\)/);
+  it('der Monatsring im Kapitel Finanzen nimmt dieselben Farben, grösster Bereich zuerst', () => {
+    for (const palette of [LIGHT_PALETTE, DARK_PALETTE]) {
+      const { gruppen } = ringDaten({ data: DEMO_DATA, t, palette, einkommen: 6200, verplant: 4000 });
+      expect(gruppen[0].key).toBe('wohnen');
+      expect(gruppen.find((g) => g.key === 'wohnen').farbe).toBe(bereichsTon('wohnen', palette));
+      expect(gruppen.find((g) => g.key === 'versicherungen').farbe).toBe(bereichsTon('versicherungen', palette));
+    }
   });
 });
 
-// A11y-Prüfung 25.10.2026 (WCAG 1.4.11): jedes Kuchenstück der Versicherungen ≥ 3:1 gegen den Grund.
+// A11y-Prüfung 25.10.2026 (WCAG 1.4.11): jedes Ringstück der Versicherungen ≥ 3:1 gegen den Grund.
 const lum = (h) => { const r = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * r[0] + 0.7152 * r[1] + 0.0722 * r[2]; };
 const kontrast = (a, b) => { const x = lum(a); const y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
 describe('M8 · Kontrast der Flächen', () => {

@@ -1,4 +1,4 @@
-// Englische Fachbegriffe wie die Bundesübersetzung des ZGB (fedlex, nichtamtlich; Sophie 25.10.2026):
+// Englische Fachbegriffe wie die Bundesübersetzung des ZGB (fedlex, nichtamtlich; Stebler Studios 25.10.2026):
 // Patientenverfügung = «patient decree» (Art. 370), Vorsorgeauftrag = «advance care directive» (Art. 360).
 // Vorher «advance directive» für die Patientenverfügung — zum Verwechseln nah am amtlichen Begriff für den
 // Vorsorgeauftrag — und für diesen abwechselnd «advance care mandate» und «lasting power of attorney».

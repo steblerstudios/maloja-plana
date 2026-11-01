@@ -39,6 +39,8 @@ Umfang: die in der Session 2026-07-06 neu hinzugefügten Texte — Notruf-Vorles
 
 | | Text |
 |---|---|
+> ⟨überholt 27.10.2026, F7-S12⟩ Die Fassung unten ist nicht mehr gültig. Gilt: «Die Notrufnummern sind kostenlos — auch mit leerem Guthaben.» (FDV Art. 27 Abs. 2). Die SIM-Aussage war nicht belegt.
+
 | 🇩🇪 DE | Tippe auf eine Nummer, um anzurufen. 112 funktioniert auch ohne Guthaben oder SIM-Karte. |
 | 🇫🇷 FR | Touchez un numéro pour appeler. Le 112 fonctionne même sans crédit ni carte SIM. |
 | 🇮🇹 IT | Tocca un numero per chiamare. Il 112 funziona anche senza credito o scheda SIM. |

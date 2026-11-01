@@ -1,13 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { PageTitle } from './components/Heading.jsx';
-import { berechneTaggeld, alvErgebnis, ALV_PARAMS } from './data/alvRechner.js';
-import { ErgebnisArt } from './components/ErgebnisArt.jsx';
-import { Icon } from './IconSystem.jsx';
+import { berechneTaggeld, alvErgebnis, ALV_PARAMS, ALV_DATA_SOURCE } from './data/alvRechner.js';
+import { RechnerForm, ErgebnisZahl, ErgebnisZeile, Einzelwahl } from './components/RechnerForm.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, leading } from './config/tokens.js';
 import { zahl, betrag } from './utils/geld.js';
 import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
-import { ansichtIkon } from './config/ansichtenRegister.js';
+import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
+import { alterUndRentenalter } from './utils/nettoAusProfil.js';
+import { kindAlter } from './utils/sozialhilfeVorbefuellung.js';
 
 function currentAge(dateStr) {
   if (!dateStr) return null;
@@ -17,20 +17,29 @@ function currentAge(dateStr) {
   return now.getFullYear() - birth.getFullYear() - (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
 }
 
+// Rechner-Form X (F7-A2, 27.10.2026): Ergebnis zuerst, dann «Ihre Angaben», RAV, offizielle Stelle, Quelle.
 export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const alter = currentAge(data.basis?.dateOfBirth);
   // 70 % statt 80 % gilt u. a. nur ohne Unterhaltspflicht gegenüber Kindern unter 25 Jahren
-  // (AVIG Art. 22 Abs. 2 Bst. a). Vorher zählte jedes Kind im Haushalt, auch ein 30-jähriges (Fassung 6).
-  // Ohne erfasstes Alter zählt das Kind — das Häkchen bleibt überschreibbar.
+  // (AVIG Art. 22 Abs. 2 Bst. a). Fassung 6 las nur `age`; ein Kind mit Geburtsdatum und leerem Alter zählte
+  // weiter, auch mit 30 (Befund X, `AlvRechner.jsx:22,30`, F7 27.10.2026). Jetzt dieselbe Altersregel wie die
+  // Sozialhilfe-Vorbefüllung (`kindAlter`: Geburtsdatum vor Alter). Ohne beides zählt das Kind — überschreibbar.
   const householdChildren = (data.basis?.household?.children || [])
-    .filter((c) => c?.age === '' || c?.age == null || Number(c.age) < 25).length;
+    .filter((c) => { const a = kindAlter(c); return a == null || a < 25; }).length;
 
-  // Monatslohn aus den Finanzen vorbefüllen (überschreibbar) — nicht zweimal eingeben.
-  // ALV-Taggeld basiert auf dem BRUTTO-Lohn: nur vorbefüllen, wenn er als Brutto hinterlegt ist.
-  // Netto oder ohne gewählte Art → leer, mit ruhigem Hinweis am Feld (utils/jahreslohnAusProfil.js).
-  const bruttoNettoMismatch = lohnBasis(data.finanzen) === 'netto';
+  // ALV-Taggeld basiert auf dem BRUTTO-Lohn. Als Brutto hinterlegt → vorbefüllt. Als Netto hinterlegt →
+  // geschätztes Brutto, sichtbar «geschätzt» (F7-R4, 27.10.2026; Schätzung wie EinkommenFeld:
+  // `nettoZuBruttoRichtwert`, AHV/ALV + PK nach Alter). Ein eingetipptes Brutto hat Vorrang (auch leer).
+  // Art offen → leer mit Hinweis, wie bisher (einkommensartOffen.test.js).
+  const basis = lohnBasis(data.finanzen);
   const basisOffen = lohnBasisOffen(data.finanzen);
-  const [bruttolohn, setBruttolohn] = useState((data.finanzen?.monthlyIncome && lohnBasis(data.finanzen) === 'brutto') ? String(data.finanzen.monthlyIncome) : '');
+  const profilLohn = Number(data.finanzen?.monthlyIncome) || 0;
+  const { bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data.basis);
+  const bruttoSchaetzung = basis === 'netto' && profilLohn > 0
+    ? nettoZuBruttoRichtwert(profilLohn, bvgAlter, rentenalter, undefined, beitragsfrei) : 0;
+  const [eingetippt, setEingetippt] = useState(basis === 'brutto' && profilLohn > 0 ? String(data.finanzen.monthlyIncome) : null);
+  const geschaetzt = eingetippt == null && bruttoSchaetzung > 0;
+  const bruttolohn = eingetippt != null ? eingetippt : (geschaetzt ? String(bruttoSchaetzung) : '');
   const [hatKinder, setHatKinder] = useState(householdChildren > 0);
   const [beitragsmonate, setBeitragsmonate] = useState('');
   const [ivGrad40, setIvGrad40] = useState(false);
@@ -54,121 +63,75 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const fmt = (v) => v != null ? zahl(v) : '–';
   const canton = data.basis?.canton;
 
-  const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
-    title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.6, marginBottom: space.md + 'px', maxWidth: '560px' },
-    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px' },
-    row: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.md + 'px', alignItems: 'flex-end' },
-    label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
-    sublabel: { color: palette.mid, fontSize: text.xs, marginTop: '2px', maxWidth: '320px', lineHeight: 1.5 },
-    input: { width: '160px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    toggle: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sageDeep : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
-    resultBox: { padding: space.md + 'px', background: palette.sage + '18', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage + '66', marginBottom: space.md + 'px' },
-    resLine: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '7px 0', borderBottom: '1px solid ' + palette.border + '66' },
-    resKey: { fontSize: text.sm, color: palette.mid },
-    resVal: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, textAlign: 'right' },
-    resBig: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },
-    hint: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 },
-    disclaimer: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px', lineHeight: 1.5, fontStyle: 'italic' },
-    empty: { fontSize: text.sm, color: palette.mid, padding: space.md + 'px', textAlign: 'center' },
-    crosslink: { display: 'block', width: '100%', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', marginBottom: space.md + 'px' },
-  };
+  const label = { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: '2px' };
+  const hinweis = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '2px 0 0', maxWidth: '420px' };
+  const eingabe = { width: '180px', minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit' };
+  const fussText = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.sm + 'px 0 0' };
 
-  const numField = (labelText, value, setter, opts = {}) =>
-    React.createElement('div', null,
-      React.createElement('label', { style: s.label }, labelText,
-        opts.sublabel && React.createElement('div', { style: s.sublabel }, opts.sublabel),
-        React.createElement('input', {
-          style: { ...s.input, width: opts.width || '160px', marginTop: '6px' },
-          type: 'number', inputMode: 'decimal',
-          value, onChange: e => setter(e.target.value),
-          placeholder: opts.placeholder || '', min: opts.min, max: opts.max,
-          'aria-label': labelText,
-        })
-      )
-    );
+  const lohnHinweis = geschaetzt
+    ? t('alv.bruttoGeschaetzt', { netto: zahl(profilLohn) })
+    : basis === 'netto' ? t('alv.bruttoNettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('alv.bruttolohnHint');
 
-  const toggleField = (labelText, value, setter, sublabel) =>
-    React.createElement('div', null,
-      React.createElement('div', { style: s.label }, labelText),
-      sublabel && React.createElement('div', { style: { ...s.sublabel, marginBottom: '6px' } }, sublabel),
-      React.createElement('div', { style: { display: 'flex', gap: '6px', marginTop: '4px' } },
-        [{ v: true, l: t('common.yes') }, { v: false, l: t('common.no') }].map((o, i) =>
-          React.createElement('button', {
-            key: i, type: 'button',
-            'aria-pressed': value === o.v,
-            style: s.toggle(value === o.v),
-            onClick: () => setter(o.v),
-          }, o.l)
-        )
-      )
-    );
-
-  const resultLine = (key, val, opts = {}) =>
-    React.createElement('div', { style: { ...s.resLine, ...(opts.last ? { borderBottom: 'none' } : {}) } },
-      React.createElement('span', { style: s.resKey }, key),
-      React.createElement('span', { style: opts.big ? { ...s.resVal, ...s.resBig } : s.resVal }, val)
-    );
-
-  return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('alv'), size: 22 }), style: { marginBottom: space.md + 'px' } }, t('alv.title')),
-    React.createElement('p', { style: s.intro }, t('alv.intro')),
-
-    // ── Eingaben ──
-    React.createElement('div', { style: s.section },
-      React.createElement('div', { style: s.row },
-        numField(t('alv.bruttolohn'), bruttolohn, setBruttolohn, { placeholder: '6000', sublabel: bruttoNettoMismatch ? t('alv.bruttoNettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('alv.bruttolohnHint'), width: '180px' }),
-        numField(t('alv.beitragsmonate'), beitragsmonate, setBeitragsmonate, { placeholder: '12', sublabel: t('alv.beitragsmonateHint'), width: '120px', min: 0, max: 24 })
-      ),
-      React.createElement('div', { style: s.row },
-        toggleField(t('alv.kinder'), hatKinder, setHatKinder, t('alv.kinderHint')),
-        toggleField(t('alv.ivGrad'), ivGrad40, setIvGrad40)
-      )
-    ),
-
-    // ── Ergebnis ──
-    !result && React.createElement('div', { style: s.empty }, t('alv.enterBrutto')),
-
-    result && !result.anspruch && React.createElement('div', { style: s.resultBox },
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t('alv.noAnspruch'))
-    ),
-
-    result && result.anspruch && React.createElement('div', { style: s.resultBox },
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm + 'px' } }, t('alv.resultTitle')),
-      resultLine(t('alv.satzLabel'), t('alv.satzValue', { p: Math.round(result.satz * 100) })),
-      resultLine(t('alv.taggeldLabel'), betrag(result.taggeld, { stellen: 2 })),
-      resultLine(t('alv.monatlichLabel'), 'CHF ' + fmt(result.monatlich), { big: true }),
-      resultLine(t('alv.wartetageLabel'), t('alv.wartetageValue', { n: result.wartetage })),
-      resultLine(t('alv.anspruchLabel'),
-        result.anspruchstage != null
-          ? t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(result.anspruchstage / ALV_PARAMS.taggelderProMonat) })
-          : t('alv.anspruchUnklar'),
-        { last: true }
-      ),
-      result.gedeckelt && React.createElement('div', { style: s.hint }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
-      // Werte 2027 (26.10.2026): Grenzbetrag 80 % fürs laufende Jahr nicht belegt → sagen, nicht still rechnen.
-      !ALV_PARAMS.satz80Belegt && React.createElement('div', { style: s.hint }, t('alv.satz80NichtBelegt', { jahr: ALV_PARAMS.satz80Jahr, laufend: new Date().getFullYear(), betrag: ALV_PARAMS.satz80Schwelle })),
-      React.createElement('div', { style: s.disclaimer }, t('alv.disclaimer'))
-    ),
-
-    // ── Art des Ergebnisses (O3) — auch ohne Eingabe, damit sichtbar ist, was fehlt ──
-    React.createElement(ErgebnisArt, { palette, t, ergebnis: art, style: { marginTop: 0, marginBottom: space.md + 'px' } }),
-
-    // ── Anmeldung / RAV ──
-    React.createElement('div', { style: { ...s.section, background: palette.sky + '14', border: '1px solid ' + palette.sky + '44' } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.xs + 'px' } }, t('alv.ravTitle')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.6 } }, t('alv.ravBody'))
-    ),
-
-    canton && onNavigate && React.createElement('button', {
-      style: s.crosslink,
-      onClick: () => onNavigate('direktlinks'),
-    }, t('alv.cantonLink', { canton })),
-
-    // ── Offizielle Links ──
-    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['arbeitslosigkeit', 'ueberbrueckungsleistungen'] })
+  const zahlFeld = (id, labelText, value, onChange, hint, opts = {}) => React.createElement('div', { style: { marginBottom: space.md + 'px' } },
+    React.createElement('label', { htmlFor: id, style: label }, labelText,
+      opts.marke && React.createElement('span', { 'data-geschaetzt': '', style: { marginLeft: space.xs + 'px', padding: '1px 8px', borderRadius: radius.full + 'px', fontSize: text.xs, fontWeight: weight.medium, background: palette.gold + '22', color: palette.goldDeep || palette.text } }, opts.marke)),
+    React.createElement('input', {
+      id, type: 'number', inputMode: 'decimal', value, onChange: (e) => onChange(e.target.value),
+      placeholder: opts.placeholder, min: opts.min, max: opts.max, 'aria-describedby': id + '-hinweis',
+      style: { ...eingabe, marginTop: '4px', ...(opts.marke ? { borderStyle: 'dashed' } : null) },
+    }),
+    React.createElement('p', { id: id + '-hinweis', style: hinweis }, hint)
   );
+  const jaNein = [{ wert: true, label: t('common.yes') }, { wert: false, label: t('common.no') }];
+
+  const ergebnis = result && (result.anspruch
+    ? React.createElement(React.Fragment, null,
+        React.createElement(ErgebnisZahl, { palette, label: t('alv.monatlichLabel'), wert: 'CHF ' + fmt(result.monatlich) }),
+        React.createElement('div', { style: { marginTop: space.xs + 'px' } },
+          React.createElement(ErgebnisZeile, { palette, label: t('alv.taggeldLabel'), wert: betrag(result.taggeld, { stellen: 2 }) }),
+          React.createElement(ErgebnisZeile, { palette, label: t('alv.satzLabel'), wert: t('alv.satzValue', { p: Math.round(result.satz * 100) }) }),
+          React.createElement(ErgebnisZeile, { palette, label: t('alv.wartetageLabel'), wert: t('alv.wartetageValue', { n: result.wartetage }) }),
+          result.anspruchstage != null && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(result.anspruchstage / ALV_PARAMS.taggelderProMonat) }) })
+        ))
+    : React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, t('alv.noAnspruch')));
+
+  const vorbehalt = result && result.anspruch && React.createElement(React.Fragment, null,
+    result.anspruchstage == null && React.createElement('p', { style: fussText }, t('alv.anspruchLabel') + ': ' + t('alv.anspruchUnklar')),
+    result.gedeckelt && React.createElement('p', { style: fussText }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
+    // Werte 2027 (26.10.2026): Grenzbetrag 80 % fürs laufende Jahr nicht belegt → sagen, nicht still rechnen.
+    !ALV_PARAMS.satz80Belegt && React.createElement('p', { style: fussText }, t('alv.satz80NichtBelegt', { jahr: ALV_PARAMS.satz80Jahr, laufend: new Date().getFullYear(), betrag: ALV_PARAMS.satz80Schwelle })),
+    React.createElement('p', { style: fussText }, t('alv.disclaimer'))
+  );
+
+  return React.createElement(RechnerForm, {
+    palette, t, view: 'alv', onNavigate,
+    titel: t('alv.title'), satz: t('alv.intro'),
+    etikett: result && result.anspruch ? t('alv.resultTitle') : null,
+    ergebnis, ohneErgebnis: t('alv.enterBrutto'), art, vorbehalt,
+    angaben: {
+      erfasst: (parsedLohn > 0 ? 1 : 0) + (parsedMonate > 0 ? 1 : 0) + 2,
+      gesamt: 4,
+      inhalt: React.createElement('div', { style: { paddingTop: space.xs + 'px' } },
+        zahlFeld('alv-brutto', t('alv.bruttolohn'), bruttolohn, setEingetippt, lohnHinweis, { placeholder: '6000', marke: geschaetzt ? t('rechnerForm.geschaetzt') : null }),
+        zahlFeld('alv-monate', t('alv.beitragsmonate'), beitragsmonate, setBeitragsmonate, t('alv.beitragsmonateHint'), { placeholder: '12', min: 0, max: 24 }),
+        React.createElement(Einzelwahl, { palette, id: 'alv-kinder', label: t('alv.kinder'), hinweis: t('alv.kinderHint'), optionen: jaNein, wert: hatKinder, onWahl: setHatKinder }),
+        React.createElement(Einzelwahl, { palette, id: 'alv-iv', label: t('alv.ivGrad'), optionen: jaNein, wert: ivGrad40, onWahl: setIvGrad40 })
+      ),
+    },
+    tun: {
+      titel: t('alv.ravTitle'),
+      inhalt: React.createElement(React.Fragment, null,
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: 0 } }, t('alv.ravBody')),
+        canton && onNavigate && React.createElement('button', {
+          type: 'button', className: 'mp-link', onClick: () => onNavigate('direktlinks'),
+          style: { display: 'flex', alignItems: 'center', width: '100%', minHeight: '44px', marginTop: space.xs + 'px', background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.text },
+        }, t('alv.cantonLink', { canton }))
+      ),
+    },
+    stelle: React.createElement(OfficialLinkBox, { palette, t, data, ids: ['arbeitslosigkeit', 'ueberbrueckungsleistungen'], alsZeilen: true }),
+    // F7-R6: die Quelle, die der Rechner schon führt (data/alvRechner.js, ALV_QUELLE_JE_JAHR) — mit Stand.
+    quelle: t('rechnerForm.quelle', { q: ALV_DATA_SOURCE }),
+  });
 };
 
 export default AlvRechner;

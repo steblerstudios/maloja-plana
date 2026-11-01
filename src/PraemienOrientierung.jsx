@@ -178,7 +178,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     Array.from({ length: betraege }, (_, i) => React.createElement('col', { key: i, style: { width: betraege > 1 ? '29%' : '36%' } })));
   const zahlBetrag = (n) => zahl(n, { stellen: 2 });
 
-  // ── Versicherungs-Übersicht (Fassung 6, Runde 9 AB; Schritt 3, Sophie 25.10.2026 «Baue 1 bis 9») ──
+  // ── Versicherungs-Übersicht (Fassung 6, Runde 9 AB; Schritt 3, Stebler Studios 25.10.2026 «Baue 1 bis 9») ──
   // Aufbau wie die Finanz-Auswertung: Marken · Versicherungen pro Monat mit KK-Last · Zeilen mit Wert je Werkzeug ·
   // Schutzschild · vier aufklappbare Teile (die bisherige Prämien-Orientierung, unverändert gerechnet) · zwei Wege ·
   // Schlusssatz. Keine neue Rechnung: alle Werte aus denselben Quellen wie bisher.
@@ -334,7 +334,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(data) }),
 
     h('div', { style: { marginTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '88' } },
-      // Absicherung je Risiko (Sophie 26.10.2026: Liste statt Netz) — was eingetragen ist und was das Gesetz vorsieht,
+      // Absicherung je Risiko (Stebler Studios 26.10.2026: Liste statt Netz) — was eingetragen ist und was das Gesetz vorsieht,
       // ohne Anteil und ohne Wertung (Logik und Belege in data/absicherungRisiko.js).
       teil('mp-vu-risiken', t('vu.risiko.titel'), risikoListe.offen ? t('vu.risiko.subOffen', { n: risikoListe.offen }) : t('vu.risiko.subKeins'), [
         h('dl', { key: 'liste', style: { margin: 0 } }, risikoListe.risiken.map((r) => h(React.Fragment, { key: r.key },
@@ -350,7 +350,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
     },
       // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
-      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
+      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate, eigeneFranchise: userFranchise }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
         t('po.franchiseOptSaving', { high: zahl(franchiseOpt.highFra, { hoechstens: 2 }), low: zahl(franchiseOpt.lowFra, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) })),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },

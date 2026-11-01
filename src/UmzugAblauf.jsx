@@ -1,16 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { text, weight, space, radius } from './config/tokens.js';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, AblaufPass, PASS_SCHRITTE, ablaufStyles, ablaufTextFarbe } from './AblaufSchale.jsx';
-import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
-import { PanelTitle } from './components/Heading.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles, ablaufTextFarbe, ohneNummer } from './AblaufSchale.jsx';
 import { plusTage, heuteIso, istVorbei } from './utils/fristen.js';
-import { fontFamilyDisplay } from './config/tokens.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
-import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
+import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
 // Orientierung statt Rechner: An-/Abmeldung bei der Gemeinde (CH: innert 14 Tagen),
@@ -19,9 +15,8 @@ import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 // Die Stellen, die die neue Adresse brauchen — stabile Schlüssel für Label + Merkliste.
 const CHECKLIST = ['Post', 'Kk', 'Employer', 'Ahv', 'Tax', 'Insurance', 'Bank', 'Subs'];
 
-// Die Schritt-Titel tragen ihre Nummer («2 · …»); im Schritt-für-Schritt steht die Nummer
-// schon in «Schritt 2 von 4» darüber — darum hier ohne.
-export const ohneNummer = (titel) => String(titel).replace(/^\s*\d+\s*·\s*/, '');
+// Seit Entwurf W (F7-A1, 27.10.2026) in der Ablauf-Schale; hier weiter exportiert für bestehende Aufrufe.
+export { ohneNummer };
 
 // Frist: innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (RHG Art. 11).
 // Gerechnet ab dem Umzugsdatum, das die Person eingibt (vorbelegt aus dem Kapitel
@@ -38,7 +33,7 @@ export const umzugsDatumVorschlag = (moveInDate, datenModus) => {
 
 export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus }) => {
   const s = ablaufStyles(palette);
-  const textFarbe = ablaufTextFarbe(palette) || palette.sageDeep || palette.mid;
+  const textFarbe = ablaufTextFarbe(palette, 'umzug') || palette.sageDeep || palette.mid;
   const currentAddress = [data?.wohnen?.address, [data?.wohnen?.postalCode, data?.wohnen?.city].filter(Boolean).join(' ')]
     .filter(Boolean).join(', ');
   // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
@@ -88,19 +83,10 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
   };
   const nurFuerJetzt = Object.values(added).includes('vorlaeufig');
 
-  // Ein Schritt nach dem anderen (Fassung 5, Entscheid Stebler Studios 23.10.2026). Der Stand bleibt
-  // gespeichert (utils/ablaufStand.js), im Beispiel/Ausprobieren nur für jetzt.
-  const [stand, setStandRoh] = useState(() => ablaufStandLaden('umzug', PASS_SCHRITTE, vorlaeufig));
-  const setStand = (next) => { setStandRoh(next); ablaufStandSichern('umzug', next, vorlaeufig); };
-  // Das Umzugsdatum lebt hier (nicht in EreignisFrist), damit es beim Blättern bleibt.
+  // Ein Schritt nach dem anderen (Fassung 5, Entscheid Stebler Studios 23.10.2026) — seit Entwurf W
+  // (F7-A1, 27.10.2026) aus der Ablauf-Schale wie alle Abläufe; Stand, Passstrasse, Weiter/Zurück und
+  // Abschluss stehen dort. Das Umzugsdatum lebt hier, damit es beim Blättern bleibt.
   const [umzugsDatum, setUmzugsDatum] = useState(() => umzugsDatumVorschlag(data?.wohnen?.moveInDate, datenModus));
-  // Nach einem Schrittwechsel den Fokus auf den neuen Schritt legen (nicht beim ersten Laden).
-  const schrittRef = useRef(null);
-  const gewechselt = useRef(false);
-  useEffect(() => {
-    if (gewechselt.current && schrittRef.current) schrittRef.current.focus();
-  }, [stand.schritt, stand.fertig]);
-  const geheZu = (next) => { gewechselt.current = true; setStand(next); };
 
   const schritte = [
     // Schritt 1 — Neue Adresse (anzeigen was erfasst ist, sonst zum Erfassen führen)
@@ -131,7 +117,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
         palette, t, onNavigate, id: 'umzug-frist', frist: (d) => plusTage(d, 14),
         wert: umzugsDatum, onWert: setUmzugsDatum,
         labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
-        buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
+        art: 'frist', buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
         karte: { titelKey: 'umzug.fristKarteTitel', bisKey: 'umzug.fristKarteBis', knopfKey: 'kvg.addToCalendar' },
         reminderTitle: t('umzug.reminderTitle'), category: 'admin', ablauf: 'umzug',
         reminderNotes: t('umzug.reminderNotes'),
@@ -202,45 +188,14 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
     ] },
   ];
 
-  const total = schritte.length;
-  const nr = stand.schritt;
-  const letzter = nr === total - 1;
-  const ruhigerKnopf = { minHeight: '44px', background: 'none', border: 'none', padding: '0 ' + space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid };
-
-  const schrittInhalt = stand.fertig
-    // Abschluss: «Der Umzug ist geordnet» mit Satz; der Ablauf lässt sich jederzeit wieder ansehen.
-    ? React.createElement('div', { 'data-umzug-schritt': 'fertig' },
-      React.createElement('span', { style: { display: 'inline-flex', color: palette.sageDeep || palette.sage } }, React.createElement(Icon, { name: 'check', size: 28 })),
-      React.createElement(PanelTitle, { palette, style: { margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t('umzug.fertigTitel')),
-      React.createElement('p', { style: s.stepText }, t('umzug.fertigText')),
-      React.createElement('button', { type: 'button', style: { ...ruhigerKnopf, padding: 0, marginTop: space.sm + 'px' }, onClick: () => geheZu({ schritt: 0, fertig: false }) }, t('umzug.nochmals'))
-    )
-    : React.createElement('div', { 'data-umzug-schritt': String(nr + 1) },
-      React.createElement('div', { style: { fontSize: text.xs, color: textFarbe, fontWeight: weight.semi } }, t('onboarding.stepOf', { current: nr + 1, total })),
-      React.createElement(AblaufStep, { palette, title: ohneNummer(t(schritte[nr].titel)), titelStyle: { marginTop: space.xs + 'px', fontFamily: fontFamilyDisplay, fontSize: '22px', lineHeight: 1.2 } }, ...schritte[nr].inhalt()),
-      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', marginTop: space.lg + 'px' } },
-        React.createElement(PrimaryButton, {
-          palette, style: { minHeight: '44px' },
-          onClick: () => geheZu(letzter ? { schritt: nr, fertig: true } : { schritt: nr + 1, fertig: false }),
-        }, letzter ? t('umzug.abschliessen') : t('umzug.weiter')),
-        nr > 0 && React.createElement('button', { type: 'button', style: ruhigerKnopf, onClick: () => geheZu({ schritt: nr - 1, fertig: false }) },
-          React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineEnd: '4px' } }, '‹'), t('common.back'))
-      )
-    );
-
   return React.createElement(AblaufContainer, {
-    palette, icon: 'home',
+    palette, t, onNavigate, ablauf: 'umzug', icon: 'home',
     title: t('umzug.title'),
     intro: t('umzug.intro'),
-    // Kopf wie im Mockup Fassung 5: Landschaftsband, Brotkrume «Übersicht › Wohnen › Umzug», Kachel.
-    kopf: {
-      t, onNavigate,
-      bereichTitel: chapterIdx('wohnen') >= 0 ? chapters[chapterIdx('wohnen')].title : null,
-      zumBereich: () => onNavigate && onNavigate('chapter', chapterIdx('wohnen')),
-    },
+    // Stationsnamen auf der Strasse wie im Mockup Fassung 5.
+    passNamen: [t('umzug.passAdresse'), t('umzug.passGemeinde'), t('umzug.passNachfuehren'), t('umzug.passKuendigen')],
   },
-    React.createElement(AblaufPass, { palette, aktuell: nr, fertig: stand.fertig, namen: [t('umzug.passAdresse'), t('umzug.passGemeinde'), t('umzug.passNachfuehren'), t('umzug.passKuendigen')] }),
-    React.createElement('div', { ref: schrittRef, tabIndex: -1, 'aria-live': 'polite', style: { outline: 'none' } }, schrittInhalt),
+    ...schritte.map((x, i) => React.createElement(AblaufStep, { key: 'u' + i, palette, title: t(x.titel) }, ...x.inhalt())),
     React.createElement(AblaufFooter, { palette, t, quelle: t('umzug.quelle'), notes: [t('umzug.footerFrist'), t('trust.localOnly')] })
   );
 };

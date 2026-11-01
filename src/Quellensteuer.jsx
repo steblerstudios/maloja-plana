@@ -12,7 +12,7 @@ import { endeMaerzFolgejahr } from './utils/fristen.js';
 export const Quellensteuer = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, icon: 'money',
+    palette, t, onNavigate, ablauf: 'quellensteuer', icon: 'money',
     title: t('quellensteuer.title'),
     intro: t('quellensteuer.intro'),
   },
@@ -33,7 +33,7 @@ export const Quellensteuer = ({ palette, t, onNavigate }) => {
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'quellensteuer-frist', frist: endeMaerzFolgejahr,
         labelKey: 'quellensteuer.fristLabel', hinweisKey: 'quellensteuer.fristHinweis', vorbeiKey: 'quellensteuer.fristVorbei',
-        buttonKey: 'quellensteuer.step4Button', doneKey: 'quellensteuer.step4Done', calendarKey: 'quellensteuer.step4CalendarLink',
+        art: 'frist', buttonKey: 'quellensteuer.step4Button', doneKey: 'quellensteuer.step4Done', calendarKey: 'quellensteuer.step4CalendarLink',
         reminderTitle: t('quellensteuer.reminderTitle'), category: 'admin',
       }),
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('quellensteuer.step4Kanton')),
