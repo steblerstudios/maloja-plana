@@ -23,7 +23,7 @@ import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
-import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle, UMLEITUNGEN, springeZuAnker } from './utils/hashRouter.js';
+import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle, merkeWahl, leseWahl, UMLEITUNGEN, springeZuAnker } from './utils/hashRouter.js';
 import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
@@ -579,7 +579,9 @@ const AppInner = ({ demo }) => {
   const [legalSection, setLegalSection] = useState('privacy');
   // Reiter bzw. Auswahl einer Seite, die frühere Seiten bündelt (F7, 27.10.2026): «Merkliste» in «Was ansteht»,
   // «Alles / Für ein Amt / Für den Notfall» in «Unterlagen drucken». Kommt aus UMLEITUNGEN (`wahl`) oder `extra`.
-  const [wahl, setWahl] = useState(() => (parseHash() || {}).wahl);
+  const [wahl, setWahl] = useState(() => { const p = parseHash() || {}; return p.wahl ?? leseWahl(p.view); });
+  // Bleibt nach Zurück und Neuladen: Sonst stünde nach «Für ein Amt» wieder die ganze Lebensmappe da (Predeploy 02.11.2026).
+  useEffect(() => { if (typeof wahl === 'string') merkeWahl(view, wahl); }, [view, wahl]);
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
@@ -686,6 +688,7 @@ const AppInner = ({ demo }) => {
   const [herkunft, setHerkunft] = useState(() => leseHerkunft());
 
   // ─── Hash routing: sync URL when view changes ─────────────
+  const [startAnker] = useState(() => (parseHash() || {}).anker);
   const isFirstRender = React.useRef(true);
   useEffect(() => {
     const chapterIdx = view === 'chapter' ? activeChapter : null;
@@ -700,9 +703,10 @@ const AppInner = ({ demo }) => {
   }, [view, activeChapter]);
 
   // Direkteinstieg über einen umgeleiteten Link (#/finanzuebersicht): zur Sprungmarke.
+  // Die Sprungmarke steht fest, bevor der Effekt oben die Adresse auf das Ziel umschreibt (Predeploy 02.11.2026).
   useEffect(() => {
-    const p = parseHash();
-    if (p && p.anker) springeZuAnker(p.anker);
+    if (startAnker) springeZuAnker(startAnker);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ─── Leises Einblenden beim Ansichtswechsel (utils/einblenden.js) ─
@@ -727,7 +731,7 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
-        setWahl(parsed.wahl);
+        setWahl(parsed.wahl ?? leseWahl(parsed.view));
         setHerkunft(leseHerkunft());
       });
       // Ein alter Eintrag (#/finanzuebersicht) kommt als Kapitel mit Sprungmarke zurück — dorthin,

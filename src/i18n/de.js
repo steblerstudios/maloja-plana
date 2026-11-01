@@ -6499,6 +6499,7 @@ export default {
     premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
   },
   pegel: {
+    vorBeitraegen: "Gerechnet mit dem Einkommen vor den eigenen AHV- und Pensionskassen-Beiträgen. Nach diesen Beiträgen bleibt weniger.",
     ansatzTiefer: "Mit Ausweis F, N oder S fällt die Unterstützung meist tiefer aus als in dieser Rechnung: Der Ansatz liegt unter dem für Einheimische, der Kanton regelt ihn, teils gibt es Sachleistungen (AsylG Art. 82 Abs. 1 und 3, AIG Art. 86 Abs. 1). Ein Anspruch kann auch ganz entfallen. Ausgenommen sind vorläufig aufgenommene Flüchtlinge und Staatenlose: Für sie gelten die gleichen Sozialhilfestandards wie für Flüchtlinge mit Asyl (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',
     grenze: 'Grenze',
@@ -6896,7 +6897,6 @@ export default {
     notes: 'Hinweis',
     notesPlaceholder: 'z.B. zum Essen, nicht mit Milch...',
     compendiumLink: 'Im Arzneimittel-Kompendium nachschlagen',
-    compendiumHinweis: 'Beim Öffnen geht der Name des Medikaments in der Adresse an compendium.ch.',
     preis: {
       eins: 'Publikumspreis laut Spezialitätenliste: {chf} ({packung})',
       gleich: 'Publikumspreis laut Spezialitätenliste: {chf} je Packung',

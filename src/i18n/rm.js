@@ -7465,6 +7465,7 @@ export default {
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
+    vorBeitraegen: "Quintà cun l’entrada avant las atgnas contribuziuns AVS e da la cassa da pensiun. Suenter questas contribuziuns resta damain.", // TODO(rm): provisorisch
     ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     coveredOffen: 'En quest quint basta l’entrada. Custs da lavur mancan — il dretg scleresch il servetsch social.',
@@ -7782,7 +7783,6 @@ export default {
     notesPlaceholder: 'p. ex. cun mangiar, betg cun latg...',
     compendiumLink: 'Tschertgar en il compendi da medicaments',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
-    compendiumHinweis: 'Cun avrir va il num dal medicament en l’adressa a compendium.ch.',
     // TODO(rm): provisorisch — Gegenlese (SL-Preis, F7-K6-2, 27.10.2026)
     preis: {
       eins: 'Pretsch public tenor la glista da specialitads: {chf} ({packung})',

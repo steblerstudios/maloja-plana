@@ -6409,6 +6409,7 @@ export default {
     premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
   },
   pegel: {
+    vorBeitraegen: "Calcolato con il reddito prima dei propri contributi AVS e di cassa pensioni. Dopo questi contributi resta meno.",
     ansatzTiefer: "Con permesso F, N o S il sostegno è per lo più inferiore a questo calcolo: la tariffa è inferiore a quella per la popolazione residente, la stabilisce il cantone e in parte si tratta di prestazioni in natura (LAsi art. 82 cpv. 1 e 3, LStrI art. 86 cpv. 1). Il diritto può anche venire meno del tutto. Fanno eccezione i rifugiati ammessi provvisoriamente e gli apolidi: per loro valgono gli stessi standard di aiuto sociale dei rifugiati con asilo (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
     grenze: 'Limite',
@@ -6807,7 +6808,6 @@ export default {
     notes: 'Nota',
     notesPlaceholder: 'p. es. durante il pasto, non con latte...',
     compendiumLink: 'Consultare il compendio dei medicamenti',
-    compendiumHinweis: 'All’apertura, il nome del medicamento viene trasmesso a compendium.ch nell’indirizzo.',
     preis: {
       eins: 'Prezzo al pubblico secondo l’elenco delle specialità: {chf} ({packung})',
       gleich: 'Prezzo al pubblico secondo l’elenco delle specialità: {chf} per confezione',

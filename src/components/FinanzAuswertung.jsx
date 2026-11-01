@@ -320,7 +320,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a) keine AHV/ALV/PK-Abzüge — dann kein Brutto-Hinweis.
-      !nurBefund && !beitragsfrei && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+      !nurBefund && !beitragsfrei && !lohnVergleichSperre(data, false) && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
         // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
         t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
           brutto: formatCHF(nettoZuBruttoRichtwert(income, bvgAlter, rentenalter)),
@@ -507,7 +507,8 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
       + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
       + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf)
-      + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : ''),
+      + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : '')
+      + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });
 };

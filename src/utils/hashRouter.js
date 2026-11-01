@@ -167,6 +167,15 @@ export function setHash(view, chapterIndex) {
  * 25.09.2026: Kapitel bei 573 px verlassen, nach «Zurück» bei 400 px gelandet (dort,
  * wo man im Werkzeug stand). Liest onHashChange als `stelle` wieder aus.
  */
+// Reiter oder Auswahl einer Seite (Merkliste, «Für ein Amt»): für diesen Tab gemerkt, nie im Hash.
+export function merkeWahl(view, wahl) {
+  try { sessionStorage.setItem('or5_wahl_' + view, wahl); } catch { /* Storage blockiert, dann gilt die Grundwahl */ }
+}
+
+export function leseWahl(view) {
+  try { return (view && sessionStorage.getItem('or5_wahl_' + view)) || undefined; } catch { return undefined; }
+}
+
 export function merkeStelle() {
   const bisher = window.history.state && typeof window.history.state === 'object' ? window.history.state : {};
   window.history.replaceState({ ...bisher, y: Math.round(window.scrollY) }, '');

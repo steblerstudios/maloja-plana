@@ -2,6 +2,7 @@
 // Ein Datei-weiter Datenstand (CANTONAL_DATA_VERSION '2024/2025') wurde am 16.09.2026
 // entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
 // unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
+import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
@@ -305,8 +306,10 @@ export function calculateSozialhilfe(data) {
   const householdSize = hh.householdSize;
   // Brutto im Profil → Netto-Richtwert (eine Regel mit dem Dashboard, utils/nettoAusProfil.js;
   // Predeploy 25.09.2026). Vorher galt jeder Monatslohn hier als netto, auch ein brutto erfasster.
-  const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, data.finanzen?.incomeType, data.basis);
-  const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, data.finanzen?.sideIncomeType, data.basis);
+  // Selbständige zahlen weder ALV noch die Abzüge von Angestellten: ihr Betrag bleibt, wie er eingetragen ist (Predeploy 02.11.2026).
+  const selbst = zahltBeitraegeSelbst(data.finanzen);
+  const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, selbst ? 'netto' : data.finanzen?.incomeType, data.basis);
+  const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, selbst ? 'netto' : data.finanzen?.sideIncomeType, data.basis);
   const erwerbseinkommen = haupt.netto + neben.netto;
   const einkommenGeschaetzt = haupt.geschaetzt || neben.geschaetzt;
   const erwerbstaetig = istErwerbstaetig(data.finanzen);
@@ -343,6 +346,8 @@ export function calculateSozialhilfe(data) {
     // F, N, S (Stebler Studios 01.11.2026: Zahl mit Hinweis): Der Ansatz liegt unter dem für Einheimische und ist kantonal
     // (AsylG Art. 82 Abs. 3, AIG Art. 86 Abs. 1). Diese Rechnung bleibt SKOS, die Anzeigen sagen es (pegel.ansatzTiefer).
     ansatzTiefer: hatAusweisFNS(data),
+    // Die SKOS-Regel zu den Beiträgen ist nicht gelesen: gerechnet wird wie eingetragen, die Anzeige sagt es (pegel.vorBeitraegen).
+    vorBeitraegen: selbst && (Number(data.versicherungen?.ahvContribution) > 0 || Number(data.versicherungen?.bvgContribution) > 0),
     gblJahr: gbl.jahr,
     gblBelegt: gbl.belegt,
     effectiveRent,

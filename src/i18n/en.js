@@ -6435,6 +6435,7 @@ export default {
     premiumHint: 'Enter your health-insurance premium to see the split.',
   },
   pegel: {
+    vorBeitraegen: "Calculated with income before your own AHV and pension fund contributions. Less remains after them.",
     ansatzTiefer: "With an F, N or S permit, support is usually lower than in this calculation: the rate is below that for the resident population, the canton sets it, and part may be given in kind (AsylG Art. 82 paras 1 and 3, AIG Art. 86 para. 1). An entitlement can also lapse entirely. Provisionally admitted refugees and stateless persons are an exception: the same social assistance standards apply to them as to refugees granted asylum (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',
     grenze: 'Limit',
@@ -6831,7 +6832,6 @@ export default {
     notes: 'Note',
     notesPlaceholder: 'e.g. with food, not with milk...',
     compendiumLink: 'Look up in drug compendium',
-    compendiumHinweis: 'Opening this sends the name of the medication to compendium.ch in the address.',
     preis: {
       eins: 'Public price per the Specialities List: {chf} ({packung})',
       gleich: 'Public price per the Specialities List: {chf} per pack',
