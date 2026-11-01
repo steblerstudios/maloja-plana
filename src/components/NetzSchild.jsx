@@ -29,6 +29,8 @@ const keil = (mitte, breite) => {
   return pts.map((p) => p.map((x) => Math.round(x * 10) / 10).join(',')).join(' ');
 };
 
+const TEIL_BEREICH = { haushalt: 'wohnen', vorsorge: 'finanzen', kk: 'versicherungen', uvg: 'versicherungen', leben: 'versicherungen' };
+
 // Franken: ganze Beträge ohne Rappen, sonst immer zwei Stellen («CHF 540.30», nie «540.3» — F7-D7).
 const chf = (n) => betrag(n, Number.isInteger(n) ? {} : { stellen: 2 });
 export const betragText = (b, t) => [
@@ -51,10 +53,10 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const winkel = (i) => teilWinkel(i, n, iLeben);
   // Teilweise: dasselbe Salbei wie «ganz», halb so dicht — im hellen wie im dunklen Modus klar als «weniger»
   // lesbar (im Browser verglichen 27.10.2026; ein eigenes helles Grün verschwand dunkel fast).
-  // Seit F7-K3-4 in der Farbe des Kapitels (Stebler Studios 01.11.2026: «dafür haben wir die Farben»); die offene Stelle bleibt Sand.
-  const salbei = bereichsTon('versicherungen', palette) || palette.sageDeep || palette.sage;
+  // Seit F7-K3-4 trägt jedes Teil die Farbe seines Lebensbereichs (Stebler Studios 01.11.2026: «Hausrat gehört zum Wohnen»); die offene Stelle bleibt Sand.
+  const tonVon = (key) => bereichsTon(TEIL_BEREICH[key], palette) || palette.sageDeep || palette.sage;
   const ganz = (p) => p.n > 0 && p.erreicht === p.n;
-  const farbe = (p) => p.erreicht === 0 ? palette.sand : salbei;
+  const farbe = (p) => p.erreicht === 0 ? palette.sand : tonVon(p.key);
   // Nur Freiwilliges ohne Eintrag (n = 0): kaum sichtbar, das ist keine Lücke.
   const dichte = (p) => p.n === 0 ? 0.15 : ganz(p) ? 0.9 : 0.5;
   const kurz = (p) => t('netzSchild.kurz.' + p.key);
@@ -91,7 +93,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   const zahlen = (b) => betragText(b, t);
-  const versZeile = (x) => h('div', { key: x.key, role: 'listitem', style: { fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
+  const versZeile = (salbei) => (x) => h('div', { key: x.key, role: 'listitem', style: { fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
     h('div', { style: { display: 'flex', alignItems: 'baseline', gap: '6px' } },
       h('span', { 'aria-hidden': true, style: { color: x.ok ? salbei : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
       h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
@@ -101,7 +103,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const teilBlock = (p) => h('div', { key: p.key, 'data-gruppe': p.key, style: { marginBottom: space.xs + 'px' } },
     h('div', { style: { display: 'flex', alignItems: 'baseline', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
       kurz(p), h('span', { style: { marginLeft: 'auto', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, stand(p))),
-    h('div', { role: 'list', 'aria-label': kurz(p) }, p.versicherungen.map(versZeile)),
+    h('div', { role: 'list', 'aria-label': kurz(p) }, p.versicherungen.map(versZeile(tonVon(p.key)))),
     p.key === 'uvg' && Number(stunden) > 0 && Number(stunden) < 8 && hinweis('unfall-8h', 'stundenlohnView.nbu_nurBeruf'),
     p.key === 'vorsorge' && p.versicherungen.some((x) => x.key === 'bvg' && !x.ok && x.betrag.guthaben) && hinweis('bvg-nur-guthaben', 'netzSchild.bvgNurGuthaben'),
     p.key === 'vorsorge' && p.versicherungen.some((x) => x.key === 'ahv' && !x.ok) && hinweis('ahv-hinweis', 'netzSchild.ahvHinweis'),

@@ -110,7 +110,10 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
 
   const ton = bereichsTon('versicherungen', palette) || palette.sky;
   const farben = Object.fromEntries(ausgabenPosten(daten, t, palette).map((x) => [x.key, x.color]));
-  const fuelle = (x) => farben[x.quelle] || ton;
+  // Hausrat und Haftpflicht gehören zum Haushalt, also zur Farbe von Wohnen; die Vorsorge zu Finanzen (Stebler Studios 01.11.2026).
+  const wohnTon = bereichsTon('wohnen', palette) || ton;
+  const vorsorgeTon = bereichsTon('finanzen', palette) || ton;
+  const fuelle = (x) => (x.key === 'hausrat' || x.key === 'haftpflicht' ? wohnTon : farben[x.quelle] || ton);
   // Der Balken zeigt, woraus die Summe besteht; die Zeilen nennen dieselben Posten — für Screenreader stumm.
   const stapel = () => h('div', { 'aria-hidden': 'true', 'data-teil': 'versicherungen-balken', style: { display: 'flex', gap: '2px', height: '10px', margin: space.sm + 'px 0', borderRadius: radius.full, overflow: 'hidden', background: palette.up } },
     ...posten.map((x) => h('div', { key: x.key, style: { flex: x.wert + ' 1 0', minWidth: '3px', background: fuelle(x) } })));
@@ -149,9 +152,9 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const feld = (k) => t('chapters.versicherungen.fields.' + k + '.label');
   const ja = (x) => has(x) && x !== 'no' && x !== 'none';
   const ausserhalb = [
-    (f.employmentType === 'employed' || zahl2(v.ahvContribution) > 0) && { key: 'ahv', name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f) },
-    bvgAktiv(v) && { key: 'bvg', name: t('netzSchild.vers.bvg'), b: betraegeFuer('bvg', v, f) },
-    Number(f.pension3a) > 0 && { key: 'saeule3a', name: t('netzSchild.vers.saeule3a'), b: betraegeFuer('saeule3a', v, f) },
+    (f.employmentType === 'employed' || zahl2(v.ahvContribution) > 0) && { key: 'ahv', farbe: vorsorgeTon, name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f) },
+    bvgAktiv(v) && { key: 'bvg', farbe: vorsorgeTon, name: t('netzSchild.vers.bvg'), b: betraegeFuer('bvg', v, f) },
+    Number(f.pension3a) > 0 && { key: 'saeule3a', farbe: vorsorgeTon, name: t('netzSchild.vers.saeule3a'), b: betraegeFuer('saeule3a', v, f) },
     ja(v.uvg) && { key: 'uvg', name: t('netzSchild.vers.uvg'), b: betraegeFuer('uvg', v, f) },
     ja(v.ktg) && { key: 'ktg', name: feld('ktg'), b: v.ktg === 'employer' ? { arbeitgeber: true } : {} },
     ja(v.legalInsurance) && { key: 'legalInsurance', name: feld('legalInsurance'), b: {} },
@@ -165,7 +168,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
       h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t('versInstrument.ausserhalb')),
       h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: ausserhalb.length }))),
     ausserhalb.map((x) => h('div', { key: x.key, style: { ...zeile, alignItems: 'baseline', fontSize: text.xs } },
-      h('span', { style: { color: palette.text, minWidth: 0 } }, x.name),
+      h('span', { style: { display: 'flex', alignItems: 'center', gap: '8px', color: palette.text, minWidth: 0 } }, marke(x.farbe || ton), x.name),
       h('span', { style: { color: palette.mid, textAlign: 'right' } }, betragText(x.b, t) || t('netzSchild.eingetragen'))
     )));
   const postenHinweise = () => h(React.Fragment, null,
