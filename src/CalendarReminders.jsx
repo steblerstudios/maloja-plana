@@ -432,7 +432,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     // (Entwurf G: «verpasst — was jetzt?», nie rot; Stebler Studios 27.10.2026). Der Weg führt in den
     // Ablauf, aus dem die Frist kommt (dort steht, was nach der Frist gilt), sonst zum Tag im Kalender.
     naechst && React.createElement('div', { 'data-als-naechstes': naechst.datum < today ? 'verpasst' : 'true', style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, padding: '18px 0 22px', marginBottom: '18px' } },
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft } }, t('calendar.alsNaechstes')),
+      React.createElement('h3', { style: { margin: 0, fontSize: text.xs, fontWeight: weight.normal, fontFamily: 'inherit', color: palette.soft } }, t('calendar.alsNaechstes')),
       React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontWeight: weight.bold, fontSize: '44px', lineHeight: 1, letterSpacing: '-0.025em', margin: '8px 0 6px', color: palette.text, fontVariantNumeric: 'tabular-nums' } }, naechstWann(naechst.datum)),
       React.createElement('p', { style: { fontSize: '14px', color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, naechst.titel + (naechst.herkunft ? ' · ' + naechst.herkunft : '')),
       naechst.datum < today && React.createElement('button', {

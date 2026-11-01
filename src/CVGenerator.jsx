@@ -51,7 +51,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
       ergaenzen),
 
     inhalt && React.createElement(React.Fragment, null,
-      React.createElement(LebenslaufBlatt, { palette, inhalt }),
+      React.createElement(LebenslaufBlatt, { palette, inhalt, ebene: 3 }),
       React.createElement(PrimaryButton, {
         palette, onClick: () => setVorschau('druck'),
         style: { width: '100%', minHeight: '44px', margin: space.md + 'px 0 ' + space.xs + 'px' },

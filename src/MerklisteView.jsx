@@ -106,7 +106,8 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     addBtn: { background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
     sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', margin: space.md + 'px 0 ' + space.sm + 'px' },
     row: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
-    cb: { flexShrink: 0, width: '20px', height: '20px', marginTop: '12px', cursor: 'pointer', accentColor: palette.sage },
+    cbZiel: { flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '44px', minHeight: '44px', margin: '0 -12px', cursor: 'pointer' },
+    cb: { width: '20px', height: '20px', margin: 0, cursor: 'pointer', accentColor: palette.sage },
     sym: (farbe) => ({ display: 'inline-flex', flexShrink: 0, marginTop: '10px', color: farbe }),
     spalte: { flex: 1, minWidth: 0 },
     // Der ganze Eintrag ist die Tippfläche (Entscheid Merkliste, 23.10.2026) — mit Verknüpfung.
@@ -153,7 +154,8 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
       i.link && React.createElement('span', { key: 'ln', style: s.unter }, labelFor(i.link) + ' ›'),
     ];
     return React.createElement('div', { key: i.id, style: s.row },
-      React.createElement('input', { type: 'checkbox', checked: !!i.done, onChange: () => toggle(i.id), style: s.cb, 'aria-label': (i.done ? t('merkliste.undo') : t('merkliste.markDone')) + ': ' + i.text }),
+      React.createElement('label', { style: s.cbZiel },
+        React.createElement('input', { type: 'checkbox', checked: !!i.done, onChange: () => toggle(i.id), style: s.cb, 'aria-label': (i.done ? t('merkliste.undo') : t('merkliste.markDone')) + ': ' + i.text })),
       React.createElement('span', { 'aria-hidden': 'true', style: s.sym(farbe) }, React.createElement(Icon, { name: merkpunktZeichen(i.link), size: 18 })),
       React.createElement('div', { style: s.spalte },
         i.link && onNavigate
@@ -191,12 +193,12 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     }),
 
     open.length > 0 && React.createElement('div', null,
-      React.createElement('div', { style: s.sectionTitle }, t('merkliste.openTitle')),
+      React.createElement('h3', { style: s.sectionTitle }, t('merkliste.openTitle')),
       open.map(renderItem)
     ),
 
     done.length > 0 && React.createElement('div', null,
-      React.createElement('div', { style: s.sectionTitle }, t('merkliste.doneTitle')),
+      React.createElement('h3', { style: s.sectionTitle }, t('merkliste.doneTitle')),
       done.map(renderItem)
     ),
 

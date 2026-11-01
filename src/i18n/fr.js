@@ -6261,7 +6261,7 @@ export default {
     tank: 'Jauge de réserve',
     tankMonths: '{months} mois de réserve',
     schild: 'Bouclier de protection',
-    schildCount: '{covered}/{total} couvertes',
+    schildCount: '{covered}/{total} saisies',
     steuer: 'Colonne fiscale',
     steuerBetrag: 'Impôt fédéral ≈ CHF {value} / an',
     setup: 'toucher pour configurer',

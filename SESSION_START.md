@@ -17,6 +17,17 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🛡️ **Nachtrag 01.11.2026, abends — Vor-live-Punkte auf dem Sammelzweig. Nichts gemergt, NICHT live.**
+>
+> - **Geheimnis-Suche über die Git-Historie:** 3'550 Commits, alle Zweige. Muster für Schlüssel und Tokens: 0 Treffer (Gegenprobe greift). Allgemeine Muster: 3 Treffer,
+>   nur Test-, Vorlagen- und Doku-Dateien. Dateinamen: keine Schlüsseldateien. Kein Fund. Eigene Regex-Suche, gitleaks ist nicht installiert.
+> - **a11y:** Monatsbalken (Legende mit Beträgen lesbar, Trennlinien), Reiter-Fokus (Ring nicht mehr abgeschnitten), Auswahl in `RechnerForm` mit 2-px-Rand statt nur Farbe
+>   (ein Zeichen verbietet `glyphenImText.test.js`), Merkliste (h3, Ziel 44 px), Blatt-Titel als Überschrift (`ebene`), «Als Nächstes» als h3 an drei Stellen, Anker «Mit Ihren Angaben»
+>   fokussierbar. Linien im Schild: gerechnet kein Verstoss. Offen, klein: Sprungziele `UnterlagenWege`, `BudgetSync`, `FinanzAuswertung`, `details` ohne Fokus.
+> - **Copy über den ganzen Diff:** Blocker behoben (Kachel `schildCount` sagte «gedeckt», jetzt «eingetragen», 5 Sprachen), dazu rm-Begriffe, it-Sätze, du klein, «Vermietende», `unterlagen.drucken.beschreibung`.
+> - **Entscheid offen:** 22 Kantone zeigen «Hausrat · freiwillig», sind aber nicht geprüft (`hausratPflicht.js`); VD ist «Pflicht», Erlass nicht gelesen · «erfasst» neben «eingetragen» in `vu.*` · «Schutzschild» neben «Schild» · `cv.title` nur de/rm angepasst.
+> - **Geprüft:** 7'551 Tests, Lint, Build, SEO 0/0, PII, 64.95 von 65 kB, Browser Beispiel Maria 375 px. Merkliste im Beispiel leer, dort nicht im Bild. Kein Screenreader.
+
 > 🛡️ **Nachtrag 01.11.2026, 17:00 — Fassung 7 zusammengeführt: Sammelzweig `integration/f7-sammel`, PR #637 (Entwurf). Nichts gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 01.11.): main = `98539e99` · live = `4299bfb9` (0.1.48-beta) · 156 Commits dazwischen.

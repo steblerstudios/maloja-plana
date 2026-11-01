@@ -2058,7 +2058,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: label }, tr(titelKey)),
       React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),
-      // Der Balken wiederholt nur die Zahlen darunter — darum für Screenreader stumm.
+      // Der Balken selbst ist für Screenreader stumm; die Legende nennt Teile und Beträge.
       // Fassung 6 («nachentschieden» 24.10.2026): unterteilt in Wohnen · Versicherungen · Steuern ·
       // Übriges; der leere Rest ist, was bleibt. Gemessen am Einkommen, im Minus an den Ausgaben.
       renderMonatsBalken(m),
@@ -2091,14 +2091,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
     const basis = Math.max(m.einkommen, m.verplant) || 1;
     const sichtbar = teile.filter((x) => x.wert > 0);
-    return React.createElement('div', { 'aria-hidden': 'true', 'data-teil': 'monat-balken' },
-      React.createElement('div', { style: { display: 'flex', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
-        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe } }))
+    return React.createElement('div', { 'data-teil': 'monat-balken' },
+      React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
+        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe, borderRight: '1px solid ' + palette.up, boxSizing: 'border-box' } }))
       ),
       sichtbar.length > 1 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: '4px', fontSize: text.xs, color: palette.mid } },
         ...sichtbar.map((x) => React.createElement('span', { key: x.key, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', color: palette.mid } },
-          React.createElement('span', { style: { width: '8px', height: '8px', borderRadius: radius.hair, background: x.farbe } }),
-          tr('chapters.finanzen.monat.teil.' + x.key)
+          React.createElement('span', { 'aria-hidden': 'true', style: { width: '8px', height: '8px', borderRadius: radius.hair, background: x.farbe } }),
+          tr('chapters.finanzen.monat.teil.' + x.key), ' ', betrag(x.wert)
         ))
       )
     );
@@ -2228,8 +2228,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Rand in palette.mid: ein Bedienelement braucht 3:1 gegen den Grund (palette.border hat 1.3:1; A11y-Prüfung).
   const ruhigerKnopf = { display: 'inline-flex', alignItems: 'center', gap: '8px', minHeight: '44px', padding: '10px 16px', border: '1px solid ' + palette.mid, borderRadius: radius.full, background: 'transparent', color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium };
   const ruhigesEnde = (etikett, titel, satz, knopf, onClick, fuss) => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.lg + 'px 0 ' + space.xs + 'px', borderTop: '1px solid ' + palette.border, textAlign: 'center' } },
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '4px' } }, etikett),
-    React.createElement('h3', { style: { margin: '0 0 4px', fontSize: text.xl, fontWeight: weight.semi, color: palette.text } }, titel),
+    React.createElement('h3', { style: { margin: '0 0 4px', fontSize: text.xs, fontWeight: weight.normal, fontFamily: 'inherit', color: palette.mid } }, etikett),
+    React.createElement('h4', { style: { margin: '0 0 4px', fontSize: text.xl, fontWeight: weight.semi, color: palette.text } }, titel),
     satz && React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, satz),
     React.createElement('button', { type: 'button', className: 'mp-link', onClick, style: ruhigerKnopf }, knopf, ' ›'),
     fuss && React.createElement('p', { style: { margin: space.md + 'px 0 0', fontSize: text.xs, color: palette.mid } }, fuss)

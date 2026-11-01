@@ -6261,7 +6261,7 @@ export default {
     tank: 'Reserve gauge',
     tankMonths: '{months} months of buffer',
     schild: 'Protection shield',
-    schildCount: '{covered}/{total} covered',
+    schildCount: '{covered}/{total} entered',
     steuer: 'Tax column',
     steuerBetrag: 'Federal tax ≈ CHF {value} / year',
     setup: 'tap to set up',

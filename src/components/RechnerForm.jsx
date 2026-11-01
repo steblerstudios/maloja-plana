@@ -159,9 +159,9 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
           onClick: () => onWahl(o.wert),
           onKeyDown: (e) => taste(e, i),
           style: {
-            minHeight: '44px', padding: '8px 16px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.sm + 'px',
+            minHeight: '44px', padding: an ? '7px 15px' : '8px 16px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.sm + 'px',
             fontWeight: an ? weight.semi : weight.normal,
-            border: '1px solid ' + (an ? palette.sage : palette.border),
+            border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border,
             background: an ? palette.sage + '22' : palette.surface,
             color: an ? (palette.sageDeep || palette.text) : palette.text,
           },
@@ -185,7 +185,7 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
     if (el) el.focus();
   };
   return React.createElement(React.Fragment, null,
-    React.createElement('div', { role: 'tablist', 'aria-label': label, style: { display: 'flex', gap: '6px', overflowX: 'auto', padding: '2px 0 ' + space.sm + 'px', margin: '0 0 ' + space.xs + 'px' } },
+    React.createElement('div', { role: 'tablist', 'aria-label': label, style: { display: 'flex', gap: '6px', overflowX: 'auto', padding: '4px 4px ' + space.sm + 'px', margin: '0 -4px ' + space.xs + 'px' } },
       liste.map((r, i) => {
         const an = r.key === aktiv;
         return React.createElement('button', {
@@ -193,10 +193,10 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
           'aria-selected': an, 'aria-controls': id + '-panel', tabIndex: an ? 0 : -1,
           onClick: () => onWahl(r.key), onKeyDown: (e) => taste(e, i),
           style: {
-            flexShrink: 0, minHeight: '44px', padding: '8px 14px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
+            flexShrink: 0, minHeight: '44px', padding: an ? '7px 13px' : '8px 14px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
             borderRadius: radius.full + 'px', whiteSpace: 'nowrap',
             fontWeight: an ? weight.semi : weight.medium,
-            border: '1px solid ' + (an ? palette.sage : palette.border),
+            border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border,
             background: an ? palette.sage + '22' : 'transparent',
             color: an ? (palette.sageDeep || palette.text) : palette.text,
           },

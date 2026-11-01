@@ -1805,7 +1805,7 @@ export default {
     pflege: 'Tgirar confamigliars',
     todesfall: 'In mortori en il conturn',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-    arztkoffer: 'Vossa valisch da sanadad',
+    arztkoffer: 'Valisch da sanadad',
     sub: {
       patientenverfuegung: 'En dumondas, per stampar',
       kreditkarte: 'Custs ed avantatgs per onn',
@@ -7268,7 +7268,7 @@ export default {
     tank: 'Indicatur da reserva',
     tankMonths: '{months} mais reserva',
     schild: 'Scud da protecziun',
-    schildCount: '{covered}/{total} cuverts',
+    schildCount: '{covered}/{total} endatadas',
     // TODO(rm): provisorisch — Gegenlese (Steuer-Säulen, 25.09.2026)
     steuer: 'Colonna da taglia',
     steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
@@ -7291,10 +7291,10 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     ganz: 'En questa glista n’è avert nagin endataziun obligatorica.',
     kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
-    vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad privata', hausrat: 'Inventari', leben: 'Assicuranza da vita' },
+    vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad civila', hausrat: 'Ménaschi', leben: 'Assicuranza da vita' },
     art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
-    haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens.',
+    haftpflichtHinweis: 'Responsabladad civila: ils locaturs la pretendan savens.',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     hausratPruefen: 'Obligaziun d’inventari en il chantun: p.pl. confermar tar l’assicuranza chantunala d’edifizis — ils relaschs n’èn betg verifitgads per tut ils chantuns.',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)

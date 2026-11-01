@@ -11,7 +11,7 @@ export const SeitenSchluss = ({ palette, t, view, onNavigate }) => {
   const gehe = () => (z.kapitel ? onNavigate('chapter', CHAPTER_KEYS.indexOf(z.kapitel)) : onNavigate(z.ziel || 'dashboard'));
   const h = React.createElement;
   return h('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.lg + 'px 0', borderTop: '1px solid ' + palette.border, textAlign: 'center' } },
-    h('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px' } }, t('chapterView.alsNaechstes')),
+    h('h3', { style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, fontWeight: weight.normal, fontFamily: 'inherit', color: palette.mid } }, t('chapterView.alsNaechstes')),
     h('button', {
       type: 'button', className: 'mp-link', onClick: gehe,
       style: { minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.text },
