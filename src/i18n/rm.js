@@ -4466,7 +4466,7 @@ export default {
     basis: 'Il maletg stat.',
     wohnen: { sie: 'Vossa chasa ha in lieu.', du: 'Tia chasa ha in lieu.' },
     finanzen: { sie: 'Las cifras sa chattan davant Vus.', du: 'Las cifras sa chattan davant tai.' },
-    versicherungen: 'La protecziun è registrada.',
+    versicherungen: 'La protecziun è endatada.',
     ausbildung: 'Il percurs è documentà.',
     behoerden: 'Il stadi è documentà.',
     notfall: 'Las infurmaziuns èn deponidas.',

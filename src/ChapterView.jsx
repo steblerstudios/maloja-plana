@@ -2315,6 +2315,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // «Für den Fall der Fälle». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
     chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
       React.createElement(BehoerdenInstrument, {
+        allData,
         palette, t: tr, behoerden: data, onNavigate, lang, checked: checklistChecked,
         onToggle: (id, wert) => {
           const next = { ...checklistChecked, [id]: wert };

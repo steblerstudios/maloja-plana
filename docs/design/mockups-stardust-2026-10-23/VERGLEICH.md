@@ -1575,3 +1575,7 @@ Rente oder Selbständigkeit mit eingetragenem Wert: Bund rechnet, Kanton und Gem
 Nicht gelöst: Ausweise F, N, S fehlen als Option; Schweizer Bürgerinnen und Bürger mit Wohnsitz im Ausland (Art. 91) sind ohne Wohnsitzfeld nicht erkennbar. Texte fr, it, en, rm von Claude, nicht fachlich gegengelesen, rm mit `TODO(rm)`.
 
 **Überholt:** ~~Offen aus der Fachprüfung, nicht gebaut:~~ Finanzen und Steuerrechner zeigen die Zahl weiter auch bei möglicher Quellensteuer (`workPermit` wird in der Steuerlogik nicht gelesen) und bei Rente oder Selbständigkeit mit direkt eingetragenem Wert (Lohn-Reihe, nicht gemessen; `r4SteuerAnnahmen.test.js:215-221`). Die Sperre gehört in `kantonssteuerFuerProfil`; die Quellensteuer-Regel soll der rechts-pruefer vorher absegnen.
+
+### Nachprüfung «ist alles Entschiedene umgesetzt?» (01.11.2026)
+
+Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finanzen, nannte aber keinen Betrag; jetzt dieselbe Zahl mit «Grobe Schätzung», gleiche Sperren. **E-1:** «Der Schutz ist eingetragen», «Prämie nicht eingetragen» (de, rm). Die übrigen «erfasst» ausserhalb der Versicherungen (Steuer, IPV, Haushalt) bleiben bewusst: E-1 betraf Schild und Versicherungs-Übersicht.

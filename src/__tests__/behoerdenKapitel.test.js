@@ -102,6 +102,21 @@ describe('Texte in allen fünf Sprachen', () => {
 // Nachprüfung 25.10.2026 (swiss-precision Muss): der Haken nennt das Steuerjahr und ist als Vorschlag gekennzeichnet —
 // sonst stand «Steuererklärung eingereicht» angehakt neben der Frist fürs nächste Jahr.
 import { erledigtesSteuerjahr, offeneErklaerungen } from '../components/BehoerdenInstrument.jsx';
+import { LIGHT_PALETTE as PALETTE_K51 } from '../config/constants.js';
+
+describe('F7-K5-1: Behörden nennt dieselbe Steuerzahl wie Finanzen', () => {
+  const zeile = (allData) => nurText(renderToStaticMarkup(React.createElement(BehoerdenInstrument, { palette: PALETTE_K51, t: (k, p) => k + (p ? JSON.stringify(p) : ''), behoerden: DEMO_DATA.behoerden, onNavigate: () => {}, allData })));
+  it('Beispiel Maria: Gesamtbetrag mit Schätzung', () => {
+    expect(zeile(DEMO_DATA)).toContain('instrumente.steuerGanz');
+    expect(zeile(DEMO_DATA)).toContain('8’431');
+    expect(zeile(DEMO_DATA)).toContain('tax.roughEstimateBadge');
+  });
+  it('mögliche Quellensteuer und ohne Profil: keine Zahl', () => {
+    expect(zeile({ ...DEMO_DATA, ausbildung: { ...DEMO_DATA.ausbildung, workPermit: 'b' } })).not.toContain('instrumente.steuerGanz');
+    expect(zeile(undefined)).not.toContain('instrumente.steuerGanz');
+  });
+});
+
 describe('Nachprüfung: Steuerjahr und leere Werte', () => {
   const heute = new Date(2026, 9, 25);
   it('Frist noch vor uns, 0 offen: das Jahr davor ist erledigt (2027 → 2025)', () => {

@@ -2,6 +2,8 @@ import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
 import { auswahlLabel } from '../utils/auswahlLabel.js';
+import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
+import { zahl } from '../utils/geld.js';
 
 // Kapitel Behörden · oben (Fassung 6, Runde 9, Entwurf AD, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme 25.10.2026).
 // Ersetzt den Kasten «Folgende Stände und Fristen sind erfasst» (er wiederholte die Angaben) und die zugeklappte
@@ -29,8 +31,12 @@ const relativ = (tr, iso) => {
   return tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
 };
 
-export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, checked = {}, onToggle, lang = 'de' }) => {
+export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, checked = {}, onToggle, lang = 'de', allData }) => {
   const d = behoerden || {};
+  // F7-K5-1 (Stebler Studios 01.11.2026): dieselbe Zahl wie Finanzen und Säule. Mit derselben Regel: nur mit erfasstem Lohn,
+  // und die Sperren (mögliche Quellensteuer, Rente) sitzen in steuernFuerProfil.
+  const steuerJahr = (Number(allData?.finanzen?.monthlyIncome) || 0) > 0
+    ? steuernFuerProfil(steuerEingabenAusDaten(allData))?.kanton?.kantonal?.total : null;
   const h = React.createElement;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
@@ -67,7 +73,9 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
     steuerfristVorbei(d, heute) && h('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed } }, tr('behördenStatus.pastHint')),
     onNavigate && h('div', { style: { marginTop: space.sm + 'px' } },
       zeilenKnopf('steuern', tr('behoerdenInstrument.allesSteuern'), tr('behoerdenInstrument.allesSteuernSub'), () => onNavigate('tax')),
-      zeilenKnopf('finanzen', tr('behoerdenInstrument.zuFinanzen'), tr('behoerdenInstrument.zuFinanzenSub'), () => onNavigate('chapter', 2)))
+      zeilenKnopf('finanzen', tr('behoerdenInstrument.zuFinanzen'), steuerJahr != null
+        ? tr('instrumente.steuerGanz', { total: zahl(steuerJahr) }) + ' · ' + tr('tax.roughEstimateBadge') + ' · ' + tr('behoerdenInstrument.zuFinanzenSub')
+        : tr('behoerdenInstrument.zuFinanzenSub'), () => onNavigate('chapter', 2)))
   );
 
   // 2. Behördengänge

@@ -40,7 +40,7 @@ describe('Versicherungen pro Monat', () => {
   });
   it('Versicherung «Ja» ohne Prämie: genannt, nicht geschätzt', () => {
     const v = { ...DEMO_DATA.versicherungen, liabilityPremium: '' };
-    expect(nurText(instrument(v))).toContain('Haftpflicht: Prämie nicht erfasst.');
+    expect(nurText(instrument(v))).toContain('Haftpflicht: Prämie nicht eingetragen.');
   });
   it('Fahrzeugversicherung zählt nicht, mit Satz', () => {
     const v = { ...DEMO_DATA.versicherungen, autoInsurance: 'yes', autoInsuranceAmount: '900' };
@@ -120,7 +120,7 @@ describe('Nachprüfung', () => {
   });
   it('Kasse erfasst, Prämie nicht: «Krankenkasse» steht zuerst bei «nicht erfasst»', () => {
     const v = { ...DEMO_DATA.versicherungen, kkPremium: '', liabilityPremium: '' };
-    expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht erfasst.');
+    expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht eingetragen.');
   });
   it('KK-Last mit Quelle (WHO) und Marke «Orientierung»', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
