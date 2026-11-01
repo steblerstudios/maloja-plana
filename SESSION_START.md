@@ -28,6 +28,7 @@
 > - **Hausrat (Entscheid Stebler Studios, abends):** ausser NW und VD zeigt jeder Kanton «je nach Kanton Pflicht», nie mehr «freiwillig». VD bleibt «Pflicht», Erlass nicht gelesen.
 > - **Design-Review (Polygrafin):** 0 Blocker. Behoben: Legende bricht nicht im Betrag, Balken mit Abstand statt Rand, Steuern in `palette.sandDeep` statt Hex, «Unterlagen drucken» wählt mit 2-px-Rand, Schild-Namen 15 px.
 >   «Rohwerte und Verlauf» der Ablauf-Schale sind feste Masse und der Kopf-Verlauf, kein Datenabfluss (dort liegt nur die Schrittnummer). Nach dem Deploy: Token-Stufe für 22/30 px, Rechner-Titel in `fontFamilyDisplay` (rund 30 Byte), Pixelwerte im Schild.
+> - **Schild in fünf Sprachen gemessen** (Kurznamen gegen ihr Feld, 15 px): it «Economia domestica» und rm «Cassa da malsauns» ragten hinaus, jetzt «Casa» und «Sanadad». Gemessen durch Einsetzen der Texte ins Schild, nicht mit umgestellter Sprache (Sprache nur it im Bild).
 > - **Entscheid offen:** «erfasst» neben «eingetragen» in `vu.*` · «Schutzschild» neben «Schild» · `cv.title` nur de/rm angepasst.
 > - **Geprüft:** 7'551 Tests, Lint, Build, SEO 0/0, PII, 64.95 von 65 kB, Browser Beispiel Maria 375 px. Merkliste im Beispiel leer, dort nicht im Bild. Kein Screenreader.
 

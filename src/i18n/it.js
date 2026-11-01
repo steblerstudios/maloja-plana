@@ -6251,7 +6251,7 @@ export default {
     nochOffen: 'Obbligatorio, non ancora inserito: {liste}.',
     teilweise: 'Inserito in parte: {liste}.',
     ganz: 'In questo elenco non è aperta nessuna voce obbligatoria.',
-    kurz: { kk: 'Cassa malati', uvg: 'Infortuni', vorsorge: 'Previdenza', haushalt: 'Economia domestica', leben: 'Vita' },
+    kurz: { kk: 'Cassa malati', uvg: 'Infortuni', vorsorge: 'Previdenza', haushalt: 'Casa', leben: 'Vita' },
     vers: { kvg: 'Assicurazione di base (LAMal)', kkZusatz: 'Assicurazione complementare', uvg: 'Assicurazione infortuni (LAINF)', uvgZusatz: 'Complementare infortuni', ahv: '1° pilastro · AVS/AI', bvg: '2° pilastro · cassa pensione', saeule3a: '3° pilastro · pilastro 3a', haftpflicht: 'RC privata', hausrat: 'Economia domestica', leben: 'Assicurazione sulla vita' },
     art: { pflicht: 'obbligatoria', freiwillig: 'facoltativa', haftpflicht: 'non obbligatoria per legge', kantonPflicht: 'obbligatoria nel cantone {kanton} (incendio e danni della natura)', jeNachKanton: 'obbligatoria a seconda del cantone' },
     haftpflichtHinweis: 'RC privata: spesso richiesta dal locatore.',

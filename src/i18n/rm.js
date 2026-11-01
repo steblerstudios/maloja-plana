@@ -7290,7 +7290,7 @@ export default {
     teilweise: 'Endatà per part: {liste}.',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     ganz: 'En questa glista n’è avert nagin endataziun obligatorica.',
-    kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
+    kurz: { kk: 'Sanadad', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
     vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad civila', hausrat: 'Ménaschi', leben: 'Assicuranza da vita' },
     art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
