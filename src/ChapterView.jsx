@@ -73,7 +73,7 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
-const LohnEinordnung = React.lazy(() => import('./components/LohnEinordnung.jsx').then((m) => ({ default: m.LohnEinordnung })));
+const LohnImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.LohnImKapitel })));
 const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
 const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
 
@@ -2190,8 +2190,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ablage('chapterView.passend.ablageDokumente'),
       ];
       default: return [
-        // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5); im Entwurf «Neue Stelle».
-        { key: 'neuerjob', titel: P('neueStelle'), sub: schritte(5), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
+        // F7-L9 (01.11.2026): «Neue Stelle» und Stundenlohn hängen an Ausbildung & Arbeit, nicht mehr hier.
         // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
         { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: unterlagen, gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
         { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
@@ -2330,7 +2329,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // `aktuellesKapitel` fest 'ausbildung': ein «fehlt noch …»-Hinweis springt nicht ins eigene Kapitel.
     chapter.key === 'ausbildung' && allData && React.createElement(React.Suspense, { key: 'ausbildung-oben', fallback: null },
       React.createElement('div', { 'data-teil': 'ausbildung-lohn', style: { marginBottom: space.lg + 'px' } },
-        React.createElement(LohnEinordnung, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: 'ausbildung' })
+        React.createElement(LohnImKapitel, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, onNavigate })
       ),
       React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
     ),

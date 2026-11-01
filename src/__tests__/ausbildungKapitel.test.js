@@ -37,9 +37,9 @@ describe('Zusammenfassung', () => {
 });
 
 describe('Oben im Kapitel', () => {
-  it('Lohn-Barometer wie in Finanzen, fest auf «ausbildung»', () => {
-    expect(QUELLE).toContain("const LohnEinordnung = React.lazy(");
-    expect(QUELLE).toContain("aktuellesKapitel: 'ausbildung'");
+  it('F7-K4-1: der Lohnvergleich steht hier, nachgeladen, fest auf «ausbildung»', () => {
+    expect(QUELLE).toContain("const LohnImKapitel = React.lazy(");
+    expect(fs.readFileSync(path.resolve(__dirname, '../components/FinanzAuswertung.jsx'), 'utf8')).toContain("aktuellesKapitel: 'ausbildung', ohneBefund: true");
   });
   it('Vorschau des Lebenslaufs nur aus erfassten Angaben', () => {
     const text = nurText(renderToStaticMarkup(React.createElement(LebenslaufVorschau, { palette: LIGHT_PALETTE, t, ausbildung: DEMO_DATA.ausbildung, allData: DEMO_DATA, onNavigate: () => {} })));

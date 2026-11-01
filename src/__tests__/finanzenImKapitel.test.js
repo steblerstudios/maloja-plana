@@ -115,9 +115,9 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
   });
 
   // Muster M7 (25.10.2026): «Neue Stelle» wie im Entwurf (vorher der Register-Name «Neuer Job»).
-  it('«Passend»: Neue Stelle, Lohnausweis, Monatsbudget, Behörden-Dossier — keine Übersicht, keine IPV mehr', () => {
+  it('«Passend»: Lohnausweis, Monatsbudget, Behörden-Dossier — keine Übersicht, keine IPV mehr', () => {
     const text = nurText(render());
-    for (const s of ['Neue Stelle', 'Lohnausweis ablegen', 'Monatsbudget', 'Einnahmen und Ausgaben im Detail', 'Behörden-Dossier']) expect(text, s).toContain(s);
+    for (const s of ['Lohnausweis ablegen', 'Monatsbudget', 'Einnahmen und Ausgaben im Detail', 'Behörden-Dossier']) expect(text, s).toContain(s);
     expect(text).not.toContain('Alle Berechnungen auf einen Blick');
     expect(text).not.toContain('Prämienverbilligung prüfen');
   });
@@ -150,12 +150,13 @@ describe('Probiermodus-Knopf bei der Auswertung', () => {
 // Abnahme F6 (Stebler Studios 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
 // Kapitel kurz und ohne Verweis «ins Kapitel Finanzen & Geld».
 describe('Kapitel Finanzen · Abnahme F6', () => {
-  it('die Lohn-Hinweise stecken hinter «So ist gerechnet»', () => {
+  it('F7-K4-1: kein Lohnvergleich hier, nur der Weg nach Ausbildung & Arbeit', () => {
     const html = teil('oben', DEMO_DATA);
-    const block = html.match(/<details[^>]*data-teil="lohn-so-gerechnet"[^>]*>[\s\S]*?<\/details>/);
-    expect(block).not.toBeNull();
-    expect(block[0]).toContain('So ist gerechnet');
-    expect(nurText(block[0])).toContain('13. Monatslohn');
+    expect(html).not.toContain('data-teil="lohn-so-gerechnet"');
+    expect(nurText(html)).not.toContain('Branchenvergleich');
+    const weg = html.match(/<button[^>]*data-teil="lohn-weg"[^>]*>[\s\S]*?<\/button>/);
+    expect(weg).not.toBeNull();
+    expect(nurText(weg[0])).toContain('Wo steht Ihr Lohn? · Ausbildung & Arbeit');
   });
   it('Steuer-Karte im Kapitel: kurz, ohne Selbstverweis', () => {
     const text = nurText(teil('oben', DEMO_DATA));

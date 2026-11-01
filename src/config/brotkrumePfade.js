@@ -37,7 +37,7 @@ export const ELTERN_TITEL = Object.freeze({
 export const RECHNER_KAPITEL = Object.freeze({
   alv: 'finanzen',
   eo: 'finanzen',
-  stundenlohn: 'finanzen',
+  stundenlohn: 'ausbildung',
   kreditkarte: 'finanzen',
   mietzins: 'wohnen',
   stipendien: 'ausbildung',

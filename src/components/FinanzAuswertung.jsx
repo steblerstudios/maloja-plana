@@ -14,6 +14,7 @@ import { nettoZuBruttoRichtwert, AHV_FREIBETRAG_RENTNER_MONAT } from '../data/ah
 import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
+import { CHAPTER_KEYS } from '../config/constants.js';
 import { KKLastCard } from '../KKLastCard.jsx';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
@@ -253,7 +254,9 @@ const generatePrintHTML = (t, data, w) => {
 // Wo steht der Lohn: Armutsgrenzen-Befund, Lohn-Barometer, Branchen-Chips. Nur mit erfasstem Lohn.
 // `aktuellesKapitel` (im Kapitel Finanzen): der «fehlt noch …»-Hinweis des Barometers springt
 // nicht ins eigene Kapitel — die Einkommensart liegt dort (LohnEinordnung).
-export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel }) => {
+// F7-K4-1 (Stebler Studios 01.11.2026): Der Lohnvergleich gehört zur Arbeit. Im Kapitel Finanzen (`nurBefund`) bleibt der
+// Armutsgrenzen-Befund mit dem Weg dorthin; in Ausbildung & Arbeit (LohnImKapitel) steht der Vergleich ohne diesen Befund.
+export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel, nurBefund, ohneBefund }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
   const eigeneBranche = BRANCHENLOHN.find((b) => b.key !== 'gesamt' && b.key === data?.ausbildung?.branche) || null;
@@ -297,7 +300,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
   },
     // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
     // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.
-    unterArmutsgrenze && React.createElement('div', {
+    unterArmutsgrenze && !ohneBefund && React.createElement('div', {
       style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
     },
       React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
@@ -318,8 +321,12 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     ),
     // F7-K2-6 (Stebler Studios 27.10.2026): Die eigene Branche (Feld im Kapitel Ausbildung & Arbeit) steht als Marke auf dem
     // Barometer, solange keine andere angetippt ist; die übrigen 17 sind aufklappbar.
-    React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche || eigeneBranche, onNavigate, aktuellesKapitel }),
-    (() => {
+    nurBefund && onNavigate && React.createElement('button', {
+      type: 'button', className: 'mp-link', 'data-teil': 'lohn-weg', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+      style: { background: 'none', border: 0, padding: 0, minHeight: '44px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
+    }, t('lohnEinordnung.title') + ' · ' + t('chapters.ausbildung.title') + ' ›'),
+    !nurBefund && React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche || eigeneBranche, onNavigate, aktuellesKapitel }),
+    !nurBefund && (() => {
       const vgl = getBranchenvergleich(income);
       if (!vgl) return null;
       // Chips gegen DENSELBEN Wert färben wie das Barometer (Vollzeit-/13.-normiert),
@@ -383,6 +390,14 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       );
     })()
   );
+};
+
+// Lohnvergleich im Kapitel Ausbildung & Arbeit (F7-K4-1): mit Lohn Barometer und Branchen, ohne Lohn der Hinweis des Barometers.
+export const LohnImKapitel = ({ palette, t, data, isDarkMode, onNavigate }) => {
+  const w = finanzWerte(data, t);
+  return w.income > 0
+    ? React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'ausbildung', ohneBefund: true })
+    : React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: 'ausbildung' });
 };
 
 // Was daraus folgt: je Karte eine Funktion (siehe oben), alle mit ({ palette, t, data, onNavigate, w }).
@@ -625,7 +640,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement('div', { 'data-teil': 'geldfluss' },
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),
-    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen' }),
+    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
       steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), kkLastKarte(p), gesundheitKarte(p), vermoegenKarte(p),

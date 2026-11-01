@@ -110,10 +110,10 @@ describe('«Jeden Monat bleiben»', () => {
 describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
   // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV im Kapitel selbst; «Passend»
   // führt zu Budget und Behörden-Dossier (die zwei Wege der früheren Übersicht).
-  it('vier Wege zu Zielen, die es in der App gibt', () => {
+  it('Wege zu Zielen, die es in der App gibt; «Neue Stelle» hängt seit F7-L9 an Ausbildung', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     expect(html).toContain('Passend zu diesem Bereich');
-    for (const s of ['Neue Stelle', 'Ablauf · 5 Schritte', 'Lohnausweis ablegen', 'Monatsbudget', 'Behörden-Dossier']) {
+    for (const s of ['Lohnausweis ablegen', 'Monatsbudget', 'Behörden-Dossier']) {
       expect(html).toContain(s);
     }
   });
@@ -125,7 +125,7 @@ describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
   it('die Ziele sind Ansichten, die die App wirklich zeigt (main.jsx)', () => {
     const main = fs.readFileSync(path.resolve(__dirname, '../main.jsx'), 'utf8');
     // 'behoerdendossier' ist seit 27.10.2026 (F7-S2) eine Umleitung auf «Unterlagen drucken» (drucken).
-    for (const v of ['neuerjob', 'sync', 'drucken', 'tresor']) expect(main).toContain("view === '" + v + "' && React.createElement(");
+    for (const v of ['sync', 'drucken', 'tresor']) expect(main).toContain("view === '" + v + "' && React.createElement(");
     expect(UMLEITUNGEN.behoerdendossier).toMatchObject({ view: 'drucken', wahl: 'amt' });
   });
 
