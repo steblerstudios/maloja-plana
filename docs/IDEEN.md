@@ -204,6 +204,9 @@ Abschiedsagentur, plaant).
   eine Reihenfolge mit Grund sind brauchbar; Streak, Angst-Zahl und Neon-Optik nicht.
   **Vorschlag, noch nicht entschieden:** «besser» heisst im Haus *aufgeräumter*, nie *reicher*;
   gemessen wird Erledigtes, nie Einkommen, Vermögen oder Schulden.
+- 🌱 **Digitale Ordnung, Schweizer Fassung** *⟨Konzept 01.11.2026⟩* — acht Bereiche von Schlüssel
+  bis Nachlass, echte Handlungen mit Belegen von BACS, EDÖB und Fedlex, Eingangstür als Haut.
+  Konzept: [`design/digitale-ordnung-schweiz.md`](design/digitale-ordnung-schweiz.md). Nicht gebaut.
 - ⟨überholt 01.11.2026, bleibt als Herkunft⟩ **Widerspruch Gamification** — House of Life (19.07.) sagt «keine Gamification»;
   `design/grundstueck-und-modi.md` (13.07.) hat Gamification bewusst **erlaubt**: Momentum im
   Kern, verspielte Welt als abschaltbare Haut, nie Wettbewerb. Beide Texte sind danach nie
