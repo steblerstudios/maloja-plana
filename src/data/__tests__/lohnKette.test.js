@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { lohnBandState, lohnKette, lohnSpiegel } from '../lohnEinordnung.js';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { LohnEinordnung } from '../../components/LohnEinordnung.jsx';
+import { LIGHT_PALETTE } from '../../config/constants.js';
+import { lohnBandState, lohnKette, lohnSpiegel, lohnVergleichSperre } from '../lohnEinordnung.js';
 
 const daten = (f = {}, rest = {}) => ({ finanzen: { incomeType: 'netto', monthlyIncome: '6200', ...f }, basis: { nationality: 'swiss' }, ...rest });
 const stand = (d, stunden = 42, { alter = 34, ...rest } = {}) => lohnBandState({ income: d.finanzen.monthlyIncome, incomeType: d.finanzen.incomeType, dreizehnter: d.finanzen.dreizehnter, hoursPerWeek: stunden, alter, ...rest });
@@ -94,5 +98,37 @@ describe('Lohn-Spiegel in Finanzen', () => {
     expect(lohnSpiegel(stand(q), q, { alter: 34 })).toBeNull();
     const d = daten();
     expect(lohnSpiegel(stand(d), d, { alter: 34, beitragsfrei: true })).toBeNull();
+  });
+});
+
+describe('Sperre für Lohn-Vergleiche', () => {
+  it('Rente, Selbständigkeit, Rentenalter ohne Anstellung', () => {
+    expect(lohnVergleichSperre(daten({ employmentType: 'selfEmployed', incomeType: 'brutto' }))).toBe('keinLohn');
+    expect(lohnVergleichSperre(daten({ employmentType: 'retired' }))).toBe('keinLohn');
+    expect(lohnVergleichSperre(daten(), true)).toBe('keinLohn');
+    expect(lohnVergleichSperre(daten({ employmentType: 'employed' }), true)).toBeNull();
+  });
+  it('Quellensteuer nur auf Netto', () => {
+    expect(lohnVergleichSperre(daten({}, { ausbildung: { workPermit: 'b' } }))).toBe('quellensteuer');
+    expect(lohnVergleichSperre(daten({ incomeType: 'brutto' }, { ausbildung: { workPermit: 'b' } }))).toBeNull();
+    expect(lohnVergleichSperre(daten())).toBeNull();
+  });
+});
+
+describe('Barometer mit Sperre', () => {
+  const zeige = (f, rest = {}) => renderToStaticMarkup(React.createElement(LohnEinordnung, {
+    palette: LIGHT_PALETTE, t: (k) => k, isDarkMode: false,
+    data: daten({ monthlyIncome: '3000', incomeType: 'brutto', ...f }, { ausbildung: { workHoursPerWeek: '42' }, basis: { canton: 'GE', nationality: 'swiss' }, ...rest }),
+  }));
+  it('Selbständig in Genf: kein Urteil, keine Mindestlohn-Warnung', () => {
+    const html = zeige({ employmentType: 'selfEmployed' });
+    expect(html).toContain('lohnEinordnung.sperre_keinLohn');
+    expect(html).not.toContain('readout');
+    expect(html).not.toContain('mindestlohn');
+  });
+  it('Angestellt in Genf: Barometer und Mindestlohn wie bisher', () => {
+    const html = zeige({ employmentType: 'employed' });
+    expect(html).toContain('readout');
+    expect(html).toContain('mindestlohn');
   });
 });

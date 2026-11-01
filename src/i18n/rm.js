@@ -4619,6 +4619,8 @@ export default {
     ketteHinweis13: { sie: 'Sche Vus survegnis in 13avel salari, è Voss valur da cumparegliaziun var 8 % pli aut.', du: 'Sche ti survegns in 13avel salari, è tia valur da cumparegliaziun var 8 % pli auta.' },
     spiegel: 'Net {netto}, ≈ {brutto} brut (stimà).',
     spiegelOhnePk: 'Net {netto}, ≈ {brutto} brut (stimà senza cassa da pensiun).',
+    sperre_keinLohn: { sie: 'La cumparegliaziun cun il median svizzer vala per salaris d’emploiads, perquai na la mussain nus betg qua. Sch’igl è in salari, tscherni en il chapitel Finanzas «Emploià» sco tip d’engaschament.', du: 'La cumparegliaziun cun il median svizzer vala per salaris d’emploiads, perquai na la mussain nus betg qua. Sch’igl è in salari, tscherna en il chapitel Finanzas «Emploià» sco tip d’engaschament.' },
+    sperre_quellensteuer: { sie: 'Cun ina taglia a la funtauna pussaivla na sa lascha betg stimar in brut fidaivel dal net. Cun il salari brut da Voss quint da paja al pudain nus classifitgar.', du: 'Cun ina taglia a la funtauna pussaivla na sa lascha betg stimar in brut fidaivel dal net. Cun il salari brut da tes quint da paja al pudain nus classifitgar.' },
     soIstGerechnet: 'Uschia è quint',
     dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
     ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8 % pli auta.",

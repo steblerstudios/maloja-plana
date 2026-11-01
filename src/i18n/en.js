@@ -3173,6 +3173,8 @@ export default {
     ketteHinweis13: 'If you receive a 13th month’s salary, your comparison value is about 8 % higher.',
     spiegel: 'Net {netto}, ≈ {brutto} gross (estimated).',
     spiegelOhnePk: 'Net {netto}, ≈ {brutto} gross (estimated without pension fund).',
+    sperre_keinLohn: 'The comparison with the Swiss median applies to employees’ wages, so it is not shown here. If this is a wage, choose «Employed» as employment type in the Finances chapter.',
+    sperre_quellensteuer: 'With possible withholding tax, no reliable gross can be estimated from net. With the gross wage from your payslip we can place it.',
     soIstGerechnet: 'How this is calculated',
     dreizehnterNote: 'The comparison figure includes the pro-rated 13th month salary (×13/12) so it matches the FSO median. Without the 13th it would be CHF {fte}.',
     ohneDreizehnterNote: 'Comparison without a pro-rated 13th month salary. With a 13th, the figure would be around 8% higher.',

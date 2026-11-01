@@ -3173,6 +3173,8 @@ export default {
     ketteHinweis13: { sie: 'Si vous recevez un 13e salaire, votre valeur de comparaison est environ 8 % plus élevée.', du: 'Si tu reçois un 13e salaire, ta valeur de comparaison est environ 8 % plus élevée.' },
     spiegel: 'Net {netto}, ≈ {brutto} brut (estimé).',
     spiegelOhnePk: 'Net {netto}, ≈ {brutto} brut (estimé sans caisse de pension).',
+    sperre_keinLohn: { sie: 'La comparaison avec la médiane suisse concerne les salaires des personnes employées, elle n’est donc pas affichée ici. S’il s’agit d’un salaire, choisissez « Salarié » comme type d’emploi dans le chapitre Finances.', du: 'La comparaison avec la médiane suisse concerne les salaires des personnes employées, elle n’est donc pas affichée ici. S’il s’agit d’un salaire, choisis « Salarié » comme type d’emploi dans le chapitre Finances.' },
+    sperre_quellensteuer: { sie: 'En cas d’impôt à la source possible, le net ne permet pas d’estimer un brut fiable. Avec le salaire brut de votre décompte, nous pouvons le situer.', du: 'En cas d’impôt à la source possible, le net ne permet pas d’estimer un brut fiable. Avec le salaire brut de ton décompte, nous pouvons le situer.' },
     soIstGerechnet: 'Comment c’est calculé',
     dreizehnterNote: 'La valeur de comparaison inclut la part du 13e salaire (×13/12) pour correspondre à la médiane de l’OFS. Sans 13e, ce serait CHF {fte}.',
     ohneDreizehnterNote: 'Comparaison sans part du 13e salaire. Avec un 13e, la valeur serait environ 8 % plus élevée.',

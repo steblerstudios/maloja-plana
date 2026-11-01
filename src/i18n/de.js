@@ -3190,6 +3190,8 @@ export default {
     ketteHinweis13: { sie: 'Falls Sie einen 13. Monatslohn erhalten, liegt Ihr Vergleichswert rund 8 % höher.', du: 'Falls Du einen 13. Monatslohn erhältst, liegt Dein Vergleichswert rund 8 % höher.' },
     spiegel: 'Netto {netto}, ≈ {brutto} brutto (geschätzt).',
     spiegelOhnePk: 'Netto {netto}, ≈ {brutto} brutto (ohne Pensionskasse geschätzt).',
+    sperre_keinLohn: { sie: 'Der Vergleich mit dem Schweizer Median gilt für Löhne von Angestellten, darum zeigen wir ihn hier nicht. Ist es ein Lohn, wählen Sie im Kapitel Finanzen beim Anstellungstyp «Angestellt».', du: 'Der Vergleich mit dem Schweizer Median gilt für Löhne von Angestellten, darum zeigen wir ihn hier nicht. Ist es ein Lohn, wähle im Kapitel Finanzen beim Anstellungstyp «Angestellt».' },
+    sperre_quellensteuer: { sie: 'Bei möglicher Quellensteuer lässt sich aus dem Netto kein verlässliches Brutto schätzen. Mit dem Bruttolohn von Ihrer Lohnabrechnung ordnen wir ihn ein.', du: 'Bei möglicher Quellensteuer lässt sich aus dem Netto kein verlässliches Brutto schätzen. Mit dem Bruttolohn von Deiner Lohnabrechnung ordnen wir ihn ein.' },
     soIstGerechnet: 'So ist gerechnet',
     dreizehnterNote: 'Der Vergleichswert enthält den anteiligen 13. Monatslohn (×13/12), damit er zum BFS-Median passt. Ohne 13. wären es CHF {fte}.',
     ohneDreizehnterNote: 'Vergleich ohne anteiligen 13. Monatslohn. Mit einem 13. läge der Vergleichswert rund 8 % höher.',

@@ -13,7 +13,7 @@ import { BRANCHENLOHN, getBranchenvergleich } from '../data/branchenLohn.js';
 import { berechneArmutsgrenze } from '../data/sozialhilfeRechner.js';
 import { nettoZuBruttoRichtwert, AHV_FREIBETRAG_RENTNER_MONAT } from '../data/ahvRechner.js';
 import { LohnEinordnung } from './LohnEinordnung.jsx';
-import { lohnBandState, lohnSpiegel } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnSpiegel, lohnVergleichSperre } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
@@ -337,7 +337,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     }, t('lohnEinordnung.title') + ' · ' + t('chapters.ausbildung.title') + ' ›'),
     !nurBefund && React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche || eigeneBranche, onNavigate, aktuellesKapitel }),
     !nurBefund && (() => {
-      const vgl = getBranchenvergleich(income);
+      const vgl = lohnVergleichSperre(data, rentenalter) ? null : getBranchenvergleich(income);
       if (!vgl) return null;
       // Chips gegen DENSELBEN Wert färben wie das Barometer (Vollzeit-/13.-normiert),
       // sonst widersprechen sich grüner Chip und Marker-Position (roh 5200 vs. FTE 4952).

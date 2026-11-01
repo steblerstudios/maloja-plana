@@ -223,13 +223,17 @@ export function lohnEinordnungErgebnis({ income, incomeType, hoursPerWeek }) {
 // Lohn-Kette (Stebler Studios 01.11.2026): von der Angabe bis zum Vergleich mit dem Median, Zeile für Zeile,
 // aus denselben Werten wie das Barometer. `null`, wenn sie nichts Haltbares sagen kann: Barometer nicht
 // vergleichbar, Rente oder Geschäftsgewinn, oder Netto mit möglicher Quellensteuer (der Richtwert kennt sie nicht).
+// Warum ein Lohn-Vergleich nichts Haltbares sagt, oder null. Eine Regel für Kette, Spiegel, Barometer und Branchen.
 // Im Rentenalter ohne ausdrücklich «angestellt» ist das Einkommen vermutlich eine Rente.
-const lohnSchaetzungHaltbar = (data, rentenalter) => !einkommenIstKeinLohn(data)
-  && !(rentenalter && data?.finanzen?.employmentType !== 'employed')
-  && !(data?.finanzen?.incomeType === 'netto' && quellensteuerMoeglich(data));
+// Netto mit möglicher Quellensteuer: der Richtwert kennt sie nicht, das geschätzte Brutto läge zu tief.
+export function lohnVergleichSperre(data, rentenalter) {
+  if (einkommenIstKeinLohn(data) || (rentenalter && data?.finanzen?.employmentType !== 'employed')) return 'keinLohn';
+  if (data?.finanzen?.incomeType === 'netto' && quellensteuerMoeglich(data)) return 'quellensteuer';
+  return null;
+}
 
 export function lohnKette(state, data, { alter, rentenalter, beitragsfrei } = {}) {
-  if (!state?.comparable || !lohnSchaetzungHaltbar(data, rentenalter)) return null;
+  if (!state?.comparable || lohnVergleichSperre(data, rentenalter)) return null;
   const zeilen = [];
   if (state.geschaetzt) {
     zeilen.push({ key: 'ketteNetto', betrag: state.incomeRoh });
@@ -246,6 +250,6 @@ export function lohnKette(state, data, { alter, rentenalter, beitragsfrei } = {}
 
 // Spiegel im Kapitel Finanzen: Netto und geschätztes Brutto, ohne Median. Nur bei netto erfasstem Lohn.
 export function lohnSpiegel(state, data, { alter, rentenalter, beitragsfrei } = {}) {
-  if (!state?.geschaetzt || beitragsfrei || !lohnSchaetzungHaltbar(data, rentenalter)) return null;
+  if (!state?.geschaetzt || beitragsfrei || lohnVergleichSperre(data, rentenalter)) return null;
   return { key: alter == null ? 'spiegelOhnePk' : 'spiegel', netto: state.incomeRoh, brutto: state.income };
 }

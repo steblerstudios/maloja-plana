@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
-import { lohnBandState, lohnEinordnungErgebnis, lohnKette, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnEinordnungErgebnis, lohnKette, lohnVergleichSperre, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
@@ -139,6 +139,16 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     return React.createElement('div', { style: card },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),
       React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('lohnEinordnung.empty')),
+      artZeile
+    );
+  }
+
+  // Rente, Geschäftsgewinn oder Netto mit möglicher Quellensteuer: kein Balken, kein Urteil, keine Mindestlohn-Warnung.
+  const sperre = lohnVergleichSperre(data, rentenalter);
+  if (sperre) {
+    return React.createElement('div', { style: card, 'data-teil': 'lohn-gesperrt' },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),
+      React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('lohnEinordnung.sperre_' + sperre)),
       artZeile
     );
   }

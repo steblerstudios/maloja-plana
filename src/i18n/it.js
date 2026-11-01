@@ -3480,6 +3480,8 @@ export default {
     ketteHinweis13: { sie: 'Se riceve una 13a mensilità, il suo valore di confronto è più alto di circa l’8 %.', du: 'Se ricevi una 13a mensilità, il tuo valore di confronto è più alto di circa l’8 %.' },
     spiegel: 'Netto {netto}, ≈ {brutto} lordo (stimato).',
     spiegelOhnePk: 'Netto {netto}, ≈ {brutto} lordo (stimato senza cassa pensioni).',
+    sperre_keinLohn: { sie: 'Il confronto con la mediana svizzera vale per i salari dei dipendenti, perciò qui non è mostrato. Se si tratta di un salario, scelga «Dipendente» come tipo di impiego nel capitolo Finanze.', du: 'Il confronto con la mediana svizzera vale per i salari dei dipendenti, perciò qui non è mostrato. Se si tratta di un salario, scegli «Dipendente» come tipo di impiego nel capitolo Finanze.' },
+    sperre_quellensteuer: { sie: 'Con una possibile imposta alla fonte, dal netto non si può stimare un lordo affidabile. Con il salario lordo del suo conteggio possiamo collocarlo.', du: 'Con una possibile imposta alla fonte, dal netto non si può stimare un lordo affidabile. Con il salario lordo del tuo conteggio possiamo collocarlo.' },
     soIstGerechnet: 'Come è calcolato',
     dreizehnterNote: 'Il valore di confronto include la quota di tredicesima (×13/12) per corrispondere alla mediana UST. Senza tredicesima sarebbe CHF {fte}.',
     ohneDreizehnterNote: 'Confronto senza quota di tredicesima. Con una tredicesima il valore sarebbe circa l’8 % più alto.',
