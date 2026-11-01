@@ -2348,13 +2348,6 @@ export default {
     },
     versicherungen: {
       title: 'Assicuranzas & prevenziun',
-      netz: {
-        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-        achse: { basic: 'Cassa da malsauns', occupational: 'Cassa da pensiun', additional: 'Ulteriuras', property: 'Chasa & viadi', mobility: 'Auto', social: 'AVS' },
-        aria: 'Rait da las assicuranzas: Il pli lunsch ch’in piz tanscha anora, il dapli è endatà en quest chapitel.',
-        hinweis: { sie: 'Mussa quant è endatà per mintga assicuranza, betg sche Vus essas bain assicurads. «Na concerna betg» quinta er.', du: 'Mussa quant è endatà per mintga assicuranza, betg sche ti es bain assicurà. «Na concerna betg» quinta er.' },
-        leer: 'Anc n’è nagut endatà. Mintga part crescha qua anora, uschespert ch’ella cuntegna insatge.',
-      },
       // TODO(rm): 'Assicuranza' (singular) da la fuorma plurala dal titel — controlar tar
       // ina/in linguist/a natal/a.
       short: 'Assicuranza',
@@ -4264,11 +4257,6 @@ export default {
     notificationBody: { sie: 'Avri Maloja Plana per examinar Vossas commemoraziuns.', du: 'Avra Maloja Plana per examinar Tias commemoraziuns.' },
   },
 
-  emergencyCardEntry: {
-    title: "Preparar la carta d'urgenza",
-    text: { sie: 'Ina persuna da contact e Vossa gruppa da sang bastan sco cumenzament.', du: 'Ina persuna da contact e Tia gruppa da sang bastan sco cumenzament.' },
-    action: "Avrir la carta d'urgenza",
-  },
 
   anspruch: {
     pageTitle: 'Survista da las prestaziuns',
@@ -4494,21 +4482,6 @@ export default {
     next: 'Enavos tar la survista',
   },
 
-  versicherungsübersicht: {
-    title: "Survista d'assicuranzas",
-    intro: { sie: "Quests secturs èn visibels en Vossa deposita. «Betg registrà» na vul betg dir «betg avant maun».", du: "Quests secturs èn visibels en Tia deposita. «Betg registrà» na vul betg dir «betg avant maun»." },
-    erfasst: 'Registrà',
-    nichtErfasst: 'Betg registrà',
-    kvg: 'Assicuranza da basa (LAMal)',
-    bvg: 'Cassa da pensiun (LPP)',
-    uvg: "Assicuranza d'accidents (LAINF)",
-    haftpflicht: 'Responsabladad civila',
-    hausrat: 'Assicuranza dal ménaschi',
-    reise: 'Assicuranza da viadi',
-    cyber: 'Cyberassicuranza',
-    fahrzeug: 'Assicuranza da vehichel',
-    ahv: 'AVS/AI/EO',
-  },
 
   // Fassung 6 · chapitel Abitar, instrument sisum (runda 9, sboz Z, 24.10.2026). Remplazza «wohnkostenanteil».
   // rm ungeprüft F6
@@ -4675,12 +4648,6 @@ export default {
 
 
 
-  debtValidation: {
-    creditorRequired: 'Creditur necessari',
-    amountInvalid: 'Import nunvalid',
-    dateRequired: "Data d'inscripziun necessaria",
-    documentRequired: 'Document da cumprova necessari',
-  },
 
   residence: {
     mainResidence: 'Domicil principal',

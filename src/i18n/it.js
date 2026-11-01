@@ -1610,11 +1610,6 @@ export default {
     emergency: { sie: 'Prepari la Sua scheda d\'emergenza — 2 minuti', du: 'Prepara la tua scheda d\'emergenza — 2 minuti' },
   },
 
-  emergencyCardEntry: {
-    title: { sie: 'Prepari la Sua scheda di emergenza', du: 'Prepara la tua scheda di emergenza' },
-    text: { sie: 'Una persona di contatto e il Suo gruppo sanguigno bastano per iniziare.', du: 'Una persona di contatto e il tuo gruppo sanguigno bastano per iniziare.' },
-    action: 'Apri la scheda di emergenza',
-  },
 
   anspruch: {
     pageTitle: 'Panoramica delle prestazioni',
@@ -2182,12 +2177,6 @@ export default {
     },
     versicherungen: {
       title: 'Assicurazioni',
-      netz: {
-        achse: { basic: 'Cassa malati', occupational: 'Cassa pensioni', additional: 'Altre', property: 'Economia dom. & viaggio', mobility: 'Auto', social: 'AVS' },
-        aria: 'Rete delle assicurazioni: più una punta si estende verso l’esterno, più quella sezione è compilata.',
-        hinweis: { sie: 'Mostra quanto è compilato per ogni assicurazione, non se Lei è assicurata/o bene. Anche «Non pertinente» conta.', du: 'Mostra quanto è compilato per ogni assicurazione, non se sei assicurata/o bene. Anche «Non pertinente» conta.' },
-        leer: 'Non è ancora compilato nulla. Ogni sezione cresce qui verso l’esterno appena contiene qualcosa.',
-      },
       short: 'Assicurazioni',
       description: 'Cassa malati, previdenza e coperture',
       intro: { sie: 'I dettagli delle Sue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.', du: 'I dettagli delle tue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.' },
@@ -2370,21 +2359,6 @@ export default {
     cardFooter: 'Creato con Maloja Plana · Stato delle informazioni all\'ultimo salvataggio',
   },
 
-  versicherungsübersicht: {
-    title: 'Panoramica assicurazioni',
-    intro: { sie: 'Questi ambiti sono visibili nel Suo archivio. «Non documentato» non significa «inesistente».', du: 'Questi ambiti sono visibili nel tuo archivio. «Non documentato» non significa «inesistente».' },
-    erfasst: 'Documentato',
-    nichtErfasst: 'Non documentato',
-    kvg: 'Assicurazione di base (LAMal)',
-    bvg: 'Cassa pensioni (LPP)',
-    uvg: 'Assicurazione infortuni (LAINF)',
-    haftpflicht: 'Assicurazione responsabilità civile',
-    hausrat: 'Assicurazione economia domestica',
-    reise: 'Assicurazione viaggio',
-    cyber: 'Assicurazione cyber',
-    fahrzeug: 'Assicurazione veicolo',
-    ahv: 'AVS/AI/IPG',
-  },
 
   behördenStatus: {
     intro: 'I seguenti stati e scadenze sono documentati.',
@@ -4226,12 +4200,6 @@ export default {
 
 
 
-  debtValidation: {
-    creditorRequired: 'Creditore richiesto',
-    amountInvalid: 'Importo non valido',
-    dateRequired: 'Data di registrazione richiesta',
-    documentRequired: 'Documento giustificativo richiesto',
-  },
 
   residence: {
     mainResidence: 'Residenza principale',

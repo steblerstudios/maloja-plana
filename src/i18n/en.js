@@ -1610,11 +1610,6 @@ export default {
     emergency: 'Prepare your emergency card — 2 minutes',
   },
 
-  emergencyCardEntry: {
-    title: 'Prepare your emergency card',
-    text: 'A contact person and your blood type are enough to start.',
-    action: 'Open emergency card',
-  },
 
   anspruch: {
     pageTitle: 'Your entitlements at a glance',
@@ -2182,12 +2177,6 @@ export default {
     },
     versicherungen: {
       title: 'Insurance',
-      netz: {
-        achse: { basic: 'Health', occupational: 'Pension fund', additional: 'Other', property: 'Home & travel', mobility: 'Car', social: 'AHV' },
-        aria: 'Web of insurances: the further a corner reaches out, the more is filled in for that section.',
-        hinweis: { sie: 'Shows how much is filled in for each insurance, not whether you are well insured. “Not applicable” counts too.', du: 'Shows how much is filled in for each insurance, not whether you are well insured. “Not applicable” counts too.' },
-        leer: 'Nothing is filled in yet. Each section grows outwards here as soon as something is in it.',
-      },
       short: 'Insurance',
       description: 'Health insurance, pension, and coverage',
       intro: 'Your insurance details in one place. Helpful when switching providers or applying for premium reductions.',
@@ -2370,21 +2359,6 @@ export default {
     cardFooter: 'Created with Maloja Plana · Information as of last save',
   },
 
-  versicherungsübersicht: {
-    title: 'Insurance overview',
-    intro: 'These areas are visible in your filing. "Not recorded" does not mean "not existing".',
-    erfasst: 'Recorded',
-    nichtErfasst: 'Not recorded',
-    kvg: 'Basic health insurance (KVG)',
-    bvg: 'Pension fund (BVG)',
-    uvg: 'Accident insurance (UVG)',
-    haftpflicht: 'Liability insurance',
-    hausrat: 'Household insurance',
-    reise: 'Travel insurance',
-    cyber: 'Cyber insurance',
-    fahrzeug: 'Vehicle insurance',
-    ahv: 'AHV/IV/EO',
-  },
 
   behördenStatus: {
     intro: 'The following statuses and deadlines are on record.',
@@ -4225,12 +4199,6 @@ export default {
 
 
 
-  debtValidation: {
-    creditorRequired: 'Creditor required',
-    amountInvalid: 'Amount invalid',
-    dateRequired: 'Registration date required',
-    documentRequired: 'Supporting document required',
-  },
 
   residence: {
     mainResidence: 'Main residence',

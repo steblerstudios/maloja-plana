@@ -1615,11 +1615,6 @@ export default {
     emergency: 'Notfallkarte vorbereiten — 2 Minuten',
   },
 
-  emergencyCardEntry: {
-    title: 'Notfallkarte vorbereiten',
-    text: { sie: 'Eine Kontaktperson und Ihre Blutgruppe reichen als Anfang.', du: 'Eine Kontaktperson und deine Blutgruppe reichen als Anfang.' },
-    action: 'Notfallkarte öffnen',
-  },
 
   anspruch: {
     pageTitle: 'Ansprüche im Überblick',
@@ -2191,12 +2186,6 @@ export default {
     },
     versicherungen: {
       title: 'Versicherungen & Vorsorge',
-      netz: {
-        achse: { basic: 'Krankenkasse', occupational: 'Pensionskasse', additional: 'Weitere', property: 'Hausrat & Reise', mobility: 'Auto', social: 'AHV' },
-        aria: 'Netz der Versicherungen: Je weiter eine Ecke nach aussen reicht, desto mehr ist in diesem Abschnitt eingetragen.',
-        hinweis: { sie: 'Zeigt, wie viel zu jeder Versicherung eingetragen ist, nicht, ob Sie gut versichert sind. «Trifft nicht zu» zählt mit.', du: 'Zeigt, wie viel zu jeder Versicherung eingetragen ist, nicht, ob du gut versichert bist. «Trifft nicht zu» zählt mit.' },
-        leer: 'Noch ist nichts eingetragen. Jeder Abschnitt wächst hier nach aussen, sobald etwas drinsteht.',
-      },
       short: 'Versicherung',
       description: 'Krankenkasse, Pensionskasse und Absicherung',
       intro: { sie: 'Ihre Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.', du: 'Deine Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.' },
@@ -2379,21 +2368,6 @@ export default {
     cardFooter: 'Erstellt mit Maloja Plana · Informationsstand beim letzten Speichern',
   },
 
-  versicherungsübersicht: {
-    title: 'Versicherungsübersicht',
-    intro: { sie: 'Diese Bereiche sind in Ihrer Ablage sichtbar. «Nicht erfasst» bedeutet nicht «nicht vorhanden».', du: 'Diese Bereiche sind in Deiner Ablage sichtbar. «Nicht erfasst» bedeutet nicht «nicht vorhanden».' },
-    erfasst: 'Erfasst',
-    nichtErfasst: 'Nicht erfasst',
-    kvg: 'Grundversicherung (KVG)',
-    bvg: 'Pensionskasse (BVG)',
-    uvg: 'Unfallversicherung (UVG)',
-    haftpflicht: 'Haftpflichtversicherung',
-    hausrat: 'Hausratversicherung',
-    reise: 'Reiseversicherung',
-    cyber: 'Cyberversicherung',
-    fahrzeug: 'Fahrzeugversicherung',
-    ahv: 'AHV/IV/EO',
-  },
 
   behördenStatus: {
     intro: 'Folgende Stände und Fristen sind erfasst.',
@@ -4273,12 +4247,6 @@ export default {
 
 
 
-  debtValidation: {
-    creditorRequired: 'Gläubiger erforderlich',
-    amountInvalid: 'Betrag ungültig',
-    dateRequired: 'Registrationsdatum erforderlich',
-    documentRequired: 'Nachweis-Dokument erforderlich',
-  },
 
   residence: {
     mainResidence: 'Hauptwohnsitz',

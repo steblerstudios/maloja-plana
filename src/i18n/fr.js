@@ -1610,11 +1610,6 @@ export default {
     emergency: 'Préparer la carte d’urgence — 2 minutes',
   },
 
-  emergencyCardEntry: {
-    title: { sie: 'Préparer votre carte d\'urgence', du: 'Préparer ta carte d\'urgence' },
-    text: { sie: 'Une personne de contact et votre groupe sanguin suffisent pour commencer.', du: 'Une personne de contact et ton groupe sanguin suffisent pour commencer.' },
-    action: 'Ouvrir la carte d\'urgence',
-  },
 
   anspruch: {
     pageTitle: 'Aperçu des prestations',
@@ -2182,12 +2177,6 @@ export default {
     },
     versicherungen: {
       title: 'Assurances',
-      netz: {
-        achse: { basic: 'Caisse maladie', occupational: 'Caisse de pension', additional: 'Autres', property: 'Ménage & voyage', mobility: 'Voiture', social: 'AVS' },
-        aria: 'Toile des assurances : plus une pointe s’étend vers l’extérieur, plus cette section est remplie.',
-        hinweis: { sie: 'Montre ce qui est rempli pour chaque assurance, pas si vous êtes bien assuré·e. « Non applicable » compte aussi.', du: 'Montre ce qui est rempli pour chaque assurance, pas si tu es bien assuré·e. « Non applicable » compte aussi.' },
-        leer: 'Rien n’est encore rempli. Chaque section s’étend ici vers l’extérieur dès qu’elle contient quelque chose.',
-      },
       short: 'Assurances',
       description: 'Assurance maladie, prévoyance et couverture',
       intro: { sie: 'Vos assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.', du: 'Tes assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.' },
@@ -2370,21 +2359,6 @@ export default {
     cardFooter: 'Créé avec Maloja Plana · État des informations lors de la dernière sauvegarde',
   },
 
-  versicherungsübersicht: {
-    title: 'Aperçu des assurances',
-    intro: { sie: 'Ces domaines sont visibles dans votre classeur. «Non documenté» ne signifie pas «inexistant».', du: 'Ces domaines sont visibles dans ton classeur. «Non documenté» ne signifie pas «inexistant».' },
-    erfasst: 'Documenté',
-    nichtErfasst: 'Non documenté',
-    kvg: 'Assurance de base (LAMal)',
-    bvg: 'Caisse de pension (LPP)',
-    uvg: 'Assurance accidents (LAA)',
-    haftpflicht: 'Assurance responsabilité civile',
-    hausrat: 'Assurance ménage',
-    reise: 'Assurance voyage',
-    cyber: 'Assurance cyber',
-    fahrzeug: 'Assurance véhicule',
-    ahv: 'AVS/AI/APG',
-  },
 
   behördenStatus: {
     intro: 'Les états et délais suivants sont documentés.',
@@ -4225,12 +4199,6 @@ export default {
 
 
 
-  debtValidation: {
-    creditorRequired: 'Créancier requis',
-    amountInvalid: 'Montant invalide',
-    dateRequired: 'Date d\'enregistrement requise',
-    documentRequired: 'Document justificatif requis',
-  },
 
   residence: {
     mainResidence: 'Résidence principale',
