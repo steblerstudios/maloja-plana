@@ -16,6 +16,12 @@ const LegalView = React.lazy(() => import('./LegalView.jsx'));
 // Zugangs-Gate braucht den Server (Login-/Backend-Grundsatzentscheid).
 const BETA_CODE_HASH = 'bc0d786f0beb06f7442b099a677ee08642acec8050aa56abd7a19711095f15b9';
 const STORAGE_KEY = 'or5_beta_access';
+const ERKLAERSEITEN = [
+  ['/was-steht-mir-zu/', 'Was steht mir zu?'],
+  ['/praemienverbilligung/', 'Prämienverbilligung'],
+  ['/sozialhilfe/', 'Sozialhilfe'],
+  ['/steuern/', 'Steuern'],
+];
 // Gemeinsame Form der zwei ruhigen Knöpfe unter «Öffnen» (Demo · Einfache Ansicht).
 const ruhigerKnopf = {
   marginTop: space.md, width: '100%', padding: '10px', borderRadius: radius.sm,
@@ -219,6 +225,20 @@ export const BetaGate = ({ children }) => {
       ),
       // Fusszeile zentriert wie bisher; Titel und Formular stehen linksbündig.
       React.createElement('div', { style: { textAlign: 'center' } },
+      // Die öffentlichen Erklärseiten: echte Links, denn die Code-Wand ist das, was Google
+      // nach dem Rendern von der Startseite sieht. Bis 01.11.2026 führte von hier kein Weg
+      // dorthin (Search Console: «Gefunden – zurzeit nicht indexiert»). Deutsch in jeder
+      // Sprache, weil fr/it/en/rm noch nicht freigegeben sind (ERKLAERSEITEN, Wächter: kernTextOhneJs.test.js).
+      React.createElement('nav', { 'aria-label': 'Erklärseiten', lang: 'de', style: { marginTop: space.md } },
+        ERKLAERSEITEN.map(([pfad, name]) => React.createElement('a', {
+          key: pfad, href: pfad,
+          style: {
+            display: 'inline-block', minHeight: '44px', lineHeight: '44px', padding: '0 8px',
+            color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
+            textDecoration: 'underline', textUnderlineOffset: '2px',
+          }
+        }, name))
+      ),
       React.createElement('button', {
         type: 'button',
         onClick: () => setLegalSection('privacy'),

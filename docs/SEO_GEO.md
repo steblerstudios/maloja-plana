@@ -14,6 +14,35 @@ B schreiben / C auditieren). Diese Datei hält den **Maloja-spezifischen Stand**
 
 ---
 
+## Stand 01.11.2026 (geht den älteren Blöcken unten vor)
+
+Live und in der Search Console gemessen. Die Blöcke darunter bleiben als Historie stehen;
+die Sätze «18 Wörter» und «die Sitemap führt nur `/`» gelten nicht mehr.
+
+| Punkt | Stand |
+|---|---|
+| Google-Index | Startseite indexiert (`site:malojaplana.ch`); `/praemienverbilligung/` und `/was-steht-mir-zu/` ohne Treffer |
+| Search Console | eingerichtet, Domain-Property. Der Vermerk «nicht eingerichtet» in `SESSION_START.md` ist überholt |
+| Bericht (Datenstand 23.10.) | 11 × `noindex` = gewollte fr/it/en/rm-Seiten · `http://` Weiterleitung und `?lang=de` Alternative = normal · 2 × «Gefunden – zurzeit nicht indexiert»: `/steuern/`, `/rechtliches/` |
+| Indexierung beantragt | Erklärseiten, 01.11.2026, von Hand in der Search Console |
+| Ohne JavaScript | Startseite rund 320 Wörter (Kern-Text im `<noscript>`) |
+| Sitemap | 6 kanonische URLs: `/`, die vier Erklärseiten, `/rechtliches/` |
+| Marken-Suche `"Maloja Plana"` | auf google.ch im gelesenen Teil der ersten Seite kein eigener Treffer |
+| Backlink GitHub | Website-Feld zeigt seit 01.11. auf `malojaplana.ch`; die alte Vercel-Adresse ist gelöscht |
+
+**Der Befund dazu:** Von der Startseite führte kein Link zu den Erklärseiten. Die Links stehen
+seit #639 an zwei Orten, und beide sind nötig: im `<noscript>`-Block für Crawler ohne
+JavaScript und auf der Code-Wand, die Google nach dem Rendern sieht. Wächter:
+`src/__tests__/kernTextOhneJs.test.js`.
+
+**Messfehler, der hier passiert ist:** Eine Web-Suche im Werkzeug ist nicht Google. Null Treffer
+dort sagen nichts über den Index. Geprüft wird mit `site:` auf google.ch und in der Search Console.
+
+**Nächste Kontrolle:** rund zwei Wochen nach dem Deploy von #639, Bericht «Seiten» in der
+Search Console.
+
+---
+
 ## Das Deploy-Gate (automatisch)
 
 `scripts/check-seo.sh` prüft den gebauten `dist/`-Stand deterministisch (bash, keine
