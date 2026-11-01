@@ -103,13 +103,13 @@ describe('Vorsorge in drei Säulen', () => {
 describe('Haushalt und Hausrat-Pflicht je Kanton', () => {
   it('Haftpflicht und Hausrat in einem Teil', () => {
     const hh = teil(netzSchildTeile({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }, { kanton: 'ZH' }), 'haushalt');
-    expect(hh.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['haftpflicht', 'haftpflicht', true], ['hausrat', 'freiwillig', false]]);
+    expect(hh.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['haftpflicht', 'haftpflicht', true], ['hausrat', 'jeNachKanton', false]]);
     expect(hh.erreicht).toBe(1);
   });
-  it('Hausrat Pflicht in NW und VD; FR, JU unbelegt und ohne Kanton «je nach Kanton»', () => {
+  it('Hausrat Pflicht in NW und VD; alle übrigen und ohne Kanton «je nach Kanton», nie «freiwillig»', () => {
     expect(['NW', 'VD', 'vd'].map(hausratPflicht)).toEqual(['pflicht', 'pflicht', 'pflicht']);
     expect(['FR', 'JU'].map(hausratPflicht)).toEqual(['unbekannt', 'unbekannt']);
-    expect(hausratPflicht('ZH')).toBe('freiwillig');
+    expect(['ZH', 'BS', 'TI'].map(hausratPflicht)).toEqual(['unbekannt', 'unbekannt', 'unbekannt']);
     expect(hausratPflicht('')).toBe('unbekannt');
     expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'VD' }), 'haushalt').versicherungen[1].art).toBe('kantonPflicht');
   });

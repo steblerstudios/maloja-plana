@@ -61,7 +61,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
     ].filter(Boolean),
     haushalt: [
       { key: 'haftpflicht', art: 'haftpflicht', ok: v.liabilityInsurance === 'yes' },
-      { key: 'hausrat', art: hausrat === 'pflicht' ? 'kantonPflicht' : hausrat === 'unbekannt' ? 'jeNachKanton' : 'freiwillig', ok: v.householdInsurance === 'yes' },
+      { key: 'hausrat', art: hausrat === 'pflicht' ? 'kantonPflicht' : 'jeNachKanton', ok: v.householdInsurance === 'yes' },
     ],
     leben: [{ key: 'leben', art: 'freiwillig', ok: v.lifeInsurance === 'yes' }],
   };
