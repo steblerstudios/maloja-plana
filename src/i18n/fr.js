@@ -2432,6 +2432,7 @@ export default {
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     ausserhalb: "Non détaillé dans ce total",
+    ausserhalbGanz: "Pas dans ce total",
     ausserhalbOhneSumme: "Autres indications",
     ausserhalbWeitere: "Ce qui est saisi sous « Autres assurances » compte dans le total. Le détail de ces assurances n’est pas saisi.",
     titel: "Assurances par mois",
@@ -4276,7 +4277,7 @@ export default {
     noteAutoTaxData: 'Vérification automatique via les données fiscales',
     cantonUnknown: 'Canton non reconnu',
     youngAdultsNote: 'Les jeunes adultes (19–25) en formation ont souvent une réduction propre, plus élevée. À vérifier séparément.',
-    ruhtMitSozialhilfe: "Avec un permis F, N ou S : tant que l’aide sociale est perçue, en tout ou en partie, ce droit est en règle générale suspendu (LAsi art. 82a al. 7, LEI art. 86 al. 2). Le montant ne s’applique alors pas.",
+    ruhtMitSozialhilfe: "Avec un permis N ou S : tant que l’aide sociale est perçue, en tout ou en partie, ce droit est suspendu (LAsi art. 82a al. 7). Il en va de même avec un permis F, sauf si l’entrée en Suisse remonte à plus de sept ans (LEI art. 86 al. 2, OA 2 art. 5b). Si le droit est suspendu, le montant ne vaut pas. Pour les réfugiés admis à titre provisoire, d’autres règles peuvent s’appliquer ; le service cantonal de la réduction des primes renseigne à ce sujet.",
     annahmeOhneDreizehnten: 'Calculé sans 13e salaire — l’indication manque encore. Avec un 13e salaire, le revenu annuel est plus élevé et la réduction plus basse, voire nulle. Cela peut être indiqué dans le chapitre « Finances ».',
     ohneDreizehntenKurz: 'calculé sans 13e salaire',
     annahmePartnerOhneDreizehnten: 'Le revenu de la deuxième personne est calculé sans 13e salaire — Maloja ne le demande pas. Si elle en reçoit un, la réduction est plus basse, voire nulle.',
@@ -6372,7 +6373,7 @@ export default {
     premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
   },
   pegel: {
-    ansatzTiefer: "Avec un permis F, N ou S, le taux est en règle générale inférieur à ce calcul et fixé par le canton (LAsi art. 82 al. 3, LEI art. 86 al. 1). Le montant est alors trop élevé. D’autres normes valent pour les réfugiés admis à titre provisoire (LEI art. 86 al. 1bis).",
+    ansatzTiefer: "Avec un permis F, N ou S, l’aide est le plus souvent inférieure à ce calcul : le taux est inférieur à celui de la population résidente, le canton le fixe, et l’aide peut prendre la forme de prestations en nature (LAsi art. 82 al. 1 et 3, LEI art. 86 al. 1). Le droit peut aussi disparaître entièrement. Font exception les réfugiés admis à titre provisoire et les apatrides : les mêmes normes d’aide sociale que pour les réfugiés ayant obtenu l’asile s’appliquent à eux (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',
     grenze: 'Limite',
     luft: 'marge',

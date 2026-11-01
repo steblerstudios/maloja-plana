@@ -49,7 +49,7 @@ describe('Oben', () => {
     const html = seite();
     expect(nurText(html)).toContain('Versicherungen pro Monat');
     expect(html).toContain('data-teil="versicherungen-karte"');
-    expect(nurText(html)).toContain('Nicht einzeln in dieser Summe');
+    expect(nurText(html)).toContain('Nicht in dieser Summe');
   });
 });
 

@@ -3414,7 +3414,7 @@ export default {
     noteAutoTaxData: 'Examinaziun automatica via datas da taglia',
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
-    ruhtMitSozialhilfe: "Cun la permissiun F, N u S vala: uscheditg che agid social vegn retratg, entir u per part, ruaussa quest dretg per regla (AsylG art. 82a al. 7, AIG art. 86 al. 2). La cifra na vala lura betg.", // TODO(rm): provisorisch
+    ruhtMitSozialhilfe: "Cun la permissiun N u S vala: Uscheditg che agid social vegn retratg, entir u per part, è quest dretg sistì (AsylG art. 82a al. 7). Cun la permissiun F vala il medem, nun che l’entrada saja passa set onns enavos (AIG art. 86 al. 2, AsylV 2 art. 5b). Sch’il dretg è sistì, na vala la cifra betg. Per fugitivs admess provisoricamain po valair auter; quai scleresch il post chantunal per la reducziun da premias.", // TODO(rm): provisorisch
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
@@ -4535,6 +4535,7 @@ export default {
   versInstrument: {
     // TODO(rm): provisorisch — Gegenlese (F7-K3-4, 01.11.2026)
     ausserhalb: "Betg specifitgà en quest total",
+    ausserhalbGanz: "Betg en quest total",
     ausserhalbOhneSumme: "Ulteriuras endataziuns",
     ausserhalbWeitere: "Quai ch’è endatà sut «Ulteriuras assicuranzas» dumbra en il total. Tge assicuranzas che quai cumpiglia n’è betg endatà.",
     titel: "Assicuranzas per mais",
@@ -7396,7 +7397,7 @@ export default {
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
-    ansatzTiefer: "Cun la permissiun F, N u S è la tariffa per regla pli bassa che quest quint e reglada dal chantun (AsylG art. 82 al. 3, AIG art. 86 al. 1). La cifra è lura memia auta. Per fugitivs admess provisoricamain valan auters standards (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
+    ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     coveredOffen: 'En quest quint basta l’entrada. Custs da lavur mancan — il dretg scleresch il servetsch social.',
     grenze: 'Limita',

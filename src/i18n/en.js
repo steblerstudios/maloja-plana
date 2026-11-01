@@ -2432,6 +2432,7 @@ export default {
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     ausserhalb: "Not itemised in this total",
+    ausserhalbGanz: "Not in this total",
     ausserhalbOhneSumme: "Other entries",
     ausserhalbWeitere: "What is entered under “Other insurance” counts in the total. Which policies it covers is not recorded.",
     titel: "Insurance per month",
@@ -4276,7 +4277,7 @@ export default {
     noteAutoTaxData: 'Automatic verification via tax data',
     cantonUnknown: 'Canton not recognized',
     youngAdultsNote: 'Young adults (19–25) in education often have their own, higher subsidy. Please check separately.',
-    ruhtMitSozialhilfe: "With an F, N or S permit: as long as social assistance is received, in whole or in part, this entitlement is generally suspended (AsylG Art. 82a para. 7, AIG Art. 86 para. 2). The amount then does not apply.",
+    ruhtMitSozialhilfe: "With an N or S permit: as long as social assistance is received, in whole or in part, this entitlement is suspended (AsylG Art. 82a para. 7). The same applies with an F permit, unless entry was more than seven years ago (AIG Art. 86 para. 2, AsylV 2 Art. 5b). If the entitlement is suspended, the amount does not apply. Other rules may apply to provisionally admitted refugees; the cantonal premium reduction office can tell you.",
     annahmeOhneDreizehnten: 'Calculated without a 13th monthly salary — this has not been stated yet. With a 13th salary, the annual income is higher and the subsidy lower — or none at all. It can be stated in the «Finances» chapter.',
     ohneDreizehntenKurz: 'calculated without a 13th monthly salary',
     annahmePartnerOhneDreizehnten: 'The second person’s income is calculated without a 13th monthly salary — Maloja does not ask about it. If they receive one, the subsidy is lower — or none at all.',
@@ -6372,7 +6373,7 @@ export default {
     premiumHint: 'Enter your health-insurance premium to see the split.',
   },
   pegel: {
-    ansatzTiefer: "With an F, N or S permit, the rate is generally lower than this calculation and set by the canton (AsylG Art. 82 para. 3, AIG Art. 86 para. 1). The figure is then too high. Other standards apply to provisionally admitted refugees (AIG Art. 86 para. 1bis).",
+    ansatzTiefer: "With an F, N or S permit, support is usually lower than in this calculation: the rate is below that for the resident population, the canton sets it, and part may be given in kind (AsylG Art. 82 paras 1 and 3, AIG Art. 86 para. 1). An entitlement can also lapse entirely. Provisionally admitted refugees and stateless persons are an exception: the same social assistance standards apply to them as to refugees granted asylum (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',
     grenze: 'Limit',
     luft: 'room',

@@ -1637,4 +1637,9 @@ F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 u
 
 - **Sozialhilfe bei F, N, S, gebaut (Stebler Studios: «Zahl mit Hinweis», gegen die Empfehlung «keine Zahl»):** Die SKOS-Rechnung bleibt, `calculateSozialhilfe` setzt `ansatzTiefer`, jede Anzeige nennt `pegel.ansatzTiefer`: Pegel (Rechner, Schnellcheck, Lebenssituationen), Kompass, Finanzen samt Druck, Budget, Behörden-Dossier. AnspruchCheck zeigt keinen Betrag und führt zum Rechner. Wortlaut AsylG Art. 82, AIG Art. 86 gelesen, kantonale Ansätze nicht. Die Regel kann F als Flüchtling nicht erkennen, der Text sagt es. Ausschluss bei rechtskräftiger Wegweisung (AsylG Art. 82 Abs. 1) nicht abgebildet.
 
-**Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton · Walliser Quelle Ziff. 6.2 für S lesen, die Sperre für S ist abgeleitet · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.
+- **Fachprüfung beider Hinweise (swiss-precision-pruefer, 01.11.2026), eingearbeitet:** IPV: Bei F lebt der Anspruch sieben Jahre nach der Einreise wieder auf (AsylV 2 Art. 5b, Wortlaut gelesen, Fassung 14.07.2026), die App kennt das Einreisedatum nicht, der Text sagt es. Für N und S ist der Anspruch bei Sozialhilfe sistiert, nicht «in der Regel». Sozialhilfe: «Die Zahl ist dann zu hoch» zurückgenommen, das Gesetz vergleicht mit Einheimischen, nicht mit SKOS. Liste neben der Summe heisst nur noch «einzeln», wenn «Weitere Versicherungen» eingetragen sind.
+- **Gelesen, Walliser Weisung 2026 Ziff. 6.2:** nennt B, L, N, F, Status S kommt im ganzen Dokument nicht vor. Die Sperre für S im Wallis bleibt abgeleitet.
+
+**Wiedervorlage März 2027:** Status S ohne Lageänderung nicht vor dem 04.03.2027 aufgehoben, ab fünf Jahren besteht Anspruch auf eine Aufenthaltsbewilligung. Die Hinweise zu S dann prüfen.
+
+**Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton, gesucht und nicht gefunden (DBG Art. 83 und KS 45 nennen S nicht) · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.

@@ -2432,6 +2432,7 @@ export default {
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     ausserhalb: "Non dettagliato in questo totale",
+    ausserhalbGanz: "Non in questo totale",
     ausserhalbOhneSumme: "Altre indicazioni",
     ausserhalbWeitere: "Ciò che è inserito sotto «Altre assicurazioni» conta nel totale. Quali assicurazioni comprenda non è indicato.",
     titel: "Assicurazioni al mese",
@@ -4277,7 +4278,7 @@ export default {
     noteAutoTaxData: 'Verifica automatica tramite i dati fiscali',
     cantonUnknown: 'Cantone non riconosciuto',
     youngAdultsNote: 'I giovani adulti (19–25) in formazione hanno spesso una riduzione propria, più alta. Da verificare a parte.',
-    ruhtMitSozialhilfe: "Con permesso F, N o S: finché si percepisce l’aiuto sociale, in tutto o in parte, questo diritto è di regola sospeso (LAsi art. 82a cpv. 7, LStrI art. 86 cpv. 2). In tal caso l’importo non si applica.",
+    ruhtMitSozialhilfe: "Con permesso N o S: finché si percepisce l’aiuto sociale, in tutto o in parte, questo diritto è sospeso (LAsi art. 82a cpv. 7). Lo stesso vale con permesso F, salvo se l’entrata risale a più di sette anni fa (LStrI art. 86 cpv. 2, OAsi 2 art. 5b). Se il diritto è sospeso, l’importo non vale. Per i rifugiati ammessi provvisoriamente possono valere altre regole; informa l’ufficio cantonale per la riduzione dei premi.",
     annahmeOhneDreizehnten: 'Calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima il reddito annuo è più alto e la riduzione più bassa o nulla. Si può indicare nel capitolo «Finanze».',
     ohneDreizehntenKurz: 'calcolato senza tredicesima',
     annahmePartnerOhneDreizehnten: 'Il reddito della seconda persona è calcolato senza tredicesima — Maloja non lo chiede. Se la riceve, la riduzione è più bassa o nulla.',
@@ -6346,7 +6347,7 @@ export default {
     premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
   },
   pegel: {
-    ansatzTiefer: "Con permesso F, N o S la tariffa è di regola inferiore a questo calcolo ed è stabilita dal cantone (LAsi art. 82 cpv. 3, LStrI art. 86 cpv. 1). L’importo risulta quindi troppo alto. Per i rifugiati ammessi provvisoriamente valgono altri standard (LStrI art. 86 cpv. 1bis).",
+    ansatzTiefer: "Con permesso F, N o S il sostegno è per lo più inferiore a questo calcolo: la tariffa è inferiore a quella per la popolazione residente, la stabilisce il cantone e in parte si tratta di prestazioni in natura (LAsi art. 82 cpv. 1 e 3, LStrI art. 86 cpv. 1). Il diritto può anche venire meno del tutto. Fanno eccezione i rifugiati ammessi provvisoriamente e gli apolidi: per loro valgono gli stessi standard di aiuto sociale dei rifugiati con asilo (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
     grenze: 'Limite',
     luft: 'margine',

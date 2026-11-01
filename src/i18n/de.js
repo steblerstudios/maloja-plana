@@ -2442,6 +2442,7 @@ export default {
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     ausserhalb: "Nicht einzeln in dieser Summe",
+    ausserhalbGanz: "Nicht in dieser Summe",
     ausserhalbOhneSumme: "Weitere Einträge",
     ausserhalbWeitere: "Was unter «Weitere Versicherungen» eingetragen ist, zählt in der Summe. Welche Versicherungen darin stecken, ist nicht erfasst.",
     titel: "Versicherungen pro Monat",
@@ -4324,7 +4325,7 @@ export default {
     noteAutoTaxData: 'Automatische Prüfung via Steuerdaten',
     cantonUnknown: 'Kanton nicht erkannt',
     youngAdultsNote: 'Junge Erwachsene (19–25) in Ausbildung haben oft eine eigene, höhere Verbilligung. Bitte separat prüfen.',
-    ruhtMitSozialhilfe: "Mit Ausweis F, N oder S gilt: Solange ganz oder teilweise Sozialhilfe bezogen wird, ruht dieser Anspruch in der Regel (AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2). Die Zahl gilt dann nicht.",
+    ruhtMitSozialhilfe: "Mit Ausweis N oder S gilt: Solange ganz oder teilweise Sozialhilfe bezogen wird, ist dieser Anspruch sistiert (AsylG Art. 82a Abs. 7). Mit Ausweis F gilt das ebenso, ausser die Einreise liegt mehr als sieben Jahre zurück (AIG Art. 86 Abs. 2, AsylV 2 Art. 5b). Bei sistiertem Anspruch gilt die Zahl nicht. Für vorläufig aufgenommene Flüchtlinge kann anderes gelten; das klärt die Stelle für die Prämienverbilligung im Kanton.",
     annahmeOhneDreizehnten: 'Ohne 13. Monatslohn gerechnet — die Angabe fehlt noch. Mit 13. Monatslohn liegt das Jahreseinkommen höher und die Verbilligung tiefer — oder sie entfällt ganz. Angeben lässt sich das im Kapitel «Finanzen & Geld».',
     ohneDreizehntenKurz: 'ohne 13. Monatslohn gerechnet',
     annahmePartnerOhneDreizehnten: 'Das Einkommen der zweiten Person ist ohne 13. Monatslohn gerechnet — danach fragt Maloja nicht. Erhält sie einen, liegt die Verbilligung tiefer oder entfällt ganz.',
@@ -6436,7 +6437,7 @@ export default {
     premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
   },
   pegel: {
-    ansatzTiefer: "Mit Ausweis F, N oder S liegt der Ansatz in der Regel tiefer als diese Rechnung und ist kantonal geregelt (AsylG Art. 82 Abs. 3, AIG Art. 86 Abs. 1). Die Zahl ist dann zu hoch. Für vorläufig aufgenommene Flüchtlinge gelten andere Standards (AIG Art. 86 Abs. 1bis).",
+    ansatzTiefer: "Mit Ausweis F, N oder S fällt die Unterstützung meist tiefer aus als in dieser Rechnung: Der Ansatz liegt unter dem für Einheimische, der Kanton regelt ihn, teils gibt es Sachleistungen (AsylG Art. 82 Abs. 1 und 3, AIG Art. 86 Abs. 1). Ein Anspruch kann auch ganz entfallen. Ausgenommen sind vorläufig aufgenommene Flüchtlinge und Staatenlose: Für sie gelten die gleichen Sozialhilfestandards wie für Flüchtlinge mit Asyl (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',
     grenze: 'Grenze',
     luft: 'Luft',
