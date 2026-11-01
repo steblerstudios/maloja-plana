@@ -1627,7 +1627,7 @@ F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 u
 - **F7-D6, wie empfohlen:** «Bedarf ≈ CHF 3’431». Ursache `Leistungsliste.jsx`, `fmt` mit `hoechstens: 2`. Nicht gebaut.
 - **F7-D7, wie empfohlen:** «CHF 540.30 / Mt. · Franchise CHF 1’500». Nicht gebaut.
 - **F7-D4, wie empfohlen:** Sicherungs-Hinweis nur oben bei «Was ist jetzt dran?». Nicht gebaut.
-- **F7-D3, anders:** Tipps-Block streichen, «Was ist jetzt dran?» bleibt der eine Wegweiser und schlägt auch Dokumente und Budget vor. Nicht gebaut. Der Block hat keine Bedingung, und `dashboard.tip3` nennt noch «Budget-Sync»; die Besprechen-Seite sagt zu Unrecht, der Name sei weg.
+- **F7-D3, anders:** Tipps-Block streichen, «Was ist jetzt dran?» bleibt der eine Wegweiser und schlägt auch Dokumente und Budget vor. Nicht gebaut. Der Block hat keine Bedingung, und `dashboard.tip3` nennt noch «Budget-Sync».
 - **F7-K3-1, K3-2, D5, zurückgestellt:** «warte damit noch bitte». Nicht entschieden.
 - **Ausweise F, N, S, gebaut:** wählbar, Steuerzahl gesperrt wie bei B und L, geprüft vom rechts-pruefer am Gesetzestext (DBG Art. 83, StHG Art. 32). Feld heisst «Aufenthaltsstatus (Ausweis)», der Sperrtext beginnt mit «Ohne Bewilligung C».
 - **IPV bei F, N, S, gebaut:** Die Zahl bleibt, dazu ein Hinweis, dass der Anspruch mit Sozialhilfe ruht (AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2). Nur auf der Seite Prämienverbilligung und in der Lebenssituation «Asylsuchend», nicht in Schnellcheck und Finanzen.
