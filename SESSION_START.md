@@ -17,6 +17,17 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 01.11.2026, Sitzungsende «Fassung 7 abschliessen» — Runde 2 gebaut. Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 19:00): main = `98539e99` · live = `4299bfb9` (0.1.48-beta, 23.10., `sauber: false`) · 156 Commits dazwischen · offene PRs #626–#637, alle Entwurf.
+> - **Zweige:** `integration/f7-sammel` (PR #637) trägt Runde 2 bis `eb59b6f7`, dazu `ee9f0d8b` (Sprungziele, aus einer anderen Sitzung). `feat/f7-runde3` zweigt bei `eb59b6f7` ab, vier Commits, Worktree `_werkbank/f7-runde3`, **noch nicht gepusht, nicht im Sammelzweig**, wartet auf Abnahme im Bild (Monatsring F7-K2-2, Unfall-Beispiel E-4; E-5 übersetzt). Die Zweige sind auseinander gelaufen: 1 zu 4 Commits.
+> - **Gebaut (Einzelheiten `VERGLEICH.md`, «Besprechen, Runde 2»):** E-1, E-2, E-3 · F7-K4-1 und F7-L9 Lohn-Faden · F7-K5-1 Säule mit ganzer Steuer, Behörden nennt dieselbe Zahl · Steuer-Sperre in der gemeinsamen Rechnung (`quellensteuerMoeglich`).
+> - **Geprüft bis `eb59b6f7`:** 7'561 Tests; Lint, Build, PII und 64.98 von 65 kB im Lauf davor. Browser: Säule und Lohn-Faden 375 px am gebauten Stand, nur Deutsch. **Nicht im Bild gesehen:** Behörden-Zeile, Sperrtexte, fr, it, rm der neuen Texte.
+> - **Stage:** zeigt noch den Stand von Fassung 7 vor Runde 2. Handgriffe von Stebler Studios auf Stage stehen aus: Patientenverfügung (nur mit Zugangscode, im Beispiel gesperrt), Druckfenster Lebenslauf.
+> - **Nicht gelöst:** Ausweise F, N, S fehlen als Option. Schweizer mit Wohnsitz im Ausland (DBG Art. 91) nicht erkennbar. B oder L mit eingetragenem Wert aus Veranlagung bleibt gesperrt (Folge von «überall»). Neue Steuertexte fr, it, en, rm nicht fachlich gegengelesen. Hausrat VD nur Fassung Stand 01.01.2011 gelesen.
+> - **Fallen dieser Sitzung:** Arbeitsbäume haben keine `.deploy.local`: Das Skript fragt dann mit Platzhalter-Host nach dem Passwort, abbrechen. Eine Kopie liegt in `_werkbank/f7-sammel`, beim Aufräumen entfernen. Neuer Import aus `utils/helpers.js` in eine nachgeladene Datei kann das Startbündel wachsen lassen (`formatDate`: +0.05 kB über das Limit). `npx vitest run` wurde bei zwei parallelen Sitzungen abgewürgt (Exit 137, Ursache nicht belegt); mit `--pool=forks --maxWorkers=2` lief es durch. Eine Vorschau nach neuem Build im Browser zeigt alte Chunks: Service Worker und Cache leeren.
+> - **Nächste Schritte:** (1) Monatsring und Unfall-Beispiel abnehmen. (2) Sammelzweig und `feat/f7-runde3` zusammenführen. (3) Offene Punkte Runde 3 gegen `VERGLEICH.md` prüfen. (4) Platz im Startbündel schaffen, dann Fassung 8. (5) Vergleichen, Ultrareview, Merge #637 als Merge-Commit, `/maloja-predeploy` auf main, Deploy (Stebler Studios). Prämien 2027 sind bis dahin nicht live, die App nennt selbst den 30.11. als Kündigungstermin.
+
 > 🧭 **Nachtrag 01.11.2026, später — Entscheid geändert (Stebler Studios): kein Merge und kein Deploy zwischen Fassung 7 und 8. Der Nachtrag 17:45 ist damit in diesem Punkt überholt.**
 >
 > - **Reihenfolge jetzt:** Fassung 7 auf dem Sammelzweig abschliessen · Fassung 8 · dann vergleichen: was haben wir, was fehlt, was geht besser · erst danach Merge und Deploy.
