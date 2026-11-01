@@ -1,7 +1,7 @@
 // Selbständige zahlen AHV und Pensionskasse selbst: Die Beiträge gehören in die Ausgaben, sonst ist «Bleibt» zu hoch (Fachprüfung 01.11.2026).
 import { describe, it, expect } from 'vitest';
-import { monatsAusgaben, sumAllExpenses } from '../monatsrechnung.js';
-import { calculateMonthlyBudget, BUDGET_GROUPS } from '../../budgetSync.js';
+import { monatsAusgaben, sumAllExpenses, beitragsNotizKey } from '../monatsrechnung.js';
+import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from '../../budgetSync.js';
 
 const versicherungen = { ahvContribution: '6000', bvgContribution: '300' };
 const mit = (employmentType) => ({ finanzen: { employmentType, monthlyIncome: '6000', incomeType: 'netto' }, versicherungen });
@@ -24,5 +24,17 @@ describe('AHV und BVG bei Selbständigen', () => {
     expect(b.reference).toEqual({ bvg: 0, ahv: 0 });
     expect(b.totalExpenses).toBe(800);
     expect(b.remaining).toBe(b.income - 800);
+  });
+});
+
+describe('Bericht und Notiz', () => {
+  it('der Bericht führt die Beiträge unter Steuern & Vorsorge', () => {
+    expect(createBudgetReport(mit('selfEmployed'), (k) => k).details.expenses.taxProvision).toBe(800);
+  });
+  it('«schon vom Nettolohn abgezogen» nur bei Anstellung mit Netto-Lohn', () => {
+    expect(beitragsNotizKey({ employmentType: 'employed', incomeType: 'netto' })).toBe('budgetSync.bvgReferenceNote');
+    for (const f of [{ employmentType: 'employed', incomeType: 'brutto' }, { employmentType: 'retired', incomeType: 'netto' }, { employmentType: 'selfEmployed', incomeType: 'netto' }, {}]) {
+      expect(beitragsNotizKey(f)).toBe('budgetSync.bvgNichtGezaehltNote');
+    }
   });
 });

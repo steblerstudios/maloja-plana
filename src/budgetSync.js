@@ -310,7 +310,7 @@ export const createBudgetReport = (data, t) => {
         insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.kkZusatz || 0) + (budget.expenses.uvgZusatz || 0) + (budget.expenses.lifeInsurance || 0) + (budget.expenses.householdInsurance || 0) + (budget.expenses.liabilityInsurance || 0) + (budget.expenses.otherInsurance || 0),
         living: (budget.expenses.groceries || 0) + (budget.expenses.communication || 0) + (budget.expenses.childcare || 0),
         mobility: budget.expenses.mobility || 0,
-        taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0),
+        taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0) + (budget.expenses.ahvSelbst || 0) + (budget.expenses.bvgSelbst || 0),
         reference: budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
         total: budget.totalExpenses
       },

@@ -363,7 +363,7 @@ export function getChapters(t) {
         { k: 'autoInsurance', type: 'select', sel: 1, sec: 'mobility', secondary: true },
         { k: 'autoInsuranceAmount', type: 'currency', secondary: true, jahr: true },
         // Jahresbetrag (Feldname «CHF/Jahr»): in der Liste mit «/ Jahr» (Fachprüfung Muster M4, 25.10.2026).
-        { k: 'ahvContribution', type: 'currency', jahr: true, sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
+        { k: 'ahvContribution', type: 'currency', hint: 1, jahr: true, sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
       ],
       docs: [
         'kkcard',

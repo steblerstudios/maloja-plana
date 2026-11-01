@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { einnahmenZeilen } from './data/haushaltsEinnahmen.js';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
+import { zahltBeitraegeSelbst, beitragsNotizKey } from './utils/monatsrechnung.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { calculateSozialhilfe } from './config/cantonalData.js';
 import { getRegionalComparison } from './data/praemienRegionen.js';
@@ -28,6 +29,8 @@ const formatCHF = (amount) => {
 
 // `onImport`: der Teil «CSV importieren» unter der Karte (F7-L7, 27.10.2026) — früher die eigene Seite
 // «budget». Ohne `onImport` (Tests, Vorschau) bleibt nur die Karte.
+const BEITRAG_FELDER = ['ahvSelbst', 'bvgSelbst'];
+
 export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }) => {
   const [budget, setBudget] = useState(null);
   const [showAnnual, setShowAnnual] = useState(false);
@@ -85,8 +88,10 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   };
 
   // Compute group totals
+  // Die Beitrags-Zeilen gelten nur für Selbständige: bei allen anderen wären sie leere Felder, die nichts bewirken.
+  const selbst = zahltBeitraegeSelbst(data?.finanzen);
   const groupData = BUDGET_GROUPS.map(group => {
-    const items = group.fields.map(field => ({
+    const items = group.fields.filter(field => selbst || !BEITRAG_FELDER.includes(field)).map(field => ({
       key: field,
       label: t('budgetSync.field.' + field),
       value: Number(budget.expenses[field] || 0)
@@ -269,7 +274,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   };
 
   // BVG/AHV reference total
-  const bvgAhvTotal = (budget.reference.bvg || 0) + (budget.reference.ahv || 0) + (budget.expenses.uvg || 0);
+  const bvgAhvTotal = (budget.reference.bvg || 0) + (budget.reference.ahv || 0) + (budget.expenses.uvg || 0)
+    + (selbst ? Number(budget.expenses.ahvSelbst || 0) + Number(budget.expenses.bvgSelbst || 0) : 0);
 
   return React.createElement('div', null, React.createElement('div', {
     style: {
@@ -347,7 +353,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       }
     // Betrag als eigenes Kind — ein React-Element mit «+» an einen String gehängt ergab seit
     // 21.09.2026 (6edd2f8b) «[object Object] (CHF 420)».
-    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')), ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t(selbst ? 'budgetSync.bvgSelbstNote' : beitragsNotizKey(data?.finanzen))), ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
     // Separator before total
     React.createElement('div', { style: { ...separatorStyle, borderTopWidth: '2px' } }),

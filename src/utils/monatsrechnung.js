@@ -33,6 +33,9 @@ const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x :
 // Selbständige zahlen AHV und Pensionskasse selbst, es gibt keinen Lohnabzug (Fachprüfung 01.11.2026).
 export const zahltBeitraegeSelbst = (finanzen) => finanzen?.employmentType === 'selfEmployed' || finanzen?.employmentType === 'freelance';
 
+// «Schon vom Nettolohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn (dieselbe Regel wie VersicherungenInstrument).
+export const beitragsNotizKey = (finanzen) => finanzen?.employmentType === 'employed' && finanzen?.incomeType === 'netto' ? 'budgetSync.bvgReferenceNote' : 'budgetSync.bvgNichtGezaehltNote';
+
 // Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG von
 // Angestellten fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur
 // als Referenz). Bei Selbständigen zählen sie. Ohne Anstellungstyp wird nichts angenommen. Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Unfall-Zusatz, Leben, Säule 3a) sind durch 12 geteilt.
