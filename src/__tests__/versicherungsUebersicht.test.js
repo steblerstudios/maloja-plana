@@ -78,8 +78,7 @@ describe('Zeilen mit Wert', () => {
 
 describe('Schutzschild und aufklappbare Teile', () => {
   it('Schutzschild steht auf der Seite', () => {
-    // Maria lässt das UVG seit E-4 bewusst offen.
-    expect(nurText(seite())).toContain('Pflicht · 2/3');
+    expect(nurText(seite())).toContain('Pflicht · 3/3');
   });
   it('Region, Vergleich und Kassen sind zugeklappt', () => {
     const html = seite();

@@ -67,11 +67,13 @@ export const DEMO_DATA = {
     // (BAG/priminfo, data/praemienDetail.js). Bis 25.10.2026 stand hier 385 — unter jeder Referenzprämie.
     // ⚠️ Mit den Prämien 2027 nachziehen.
     kkPremium: '540.30',
-    // Beispielwerte, keine Offerte: damit Zusatz und Leben im Schild mit Beträgen zu sehen sind (F7-K3-6, 31.10.2026).
+    // Beispielwerte, keine Offerte: damit der Zusatz im Schild mit Betrag zu sehen ist (F7-K3-6, 31.10.2026).
     kkZusatz: 'Spital halbprivat',
     kkZusatzPremium: '38.50',
-    lifeInsurance: 'yes',
-    lifeInsurancePremium: '600',
+    // E-4 (Stebler Studios 01.11.2026): keine Lebensversicherung, damit das Beispiel zeigt, wie ein leerer Teil im Netz-Schild
+    // aussieht. Sie ist freiwillig, das Feld bleibt blass und zählt nicht als Lücke (data/netzSchild.js).
+    lifeInsurance: '',
+    lifeInsurancePremium: '',
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
     policyNumber: 'CSS-2024-7788991',
@@ -83,10 +85,7 @@ export const DEMO_DATA = {
     bvgContribution: '420',
     bvgBalance: '45000',
     ktg: 'employer',
-    // E-4 (Stebler Studios 01.11.2026): bewusst leer, damit das Beispiel zeigt, wie ein offenes Teil im Netz-Schild aussieht.
-    // Das Schild sagt «noch nicht eingetragen», nicht «nicht versichert». Hausrat oder Haftpflicht wegzulassen zeigt
-    // bei Maria nichts: In Zürich ist beides keine Pflicht, also keine Lücke (data/netzSchild.js).
-    uvg: '',
+    uvg: 'employer',
     liabilityInsurance: 'yes',
     // Beispielwerte, nicht belegt (Fachprüfung 25.10.2026): übliche Versicherungssumme und eine Prämie
     // aus der Marktspanne für eine Person (etwa 80–150 / Jahr). Bis 25.10.2026 stand hier '35' als «Summe».

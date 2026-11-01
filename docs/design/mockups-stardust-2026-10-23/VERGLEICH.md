@@ -1582,12 +1582,12 @@ Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finan
 
 ### Besprechen, Runde 3 (Stebler Studios, 01.11.2026)
 
-- **F7-K2-2, anders:** Nicht bloss den Kuchen weglassen, sondern «fusionieren kreativ». Umsetzungsidee von Claude, eingebaut zum Ansehen: der **Monatsring**
-  (`components/Monatsring.jsx`). Der Ring ist das ganze Einkommen, die Stücke sind die Ausgaben, die offene Stelle ist, was bleibt, die Zahl steht in der Mitte.
-  Daneben «Wofür geht es weg?» mit Wohnen, Versicherungen, Steuern, Übriges, aufklappbar zu den Posten. Ersetzt Zahl, Balken und Kuchen. **Wartet auf Abnahme im Bild.**
-- **E-4, anders:** Ein anderes Beispiel als Hausrat. Gemessen: Hausrat wegzulassen hätte bei Maria nichts gezeigt, in Zürich ist er keine Pflicht und damit keine Lücke
-  (`data/netzSchild.js`). Eingebaut: Bei Maria ist die Unfallversicherung nicht eingetragen. Das Schild sagt «Pflicht, noch nicht eingetragen: Unfall», sandfarben, Pflicht 2 von 3.
-  Das Beispiel zeigt damit keinen fehlenden Schutz, sondern einen fehlenden Eintrag. **Wartet auf Abnahme im Bild.**
+- **F7-K2-2, anders:** Nicht bloss den Kuchen weglassen, sondern «fusionieren kreativ». Nachgeschärft: Der Kreis mit der Zahl in der Mitte bleibt, dazu der Balken mit Namen
+  (Skizze A), «alles ideal nach UI/UX platziert». Eingebaut (`components/Monatsring.jsx`), von oben nach unten: Umschalter Monat / Jahr · Ring mit der Antwort in der Mitte ·
+  «Wofür geht es weg?» als Balken aus Kacheln, Klick öffnet die Posten · verplant von Einkommen. Skizzen B (Abstieg) und C (Flächen) sind verworfen.
+  «Jahr» ist der Monat × 12 und sagt das, ein 13. Monatslohn ist nicht eingerechnet. Einen Umschalter für Geld gab es vorher nicht, nur «Ganzes Jahr» im Kalender. **Wartet auf Abnahme im Bild.**
+- **E-4, anders:** Nicht Hausrat, nicht Unfall (Maria ist als Angestellte versichert, «offen» sähe falsch aus), sondern die **Lebensversicherung** (Stebler Studios). Sie ist freiwillig, der
+  Teil bleibt blass und zählt nicht als Lücke, Pflicht bleibt 3/3. Folge: Maria CHF 609 Versicherungen, CHF 3’965 verplant, CHF 2’235 bleiben. Das kräftige Sand sieht man im Beispiel nicht. **Wartet auf Abnahme im Bild.**
 - **E-5, wie empfohlen:** Absatz zur Patientenverfügung übersetzt, als provisorisch markiert. Gegenlese durch eine Person, die Rumantsch kann, offen.
 
-Stand: Zweig `feat/f7-runde3` auf `integration/f7-sammel` `eb59b6f7`, Vorschau mit `preview_start f7-runde3` (Port 5192). Geprüft: 7561 Tests, Build, 64.97 von 65 kB, Browser dunkel und hell, 375 px ohne Querscrollen.
+Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192).
