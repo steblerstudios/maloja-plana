@@ -17,6 +17,14 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 01.11.2026, 17:45 — Deploy vor Fassung 8 entschieden (Stebler Studios: «Ja, vorher deployen»). Nichts gemergt, NICHT live.**
+>
+> - **Sozialhilfe-Pegel:** deckt das Einkommen den Bedarf, nennt er das Vermögen nicht mehr als Grund (`pegel.js`, Wächter in `anspruchInstrumente.test.js`).
+> - **Hausrat VD:** Erlass gelesen, LAIEN Art. 6a Abs. 1 und Art. 27 Abs. 1, Fassung Stand 01.01.2011 (LexFind). Aktuelle Fassung nicht gelesen. FR, JU, 22 Kantone unverändert «je nach Kanton».
+> - **Apotheken-Tarif (LOA):** kein Blocker. Die App sagt «Publikumspreis laut Spezialitätenliste», nicht «Sie zahlen»; ob die Apotheke eigene Leistungen verrechnet, steht bewusst nicht im Text.
+> - **Geprüft:** 7'555 Tests, Lint, Build, PII, 64.98 von 65 kB. **Freigabe-Marke fehlt**, erst auf dem main-Stand setzen.
+> - **Reihenfolge:** Stage-Prüfung · Ultrareview · Merge #637 als Merge-Commit · `/maloja-predeploy` auf main · `bash deploy.sh` · Live-Gegenprobe. Merge und Deploy: Stebler Studios.
+
 > 🛡️ **Nachtrag 01.11.2026, abends — Vor-live-Punkte auf dem Sammelzweig. Nichts gemergt, NICHT live.**
 >
 > - **Geheimnis-Suche über die Git-Historie:** 3'550 Commits, alle Zweige. Muster für Schlüssel und Tokens: 0 Treffer (Gegenprobe greift). Allgemeine Muster: 3 Treffer,

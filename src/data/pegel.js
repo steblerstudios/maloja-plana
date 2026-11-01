@@ -79,7 +79,9 @@ export function sozialhilfePegelState(data) {
   // Anspruch möglich — ob er beim Eintritt zählt, regelt der Kanton. Dann kein «keine Aufstockung
   // nötig» (Nein ohne Grundlage), sondern der offene Satz sozialhilfe.efbEntscheidet.
   // 'offen' (Fachprüfung 01.11.2026): Erwerbsunkosten kennt das Profil nicht, der Bedarf ist dann zu tief — auch das ist kein Nein.
-  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : (sh?.erwerbsunkostenOffen ? 'offen' : 'covered')));
+  // Deckt das Einkommen den Bedarf ohnehin, ist das Vermögen nicht der Grund (Beispiel Maria, Fachpunkt F7 #630): dann 'covered', nicht 'vermoegen'.
+  const einkommenDeckt = deficit <= 0 && !sh?.efbEntscheidet && !sh?.erwerbsunkostenOffen;
+  const mode = vermoegenUeber > 0 && !einkommenDeckt ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : (sh?.erwerbsunkostenOffen ? 'offen' : 'covered')));
   const fraction = Math.max(0, Math.min(PEGEL_SCALE, rawFraction));
   return {
     show: true, variant: 'aufstockung', mode, fraction,

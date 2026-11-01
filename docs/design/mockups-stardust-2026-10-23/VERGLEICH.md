@@ -1516,7 +1516,7 @@ Hinweis: F7-K3-4 ist mit dem Netz-Schild zum Teil überholt, D10 und K3-2 hänge
 
 ### Gebaut auf dem Sammelzweig (31.10.2026, Stebler Studios: «Ja, weiterbauen»)
 
-Zweig `integration/f7-sammel`, nicht gepusht, nicht in `main`. Je ein Commit, Wächter im selben Commit.
+Zweig `integration/f7-sammel`, PR #637 (Entwurf), nicht in `main`. Je ein Commit, Wächter im selben Commit.
 
 - **F7-K4-2:** Maria ist «Pflegefachfrau FH».
 - **F7-K6-1:** Patientenverfügung nur im Block «Vorsorge». Die Antwort «vorhanden?» zog dorthin um, weil das Formular sie
