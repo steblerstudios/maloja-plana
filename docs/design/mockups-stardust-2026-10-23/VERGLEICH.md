@@ -1561,3 +1561,12 @@ Zweig `integration/f7-sammel`, PR #637 (Entwurf), nicht in `main`. Je ein Commit
   Die Regel «nur die belegte Bundessteuer als Zahl» (`InstrumentePanel.jsx`) fällt damit. Vor dem Bau: swiss-precision-pruefer zum Satz. Ort der Säule hängt an F7-D10.
 
 **Noch nicht gewählt (19):** F7-D1–D7, D9, D10 · F7-L4 · F7-S5 · F7-K2-1 · F7-K2-2 · F7-K3-1 · F7-K3-2 · F7-K3-4 · E-3 · E-4 · E-5
+
+### Besprechen, Runde 2, gebaut (01.11.2026, Stebler Studios: «lass uns mal die entschiedenen sachen bauen»)
+
+- **E-1, E-2:** «eingetragen» in `vu.*`, «Schild» auf der Kachel, alle Sprachen. **E-3:** Seitenname «CV» in fr, it, en. Der Generator ist nicht verschwunden: seit F7-R5 Vorschau und PDF, HTML und JSON unter «Weitere Formate».
+- **F7-K4-1:** Barometer und Branchen stehen nur in Ausbildung & Arbeit (`LohnImKapitel`). Finanzen behält den Armutsgrenzen-Befund und führt mit einer Zeile dorthin.
+- **F7-L9:** Die Brutto-Schätzung war schon überall dieselbe (`nettoZuBruttoRichtwert`), an der Rechnung ist nichts geändert. «Neue Stelle» ist aus Finanzen › Passend raus, die Brotkrume des Stundenlohns führt nach Ausbildung & Arbeit. Im Rucksack bleibt der Stundenlohn im Portemonnaie.
+- **F7-K5-1:** Säule in zwei Teilen, Klick nach Finanzen. Fachprüfung (swiss-precision-pruefer): Summe nachgerechnet, «≈» allein reicht nicht, darum «Grobe Schätzung für den Hauptort, ohne Kirchensteuer», Annahmen und «Steuererklärung bis» je als eigene Zeile. Gesamtzahl nur mit Lohn, unselbständig, nicht pensioniert. Bei Bewilligung B, L, G keine Zahl.
+
+**Offen aus der Fachprüfung, nicht gebaut:** Finanzen und Steuerrechner zeigen die Zahl weiter auch bei möglicher Quellensteuer (`workPermit` wird in der Steuerlogik nicht gelesen) und bei Rente oder Selbständigkeit mit direkt eingetragenem Wert (Lohn-Reihe, nicht gemessen; `r4SteuerAnnahmen.test.js:215-221`). Die Sperre gehört in `kantonssteuerFuerProfil`; die Quellensteuer-Regel soll der rechts-pruefer vorher absegnen.

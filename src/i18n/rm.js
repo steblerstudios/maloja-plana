@@ -7272,6 +7272,15 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Steuer-Säulen, 25.09.2026)
     steuer: 'Colonna da taglia',
     steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
+    // TODO(rm): provisorisch — Gegenlese (Steuer-Säule ganz, F7-K5-1, 01.11.2026)
+    steuerGanz: 'Taglia sin il retgav ≈ CHF {total} / onn',
+    steuerDavon: 'Stimaziun grossa per la chapitala, senza taglia da baselgia. Da quai Confederaziun ≈ CHF {bund}.',
+    steuerOhne13: 'Calculà senza 13avel salari.',
+    steuerAllein: 'Calculà per in pèr cun ina suletta paja.',
+    steuerEinzeln: { sie: 'Calculà be per Vus.', du: 'Calculà be per tai.' },
+    steuerKinder: 'Calculà cun la deducziun cumpletta per uffants.',
+    steuerFrist: 'Decleraziun da taglia fin ils {datum}',
+    steuerQuelle: 'Nagina stimaziun: taglia a la funtauna pussaivla',
     setup: 'tutgar per configurar',
   },
   // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)

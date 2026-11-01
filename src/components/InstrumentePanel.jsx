@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { schildState, schildOptionen } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
-import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
+import { steuernFuerProfil, steuerEingabenAusDaten, ERWERBSART_OHNE_SCHAETZUNG } from '../data/kantonaleSteuerdaten.js';
+import { steuerfristVorbei } from '../utils/steuerfrist.js';
+import { heuteIso } from '../utils/fristen.js';
+import { CHAPTER_KEYS } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
@@ -46,15 +49,20 @@ const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
 // oben gerundet, auf der Grundlinie stehend. Eine einzelne Säule hat nichts, woran ihre Höhe
 // sich messen könnte — darum feste Höhe; die Zahl darunter trägt die Aussage. Ohne Betrag
 // gestrichelt, wie die Platzhalter-Säule im Rechner. <title> mit Name und Betrag (Hover).
+// F7-K5-1 (01.11.2026): Mit Gesamtzahl zwei Teile: unten satt die Bundessteuer, oben heller Kanton und Gemeinde (Schätzung).
 const S_BASIS = 40, S_BREIT = 16, S_HOCH = 30;
 const oben = (x, y, w, h, r) => 'M ' + x + ' ' + (y + h) + ' V ' + (y + r) + ' Q ' + x + ' ' + y + ' ' + (x + r) + ' ' + y
   + ' H ' + (x + w - r) + ' Q ' + (x + w) + ' ' + y + ' ' + (x + w) + ' ' + (y + r) + ' V ' + (y + h);
-const miniSaeule = (palette, t, { betragJahr, verheiratet }) => {
+const miniSaeule = (palette, t, { betragJahr, verheiratet, bundAnteil, titelText }) => {
   const h = React.createElement;
   const x = 20;
-  const titel = t('tax.saeulen.' + (verheiratet ? 'gemeinsam' : 'ledig')) + (betragJahr != null ? ': ' + chfBetrag(betragJahr) : '');
+  const titel = titelText || t('tax.saeulen.' + (verheiratet ? 'gemeinsam' : 'ledig')) + (betragJahr != null ? ': ' + chfBetrag(betragJahr) : '');
+  // Mindesthöhe, damit der Bund-Teil auch bei kleinem Anteil sichtbar bleibt; die Zahl steht im Text.
+  const bundHoch = bundAnteil != null ? Math.max(5, Math.round(S_HOCH * bundAnteil)) : null;
   return h('svg', { viewBox: '0 0 56 44', width: 56, height: 44, role: 'img', 'aria-label': titel },
-    betragJahr != null
+    bundHoch != null && h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand, opacity: 0.4 }, h('title', null, titel)),
+    bundHoch != null && h('rect', { x, y: S_BASIS - bundHoch, width: S_BREIT, height: bundHoch, fill: palette.sand }),
+    bundHoch != null ? null : betragJahr != null
       ? h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand }, h('title', null, titel))
       : h('path', { d: oben(x + 0.5, S_BASIS - S_HOCH, S_BREIT - 1, S_HOCH, 2), fill: 'none', stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2' }, h('title', null, titel)),
     h('line', { x1: 12, x2: 44, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
@@ -100,13 +108,25 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
   // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
-  // Nur die Bundessteuer als Zahl — sie ist der amtlich belegte Tarif (DBG Art. 36).
+  // F7-K5-1 (Stebler Studios 01.11.2026): die ganze Einkommenssteuer, dieselbe Zahl wie das Kapitel Finanzen, als grobe
+  // Schätzung ausgewiesen. Fachprüfung 01.11.2026: nur für den gemessenen Fall (Lohn erfasst, unselbständig, nicht pensioniert).
+  // Mögliche Quellensteuer (Bewilligung B, L, G): keine Zahl, die Steuer wird in der Regel vom Lohn abgezogen.
+  // Sonst bleibt die Bundessteuer allein.
   let bundessteuer = null;
+  let steuerGanz = null;
+  const quellensteuer = ['b', 'l', 'g'].includes(String(data?.ausbildung?.workPermit || '').toLowerCase());
   try {
     if ((Number(data?.finanzen?.monthlyIncome) || 0) > 0 || (Number(data?.finanzen?.taxableIncome) || 0) > 0) {
       const eingaben = steuerEingabenAusDaten(data);
       const st = steuernFuerProfil(eingaben);
       bundessteuer = st?.bund ? Math.round(st.bund.steuer) : null;
+      const gemessen = (Number(data?.finanzen?.monthlyIncome) || 0) > 0 && !ERWERBSART_OHNE_SCHAETZUNG[eingaben.erwerbsart] && !data?.basis?.household?.isRetired;
+      if (st?.bund && st.kanton?.kantonal && gemessen && !quellensteuer) {
+        // Kurz, die Kachel ist schmal; ausführlich in Finanzen (annahmenTexte).
+        const annahmen = [['ohneDreizehnten', 'steuerOhne13'], ['alleinverdiener', 'steuerAllein'], ['einzeln', 'steuerEinzeln'], ['kinderabzugGanz', 'steuerKinder']]
+          .filter(([k]) => st.annahmen?.[k]).map(([, k]) => t('instrumente.' + k));
+        steuerGanz = { total: st.kanton.kantonal.total, bund: bundessteuer, annahmen };
+      }
     }
   } catch { /* Orientierung, nie blockierend */ }
 
@@ -132,6 +152,17 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     : t('instrumente.tachoSub');
 
   const setup = t('instrumente.setup');
+  // Eigene Zeile für die Frist: direkt neben dem Betrag läse sie sich als Zahlungstermin (Fachprüfung 01.11.2026).
+  const frist = data?.behoerden?.taxFilingDeadline;
+  const heute = heuteIso();
+  const fristGilt = frist && (frist >= heute || steuerfristVorbei(data.behoerden, heute));
+  const steuerSaetze = steuerGanz ? [
+    t('instrumente.steuerGanz', { total: zahl(steuerGanz.total) }),
+    t('instrumente.steuerDavon', { bund: zahl(steuerGanz.bund) }),
+    ...steuerGanz.annahmen,
+    ...(fristGilt ? [t('instrumente.steuerFrist', { datum: frist.split('-').reverse().join('.') })] : []),
+  ] : [];
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
@@ -141,9 +172,14 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
       key: 'steuer', name: t('instrumente.steuer'),
-      sub: bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
-      glyph: miniSaeule(palette, t, { betragJahr: bundessteuer, verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus) }),
-      onClick: () => onNavigate('tax'),
+      sub: quellensteuer ? t('instrumente.steuerQuelle')
+        : steuerGanz ? steuerSaetze.map((z, i) => h('span', { key: i, style: { display: 'block', marginTop: i ? '2px' : 0, color: i ? palette.soft : palette.mid } }, z))
+          : bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
+      glyph: miniSaeule(palette, t, {
+        betragJahr: quellensteuer ? null : bundessteuer, verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
+        bundAnteil: steuerGanz ? steuerGanz.bund / steuerGanz.total : null, titelText: steuerGanz ? steuerSaetze.join(' ') : null,
+      }),
+      onClick: () => (steuerGanz ? onNavigate('chapter', CHAPTER_KEYS.indexOf('finanzen')) : onNavigate('tax')),
     },
     {
       key: 'tank', name: t('instrumente.tank'),

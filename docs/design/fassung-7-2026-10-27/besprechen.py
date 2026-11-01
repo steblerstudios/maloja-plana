@@ -151,7 +151,7 @@ THEMEN = [
 
 # Runde 2: was am 01.11. noch keinen Entscheid hat, geprüft auf Stage (Commit 57785fa7). F7-D8 ist ein Fehlbefund und fällt weg.
 RUNDE2 = ['F7-D1', 'F7-D2', 'F7-D3', 'F7-D4', 'F7-D5', 'F7-D6', 'F7-D7', 'F7-D9', 'F7-D10', 'F7-L4', 'F7-S5', 'F7-K2-1', 'F7-K2-2',
-          'F7-K3-1', 'F7-K3-2', 'F7-K3-4', 'F7-K4-1', 'F7-K5-1', 'F7-L9']
+          'F7-K3-1', 'F7-K3-2', 'F7-K3-4']
 AKTUELL = {
   'F7-D2': {'heute': 'Auf dem Dashboard stehen «7/7», «Grundordnung 15/15» und zwei Gesamtzahlen in Prozent (bei Maria 66 % und 73 %).'},
   'F7-D3': {'neu': 'Korrektur zu Runde 1: Der Name «Budget-Sync» ist nicht weg, er steht noch im dritten Tipp. Der Block «Tipps für den Anfang» erscheint bei Maria weiterhin. Mit dem Entscheid fällt beides.'},
@@ -159,7 +159,8 @@ AKTUELL = {
   'F7-D5': {'neu': '«Was steht mir zu?» ist gebaut, der Ort ist also da. Auf Stage steht der Block weiter unter dem Titel «Leistungen» auf dem Dashboard.'},
   'F7-D6': {'neu': 'Auf Stage unverändert. Maria: «Bedarf ≈ 3’431.3».'},
   'F7-D7': {'neu': 'Das Kapitel zeigt schon «CHF 540.30». Falsch ist nur noch die Zeile auf dem Dashboard.'},
-  'F7-D10': {'neu': 'Das Netz-Schild steht im Kapitel. Auf dem Dashboard heisst die Kachel weiter «Schutzschild». Die Instrumente stehen noch als eigener Block.'},
+  'F7-D10': {'neu': 'Die Säule bleibt und zeigt neu die ganze Steuer (dein Entscheid K5-1). Die Instrumente stehen noch als eigener Block.',
+             'empf': 'Jedes Instrument klein in seine Kapitel-Zeile: Versicherungen mit dem Schild, Finanzen mit Säule und Tankanzeige. Der eigene Block fällt weg.'},
   'F7-K3-1': {'neu': 'Auf Stage steht die KK-Last weiter in beiden Kapiteln.'},
   'F7-K3-2': {'neu': 'Das Kreuz zeigt seit #626 die eigene Franchise, im Kapitel steht es unter dem Schild.'},
   'F7-K3-4': {'stand': 'teil', 'heute': 'Oben stehen Summe pro Monat und KK-Last, dann das Netz-Schild mit der langen Liste aller Versicherungen, dann das Franchise-Kreuz. Die Angaben beginnen erst weit unten.',
@@ -175,22 +176,54 @@ for t in THEMEN:
         t['titel'] = 'Versicherungen'
         t['intro'] = 'Das Netz-Schild ist gebaut. Offen ist nur noch, was rundherum steht. Diese drei Punkte hängen zusammen.'
         t['bilder'] = [bild('k3-schild-stage.jpg', 'Netz-Schild auf Stage', 'Stand 01.11. auf Stage: das Netz-Schild bei Maria, darunter die Liste.')]
+    if t['id'] == 'geld':
+        t['titel'] = 'Ausgaben in Finanzen'
+        t['intro'] = 'Dieselbe Aufteilung steht heute zweimal im Kapitel.'
+        t['bilder'] = []
     if t['id'] == 'dashboard':
         t['intro'] = 'Fast alles ist hier noch offen, weil die Pakete das Dashboard kaum angefasst haben. D1, D9 und D10 hängen zusammen: Sie ergeben den neuen Aufbau der Seite.'
 THEMEN = [t for t in THEMEN if t['punkte']]
-THEMEN.append({'id': 'begriffe', 'titel': 'Begriffe und Kleines', 'bilder': [],
-  'intro': 'Die kleinen Entscheide aus der Prüfung vom 01.11. Keiner hat eine F7-Nummer, jeder geht in wenigen Minuten.',
+def bloecke(*zeilen):
+    return ''.join('<div class="bl %s">%s%s</div>' % (k, t, '<small>%s</small>' % u if u else '') for k, t, u in zeilen)
+def vergleich(vorher, nachher):
+    return '<div class="skizze"><div class="sk"><h4>Heute</h4>%s</div><div class="sk neu"><h4>So stelle ich es mir vor</h4>%s</div></div>' % (vorher, nachher)
+SCHILD_SVG = lambda kern: '<svg viewBox="0 0 100 112" width="104" role="img" aria-label="%s"><path d="M50 3 L95 18 V58 C95 84 74 100 50 109 C26 100 5 84 5 58 V18 Z" fill="#8FB0A0"/>%s</svg>' % (
+    'Schild mit offenem Bereich' if kern else 'Schild ganz gefüllt',
+    '<path d="M50 56 L95 40 V58 C95 70 90 80 82 88 Z" fill="#C4A06A"/>' if kern else '')
+BALKEN = '<div class="balken"><i style="flex:1650;background:var(--sky)"></i><i style="flex:659;background:var(--sage)"></i><i style="flex:850;background:var(--sand)"></i><i style="flex:856;background:var(--soft)"></i></div>'
+SKIZZEN = {
+  'dashboard': vergleich(
+    bloecke(('', 'Landschaft mit sieben Wegmarken', ''), ('', 'Was ist jetzt dran?', ''), ('weg', 'Ihr Fortschritt', 'dieselben sieben Kapitel als Balken'), ('', 'Was steht mir zu?', ''),
+            ('weg', 'Leistungen', 'rechnet IPV, Sozialhilfe, ALV hier nochmals'), ('weg', 'Ihre Instrumente', 'eigener Block'), ('', 'Ihr Alltag · Absicherung · Schutz', 'dieselben Kapitel, dritte Liste'),
+            ('', 'Werkzeuge', ''), ('weg', 'Tipps für den Anfang', 'auch wenn alles eingetragen ist'), ('weg', 'Sicherung, zweiter Hinweis', '')),
+    bloecke(('', 'Landschaft', 'der Einstieg, mit einer Zahl: 73 % eingetragen'), ('haupt', 'Was ist jetzt dran?', 'Steuerfrist 31. März · Sicherung erstellen'),
+            ('', 'Basis · 79 %', ''), ('', 'Wohnen · 71 %', ''), ('', 'Finanzen · 38 %', 'mit Säule ≈ CHF 8’431 und Tankanzeige 4.6 Monate'), ('', 'Versicherungen · 70 %', 'mit Schild 5/5'),
+            ('', 'Ausbildung · Behörden · Notfall', 'je eine Zeile'), ('', 'Was steht mir zu?', 'eine Zeile mit Ergebnis und Link'), ('', 'Werkzeuge', '')))
+    + vergleich(bloecke(('', 'Sozialhilfe', 'Bedarf ≈ 3’431.3'), ('', 'Versicherungen', 'CSS, CHF 540.3, Franchise 1’500')),
+                bloecke(('', 'Sozialhilfe', 'Bedarf ≈ CHF 3’431'), ('', 'Versicherungen', 'CSS, CHF 540.30 / Mt. · Franchise CHF 1’500'))),
+  'fortschritt': vergleich(
+    bloecke(('', 'Landschaft', 'auf dem Dashboard'), ('weg', 'Lebensbaum', 'mitten im Kapitel Finanzen'), ('weg', 'Obstgarten', '11 Bäumchen, andere Bereiche als die Kapitel, 4 «kommt später»')),
+    bloecke(('', 'Landschaft', 'bleibt der Einstieg auf dem Dashboard'), ('haupt', 'Ihr Garten', 'eigene Seite, ein Bäumchen je Kapitel, also 7'), ('', 'Basis 79 % · Wohnen 71 % · Finanzen 38 % …', 'dieselben Zahlen wie auf dem Dashboard'))),
+  'versicherungen': vergleich(
+    bloecke(('', 'Versicherungen pro Monat CHF 659', 'mit allen Posten'), ('weg', 'Ihre KK-Last 8.7 %', 'steht auch in Finanzen'), ('', 'Netz-Schild', 'mit langer Liste'), ('weg', 'Franchise-Kreuz', 'ganze Grafik, auch auf dem Dashboard und der Übersicht'), ('', 'Angaben', 'kommen erst weit unten')),
+    bloecke(('haupt', 'Netz-Schild', 'zuerst, Liste aufklappbar'), ('', 'Versicherungen pro Monat CHF 659', 'eine Zeile'), ('', 'KK-Last 8.7 % ›', 'eine Zeile'), ('', 'Franchise: eher 2’500 ›', 'eine Zeile, das Kreuz liegt auf der Übersicht'), ('', 'Angaben', 'gleich danach'))),
+  'geld': vergleich(
+    bloecke(('', 'Balken oben', 'Wohnen · Versicherungen · Steuern · Übriges'), ('weg', 'Kuchen «Wofür geht es weg?»', 'dieselben Zahlen, weiter unten nochmals')),
+    '<div class="bl"><b>Wofür geht es weg?</b> CHF 4’015 im Monat' + BALKEN + '<small>Antippen klappt auf:</small></div>'
+    + bloecke(('', 'Wohnen CHF 1’650', ''), ('', 'Versicherungen CHF 659', ''), ('', 'Steuern CHF 850', ''), ('', 'Übriges CHF 856', ''))),
+}
+for t in THEMEN:
+    t['skizze'] = SKIZZEN.get(t['id'], '')
+THEMEN.append({'id': 'begriffe', 'titel': 'Zwei letzte Fragen, verständlicher', 'bilder': [],
+  'intro': 'Das waren E-4 und E-5, einfacher erklärt.',
+  'skizze': '<div class="skizze"><div class="sk"><h4>Heute bei Maria: alles eingetragen</h4>' + SCHILD_SVG(False) + '</div><div class="sk"><h4>Wenn etwas fehlt, zum Beispiel Hausrat</h4>' + SCHILD_SVG(True) + '</div></div>',
   'punkte': [
-    p('E-1', '«erfasst» oder «eingetragen»', 'offen', 'Das Schild sagt «eingetragen», die Versicherungs-Übersicht (<code>vu.*</code>) teils «erfasst».',
-      'Überall «eingetragen». Das Wort sagt am deutlichsten, dass es um Ihre Einträge geht und nicht um die Deckung.'),
-    p('E-2', '«Schild» oder «Schutzschild»', 'offen', 'Im Kapitel steht das Netz-Schild, auf dem Dashboard heisst die Kachel «Schutzschild».',
-      'Überall «Schild». «Schutz» klingt nach Deckung, und genau das zeigt das Bild nicht.'),
-    p('E-3', 'Name der Lebenslauf-Seite', 'offen', 'Deutsch «Lebenslauf», Rumantsch «Curriculum vitae», Französisch noch «Créateur de CV».',
-      'In allen Sprachen der schlichte Name, Französisch also «CV». Der Generator ist seit F7-R5 weg.'),
-    p('E-4', 'Sandfarbener Kern bei Maria', 'offen', 'Seit Maria Zusatz und Lebensversicherung hat, ist das Schild ganz gefüllt, der Kern «noch nicht gedeckt» ist bei ihr nicht zu sehen.',
-      'So lassen. Das Beispiel soll zeigen, was bei Maria stimmt. Ein leeres Feld künstlich zu erzeugen wäre unehrlich.'),
-    p('E-5', 'Erklärtext auf Rumantsch', 'offen', 'Im Kapitel Notfall steht der Erklärtext zur Patientenverfügung in der Sprache Rumantsch noch auf Deutsch. Das ist schon heute so auf <code>main</code>.',
-      'Mit der nächsten rm-Gegenlese übersetzen, nicht von mir allein. Bis dahin bleibt der deutsche Text.'),
+    p('E-4', 'Soll man im Beispiel sehen, wie eine Lücke aussieht?', 'offen',
+      'Im Schild wird ein Bereich sandfarben, solange dort etwas fehlt. Maria hat inzwischen alles eingetragen. Im Beispiel sieht man den sandfarbenen Bereich deshalb nie, siehe die zwei Bilder oben.',
+      'So lassen. Maria ist das Beispiel für einen geordneten Stand. Wer selbst etwas auslässt, sieht die Lücke bei den eigenen Angaben. «Anders» heisst: Ich entferne bei Maria die Hausrat-Versicherung, dann sieht man die Lücke auch im Beispiel.'),
+    p('E-5', 'Deutscher Absatz in der Sprache Rumantsch', 'offen',
+      'Wer die App auf Rumantsch stellt, sieht im Kapitel Notfall einen Absatz, der noch auf Deutsch ist: die Erklärung, was eine Patientenverfügung ist.',
+      'Ich übersetze ihn jetzt und markiere ihn als ungeprüft, wie die übrigen Texte in «Rumantsch (provisoric)». Eine Person, die Rumantsch kann, liest ihn später gegen. «Später» heisst: Er bleibt vorerst Deutsch.'),
   ]})
 
 html = (HIER / 'besprechen-vorlage.html').read_text(encoding='utf-8')

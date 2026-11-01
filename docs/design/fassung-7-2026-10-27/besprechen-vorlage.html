@@ -59,6 +59,17 @@ dd.empf { color: var(--text); }
 .wahl button[aria-pressed="true"].spaeter { background: var(--soft); border-color: var(--soft); color: var(--bg); }
 .pkt textarea { font: inherit; font-size: 14px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; min-height: 64px; width: 100%; }
 
+
+.skizze { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.sk { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); padding: 10px; }
+.sk h4 { font-family: var(--display); font-size: 13px; margin: 0 0 8px; color: var(--soft); }
+.sk.neu { border-color: var(--sage); } .sk.neu h4 { color: var(--sage); }
+.bl { background: var(--up); border-radius: 6px; padding: 6px 8px; font-size: 13px; margin-bottom: 5px; color: var(--text); }
+.bl small { display: block; color: var(--soft); font-size: 12px; }
+.bl.weg { background: transparent; border: 1px dashed var(--border); color: var(--soft); text-decoration: line-through; }
+.bl.weg small { text-decoration: none; display: block; }
+.bl.haupt { border-left: 3px solid var(--sage); }
+.balken { display: flex; height: 14px; border-radius: 4px; overflow: hidden; margin-top: 6px; } .balken i { display: block; }
 .schild { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px; display: grid; gap: 6px; }
 .schild iframe { width: 100%; height: 470px; border: 0; border-radius: 6px; background: transparent; }
 .schild p { font-size: 13px; }
@@ -73,9 +84,9 @@ textarea#ausgabe { width: 100%; min-height: 140px; font: 13px/1.5 ui-monospace, 
 
 <main>
   <div class="lead">
-    <span class="meta">Maloja Plana · Fassung 7 · Runde 2 · Stand 01.11.2026 · geprüft auf Stage, Bilder vom 27.10. ausser bei Versicherungen</span>
+    <span class="meta">Maloja Plana · Fassung 7 · Runde 3 · Stand 01.11.2026 · Beispiele mit den Zahlen von Maria</span>
     <h1>Fassung 7 · Besprechen</h1>
-    <p>19 Punkte aus dem Rundgang und 5 kleine Entscheide, die noch offen sind. Je Punkt: wie es heute ist, was sich verändert hat, und meine Empfehlung. Wähle «Wie empfohlen», «Anders» (mit einem Satz dazu) oder «Später», dann unten kopieren und in den Chat legen.</p>
+    <p>Die letzten 18 Entscheide. Je Thema siehst du links, wie es heute ist, und rechts, wie ich es mir vorstelle, mit den Zahlen von Maria. Es sind Skizzen, keine fertigen Seiten. Darunter stehen die einzelnen Punkte. Du kannst auch ein ganzes Thema mit einem Satz im Chat entscheiden.</p>
     <nav class="themen" id="themen" aria-label="Themen"></nav>
   </div>
 
@@ -95,8 +106,8 @@ const STAND = { offen: 'noch wie im Rundgang', teil: 'teilweise erledigt', erled
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 let wahl = {};
-try { wahl = JSON.parse(localStorage.getItem('f7-besprechen-2') || '{}'); } catch (e) { wahl = {}; }
-const speichern = () => { try { localStorage.setItem('f7-besprechen-2', JSON.stringify(wahl)); } catch (e) {} };
+try { wahl = JSON.parse(localStorage.getItem('f7-besprechen-3') || '{}'); } catch (e) { wahl = {}; }
+const speichern = () => { try { localStorage.setItem('f7-besprechen-3', JSON.stringify(wahl)); } catch (e) {} };
 
 function bauen() {
   document.getElementById('themen').innerHTML = THEMEN.map((t, i) => `<a href="#${t.id}">${i + 1} · ${t.titel}</a>`).join('');
@@ -108,6 +119,7 @@ function bauen() {
       </figure>
       <div>
         <div class="kopf"><span class="nr">Thema ${i + 1} von ${THEMEN.length}</span><h2>${t.titel}</h2><p>${t.intro}</p></div>
+        ${t.skizze || ''}
         <div class="punkte">${t.punkte.map(p => `
           <article class="pkt" data-id="${p.id}">
             <div class="zeile"><h3>${p.titel}</h3><span class="id">${p.id}</span><span class="chip ${p.stand}">${STAND[p.stand]}</span></div>
@@ -137,7 +149,7 @@ function zeigen() {
     if (document.activeElement !== ta) ta.value = w.notiz || '';
   });
   const alle = document.querySelectorAll('.pkt').length;
-  const n = Object.values(wahl).filter(w => w && w.w).length;
+  const n = [...document.querySelectorAll('.pkt')].filter(el => (wahl[el.dataset.id] || {}).w).length;
   document.getElementById('stand').textContent = `${n} von ${alle} entschieden`;
 }
 
@@ -158,11 +170,11 @@ document.addEventListener('input', e => {
 
 document.getElementById('kopieren').addEventListener('click', async () => {
   const W = { ja: 'wie empfohlen', anders: 'anders', spaeter: 'später' };
-  const zeilen = THEMEN.flatMap(t => t.punkte.filter(p => wahl[p.id]).map(p => {
+  const zeilen = THEMEN.flatMap(t => t.punkte.filter(p => wahl[p.id] && wahl[p.id].w).map(p => {
     const w = wahl[p.id];
     return `${p.id}: ${W[w.w]}${w.w === 'anders' && w.notiz.trim() ? ' — ' + w.notiz.trim() : ''}`;
   }));
-  const text = 'Fassung 7, Besprechen Runde 2:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
+  const text = 'Fassung 7, Besprechen Runde 3:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
   const ta = document.getElementById('ausgabe');
   ta.value = text; ta.hidden = false;
   const btn = document.getElementById('kopieren');
