@@ -11,11 +11,7 @@ import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { NetzSchild, betragText } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
-import { calculateIPV } from '../config/cantonalData.js';
-import { ipvAbzug } from '../data/ipvAbzug.js';
-import { renderSource } from '../utils/renderSource.js';
-import { ErgebnisArt } from './ErgebnisArt.jsx';
-import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
+import { KKLastEinordnung, VERGLEICHSMARKE, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
 
 // Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Stebler Studios 24.10.2026,
 // nachgebessert am selben Tag). Wie das Wohnkosten-Instrument: unter der ruhigen Zusammenfassung, vor den Angaben.
@@ -24,13 +20,12 @@ import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 //   1. «Versicherungen pro Monat» — aus der einen Monatsrechnung (utils/monatsrechnung.js), also dieselbe Zahl wie
 //      die Budget-Gruppe «Versicherung & Gesundheit»: Krankenkasse, Hausrat ÷ 12, Haftpflicht ÷ 12, «Weitere
 //      Versicherungen» aus dem Kapitel Finanzen. Darunter, was fehlt und was bewusst nicht zählt.
-//   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze,
+//   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen mit der Vergleichsmarke 10 % (wie KKLastCard, dieselben Sätze,
 //      dieselbe IPV-Entlastung über ipvAbzug, Quelle und «Orientierung» — Fachprüfung 25.10.2026).
 //   3. Netz-Schild (seit 27.10.2026, F7-K3-6) — ein Schild aus Teilen statt der zwei kleinen Schilde und des Netzes.
 //      Seit F7-K3-4 folgt es direkt auf die Summe, Posten und Liste sind eingeklappt.
 //   4. Franchise-Kreuz klein — dieselbe Rechnung wie die Prämien-Seite (ladeFranchiseOpt, erst mit Kasse + PLZ),
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
-const WHO = 10;
 const has = (x) => x != null && String(x).trim() !== '';
 const zahl2 = (x) => Number(x) || 0;
 
@@ -91,10 +86,8 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const einkommen = Number(daten.finanzen?.monthlyIncome) || 0;
   const anteil = kkPraemie > 0 && einkommen > 0 ? (kkPraemie / einkommen) * 100 : null;
   const skala = anteil == null ? 15 : Math.max(15, Math.ceil(anteil / 5) * 5);
-  const ueber = anteil != null && anteil >= WHO;
-  // IPV-Entlastung wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
-  const ipvBetrag = anteil != null ? Math.min(kkPraemie, ipvAbzug(daten, calculateIPV(daten)).betrag || 0) : 0;
-  const effektiv = ipvBetrag > 0 ? Math.round(((kkPraemie - ipvBetrag) / einkommen) * 1000) / 10 : null;
+  // IPV-Stand wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
+  const kkStand = anteil != null ? kkLastIpv(daten, kkPraemie, einkommen) : null;
 
   const schildDa = schildState(v, schildOptionen(daten)).touched;
 
@@ -123,21 +116,15 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     // In der Übersicht steht die KK-Last direkt unter dem Seitentitel (h2) — darum h3 (A11y-Prüfung).
     h(uebersicht ? 'h3' : 'h4', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('kkLast.title')),
     h('div', { 'aria-hidden': 'true', 'data-teil': 'kk-last-balken', style: { position: 'relative', height: '8px', margin: space.sm + 'px 0', borderRadius: radius.full, background: palette.surface } },
-      h('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (anteil / skala) * 100) + '%', background: ueber ? palette.gold : ton, borderRadius: radius.full } }),
-      h('div', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (WHO / skala) * 100 + '%', width: '2px', background: palette.text } })
+      h('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (anteil / skala) * 100) + '%', background: ton, borderRadius: radius.full } }),
+      h('div', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (VERGLEICHSMARKE / skala) * 100 + '%', width: '2px', background: palette.text } })
     ),
     h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
-      h('span', null, t('versInstrument.anteil', { pct: zahl(anteil, { hoechstens: 1 }) })),
-      h('span', { style: { whiteSpace: 'nowrap' } }, h(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('versInstrument.who'))
+      h('span', { style: { fontWeight: weight.semi, color: palette.text } }, zahl(anteil, { hoechstens: 1 }) + ' %'),
+      h('span', { style: { whiteSpace: 'nowrap' } }, h(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('kkLast.marker'))
     ),
-    h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t(ueber ? 'kkLast.overNote' : 'kkLast.underNote')),
-    effektiv != null && h('p', { 'data-teil': 'kk-last-ipv', style: { ...klein, margin: space.xs + 'px 0 0', color: palette.skyDeep || palette.text } }, t('kkLast.ipvRelief', { ipv: zahl(ipvBetrag), share: zahl(effektiv, { hoechstens: 1 }) })),
-    h(ErgebnisArt, { palette, t, ergebnis: KK_LAST_ERGEBNIS, style: { marginTop: space.xs + 'px' } }),
-    h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('kkLast.source'), null, t)),
-    ueber && onNavigate && h('button', {
-      type: 'button', className: 'mp-link', onClick: () => onNavigate('premium'),
-      style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, cursor: 'pointer' },
-    }, t('kkLast.ipvLink'))
+    h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t(kkLastBasisKey(daten))),
+    h(KKLastEinordnung, { palette, t, onNavigate, stand: kkStand })
   );
   const postenZeilen = () => h('div', { 'data-teil': 'versicherungen-posten' },
     ...posten.map((x) => h(React.Fragment, { key: x.key },

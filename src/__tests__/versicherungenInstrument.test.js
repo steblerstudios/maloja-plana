@@ -16,6 +16,7 @@ import en from '../i18n/en.js';
 import fr from '../i18n/fr.js';
 import it_ from '../i18n/it.js';
 import rm from '../i18n/rm.js';
+import { kkLastBasisKey } from '../KKLastCard.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 
 const t = createT({ de }, 'de', 'sie');
@@ -56,17 +57,23 @@ describe('Versicherungen pro Monat', () => {
 });
 
 describe('KK-Last', () => {
-  it('Maria: 8.7 % des Einkommens, Marke WHO 10 %, Satz «unter 10 %»', () => {
+  it('Maria: 8.7 %, Basis netto, Vergleichsmarke, Weg zur IPV', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
-    expect(text).toContain('8.7 % des Einkommens');
-    expect(text).toContain('WHO 10 %');
-    expect(text).toContain(de.kkLast.underNote);
-  });
-  it('über 10 %: Satz «über dem Richtwert» und Weg zur IPV', () => {
-    const v = { ...DEMO_DATA.versicherungen, kkPremium: '700' };
-    const text = nurText(instrument(v));
-    expect(text).toContain(de.kkLast.overNote);
+    expect(text).toContain('8.7 %');
+    expect(text).toContain(de.kkLast.basisNetto.sie);
+    expect(text).toContain('Vergleichsmarke 10 %');
+    expect(text).toContain(de.kkLast.zusatzkosten);
+    expect(text).toContain(de.kkLast.kanton);
     expect(text).toContain(de.kkLast.ipvLink);
+    expect(text).not.toContain('WHO 10 %');
+    expect(text).not.toContain('Richtwert');
+  });
+  it('über 10 %: gleiche Sätze, keine Warnfarbe', () => {
+    const v = { ...DEMO_DATA.versicherungen, kkPremium: '700' };
+    const html = instrument(v);
+    expect(nurText(html)).toContain(de.kkLast.markeFrage);
+    expect(nurText(html)).toContain(de.kkLast.ipvLink);
+    expect(html).not.toContain('Richtwert');
   });
 });
 
@@ -121,9 +128,17 @@ describe('Nachprüfung', () => {
     const v = { ...DEMO_DATA.versicherungen, kkPremium: '', liabilityPremium: '' };
     expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht eingetragen.');
   });
+  it('Basis je nach Einkommen: netto, brutto, offen, nicht Lohn', () => {
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'netto' } })).toBe('kkLast.basisNetto');
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'brutto' } })).toBe('kkLast.basisBrutto');
+    expect(kkLastBasisKey({ finanzen: {} })).toBe('kkLast.basisOffen');
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'netto', employmentType: 'selfEmployed' } })).toBe('kkLast.basisEinkommen');
+    expect(kkLastBasisKey({ finanzen: { incomeType: 'netto' }, basis: { household: { isRetired: true } } })).toBe('kkLast.basisEinkommen');
+  });
   it('KK-Last mit Quelle (WHO) und Marke «Orientierung»', () => {
     const text = nurText(instrument(DEMO_DATA.versicherungen));
-    expect(text).toContain('WHO / UNO SDG-Indikator 3.8.2');
+    expect(text).toContain('WHO, Indikator 4845');
+    expect(text).toContain('KVG Art. 65 Abs. 1ter');
   });
   it('Netz-Schild: Stand als Liste mit Rollen und als Satz, nicht nur im Bild', () => {
     const html = instrument(DEMO_DATA.versicherungen);

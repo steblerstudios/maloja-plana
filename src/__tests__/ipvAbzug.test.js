@@ -94,7 +94,6 @@ describe('Luzern, Anmeldefrist vorbei (September 2026)', () => {
     am(FRIST_VORBEI);
     const html = kk(person());
     expect(html).not.toContain('kkLast.ipvRelief');
-    expect(html).not.toContain('kkLast.underWithIpv');
     expect(html).toContain(HINWEIS);
   });
   it('Prämien-Beleg: kein Abzug, Prämie ganz selbst, der Hinweis steht da', () => {
