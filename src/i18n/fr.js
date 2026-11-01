@@ -2089,6 +2089,12 @@ export default {
         haushaltFehlen: "Pour tout le ménage, il manque {betrag}",
         haushaltWie: "Calculé comme sur la page Budget, en comptant aussi le revenu de la ou du partenaire.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        ansicht: "Mois ou année",
+        ansichtMonat: "Mois",
+        ansichtJahr: "Année",
+        jahrBleiben: "Il reste chaque année",
+        jahrFehlen: "Il manque chaque année",
+        jahrHinweis: "Le mois × 12. Un 13e salaire n’est pas compté.",
         teil: { wohnen: "Logement", versicherungen: "Assurances", steuern: "Impôts", uebriges: "Autres" },
       },
       passend: {

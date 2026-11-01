@@ -2098,6 +2098,12 @@ export default {
         haushaltFehlen: "Mit dem ganzen Haushalt fehlen {betrag}",
         haushaltWie: "Gerechnet wie auf der Budget-Seite, zusätzlich mit dem Einkommen der Partnerin oder des Partners.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        ansicht: "Monat oder Jahr",
+        ansichtMonat: "Monat",
+        ansichtJahr: "Jahr",
+        jahrBleiben: "Jedes Jahr bleiben",
+        jahrFehlen: "Jedes Jahr fehlen",
+        jahrHinweis: "Der Monat × 12. Ein 13. Monatslohn ist nicht eingerechnet.",
         teil: { wohnen: "Wohnen", versicherungen: "Versicherungen", steuern: "Steuern", uebriges: "Übriges" },
       },
       passend: {

@@ -2089,6 +2089,12 @@ export default {
         haushaltFehlen: "For the whole household, {betrag} is missing",
         haushaltWie: "Calculated as on the budget page, also counting a partner's income.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        ansicht: "Month or year",
+        ansichtMonat: "Month",
+        ansichtJahr: "Year",
+        jahrBleiben: "Left over each year",
+        jahrFehlen: "Missing each year",
+        jahrHinweis: "The month × 12. A 13th salary is not included.",
         teil: { wohnen: "Housing", versicherungen: "Insurance", steuern: "Taxes", uebriges: "Other" },
       },
       passend: {

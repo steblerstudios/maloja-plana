@@ -2056,16 +2056,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Mit Nebenerwerb muss auch er als netto erfasst sein (Fassung 6: er zählt jetzt mit).
     const allesNetto = data.incomeType === 'netto' && (!(Number(data.sideIncome) > 0) || data.sideIncomeType === 'netto');
     const einkommenKey = allesNetto ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
+    const fuss = (faktor) => React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
+      React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant * faktor)),
+      m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen * faktor))
+    );
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
       // F7-K2-2 (01.11.2026): Zahl, Balken und Kuchen sind ein Bild, der Monatsring. Bis er geladen ist, steht die Zahl allein.
       React.createElement(React.Suspense, { fallback: React.createElement(React.Fragment, null,
         React.createElement('div', { style: label }, tr(titelKey)),
-        React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.abs(m.bleibt)))) },
-        React.createElement(Monatsring, { palette, t: tr, data: { ...(allData || {}), finanzen: data }, einkommen: m.einkommen, verplant: m.verplant, titel: tr(titelKey), zahl: betrag(Math.abs(m.bleibt)) })
-      ),
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
-        React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
-        m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
+        React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.abs(m.bleibt))),
+        fuss(1)) },
+        React.createElement(Monatsring, {
+          palette, t: tr, data: { ...(allData || {}), finanzen: data }, einkommen: m.einkommen, verplant: m.verplant,
+          titel: tr(titelKey), titelJahr: tr('chapters.finanzen.monat.' + (plus ? 'jahrBleiben' : 'jahrFehlen')), zahl: m.bleibt,
+          fuss,
+        })
       ),
       renderDoppeltVersichert(),
       renderHaushaltsSaldo(h)

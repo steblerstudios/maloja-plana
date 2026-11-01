@@ -24,7 +24,7 @@ const profil = (finanzen = {}) => ({
 describe('Monatsring: «Wofür geht es weg?»', () => {
   const ring = (d) => {
     const verplant = sumAllExpenses(d.finanzen, d);
-    return { data: d, t, palette, einkommen: Number(d.finanzen.monthlyIncome) || 0, verplant, titel: 'Jeden Monat bleiben', zahl: 'CHF 2’100' };
+    return { data: d, t, palette, einkommen: Number(d.finanzen.monthlyIncome) || 0, verplant, titel: 'Jeden Monat bleiben', titelJahr: 'Jedes Jahr bleiben', zahl: (Number(d.finanzen.monthlyIncome) || 0) - verplant };
   };
   it('Gruppen = alle Ausgabenposten; ihre Summe sind die Ausgaben, der Rest ist, was bleibt', () => {
     const d = profil();
@@ -39,19 +39,19 @@ describe('Monatsring: «Wofür geht es weg?»', () => {
     expect(rest).toBe(0);
     expect(basis).toBe(2900);
   });
-  it('Zahl in der Mitte, Liste mit Betrag und Prozent, Bild für Screenreader stumm', () => {
+  it('Zahl in der Mitte, Balken mit Betrag und Prozent, Bild für Screenreader stumm', () => {
     const html = renderToStaticMarkup(React.createElement(Monatsring, ring(profil())));
     const klar = html.replace(/<[^>]+>/g, '');
     expect(html).toContain('aria-hidden="true"');
     expect(klar).toContain('Jeden Monat bleiben');
     expect(klar).toContain('Wofür geht es weg?');
     // Wohnen 1’500 von 5’000 Einkommen, Rest 2’100.
-    expect(klar).toContain('CHF 1’500 · 30 %');
-    expect(klar).toContain('CHF 2’100 · 42 %');
+    expect(klar).toContain('CHF 1’50030 %');
+    expect(klar).toContain('CHF 2’10042 %');
   });
   it('kleine Posten als «< 1 %», nicht «0 %»', () => {
     const html = renderToStaticMarkup(React.createElement(Monatsring, ring(profil({ pension3a: 120 }))));
-    expect(html.replace(/<[^>]+>/g, '')).not.toContain('· 0 %');
+    expect(html.replace(/<[^>]+>/g, '')).not.toContain('CHF 1200 %');
   });
   it('eine Gruppe mit mehreren Posten lässt sich aufklappen, eine mit einem nicht', () => {
     const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };

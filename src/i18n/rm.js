@@ -2243,6 +2243,13 @@ export default {
         // rm ungeprüft Finanzen-Fusion
         haushaltWie: "Quintà sco sin la pagina dal budget, inclusiv l'entrada da la partenaria u dal partenari.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben» — rm ungeprüft F6
+        // TODO(rm): provisorisch — Gegenlese (Monat/Jahr, F7-K2-2, 01.11.2026)
+        ansicht: "Mais u onn",
+        ansichtMonat: "Mais",
+        ansichtJahr: "Onn",
+        jahrBleiben: "Mintga onn restan",
+        jahrFehlen: "Mintga onn mancan",
+        jahrHinweis: "Il mais × 12. In 13avel salari n’è betg quintà.",
         teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", uebriges: "Ulteriur" },
       },
       passend: {

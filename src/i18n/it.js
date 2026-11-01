@@ -2089,6 +2089,12 @@ export default {
         haushaltFehlen: "Per l'intera economia domestica mancano {betrag}",
         haushaltWie: "Calcolato come nella pagina Budget, contando anche il reddito della o del partner.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        ansicht: "Mese o anno",
+        ansichtMonat: "Mese",
+        ansichtJahr: "Anno",
+        jahrBleiben: "Ogni anno restano",
+        jahrFehlen: "Ogni anno mancano",
+        jahrHinweis: "Il mese × 12. Una 13a mensilità non è inclusa.",
         teil: { wohnen: "Abitazione", versicherungen: "Assicurazioni", steuern: "Imposte", uebriges: "Altro" },
       },
       passend: {
