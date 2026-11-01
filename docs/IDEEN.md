@@ -54,7 +54,7 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 | Entscheid | § | Warum jetzt |
 |---|---|---|
 | Kern: Ordner oder Ereignisse · zusammen mit der Kapitel-Architektur und der App-Struktur | §0, §6 | davon hängt ab, wie der ganze Winter gebaut wird |
-| Gamification: House of Life gegenüber Grundstück-Blatt · dazu die **Berg-Bilder bei 20–100 %** auf dem Dashboard (§15) | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
+| ~~Gamification: House of Life gegenüber Grundstück-Blatt · dazu die **Berg-Bilder bei 20–100 %** auf dem Dashboard (§15)~~ ✅ **01.11.2026: abschaltbare Haut** (§1) | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
 | UI/UX aus den Runden 3–5: **Löschen ohne Rückgängig** (15 Knöpfe) · **Ladehinweis** beim Nachladen — *vor Oktober ansehen* · ~~zwei Zurück-Knöpfe~~ ✅ Brotkrume (25.09.) | §15 | der Dokumenten-Tresor löscht endgültig — der einzige Weg zu Datenverlust ohne Netz |
 | Baum oder Obstgarten · zwei Bäume verschmelzen | §2 | braucht nur ein Mockup, kein Bau |
 | Sechs Meinungs-Entscheide (E4), vor allem Preis/Paywall | §11 | Preis bestimmt, was Maloja nach aussen verspricht |
@@ -195,7 +195,16 @@ Abschiedsagentur, plaant).
   Muji, Kinfolk, Monocle, japanische Gärten, Museumsausstellung, Monument Valley. **Grenze:**
   kein Cartoon, keine Fantasy. Technik später: räumliches Gehen per Scroll,
   `prefers-reduced-motion` zwingend.
-- ❓ **Widerspruch Gamification** — House of Life (19.07.) sagt «keine Gamification»;
+- ✅ **Entscheid Gamification, 01.11.2026 (Stebler Studios): abschaltbare Haut.** Es gilt
+  `design/grundstueck-und-modi.md`: Momentum im Kern, die verspielte Welt opt-in und jederzeit
+  aus, nie Wettbewerb. Der Normal-Modus bleibt vollständig; das «keine Gamification» aus House
+  of Life gilt damit für den Kern, nicht für die Haut. **Bau erst nach Fassung 7/8**, die Spalte
+  «irgendwann/Welt» bleibt ohne Termin. Anstoss war Reclaim City
+  (play.multiversegames.ai/reclaim-city, Datenschutz-Spiel): echte Handlungen statt Punkte und
+  eine Reihenfolge mit Grund sind brauchbar; Streak, Angst-Zahl und Neon-Optik nicht.
+  **Vorschlag, noch nicht entschieden:** «besser» heisst im Haus *aufgeräumter*, nie *reicher*;
+  gemessen wird Erledigtes, nie Einkommen, Vermögen oder Schulden.
+- ⟨überholt 01.11.2026, bleibt als Herkunft⟩ **Widerspruch Gamification** — House of Life (19.07.) sagt «keine Gamification»;
   `design/grundstueck-und-modi.md` (13.07.) hat Gamification bewusst **erlaubt**: Momentum im
   Kern, verspielte Welt als abschaltbare Haut, nie Wettbewerb. Beide Texte sind danach nie
   gegeneinander gelegt worden. **Entscheid 24.09.2026: im Oktober klären.** Bis dahin stehen
@@ -581,7 +590,7 @@ Edelweiss, Gipfelkreuz, Matterhorn, Kuh, Uhr, Schoggi, Sonne, Fahne (`Dashboard.
 (keine Einblendung, kein Ton) — aber strukturell «mehr ausgefüllt = mehr Belohnung».
 - A · behalten · B · auf 2–3 Stufen reduzieren · C · weglassen · D · als abschaltbare «Haut».
 - *Vorschlag:* folgt aus dem Gamification-Entscheid oben — «keine Gamification» → C,
-  «abschaltbare Haut» → D.
+  «abschaltbare Haut» → D. **Seit dem Entscheid vom 01.11.2026 (§1) also D, noch nicht gebaut.**
 
 **Steuer-Säule mit Vergleich** (Idee, festgehalten 25.09.2026, Stebler Studios). Das Instrument
 «Steuer-Säule» im Dashboard zeigt seit dem Umbau «Was steht mir zu?» nur die **eine** Säule des
