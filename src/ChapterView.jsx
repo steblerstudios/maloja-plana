@@ -39,7 +39,8 @@ import { kalenderdatum } from './utils/datumAnzeige.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import landschaft from './assets/berge/landschaft.webp?url';
-import { einkommenIstKeinLohn, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
+import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
+import { istAngestellt } from './utils/anstellung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -1014,7 +1015,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
         // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
-        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && allData.finanzen.employmentType === 'employed' &&
+        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && istAngestellt(allData.finanzen) &&
           React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('uvgHint.fieldSuggest'))),
         renderOrientation(field)
       );
@@ -1374,7 +1375,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
               // korrekt schweigt. Fünf Stellen rechneten diesen Befund, jede etwas anders.
               // Der Mindestlohn gilt für Arbeitsverhältnisse: bei Rente oder Geschäftsgewinn kein Befund.
-              const check = monthlyIncome > 0 && !einkommenIstKeinLohn(allData)
+              const check = monthlyIncome > 0 && !mindestlohnNichtAnwendbar(allData)
                 ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType, allData?.finanzen?.dreizehnter)
                 : null;
               elements.push(
@@ -1556,7 +1557,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ['sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint'],
             ], ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint']);
             const kanton = allData && allData.basis && allData.basis.canton;
-            if (kanton && kantonHatMindestlohn(kanton) && !einkommenIstKeinLohn(allData)) {
+            if (kanton && kantonHatMindestlohn(kanton) && !mindestlohnNichtAnwendbar(allData)) {
               const lohn = parseFloat(data[field.k]) || 0;
               if (lohn > 0) {
                 // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme mehr. Bei Teilzeit erzeugte sie

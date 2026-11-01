@@ -2,6 +2,7 @@ import { BVG_PARAMS } from './ahvRechner.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { lohnBasis } from '../utils/jahreslohnAusProfil.js';
 import { referenzalterErreicht } from '../utils/nettoAusProfil.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Reine Logik für den Versicherungs-Schutzschild — kein React, damit testbar.
 // ZWEI Schilde, weil das Gesetz zwei Dinge unterscheidet:
@@ -31,7 +32,7 @@ export function jahreseinkommenFuerSchild(finanzen = {}) {
 // Die Optionen für schildState aus dem Profil — für beide Aufrufer gleich.
 export function schildOptionen(data = {}) {
   return {
-    employed: data?.finanzen?.employmentType === 'employed',
+    employed: istAngestellt(data?.finanzen),
     annualIncome: jahreseinkommenFuerSchild(data?.finanzen),
     // 13. offen: ×12 gerechnet. Läge erst ×13 über der Schwelle, ist die Pflicht offen, nicht weg.
     annualIncomeMit13: dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen'

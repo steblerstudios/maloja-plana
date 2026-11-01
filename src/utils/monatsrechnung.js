@@ -25,6 +25,7 @@
 // Hinweis die Autokosten schon enthalten. Das wäre ein eigener Entscheid.
 
 import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
+import { istAngestellt, istLernend } from './anstellung.js';
 
 // Nur positive Beträge zählen — wie die Einnahmen (data/haushaltsEinnahmen.js); ein negativer
 // Eintrag soll die Ausgaben nicht still verkleinern (Fachprüfung Fassung 6).
@@ -34,7 +35,7 @@ const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x :
 export const zahltBeitraegeSelbst = (finanzen) => finanzen?.employmentType === 'selfEmployed' || finanzen?.employmentType === 'freelance';
 
 // «Schon vom Nettolohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn (dieselbe Regel wie VersicherungenInstrument).
-export const beitragsNotizKey = (finanzen) => finanzen?.employmentType === 'employed' && finanzen?.incomeType === 'netto' ? 'budgetSync.bvgReferenceNote' : 'budgetSync.bvgNichtGezaehltNote';
+export const beitragsNotizKey = (finanzen) => istAngestellt(finanzen) && finanzen?.incomeType === 'netto' ? 'budgetSync.bvgReferenceNote' : 'budgetSync.bvgNichtGezaehltNote';
 
 // Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG von
 // Angestellten fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur
@@ -82,6 +83,11 @@ const profil = (finanzen, allData) => ({ ...(allData || {}), finanzen: finanzen 
 // Rente oder Geschäftsgewinn: `monthlyIncome` ist dann kein Lohn, Lohn-Vergleiche und Lohn-Wörter passen nicht.
 export const einkommenIstKeinLohn = (data) => !!data?.basis?.household?.isRetired
   || ['retired', 'selfEmployed', 'freelance'].includes(data?.finanzen?.employmentType);
+
+// Der kantonale Mindestlohn gilt für Lohn aus Arbeitsverhältnissen, aber nicht für Lehrverhältnisse:
+// GE LIRT Art. 39J · TI LSM Art. 3 · JU RSJU 822.41 Art. 3 al. 2 · NE RSalMin Art. 3 Abs. 2 lit. b (Stand 1.11.2025)
+// · BS Regierungsrat in der Antwort an den Grossen Rat: «Lernende fallen nicht unter das kantonale Mindestlohngesetz».
+export const mindestlohnNichtAnwendbar = (data) => einkommenIstKeinLohn(data) || istLernend(data?.finanzen);
 
 // Summe der Versicherungen pro Monat, wie sie die Versicherungs-Karte zeigt. `p` = monatsAusgaben().
 export const versicherungenSumme = (p) => p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
