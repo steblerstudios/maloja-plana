@@ -432,6 +432,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, hinweisZeichen('check'), t('premium.schnellcheckUebernommen'));
 
   // Ergebnis — Urteil gross, darunter der Satz; die Beträge, wo die App sie rechnet.
+  // F, N, S (Stebler Studios 01.11.2026): Die Zahl bleibt, weil Maloja den Sozialhilfe-Bezug nicht kennt. AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2.
+  const ruhtHinweis = ['f', 'n', 's'].includes(String(data.ausbildung?.workPermit || '').toLowerCase())
+    && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), t('ipv.ruhtMitSozialhilfe'));
   const urteil = (label, farbe, zeichen) => React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: farbe, lineHeight: '1.2', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, hinweisZeichen(zeichen), label);
   const ergebnis = () => {
     // Eligibility Status — only once income is present; otherwise prompt for income
@@ -461,7 +464,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       ipvResult.offen && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, t('ipv.offenGrund.' + ipvResult.offen)),
       offenFeld(ipvResult.offen),
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle')),
-      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote'))),
+      ruhtHinweis
     );
     if (ipvResult.eligible) return React.createElement('div', { style: { marginBottom: space.md } },
       // «Berechtigt» stimmt nicht, wo der Kanton den Anspruch nur auf Antrag prüft (GE unter der
@@ -471,7 +475,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, t(ipvResult.noteKey, ipvResult.noteParams)),
       // Fassung 5: ohne gerechneten Betrag steht unter «Berechtigt» der Antrags-Satz statt einer Zahl.
       !betragGerechnet && !ipvResult.antragNoetig && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('premium.eligibleAntrag')),
-      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote'))),
+      ruhtHinweis
     );
     return React.createElement('div', { style: { marginBottom: space.md } },
       urteil(t('premium.notEligible'), palette.text),

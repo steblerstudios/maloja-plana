@@ -121,7 +121,7 @@ de   k=employerAddress type="textarea" naOk=true label~902f77eb
 de   k=jobTitle type="text" mvo=true naOk=true orientation~29fa1707 label~36ea3f94
 de   k=branche type="select" naOk=true label~fd7fc200 options=18 optWerte~d59d16bb optLabels~a84c7fcc
 de   k=employmentStart type="date" naOk=true label~61333009
-de   k=workPermit type="select" orientation~16448996 label~d08cbc7b options=5 optWerte~14b89076 optLabels~1de4e09b
+de   k=workPermit type="select" orientation~f39297dc label~582cda24 options=8 optWerte~0cec5337 optLabels~ce3d6a3a
 de   k=workHoursPerWeek type="text" naOk=true label~034f1a25
 de   k=languages type="textarea" section~8955896f label~8955896f sectionIntro~85162a34
 de   doc k=diploma label~d65d7498
@@ -282,7 +282,7 @@ fr   k=employerAddress type="textarea" naOk=true label~1cbb3c6e
 fr   k=jobTitle type="text" mvo=true naOk=true orientation~09629125 label~dded5583
 fr   k=branche type="select" naOk=true label~fd7fc200 options=18 optWerte~d59d16bb optLabels~65c464db
 fr   k=employmentStart type="date" naOk=true label~ee585ba1
-fr   k=workPermit type="select" orientation~6f20cae6 label~1fcaa2be options=5 optWerte~14b89076 optLabels~e473da76
+fr   k=workPermit type="select" orientation~89f68097 label~3097c280 options=8 optWerte~0cec5337 optLabels~07423389
 fr   k=workHoursPerWeek type="text" naOk=true label~4734a2a6
 fr   k=languages type="textarea" section~37f82364 label~37f82364 sectionIntro~13d45c74
 fr   doc k=diploma label~212b8a6f
@@ -443,7 +443,7 @@ it   k=employerAddress type="textarea" naOk=true label~4f9570c9
 it   k=jobTitle type="text" mvo=true naOk=true orientation~31e87c07 label~1439496e
 it   k=branche type="select" naOk=true label~bb0a1663 options=18 optWerte~d59d16bb optLabels~6e3fee31
 it   k=employmentStart type="date" naOk=true label~aa810e8f
-it   k=workPermit type="select" orientation~1c5b2455 label~1113a949 options=5 optWerte~14b89076 optLabels~02f7955e
+it   k=workPermit type="select" orientation~815d9583 label~88dfcd8e options=8 optWerte~0cec5337 optLabels~f1a04aaf
 it   k=workHoursPerWeek type="text" naOk=true label~279a7c7a
 it   k=languages type="textarea" section~d9190757 label~d9190757 sectionIntro~d6112569
 it   doc k=diploma label~34551f6d
@@ -604,7 +604,7 @@ en   k=employerAddress type="textarea" naOk=true label~85dee87c
 en   k=jobTitle type="text" mvo=true naOk=true orientation~0c147156 label~fb1d97e2
 en   k=branche type="select" naOk=true label~0c6c13df options=18 optWerte~d59d16bb optLabels~2aa65dd0
 en   k=employmentStart type="date" naOk=true label~90628f1c
-en   k=workPermit type="select" orientation~b84133b7 label~22ede7b2 options=5 optWerte~14b89076 optLabels~17a4f41e
+en   k=workPermit type="select" orientation~52b438bd label~2b13dcfb options=8 optWerte~0cec5337 optLabels~3c56020c
 en   k=workHoursPerWeek type="text" naOk=true label~0fe02418
 en   k=languages type="textarea" section~0c632e38 label~0c632e38 sectionIntro~25be863d
 en   doc k=diploma label~2a550faf
@@ -765,7 +765,7 @@ rm   k=employerAddress type="textarea" naOk=true label~3b999ae7
 rm   k=jobTitle type="text" mvo=true naOk=true orientation~3ce61019 label~fb50b2e5
 rm   k=branche type="select" naOk=true label~8b92d5ef options=18 optWerte~d59d16bb optLabels~ad20a69a
 rm   k=employmentStart type="date" naOk=true label~9cc6d84c
-rm   k=workPermit type="select" orientation~0d4856c9 label~cca5b62b options=5 optWerte~14b89076 optLabels~c8e02ec6
+rm   k=workPermit type="select" orientation~157fe981 label~8f3f3034 options=8 optWerte~0cec5337 optLabels~1fba22e7
 rm   k=workHoursPerWeek type="text" naOk=true label~94f62bd4
 rm   k=languages type="textarea" section~ee5d4fe8 label~ee5d4fe8 sectionIntro~522fd0ff
 rm   doc k=diploma label~aaded0b0

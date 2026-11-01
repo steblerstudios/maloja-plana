@@ -374,7 +374,8 @@ export function quellensteuerMoeglich(data = {}) {
   const permit = String(data?.ausbildung?.workPermit || '').toLowerCase();
   const nationalitaet = data?.basis?.nationality;
   if (permit === 'g') return 'g';
-  if (permit === 'b' || permit === 'l') return 'bl';
+  // F, N, S (Stebler Studios 01.11.2026): ohne Niederlassungsbewilligung fallen auch sie unter DBG Art. 83 Abs. 1, StHG Art. 32 Abs. 1.
+  if (['b', 'l', 'f', 'n', 's'].includes(permit)) return 'bl';
   return !permit && nationalitaet && nationalitaet !== 'swiss' ? 'bl' : null;
 }
 

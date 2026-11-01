@@ -71,9 +71,16 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
     expect(ipvAbzug(profil(20000 / 12))).toMatchObject({ betrag: 393, grund: 'geschaetzt' });
   });
 
+  // AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2: Mit Sozialhilfe ruht der Anspruch, die App kennt den Bezug aber nicht.
+  it('Ausweis F, N, S: Hinweis, dass der Anspruch mit Sozialhilfe ruht, bei anderen nicht', () => {
+    for (const workPermit of ['f', 'n', 's']) expect(render({ ...profil(2000), ausbildung: { workPermit } })).toContain('ipv.ruhtMitSozialhilfe');
+    for (const workPermit of ['swiss', 'c', 'b']) expect(render({ ...profil(2000), ausbildung: { workPermit } })).not.toContain('ipv.ruhtMitSozialhilfe');
+  });
+
   it('über der Grenze, Quellensteuer, junge Erwachsene: je ein eigener Satz', () => {
     expect(render(profil(38501 / 12))).toContain('ipv.vsKeinAnspruch');
     expect(render({ ...profil(2000), ausbildung: { workPermit: 'b' } })).toContain('ipv.offenGrund.vsQuellensteuer');
+    for (const workPermit of ['f', 'n', 's']) expect(render({ ...profil(2000), ausbildung: { workPermit } })).toContain('ipv.offenGrund.vsQuellensteuer');
     expect(render({ ...profil(2000), ausbildung: { workPermit: 'g' } })).toContain('ipv.offenGrund.vsGrenzgaenger');
     expect(render(profil(1000, { finanzen: { alimentePaid: 1500 } }))).toContain('ipv.offenGrund.vsUnterhaltUeberEinkommen');
     expect(render({ ...profil(2000), basis: { ...profil(2000).basis, dateOfBirth: '2002-03-01' } })).toContain('ipv.offenGrund.vsJungeErwachsene');

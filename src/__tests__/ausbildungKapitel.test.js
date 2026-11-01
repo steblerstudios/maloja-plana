@@ -56,10 +56,10 @@ describe('Oben im Kapitel', () => {
 
 describe('Angaben', () => {
   it('Schweizer/in: «Aufenthaltsbewilligung nicht nötig (Schweizer Bürgerrecht)»', () => {
-    expect(kapitel()).toContain('Aufenthaltsbewilligung nicht nötig (Schweizer Bürgerrecht)');
+    expect(kapitel()).toContain('Aufenthaltsstatus (Ausweis) nicht nötig (Schweizer Bürgerrecht)');
   });
   it('mit Bewilligung: die Bewilligung wie bisher', () => {
-    expect(kapitel({ ...DEMO_DATA.ausbildung, workPermit: 'b' })).toContain('Aufenthaltsbewilligung B');
+    expect(kapitel({ ...DEMO_DATA.ausbildung, workPermit: 'b' })).toContain('Aufenthaltsstatus (Ausweis) B');
   });
   // Muster M1 (25.10.2026) löst die Spalten 3 : 2 ab: Zeilen wie im Entwurf — die Bezeichnung nimmt den
   // Platz, den der Wert übrig lässt (trennt nach Silben), der Wert höchstens 62 % und bricht nur

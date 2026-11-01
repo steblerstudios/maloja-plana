@@ -97,7 +97,7 @@
 //     Wallis am 1. Januar, bilaterale Abkommen vorbehalten → `orientierung('vsGrenzgaenger')`.
 //   · Bezahlte Unterhaltsbeiträge, die das ganze übrige massgebende Einkommen aufzehren →
 //     `orientierung('vsUnterhaltUeberEinkommen')` statt Einkommen 0 und Höchstsatz.
-//   · QUELLENBESTEUERTE (Ausweis B, L; auch N, F — kennt die App nicht): nicht automatisch erfasst,
+//   · QUELLENBESTEUERTE (Ausweis B, L, N, F; S abgeleitet): nicht automatisch erfasst,
 //     Gesuch bis 31. Dezember ([3], [5] Ziff. 6.2), anderes Einkommen (80 % brutto, Art. 8 Abs. 5 [1])
 //     → `orientierung('vsQuellensteuer')` aus `ausbildung.workPermit` (Fachprüfung #477, B2).
 //     Personen mit NEUER C-Bewilligung (2025) müssen ebenfalls beantragen — erkennt die App nicht; der
@@ -220,7 +220,9 @@ export function ipvWallis(data, hh, ipvData, youngAdultsCount, orientierung, loo
   if (!ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('vsJungeErwachsene');
   // Quellenbesteuerte: nicht automatisch, Gesuch bis 31.12. ([3], [5] Ziff. 6.2). Die App kennt die
   // Bewilligung (`ausbildung.workPermit`); B und L sind in der Regel quellenbesteuert.
-  if (bewilligung === 'b' || bewilligung === 'l') return orientierung('vsQuellensteuer');
+  // F und N nennt die Quelle [5] Ziff. 6.2. S nennt sie nicht (nur Code-Kommentar gelesen): abgeleitet aus DBG Art. 83,
+  // keine Zahl ist hier die vorsichtigere Antwort.
+  if (['b', 'l', 'f', 'n', 's'].includes(bewilligung)) return orientierung('vsQuellensteuer');
   // Alter im Anspruchsjahr, beim eingetippten Alter ein Jahr dazu (wie BE/SG/LU).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');

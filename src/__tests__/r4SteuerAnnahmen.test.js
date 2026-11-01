@@ -221,7 +221,7 @@ describe('R4-2 · Rentner und Selbständige', () => {
     expect(s.kanton.grund).toBe('erwerbsartDirekt');
   });
 
-  it.each([['b', 'quellensteuer'], ['l', 'quellensteuer'], ['g', 'quellensteuerG']])('Ausweis %s: keine Steuerzahl, auch nicht mit eingetragenem Wert', (workPermit, grund) => {
+  it.each([['b', 'quellensteuer'], ['l', 'quellensteuer'], ['f', 'quellensteuer'], ['n', 'quellensteuer'], ['s', 'quellensteuer'], ['g', 'quellensteuerG']])('Ausweis %s: keine Steuerzahl, auch nicht mit eingetragenem Wert', (workPermit, grund) => {
     const d = { ...profil({ canton: 'BE', monat: 5000, taxableIncome: 50000 }), ausbildung: { workPermit } };
     const s = steuernFuerProfil(steuerEingabenAusDaten(d));
     expect(s.bund).toBeNull();
