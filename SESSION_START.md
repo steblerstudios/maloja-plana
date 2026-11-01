@@ -17,6 +17,15 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 02.11.2026, 00:20 — Fassung 7 ist auf `main`, NICHT live. Der Entscheid «erst nach Fassung 8» ist damit überholt.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 00:17): main = `f430a357` · live = `4299bfb9` (0.1.48-beta) · 350 Commits dazwischen. CI auf `main` grün.
+> - **Entscheid:** Stebler Studios, 02.11.2026: «Jetzt nach main», nach einem widersprüchlichen «Ja, F8 zuerst» in einer anderen Sitzung direkt nachgefragt und bestätigt. #637 als Merge-Commit, #626 bis #636 stehen dadurch auf gemergt.
+> - **Geprüft auf `de1b7227` in sauberer Kopie:** 7'655 Tests (`--testTimeout=20000`), Lint, Build, PII, 64.21 von 65 kB. **Nicht gelaufen:** Ultrareview und `/maloja-predeploy`.
+> - **Gemergt ist nicht live.** Deploy nur durch Stebler Studios, von `main`, nach `/maloja-predeploy`. Die Freigabe-Marke erst auf diesem Stand setzen. Prämien 2027: Die App nennt den 30.11. als Kündigungstermin.
+> - **Offen im Bild:** alles aus dem Nachtrag 23:30, dazu Stage neu aufsetzen. Offene Entwürfe: #638, #641.
+> - **Der Sammelzweig ist abgeschlossen.** Neue Arbeit zweigt von `main` ab. Fassung 8 hat noch kein Dokument.
+
 > 🧾 **Nachtrag 01.11.2026, 23:30, Sitzungsende «Fassung 7, Punkt für Punkt» — Dashboard und Ausweise gebaut, Zweige zusammengeführt. Nichts nach `main` gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 23:27): main = `88770f11` (nur #639 SEO dazu) · live = `4299bfb9` (0.1.48-beta) · 157 Commits dazwischen. Stand der Prüfung und des Pushs: in der Übergabe im Chat, hier nie als Hash ohne Messung übernehmen.
