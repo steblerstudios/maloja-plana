@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
-import { lohnBandState, lohnEinordnungErgebnis, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnEinordnungErgebnis, lohnKette, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
@@ -187,6 +187,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     );
   }
 
+  const kette = lohnKette(state, data, { alter: bvgAlter, rentenalter, beitragsfrei });
+
   // Valenz statt Richtung: gold ist die „engere Seite" — beim Lohn also darunter.
   const valenceColor = rel === 'above' ? palette.sage : rel === 'below' ? palette.gold : palette.mid;
   const readoutColor = rel === 'above' ? palette.sageDeep : rel === 'below' ? palette.goldDeep : palette.mid;
@@ -309,11 +311,17 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     React.createElement('details', { 'data-teil': 'lohn-so-gerechnet', style: { marginTop: space.sm + 'px' } },
       React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.xs, color: palette.mid, fontWeight: weight.medium } },
         t('lohnEinordnung.soIstGerechnet')),
+      // Die Kette zeigt, wie die Beträge zusammenhängen. Wo sie nichts Haltbares sagen kann, bleiben die drei Hinweise.
+      kette && React.createElement('ul', { 'data-teil': 'lohn-kette', style: { listStyle: 'none', margin: 0, padding: 0, fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+        kette.zeilen.map((z) => React.createElement('li', { key: z.key, style: { marginTop: space.xs + 'px' } },
+          t('lohnEinordnung.' + z.key, { betrag: fmt(z.betrag), stunden: z.stunden, jahr: z.jahr })))
+      ),
+      kette?.hinweis13 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } }, t('lohnEinordnung.ketteHinweis13')),
       // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).
-      geschaetzt && React.createElement('div', {
+      !kette && geschaetzt && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal },
       }, t('lohnEinordnung.geschaetztAusNetto', { netto: fmt(incomeRoh) })),
-      React.createElement('div', {
+      !kette && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
       }, partTime ? t('lohnEinordnung.fteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
         : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
@@ -321,7 +329,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       // Die Basis des Vergleichs IMMER ausweisen (Stebler Studios): mit 13. enthält der
       // Vergleichswert den anteiligen 13. (×13/12, standardisiert wie der BFS-Median); ohne 13.
       // wird der Basislohn direkt verglichen — mit Hinweis, dass ein 13. den Wert hebt.
-      React.createElement('div', {
+      !kette && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
       }, hat13
         ? t('lohnEinordnung.dreizehnterNote', { fte: fmt(incomeFTE) })

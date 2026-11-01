@@ -7,7 +7,7 @@ import { renderSource } from './utils/renderSource.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { zahl } from './utils/geld.js';
-import { monatsAusgaben, versicherungenSumme } from './utils/monatsrechnung.js';
+import { einkommenIstKeinLohn, monatsAusgaben, versicherungenSumme } from './utils/monatsrechnung.js';
 
 // Die 10 % sind nur noch eine offene Vergleichsmarke: kein Grenzwert, keine Empfehlung, keine Warnfarbe.
 // WHO 4845 führt 10 % oder 25 % für Zahlungen aus der eigenen Tasche und schliesst Prämien aus;
@@ -19,12 +19,10 @@ export const VERGLEICHSMARKE = 10;
 // da sind, darum fehlt nie eine Angabe.
 export const KK_LAST_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 
-const NICHT_LOHN = ['retired', 'selfEmployed', 'freelance'];
-
 // Woran die Prämie gemessen wird. Der Nenner ist überall `monthlyIncome`; der Satz sagt, was das hier ist.
 export const kkLastBasisKey = (data) => {
   const f = data?.finanzen || {};
-  if (data?.basis?.household?.isRetired || NICHT_LOHN.includes(f.employmentType)) return 'kkLast.basisEinkommen';
+  if (einkommenIstKeinLohn(data)) return 'kkLast.basisEinkommen';
   if (f.incomeType === 'netto') return 'kkLast.basisNetto';
   if (f.incomeType === 'brutto') return 'kkLast.basisBrutto';
   return 'kkLast.basisOffen';

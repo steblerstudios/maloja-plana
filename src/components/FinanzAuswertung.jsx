@@ -13,7 +13,7 @@ import { BRANCHENLOHN, getBranchenvergleich } from '../data/branchenLohn.js';
 import { berechneArmutsgrenze } from '../data/sozialhilfeRechner.js';
 import { nettoZuBruttoRichtwert, AHV_FREIBETRAG_RENTNER_MONAT } from '../data/ahvRechner.js';
 import { LohnEinordnung } from './LohnEinordnung.jsx';
-import { lohnBandState } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnSpiegel } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
@@ -297,6 +297,12 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     - Number(data.versicherungen?.kkPremium || 0) - Number(f.alimentePaid || 0));
   const unterArmutsgrenze = f.incomeType === 'netto' && !bruttoDabei && rentKnown
     && armutsgrenze > 0 && verfuegbar < armutsgrenze;
+  // Spiegel des Lohns in Finanzen, aus derselben Schätzung wie das Barometer.
+  const lohnSatz = lohnSpiegel(lohnBandState({
+    income: f.monthlyIncome, canton: data.basis?.canton, hoursPerWeek: data.ausbildung?.workHoursPerWeek,
+    incomeType: f.incomeType, dreizehnter: f.dreizehnter, alter: bvgAlter, rentenalter, beitragsfrei,
+  }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
+
   return React.createElement('div', {
     style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
@@ -314,7 +320,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a) keine AHV/ALV/PK-Abzüge — dann kein Brutto-Hinweis.
-      !beitragsfrei && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+      !nurBefund && !beitragsfrei && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
         // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
         t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
           brutto: formatCHF(nettoZuBruttoRichtwert(income, bvgAlter, rentenalter)),
@@ -323,6 +329,8 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     ),
     // F7-K2-6 (Stebler Studios 27.10.2026): Die eigene Branche (Feld im Kapitel Ausbildung & Arbeit) steht als Marke auf dem
     // Barometer, solange keine andere angetippt ist; die übrigen 17 sind aufklappbar.
+    nurBefund && lohnSatz && React.createElement('div', { 'data-teil': 'lohn-spiegel', style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+      t('lohnEinordnung.' + lohnSatz.key, { netto: formatCHF(lohnSatz.netto), brutto: formatCHF(lohnSatz.brutto) })),
     nurBefund && onNavigate && React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'lohn-weg', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
       style: { background: 'none', border: 0, padding: 0, minHeight: '44px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },

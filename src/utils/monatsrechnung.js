@@ -79,6 +79,10 @@ const summe = (o) => Object.values(o).reduce((a, b) => a + b, 0);
 const profil = (finanzen, allData) => ({ ...(allData || {}), finanzen: finanzen || allData?.finanzen || {} });
 
 // Erfasste Lebenskosten: alles ausser Schuldenraten und bezahlten Alimenten.
+// Rente oder Geschäftsgewinn: `monthlyIncome` ist dann kein Lohn, Lohn-Vergleiche und Lohn-Wörter passen nicht.
+export const einkommenIstKeinLohn = (data) => !!data?.basis?.household?.isRetired
+  || ['retired', 'selfEmployed', 'freelance'].includes(data?.finanzen?.employmentType);
+
 // Summe der Versicherungen pro Monat, wie sie die Versicherungs-Karte zeigt. `p` = monatsAusgaben().
 export const versicherungenSumme = (p) => p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
 

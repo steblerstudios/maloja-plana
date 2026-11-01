@@ -33,6 +33,9 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel, mindestlohnJahrNichtBelegt } from './lohnCheck.js';
 import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+import { quellensteuerMoeglich } from './kantonaleSteuerdaten.js';
+import { einkommenIstKeinLohn } from '../utils/monatsrechnung.js';
+import { dreizehnterStatus } from '../utils/dreizehnter.js';
 
 export const LOHN_REFERENZ = {
   median: LSE_VERTEILUNG.median,
@@ -215,4 +218,34 @@ export function lohnEinordnungErgebnis({ income, incomeType, hoursPerWeek }) {
       wochenstunden: num(hoursPerWeek) > 0 && !wochenstundenUnplausibel(hoursPerWeek),
     }),
   });
+}
+
+// Lohn-Kette (Stebler Studios 01.11.2026): von der Angabe bis zum Vergleich mit dem Median, Zeile für Zeile,
+// aus denselben Werten wie das Barometer. `null`, wenn sie nichts Haltbares sagen kann: Barometer nicht
+// vergleichbar, Rente oder Geschäftsgewinn, oder Netto mit möglicher Quellensteuer (der Richtwert kennt sie nicht).
+// Im Rentenalter ohne ausdrücklich «angestellt» ist das Einkommen vermutlich eine Rente.
+const lohnSchaetzungHaltbar = (data, rentenalter) => !einkommenIstKeinLohn(data)
+  && !(rentenalter && data?.finanzen?.employmentType !== 'employed')
+  && !(data?.finanzen?.incomeType === 'netto' && quellensteuerMoeglich(data));
+
+export function lohnKette(state, data, { alter, rentenalter, beitragsfrei } = {}) {
+  if (!state?.comparable || !lohnSchaetzungHaltbar(data, rentenalter)) return null;
+  const zeilen = [];
+  if (state.geschaetzt) {
+    zeilen.push({ key: 'ketteNetto', betrag: state.incomeRoh });
+    zeilen.push({ key: beitragsfrei ? 'ketteBruttoOhneAbzug' : alter == null ? 'ketteBruttoOhnePk' : 'ketteBrutto', betrag: state.income });
+  } else {
+    zeilen.push({ key: 'ketteBruttoAngabe', betrag: state.income });
+  }
+  if (state.partTime || state.overFullTime) zeilen.push({ key: 'ketteAuf40', betrag: state.incomeFTE, stunden: state.hoursPerWeek });
+  if (state.hat13) zeilen.push({ key: 'ketteMit13', betrag: state.incomeVergleich });
+  zeilen.push({ key: 'ketteMedian', betrag: state.median, jahr: LOHN_REFERENZ.jahr });
+  // Nur bei leerem Feld: Bei «Nein» ist der Vergleich richtig, es gibt nichts dazuzurechnen.
+  return { zeilen, hinweis13: dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen' };
+}
+
+// Spiegel im Kapitel Finanzen: Netto und geschätztes Brutto, ohne Median. Nur bei netto erfasstem Lohn.
+export function lohnSpiegel(state, data, { alter, rentenalter, beitragsfrei } = {}) {
+  if (!state?.geschaetzt || beitragsfrei || !lohnSchaetzungHaltbar(data, rentenalter)) return null;
+  return { key: alter == null ? 'spiegelOhnePk' : 'spiegel', netto: state.incomeRoh, brutto: state.income };
 }

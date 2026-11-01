@@ -4607,6 +4607,18 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
+    // TODO(rm): von Claude, provisorisch.
+    ketteNetto: { sie: 'Net CHF {betrag}, Vossa indicaziun', du: 'Net CHF {betrag}, tia indicaziun' },
+    ketteBrutto: 'Brut ≈ CHF {betrag}, stimà',
+    ketteBruttoOhnePk: 'Brut ≈ CHF {betrag}, stimà senza cassa da pensiun',
+    ketteBruttoOhneAbzug: 'Brut CHF {betrag}, quintà senza deducziuns',
+    ketteBruttoAngabe: { sie: 'Brut CHF {betrag}, Vossa indicaziun', du: 'Brut CHF {betrag}, tia indicaziun' },
+    ketteAuf40: { sie: 'Sin 40 uras l’emna ≈ CHF {betrag}, Vus lavurais {stunden} uras', du: 'Sin 40 uras l’emna ≈ CHF {betrag}, ti lavuras {stunden} uras' },
+    ketteMit13: 'Cun 13avel salari ≈ CHF {betrag}',
+    ketteMedian: 'Median svizzer {jahr} CHF {betrag}, brut, temp plain, cun part dal 13avel salari e da pajaments spezials',
+    ketteHinweis13: { sie: 'Sche Vus survegnis in 13avel salari, è Voss valur da cumparegliaziun var 8 % pli aut.', du: 'Sche ti survegns in 13avel salari, è tia valur da cumparegliaziun var 8 % pli auta.' },
+    spiegel: 'Net {netto}, ≈ {brutto} brut (stimà).',
+    spiegelOhnePk: 'Net {netto}, ≈ {brutto} brut (stimà senza cassa da pensiun).',
     soIstGerechnet: 'Uschia è quint',
     dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
     ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8 % pli auta.",
