@@ -1588,9 +1588,12 @@ Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finan
   direkt darunter. Die Zeile «verplant von Einkommen» und der Satz «Monatliches Einkommen … Es bleiben …» (`MirrorCards.jsx`) entfallen, wo die Karte steht; bei Brutto bleibt der Satz,
   offene Kredite nennt er weiterhin. Skizzen B (Abstieg) und C (Flächen) sind verworfen.
   Verfeinert («noch besser»): Summe der Ausgaben in der Titelzeile, damit die Karte aufgeht (6’200 − 3’965 = 2’235); im Ring je Bereich ein Stück, nur der geöffnete zeigt seine Posten; Balken auf gleich langer Spur.
-  «Jahr» ist der Monat × 12 und sagt das, ein 13. Monatslohn ist nicht eingerechnet. Einen Umschalter für Geld gab es vorher nicht, nur «Ganzes Jahr» im Kalender. **Wartet auf Abnahme im Bild.**
+  «Jahr» ist der Monat × 12 und sagt das, ein 13. Monatslohn ist nicht eingerechnet. Einen Umschalter für Geld gab es vorher nicht, nur «Ganzes Jahr» im Kalender. **Vorerst abgenommen.**
 - **E-4, anders:** Nicht Hausrat, nicht Unfall (Maria ist als Angestellte versichert, «offen» sähe falsch aus), sondern die **Lebensversicherung** (Stebler Studios). Sie ist freiwillig, der
-  Teil bleibt blass und zählt nicht als Lücke, Pflicht bleibt 3/3. Folge: Maria CHF 609 Versicherungen, CHF 3’965 verplant, CHF 2’235 bleiben. Das kräftige Sand sieht man im Beispiel nicht. **Wartet auf Abnahme im Bild.**
+  Teil bleibt blass und zählt nicht als Lücke, Pflicht bleibt 3/3. Folge: Maria CHF 609 Versicherungen, CHF 3’965 verplant, CHF 2’235 bleiben. Das kräftige Sand sieht man im Beispiel nicht. **Vorerst abgenommen.**
 - **E-5, wie empfohlen:** Absatz zur Patientenverfügung übersetzt, als provisorisch markiert. Gegenlese durch eine Person, die Rumantsch kann, offen.
+
+**Abnahme (Stebler Studios, 01.11.2026):** «vorerst ok so aber wollen wir noch verbessern». Die Monatskarte darf in den Sammelzweig; sie bleibt als offener Gestaltungspunkt stehen.
+Nächster Schritt: frische Prüfung der Karte (polygrafin), Vorschläge als Skizze zeigen, erst dann bauen. Was genau noch fehlt, ist nicht benannt.
 
 Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192).
