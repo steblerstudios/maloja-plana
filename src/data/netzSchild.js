@@ -100,7 +100,8 @@ export function betraegeFuer(key, v = {}, finanzen = {}) {
     // Nicht «Lohnabzug»: die Berufsunfall-Prämie trägt der Arbeitgeber (UVG Art. 91), nur die Nichtberufsunfall-Prämie
     // kann vom Lohn abgehen. Ein Betrag ist nicht erfasst.
     case 'uvg': return v.uvg === 'employer' ? { arbeitgeber: true } : {};
-    case 'ahv': return zahl(v.ahvContribution) > 0 ? jahr(v.ahvContribution) : lohnAbzug;
+    // «In der Regel»: Lernende bis 17, Löhne unter dem Rentner-Freibetrag u. Ä. kennt diese Rechnung nicht (Fachprüfung 01.11.2026).
+    case 'ahv': return { ...jahr(v.ahvContribution), ...(lohnAbzug.lohn ? { lohnRegel: true } : {}) };
     case 'bvg': return mehr({ ...monat(v.bvgContribution), ...(zahl(v.bvgContribution) > 0 ? lohnAbzug : {}) }, 'guthaben', v.bvgBalance);
     case 'saeule3a': return mehr(jahr(finanzen.pension3a), 'guthaben', finanzen.pension3aBalance);
     case 'haftpflicht': return mehr(v.liabilityInsurance === 'no' ? {} : jahr(v.liabilityPremium), 'summe', v.liabilityAmount);

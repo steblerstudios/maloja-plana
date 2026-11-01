@@ -1,5 +1,5 @@
 import React from 'react';
-import { bereichsTon } from '../utils/lebensbereichFruechte.js';
+import { bereichsTon, kontrast, mischeHex } from '../utils/lebensbereichFruechte.js';
 import { netzSchildTeile, teilWinkel, fuellung, SCHILD_KERN } from '../data/netzSchild.js';
 import { HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { shieldPath } from './shieldShape.js';
@@ -38,6 +38,7 @@ export const betragText = (b, t) => [
   b.guthaben && t('netzSchild.betrag.guthaben', { chf: chf(b.guthaben) }),
   b.summe && t('netzSchild.betrag.summe', { chf: chf(b.summe) }),
   b.lohn && t('netzSchild.betrag.lohn'),
+  b.lohnRegel && t('netzSchild.betrag.lohnRegel'),
   b.arbeitgeber && t('netzSchild.betrag.arbeitgeber'),
   b.name,
 ].filter(Boolean).join(' · ');
@@ -59,6 +60,10 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const farbe = (p) => p.erreicht === 0 ? palette.sand : tonVon(p.key);
   // Nur Freiwilliges ohne Eintrag (n = 0): kaum sichtbar, das ist keine Lücke.
   const dichte = (p) => p.n === 0 ? 0.15 : ganz(p) ? 0.9 : 0.5;
+  // Sand und das Gold der Vorsorge haben 1.07:1, die Farbe allein trennt sie nicht: Offenes ist zusätzlich schraffiert (F7-K3-4, Messung 01.11.2026).
+  const offenTeil = (p) => p.n > 0 && p.erreicht === 0;
+  // Hell hatte die Schrift in Grundfarbe auf vollem Gold nur 2:1: Sie bleibt nur, wo sie 4.5:1 erreicht, sonst dunkle Schrift mit Kontur.
+  const schriftHell = (p) => ganz(p) && kontrast(palette.surface, mischeHex(palette.up, farbe(p), dichte(p))) >= 4.5;
   const kurz = (p) => t('netzSchild.kurz.' + p.key);
   const stand = (p) => (p.n ? t('netzSchild.vonN', { n: p.erreicht, total: p.n }) : t('netzSchild.nichtEingetragen'));
   const aria = t('netzSchild.aria') + ' ' + teile.map((p) => kurz(p) + ': ' + stand(p)).join('; ') + '.';
@@ -68,11 +73,15 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const bild = h('svg', { viewBox: `0 0 ${B} ${H}`, width: '100%', role: 'img', 'aria-label': aria, style: { maxWidth: '300px', height: 'auto', display: 'block', margin: '0 auto' } },
     h('defs', null,
       h('clipPath', { id: 'ns-schild' }, h('path', { d: SCHILD })),
-      teile.map((p, i) => h('clipPath', { key: p.key, id: 'ns-keil-' + p.key }, h('polygon', { points: keil(winkel(i), breite) })))),
+      teile.map((p, i) => h('clipPath', { key: p.key, id: 'ns-keil-' + p.key }, h('polygon', { points: keil(winkel(i), breite) }))),
+      // Weit gesetzt: Das Muster schrumpft mit dem Kern (SCHILD_KERN).
+      h('pattern', { id: 'ns-offen', width: 22, height: 22, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+        h('line', { x1: 0, y1: 0, x2: 0, y2: 22, stroke: palette.text, strokeOpacity: 0.55, strokeWidth: 6 }))),
     h('g', { clipPath: 'url(#ns-schild)' },
       h('path', { d: SCHILD, fill: palette.up }),
       teile.map((p) => h('g', { key: p.key, clipPath: 'url(#ns-keil-' + p.key + ')' },
         h('path', { 'data-teil': p.key, 'data-erreicht': p.erreicht + '/' + p.n, d: SCHILD, transform: skaliert(fuellung(p)), fill: farbe(p), fillOpacity: dichte(p) }),
+        offenTeil(p) && h('path', { 'data-offen': p.key, d: SCHILD, transform: skaliert(fuellung(p)), fill: 'url(#ns-offen)' }),
         linien(p).map((s) => h('path', { key: s, d: SCHILD, fill: 'none', stroke: palette.mid, strokeOpacity: 0.35, strokeWidth: 1, vectorEffect: 'non-scaling-stroke', transform: skaliert(s) })))),
       // Fugen zwischen den Teilen, in der Farbe des Grunds.
       teile.map((p, i) => {
@@ -87,7 +96,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
       const [x, y] = punkt(g, Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96);
       return h('text', { key: p.key, 'aria-hidden': true, x, y, textAnchor: 'middle', dominantBaseline: 'central',
         // Kontur in der Grundfarbe: auf halbdichtem Salbei reichte der Kontrast dunkel nicht (a11y-Prüfung 01.11.2026).
-        style: { fontSize: '15px', fontWeight: weight.semi, fill: ganz(p) ? palette.surface : palette.text, ...(ganz(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } }, kurz(p));
+        style: { fontSize: '15px', fontWeight: weight.semi, fill: schriftHell(p) ? palette.surface : palette.text, ...(schriftHell(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } }, kurz(p));
     }));
 
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);
@@ -111,6 +120,9 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
     p.key === 'haushalt' && HAUSRAT_PFLICHT.verify &&
       hinweis('hausrat-pruefen', 'netzSchild.hausratPruefen'));
 
+  // Die Marke erklärt die Schraffur im Bild; das Wort steht im Satz daneben.
+  const offenMarke = offen.length > 0 && h('svg', { 'aria-hidden': true, 'data-teil': 'netz-schild-offen-marke', viewBox: '0 0 44 44', width: 14, height: 14, style: { verticalAlign: '-2px', marginRight: '6px' } },
+    h('rect', { width: 44, height: 44, fill: palette.sand, fillOpacity: 0.5 }), h('rect', { width: 44, height: 44, fill: 'url(#ns-offen)' }));
   const satz = [
     offen.length && t('netzSchild.nochOffen', { liste: offen.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
     teilweise.length && t('netzSchild.teilweise', { liste: teilweise.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
@@ -119,7 +131,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   return h('div', { 'data-schild': 'netz', style: { marginBottom: space.sm + 'px' } },
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px 0' } }, t('netzSchild.intro')),
     bild,
-    h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } }, satz),
+    h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } }, offenMarke, satz),
     // F7-K3-4 (Stebler Studios 01.11.2026): Das Schild ist die Antwort, die lange Liste liegt eingeklappt darunter.
     h('details', { 'data-teil': 'netz-schild-liste', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
       // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).

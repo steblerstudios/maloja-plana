@@ -12,7 +12,7 @@ import { BUDGET_GROUPS } from '../budgetSync.js';
 import { hausratPflicht, HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { NetzSchild } from '../components/NetzSchild.jsx';
 import { schildOptionen } from '../data/schutzschild.js';
-import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
+import { getChapters, LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -242,5 +242,31 @@ describe('Fachprüfung 01.11.2026', () => {
   it('der Pegel sagt nicht «keine Aufstockung nötig», solange Erwerbsunkosten fehlen', () => {
     const q = fs.readFileSync(path.resolve(__dirname, '../data/pegel.js'), 'utf8');
     expect(q).toContain("sh?.erwerbsunkostenOffen ? 'offen' : 'covered'");
+  });
+});
+
+// Sand und Gold der Vorsorge trennt die Farbe nicht (1.07:1): Offenes braucht die Form. Hell trug die Schrift auf vollem Gold nur 2:1.
+describe('NetzSchild: offene Stelle und Schrift (F7-K3-4)', () => {
+  const html = (v, palette, o = {}) => renderToStaticMarkup(React.createElement(NetzSchild, { palette, t, versicherungen: v, ...o }));
+  const finanzen = { employmentType: 'employed', pension3a: '7000' };
+  const voll = { kkInsurer: 'CSS', kkZusatz: 'Top', uvg: 'employer', uvgZusatz: 'yes', bvgContribution: '200', liabilityInsurance: 'yes', householdInsurance: 'yes', lifeInsurance: 'yes' };
+  const schrift = (out, name) => out.match(new RegExp('<text[^>]*style="([^"]*)"[^>]*>' + name + '</text>'))[1];
+
+  it('nur ein offenes Teil ist schraffiert, und die Marke beim Satz steht nur dann', () => {
+    const offen = html({ bvgBalance: '1', liabilityInsurance: 'yes' }, LIGHT_PALETTE, { finanzen });
+    expect(offen).toContain('data-offen="kk"');
+    expect(offen).toContain('netz-schild-offen-marke');
+    const ohne = html(voll, LIGHT_PALETTE, { finanzen, employed: true });
+    expect(ohne).not.toContain('data-offen=');
+    expect(ohne).not.toContain('netz-schild-offen-marke');
+  });
+
+  it('auf vollem Gold: hell dunkle Schrift mit Kontur, dunkel Schrift in Grundfarbe', () => {
+    const hell = html(voll, LIGHT_PALETTE, { finanzen, employed: true });
+    expect(hell).toContain('data-erreicht="3/3"');
+    expect(schrift(hell, 'Vorsorge')).toContain('fill:' + LIGHT_PALETTE.text);
+    expect(schrift(hell, 'Vorsorge')).toContain('stroke:' + LIGHT_PALETTE.up);
+    const dunkel = html(voll, DARK_PALETTE, { finanzen, employed: true });
+    expect(schrift(dunkel, 'Vorsorge')).toContain('fill:' + DARK_PALETTE.surface);
   });
 });

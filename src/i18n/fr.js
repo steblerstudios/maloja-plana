@@ -2430,7 +2430,9 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
-    ausserhalb: "Hors de cette somme",
+    ausserhalb: "Non détaillé dans ce total",
+    ausserhalbOhneSumme: "Autres indications",
+    ausserhalbWeitere: "Ce qui est saisi sous « Autres assurances » compte dans le total. Le détail de ces assurances n’est pas saisi.",
     titel: "Assurances par mois",
     kk: "Caisse maladie (assurance de base)",
     hausrat: "Assurance ménage (CHF {jahr} / an)",
@@ -4269,7 +4271,7 @@ export default {
     noteAutoTaxData: 'Vérification automatique via les données fiscales',
     cantonUnknown: 'Canton non reconnu',
     youngAdultsNote: 'Les jeunes adultes (19–25) en formation ont souvent une réduction propre, plus élevée. À vérifier séparément.',
-    ruhtMitSozialhilfe: "Avec un permis F, N ou S : tant que l’aide sociale est perçue, en tout ou en partie, ce droit est en règle générale suspendu (LAsi art. 82a al. 7, LEI art. 86 al. 2). Le montant ne vaut alors pas.",
+    ruhtMitSozialhilfe: "Avec un permis F, N ou S : tant que l’aide sociale est perçue, en tout ou en partie, ce droit est en règle générale suspendu (LAsi art. 82a al. 7, LEI art. 86 al. 2). Le montant ne s’applique alors pas.",
     annahmeOhneDreizehnten: 'Calculé sans 13e salaire — l’indication manque encore. Avec un 13e salaire, le revenu annuel est plus élevé et la réduction plus basse, voire nulle. Cela peut être indiqué dans le chapitre « Finances ».',
     ohneDreizehntenKurz: 'calculé sans 13e salaire',
     annahmePartnerOhneDreizehnten: 'Le revenu de la deuxième personne est calculé sans 13e salaire — Maloja ne le demande pas. Si elle en reçoit un, la réduction est plus basse, voire nulle.',
@@ -6290,7 +6292,7 @@ export default {
   netzSchild: {
     listeTitel: 'Toutes les assurances',
     intro: 'Une partie par domaine. Plus il y a d’indications, plus elle se remplit. Le bouclier montre ce qui est saisi, pas si les prestations suffisent. La police fait foi.',
-    aria: 'Écusson composé des domaines d’assurance.',
+    aria: 'Bouclier composé des domaines d’assurance.',
     nichtEingetragen: 'non saisi',
     lautAngaben: 'selon les indications',
     bvgNurGuthaben: 'Un avoir seul n’est pas une caisse de pension en cours, par exemple en cas de libre passage. En cas d’emploi avec caisse de pension : saisir la caisse ou la cotisation.',
@@ -6305,7 +6307,7 @@ export default {
     haftpflichtHinweis: 'RC privée : souvent exigée par le bailleur.',
     hausratPruefen: 'Obligation ménage dans le canton : à confirmer auprès de l’assurance immobilière cantonale — les textes n’ont pas été vérifiés pour tous les cantons.',
     ahvHinweis: 'Toute personne qui habite ou travaille en Suisse est assurée à l’AVS/AI (LAVS art. 1a). Seule reste ouverte ici la saisie des cotisations.',
-    betrag: { kosten: '{mt} / mois · {jahr} / an', guthaben: 'avoir {chf}', summe: 'somme d’assurance {chf}', lohn: 'déduit du salaire', arbeitgeber: 'passe par l’employeur' },
+    betrag: { kosten: '{mt} / mois · {jahr} / an', guthaben: 'avoir {chf}', summe: 'somme d’assurance {chf}', lohn: 'déduit du salaire', lohnRegel: 'en cas d’emploi, en règle générale via le salaire', arbeitgeber: 'passe par l’employeur' },
   },
 
   schutzschild: {

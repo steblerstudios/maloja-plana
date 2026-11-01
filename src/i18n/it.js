@@ -2430,7 +2430,9 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
-    ausserhalb: "Fuori da questa somma",
+    ausserhalb: "Non dettagliato in questo totale",
+    ausserhalbOhneSumme: "Altre indicazioni",
+    ausserhalbWeitere: "Ciò che è inserito sotto «Altre assicurazioni» conta nel totale. Quali assicurazioni comprenda non è indicato.",
     titel: "Assicurazioni al mese",
     kk: "Cassa malati (assicurazione di base)",
     hausrat: "Assicurazione economia domestica (CHF {jahr} / anno)",
@@ -4270,7 +4272,7 @@ export default {
     noteAutoTaxData: 'Verifica automatica tramite i dati fiscali',
     cantonUnknown: 'Cantone non riconosciuto',
     youngAdultsNote: 'I giovani adulti (19–25) in formazione hanno spesso una riduzione propria, più alta. Da verificare a parte.',
-    ruhtMitSozialhilfe: "Con permesso F, N o S: finché si percepisce l’aiuto sociale, in tutto o in parte, questo diritto è di regola sospeso (LAsi art. 82a cpv. 7, LStrI art. 86 cpv. 2). L’importo in tal caso non vale.",
+    ruhtMitSozialhilfe: "Con permesso F, N o S: finché si percepisce l’aiuto sociale, in tutto o in parte, questo diritto è di regola sospeso (LAsi art. 82a cpv. 7, LStrI art. 86 cpv. 2). In tal caso l’importo non si applica.",
     annahmeOhneDreizehnten: 'Calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima il reddito annuo è più alto e la riduzione più bassa o nulla. Si può indicare nel capitolo «Finanze».',
     ohneDreizehntenKurz: 'calcolato senza tredicesima',
     annahmePartnerOhneDreizehnten: 'Il reddito della seconda persona è calcolato senza tredicesima — Maloja non lo chiede. Se la riceve, la riduzione è più bassa o nulla.',
@@ -6039,7 +6041,7 @@ export default {
     },
     satz: { sie: 'Le Sue assicurazioni in sintesi — in base ai Suoi dati.', du: 'Le tue assicurazioni in sintesi — in base ai tuoi dati.' },
     darin: 'Cosa comprende',
-    erfasst: 'Registrate: {n}',
+    erfasst: 'Inserite: {n}',
     markeFranchise: 'Franchigia {franchise}',
     markeRegion: 'Regione di premio {kanton} {region}',
     franchise: 'Franchigia',
@@ -6279,7 +6281,7 @@ export default {
     haftpflichtHinweis: 'RC privata: spesso richiesta dal locatore.',
     hausratPruefen: 'Obbligo economia domestica nel cantone: da confermare presso l’assicurazione cantonale degli stabili — i testi non sono stati verificati per tutti i cantoni.',
     ahvHinweis: 'Chi abita o lavora in Svizzera è assicurato all’AVS/AI (LAVS art. 1a). Qui resta aperto solo se i contributi sono inseriti.',
-    betrag: { kosten: '{mt} / mese · {jahr} / anno', guthaben: 'avere {chf}', summe: 'somma assicurata {chf}', lohn: 'dedotto dal salario', arbeitgeber: 'tramite il datore di lavoro' },
+    betrag: { kosten: '{mt} / mese · {jahr} / anno', guthaben: 'avere {chf}', summe: 'somma assicurata {chf}', lohn: 'dedotto dal salario', lohnRegel: 'con un impiego, di regola tramite il salario', arbeitgeber: 'tramite il datore di lavoro' },
   },
 
   schutzschild: {

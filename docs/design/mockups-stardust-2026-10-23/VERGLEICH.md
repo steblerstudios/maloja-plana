@@ -1609,6 +1609,16 @@ Eingebaut: **eine Versicherungs-Karte** (`VersicherungenInstrument.jsx`, auch au
 Schild mit eingeklappter Liste folgt nach der Karte, das Franchise-Kreuz bleibt, F7-K3-1 und K3-2 bleiben zurückgestellt. **Abgenommen** (Stebler Studios: «Ja, passt»).
 Offen: Gold (Vorsorge) und Sand (Pflicht fehlt) liegen nah beieinander; Schrift im Schild hell und Handybreite nicht geprüft; Gegenlese «Nicht in dieser Summe» und «Alle Versicherungen»; Fachprüfung der Liste «Nicht in dieser Summe».
 
+**Abgearbeitet (01.11.2026 abends, Zweig `feat/f7-schild-feinschliff`):**
+- **Gold und Sand:** gemessen 1.07:1, die Farbe trennt sie nicht. Beide Farben bleiben wie entschieden; die offene Stelle ist zusätzlich schraffiert, und beim Satz steht dieselbe Marke.
+- **Hell:** Die Schrift in Grundfarbe hatte auf vollem Gold nur 2:1 (Wohnen 3.5, Versicherungen 3.2). Sie bleibt nur noch ab 4.5:1, sonst dunkle Schrift mit Kontur. Dunkel unverändert.
+- **Handy (375 px):** Kein seitliches Scrollen. In der Liste lief der Pensionskassen-Betrag in den Namen, die Zeile bricht jetzt um; nachgemessen ohne Überlappung. Geprüft mit dem Beispiel Maria Muster hell auf Handybreite und hell auf Desktop, die offene Stelle auf einer Probeseite hell und dunkel. Die schmalste Breite unter 375 px und FR/IT auf dem Handy sind nicht angesehen.
+- **Fachprüfung (swiss-precision-pruefer):** kein falscher Betrag, aber falsche Aussagen, behoben: Überschrift jetzt «Nicht einzeln in dieser Summe», weil Rechtsschutz, Reise, Cyber und Kinderversicherung nur über «Weitere Versicherungen» eine Prämie haben können (dazu ein Hinweis, wenn dort etwas steht); ohne Summe «Weitere Einträge»; AHV ohne Beitrag «laut Angaben» statt «eingetragen», zählt nicht mit; AHV-Text «bei Anstellung in der Regel über den Lohn»; Unfall-Zusatz ohne Prämie, Kinderversicherungen und Gebäudeversicherung ergänzt; Fahrzeug-Satz nicht mehr bei «Nein». Gesetzesartikel hat die Prüfung nicht am Wortlaut nachgelesen.
+- **Gegenlese (copy-pruefer):** FR/IT/RM «total» statt «somme/somma/summa» (dort schon Versicherungssumme), ein Wort je Handlung (`vu.erfasst`), «bouclier» und «scut» durchgehend, zwei holprige Sätze in `ruhtMitSozialhilfe`. EN und FR/IT sonst ok.
+
+**Bleibt offen:** RM gegenlesen durch eine Person, die Rumantsch kann, ist nicht ersetzt, alle neuen RM-Texte sind Vorschläge, darunter `ausserhalb`, `ausserhalbWeitere`, `lohnRegel`, `lohn` («deducì dal salari» oder «da la paja») und `ganz` («nagin endataziun» ist vermutlich falsch im Genus). Die neuen FR/IT/EN-Texte dieser Runde hat nach dem Einbau niemand mehr gegengelesen.
+**Zwei Fachbefunde ausserhalb der Liste, nicht behoben:** Erfasste AHV- und BVG-Beiträge von Selbständigen fehlen in jeder Ausgabensumme, weil «schon vom Nettolohn abgezogen» ohne Bedingung gilt (`monatsrechnung.js`, `budgetSync.js`), «Bleibt» ist dann zu hoch. Der KTG-Hinweis `de.js` sagt ohne Einschränkung «sie zahlt 80% Ihres Lohns»; massgebend ist die Police.
+
 ### Besprechen, Punkt für Punkt (Stebler Studios, 01.11.2026 abends)
 
 **Reihenfolge:** «das dash board wollen wir zum schluss machen alles ander davor bitte». Der Aufbau (F7-D1, D2, D9, D10, Skizze mit den Teilen A bis E) ist nicht abgelehnt, er kommt zuletzt.
