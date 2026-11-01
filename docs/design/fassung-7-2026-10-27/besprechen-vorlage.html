@@ -73,9 +73,9 @@ textarea#ausgabe { width: 100%; min-height: 140px; font: 13px/1.5 ui-monospace, 
 
 <main>
   <div class="lead">
-    <span class="meta">Maloja Plana · Fassung 7 · die offenen Punkte · Stand 27.10.2026 · Bilder vom Rundgang auf <code>main</code>, also vor den acht Entwurfs-PRs #626–#633</span>
+    <span class="meta">Maloja Plana · Fassung 7 · Runde 2 · Stand 01.11.2026 · geprüft auf Stage, Bilder vom 27.10. ausser bei Versicherungen</span>
     <h1>Fassung 7 · Besprechen</h1>
-    <p>Die 31 Punkte, die noch keinen Entscheid haben: die 21 «Besprechen» und die 10 Dashboard-Punkte, nach Thema geordnet. Je Punkt: wie es heute ist, was sich durch die gebauten Pakete schon verändert hat, und meine Empfehlung. Wähle «Wie empfohlen», «Anders» (mit einem Satz dazu) oder «Später», dann unten kopieren und in den Chat legen.</p>
+    <p>19 Punkte aus dem Rundgang und 5 kleine Entscheide, die noch offen sind. Je Punkt: wie es heute ist, was sich verändert hat, und meine Empfehlung. Wähle «Wie empfohlen», «Anders» (mit einem Satz dazu) oder «Später», dann unten kopieren und in den Chat legen.</p>
     <nav class="themen" id="themen" aria-label="Themen"></nav>
   </div>
 
@@ -95,8 +95,8 @@ const STAND = { offen: 'noch wie im Rundgang', teil: 'teilweise erledigt', erled
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 let wahl = {};
-try { wahl = JSON.parse(localStorage.getItem('f7-besprechen') || '{}'); } catch (e) { wahl = {}; }
-const speichern = () => { try { localStorage.setItem('f7-besprechen', JSON.stringify(wahl)); } catch (e) {} };
+try { wahl = JSON.parse(localStorage.getItem('f7-besprechen-2') || '{}'); } catch (e) { wahl = {}; }
+const speichern = () => { try { localStorage.setItem('f7-besprechen-2', JSON.stringify(wahl)); } catch (e) {} };
 
 function bauen() {
   document.getElementById('themen').innerHTML = THEMEN.map((t, i) => `<a href="#${t.id}">${i + 1} · ${t.titel}</a>`).join('');
@@ -162,7 +162,7 @@ document.getElementById('kopieren').addEventListener('click', async () => {
     const w = wahl[p.id];
     return `${p.id}: ${W[w.w]}${w.w === 'anders' && w.notiz.trim() ? ' — ' + w.notiz.trim() : ''}`;
   }));
-  const text = 'Fassung 7, Besprechen:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
+  const text = 'Fassung 7, Besprechen Runde 2:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
   const ta = document.getElementById('ausgabe');
   ta.value = text; ta.hidden = false;
   const btn = document.getElementById('kopieren');

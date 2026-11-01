@@ -1,4 +1,5 @@
-"""Baut besprechen.html aus besprechen-vorlage.html + den 31 offenen Punkten unten + Bildern + Schild-Prototyp.
+"""Baut besprechen.html aus besprechen-vorlage.html + den offenen Punkten von Runde 2 (RUNDE2, Stand 01.11.2026 auf Stage).
+Die 31 Punkte von Runde 1 bleiben unten als Beleg stehen; Runde 1 ist in VERGLEICH.md festgehalten.
 Aufruf: python3 -I besprechen.py  (im Ordner fassung-7-2026-10-27). Quelle: BEFUNDE.md, VERGLEICH «Fassung 7» Stand 2,
 Baustand der acht Entwurfs-PRs #626–#633. Prototyp: _werkbank/versicherung-schild-2026-10-27/."""
 import base64, json, pathlib
@@ -147,6 +148,50 @@ THEMEN = [
        'Der Generator wird zur Vorschau aus dem Kapitel, plus «Als PDF drucken». «JSON (ATS)» kommt klein unter «Weitere Formate».'),
    ]},
 ]
+
+# Runde 2: was am 01.11. noch keinen Entscheid hat, geprüft auf Stage (Commit 57785fa7). F7-D8 ist ein Fehlbefund und fällt weg.
+RUNDE2 = ['F7-D1', 'F7-D2', 'F7-D3', 'F7-D4', 'F7-D5', 'F7-D6', 'F7-D7', 'F7-D9', 'F7-D10', 'F7-L4', 'F7-S5', 'F7-K2-1', 'F7-K2-2',
+          'F7-K3-1', 'F7-K3-2', 'F7-K3-4', 'F7-K4-1', 'F7-K5-1', 'F7-L9']
+AKTUELL = {
+  'F7-D2': {'heute': 'Auf dem Dashboard stehen «7/7», «Grundordnung 15/15» und zwei Gesamtzahlen in Prozent (bei Maria 66 % und 73 %).'},
+  'F7-D3': {'neu': 'Korrektur zu Runde 1: Der Name «Budget-Sync» ist nicht weg, er steht noch im dritten Tipp. Der Block «Tipps für den Anfang» erscheint bei Maria weiterhin. Mit dem Entscheid fällt beides.'},
+  'F7-D4': {'neu': 'Seit #627 heisst sie überall «Sicherung». Auf Stage stehen beide Hinweise noch.'},
+  'F7-D5': {'neu': '«Was steht mir zu?» ist gebaut, der Ort ist also da. Auf Stage steht der Block weiter unter dem Titel «Leistungen» auf dem Dashboard.'},
+  'F7-D6': {'neu': 'Auf Stage unverändert. Maria: «Bedarf ≈ 3’431.3».'},
+  'F7-D7': {'neu': 'Das Kapitel zeigt schon «CHF 540.30». Falsch ist nur noch die Zeile auf dem Dashboard.'},
+  'F7-D10': {'neu': 'Das Netz-Schild steht im Kapitel. Auf dem Dashboard heisst die Kachel weiter «Schutzschild». Die Instrumente stehen noch als eigener Block.'},
+  'F7-K3-1': {'neu': 'Auf Stage steht die KK-Last weiter in beiden Kapiteln.'},
+  'F7-K3-2': {'neu': 'Das Kreuz zeigt seit #626 die eigene Franchise, im Kapitel steht es unter dem Schild.'},
+  'F7-K3-4': {'stand': 'teil', 'heute': 'Oben stehen Summe pro Monat und KK-Last, dann das Netz-Schild mit der langen Liste aller Versicherungen, dann das Franchise-Kreuz. Die Angaben beginnen erst weit unten.',
+              'neu': 'Das Netz-Schild ersetzt Spinnennetz und zwei Schilde (#636). Es ist damit das stärkste Bild im Kapitel, die Liste darunter ist aber lang.',
+              'empf': 'Schild zuerst, Liste darunter eingeklappt. Summe pro Monat bleibt eine Zeile. KK-Last und Franchise-Kreuz wie in K3-1 und K3-2.'},
+  'F7-K4-1': {'neu': 'Seit #628 zeigt der Vergleich die eigene Branche. Auf Stage steht er weiter in beiden Kapiteln.'},
+  'F7-K2-1': {'neu': 'Auf Stage steht der Baum unter dem Titel «Was aus Ihren Angaben wächst» noch in Finanzen.'},
+}
+for t in THEMEN:
+    t['punkte'] = [{**x, **AKTUELL.get(x['id'], {})} for x in t['punkte'] if x['id'] in RUNDE2]
+    t.pop('schild', None)
+    if t['id'] == 'versicherungen':
+        t['titel'] = 'Versicherungen'
+        t['intro'] = 'Das Netz-Schild ist gebaut. Offen ist nur noch, was rundherum steht. Diese drei Punkte hängen zusammen.'
+        t['bilder'] = [bild('k3-schild-stage.jpg', 'Netz-Schild auf Stage', 'Stand 01.11. auf Stage: das Netz-Schild bei Maria, darunter die Liste.')]
+    if t['id'] == 'dashboard':
+        t['intro'] = 'Fast alles ist hier noch offen, weil die Pakete das Dashboard kaum angefasst haben. D1, D9 und D10 hängen zusammen: Sie ergeben den neuen Aufbau der Seite.'
+THEMEN = [t for t in THEMEN if t['punkte']]
+THEMEN.append({'id': 'begriffe', 'titel': 'Begriffe und Kleines', 'bilder': [],
+  'intro': 'Die kleinen Entscheide aus der Prüfung vom 01.11. Keiner hat eine F7-Nummer, jeder geht in wenigen Minuten.',
+  'punkte': [
+    p('E-1', '«erfasst» oder «eingetragen»', 'offen', 'Das Schild sagt «eingetragen», die Versicherungs-Übersicht (<code>vu.*</code>) teils «erfasst».',
+      'Überall «eingetragen». Das Wort sagt am deutlichsten, dass es um Ihre Einträge geht und nicht um die Deckung.'),
+    p('E-2', '«Schild» oder «Schutzschild»', 'offen', 'Im Kapitel steht das Netz-Schild, auf dem Dashboard heisst die Kachel «Schutzschild».',
+      'Überall «Schild». «Schutz» klingt nach Deckung, und genau das zeigt das Bild nicht.'),
+    p('E-3', 'Name der Lebenslauf-Seite', 'offen', 'Deutsch «Lebenslauf», Rumantsch «Curriculum vitae», Französisch noch «Créateur de CV».',
+      'In allen Sprachen der schlichte Name, Französisch also «CV». Der Generator ist seit F7-R5 weg.'),
+    p('E-4', 'Sandfarbener Kern bei Maria', 'offen', 'Seit Maria Zusatz und Lebensversicherung hat, ist das Schild ganz gefüllt, der Kern «noch nicht gedeckt» ist bei ihr nicht zu sehen.',
+      'So lassen. Das Beispiel soll zeigen, was bei Maria stimmt. Ein leeres Feld künstlich zu erzeugen wäre unehrlich.'),
+    p('E-5', 'Erklärtext auf Rumantsch', 'offen', 'Im Kapitel Notfall steht der Erklärtext zur Patientenverfügung in der Sprache Rumantsch noch auf Deutsch. Das ist schon heute so auf <code>main</code>.',
+      'Mit der nächsten rm-Gegenlese übersetzen, nicht von mir allein. Bis dahin bleibt der deutsche Text.'),
+  ]})
 
 html = (HIER / 'besprechen-vorlage.html').read_text(encoding='utf-8')
 # «</» maskieren: der Prototyp enthält selbst </script>, das würde den Skript-Block der Seite beenden.
