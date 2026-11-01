@@ -1658,3 +1658,8 @@ Anlass F7-K3-1: «eigentlich gefällt mir das doppelte … ich finde das hilft b
 - **Lohn, Spiegel in Finanzen:** «Netto CHF 6’200, geschätzt ≈ CHF 6’796 brutto.» Link «Lohnvergleich in Ausbildung & Arbeit ›».
 
 **Offen vor dem Bau:** Der Richtwert «10% (WHO)» bei `kkLast.*` ist zu prüfen. Die UN-Metadaten zu SDG 3.8.2 messen Ausgaben aus der eigenen Tasche, Stand Juli 2025 mit einer Schwelle von 40 % des frei verfügbaren Budgets; ob Prämien überhaupt zählen, ist nicht belegt. swiss-precision-pruefer und copy-pruefer, dann fr, it, en, rm.
+
+**Prüfung Richtwert und Entwürfe (01.11.2026, swiss-precision-pruefer, nicht entschieden, nichts gebaut):**
+- **«Richtwert 10% (WHO)» ist für Prämien nicht haltbar.** WHO Global Health Observatory, Indikator 4845, gelesen 01.11.2026: Die Haushaltsausgaben im Indikator «exclude insurance premiums». Die 10 % sind zudem eine Monitoring-Schwelle, kein Richtwert. Gilt für `KKLastCard.jsx`, `VersicherungenInstrument.jsx`, `kkLast.*` in fünf Sprachen, Tests.
+- **Schweiz:** Der Bund gibt keinen Höchstanteil vor, jeder Kanton legt ihn fest (KVG Art. 65 Abs. 1ter, `docs/BEFUND-quellen-kosten-senken-2026-10-24.md`). Vorschlag: Schwelle streichen, IPV-Hinweise nicht mehr an `over` hängen.
+- **Entwürfe:** Für Maria stimmen alle Zahlen. Lohn-Kette und Lohn-Spiegel sind so nicht baubar: Sie brauchen Varianten für Brutto-Eingabe, offene Einkommensart, fehlendes Alter, mögliche Quellensteuer, Rente und Selbständigkeit, 13. Monatslohn (leer, Nein, Ja), 40 Std. und Teilzeit. KK-Last: Basis nennen, nur `monthlyIncome`. Wohnen: Varianten `anteilBrutto`, `anteilTeilsBrutto`, `anteilEigen` bleiben.
