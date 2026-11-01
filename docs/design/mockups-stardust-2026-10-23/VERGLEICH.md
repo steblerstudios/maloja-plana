@@ -1596,8 +1596,7 @@ Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finan
 **Abnahme (Stebler Studios, 01.11.2026):** «vorerst ok so aber wollen wir noch verbessern». Die Monatskarte darf in den Sammelzweig; sie bleibt als offener Gestaltungspunkt stehen.
 
 **Gestaltungsprüfung und Umbau (Stebler Studios: «Ja, so umbauen»):** Was bleibt war ungefärbt, das satteste Grün war die Miete, Gold hiess «Sonstiges» (entgegen `farb-und-daten-system.md`).
-Darum in dieser Karte: Ausgaben in vier Granit-Stufen, was bleibt in `sage`; **nimmt für diese Karte die Bereichsfarben aus Muster M8 zurück**. Dazu feinerer, grösserer Ring (220, Strich 14), Beträge und Anteile auf einer
-Kante, Pfeil «›» statt +/−, Balken messen am Einkommen wie der Ring, Haarlinie, ruhigerer Umschalter. Abweichung von der Prüferin nach Messung: Stufen 1 / 0.9 / 0.8 / 0.75 statt 1 / 0.75 / 0.55 / 0.4 und `sage` 0.85 statt 0.22–0.28, weil
-sonst unter 3:1 (WCAG 1.4.11). **Wartet auf Abnahme im Bild.**
+Was bleibt ist `sage`. Die vier Granit-Stufen für die Ausgaben sind **verworfen** (Stebler Studios: «die Farben wollen wir haben, unsere verschiedenen Farben pro Feld, alles andere super so»); die Bereichsfarben aus Muster M8 bleiben. Dazu feinerer, grösserer Ring (220, Strich 14), Beträge und Anteile auf einer
+Kante, Pfeil «›» statt +/−, Balken messen am Einkommen wie der Ring, Haarlinie, ruhigerer Umschalter. Abweichung von der Prüferin nach Messung: `sage` 0.85 statt 0.22–0.28, weil sonst unter 3:1 (WCAG 1.4.11). **Abgenommen.**
 
 Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192).
