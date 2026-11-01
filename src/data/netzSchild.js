@@ -17,6 +17,11 @@ import { hausratPflicht } from './hausratPflicht.js';
 //   Haushalt      Privathaftpflicht · Hausrat (Pflicht je Kanton, siehe hausratPflicht.js mit verify)
 //   Leben         Lebensversicherung (freiwillig), oben in der Mitte
 // Welche Pflicht wann gilt, entscheidet weiter schildState (Eintrittsschwelle, Mindestalter, Referenzalter …).
+//
+// Rechts-Prüfung 01.11.2026 (Entscheid Stebler Studios): Das Schild zeigt, was EINGETRAGEN ist, nicht, was gedeckt ist.
+// Darum zählt nur Pflicht als Lücke: Freiwilliges ohne Eintrag bleibt neutral (`zaehlt`), und die AHV ist es nie — wer
+// hier wohnt oder arbeitet, ist versichert (AHVG Art. 1a), offen ist höchstens der Beitrag. Ein blosses Guthaben ist
+// keine Pensionskasse (Freizügigkeit deckt Invalidität und Tod nicht, siehe absicherungRisiko.js).
 
 const REIHE = ['haushalt', 'vorsorge', 'leben', 'kk', 'uvg'];
 export const SCHILD_KERN = 0.34;
@@ -34,7 +39,8 @@ export function netzSchildTeile(v = {}, opts = {}) {
   const art = opts.finanzen?.employmentType;
   const erwerb = ERWERB.includes(art) || opts.employed === true;
   const bvg = pflichtItem('bvg');
-  const bvgErfasst = has(v.bvgInsurer) || zahl(v.bvgContribution) > 0 || zahl(v.bvgBalance) > 0;
+  const bvgKasse = has(v.bvgInsurer) || zahl(v.bvgContribution) > 0;
+  const bvgErfasst = bvgKasse || zahl(v.bvgBalance) > 0;
   const hausrat = hausratPflicht(opts.kanton);
 
   const roh = {
@@ -49,7 +55,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
     vorsorge: [
       // AHV: wer erwerbstätig ist, zahlt über Lohn bzw. Ausgleichskasse; im Ruhestand keine Lücke.
       { key: 'ahv', art: 'pflicht', ok: erwerb || art === 'retired' || zahl(v.ahvContribution) > 0 },
-      (bvg || bvgErfasst) && { key: 'bvg', art: bvg ? 'pflicht' : 'freiwillig', ok: bvgErfasst },
+      (bvg || bvgErfasst) && { key: 'bvg', art: bvg ? 'pflicht' : 'freiwillig', ok: bvgKasse },
       (erwerb || zahl(opts.finanzen?.pension3a) > 0) && { key: 'saeule3a', art: 'freiwillig', ok: zahl(opts.finanzen?.pension3a) > 0 },
     ].filter(Boolean),
     haushalt: [
@@ -64,11 +70,12 @@ export function netzSchildTeile(v = {}, opts = {}) {
     .map((key) => {
       const teile = roh[key].map((x) => ({ ...x, betrag: betraegeFuer(x.key, v, opts.finanzen || {}) }));
       const erreicht = teile.filter((x) => x.ok).length;
-      return { key, versicherungen: teile, n: teile.length, erreicht };
+      const zaehlt = (x) => x.ok || ((x.art === 'pflicht' || x.art === 'kantonPflicht') && x.key !== 'ahv');
+      return { key, versicherungen: teile, n: teile.filter(zaehlt).length, erreicht };
     });
   return {
     teile,
-    offen: teile.filter((t) => t.erreicht === 0).map((t) => t.key),
+    offen: teile.filter((t) => t.n > 0 && t.erreicht === 0).map((t) => t.key),
     teilweise: teile.filter((t) => t.erreicht > 0 && t.erreicht < t.n).map((t) => t.key),
     st,
   };
@@ -87,7 +94,7 @@ export function betraegeFuer(key, v = {}, finanzen = {}) {
   const mehr = (o, k, x) => (zahl(x) > 0 ? { ...o, [k]: zahl(x) } : o);
   switch (key) {
     case 'kvg': return monat(v.kkPremium);
-    case 'kkZusatz': return { ...monat(v.kkZusatzPremium), ...(has(v.kkZusatz) ? { name: String(v.kkZusatz).trim() } : {}) };
+    case 'kkZusatz': return has(v.kkZusatz) ? { ...monat(v.kkZusatzPremium), name: String(v.kkZusatz).trim() } : {};
     case 'uvgZusatz': return v.uvgZusatz === 'no' ? {} : jahr(v.uvgZusatzPremium);
     case 'leben': return v.lifeInsurance === 'no' ? {} : jahr(v.lifeInsurancePremium);
     // Nicht «Lohnabzug»: die Berufsunfall-Prämie trägt der Arbeitgeber (UVG Art. 91), nur die Nichtberufsunfall-Prämie

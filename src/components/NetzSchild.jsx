@@ -40,11 +40,13 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   // Teilweise: dasselbe Salbei wie «ganz», halb so dicht — im hellen wie im dunklen Modus klar als «weniger»
   // lesbar (im Browser verglichen 27.10.2026; ein eigenes helles Grün verschwand dunkel fast).
   const salbei = palette.sageDeep || palette.sage;
-  const ganz = (p) => p.erreicht === p.n;
+  const ganz = (p) => p.n > 0 && p.erreicht === p.n;
   const farbe = (p) => p.erreicht === 0 ? palette.sand : salbei;
-  const dichte = (p) => p.erreicht === 0 ? 0.5 : ganz(p) ? 0.9 : 0.5;
+  // Nur Freiwilliges ohne Eintrag (n = 0): kaum sichtbar, das ist keine Lücke.
+  const dichte = (p) => p.n === 0 ? 0.15 : ganz(p) ? 0.9 : 0.5;
   const kurz = (p) => t('netzSchild.kurz.' + p.key);
-  const aria = t('netzSchild.aria') + ' ' + teile.map((p) => kurz(p) + ': ' + t('netzSchild.vonN', { n: p.erreicht, total: p.n })).join('; ') + '.';
+  const stand = (p) => (p.n ? t('netzSchild.vonN', { n: p.erreicht, total: p.n }) : t('netzSchild.nichtEingetragen'));
+  const aria = t('netzSchild.aria') + ' ' + teile.map((p) => kurz(p) + ': ' + stand(p)).join('; ') + '.';
   // Stufen-Linien je Teil: der Kern und jede Zwischenstufe, in Schildform, nur im eigenen Keil.
   const linien = (p) => [SCHILD_KERN, ...Array.from({ length: p.n - 1 }, (_, k) => fuellung({ erreicht: k + 1, n: p.n }))];
 
@@ -89,15 +91,16 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
     h('div', { style: { display: 'flex', alignItems: 'baseline', gap: '6px' } },
       h('span', { 'aria-hidden': true, style: { color: x.ok ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
       h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
-      h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, x.ok ? t('netzSchild.gedeckt') : t('netzSchild.offen'))),
+      h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, t(x.ok ? 'netzSchild.eingetragen' : 'netzSchild.nichtEingetragen'))),
     zahlen(x.betrag) && h('div', { 'data-betrag': x.key, style: { color: palette.mid, paddingLeft: '20px', fontVariantNumeric: 'tabular-nums' } }, zahlen(x.betrag)));
   const teilBlock = (p) => h('div', { key: p.key, 'data-gruppe': p.key, style: { marginBottom: space.xs + 'px' } },
     h('div', { style: { display: 'flex', alignItems: 'baseline', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
-      kurz(p), h('span', { style: { marginLeft: 'auto', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, t('netzSchild.vonN', { n: p.erreicht, total: p.n }))),
+      kurz(p), h('span', { style: { marginLeft: 'auto', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, stand(p))),
     h('div', { role: 'list', 'aria-label': kurz(p) }, p.versicherungen.map(versZeile)),
-    p.key === 'uvg' && Number(stunden) > 0 && Number(stunden) < 8 && h('p', { 'data-teil': 'unfall-8h', style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t('netzSchild.unfall8h')),
+    p.key === 'uvg' && Number(stunden) > 0 && Number(stunden) < 8 && h('p', { 'data-teil': 'unfall-8h', style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t('stundenlohnView.nbu_nurBeruf')),
+    p.key === 'vorsorge' && p.versicherungen.some((x) => x.key === 'ahv' && !x.ok) && h('p', { 'data-teil': 'ahv-hinweis', style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t('netzSchild.ahvHinweis')),
     p.key === 'haushalt' && h('p', { style: { ...klein, margin: '2px 0 0 24px' } }, t('netzSchild.haftpflichtHinweis')),
-    p.key === 'haushalt' && HAUSRAT_PFLICHT.verify && p.versicherungen.some((x) => x.art === 'kantonPflicht' || x.art === 'jeNachKanton') &&
+    p.key === 'haushalt' && HAUSRAT_PFLICHT.verify &&
       h('p', { 'data-teil': 'hausrat-pruefen', style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t('netzSchild.hausratPruefen')));
 
   const satz = [

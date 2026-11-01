@@ -78,7 +78,8 @@ export function sozialhilfePegelState(data) {
   // 'efb' (Predeploy 25.09.2026): ohne Freibetrag gedeckt, MIT Einkommensfreibetrag (SKOS D.2) ein
   // Anspruch möglich — ob er beim Eintritt zählt, regelt der Kanton. Dann kein «keine Aufstockung
   // nötig» (Nein ohne Grundlage), sondern der offene Satz sozialhilfe.efbEntscheidet.
-  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : 'covered'));
+  // 'offen' (Fachprüfung 01.11.2026): Erwerbsunkosten kennt das Profil nicht, der Bedarf ist dann zu tief — auch das ist kein Nein.
+  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : (sh?.erwerbsunkostenOffen ? 'offen' : 'covered')));
   const fraction = Math.max(0, Math.min(PEGEL_SCALE, rawFraction));
   return {
     show: true, variant: 'aufstockung', mode, fraction,

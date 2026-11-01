@@ -1569,7 +1569,8 @@ export default {
       basic: { sie: 'Mintga persuna en Svizra ha ina cassa da malsauns. Qua rimnais Vus las indicaziuns las pli impurtantas.', du: 'Mintga persuna en Svizra ha ina cassa da malsauns. Qua rimnas Ti las indicaziuns las pli impurtantas.' },
       occupational: { sie: 'Vossa cassa da pensiun — ella vegn finanziada ensemen cun Voss patrun e segirescha Vossa vegliadetgna.', du: 'Tia cassa da pensiun — ella vegn finanziada ensemen cun Tes patrun e segirescha Tia vegliadetgna.' },
       additional: { sie: "LAINF (assicuranza d'accidents): Sco emploià/ada essas Vus assicurà/ada obligatoricamain via il patrun — accidents professiunals e betg professiunals da 8h/emna. ICM (indemnità per cas da malsogna): Betg obligatoric, ma blers patrun han ina — ella paja 80% da Voss salari en cas da malsogna.", du: "LAINF (assicuranza d'accidents): Sco emploià/ada es Ti assicurà/ada obligatoricamain via il patrun — accidents professiunals e betg professiunals da 8h/emna. ICM (indemnità per cas da malsogna): Betg obligatoric, ma blers patrun han ina — ella paja 80% da Tes salari en cas da malsogna." },
-      property: { sie: "Ménaschi, viadi, cyber — assicuranzas che Vus pudais avair, ma betg stuais.", du: "Ménaschi, viadi, cyber — assicuranzas che Ti pos avair, ma betg stos." },
+      // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+      property: 'Ménaschi, viadi, cyber — per il pli facultativas. Il ménaschi po esser obligatoric tenor il chantun.',
       mobility: { sie: "Sche Vus avais in auto: l'assicuranza da vehichel a motor appartegna qua.", du: "Sche Ti has in auto: l'assicuranza da vehichel a motor appartegna qua." },
       social: "Contribuziuns AVS e assicuranzas socialas — la basa dal sistem svizzer da prevenziun.",
       health: 'Cassa da malsauns, model e premia.',
@@ -7305,20 +7306,24 @@ export default {
   },
   // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)
   netzSchild: {
-    intro: 'Ina part per sectur. Pli bler ch’è cuvrì, pli fitg s’empleni ella; in pitschen nucleus vul dir: anc nagut cuvrì.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    intro: 'Ina part per sectur. Pli bleras indicaziuns, pli fitg s’emplenescha ella. Il scut mussa tge ch’è endatà, betg sche las prestaziuns bastan. Decisiva è la polizza.',
     aria: 'Stemma da secturs d’assicuranza.',
-    offen: 'anc betg cuvrì',
-    gedeckt: 'cuvrì',
+    nichtEingetragen: 'betg endatà',
+    eingetragen: 'endatà',
     vonN: '{n} da {total}',
-    nochOffen: 'Anc betg cuvrì: {liste}.',
-    teilweise: 'Per part: {liste}.',
-    ganz: 'Tut las parts èn cuvridas cumplainamain.',
+    nochOffen: 'Obligatoric, anc betg endatà: {liste}.',
+    teilweise: 'Endatà per part: {liste}.',
+    ganz: 'Tut las assicuranzas obligatoricas èn endatadas.',
     kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
     vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad privata', hausrat: 'Inventari', leben: 'Assicuranza da vita' },
     art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
-    haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens, cun in chaun è ella obligatorica en blers chantuns.',
-    hausratPruefen: 'Obligaziun d’inventari: p.pl. confermar tar l’assicuranza chantunala d’edifizis — la funtauna n’è anc betg verifitgada.',
-    unfall8h: 'Sut 8 uras per emna tar il medem patrun n’èn ils accidents en il temp liber betg assicurads tras el, mabain tras la cassa da malsauns (OAINF art. 13).',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    haftpflichtHinweis: 'Responsabladad privata: ils locaturs la pretendan savens.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    hausratPruefen: 'Obligaziun d’inventari en il chantun: p.pl. confermar tar l’assicuranza chantunala d’edifizis — ils relaschs n’èn betg verifitgads per tut ils chantuns.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    ahvHinweis: 'Tgi che abitescha u lavura en Svizra è assicurà tar l’AVS/AI (LAVS art. 1a). Avert è qua mo, sche contribuziuns èn endatadas.',
     betrag: { kosten: '{mt} / mais · {jahr} / onn', guthaben: 'avair {chf}', summe: 'summa assicurada {chf}', lohn: 'deducì dal salari', arbeitgeber: 'via il patrun' },
   },
 
@@ -7381,6 +7386,8 @@ export default {
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    coveredOffen: 'En quest quint basta l’entrada. Custs da lavur mancan — il dretg scleresch il servetsch social.',
     grenze: 'Limita',
     luft: 'spazi',
     empty: 'Endatar entrada e chantun — lura mussa l’indicatur il spazi disponibel.',
@@ -7699,8 +7706,10 @@ export default {
       eins: 'Pretsch public tenor la glista da specialitads: {chf} ({packung})',
       gleich: 'Pretsch public tenor la glista da specialitads: {chf} per pachet',
       spanne: 'Pretsch public tenor la glista da specialitads: {von} fin {bis}, tenor il pachet',
-      sb40Alle: 'En la glista da specialitads è notada qua ina part da 40 % empè da 10 %, perquai ch\'i dat preparats pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva quest preparat per motivs medicinals, resta la part da 10 %.',
-      sb40Einige: 'Tenor il preparat ed il pachet è notada en la glista da specialitads ina part da 40 % empè da 10 %, perquai ch\'i dat pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva in tal preparat per motivs medicinals, resta la part da 10 %.',
+      // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+      sb40Alle: 'En la glista da specialitads è notada qua ina part da 40 % empè da 10 %, perquai ch\'i dat preparats pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva expressivamain, per motivs medicinals cumprovabels, in preparat original u da referenza, resta la part da 10 %; il medem vala, sche l’apoteca refusa ina substituziun per motivs medicinals cumprovabels (KLV art. 38a al. 7).',
+      // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+      sb40Einige: 'Tenor il preparat ed il pachet è notada en la glista da specialitads ina part da 40 % empè da 10 %, perquai ch\'i dat pli favurabels cun la medema substanza activa. Sche la medica u il medi prescriva expressivamain, per motivs medicinals cumprovabels, in preparat original u da referenza, resta la part da 10 %; il medem vala, sche l’apoteca refusa ina substituziun per motivs medicinals cumprovabels (KLV art. 38a al. 7).',
       hinweis: { sie: 'Quai che Vus pajais sezs, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en Voss cas.', du: 'Quai che ti pajas sez, dependa da la franchisa, da la part e da quai, sche la cassa da malsauns surpiglia il medicament en tes cas.' },
       quelle: 'UFSP, glista da specialitads',
       stand: 'Stadi {datum}',

@@ -2,7 +2,7 @@
 """Liest den BAG-Datenstamm der Spezialitätenliste (Excel) und gibt die Packungen als JSON aus.
 
 Aufruf: python3 scripts/extract-sl-preise.py <datei.xlsx>
-Ausgabe: [[Handelsname, gal.Form/Dosierung, Packung, Publikumspreis inkl. MwSt, Selbstbehalt], ...]
+Ausgabe: [[Handelsname, gal.Form/Dosierung, Packung, Publikumspreis inkl. MwSt, Selbstbehalt, Wirkstoffe], ...]
 Spalten werden über die Kopfzeile gesucht, nicht über die Position — das BAG hat das Format 2026 schon einmal gewechselt.
 """
 import json
@@ -10,7 +10,7 @@ import sys
 
 import openpyxl
 
-SPALTEN = ['Handelsname', 'gal.Form/Dosierung', 'Packung', 'Publikumspreis inkl. MwSt', 'Selbstbehalt']
+SPALTEN = ['Handelsname', 'gal.Form/Dosierung', 'Packung', 'Publikumspreis inkl. MwSt', 'Selbstbehalt', 'Wirkstoffe']
 
 wb = openpyxl.load_workbook(sys.argv[1], read_only=True, data_only=True)
 ws = wb['Datenstamm']
@@ -23,9 +23,9 @@ idx = [kopf.index(s) for s in SPALTEN]
 
 aus = []
 for r in zeilen:
-    name, form, packung, pp, sb = (r[i] for i in idx)
+    name, form, packung, pp, sb, wirkstoffe = (r[i] for i in idx)
     if not name or not isinstance(pp, (int, float)):
         continue
-    aus.append([str(name).strip(), str(form or '').strip(), str(packung or '').strip(), float(pp), float(sb or 0)])
+    aus.append([str(name).strip(), str(form or '').strip(), str(packung or '').strip(), float(pp), float(sb or 0), str(wirkstoffe or '').strip()])
 
 json.dump(aus, sys.stdout, ensure_ascii=False)

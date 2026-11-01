@@ -2,6 +2,8 @@
 // Umbau am selben Tag: Vorsorge mit drei Säulen, Unfall mit Zusatz (neues Feld), Haushalt mit Haftpflicht und
 // Hausrat, Hausrat-Pflicht je Kanton mit Prüf-Vermerk, Leben oben in der Mitte.
 import { describe, it, expect } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { netzSchildTeile, teilWinkel, fuellung, betraegeFuer, SCHILD_KERN } from '../data/netzSchild.js';
@@ -66,11 +68,24 @@ describe('Vorsorge in drei Säulen', () => {
     expect(vs.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['ahv', 'pflicht', true], ['bvg', 'pflicht', true], ['saeule3a', 'freiwillig', true]]);
     expect(vs.erreicht).toBe(3);
   });
-  it('ohne Erwerb: nur AHV (Pflicht auch ohne Erwerb, AHVG Art. 10) — ohne Beitrag noch nicht gedeckt', () => {
+  it('ohne Erwerb: nur AHV, ohne Beitrag keine Lücke — versichert ist, wer hier wohnt (AHVG Art. 1a)', () => {
     const vs = teil(netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false }), 'vorsorge');
     expect(vs.versicherungen.map((x) => x.key)).toEqual(['ahv']);
     expect(vs.erreicht).toBe(0);
+    expect(vs.n).toBe(0);
+    expect(netzSchildTeile({ kkInsurer: 'CSS' }, { employed: false }).offen).not.toContain('vorsorge');
     expect(teil(netzSchildTeile({ kkInsurer: 'CSS', ahvContribution: '530' }, {}), 'vorsorge').erreicht).toBe(1);
+  });
+  it('ein blosses Guthaben ist keine Pensionskasse (Freizügigkeit)', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS', bvgBalance: '20000' }, { ...angestellt, finanzen: { employmentType: 'employed' } });
+    expect(teil(r, 'vorsorge').versicherungen.find((x) => x.key === 'bvg').ok).toBe(false);
+  });
+  it('Freiwilliges ohne Eintrag ist keine Lücke', () => {
+    const r = netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'ZH' });
+    expect(teil(r, 'kk').n).toBe(1);
+    expect(teil(r, 'leben').n).toBe(0);
+    expect(r.offen).toEqual([]);
+    expect(r.teilweise).toEqual([]);
   });
   it('im Ruhestand ist die AHV keine Lücke', () => {
     expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { finanzen: { employmentType: 'retired' } }), 'vorsorge').erreicht).toBe(1);
@@ -83,8 +98,9 @@ describe('Haushalt und Hausrat-Pflicht je Kanton', () => {
     expect(hh.versicherungen.map((x) => [x.key, x.art, x.ok])).toEqual([['haftpflicht', 'haftpflicht', true], ['hausrat', 'freiwillig', false]]);
     expect(hh.erreicht).toBe(1);
   });
-  it('Hausrat Pflicht in NW, FR, JU, VD; ohne Kanton «je nach Kanton»', () => {
-    expect(['NW', 'FR', 'JU', 'VD', 'vd'].map(hausratPflicht)).toEqual(['pflicht', 'pflicht', 'pflicht', 'pflicht', 'pflicht']);
+  it('Hausrat Pflicht in NW und VD; FR, JU unbelegt und ohne Kanton «je nach Kanton»', () => {
+    expect(['NW', 'VD', 'vd'].map(hausratPflicht)).toEqual(['pflicht', 'pflicht', 'pflicht']);
+    expect(['FR', 'JU'].map(hausratPflicht)).toEqual(['unbekannt', 'unbekannt']);
     expect(hausratPflicht('ZH')).toBe('freiwillig');
     expect(hausratPflicht('')).toBe('unbekannt');
     expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'VD' }), 'haushalt').versicherungen[1].art).toBe('kantonPflicht');
@@ -101,11 +117,18 @@ describe('Bild und Text', () => {
   });
   it('Satz und je Versicherung eine Zeile mit Wort, nicht nur Farbe', () => {
     const text = nurText(html({ kkInsurer: 'CSS', liabilityInsurance: 'yes' }, { kanton: 'VD' }));
-    expect(text).toContain('Noch nicht gedeckt: Vorsorge, Leben.');
-    expect(text).toContain('Teilweise: Haushalt, Krankenkasse.');
-    expect(text).toContain('Hausrat · Pflicht in VD (Feuer und Elementar) noch nicht gedeckt');
-    expect(text).toContain('Bitte bei der kantonalen Gebäudeversicherung bestätigen');
-    expect(text).toContain('Privathaftpflicht · gesetzlich nicht vorgeschrieben gedeckt');
+    expect(text).toContain('Teilweise eingetragen: Haushalt.');
+    expect(text).toContain('Hausrat · Pflicht in VD (Feuer und Elementar) nicht eingetragen');
+    expect(text).toContain('bitte bei der kantonalen Gebäudeversicherung bestätigen');
+    expect(text).toContain('Privathaftpflicht · gesetzlich nicht vorgeschrieben eingetragen');
+    expect(text).toContain('nicht, ob die Leistungen reichen');
+    expect(text).not.toMatch(/gedeckt/);
+  });
+  it('Prüf-Vermerk steht bei jedem Kanton, AHV-Hinweis nur ohne Eintrag', () => {
+    const zh = html({ kkInsurer: 'CSS' }, { kanton: 'ZH', employed: false });
+    expect(zh).toContain('data-teil="hausrat-pruefen"');
+    expect(zh).toContain('data-teil="ahv-hinweis"');
+    expect(html({ kkInsurer: 'CSS', ahvContribution: '530' }, { kanton: 'ZH' })).not.toContain('data-teil="ahv-hinweis"');
   });
   it('unter 8 Stunden pro Woche: Hinweis zur Freizeit (UVV Art. 13)', () => {
     const v = { kkInsurer: 'CSS', uvg: 'employer' };
@@ -113,7 +136,7 @@ describe('Bild und Text', () => {
     expect(html(v, { ...angestellt, stunden: '42' })).not.toContain('data-teil="unfall-8h"');
   });
   it('das Bild nennt für Bildschirmleser je Teil «x von n»', () => {
-    expect(html({ kkInsurer: 'CSS' }, { kanton: 'ZH' })).toContain('aria-label="Schild aus Versicherungsbereichen. Haushalt: 0 von 2; Vorsorge: 0 von 1; Leben: 0 von 1; Krankenkasse: 1 von 2."');
+    expect(html({ kkInsurer: 'CSS' }, { kanton: 'ZH' })).toContain('aria-label="Schild aus Versicherungsbereichen. Haushalt: nicht eingetragen; Vorsorge: nicht eingetragen; Leben: nicht eingetragen; Krankenkasse: 1 von 1."');
   });
   it('Beispiel Maria zeigt das Schild mit Vorsorge 3 von 3', () => {
     const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton, stunden: DEMO_DATA.ausbildung.workHoursPerWeek };
@@ -123,7 +146,7 @@ describe('Bild und Text', () => {
   });
   it('alle Texte in fünf Sprachen', () => {
     const blatt = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
-    const keys = ['intro', 'aria', 'offen', 'gedeckt', 'vonN', 'nochOffen', 'teilweise', 'ganz', 'haftpflichtHinweis', 'hausratPruefen', 'unfall8h',
+    const keys = ['intro', 'aria', 'nichtEingetragen', 'eingetragen', 'vonN', 'nochOffen', 'teilweise', 'ganz', 'haftpflichtHinweis', 'hausratPruefen', 'ahvHinweis',
       ...['kk', 'uvg', 'vorsorge', 'haushalt', 'leben'].map((k) => 'kurz.' + k),
       ...['kvg', 'kkZusatz', 'uvg', 'uvgZusatz', 'ahv', 'bvg', 'saeule3a', 'haftpflicht', 'hausrat', 'leben'].map((k) => 'vers.' + k),
       ...['pflicht', 'freiwillig', 'haftpflicht', 'kantonPflicht', 'jeNachKanton'].map((k) => 'art.' + k)];
@@ -185,5 +208,17 @@ describe('Prämien für Zusatz, Unfall-Zusatz und Leben (31.10.2026)', () => {
   it('die drei Felder stehen im Kapitel, je direkt nach ihrer Versicherung', () => {
     const felder = getChapters(t).find((c) => c.key === 'versicherungen').fields.map((f) => f.k);
     for (const [a, b] of [['kkZusatz', 'kkZusatzPremium'], ['uvgZusatz', 'uvgZusatzPremium'], ['lifeInsurance', 'lifeInsurancePremium']]) expect(felder.indexOf(b)).toBe(felder.indexOf(a) + 1);
+  });
+});
+
+describe('Fachprüfung 01.11.2026', () => {
+  it('ein Zusatz-Betrag ohne Namen zählt weder im Budget noch im Schild', () => {
+    expect(monatsAusgaben({ versicherungen: { kkZusatz: '', kkZusatzPremium: '40' } }).kkZusatz).toBe(0);
+    expect(monatsAusgaben({ versicherungen: { kkZusatz: 'Top', kkZusatzPremium: '40' } }).kkZusatz).toBe(40);
+    expect(betraegeFuer('kkZusatz', { kkZusatz: '', kkZusatzPremium: '40' })).toEqual({});
+  });
+  it('der Pegel sagt nicht «keine Aufstockung nötig», solange Erwerbsunkosten fehlen', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../data/pegel.js'), 'utf8');
+    expect(q).toContain("sh?.erwerbsunkostenOffen ? 'offen' : 'covered'");
   });
 });

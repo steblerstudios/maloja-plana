@@ -74,3 +74,22 @@ describe('generierte SL-Preise', () => {
     expect(p.min).toBe(15.4);
   });
 });
+
+// Fachprüfung 01.11.2026: Kombinationen zählen nicht zum Einzelwirkstoff, echte Kombinationen des Katalogs bleiben.
+describe('SL-Daten ohne fremde Kombinationen', () => {
+  it('Einzelwirkstoffe tragen keine mehrteiligen Stärken', async () => {
+    const { SL_PREISE } = await import('../../data/medikamentPreise.js');
+    for (const n of ['Valsartan', 'Candesartan', 'Amlodipin', 'Atorvastatin', 'Lisinopril', 'Losartan', 'Jardiance', 'Tramadol']) {
+      expect(SL_PREISE[n].filter(([form]) => /\d\s*\/\s*\d/.test(form)), n).toEqual([]);
+    }
+    expect(Math.max(...SL_PREISE.Valsartan.map((p) => p[2]))).toBe(51.5);
+    expect(Math.max(...SL_PREISE.Jardiance.map((p) => p[2]))).toBe(143.4);
+    expect(SL_PREISE.Augmentin.length).toBeGreaterThan(0);
+    expect(SL_PREISE.Seretide.length).toBeGreaterThan(0);
+  });
+  it('die 40-%-Ausnahme nennt KLV Art. 38a Abs. 7, «nachweisbar» und «ausdrücklich»', async () => {
+    const de = (await import('../../i18n/de.js')).default;
+    const text = JSON.stringify(de).match(/"sb40Alle":"([^"]+)"/)[1];
+    for (const w of ['nachweisbar', 'ausdrücklich', 'Referenzpräparat', 'Apotheke', 'KLV Art. 38a Abs. 7']) expect(text).toContain(w);
+  });
+});

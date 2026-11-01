@@ -44,10 +44,19 @@ const zeilen = JSON.parse(execFileSync('python3', [resolve(__dirname, 'extract-s
 const namen = MEDICATIONS.map(([n]) => n).sort((a, b) => b.length - a.length);
 const passt = (h, k) => h === k || h.startsWith(k + ' ');
 const besitzer = (h) => namen.find((n) => passt(h.toLowerCase(), n.toLowerCase()));
+// Kombinationen (Fachprüfung 01.11.2026): «Valsartan» darf nicht «Amlodipin Valsartan», «Ciproxin» nicht «Ciproxin HC»
+// mitnehmen. Hat die SL-Zeile mehrere Wirkstoffe, zählt sie nur, wenn der Katalog selbst eine Kombination führt.
+const KOMBI = /[+/,]|\bund\b/i;
+const katalogKombi = Object.fromEntries(MEDICATIONS.map(([n, w]) => [n, KOMBI.test(w)]));
+const passendeWirkstoffe = (name, wirkstoffe) => katalogKombi[name] || !String(wirkstoffe).includes(',');
 const preise = {};
+const ausgelassen = {};
 for (const [name] of MEDICATIONS) {
-  const treffer = zeilen
-    .filter(([h]) => besitzer(h) === name)
+  const eigene = zeilen.filter(([h]) => besitzer(h) === name);
+  const weg = eigene.filter((z) => !passendeWirkstoffe(name, z[5]));
+  if (weg.length) ausgelassen[name] = weg.length;
+  const treffer = eigene
+    .filter((z) => passendeWirkstoffe(name, z[5]))
     .map(([, form, packung, pp, sb]) => [form, packung, Math.round(pp * 100) / 100, Math.round(sb * 100)]);
   const einmalig = [...new Map(treffer.map((t) => [t.join('|'), t])).values()];
   if (einmalig.length) preise[name] = einmalig;
@@ -65,3 +74,4 @@ writeFileSync(ZIEL, kopf
 const ohne = MEDICATIONS.map(([n]) => n).filter((n) => !preise[n]);
 console.log(`medikamentPreise.js: Stand ${stand}, ${Object.keys(preise).length} von ${MEDICATIONS.length} Medikamenten mit Preis.`);
 console.log('Ohne Treffer in der SL: ' + ohne.join(', '));
+console.log('Kombinationen ausgelassen: ' + JSON.stringify(ausgelassen));
