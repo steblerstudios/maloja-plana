@@ -63,7 +63,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   // rutschen auf dem Handy in eine zweite Zeile, statt den Namen abzuschneiden. Die wahren Anteile zeigt der Ring.
   const kachel = (key, wert, name, farbe, knopf, auf) => React.createElement(knopf ? 'button' : 'div', {
     key, 'data-gruppe': key, ...(knopf ? { type: 'button', 'aria-expanded': auf, onClick: () => setOffen(auf ? null : key) } : {}),
-    style: { position: 'relative', flex: wert + ' 1 104px', minWidth: 0, minHeight: '72px', padding: space.xs + 'px ' + space.sm + 'px', textAlign: 'left', fontFamily: 'inherit', fontSize: text.xs, lineHeight: 1.3, color: palette.text, cursor: knopf ? 'pointer' : 'default',
+    style: { position: 'relative', flex: wert + ' 1 104px', minWidth: 0, minHeight: '72px', boxSizing: 'border-box', padding: space.xs + 'px 6px', textAlign: 'left', fontFamily: 'inherit', fontSize: text.xs, lineHeight: 1.3, color: palette.text, cursor: knopf ? 'pointer' : 'default',
       background: auf ? palette.surface : farbe ? palette.up : 'transparent', border: farbe ? 0 : '1px dashed ' + palette.mid, borderTop: farbe ? '6px solid ' + farbe : '1px dashed ' + palette.mid, borderRadius: radius.sm, outline: auf ? '1px solid ' + palette.mid : 'none' },
   },
     React.createElement('span', { style: { display: 'block', fontWeight: weight.semi, color: palette.text } }, name),
