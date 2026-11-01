@@ -134,7 +134,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
 //   · Kopf: Gesamt-Fortschritt, darunter die Grundordnung als eine Zeile (x/15).
 //   · Je Kapitel eine Zeile; ein Tipp klappt sie auf (aria-expanded).
 //   · Aufgeklappt: die Grundordnungs-Felder dieses Kapitels, dann «Öffnen».
-export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo, simpleView = false, zusammenfassung = () => null, instrumentFuer = () => null }) => {
+export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo, simpleView = false, zusammenfassung = () => null, instrumentFuer = () => null, gruppen = null }) => {
   const [offen, setOffen] = useState(() => new Set());
   const umschalten = (key) => setOffen((alt) => {
     const neu = new Set(alt);
@@ -183,8 +183,11 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
       React.createElement('div', null,
         mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress'))
     ),
+    // Die Gruppen der früheren Kapitel-Liste (Stebler Studios 01.11.2026). Ohne `gruppen` eine einzige Liste.
+    (gruppen || [{ kapitel: chapters.map((_, i) => i) }]).map((g, gi) => React.createElement('div', { key: gi, style: { marginTop: gi ? space.lg + 'px' : 0 } },
+    g.titel && React.createElement('h4', { style: { margin: '0 0 ' + space.xs + 'px', padding: '0 8px', fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, letterSpacing: '0.4px' } }, g.titel),
     React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '2px' } },
-      chapters.map((ch, idx) => React.createElement(KapitelZeile, {
+      g.kapitel.filter((idx) => chapters[idx]).map((idx) => { const ch = chapters[idx]; return React.createElement(KapitelZeile, {
         key: ch.key, palette, t, ch, idx, lang, statusLabels, onSelectChapter,
         pct: chapterCompletions[idx],
         status: chapterStatuses[idx],
@@ -194,8 +197,8 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
         felder,
         zusammenfassung: !simpleView && chapterStatuses[idx] !== 'leer' ? zusammenfassung(ch.key) : null,
         instrument: simpleView ? null : instrumentFuer(ch.key),
-      }))
-    )
+      }); })
+    )))
   );
 };
 

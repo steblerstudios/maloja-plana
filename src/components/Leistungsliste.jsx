@@ -154,14 +154,14 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       // Neutral eingefärbt — es ist eine Lage, kein Betrag, der zusteht.
       !f && l.key === 'soz' && sozPegel && (() => {
         const max = Math.max(sozPegel.bedarf, sozPegel.einkommen, 1);
-        return React.createElement('div', { style: { flexShrink: 0, width: '96px', textAlign: 'right' } },
+        return React.createElement('div', { style: { flexShrink: 0, width: '116px', textAlign: 'right' } },
           React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
             t('pegel.bedarf') + ' ≈ ' + betrag(Math.round(sozPegel.bedarf))),
           React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '5px', borderRadius: radius.full + 'px', background: palette.up } },
             React.createElement('div', { style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: radius.full + 'px' } }),
             React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
       })(),
-      zaehlt && React.createElement('div', { style: { flexShrink: 0, width: '96px', textAlign: 'right' } },
+      zaehlt && React.createElement('div', { style: { flexShrink: 0, width: '116px', textAlign: 'right' } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, '≈ CHF ' + fmt(f.monthly)),
         React.createElement('div', { 'aria-hidden': true, style: { height: '6px', marginTop: '4px', borderRadius: radius.full + 'px', background: palette.up, overflow: 'hidden' } },
           React.createElement('div', { style: { height: '100%', width: (maxMonthly > 0 ? f.monthly / maxMonthly * 100 : 0).toFixed(1) + '%', background: palette.sage, borderRadius: radius.full + 'px' } }))

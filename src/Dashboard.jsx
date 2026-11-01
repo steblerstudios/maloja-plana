@@ -569,6 +569,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       // F7-D1, D9, D10 (Stebler Studios 01.11.2026): ein Block aus Fortschritt und Kapiteln, die Instrumente in ihrer Kapitel-Zeile.
       React.createElement(BergDetail, {
         palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo, simpleView,
+        gruppen: [
+          { titel: t('dashboard.tierCore'), kapitel: [0, 1, 2] },
+          { titel: t('dashboard.tierSupporting'), kapitel: [3, 4] },
+          { titel: t('dashboard.tierProtective'), kapitel: [5, 6] },
+        ],
         zusammenfassung: (key) => buildSnippet(key, data[key] || {}, data, t, lang),
         instrumentFuer: (key) => INSTRUMENTE_JE_KAPITEL[key] && React.createElement(React.Suspense, { fallback: null },
           React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key] })),
