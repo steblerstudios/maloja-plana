@@ -1642,6 +1642,8 @@ F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 u
 
 - **F7-D3, D4, D6, D7 gebaut (01.11.2026 abends):** Tipps-Block und unterer Sicherungs-Block weg, Texte gelöscht. Sicherung oben, gleiche Regel wie vorher (Daten da, keine oder älter als 7 Tage). Wegweiser nach der Grundordnung: Dokumente (nicht im Beispiel), dann Budget, sobald kein Einkommen eingetragen ist, sonst das Kapitel mit dem tiefsten Stand. Im Beispiel Maria im Browser gesehen: D3, D4, D6, D7. Nicht im Bild: die Schritte Dokumente und Budget, sie brauchen ein echtes Profil.
 
+- **Dashboard-Aufbau, Richtung, nicht entschieden, nicht bauen (Stebler Studios, 01.11.2026):** «so ist schon mal cool finde ich das ist ein guetr start», zur Prozentzahl «warte damit bitte noch». Skizze: A Landschaft · B Was ist jetzt dran · C ein Block aus «Ihr Fortschritt» und den Kapitel-Zeilen, die Stebler Studios zusammenlegen möchte, mit Gesamtstand oben, je Zeile Zusammenfassung, Balken und Instrument · D Werkzeuge · E Was steht mir zu. Offen: ob die Gesamtzahl nur im Block C steht, Platz für Tankanzeige und Steuer-Säule, Fortschrittsbild (F7-L4, S5, K2-1).
+
 **Wiedervorlage März 2027:** Status S ohne Lageänderung nicht vor dem 04.03.2027 aufgehoben, ab fünf Jahren besteht Anspruch auf eine Aufenthaltsbewilligung. Die Hinweise zu S dann prüfen.
 
 **Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton, gesucht und nicht gefunden (DBG Art. 83 und KS 45 nennen S nicht) · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.
