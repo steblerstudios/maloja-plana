@@ -60,6 +60,7 @@ export const ABLAEUFE = [
   { view: 'lehre', bereich: 'arbeit', nav: 'nav.lehre', sub: 'nav.sub.lehre', icon: 'lebenslauf', aliases: ['lehre', 'lehrvertrag', 'lernende', 'erste stelle', 'apprentissage', 'contrat d’apprentissage', 'tirocinio', 'apprendistato', 'apprenticeship'] },
   { view: 'volljaehrig', bereich: 'person', nav: 'nav.volljaehrig', sub: 'nav.sub.volljaehrig', icon: 'heart', aliases: ['18 werden', 'volljährig', 'volljaehrig', 'volljährigkeit', 'majorité', '18 ans', 'maggiore età', '18 anni', 'turning 18', 'coming of age'] },
   { view: 'dienst', bereich: 'behoerden', nav: 'nav.dienst', sub: 'nav.sub.dienst', icon: 'behoerden', aliases: ['militär', 'zivildienst', 'rekrutierung', 'wehrpflichtersatz', 'service militaire', 'service civil', 'servizio militare', 'servizio civile', 'military service', 'civilian service'] },
+  { view: 'digitaleordnung', bereich: 'person', nav: 'nav.digitaleordnung', sub: 'nav.sub.digitaleordnung', icon: 'lock', aliases: ['digitale ordnung', 'passwort', 'passwörter', 'passwortmanager', 'zwei-faktor', 'phishing', 'betrug', 'gehackt', 'datenschutz', 'auskunft', 'robinsonliste', 'mot de passe', 'password', 'privacy'] },
   { view: 'todesfall', bereich: 'familie', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
