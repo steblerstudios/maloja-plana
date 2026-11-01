@@ -4977,6 +4977,8 @@ export default {
   },
 
   cv: {
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    alsDatei: 'La fanestra da stampa è vegnida bloccada. Il curriculum è sco datoteca tar las telechargiadas.',
     // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
     pdfDrucken: "Stampar sco PDF",
     // TODO(rm): provisorisch — Gegenlese (F7, 31.10.2026)
@@ -7277,11 +7279,16 @@ export default {
     intro: 'Ina part per sectur. Pli bleras indicaziuns, pli fitg s’emplenescha ella. Il scut mussa tge ch’è endatà, betg sche las prestaziuns bastan. Decisiva è la polizza.',
     aria: 'Stemma da secturs d’assicuranza.',
     nichtEingetragen: 'betg endatà',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    lautAngaben: 'tenor las indicaziuns',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    bvgNurGuthaben: 'In avair sulet n’è betg ina cassa da pensiun currenta, per exempel tar la libra circulaziun. Tar in’emploi cun cassa da pensiun: endatar la cassa u la contribuziun.',
     eingetragen: 'endatà',
     vonN: '{n} da {total}',
     nochOffen: 'Obligatoric, anc betg endatà: {liste}.',
     teilweise: 'Endatà per part: {liste}.',
-    ganz: 'Tut las assicuranzas obligatoricas èn endatadas.',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    ganz: 'En questa glista n’è avert nagin endataziun obligatorica.',
     kurz: { kk: 'Cassa da malsauns', uvg: 'Accident', vorsorge: 'Prevenziun', haushalt: 'Chasada', leben: 'Vita' },
     vers: { kvg: 'Assicuranza da basa (LAMal)', kkZusatz: 'Assicuranza supplementara', uvg: 'Assicuranza d’accident (LAINF)', uvgZusatz: 'Supplementara d’accident', ahv: '1. pitga · AVS/AI', bvg: '2. pitga · cassa da pensiun', saeule3a: '3. pitga · pitga 3a', haftpflicht: 'Responsabladad privata', hausrat: 'Inventari', leben: 'Assicuranza da vita' },
     art: { pflicht: 'obligatoric', freiwillig: 'facultativ', haftpflicht: 'betg prescrit da la lescha', kantonPflicht: 'obligatoric en {kanton} (fieu ed elements)', jeNachKanton: 'obligatoric tenor il chantun' },
@@ -7308,10 +7315,10 @@ export default {
     bvg: 'Cassa da pensiun (BVG)',
     haftpflicht: 'Responsabladad civila',
     hausrat: 'Economia da chasa',
-    covered: 'cuvert',
-    open: 'avert',
-    allCovered: 'tut cuvert',
-    someOpen: 'avert: {list}',
+    covered: 'endatà',
+    open: 'betg endatà',
+    allCovered: 'tut endatà',
+    someOpen: 'betg endatà: {list}',
   },
   // rm: Muttersprachler-Gegenlese offen (siehe i18n-Backlog)
   // TODO(rm): Gegenlese durch Muttersprachler:in offen (Rumantsch Grischun) — ipvStatus.* + beleg.*/pegel.*

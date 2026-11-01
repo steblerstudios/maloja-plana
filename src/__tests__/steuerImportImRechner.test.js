@@ -26,8 +26,8 @@ describe('Steuer-Import im Rechner', () => {
     expect(eintrag.aliases).toEqual(expect.arrayContaining(['steuerimport', 'steuererklärung']));
     expect(WERKZEUGE.some((w) => w.view === 'taxImport')).toBe(false);
   });
-  it('das steuerbare Einkommen zählt nach dem Import nur, wenn das Feld leer war', () => {
-    expect(quelle('TaxCalculator.jsx')).toContain('if (!taxableInput && merged.taxableIncome)');
+  it('das steuerbare Einkommen zählt nach dem Import nur, wenn es neu ergänzt wurde', () => {
+    expect(quelle('TaxCalculator.jsx')).toContain('if (!taxableInput && !data.finanzen?.taxableIncome && merged.taxableIncome)');
   });
   it('3a aus Finanzen kommt auf Klick, nie still in den Abzug', () => {
     const rechner = quelle('TaxCalculator.jsx');

@@ -73,7 +73,8 @@ export function schildState(v = {}, opts = {}) {
   const bvgAlter = opts.referenzalterErreicht !== true && opts.vorBvgMindestalter !== true;
   // BVG Art. 7 Abs. 1: Jahreslohn von «mehr als» der Schwelle — wie lohnAbzuege.js (`<=` → nicht versichert).
   const bvgPflicht = employed && bvgAlter && einkommen > BVG_PARAMS.eintrittsschwelle;
-  const bvgErfasst = has(v.bvgInsurer) || Number(v.bvgContribution) > 0 || Number(v.bvgBalance) > 0;
+  // Ein blosses Guthaben (Freizügigkeit) ist keine laufende Pensionskasse (Rechts-Prüfung 01.11.2026).
+  const bvgErfasst = has(v.bvgInsurer) || Number(v.bvgContribution) > 0;
   // Unter der Schwelle, aber nicht als Brutto erfasst: ob die Pflicht besteht, ist offen (siehe oben).
   // Nicht als Lücke gezählt (keine falsche Lücke), aber benannt. Ist eine Kasse erfasst, erübrigt es sich.
   const bvgUnklarBasis = employed && bvgAlter && !bvgPflicht && einkommen > 0 && opts.lohnBasis !== 'brutto' && !bvgErfasst;

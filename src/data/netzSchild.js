@@ -54,7 +54,8 @@ export function netzSchildTeile(v = {}, opts = {}) {
     ] : [],
     vorsorge: [
       // AHV: wer erwerbstätig ist, zahlt über Lohn bzw. Ausgleichskasse; im Ruhestand keine Lücke.
-      { key: 'ahv', art: 'pflicht', ok: erwerb || art === 'retired' || zahl(v.ahvContribution) > 0 },
+      // `abgeleitet`: kein Beitrag erfasst, der Stand folgt aus dem Erwerbsstatus — die Zeile sagt «laut Angaben», nicht «eingetragen».
+      { key: 'ahv', art: 'pflicht', ok: erwerb || art === 'retired' || zahl(v.ahvContribution) > 0, abgeleitet: !(zahl(v.ahvContribution) > 0) },
       (bvg || bvgErfasst) && { key: 'bvg', art: bvg ? 'pflicht' : 'freiwillig', ok: bvgKasse },
       (erwerb || zahl(opts.finanzen?.pension3a) > 0) && { key: 'saeule3a', art: 'freiwillig', ok: zahl(opts.finanzen?.pension3a) > 0 },
     ].filter(Boolean),

@@ -202,7 +202,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     // Seite beide selbst, dieselben Themen wie dort.
     onNavigate && React.createElement('div', { 'data-teil': 'auch-pruefen', style: { marginBottom: space.md } },
       [['ipv', t('sozialhilfe.ipvSection')], ['el', t('sozialhilfe.elSection')]].map(([key, titel]) => React.createElement('button', {
-        key, type: 'button', className: 'mp-link', onClick: () => onNavigate('situationen'),
+        key, type: 'button', className: 'mp-link', onClick: () => onNavigate('ansprueche'),
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text },
       },
         React.createElement('span', { style: { minWidth: 0 } }, titel),

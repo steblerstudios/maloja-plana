@@ -152,7 +152,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
   // Nur das steuerbare Einkommen hält er in eigenem Zustand — es zählt ab jetzt, wenn das Feld leer war.
   const importUebernehmen = (merged) => {
     onImport(merged);
-    if (!taxableInput && merged.taxableIncome) {
+    if (!taxableInput && !data.finanzen?.taxableIncome && merged.taxableIncome) {
       setTaxableInput(String(merged.taxableIncome));
       setUseEnteredTaxable(true);
     }

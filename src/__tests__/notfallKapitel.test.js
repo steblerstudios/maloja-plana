@@ -181,6 +181,16 @@ describe('Im Kapitel', () => {
     expect(passend).toContain('Unterlagen · Patientenverfügung, Organspende-Karte, Blutgruppen-Ausweis');
     expect(passend).not.toContain('Patientenverfügung erstellen');
   });
+  it('Persönliche Basis: die sechs Familien-Abläufe unter «Familie» (F7-L3)', () => {
+    const html = renderToStaticMarkup(React.createElement(ChapterViewComplete, {
+      palette: LIGHT_PALETTE, t, chapter: chapters.find((c) => c.key === 'basis'), data: DEMO_DATA.basis, allData: DEMO_DATA,
+      onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, chapters,
+    }));
+    const familie = nurText(html.slice(html.indexOf('data-teil="passend-familie"')));
+    expect(familie).toContain('Heirat');
+    expect(familie).toContain('Zusammenziehen');
+    expect(familie).not.toContain('Rucksack');
+  });
   it('Passend: Ablauf Vorsorge und Organspende als Eingang (F7-K5-2, F7-L1)', () => {
     const html = kapitelHtml();
     const passend = nurText(html.slice(html.indexOf('data-teil="passend"')));

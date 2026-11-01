@@ -80,12 +80,20 @@ describe('Vorsorge in drei Säulen', () => {
     const r = netzSchildTeile({ kkInsurer: 'CSS', bvgBalance: '20000' }, { ...angestellt, finanzen: { employmentType: 'employed' } });
     expect(teil(r, 'vorsorge').versicherungen.find((x) => x.key === 'bvg').ok).toBe(false);
   });
+  it('die AHV aus dem Erwerbsstatus heisst «laut Angaben», ein Guthaben allein bekommt einen Hinweis', () => {
+    const o = { ...angestellt, finanzen: { employmentType: 'employed' }, kanton: 'ZH' };
+    const out = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: { kkInsurer: 'CSS', bvgBalance: '20000' }, ...o }));
+    expect(out).toContain('laut Angaben');
+    expect(out).toContain('data-teil="bvg-nur-guthaben"');
+  });
   it('Freiwilliges ohne Eintrag ist keine Lücke', () => {
     const r = netzSchildTeile({ kkInsurer: 'CSS' }, { kanton: 'ZH' });
     expect(teil(r, 'kk').n).toBe(1);
     expect(teil(r, 'leben').n).toBe(0);
     expect(r.offen).toEqual([]);
     expect(r.teilweise).toEqual([]);
+    // Der Schlusssatz bleibt bei der Liste: Was nicht beurteilt werden kann, steht nicht darin.
+    expect(de.netzSchild.ganz).toContain('In dieser Liste');
   });
   it('im Ruhestand ist die AHV keine Lücke', () => {
     expect(teil(netzSchildTeile({ kkInsurer: 'CSS' }, { finanzen: { employmentType: 'retired' } }), 'vorsorge').erreicht).toBe(1);

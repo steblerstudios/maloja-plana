@@ -17,6 +17,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
   // Export-Vorschau (K20): null | 'druck' | 'html' | 'json' — erst zeigen, was im Dokument steht. Das Blatt zeigt
   // weniger als der Druck (Geburtsdatum, Nationalität, Zivilstand): darum auch vor dem Drucken.
   const [vorschau, setVorschau] = useState(null);
+  const [alsDatei, setAlsDatei] = useState(false);
   const zweitKnopf = { minHeight: '44px', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   const cv = generateCVTemplate(data, t);
@@ -28,7 +29,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
     if (win) {
       const bereit = win.document.fonts ? win.document.fonts.ready : Promise.resolve();
       bereit.then(() => { win.focus(); win.print(); });
-    }
+    } else setAlsDatei(true); // Druckfenster blockiert: openPrintWindow hat die Datei gespeichert, das sagen.
   };
   const weiter = () => {
     const art = vorschau;
@@ -57,15 +58,17 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
       }, t('cv.pdfDrucken')),
       React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, t('cv.pdfHinweis')),
       vorschau === 'druck' && vorschauBox(),
-      React.createElement('details', { 'data-teil': 'weitere-formate', style: { marginBottom: space.sm + 'px' } },
-        React.createElement('summary', { style: { cursor: 'pointer', padding: '12px 0', fontSize: text.sm, color: palette.mid } }, t('cv.weitereFormate')),
-        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.sm + 'px' } },
-          React.createElement('button', { type: 'button', onClick: () => setVorschau('html'), style: zweitKnopf },
-            React.createElement(ZielHinweis, { t, art: 'download' }), t('cv.downloadHtml')),
-          React.createElement('button', { type: 'button', onClick: () => setVorschau('json'), title: t('cv.downloadJsonHint'), style: zweitKnopf },
-            '{ } ' + t('cv.downloadJson'))),
-        (vorschau === 'html' || vorschau === 'json') && vorschauBox()),
+      React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.text } }, alsDatei && t('cv.alsDatei')),
       ergaenzen),
+
+    React.createElement('details', { 'data-teil': 'weitere-formate', style: { marginBottom: space.sm + 'px' } },
+      React.createElement('summary', { style: { cursor: 'pointer', padding: '12px 0', fontSize: text.sm, color: palette.mid } }, t('cv.weitereFormate')),
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.sm + 'px' } },
+        React.createElement('button', { type: 'button', onClick: () => setVorschau('html'), style: zweitKnopf },
+          React.createElement(ZielHinweis, { t, art: 'download' }), t('cv.downloadHtml')),
+        React.createElement('button', { type: 'button', onClick: () => setVorschau('json'), title: t('cv.downloadJsonHint'), style: zweitKnopf },
+          '{ } ' + t('cv.downloadJson'))),
+      (vorschau === 'html' || vorschau === 'json') && vorschauBox()),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.md + 'px' } }, hinweisZeichen(), t('trust.localOnly'))
   );

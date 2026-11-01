@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { springeZuAnker } from '../utils/hashRouter.js';
+import { ExternerLink } from './ExternerLink.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
 import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
@@ -313,6 +314,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
 
   // 4. Vorsorge
   const geregelt = VORSORGE.filter((v) => vorsorgeGeregelt(nf, v.k)).length;
+  const pvFeld = (kapitelListe.find((c) => c.key === 'notfall') || { fields: [] }).fields.find((f) => f.k === 'patientenverfuegung');
   const vorsorgeWert = (k) => {
     const v = nf[k];
     if (!v) return t('notfallKapitel.nichtErfasst');
@@ -354,6 +356,8 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         h('option', { value: '' }, t('notfallKapitel.nichtErfasst')),
         ['yes', 'no'].map((w) => h('option', { key: w, value: w }, t('chapters.notfall.fields.patientenverfuegung.options.' + w)))),
       h('p', { id: 'mp-notfall-pv-hinweis', style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
+      pvFeld?.orientation && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, pvFeld.orientation),
+      pvFeld?.link && h(ExternerLink, { t, href: pvFeld.link.url, style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, pvFeld.link.label),
       nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none', marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
