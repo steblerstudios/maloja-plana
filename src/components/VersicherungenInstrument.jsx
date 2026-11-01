@@ -175,9 +175,10 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
       eingetragen > 0 && h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: eingetragen }))),
     // «Weitere Versicherungen» ist der einzige Eintragungsort für Rechtsschutz, Reise, Cyber …: dort Eingetragenes zählt in der Summe (Fachprüfung 01.11.2026).
     p.otherInsurance > 0 && h('p', { 'data-teil': 'versicherungen-ausserhalb-weitere', style: { ...klein, margin: '0 0 ' + space.xs + 'px' } }, t('versInstrument.ausserhalbWeitere')),
-    ausserhalb.map((x) => h('div', { key: x.key, style: { ...zeile, alignItems: 'baseline', fontSize: text.xs } },
+    // Umbruch statt Quetschen: Auf dem Handy lief der lange Pensionskassen-Betrag sonst in den Namen (Sichtprüfung 01.11.2026).
+    ausserhalb.map((x) => h('div', { key: x.key, style: { ...zeile, flexWrap: 'wrap', gap: '0 ' + space.md + 'px', alignItems: 'baseline', fontSize: text.xs } },
       h('span', { style: { display: 'flex', alignItems: 'center', gap: '8px', color: palette.text, minWidth: 0 } }, marke(x.farbe || ton), x.name),
-      h('span', { style: { color: palette.mid, textAlign: 'right' } }, betragText(x.b, t) || t(x.abgeleitet ? 'netzSchild.lautAngaben' : 'netzSchild.eingetragen'))
+      h('span', { style: { color: palette.mid, textAlign: 'right', marginLeft: 'auto' } }, betragText(x.b, t) || t(x.abgeleitet ? 'netzSchild.lautAngaben' : 'netzSchild.eingetragen'))
     )));
   const postenHinweise = () => h(React.Fragment, null,
     fehlt.length > 0 && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.nichtErfasst', { liste: fehlt.join(', ') })),
