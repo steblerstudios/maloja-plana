@@ -170,12 +170,10 @@ describe('M8 · eine Bereichsfarbe je Kapitel', () => {
     expect(bereichsTon('wohnen', LIGHT_PALETTE)).toBe(getBereichForChapter('wohnen').lightDeep);
     expect(bereichsTon('wohnen', DARK_PALETTE)).toBe(getBereichForChapter('wohnen').dark);
   });
-  it('der Monatsring im Kapitel Finanzen nimmt dieselben Farben', () => {
-    for (const palette of [LIGHT_PALETTE, DARK_PALETTE]) {
-      const { gruppen } = ringDaten({ data: DEMO_DATA, t, palette, einkommen: 6200, verplant: 4000 });
-      expect(gruppen.find((g) => g.key === 'wohnen').farbe).toBe(bereichsTon('wohnen', palette));
-      expect(gruppen.find((g) => g.key === 'versicherungen').farbe).toBe(bereichsTon('versicherungen', palette));
-    }
+  it('der Monatsring trägt keine Bereichsfarbe: Granit in vier Stufen, grösster Bereich am dunkelsten (F7-K2-2)', () => {
+    const { gruppen } = ringDaten({ data: DEMO_DATA, t, palette: LIGHT_PALETTE, einkommen: 6200, verplant: 4000 });
+    expect(gruppen.map((g) => g.stufe)).toEqual([1, 0.9, 0.8, 0.75]);
+    expect(gruppen[0].key).toBe('wohnen');
   });
 });
 

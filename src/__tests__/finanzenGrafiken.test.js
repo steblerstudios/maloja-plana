@@ -29,7 +29,7 @@ describe('Monatsring: «Wofür geht es weg?»', () => {
   it('Gruppen = alle Ausgabenposten; ihre Summe sind die Ausgaben, der Rest ist, was bleibt', () => {
     const d = profil();
     const { gruppen, basis, rest } = ringDaten(ring(d));
-    expect(gruppen.map((g) => g.key)).toEqual(['wohnen', 'versicherungen', 'steuern', 'uebriges']);
+    expect(gruppen.map((g) => g.key)).toEqual(['wohnen', 'uebriges', 'versicherungen', 'steuern']);
     expect(gruppen.reduce((a, g) => a + g.wert, 0)).toBe(sumAllExpenses(d.finanzen, d));
     expect(basis).toBe(5000);
     expect(rest).toBe(2100);
@@ -46,15 +46,15 @@ describe('Monatsring: «Wofür geht es weg?»', () => {
     expect(klar).toContain('Jeden Monat bleibenCHF 2’10042 %');
     // Die Summe macht die Rechnung sichtbar: 5’000 − 2’900 = 2’100.
     expect(klar).toContain('Wofür geht es weg?CHF 2’900');
-    expect(klar).toContain('CHF 1’500');
+    expect(klar).toContain('CHF 1’50030 %');
     expect(klar.indexOf('CHF 1’500')).toBeLessThan(klar.indexOf('CHF 600'));
-    // Längster Balken = grösster Bereich.
-    expect(html).toContain('width:100%');
+    // Der Balken misst wie der Ring am Einkommen: 1’500 von 5’000.
+    expect(html).toContain('width:30%');
   });
   it('geschlossen je Bereich ein Stück im Ring', () => {
     const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };
     const html = renderToStaticMarkup(React.createElement(Monatsring, ring(d)));
-    expect((html.match(/pathLength/gi) || []).length).toBe(ringDaten(ring(d)).gruppen.length);
+    expect((html.match(/pathLength/gi) || []).length).toBe(ringDaten(ring(d)).gruppen.length + 1); // + was bleibt
   });
   it('eine Gruppe mit mehreren Posten lässt sich aufklappen, eine mit einem nicht', () => {
     const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };
