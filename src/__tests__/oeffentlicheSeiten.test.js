@@ -236,11 +236,19 @@ describe('Öffentliche Erklärseiten', () => {
       expect(text).toContain('Gerichtsstand ist Basel-Stadt');
       // 23.09.2026: Hier stand `toContain('Art. 3 Abs. 1 lit. s UWG')` — das
       // pinnte EINE Schreibweise der Fundstelle («lit.»), nicht die Zusage.
-      // Die amtliche Sammlung schreibt «Bst.», und genau darauf zeigt die Seite
+      // Die Systematische Sammlung schreibt «Bst.», und genau darauf zeigt die Seite
       // jetzt. Geprüft wird deshalb die Sache: der Artikel ist genannt UND
       // belegt. Die Ausformulierung hütet `impressumAdresse.test.js`.
       expect(text).toMatch(/Art\. 3 Abs\. 1 (lit|Bst)\. s/);
       expect(html).toContain('fedlex.admin.ch/eli/cc/1988/223_223_223');
+    });
+
+    it('nennt die SR nicht «amtliche Sammlung» — das ist die AS', () => {
+      const texte = Object.values(QUELLEN).flatMap((q) => [q.text, ...Object.values(q.texte || {})]);
+      expect(texte.length).toBeGreaterThan(0);
+      for (const t of texte) {
+        expect(t).not.toMatch(/amtliche Sammlung|recueil officiel|raccolta ufficiale|collecziun uffiziala/);
+      }
     });
 
     it('sagt, welche Daten beim blossen Aufruf anfallen', () => {

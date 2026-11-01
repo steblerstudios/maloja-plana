@@ -96,9 +96,9 @@ export const SEITEN = [
       {
         titel: 'Ce que prescrit la Confédération et ce que décide le canton',
         absaetze: [
-          'La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes et participe à son financement. Qui la reçoit et à quelle hauteur, c’est le canton qui en décide.',
+          'La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et à quelle hauteur.',
           'Concrètement, ce qui diffère d’un canton à l’autre : les limites de revenu et de fortune, la manière même dont le revenu déterminant est calculé, le fait de devoir déposer une demande ou d’être contacté, et les délais.',
-          'En revanche, une chose est partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.',
+          'Est aussi partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.',
           'C’est pourquoi la phrase « chez nous, on y a droit à partir d’un revenu de X » mène rarement loin. Elle vaut au mieux pour un canton, et là encore pour une seule année.',
         ],
       },

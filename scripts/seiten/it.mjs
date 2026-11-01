@@ -88,7 +88,7 @@ export const SEITEN = [
       {
         titel: 'Che cosa prescrive la Confederazione e che cosa decide il Cantone',
         absaetze: [
-          'La Confederazione prescrive <em>che</em> una riduzione dei premi debba esistere e partecipa al suo finanziamento. Chi la riceve e in quale misura lo decide il Cantone.',
+          'La Confederazione prescrive <em>che</em> una riduzione dei premi debba esistere, fissa a tal fine requisiti minimi e partecipa al suo finanziamento. Nel quadro di questi requisiti, il Cantone decide chi la riceve e in quale misura.',
           'Concretamente, da Cantone a Cantone differiscono: i limiti di reddito e di sostanza, il modo stesso in cui il reddito determinante viene calcolato, il fatto di dover presentare una domanda oppure di essere contattati, e i termini.',
           'Ovunque uguale è invece <strong>dove va il denaro</strong>: il Cantone versa il contributo direttamente alla cassa malati, non alla persona assicurata. Ciò figura nella LAMal e non rientra nel margine di manovra cantonale.',
           'Per questo la frase «da noi si riceve qualcosa a partire da un reddito di X» porta raramente lontano. Vale al massimo per un Cantone, e anche lì soltanto per un anno.',

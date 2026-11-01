@@ -101,7 +101,7 @@ export const SEITEN = [
       {
         titel: 'Tge che la Confederaziun prescriva e tge ch’il chantun decida',
         absaetze: [
-          'La Confederaziun prescriva <em>che</em> i stoppia dar ina reducziun da premi e sa participescha al finanziament. Tgi ch’la survegn e quant bler decida il chantun.',
+          'La Confederaziun prescriva <em>che</em> i stoppia dar ina reducziun da premi, fixescha per quai pretensiuns minimalas e sa participescha al finanziament. En il rom da questas pretensiuns decida il chantun tgi ch’la survegn e quant bler.',
           'Concretamain differeschan da chantun a chantun: ils limits d’entrada e da facultad, la moda co che l’entrada decisiva vegn insumma calculada, sche ins sto inoltrar ina dumonda u sche ins vegn contactà, ed ils termins.',
           'Dapertut medem è percunter <strong>nua ch’ils daners van</strong>: il chantun paja la contribuziun directamain a la cassa da malsauns, betg a la persuna assicurada. Quai stat en la LAMal e n’è betg spazi da moviment chantunal.',
           'Perquai na maina la frasa «tar nus survegn ins quai a partir d’ina entrada da X» rara vart. Ella vala il pli auter per in chantun, e là mo per in onn.',

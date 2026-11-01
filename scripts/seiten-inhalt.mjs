@@ -79,7 +79,7 @@ export const GEPRUEFT = 'September 2026';
 // `src/__tests__/oeffentlicheSeiten.test.js` prüft die Form, nicht die
 // Erreichbarkeit — ein Test, der ins Netz greift, ist kein Test.
 export const QUELLEN = {
-  // Amtliche Sammlung des Bundes. Steht hier, weil das Impressum den Artikel
+  // Systematische Sammlung des Bundesrechts (SR). Steht hier, weil das Impressum den Artikel
   // nennt, auf den es sich stützt — und wer einen Artikel nennt, soll ihn
   // belegen können. Dieselbe Adresse verwendet das Studio-Impressum
   // (stebler-studios/website/impressum.html, 22.09.2026), bewusst wörtlich
@@ -93,39 +93,43 @@ export const QUELLEN = {
   // SPA-Hülle zurück, alle vier md5-identisch. Der Statuscode 200 misst dort
   // das Werkzeug, nicht den Bestand. Was nicht belegbar ist, wird nicht
   // behauptet: die rätoromanische Seite verlinkt die deutsche Fassung, wie es
-  // die englische auch tut. Englisch fehlt aus demselben Grund — Fedlex führt
-  // Bundesrecht nicht auf Englisch.
+  // die englische auch tut.
+  //
+  // Nachtrag 02.11.2026, über die Fedlex-Metadaten gemessen: rm hat für UWG und KVG
+  // keine Datei. Englisch gibt es beim UWG (Stand 1.1.2025, ohne Rechtskraft), es
+  // ist bewusst nicht verlinkt. Beim KVG gibt es keine englische Datei, /en leitete
+  // am 01.11.2026 im Browser auf /de um.
   fedlexUwgArt3: {
     url: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3',
-    text: 'UWG Art. 3 Abs. 1 Bst. s Ziff. 1 (SR 241, amtliche Sammlung)',
+    text: 'UWG Art. 3 Abs. 1 Bst. s Ziff. 1 (SR 241, Systematische Sammlung)',
     sprachen: {
       fr: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/fr#art_3',
       it: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3',
     },
     texte: {
-      fr: 'LCD art. 3 al. 1 let. s ch. 1 (RS 241, recueil officiel)',
-      it: 'LCSl art. 3 cpv. 1 lett. s n. 1 (RS 241, raccolta ufficiale)',
+      fr: 'LCD art. 3 al. 1 let. s ch. 1 (RS 241, recueil systématique)',
+      it: 'LCSl art. 3 cpv. 1 lett. s n. 1 (RS 241, raccolta sistematica)',
       en: 'Swiss Unfair Competition Act, Art. 3 para. 1 lit. s no. 1 (SR 241)',
-      rm: 'LCSL art. 3 al. 1 lit. s cifra 1 (DS 241, collecziun uffiziala)',
+      rm: 'LCSL art. 3 al. 1 lit. s cifra 1 (CS 241)',
     },
   },
-  // Art. 65 Abs. 3 KVG am 01.11.2026 im Browser gelesen, de/fr/it, Stand 1. Juli 2026
-  // (`curl` bekommt von Fedlex nur die SPA-Hülle, s. o.). 🛑 Die Fassungen decken
-  // sich nicht: de «insbesondere auf Antrag», fr «notamment à la demande», it «su
+  // Art. 65 KVG am 01.11.2026 im Browser gelesen, de/fr/it, Stand 1. Juli 2026
+  // (`curl` bekommt von Fedlex nur die SPA-Hülle, s. o.). 🛑 In Abs. 3 decken sich
+  // die Fassungen nicht: de «insbesondere auf Antrag», fr «notamment à la demande», it «su
   // richiesta particolare». Die italienische Seite folgt deshalb dem italienischen
-  // Wortlaut. `rm` und `en` fehlen aus demselben Grund wie beim UWG.
+  // Wortlaut. Art. 66 steht in der Angabe wegen des Bundesbeitrags.
   fedlexKvgArt65: {
     url: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65',
-    text: 'KVG Art. 65 Abs. 3 (SR 832.10, Systematische Rechtssammlung)',
+    text: 'KVG Art. 65 und 66 (SR 832.10, Systematische Sammlung)',
     sprachen: {
       fr: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_65',
       it: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_65',
     },
     texte: {
-      fr: 'LAMal art. 65 al. 3 (RS 832.10, recueil systématique)',
-      it: 'LAMal art. 65 cpv. 3 (RS 832.10, raccolta sistematica)',
-      en: 'Swiss Health Insurance Act (KVG), Art. 65 para. 3 (SR 832.10)',
-      rm: 'LAMal art. 65 al. 3 (DS 832.10)',
+      fr: 'LAMal art. 65 et 66 (RS 832.10, recueil systématique)',
+      it: 'LAMal art. 65 e 66 (RS 832.10, raccolta sistematica)',
+      en: 'Swiss Health Insurance Act (KVG), Art. 65 and 66 (SR 832.10)',
+      rm: 'LAMal art. 65 e 66 (CS 832.10)',
     },
   },
   estvRechner: {
@@ -295,7 +299,7 @@ export const SEITEN = [
       {
         titel: 'Was der Bund vorgibt und was der Kanton entscheidet',
         absaetze: [
-          'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, und beteiligt sich an der Finanzierung. Wer sie bekommt und wie viel, entscheidet der Kanton.',
+          'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, setzt dafür Mindestvorgaben und beteiligt sich an der Finanzierung. Im Rahmen dieser Vorgaben entscheidet der Kanton, wer sie bekommt und wie viel.',
           'Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.',
           'Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.',
           'Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.',

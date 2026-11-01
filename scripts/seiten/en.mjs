@@ -92,9 +92,9 @@ export const SEITEN = [
       {
         titel: 'What the federal government prescribes and what the canton decides',
         absaetze: [
-          'The federal government prescribes <em>that</em> there must be a premium reduction and contributes to its funding. Who receives it and how much is decided by the canton.',
+          'The federal government prescribes <em>that</em> there must be a premium reduction, sets minimum requirements for it and contributes to its funding. Within these requirements, the canton decides who receives it and how much.',
           'Specifically, these differ from canton to canton: the income and asset limits, how the relevant income is calculated in the first place, whether you have to apply or are contacted, and the deadlines.',
-          'One thing is the same everywhere, however: <strong>where the money goes</strong>. The canton pays the contribution directly to the health insurer, not to the insured person. This is set out in the Health Insurance Act and is not within cantonal discretion.',
+          'What is also the same everywhere is <strong>where the money goes</strong>. The canton pays the contribution directly to the health insurer, not to the insured person. This is set out in the Health Insurance Act and is not within cantonal discretion.',
           'That is why the sentence “here you get it from an income of X” rarely helps. At best it is true for one canton, and there only for one year.',
         ],
       },
