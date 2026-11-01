@@ -1608,3 +1608,18 @@ Eingebaut: **eine Versicherungs-Karte** (`VersicherungenInstrument.jsx`, auch au
 (AHV, Pensionskasse, Säule 3a, UVG, KTG, Rechtsschutz, Reise, Cyber, Fahrzeug, nur wenn eingetragen; die Summe selbst bleibt die Budget-Gruppe). Farben nach Lebensbereich (Stebler Studios: «Hausrat gehört doch auch zum Wohnen»): Hausrat, Haftpflicht und das Schild-Teil Haushalt in Wohnen, Vorsorge in Finanzen, Krankenkasse, Unfall und Leben in Versicherungen; die offene Stelle bleibt Sand.
 Schild mit eingeklappter Liste folgt nach der Karte, das Franchise-Kreuz bleibt, F7-K3-1 und K3-2 bleiben zurückgestellt. **Abgenommen** (Stebler Studios: «Ja, passt»).
 Offen: Gold (Vorsorge) und Sand (Pflicht fehlt) liegen nah beieinander; Schrift im Schild hell und Handybreite nicht geprüft; Gegenlese «Nicht in dieser Summe» und «Alle Versicherungen»; Fachprüfung der Liste «Nicht in dieser Summe».
+
+### Besprechen, Punkt für Punkt (Stebler Studios, 01.11.2026 abends)
+
+**Reihenfolge:** «das dash board wollen wir zum schluss machen alles ander davor bitte». Der Aufbau (F7-D1, D2, D9, D10, Skizze mit den Teilen A bis E) ist nicht abgelehnt, er kommt zuletzt.
+F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 und K2-1 hängen am Fortschrittsbild und damit an D1.
+
+- **F7-D6, wie empfohlen:** «Bedarf ≈ CHF 3’431». Ursache `Leistungsliste.jsx`, `fmt` mit `hoechstens: 2`. Nicht gebaut.
+- **F7-D7, wie empfohlen:** «CHF 540.30 / Mt. · Franchise CHF 1’500». Nicht gebaut.
+- **F7-D4, wie empfohlen:** Sicherungs-Hinweis nur oben bei «Was ist jetzt dran?». Nicht gebaut.
+- **F7-D3, anders:** Tipps-Block streichen, «Was ist jetzt dran?» bleibt der eine Wegweiser und schlägt auch Dokumente und Budget vor. Nicht gebaut. Der Block hat keine Bedingung, und `dashboard.tip3` nennt noch «Budget-Sync»; die Besprechen-Seite sagt zu Unrecht, der Name sei weg.
+- **F7-K3-1, K3-2, D5, zurückgestellt:** «warte damit noch bitte». Nicht entschieden.
+- **Ausweise F, N, S, gebaut:** wählbar, Steuerzahl gesperrt wie bei B und L, geprüft vom rechts-pruefer am Gesetzestext (DBG Art. 83, StHG Art. 32). Feld heisst «Aufenthaltsstatus (Ausweis)», der Sperrtext beginnt mit «Ohne Bewilligung C».
+- **IPV bei F, N, S, gebaut:** Die Zahl bleibt, dazu ein Hinweis, dass der Anspruch mit Sozialhilfe ruht (AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2). Nur auf der Seite Prämienverbilligung und in der Lebenssituation «Asylsuchend», nicht in Schnellcheck und Finanzen.
+
+**Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton · Walliser Quelle Ziff. 6.2 für S lesen, die Sperre für S ist abgeleitet · Sozialhilfe-Ansatz für N, F, S (AsylG Art. 82 Abs. 3, AIG Art. 86 Abs. 1), `SozialhilfeRechner` kennt den Ausweis nicht, nicht nachgerechnet · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.
