@@ -120,8 +120,9 @@ sofort und stützen sich fast nur auf das BACS.
 
 ## 6 · Anbieter wie Proton
 
-Proton Mail könnte als **Beispiel** dienen, nicht als Pflicht (Entscheid offen, §7). Der Wechsel des
-E-Mail-Anbieters wäre eine freiwillige Kür. Unsere Einschätzung: Er ist aufwendig, und die
+**Entscheid 01.11.2026 (Stebler Studios): beides.** Maloja beschreibt zuerst die Eigenschaften und
+nennt danach mehrere Beispiele. Proton Mail kann eines davon sein, nie eine Pflicht, und erst, wenn
+die Belege unten geprüft sind. Der Wechsel des E-Mail-Anbieters ist eine freiwillige Kür. Unsere Einschätzung: Er ist aufwendig, und die
 abgesicherte bestehende Adresse bringt meist schneller etwas.
 
 - **Regel:** zuerst die Eigenschaft nennen (Standort, Verschlüsselung, Geschäftsmodell), dann
@@ -138,7 +139,7 @@ abgesicherte bestehende Adresse bringt meist schneller etwas.
 
 1. Name: «Digitale Ordnung» oder ein anderer.
 2. Einstieg: Kapitel Notfall oder anderswo.
-3. Anbieter nennen oder nur Eigenschaften beschreiben.
+3. ~~Anbieter nennen oder nur Eigenschaften beschreiben.~~ ✅ Beides (§6).
 4. Regel «aufgeräumter, nie reicher» als Grundsatz bestätigen.
 
 ## 8 · Bevor es gebaut wird
