@@ -180,7 +180,8 @@ describe('Wörter und Platz im Schild', () => {
 
 describe('Beträge je Versicherung (Stebler Studios 27.10.2026)', () => {
   const o = { ...schildOptionen(DEMO_DATA), finanzen: DEMO_DATA.finanzen, kanton: DEMO_DATA.basis.canton };
-  const html = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: DEMO_DATA.versicherungen, ...o }));
+  // Maria lässt das UVG seit E-4 bewusst offen; hier mit Eintrag, damit auch die Zeile «läuft über den Arbeitgeber» geprüft ist.
+  const html = renderToStaticMarkup(React.createElement(NetzSchild, { palette: LIGHT_PALETTE, t, versicherungen: { ...DEMO_DATA.versicherungen, uvg: 'employer' }, ...o }));
   const text = nurText(html);
   it('Maria: Kosten pro Monat und Jahr, Guthaben, Versicherungssumme — nur aus erfassten Feldern', () => {
     expect(text).toContain('CHF 540.30 / Mt. · CHF 6’483.60 / Jahr');

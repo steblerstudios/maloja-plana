@@ -83,7 +83,10 @@ export const DEMO_DATA = {
     bvgContribution: '420',
     bvgBalance: '45000',
     ktg: 'employer',
-    uvg: 'employer',
+    // E-4 (Stebler Studios 01.11.2026): bewusst leer, damit das Beispiel zeigt, wie ein offenes Teil im Netz-Schild aussieht.
+    // Das Schild sagt «noch nicht eingetragen», nicht «nicht versichert». Hausrat oder Haftpflicht wegzulassen zeigt
+    // bei Maria nichts: In Zürich ist beides keine Pflicht, also keine Lücke (data/netzSchild.js).
+    uvg: '',
     liabilityInsurance: 'yes',
     // Beispielwerte, nicht belegt (Fachprüfung 25.10.2026): übliche Versicherungssumme und eine Prämie
     // aus der Marktspanne für eine Person (etwa 80–150 / Jahr). Bis 25.10.2026 stand hier '35' als «Summe».
