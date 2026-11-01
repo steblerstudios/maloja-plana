@@ -56,7 +56,8 @@ export function pegelState(data) {
 // Linie = Existenzminimum (totalBedarf), Wasser = Einkommen, die Lücke (deficit)
 // wird als Aufstockung gefüllt. Reine Anzeige über calculateSozialhilfe.
 export function sozialhilfePegelState(data) {
-  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!calculateSozialhilfe(data)?.ansatzTiefer };
+  const sh = calculateSozialhilfe(data);
+  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen };
 }
 
 function sozialhilfePegelRoh(data) {

@@ -1,3 +1,4 @@
+import { lohnVergleichSperre } from '../data/lohnEinordnung.js';
 import React, { useState } from 'react';
 import { text, weight, space, radius } from '../config/tokens.js';
 import { bruttoZuNettoRichtwert, nettoZuBruttoRichtwert } from '../data/lohnAbzuege.js';
@@ -37,7 +38,9 @@ export function useEinkommen(data) {
   const { alter, bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
   const zahlWert = Math.max(0, Number(betrag) || 0);
   const nettoMonat = art === 'netto' ? zahlWert : bruttoZuNettoRichtwert(zahlWert, bvgAlter, rentenalter, undefined, beitragsfrei);
-  const gegenwert = zahlWert > 0 ? (art === 'netto' ? nettoZuBruttoRichtwert(zahlWert, bvgAlter, rentenalter, undefined, beitragsfrei) : nettoMonat) : 0;
+  const sperre = lohnVergleichSperre(data || {}, rentenalter);
+  const ohneBrutto = art === 'netto' && (sperre === 'keinLohn' || sperre === 'quellensteuer');
+  const gegenwert = zahlWert > 0 && !ohneBrutto ? (art === 'netto' ? nettoZuBruttoRichtwert(zahlWert, bvgAlter, rentenalter, undefined, beitragsfrei) : nettoMonat) : 0;
   return {
     betrag, setBetrag, art, setArt, alter, ohneAlter: alter == null, nettoMonat, gegenwert,
     geschaetzt: art === 'brutto' && zahlWert > 0,

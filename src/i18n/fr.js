@@ -6435,6 +6435,7 @@ export default {
     premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
   },
   pegel: {
+    vorBeitraegen: "Calculé avec le revenu avant les cotisations AVS et de caisse de pension propres. Après ces cotisations, il reste moins.",
     ansatzTiefer: "Avec un permis F, N ou S, l’aide est le plus souvent inférieure à ce calcul : le taux est inférieur à celui de la population résidente, le canton le fixe, et l’aide peut prendre la forme de prestations en nature (LAsi art. 82 al. 1 et 3, LEI art. 86 al. 1). Le droit peut aussi disparaître entièrement. Font exception les réfugiés admis à titre provisoire et les apatrides : les mêmes normes d’aide sociale que pour les réfugiés ayant obtenu l’asile s’appliquent à eux (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',
     grenze: 'Limite',
@@ -6831,7 +6832,6 @@ export default {
     notes: 'Remarque',
     notesPlaceholder: 'p. ex. pendant le repas, pas avec du lait...',
     compendiumLink: 'Consulter le compendium des médicaments',
-    compendiumHinweis: 'À l’ouverture, le nom du médicament est transmis à compendium.ch dans l’adresse.',
     preis: {
       eins: 'Prix public selon la liste des spécialités : {chf} ({packung})',
       gleich: 'Prix public selon la liste des spécialités : {chf} par emballage',

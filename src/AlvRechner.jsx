@@ -1,3 +1,4 @@
+import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import React, { useState, useMemo } from 'react';
 import { berechneTaggeld, alvErgebnis, ALV_PARAMS, ALV_DATA_SOURCE } from './data/alvRechner.js';
 import { RechnerForm, ErgebnisZahl, ErgebnisZeile, Einzelwahl } from './components/RechnerForm.jsx';
@@ -35,7 +36,9 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const basisOffen = lohnBasisOffen(data.finanzen);
   const profilLohn = Number(data.finanzen?.monthlyIncome) || 0;
   const { bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data.basis);
-  const bruttoSchaetzung = basis === 'netto' && profilLohn > 0
+  // Rente, Geschäftsgewinn oder mögliche Quellensteuer: kein verlässliches Brutto, das Feld bleibt leer (Predeploy 02.11.2026).
+  const sperre = lohnVergleichSperre(data, rentenalter);
+  const bruttoSchaetzung = basis === 'netto' && profilLohn > 0 && sperre !== 'keinLohn' && sperre !== 'quellensteuer'
     ? nettoZuBruttoRichtwert(profilLohn, bvgAlter, rentenalter, undefined, beitragsfrei) : 0;
   const [eingetippt, setEingetippt] = useState(basis === 'brutto' && profilLohn > 0 ? String(data.finanzen.monthlyIncome) : null);
   const geschaetzt = eingetippt == null && bruttoSchaetzung > 0;

@@ -849,6 +849,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
+      sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.
