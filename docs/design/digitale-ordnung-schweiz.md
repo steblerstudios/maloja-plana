@@ -112,8 +112,11 @@ Die Feature-Regeln verlangen: kein neues Modul, keine neue Dashboard-Zone.
   keine Rechtsberatung» in Ablauf und Brief, Schweizer Quelle je Aussage, ungeprüfte Bausteine mit
   `verify: true`. Ob der bestehende Briefgenerator und sein Hinweistext das tragen, ist nicht geprüft.
 - **Wiedervorlage:** höchstens jährlich ein ruhiger Hinweis «Digitale Ordnung ansehen», abschaltbar.
-- **Haus (abschaltbare Haut):** Die Eingangstür spiegelt Bereich 1, weitere Bauteile erst nach
-  Entscheid. Dieselben Daten wie im Normal-Modus, und «trifft nicht zu» zählt als erledigt.
+- **Haus (abschaltbare Haut), Skizze bestätigt 01.11.2026:** Die acht Schritte zeigen sich an fünf
+  Stellen der Eingangstür: A Schloss (1, 3) · B Türfarbe (2) · C Briefkasten (4, 5) · D Lampe (6, 7) ·
+  E Namensschild (8). Der Anfang ist eine warme, gepflegte Tür, nie kaputt. Dieselben Daten wie im
+  Normal-Modus, und «trifft nicht zu» zählt als erledigt. Die Skizze zeigt die Stimmung, nicht die
+  fertige Grafik. Nicht gebaut.
 
 **Kleinste sinnvolle erste Fassung:** nur Bereiche 1, 6 und 7. Sie brauchen keine Vorlagen, helfen
 sofort und stützen sich fast nur auf das BACS.
@@ -140,7 +143,7 @@ abgesicherte bestehende Adresse bringt meist schneller etwas.
 1. Name: «Digitale Ordnung» oder ein anderer.
 2. Einstieg: Kapitel Notfall oder anderswo.
 3. ~~Anbieter nennen oder nur Eigenschaften beschreiben.~~ ✅ Beides (§6).
-4. Regel «aufgeräumter, nie reicher» als Grundsatz bestätigen.
+4. ~~Regel «aufgeräumter, nie reicher» als Grundsatz bestätigen.~~ ✅ Bestätigt 01.11.2026 (Stebler Studios).
 
 ## 8 · Bevor es gebaut wird
 
