@@ -330,7 +330,7 @@ export function getChapters(t) {
       fields: [
         { k: 'kkInsurer', type: 'text', ph: 1, mvo: true, sec: 'basic', orientation: or(t, 'kvg'), link: lk(t, 'kkWechsel') },
         { k: 'kkModel', type: 'select', sel: 1 },
-        { k: 'kkPremium', type: 'currency', mvo: true },
+        { k: 'kkPremium', type: 'currency', hint: 1, mvo: true },
         { k: 'franchise', type: 'select', sel: 1, mvo: true, orientation: or(t, 'franchise') },
         { k: 'kkCardNumber', type: 'text' },
         { k: 'policyNumber', type: 'text', hint: 1 },

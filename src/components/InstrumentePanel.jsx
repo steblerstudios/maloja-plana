@@ -101,7 +101,7 @@ const miniShield = (palette, fraction) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false }) => {
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   const shield = schildState(v, schildOptionen(data));
@@ -135,6 +135,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const [franchiseOpt, setFranchiseOpt] = useState(null);
   const plz = data?.wohnen?.postalCode, kasse = data?.versicherungen?.kkInsurer, geburt = data?.basis?.dateOfBirth;
   useEffect(() => {
+    if (nur && !nur.includes('tacho')) return undefined;
     let aktiv = true;
     ladeFranchiseOpt(data).then((o) => { if (aktiv) setFranchiseOpt(o); }).catch(() => { if (aktiv) setFranchiseOpt(null); });
     return () => { aktiv = false; };
@@ -195,6 +196,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
   ];
 
+  // F7-D10: in der Kapitel-Zeile nur die Kacheln dieses Kapitels, ohne Titel.
+  const kacheln = nur ? nur.map((k) => tiles.find((x) => x.key === k)).filter(Boolean) : tiles;
   const titel = h(PanelTitle, {
     palette,
     style: eingebettet
@@ -202,17 +205,19 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       : { margin: '0 0 ' + space.xs + 'px 0' },
   }, t('instrumente.title'));
 
-  return h('div', { style: eingebettet ? { marginTop: space.lg + 'px' } : { marginBottom: space.xl + 'px' } },
+  return h('div', { style: nur ? { padding: '4px 0 ' + space.sm + 'px' } : eingebettet ? { marginTop: space.lg + 'px' } : { marginBottom: space.xl + 'px' } },
     // Eingebettet: Titel ohne Einleitung — die Finanz-Übersicht steht als Karte direkt darüber.
-    eingebettet ? h('div', { style: { marginBottom: space.sm + 'px' } }, titel) : titel,
-    !eingebettet && h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
+    nur ? null : eingebettet ? h('div', { style: { marginBottom: space.sm + 'px' } }, titel) : titel,
+    !eingebettet && !nur && h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
     // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
     // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
-      tiles.map(tile => h('button', {
+      kacheln.map(tile => h('button', {
         key: tile.key,
         onClick: tile.onClick,
         style: {
+          // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
+          ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
           border: '1px solid ' + palette.border + '44', borderRadius: radius.md,

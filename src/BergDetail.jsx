@@ -39,24 +39,23 @@ export const GrundordnungFelder = ({ palette, fields, onSelectChapter }) =>
 
 // Eine Kapitelzeile samt aufgeklappter Grundordnung. Ohne eigenen Zustand — ob sie
 // offen ist, hält BergDetail; so lässt sie sich ohne DOM prüfen (vitest ohne jsdom).
-export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusLabels, lang, istOffen, onUmschalten, felder, onSelectChapter }) => {
+export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusLabels, lang, istOffen, onUmschalten, felder, onSelectChapter, zusammenfassung = null, instrument = null }) => {
   // Das Filtern gehört hierher, nicht an die Aufrufstelle: so prüft der Test es mit.
   const kapitelFelder = felder.filter((f) => f.chapterIdx === idx);
   const panelId = 'fortschritt-kapitel-' + ch.key;
   const IconFn = Icons[ch.key];
   return React.createElement('div', null,
+    React.createElement('div', { style: { display: 'flex', alignItems: 'stretch', gap: '2px' } },
+    // F7-D1: Die Zeile führt ins Kapitel, wie die Kapitel-Liste vorher. Der Pfeil daneben klappt die Grundordnung auf.
     React.createElement('button', {
       type: 'button',
-      onClick: onUmschalten,
-      'aria-expanded': istOffen,
-      // aria-controls nur, solange das Ziel im DOM steht (zugeklappt wird es nicht gerendert).
-      'aria-controls': istOffen ? panelId : undefined,
-      'aria-label': ch.title + ' — ' + pct + '%',
+      onClick: () => onSelectChapter(idx),
+      'aria-label': ch.title + ' — ' + pct + '%' + (zusammenfassung ? '. ' + zusammenfassung : ''),
       style: {
-        display: 'flex', alignItems: 'center', gap: space.sm + 2,
+        display: 'flex', alignItems: 'center', gap: space.sm + 2, flex: '1 1 0', minWidth: 0,
         padding: '10px 8px', background: istOffen ? palette.up : 'transparent', border: 'none',
         borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
-        color: palette.text, width: '100%', textAlign: 'left',
+        color: palette.text, textAlign: 'left',
         transition: `background ${duration.fast}ms ${ease}`,
       },
       onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
@@ -87,16 +86,25 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
         pct > 0 && statusLabels[status] && React.createElement('span', {
           lang,
           style: { fontSize: text.xs, color: palette.soft, marginTop: '1px' }
-        }, statusLabels[status])
+        }, statusLabels[status]),
+        zusammenfassung && React.createElement('span', { style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: '2px' } }, zusammenfassung)
       ),
       React.createElement('span', {
         style: { fontSize: text.xs, color: pct === 100 ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
       }, pct + '%'),
-      React.createElement('span', {
-        'aria-hidden': 'true',
-        style: { display: 'inline-flex', color: palette.mid, flexShrink: 0 }
-      }, aufklappZeichen(istOffen))
     ),
+    React.createElement('button', {
+      type: 'button',
+      onClick: onUmschalten,
+      'aria-expanded': istOffen,
+      // aria-controls nur, solange das Ziel im DOM steht (zugeklappt wird es nicht gerendert).
+      'aria-controls': istOffen ? panelId : undefined,
+      'aria-label': t('mvo.title') + ': ' + ch.title,
+      style: { width: '44px', minHeight: '44px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit' },
+    },
+      React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex' } }, aufklappZeichen(istOffen)))
+    ),
+    instrument,
     istOffen && React.createElement('div', {
       id: panelId,
       style: { display: 'flex', flexDirection: 'column', gap: '3px', padding: '4px 0 ' + space.sm + 'px 32px' }
@@ -126,7 +134,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
 //   · Kopf: Gesamt-Fortschritt, darunter die Grundordnung als eine Zeile (x/15).
 //   · Je Kapitel eine Zeile; ein Tipp klappt sie auf (aria-expanded).
 //   · Aufgeklappt: die Grundordnungs-Felder dieses Kapitels, dann «Öffnen».
-export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo }) => {
+export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo, simpleView = false, zusammenfassung = () => null, instrumentFuer = () => null }) => {
   const [offen, setOffen] = useState(() => new Set());
   const umschalten = (key) => setOffen((alt) => {
     const neu = new Set(alt);
@@ -184,6 +192,8 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
         istOffen: offen.has(ch.key),
         onUmschalten: () => umschalten(ch.key),
         felder,
+        zusammenfassung: !simpleView && chapterStatuses[idx] !== 'leer' ? zusammenfassung(ch.key) : null,
+        instrument: simpleView ? null : instrumentFuer(ch.key),
       }))
     )
   );

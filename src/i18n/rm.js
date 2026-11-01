@@ -2389,7 +2389,6 @@ export default {
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
-        kkPremium: 'Premia avant la deducziun da la reducziun da premias.',
         liabilityPremium: "Premia responsabladad civila CHF/onn",
         householdInsurance: { label: 'Assicuranza dal ménaschi', options: { no: 'Na', yes: 'Gea' } },
         householdInsuranceAmount: 'Premia ménaschi CHF/onn',
@@ -2405,6 +2404,7 @@ export default {
         freizuegigkeit: 'p.ex. fundaziun da liber passadi',
       },
       hints: {
+        kkPremium: 'Premia avant la deducziun da la reducziun da premias.',
         liabilityPremium: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         householdInsuranceAmount: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)

@@ -2209,7 +2209,6 @@ export default {
         ktg: { label: 'Indemnité journalière maladie (IJM)', options: { yes: 'Oui', employer: 'Par l\'employeur', none: 'Aucune / Inconnue' } },
         liabilityInsurance: { label: 'Responsabilité civile', options: { no: 'Non', yes: 'Oui' } },
         liabilityAmount: 'Montant de couverture (CHF)',
-        kkPremium: 'Prime avant déduction de la réduction de primes.',
         liabilityPremium: "Prime RC (CHF/an)",
         householdInsurance: { label: 'Assurance ménage', options: { no: 'Non', yes: 'Oui' } },
         householdInsuranceAmount: 'Prime ménage (CHF/an)',
@@ -2225,6 +2224,7 @@ export default {
         freizuegigkeit: 'p. ex. fondation de libre passage',
       },
       hints: {
+        kkPremium: 'Prime avant déduction de la réduction de primes.',
         liabilityPremium: { sie: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscrivez la prime qu’une fois.", du: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscris la prime qu’une fois." },
         householdInsuranceAmount: { sie: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscrivez la prime qu’une fois.", du: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscris la prime qu’une fois." },
         bvgInsurer: 'Pas de caisse de pension ? Choisir alors «Ne s\'applique pas». Dans certains cantons, cela compte pour la réduction des primes comme «pas de 2e pilier».',

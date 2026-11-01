@@ -2209,7 +2209,6 @@ export default {
         ktg: { label: 'Indennità giornaliera malattia (IGM)', options: { yes: 'Sì', employer: 'Tramite datore di lavoro', none: 'Nessuna / Sconosciuta' } },
         liabilityInsurance: { label: 'Assicurazione responsabilità civile', options: { no: 'No', yes: 'Sì' } },
         liabilityAmount: 'Importo di copertura (CHF)',
-        kkPremium: 'Premio prima della deduzione della riduzione dei premi.',
         liabilityPremium: "Premio RC (CHF/anno)",
         householdInsurance: { label: 'Assicurazione economia domestica', options: { no: 'No', yes: 'Sì' } },
         householdInsuranceAmount: 'Premio economia domestica (CHF/anno)',
@@ -2225,6 +2224,7 @@ export default {
         freizuegigkeit: 'p.es. fondazione di libero passaggio',
       },
       hints: {
+        kkPremium: 'Premio prima della deduzione della riduzione dei premi.',
         liabilityPremium: { sie: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisca il premio una sola volta.", du: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisci il premio una sola volta." },
         householdInsuranceAmount: { sie: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisca il premio una sola volta.", du: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisci il premio una sola volta." },
         bvgInsurer: 'Nessuna cassa pensione? Allora scegliere «Non pertinente». In alcuni Cantoni, per la riduzione dei premi ciò vale come «nessun 2° pilastro».',

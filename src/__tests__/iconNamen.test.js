@@ -103,7 +103,7 @@ describe('Icon-Namen · Zuordnungstabellen', () => {
     const orte = tabellen().map((t) => t.ort);
     expect(orte).toEqual(expect.arrayContaining([
       'Baum3D.jsx:WERKZEUG_ICON', 'CalendarReminders.jsx:CATEGORY_ICON_KEYS',
-      'DirektLinks.jsx:HERZ_ICON', 'Dashboard.jsx:chapterIcons', 'MobileNav.jsx:chapterIcons',
+      'DirektLinks.jsx:HERZ_ICON', 'MobileNav.jsx:chapterIcons',
     ]));
   });
 

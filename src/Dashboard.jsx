@@ -38,6 +38,8 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = React.lazy(() => import('./BergDetail.jsx'));
+// Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
+const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
 const QuickCheck = React.lazy(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
@@ -346,35 +348,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const chapterAccentColor = astFarben(chapters, palette, isDarkMode);
 
-  const getStatusColor = (pct, chKey) => {
-    if (pct === 0) return chapterAccentColor[chKey] || palette.soft;
-    if (pct < 50) return palette.gold;
-    if (pct < 100) return palette.sage;
-    return palette.sage;
-  };
-
-  const getIconBg = (pct, chKey) => {
-    const accent = chapterAccentColor[chKey] || palette.sand;
-    if (pct === 0) return accent + '18';
-    if (pct < 50) return palette.sand + '22';
-    if (pct < 100) return palette.sand + '30';
-    return palette.sage + '24';
-  };
-
-  const getIconOpacity = (pct) => {
-    if (pct === 0) return 0.7;
-    if (pct < 50) return 0.78;
-    if (pct < 100) return 0.88;
-    return 1;
-  };
-
-  // Chapter icon mapping to SVG system
-  const chapterIcons = {
-    basis: 'basis', wohnen: 'wohnen', finanzen: 'finanzen',
-    versicherungen: 'versicherungen', ausbildung: 'ausbildung',
-    behoerden: 'behoerden', notfall: 'notfall',
-  };
-
   const chapterCompletions = chapters.map(ch => kapitelVollstaendigkeit(ch, data[ch.key]).pct);
 
   let lastBackupRaw = null;
@@ -593,260 +566,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Tester-Feedback: von Anfang an sichtbar, als eine Karte, Kapitel einzeln aufklappbar.
     // Abstand nach unten trägt die Karte selbst (marginBottom in BergDetail).
     React.createElement(React.Suspense, { fallback: null },
-      React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
+      // F7-D1, D9, D10 (Stebler Studios 01.11.2026): ein Block aus Fortschritt und Kapiteln, die Instrumente in ihrer Kapitel-Zeile.
+      React.createElement(BergDetail, {
+        palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo, simpleView,
+        zusammenfassung: (key) => buildSnippet(key, data[key] || {}, data, t, lang),
+        instrumentFuer: (key) => INSTRUMENTE_JE_KAPITEL[key] && React.createElement(React.Suspense, { fallback: null },
+          React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key] })),
+      })
     ),
-    // ─── Was steht mir zu? — ein Block (seit 25.09.2026) ──
-    // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
-    // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
-    // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
-    // Rechts im Kopf der Wanderrucksack (gewählt 27.09.2026; bis dahin «Mein Gepäck») — Gegenstück zum Leistungs-Kompass
-    // über den Leistungen: Beschriftung links, Zeichnung rechts. Der Datenschutz-Satz
-    // rückt dafür unter den Titel.
-    (() => {
-      const rucksackKnopf = React.createElement('button', {
-        type: 'button', onClick: () => onNavigate('gepaeck'),
-        style: {
-          display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0', flexShrink: 0,
-          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'right',
-        },
-      },
-        React.createElement('span', { style: { minWidth: 0 } },
-          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('nav.rucksack')),
-          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } }, t('gepaeck.unpack'))),
-        miniRucksack(palette));
-      return React.createElement('div', {
-      'data-tour': 'anspruch',
-      // Kein Kasten im Kasten (Grundsatz 25.09.2026, Vorbild «Ihr Alltag»): die Einträge
-      // tragen eigene Rahmen, der Abschnitt selbst hat nur Luft — 48 px nach aussen.
-      style: {
-        marginTop: space['2xl'] + 'px', marginBottom: space['2xl'] + 'px',
-      }
-    },
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.md + 'px', marginBottom: space.md }
-      },
-        React.createElement('div', { style: { minWidth: 0 } },
-          React.createElement(PanelTitle, { palette, style: { margin: 0, letterSpacing: '-0.2px' } }, t('dashboard.anspruchTitle')),
-          React.createElement('div', {
-            // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
-            style: { fontSize: text.xs - 1, color: palette.sageDeep, marginTop: '2px' }
-          }, t('dashboard.highlightPrivacy'))),
-        rucksackKnopf
-      ),
-      React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
-      }, t('dashboard.anspruchIntro')),
-      (() => {
-        const items = [
-          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
-          // Zweite grosse Karte daneben (gewählt 27.09.2026): die Notfallkarte — vorher klein
-          // unter der Linie. Die Ansprüche erreicht man über den Leistungs-Kompass.
-          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall', primary: true },
-          // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
-          // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
-          // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
-          !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
-        ].filter(Boolean);
-        const renderItem = (item) => {
-          const IconFn = Icons[item.icon];
-          return React.createElement('button', {
-            key: item.view,
-            onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
-            style: {
-              display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
-              padding: item.primary ? '18px 20px' : '12px 14px',
-              background: item.primary ? palette.sand + '08' : 'transparent',
-              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
-              borderRadius: radius.md,
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              textAlign: 'left',
-              color: palette.text,
-              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = item.primary ? palette.sand + '66' : palette.border + '99'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
-          },
-            // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
-            // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Stebler Studios).
-            React.createElement('div', {
-              style: {
-                width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
-                background: item.primary ? palette.sand + '18' : palette.up,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0, color: item.primary ? palette.sand : palette.mid,
-              }
-            }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
-            React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-              React.createElement('div', { style: { fontSize: item.primary ? text.body : text.sm, fontWeight: item.primary ? weight.semi : weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
-            )
-          );
-        };
-        const primaries = items.filter(i => i.primary);
-        const rest = items.filter(i => !i.primary);
-        return React.createElement(React.Fragment, null,
-          // Zwei grosse Einstiege nebeneinander: Finanz-Übersicht und Notfallkarte.
-          // Auf dem Handy untereinander (auto-fit).
-          React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.sm + 'px' }
-          }, primaries.map(renderItem)),
-          // Eigene Suspense-Grenze wie bei den Instrumenten.
-          React.createElement(React.Suspense, { fallback: null },
-            React.createElement(QuickCheck, { palette, t, onNavigate, data })),
-          // Der Weg weiter — seit 27.09.2026 nur noch einer («Alle Ansprüche» führt über den
-          // Leistungs-Kompass auf dieselbe Seite).
-          React.createElement('button', {
-            onClick: () => onNavigate('situationen'),
-            style: {
-              // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
-              display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', marginTop: space.sm,
-              fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-            },
-          }, t('lebenszustaende.dashboardLink')),
-          // Deine Instrumente — seit 25.09.2026 im selben Block, nach den Leistungen
-          // (Wunsch 25.09.: erst was zusteht, dann der eigene Stand).
-          // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
-          React.createElement(React.Suspense, { fallback: null },
-            React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
-          // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
-          // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
-          // nichts, dann auch keine leere Linie.
-          rest.length > 0 && React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
-          }, rest.map(renderItem))
-        );
-      })(),
-      // Sanfte Erst-Schritte — eingefaltet in die Highlight-Box (nur neue Nutzer)
-      !hasMeaningfulProgress && React.createElement('div', {
-        style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
-      },
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', fontWeight: weight.medium }
-        }, t('guidedStart.title')),
-        React.createElement('div', {
-          style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px' }
-        },
-          gentleStartActions.map((item) =>
-            React.createElement('button', {
-              key: item.label,
-              onClick: item.action,
-              style: {
-                background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
-                fontSize: text.sm, color: palette.sageDeep || palette.sage, textAlign: 'left', fontFamily: 'inherit',
-                display: 'flex', alignItems: 'center', gap: space.xs + 'px',
-              },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
-            },
-              item.label
-            )
-          )
-        )
-      )
-    );
-    })(),
-
-    // ─── Life chapters — moved up: the core action, immediately visible ──
-    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
-
-      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
-      ...[
-        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
-        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
-        { label: t('dashboard.tierProtective'), indices: [5, 6] },
-      ].map((tier, tierIdx) =>
-        React.createElement('div', {
-          key: 'tier-' + tierIdx,
-          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
-        },
-          // Die Kapitel-Sektion hat keinen eigenen Titel — die drei Tier-Labels
-          // («Ihr Alltag» …) sind ihre einzige Gliederung. Als h3 werden sie zur
-          // Sprungmarke, statt nur fett auszusehen.
-          React.createElement(PanelTitle, {
-            palette,
-            style: {
-              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
-              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
-              borderBottom: '1px solid ' + palette.border,
-            }
-          }, tier.label),
-
-          ...tier.indices.map((chIdx) => {
-            const ch = chapters[chIdx];
-            if (!ch) return null;
-            const { pct } = kapitelVollstaendigkeit(ch, data[ch.key]);
-            const statusColor = getStatusColor(pct, ch.key);
-            const iconKey = chapterIcons[ch.key];
-            const IconFn = iconKey && Icons[iconKey];
-            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
-            const rowOpacity = pct === 0 ? 0.72 : 1;
-            const status = getChapterStatus(ch);
-            // Deep-Varianten: als 13px-Statustext brauchen sand/sage ≥4.5:1 (roh: 2.34 / 4.34).
-            const statusColors = { leer: palette.soft, begonnen: palette.sandDeep, grundordnung: palette.sageDeep, vertieft: palette.sageDeep };
-
-            return React.createElement('button', {
-              key: ch.key,
-              onClick: () => onSelectChapter(chIdx),
-              style: {
-                display: 'flex', alignItems: 'center', gap: space.md,
-                padding: simpleView ? '26px 4px' : '20px 4px',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
-                borderRadius: 0,
-                cursor: 'pointer',
-                textAlign: 'left',
-                color: palette.text,
-                fontFamily: 'inherit',
-                opacity: rowOpacity,
-                transition: `opacity ${duration.cinematic}ms ${ease}`,
-                width: '100%',
-              },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
-            },
-              React.createElement('div', {
-                style: {
-                  width: simpleView ? '56px' : '40px', height: simpleView ? '56px' : '40px', borderRadius: radius.md,
-                  background: getIconBg(pct, ch.key),
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                  transition: `background ${duration.cinematic}ms ${ease}, opacity ${duration.cinematic}ms ${ease}, box-shadow ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
-                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
-                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
-                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
-                }
-              }, IconFn ? React.createElement('div', { style: { width: simpleView ? '34px' : '24px', height: simpleView ? '34px' : '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
-
-              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-                React.createElement('div', {
-                  style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
-                },
-                  React.createElement('div', { style: { fontSize: simpleView ? text.lg : text.body, fontWeight: weight.semi } }, ch.title),
-                  !simpleView && React.createElement('span', {
-                    style: {
-                      fontSize: text.xs, fontWeight: weight.medium,
-                      color: statusColors[status],
-                      flexShrink: 0, letterSpacing: '0.2px',
-                      transition: `color ${duration.cinematic}ms ${ease}`,
-                    }
-                  }, t('chapterStatus.' + status))
-                ),
-                !simpleView && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
-                !simpleView && status !== 'leer' && (() => {
-                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t, lang);
-                  return snippet ? React.createElement('div', {
-                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
-                  }, snippet) : null;
-                })(),
-              ),
-            );
-          })
-        )
-      )
-    ),
-
     // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
     // Einzelbaum (beide bleiben nebeneinander). Kontrast: Vordergrund-Akzent via
     // sandDeep statt sand (sand ist im Hellmodus zu hell für Text/Symbol, 2.34:1).
@@ -1012,6 +739,153 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         );
       })()
     ),
+
+    // ─── Was steht mir zu? — ein Block (seit 25.09.2026) ──
+    // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
+    // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
+    // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
+    // Rechts im Kopf der Wanderrucksack (gewählt 27.09.2026; bis dahin «Mein Gepäck») — Gegenstück zum Leistungs-Kompass
+    // über den Leistungen: Beschriftung links, Zeichnung rechts. Der Datenschutz-Satz
+    // rückt dafür unter den Titel.
+    (() => {
+      const rucksackKnopf = React.createElement('button', {
+        type: 'button', onClick: () => onNavigate('gepaeck'),
+        style: {
+          display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0', flexShrink: 0,
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'right',
+        },
+      },
+        React.createElement('span', { style: { minWidth: 0 } },
+          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('nav.rucksack')),
+          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } }, t('gepaeck.unpack'))),
+        miniRucksack(palette));
+      return React.createElement('div', {
+      'data-tour': 'anspruch',
+      // Kein Kasten im Kasten (Grundsatz 25.09.2026, Vorbild «Ihr Alltag»): die Einträge
+      // tragen eigene Rahmen, der Abschnitt selbst hat nur Luft — 48 px nach aussen.
+      style: {
+        marginTop: space['2xl'] + 'px', marginBottom: space['2xl'] + 'px',
+      }
+    },
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.md + 'px', marginBottom: space.md }
+      },
+        React.createElement('div', { style: { minWidth: 0 } },
+          React.createElement(PanelTitle, { palette, style: { margin: 0, letterSpacing: '-0.2px' } }, t('dashboard.anspruchTitle')),
+          React.createElement('div', {
+            // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
+            style: { fontSize: text.xs - 1, color: palette.sageDeep, marginTop: '2px' }
+          }, t('dashboard.highlightPrivacy'))),
+        rucksackKnopf
+      ),
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
+      }, t('dashboard.anspruchIntro')),
+      (() => {
+        const items = [
+          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
+          // Zweite grosse Karte daneben (gewählt 27.09.2026): die Notfallkarte — vorher klein
+          // unter der Linie. Die Ansprüche erreicht man über den Leistungs-Kompass.
+          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall', primary: true },
+          // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
+          // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
+          // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
+          !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
+        ].filter(Boolean);
+        const renderItem = (item) => {
+          const IconFn = Icons[item.icon];
+          return React.createElement('button', {
+            key: item.view,
+            onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
+            style: {
+              display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
+              padding: item.primary ? '18px 20px' : '12px 14px',
+              background: item.primary ? palette.sand + '08' : 'transparent',
+              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
+              borderRadius: radius.md,
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              textAlign: 'left',
+              color: palette.text,
+              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = item.primary ? palette.sand + '66' : palette.border + '99'; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
+          },
+            // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
+            // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Stebler Studios).
+            React.createElement('div', {
+              style: {
+                width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
+                background: item.primary ? palette.sand + '18' : palette.up,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0, color: item.primary ? palette.sand : palette.mid,
+              }
+            }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
+            React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+              React.createElement('div', { style: { fontSize: item.primary ? text.body : text.sm, fontWeight: item.primary ? weight.semi : weight.medium } }, item.label),
+              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
+            )
+          );
+        };
+        const primaries = items.filter(i => i.primary);
+        const rest = items.filter(i => !i.primary);
+        return React.createElement(React.Fragment, null,
+          // Zwei grosse Einstiege nebeneinander: Finanz-Übersicht und Notfallkarte.
+          // Auf dem Handy untereinander (auto-fit).
+          React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.sm + 'px' }
+          }, primaries.map(renderItem)),
+          // Eigene Suspense-Grenze wie bei den Instrumenten.
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(QuickCheck, { palette, t, onNavigate, data })),
+          // Der Weg weiter — seit 27.09.2026 nur noch einer («Alle Ansprüche» führt über den
+          // Leistungs-Kompass auf dieselbe Seite).
+          React.createElement('button', {
+            onClick: () => onNavigate('situationen'),
+            style: {
+              // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+              display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', marginTop: space.sm,
+              fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+            },
+          }, t('lebenszustaende.dashboardLink')),
+          // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
+          // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
+          // nichts, dann auch keine leere Linie.
+          rest.length > 0 && React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
+          }, rest.map(renderItem))
+        );
+      })(),
+      // Sanfte Erst-Schritte — eingefaltet in die Highlight-Box (nur neue Nutzer)
+      !hasMeaningfulProgress && React.createElement('div', {
+        style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', fontWeight: weight.medium }
+        }, t('guidedStart.title')),
+        React.createElement('div', {
+          style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px' }
+        },
+          gentleStartActions.map((item) =>
+            React.createElement('button', {
+              key: item.label,
+              onClick: item.action,
+              style: {
+                background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
+                fontSize: text.sm, color: palette.sageDeep || palette.sage, textAlign: 'left', fontFamily: 'inherit',
+                display: 'flex', alignItems: 'center', gap: space.xs + 'px',
+              },
+              onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
+              onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
+            },
+              item.label
+            )
+          )
+        )
+      )
+    );
+    })(),
 
     !demoMode && React.createElement(BetaFeedback, { palette, t })
     )

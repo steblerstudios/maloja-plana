@@ -78,7 +78,7 @@ de   doc k=bank_statement label~67623951
 de kapitel=versicherungen title~ef27b74c short~dca3d9ce description~deb8fbd8 felder=30 docs=5
 de   k=kkInsurer type="text" mvo=true section~a6b6d59a orientation~73f99cd4 link~8ce59537 placeholder~3cd655d7 label~308f6858 sectionIntro~bcc4d385
 de   k=kkModel type="select" label~86df66a1 options=7 optWerte~8aa6d6ea optLabels~83eac850
-de   k=kkPremium type="currency" mvo=true label~1cdc128c
+de   k=kkPremium type="currency" mvo=true hint~1cdc128c label~8a67ec89
 de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b options=10 optWerte~98b76529 optLabels~9a237633
 de   k=kkCardNumber type="text" label~8fdb99db
 de   k=policyNumber type="text" hint~d822c8ff label~45658792
@@ -239,7 +239,7 @@ fr   doc k=bank_statement label~eedff1ab
 fr kapitel=versicherungen title~c74bd01f short~c74bd01f description~9a4e9a92 felder=30 docs=5
 fr   k=kkInsurer type="text" mvo=true section~4384b172 orientation~23c37a17 link~f91795de placeholder~3f2cceb8 label~14a71ffc sectionIntro~199947b7
 fr   k=kkModel type="select" label~7fc82fe8 options=7 optWerte~8aa6d6ea optLabels~dc6d42f3
-fr   k=kkPremium type="currency" mvo=true label~5754d7ad
+fr   k=kkPremium type="currency" mvo=true hint~5754d7ad label~5d1cd9b4
 fr   k=franchise type="select" mvo=true orientation~1148922f label~41fbffa6 options=10 optWerte~98b76529 optLabels~f9e805ab
 fr   k=kkCardNumber type="text" label~527590eb
 fr   k=policyNumber type="text" hint~d07b68a9 label~57ba1e46
@@ -400,7 +400,7 @@ it   doc k=bank_statement label~9bbe904f
 it kapitel=versicherungen title~5da62723 short~5da62723 description~28100566 felder=30 docs=5
 it   k=kkInsurer type="text" mvo=true section~e24dd047 orientation~033581a1 link~503f51a9 placeholder~fc5f0a41 label~14bab828 sectionIntro~c33f5d4f
 it   k=kkModel type="select" label~466790b4 options=7 optWerte~8aa6d6ea optLabels~eaa4b72c
-it   k=kkPremium type="currency" mvo=true label~ece531ed
+it   k=kkPremium type="currency" mvo=true hint~ece531ed label~b97636a8
 it   k=franchise type="select" mvo=true orientation~95d3602b label~dd2b8bed options=10 optWerte~98b76529 optLabels~f9e805ab
 it   k=kkCardNumber type="text" label~c8cc9310
 it   k=policyNumber type="text" hint~f2c42569 label~2ccc2ea9
@@ -561,7 +561,7 @@ en   doc k=bank_statement label~921df5a6
 en kapitel=versicherungen title~1ed7e947 short~1ed7e947 description~200e0c22 felder=30 docs=5
 en   k=kkInsurer type="text" mvo=true section~8e278f01 orientation~819945ad link~8ce59537 placeholder~8408ec55 label~d79e62d3 sectionIntro~b45c3f12
 en   k=kkModel type="select" label~0093873a options=7 optWerte~8aa6d6ea optLabels~290129ca
-en   k=kkPremium type="currency" mvo=true label~965b9e53
+en   k=kkPremium type="currency" mvo=true hint~965b9e53 label~feb677c9
 en   k=franchise type="select" mvo=true orientation~680a9a69 label~7c145cb0 options=10 optWerte~98b76529 optLabels~f9e805ab
 en   k=kkCardNumber type="text" label~75df6208
 en   k=policyNumber type="text" hint~3f6eab70 label~fab0da68
@@ -722,7 +722,7 @@ rm   doc k=bank_statement label~c8787c08
 rm kapitel=versicherungen title~f6230c0e short~93d1bf3b description~33573315 felder=30 docs=5
 rm   k=kkInsurer type="text" mvo=true section~6200cabf orientation~55cd8b83 link~8ce59537 placeholder~72b164ea label~fc7dfbfd sectionIntro~bda20a42
 rm   k=kkModel type="select" label~8285e8fa options=7 optWerte~e61b141c optLabels~bd304914
-rm   k=kkPremium type="currency" mvo=true label~262d15d4
+rm   k=kkPremium type="currency" mvo=true hint~262d15d4 label~45705432
 rm   k=franchise type="select" mvo=true orientation~b80db104 label~c5887ae4 options=10 optWerte~98b76529 optLabels~6fdc5753
 rm   k=kkCardNumber type="text" label~dcc7ad86
 rm   k=policyNumber type="text" hint~e509e3b0 label~655a1464

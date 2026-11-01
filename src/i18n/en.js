@@ -2209,7 +2209,6 @@ export default {
         ktg: { label: 'Daily sickness benefit (KTG)', options: { yes: 'Yes', employer: 'Through employer', none: 'None / Unknown' } },
         liabilityInsurance: { label: 'Liability insurance', options: { no: 'No', yes: 'Yes' } },
         liabilityAmount: 'Coverage amount (CHF)',
-        kkPremium: 'Premium before any premium reduction.',
         liabilityPremium: "Liability premium (CHF/year)",
         householdInsurance: { label: 'Household contents insurance', options: { no: 'No', yes: 'Yes' } },
         householdInsuranceAmount: 'Household premium (CHF/year)',
@@ -2225,6 +2224,7 @@ export default {
         freizuegigkeit: 'e.g. vested benefits foundation',
       },
       hints: {
+        kkPremium: 'Premium before any premium reduction.',
         liabilityPremium: "Annual premium. One twelfth of it counts in the budget each month. Household contents and liability in one policy? Then enter the premium only once.",
         householdInsuranceAmount: "Annual premium. One twelfth of it counts in the budget each month. Household contents and liability in one policy? Then enter the premium only once.",
         bvgInsurer: 'No pension fund? Then choose «Does not apply». In some cantons this counts as «no second pillar» for the premium reduction.',

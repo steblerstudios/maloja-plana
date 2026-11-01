@@ -2218,7 +2218,6 @@ export default {
         ktg: { label: 'Krankentaggeld (KTG)', options: { yes: 'Ja', employer: 'Über Arbeitgeber', none: 'Keine / Unbekannt' } },
         liabilityInsurance: { label: 'Haftpflichtversicherung', options: { no: 'Nein', yes: 'Ja' } },
         liabilityAmount: 'Versicherungssumme CHF',
-        kkPremium: 'Prämie vor Abzug der Prämienverbilligung.',
         liabilityPremium: "Haftpflicht-Prämie CHF/Jahr",
         householdInsurance: { label: 'Hausratversicherung', options: { no: 'Nein', yes: 'Ja' } },
         householdInsuranceAmount: 'Hausrat-Prämie CHF/Jahr',
@@ -2234,6 +2233,7 @@ export default {
         freizuegigkeit: 'z.B. Stiftung Auffangeinrichtung BVG',
       },
       hints: {
+        kkPremium: 'Prämie vor Abzug der Prämienverbilligung.',
         liabilityPremium: "Jahresprämie. Im Budget zählt davon pro Monat ein Zwölftel. Hausrat und Haftpflicht in einer Police? Dann die Prämie nur einmal eintragen.",
         householdInsuranceAmount: "Jahresprämie. Im Budget zählt davon pro Monat ein Zwölftel. Hausrat und Haftpflicht in einer Police? Dann die Prämie nur einmal eintragen.",
         bvgInsurer: 'Keine Pensionskasse? Dann «Trifft nicht zu» wählen. In einigen Kantonen zählt das für die Prämienverbilligung als «keine 2. Säule».',
