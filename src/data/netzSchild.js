@@ -1,5 +1,6 @@
 import { schildState, bvgAktiv, zahl } from './schutzschild.js';
 import { hausratPflicht } from './hausratPflicht.js';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Netz-Schild (Fassung 7, F7-K3-6, Entscheid Stebler Studios 27.10.2026): EIN Bild statt Spinnennetz und zwei
 // Schutzschilden. Ein Schild aus Teilen, das sich je Teil von der Mitte nach aussen füllt.
@@ -27,7 +28,7 @@ const REIHE = ['haushalt', 'vorsorge', 'leben', 'kk', 'uvg'];
 export const SCHILD_KERN = 0.34;
 
 const has = (x) => x != null && String(x).trim() !== '';
-const ERWERB = ['employed', 'selfEmployed', 'freelance'];
+const ERWERB = ['employed', 'apprentice', 'selfEmployed', 'freelance'];
 
 // Füllung 0..1: ohne Erfülltes ein kleiner Kern, sonst anteilig bis ganz.
 export const fuellung = (teil) => teil.erreicht === 0 ? SCHILD_KERN : SCHILD_KERN + (1 - SCHILD_KERN) * (teil.erreicht / teil.n);
@@ -88,7 +89,7 @@ export function netzSchildTeile(v = {}, opts = {}) {
 export function betraegeFuer(key, v = {}, finanzen = {}) {
   // «Über den Lohn» stimmt nur für Angestellte mit netto erfasstem Lohn (Regel aus VersicherungenInstrument,
   // Fachprüfung 25.10.2026): bei brutto steckt der Beitrag noch im Betrag, Selbständige zahlen selbst.
-  const lohnAbzug = finanzen.employmentType === 'employed' && finanzen.incomeType === 'netto' ? { lohn: true } : {};
+  const lohnAbzug = istAngestellt(finanzen) && finanzen.incomeType === 'netto' ? { lohn: true } : {};
   const monat = (x) => { const m = zahl(x); return m > 0 ? { mt: m, jahr: Math.round(m * 12 * 100) / 100 } : {}; };
   const jahr = (x) => { const j = zahl(x); return j > 0 ? { mt: Math.round((j / 12) * 100) / 100, jahr: j } : {}; };
   const mehr = (o, k, x) => (zahl(x) > 0 ? { ...o, [k]: zahl(x) } : o);

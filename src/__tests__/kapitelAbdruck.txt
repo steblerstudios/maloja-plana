@@ -46,7 +46,7 @@ de   k=incomeType type="select" label~e67c1e1a options=2 optWerte~808c757b optLa
 de   k=dreizehnter type="select" label~64231a85 options=2 optWerte~2bfd19fd optLabels~b50f42dc
 de   k=employer type="text" recommended=true naOk=true label~29d7414b
 de   k=employerAddress type="textarea" naOk=true hint~496988cf label~902f77eb
-de   k=employmentType type="select" label~691027ce options=4 optWerte~cb5df223 optLabels~28763f8f
+de   k=employmentType type="select" label~691027ce options=5 optWerte~2b10a5aa optLabels~186992de
 de   k=startDate type="date" naOk=true label~19564dc6
 de   k=familienzulagen type="currency" naOk=true hint~7435e1a4 label~0fe6842d
 de   k=alimenteReceived type="currency" naOk=true hint~7b19adf2 label~32f358ea
@@ -207,7 +207,7 @@ fr   k=incomeType type="select" label~0e0a9629 options=2 optWerte~808c757b optLa
 fr   k=dreizehnter type="select" label~495f05d6 options=2 optWerte~2bfd19fd optLabels~b74e5823
 fr   k=employer type="text" recommended=true naOk=true label~375760d9
 fr   k=employerAddress type="textarea" naOk=true hint~30fe80dc label~1cbb3c6e
-fr   k=employmentType type="select" label~7947fb48 options=4 optWerte~cb5df223 optLabels~714717e1
+fr   k=employmentType type="select" label~7947fb48 options=5 optWerte~2b10a5aa optLabels~5d79a280
 fr   k=startDate type="date" naOk=true label~f6a61ad7
 fr   k=familienzulagen type="currency" naOk=true hint~30e71d92 label~7af5a968
 fr   k=alimenteReceived type="currency" naOk=true hint~02d20698 label~5be3aecd
@@ -368,7 +368,7 @@ it   k=incomeType type="select" label~91124d77 options=2 optWerte~808c757b optLa
 it   k=dreizehnter type="select" label~25a780ec options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=employer type="text" recommended=true naOk=true label~b93da698
 it   k=employerAddress type="textarea" naOk=true hint~24eee765 label~4f9570c9
-it   k=employmentType type="select" label~f63135dc options=4 optWerte~cb5df223 optLabels~e9f45455
+it   k=employmentType type="select" label~f63135dc options=5 optWerte~2b10a5aa optLabels~6092f2bc
 it   k=startDate type="date" naOk=true label~5e6e6a52
 it   k=familienzulagen type="currency" naOk=true hint~7bd4ff6f label~f0b71c86
 it   k=alimenteReceived type="currency" naOk=true hint~e7e8ab21 label~a6991b52
@@ -529,7 +529,7 @@ en   k=incomeType type="select" label~90d6fcba options=2 optWerte~808c757b optLa
 en   k=dreizehnter type="select" label~981c932c options=2 optWerte~2bfd19fd optLabels~ea0983bd
 en   k=employer type="text" recommended=true naOk=true label~a9dd48a4
 en   k=employerAddress type="textarea" naOk=true hint~2c162a45 label~85dee87c
-en   k=employmentType type="select" label~6aed03e1 options=4 optWerte~cb5df223 optLabels~68106654
+en   k=employmentType type="select" label~6aed03e1 options=5 optWerte~2b10a5aa optLabels~e2b49a55
 en   k=startDate type="date" naOk=true label~44faa00d
 en   k=familienzulagen type="currency" naOk=true hint~cd283f33 label~b9f292ff
 en   k=alimenteReceived type="currency" naOk=true hint~3a7419da label~39087ca0
@@ -690,7 +690,7 @@ rm   k=incomeType type="select" label~146bcd0e options=2 optWerte~808c757b optLa
 rm   k=dreizehnter type="select" label~52c28702 options=2 optWerte~2bfd19fd optLabels~1534032f
 rm   k=employer type="text" recommended=true naOk=true label~ae80e17b
 rm   k=employerAddress type="textarea" naOk=true hint~c961f130 label~3b999ae7
-rm   k=employmentType type="select" label~979ec471 options=4 optWerte~cb5df223 optLabels~9fbdc700
+rm   k=employmentType type="select" label~979ec471 options=5 optWerte~2b10a5aa optLabels~ebc18f49
 rm   k=startDate type="date" naOk=true label~60fff5d7
 rm   k=familienzulagen type="currency" naOk=true hint~01145d3e label~5fd44950
 rm   k=alimenteReceived type="currency" naOk=true hint~157230a0 label~b6402f7c

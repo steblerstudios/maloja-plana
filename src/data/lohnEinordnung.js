@@ -35,6 +35,7 @@ import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 import { quellensteuerMoeglich } from './kantonaleSteuerdaten.js';
 import { einkommenIstKeinLohn } from '../utils/monatsrechnung.js';
+import { istAngestellt, istLernend } from '../utils/anstellung.js';
 import { dreizehnterStatus } from '../utils/dreizehnter.js';
 
 export const LOHN_REFERENZ = {
@@ -231,7 +232,9 @@ export function lohnEinordnungErgebnis({ income, incomeType, hoursPerWeek }) {
 // Im Rentenalter ohne ausdrücklich «angestellt» ist das Einkommen vermutlich eine Rente.
 // Netto mit möglicher Quellensteuer: der Richtwert kennt sie nicht, das geschätzte Brutto läge zu tief.
 export function lohnVergleichSperre(data, rentenalter) {
-  if (einkommenIstKeinLohn(data) || (rentenalter && data?.finanzen?.employmentType !== 'employed')) return 'keinLohn';
+  if (einkommenIstKeinLohn(data) || (rentenalter && !istAngestellt(data?.finanzen))) return 'keinLohn';
+  // Der Median zählt Löhne von Lernenden nicht mit (branchenLohn.js).
+  if (istLernend(data?.finanzen)) return 'lernend';
   if (data?.finanzen?.incomeType === 'netto' && quellensteuerMoeglich(data)) return 'quellensteuer';
   return null;
 }

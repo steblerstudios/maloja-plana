@@ -12,6 +12,7 @@ import { NetzSchild, betragText } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { KKLastEinordnung, VERGLEICHSMARKE, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
+import { istAngestellt } from '../utils/anstellung.js';
 
 // Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Stebler Studios 24.10.2026,
 // nachgebessert am selben Tag). Wie das Wohnkosten-Instrument: unter der ruhigen Zusammenfassung, vor den Angaben.
@@ -79,7 +80,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   // «Schon vom Lohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn — bei brutto steckt der
   // Beitrag noch im Betrag, Selbständige zahlen freiwillige Beiträge selbst (Fachprüfung 25.10.2026).
   const f = daten.finanzen || {};
-  const pk = Number(v.bvgContribution) > 0 && f.employmentType === 'employed' && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
+  const pk = Number(v.bvgContribution) > 0 && istAngestellt(f) && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
 
   // KK-Last wie KKLastCard: Grundversicherungs-Prämie ÷ monatliches Einkommen.
   const kkPraemie = Number(v.kkPremium) || 0;
@@ -140,7 +141,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const ja = (x) => has(x) && x !== 'no' && x !== 'none';
   const ausserhalb = [
     // Ohne erfassten Beitrag folgt die AHV nur aus dem Erwerbsstatus: nicht «eingetragen», sondern «laut Angaben», wie im Schild (Fachprüfung 01.11.2026).
-    (f.employmentType === 'employed' || zahl2(v.ahvContribution) > 0) && { key: 'ahv', farbe: vorsorgeTon, name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f), abgeleitet: !(zahl2(v.ahvContribution) > 0) },
+    (istAngestellt(f) || zahl2(v.ahvContribution) > 0) && { key: 'ahv', farbe: vorsorgeTon, name: t('netzSchild.vers.ahv'), b: betraegeFuer('ahv', v, f), abgeleitet: !(zahl2(v.ahvContribution) > 0) },
     bvgAktiv(v) && { key: 'bvg', farbe: vorsorgeTon, name: t('netzSchild.vers.bvg'), b: betraegeFuer('bvg', v, f) },
     Number(f.pension3a) > 0 && { key: 'saeule3a', farbe: vorsorgeTon, name: t('netzSchild.vers.saeule3a'), b: betraegeFuer('saeule3a', v, f) },
     ja(v.uvg) && { key: 'uvg', name: t('netzSchild.vers.uvg'), b: betraegeFuer('uvg', v, f) },

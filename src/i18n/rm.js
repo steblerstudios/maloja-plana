@@ -2286,7 +2286,7 @@ export default {
         dreizehnter: { label: '13avel salari mensil?', options: { no: 'Na', yes: 'Gea' } },
         employer: 'Patrun',
         employerAddress: 'Adressa dal patrun',
-        employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
+        employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', apprentice: 'En emprendissadi', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
         startDate: 'Cumenzament dal lavur',
         savingsGoal: 'Finamira da spargn CHF',
         savingsAccount: 'Spargn CHF',
@@ -4622,6 +4622,8 @@ export default {
     spiegel: 'Net {netto}, ≈ {brutto} brut (stimà).',
     spiegelOhnePk: 'Net {netto}, ≈ {brutto} brut (stimà senza cassa da pensiun).',
     sperre_keinLohn: { sie: 'La cumparegliaziun cun il median svizzer vala per salaris d’emploiads, perquai na la mussain nus betg qua. Sch’igl è in salari, tscherni en il chapitel Finanzas «Emploià» sco tip d’engaschament.', du: 'La cumparegliaziun cun il median svizzer vala per salaris d’emploiads, perquai na la mussain nus betg qua. Sch’igl è in salari, tscherna en il chapitel Finanzas «Emploià» sco tip d’engaschament.' },
+    // TODO(rm): provisorisch, Gegenlese offen (auch employmentType.options.apprentice)
+    sperre_lernend: { sie: 'Il median svizzer na quinta betg las pajas dad emprendistas ed emprendists, perquai na mussain nus qua nagina cumparegliaziun. Era ils salaris minimals chantunals n’èn betg obligatorics per emprendissadis. Per Voss salari quinta Voss contract dad emprendissadi. Sche in contract collectiv da lavur vala en Vossa branscha, po er quel cuntegnair prescripziuns.', du: 'Il median svizzer na quinta betg las pajas dad emprendistas ed emprendists, perquai na mussain nus qua nagina cumparegliaziun. Era ils salaris minimals chantunals n’èn betg obligatorics per emprendissadis. Per tes salari quinta tes contract dad emprendissadi. Sche in contract collectiv da lavur vala en tia branscha, po er quel cuntegnair prescripziuns.' },
     sperre_quellensteuer: { sie: 'Cun ina taglia a la funtauna pussaivla na sa lascha betg stimar in brut fidaivel dal net. Cun il salari brut da Voss quint da paja al pudain nus classifitgar.', du: 'Cun ina taglia a la funtauna pussaivla na sa lascha betg stimar in brut fidaivel dal net. Cun il salari brut da tes quint da paja al pudain nus classifitgar.' },
     soIstGerechnet: 'Uschia è quint',
     dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
