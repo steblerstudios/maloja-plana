@@ -339,7 +339,9 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
         fontSize: text.xs, color: palette.mid, textDecoration: 'underline',
         textUnderlineOffset: '2px',
       }
-    }, t('medications.compendiumLink'))
+    }, t('medications.compendiumLink')),
+    // Ein Klick übermittelt ein Gesundheitsdatum an einen Dritten: das steht beim Link (Sicherheits-Prüfung 01.11.2026).
+    compendiumUrl && React.createElement('small', { 'data-teil': 'compendium-hinweis', style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('medications.compendiumHinweis'))
   );
 };
 

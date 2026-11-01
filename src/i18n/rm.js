@@ -2597,7 +2597,8 @@ export default {
       data3: "Datas d'assicuranza, documents, commemoraziuns e termins — per l'archiv persunal.",
       data4: 'Tut las calculaziuns (taglia, agid social, premias, prevenziun) vegnan fatgas mo en la memoria da lavur e na vegnan betg memorisadas separadamain.',
       sensitiveTitle: 'Datas particularamain sensitivas',
-      sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, donaziun d'organs), datas davart mesiras d'agid social u convicziuns religiusas.",
+      // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+      sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, allergias, malsognas cronicas, gruppa da sang, medias e medis, donaziun d'organs, disposiziun da pazient), datas davart mesiras d'agid social u convicziuns religiusas.",
       sensitive2: { sie: "Questas indicaziuns restan sin Voss apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatai talas rubricas mo sche quai Vus convegn — e protegì l'apparat cun in code.", du: "Questas indicaziuns restan sin Tes apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatescha talas rubricas mo sche quai ta convegn — e protegia l'apparat cun in code." }, // TODO(rm): Gegenlese Muttersprache
       // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       hostingTitle: 'Hosting',
@@ -7675,6 +7676,8 @@ export default {
     notes: 'Remartga',
     notesPlaceholder: 'p. ex. cun mangiar, betg cun latg...',
     compendiumLink: 'Tschertgar en il compendi da medicaments',
+    // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
+    compendiumHinweis: 'Cun avrir va il num dal medicament en l’adressa a compendium.ch.',
     // TODO(rm): provisorisch — Gegenlese (SL-Preis, F7-K6-2, 27.10.2026)
     preis: {
       eins: 'Pretsch public tenor la glista da specialitads: {chf} ({packung})',

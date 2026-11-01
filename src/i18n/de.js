@@ -2619,7 +2619,7 @@ export default {
       data3: 'Versicherungsdaten, Dokumente, Erinnerungen und Fristen — für die persönliche Ablage.',
       data4: 'Alle Berechnungen (Steuer, Sozialhilfe, Prämien, Vorsorge) finden nur im Arbeitsspeicher statt und werden nicht separat gespeichert.',
       sensitiveTitle: 'Besonders schützenswerte Daten',
-      sensitive1: 'Je nach Eingabe kann Maloja Plana Gesundheitsdaten (Medikamente, Organspende), Daten zu Sozialhilfemassnahmen oder religiöse Überzeugungen enthalten.',
+      sensitive1: 'Je nach Eingabe kann Maloja Plana Gesundheitsdaten (Medikamente, Allergien, chronische Erkrankungen, Blutgruppe, Ärztinnen und Ärzte, Organspende, Patientenverfügung), Daten zu Sozialhilfemassnahmen oder religiöse Überzeugungen enthalten.',
       sensitive2: { sie: 'Diese Angaben bleiben auf Ihrem Gerät. Sie werden nicht an uns und nicht an einen Server übertragen. Die automatischen Schnappschüsse im Browser sind nicht verschlüsselt. Tragen Sie solche Felder nur ein, wenn Ihnen das recht ist — und schützen Sie das Gerät mit einem Code.', du: 'Diese Angaben bleiben auf Deinem Gerät. Sie werden nicht an uns und nicht an einen Server übertragen. Die automatischen Schnappschüsse im Browser sind nicht verschlüsselt. Trag solche Felder nur ein, wenn Dir das recht ist — und schütz das Gerät mit einem Code.' },
       hostingTitle: 'Hosting',
       hosting1: 'Die statische Webanwendung (ohne Nutzerdaten) wird bei Infomaniak Network SA (Rue Eugène-Marziano 25, 1227 Les Acacias / Genf, Schweiz) gehostet — einem Schweizer Anbieter mit Rechenzentren in der Schweiz. Beim Abruf der Webseite verarbeitet Infomaniak als Auftragsbearbeiterin (Art. 9 nDSG) technische Daten: IP-Adresse, Zeitpunkt, aufgerufene Datei, Browsertyp und Betriebssystem. Zweck: Auslieferung der Seite und Betriebssicherheit. Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf.',
@@ -6803,6 +6803,7 @@ export default {
     notes: 'Hinweis',
     notesPlaceholder: 'z.B. zum Essen, nicht mit Milch...',
     compendiumLink: 'Im Arzneimittel-Kompendium nachschlagen',
+    compendiumHinweis: 'Beim Öffnen geht der Name des Medikaments in der Adresse an compendium.ch.',
     preis: {
       eins: 'Publikumspreis laut Spezialitätenliste: {chf} ({packung})',
       gleich: 'Publikumspreis laut Spezialitätenliste: {chf} je Packung',

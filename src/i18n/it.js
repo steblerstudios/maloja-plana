@@ -2609,7 +2609,7 @@ export default {
       data3: 'Dati assicurativi, documenti, promemoria e scadenze — per l\'archivio personale.',
       data4: 'Tutti i calcoli (imposte, assistenza sociale, premi, previdenza) avvengono solo nella memoria di lavoro e non vengono archiviati separatamente.',
       sensitiveTitle: 'Dati particolarmente sensibili',
-      sensitive1: { sie: 'A seconda dei Suoi inserimenti, Maloja Plana può contenere dati sanitari (farmaci, donazione di organi), dati relativi all\'assistenza sociale o convinzioni religiose.', du: 'A seconda dei tuoi inserimenti, Maloja Plana può contenere dati sanitari (farmaci, donazione di organi), dati relativi all\'assistenza sociale o convinzioni religiose.' },
+      sensitive1: { sie: 'A seconda dei Suoi inserimenti, Maloja Plana può contenere dati sanitari (farmaci, allergie, malattie croniche, gruppo sanguigno, medici, donazione di organi, direttive del paziente), dati relativi all\'assistenza sociale o convinzioni religiose.', du: 'A seconda dei tuoi inserimenti, Maloja Plana può contenere dati sanitari (farmaci, allergie, malattie croniche, gruppo sanguigno, medici, donazione di organi, direttive del paziente), dati relativi all\'assistenza sociale o convinzioni religiose.' },
       sensitive2: { sie: 'Queste indicazioni restano sul Suo dispositivo. Non vengono trasmesse né a noi né a un server. Le istantanee automatiche nel browser non sono cifrate. Compili tali campi solo se Le sta bene — e protegga il dispositivo con un codice.', du: 'Queste indicazioni restano sul tuo dispositivo. Non vengono trasmesse né a noi né a un server. Le istantanee automatiche nel browser non sono cifrate. Compila tali campi solo se ti sta bene — e proteggi il dispositivo con un codice.' },
       hostingTitle: 'Hosting',
       hosting1: 'L\'applicazione web statica (senza dati utente) è ospitata da Infomaniak Network SA (Rue Eugène-Marziano 25, 1227 Les Acacias / Ginevra, Svizzera) — un provider svizzero con data center in Svizzera. Alla chiamata della pagina Infomaniak tratta in qualità di responsabile del trattamento (art. 9 nLPD) dati tecnici: indirizzo IP, momento, file richiesto, tipo di browser e sistema operativo. Scopo: la consegna della pagina e la sicurezza dell\'esercizio. Secondo le indicazioni del provider i log di accesso e di errore vengono conservati almeno 7 giorni.',
@@ -6714,6 +6714,7 @@ export default {
     notes: 'Nota',
     notesPlaceholder: 'p. es. durante il pasto, non con latte...',
     compendiumLink: 'Consultare il compendio dei medicamenti',
+    compendiumHinweis: 'All’apertura, il nome del medicamento viene trasmesso a compendium.ch nell’indirizzo.',
     preis: {
       eins: 'Prezzo al pubblico secondo l’elenco delle specialità: {chf} ({packung})',
       gleich: 'Prezzo al pubblico secondo l’elenco delle specialità: {chf} per confezione',

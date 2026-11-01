@@ -2609,7 +2609,7 @@ export default {
       data3: 'Données d\'assurance, documents, rappels et délais — pour le classement personnel.',
       data4: 'Tous les calculs (impôts, aide sociale, primes, prévoyance) ne sont effectués qu\'en mémoire vive et ne sont pas stockés séparément.',
       sensitiveTitle: 'Données sensibles',
-      sensitive1: 'Selon les données saisies, Maloja Plana peut contenir des données de santé (médicaments, don d\'organes), des données relatives à l\'aide sociale ou des convictions religieuses.',
+      sensitive1: 'Selon les données saisies, Maloja Plana peut contenir des données de santé (médicaments, allergies, maladies chroniques, groupe sanguin, médecins, don d\'organes, directives anticipées), des données relatives à l\'aide sociale ou des convictions religieuses.',
       sensitive2: { sie: 'Ces indications restent sur votre appareil. Elles ne sont transmises ni à nous ni à un serveur. Les instantanés automatiques dans le navigateur ne sont pas chiffrés. Ne remplissez de tels champs que si cela vous convient — et protégez l\'appareil par un code.', du: 'Ces indications restent sur ton appareil. Elles ne sont transmises ni à nous ni à un serveur. Les instantanés automatiques dans le navigateur ne sont pas chiffrés. Ne remplis de tels champs que si cela te convient — et protège l\'appareil par un code.' },
       hostingTitle: 'Hébergement',
       hosting1: 'L\'application web statique (sans données utilisateur) est hébergée par Infomaniak Network SA (Rue Eugène-Marziano 25, 1227 Les Acacias / Genève, Suisse) — un prestataire suisse avec des centres de données en Suisse. Lors de l\'accès au site, Infomaniak traite en qualité de sous-traitante (art. 9 nLPD) des données techniques : adresse IP, horodatage, fichier appelé, type de navigateur et système d\'exploitation. Finalité : la diffusion de la page et la sécurité de l\'exploitation. Selon les indications du prestataire, les logs d\'accès et d\'erreur sont conservés au moins 7 jours.',
@@ -6738,6 +6738,7 @@ export default {
     notes: 'Remarque',
     notesPlaceholder: 'p. ex. pendant le repas, pas avec du lait...',
     compendiumLink: 'Consulter le compendium des médicaments',
+    compendiumHinweis: 'À l’ouverture, le nom du médicament est transmis à compendium.ch dans l’adresse.',
     preis: {
       eins: 'Prix public selon la liste des spécialités : {chf} ({packung})',
       gleich: 'Prix public selon la liste des spécialités : {chf} par emballage',

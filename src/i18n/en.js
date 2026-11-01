@@ -2609,7 +2609,7 @@ export default {
       data3: 'Insurance data, documents, reminders and deadlines — for personal filing.',
       data4: 'All calculations (tax, social assistance, premiums, pension) run only in memory and are not stored separately.',
       sensitiveTitle: 'Particularly sensitive data',
-      sensitive1: 'Depending on your input, Maloja Plana may contain health data (medications, organ donation), data on social assistance measures, or religious beliefs.',
+      sensitive1: 'Depending on your input, Maloja Plana may contain health data (medications, allergies, chronic conditions, blood type, doctors, organ donation, patient decree), data on social assistance measures, or religious beliefs.',
       sensitive2: 'This information stays on your device. It is not transmitted to us and not to any server. The automatic snapshots in the browser are not encrypted. Only fill in such fields if you are comfortable with that — and protect the device with a passcode.',
       hostingTitle: 'Hosting',
       hosting1: 'The static web application (without user data) is hosted by Infomaniak Network SA (Rue Eugène-Marziano 25, 1227 Les Acacias / Geneva, Switzerland) — a Swiss provider with data centres in Switzerland. When the page is requested, Infomaniak processes technical data as a processor (Art. 9 nDSG): IP address, time, file requested, browser type and operating system. Purpose: delivering the page and operational security. According to the provider, access and error logs are kept for at least 7 days.',
@@ -6738,6 +6738,7 @@ export default {
     notes: 'Note',
     notesPlaceholder: 'e.g. with food, not with milk...',
     compendiumLink: 'Look up in drug compendium',
+    compendiumHinweis: 'Opening this sends the name of the medication to compendium.ch in the address.',
     preis: {
       eins: 'Public price per the Specialities List: {chf} ({packung})',
       gleich: 'Public price per the Specialities List: {chf} per pack',
