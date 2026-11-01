@@ -29,7 +29,7 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
 // `userLabel` (optional): ersetzt «Ihre Miete: CHF …» — im Kapitel Wohnen beim Regler «Ausprobierte
 // Miete: CHF …» (Fassung 6), damit niemand die ausprobierte Zahl für die erfasste hält.
-// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Sophie 25.10.2026 «Barometer
+// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Stebler Studios 25.10.2026 «Barometer
 // ruhiger»). Ohne die strukturelle Erklärung, und der Zimmer-Hinweis zeigt auf das Feld unten im
 // Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
 export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {

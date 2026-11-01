@@ -146,7 +146,7 @@ describe('Probiermodus-Knopf bei der Auswertung', () => {
   });
 });
 
-// Abnahme F6 (Sophie 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
+// Abnahme F6 (Stebler Studios 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
 // Kapitel kurz und ohne Verweis «ins Kapitel Finanzen & Geld».
 describe('Kapitel Finanzen · Abnahme F6', () => {
   it('die Lohn-Hinweise stecken hinter «So ist gerechnet»', () => {

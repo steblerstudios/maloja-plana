@@ -4,7 +4,7 @@ import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../co
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 
-// Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Sophie 24.10.2026; gebaut Abnahme
+// Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme
 // 25.10.2026). Das Kapitel ist der eine Notfall-Ort; der frühere Einstieg (#/notfalleinstieg) leitet hierher.
 // Oben, nach der Zusammenfassung, vier Teile:
 //   1. Im Ernstfall — Knopf zur Notfallkarte (bleibt beim Scrollen oben stehen, ausser während man tippt),
@@ -69,7 +69,7 @@ export const NOTFALL_ANGABEN = SCENARIOS.flatMap((s) => s.fields)
   .filter((f, i, alle) => alle.findIndex((x) => x.chapter === f.chapter && x.k === f.k) === i);
 
 // Eine Angabe ist bereit, wenn sie einen Wert hat oder «trifft nicht zu» trägt. Ausnahme Patientenverfügung: erst
-// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Sophie 25.10.2026, nach der
+// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Stebler Studios 25.10.2026, nach der
 // Fachprüfung; sonst zählte «Bereit» sie als erledigt und «Vorsorge» darunter als nicht geregelt).
 export const angabeBereit = (data, f) => (f.chapter === 'notfall' && f.k === 'patientenverfuegung'
   ? vorsorgeGeregelt((data || {}).notfall, 'patientenverfuegung')

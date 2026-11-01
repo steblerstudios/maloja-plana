@@ -1,4 +1,4 @@
-// Fassung 6 · Kapitel Notfall «ein Ort» (Runde 9, Entwurf AE; Sophie 25.10.2026 «Baue Notfall 1 bis 11»):
+// Fassung 6 · Kapitel Notfall «ein Ort» (Runde 9, Entwurf AE; Stebler Studios 25.10.2026 «Baue Notfall 1 bis 11»):
 // Ernstfall-Knopf, der stehen bleibt · «… anrufen» · «Bereit für den Ernstfall 19 von 20» mit dem Fehlenden zum
 // Ausfüllen · vier Unterlagen-Kacheln mit der Portemonnaie-Karte · Vorsorge «1 von 4 geregelt» · Zusammenfassung
 // mit Blutgruppe und Allergien · Fehlendes in den Angaben · Passend nur Ablage · Namen, Brotkrumen, Suche.
@@ -63,7 +63,7 @@ describe('Bereit für den Ernstfall', () => {
     expect(bereitschaft(keine).erledigt).toBe(19);
     expect(chapters.find((c) => c.key === 'notfall').fields.find((f) => f.k === 'medications').naOk).toBe(true);
   });
-  it('Patientenverfügung zählt erst bei «Ja» (Sophie 25.10.2026)', () => {
+  it('Patientenverfügung zählt erst bei «Ja» (Stebler Studios 25.10.2026)', () => {
     const mit = (pv) => ({ ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, patientenverfuegung: pv } });
     expect(bereitschaft(mit('no')).fehlend.some((f) => f.k === 'patientenverfuegung')).toBe(true);
     expect(bereitschaft(mit('yes')).fehlend.some((f) => f.k === 'patientenverfuegung')).toBe(false);

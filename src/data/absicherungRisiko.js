@@ -1,7 +1,7 @@
 import { schildState, schildOptionen } from './schutzschild.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 
-// Absicherung je Lebensrisiko — Liste in der Versicherungs-Übersicht (Sophie 26.10.2026: «Liste je Risiko statt Netz»).
+// Absicherung je Lebensrisiko — Liste in der Versicherungs-Übersicht (Stebler Studios 26.10.2026: «Liste je Risiko statt Netz»).
 // Je Risiko Zeilen: was eingetragen ist, was das Gesetz vorsieht, freiwillig Erfasstes als Zusatz. Bewusst KEIN Anteil
 // und keine Fläche: AHV/IV gelten für alle und sind nicht «erfasst», Freiwilliges ist keine Lücke (Fachprüfung des
 // Netz-Konzepts, 26.10.2026). Haftpflicht und Hausrat stehen im Schutzschild «Empfohlen», nicht hier.

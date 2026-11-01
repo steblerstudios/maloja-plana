@@ -6017,7 +6017,7 @@ export default {
       trustOk: 'Eher sicher',
       trustLow: 'Unsicher',
       // 26.10.2026: hiess «Feedback senden», schickte aber nichts. Jetzt ein Mail-Entwurf,
-      // gesendet wird erst mit dem eigenen Klick im Mailprogramm (Entscheid Sophie).
+      // gesendet wird erst mit dem eigenen Klick im Mailprogramm (Entscheid Stebler Studios).
       submit: 'Als E-Mail vorbereiten',
       submitHint: { sie: 'Öffnet Ihr Mailprogramm mit einem Entwurf an info@malojaplana.ch. Gesendet wird erst, wenn Sie dort auf Senden klicken.', du: 'Öffnet Dein Mailprogramm mit einem Entwurf an info@malojaplana.ch. Gesendet wird erst, wenn Du dort auf Senden klickst.' },
       to: 'An',
@@ -6058,7 +6058,7 @@ export default {
   },
   // Versicherungs-Übersicht (Runde 9 AB, Schritt 3, 25.10.2026)
   vu: {
-    // Absicherung je Risiko (Sophie 26.10.2026: Liste statt Netz); Gesetzesstellen auf fedlex gelesen 26.10.2026.
+    // Absicherung je Risiko (Stebler Studios 26.10.2026: Liste statt Netz); Gesetzesstellen auf fedlex gelesen 26.10.2026.
     risiko: {
       titel: 'Absicherung je Risiko',
       subOffen: '{n} noch offen',

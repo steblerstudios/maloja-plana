@@ -21,7 +21,7 @@ const profil = (finanzen = {}) => ({
 });
 
 describe('Kuchen: «Wofür geht es weg?»', () => {
-  // Abnahme F6 (Sophie 25.10.2026): nur die Ausgaben — bis dahin lag «bleibt» als Stück darin.
+  // Abnahme F6 (Stebler Studios 25.10.2026): nur die Ausgaben — bis dahin lag «bleibt» als Stück darin.
   it('Stücke = alle Ausgabenposten, ohne «bleibt»; Summe = Ausgaben', () => {
     const d = profil();
     const { stuecke, summe } = kuchenDaten(d, t, palette);

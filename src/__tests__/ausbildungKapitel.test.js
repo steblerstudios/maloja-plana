@@ -1,4 +1,4 @@
-// Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC; gebaut Abnahme 25.10.2026, Sophie «Bau Ausbildung 1 bis 5»):
+// Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC; gebaut Abnahme 25.10.2026, Stebler Studios «Bau Ausbildung 1 bis 5»):
 // Zusammenfassung mit Arbeitgeber, Dauer und Stunden · «Wo steht Ihr Lohn?» oben · Vorschau des Lebenslaufs ·
 // Werte nicht mehr über den Kartenrand · «Aufenthaltsbewilligung» bei Schweizer/innen «nicht nötig».
 import { describe, it, expect } from 'vitest';

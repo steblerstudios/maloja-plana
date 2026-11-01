@@ -253,7 +253,7 @@ export const SAEULE_3A = Object.freeze({
       + 'Frage 2), nicht gesendet. Betroffen sind nur Einzahlungen ÜBER dem Maximum.',
     // ⟨26.10.2026⟩ Hier stand «beim ASV Bern angefragt». Belegt ist das Gegenteil:
     // stebler-studios/KANTONS-NACHFRAGEN-ENTWURF-2026-10.md, «Nichts davon ist gesendet», Zeile A2
-    // (ASV Bern, IPV + 3a) ohne Haken. Senden ist Sophies Hand. Wird gesendet, hier und in
+    // (ASV Bern, IPV + 3a) ohne Haken. Senden ist Sache von Stebler Studios. Wird gesendet, hier und in
     // `ipv.vorbehaltBE3aDeckel` nachziehen.
     maximumFuer: (bemessungsjahr) => saeule3aMaximum(bemessungsjahr),
     // Das rohe Nettoeinkommen trägt die 3a voll, der Kanton rechnet sie nur bis zum Maximum

@@ -372,7 +372,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
 
 // Was daraus folgt: je Karte eine Funktion (siehe oben), alle mit ({ palette, t, data, onNavigate, w }).
 // Die Übersicht zeigt sie in ihrer Reihenfolge (auswertungsKarten), das Kapitel Finanzen in seiner.
-// `imKapitel` (Abnahme F6, Sophie 25.10.2026): im Kapitel Finanzen kürzer — eine Zeile Bund · Kanton und
+// `imKapitel` (Abnahme F6, Stebler Studios 25.10.2026): im Kapitel Finanzen kürzer — eine Zeile Bund · Kanton und
 // Gemeinde mit «grobe Schätzung, Hauptort, ohne Kirchensteuer»; die ganze Herleitung steht auf der Seite
 // Steuern, zu der die Karte führt. Und der 13. Monatslohn verweist nicht «ins Kapitel Finanzen & Geld»,
 // in dem man schon ist, sondern auf «Einkommen» oben.

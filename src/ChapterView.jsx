@@ -1794,7 +1794,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     if (f.type === 'household') {
       const h = v || {};
       const kinder = Array.isArray(h.children) ? h.children.length : 0;
-      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt». Abnahme F6 (Sophie 25.10.2026): statt
+      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt». Abnahme F6 (Stebler Studios 25.10.2026): statt
       // «1 Erwachsene · 0 Kinder» jetzt «allein, keine Kinder» bzw. «2 Erwachsene, 1 Kind». Die Zahl
       // der Erwachsenen wie die Erfassung sie zählt (adultsList, sonst adults; utils/partnereinkommen.js).
       const erwachsene = erwachseneImHaushalt(h);
@@ -1848,7 +1848,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Bereiche enthalten bereits Daten.». Andere Kapitel bleiben, wie sie waren.
   const istFinanzen = chapter.key === 'finanzen';
   const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
-  // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
+  // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Stebler Studios 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
   // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),
   // die Bezeichnung den Rest («flex: 1 1 0») — so bricht «Noch nicht» nicht neben einem langen Namen;
@@ -2129,8 +2129,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).
   // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV oben im Kapitel; dazu kamen
   // die zwei Wege, die die Übersicht unten hatte: Budget und Behörden-Dossier.
-  // Fassung 6 (Runde 9, VERGLEICH.md): in jedem Kapitel, je mit den von Sophie gewählten Zielen.
-  // Muster M7 (Sophie 25.10.2026): Namen und Untertitel wie im Entwurf statt aus dem Register
+  // Fassung 6 (Runde 9, VERGLEICH.md): in jedem Kapitel, je mit den von Stebler Studios gewählten Zielen.
+  // Muster M7 (Stebler Studios 25.10.2026): Namen und Untertitel wie im Entwurf statt aus dem Register
   // («Ablauf · 4 Schritte», «Neue Stelle», «Lebenslauf erstellen · Aus Ihren Angaben · als PDF» …);
   // wo ein Untertitel eine Zahl nennt, ist sie gezählt (Umzug: 4 Schritte, Neue Stelle: 5).
   // Die Ablage nennt die Unterlagen, die das Kapitel kennt (wie bisher schon Notfall).
@@ -2149,7 +2149,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       case 'basis': return [
         // Je nach Angaben oben (Runde 9, Y). «Neu in der Schweiz» (Ablauf `zuzug`) sollte nur nach einem
         // Zuzug in den letzten 12 Monaten erscheinen; ein Zuzugsdatum gibt es im Profil nicht. Abnahme F6
-        // (Sophie 25.10.2026): weglassen, bis es ein Datum gibt — sonst stünde es auch nach 20 Jahren da.
+        // (Stebler Studios 25.10.2026): weglassen, bis es ein Datum gibt — sonst stünde es auch nach 20 Jahren da.
         ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung', { sub: P('bewilligungSub') }), weg('einbuergerung', { sub: P('einbuergerungSub') })] : []),
         weg('lebensmappe', { sub: P('lebensmappeSub') }),
         weg('ausweis', { sub: P('ausweisSub') }),
@@ -2213,7 +2213,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       ))
     );
   };
-  // Muster M6 (Fassung 6, Sophie 25.10.2026): «Als Nächstes» ruhig wie im Entwurf — zentriert über
+  // Muster M6 (Fassung 6, Stebler Studios 25.10.2026): «Als Nächstes» ruhig wie im Entwurf — zentriert über
   // einer Linie, leiser Umrissknopf statt gefüllter Karte mit Goldknopf und Versalien. Gleich für
   // «Alle Kapitel durchgegangen» (Notfall), dort zusätzlich «Ihre Daten bleiben auf diesem Gerät.».
   // Rand in palette.mid: ein Bedienelement braucht 3:1 gegen den Grund (palette.border hat 1.3:1; A11y-Prüfung).
@@ -2232,7 +2232,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const renderAlleDurch = () => ruhigesEnde(tr('chapterView.alleDurch'), tr('chapterView.zurUebersichtTitel'), tr('chapterView.zurUebersichtSatz'),
     tr('chapterView.zurUebersicht'), () => onNavigate('dashboard'), tr('trust.localOnly'));
 
-  // Muster M5 (Fassung 6, Sophie 25.10.2026): Kopf wie im Entwurf — Landschaftsband in der
+  // Muster M5 (Fassung 6, Stebler Studios 25.10.2026): Kopf wie im Entwurf — Landschaftsband in der
   // Bereichsfarbe, darauf die Brotkrume «Übersicht › Kapitel», darunter das Symbol in einer Kachel
   // und der Titel. Keine Karte mehr um das Kapitel (vorher Kopf und Inhalt in einer Karte, die Seite
   // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich).

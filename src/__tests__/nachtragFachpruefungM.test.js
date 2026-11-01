@@ -1,4 +1,4 @@
-// Nachträge aus der Fachprüfung zum Muster M1–M8 (#581, 25.10.2026; Sophie: «ok sauber weiter»).
+// Nachträge aus der Fachprüfung zum Muster M1–M8 (#581, 25.10.2026; Stebler Studios: «ok sauber weiter»).
 // 1. Wochenaufenthalt: das Feld speichert `weekly`/`secondary`, PremiumSubsidy und Sozialhilfe verglichen mit
 //    'wochenaufenthalt'/'nebenwohnsitz' — ihre Hinweise erschienen nie.
 // 2. «trifft nicht zu» für Felder, die oft nicht gelten (Pensionskasse, Familienzulagen, Kinderbetreuung).

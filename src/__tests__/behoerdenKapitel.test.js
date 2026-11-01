@@ -1,4 +1,4 @@
-// Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD; Sophie 25.10.2026 «Bau Behörden 1 bis 7 und 9»):
+// Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD; Stebler Studios 25.10.2026 «Bau Behörden 1 bis 7 und 9»):
 // Kasten «Folgende Stände …» weg · Zusammenfassung mit Steuererklärung und Betreibungsregister · Steuerfrist als
 // Kalenderblatt · Behördengänge offen · «Für den Fall der Fälle» · «Rechtliche Vertretung: nicht erfasst» ·
 // Querverweis Steuern ↔ Finanzen · Marias Steuerfrist mit Quelle (31.03.2027).

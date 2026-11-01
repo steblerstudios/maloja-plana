@@ -1,4 +1,4 @@
-// Fassung 6 · Kapitel Versicherungen, Schritt 2 (Runde 9, Entwurf AA nachgebessert, Sophie 24./25.10.2026):
+// Fassung 6 · Kapitel Versicherungen, Schritt 2 (Runde 9, Entwurf AA nachgebessert, Stebler Studios 24./25.10.2026):
 // Versicherungen pro Monat, KK-Last gegen WHO 10 %, Schutzschild klein, Franchise-Kreuz klein mit Weg zur
 // Übersicht, «Alle Versicherungen auf einen Blick» zuoberst in «Passend».
 import { describe, it, expect } from 'vitest';

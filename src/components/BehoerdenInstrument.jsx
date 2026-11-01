@@ -2,7 +2,7 @@ import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
 
-// Kapitel Behörden · oben (Fassung 6, Runde 9, Entwurf AD, Entscheid Sophie 24.10.2026; gebaut Abnahme 25.10.2026).
+// Kapitel Behörden · oben (Fassung 6, Runde 9, Entwurf AD, Entscheid Stebler Studios 24.10.2026; gebaut Abnahme 25.10.2026).
 // Ersetzt den Kasten «Folgende Stände und Fristen sind erfasst» (er wiederholte die Angaben) und die zugeklappte
 // «Behörden-Checkliste»:
 //   1. Steuerfrist als Kalenderblatt mit «fällig am …», wann, wie viele offen; Weg zu Steuern und — Entscheid

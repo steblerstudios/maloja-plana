@@ -1,4 +1,4 @@
-// Fassung 6 · Versicherungs-Übersicht (Runde 9 AB, Schritt 3; Sophie 25.10.2026 «Baue Versicherungs-Übersicht 1 bis 9,
+// Fassung 6 · Versicherungs-Übersicht (Runde 9 AB, Schritt 3; Stebler Studios 25.10.2026 «Baue Versicherungs-Übersicht 1 bis 9,
 // gestapelt auf #576»): die Prämien-Orientierung als Übersicht — Name und Brotkrume, Marken, Versicherungen pro Monat mit
 // KK-Last, Zeilen mit Wert, Schutzschild, vier aufklappbare Teile, Zusatz-Wechsel und KK-Scanner, Schlusssatz.
 import { describe, it, expect } from 'vitest';

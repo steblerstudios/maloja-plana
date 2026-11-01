@@ -3,10 +3,10 @@ import { text, weight, space, radius } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
 
-// Kuchen im Kapitel Finanzen — «Wofür geht das Geld weg?» (Sophie 24.10.2026 abends, VERGLEICH.md
+// Kuchen im Kapitel Finanzen — «Wofür geht das Geld weg?» (Stebler Studios 24.10.2026 abends, VERGLEICH.md
 // «Geldfluss, Kuchen, Balken … nachentschieden»). Vorher auf der Charts-Seite (ChartsAdvanced.jsx,
 // entfernt mit #556); jetzt aus derselben Rechnung wie «Jeden Monat bleiben» (utils/monatsrechnung.js).
-// Abnahme F6 (Sophie 25.10.2026): nur die Ausgaben. Bis dahin lag «Rest/Sparen» als Stück darin (bei
+// Abnahme F6 (Stebler Studios 25.10.2026): nur die Ausgaben. Bis dahin lag «Rest/Sparen» als Stück darin (bei
 // Maria 40 %) — das beantwortet nicht «Wofür geht es weg?», und «was bleibt» zeigt schon der Balken oben.
 // Die Prozente sind Anteile an den Ausgaben.
 

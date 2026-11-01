@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 
-// Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9, Entwurf AC, Entscheid Sophie 24.10.2026
+// Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9, Entwurf AC, Entscheid Stebler Studios 24.10.2026
 // «Lohn-Barometer & Lebenslauf-Vorschau»; gebaut Abnahme 25.10.2026). Eine ruhige Papierkarte nur aus dem, was
 // schon erfasst ist — Persönliche Basis, Wohnort und dieses Kapitel. Nichts wird erfunden oder ergänzt; was
 // fehlt, bleibt weg. Der Knopf führt in den Lebenslauf (`cv`), wo man ergänzt und als PDF speichert.

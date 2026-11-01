@@ -1,4 +1,4 @@
-// Zweiter Nachtrag (Sophie 25.10.2026: «ok sauber weiter bitte»):
+// Zweiter Nachtrag (Stebler Studios 25.10.2026: «ok sauber weiter bitte»):
 // 1. Schutzschild: Pensionskasse als «trifft nicht zu» markiert, obwohl in der Regel Pflicht → die Lücke bleibt,
 //    ein ruhiger Satz sagt warum (BVG Art. 2, 7; Ausnahmen BVV 2 Art. 1j).
 // 2. AHV-Orientierung: «Ihr Arbeitgeber zahlt die andere Hälfte» galt nur für Angestellte.

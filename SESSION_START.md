@@ -51,7 +51,7 @@
 >   neuer). (5) Der Arbeitsordner `_werkbank/ablauf-band` von #624 war beim Abschluss schon entfernt (nicht von dieser
 >   Sitzung); der Inhalt ist vollständig auf main.
 
-> ✅ **Nachtrag 26.10.2026, 17:50 — #611 und #609 gemergt (Sophie: «ja dann lass und comitten mergen pushen usw
+> ✅ **Nachtrag 26.10.2026, 17:50 — #611 und #609 gemergt (Stebler Studios: «ja dann lass und comitten mergen pushen usw
 > was wir alles können»). NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 17:50): main = `758da6c7` (26.10. 17:37) · live = `4299bfb9` (0.1.48-beta,
@@ -70,7 +70,7 @@
 >   über das Test-Zeitlimit. «sauber: false» vom 23.10. kam von der unversionierten `ipv_rechner_28.html`, weil der Stash
 >   vor dem Deploy ohne `-u` lief. Am 29.10. aus frischem Worktree von `main` deployen oder `git stash -u`.
 
-> ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Sophie: «Ja, merge die Entwurfs-PRs in der festgehaltenen
+> ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Stebler Studios: «Ja, merge die Entwurfs-PRs in der festgehaltenen
 > Reihenfolge … Nichts erzwingen, kein Deploy»). NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:22): main = `c5ba39e3` (26.10. 15:22) · live = `4299bfb9` (0.1.48-beta) ·
@@ -108,7 +108,7 @@
 > - **#599** (auf #593): Netto-Richtwert ohne AHV/ALV/PK, solange im Jahr ≤17 (AHVG 3 II a, AVIG 2 I a, BVG 7 I); «Neuer Job»
 >   nennt das BVG-Mindestalter. · **#600** (auf #599): BVG-Altersgutschrift nach Jahrgang (BVV 2 Art. 13).
 > - **Zweig `feat/absicherung-je-risiko`** `e231e928` (auf #598, **kein PR**): Liste «Absicherung je Risiko» in der Versicherungs-
->   Übersicht (Sophie: Liste statt Spinnennetz). Textprüfung 0 Blocker (noch nicht eingearbeitet), **Fachprüfung ausstehend**.
+>   Übersicht (Stebler Studios: Liste statt Spinnennetz). Textprüfung 0 Blocker (noch nicht eingearbeitet), **Fachprüfung ausstehend**.
 > **Merge-Reihenfolge:** #586 → #588 → #589 → #590 → #593 → #599 → #600 (#591 auf #586) · #594 → #595 + #596 → #597 → #598.
 > **Offen:** Geburt am 1. eines Monats (Merkblätter 3.01/3.04 und RWL Stand 1.1.2026 gelesen: nicht geregelt → Ausgleichskasse
 > fragen) · Spinnennetz im Kapitel weg, sobald M2 steht · BVG-Hochrechnung: Jahresschritte ab heute, Gutschriftjahre aufgerundet ·

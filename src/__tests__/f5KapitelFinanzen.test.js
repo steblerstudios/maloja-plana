@@ -21,7 +21,7 @@ const render = (key, data, extra = {}) => renderToStaticMarkup(React.createEleme
 }));
 const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
 
-// Muster M5 (Fassung 6, Sophie 25.10.2026) löst «Kopf links und ruhig» (23.10.2026) ab: Kopf wie im
+// Muster M5 (Fassung 6, Stebler Studios 25.10.2026) löst «Kopf links und ruhig» (23.10.2026) ab: Kopf wie im
 // Entwurf — Landschaftsband, Brotkrume «Übersicht › Kapitel», Symbol in einer Kachel, keine Karte.
 describe('Kopf wie im Entwurf — für alle Kapitel (M5)', () => {
   it.each(CHAPTER_KEYS)('%s: Band, Brotkrume «Übersicht › Kapitel», Symbol in der Kachel, Titel in Textfarbe', (key) => {
@@ -234,7 +234,7 @@ describe('Reiter «Dokumente» plus «Dokument fotografieren»', () => {
 
 // Fassung 6 (Runde 9, Y): eine lesbare Zeile statt «Erwachsene im Haushalt 1 · Kinder 0».
 describe('Persönliche Basis: «Im Haushalt»', () => {
-  // Abnahme F6 (Sophie 25.10.2026): «allein, keine Kinder» statt «1 Erwachsene · 0 Kinder».
+  // Abnahme F6 (Stebler Studios 25.10.2026): «allein, keine Kinder» statt «1 Erwachsene · 0 Kinder».
   it('eine Person ohne Kinder: «allein, keine Kinder»', () => {
     const text = render('basis', DEMO_DATA.basis).replace(/<[^>]+>/g, '');
     expect(text).toContain('Im Haushaltallein, keine Kinder');
