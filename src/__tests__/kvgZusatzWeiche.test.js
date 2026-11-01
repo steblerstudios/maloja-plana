@@ -43,6 +43,12 @@ describe('ein Ablauf im Register, die alte Adresse bleibt', () => {
     expect(UMLEITUNGEN.zusatzwechsel).toEqual({ view: 'kvgwechsel', chapterIndex: null, anker: ZUSATZ_ANKER });
     expect(parseHash('#/zusatzwechsel')).toMatchObject({ view: 'kvgwechsel', anker: ZUSATZ_ANKER });
   });
+  it('die Weiche bleibt beim Wählen stehen, sonst verliert der Knopf den Fokus', () => {
+    const src = readFileSync(resolve(__dirname, '..', 'KVGWechsel.jsx'), 'utf8');
+    expect(src).not.toMatch(/key: weg \+ i/);
+    expect(src).toMatch(/scrollMarginTop: 'var\(--mp-sprungabstand\)',\s+textAlign: 'left'/);
+  });
+
   it('die Sprungmarke wählt den Knopf (springeZuAnker klickt data-anker-wahl)', () => {
     const src = readFileSync(resolve(__dirname, '..', 'utils', 'hashRouter.js'), 'utf8');
     expect(src).toMatch(/'ankerWahl' in el\.dataset\) el\.click\(\)/);

@@ -109,6 +109,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
     return React.createElement('button', {
       type: 'button', key: w, onClick: () => waehle(w), 'aria-pressed': an, ...extra,
       style: {
+        scrollMarginTop: 'var(--mp-sprungabstand)',
         textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', padding: '12px', minHeight: '48px', fontSize: text.sm, color: palette.text,
         background: an ? textFarbe + '24' : palette.surface, borderRadius: radius.lg + 'px', border: '1px solid ' + (an ? textFarbe : palette.border),
       },
@@ -206,7 +207,9 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
     title: t('kvgWechsel.title'),
     intro: t(weg === 'zusatz' ? 'zusatzWechsel.intro' : 'kvgWechsel.intro'),
   },
-    ...schritte.map((x, i) => React.createElement(AblaufStep, { key: weg + i, palette, title: x.titel }, ...(i === 0 ? weiche : []), ...x.inhalt)),
+    // Schlüssel ohne `weg`: die Weiche in Schritt 1 gehört beiden Wegen. Würde sie bei der Wahl neu aufgebaut, verlöre der
+    // Knopf den Fokus (`#/zusatzwechsel`, springeZuAnker wählt und fokussiert ihn).
+    ...schritte.map((x, i) => React.createElement(AblaufStep, { key: i, palette, title: x.titel }, ...(i === 0 ? weiche : []), ...x.inhalt)),
 
     // ── Fuss — je Weg wie bisher: Grundversicherung mit Quelle KVG Art. 7, Sonderkündigungsrecht,
     // keine-Beratung und lokal-Hinweis; Zusatzversicherung zitiert ihre Quellen im Schritt selbst.

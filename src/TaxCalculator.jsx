@@ -230,7 +230,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
       React.createElement('div', null,
         // F7-L8 (31.10.2026): der Steuer-Import als ruhige Zeile. `springeZuAnker` klappt sie für den alten Link
         // `#/taxImport` auf; erst offen wird TaxImport geladen.
-        onImport && React.createElement('details', { id: TAX_IMPORT_ANKER, onToggle: (e) => setImportOffen(e.currentTarget.open), style: { marginBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
+        onImport && React.createElement('details', { id: TAX_IMPORT_ANKER, onToggle: (e) => setImportOffen(e.currentTarget.open), style: { marginBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '88', scrollMarginTop: 'var(--mp-sprungabstand)' } },
           React.createElement('summary', { style: { cursor: 'pointer', padding: '12px 0', fontSize: text.sm, color: palette.text } }, t('tax.ausSteuererklaerung')),
           importOffen && React.createElement(React.Suspense, { fallback: null },
             React.createElement(TaxImport, { palette, t, currentFinanzen: data.finanzen || {}, onImport: importUebernehmen, vorlaeufig }))),
