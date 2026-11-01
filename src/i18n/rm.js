@@ -2244,6 +2244,7 @@ export default {
         haushaltWie: "Quintà sco sin la pagina dal budget, inclusiv l'entrada da la partenaria u dal partenari.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben» — rm ungeprüft F6
         // TODO(rm): provisorisch — Gegenlese (Monat/Jahr, F7-K2-2, 01.11.2026)
+        // TODO(rm): provisorisch — Gegenlese (Kopf der Monatskarte, F7-K2-2, 01.11.2026)
         einkommen: "Entrada {betrag}",
         einkommenNetto: "Entrada {betrag}, netto",
         ansicht: "Mais u onn",

@@ -47,13 +47,15 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   const [faktor, setFaktor] = useState(1);
   const jahr = faktor === 12;
   const chf = (w) => betrag(Math.round(w * faktor));
+  // Ruhig: je Bereich ein Stück. Nur der geöffnete zeigt seine Posten als einzelne Stücke.
   let start = 0;
-  const stuecke = gruppen.flatMap((g) => g.posten.map((p) => {
+  const stuecke = gruppen.flatMap((g) => (offen === g.key ? g.posten : [{ key: g.key, value: g.wert }]).map((p) => {
     const laenge = (p.value / basis) * 100;
     const anfang = start;
     start += laenge;
     return { key: p.key, laenge: Math.max(laenge - LUFT, 0.3), anfang, farbe: g.farbe, gruppe: g.key };
   }));
+  const blass = (key) => (offen && offen !== key ? 0.45 : 1);
   const umschalter = (wert, name) => React.createElement('button', {
     type: 'button', 'aria-pressed': faktor === wert, onClick: () => setFaktor(wert),
     style: { minHeight: '36px', padding: '0 ' + space.md + 'px', border: 0, borderRadius: radius.full, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
@@ -73,7 +75,9 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
           React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t('chapters.finanzen.monat.teil.' + g.key)),
           React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, chf(g.wert), knopf && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-block', width: '14px', textAlign: 'right', color: palette.mid } }, auf ? '−' : '+'))
         ),
-        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', height: '7px', marginTop: '3px', borderRadius: radius.full, background: g.farbe, width: (g.wert / groesste) * 100 + '%', opacity: offen && !auf ? 0.3 : 1 } })
+        // Die Spur ist für alle gleich lang, so lassen sich die Längen vergleichen.
+        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', height: '8px', marginTop: '4px', borderRadius: radius.full, background: palette.up, overflow: 'hidden' } },
+          React.createElement('span', { style: { display: 'block', height: '100%', borderRadius: radius.full, background: g.farbe, width: (g.wert / groesste) * 100 + '%', opacity: blass(g.key), transition: 'opacity 150ms ease' } }))
       ),
       auf && React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: '2px 0 ' + space.xs + 'px', fontSize: text.xs } },
         g.posten.map((p) => React.createElement('li', { key: p.key, style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', padding: '3px 14px 3px 0' } },
@@ -97,7 +101,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
           stuecke.map((s) => React.createElement('circle', {
             key: s.key, cx: 100, cy: 100, r: 86, fill: 'none', stroke: s.farbe, strokeWidth: 20, pathLength: 100,
             strokeDasharray: s.laenge + ' ' + (100 - s.laenge), strokeDashoffset: -s.anfang,
-            opacity: offen && offen !== s.gruppe ? 0.3 : 1,
+            opacity: blass(s.gruppe), style: { transition: 'opacity 150ms ease' },
           }))
         ),
         React.createElement('div', { style: { position: 'absolute', inset: '34px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' } },
@@ -107,7 +111,10 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
         )
       ),
       React.createElement('section', { 'aria-labelledby': 'mp-ring-titel', style: { flex: '1 1 260px', minWidth: 0 } },
-        React.createElement('h3', { id: 'mp-ring-titel', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('chapters.finanzen.kuchenFrage')),
+        React.createElement('h3', { id: 'mp-ring-titel', style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+          // Mit der Summe geht die Karte auf: Einkommen oben, minus das hier, gibt die Zahl in der Mitte.
+          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t('chapters.finanzen.kuchenFrage')),
+          React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', paddingRight: '14px' } }, chf(verplant))),
         sortiert.map(zeile)
       )
     ),

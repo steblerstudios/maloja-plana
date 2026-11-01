@@ -44,11 +44,17 @@ describe('Monatsring: «Wofür geht es weg?»', () => {
     const klar = html.replace(/<[^>]+>/g, '');
     expect(html).toContain('aria-hidden="true"');
     expect(klar).toContain('Jeden Monat bleibenCHF 2’10042 %');
-    expect(klar).toContain('Wofür geht es weg?');
+    // Die Summe macht die Rechnung sichtbar: 5’000 − 2’900 = 2’100.
+    expect(klar).toContain('Wofür geht es weg?CHF 2’900');
     expect(klar).toContain('CHF 1’500');
     expect(klar.indexOf('CHF 1’500')).toBeLessThan(klar.indexOf('CHF 600'));
     // Längster Balken = grösster Bereich.
     expect(html).toContain('width:100%');
+  });
+  it('geschlossen je Bereich ein Stück im Ring', () => {
+    const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };
+    const html = renderToStaticMarkup(React.createElement(Monatsring, ring(d)));
+    expect((html.match(/pathLength/gi) || []).length).toBe(ringDaten(ring(d)).gruppen.length);
   });
   it('eine Gruppe mit mehreren Posten lässt sich aufklappen, eine mit einem nicht', () => {
     const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };
