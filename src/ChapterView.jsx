@@ -2086,17 +2086,17 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
       { key: 'versicherungen', wert: p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
-      { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
+      { key: 'steuern', wert: p.tax, farbe: palette.sandDeep },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
     const basis = Math.max(m.einkommen, m.verplant) || 1;
     const sichtbar = teile.filter((x) => x.wert > 0);
     return React.createElement('div', { 'data-teil': 'monat-balken' },
-      React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
-        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe, borderRight: '1px solid ' + palette.up, boxSizing: 'border-box' } }))
+      React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', gap: '1px', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
+        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe } }))
       ),
-      sichtbar.length > 1 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: '4px', fontSize: text.xs, color: palette.mid } },
-        ...sichtbar.map((x) => React.createElement('span', { key: x.key, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', color: palette.mid } },
+      sichtbar.length > 1 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: '4px', fontSize: text.xs, color: palette.mid } },
+        ...sichtbar.map((x) => React.createElement('span', { key: x.key, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', color: palette.mid } },
           React.createElement('span', { 'aria-hidden': 'true', style: { width: '8px', height: '8px', borderRadius: radius.hair, background: x.farbe } }),
           tr('chapters.finanzen.monat.teil.' + x.key), ' ', betrag(x.wert)
         ))

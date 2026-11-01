@@ -8,8 +8,8 @@ import { zahl, betrag } from '../utils/geld.js';
 
 // Netz-Schild (F7-K3-6, Stebler Studios 27.10.2026): ersetzt im Kapitel Versicherungen das Spinnennetz und die
 // zwei kleinen Schilde «Pflicht / Empfohlen». Logik: data/netzSchild.js. Die Form ist dieselbe wie überall
-// (shieldShape.js), die Farben sind die Maloja-Töne: Sand für «noch nicht gedeckt» (ein Hinweis, kein Alarm),
-// helles Salbei für die Grundversicherung, Salbei für gedeckt.
+// (shieldShape.js), die Farben sind die Maloja-Töne: Sand für «noch nicht eingetragen» (ein Hinweis, kein Alarm),
+// helles Salbei für die Grundversicherung, Salbei für eingetragen.
 // Der Stand steht nie nur im Bild: Grösse der Füllung + Liste mit ✓/○ und Wort darunter (a11y).
 
 const B = 340, H = 330;
@@ -72,7 +72,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
       const [x, y] = punkt(g, Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96);
       return h('text', { key: p.key, 'aria-hidden': true, x, y, textAnchor: 'middle', dominantBaseline: 'central',
         // Kontur in der Grundfarbe: auf halbdichtem Salbei reichte der Kontrast dunkel nicht (a11y-Prüfung 01.11.2026).
-        style: { fontSize: '14px', fontWeight: weight.semi, fill: ganz(p) ? palette.surface : palette.text, ...(ganz(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } }, kurz(p));
+        style: { fontSize: '15px', fontWeight: weight.semi, fill: ganz(p) ? palette.surface : palette.text, ...(ganz(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } }, kurz(p));
     }));
 
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);

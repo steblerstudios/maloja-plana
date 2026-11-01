@@ -38,9 +38,9 @@ export const UnterlagenDrucken = ({ palette, t, data, chapters, documents, onNav
       key: w.key,
       style: {
         display: 'flex', alignItems: 'center', gap: '12px', minHeight: '44px', boxSizing: 'border-box',
-        padding: '10px 14px', marginBottom: space.sm + 'px', cursor: 'pointer',
+        padding: an ? '9px 13px' : '10px 14px', marginBottom: space.sm + 'px', cursor: 'pointer',
         background: an ? palette.sage + '22' : palette.up, color: palette.text,
-        border: '1px solid ' + (an ? palette.sage : palette.border), borderRadius: radius.sm,
+        border: an ? '2px solid ' + palette.sage : '1px solid ' + palette.border, borderRadius: radius.sm,
       },
     },
       React.createElement('input', {
