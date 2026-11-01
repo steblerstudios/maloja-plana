@@ -7299,6 +7299,8 @@ export default {
   },
   // TODO(rm): provisorisch — Gegenlese (Netz-Schild, F7-K3-6, 27.10.2026)
   netzSchild: {
+    // TODO(rm): provisorisch — Gegenlese (F7-K3-4, 01.11.2026)
+    listeTitel: 'Tut las assicuranzas',
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     intro: 'Ina part per sectur. Pli bleras indicaziuns, pli fitg s’emplenescha ella. Il scut mussa tge ch’è endatà, betg sche las prestaziuns bastan. Decisiva è la polizza.',
     aria: 'Stemma da secturs d’assicuranza.',

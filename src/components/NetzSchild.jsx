@@ -114,7 +114,11 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px 0' } }, t('netzSchild.intro')),
     bild,
     h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } }, satz),
-    h('div', { style: { maxWidth: '380px', margin: '0 auto' } }, teile.map(teilBlock)),
+    // F7-K3-4 (Stebler Studios 01.11.2026): Das Schild ist die Antwort, die lange Liste liegt eingeklappt darunter.
+    h('details', { 'data-teil': 'netz-schild-liste', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
+      // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
+      h('summary', { style: { cursor: 'pointer', minHeight: '44px', paddingTop: '10px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('netzSchild.listeTitel')),
+      h('div', { style: { maxWidth: '380px', margin: '0 auto' } }, teile.map(teilBlock))),
     st.bvgUnklar && h('p', { style: { ...klein, margin: space.sm + 'px 0 0' } },
       hinweisZeichen(), t(st.bvgUnklarGrund === 'dreizehnter' ? 'schutzschild.bvgUnklar13' : 'schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) })),
     st.bvgNa && h('p', { 'data-teil': 'bvg-na', style: { ...klein, margin: space.sm + 'px 0 0' } },

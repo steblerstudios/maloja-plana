@@ -131,3 +131,18 @@ describe('Nachprüfung', () => {
     expect(html).toContain('data-teil="netz-schild-satz"');
   });
 });
+
+// F7-K3-4 (Stebler Studios 01.11.2026): im Kapitel das Schild zuerst, Liste und Posten eingeklappt.
+describe('Kapitel Versicherungen: Aufbau', () => {
+  const html = renderToStaticMarkup(React.createElement(VersicherungenInstrument, { palette: LIGHT_PALETTE, t, versicherungen: DEMO_DATA.versicherungen, allData: DEMO_DATA, onNavigate: () => {} }));
+  it('Schild vor Summe, Summe vor KK-Last', () => {
+    expect(html.indexOf('data-schild="netz"')).toBeGreaterThan(-1);
+    expect(html.indexOf('data-schild="netz"')).toBeLessThan(html.indexOf('data-teil="versicherungen-darin"'));
+    expect(html.indexOf('data-teil="versicherungen-darin"')).toBeLessThan(html.indexOf('data-teil="kk-last-balken"'));
+  });
+  it('Liste und Posten sind eingeklappt, die Summe bleibt sichtbar', () => {
+    expect(html).toMatch(/<details[^>]*data-teil="netz-schild-liste"(?![^>]*open)/);
+    expect(html).toMatch(/<details[^>]*data-teil="versicherungen-darin"(?![^>]*open)/);
+    expect(html.slice(html.indexOf('<summary', html.indexOf('versicherungen-darin'))).replace(/<[^>]+>/g, '')).toContain('Versicherungen pro Monat CHF 609');
+  });
+});

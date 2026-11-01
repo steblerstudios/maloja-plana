@@ -6286,6 +6286,7 @@ export default {
     setup: 'tap to set up',
   },
   netzSchild: {
+    listeTitel: 'All insurance',
     intro: 'One part per area. The more is entered, the further it fills. The shield shows what is entered, not whether the benefits are enough. Your policy is what counts.',
     aria: 'Shield made of insurance areas.',
     nichtEingetragen: 'not entered',

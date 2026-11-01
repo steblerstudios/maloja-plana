@@ -6286,6 +6286,7 @@ export default {
     setup: 'toucher pour configurer',
   },
   netzSchild: {
+    listeTitel: 'Toutes les assurances',
     intro: 'Une partie par domaine. Plus il y a d’indications, plus elle se remplit. Le bouclier montre ce qui est saisi, pas si les prestations suffisent. La police fait foi.',
     aria: 'Écusson composé des domaines d’assurance.',
     nichtEingetragen: 'non saisi',

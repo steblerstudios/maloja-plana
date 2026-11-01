@@ -6260,6 +6260,7 @@ export default {
     setup: 'toccare per configurare',
   },
   netzSchild: {
+    listeTitel: 'Tutte le assicurazioni',
     intro: 'Una parte per ambito. Più dati ci sono, più si riempie. Lo scudo mostra ciò che è inserito, non se le prestazioni bastano. Fa stato la polizza.',
     aria: 'Scudo composto dai settori assicurativi.',
     nichtEingetragen: 'non inserito',

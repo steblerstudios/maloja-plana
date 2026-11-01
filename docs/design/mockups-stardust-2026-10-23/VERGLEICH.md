@@ -1600,3 +1600,8 @@ Was bleibt ist `sage`. Die vier Granit-Stufen für die Ausgaben sind **verworfen
 Kante, Pfeil «›» statt +/−, Balken messen am Einkommen wie der Ring, Haarlinie, ruhigerer Umschalter. Abweichung von der Prüferin nach Messung: `sage` 0.85 statt 0.22–0.28, weil sonst unter 3:1 (WCAG 1.4.11). **Abgenommen.**
 
 Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192).
+
+### F7-K3-4 gebaut (Stebler Studios, 01.11.2026: «Ja, wie empfohlen»)
+
+Im Kapitel Versicherungen steht das Netz-Schild zuoberst, die Liste aller Versicherungen ist eingeklappt, «Versicherungen pro Monat» ist eine Zeile mit den Posten darin. KK-Last und Franchise-Kreuz
+bleiben unverändert an ihrem Platz, weil F7-K3-1 und F7-K3-2 zurückgestellt sind; die Angaben beginnen darum noch nicht gleich nach der Summe. Die Versicherungs-Übersicht ist unverändert.

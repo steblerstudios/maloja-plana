@@ -6350,6 +6350,7 @@ export default {
     setup: 'antippen zum Einrichten',
   },
   netzSchild: {
+    listeTitel: 'Alle Versicherungen',
     intro: 'Ein Teil je Bereich. Je mehr darin eingetragen ist, desto weiter füllt es sich. Das Schild zeigt, was eingetragen ist, nicht, ob die Leistungen reichen. Massgebend ist die Police.',
     aria: 'Schild aus Versicherungsbereichen.',
     nichtEingetragen: 'nicht eingetragen',
