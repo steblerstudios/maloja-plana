@@ -2098,6 +2098,8 @@ export default {
         haushaltFehlen: "Mit dem ganzen Haushalt fehlen {betrag}",
         haushaltWie: "Gerechnet wie auf der Budget-Seite, zusätzlich mit dem Einkommen der Partnerin oder des Partners.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        einkommen: "Einkommen {betrag}",
+        einkommenNetto: "Einkommen {betrag}, netto",
         ansicht: "Monat oder Jahr",
         ansichtMonat: "Monat",
         ansichtJahr: "Jahr",

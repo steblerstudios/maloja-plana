@@ -1583,8 +1583,10 @@ Zwei Lücken gefunden und geschlossen. **F7-K5-1:** Behörden führte nach Finan
 ### Besprechen, Runde 3 (Stebler Studios, 01.11.2026)
 
 - **F7-K2-2, anders:** Nicht bloss den Kuchen weglassen, sondern «fusionieren kreativ». Nachgeschärft: Der Kreis mit der Zahl in der Mitte bleibt, dazu der Balken mit Namen
-  (Skizze A), «alles ideal nach UI/UX platziert». Eingebaut (`components/Monatsring.jsx`), von oben nach unten: Umschalter Monat / Jahr · Ring mit der Antwort in der Mitte ·
-  «Wofür geht es weg?» als Balken aus Kacheln, Klick öffnet die Posten · verplant von Einkommen. Skizzen B (Abstieg) und C (Flächen) sind verworfen.
+  (Skizze A), «alles ideal nach UI/UX platziert»; danach «das geht noch besser». Eingebaut als **eine Monatskarte** (`components/Monatsring.jsx`): oben Einkommen und Umschalter
+  Monat / Jahr · Ring mit der Antwort in der Mitte · daneben, auf schmalen Bildschirmen darunter, «Wofür geht es weg?» als Zeilen mit Balken, grösster Bereich zuerst, Klick öffnet die Posten
+  direkt darunter. Die Zeile «verplant von Einkommen» und der Satz «Monatliches Einkommen … Es bleiben …» (`MirrorCards.jsx`) entfallen, wo die Karte steht; bei Brutto bleibt der Satz,
+  offene Kredite nennt er weiterhin. Skizzen B (Abstieg) und C (Flächen) sind verworfen.
   «Jahr» ist der Monat × 12 und sagt das, ein 13. Monatslohn ist nicht eingerechnet. Einen Umschalter für Geld gab es vorher nicht, nur «Ganzes Jahr» im Kalender. **Wartet auf Abnahme im Bild.**
 - **E-4, anders:** Nicht Hausrat, nicht Unfall (Maria ist als Angestellte versichert, «offen» sähe falsch aus), sondern die **Lebensversicherung** (Stebler Studios). Sie ist freiwillig, der
   Teil bleibt blass und zählt nicht als Lücke, Pflicht bleibt 3/3. Folge: Maria CHF 609 Versicherungen, CHF 3’965 verplant, CHF 2’235 bleiben. Das kräftige Sand sieht man im Beispiel nicht. **Wartet auf Abnahme im Bild.**

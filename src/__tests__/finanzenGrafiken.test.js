@@ -39,19 +39,16 @@ describe('Monatsring: «Wofür geht es weg?»', () => {
     expect(rest).toBe(0);
     expect(basis).toBe(2900);
   });
-  it('Zahl in der Mitte, Balken mit Betrag und Prozent, Bild für Screenreader stumm', () => {
+  it('Zahl und Anteil in der Mitte, Bereiche mit Betrag, grösster zuerst, Bild für Screenreader stumm', () => {
     const html = renderToStaticMarkup(React.createElement(Monatsring, ring(profil())));
     const klar = html.replace(/<[^>]+>/g, '');
     expect(html).toContain('aria-hidden="true"');
-    expect(klar).toContain('Jeden Monat bleiben');
+    expect(klar).toContain('Jeden Monat bleibenCHF 2’10042 %');
     expect(klar).toContain('Wofür geht es weg?');
-    // Wohnen 1’500 von 5’000 Einkommen, Rest 2’100.
-    expect(klar).toContain('CHF 1’50030 %');
-    expect(klar).toContain('CHF 2’10042 %');
-  });
-  it('kleine Posten als «< 1 %», nicht «0 %»', () => {
-    const html = renderToStaticMarkup(React.createElement(Monatsring, ring(profil({ pension3a: 120 }))));
-    expect(html.replace(/<[^>]+>/g, '')).not.toContain('CHF 1200 %');
+    expect(klar).toContain('CHF 1’500');
+    expect(klar.indexOf('CHF 1’500')).toBeLessThan(klar.indexOf('CHF 600'));
+    // Längster Balken = grösster Bereich.
+    expect(html).toContain('width:100%');
   });
   it('eine Gruppe mit mehreren Posten lässt sich aufklappen, eine mit einem nicht', () => {
     const d = { ...profil(), wohnen: { rentAmount: 1500, utilities: 200 } };

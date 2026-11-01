@@ -2089,6 +2089,8 @@ export default {
         haushaltFehlen: "Pour tout le ménage, il manque {betrag}",
         haushaltWie: "Calculé comme sur la page Budget, en comptant aussi le revenu de la ou du partenaire.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        einkommen: "Revenu {betrag}",
+        einkommenNetto: "Revenu {betrag}, net",
         ansicht: "Mois ou année",
         ansichtMonat: "Mois",
         ansichtJahr: "Année",

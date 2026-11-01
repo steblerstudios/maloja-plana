@@ -2055,21 +2055,17 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // «netto» nur, wenn das Einkommen als Netto erfasst ist — sonst stimmte das Wort nicht.
     // Mit Nebenerwerb muss auch er als netto erfasst sein (Fassung 6: er zählt jetzt mit).
     const allesNetto = data.incomeType === 'netto' && (!(Number(data.sideIncome) > 0) || data.sideIncomeType === 'netto');
-    const einkommenKey = allesNetto ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
-    const fuss = (faktor) => React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
-      React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant * faktor)),
-      m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen * faktor))
-    );
+    // Kopf der Monatskarte: das Einkommen als Ausgangspunkt, ohne Zeile, wenn keines erfasst ist (nur Haushalt).
+    const kopf = (faktor) => m.einkommen > 0 ? React.createElement('span', null, ...mitBetrag(allesNetto ? 'chapters.finanzen.monat.einkommenNetto' : 'chapters.finanzen.monat.einkommen', m.einkommen * faktor, betrag)) : null;
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
-      // F7-K2-2 (01.11.2026): Zahl, Balken und Kuchen sind ein Bild, der Monatsring. Bis er geladen ist, steht die Zahl allein.
+      // F7-K2-2 (01.11.2026): Zahl, Balken und Kuchen sind eine Karte. Bis sie geladen ist, stehen Einkommen und Zahl allein.
       React.createElement(React.Suspense, { fallback: React.createElement(React.Fragment, null,
         React.createElement('div', { style: label }, tr(titelKey)),
         React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.abs(m.bleibt))),
-        fuss(1)) },
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, kopf(1))) },
         React.createElement(Monatsring, {
           palette, t: tr, data: { ...(allData || {}), finanzen: data }, einkommen: m.einkommen, verplant: m.verplant,
-          titel: tr(titelKey), titelJahr: tr('chapters.finanzen.monat.' + (plus ? 'jahrBleiben' : 'jahrFehlen')), zahl: m.bleibt,
-          fuss,
+          titel: tr(titelKey), titelJahr: tr('chapters.finanzen.monat.' + (plus ? 'jahrBleiben' : 'jahrFehlen')), zahl: m.bleibt, kopf,
         })
       ),
       renderDoppeltVersichert(),

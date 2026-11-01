@@ -2089,6 +2089,8 @@ export default {
         haushaltFehlen: "Per l'intera economia domestica mancano {betrag}",
         haushaltWie: "Calcolato come nella pagina Budget, contando anche il reddito della o del partner.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        einkommen: "Reddito {betrag}",
+        einkommenNetto: "Reddito {betrag}, netto",
         ansicht: "Mese o anno",
         ansichtMonat: "Mese",
         ansichtJahr: "Anno",

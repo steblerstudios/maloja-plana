@@ -4,10 +4,10 @@ import { betrag } from '../utils/geld.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
 
-// Monatsring im Kapitel Finanzen (F7-K2-2, Stebler Studios 01.11.2026: «fusionieren, kreativ», dann «den Kreis, das in der Mitte,
-// Kuchen, Monatsring und Balken wie A»). Fasst zusammen, was vorher getrennt stand: Die Antwort steht in der Mitte des Rings,
-// der Ring ist das ganze Einkommen, die offene Stelle ist, was bleibt. Darunter der Balken mit den Namen darin; er ersetzt die
-// Legende, und ein Klick öffnet die Posten. Rechnung wie vorher: utils/monatsrechnung.js.
+// Monatskarte im Kapitel Finanzen (F7-K2-2, Stebler Studios 01.11.2026: «fusionieren, kreativ», dann «den Kreis, das in der Mitte,
+// Kuchen, Monatsring und Balken», dann eine Karte statt vier Blöcken). Der Ring ist das ganze Einkommen, die offene Stelle ist, was
+// bleibt, die Antwort steht in der Mitte. Daneben die Bereiche, grösster zuerst; die Länge misst am grössten, die Anteile am
+// Einkommen zeigt der Ring. Ein Klick öffnet die Posten. Rechnung wie vorher: utils/monatsrechnung.js.
 // Im Minus ist der Ring voll und gemessen an den Ausgaben. «Jahr» ist die Monatsrechnung × 12, sie kennt keinen 13. Lohn.
 
 const GRUPPEN = {
@@ -38,10 +38,10 @@ const anteil = (wert, basis) => {
   return p > 0 && p < 1 ? '< 1 %' : Math.round(p) + ' %';
 };
 
-const MASS = 220;
+const MASS = 190;
 const LUFT = 0.35; // Abstand zwischen zwei Stücken, in Prozent des Rings
 
-export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titelJahr, zahl, fuss }) => {
+export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titelJahr, zahl, kopf }) => {
   const { gruppen, basis, rest } = ringDaten({ data, t, palette, einkommen, verplant });
   const [offen, setOffen] = useState(null);
   const [faktor, setFaktor] = useState(1);
@@ -56,54 +56,61 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   }));
   const umschalter = (wert, name) => React.createElement('button', {
     type: 'button', 'aria-pressed': faktor === wert, onClick: () => setFaktor(wert),
-    style: { minHeight: '36px', minWidth: '72px', padding: '0 ' + space.md + 'px', border: 0, borderRadius: radius.full, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
+    style: { minHeight: '36px', padding: '0 ' + space.md + 'px', border: 0, borderRadius: radius.full, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
       fontWeight: faktor === wert ? weight.semi : weight.normal, background: faktor === wert ? palette.surface : 'transparent', color: palette.text },
   }, name);
-  // Kachel im Balken: oben die Farbe, darunter Name und Betrag. Die Breite folgt dem Betrag; zu schmale Kacheln
-  // rutschen auf dem Handy in eine zweite Zeile, statt den Namen abzuschneiden. Die wahren Anteile zeigt der Ring.
-  const kachel = (key, wert, name, farbe, knopf, auf) => React.createElement(knopf ? 'button' : 'div', {
-    key, 'data-gruppe': key, ...(knopf ? { type: 'button', 'aria-expanded': auf, onClick: () => setOffen(auf ? null : key) } : {}),
-    style: { position: 'relative', flex: wert + ' 1 104px', minWidth: 0, minHeight: '72px', boxSizing: 'border-box', padding: space.xs + 'px 6px', textAlign: 'left', fontFamily: 'inherit', fontSize: text.xs, lineHeight: 1.3, color: palette.text, cursor: knopf ? 'pointer' : 'default',
-      background: auf ? palette.surface : farbe ? palette.up : 'transparent', border: farbe ? 0 : '1px dashed ' + palette.mid, borderTop: farbe ? '6px solid ' + farbe : '1px dashed ' + palette.mid, borderRadius: radius.sm, outline: auf ? '1px solid ' + palette.mid : 'none' },
-  },
-    React.createElement('span', { style: { display: 'block', fontWeight: weight.semi, color: palette.text } }, name),
-    React.createElement('span', { style: { display: 'block', color: palette.text, fontVariantNumeric: 'tabular-nums' } }, chf(wert)),
-    React.createElement('span', { style: { display: 'block', color: palette.mid, fontVariantNumeric: 'tabular-nums' } }, anteil(wert, basis)),
-    knopf && React.createElement('span', { 'aria-hidden': 'true', style: { position: 'absolute', right: space.sm + 'px', bottom: space.xs + 'px', color: palette.mid } }, auf ? '−' : '+')
-  );
-  const auf = gruppen.find((g) => g.key === offen);
-  return React.createElement('div', { 'data-teil': 'monatsring' },
-    React.createElement('div', { role: 'group', 'aria-label': t('chapters.finanzen.monat.ansicht'), style: { display: 'flex', width: 'fit-content', margin: '0 auto ' + space.sm + 'px', padding: '3px', borderRadius: radius.full, background: palette.up } },
-      umschalter(1, t('chapters.finanzen.monat.ansichtMonat')), umschalter(12, t('chapters.finanzen.monat.ansichtJahr'))),
-    React.createElement('div', { style: { position: 'relative', width: MASS + 'px', height: MASS + 'px', margin: '0 auto ' + space.md + 'px' } },
-      // Das Bild wiederholt nur den Balken darunter — für Screenreader stumm; Titel und Zahl in der Mitte sind Text.
-      React.createElement('svg', { width: MASS, height: MASS, viewBox: '0 0 200 200', 'aria-hidden': 'true', style: { display: 'block', transform: 'rotate(-90deg)' } },
-        React.createElement('circle', { cx: 100, cy: 100, r: 86, fill: 'none', stroke: palette.up, strokeWidth: 20 }),
-        stuecke.map((s) => React.createElement('circle', {
-          key: s.key, cx: 100, cy: 100, r: 86, fill: 'none', stroke: s.farbe, strokeWidth: 20, pathLength: 100,
-          strokeDasharray: s.laenge + ' ' + (100 - s.laenge), strokeDashoffset: -s.anfang,
-          opacity: offen && offen !== s.gruppe ? 0.3 : 1,
-        }))
+  const sortiert = [...gruppen].sort((a, b) => b.wert - a.wert);
+  const groesste = sortiert[0]?.wert || 1;
+  const zeile = (g) => {
+    const auf = offen === g.key;
+    const knopf = g.posten.length > 1;
+    return React.createElement('div', { key: g.key, 'data-gruppe': g.key },
+      React.createElement(knopf ? 'button' : 'div', {
+        ...(knopf ? { type: 'button', 'aria-expanded': auf, onClick: () => setOffen(auf ? null : g.key) } : {}),
+        style: { display: 'block', width: '100%', minHeight: '44px', boxSizing: 'border-box', padding: '4px 0', background: 'none', border: 0, fontFamily: 'inherit', fontSize: text.sm, textAlign: 'left', color: palette.text, cursor: knopf ? 'pointer' : 'default' },
+      },
+        React.createElement('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px' } },
+          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t('chapters.finanzen.monat.teil.' + g.key)),
+          React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, chf(g.wert), knopf && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-block', width: '14px', textAlign: 'right', color: palette.mid } }, auf ? '−' : '+'))
+        ),
+        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', height: '7px', marginTop: '3px', borderRadius: radius.full, background: g.farbe, width: (g.wert / groesste) * 100 + '%', opacity: offen && !auf ? 0.3 : 1 } })
       ),
-      React.createElement('div', { style: { position: 'absolute', inset: '38px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' } },
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.25 } }, jahr ? titelJahr : titel),
-        React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, jahr ? betrag(Math.abs(Math.round(zahl * 12))) : betrag(Math.abs(zahl)))
-      )
-    ),
-    React.createElement('section', { 'aria-labelledby': 'mp-ring-titel' },
-      React.createElement('h3', { id: 'mp-ring-titel', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('chapters.finanzen.kuchenFrage')),
-      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '3px' } },
-        gruppen.map((g) => kachel(g.key, g.wert, t('chapters.finanzen.monat.teil.' + g.key), g.farbe, g.posten.length > 1, offen === g.key)),
-        rest > 0 && kachel('bleibt', rest, t('budgetSync.remaining'), null, false, false)
-      ),
-      auf && React.createElement('ul', { style: { listStyle: 'none', margin: space.xs + 'px 0 0', padding: 0, fontSize: text.xs } },
-        auf.posten.map((p) => React.createElement('li', { key: p.key, style: { display: 'flex', gap: space.sm + 'px', padding: '3px 0', borderBottom: '1px solid ' + palette.border } },
-          React.createElement('span', { style: { flex: 1, minWidth: 0, color: palette.text } }, p.label),
-          React.createElement('span', { style: { color: palette.mid, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, chf(p.value) + ' · ' + anteil(p.value, basis))
+      auf && React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: '2px 0 ' + space.xs + 'px', fontSize: text.xs } },
+        g.posten.map((p) => React.createElement('li', { key: p.key, style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', padding: '3px 14px 3px 0' } },
+          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, p.label),
+          React.createElement('span', { style: { color: palette.mid, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, chf(p.value))
         ))
       )
+    );
+  };
+  return React.createElement('div', { 'data-teil': 'monatsring', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md } },
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: space.xs + 'px ' + space.md + 'px', marginBottom: space.md + 'px' } },
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, kopf && kopf(faktor)),
+      React.createElement('div', { role: 'group', 'aria-label': t('chapters.finanzen.monat.ansicht'), style: { display: 'flex', padding: '3px', borderRadius: radius.full, background: palette.up } },
+        umschalter(1, t('chapters.finanzen.monat.ansichtMonat')), umschalter(12, t('chapters.finanzen.monat.ansichtJahr')))
     ),
-    fuss && fuss(faktor),
-    jahr && React.createElement('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid } }, t('chapters.finanzen.monat.jahrHinweis'))
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px ' + space.lg + 'px', alignItems: 'center' } },
+      React.createElement('div', { style: { position: 'relative', width: MASS + 'px', height: MASS + 'px', margin: '0 auto', flexShrink: 0 } },
+        // Das Bild wiederholt nur die Zeilen daneben — für Screenreader stumm; Titel und Zahl in der Mitte sind Text.
+        React.createElement('svg', { width: MASS, height: MASS, viewBox: '0 0 200 200', 'aria-hidden': 'true', style: { display: 'block', transform: 'rotate(-90deg)' } },
+          React.createElement('circle', { cx: 100, cy: 100, r: 86, fill: 'none', stroke: palette.up, strokeWidth: 20 }),
+          stuecke.map((s) => React.createElement('circle', {
+            key: s.key, cx: 100, cy: 100, r: 86, fill: 'none', stroke: s.farbe, strokeWidth: 20, pathLength: 100,
+            strokeDasharray: s.laenge + ' ' + (100 - s.laenge), strokeDashoffset: -s.anfang,
+            opacity: offen && offen !== s.gruppe ? 0.3 : 1,
+          }))
+        ),
+        React.createElement('div', { style: { position: 'absolute', inset: '34px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' } },
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.25 } }, jahr ? titelJahr : titel),
+          React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.abs(Math.round(zahl * faktor)))),
+          rest > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, anteil(rest, basis))
+        )
+      ),
+      React.createElement('section', { 'aria-labelledby': 'mp-ring-titel', style: { flex: '1 1 260px', minWidth: 0 } },
+        React.createElement('h3', { id: 'mp-ring-titel', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('chapters.finanzen.kuchenFrage')),
+        sortiert.map(zeile)
+      )
+    ),
+    jahr && React.createElement('p', { style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid } }, t('chapters.finanzen.monat.jahrHinweis'))
   );
 };

@@ -177,37 +177,29 @@ function buildFinanzenSentence(data, allData, t) {
   const income = formatCHF(data.monthlyIncome);
   if (!income) return null;
 
+  const { total: totalIncome, brutto } = eigeneEinnahmen(data);
+  const totalExp = Math.round(sumAllExpenses(data, allData));
+  // F7-K2-2 (Stebler Studios 01.11.2026): Die Monatskarte zeigt Einkommen, Ausgaben und Rest. Der Satz wiederholt sie nicht;
+  // er bleibt, wo es keine Karte gibt (brutto, oder nichts erfasst), und nennt offene Kredite weiterhin.
+  const monatskarte = !brutto && totalIncome > 0 && totalExp > 0;
+
   const parts = [];
 
   // First part: income + employer
-  if (data.employer) {
-    parts.push(t('mirror.finanzen.incomeAt', { income: income, employer: data.employer }) + '.');
-  } else {
-    parts.push(t('mirror.finanzen.incomeOnly', { income: income }) + '.');
+  if (!monatskarte) {
+    if (data.employer) {
+      parts.push(t('mirror.finanzen.incomeAt', { income: income, employer: data.employer }) + '.');
+    } else {
+      parts.push(t('mirror.finanzen.incomeOnly', { income: income }) + '.');
+    }
   }
 
   // Second part: recorded expenses
   // Auf Franken: Gebäudeversicherung und Säule 3a sind Jahresbeträge ÷ 12 (Fassung 6) — Rappen
   // daraus wären Scheingenauigkeit.
   const expSum = Math.round(sumExpenses(data, allData));
-  if (expSum > 0) {
+  if (!monatskarte && expSum > 0) {
     parts.push(t('mirror.finanzen.expensesRecorded', { amount: formatCHF(expSum) }) + '.');
-  }
-
-  // Third part: financial difference — nicht bei brutto erfasstem Lohn. Darüber steht dann die
-  // Frage nach dem Netto statt einer Zahl (Entscheid Stebler Studios 24.10.2026,
-  // docs/entscheide/finanzen-fusion.md); ein Rest aus dem Bruttolohn läge so nie auf dem Konto.
-  const { total: totalIncome, brutto } = eigeneEinnahmen(data);
-  const totalExp = Math.round(sumAllExpenses(data, allData));
-  if (!brutto && totalIncome > 0 && totalExp > 0) {
-    const diff = totalIncome - totalExp;
-    if (diff > 0) {
-      parts.push(t('mirror.finanzen.remainsPositive', { amount: formatCHF(diff) }) + '.');
-    } else if (diff < 0) {
-      parts.push(t('mirror.finanzen.remainsNegative', { amount: formatCHF(Math.abs(diff)) }) + '.');
-    } else {
-      parts.push(t('mirror.finanzen.remainsZero') + '.');
-    }
   }
 
   // Fourth part: loans (only if > 0)
@@ -216,7 +208,7 @@ function buildFinanzenSentence(data, allData, t) {
     parts.push(t('mirror.finanzen.loansOpen', { amount: formatCHF(loans) }) + '.');
   }
 
-  return parts.join(' ');
+  return parts.join(' ') || null;
 }
 
 // ─── Generic select label helper ──────────────────────────

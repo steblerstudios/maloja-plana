@@ -50,20 +50,20 @@ describe('«Jeden Monat bleiben»', () => {
 
   // Fassung 6 (24.10.2026): die Säule 3a (CHF 250/Jahr) zählt jetzt auch im Kapitel — eine Zahl
   // mit dem Budget, darum keine Haushalts-Zeile mehr. Vorher: 2’480 hier, 2’459 im Budget. Seit 25.10.2026 (KK-Prämie 540.30, Hausrat und Haftpflicht ÷ 12): 2’274.
-  it('Maria: CHF 2’235, 3’965 verplant von 6’200 Einkommen, netto — wie der Satz und das Budget', () => {
+  it('Maria: CHF 2’235 von CHF 6’200 Einkommen, netto; kein Satz wiederholt die Karte (F7-K2-2)', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const text = html.replace(/<[^>]+>/g, '');
     expect(text).toContain('Jeden Monat bleibenCHF 2’235');
-    expect(text).toContain('3’965 verplant');
-    expect(text).toContain('von 6’200 Einkommen, netto');
-    expect(text).toContain('Es bleiben CHF 2’235.');
+    expect(text).toContain('Einkommen CHF 6’200, netto');
+    expect(text).not.toContain('Es bleiben');
+    expect(text).not.toContain('Monatliches Einkommen CHF 6’200');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
   it('Einkommen ohne Art: Zahl ohne «netto»', () => {
     const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: '' }).replace(/<[^>]+>/g, '');
-    expect(text).toContain('von 6’200 Einkommen');
-    expect(text).not.toContain('Einkommen, netto');
+    expect(text).toContain('Einkommen CHF 6’200');
+    expect(text).not.toContain('6’200, netto');
   });
 
   // Entscheid 24.10.2026: bei brutto keine Zahl, die so nie auf dem Konto liegt — die Netto-Frage

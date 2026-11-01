@@ -2089,6 +2089,8 @@ export default {
         haushaltFehlen: "For the whole household, {betrag} is missing",
         haushaltWie: "Calculated as on the budget page, also counting a partner's income.",
         // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        einkommen: "Income {betrag}",
+        einkommenNetto: "Income {betrag}, net",
         ansicht: "Month or year",
         ansichtMonat: "Month",
         ansichtJahr: "Year",
