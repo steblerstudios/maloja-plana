@@ -3206,8 +3206,8 @@ export default {
   },
 
   tax: {
-    aus3aUebernehmen: "Take over {betrag} from the Finances chapter ›",
-    ausSteuererklaerung: "Take over from the tax return",
+    aus3aUebernehmen: "Use {betrag} from the Finances chapter ›",
+    ausSteuererklaerung: "Use the figures from the tax return",
     abzuegeGeschaetzt: 'Deductions (estimate)',
     title: 'Taxes',
     intro: 'This overview gives you a rough estimate of your tax burden — as orientation, not tax advice. You can try different deductions and see how your situation changes.',
@@ -4023,7 +4023,7 @@ export default {
   },
 
   taxImport: {
-    uebernommen: "Taken over. The details are in the Finances chapter.",
+    uebernommen: "Done. The details are in the Finances chapter.",
     title: 'Tax data import',
     intro: 'Transfer the key figures from your tax return — income, assets and tax amount. Everything stays on your device; the file is only read locally.',
     selectFile: 'Choose file',

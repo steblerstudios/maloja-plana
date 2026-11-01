@@ -223,7 +223,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         // F7-L8 (31.10.2026): der Steuer-Import als ruhige Zeile. `springeZuAnker` klappt sie für den alten Link
         // `#/taxImport` auf; erst offen wird TaxImport geladen.
         onImport && React.createElement('details', { id: TAX_IMPORT_ANKER, onToggle: (e) => setImportOffen(e.currentTarget.open), style: { marginBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
-          React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, color: palette.text } }, t('tax.ausSteuererklaerung')),
+          React.createElement('summary', { style: { cursor: 'pointer', padding: '12px 0', fontSize: text.sm, color: palette.text } }, t('tax.ausSteuererklaerung')),
           importOffen && React.createElement(React.Suspense, { fallback: null },
             React.createElement(TaxImport, { palette, t, currentFinanzen: data.finanzen || {}, onImport: importUebernehmen }))),
         React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('tax.inputs')),
@@ -315,6 +315,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
             React.createElement('input', {
               type: 'number',
               inputMode: 'decimal',
+              'data-abzug': ded.key,
               value: taxData[ded.key] || '',
               onChange: (e) => handleInputChange(ded.key, e.target.value),
               placeholder: '0',
@@ -325,7 +326,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
           // F7-L8: Die Einzahlungen stehen im Kapitel Finanzen (Säule-3a-Tracker). Hier auf Klick, nicht still —
           // der Abzug ändert die Schätzung, und im Rechner darf man bewusst etwas anderes durchspielen.
           ded.key === 'pension3a' && erfasst3a(ded.max) > 0 && Number(taxData.pension3a) !== erfasst3a(ded.max) && React.createElement('button', {
-            type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker', onClick: () => handleInputChange('pension3a', erfasst3a(ded.max)),
+            type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker', onClick: () => { handleInputChange('pension3a', erfasst3a(ded.max)); document.querySelector('[data-abzug="pension3a"]')?.focus(); }, // Der Knopf verschwindet danach: Fokus ins Feld.
             style: { minHeight: '44px', padding: 0, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep, textAlign: 'left' },
           }, t('tax.aus3aUebernehmen', { betrag: betrag(erfasst3a(ded.max), { hoechstens: 2 }) }))
         ))

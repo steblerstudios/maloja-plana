@@ -69,7 +69,8 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
       const g = (winkel(i) % 360 + 360) % 360;
       const [x, y] = punkt(g, Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96);
       return h('text', { key: p.key, 'aria-hidden': true, x, y, textAnchor: 'middle', dominantBaseline: 'central',
-        style: { fontSize: '14px', fontWeight: weight.semi, fill: ganz(p) ? palette.surface : palette.text } }, kurz(p));
+        // Kontur in der Grundfarbe: auf halbdichtem Salbei reichte der Kontrast dunkel nicht (a11y-Prüfung 01.11.2026).
+        style: { fontSize: '14px', fontWeight: weight.semi, fill: ganz(p) ? palette.surface : palette.text, ...(ganz(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } }, kurz(p));
     }));
 
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);

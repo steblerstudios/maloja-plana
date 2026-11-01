@@ -2429,7 +2429,7 @@ export default {
     wegSoGehts: "Come fare",
     wegAblauf: "Percorso",
     fallTitel: "Per ogni evenienza",
-    fallSatz: { sie: "Il Suo testamento sta qui. Mandato precauzionale e direttive del paziente si trovano nel capitolo Emergenza.", du: "Il tuo testamento sta qui. Mandato precauzionale e direttive del paziente si trovano nel capitolo Emergenza." },
+    fallSatz: { sie: "Il Suo testamento va qui. Il mandato precauzionale e le direttive del paziente si trovano nel capitolo Emergenza.", du: "Il tuo testamento va qui. Il mandato precauzionale e le direttive del paziente si trovano nel capitolo Emergenza." },
     nichtErfasst: "nessuna voce",
     steuererklaerungJahr: "Dichiarazione d’imposta {jahr} inoltrata",
     vorschlag: "Proposta da «Dichiarazioni in sospeso: 0»",

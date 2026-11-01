@@ -183,7 +183,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const kapitelTitel = (kap) => (kapitelListe.find((c) => c.key === kap) || {}).title || kap;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
+  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
   const notfallRot = palette.roseDeep || palette.rose;
 
   // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
@@ -205,6 +205,8 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const stand = bereitschaft(alle);
   const pct = Math.round((stand.erledigt / stand.gesamt) * 100);
   const lagenName = (keys) => keys.map((k) => '«' + t('notfallEinstieg.' + k + '.title') + '»').join(', ');
+  // Nicht nur scrollen: Tastatur und Screenreader landen sonst nicht im Block (a11y-Prüfung 01.11.2026).
+  const zurVorsorge = () => { springeZuAnker('mp-notfall-vorsorge'); document.getElementById('mp-notfall-vorsorge')?.focus({ preventScroll: true }); };
   const speichern = (f) => {
     const wert = String(eingaben[f.k] || '').trim();
     if (!wert || demoMode || !onUpdate) return;
@@ -234,7 +236,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     if (f.k === 'patientenverfuegung') {
       return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
         titel,
-        h('button', { type: 'button', className: 'mp-link', onClick: () => springeZuAnker('mp-notfall-vorsorge'), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.zurVorsorge')));
+        h('button', { type: 'button', className: 'mp-link', onClick: zurVorsorge, style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.zurVorsorge')));
     }
     // Auswahl (Blutgruppe): zum Feld im Formular unten.
     if (!EINGABE[f.k]) {
@@ -317,7 +319,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     return t('chapters.notfall.fields.' + k + '.options.' + v) || v;
   };
   const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
-    h('h3', { id: 'mp-notfall-vorsorge', style: kapH }, t('notfallKapitel.vorsorgeTitel')),
+    h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, style: kapH }, t('notfallKapitel.vorsorgeTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.vorsorgeSatz'), ' ',
       h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
@@ -345,13 +347,13 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     h('div', { 'data-teil': 'notfall-pv-antwort', style: { marginTop: space.sm + 'px' } },
       h('label', { htmlFor: 'mp-notfall-pv', style: { display: 'block', fontSize: text.sm, color: palette.text } }, feldName('notfall', 'patientenverfuegung')),
       h('select', {
-        id: 'mp-notfall-pv', value: nf.patientenverfuegung || '', disabled: !!demoMode,
+        id: 'mp-notfall-pv', 'aria-describedby': 'mp-notfall-pv-hinweis', value: nf.patientenverfuegung || '', disabled: !!demoMode,
         onChange: (e) => onUpdate && onUpdate('patientenverfuegung', e.target.value),
         style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '0 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
       },
         h('option', { value: '' }, t('notfallKapitel.nichtErfasst')),
         ['yes', 'no'].map((w) => h('option', { key: w, value: w }, t('chapters.notfall.fields.patientenverfuegung.options.' + w)))),
-      h('p', { style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
+      h('p', { id: 'mp-notfall-pv-hinweis', style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
       nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none', marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 

@@ -26,7 +26,7 @@ export const SeitenSchluss = ({ palette, t, view, onNavigate }) => {
     h('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px' } }, t('chapterView.alsNaechstes')),
     h('button', {
       type: 'button', className: 'mp-link', onClick: gehe,
-      style: { minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.text },
+      style: { minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.text },
     }, (name ? t('dashboard.nextUpWeiter', { name }) : t('chapterView.zurUebersicht')), ' ›'));
 };
 
