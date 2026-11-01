@@ -339,6 +339,9 @@ export function calculateSozialhilfe(data) {
   const gbl = gblStand();
   return {
     grundbedarf,
+    // F, N, S (Stebler Studios 01.11.2026: Zahl mit Hinweis): Der Ansatz liegt unter dem für Einheimische und ist kantonal
+    // (AsylG Art. 82 Abs. 3, AIG Art. 86 Abs. 1). Diese Rechnung bleibt SKOS, die Anzeigen sagen es (pegel.ansatzTiefer).
+    ansatzTiefer: ['f', 'n', 's'].includes(String(data.ausbildung?.workPermit || '').toLowerCase()),
     gblJahr: gbl.jahr,
     gblBelegt: gbl.belegt,
     effectiveRent,

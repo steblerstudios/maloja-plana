@@ -425,7 +425,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('budgetSync.skosNote'))
+        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '')
       )
     ),
 

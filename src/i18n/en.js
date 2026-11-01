@@ -6365,6 +6365,7 @@ export default {
     premiumHint: 'Enter your health-insurance premium to see the split.',
   },
   pegel: {
+    ansatzTiefer: "With an F, N or S permit, the rate is generally lower than this calculation and set by the canton (AsylG Art. 82 para. 3, AIG Art. 86 para. 1). The figure is then too high. Other standards apply to provisionally admitted refugees (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',
     grenze: 'Limit',
     luft: 'room',

@@ -6339,6 +6339,7 @@ export default {
     premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
   },
   pegel: {
+    ansatzTiefer: "Con permesso F, N o S la tariffa è di regola inferiore a questo calcolo ed è stabilita dal cantone (LAsi art. 82 cpv. 3, LStrI art. 86 cpv. 1). L’importo risulta quindi troppo alto. Per i rifugiati ammessi provvisoriamente valgono altri standard (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
     grenze: 'Limite',
     luft: 'margine',

@@ -6365,6 +6365,7 @@ export default {
     premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
   },
   pegel: {
+    ansatzTiefer: "Avec un permis F, N ou S, le taux est en règle générale inférieur à ce calcul et fixé par le canton (LAsi art. 82 al. 3, LEI art. 86 al. 1). Le montant est alors trop élevé. D’autres normes valent pour les réfugiés admis à titre provisoire (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',
     grenze: 'Limite',
     luft: 'marge',

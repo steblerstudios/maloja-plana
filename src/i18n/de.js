@@ -6429,6 +6429,7 @@ export default {
     premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
   },
   pegel: {
+    ansatzTiefer: "Mit Ausweis F, N oder S liegt der Ansatz in der Regel tiefer als diese Rechnung und ist kantonal geregelt (AsylG Art. 82 Abs. 3, AIG Art. 86 Abs. 1). Die Zahl ist dann zu hoch. Für vorläufig aufgenommene Flüchtlinge gelten andere Standards (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',
     grenze: 'Grenze',
     luft: 'Luft',

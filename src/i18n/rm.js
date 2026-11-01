@@ -7389,6 +7389,7 @@ export default {
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
+    ansatzTiefer: "Cun la permissiun F, N u S è la tariffa per regla pli bassa che quest quint e reglada dal chantun (AsylG art. 82 al. 3, AIG art. 86 al. 1). La cifra è lura memia auta. Per fugitivs admess provisoricamain valan auters standards (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     coveredOffen: 'En quest quint basta l’entrada. Custs da lavur mancan — il dretg scleresch il servetsch social.',
     grenze: 'Limita',
