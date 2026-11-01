@@ -163,7 +163,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
   if (!basisKnown || !hoursKnown) {
     const hinweis = !basisKnown
       ? (einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing')
-      : state.stundenUnplausibel ? 'lohnEinordnung.hoursImplausibleNote' : 'lohnEinordnung.hoursUnknownNote';
+      : state.stundenZuTief ? 'lohnEinordnung.hoursTooLowNote' : state.stundenUnplausibel ? 'lohnEinordnung.hoursImplausibleNote' : 'lohnEinordnung.hoursUnknownNote';
     // Fehlt die Einkommensart → Kapitel Finanzen; fehlen die Wochenstunden → Ausbildung & Arbeit.
     // Index aus CHAPTER_KEYS statt hartcodiert: die Kapitel-Reihenfolge darf sich ändern, ohne dass
     // dieser Hinweis still ins falsche Kapitel führt.
@@ -327,6 +327,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
           t('lohnEinordnung.' + z.key, { betrag: fmt(z.betrag), stunden: z.stunden, jahr: z.jahr })))
       ),
       kette?.hinweis13 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } }, t('lohnEinordnung.ketteHinweis13')),
+      // BFS: Die Löhne von Lernenden und Praktikant:innen zählen im Median nicht mit.
+      kette && React.createElement('div', { 'data-teil': 'lohn-kette-lernende', style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } }, t('lohnEinordnung.ketteLernende')),
       // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).
       !kette && geschaetzt && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal },

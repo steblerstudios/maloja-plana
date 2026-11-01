@@ -3188,6 +3188,7 @@ export default {
     ketteMit13: 'Mit 13. Monatslohn ≈ CHF {betrag}',
     ketteMedian: 'Schweizer Median {jahr} CHF {betrag}, brutto, Vollzeit, mit anteiligem 13. Monatslohn und Sonderzahlungen',
     ketteHinweis13: { sie: 'Falls Sie einen 13. Monatslohn erhalten, liegt Ihr Vergleichswert rund 8 % höher.', du: 'Falls Du einen 13. Monatslohn erhältst, liegt Dein Vergleichswert rund 8 % höher.' },
+    ketteLernende: 'Löhne von Lernenden und Praktikant:innen zählen im Median nicht mit. Für sie sagt dieser Vergleich wenig.',
     spiegel: 'Netto {netto}, ≈ {brutto} brutto (geschätzt).',
     spiegelOhnePk: 'Netto {netto}, ≈ {brutto} brutto (ohne Pensionskasse geschätzt).',
     sperre_keinLohn: { sie: 'Der Vergleich mit dem Schweizer Median gilt für Löhne von Angestellten, darum zeigen wir ihn hier nicht. Ist es ein Lohn, wählen Sie im Kapitel Finanzen beim Anstellungstyp «Angestellt».', du: 'Der Vergleich mit dem Schweizer Median gilt für Löhne von Angestellten, darum zeigen wir ihn hier nicht. Ist es ein Lohn, wähle im Kapitel Finanzen beim Anstellungstyp «Angestellt».' },
@@ -3202,6 +3203,7 @@ export default {
     // Ohne Stunden gibt es keine Einordnung, sondern eine ruhige Einladung.
     hoursUnknownNote: { sie: 'Ohne Ihre Wochenstunden lässt sich Ihr Lohn nicht mit dem Vollzeit-Median vergleichen — tragen Sie sie ein, dann ordnen wir ihn ein.', du: 'Ohne Deine Wochenstunden lässt sich Dein Lohn nicht mit dem Vollzeit-Median vergleichen — trag sie ein, dann ordnen wir ihn ein.' },
     hoursImplausibleNote: { sie: '{hours} Stunden pro Woche sind ungewöhnlich viele. Ist vielleicht ein Pensum in Prozent gemeint? Dann tragen Sie bitte die Wochenstunden ein — bis dahin rechnen wir nicht damit.', du: '{hours} Stunden pro Woche sind ungewöhnlich viele. Ist vielleicht ein Pensum in Prozent gemeint? Dann trag bitte die Wochenstunden ein — bis dahin rechnen wir nicht damit.' },
+    hoursTooLowNote: { sie: '{hours} Stunden pro Woche sind sehr wenig. Ist vielleicht ein Pensum gemeint, zum Beispiel 0.8 für 80 %? Dann tragen Sie bitte die Wochenstunden ein. Bis dahin rechnen wir nicht damit.', du: '{hours} Stunden pro Woche sind sehr wenig. Ist vielleicht ein Pensum gemeint, zum Beispiel 0.8 für 80 %? Dann trag bitte die Wochenstunden ein. Bis dahin rechnen wir nicht damit.' },
     aria: 'Lohn CHF {amount}, Schweizer Median CHF {median}.',
     source: 'Quelle: [[BFS|www.bfs.admin.ch]], Lohnstrukturerhebung {jahr} (Median CHF {median}, inkl. anteiligem 13. Monatslohn).',
     empty: { sie: 'Sobald Ihr Einkommen erfasst ist, ordnen wir es hier ruhig ein.', du: 'Sobald Dein Einkommen erfasst ist, ordnen wir es hier ruhig ein.' },
