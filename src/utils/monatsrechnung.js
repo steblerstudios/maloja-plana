@@ -30,9 +30,12 @@ import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
 // Eintrag soll die Ausgaben nicht still verkleinern (Fachprüfung Fassung 6).
 const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
 
-// Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG
-// fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur als
-// Referenz). Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Unfall-Zusatz, Leben, Säule 3a) sind durch 12 geteilt.
+// Selbständige zahlen AHV und Pensionskasse selbst, es gibt keinen Lohnabzug (Fachprüfung 01.11.2026).
+export const zahltBeitraegeSelbst = (finanzen) => finanzen?.employmentType === 'selfEmployed' || finanzen?.employmentType === 'freelance';
+
+// Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG von
+// Angestellten fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur
+// als Referenz). Bei Selbständigen zählen sie. Ohne Anstellungstyp wird nichts angenommen. Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Unfall-Zusatz, Leben, Säule 3a) sind durch 12 geteilt.
 export function monatsAusgaben(profilDaten) {
   const data = profilDaten || {};
   return {
@@ -60,6 +63,8 @@ export function monatsAusgaben(profilDaten) {
     mobility: n(data.finanzen?.mobility),
     tax: n(data.finanzen?.monthlyTax),
     pension3a: n(data.finanzen?.pension3a) / 12,
+    ahvSelbst: zahltBeitraegeSelbst(data.finanzen) ? n(data.versicherungen?.ahvContribution) / 12 : 0,
+    bvgSelbst: zahltBeitraegeSelbst(data.finanzen) ? n(data.versicherungen?.bvgContribution) : 0,
     debtPayments: n(data.finanzen?.debtPayments),
     alimentePaid: n(data.finanzen?.alimentePaid),
   };
