@@ -1556,6 +1556,8 @@ Zweig `integration/f7-sammel`, PR #637 (Entwurf), nicht in `main`. Je ein Commit
 - F7-K5-1 — Betrag in Finanzen, Frist in Behörden, beide verweisen mit derselben Zahl aufeinander: ja. **Die Säule auf dem Dashboard bleibt aber.**
   Stebler Studios: «Für die säule hätt ich gerne eine lösung die möchte ich eigentlich nicht weg aber sie könnte besser sein da stimme ich zu».
   Befund dazu: Die Säule zeigt bewusst nur die Bundessteuer (`InstrumentePanel.jsx`), bei Maria CHF 977, Finanzen rechnet dagegen CHF 977 + CHF 7’454 Kanton und Gemeinde (grobe Schätzung).
-  Vorschlag von Claude ausstehend bis Entscheid.
+  **Entschieden (Stebler Studios, 01.11.2026: «Ja, ganze Steuer»):** Die Säule zeigt die ganze Steuer in zwei Teilen: unten satt die Bundessteuer, oben heller Kanton und
+  Gemeinde als Schätzung. Text «≈ CHF 8’431 / Jahr, davon Bund CHF 977» (Beispiel Maria), dieselbe Zahl wie in Finanzen, klein die Frist, Klick nach Finanzen.
+  Die Regel «nur die belegte Bundessteuer als Zahl» (`InstrumentePanel.jsx`) fällt damit. Vor dem Bau: swiss-precision-pruefer zum Satz. Ort der Säule hängt an F7-D10.
 
 **Noch nicht gewählt (19):** F7-D1–D7, D9, D10 · F7-L4 · F7-S5 · F7-K2-1 · F7-K2-2 · F7-K3-1 · F7-K3-2 · F7-K3-4 · E-3 · E-4 · E-5
