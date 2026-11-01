@@ -6272,7 +6272,7 @@ export default {
     title: { sie: 'Votre parcours de réduction de primes', du: 'Ton parcours de réduction de primes' },
     geschaetztLead: { sie: 'Le montant ci-dessus est une estimation. La manière dont la réduction fonctionne pour vous dépend de votre canton :', du: 'Le montant ci-dessus est une estimation. La manière dont la réduction fonctionne pour toi dépend de ton canton :' },
     orientierungLead: { sie: 'La manière dont la réduction fonctionne pour vous dépend de votre canton :', du: 'La manière dont la réduction fonctionne pour toi dépend de ton canton :' },
-    wayAuto: { sie: 'Automatique : de nombreux cantons calculent la réduction à partir de votre déclaration d’impôt — vous n’avez rien à faire, il suffit d’attendre la décision.', du: 'Automatique : de nombreux cantons calculent la réduction à partir de ta déclaration d’impôt — tu n’as rien à faire, il suffit d’attendre la décision.' },
+    wayAuto: { sie: 'Automatique : de nombreux cantons calculent la réduction à partir de votre déclaration d’impôt — en général, vous n’avez rien à faire, il suffit d’attendre la décision. Si votre revenu ou votre ménage a changé depuis la taxation, renseignez-vous de vous-même.', du: 'Automatique : de nombreux cantons calculent la réduction à partir de ta déclaration d’impôt — en général, tu n’as rien à faire, il suffit d’attendre la décision. Si ton revenu ou ton ménage a changé depuis la taxation, renseigne-toi de toi-même.' },
     wayApply: { sie: 'Demande : dans d’autres cantons, vous la demandez vous-même (voir les liens ci-dessous).', du: 'Demande : dans d’autres cantons, tu la demandes toi-même (voir les liens ci-dessous).' },
     markApplied: 'J’ai fait la demande',
     markConfirmed: 'Décision reçue',

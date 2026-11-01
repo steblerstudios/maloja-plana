@@ -6246,7 +6246,7 @@ export default {
     title: { sie: 'Il Suo percorso di riduzione dei premi', du: 'Il tuo percorso di riduzione dei premi' },
     geschaetztLead: { sie: 'La cifra qui sopra è una stima. Come funziona la riduzione per Lei dipende dal cantone:', du: 'La cifra qui sopra è una stima. Come funziona la riduzione per te dipende dal cantone:' },
     orientierungLead: { sie: 'Come funziona la riduzione nel Suo caso dipende dal Cantone:', du: 'Come funziona la riduzione nel tuo caso dipende dal Cantone:' },
-    wayAuto: { sie: 'Automatica: molti cantoni calcolano la riduzione dalla Sua dichiarazione d’imposta — non deve fare nulla, basta attendere la decisione.', du: 'Automatica: molti cantoni calcolano la riduzione dalla tua dichiarazione d’imposta — non devi fare nulla, basta attendere la decisione.' },
+    wayAuto: { sie: 'Automatica: molti cantoni calcolano la riduzione dalla Sua dichiarazione d’imposta — di solito non deve fare nulla, basta attendere la decisione. Se il Suo reddito o la Sua economia domestica sono cambiati dopo la tassazione, si informi di propria iniziativa.', du: 'Automatica: molti cantoni calcolano la riduzione dalla tua dichiarazione d’imposta — di solito non devi fare nulla, basta attendere la decisione. Se il tuo reddito o la tua economia domestica sono cambiati dopo la tassazione, informati di tua iniziativa.' },
     wayApply: { sie: 'Richiesta: in altri cantoni la richiede Lei stesso (vedi i link qui sotto).', du: 'Richiesta: in altri cantoni la richiedi tu stesso (vedi i link qui sotto).' },
     markApplied: 'Ho fatto la richiesta',
     markConfirmed: 'Decisione ricevuta',

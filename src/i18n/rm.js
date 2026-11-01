@@ -7225,7 +7225,7 @@ export default {
     title: { sie: 'Vossa via da reducziun da premis', du: 'Tia via da reducziun da premis' },
     geschaetztLead: { sie: 'La cifra survart è ina stima. Co che la reducziun funcziunescha per Vus dependa dal chantun:', du: 'La cifra survart è ina stima. Co che la reducziun funcziunescha per tai dependa dal chantun:' },
     orientierungLead: { sie: 'Co che la reducziun funcziunescha per Vus dependa dal chantun:', du: 'Co che la reducziun funcziunescha per tai dependa dal chantun:' }, // TODO(rm): provisorisch
-    wayAuto: { sie: 'Automatic: blers chantuns quintan la reducziun a partir da Vossa decleraziun da taglia — Vus na stuais far nagut, mabain mo spetgar la decisiun.', du: 'Automatic: blers chantuns quintan la reducziun a partir da tia decleraziun da taglia — ti na stos far nagut, mabain mo spetgar la decisiun.' },
+    wayAuto: { sie: 'Automatic: blers chantuns quintan la reducziun a partir da Vossa decleraziun da taglia — per regla na stuais Vus far nagut, mabain mo spetgar la decisiun. Sche Vossa entrada u Voss tegnairchasa è sa midada dapi la taxaziun, dumandai da Vossa iniziativa.', du: 'Automatic: blers chantuns quintan la reducziun a partir da tia decleraziun da taglia — per regla na stos ti far nagut, mabain mo spetgar la decisiun. Sche tia entrada u tes tegnairchasa è sa midada dapi la taxaziun, dumonda da tia iniziativa.' },
     wayApply: { sie: 'Dumonda: en auters chantuns la dumandais Vus sez (guarda ils links sutvart).', du: 'Dumonda: en auters chantuns la dumondas ti sez (guarda ils links sutvart).' },
     markApplied: 'Jau hai fatg la dumonda',
     markConfirmed: 'Decisiun retschavida',

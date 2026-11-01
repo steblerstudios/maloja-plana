@@ -37,7 +37,7 @@ export const SEITEN = [
       {
         titel: 'Trois niveaux qui ne se concertent pas',
         absaetze: [
-          'La <strong>Confédération</strong> ne fixe souvent que le cadre : elle prescrit qu’une prestation doit exister et en laisse l’aménagement aux cantons. C’est le cas par exemple de la réduction des primes.',
+          'La <strong>Confédération</strong> ne fixe souvent que le cadre : elle prescrit qu’une prestation doit exister et en laisse largement l’aménagement aux cantons. C’est le cas par exemple de la réduction des primes.',
           'Les <strong>cantons</strong> remplissent ce cadre — avec leurs propres limites, leurs propres formulaires, leurs propres délais. Deux ménages aux chiffres identiques peuvent être traités différemment dans deux cantons. Ce n’est pas un défaut du système, c’est le système.',
           'Les <strong>communes</strong> exécutent dans plusieurs domaines ce que le canton décide — en matière d’aide sociale, elles sont souvent l’interlocuteur réel.',
           'Concrètement : il n’existe pas de réponse générale à « est-ce que j’y ai droit ? ». Il n’existe que la réponse pour votre lieu de domicile, votre situation et votre année.',
@@ -91,14 +91,14 @@ export const SEITEN = [
       'La réduction individuelle des primes (RIP) est une contribution à la prime d’assurance-maladie. La Confédération fixe le cadre, les cantons décident — ce que cela signifie pour vous.',
     brotkrume: 'Réduction des primes',
     vorspann:
-      'La réduction individuelle des primes — souvent abrégée RIP — est une contribution des pouvoirs publics à la prime d’assurance-maladie. Elle est prévue par la loi sur l’assurance-maladie (LAMal), mais la Confédération ne l’exécute pas : ce sont les cantons qui le font, chacun selon ses propres règles.',
+      'La réduction individuelle des primes — souvent abrégée RIP — est une contribution des pouvoirs publics à la prime d’assurance-maladie. Elle est prévue par la loi sur l’assurance-maladie (LAMal), mais la Confédération ne l’exécute pas : ce sont les cantons qui le font, chacun selon ses propres règles, dans le cadre du droit fédéral.',
     abschnitte: [
       {
         titel: 'Ce que prescrit la Confédération et ce que décide le canton',
         absaetze: [
           'La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et à quelle hauteur.',
           'Concrètement, ce qui diffère d’un canton à l’autre : les limites de revenu et de fortune, la manière même dont le revenu déterminant est calculé, le fait de devoir déposer une demande ou d’être contacté, et les délais.',
-          'Est aussi partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.',
+          'Est en revanche partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.',
           'C’est pourquoi la phrase « chez nous, on y a droit à partir d’un revenu de X » mène rarement loin. Elle vaut au mieux pour un canton, et là encore pour une seule année.',
         ],
       },
@@ -106,7 +106,7 @@ export const SEITEN = [
         titel: 'Quels chiffres comptent',
         absaetze: [
           'Les cantons se fondent en règle générale sur les données fiscales — et souvent non pas sur celles de l’année en cours, mais sur une taxation antérieure déjà entrée en force. Cela a une conséquence qui surprend : une personne qui gagne nettement moins cette année ne le voit pas apparaître d’elle-même dans de nombreux cantons — d’autres en tiennent compte seulement lors du décompte définitif ultérieur.',
-          'La LAMal exige toutefois que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle à partir de quel changement cela s’applique, quels justificatifs et délais valent et à partir de quand cela prend effet. Un droit à la réduction n’en découle pas automatiquement. L’organe compétent vous renseigne — le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, mais dans certains cantons l’administration fiscale ou la commune de domicile.',
+          'La LAMal exige toutefois que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle les détails, par exemple les conditions, les justificatifs, les délais et la date d’effet. Un droit à la réduction n’en découle pas automatiquement. L’organe compétent vous renseigne — le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, mais dans certains cantons l’administration fiscale ou la commune de domicile.',
         ],
       },
       {
@@ -136,7 +136,7 @@ export const SEITEN = [
       {
         frage: 'Et si mon revenu a fortement baissé ?',
         antwort:
-          'Alors il vaut particulièrement la peine de se renseigner. La LAMal exige que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle à partir de quel changement cela s’applique, quels justificatifs et délais valent et à partir de quand cela prend effet. Un droit à la réduction n’en découle pas automatiquement. Renseignez-vous auprès de l’organe compétent, même si la taxation déterminante indique encore un revenu plus élevé.',
+          'Alors il vaut particulièrement la peine de se renseigner. La LAMal exige que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle les détails, par exemple les conditions, les justificatifs, les délais et la date d’effet. Un droit à la réduction n’en découle pas automatiquement. Renseignez-vous auprès de l’organe compétent, même si la taxation déterminante indique encore un revenu plus élevé.',
       },
     ],
     quellen: ['priminfo', 'fedlexKvgArt65'],

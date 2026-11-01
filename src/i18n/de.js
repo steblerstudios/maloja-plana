@@ -6336,7 +6336,7 @@ export default {
     title: { sie: 'Ihr IPV-Weg', du: 'Dein IPV-Weg' },
     geschaetztLead: { sie: 'Die Zahl oben ist eine Schätzung. Wie die Verbilligung bei Ihnen läuft, hängt vom Kanton ab:', du: 'Die Zahl oben ist eine Schätzung. Wie die Verbilligung bei dir läuft, hängt vom Kanton ab:' },
     orientierungLead: { sie: 'Wie die Verbilligung bei Ihnen läuft, hängt vom Kanton ab:', du: 'Wie die Verbilligung bei dir läuft, hängt vom Kanton ab:' },
-    wayAuto: { sie: 'Automatisch: Viele Kantone berechnen die Verbilligung aus Ihrer Steuererklärung — Sie müssen nichts tun, sondern nur auf die Verfügung achten.', du: 'Automatisch: Viele Kantone berechnen die Verbilligung aus deiner Steuererklärung — du musst nichts tun, sondern nur auf die Verfügung achten.' },
+    wayAuto: { sie: 'Automatisch: Viele Kantone berechnen die Verbilligung aus Ihrer Steuererklärung — Sie müssen meist nichts tun und nur auf die Verfügung achten. Hat sich Ihr Einkommen oder Ihr Haushalt seit der Veranlagung geändert, fragen Sie von sich aus nach.', du: 'Automatisch: Viele Kantone berechnen die Verbilligung aus deiner Steuererklärung — du musst meist nichts tun und nur auf die Verfügung achten. Hat sich dein Einkommen oder dein Haushalt seit der Veranlagung geändert, frag von dir aus nach.' },
     wayApply: { sie: 'Antrag: In anderen Kantonen beantragen Sie sie selbst (siehe die Links unten).', du: 'Antrag: In anderen Kantonen beantragst du sie selbst (siehe die Links unten).' },
     markApplied: 'Ich habe beantragt',
     markConfirmed: 'Verfügung erhalten',

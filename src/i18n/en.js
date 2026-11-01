@@ -6272,7 +6272,7 @@ export default {
     title: 'Your premium subsidy path',
     geschaetztLead: 'The figure above is an estimate. How the subsidy works for you depends on your canton:',
     orientierungLead: 'How the reduction works for you depends on your canton:',
-    wayAuto: 'Automatic: many cantons calculate the subsidy from your tax return — you do nothing, just watch for the decision letter.',
+    wayAuto: 'Automatic: many cantons calculate the subsidy from your tax return — you usually do nothing, just watch for the decision letter. If your income or household has changed since the assessment, ask on your own initiative.',
     wayApply: 'Application: in other cantons you apply for it yourself (see the links below).',
     markApplied: 'I have applied',
     markConfirmed: 'Decision received',
