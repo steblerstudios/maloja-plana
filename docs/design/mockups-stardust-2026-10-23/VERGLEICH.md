@@ -1541,3 +1541,21 @@ Zweig `integration/f7-sammel`, PR #637 (Entwurf), nicht in `main`. Je ein Commit
   neutral, ein Guthaben allein ist keine Pensionskasse. Altes Schutzschild ebenso.
 - **Medikamentenpreis:** Kombinationen zählen nicht zum Einzelwirkstoff (Spalte «Wirkstoffe»). 40-%-Ausnahme nach KLV Art. 38a Abs. 7.
 - **Hausrat:** Pflicht nur NW (NSVG Art. 27 Abs. 1) und VD (über ECA Vaud belegt); FR, JU «je nach Kanton», bis der Erlass gelesen ist.
+
+### Besprechen, Runde 2, erster Teil (Stebler Studios, 01.11.2026, Seite «Fassung 7 Besprechen»)
+
+5 von 24 Punkten gewählt. **Nichts gebaut.** Stebler Studios: «hier mal ein anfang».
+
+**Wie empfohlen (4):**
+- F7-K4-1 — Lohnvergleich nur in Ausbildung & Arbeit; Finanzen zeigt das Einkommen mit Link zum Vergleich.
+- F7-L9 — Alles mit Lohn hängt an Ausbildung & Arbeit; die Rechner bleiben und nutzen dieselbe Brutto-Schätzung.
+- E-1 — Überall «eingetragen», nicht «erfasst».
+- E-2 — Überall «Schild», nicht «Schutzschild».
+
+**Anders (1):**
+- F7-K5-1 — Betrag in Finanzen, Frist in Behörden, beide verweisen mit derselben Zahl aufeinander: ja. **Die Säule auf dem Dashboard bleibt aber.**
+  Stebler Studios: «Für die säule hätt ich gerne eine lösung die möchte ich eigentlich nicht weg aber sie könnte besser sein da stimme ich zu».
+  Befund dazu: Die Säule zeigt bewusst nur die Bundessteuer (`InstrumentePanel.jsx`), bei Maria CHF 977, Finanzen rechnet dagegen CHF 977 + CHF 7’454 Kanton und Gemeinde (grobe Schätzung).
+  Vorschlag von Claude ausstehend bis Entscheid.
+
+**Noch nicht gewählt (19):** F7-D1–D7, D9, D10 · F7-L4 · F7-S5 · F7-K2-1 · F7-K2-2 · F7-K3-1 · F7-K3-2 · F7-K3-4 · E-3 · E-4 · E-5
