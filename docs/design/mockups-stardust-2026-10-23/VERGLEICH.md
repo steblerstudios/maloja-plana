@@ -1534,3 +1534,10 @@ Zweig `integration/f7-sammel`, nicht gepusht, nicht in `main`. Je ein Commit, W�
   Passend). `aussteuerung` ist Umleitung, `notifications` kommt über die Einstellungen.
 - **F7-L2:** Nachgezählt: sieben Seiten ohne Weg. `components/SeitenSchluss.jsx`, nachgeladen, eine Tabelle: kk, sync, direktlinks,
   export, notifications, flyer, installApp. Einstellungen bleiben ohne, das ist ein Systemziel.
+
+### Predeploy-Prüfung, behoben (01.11.2026, Stebler Studios: «Ja, wie empfohlen»)
+
+- **Netz-Schild:** zeigt, was eingetragen ist, nicht, was gedeckt ist. Lücke ist nur Pflicht; die AHV ist nie eine Lücke (AHVG Art. 1a), Freiwilliges bleibt
+  neutral, ein Guthaben allein ist keine Pensionskasse. Altes Schutzschild ebenso.
+- **Medikamentenpreis:** Kombinationen zählen nicht zum Einzelwirkstoff (Spalte «Wirkstoffe»). 40-%-Ausnahme nach KLV Art. 38a Abs. 7.
+- **Hausrat:** Pflicht nur NW (NSVG Art. 27 Abs. 1) und VD (über ECA Vaud belegt); FR, JU «je nach Kanton», bis der Erlass gelesen ist.
