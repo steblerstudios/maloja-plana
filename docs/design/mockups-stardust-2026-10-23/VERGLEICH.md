@@ -1601,7 +1601,9 @@ Kante, Pfeil «›» statt +/−, Balken messen am Einkommen wie der Ring, Haarl
 
 Stand: Zweig `feat/f7-runde3`, Vorschau mit `preview_start f7-runde3` (Port 5192).
 
-### F7-K3-4 gebaut (Stebler Studios, 01.11.2026: «Ja, wie empfohlen»)
+### F7-K3-4 gebaut (Stebler Studios, 01.11.2026)
 
-Im Kapitel Versicherungen bleibt die grosse Summe zuoberst (Stebler Studios nachträglich: «hat mir irgendwie noch gefallen»), die Posten sind darunter eingeklappt, dann folgt das Netz-Schild mit eingeklappter Liste. KK-Last und Franchise-Kreuz
-bleiben unverändert an ihrem Platz, weil F7-K3-1 und F7-K3-2 zurückgestellt sind; die Angaben beginnen darum noch nicht gleich nach der Summe. Die Versicherungs-Übersicht ist unverändert.
+Ablauf: «Ja, wie empfohlen» (Schild zuerst), dann zurückgenommen: Die grosse Summe bleibt zuoberst. Danach: «vereine diese Dinge, ergänze die anderen Versicherungen, schau die ganze Seite mit den Farben an, dafür haben wir die Farben».
+Eingebaut: **eine Versicherungs-Karte** (`VersicherungenInstrument.jsx`, auch auf der Versicherungs-Übersicht) mit grosser Summe, Balken aus den Posten, Zeilen in den Farben aus `ausgabenPosten`, KK-Last direkt bei der Krankenkasse, und eingeklappt «Nicht in dieser Summe»
+(AHV, Pensionskasse, Säule 3a, UVG, KTG, Rechtsschutz, Reise, Cyber, Fahrzeug, nur wenn eingetragen; die Summe selbst bleibt die Budget-Gruppe). Netz-Schild und KK-Last-Balken tragen die Farbe des Kapitels statt Salbei und Sky, die offene Stelle bleibt Sand.
+Schild mit eingeklappter Liste folgt nach der Karte, das Franchise-Kreuz bleibt, F7-K3-1 und K3-2 bleiben zurückgestellt. **Wartet auf Abnahme im Bild.**

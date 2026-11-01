@@ -132,16 +132,25 @@ describe('Nachprüfung', () => {
   });
 });
 
-// F7-K3-4 (Stebler Studios 01.11.2026): grosse Summe oben, Posten und Liste eingeklappt, Schild vor der KK-Last.
-describe('Kapitel Versicherungen: Aufbau', () => {
+// F7-K3-4 (Stebler Studios 01.11.2026): eine Karte mit Summe, Posten und KK-Last, dazu was nicht in der Summe zählt.
+describe('Kapitel Versicherungen: eine Karte', () => {
   const html = instrument(DEMO_DATA.versicherungen);
-  it('Summe vor Schild, Schild vor KK-Last', () => {
-    expect(nurText(html).trim().startsWith('Versicherungen pro Monat CHF 609')).toBe(true);
-    expect(html.indexOf('data-teil="versicherungen-darin"')).toBeLessThan(html.indexOf('data-schild="netz"'));
-    expect(html.indexOf('data-schild="netz"')).toBeLessThan(html.indexOf('data-teil="kk-last-balken"'));
+  const text = nurText(html);
+  it('Summe zuerst, KK-Last bei der Krankenkasse, Schild nach der Karte', () => {
+    expect(text.trim().startsWith('Versicherungen pro Monat CHF 609')).toBe(true);
+    expect(html.indexOf('Krankenkasse (Grundversicherung)')).toBeLessThan(html.indexOf('data-teil="kk-last-balken"'));
+    expect(html.indexOf('data-teil="kk-last-balken"')).toBeLessThan(html.indexOf('Krankenkasse (Zusatz)'));
+    expect(html.indexOf('data-teil="versicherungen-ausserhalb"')).toBeLessThan(html.indexOf('data-schild="netz"'));
   });
-  it('Liste und Posten sind eingeklappt', () => {
+  it('ergänzt, was nicht in der Summe zählt, nur aus erfassten Feldern', () => {
+    expect(text).toContain('Pensionskasse');
+    expect(text).toContain('Reiseversicherung');
+    expect(text).toContain('Krankentaggeld');
+    expect(text).not.toContain('Cyberversicherung eingetragen');
+    expect(html).toMatch(/<details[^>]*data-teil="versicherungen-ausserhalb"(?![^>]*open)/);
     expect(html).toMatch(/<details[^>]*data-teil="netz-schild-liste"(?![^>]*open)/);
-    expect(html).toMatch(/<details[^>]*data-teil="versicherungen-darin"(?![^>]*open)/);
+  });
+  it('die Summe ändert sich nicht durch die Ergänzung', () => {
+    expect(text).toContain('CHF 609');
   });
 });

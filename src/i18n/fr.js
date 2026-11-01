@@ -2430,6 +2430,7 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
+    ausserhalb: "Hors de cette somme",
     titel: "Assurances par mois",
     kk: "Caisse maladie (assurance de base)",
     hausrat: "Assurance ménage (CHF {jahr} / an)",

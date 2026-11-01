@@ -4531,6 +4531,8 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
+    // TODO(rm): provisorisch — Gegenlese (F7-K3-4, 01.11.2026)
+    ausserhalb: "Betg en questa summa",
     titel: "Assicuranzas per mais",
     kk: "Cassa da malsauns (assicuranza da basa)",
     hausrat: "Ménaschi (CHF {jahr} / onn)",

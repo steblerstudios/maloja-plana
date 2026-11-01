@@ -2430,6 +2430,7 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
+    ausserhalb: "Not in this total",
     titel: "Insurance per month",
     kk: "Health insurance (basic)",
     hausrat: "Household contents (CHF {jahr} / year)",

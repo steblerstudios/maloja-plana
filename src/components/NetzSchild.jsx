@@ -1,4 +1,5 @@
 import React from 'react';
+import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { netzSchildTeile, teilWinkel, fuellung, SCHILD_KERN } from '../data/netzSchild.js';
 import { HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { shieldPath } from './shieldShape.js';
@@ -28,6 +29,17 @@ const keil = (mitte, breite) => {
   return pts.map((p) => p.map((x) => Math.round(x * 10) / 10).join(',')).join(' ');
 };
 
+// Franken: ganze Beträge ohne Rappen, sonst immer zwei Stellen («CHF 540.30», nie «540.3» — F7-D7).
+const chf = (n) => betrag(n, Number.isInteger(n) ? {} : { stellen: 2 });
+export const betragText = (b, t) => [
+  b.mt && t('netzSchild.betrag.kosten', { mt: chf(b.mt), jahr: chf(b.jahr) }),
+  b.guthaben && t('netzSchild.betrag.guthaben', { chf: chf(b.guthaben) }),
+  b.summe && t('netzSchild.betrag.summe', { chf: chf(b.summe) }),
+  b.lohn && t('netzSchild.betrag.lohn'),
+  b.arbeitgeber && t('netzSchild.betrag.arbeitgeber'),
+  b.name,
+].filter(Boolean).join(' · ');
+
 export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stunden, employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter }) => {
   const v = versicherungen || {};
   const { teile, offen, teilweise, st } = netzSchildTeile(v, { employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter, finanzen, kanton });
@@ -39,7 +51,8 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const winkel = (i) => teilWinkel(i, n, iLeben);
   // Teilweise: dasselbe Salbei wie «ganz», halb so dicht — im hellen wie im dunklen Modus klar als «weniger»
   // lesbar (im Browser verglichen 27.10.2026; ein eigenes helles Grün verschwand dunkel fast).
-  const salbei = palette.sageDeep || palette.sage;
+  // Seit F7-K3-4 in der Farbe des Kapitels (Stebler Studios 01.11.2026: «dafür haben wir die Farben»); die offene Stelle bleibt Sand.
+  const salbei = bereichsTon('versicherungen', palette) || palette.sageDeep || palette.sage;
   const ganz = (p) => p.n > 0 && p.erreicht === p.n;
   const farbe = (p) => p.erreicht === 0 ? palette.sand : salbei;
   // Nur Freiwilliges ohne Eintrag (n = 0): kaum sichtbar, das ist keine Lücke.
@@ -77,19 +90,10 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
 
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  // Franken: ganze Beträge ohne Rappen, sonst immer zwei Stellen («CHF 540.30», nie «540.3» — F7-D7).
-  const chf = (n) => betrag(n, Number.isInteger(n) ? {} : { stellen: 2 });
-  const zahlen = (b) => [
-    b.mt && t('netzSchild.betrag.kosten', { mt: chf(b.mt), jahr: chf(b.jahr) }),
-    b.guthaben && t('netzSchild.betrag.guthaben', { chf: chf(b.guthaben) }),
-    b.summe && t('netzSchild.betrag.summe', { chf: chf(b.summe) }),
-    b.lohn && t('netzSchild.betrag.lohn'),
-    b.arbeitgeber && t('netzSchild.betrag.arbeitgeber'),
-    b.name,
-  ].filter(Boolean).join(' · ');
+  const zahlen = (b) => betragText(b, t);
   const versZeile = (x) => h('div', { key: x.key, role: 'listitem', style: { fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
     h('div', { style: { display: 'flex', alignItems: 'baseline', gap: '6px' } },
-      h('span', { 'aria-hidden': true, style: { color: x.ok ? palette.sage : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
+      h('span', { 'aria-hidden': true, style: { color: x.ok ? salbei : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
       h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
       h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, t(!x.ok ? 'netzSchild.nichtEingetragen' : x.abgeleitet ? 'netzSchild.lautAngaben' : 'netzSchild.eingetragen'))),
     zahlen(x.betrag) && h('div', { 'data-betrag': x.key, style: { color: palette.mid, paddingLeft: '20px', fontVariantNumeric: 'tabular-nums' } }, zahlen(x.betrag)));

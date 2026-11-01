@@ -2440,6 +2440,7 @@ export default {
   },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
+    ausserhalb: "Nicht in dieser Summe",
     titel: "Versicherungen pro Monat",
     kk: "Krankenkasse (Grundversicherung)",
     hausrat: "Hausrat (CHF {jahr} / Jahr)",

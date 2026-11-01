@@ -48,8 +48,8 @@ describe('Oben', () => {
   it('Versicherungen pro Monat mit KK-Last, Posten zugeklappt', () => {
     const html = seite();
     expect(nurText(html)).toContain('Versicherungen pro Monat');
-    expect(html).toMatch(/<details data-teil="versicherungen-darin"/);
-    expect(nurText(html)).toContain('Was darin steckt');
+    expect(html).toContain('data-teil="versicherungen-karte"');
+    expect(nurText(html)).toContain('Nicht in dieser Summe');
   });
 });
 
