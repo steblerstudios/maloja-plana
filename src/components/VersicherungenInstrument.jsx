@@ -189,8 +189,14 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h4', { style: kapH }, t('instrumente.tacho')),
-      h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true, eigeneFranchise: parseFranchise(v.franchise) }),
-      vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal, textAlign: 'center' } }, vorschlagSatz),
+      // F7-K3-2 (Stebler Studios 01.11.2026: «kombi von a b c»): oben Empfehlung und bisher, die Grafik aufklappbar, darunter die Übersicht.
+      vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.body, fontWeight: weight.medium, color: palette.text, lineHeight: leading.normal } }, vorschlagSatz),
+      h('p', { 'data-teil': 'franchise-bisher', style: { margin: '2px 0 0', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } },
+        [gesundheitskostenBisher(daten) > 0 && t('versInstrument.kreuzBisher', { betrag: betrag(gesundheitskostenBisher(daten)) }),
+          parseFranchise(v.franchise) != null && t('versInstrument.kreuzFranchise', { betrag: betrag(parseFranchise(v.franchise)) })].filter(Boolean).join(' · ')),
+      h('details', { 'data-teil': 'franchise-grafik', style: { marginTop: space.xs + 'px' } },
+        h('summary', { style: { cursor: 'pointer', minHeight: '44px', lineHeight: '44px', fontSize: text.sm, color: palette.text } }, t('versInstrument.kreuzGrafik')),
+        h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true, eigeneFranchise: parseFranchise(v.franchise) })),
       onNavigate && h('button', {
         type: 'button', className: 'mp-link', 'data-teil': 'zur-uebersicht', onClick: () => onNavigate('praemien'),
         style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', marginTop: space.sm + 'px', textAlign: 'left', background: 'none', border: 'none', borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },

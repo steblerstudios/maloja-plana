@@ -4532,6 +4532,9 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7-K3-4, 01.11.2026)
     ausserhalb: "Betg specifitgà en quest total",
     ausserhalbGanz: "Betg en quest total",
+    kreuzBisher: "Fin ussa {betrag} quest onn", // TODO(rm): provisorisch
+    kreuzFranchise: "Franchisa {betrag}", // TODO(rm): provisorisch
+    kreuzGrafik: "Mussar la grafica", // TODO(rm): provisorisch
     ausserhalbOhneSumme: "Ulteriuras endataziuns",
     ausserhalbWeitere: "Quai ch’è endatà sut «Ulteriuras assicuranzas» dumbra en il total. Tge assicuranzas che quai cumpiglia n’è betg endatà.",
     titel: "Assicuranzas per mais",

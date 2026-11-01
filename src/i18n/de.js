@@ -2439,6 +2439,9 @@ export default {
   versInstrument: {
     ausserhalb: "Nicht einzeln in dieser Summe",
     ausserhalbGanz: "Nicht in dieser Summe",
+    kreuzBisher: "Bisher {betrag} in diesem Jahr",
+    kreuzFranchise: "Franchise {betrag}",
+    kreuzGrafik: "Grafik ansehen",
     ausserhalbOhneSumme: "Weitere Einträge",
     ausserhalbWeitere: "Was unter «Weitere Versicherungen» eingetragen ist, zählt in der Summe. Welche Versicherungen darin stecken, ist nicht erfasst.",
     titel: "Versicherungen pro Monat",

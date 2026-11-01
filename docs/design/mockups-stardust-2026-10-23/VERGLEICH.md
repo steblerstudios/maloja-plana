@@ -1646,6 +1646,10 @@ F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 u
 - **F7-D1, D9, D10 gebaut (01.11.2026 abends):** `BergDetail` ist der eine Block C, die Kapitel-Liste darunter ist weg, ihre Zusammenfassung steht in der Zeile. Die Zeile führt ins Kapitel, der Pfeil klappt die Grundordnung auf. Instrumente: Finanzen Steuer-Säule und Tankanzeige, je ganze Breite · Versicherungen Schild und Franchise-Kreuz (bleibt, solange F7-K3-2 zurückgestellt ist). Die Gruppen «Ihr Alltag, Absicherung, Schutz» sind damit weg. Obstgarten-Zugang bleibt unter dem Block. Reihenfolge: Landschaft · Was ist jetzt dran · Block C · Obstgarten · Werkzeuge · Was steht mir zu. Startbündel 64.56 auf 63.84 kB.
 - **Fehler aus `30f0e3a9` behoben:** Der Hinweis zur Prämie stand unter `fields.kkPremium` und überschrieb in allen Sprachen den Feldnamen. Er steht jetzt unter `hints`, das Feld trägt `hint: 1`.
 
+- **F7-K3-1 erledigt:** `KKLastSpiegel` in Finanzen, Regel Zuhause, Spiegel, Wegweiser. Stebler Studios zur kurzen Fassung: «1 ist gut».
+- **F7-K3-2 gebaut (Stebler Studios, 01.11.2026: «kombi von a b c»):** Im Kapitel oben Empfehlung und bisher, die Grafik zugeklappt, darunter der Link zur Versicherungs-Übersicht. Dashboard-Kachel und Übersicht unverändert. Im Beispiel Maria im Browser gesehen, Grafik aufgeklappt in voller Grösse. Nur Deutsch und Desktop-Breite.
+- **F7-D5 offen:** Varianten A bis C gezeigt, Stebler Studios «noch nicht ganz glücklich».
+
 **Wiedervorlage März 2027:** Status S ohne Lageänderung nicht vor dem 04.03.2027 aufgehoben, ab fünf Jahren besteht Anspruch auf eine Aufenthaltsbewilligung. Die Hinweise zu S dann prüfen.
 
 **Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton, gesucht und nicht gefunden (DBG Art. 83 und KS 45 nennen S nicht) · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.

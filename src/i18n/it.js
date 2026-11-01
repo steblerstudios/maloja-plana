@@ -2429,6 +2429,9 @@ export default {
   versInstrument: {
     ausserhalb: "Non dettagliato in questo totale",
     ausserhalbGanz: "Non in questo totale",
+    kreuzBisher: "Finora {betrag} quest’anno",
+    kreuzFranchise: "Franchigia {betrag}",
+    kreuzGrafik: "Vedere il grafico",
     ausserhalbOhneSumme: "Altre indicazioni",
     ausserhalbWeitere: "Ciò che è inserito sotto «Altre assicurazioni» conta nel totale. Quali assicurazioni comprenda non è indicato.",
     titel: "Assicurazioni al mese",

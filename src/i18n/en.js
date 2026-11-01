@@ -2429,6 +2429,9 @@ export default {
   versInstrument: {
     ausserhalb: "Not itemised in this total",
     ausserhalbGanz: "Not in this total",
+    kreuzBisher: "{betrag} so far this year",
+    kreuzFranchise: "Deductible {betrag}",
+    kreuzGrafik: "View chart",
     ausserhalbOhneSumme: "Other entries",
     ausserhalbWeitere: "What is entered under “Other insurance” counts in the total. Which policies it covers is not recorded.",
     titel: "Insurance per month",
