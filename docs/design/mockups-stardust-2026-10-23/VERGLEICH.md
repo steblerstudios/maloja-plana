@@ -1643,3 +1643,18 @@ F7-D3, D4 und D7 liegen auf dem Dashboard und werden mit ihm gebaut. F7-L4, S5 u
 **Wiedervorlage März 2027:** Status S ohne Lageänderung nicht vor dem 04.03.2027 aufgehoben, ab fünf Jahren besteht Anspruch auf eine Aufenthaltsbewilligung. Die Hinweise zu S dann prüfen.
 
 **Offen aus der Rechtsprüfung:** Praxisbeleg für S bei ESTV oder Kanton, gesucht und nicht gefunden (DBG Art. 83 und KS 45 nennen S nicht) · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · Geltung von Art. 82a Abs. 7 für vorläufig aufgenommene Flüchtlinge · kantonale IPV-Sonderregeln.
+
+### Regel Zuhause, Spiegel, Wegweiser (Stebler Studios, 01.11.2026: «Ja, Regel gilt»)
+
+Anlass F7-K3-1: «eigentlich gefällt mir das doppelte … ich finde das hilft bei verstehen». Jede Zahl hat ein Zuhause mit Erklärung, Quelle und Eingabe. Anderswo steht sie als Spiegel aus derselben Rechnung mit dem Blick des Kapitels, oder als Wegweiser mit Link. Prüffrage: Sagt die Zahl hier etwas, was sie dort nicht sagt?
+
+- **F7-K3-1, anders:** Die KK-Last bleibt an beiden Orten, Finanzen bekommt einen eigenen Satz. Nicht gebaut.
+- **Danach ansehen:** F7-K3-2, F7-D5, das Dashboard, F7-K4-1.
+
+**Entwürfe, nicht entschieden, nicht gebaut (Beispiel Maria):**
+- **KK-Last, Spiegel in Finanzen:** Titel «Krankenkasse im Budget». «CHF 540.30 von CHF 609 Versicherungen gehen an die Grundversicherung. Das sind 8.7 % Ihres Einkommens.» Link «Einordnung in Versicherungen ›». Der Hinweis auf die Prämienverbilligung bleibt.
+- **Wohnkosten, Zuhause in Wohnen:** «Rund 30 % des Nettoeinkommens (CHF 6’200)». Die Monatskarte zeigt schon ganze Prozent.
+- **Lohn, Zuhause in Ausbildung & Arbeit:** vier Zeilen. «Netto CHF 6’200, Ihre Angabe» · «Brutto ≈ CHF 6’796, geschätzt» · «Auf 40 Std. pro Woche ≈ CHF 6’472, Sie arbeiten 42 Std.» · «Schweizer Median CHF 7’024, brutto, mit anteiligem 13. Monatslohn». Dazu, wenn kein 13. Monatslohn eingetragen ist: «Ein 13. Monatslohn ist bei Ihrem Wert nicht eingerechnet.»
+- **Lohn, Spiegel in Finanzen:** «Netto CHF 6’200, geschätzt ≈ CHF 6’796 brutto.» Link «Lohnvergleich in Ausbildung & Arbeit ›».
+
+**Offen vor dem Bau:** Der Richtwert «10% (WHO)» bei `kkLast.*` ist zu prüfen. Die UN-Metadaten zu SDG 3.8.2 messen Ausgaben aus der eigenen Tasche, Stand Juli 2025 mit einer Schwelle von 40 % des frei verfügbaren Budgets; ob Prämien überhaupt zählen, ist nicht belegt. swiss-precision-pruefer und copy-pruefer, dann fr, it, en, rm.
