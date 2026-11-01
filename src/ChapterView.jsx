@@ -12,7 +12,7 @@ import { text, weight, leading, space, radius, fontFamily, fontFamilyDisplay, du
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
-import { kapitelBereichsfarbe, bereichsTon } from './utils/lebensbereichFruechte.js';
+import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
@@ -39,7 +39,7 @@ import { kalenderdatum } from './utils/datumAnzeige.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import landschaft from './assets/berge/landschaft.webp?url';
-import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from './utils/monatsrechnung.js';
+import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -69,6 +69,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
+const Monatsring = React.lazy(() => import('./components/Monatsring.jsx').then((m) => ({ default: m.Monatsring })));
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
@@ -2056,12 +2057,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const allesNetto = data.incomeType === 'netto' && (!(Number(data.sideIncome) > 0) || data.sideIncomeType === 'netto');
     const einkommenKey = allesNetto ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
-      React.createElement('div', { style: label }, tr(titelKey)),
-      React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),
-      // Der Balken selbst ist für Screenreader stumm; die Legende nennt Teile und Beträge.
-      // Fassung 6 («nachentschieden» 24.10.2026): unterteilt in Wohnen · Versicherungen · Steuern ·
-      // Übriges; der leere Rest ist, was bleibt. Gemessen am Einkommen, im Minus an den Ausgaben.
-      renderMonatsBalken(m),
+      // F7-K2-2 (01.11.2026): Zahl, Balken und Kuchen sind ein Bild, der Monatsring. Bis er geladen ist, steht die Zahl allein.
+      React.createElement(React.Suspense, { fallback: React.createElement(React.Fragment, null,
+        React.createElement('div', { style: label }, tr(titelKey)),
+        React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.abs(m.bleibt)))) },
+        React.createElement(Monatsring, { palette, t: tr, data: { ...(allData || {}), finanzen: data }, einkommen: m.einkommen, verplant: m.verplant, titel: tr(titelKey), zahl: betrag(Math.abs(m.bleibt)) })
+      ),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
@@ -2079,29 +2080,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const praemie = [v.householdInsuranceAmount, v.liabilityPremium, v.kkZusatzPremium, v.uvgZusatzPremium, v.lifeInsurancePremium].some((x) => Number(x) > 0);
     return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
       tr('chapters.finanzen.monat.doppeltVersichert'));
-  };
-  const renderMonatsBalken = (m) => {
-    const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
-    const teile = [
-      // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
-      { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
-      { key: 'steuern', wert: p.tax, farbe: palette.mid },
-    ];
-    teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
-    const basis = Math.max(m.einkommen, m.verplant) || 1;
-    const sichtbar = teile.filter((x) => x.wert > 0);
-    return React.createElement('div', { 'data-teil': 'monat-balken' },
-      React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', gap: '1px', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
-        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe } }))
-      ),
-      sichtbar.length > 1 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: '4px', fontSize: text.xs, color: palette.mid } },
-        ...sichtbar.map((x) => React.createElement('span', { key: x.key, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', color: palette.mid } },
-          React.createElement('span', { 'aria-hidden': 'true', style: { width: '8px', height: '8px', borderRadius: radius.hair, background: x.farbe } }),
-          tr('chapters.finanzen.monat.teil.' + x.key), ' ', betrag(x.wert)
-        ))
-      )
-    );
   };
   // Zweite Zeile: der Haushalt wie auf der Budget-Seite — nur, wenn er abweicht.
   const renderHaushaltsSaldo = (h) => {

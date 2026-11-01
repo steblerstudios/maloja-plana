@@ -8,6 +8,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
 import { getChapters, LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
+import { ringDaten } from '../components/Monatsring.jsx';
 import { ausgabenPosten } from '../components/Geldfluss.jsx';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { getBereichForChapter } from '../data/lebensbereiche.js';
@@ -157,7 +158,7 @@ describe('M7 · Passend wie im Entwurf', () => {
 });
 
 describe('M8 · eine Bereichsfarbe je Kapitel', () => {
-  it('Kuchen und Geldfluss: Miete in der Wohnen-Farbe, Krankenkasse in der Versicherungen-Farbe', () => {
+  it('Monatsring und Geldfluss: Miete in der Wohnen-Farbe, Krankenkasse in der Versicherungen-Farbe', () => {
     for (const palette of [LIGHT_PALETTE, DARK_PALETTE]) {
       const posten = ausgabenPosten(DEMO_DATA, t, palette);
       const farbe = (k) => posten.find((p) => p.key === k)?.color || posten.find((p) => p.key === k)?.farbe;
@@ -169,13 +170,16 @@ describe('M8 · eine Bereichsfarbe je Kapitel', () => {
     expect(bereichsTon('wohnen', LIGHT_PALETTE)).toBe(getBereichForChapter('wohnen').lightDeep);
     expect(bereichsTon('wohnen', DARK_PALETTE)).toBe(getBereichForChapter('wohnen').dark);
   });
-  it('der Monatsbalken im Kapitel Finanzen nimmt dieselben Farben', () => {
-    expect(QUELLE).toMatch(/key: 'wohnen', wert: [^\n]*farbe: bereichsTon\('wohnen', palette\)/);
-    expect(QUELLE).toMatch(/key: 'versicherungen', wert: [^\n]*farbe: bereichsTon\('versicherungen', palette\)/);
+  it('der Monatsring im Kapitel Finanzen nimmt dieselben Farben', () => {
+    for (const palette of [LIGHT_PALETTE, DARK_PALETTE]) {
+      const { gruppen } = ringDaten({ data: DEMO_DATA, t, palette, einkommen: 6200, verplant: 4000 });
+      expect(gruppen.find((g) => g.key === 'wohnen').farbe).toBe(bereichsTon('wohnen', palette));
+      expect(gruppen.find((g) => g.key === 'versicherungen').farbe).toBe(bereichsTon('versicherungen', palette));
+    }
   });
 });
 
-// A11y-Prüfung 25.10.2026 (WCAG 1.4.11): jedes Kuchenstück der Versicherungen ≥ 3:1 gegen den Grund.
+// A11y-Prüfung 25.10.2026 (WCAG 1.4.11): jedes Ringstück der Versicherungen ≥ 3:1 gegen den Grund.
 const lum = (h) => { const r = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * r[0] + 0.7152 * r[1] + 0.0722 * r[2]; };
 const kontrast = (a, b) => { const x = lum(a); const y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
 describe('M8 · Kontrast der Flächen', () => {

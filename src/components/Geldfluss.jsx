@@ -107,8 +107,8 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
   );
 };
 
-// Die Ausgabenposten mit Namen und Farbe — eine Liste für Geldfluss und Kuchen (Fassung 6:
-// Balken, Kuchen und Sankey im Kapitel Finanzen, VERGLEICH.md «nachentschieden»).
+// Die Ausgabenposten mit Namen und Farbe — eine Liste für Geldfluss und Monatsring (Fassung 6,
+// VERGLEICH.md «nachentschieden»; Ring seit F7-K2-2).
 // Dieselben Posten wie die Rechnung (dazu Hypothek, Gebäudeversicherung, Kinderbetreuung,
 // Säule 3a), sonst ginge der Fluss nicht auf.
 export const ausgabenPosten = (data, t, palette) => {
@@ -163,7 +163,7 @@ export const geldflussDaten = (data, t, palette) => {
 
 export const GeldflussImKapitel = ({ data, t, palette }) => {
   const { quellen, ziele, beschreibung, brutto } = geldflussDaten(data, t, palette);
-  // Erst mit zwei oder mehr Einnahmequellen sagt der Fluss mehr als der Kuchen: mit einem Lohn
+  // Erst mit zwei oder mehr Einnahmequellen sagt der Fluss mehr als der Monatsring: mit einem Lohn
   // ist er ein Strom, der sich auffächert (Stebler Studios: «komisch»). «Nicht gedeckt» zählt nicht als Quelle.
   const echteQuellen = quellen.filter((q) => q.label !== t('chapters.finanzen.geldfluss.uncovered')).length;
   if (brutto || echteQuellen < 2) return null;

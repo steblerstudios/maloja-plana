@@ -23,7 +23,7 @@ const summe = (l) => l.reduce((a, x) => a + x.value, 0);
 const summeHoehe = (knoten) => knoten.reduce((a, k) => a + k.h, 0);
 
 describe('Geldfluss', () => {
-  // Fassung 6: der Fluss erst mit zwei Einnahmequellen — Maria (ein Lohn) zeigt den Kuchen, hier
+  // Fassung 6: der Fluss erst mit zwei Einnahmequellen — Maria (ein Lohn) zeigt nur den Monatsring, hier
   // mit Familienzulagen als zweiter Quelle.
   it('Beispiel Maria mit Familienzulagen: Titel und Beschreibung für Screenreader', () => {
     const html = zeichne({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, familienzulagen: '215' } });
@@ -95,15 +95,13 @@ describe('Geldfluss am neuen Ort', () => {
     expect(html).not.toContain('data-teil="geldfluss"');
   });
 
-  // Bis 24.10.2026 hiess es hier «die Charts-Seite zeigt wieder ihr Kuchendiagramm». Die Seite
-  // gibt es nicht mehr (#/charts → hierher, chartsUmleitung.test.js). Seit Fassung 6 steht ihr Kuchen
-  // hier; Maria hat einen Lohn, darum kein Fluss.
-  it('ein alter Charts-Link landet beim Kuchen', () => {
+  // Bis 24.10.2026 hiess es hier «die Charts-Seite zeigt wieder ihr Kuchendiagramm». Die Seite gibt es nicht mehr
+  // (#/charts → hierher, chartsUmleitung.test.js). Maria hat einen Lohn, darum kein Fluss; die Aufteilung steht im Monatsring.
+  it('ein alter Charts-Link landet in der Auswertung, ohne Fluss', () => {
     const html = renderToStaticMarkup(React.createElement(FinanzenImKapitel, {
       teil: 'oben', palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {},
     }));
     expect(html).toContain('id="mp-finanz-auswertung"');
-    expect(html).toContain('data-teil="kuchen"');
     expect(html).not.toContain(G.title);
   });
 });
