@@ -6,6 +6,7 @@ import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { Pegel } from './components/Pegel.jsx';
 import { PraemienBeleg } from './components/PraemienBeleg.jsx';
+import { hatAusweisFNS } from './data/ausweis.js';
 import { sozialhilfePegelState } from './data/pegel.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './components/EinkommenFeld.jsx';
 import { praemienBelegState } from './data/praemienBeleg.js';
@@ -238,6 +239,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     belegState && React.createElement(PraemienBeleg, {
       palette, t, state: belegState,
     }),
+    belegState && hatAusweisFNS(data) && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm } }, t('ipv.ruhtMitSozialhilfe')),
 
     // Sozialhilfe-Pegel (Aufstockungs-Modus): dieselbe Metapher, Linie = Existenz-
     // minimum. Braucht Miet-Kontext, sonst wäre der Bedarf unvollständig.

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { hatAusweisFNS } from './data/ausweis.js';
 import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
@@ -433,7 +434,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
 
   // Ergebnis — Urteil gross, darunter der Satz; die Beträge, wo die App sie rechnet.
   // F, N, S (Stebler Studios 01.11.2026): Die Zahl bleibt, weil Maloja den Sozialhilfe-Bezug nicht kennt. AsylG Art. 82a Abs. 7, AIG Art. 86 Abs. 2.
-  const ruhtHinweis = ['f', 'n', 's'].includes(String(data.ausbildung?.workPermit || '').toLowerCase())
+  const ruhtHinweis = hatAusweisFNS(data)
     && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), t('ipv.ruhtMitSozialhilfe'));
   const urteil = (label, farbe, zeichen) => React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: farbe, lineHeight: '1.2', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, hinweisZeichen(zeichen), label);
   const ergebnis = () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon, hinweisZeichen, erledigtZeichen } from '../IconSystem.jsx';
+import { hatAusweisFNS } from '../data/ausweis.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, ladeIPVModelle } from '../config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from '../data/ipvAbzug.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from '../data/kantonaleSteuerdaten.js';
@@ -145,6 +146,7 @@ export const finanzWerte = (data, t) => {
   return {
     income, canton, steuerkanton, hh, hasData: income > 0,
     sozialhilfe, ipv, ipvAbzug: ipvAbzugWert, ipvFristVorbei, ipvVerfuegung, ipvOhneJahr, el,
+    ipvRuht: hatAusweisFNS(data),
     taxResult, steuerOhneZahl, kantonsSchaetzung, kantonal, annahmen, annahmenSatz, steuerAngabeSatz,
     currentYear, gesundheitskosten, gesundheitskostenOffen, hasGesundheitskosten: (gesundheitskosten + gesundheitskostenOffen) > 0,
     savingsAccount, totalAssets, hasAssets: totalAssets > 0,
@@ -191,7 +193,7 @@ export const druckAbschnitte = (t, w) => {
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   // Geschätzter Betrag bei offener Frage nach dem 13. Monatslohn: die Annahme gehört dazu (wie bei der Steuer).
-  const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? ipvAnnahmenTexte(t, w.ipv.annahmen) : [];
+  const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? [...ipvAnnahmenTexte(t, w.ipv.annahmen), ...(w.ipvRuht ? [t('ipv.ruhtMitSozialhilfe')] : [])] : [];
   if (ipvAnnahmen.length) {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
@@ -466,6 +468,7 @@ export const ipvKarte = ({ palette, t, onNavigate, w }) => {
       : ipv.eligible
       ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
         + ipvAnnahmenTexte(t, ipv.annahmen).map((x) => '. ' + x).join('')
+        + (w.ipvRuht ? '. ' + t('ipv.ruhtMitSozialhilfe') : '')
       : ipv.belegt === false
         ? t(ipv.noteKey, ipv.noteParams)
         // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht

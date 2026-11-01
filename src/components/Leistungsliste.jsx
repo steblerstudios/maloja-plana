@@ -1,11 +1,12 @@
 import React from 'react';
 import Icons from '../IconKern.jsx';
+import { hatAusweisFNS } from '../data/ausweis.js';
 import { text, weight, leading, space, radius, ease, duration } from '../config/tokens.js';
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf, ladeIPVModelle } from '../config/cantonalData.js';
-import { zahl } from '../utils/geld.js';
+import { zahl, betrag } from '../utils/geld.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 import { gblStand } from '../data/skosGrundbedarf.js';
@@ -59,6 +60,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       detail: ipv.eligible
         ? t('dashboard.quickCheckResult', { income: fmt(ipvJahreseinkommen(probe)), amount: fmt(ipv.annual) })
           + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
+          + (hatAusweisFNS(probe) ? ' ' + t('ipv.ruhtMitSozialhilfe') : '')
         : t(ipv.noteKey),
     };
     // F7-K2-4 (Stebler Studios 27.10.2026): Ohne Anspruch stand hier «Hängt von Kanton und Einkommen ab — im
@@ -154,7 +156,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         const max = Math.max(sozPegel.bedarf, sozPegel.einkommen, 1);
         return React.createElement('div', { style: { flexShrink: 0, width: '96px', textAlign: 'right' } },
           React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
-            t('pegel.bedarf') + ' ≈ ' + fmt(sozPegel.bedarf)),
+            t('pegel.bedarf') + ' ≈ ' + betrag(Math.round(sozPegel.bedarf))),
           React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '5px', borderRadius: radius.full + 'px', background: palette.up } },
             React.createElement('div', { style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: radius.full + 'px' } }),
             React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
