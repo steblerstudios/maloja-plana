@@ -22,6 +22,8 @@
 export const BRANCHENLOHN_VERSION = '2022/2024';
 
 // Gesamtwirtschaftliche Verteilungswerte für die Lohn-Einordnung (Barometer).
+// Standardisiert: Jahrestotal, alles inklusive, auf Vollzeit umgerechnet und durch 12 geteilt (Kanton Freiburg, Auswertung LSE,
+// gelesen 01.11.2026). Die Definition im BFS-Glossar selbst ist noch nicht gelesen.
 // LSE 2024 — ALLE drei Werte wörtlich amtlich belegt:
 //   BFS-Medienmitteilung „2024 lag der Medianlohn bei 7024 Franken brutto —
 //   Schweizerische Lohnstrukturerhebung (LSE) im Jahr 2024: Erste Ergebnisse", 25.11.2025

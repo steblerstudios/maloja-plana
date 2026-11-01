@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
-import { monatsAusgaben } from '../utils/monatsrechnung.js';
+import { monatsAusgaben, versicherungenSumme } from '../utils/monatsrechnung.js';
 import { betrag, zahl } from '../utils/geld.js';
 import { schildOptionen, schildState, bvgAktiv } from '../data/schutzschild.js';
 import { betraegeFuer } from '../data/netzSchild.js';
@@ -35,7 +35,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const v = versicherungen || {};
   const daten = { ...(allData || {}), versicherungen: v };
   const p = monatsAusgaben(daten);
-  const summe = p.healthInsurance + p.kkZusatz + p.uvgZusatz + p.lifeInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance;
+  const summe = versicherungenSumme(p);
 
   const [franchiseOpt, setFranchiseOpt] = useState(null);
   const plz = daten.wohnen?.postalCode, kasse = v.kkInsurer, geburt = daten.basis?.dateOfBirth;

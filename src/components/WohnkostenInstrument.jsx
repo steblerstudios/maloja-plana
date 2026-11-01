@@ -74,7 +74,8 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
 
   const ausprobiert = probe != null && probe !== r.heute;
   const fuell = bereichFillColor('wohnen', isDarkMode) || palette.sage;
-  const pct = r.anteil == null ? null : zahl(r.anteil, { hoechstens: 1 });
+  // Ganze Prozent wie die Monatskarte. Nur knapp über einem Drittel eine Stelle, sonst stünde 33 % neben «mehr als ein Drittel».
+  const pct = r.anteil == null ? null : zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 });
 
   const canton = allData?.basis?.canton || '';
   const hh = getHouseholdInfo(allData) || {};

@@ -7,6 +7,7 @@ import { renderSource } from './utils/renderSource.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { zahl } from './utils/geld.js';
+import { einkommenIstKeinLohn, monatsAusgaben, versicherungenSumme } from './utils/monatsrechnung.js';
 
 // Die 10 % sind nur noch eine offene Vergleichsmarke: kein Grenzwert, keine Empfehlung, keine Warnfarbe.
 // WHO 4845 führt 10 % oder 25 % für Zahlungen aus der eigenen Tasche und schliesst Prämien aus;
@@ -18,12 +19,10 @@ export const VERGLEICHSMARKE = 10;
 // da sind, darum fehlt nie eine Angabe.
 export const KK_LAST_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 
-const NICHT_LOHN = ['retired', 'selfEmployed', 'freelance'];
-
 // Woran die Prämie gemessen wird. Der Nenner ist überall `monthlyIncome`; der Satz sagt, was das hier ist.
 export const kkLastBasisKey = (data) => {
   const f = data?.finanzen || {};
-  if (data?.basis?.household?.isRetired || NICHT_LOHN.includes(f.employmentType)) return 'kkLast.basisEinkommen';
+  if (einkommenIstKeinLohn(data)) return 'kkLast.basisEinkommen';
   if (f.incomeType === 'netto') return 'kkLast.basisNetto';
   if (f.incomeType === 'brutto') return 'kkLast.basisBrutto';
   return 'kkLast.basisOffen';
@@ -117,6 +116,30 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginBottom: space.xs } }, t('kkLast.marker')),
     React.createElement(KKLastEinordnung, { palette, t, onNavigate, stand })
+  );
+};
+
+// Spiegel im Kapitel Finanzen: dieselbe Zahl mit dem Blick aufs Budget. Die Einordnung und die Marke
+// wohnen in Versicherungen (Regel Zuhause, Spiegel, Wegweiser, Stebler Studios 01.11.2026).
+export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
+  const premium = Number(data?.versicherungen?.kkPremium) || 0;
+  const income = Number(data?.finanzen?.monthlyIncome) || 0;
+  if (premium <= 0 || income <= 0) return null;
+  const summe = Math.round(versicherungenSumme(monatsAusgaben(data)));
+  const allein = summe <= Math.round(premium);
+  return React.createElement('div', {
+    'data-teil': 'kk-last-spiegel',
+    style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' },
+  },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text, marginBottom: space.xs } }, t('kkLast.spiegelTitel')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+      t(allein ? 'kkLast.spiegelSatzAllein' : 'kkLast.spiegelSatz', { praemie: Number.isInteger(premium) ? zahl(premium) : zahl(premium, { stellen: 2 }), summe: zahl(summe) })),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginTop: space.xs } },
+      zahl((premium / income) * 100, { hoechstens: 1 }) + ' %: ' + t(kkLastBasisKey(data))),
+    onNavigate && React.createElement('button', {
+      type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', 3),
+      style: { marginTop: space.sm + 'px', minHeight: '44px', padding: 0, background: 'none', border: 0, fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' },
+    }, t('kkLast.spiegelLink') + ' ›')
   );
 };
 
