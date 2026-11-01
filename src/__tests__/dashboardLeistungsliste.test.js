@@ -84,13 +84,13 @@ describe('Instrument Steuer-Säulen', () => {
     // F7-K5-1: die ganze Steuer, dieselbe Zahl wie das Kapitel Finanzen, mit Bund-Anteil.
     expect(mit).toContain('instrumente.steuerGanz(' + zahl(st.kanton.kantonal.total) + ')');
     expect(mit).toContain('instrumente.steuerDavon(' + zahl(erwartet) + ')');
-    // Fachprüfung 01.11.2026: mögliche Quellensteuer ohne Zahl; pensioniert nur die Bundessteuer.
+    // Fachprüfung 01.11.2026: mögliche Quellensteuer und pensioniert ohne Zahl (Sperre in der Rechnung selbst).
     const quelle = kachel({ ...data, ausbildung: { workPermit: 'b' } });
     expect(quelle).toContain('instrumente.steuerQuelle');
     expect(quelle).not.toContain('instrumente.steuerGanz');
     expect(quelle).not.toContain('instrumente.steuerBetrag');
     const rente = kachel({ ...data, basis: { ...data.basis, household: { ...data.basis.household, isRetired: true } } });
-    expect(rente).toContain('instrumente.steuerBetrag(' + zahl(erwartet) + ')');
+    expect(rente).not.toContain('instrumente.steuerBetrag');
     expect(rente).not.toContain('instrumente.steuerGanz');
     const ohne = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data: { basis: {} }, onNavigate: () => {}, eingebettet: true }));
     expect(ohne).not.toContain('instrumente.steuerBetrag');

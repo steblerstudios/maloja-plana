@@ -13,7 +13,7 @@ import { chf } from '../utils/steuerTexte.js';
 // R4: Gründe ohne jede Steuerzahl (Bund und Kanton), mit einem gemeinsamen Text.
 // K62.4: zivilstandDirekt = eingetragener Wert, Steuerrechner probeweise mit dem anderen Zivilstand.
 // K87: kinderDirekt = eingetragener Wert, Steuerrechner probeweise mit einer anderen Kinderzahl.
-const OHNE_ZAHL_TEXT = { rente: 'tax.ohneZahlRente', selbstaendig: 'tax.ohneZahlSelbstaendig', partnerOffen: 'tax.ohneZahlPartnerOffen', zivilstandDirekt: 'tax.ohneZahlZivilstandDirekt', kinderDirekt: 'tax.ohneZahlKinderDirekt' };
+const OHNE_ZAHL_TEXT = { quellensteuer: 'tax.ohneZahlQuellensteuer', quellensteuerG: 'tax.ohneZahlQuellensteuerG', erwerbsartDirekt: 'tax.ohneZahlErwerbsartDirekt', rente: 'tax.ohneZahlRente', selbstaendig: 'tax.ohneZahlSelbstaendig', partnerOffen: 'tax.ohneZahlPartnerOffen', zivilstandDirekt: 'tax.ohneZahlZivilstandDirekt', kinderDirekt: 'tax.ohneZahlKinderDirekt' };
 
 // Gründe, die die Orientierung unter der Zahl schon erklärt — dort nicht doppelt nennen.
 export const ERKLAERT_IN_ORIENTIERUNG = ['brutto', ...Object.keys(OHNE_ZAHL_TEXT)];

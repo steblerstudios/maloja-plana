@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { schildState, schildOptionen } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
-import { steuernFuerProfil, steuerEingabenAusDaten, ERWERBSART_OHNE_SCHAETZUNG } from '../data/kantonaleSteuerdaten.js';
+import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
 import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
@@ -110,18 +110,18 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
   // F7-K5-1 (Stebler Studios 01.11.2026): die ganze Einkommenssteuer, dieselbe Zahl wie das Kapitel Finanzen, als grobe
   // Schätzung ausgewiesen. Fachprüfung 01.11.2026: nur für den gemessenen Fall (Lohn erfasst, unselbständig, nicht pensioniert).
-  // Mögliche Quellensteuer (Bewilligung B, L, G): keine Zahl, die Steuer wird in der Regel vom Lohn abgezogen.
+  // Mögliche Quellensteuer sperrt die Rechnung selbst (quellensteuerMoeglich), hier nur der kurze Satz.
   // Sonst bleibt die Bundessteuer allein.
   let bundessteuer = null;
   let steuerGanz = null;
-  const quellensteuer = ['b', 'l', 'g'].includes(String(data?.ausbildung?.workPermit || '').toLowerCase());
+  let quellensteuer = false;
   try {
     if ((Number(data?.finanzen?.monthlyIncome) || 0) > 0 || (Number(data?.finanzen?.taxableIncome) || 0) > 0) {
       const eingaben = steuerEingabenAusDaten(data);
       const st = steuernFuerProfil(eingaben);
       bundessteuer = st?.bund ? Math.round(st.bund.steuer) : null;
-      const gemessen = (Number(data?.finanzen?.monthlyIncome) || 0) > 0 && !ERWERBSART_OHNE_SCHAETZUNG[eingaben.erwerbsart] && !data?.basis?.household?.isRetired;
-      if (st?.bund && st.kanton?.kantonal && gemessen && !quellensteuer) {
+      quellensteuer = String(st?.grund || '').startsWith('quellensteuer');
+      if (st?.bund && st.kanton?.kantonal && (Number(data?.finanzen?.monthlyIncome) || 0) > 0) {
         // Kurz, die Kachel ist schmal; ausführlich in Finanzen (annahmenTexte).
         const annahmen = [['ohneDreizehnten', 'steuerOhne13'], ['alleinverdiener', 'steuerAllein'], ['einzeln', 'steuerEinzeln'], ['kinderabzugGanz', 'steuerKinder']]
           .filter(([k]) => st.annahmen?.[k]).map(([, k]) => t('instrumente.' + k));
