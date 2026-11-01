@@ -221,8 +221,8 @@ export const HEARTFELT = [
   { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
   { key: 'heartfelt25', name: 'Leihlager', url: 'https://www.leihlager.ch/', group: 'gemeinschaft' }, // gemeinnützige Leihplattform Basel («Leihen statt kaufen»), ehrenamtlich
   { key: 'heartfelt26', name: 'utopi', url: 'https://utopi.one/', group: 'tiere' }, // Wildblumen-Saatgut für Wildbienen (Shop, PRTGNST GmbH/MONTY., DE; liefert in die CH) – kein Affiliate, geprüft 19.09.2026
-  { key: 'heartfelt28', name: 'Reclaim City', url: 'https://play.multiversegames.ai/reclaim-city/', group: 'digital' }, // Datenschutz-Spiel (Multiverse Games), englisch, kein Affiliate; Anstoss für «Digitale Ordnung», angesehen 01.11.2026
-  { key: 'heartfelt29', name: 'Proton Mail', url: 'https://proton.me/mail', group: 'digital' }, // Proton AG, Genf, Datenschutzerklärung Stand 12.05.2026; kein Affiliate, Beispiel nach Entscheid 01.11.2026 (Konzept §6)
+  { key: 'heartfelt28', name: 'Reclaim City', url: 'https://play.multiversegames.ai/reclaim-city/', group: 'digital' }, // Datenschutz-Spiel (Multiverse), englisch, kein Affiliate; Anstoss für «Digitale Ordnung», angesehen 01.11.2026
+  { key: 'heartfelt29', name: 'Proton Mail', url: 'https://proton.me/mail', group: 'digital' }, // Proton AG, Plan-les-Ouates GE, Datenschutzerklärung Stand 12.05.2026; kein Affiliate, Beispiel nach Entscheid 01.11.2026 (Konzept §6)
   { key: 'heartfelt27', name: 'Nexter', url: 'https://crewz.io/de/nexter/', group: 'digital' }, // Habit-Tracker der Crewz GmbH (Freiburg i. Br.) – kein Affiliate, Seite geprüft 25.09.2026 (erfundene Adresse → 404)
 ];
 

@@ -4,7 +4,7 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Digitale Ordnung — geführter Durchgang, gebaut 01.11.2026 auf Wunsch von Stebler Studios, Anstoss Reclaim City.
 // Konzept und Grenzen: docs/design/digitale-ordnung-schweiz.md. Jeder Schritt ist etwas, das man selbst
-// ausserhalb der App tut. Maloja fragt nie nach Passwörtern und verbindet sich mit keinem Konto; gespeichert
+// ausserhalb der App tut. Maloja fragt nie nach den Passwörtern der eigenen Konten und verbindet sich mit keinem Konto; gespeichert
 // wird nur der Stand des Ablaufs (utils/ablaufStand.js). Bewusst noch ohne eigene Briefe: Schritt 5 führt zu
 // den Musterbriefen des EDÖB. Eigene Vorlagen setzen die Bedingungen aus dem Konzept §5 voraus.
 
@@ -43,7 +43,8 @@ export const DigitaleOrdnung = ({ palette, t, onNavigate }) => {
     schritt(5,
       absatz('digitaleOrdnung.step5Text2'),
       aussen('digitaleOrdnung.step5Link', MUSTER),
-      onNavigate && React.createElement(AblaufLink, { key: 'bv', palette, label: t('digitaleOrdnung.step5LinkBetreibung'), onClick: () => onNavigate('betreibungsauszug') })),
+      onNavigate && React.createElement(AblaufLink, { key: 'bv', palette, label: t('digitaleOrdnung.step5LinkBetreibung'), onClick: () => onNavigate('betreibungsauszug') }),
+      onNavigate && React.createElement(AblaufLink, { key: 'sch', palette, label: t('digitaleOrdnung.step5LinkSchulden'), onClick: () => onNavigate('schulden') })),
     schritt(6, aussen('digitaleOrdnung.step6Link', ERSTE)),
     schritt(7,
       absatz('digitaleOrdnung.step7Text2'),
