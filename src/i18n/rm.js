@@ -1568,7 +1568,7 @@ export default {
     versicherungen: {
       basic: { sie: 'Mintga persuna en Svizra ha ina cassa da malsauns. Qua rimnais Vus las indicaziuns las pli impurtantas.', du: 'Mintga persuna en Svizra ha ina cassa da malsauns. Qua rimnas Ti las indicaziuns las pli impurtantas.' },
       occupational: { sie: 'Vossa cassa da pensiun — ella vegn finanziada ensemen cun Voss patrun e segirescha Vossa vegliadetgna.', du: 'Tia cassa da pensiun — ella vegn finanziada ensemen cun Tes patrun e segirescha Tia vegliadetgna.' },
-      additional: { sie: "LAINF (assicuranza d'accidents): Sco emploià/ada essas Vus assicurà/ada obligatoricamain via il patrun — accidents professiunals e betg professiunals da 8h/emna. ICM (indemnità per cas da malsogna): Betg obligatoric, ma blers patrun han ina — ella paja 80% da Voss salari en cas da malsogna.", du: "LAINF (assicuranza d'accidents): Sco emploià/ada es Ti assicurà/ada obligatoricamain via il patrun — accidents professiunals e betg professiunals da 8h/emna. ICM (indemnità per cas da malsogna): Betg obligatoric, ma blers patrun han ina — ella paja 80% da Tes salari en cas da malsogna." },
+      additional: { sie: "LAINF (assicuranza d'accidents): Sco emploià/ada essas Vus assicurà/ada obligatoricamain via il patrun — accidents professiunals e betg professiunals da 8h/emna. ICM (indemnità per cas da malsogna): Betg obligatoric, ma blers patrun han ina. Quant ch’ella paja en cas da malsogna stat en la polizza.", du: "LAINF (assicuranza d'accidents): Sco emploià/ada es Ti assicurà/ada obligatoricamain via il patrun — accidents professiunals e betg professiunals da 8h/emna. ICM (indemnità per cas da malsogna): Betg obligatoric, ma blers patrun han ina. Quant ch’ella paja en cas da malsogna stat en la polizza." },
       // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
       property: 'Ménaschi, viadi, cyber — per il pli facultativas. Il ménaschi po esser obligatoric tenor il chantun.',
       mobility: { sie: "Sche Vus avais in auto: l'assicuranza da vehichel a motor appartegna qua.", du: "Sche Ti has in auto: l'assicuranza da vehichel a motor appartegna qua." },
@@ -2413,7 +2413,7 @@ export default {
         ahvContribution: "Tar in engaschament mo per la survista. Tar ina activitad independenta dumbra la contribuziun en il budget. Endatar l’entrada avant questa contribuziun.", // TODO(rm): provisorisch — Gegenlese (Selbständige, 01.11.2026)
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
-        ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Voss salari en cas da malsogna.", du: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Tes salari en cas da malsogna." },
+        ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM. Quant ch’ella paja en cas da malsogna stat en la polizza.", du: "Betg obligatoric. Blers patrun han ina ICM. Quant ch’ella paja en cas da malsogna stat en la polizza." },
         uvgZusatzPremium: { sie: "Inditgar mo sche Vus pajais la premia sezs. Quai che vegn deducì dal salari è gia en il salari net.", du: "Inditgar mo sche ti pajas la premia sez. Quai che vegn deducì dal salari è gia en il salari net." }, // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
       },
       docs: {
@@ -6453,7 +6453,11 @@ export default {
     source: 'Funtaunas: [[OMS, indicatur 4845|https://www.who.int/data/gho/indicator-metadata-registry/imr-details/4845]] · [[ONU, metadatas SDG 3.8.2, versiun 27.03.2026|https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-02_NEW.pdf]] · [[LAMal art. 65 al. 1ter e disposiziun transitorica da la midada dals 29.9.2023, versiun 1.1.2026|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65]]',
     ipvLink: 'Verifitgar la reducziun da premias (IPV)',
     ipvRelief: 'Cun la reducziun da premias: −CHF {ipv}/mais → effectivamain {share}% da l\'entrada.',
-    ipvNoClaim: 'Nagin dretg sin reducziun da premias en questa situaziun.',
+    ipvNoClaim: 'Tenor quest quint approximativ na dat i nagin dretg sin reducziun da premias. Il post cumpetent decida.',
+    spiegelTitel: 'La cassa da malsauns en il budget',
+    spiegelSatz: 'CHF {praemie} da CHF {summe} assicuranzas van a l’assicuranza da basa.',
+    spiegelSatzAllein: 'CHF {praemie} van a l’assicuranza da basa.',
+    spiegelLink: 'Context en Assicuranzas',
   },
   uvgHint: {
     title: 'Cuvrida d’accident: spargnar sco emploià',

@@ -1288,7 +1288,7 @@ export default {
     versicherungen: {
       basic: { sie: 'Ogni persona in Svizzera ha una cassa malati. Raccolga qui le informazioni principali.', du: 'Ogni persona in Svizzera ha una cassa malati. Raccogli qui le informazioni principali.' },
       occupational: { sie: 'La Sua cassa pensione — finanziata insieme al Suo datore di lavoro per garantire la Sua vecchiaia.', du: 'La tua cassa pensione — finanziata insieme al tuo datore di lavoro per garantire la tua vecchiaia.' },
-      additional: { sie: 'LAINF (assicurazione infortuni): Come dipendente è coperto dal datore di lavoro — infortuni professionali e non professionali da 8h/settimana. IGM (indennità giornaliera malattia): Non obbligatoria, ma molti datori ne hanno una — paga l\'80% del salario in caso di malattia.', du: 'LAINF (assicurazione infortuni): Come dipendente sei coperto dal datore di lavoro — infortuni professionali e non professionali da 8h/settimana. IGM (indennità giornaliera malattia): Non obbligatoria, ma molti datori ne hanno una — paga l\'80% del salario in caso di malattia.' },
+      additional: { sie: 'LAINF (assicurazione infortuni): Come dipendente è coperto dal datore di lavoro — infortuni professionali e non professionali da 8h/settimana. IGM (indennità giornaliera malattia): Non obbligatoria, ma molti datori ne hanno una. Quanto paga in caso di malattia è indicato nella polizza.', du: 'LAINF (assicurazione infortuni): Come dipendente sei coperto dal datore di lavoro — infortuni professionali e non professionali da 8h/settimana. IGM (indennità giornaliera malattia): Non obbligatoria, ma molti datori ne hanno una. Quanto paga in caso di malattia è indicato nella polizza.' },
       property: 'Economia domestica, viaggio, cyber — per lo più facoltative. L’economia domestica può essere obbligatoria secondo il cantone.',
       mobility: { sie: 'Se ha un\'auto: l\'assicurazione veicoli a motore va qui.', du: 'Se hai un\'auto: l\'assicurazione veicoli a motore va qui.' },
       social: 'Contributi AVS e assicurazioni sociali — la base del sistema previdenziale svizzero.',
@@ -2232,7 +2232,7 @@ export default {
         ahvContribution: "Con un impiego, solo a titolo informativo. Con un’attività indipendente il contributo conta nel budget. Inserire quindi il reddito prima di questo contributo.",
         bvgBalance: 'Dall\'ultimo certificato della cassa pensione. Utilizzato nel calcolatore previdenziale.',
         policyNumber: 'Numero di contratto/polizza dell\'assicurazione di base — riportato sulla polizza, non il numero della tessera.',
-        ktg: { sie: 'Non obbligatoria. Molti datori di lavoro hanno un\'IGM — paga l\'80% dello stipendio in caso di malattia.', du: 'Non obbligatoria. Molti datori di lavoro hanno un\'IGM — paga l\'80% dello stipendio in caso di malattia.' },
+        ktg: { sie: 'Non obbligatoria. Molti datori di lavoro hanno un\'IGM. Quanto paga in caso di malattia è indicato nella polizza.', du: 'Non obbligatoria. Molti datori di lavoro hanno un\'IGM. Quanto paga in caso di malattia è indicato nella polizza.' },
         uvgZusatzPremium: { sie: "Da inserire solo se paga il premio di tasca propria. Ciò che viene dedotto dal salario è già nel salario netto.", du: "Da inserire solo se paghi il premio di tasca tua. Ciò che viene dedotto dal salario è già nel salario netto." },
       },
       docs: {
@@ -4519,7 +4519,11 @@ export default {
     source: 'Fonti: [[OMS, indicatore 4845|https://www.who.int/data/gho/indicator-metadata-registry/imr-details/4845]] · [[ONU, metadati OSS 3.8.2, stato 27.03.2026|https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-02_NEW.pdf]] · [[LAMal art. 65 cpv. 1ter e disposizione transitoria della modifica del 29.9.2023, stato 1.1.2026|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_65]]',
     ipvLink: 'Verificare la riduzione dei premi (IPV)',
     ipvRelief: 'Con la riduzione dei premi: −CHF {ipv}/mese → effettivamente {share}% del reddito.',
-    ipvNoClaim: 'Nessun diritto alla riduzione dei premi in questa situazione.',
+    ipvNoClaim: 'Secondo questo calcolo approssimativo non vi è diritto alla riduzione dei premi. Decide l’ufficio competente.',
+    spiegelTitel: 'La cassa malati nel budget',
+    spiegelSatz: 'CHF {praemie} su CHF {summe} di assicurazioni vanno all’assicurazione di base.',
+    spiegelSatzAllein: 'CHF {praemie} vanno all’assicurazione di base.',
+    spiegelLink: 'Contesto in Assicurazioni',
   },
   uvgHint: {
     title: 'Copertura infortuni: risparmiare da dipendente',

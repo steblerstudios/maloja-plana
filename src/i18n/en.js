@@ -1288,7 +1288,7 @@ export default {
     versicherungen: {
       basic: 'Everyone in Switzerland has health insurance. Collect the key details here.',
       occupational: 'Your pension fund — jointly financed with your employer to secure your retirement.',
-      additional: 'UVG (accident insurance): As an employee, you\'re covered by your employer — work and non-work accidents from 8h/week. KTG (daily sickness allowance): Not mandatory, but many employers have one — it pays 80% of your salary during illness.',
+      additional: 'UVG (accident insurance): As an employee, you\'re covered by your employer — work and non-work accidents from 8h/week. KTG (daily sickness allowance): Not mandatory, but many employers have one. What it pays during illness is set out in the policy.',
       property: 'Household, travel, cyber — mostly optional. Household contents may be mandatory depending on the canton.',
       mobility: 'If you have a car: motor vehicle insurance belongs here.',
       social: 'AHV contributions and social insurance — the foundation of the Swiss pension system.',
@@ -2232,7 +2232,7 @@ export default {
         ahvContribution: "If employed, for reference only. If self-employed, the contribution counts in the budget. Enter your income before this contribution.",
         bvgBalance: 'From your latest pension fund statement. Feeds into the pension calculator.',
         policyNumber: 'Contract/policy number of the basic insurance — shown on the policy document, not the card number.',
-        ktg: 'Not mandatory. Many employers have KTG coverage — it pays 80% of your salary during illness.',
+        ktg: 'Not mandatory. Many employers have KTG coverage. What it pays during illness is set out in the policy.',
         uvgZusatzPremium: "Only enter this if you pay the premium yourself. Anything deducted from your salary is already in your net pay.",
       },
       docs: {
@@ -4618,7 +4618,11 @@ export default {
     source: 'Sources: [[WHO, indicator 4845|https://www.who.int/data/gho/indicator-metadata-registry/imr-details/4845]] · [[UN, SDG 3.8.2 metadata, as of 27.03.2026|https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-02_NEW.pdf]] · [[KVG Art. 65 para. 1ter and transitional provision to the amendment of 29.9.2023, as of 1.1.2026|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65]]',
     ipvLink: 'Check premium reduction (IPV)',
     ipvRelief: 'With premium reduction: −CHF {ipv}/mo → effectively {share}% of income.',
-    ipvNoClaim: 'No entitlement to premium reduction in this situation.',
+    ipvNoClaim: 'By this rough calculation there is no entitlement to premium reduction. The responsible office decides.',
+    spiegelTitel: 'Health insurance in the budget',
+    spiegelSatz: 'CHF {praemie} of CHF {summe} for insurance goes to basic insurance.',
+    spiegelSatzAllein: 'CHF {praemie} goes to basic insurance.',
+    spiegelLink: 'Context in Insurance',
   },
   uvgHint: {
     title: 'Accident cover: save as an employee',

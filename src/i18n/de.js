@@ -1289,7 +1289,7 @@ export default {
     versicherungen: {
       basic: { sie: 'Jede Person in der Schweiz hat eine Krankenkasse. Hier sammeln Sie die wichtigsten Angaben dazu.', du: 'Jede Person in der Schweiz hat eine Krankenkasse. Hier sammelst Du die wichtigsten Angaben dazu.' },
       occupational: { sie: 'Ihre Pensionskasse — sie wird gemeinsam mit Ihrem Arbeitgeber finanziert und sichert Ihr Alter ab.', du: 'Deine Pensionskasse — sie wird gemeinsam mit Deinem Arbeitgeber finanziert und sichert Dein Alter ab.' },
-      additional: { sie: 'UVG (Unfallversicherung): Als Angestellte/r sind Sie obligatorisch über den Arbeitgeber versichert — Berufs- und Nichtberufsunfälle ab 8h/Woche. KTG (Krankentaggeld): Nicht obligatorisch, aber viele Arbeitgeber haben eine — sie zahlt 80% Ihres Lohns bei Krankheit.', du: 'UVG (Unfallversicherung): Als Angestellte/r bist Du obligatorisch über den Arbeitgeber versichert — Berufs- und Nichtberufsunfälle ab 8h/Woche. KTG (Krankentaggeld): Nicht obligatorisch, aber viele Arbeitgeber haben eine — sie zahlt 80% Deines Lohns bei Krankheit.' },
+      additional: { sie: 'UVG (Unfallversicherung): Als Angestellte/r sind Sie obligatorisch über den Arbeitgeber versichert — Berufs- und Nichtberufsunfälle ab 8h/Woche. KTG (Krankentaggeld): Nicht obligatorisch, aber viele Arbeitgeber haben eine. Wie viel sie bei Krankheit zahlt, steht in der Police.', du: 'UVG (Unfallversicherung): Als Angestellte/r bist Du obligatorisch über den Arbeitgeber versichert — Berufs- und Nichtberufsunfälle ab 8h/Woche. KTG (Krankentaggeld): Nicht obligatorisch, aber viele Arbeitgeber haben eine. Wie viel sie bei Krankheit zahlt, steht in der Police.' },
       property: 'Hausrat, Reise, Cyber — meist freiwillig. Hausrat kann je nach Kanton Pflicht sein.',
       mobility: { sie: 'Falls Sie ein Auto haben: die Motorfahrzeugversicherung gehört hierher.', du: 'Falls Du ein Auto hast: die Motorfahrzeugversicherung gehört hierher.' },
       social: 'AHV-Beiträge und Sozialversicherungen — die Basis des Schweizer Vorsorgesystems.',
@@ -2241,7 +2241,7 @@ export default {
         ahvContribution: "Bei Anstellung nur zur Übersicht. Bei Selbständigkeit zählt der Beitrag im Budget. Das Einkommen dafür vor diesem Beitrag erfassen.",
         bvgBalance: 'Letzter PK-Ausweis. Fliesst in den Vorsorge-Rechner.',
         policyNumber: 'Vertrags-/Policennummer der Grundversicherung — steht auf der Police, nicht die Kartennummer.',
-        ktg: { sie: 'Nicht obligatorisch. Viele Arbeitgeber haben eine KTG — sie zahlt 80% Ihres Lohns bei Krankheit.', du: 'Nicht obligatorisch. Viele Arbeitgeber haben eine KTG — sie zahlt 80% Deines Lohns bei Krankheit.' },
+        ktg: { sie: 'Nicht obligatorisch. Viele Arbeitgeber haben eine KTG. Wie viel sie bei Krankheit zahlt, steht in der Police.', du: 'Nicht obligatorisch. Viele Arbeitgeber haben eine KTG. Wie viel sie bei Krankheit zahlt, steht in der Police.' },
         uvgZusatzPremium: { sie: "Nur eintragen, wenn Sie die Prämie selbst bezahlen. Was vom Lohn abgeht, steckt schon im Nettolohn.", du: "Nur eintragen, wenn du die Prämie selbst bezahlst. Was vom Lohn abgeht, steckt schon im Nettolohn." },
       },
       docs: {
@@ -4585,7 +4585,11 @@ export default {
     source: 'Quellen: [[WHO, Indikator 4845|https://www.who.int/data/gho/indicator-metadata-registry/imr-details/4845]] · [[UNO, Metadaten SDG 3.8.2, Stand 27.03.2026|https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-02_NEW.pdf]] · [[KVG Art. 65 Abs. 1ter und Übergangsbestimmung zur Änderung vom 29.9.2023, Stand 1.1.2026|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65]]',
     ipvLink: 'Prämienverbilligung (IPV) prüfen',
     ipvRelief: 'Mit Prämienverbilligung: −CHF {ipv}/Mt. → effektiv {share}% des Einkommens.',
-    ipvNoClaim: 'Kein Anspruch auf Prämienverbilligung in dieser Situation.',
+    ipvNoClaim: 'Nach dieser groben Rechnung besteht kein Anspruch auf Prämienverbilligung. Verbindlich entscheidet die zuständige Stelle.',
+    spiegelTitel: 'Krankenkasse im Budget',
+    spiegelSatz: 'CHF {praemie} von CHF {summe} Versicherungen gehen an die Grundversicherung.',
+    spiegelSatzAllein: 'CHF {praemie} gehen an die Grundversicherung.',
+    spiegelLink: 'Einordnung in Versicherungen',
   },
   uvgHint: {
     title: 'Unfalldeckung: als Angestellte sparen',

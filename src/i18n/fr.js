@@ -1288,7 +1288,7 @@ export default {
     versicherungen: {
       basic: { sie: 'Chaque personne en Suisse a une caisse maladie. Rassemblez ici les informations essentielles.', du: 'Chaque personne en Suisse a une caisse maladie. Rassemble ici les informations essentielles.' },
       occupational: { sie: 'Votre caisse de pension — financée conjointement avec votre employeur pour assurer votre retraite.', du: 'Ta caisse de pension — financée conjointement avec ton employeur pour assurer ta retraite.' },
-      additional: { sie: 'LAA (assurance accidents) : En tant que salarié, vous êtes couvert par votre employeur — accidents professionnels et non professionnels dès 8h/semaine. IJM (indemnité journalière maladie) : Pas obligatoire, mais beaucoup d\'employeurs en ont une — elle paie 80% du salaire en cas de maladie.', du: 'LAA (assurance accidents) : En tant que salarié, tu es couvert par ton employeur — accidents professionnels et non professionnels dès 8h/semaine. IJM (indemnité journalière maladie) : Pas obligatoire, mais beaucoup d\'employeurs en ont une — elle paie 80% du salaire en cas de maladie.' },
+      additional: { sie: 'LAA (assurance accidents) : En tant que salarié, vous êtes couvert par votre employeur — accidents professionnels et non professionnels dès 8h/semaine. IJM (indemnité journalière maladie) : Pas obligatoire, mais beaucoup d\'employeurs en ont une. Le montant versé en cas de maladie figure dans la police.', du: 'LAA (assurance accidents) : En tant que salarié, tu es couvert par ton employeur — accidents professionnels et non professionnels dès 8h/semaine. IJM (indemnité journalière maladie) : Pas obligatoire, mais beaucoup d\'employeurs en ont une. Le montant versé en cas de maladie figure dans la police.' },
       property: 'Ménage, voyage, cyber — le plus souvent facultatives. L’assurance ménage peut être obligatoire selon le canton.',
       mobility: { sie: 'Si vous avez une voiture : l\'assurance véhicule à moteur se trouve ici.', du: 'Si tu as une voiture : l\'assurance véhicule à moteur se trouve ici.' },
       social: 'Cotisations AVS et assurances sociales — le socle du système suisse de prévoyance.',
@@ -2232,7 +2232,7 @@ export default {
         ahvContribution: "En cas d’emploi, à titre indicatif. En cas d’activité indépendante, la cotisation compte dans le budget. Saisir pour cela le revenu avant cette cotisation.",
         bvgBalance: 'Dernier certificat de caisse de pension. Utilisé dans le calculateur de prévoyance.',
         policyNumber: 'Numéro de contrat/police de l\'assurance de base — figure sur la police, pas le numéro de carte.',
-        ktg: { sie: 'Pas obligatoire. Beaucoup d\'employeurs ont une IJM — elle verse 80% du salaire en cas de maladie.', du: 'Pas obligatoire. Beaucoup d\'employeurs ont une IJM — elle verse 80% du salaire en cas de maladie.' },
+        ktg: { sie: 'Pas obligatoire. Beaucoup d\'employeurs ont une IJM. Le montant versé en cas de maladie figure dans la police.', du: 'Pas obligatoire. Beaucoup d\'employeurs ont une IJM. Le montant versé en cas de maladie figure dans la police.' },
         uvgZusatzPremium: { sie: "À saisir seulement si vous payez la prime vous-même. Ce qui est déduit du salaire figure déjà dans le salaire net.", du: "À saisir seulement si tu paies la prime toi-même. Ce qui est déduit du salaire figure déjà dans le salaire net." },
       },
       docs: {
@@ -4546,7 +4546,11 @@ export default {
     source: 'Sources : [[OMS, indicateur 4845|https://www.who.int/data/gho/indicator-metadata-registry/imr-details/4845]] · [[ONU, métadonnées ODD 3.8.2, état au 27.03.2026|https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-02_NEW.pdf]] · [[LAMal art. 65 al. 1ter et disposition transitoire de la modification du 29.9.2023, état au 1.1.2026|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_65]]',
     ipvLink: 'Vérifier la réduction de primes',
     ipvRelief: 'Avec la réduction de primes : −CHF {ipv}/mois → effectivement {share}% du revenu.',
-    ipvNoClaim: 'Pas de droit à la réduction de primes dans cette situation.',
+    ipvNoClaim: 'Selon ce calcul approximatif, il n’y a pas de droit à la réduction de primes. L’office compétent décide.',
+    spiegelTitel: 'L’assurance maladie dans le budget',
+    spiegelSatz: 'CHF {praemie} sur CHF {summe} d’assurances vont à l’assurance de base.',
+    spiegelSatzAllein: 'CHF {praemie} vont à l’assurance de base.',
+    spiegelLink: 'Situer dans Assurances',
   },
   uvgHint: {
     title: 'Couverture accidents : économiser comme salarié',

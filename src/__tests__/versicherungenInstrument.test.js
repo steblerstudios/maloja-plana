@@ -16,7 +16,7 @@ import en from '../i18n/en.js';
 import fr from '../i18n/fr.js';
 import it_ from '../i18n/it.js';
 import rm from '../i18n/rm.js';
-import { kkLastBasisKey } from '../KKLastCard.jsx';
+import { KKLastSpiegel, kkLastBasisKey } from '../KKLastCard.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 
 const t = createT({ de }, 'de', 'sie');
@@ -127,6 +127,15 @@ describe('Nachprüfung', () => {
   it('Kasse erfasst, Prämie nicht: «Krankenkasse» steht zuerst bei «nicht erfasst»', () => {
     const v = { ...DEMO_DATA.versicherungen, kkPremium: '', liabilityPremium: '' };
     expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht eingetragen.');
+  });
+  it('Spiegel in Finanzen: Blick aufs Budget, ohne Marke und ohne WHO', () => {
+    const tt = (k, p = {}) => k + JSON.stringify(p);
+    const pal = new Proxy({}, { get: () => '#000' });
+    const html = renderToStaticMarkup(React.createElement(KKLastSpiegel, { palette: pal, t: tt, data: DEMO_DATA, onNavigate: () => {} }));
+    expect(html).toContain('kkLast.spiegelSatz');
+    expect(html).toContain('8.7 %');
+    expect(html).not.toContain('kkLast.marker');
+    expect(html).not.toContain('kkLast.kanton');
   });
   it('Basis je nach Einkommen: netto, brutto, offen, nicht Lohn', () => {
     expect(kkLastBasisKey({ finanzen: { incomeType: 'netto' } })).toBe('kkLast.basisNetto');

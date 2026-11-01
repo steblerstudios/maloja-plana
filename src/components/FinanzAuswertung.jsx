@@ -16,7 +16,7 @@ import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
-import { KKLastCard } from '../KKLastCard.jsx';
+import { KKLastCard, KKLastSpiegel } from '../KKLastCard.jsx';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
 import { renderSource } from '../utils/renderSource.js';
@@ -645,7 +645,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen', nurBefund: true }),
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), kkLastKarte(p), gesundheitKarte(p), vermoegenKarte(p),
+      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), React.createElement(KKLastSpiegel, { palette, t, data, onNavigate }), gesundheitKarte(p), vermoegenKarte(p),
       // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
       (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
         palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
