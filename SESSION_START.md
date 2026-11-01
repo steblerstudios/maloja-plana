@@ -17,6 +17,17 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 01.11.2026, 23:30, Sitzungsende «Fassung 7, Punkt für Punkt» — Dashboard und Ausweise gebaut, Zweige zusammengeführt. Nichts nach `main` gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 23:27): main = `88770f11` (nur #639 SEO dazu) · live = `4299bfb9` (0.1.48-beta) · 157 Commits dazwischen. Stand der Prüfung und des Pushs: in der Übergabe im Chat, hier nie als Hash ohne Messung übernehmen.
+> - **Gebaut, Einzelheiten `VERGLEICH.md`, «Besprechen, Punkt für Punkt»:** Ausweise F, N, S mit Steuer-Sperre, IPV-Hinweis nach AsylV 2 Art. 5b, Sozialhilfe-Hinweis (Zahl bleibt) · F7-D3, D4, D6, D7 · F7-D1, D9, D10: ein Block aus Fortschritt und Kapiteln (`BergDetail`), Gruppen zurück, Instrumente in den Kapitel-Zeilen · F7-K3-2 und F7-D5 je als Kombi: Ergebnis oben, Grafik oder Einkommensfeld aufklappbar, Link darunter · F7-K3-1 über `KKLastSpiegel` erledigt, Regel Zuhause, Spiegel, Wegweiser.
+> - **In den Sammelzweig gemergt:** `origin/main` (#639), `feat/f7-lohn-rest`, `feat/digitale-ordnung`, `seo/startseite-links-erklaerseiten`, `docs/gamification-entscheid` (fünf Konflikte: Sammelzweig gilt, `Kuchen.jsx` bleibt gelöscht). Danach `fix/f7-gegenlese` (Rechts- und Copy-Gegenlese) und `feat/f7-lohn-rest` bis Status «Lernend».
+> - **Entscheid offen:** Stebler Studios sagte «pushen mergen und commiten was wir können». Das widerspricht dem Entscheid «kein Merge vor Fassung 8 und Vergleich» nicht ausdrücklich, hebt ihn aber auch nicht klar auf. Gemergt wurde nur in den Sammelzweig. Merge von #637 nach `main` braucht ein klares Ja.
+> - **Wartet, nicht bauen:** Fortschrittsbild (F7-L4, S5, K2-1, Varianten gezeigt) und die Zahlen «7/7» und Prozent in der Landschaft: «da warten wir noch». Landschaft 65 %, Block 72 % bei Maria, Ursache nicht geprüft.
+> - **Fachlich offen:** Praxisbeleg Status S zur Quellensteuer nicht gefunden · Status S im Wallis abgeleitet · vorläufig aufgenommene Flüchtlinge ausserhalb Zürichs · kantonale Ansätze nicht gelesen · Ausschluss bei rechtskräftiger Wegweisung nicht abgebildet · Wiedervorlage Status S März 2027.
+> - **Nicht im Bild gesehen:** Sperrtexte, IPV-Hinweise, Schritte Dokumente und Budget im Wegweiser (nur echtes Profil, Stage mit Zugangscode) · Kompass ohne Einkommen · heller Modus · Handy bei K3-2, D5 · Übersetzungen. rm provisorisch, fr, it, en nicht gegengelesen.
+> - **Fallen:** Mehrere Sitzungen committen in `_werkbank/f7-sammel`, vor jeder Aussage HEAD messen. Volle Tests bei Last: `--testTimeout=20000`, `glyphenImText` läuft sonst in Zeitüberschreitung. Beispiel Maria ist für Eingaben gesperrt. Push nur nach grünen Tests.
+
 > 🧾 **Nachtrag 01.11.2026, 21:05, Sitzungsende «Feinschliff Schild und Selbständige» — in `integration/f7-sammel` gemergt, nichts auf `main`, NICHT live.**
 >
 > **Gemessen:** main = `98539e99` · live = `4299bfb9` · Sammelzweig `a8d9a6d6` (lokal 3 Docs-Commits einer anderen Sitzung voraus; `60c8833b` ist auf origin, weil jene Sitzung bis `e6ee7665` gepusht hat). Startbündel an `a8d9a6d6`: 64.62 von 65 kB.
