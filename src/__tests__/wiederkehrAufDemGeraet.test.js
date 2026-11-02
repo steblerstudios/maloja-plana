@@ -9,7 +9,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createT } from '../i18n/index.js';
 import { betaFeedbackText } from '../utils/betaFeedbackMail.js';
-import { SCHLUESSEL, ABGELEHNT, tagMerken, nutzungstageImMonat, tageLoeschen, zaehlenErlaubt, zaehlenSetzen, FEEDBACK, feedbackRuht, feedbackMerken } from '../utils/nutzungsTage.js';
+import { SCHLUESSEL, ABGELEHNT, tagMerken, tageLoeschen, zaehlenErlaubt } from '../utils/nutzungsTage.js';
+import { nutzungstageImMonat, zaehlenSetzen, FEEDBACK, feedbackRuht, feedbackMerken } from '../utils/nutzungsAnzeige.js';
 import { BEHALTEN } from '../utils/datenLoeschen.js';
 // 🛑 Nicht `import it from '../i18n/it.js'` — das überschreibt vitests `it`.
 import deTexte from '../i18n/de.js';
@@ -158,7 +159,7 @@ describe('Feedback alle drei Monate', () => {
   });
 
   it('der Abschnitt drängt nicht: kein Hinweis ausserhalb der Karte', () => {
-    expect(lesen('utils', 'nutzungsTage.js')).not.toMatch(/Notification|setTimeout|setInterval/);
+    expect(lesen('utils', 'nutzungsTage.js') + lesen('utils', 'nutzungsAnzeige.js')).not.toMatch(/Notification|setTimeout|setInterval/);
   });
 });
 
@@ -178,17 +179,25 @@ describe('Die Zahl geht nur freiwillig mit', () => {
   });
 
   it('das Kästchen ist vorgegeben aus und erscheint nur mit einer Zahl', () => {
-    const dashboard = lesen('Dashboard.jsx');
-    const k = dashboard.slice(dashboard.indexOf('const BetaFeedback'), dashboard.indexOf('// Merged status surface'));
+    const k = lesen('components', 'BetaFeedback.jsx');
     expect(k).toMatch(/const \[nutzungMit, setNutzungMit\] = useState\(false\)/);
     expect(k).toMatch(/nutzungstage: nutzungMit \? tage : null/);
     expect(k).toMatch(/tage > 0 && React\.createElement/);
   });
 });
 
+describe('Startbündel', () => {
+  it('main.jsx lädt nur das Zählen, nicht die Anzeige', () => {
+    expect(lesen('main.jsx')).not.toContain('nutzungsAnzeige');
+    const dashboard = lesen('Dashboard.jsx');
+    expect(dashboard).toContain("React.lazy(() => import('./components/BetaFeedback.jsx')");
+    expect(dashboard).not.toContain('nutzungsAnzeige');
+  });
+});
+
 describe('Es wird nichts gesendet', () => {
   it('der Baustein hat keinen Netzweg', () => {
-    expect(lesen('utils', 'nutzungsTage.js')).not.toMatch(/fetch|sendBeacon|XMLHttpRequest|WebSocket|navigator\.|document\.cookie/);
+    expect(lesen('utils', 'nutzungsTage.js') + lesen('utils', 'nutzungsAnzeige.js')).not.toMatch(/fetch|sendBeacon|XMLHttpRequest|WebSocket|navigator\.|document\.cookie/);
   });
 
   it('der Baustein der Einstellungen hat keinen Netzweg', () => {

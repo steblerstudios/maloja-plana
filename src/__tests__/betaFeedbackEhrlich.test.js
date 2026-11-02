@@ -29,8 +29,7 @@ const SPRACHEN = { de: deTexte, en: enTexte, fr: frTexte, it: itTexte, rm: rmTex
 const ALTE_KNOEPFE = ['Feedback senden', 'Send feedback', 'Envoyer le feedback', 'Invia feedback', 'Trametter il feedback'];
 const NEUE_SCHLUESSEL = ['submit', 'submitHint', 'previewTitle', 'to', 'copy', 'copied', 'copyFailed', 'noMailApp', 'reopen', 'thanks', 'thanksDetail', 'thanksLater'];
 
-const dashboard = fs.readFileSync(path.resolve(__dirname, '..', 'Dashboard.jsx'), 'utf8');
-const komponente = dashboard.slice(dashboard.indexOf('const BetaFeedback'), dashboard.indexOf('// Merged status surface'));
+const komponente = fs.readFileSync(path.resolve(__dirname, '..', 'components', 'BetaFeedback.jsx'), 'utf8');
 
 describe('Der Knopf verspricht kein Senden mehr', () => {
   for (const [lang, texte] of Object.entries(SPRACHEN)) {

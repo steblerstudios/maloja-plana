@@ -121,9 +121,13 @@ describe('Berg-Detail lädt nach, das Dashboard hält es nicht fest (E36, 24.09.
 // Startbündel; main.jsx brauchte aus utils/fristen.js nur heuteIso. Zusammen −0.70 kB.
 describe('Startbündel: keine ganzen Fach-Dateien für eine kleine Hilfsfunktion', () => {
   const dashboard = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
-  it('Dashboard holt die Zwischenablage aus utils/zwischenablage.js, nicht aus notfallpass.js', () => {
-    expect(dashboard).toMatch(/from '\.\/utils\/zwischenablage\.js'/);
+  // Seit 02.11.2026 liegt das Beta-Feedback in einer eigenen, nachgeladenen Komponente.
+  it('Dashboard zieht notfallpass.js nicht, das Beta-Feedback holt die Zwischenablage aus utils/zwischenablage.js', () => {
+    const feedback = readFileSync(new URL('../components/BetaFeedback.jsx', import.meta.url), 'utf8');
     expect(dashboard).not.toMatch(/from '\.\/utils\/notfallpass\.js'/);
+    expect(dashboard).toContain("import('./components/BetaFeedback.jsx')");
+    expect(feedback).toMatch(/from '\.\.\/utils\/zwischenablage\.js'/);
+    expect(feedback).not.toMatch(/notfallpass\.js'/);
   });
   it('main.jsx importiert utils/fristen.js nicht', () => {
     expect(mainJsx).not.toMatch(/from '\.\/utils\/fristen\.js'/);

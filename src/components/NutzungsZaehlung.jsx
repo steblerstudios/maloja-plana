@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { text, space } from '../config/tokens.js';
-import { nutzungstageImMonat, tageLoeschen, zaehlenErlaubt, zaehlenSetzen } from '../utils/nutzungsTage.js';
+import { tageLoeschen, zaehlenErlaubt } from '../utils/nutzungsTage.js';
+import { nutzungstageImMonat, zaehlenSetzen } from '../utils/nutzungsAnzeige.js';
 
 // Zählung auf dem Gerät (02.11.2026): der immer erreichbare Ort zum Ansehen, Ablehnen und
 // Löschen. Im Beispiel gibt es nichts zu zählen.
