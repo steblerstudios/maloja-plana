@@ -4,7 +4,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { buildICS, downloadICS } from './utils/icsExport.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { text, weight, space, radius, fontFamily, fontFamilyDisplay, ease, duration, leading } from './config/tokens.js';
+import { text, weight, space, radius, fontFamily, fontFamilyDisplay, ease, duration, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { EmptyState } from './components/EmptyState.jsx';
@@ -278,6 +278,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         // «Termin · Fällig in 3 Tagen · aus dem Ablauf Umzug» ruhig wie im Entwurf; nur die Art etwas heller.
         React.createElement('div', { style: { fontSize: '12px', color: palette.soft, marginTop: '1px', lineHeight: leading.normal } },
           React.createElement('span', { style: { color: palette.mid } }, artName), ' · ', React.createElement('span', { style: { color: dueColor } }, wann), herkunft ? ' · ' + herkunft : null),
+        // Ohne Haken-Knopf steht das Datum sonst nur in der ausgeblendeten Spalte: Screenreader hörten es nie.
+        !onToggle && d ? React.createElement('span', { style: visuallyHiddenStyle }, datumLang(iso)) : null,
         extra
       ),
       onToggle && React.createElement('button', { type: 'button', 'aria-label': toggleLabel + ': ' + titel + (d ? ', ' + datumLang(iso) : ''), onClick: onToggle, style: leiseKnopf },

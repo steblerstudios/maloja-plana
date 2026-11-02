@@ -1083,7 +1083,7 @@ const AppInner = ({ demo }) => {
     background: active ? accent + (opts.bgAlpha || '22') : 'transparent',
     // Aktiv trägt der Text den Kontrast, die Akzentfarbe liegt in Fläche und Rand (4.5:1 in beiden Modi).
     color: active ? (opts.activeColor || palette.text) : palette.mid,
-    border: '1px solid ' + (active ? accent : palette.border),
+    border: '1px solid ' + (active ? palette.mid : palette.border),
     borderRadius: radius.sm, cursor: 'pointer',
     lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
     display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',

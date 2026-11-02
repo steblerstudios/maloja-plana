@@ -2387,6 +2387,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
+        'aria-pressed': expandedSection === 'fields',
         style: {
           minHeight: '44px', padding: space.sm + 'px ' + space.md + 'px',
           background: expandedSection === 'fields' ? palette.sand : 'transparent',
@@ -2400,6 +2401,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       }, tr('chapterView.fields')),
       React.createElement('button', {
         onClick: () => setExpandedSection('documents'),
+        'aria-pressed': expandedSection === 'documents',
         style: {
           minHeight: '44px', padding: space.sm + 'px ' + space.md + 'px',
           background: expandedSection === 'documents' ? palette.sand : 'transparent',
