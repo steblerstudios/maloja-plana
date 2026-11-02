@@ -3,8 +3,9 @@
 > Haltung (Entscheid 2026): **Aggregierte, cookielose Zahlen ja — Verfolgung
 > einzelner Personen nein.** Kein Google Analytics, kein Cookie-Banner, kein
 > Tracking-Script in der App. Die App bleibt CSP self-only und sendet nichts.
-> Quelle der Zahlen ist ausschliesslich der Hoster (Infomaniak): Server-Logs
-> und die eingebaute Besucherstatistik im Manager.
+> Quelle der Zahlen ist der Hoster (Infomaniak): Server-Logs
+> und die eingebaute Besucherstatistik im Manager. Dazu kommen nur Zahlen, die
+> Personen selbst per E-Mail schicken (siehe «Wiederkehr auf dem Gerät»).
 
 ## Was wir wissen wollen (und so erfahren können)
 
@@ -30,7 +31,8 @@
 Regel: **Zählen ja, drängen nein.** Die App zählt nur auf dem Gerät, an wie vielen Tagen
 sie im laufenden Monat geöffnet wurde (`src/utils/nutzungsTage.js`). Sie sendet nichts. Die
 Zahl geht nur mit, wenn die Person sie im Beta-Feedback ankreuzt und die E-Mail selbst
-sendet. Das Zählen lässt sich in den Einstellungen ablehnen und endet nach dem Beta-Feedback.
+sendet. Das Zählen lässt sich in den Einstellungen ablehnen. Das Beta-Feedback erscheint frühestens
+alle drei Monate wieder, ohne Erinnerung und wegklickbar.
 Die Auswertung bleibt deshalb eine Stichprobe von Freiwilligen. Anonyme Summen an
 einen eigenen Empfänger sind bis zur Backend-Frage geparkt (siehe «Später»).
 

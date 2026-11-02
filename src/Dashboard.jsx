@@ -22,7 +22,7 @@ import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
 import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
-import { nutzungstageImMonat, tageLoeschen } from './utils/nutzungsTage.js';
+import { nutzungstageImMonat, tageLoeschen, feedbackRuht, feedbackMerken } from './utils/nutzungsTage.js';
 import { inZwischenablage } from './utils/zwischenablage.js';
 import { version as APP_VERSION } from '../package.json';
 
@@ -163,11 +163,12 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
 // eigenen Klick im Mailprogramm; wer keins hat, kopiert den Text. Auf dem Gerät bleibt nur
 // der Merker «erledigt», die Antworten selbst nicht.
 const BetaFeedback = ({ palette, t }) => {
-  const storageKey = 'or5_beta_feedback';
   const { lang } = useT();
-  // 'neu' = Formular · 'offen' = Entwurf eben geöffnet (diese Sitzung) · 'frueher' = schon erledigt
+  // 'neu' = Formular · 'offen' = Entwurf eben geöffnet (diese Sitzung) · 'frueher' = beantwortet,
+  // ruht · 'weg' = weggeklickt, ruht. Nach 90 Tagen ist wieder 'neu' (Stebler Studios, 02.11.2026).
   const [phase, setPhase] = useState(() => {
-    try { return localStorage.getItem(storageKey) === 'done' ? 'frueher' : 'neu'; } catch { return 'neu'; }
+    const ruht = feedbackRuht();
+    return ruht === 'beantwortet' ? 'frueher' : ruht === 'weggeklickt' ? 'weg' : 'neu';
   });
   const [expanded, setExpanded] = useState(false);
   const [q1, setQ1] = useState('');
@@ -194,6 +195,8 @@ const BetaFeedback = ({ palette, t }) => {
   const kopieHinweis = kopie && React.createElement('div', {
     role: 'status', style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' },
   }, t(kopie === 'ok' ? 'beta.feedback.copied' : 'beta.feedback.copyFailed'));
+
+  if (phase === 'weg') return null;
 
   if (phase === 'frueher') {
     return React.createElement('div', {
@@ -229,7 +232,13 @@ const BetaFeedback = ({ palette, t }) => {
           padding: space.sm + 'px ' + space.lg + 'px', cursor: 'pointer',
           color: palette.mid, fontSize: text.sm, fontFamily: 'inherit',
         }
-      }, t('beta.feedback.title'))
+      }, t('beta.feedback.title')),
+      React.createElement('div', null,
+        React.createElement('button', {
+          type: 'button', style: linkKnopf,
+          onClick: () => { feedbackMerken(true); setPhase('weg'); },
+        }, t('beta.feedback.diesmalNicht'))
+      )
     );
   }
 
@@ -244,7 +253,7 @@ const BetaFeedback = ({ palette, t }) => {
   // Erst den Merker setzen, dann das Mailprogramm öffnen. Die Antworten werden nicht
   // gespeichert — sie stehen im Entwurf, und den schickt die Person selbst.
   const handleSubmit = () => {
-    try { localStorage.setItem(storageKey, 'done'); } catch { /* ignore */ }
+    feedbackMerken();
     try { window.location.href = href; } catch { /* Kopier-Ausweg bleibt */ }
     setPhase('offen');
   };

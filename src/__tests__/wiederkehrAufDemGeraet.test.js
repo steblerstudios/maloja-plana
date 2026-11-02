@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createT } from '../i18n/index.js';
 import { betaFeedbackText } from '../utils/betaFeedbackMail.js';
-import { SCHLUESSEL, ABGELEHNT, tagMerken, nutzungstageImMonat, tageLoeschen, zaehlenErlaubt, zaehlenSetzen, feedbackErledigt } from '../utils/nutzungsTage.js';
+import { SCHLUESSEL, ABGELEHNT, tagMerken, nutzungstageImMonat, tageLoeschen, zaehlenErlaubt, zaehlenSetzen, FEEDBACK, feedbackRuht, feedbackMerken } from '../utils/nutzungsTage.js';
 import { BEHALTEN } from '../utils/datenLoeschen.js';
 // 🛑 Nicht `import it from '../i18n/it.js'` — das überschreibt vitests `it`.
 import deTexte from '../i18n/de.js';
@@ -102,12 +102,11 @@ describe('Ablehnen und Ende der Zählung', () => {
     expect(nutzungstageImMonat(s, tag('2026-11-03'))).toBe(1);
   });
 
-  it('nach dem Beta-Feedback endet die Zählung, und die Zahl wird entfernt', () => {
+  it('nach dem Beta-Feedback läuft die Zählung weiter', () => {
     tagMerken(s, tag('2026-11-02'));
-    s.setItem('or5_beta_feedback', 'done');
-    expect(feedbackErledigt(s)).toBe(true);
+    feedbackMerken(false, s, tag('2026-11-02'));
     tagMerken(s, tag('2026-11-03'));
-    expect(s.roh()).toBeUndefined();
+    expect(nutzungstageImMonat(s, tag('2026-11-03'))).toBe(2);
   });
 
   it('die Ablehnung übersteht «Alle Daten löschen»', () => {
@@ -122,7 +121,44 @@ describe('Ablehnen und Ende der Zählung', () => {
   });
 
   it('das Zählen läuft vor dem ersten Rendern des Feedbacks', () => {
-    expect(lesen('main.jsx')).toMatch(/useState\(\(\) => \{ if \(!demo\) tagMerken\(\); return null; \}\)/);
+    expect(lesen('main.jsx')).toMatch(/useState\(\(\) => \{ if \(!demo && isOnboardingDone\(\)\) tagMerken\(\); return null; \}\)/);
+  });
+});
+
+describe('Feedback alle drei Monate', () => {
+  let s;
+  beforeEach(() => { s = speicher(); });
+
+  it('ist ohne Merker bereit', () => {
+    expect(feedbackRuht(s, tag('2026-11-02'))).toBe(null);
+  });
+
+  it('ruht nach einer Antwort 89 Tage und ist am 90. Tag wieder da', () => {
+    feedbackMerken(false, s, tag('2026-11-02'));
+    expect(feedbackRuht(s, tag('2027-01-30'))).toBe('beantwortet');
+    expect(feedbackRuht(s, tag('2027-01-31'))).toBe(null);
+  });
+
+  it('Wegklicken zählt wie eine Antwort, wird aber nicht verdankt', () => {
+    feedbackMerken(true, s, tag('2026-11-02'));
+    expect(feedbackRuht(s, tag('2026-12-01'))).toBe('weggeklickt');
+    expect(feedbackRuht(s, tag('2027-01-31'))).toBe(null);
+  });
+
+  it('das alte «done» beginnt die Frist heute', () => {
+    s.setItem(FEEDBACK, 'done');
+    expect(feedbackRuht(s, tag('2026-11-02'))).toBe('beantwortet');
+    expect(feedbackRuht(s, tag('2027-01-30'))).toBe('beantwortet');
+    expect(feedbackRuht(s, tag('2027-01-31'))).toBe(null);
+  });
+
+  it('übersteht kaputte Werte', () => {
+    s.setItem(FEEDBACK, 'unsinn');
+    expect(feedbackRuht(s, tag('2026-11-02'))).toBe(null);
+  });
+
+  it('der Abschnitt drängt nicht: kein Hinweis ausserhalb der Karte', () => {
+    expect(lesen('utils', 'nutzungsTage.js')).not.toMatch(/Notification|setTimeout|setInterval/);
   });
 });
 
@@ -165,7 +201,7 @@ describe('Texte in allen Sprachen', () => {
     for (const anrede of ['sie', 'du']) {
       const t = createT({ [lang]: texte }, lang, anrede);
       it(`${lang}/${anrede}: alles da`, () => {
-        for (const k of ['beta.feedback.nutzungKaestchen', 'beta.feedback.nutzungHinweis', 'beta.feedback.nutzungZeile', 'beta.feedback.nutzungLoeschen', 'beta.feedback.nutzungSchalter', 'beta.feedback.nutzungStand', 'legal.privacy.zaehlungTitle', 'legal.privacy.zaehlung1']) {
+        for (const k of ['beta.feedback.nutzungKaestchen', 'beta.feedback.nutzungHinweis', 'beta.feedback.nutzungZeile', 'beta.feedback.nutzungLoeschen', 'beta.feedback.nutzungSchalter', 'beta.feedback.nutzungStand', 'beta.feedback.diesmalNicht', 'legal.privacy.zaehlungTitle', 'legal.privacy.zaehlung1']) {
           expect(t(k, { n: 4 }), k).not.toBe(k);
         }
         expect(t('beta.feedback.nutzungZeile', { n: 4 })).toContain('4');

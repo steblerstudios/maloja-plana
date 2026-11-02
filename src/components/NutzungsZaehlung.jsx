@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { text, space } from '../config/tokens.js';
-import { nutzungstageImMonat, tageLoeschen, zaehlenErlaubt, zaehlenSetzen, feedbackErledigt } from '../utils/nutzungsTage.js';
+import { nutzungstageImMonat, tageLoeschen, zaehlenErlaubt, zaehlenSetzen } from '../utils/nutzungsTage.js';
 
 // Zählung auf dem Gerät (02.11.2026): der immer erreichbare Ort zum Ansehen, Ablehnen und
-// Löschen. Im Beispiel gibt es nichts zu zählen. Nach dem Beta-Feedback endet die Zählung,
-// die Karte bleibt nur, solange noch eine Zahl zum Löschen da ist.
+// Löschen. Im Beispiel gibt es nichts zu zählen.
 export const NutzungsZaehlung = ({ palette, t, demoMode }) => {
   const [an, setAn] = useState(() => zaehlenErlaubt());
   const [tage, setTage] = useState(() => nutzungstageImMonat());
-  if (demoMode || (feedbackErledigt() && tage === 0)) return null;
+  if (demoMode) return null;
 
   const umschalten = (e) => {
     const wert = e.target.checked;

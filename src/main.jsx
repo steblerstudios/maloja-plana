@@ -443,8 +443,9 @@ const useViewport = () => {
 // demo: nur gesetzt, wenn die Code-Wand die Demo öffnet (K7) — { data, onLeave }.
 const AppInner = ({ demo }) => {
   // Zählt nur auf dem Gerät, siehe utils/nutzungsTage.js. Das Beispiel zählt nicht mit.
-  // Im Initialisierer, damit das Beta-Feedback den heutigen Tag schon sieht.
-  useState(() => { if (!demo) tagMerken(); return null; });
+  // Im Initialisierer, damit das Beta-Feedback den heutigen Tag schon sieht. Gezählt wird erst
+  // nach der Einführung, denn erst dann sind die Einstellungen zum Ablehnen erreichbar.
+  useState(() => { if (!demo && isOnboardingDone()) tagMerken(); return null; });
   const { t, lang, setLanguage, supportedLanguages, anrede, setAnrede } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const [readable, setReadable] = useState(() => { try { return localStorage.getItem('or5_readable') === 'true'; } catch { return false; } });
