@@ -6438,6 +6438,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calculated without the income allowance for apprentices. Many cantons give them an income allowance or an integration allowance. The canton decides what applies.",
+    konkubinatOffen: "Calculated without a cohabitation contribution. In a stable cohabiting relationship, social services count a contribution from the partner as income, so the entitlement may be lower or lapse.",
     vorBeitraegen: "Income from self-employment is calculated as entered. Personal AHV and pension fund contributions are not deducted.",
     ansatzTiefer: "With an F, N or S permit, support is usually lower than in this calculation: the rate is below that for the resident population, the canton sets it, and part may be given in kind (AsylG Art. 82 paras 1 and 3, AIG Art. 86 para. 1). An entitlement can also lapse entirely. Provisionally admitted refugees and stateless persons are an exception: the same social assistance standards apply to them as to refugees granted asylum (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',
@@ -6762,6 +6763,7 @@ export default {
     wohnformZweckWg: 'Separately — each person runs their own household (flatshare)',
     wohnformHint: 'Run jointly: basic needs as a share of the whole household. Flatshare run separately: basic needs of the supported persons minus 10%. As a rule, social services assume a joint household and a separately run one has to be shown — practice varies by canton.',
     mieteAnteilHint: 'In a shared household, enter only your own share of rent and service charges.',
+    mieteAnteilProfilHint: "From your profile: rent and service charges, split equally among everyone in the household. You can change this here.",
     gblAnteil: 'share {einheit} of {haushalt} pers.',
     gblZweckWg: '{einheit} pers., flatshare −10%',
     andereEinkuenfte: 'Other income (CHF)',
@@ -6789,6 +6791,7 @@ export default {
     vermoegenHinweis: 'Assets exceed exemption – no entitlement',
     freibetrag: 'exemption',
     eingeben: 'Enter rent and health insurance premium to calculate entitlement.',
+    lohnEingeben: "Your profile has a salary but no net amount. Enter your net income below to calculate the entitlement.",
     source: 'Basic needs based on [[SKOS guidelines|skos.ch]] (1.1.{jahr}), asset allowance by canton. Not included: the municipality’s rent limits, premium reduction, situation-related benefits (except extra costs of working you enter) and cantonal deviations, including the income exemption. The social services office assesses the entitlement. Not legally binding.',
   },
   dl: {

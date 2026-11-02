@@ -38,3 +38,25 @@ export function grundbedarf(personen, stichtag) {
   if (personen <= 7) return tabelle[personen];
   return tabelle[7] + (personen - 7) * proWeitere;
 }
+
+// Grundbedarf je Wohnform (SKOS-RL C.3.1 / C.3.2; Wortlaut und Beträge gegengelesen im Merkblatt
+// «Grundbedarf in Wohngemeinschaften», Kantonales Sozialamt GR, V6.0 vom 7.1.2025):
+// - 'allein': nur die Unterstützungseinheit lebt im Haushalt → GBL nach ihrer Grösse.
+// - 'familienaehnlich': gemeinsam geführter Haushalt ohne gemeinsame Unterstützungseinheit (z. B.
+//   Konkubinat, Eltern mit volljährigen Kindern) → GBL nach der GANZEN Haushaltsgrösse, davon der
+//   Pro-Kopf-Anteil der unterstützten Personen (GR: 2 Pers. 812, 3 Pers. 658 p. P.).
+// - 'zweckWg': Zusammenwohnen, um Wohnkosten zu sparen, Haushalt getrennt geführt → GBL nach der
+//   Unterstützungseinheit, minus 10 % (GR: 955 p. P.).
+// Im Zweifel gilt ein gemeinsamer Haushalt als familienähnlich — die Zweck-WG muss die unterstützte
+// Person nachweisen (GR-Merkblatt Ziff. 2.1). Sonderregeln für junge Erwachsene sind kantonal und
+// hier nicht abgebildet.
+export const WOHNFORMEN = ['allein', 'familienaehnlich', 'zweckWg'];
+export function grundbedarfNachWohnform(einheit, weiterePersonen = 0, wohnform = 'allein', stichtag) {
+  const weitere = Math.max(0, Math.floor(Number(weiterePersonen) || 0));
+  if (wohnform === 'familienaehnlich' && weitere > 0) {
+    const haushalt = einheit + weitere;
+    return Math.round(grundbedarf(haushalt, stichtag) / haushalt * einheit);
+  }
+  if (wohnform === 'zweckWg' && weitere > 0) return Math.round(grundbedarf(einheit, stichtag) * 0.9);
+  return grundbedarf(einheit, stichtag);
+}

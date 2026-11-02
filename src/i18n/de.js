@@ -6502,6 +6502,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Für Lernende ohne Einkommensfreibetrag gerechnet. Zahlreiche Kantone geben ihnen einen Freibetrag oder eine Integrationszulage. Was gilt, regelt der Kanton.",
+    konkubinatOffen: "Ohne Konkubinatsbeitrag gerechnet. Im stabilen Konkubinat zählt die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme, der Anspruch kann tiefer sein oder wegfallen.",
     vorBeitraegen: "Das Einkommen aus der Selbständigkeit ist gerechnet, wie es eingetragen ist. Eigene AHV- und Pensionskassen-Beiträge sind nicht abgezogen.",
     ansatzTiefer: "Mit Ausweis F, N oder S fällt die Unterstützung meist tiefer aus als in dieser Rechnung: Der Ansatz liegt unter dem für Einheimische, der Kanton regelt ihn, teils gibt es Sachleistungen (AsylG Art. 82 Abs. 1 und 3, AIG Art. 86 Abs. 1). Ein Anspruch kann auch ganz entfallen. Ausgenommen sind vorläufig aufgenommene Flüchtlinge und Staatenlose: Für sie gelten die gleichen Sozialhilfestandards wie für Flüchtlinge mit Asyl (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',
@@ -6827,6 +6828,7 @@ export default {
     wohnformZweckWg: 'Getrennt — jede Person führt ihren Haushalt selbst (Wohngemeinschaft)',
     wohnformHint: 'Gemeinsam geführt: Grundbedarf als Anteil am ganzen Haushalt. Getrennt geführte WG: Grundbedarf der unterstützten Personen minus 10 %. In der Regel rechnet die Sozialbehörde mit «gemeinsam», die getrennte Haushaltsführung ist nachzuweisen — die Praxis ist kantonal verschieden.',
     mieteAnteilHint: 'Im geteilten Haushalt nur den eigenen Anteil an Miete und Nebenkosten eintragen.',
+    mieteAnteilProfilHint: "Aus dem Profil: Miete und Nebenkosten, zu gleichen Teilen auf alle Personen im Haushalt verteilt. Hier frei anpassbar.",
     gblAnteil: 'Anteil {einheit} von {haushalt} Pers.',
     gblZweckWg: '{einheit} Pers., WG −10 %',
     andereEinkuenfte: 'Andere Einkünfte (CHF)',
@@ -6854,6 +6856,7 @@ export default {
     vermoegenHinweis: 'Vermögen übersteigt Freibetrag – kein Anspruch',
     freibetrag: 'Freibetrag',
     eingeben: { sie: 'Geben Sie Miete und KVG-Prämie ein, um den Anspruch zu berechnen.', du: 'Gib Miete und KVG-Prämie ein, um den Anspruch zu berechnen.' },
+    lohnEingeben: { sie: "Im Profil steht ein Lohn, aber kein Nettobetrag. Tragen Sie unten das Netto-Einkommen ein, um den Anspruch zu berechnen.", du: "Im Profil steht ein Lohn, aber kein Nettobetrag. Trag unten das Netto-Einkommen ein, um den Anspruch zu berechnen." },
     source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.{jahr}), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
   dl: {

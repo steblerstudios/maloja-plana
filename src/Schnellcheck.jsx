@@ -79,7 +79,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
         + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
         + (w.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
-        + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : ''),
+        + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
+        + (w.konkubinatOffen ? ' · ' + t('pegel.konkubinatOffen') : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
       key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,

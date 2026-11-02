@@ -5879,6 +5879,7 @@ export default {
     wohnformZweckWg: "Separadamain — mintga persuna maina sia atgna economia da chasa (cuminanza d'abitar)",
     wohnformHint: "Manada communablamain: basegn da basa sco part da l'entira economia da chasa. Cuminanza d'abitar manada separadamain: basegn da basa da las persunas sustegnidas main 10 %. Per regla quinta il servetsch social cun «communablamain», l'economia separada sto vegnir cumprovada — la pratica è differenta da chantun a chantun.",
     mieteAnteilHint: "En in'economia da chasa partida endatar mo l'atgna part da la pigiun e dals custs accessorics.",
+    mieteAnteilProfilHint: "Dal profil: tschains e custs accessorics, repartids en parts eguals sin tut las persunas en il tegnairchasa. Qua libramain adattabel.", // TODO(rm): provisorisch
     gblAnteil: 'part {einheit} da {haushalt} pers.',
     gblZweckWg: "{einheit} pers., cuminanza d'abitar −10 %",
     andereEinkuenfte: 'Autras entradas (CHF)',
@@ -5909,6 +5910,7 @@ export default {
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
+    lohnEingeben: { sie: "En il profil stat ina paja, ma nagin import net. Endatai sutvart l’entrada netta per calcular il dretg.", du: "En il profil stat ina paja, ma nagin import net. Endatescha sutvart l’entrada netta per calcular il dretg." }, // TODO(rm): provisorisch
     // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
     source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.{jahr}), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
@@ -7468,6 +7470,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Quintà senza franchisa sin l’entrada per persunas en furmaziun. Blers chantuns dattan ad ellas ina franchisa u in’allocaziun d’integraziun. Il chantun decida tge che vala.", // TODO(rm): provisorisch
+    konkubinatOffen: "Quintà senza contribuziun da concubinat. En in concubinat stabil dumbra il servetsch social ina contribuziun da la partenaria u dal partenari sco entrada, il dretg po esser pli bass u crudar davent.", // TODO(rm): provisorisch
     vorBeitraegen: "L’entrada da l’activitad independenta è quintada sco endatada. Las atgnas contribuziuns AVS e da la cassa da pensiun n’èn betg deducidas.", // TODO(rm): provisorisch
     ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)

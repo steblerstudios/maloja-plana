@@ -6412,6 +6412,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calcolato senza franchigia sul reddito per le persone in formazione. Numerosi cantoni concedono loro una franchigia o un supplemento d’integrazione. Il cantone decide cosa si applica.",
+    konkubinatOffen: "Calcolato senza contributo di concubinato. In un concubinato stabile il servizio sociale conteggia come reddito un contributo della o del partner: il diritto può essere inferiore o venire meno.",
     vorBeitraegen: "Il reddito da attività indipendente è calcolato come inserito. I contributi AVS e di cassa pensioni personali non sono dedotti.",
     ansatzTiefer: "Con permesso F, N o S il sostegno è per lo più inferiore a questo calcolo: la tariffa è inferiore a quella per la popolazione residente, la stabilisce il cantone e in parte si tratta di prestazioni in natura (LAsi art. 82 cpv. 1 e 3, LStrI art. 86 cpv. 1). Il diritto può anche venire meno del tutto. Fanno eccezione i rifugiati ammessi provvisoriamente e gli apolidi: per loro valgono gli stessi standard di aiuto sociale dei rifugiati con asilo (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
@@ -6737,6 +6738,7 @@ export default {
     wohnformZweckWg: 'Separatamente — ogni persona gestisce la propria economia domestica (appartamento condiviso)',
     wohnformHint: "Gestione in comune: fabbisogno di base come quota dell'intera economia domestica. Appartamento condiviso gestito separatamente: fabbisogno di base delle persone sostenute meno 10 %. Di regola il servizio sociale considera la gestione in comune, quella separata va dimostrata — la prassi varia da cantone a cantone.",
     mieteAnteilHint: "In un'economia domestica condivisa indicare solo la propria quota di pigione e spese accessorie.",
+    mieteAnteilProfilHint: "Dal profilo: affitto e spese accessorie, ripartite in parti uguali tra tutte le persone dell’economia domestica. Modificabile qui.",
     gblAnteil: 'quota {einheit} su {haushalt} pers.',
     gblZweckWg: '{einheit} pers., appartamento condiviso −10 %',
     andereEinkuenfte: 'Altri redditi (CHF)',
@@ -6764,6 +6766,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
+    lohnEingeben: { sie: "Nel profilo c’è un salario, ma non un importo netto. Inserisca qui sotto il reddito netto per calcolare il diritto.", du: "Nel profilo c’è un salario, ma non un importo netto. Inserisci qui sotto il reddito netto per calcolare il diritto." },
     source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.{jahr}), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali (salvo le spese dovute al lavoro inserite) e differenze cantonali, anche per la franchigia sul reddito. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
   },
 

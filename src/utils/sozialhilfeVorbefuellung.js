@@ -21,34 +21,19 @@
 //   «familienähnlich» — so rechnet die Sozialbehörde in der Regel (SKOS-RL C.3.1/C.3.2).
 //   Kinder zählen zur Einheit, solange sie minderjährig sind; ab 18 sind sie «weitere Personen»
 //   (das Profil erfasst Kinder bis 25). Ohne Alter gilt ein Kind als minderjährig.
-// - Miete: bei weiteren Personen NICHT vorbefüllen — im Profil steht die ganze Miete, gezählt wird
-//   nur der eigene Anteil (SKOS C.4). Leer mit Hinweis statt eine Pro-Kopf-Annahme.
+// - Miete = Miete + Nebenkosten (SKOS-RL C.4.1 Abs. 2), bei weiteren Personen der Anteil nach Köpfen
+//   (C.4.2 Abs. 2, utils/unterstuetzungseinheit.js). Bis 02.11.2026 blieb das Feld dort leer, und ein
+//   leeres Feld zählte als 0: Der Rechner sagte «kein Anspruch», die Seite rechnete die ganze Miete.
 // - Erwerbstätig = Anstellungstyp angestellt/selbstständig/freiberuflich, oder ohne Anstellungstyp
 //   ein eingetragener Arbeitgeber. «Rentner» geht vor einem liegen gebliebenen Arbeitgeber.
 
-import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
-import { giltAlsVerheiratet } from './zivilstand.js';
+import { partnerEinkommenRoh } from './partnereinkommen.js';
+import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil } from './unterstuetzungseinheit.js';
 import { referenzalterMonate } from '../data/ahvRechner.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
 
-// Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
-function alterInMonaten(geburtsdatum, heute) {
-  const g = new Date(geburtsdatum);
-  if (!geburtsdatum || Number.isNaN(g.getTime())) return null;
-  let m = (heute.getFullYear() - g.getFullYear()) * 12 + (heute.getMonth() - g.getMonth());
-  if (heute.getDate() < g.getDate()) m -= 1;
-  return m;
-}
-
-export function kindAlter(kind, heute = new Date()) {
-  if (kind?.birthDate) {
-    const m = alterInMonaten(kind.birthDate, heute);
-    if (m != null) return Math.floor(m / 12);
-  }
-  const a = Number(kind?.age);
-  return Number.isFinite(a) && kind?.age !== '' && kind?.age != null ? a : null;
-}
+export { kindAlter } from './unterstuetzungseinheit.js';
 
 export function saeule3aBeziehbar(basis, heute = new Date()) {
   const alter = alterInMonaten(basis?.dateOfBirth, heute);
@@ -79,8 +64,8 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const einkommen = hauptBrutto || hauptBasisOffen ? '' : summeAlsFeld([f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined]);
 
   const partner = partnerEinkommenRoh(basis);
-  const partnerErfasst = betrag(partner) > 0;
-  const verheiratet = giltAlsVerheiratet(basis.maritalStatus);
+  const haushalt = unterstuetzungseinheit(basis, heute);
+  const { verheiratet, adults, kinder, weiterePersonen, konkubinatOffen } = haushalt;
   const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined]);
 
   const mit3a = saeule3aBeziehbar(basis, heute) && betrag(f.pension3aBalance) > 0;
@@ -90,24 +75,23 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   // Lernende: erwerbstätig, aber ohne Freibetrag, gleiche Regel wie calculateSozialhilfe.
   const ohneFreibetrag = erwerbstaetig && !freibetragGilt(f);
 
-  const erwachsene = erwachseneImHaushalt(basis.household);
-  const einheitErwachsene = verheiratet && erwachsene >= 2 ? 2 : 1;
-  const kinderListe = Array.isArray(basis.household?.children) ? basis.household.children : [];
-  const erwachseneKinder = kinderListe.filter(k => { const a = kindAlter(k, heute); return a != null && a >= 18; }).length;
-  const weiterePersonen = Math.max(0, erwachsene - einheitErwachsene) + erwachseneKinder;
-  const konkubinat = basis.maritalStatus === 'cohabiting';
+  const wohnkosten = summeAlsFeld([data?.wohnen?.rentAmount, data?.wohnen?.utilities]);
+  const mieteAnteil = weiterePersonen > 0 && Number(wohnkosten) > 0;
 
   return {
     ohneFreibetrag,
-    adults: einheitErwachsene,
-    kinder: kinderListe.length - erwachseneKinder,
+    adults,
+    kinder,
     weiterePersonen,
-    miete: weiterePersonen > 0 ? '' : summeAlsFeld([data?.wohnen?.rentAmount]),
+    miete: mieteAnteil ? String(wohnkostenAnteil(Number(wohnkosten), haushalt)) : wohnkosten,
+    mieteAnteil,
     wohnform: weiterePersonen > 0 ? 'familienaehnlich' : 'allein',
     einkommen,
     einkommenMitNebenerwerb: !hauptBrutto && !hauptBasisOffen && nebenZaehlt,
     hauptBrutto,
     hauptBasisOffen,
+    // Lohn im Profil, aber das Feld bleibt leer: Dann gibt es keinen Betrag, leer hiesse Einkommen 0.
+    lohnNichtUebernommen: hauptBasisOffen || (hauptBrutto && betrag(f.monthlyIncome) > 0),
     andereEinkuenfte,
     vermoegen,
     vermoegenMit3a: mit3a,
@@ -116,7 +100,6 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     erwerbstaetig,
     nebenerwerbBrutto,
     nebenerwerbBasisOffen,
-    // Konkubinatsbeitrag-Hinweis: bei erfasstem Partnerlohn — oder im Konkubinat mit Mitbewohnenden.
-    partnerKonkubinat: !verheiratet && (partnerErfasst || (konkubinat && weiterePersonen > 0)),
+    partnerKonkubinat: konkubinatOffen,
   };
 }

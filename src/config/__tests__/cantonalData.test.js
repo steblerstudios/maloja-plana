@@ -54,7 +54,7 @@ describe('calculateSozialhilfe — Vermögensfreibetrag je Kanton', () => {
     for (const canton of CANTON_CODES) {
       for (const [adults, kids] of haushalte) {
         const a = calculateSozialhilfe({
-          basis: { canton, household: { adults, children: Array.from({ length: kids }, () => ({ age: 5 })) } },
+          basis: { canton, maritalStatus: adults > 1 ? 'married' : undefined, household: { adults, children: Array.from({ length: kids }, () => ({ age: 5 })) } },
           finanzen: {}, wohnen: {}, versicherungen: {},
         });
         const b = berechneSozialhilfe({ adults, kinderImHaushalt: kids, kanton: canton });
@@ -65,7 +65,7 @@ describe('calculateSozialhilfe — Vermögensfreibetrag je Kanton', () => {
 
   it('BS (Unterstützungsrichtlinien WSU Ziff. 14): Paar mit Kind 20000, nicht gekennzeichnet', () => {
     const r = calculateSozialhilfe({
-      basis: { canton: 'BS', household: { adults: 2, children: [{ age: 3 }] } },
+      basis: { canton: 'BS', maritalStatus: 'married', household: { adults: 2, children: [{ age: 3 }] } },
       finanzen: { savingsAccount: 19000 }, wohnen: {}, versicherungen: {},
     });
     expect(r.vermoegensfreibetrag).toBe(20000);
@@ -75,7 +75,7 @@ describe('calculateSozialhilfe — Vermögensfreibetrag je Kanton', () => {
 
   it('SH mit Kind (Zuschlag nicht geregelt): 4000, gekennzeichnet nur mit Kindern', () => {
     const r = calculateSozialhilfe({
-      basis: { canton: 'SH', household: { adults: 2, children: [{ age: 7 }, { age: 19 }] } },
+      basis: { canton: 'SH', maritalStatus: 'married', household: { adults: 2, children: [{ age: 7 }, { age: 19 }] } },
       finanzen: {}, wohnen: {}, versicherungen: {},
     });
     expect(r.vermoegensfreibetrag).toBe(4000);
@@ -107,18 +107,18 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
   });
 
   it('follows the tiered SKOS D.3.1 schedule (12000 couple, +3000 per minor child, max 15000)', () => {
-    const couple = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [] } } });
+    const couple = calc({ basis: { canton: 'ZH', maritalStatus: 'married', household: { adults: 2, children: [] } } });
     expect(couple.vermoegensfreibetrag).toBe(12000); // Paar → 12000
 
-    const coupleOneChild = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [{ age: 4 }] } } });
+    const coupleOneChild = calc({ basis: { canton: 'ZH', maritalStatus: 'married', household: { adults: 2, children: [{ age: 4 }] } } });
     expect(coupleOneChild.vermoegensfreibetrag).toBe(15000); // 12000 + 1×3000
 
-    const family = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [{ age: 4 }, { age: 8 }] } } });
+    const family = calc({ basis: { canton: 'ZH', maritalStatus: 'married', household: { adults: 2, children: [{ age: 4 }, { age: 8 }] } } });
     expect(family.vermoegensfreibetrag).toBe(15000); // 12000 + 2×3000 → gedeckelt bei 15000
   });
 
   it('counts only minor children toward the SKOS D.3.1 allowance', () => {
-    const adultChild = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [{ age: 20 }] } } });
+    const adultChild = calc({ basis: { canton: 'ZH', maritalStatus: 'married', household: { adults: 2, children: [{ age: 20 }] } } });
     expect(adultChild.vermoegensfreibetrag).toBe(12000); // volljähriges Kind zählt nicht
   });
 

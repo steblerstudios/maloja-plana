@@ -6438,6 +6438,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calculé sans franchise sur le revenu pour les personnes en formation. De nombreux cantons leur accordent une franchise ou un supplément d’intégration. Le canton décide de ce qui s’applique.",
+    konkubinatOffen: "Calculé sans contribution de concubinage. Dans un concubinage stable, le service social compte une contribution de la ou du partenaire comme revenu ; le droit peut être plus bas ou disparaître.",
     vorBeitraegen: "Le revenu de l’activité indépendante est calculé tel qu’il est saisi. Les cotisations AVS et de caisse de pension personnelles ne sont pas déduites.",
     ansatzTiefer: "Avec un permis F, N ou S, l’aide est le plus souvent inférieure à ce calcul : le taux est inférieur à celui de la population résidente, le canton le fixe, et l’aide peut prendre la forme de prestations en nature (LAsi art. 82 al. 1 et 3, LEI art. 86 al. 1). Le droit peut aussi disparaître entièrement. Font exception les réfugiés admis à titre provisoire et les apatrides : les mêmes normes d’aide sociale que pour les réfugiés ayant obtenu l’asile s’appliquent à eux (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',
@@ -6762,6 +6763,7 @@ export default {
     wohnformZweckWg: 'Séparément — chaque personne tient son propre ménage (colocation)',
     wohnformHint: "Tenu en commun : besoin de base calculé comme part du ménage entier. Colocation tenue séparément : besoin de base des personnes aidées moins 10 %. En règle générale, le service social part d'un ménage commun, la tenue séparée doit être prouvée — la pratique varie selon les cantons.",
     mieteAnteilHint: "Dans un ménage partagé, n'indiquer que sa propre part du loyer et des charges.",
+    mieteAnteilProfilHint: "Depuis le profil : loyer et charges, répartis à parts égales entre toutes les personnes du ménage. Modifiable ici.",
     gblAnteil: 'part {einheit} sur {haushalt} pers.',
     gblZweckWg: '{einheit} pers., colocation −10 %',
     andereEinkuenfte: 'Autres revenus (CHF)',
@@ -6789,6 +6791,7 @@ export default {
     vermoegenHinweis: 'La fortune dépasse la franchise – pas de droit',
     freibetrag: 'franchise',
     eingeben: { sie: 'Saisissez le loyer et la prime LAMal pour calculer le droit.', du: 'Saisis le loyer et la prime LAMal pour calculer le droit.' },
+    lohnEingeben: { sie: "Le profil indique un salaire, mais pas de montant net. Saisissez le revenu net ci-dessous pour calculer le droit.", du: "Le profil indique un salaire, mais pas de montant net. Saisis le revenu net ci-dessous pour calculer le droit." },
     source: 'Forfait pour l’entretien selon les [[normes CSIAS|skos.ch]] (1.1.{jahr}), franchise sur la fortune selon le canton. Non pris en compte : plafonds de loyer de la commune, réduction des primes, prestations circonstancielles (sauf les frais liés au travail saisis) et écarts cantonaux, y compris pour la franchise sur le revenu. Le service social examine le droit. Sans valeur juridique.',
   },
   dl: {

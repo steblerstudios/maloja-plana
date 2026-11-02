@@ -12,7 +12,7 @@ import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestae
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 import { EFB_PARAMS, einkommensfreibetrag, sozialhilfeBilanz, KNAPP_OBEN } from './sozialhilfeKern.js';
-import { grundbedarf, gblStand } from './skosGrundbedarf.js';
+import { grundbedarf, gblStand, WOHNFORMEN, grundbedarfNachWohnform } from './skosGrundbedarf.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
 
@@ -78,27 +78,7 @@ export function rueckerstattungsFreibetrag(adults = 1, minorChildren = 0) {
   return basis + Math.max(0, minorChildren) * 15000;
 }
 
-// Grundbedarf je Wohnform (SKOS-RL C.3.1 / C.3.2; Wortlaut und Beträge gegengelesen im Merkblatt
-// «Grundbedarf in Wohngemeinschaften», Kantonales Sozialamt GR, V6.0 vom 7.1.2025):
-// - 'allein': nur die Unterstützungseinheit lebt im Haushalt → GBL nach ihrer Grösse.
-// - 'familienaehnlich': gemeinsam geführter Haushalt ohne gemeinsame Unterstützungseinheit (z. B.
-//   Konkubinat, Eltern mit volljährigen Kindern) → GBL nach der GANZEN Haushaltsgrösse, davon der
-//   Pro-Kopf-Anteil der unterstützten Personen (GR: 2 Pers. 812, 3 Pers. 658 p. P.).
-// - 'zweckWg': Zusammenwohnen, um Wohnkosten zu sparen, Haushalt getrennt geführt → GBL nach der
-//   Unterstützungseinheit, minus 10 % (GR: 955 p. P.).
-// Im Zweifel gilt ein gemeinsamer Haushalt als familienähnlich — die Zweck-WG muss die unterstützte
-// Person nachweisen (GR-Merkblatt Ziff. 2.1). Sonderregeln für junge Erwachsene sind kantonal und
-// hier nicht abgebildet.
-export const WOHNFORMEN = ['allein', 'familienaehnlich', 'zweckWg'];
-export function grundbedarfNachWohnform(einheit, weiterePersonen = 0, wohnform = 'allein', stichtag) {
-  const weitere = Math.max(0, Math.floor(Number(weiterePersonen) || 0));
-  if (wohnform === 'familienaehnlich' && weitere > 0) {
-    const haushalt = einheit + weitere;
-    return Math.round(grundbedarfFuerHaushalt(haushalt, stichtag) / haushalt * einheit);
-  }
-  if (wohnform === 'zweckWg' && weitere > 0) return Math.round(grundbedarfFuerHaushalt(einheit, stichtag) * 0.9);
-  return grundbedarfFuerHaushalt(einheit, stichtag);
-}
+export { WOHNFORMEN, grundbedarfNachWohnform };
 
 export function berechneSozialhilfe({
   haushaltGroesse,
