@@ -628,7 +628,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   }
   const fruechte = chapters.length ? bereichsFruechte(chapters, data, astFarben(chapters, palette, isDarkMode)) : [];
   // Offen, sobald ein Anspruch möglich ist — dieselben Signale wie die Karten selbst.
-  const anspruch = !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.el.eligible);
+  const anspruch = !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen || w.el.eligible);
   const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).

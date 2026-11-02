@@ -82,10 +82,18 @@ describe('Lernende: kein Nein ohne Grundlage (Predeploy 02.11.2026, vierte Runde
   });
 
   it('Der offene Fall steht auch in der grossen Anzeige, im Dossier und auf der Karte', () => {
-    expect(quelle('../SozialhilfeRechner.jsx')).toContain("t(result.efbEntscheidet ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')");
+    expect(quelle('../SozialhilfeRechner.jsx')).toContain("t(result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')");
     expect(quelle('../dossierGenerator.js')).toContain("sozialhilfe.anspruchOffen ? t('pegel.coveredOffen')");
     expect(quelle('../components/FinanzAuswertung.jsx')).toContain(": sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t('sozialhilfe.notEntitled'),");
     expect(quelle('../SozialhilfeView.jsx')).toContain("sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t(sozialhilfe.noteKey");
+  });
+
+  it('Rechner kennt das offene Band, eine eingetragene Zahl beantwortet es', () => {
+    const r = (erwerbsunkosten) => berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 2000, erwerbsunkosten, erwerbstaetig: true, kanton: 'ZH' });
+    expect(r(0).hatAnspruch).toBe(false);
+    expect(r(0).anspruchOffen).toBe(true);
+    expect(r(20).anspruchOffen).toBe(false);
+    expect(berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 2200, erwerbstaetig: true, kanton: 'ZH' }).anspruchOffen).toBe(false);
   });
 
   it('Ohne Erwerb kein Lernenden-Fall', () => {

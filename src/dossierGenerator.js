@@ -1068,6 +1068,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       income: sozialhilfe.income || 0,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
+      anspruchOffen: !!sozialhilfe.anspruchOffen,
+      ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
       deficit: sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };

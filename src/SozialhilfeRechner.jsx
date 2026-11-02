@@ -122,7 +122,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         },
           result.hatAnspruch
             ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
-            : t(result.efbEntscheidet ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
+            : t(result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
@@ -131,6 +131,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
           t('sozialhilfe.efbEntscheidet')
         ),
+        !result.hatAnspruch && !result.efbEntscheidet && result.anspruchOffen && React.createElement('div', { style: s.hint }, t('pegel.coveredOffen')),
         // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
         // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
         result.hatAnspruch && result.vfbUnbestaetigt && React.createElement('div', { style: s.hint },
