@@ -4890,7 +4890,7 @@ export default {
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
-    einkommenNichtErfasst: 'Entradas betg endatadas, nagin import',
+    einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
     assetLimitBasisCanton: 'Chantun {name}',
@@ -5889,6 +5889,7 @@ export default {
     gblAnteil: 'part {einheit} da {haushalt} pers.',
     gblZweckWg: "{einheit} pers., cuminanza d'abitar −10 %",
     andereEinkuenfte: 'Autras entradas (CHF)',
+    andereEinkuenfteHint: 'Rentas, daners da di, supplements per uffants, pensiun alimentara, stipendis', // TODO(rm)
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',
     integration: "Mesira d'integraziun",
@@ -5915,7 +5916,7 @@ export default {
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm)
-    einkommenEingeben: { sie: 'Endatai Voss entradas. Sche Vus n’avais naginas, endatai 0.', du: 'Endatescha tias entradas. Sche ti n’has naginas, endatescha 0.' },
+    einkommenEingeben: { sie: 'Endatai Vossa entrada. Sche Vus n’avais nagin salari, endatai 0; rentas e daners da di tutgan tar las autras entradas.', du: 'Endatescha Tia entrada. Sche ti n’has nagin salari, endatescha 0; rentas e daners da di tutgan tar las autras entradas.' },
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
     vermoegenZuerstTitel: "L’emprim la facultad", // TODO(rm): provisorisch
     nebenEingeben: { sie: "L’activitad accessorica n’è betg en il profil sco import net. Endatai sutvart tut l’entrada netta per calcular il dretg. Fin lura resta ina cifra dal profil ina stima.", du: "L’activitad accessorica n’è betg en il profil sco import net. Endatescha sutvart tut l’entrada netta per calcular il dretg. Fin lura resta ina cifra dal profil ina stima." }, // TODO(rm): provisorisch

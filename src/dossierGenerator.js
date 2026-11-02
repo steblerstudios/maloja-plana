@@ -885,8 +885,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionSozialhilfe'),
       rows: sRows,
       status,
-      statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
-      statusOk: sozialhilfe.eligible,
+      // Ohne Einkommen kein Erfolg: Das Blatt nennt dann keinen Betrag und darf nicht grün sein (F8-S4).
+      statusColor: sozialhilfe.eligible && !sozialhilfe.einkommenFehlt ? DRUCK.gruen : DRUCK.grau,
+      statusOk: sozialhilfe.eligible && !sozialhilfe.einkommenFehlt,
       notes,
     });
   }
@@ -1086,7 +1087,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
       effectiveRent: sozialhilfe.effectiveRent || 0,
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
-      income: sozialhilfe.income || 0,
+      income: sozialhilfe.einkommenFehlt ? null : sozialhilfe.income || 0,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,

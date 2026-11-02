@@ -358,7 +358,7 @@ export function calculateSozialhilfe(data) {
   // Kein Einkommen erfasst: Die Rechnung läuft weiter (Schnellcheck rechnet mit Proben), aber Karte und Dossier nennen keinen
   // Betrag aus einem leeren Feld (F8-S4). Dieselbe Regel wie im Rechner: Andere Einkünfte reichen nur bei einer Lage ohne Erwerb.
   const feldLeer = (v) => v == null || String(v).trim() === '';
-  const einkommenFehlt = feldLeer(data.finanzen?.monthlyIncome) && feldLeer(data.finanzen?.sideIncome)
+  const einkommenFehlt = feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
     && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0);
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.

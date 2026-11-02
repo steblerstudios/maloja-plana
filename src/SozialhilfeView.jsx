@@ -63,13 +63,14 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   }
 
   return rechner({
-    tun: (ergebnis) => ({ titel: t('sozialhilfe.nextSteps'), inhalt: React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
-        React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step1')),
-        React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step2')),
-        React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step3')),
+    // Der EL-Schritt hängt nicht am Sozialhilfe-Ergebnis: Rentnerinnen und Rentner brauchen ihn auch bei einem Nein.
+    tun: (ergebnis, sozialdienst) => (sozialdienst || el.eligible) ? ({ titel: t('sozialhilfe.nextSteps'), inhalt: React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
+        sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step1')),
+        sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step2')),
+        sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step3')),
         ergebnis?.hatAnspruch && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step4')),
         el.eligible && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step5'))
-      ) }),
+      ) }) : undefined,
     weiteres: React.createElement('div', { style: { paddingTop: space.lg } },
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },

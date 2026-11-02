@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { calculateSozialhilfe } from '../config/cantonalData.js';
-import { generateBehoerdenJSON } from '../dossierGenerator.js';
+import { generateBehoerdenJSON, getBehoerdenDossierPreview } from '../dossierGenerator.js';
 
 // F8-S4 auch für Karte und Dossier: aus einem leeren Einkommensfeld wird kein Betrag.
 const profil = (finanzen) => ({
@@ -28,5 +28,17 @@ describe('einkommenFehlt', () => {
     const s = (typeof j === 'string' ? JSON.parse(j) : j).calculations.sozialhilfe;
     expect(s.eligible).toBe(false);
     expect(s.deficit).toBeNull();
+    expect(s.income).toBeNull();
+  });
+  it('Dossier-Blatt: kein Erfolgszeichen ohne Einkommen', () => {
+    const d = profil({});
+    const blatt = getBehoerdenDossierPreview(d, [], t, { sozialhilfe: calculateSozialhilfe(d) });
+    const abschnitt = blatt.sections.find((x) => x.key === 'sozialhilfe');
+    expect(abschnitt.status).toBe('sozialhilfe.einkommenNichtErfasst');
+    expect(abschnitt.statusOk).toBeFalsy();
+  });
+  it('Hauptlohn leer, Nebenerwerb 0: gleiche Regel wie im Rechner', () => {
+    expect(calculateSozialhilfe(profil({ sideIncome: 0 })).einkommenFehlt).toBe(true);
+    expect(calculateSozialhilfe(profil({ sideIncome: 400 })).einkommenFehlt).toBe(false);
   });
 });
