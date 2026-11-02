@@ -216,9 +216,10 @@ describe('Offene Befunde aus #651 geschlossen', () => {
     expect(calculateSozialhilfe(profil({ monthlyIncome: 2200 })).hinweise).toContain('pegel.lohnartOffen');
     expect(calculateSozialhilfe(profil({ monthlyIncome: 2200, incomeType: 'netto' })).hinweise).not.toContain('pegel.lohnartOffen');
   });
-  it('Nebenerwerb nicht übernommen: der Rechner sagt es am Ergebnis, nicht nur am Feld', () => {
+  it('Nebenerwerb nicht übernommen: kein Betrag, der Rechner fragt und sagt warum', () => {
     const html = render(profil({ monthlyIncome: 1000, incomeType: 'netto', sideIncome: 400 }));
-    expect((html.match(new RegExp(de.einkommensart.nebenOffen, 'g')) || []).length).toBe(2);
+    expect(html).toContain(de.einkommensart.nebenOffen);
+    expect(html).toContain(de.sh.lohnEingeben.sie);
   });
   it('sechs Kinder: das Formular kappt nicht mehr', () => {
     const p = profil({ monthlyIncome: 1000, incomeType: 'netto' }, { household: { adults: 1, children: Array.from({ length: 6 }, () => ({ age: 5 })) } });

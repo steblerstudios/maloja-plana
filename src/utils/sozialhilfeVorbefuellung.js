@@ -84,6 +84,8 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     mieteAnteil,
     wohnform: weiterePersonen > 0 ? 'familienaehnlich' : 'allein',
     einkommen,
+    // Nebenerwerb nicht netto: Das Feld trägt nur den Hauptlohn. Ein Betrag daraus wäre zu hoch, also erst nach einem Eintrag.
+    lohnUnvollstaendig: nebenerwerbBrutto || nebenerwerbBasisOffen,
     einkommenMitNebenerwerb: !hauptBrutto && !hauptBasisOffen && nebenZaehlt,
     hauptBrutto,
     hauptBasisOffen,

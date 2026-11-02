@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -138,5 +139,33 @@ describe('Die Seite zeigt es, nicht nur das Feld', () => {
   });
   it('Gegenprobe: normaler Anspruch zeigt die Zusage', () => {
     expect(seite(profil({ savingsAccount: 1000 }))).toContain(de.sozialhilfe.entitled);
+  });
+});
+
+describe('Fachprüfung 44c6808f', () => {
+  const brutto = { monthlyIncome: 1500, sideIncome: 2000, sideIncomeType: 'brutto' };
+  it('Nebenerwerb brutto bei Hauptlohn über 0: kein Betrag, bis das Netto eingetragen ist', () => {
+    const html = render(profil(brutto));
+    expect(html).not.toContain('/ ' + de.sh.monat);
+    expect(html).toContain(de.sh.lohnEingeben.sie);
+    expect(html).toMatch(/value="1500"/);
+  });
+  it('Nebenerwerb ohne Art: dasselbe', () => {
+    expect(render(profil({ monthlyIncome: 1500, sideIncome: 2000 }))).toContain(de.sh.lohnEingeben.sie);
+  });
+  it('Vermögen beim gewöhnlichen Nein: kein Vermögenssatz im Rechner', () => {
+    const html = render(profil({ monthlyIncome: 6000, savingsAccount: 100000 }));
+    expect(html).toContain(de.sh.keinAnspruch);
+    expect(html).not.toContain(de.sh.vermoegenHinweis);
+  });
+  it('Rechner zeigt keine 0 neben «Anspruch möglich»', () => {
+    const r = berechneSozialhilfe({ adults: 1, miete: 1200, krankenkassePraemie: 300, erwerbseinkommen: 2700, erwerbstaetig: true, kanton: 'ZH' });
+    expect(r.anspruchOffen).toBe(true);
+    expect(render(profil({ monthlyIncome: 2700 }))).not.toMatch(/>0<\/td>/);
+  });
+  it('JSON nennt den Grund', () => {
+    const quelle = fs.readFileSync(new URL('../dossierGenerator.js', import.meta.url), 'utf8');
+    expect(quelle).toContain('vermoegenZuerst: !!sozialhilfe.vermoegenZuerst');
+    expect(quelle).toContain('offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined');
   });
 });

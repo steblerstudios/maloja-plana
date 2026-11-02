@@ -1071,6 +1071,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
+      vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
+      offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,
       hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k)),
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
       deficit: sozialhilfe.betragOffen ? null : sozialhilfe.deficit || 0,
