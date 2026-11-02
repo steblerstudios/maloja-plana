@@ -6,6 +6,7 @@ import { berechneSozialhilfe } from '../data/sozialhilfeRechner.js';
 import { sozialhilfePegelState } from '../data/pegel.js';
 import { sozialhilfeVorbefuellung } from '../utils/sozialhilfeVorbefuellung.js';
 import { SozialhilfeRechner } from '../SozialhilfeRechner.jsx';
+import { SozialhilfeView } from '../SozialhilfeView.jsx';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -97,7 +98,7 @@ describe('Rechner im Konkubinat', () => {
 describe('Nachtrag Rechtsprüfer 2a1d09d0', () => {
   const k = { maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 8000 } };
   it('Knapp-Fall: kein Betrag, auch keine 0', () => {
-    const s = calculateSozialhilfe(profil({ monthlyIncome: 1600 }));
+    const s = calculateSozialhilfe(profil({ monthlyIncome: 2700 })); // Bedarf 2561, Quote 1,05
     expect(s.anspruchOffen).toBe(true);
     expect(s.betragOffen).toBe(true);
   });
@@ -113,5 +114,29 @@ describe('Nachtrag Rechtsprüfer 2a1d09d0', () => {
     const quelle = (await import('node:fs')).readFileSync(new URL('../dossierGenerator.js', import.meta.url), 'utf8');
     expect(quelle).toContain('deficit: sozialhilfe.betragOffen ? null : sozialhilfe.deficit || 0');
     expect(quelle).toContain('hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k))');
+  });
+});
+
+describe('Die Seite zeigt es, nicht nur das Feld', () => {
+  const seite = (d) => renderToStaticMarkup(React.createElement(SozialhilfeView, { palette, t, data: d, onNavigate: () => {} }));
+  it('Vermögen über dem Freibetrag: keine Zusage, der Satz steht, kein Nein', () => {
+    const html = seite(profil({ savingsAccount: 100000 }));
+    expect(html).not.toContain(de.sozialhilfe.entitled);
+    expect(html).not.toContain('2’028');
+    expect(html).toContain(de.pegel.vermoegen);
+    expect(html).not.toContain(de.sh.keinAnspruch);
+  });
+  it('Konkubinat Partner 8000, Lohn 800, Sparkonto 100000: Vermögenssatz bleibt', () => {
+    const html = seite(profil({ savingsAccount: 100000 }, { maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 8000 } }));
+    expect(html).toContain(de.pegel.konkubinatBetragOffen);
+    expect(html).toContain(de.pegel.vermoegen);
+  });
+  it('Knapp-Fall: keine Zeile CHF 0', () => {
+    const html = seite(profil({ monthlyIncome: 2700 }));
+    expect(html).toContain('—');
+    expect(html).not.toMatch(/CHF\s*0</);
+  });
+  it('Gegenprobe: normaler Anspruch zeigt die Zusage', () => {
+    expect(seite(profil({ savingsAccount: 1000 }))).toContain(de.sozialhilfe.entitled);
   });
 });
