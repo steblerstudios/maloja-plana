@@ -88,5 +88,8 @@ export function unterstuetzungseinheit(basis, heute = new Date()) {
 // Der eigene Anteil an den Wohnkosten, Miete plus Nebenkosten (C.4.1 Abs. 2, C.4.2 Abs. 2).
 export const wohnkostenAnteil = (wohnkosten, { einheit, haushalt }) => Math.round(wohnkosten * einheit / haushalt);
 
+// Kurzfristig verfügbar (SKOS-RL D.3.1 Erl. a und c): Bankguthaben und Wertpapiere.
+export const verfuegbarUeberFreibetrag = (finanzen, freibetrag) => (Number(finanzen?.savingsAccount) || 0) + (Number(finanzen?.securitiesValue) || 0) > freibetrag;
+
 // Einnahmen Minderjähriger zählen nur bis zu ihrem Anteil am Budget (SKOS-RL D.1 Abs. 2). Die App rechnet sie ganz an.
 export const kinderEinnahmenOffen = (finanzen, { kinder }) => kinder > 0 && (Number(finanzen?.alimenteReceived) > 0 || Number(finanzen?.familienzulagen) > 0);
