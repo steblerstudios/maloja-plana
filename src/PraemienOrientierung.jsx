@@ -525,7 +525,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                         onClick: () => { setPickedFranchise(f.franchise); setWithUnfall(variant === 'mit'); },
                         style: {
                           background: isActive ? palette.sage + '22' : 'none',
-                          border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
+                          minHeight: '44px', border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
                           borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
                           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                           color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
