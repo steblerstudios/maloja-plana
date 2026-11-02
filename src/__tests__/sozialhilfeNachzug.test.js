@@ -24,6 +24,9 @@ describe('Nachzug: nur Nebenerwerb, nicht übernommen', () => {
   it('Hauptlohn leer, Nebenerwerb ohne Art: dasselbe', () => {
     expect(sozialhilfeVorbefuellung({ finanzen: { sideIncome: 2000 } }).lohnNichtUebernommen).toBe(true);
   });
+  it('Art brutto ohne Hauptlohn, Nebenerwerb netto: das Feld bleibt leer, also auch kein Betrag', () => {
+    expect(sozialhilfeVorbefuellung({ finanzen: { incomeType: 'brutto', sideIncome: 2000, sideIncomeType: 'netto' } }).lohnNichtUebernommen).toBe(true);
+  });
   it('Gegenprobe: Hauptlohn netto und Nebenerwerb ohne Art rechnet, der Hinweis steht am Ergebnis', () => {
     expect(sozialhilfeVorbefuellung({ finanzen: { monthlyIncome: 1000, incomeType: 'netto', sideIncome: 400 } }).lohnNichtUebernommen).toBe(false);
   });
