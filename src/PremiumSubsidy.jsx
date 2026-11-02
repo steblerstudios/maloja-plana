@@ -226,7 +226,6 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     // aktuelle Live-Schätzung knapp unter die Grenze fällt — sonst verschwänden
     // real eingetragene Verfügungsdaten. Nur im reinen Schätz-Zustand blenden wir
     // die Lebenslinie aus, wenn (noch) kein Anspruch geschätzt wird.
-    if (!anspruchMoeglich && ipvStatus.status === IPV_STATUS.GESCHAETZT) return null;
     const h = React.createElement;
     const weg = (children) => h('section', {
       'aria-labelledby': 'ipv-weg-titel',
@@ -237,6 +236,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       badge || null
     );
     const lead = (s) => h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', marginBottom: space.sm } }, s);
+    // Art. 65 Abs. 3 KVG gilt für alle Kantone und alle Zustände, auch ohne geschätzten Anspruch.
+    const aenderung = lead(t('ipvStatus.aenderung'));
+    if (!anspruchMoeglich && ipvStatus.status === IPV_STATUS.GESCHAETZT) return weg([head(), aenderung]);
 
     if (ipvStatus.status === IPV_STATUS.BESTAETIGT) {
       const stamp = h('span', { style: { border: '2px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.5px', padding: '2px 8px', borderRadius: radius.xs, transform: 'rotate(-6deg)', display: 'inline-block' } }, t('ipvStatus.stamp'));
@@ -261,6 +263,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       return weg([
         head(stamp),
         hinweis,
+        aenderung,
         zuordnen,
         ipvStatus.betrag > 0
           ? h('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sageDeep, marginBottom: space.sm } }, fmtCHF(ipvStatus.betrag) + ' / ' + t('schnellcheck.monat'))
@@ -284,6 +287,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       return weg([
         head(badge),
         lead(t('ipvStatus.appliedLead')),
+        aenderung,
         jahrWahl(),
         h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
           lineBtn(t('ipvStatus.markConfirmed'), verfuegungEintragen, { primary: true }),
@@ -301,6 +305,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         h('li', { style: { marginBottom: space.xs } }, t('ipvStatus.wayAuto')),
         h('li', null, t('ipvStatus.wayApply'))
       ),
+      aenderung,
       jahrWahl(),
       h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
         lineBtn(t('ipvStatus.markApplied'), () => setIpvStatus(IPV_STATUS.BEANTRAGT)),
