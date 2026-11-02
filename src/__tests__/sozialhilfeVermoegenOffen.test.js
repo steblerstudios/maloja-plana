@@ -93,3 +93,25 @@ describe('Rechner im Konkubinat', () => {
     expect(html).not.toMatch(/Noch \d+ Angaben/);
   });
 });
+
+describe('Nachtrag Rechtsprüfer 2a1d09d0', () => {
+  const k = { maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 8000 } };
+  it('Knapp-Fall: kein Betrag, auch keine 0', () => {
+    const s = calculateSozialhilfe(profil({ monthlyIncome: 1600 }));
+    expect(s.anspruchOffen).toBe(true);
+    expect(s.betragOffen).toBe(true);
+  });
+  it('Lohn 9000, Partner 8000: Seite und Rechner sagen beide, das Einkommen reicht', () => {
+    const p = profil({ monthlyIncome: 9000 }, k);
+    expect(calculateSozialhilfe(p).betragOffen).toBe(false);
+    expect(render(p)).toContain(de.sh.keinAnspruch);
+  });
+  it('Text sagt tiefer oder wegfallen', () => {
+    expect(de.pegel.konkubinatBetragOffen).toContain('tiefer sein oder wegfallen');
+  });
+  it('JSON-Export: offener Betrag ist null, Hinweise lesbar', async () => {
+    const quelle = (await import('node:fs')).readFileSync(new URL('../dossierGenerator.js', import.meta.url), 'utf8');
+    expect(quelle).toContain('deficit: sozialhilfe.betragOffen ? null : sozialhilfe.deficit || 0');
+    expect(quelle).toContain('hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k))');
+  });
+});

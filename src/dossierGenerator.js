@@ -1071,9 +1071,9 @@ export function generateBehoerdenJSON(data, calculations, t) {
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
-      hinweise: sozialhilfe.hinweise || [],
+      hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k)),
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
-      deficit: sozialhilfe.deficit || 0,
+      deficit: sozialhilfe.betragOffen ? null : sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };
   }

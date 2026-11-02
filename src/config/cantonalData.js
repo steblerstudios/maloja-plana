@@ -387,7 +387,8 @@ export function calculateSozialhilfe(data) {
     anspruchOffen: betragOffen || knapp,
     konkubinatBetragOffen,
     vermoegenZuerst,
-    betragOffen,
+    // Kein Betrag zu nennen, auch keine 0: offen wegen Konkubinat, Vermögen oder knapp über dem Bedarf.
+    betragOffen: betragOffen || knapp,
     offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     eligible: deficit > 0,

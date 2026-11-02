@@ -6503,7 +6503,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Für Lernende ohne Einkommensfreibetrag gerechnet. Zahlreiche Kantone geben ihnen einen Freibetrag oder eine Integrationszulage. Was gilt, regelt der Kanton.",
-    konkubinatBetragOffen: "Kein Betrag: Im stabilen Konkubinat kann die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme anrechnen, der Anspruch kann wegfallen. Die App kennt diesen Beitrag nicht. Den Anspruch klärt der Sozialdienst.",
+    konkubinatBetragOffen: "Kein Betrag: Im stabilen Konkubinat kann die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme anrechnen, der Anspruch kann tiefer sein oder wegfallen. Die App kennt diesen Beitrag nicht. Den Anspruch klärt der Sozialdienst.",
     konkubinatOffen: "Ohne Konkubinatsbeitrag gerechnet. Im stabilen Konkubinat kann die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme anrechnen, der Anspruch kann tiefer sein oder wegfallen.",
     zivilstandOffen: "Der Zivilstand fehlt im Profil. Gerechnet als Paar mit gemeinsamem Haushalt, ohne Ehe oder eingetragene Partnerschaft sieht die Rechnung anders aus.",
     rechnungOffen: "Rechnung unvollständig, Einzelheiten auf der Seite Sozialhilfe.",
