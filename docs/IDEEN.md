@@ -202,7 +202,7 @@ Abschiedsagentur, plaant).
   «irgendwann/Welt» bleibt ohne Termin. Anstoss war Reclaim City
   (play.multiversegames.ai/reclaim-city, Datenschutz-Spiel): echte Handlungen statt Punkte und
   eine Reihenfolge mit Grund sind brauchbar; Streak, Angst-Zahl und Neon-Optik nicht.
-  **Vorschlag, noch nicht entschieden:** «besser» heisst im Haus *aufgeräumter*, nie *reicher*;
+  **Grundsatz, bestätigt 01.11.2026:** «besser» heisst im Haus *aufgeräumter*, nie *reicher*;
   gemessen wird Erledigtes, nie Einkommen, Vermögen oder Schulden.
 - 🌱 **Digitale Ordnung, Schweizer Fassung** *⟨Konzept 01.11.2026⟩* — acht Bereiche von Schlüssel
   bis Nachlass, echte Handlungen mit Belegen von BACS, EDÖB und Fedlex, Eingangstür als Haut.

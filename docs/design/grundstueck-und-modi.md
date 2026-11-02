@@ -3,8 +3,9 @@
 > **Detailblatt zu [`../IDEEN.md`](../IDEEN.md) §2** (seit 24.09.2026). Die Landkarte zählt
 > die Visionen auf, dieses Blatt führt eine aus. Der Widerspruch zu House of Life (19.07.)
 > ist **entschieden, 01.11.2026 (Stebler Studios): abschaltbare Haut, wie hier beschrieben.**
-> Bau erst nach Fassung 7/8. Offen bleibt §5: Die Garage spiegelt heute die Finanzierungslage;
-> der Vorschlag «aufgeräumter, nie reicher» (IDEEN §1) würde das ändern.
+> Bau erst nach Fassung 7/8. **Grundsatz, bestätigt 01.11.2026: «besser» heisst aufgeräumter, nie
+> reicher.** Gemessen wird Erledigtes, nie Einkommen, Vermögen oder Schulden. §5 ist damit
+> eingeschränkt, siehe dort.
 
 > **Status:** Vision / Design-Kanon (noch nicht gebaut). Diese Datei ist die *eine*
 > Quelle für die räumliche Metapher und das Verhältnis von Normal- zu Spiel-Modus.
@@ -132,6 +133,10 @@ Für sie darf „Baracken-Modus" nie heissen: „dein Leben sieht ärmlich aus."
 
 Man „hat" nicht einfach ein Auto. Man kommt auf zwei Wegen dazu — und beide sind
 ehrliche, nicht-moralische Budget-Führung (`maloja-budget-philosophy`):
+
+> ⟨Eingeschränkt 01.11.2026⟩ Die Garage zeigt nicht mehr, ob die Finanzierung gut oder knapp ist,
+> sondern ob die Kosten durchgerechnet und die Unterlagen geordnet sind. Die Fassung unten bleibt
+> als Herkunft.
 
 1. **Man besitzt schon eins.** Die Garage spiegelt die Finanzierungslage (gut/knapp).
 2. **Man möchte eins.** Dann *zuerst die Garage bauen* = Leistbarkeit vorrechnen →
