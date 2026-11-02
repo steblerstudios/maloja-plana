@@ -27,9 +27,9 @@ describe('sozialhilfeVorbefuellung', () => {
       expect(saeule3aZaehlt({ dateOfBirth: '1963-09-25', gender: 'male' }, heute)).toBe(false);
       expect(vb({ basis: { dateOfBirth: '1963-09-25', gender: 'male' }, finanzen: f }, heute).vermoegen).toBe('1000');
     });
-    it('Frau: Grenze nach ihrem Referenzalter (Übergangsjahrgang 1962: 64 J. 6 M., Grenze 62 J. 6 M.)', () => {
-      expect(saeule3aZaehlt({ dateOfBirth: '1962-09-01', gender: 'female' }, new Date('2025-03-01'))).toBe(true);
-      expect(saeule3aZaehlt({ dateOfBirth: '1962-09-01', gender: 'female' }, new Date('2025-02-28'))).toBe(false);
+    it('Frau der Übergangsgeneration: ab 62, nicht nach ihrem Referenzalter (AHVG Art. 40c, Jahrgang 1962)', () => {
+      expect(saeule3aZaehlt({ dateOfBirth: '1962-09-01', gender: 'female' }, new Date('2024-09-01'))).toBe(true);
+      expect(saeule3aZaehlt({ dateOfBirth: '1962-09-01', gender: 'female' }, new Date('2024-08-31'))).toBe(false);
     });
     it('ohne oder mit unsinnigem Geburtsdatum: zählt nicht', () => {
       expect(saeule3aZaehlt({}, heute)).toBe(false);

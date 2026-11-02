@@ -15,7 +15,7 @@
 
 import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
 import { giltAlsVerheiratet } from './zivilstand.js';
-import { referenzalterMonate, VORBEZUG_MAX_MONATE } from '../data/lohnAbzuege.js';
+import { fruehesterVorbezugMonate } from '../data/lohnAbzuege.js';
 
 // Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
 export function alterInMonaten(geburtsdatum, heute) {
@@ -42,7 +42,7 @@ export function saeule3aZaehlt(basis, heute = new Date()) {
   const alter = alterInMonaten(basis?.dateOfBirth, heute);
   if (alter == null) return false;
   const jahrgang = new Date(basis.dateOfBirth).getFullYear();
-  return alter >= referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: jahrgang }) - VORBEZUG_MAX_MONATE;
+  return alter >= fruehesterVorbezugMonate({ geschlecht: basis?.gender, geburtsjahr: jahrgang });
 }
 
 // Die Felder, die als Vermögen zählen: Sparkonto, Wertschriften, übriges, Säule 3b (SKOS-RL D.3.3 Abs. 6),
