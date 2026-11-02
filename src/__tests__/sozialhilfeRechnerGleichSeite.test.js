@@ -111,14 +111,15 @@ describe('Zwei Erwachsene ohne Ehe: keine Unterstützungseinheit (C.2 Erl. b, C.
     expect(sh.effectiveRent).toBe(600);
     expect(sh.deficit).toBe(rechner(p).sozialhilfeAnspruch);
   });
-  it('Partnerlohn im Konkubinat: nicht als ganzer Lohn abgezogen, die Rechnung sagt, was fehlt (D.4.4)', () => {
+  it('Partnerlohn im Konkubinat: kein Betrag, Seite und Rechner sagen, was fehlt (D.4.4, Stebler Studios 02.11.2026)', () => {
     const p = profil({ monthlyIncome: 800, incomeType: 'netto' }, { maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 5000 } });
     const sh = calculateSozialhilfe(p);
     expect(sh.income).toBe(800);
-    expect(sh.hinweise).toContain('pegel.konkubinatOffen');
-    expect(sh.deficit).toBe(rechner(p).sozialhilfeAnspruch);
-    expect(sozialhilfePegelState(p).hinweise).toContain('pegel.konkubinatOffen');
-    expect(render(p)).toContain(de.pegel.konkubinatOffen);
+    expect(sh.deficit).toBe(0);
+    expect(sh.offenText).toBe('pegel.konkubinatBetragOffen');
+    expect(sozialhilfePegelState(p).amount).toBe(0);
+    expect(render(p)).toContain(de.pegel.konkubinatBetragOffen);
+    expect(render(p)).not.toContain(de.pegel.konkubinatOffen);
   });
   it('Kind ab 18 zählt nicht zur Einheit, auch auf der Seite', () => {
     const p = profil({ monthlyIncome: 1000, incomeType: 'netto' }, { household: { adults: 1, children: [{ age: 20 }] } });

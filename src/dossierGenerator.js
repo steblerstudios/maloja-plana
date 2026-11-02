@@ -842,7 +842,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       { label: t('sozialhilfe.deductIncome'), value: mit('− ', sozialhilfe.income) },
       // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
       sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
-      { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
+      !sozialhilfe.konkubinatBetragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
     ].filter(r => r && r.value);
     // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
     const notes = [
@@ -860,7 +860,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich')
-      : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen')
+      : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText)
       : t('sozialhilfe.notEntitled');
     sections.push({
       key: 'sozialhilfe',
@@ -1070,6 +1070,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,
+      konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
+      hinweise: sozialhilfe.hinweise || [],
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
       deficit: sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,

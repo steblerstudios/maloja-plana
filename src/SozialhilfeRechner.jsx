@@ -47,6 +47,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     if (m <= 0 && k <= 0) return null;
     // Lohn im Profil, aber nicht als Netto: Ohne Eintrag gäbe es sonst einen Betrag aus einem Einkommen von 0.
     if (vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '') return null;
+    if (vorbefuellt.konkubinatBetragOffen) return null;
     return berechneSozialhilfe({
       adults,
       kinderImHaushalt: kinderCount,
@@ -208,7 +209,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,
-    ergebnis, ohneErgebnis: t(vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '' ? 'sh.lohnEingeben' : 'sh.eingeben'),
+    ergebnis, ohneErgebnis: t(vorbefuellt.konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '' ? 'sh.lohnEingeben' : 'sh.eingeben'),
     art: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
     vorbehalt: result && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.hinweise.length > 0 || vorbefuellt.vorBeitraegen || vorbefuellt.nebenerwerbBrutto || vorbefuellt.nebenerwerbBasisOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
       [

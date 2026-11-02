@@ -197,7 +197,7 @@ export const druckAbschnitte = (t, w) => {
   if (ipvAnnahmen.length) {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
-  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : w.sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : w.sozialhilfe.anspruchOffen ? t(w.sozialhilfe.offenText) : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   if (w.sozialhilfe.ansatzTiefer) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ansatzTiefer')) + '</td></tr>' });
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
@@ -504,7 +504,7 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
         // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
         + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
       // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
-      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t('sozialhilfe.notEntitled'),
+      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) : t('sozialhilfe.notEntitled'),
     statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
     detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.

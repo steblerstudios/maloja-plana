@@ -7471,6 +7471,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Quintà senza franchisa sin l’entrada per persunas en furmaziun. Blers chantuns dattan ad ellas ina franchisa u in’allocaziun d’integraziun. Il chantun decida tge che vala.", // TODO(rm): provisorisch
+    konkubinatBetragOffen: "Nagin import: En in concubinat stabil po il servetsch social dumbrar ina contribuziun da la partenaria u dal partenari sco entrada, il dretg po crudar davent. L’app na enconuscha betg questa contribuziun. Il servetsch social scleresch il dretg.", // TODO(rm): provisorisch
     konkubinatOffen: "Quintà senza contribuziun da concubinat. En in concubinat stabil po il servetsch social dumbrar ina contribuziun da la partenaria u dal partenari sco entrada, il dretg po esser pli bass u crudar davent.", // TODO(rm): provisorisch
     zivilstandOffen: "Il stadi civil manca en il profil. Quintà sco pèr cun tegnairchasa cuminaivel; senza matrimoni u partenadi registrà è il quint auter.", // TODO(rm): provisorisch
     rechnungOffen: "Quint incomplet, detagls sin la pagina agid social.", // TODO(rm): provisorisch

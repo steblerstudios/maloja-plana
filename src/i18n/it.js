@@ -6413,6 +6413,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calcolato senza franchigia sul reddito per le persone in formazione. Numerosi cantoni concedono loro una franchigia o un supplemento d’integrazione. Il cantone decide cosa si applica.",
+    konkubinatBetragOffen: "Nessun importo: in un concubinato stabile il servizio sociale può conteggiare come reddito un contributo della o del partner, il diritto può venire meno. L’app non conosce questo contributo. Il servizio sociale chiarisce il diritto.",
     konkubinatOffen: "Calcolato senza contributo di concubinato. In un concubinato stabile il servizio sociale può conteggiare come reddito un contributo della o del partner: il diritto può essere inferiore o venire meno.",
     zivilstandOffen: "Nel profilo manca lo stato civile. Calcolato come coppia con economia domestica comune; senza matrimonio o unione domestica registrata il calcolo è diverso.",
     rechnungOffen: "Calcolo incompleto, dettagli nella pagina aiuto sociale.",

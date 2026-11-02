@@ -87,7 +87,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     hauptBasisOffen,
     vorBeitraegen: selbst && betrag(f.monthlyIncome) > 0,
     // Lohn im Profil, aber das Feld bleibt leer: Dann gibt es keinen Betrag, leer hiesse Einkommen 0.
-    lohnNichtUebernommen: hauptBasisOffen || (hauptBrutto && betrag(f.monthlyIncome) > 0) || (einkommen === '' && betrag(f.sideIncome) > 0),
+    lohnNichtUebernommen: hauptBasisOffen || (hauptBrutto && betrag(f.monthlyIncome) > 0) || (!betrag(einkommen) && betrag(f.sideIncome) > 0),
     andereEinkuenfte,
     vermoegen,
     vermoegenMit3a: mit3a,
@@ -97,6 +97,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     nebenerwerbBrutto,
     nebenerwerbBasisOffen,
     partnerKonkubinat: haushalt.hinweise.includes('pegel.konkubinatOffen'),
+    konkubinatBetragOffen: haushalt.konkubinatMitLohn,
     hinweise: [...haushalt.hinweise, kinderEinnahmenOffen(f, haushalt) && 'pegel.kinderEinnahmen'].filter(Boolean),
   };
 }

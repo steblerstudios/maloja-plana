@@ -340,7 +340,8 @@ export function calculateSozialhilfe(data) {
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;
-  const deficit = bilanz.luecke;
+  const konkubinatBetragOffen = einheit.konkubinatMitLohn && (bilanz.luecke > 0 || bilanz.efbEntscheidet);
+  const deficit = konkubinatBetragOffen ? 0 : bilanz.luecke;
 
   // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
@@ -367,18 +368,20 @@ export function calculateSozialhilfe(data) {
     income,
     efb: bilanz.efb,
     anrechenbaresEinkommen: bilanz.anrechenbaresEinkommen,
-    efbEntscheidet: bilanz.efbEntscheidet,
+    efbEntscheidet: bilanz.efbEntscheidet && !konkubinatBetragOffen,
     // Einkommen aus brutto geschätzt (Anzeige: «≈ … (geschätzt)»).
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...einheit.hinweise, kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
-    anspruchOffen: erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
+    anspruchOffen: konkubinatBetragOffen || (erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN),
+    konkubinatBetragOffen,
+    offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : 'pegel.coveredOffen',
     deficit,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
