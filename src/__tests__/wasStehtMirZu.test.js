@@ -73,7 +73,8 @@ describe('Beispiel Maria: dieselben Ergebnisse wie das Kapitel Finanzen', () => 
     expect(status).toContain(de.schnellcheck.ipv);
     expect(status).toContain(de.pegel.over);
     expect(status).toContain(de.nav.sozialhilfe);
-    expect(status).toContain(de.pegel.vermoegen);
+    // Marias Einkommen deckt den Bedarf klar, das Vermögen ist nicht der Grund (Fachpunkt F7 #630).
+    expect(status).toContain(de.pegel.covered);
     expect(status).toContain(de.wasStehtMirZu.ergebnisKeiner);
     // Kein Kompass, kein Prämien-Beleg mehr auf dieser Seite.
     expect(quelle('Lebenssituationen.jsx')).not.toMatch(/PraemienBeleg|LeistungsKompass/);

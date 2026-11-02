@@ -8,7 +8,7 @@ import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
-import { sozialhilfeBilanz, istErwerbstaetig } from '../data/sozialhilfeKern.js';
+import { sozialhilfeBilanz, istErwerbstaetig, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { grundbedarf as skosGrundbedarf, gblStand } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 
@@ -362,6 +362,8 @@ export function calculateSozialhilfe(data) {
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
+    // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
+    anspruchOffen: erwerbstaetig && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine

@@ -92,7 +92,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       else if (sh) sozPegel = {
         bedarf: sh.totalBedarf, einkommen: sh.income,
         // Freibetrag-Fall: offen statt «keine Aufstockung nötig» (wie pegel.js, Predeploy 25.09.2026).
-        detail: (sh.eligible ? t('pegel.vermoegen') : sh.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sh.erwerbsunkostenOffen ? t('pegel.coveredOffen') : t('pegel.covered')) + (sh.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '') + (sh.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : ''),
+        detail: (sh.eligible ? t('pegel.vermoegen') : sh.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sh.anspruchOffen ? t('pegel.coveredOffen') : t('pegel.covered')) + (sh.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '') + (sh.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : ''),
       };
     }
     // EL (Predeploy 25.09.2026): nur im AHV-/IV-Renten-Kontext, qualitativ ohne Betrag — wie im
