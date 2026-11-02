@@ -73,6 +73,8 @@ function sozialhilfePegelRoh(data) {
 
   if (sh?.konkubinatBetragOffen) return { show: true, variant: 'aufstockung', mode: 'offen', fraction: Math.max(0, Math.min(PEGEL_SCALE, income / bedarf)), income, bedarf, amount: 0, canton, vermoegenUeber };
 
+  if (sh?.vermoegenZuerst) return { show: true, variant: 'aufstockung', mode: 'vermoegen', fraction: Math.max(0, Math.min(PEGEL_SCALE, income / bedarf)), income, bedarf, amount: 0, canton, vermoegenUeber };
+
   // Ohne Kanton, Miet-Kontext oder Bedarf ist die Berechnung unvollständig.
   if (!canton || rent <= 0 || bedarf <= 0 || income <= 0) {
     return { show: true, variant: 'aufstockung', mode: 'empty', fraction: 0, income, bedarf, amount: 0, canton };

@@ -6503,7 +6503,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Für Lernende ohne Einkommensfreibetrag gerechnet. Zahlreiche Kantone geben ihnen einen Freibetrag oder eine Integrationszulage. Was gilt, regelt der Kanton.",
-    konkubinatBetragOffen: "Kein Betrag: Im stabilen Konkubinat kann die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme anrechnen, der Anspruch kann wegfallen. Die App kennt diesen Beitrag nicht. Den Anspruch klärt der Sozialdienst.",
+    konkubinatBetragOffen: "Kein Betrag: Im stabilen Konkubinat kann die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme anrechnen, der Anspruch kann tiefer sein oder wegfallen. Die App kennt diesen Beitrag nicht. Den Anspruch klärt der Sozialdienst.",
     konkubinatOffen: "Ohne Konkubinatsbeitrag gerechnet. Im stabilen Konkubinat kann die Sozialbehörde einen Beitrag der Partnerin oder des Partners als Einnahme anrechnen, der Anspruch kann tiefer sein oder wegfallen.",
     zivilstandOffen: "Der Zivilstand fehlt im Profil. Gerechnet als Paar mit gemeinsamem Haushalt, ohne Ehe oder eingetragene Partnerschaft sieht die Rechnung anders aus.",
     rechnungOffen: "Rechnung unvollständig, Einzelheiten auf der Seite Sozialhilfe.",
@@ -6861,7 +6861,7 @@ export default {
     erwerbsunkostenZeile: 'Mehrkosten für die Arbeit',
     anrechenbar: 'Anrechenbares Einkommen',
     sozialhilfe: 'Sozialhilfe-Anspruch',
-    vermoegenHinweis: 'Vermögen übersteigt Freibetrag – kein Anspruch',
+    vermoegenHinweis: 'Vermögen über dem Freibetrag, es wird zuerst angerechnet',
     freibetrag: 'Freibetrag',
     eingeben: { sie: 'Geben Sie Miete und KVG-Prämie ein, um den Anspruch zu berechnen.', du: 'Gib Miete und KVG-Prämie ein, um den Anspruch zu berechnen.' },
     lohnEingeben: { sie: "Im Profil steht ein Lohn, aber kein Nettobetrag. Tragen Sie unten das Netto-Einkommen ein, um den Anspruch zu berechnen.", du: "Im Profil steht ein Lohn, aber kein Nettobetrag. Trag unten das Netto-Einkommen ein, um den Anspruch zu berechnen." },
