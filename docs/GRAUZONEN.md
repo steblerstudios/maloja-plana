@@ -489,6 +489,8 @@ Kantonen gilt die Altersgrenze länger, siehe unten).
 - **Nicht gelesen:** der Wortlaut der SKOS-Richtlinien C.3.2 und C.4.2 selbst. Die Online-Fassung
   `rl.skos.ch` lieferte beim Abruf nur eine leere Seitenhülle («Erlasse»). Nachfragen bei: SKOS
   (skos.ch) oder die Kapitel als PDF beziehen.
+  *(Nachtrag 02.11.2026: gelesen. Als PDF abrufbar: rl.skos.ch, `lexoverview-2026/lex-RL_B_1/lex-RL.pdf?effective-from=20260101`,
+  Version vom 1.1.2026. Der Satz oben bleibt als Beleg stehen.)*
 
 **Kantonal verschieden?** Ja, deutlich. Geprüft: ZH, SO, AG, BS. Welche zwei Kantone die
 Altersgrenze auf 30 bzw. 35 ausdehnen, steht im SKOS-Papier nicht; nicht ermittelt.

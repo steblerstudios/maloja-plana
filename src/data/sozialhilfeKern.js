@@ -32,8 +32,8 @@
 //    700». Das war eine eigene, unbelegte Abstufung: 700 schon ab 1309 Fr. Lohn, und unter 400 Fr.
 //    Lohn ein Freibetrag über dem Lohn (Fachprüfung swiss-precision zu PR #389).
 //    🟡 UNSICHER bleibt: Andere Kantone geben mehr (bis 700) oder rechnen nach Pensum. Die Anzeige
-//    nennt den Betrag deshalb «geschätzt». Lernende: Die SKOS-RL (Arbeitsdokument, Version 1.1.2021,
-//    gelesen 02.11.2026; die aktuelle Fassung nicht) sagen beides: «In zahlreichen Kantonen» kein EFB,
+//    nennt den Betrag deshalb «geschätzt». Lernende: Die SKOS-RL (Version vom 1.1.2026,
+//    gelesen 02.11.2026) sagen beides: «In zahlreichen Kantonen» kein EFB,
 //    dafür IZU (D.2 Erl. b), und «in zahlreichen Kantonen» keine IZU, dafür ein EFB (C.6.7 Erl. c). Die
 //    Rechnung gibt ihnen darum keinen (`freibetragGilt`), behauptet aber auch kein Nein
 //    (`freibetragUngewiss`). Auch Basel-Stadt: Ziff. 4.3 und 12.1 URL sagen «pro erwerbstätige Person»
