@@ -2352,6 +2352,7 @@ export default {
         otherInsurance: 'Ulteriuras assicuranzas CHF',
         pension3a: '3. pitga A pajà CHF/onn',
         pension3aBalance: '3. pitga A — avair (total) CHF',
+        ivBezug: { label: "Renta AI", options: { keine: "Nagina", teil: "Renta parziala", ganz: "Renta entira" } }, // TODO(rm)
         pension3bBalance: '3. pitga B — avair (total) CHF',
         familienzulagen: 'Supplements da famiglia per mais CHF',
         alimenteReceived: 'Aliments retschavids CHF/mais',
@@ -2387,6 +2388,7 @@ export default {
         securitiesValue: 'Valur fiscala d’aczias, fonds ed obligaziuns ils 31.12 — relevant per la taglia sin la facultad.',
         otherAssets: 'Daners blut, metals prezius, criptomonedas, vehichels e.u.v. (valur fiscala).',
         pension3aBalance: { sie: 'L’import total spargnà fin ussa sin Voss conto 3a — betg la contribuziun annuala.', du: 'L’import total spargnà fin ussa sin tes conto 3a — betg la contribuziun annuala.' },
+        ivBezug: { sie: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che Vus al dais vinavant sezza.", du: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che ti al das vinavant sez." }, // TODO(rm)
         pension3bBalance: { sie: 'Il valur actual da Vossa prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).', du: 'Il valur actual da tia prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).' },
       },
       docs: {
@@ -2652,7 +2654,7 @@ export default {
       data4: 'Tut las calculaziuns (taglia, agid social, premias, prevenziun) vegnan fatgas mo en la memoria da lavur e na vegnan betg memorisadas separadamain.',
       sensitiveTitle: 'Datas particularamain sensitivas',
       // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
-      sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, allergias, malsognas cronicas, gruppa da sang, medias e medis, donaziun d'organs, disposiziun da pazient), datas davart mesiras d'agid social u convicziuns religiusas.",
+      sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, allergias, malsognas cronicas, gruppa da sang, medias e medis, donaziun d'organs, disposiziun da pazient, renta AI), datas davart mesiras d'agid social u convicziuns religiusas.",
       sensitive2: { sie: "Questas indicaziuns restan sin Voss apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatai talas rubricas mo sche quai Vus convegn — e protegì l'apparat cun in code.", du: "Questas indicaziuns restan sin Tes apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatescha talas rubricas mo sche quai ta convegn — e protegia l'apparat cun in code." }, // TODO(rm): Gegenlese Muttersprache
       // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       hostingTitle: 'Hosting',
@@ -4880,6 +4882,7 @@ export default {
     elSection: 'Prestaziuns cumplementaras (PC)',
     elOnlyAhvIv: 'PC mo cun ina prestaziun AVS/AI',
     elPossible: 'Dretg pussaivel',
+    elPruefen: "Laschar examinar prestaziuns supplementaras", // TODO(rm)
     totalIncome: 'Entrada totala: CHF {value}',
     totalExpenses: 'Expensas: CHF {value}',
     skosTable: 'Tabella basegn fundamental COSAS',
@@ -5879,6 +5882,9 @@ export default {
     nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai na vegn ella betg quintada — qua agiuntar l'import net.",
     konkubinatHint: "En concubinat na quinta betg l'entir salari da la partenaria u dal partenari, mabain ina contribuziun da concubinat — il servetsch social la fixescha. Perquai na vegn nagut preemplenì qua.",
     inkl3aHint: "Summà ord il profil, inclusiv il pilaster 3a — l’agid social pretenda per princip ch’el vegnia retratg ensemen cun l’anticipaziun da l’AVS; el quinta perquai da lura davent sco facultad.", // TODO(rm): provisorisch
+    inkl3aIvHint: "Sumà ord il profil, inclus il pilier 3a: el sto per regla vegnir retratg ensemen cun ina renta AI entira.", // TODO(rm)
+    ivGanz3a: "Il pilier 3a è quintà, perquai ch’ina renta AI entira è endatada: el sto per regla vegnir retratg ensemen cun questa renta, sche il ristg d’invaliditad n’è betg assicurà (SKOS D.3.3 al. 3, OPP 3 art. 3 al. 2 lit. a). Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC.", // TODO(rm)
+    ivUnklar3a: { sie: "Sche Vus retschavais ina renta AI entira: cun il pilier 3a fiss la facultad sur la franchisa da l’agid social. Il dretg sclerescha il servetsch social. Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC.", du: "Sche ti retschaves ina renta AI entira: cun il pilier 3a fiss la facultad sur la franchisa da l’agid social. Il dretg sclerescha il servetsch social. Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC." }, // TODO(rm)
     erwachseneHint: 'La persuna che fa la dumonda e, en cas da maridaglia u da partenadi registrà, la partenaria u il partenari.',
     jungeErwachseneHint: "Sut 25 onns po il basegn da basa esser pli bass tenor il chantun — per plaschair s'infurmar tar il servetsch social.",
     weiterePersonen: "Ulteriuras persunas en l'economia da chasa",

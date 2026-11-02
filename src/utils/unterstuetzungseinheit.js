@@ -46,11 +46,13 @@ export function saeule3aZaehlt(basis, heute = new Date()) {
 }
 
 // Die Felder, die als Vermögen zählen: Sparkonto, Wertschriften, übriges, Säule 3b (SKOS-RL D.3.3 Abs. 6),
-// die Säule 3a erst ab dem frühesten AHV-Vorbezug. Rohwerte, damit ein leeres Feld leer bleibt.
+// die Säule 3a erst ab dem frühesten AHV-Vorbezug oder mit einer ganzen IV-Rente (D.3.3 Abs. 3, Version vom 1.1.2021,
+// gelesen 02.11.2026). Eine Teilrente löst sie nicht aus: BVV 3 Art. 3 Abs. 2 Bst. a. Rohwerte, damit ein leeres Feld leer bleibt.
 export function vermoegensFelder(finanzen, basis, heute = new Date()) {
-  const mit3a = saeule3aZaehlt(basis, heute) && Number(finanzen?.pension3aBalance) > 0;
+  const nachAlter = saeule3aZaehlt(basis, heute);
+  const mit3a = (nachAlter || finanzen?.ivBezug === 'ganz') && Number(finanzen?.pension3aBalance) > 0;
   const f = finanzen || {};
-  return { mit3a, felder: [f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined] };
+  return { mit3a, durchIv: mit3a && !nachAlter, felder: [f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined] };
 }
 
 // Die Kinder im Haushalt, ohne Haushaltsangabe aus dem alten Feld `dependents`. Ohne Alter gilt ein Kind als

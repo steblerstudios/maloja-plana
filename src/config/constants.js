@@ -315,6 +315,7 @@ export function getChapters(t) {
         { k: 'loans', type: 'currency' },
         { k: 'pension3a', type: 'currency', jahr: true, sec: 'provision', secondary: true, orientation: or(t, 'saeule3a') },
         { k: 'pension3aBalance', type: 'currency', hint: 1, secondary: true },
+        { k: 'ivBezug', type: 'select', sel: 1, hint: 1, secondary: true, naOk: true },
         { k: 'pension3b', type: 'select', sel: 1, secondary: true, orientation: or(t, 'saeule3b') },
         { k: 'pension3bBalance', type: 'currency', hint: 1, secondary: true },
         { k: 'investmentFunds', type: 'select', sel: 1, secondary: true },
