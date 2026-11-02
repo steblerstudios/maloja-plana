@@ -87,11 +87,11 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     hauptBasisOffen,
     vorBeitraegen: selbst && betrag(f.monthlyIncome) > 0,
     // Lohn im Profil, aber das Feld bleibt leer: Dann gibt es keinen Betrag, leer hiesse Einkommen 0.
-    lohnNichtUebernommen: hauptBasisOffen || (hauptBrutto && betrag(f.monthlyIncome) > 0),
+    lohnNichtUebernommen: hauptBasisOffen || (hauptBrutto && betrag(f.monthlyIncome) > 0) || (einkommen === '' && betrag(f.sideIncome) > 0),
     andereEinkuenfte,
     vermoegen,
     vermoegenMit3a: mit3a,
-    // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS C.3.3) — nur Hinweis, keine Rechnung.
+    // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS-RL C.3.2 Abs. 4) — nur Hinweis, keine Rechnung.
     jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,
     nebenerwerbBrutto,

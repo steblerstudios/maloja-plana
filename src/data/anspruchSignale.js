@@ -37,7 +37,7 @@ export function anspruchSignale(data = {}) {
       const sh = calculateSozialhilfe(data);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
         // mitGanzerMiete: die Anzeige sagt, dass die ganze Miete eingerechnet ist.
-        add('behoerden', { key: 'sozialhilfe', view: 'sozialhilfe', mitGanzerMiete: !!sh.mitGanzerMiete });
+        add('behoerden', { key: 'sozialhilfe', view: 'sozialhilfe', mitGanzerMiete: !!sh.mitGanzerMiete, hinweise: sh.hinweise || [] });
       }
     }
     // EL: nur im AHV-/IV-Renten-Kontext.

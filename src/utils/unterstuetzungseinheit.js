@@ -11,7 +11,7 @@
 // - D.4.4: Im stabilen Konkubinat zählt nicht der Lohn, sondern ein Konkubinatsbeitrag als Einnahme. Den
 //   kann die App nicht rechnen (erweitertes SKOS-Budget der anderen Person), darum ein Hinweis.
 // - D.4.5: Wer für berufstätige Mitbewohnende den Haushalt führt, dem wird eine Entschädigung als Einnahme
-//   angerechnet, höchstens 950 Franken je Person. Sie hängt am Budget der anderen: nur ein Hinweis.
+//   angerechnet, höchstens 950 Franken je Person (Stand 1.1.2026), die Anzeige nennt den Betrag. Sie hängt am Budget der anderen: nur ein Hinweis.
 
 import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
 import { giltAlsVerheiratet } from './zivilstand.js';
