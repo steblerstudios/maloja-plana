@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import { calculateSozialhilfe } from '../config/cantonalData.js';
 import { sozialhilfePegelState } from '../data/pegel.js';
-import { lernendeMitFreibetrag } from '../data/sozialhilfeKern.js';
 import { sozialhilfeVorbefuellung } from '../utils/sozialhilfeVorbefuellung.js';
 import { berechneSozialhilfe } from '../data/sozialhilfeRechner.js';
 import de from '../i18n/de.js';
@@ -72,16 +71,26 @@ describe('Lernende: kein Nein ohne Grundlage (Predeploy 02.11.2026, vierte Runde
     expect(r.efbEntscheidet).toBe(true);
   });
 
-  it('Basel-Stadt: «pro erwerbstätige Person» gilt auch für Lernende', () => {
+  it('Basel-Stadt: gerechnet wie überall, aber kein Nein, solange der Eintrittsabzug einen Anspruch ergäbe', () => {
     const l = calculateSozialhilfe(fall('apprentice', 'BS', 1900));
-    expect(l.deficit).toBe(calculateSozialhilfe(fall('employed', 'BS', 1900)).deficit);
-    expect(l.efb).toBeGreaterThan(0);
-    expect(l.ohneFreibetrag).toBe(false);
-    expect(lernendeMitFreibetrag('BS')).toBe(true);
-    expect(lernendeMitFreibetrag('AG')).toBe(false);
-    const r = (kanton) => berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 1900, erwerbstaetig: true, ohneFreibetrag: true, kanton });
-    expect(r('BS').efb).toBeGreaterThan(0);
-    expect(r('AG').efb ?? 0).toBe(0);
+    expect(l.efb).toBe(0);
+    expect(l.deficit).toBe(61);
+    expect(l.ohneFreibetrag).toBe(true);
+    expect(calculateSozialhilfe(fall('apprentice', 'BS', 2100)).efbEntscheidet).toBe(true);
+    // Über Bedarf + 200 gibt es auch für Angestellte nichts.
+    expect(calculateSozialhilfe(fall('apprentice', 'BS', 2250)).efbEntscheidet).toBe(false);
+  });
+
+  it('Der offene Fall steht auch in der grossen Anzeige, im Dossier und auf der Karte', () => {
+    expect(quelle('../SozialhilfeRechner.jsx')).toContain("t(result.efbEntscheidet ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')");
+    expect(quelle('../dossierGenerator.js')).toContain("sozialhilfe.anspruchOffen ? t('pegel.coveredOffen')");
+    expect(quelle('../components/FinanzAuswertung.jsx')).toContain(": sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t('sozialhilfe.notEntitled'),");
+    expect(quelle('../SozialhilfeView.jsx')).toContain("sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t(sozialhilfe.noteKey");
+  });
+
+  it('Ohne Erwerb kein Lernenden-Fall', () => {
+    expect(berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 2250, erwerbstaetig: false, ohneFreibetrag: true, kanton: 'AG' }).efbEntscheidet).toBe(false);
+    expect(calculateSozialhilfe(fall('apprentice', 'AG', 0)).ohneFreibetrag).toBe(false);
   });
 
   it('Der Hinweis steht an jedem Betrag und nennt beide Anerkennungen', () => {

@@ -324,10 +324,10 @@ export function calculateSozialhilfe(data) {
   const effectiveRent = rent + utilities;
   const effectiveKK = kkPremium;
 
-  const ohneFreibetrag = erwerbstaetig && !freibetragGilt(data.finanzen, canton);
+  const ohneFreibetrag = erwerbstaetig && erwerbseinkommen > 0 && !freibetragGilt(data.finanzen);
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
-    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen, canton), freibetragUngewiss: ohneFreibetrag, kanton: canton,
+    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;

@@ -6437,7 +6437,7 @@ export default {
     premiumHint: 'Enter your health-insurance premium to see the split.',
   },
   pegel: {
-    ohneFreibetrag: "Calculated without the income allowance for apprentices. Many cantons give them an allowance or an integration allowance (IZU). The canton decides what applies.",
+    ohneFreibetrag: "Calculated without the income allowance for apprentices. Many cantons give them an income allowance or an integration allowance. The canton decides what applies.",
     vorBeitraegen: "Income from self-employment is calculated as entered. Personal AHV and pension fund contributions are not deducted.",
     ansatzTiefer: "With an F, N or S permit, support is usually lower than in this calculation: the rate is below that for the resident population, the canton sets it, and part may be given in kind (AsylG Art. 82 paras 1 and 3, AIG Art. 86 para. 1). An entitlement can also lapse entirely. Provisionally admitted refugees and stateless persons are an exception: the same social assistance standards apply to them as to refugees granted asylum (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',

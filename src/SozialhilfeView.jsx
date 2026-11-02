@@ -141,9 +141,9 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       // Freibetrag-Fall (Predeploy 25.09.2026): nicht «reicht aus» + «Kein Anspruch» + «wäre möglich»
       // untereinander, sondern offen — «Anspruch möglich» und warum der Kanton entscheidet.
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(),
-        t(sozialhilfe.efbEntscheidet ? 'dashboard.anspruchMoeglich' : 'sozialhilfe.notEntitled')),
+        t(sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sozialhilfe.notEntitled')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } },
-        sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : t(sozialhilfe.noteKey, sozialhilfe.noteParams))
+        sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
     // Vermögensfreibetrag-Orientierung (je Kanton, data/sozialhilfeRechner.js) — nur wenn ein

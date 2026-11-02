@@ -9,7 +9,6 @@ import { zahl } from './utils/geld.js';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { hatAusweisFNS } from './data/ausweis.js';
-import { lernendeMitFreibetrag } from './data/sozialhilfeKern.js';
 
 // `titel`, `satz`, `weiteres`, `stelle`: von SozialhilfeView (die Seite um den Rechner), sonst leer.
 export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, weiteres, stelle, tun }) => {
@@ -40,7 +39,6 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   // darum leer; gerechnet wird nur mit einem eingetragenen Betrag (data/sozialhilfeKern.js).
   const [erwerbsunkosten, setErwerbsunkosten] = useState('');
 
-  const ohneFreibetrag = vorbefuellt.ohneFreibetrag && !lernendeMitFreibetrag(kanton);
   const result = useMemo(() => {
     const m = Number(miete) || 0;
     const k = Number(kvg) || 0;
@@ -57,11 +55,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       andereEinkuenfte: Number(andereEinkuenfte) || 0,
       vermoegen: Number(vermoegen) || 0,
       erwerbstaetig,
-      ohneFreibetrag,
+      ohneFreibetrag: vorbefuellt.ohneFreibetrag,
       integrationsMassnahme: integration,
       kanton,
     });
-  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, ohneFreibetrag, integration, kanton]);
+  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, integration, kanton]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -124,7 +122,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         },
           result.hatAnspruch
             ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
-            : t('sh.keinAnspruch')
+            : t(result.efbEntscheidet ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
@@ -206,11 +204,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     titel: titel || t('sh.title'), satz,
     ergebnis, ohneErgebnis: t('sh.eingeben'),
     art: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
-    vorbehalt: result && (!result.gblBelegt || hatAusweisFNS(data) || ohneFreibetrag) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
+    vorbehalt: result && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
       [
         !result.gblBelegt && t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() }),
         hatAusweisFNS(data) && t('pegel.ansatzTiefer'),
-        ohneFreibetrag && t('pegel.ohneFreibetrag'),
+        vorbefuellt.ohneFreibetrag && t('pegel.ohneFreibetrag'),
       ].filter(Boolean).join(' ')),
     angaben: {
       erfasst: angabenWerte.filter((v) => String(v ?? '').trim() !== '').length, gesamt: angabenWerte.length,

@@ -858,6 +858,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
+      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich')
+      : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen')
       : t('sozialhilfe.notEntitled');
     sections.push({
       key: 'sozialhilfe',
