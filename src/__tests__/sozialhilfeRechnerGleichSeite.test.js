@@ -115,9 +115,9 @@ describe('Zwei Erwachsene ohne Ehe: keine Unterstützungseinheit (C.2 Erl. b, C.
     const p = profil({ monthlyIncome: 800, incomeType: 'netto' }, { maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 5000 } });
     const sh = calculateSozialhilfe(p);
     expect(sh.income).toBe(800);
-    expect(sh.haushaltOffen).toBe('pegel.konkubinatOffen');
+    expect(sh.hinweise).toContain('pegel.konkubinatOffen');
     expect(sh.deficit).toBe(rechner(p).sozialhilfeAnspruch);
-    expect(sozialhilfePegelState(p).haushaltOffen).toBe('pegel.konkubinatOffen');
+    expect(sozialhilfePegelState(p).hinweise).toContain('pegel.konkubinatOffen');
     expect(render(p)).toContain(de.pegel.konkubinatOffen);
   });
   it('Kind ab 18 zählt nicht zur Einheit, auch auf der Seite', () => {
@@ -150,17 +150,17 @@ describe('Nachbesserung nach Fachprüfung e1383af5', () => {
     expect(sh.effectiveRent).toBe(1700);
     expect(sh.income).toBe(4000);
     expect(sh.vermoegensfreibetrag).toBe(calculateSozialhilfe({ ...p, basis: { ...p.basis, maritalStatus: 'married' } }).vermoegensfreibetrag);
-    expect(sh.haushaltOffen).toBe('pegel.zivilstandOffen');
+    expect(sh.hinweise).toContain('pegel.zivilstandOffen');
     expect(sh.deficit).toBe(rechner(p).sozialhilfeAnspruch);
     expect(render(p)).toContain(de.pegel.zivilstandOffen);
   });
   it('ledig, zwei Erwachsene: bleibt getrennt, ohne Zivilstands-Hinweis', () => {
     const sh = calculateSozialhilfe(profil({}, { maritalStatus: 'single', household: { adults: 2, children: [] } }));
     expect(sh.grundbedarf).toBe(812);
-    expect(sh.haushaltOffen).toBe(null);
+    expect(sh.hinweise).not.toContain('pegel.zivilstandOffen');
   });
   it('Konkubinat mit nur einer erfassten Person: Hinweis trotzdem', () => {
-    expect(calculateSozialhilfe(profil({}, { maritalStatus: 'cohabiting' })).haushaltOffen).toBe('pegel.konkubinatOffen');
+    expect(calculateSozialhilfe(profil({}, { maritalStatus: 'cohabiting' })).hinweise).toContain('pegel.konkubinatOffen');
   });
   it('Altfeld dependents: Rechner und Seite gleich', () => {
     const p = profil({ monthlyIncome: 1000, incomeType: 'netto' }, { household: undefined, dependents: 2 });
@@ -180,5 +180,54 @@ describe('Nachbesserung nach Fachprüfung e1383af5', () => {
   it('Seite nennt den Anteil am Grundbedarf', () => {
     const sh = calculateSozialhilfe(profil({}, { maritalStatus: 'cohabiting', household: { adults: 2, children: [] } }));
     expect([sh.einheit, sh.haushalt]).toEqual([1, 2]);
+  });
+});
+
+describe('Offene Befunde aus #651 geschlossen', () => {
+  const heute = new Date();
+  it('Vermögen: Säule 3b zählt auch auf der Seite (SKOS-RL D.3.3 Abs. 6), eine Summe für beide Wege', () => {
+    const p = profil({ savingsAccount: 1000, pension3bBalance: 9000 });
+    expect(calculateSozialhilfe(p).vermoegen).toBe(10000);
+    expect(calculateSozialhilfe(p).vermoegen).toBe(Number(sozialhilfeVorbefuellung(p).vermoegen));
+  });
+  it('Vermögen: beziehbare Säule 3a auf beiden Wegen gleich', () => {
+    const jg = heute.getFullYear() - 62;
+    const p = profil({ savingsAccount: 1000, pension3aBalance: 20000 }, { dateOfBirth: `${jg}-01-01`, gender: 'male' });
+    expect(calculateSozialhilfe(p).vermoegen).toBe(21000);
+    expect(Number(sozialhilfeVorbefuellung(p).vermoegen)).toBe(21000);
+  });
+  it('Haushaltsführung: Hinweis bei Mitbewohnenden, nicht allein (D.4.5)', () => {
+    const wg = calculateSozialhilfe(profil({}, { maritalStatus: 'single', household: { adults: 2, children: [] } }));
+    expect(wg.hinweise).toContain('pegel.haushaltsfuehrungOffen');
+    expect(calculateSozialhilfe(profil({})).hinweise).not.toContain('pegel.haushaltsfuehrungOffen');
+  });
+  it('Einnahmen von Kindern: Hinweis nur bei Kind plus Alimente oder Zulagen (D.1 Abs. 2)', () => {
+    const kind = { household: { adults: 1, children: [{ age: 8 }] } };
+    expect(calculateSozialhilfe(profil({ alimenteReceived: 500 }, kind)).hinweise).toContain('pegel.kinderEinnahmen');
+    expect(calculateSozialhilfe(profil({}, kind)).hinweise).not.toContain('pegel.kinderEinnahmen');
+    expect(calculateSozialhilfe(profil({ alimenteReceived: 500 })).hinweise).not.toContain('pegel.kinderEinnahmen');
+  });
+  it('Ehe mit einer erfassten Person: Hinweis, wenn der Partnerlohn zählt', () => {
+    const p = profil({}, { maritalStatus: 'married', household: { adults: 1, children: [], partnerIncome: 3000 } });
+    expect(calculateSozialhilfe(p).hinweise).toContain('pegel.zweitePersonFehlt');
+  });
+  it('Lohnart offen: die Seite sagt, dass als netto gerechnet ist', () => {
+    expect(calculateSozialhilfe(profil({ monthlyIncome: 2200 })).hinweise).toContain('pegel.lohnartOffen');
+    expect(calculateSozialhilfe(profil({ monthlyIncome: 2200, incomeType: 'netto' })).hinweise).not.toContain('pegel.lohnartOffen');
+  });
+  it('Nebenerwerb nicht übernommen: der Rechner sagt es am Ergebnis, nicht nur am Feld', () => {
+    const html = render(profil({ monthlyIncome: 1000, incomeType: 'netto', sideIncome: 400 }));
+    expect((html.match(new RegExp(de.einkommensart.nebenOffen, 'g')) || []).length).toBe(2);
+  });
+  it('sechs Kinder: das Formular kappt nicht mehr', () => {
+    const p = profil({ monthlyIncome: 1000, incomeType: 'netto' }, { household: { adults: 1, children: Array.from({ length: 6 }, () => ({ age: 5 })) } });
+    expect(render(p)).toMatch(/aria-label="Kinder[^"]*"[^>]*>(?:(?!<\/select>).)*<option value="6" selected=""/s);
+  });
+  it('das Feld Familienzulagen warnt vor Doppelzählung, in jeder Sprache', () => {
+    expect(JSON.stringify(de)).toMatch(/Kinderzulagen vom Arbeitgeber[^"]*doppelt/);
+    expect(JSON.stringify(en)).toMatch(/compensation office\.[^"]*twice/);
+    expect(JSON.stringify(fr)).toMatch(/caisse de compensation\.[^"]*double/);
+    expect(JSON.stringify(itTranslations)).toMatch(/cassa di compensazione\.[^"]*due volte/);
+    expect(JSON.stringify(rm)).toMatch(/supplements da furmaziun\.[^"]*dubel/);
   });
 });

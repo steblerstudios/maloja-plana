@@ -835,7 +835,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     // ohne Betrag stehen (Fassung 6, Fix 7). Ohne Betrag fällt die Zeile weg.
     const mit = (vor, wert, nach = '') => { const b = formatCHF(wert); return b ? vor + b + nach : ''; };
     const sRows = [
-      { label: t('sozialhilfe.basicNeeds'), value: formatCHF(sozialhilfe.grundbedarf) },
+      { label: t('sozialhilfe.basicNeeds') + (sozialhilfe.haushalt > sozialhilfe.einheit ? ' (' + t('sh.gblAnteil', { einheit: sozialhilfe.einheit, haushalt: sozialhilfe.haushalt }) + ')' : ''), value: formatCHF(sozialhilfe.grundbedarf) },
       { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
       { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
       { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
@@ -851,7 +851,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
-      sozialhilfe.haushaltOffen && t(sozialhilfe.haushaltOffen),
+      ...(sozialhilfe.hinweise || []).map((k) => t(k)),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.

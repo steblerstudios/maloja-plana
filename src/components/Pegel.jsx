@@ -100,7 +100,7 @@ export const Pegel = ({ palette, t, state }) => {
       t('beleg.geschaetzt') + (state.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')) : null,
     state.ansatzTiefer ? h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '4px' } }, t('pegel.ansatzTiefer')) : null,
     state.ohneFreibetrag ? h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '4px' } }, t('pegel.ohneFreibetrag')) : null,
-    state.haushaltOffen ? h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '4px' } }, t(state.haushaltOffen)) : null,
+    ...(state.hinweise || []).map((k) => h('div', { key: k, style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '4px' } }, t(k))),
     state.vorBeitraegen ? h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '4px' } }, t('pegel.vorBeitraegen')) : null
   );
 

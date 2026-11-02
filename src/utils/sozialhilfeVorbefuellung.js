@@ -28,19 +28,11 @@
 //   ein eingetragener Arbeitgeber. «Rentner» geht vor einem liegen gebliebenen Arbeitgeber.
 
 import { partnerEinkommenRoh } from './partnereinkommen.js';
-import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil } from './unterstuetzungseinheit.js';
-import { referenzalterMonate } from '../data/ahvRechner.js';
+import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
 
-export { kindAlter } from './unterstuetzungseinheit.js';
-
-export function saeule3aBeziehbar(basis, heute = new Date()) {
-  const alter = alterInMonaten(basis?.dateOfBirth, heute);
-  if (alter == null) return false;
-  const jahrgang = new Date(basis.dateOfBirth).getFullYear();
-  return alter >= referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: jahrgang }) - 60;
-}
+export { kindAlter, saeule3aBeziehbar } from './unterstuetzungseinheit.js';
 
 const betrag = (v) => {
   const n = Number(v);
@@ -65,11 +57,11 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
 
   const partner = partnerEinkommenRoh(basis);
   const haushalt = unterstuetzungseinheit(basis, heute);
-  const { verheiratet, adults, kinder, weiterePersonen, haushaltOffen } = haushalt;
+  const { verheiratet, adults, kinder, weiterePersonen } = haushalt;
   const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined]);
 
-  const mit3a = saeule3aBeziehbar(basis, heute) && betrag(f.pension3aBalance) > 0;
-  const vermoegen = summeAlsFeld([f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined]);
+  const { mit3a, felder } = vermoegensFelder(f, basis, heute);
+  const vermoegen = summeAlsFeld(felder);
 
   const erwerbstaetig = istErwerbstaetig(f);
   // Lernende: erwerbstätig, aber ohne Freibetrag, gleiche Regel wie calculateSozialhilfe.
@@ -100,7 +92,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     erwerbstaetig,
     nebenerwerbBrutto,
     nebenerwerbBasisOffen,
-    partnerKonkubinat: haushaltOffen === 'pegel.konkubinatOffen',
-    haushaltOffen,
+    partnerKonkubinat: haushalt.hinweise.includes('pegel.konkubinatOffen'),
+    hinweise: [...haushalt.hinweise, kinderEinnahmenOffen(f, haushalt) && 'pegel.kinderEinnahmen'].filter(Boolean),
   };
 }

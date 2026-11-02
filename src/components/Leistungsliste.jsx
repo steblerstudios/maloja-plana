@@ -86,7 +86,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
           + (sh.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
           + (sh.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
           + (sh.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
-          + (sh.haushaltOffen ? ' · ' + t(sh.haushaltOffen) : '')
+          + (sh.hinweise || []).map((k) => ' · ' + t(k)).join('')
           + (sh.vorBeitraegen ? ' · ' + t('pegel.vorBeitraegen') : ''),
       };
       // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem

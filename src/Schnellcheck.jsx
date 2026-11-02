@@ -80,7 +80,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
         + (w.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
         + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
-        + (w.haushaltOffen ? ' · ' + t(w.haushaltOffen) : ''),
+        + (w.hinweise || []).map((k) => ' · ' + t(k)).join(''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
       key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,

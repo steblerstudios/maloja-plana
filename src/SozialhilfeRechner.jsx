@@ -10,6 +10,8 @@ import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { hatAusweisFNS } from './data/ausweis.js';
 
+const KINDER_MAX = 12;
+
 // `titel`, `satz`, `weiteres`, `stelle`: von SozialhilfeView (die Seite um den Rechner), sonst leer.
 export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, weiteres, stelle, tun }) => {
   const isMobile = useIsMobile();
@@ -17,7 +19,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   const kanton = data?.basis?.canton || '';
   const vorbefuellt = useMemo(() => sozialhilfeVorbefuellung(data), [data]);
   const initAdults = Math.min(4, vorbefuellt.adults);
-  const initChildren = Math.min(5, vorbefuellt.kinder);
+  const initChildren = Math.min(KINDER_MAX, vorbefuellt.kinder);
 
   const [adults, setAdults] = useState(initAdults);
   const [kinderCount, setKinderCount] = useState(initChildren);
@@ -208,12 +210,14 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     titel: titel || t('sh.title'), satz,
     ergebnis, ohneErgebnis: t(vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '' ? 'sh.lohnEingeben' : 'sh.eingeben'),
     art: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
-    vorbehalt: result && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.haushaltOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
+    vorbehalt: result && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.hinweise.length > 0 || vorbefuellt.nebenerwerbBrutto || vorbefuellt.nebenerwerbBasisOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
       [
         !result.gblBelegt && t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() }),
         hatAusweisFNS(data) && t('pegel.ansatzTiefer'),
         vorbefuellt.ohneFreibetrag && t('pegel.ohneFreibetrag'),
-        vorbefuellt.haushaltOffen && t(vorbefuellt.haushaltOffen),
+        ...vorbefuellt.hinweise.map((k) => t(k)),
+        vorbefuellt.nebenerwerbBrutto && t('sh.nebenerwerbBruttoHint'),
+        vorbefuellt.nebenerwerbBasisOffen && t('einkommensart.nebenOffen'),
       ].filter(Boolean).join(' ')),
     angaben: {
       erfasst: angabenWerte.filter((v) => String(v ?? '').trim() !== '').length, gesamt: angabenWerte.length,
@@ -244,7 +248,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
               'aria-label': t('sh.kinder'),
               onChange: e => setKinderCount(Number(e.target.value)),
             },
-              [0,1,2,3,4,5].map(n =>
+              Array.from({ length: KINDER_MAX + 1 }, (_, n) => n).map(n =>
                 React.createElement('option', { key: n, value: n }, n)
               )
             ),

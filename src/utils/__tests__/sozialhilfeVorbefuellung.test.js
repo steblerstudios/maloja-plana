@@ -5,7 +5,7 @@ import { sozialhilfeVorbefuellung as vb, saeule3aBeziehbar } from '../sozialhilf
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ ohneFreibetrag: false, adults: 1, kinder: 0, weiterePersonen: 0, miete: '', mieteAnteil: false, wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, hauptBasisOffen: false, lohnNichtUebernommen: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, nebenerwerbBasisOffen: false, partnerKonkubinat: false, haushaltOffen: null });
+    expect(vb({})).toEqual({ ohneFreibetrag: false, adults: 1, kinder: 0, weiterePersonen: 0, miete: '', mieteAnteil: false, wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, hauptBasisOffen: false, lohnNichtUebernommen: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, nebenerwerbBasisOffen: false, partnerKonkubinat: false, hinweise: [] });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 

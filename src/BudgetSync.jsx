@@ -432,7 +432,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '', sozialhilfe?.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : '', sozialhilfe?.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '', sozialhilfe?.haushaltOffen ? ' ' + t(sozialhilfe.haushaltOffen) : '')
+        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '', sozialhilfe?.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : '', sozialhilfe?.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '', (sozialhilfe?.hinweise || []).map((k) => ' ' + t(k)).join(''))
       )
     ),
 
