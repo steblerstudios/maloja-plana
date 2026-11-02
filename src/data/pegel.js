@@ -60,6 +60,19 @@ export function sozialhilfePegelState(data) {
   return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, offenText: sh?.offenText, ohneFreibetrag: !!sh?.ohneFreibetrag, hinweise: sh?.hinweise || [] };
 }
 
+// Derselbe Pegel aus dem Ergebnis des Rechners (F8-S2, 02.11.2026): die Seite hat eine Rechnung, die den
+// Eingaben folgt. Nur für «Lücke» und «gedeckt»; offene Fälle sagt der Ergebnisblock selbst.
+export function sozialhilfePegelAusRechner(result) {
+  if (!result || result.bedarf <= 0 || result.vermoegenZuerst || result.anspruchOffen || result.efbEntscheidet) return null;
+  const mode = result.hatAnspruch ? 'gap' : 'covered';
+  const income = mode === 'gap' ? result.anrechenbaresEinkommen : result.totalEinkommen;
+  return {
+    show: true, variant: 'aufstockung', mode,
+    fraction: Math.max(0, Math.min(PEGEL_SCALE, income / result.bedarf)),
+    income, bedarf: result.bedarf, amount: mode === 'gap' ? result.totalUnterstuetzung : 0,
+  };
+}
+
 function sozialhilfePegelRoh(data) {
   const canton = data?.basis?.canton || '';
   const rent = Number(data?.wohnen?.rentAmount || 0);

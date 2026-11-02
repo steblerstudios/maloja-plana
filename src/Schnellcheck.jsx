@@ -221,7 +221,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       ),
       React.createElement('div', { style: s.context },
         canton
-          ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, size: hh.householdSize })
+          ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, personen: t(hh.householdSize === 1 ? 'common.person' : 'common.persons', { count: hh.householdSize }) })
           : t('schnellcheck.contextNoCanton'),
         ' ',
         React.createElement('button', {

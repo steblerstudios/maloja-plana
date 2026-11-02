@@ -79,7 +79,7 @@ describe('K10 · Aussage 1 in den Ansichten: kein Rechner fragt den Kanton nochm
     expect(render(SozialhilfeView, { data: p })).toContain('premium.canton(cantons.BE)');
     expect(render(StipendienView, { data: p })).toContain('stip.yourCanton(cantons.BE)');
     expect(render(MietzinsOrientierung, { data: p })).toContain('mietzinsView.cantonLabel(cantons.BE)');
-    expect(render(Schnellcheck, { data: p })).toContain('schnellcheck.contextCanton(cantons.BE|1)');
+    expect(render(Schnellcheck, { data: p })).toContain('schnellcheck.contextCanton(cantons.BE|common.person(1))');
   });
 });
 

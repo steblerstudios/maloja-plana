@@ -4371,7 +4371,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     markeKK: 'Cassa da malsauns {betrag}',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
-    markeHaushalt: '{canton} · {size} persuna(s)',
+    markeHaushalt: '{canton} · {personen}',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     schrittTitel: 'Gugent pass per pass?',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
@@ -4857,7 +4857,6 @@ export default {
     nebenResidence: "Domicil secundar", // Fachprüfung 25.10.2026 — rm ungeprüft
     weeklyNote: { sie: "Cumpetent è per regla il servetsch social al domicil principal. En ina urgenza acuta gida er la vischnanca, nua che Vus As chattais.", du: "Cumpetent è per regla il servetsch social al domicil principal. En ina urgenza acuta gida er la vischnanca, nua che ti ta chattas." },
     weeklyMiete: "Il tschains endatà tutga forsa tar la dimora settimanala. Decisiva è l'abitaziun al domicil principal.",
-    skosCalculation: 'Calculaziun dal basegn COSAS',
     basicNeeds: 'Basegn fundamental (COSAS)',
     housingCosts: "Custs d'abitar (effectivs)",
     rentLimitUnbekannt: { sie: 'Qua èn quintads la fittanza ed ils custs accessorics, en in tegnairchasa spartì l’atgna part. Quant che l’agid social renconuscha, dependa da la limita da fittanza da Voss lieu da domicil — il servetsch social cumpetent la enconuscha.', du: 'Qua èn quintads la fittanza ed ils custs accessorics, en in tegnairchasa spartì l’atgna part. Quant che l’agid social renconuscha, dependa da la limita da fittanza da tes lieu da domicil — il servetsch social cumpetent la enconuscha.' },
@@ -4884,11 +4883,8 @@ export default {
     step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
     step5: 'Examinar la dumonda PC tar la filiala AVS',
     orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
-    householdAdults: 'Ménaschi: {count} creschids',
-    householdAdultsChildren: 'Ménaschi: {adults} creschids + {children} uffants',
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
-    assetLimitTitle: 'Facultad sur la franchisa',
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
     assetLimitBasisCanton: 'Chantun {name}',
@@ -4903,7 +4899,7 @@ export default {
     saeule3aNichtGezaehlt: "La pitga 3a n’è betg quintada qua. Ella sto per princip vegnir retratga pir ensemen cun il retratg anticipà da l’AVS u cun il retratg d’ina renta AI entira.", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (25.09.2026)
     efbEntscheidet: { sie: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Vossa vischnanca.', du: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Tia vischnanca.' },
-    erwerbsunkostenOffen: 'Custs supplementars per la lavur, sco mangiar ordaifer u il viadi a la lavur, n’èn betg quintads qua. Els augmentan il basegn — en il quintader sutvart pon ins endatar els.',
+    erwerbsunkostenOffen: 'Custs supplementars per la lavur, sco mangiar ordaifer u il viadi a la lavur, n’èn betg quintads qua. Els augmentan il basegn — tar las indicaziuns pon ins endatar els.',
     // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (25.09.2026)
     efbGeschaetzt: 'Limita d’entrada libra stimada: in terz da l’entrada da gudogn, maximalmain 400 francs (regla da Basilea-Citad). La SKOS numna 400 fin 700 francs per mais per ina plazza a temp cumplain, l’import fixescha il chantun.',
     erwerbsunkostenNichtEingerechnet: 'Custs supplementars per la lavur (sco mangiar ordaifer u il viadi a la lavur) n’èn betg quintads. Els augmentan il basegn.',
@@ -5910,9 +5906,10 @@ export default {
     erwerbsunkostenZeile: 'Custs supplementars per la lavur',
     anrechenbar: 'Entrada imputabla',
     sozialhilfe: "Dretg d'agid social",
-    vermoegenHinweis: 'Facultad sur la limita libra: ella vegn per regla quintada l’emprim', // TODO(rm): provisorisch
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    // TODO(rm)
+    einkommenEingeben: { sie: 'Endatai Voss entradas. Sche Vus n’avais naginas, endatai 0.', du: 'Endatescha tias entradas. Sche ti n’has naginas, endatescha 0.' },
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
     vermoegenZuerstTitel: "L’emprim la facultad", // TODO(rm): provisorisch
     nebenEingeben: { sie: "L’activitad accessorica n’è betg en il profil sco import net. Endatai sutvart tut l’entrada netta per calcular il dretg. Fin lura resta ina cifra dal profil ina stima.", du: "L’activitad accessorica n’è betg en il profil sco import net. Endatescha sutvart tut l’entrada netta per calcular il dretg. Fin lura resta ina cifra dal profil ina stima." }, // TODO(rm): provisorisch
@@ -7510,7 +7507,7 @@ export default {
     income: 'Entrada mensila (brutto)',
     rent: 'Fittanza / mais',
     kk: 'Premia da la cassa da malsauns / mais',
-    contextCanton: 'Chantun {canton} · chasa da {size} persuna(s).',
+    contextCanton: 'Chantun {canton} · chasa da {personen}.',
     contextNoCanton: 'Anc nagin chantun endatà — necessari per la reducziun da premias e l’agid social.',
     adjustProfile: 'adattar en il profil',
     resultTitle: 'Cun questas datas pudessas ti avair dretg a:',

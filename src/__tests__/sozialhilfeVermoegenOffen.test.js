@@ -48,7 +48,7 @@ describe('Vermögen über dem Freibetrag: offen, kein Betrag, kein Nein', () => 
   it('der Rechner sagt nicht «Kein Anspruch» und zeigt keinen Betrag', () => {
     const html = render(reich);
     expect(html).not.toContain(de.sh.keinAnspruch);
-    expect(html).toContain(de.pegel.vermoegen);
+    expect(html).toContain('Frist zur Verwertung');
     expect(html).not.toMatch(/kein Anspruch/);
   });
   it('Gegenprobe: unter dem Freibetrag Betrag wie bisher', () => {
@@ -124,7 +124,7 @@ describe('Die Seite zeigt es, nicht nur das Feld', () => {
     const html = seite(profil({ savingsAccount: 100000 }));
     expect(html).not.toContain(de.sozialhilfe.entitled);
     expect(html).not.toContain('2’028');
-    expect(html).toContain(de.pegel.vermoegen);
+    expect(html).toContain('Frist zur Verwertung');
     expect(html).not.toContain(de.sh.keinAnspruch);
   });
   it('Konkubinat Partner 8000, Lohn 800, Sparkonto 100000: Vermögenssatz bleibt', () => {
@@ -138,7 +138,7 @@ describe('Die Seite zeigt es, nicht nur das Feld', () => {
     expect(html).not.toMatch(/CHF\s*0</);
   });
   it('Gegenprobe: normaler Anspruch zeigt die Zusage', () => {
-    expect(seite(profil({ savingsAccount: 1000 }))).toContain(de.sozialhilfe.entitled);
+    expect(seite(profil({ savingsAccount: 1000 }))).toContain('/ ' + de.sh.monat);
   });
 });
 
@@ -156,7 +156,7 @@ describe('Fachprüfung 44c6808f', () => {
   it('Vermögen beim gewöhnlichen Nein: kein Vermögenssatz im Rechner', () => {
     const html = render(profil({ monthlyIncome: 6000, savingsAccount: 100000 }));
     expect(html).toContain(de.sh.keinAnspruch);
-    expect(html).not.toContain(de.sh.vermoegenHinweis);
+    expect(html).not.toContain('Frist zur Verwertung');
   });
   it('Rechner zeigt keine 0 neben «Anspruch möglich»', () => {
     const r = berechneSozialhilfe({ adults: 1, miete: 1200, krankenkassePraemie: 300, erwerbseinkommen: 2700, erwerbstaetig: true, kanton: 'ZH' });
