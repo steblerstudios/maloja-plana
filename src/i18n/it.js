@@ -7021,6 +7021,7 @@ export default {
     },
     whereTitle: 'Dove fare domanda?',
     where: { sie: 'Presenti una domanda formale all’ufficio borse di studio del Suo cantone — di norma è competente il cantone di domicilio dei Suoi genitori.', du: 'Presenta una domanda formale all’ufficio borse di studio del tuo cantone — di norma è competente il cantone di domicilio dei tuoi genitori.' },
+    whereAusnahmen: { sie: 'Può essere diverso se, dopo una prima formazione o quattro anni di attività lucrativa, ha vissuto almeno due anni in un cantone mantenendosi da sé, se i Suoi genitori vivono all’estero o in cantoni diversi, oppure se è rifugiato/a riconosciuto/a o apolide. Le regole variano da cantone a cantone. In caso di dubbio si rivolga all’ufficio borse di studio.', du: 'Può essere diverso se, dopo una prima formazione o quattro anni di attività lucrativa, hai vissuto almeno due anni in un cantone mantenendoti da te, se i tuoi genitori vivono all’estero o in cantoni diversi, oppure se sei rifugiato/a riconosciuto/a o apolide. Le regole variano da cantone a cantone. In caso di dubbio rivolgiti all’ufficio borse di studio.' },
     cantonalLink: 'Uffici cantonali borse di studio (elenco CDPE)',
     officeLink: 'Borse di studio: {canton}',
     yourCanton: { sie: 'Il Suo cantone: {canton}', du: 'Il tuo cantone: {canton}' },

@@ -7035,6 +7035,7 @@ export default {
     },
     whereTitle: 'Wo beantragen?',
     where: { sie: 'Reichen Sie ein formelles Gesuch bei der Stipendienstelle Ihres Kantons ein — zuständig ist in der Regel der Wohnsitzkanton Ihrer Eltern.', du: 'Reiche ein formelles Gesuch bei der Stipendienstelle Deines Kantons ein — zuständig ist in der Regel der Wohnsitzkanton Deiner Eltern.' },
+    whereAusnahmen: { sie: 'Anders kann es sein, wenn Sie nach einer ersten Ausbildung oder vier Jahren Erwerbstätigkeit mindestens zwei Jahre in einem Kanton gewohnt und sich selbst finanziert haben, wenn Ihre Eltern im Ausland oder in verschiedenen Kantonen wohnen oder wenn Sie als Flüchtling anerkannt oder staatenlos sind. Die Regeln unterscheiden sich je nach Kanton. Im Zweifel fragen Sie bei der Stipendienstelle nach.', du: 'Anders kann es sein, wenn Du nach einer ersten Ausbildung oder vier Jahren Erwerbstätigkeit mindestens zwei Jahre in einem Kanton gewohnt und Dich selbst finanziert hast, wenn Deine Eltern im Ausland oder in verschiedenen Kantonen wohnen oder wenn Du als Flüchtling anerkannt oder staatenlos bist. Die Regeln unterscheiden sich je nach Kanton. Im Zweifel frag bei der Stipendienstelle nach.' },
     cantonalLink: 'Kantonale Stipendienstellen (EDK-Verzeichnis)',
     officeLink: 'Stipendien: {canton}',
     yourCanton: { sie: 'Ihr Kanton: {canton}', du: 'Dein Kanton: {canton}' },

@@ -32,6 +32,10 @@ describe('Stipendienstelle je Kanton', () => {
     expect(html).toContain(STIPENDIEN_OFFICIAL.edkCantonalOffices);
   });
 
+  it('der Hinweis auf die Ausnahmen steht direkt beim Wo-beantragen, auch ohne Kanton', () => {
+    expect(render('')).toContain('stip.whereAusnahmen');
+  });
+
   it('ohne Kanton: nur das EDK-Verzeichnis', () => {
     const html = render('');
     expect(html).toContain(STIPENDIEN_OFFICIAL.edkCantonalOffices);

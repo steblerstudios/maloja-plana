@@ -7072,6 +7072,7 @@ export default {
     },
     whereTitle: 'Where to apply?',
     where: 'Submit a formal application to your canton’s scholarship office — usually the canton where your parents reside is responsible.',
+    whereAusnahmen: 'This can differ if, after a first qualification or four years of paid work, you have lived in a canton for at least two years and supported yourself, if your parents live abroad or in different cantons, or if you are a recognised refugee or stateless. The rules vary by canton. If in doubt, ask the scholarship office.',
     cantonalLink: 'Cantonal scholarship offices (EDK directory)',
     officeLink: 'Scholarships: {canton}',
     yourCanton: 'Your canton: {canton}',

@@ -8040,6 +8040,7 @@ export default {
     },
     whereTitle: 'Nua far dumonda?',
     where: { sie: 'Inoltrai ina dumonda formala tar l’uffizi da stipendis da Voss chantun — savens è cumpetent il chantun da domicil da Voss geniturs.', du: 'Inoltra ina dumonda formala tar l’uffizi da stipendis da tes chantun — savens è cumpetent il chantun da domicil da tes geniturs.' },
+    whereAusnahmen: { sie: 'I po esser auter, sche Vus avais vivì suenter ina emprima furmaziun u quatter onns activitad da gudogn almain dus onns en in chantun e finanzià Vus sez, sche Voss geniturs vivan a l’exteriur u en differents chantuns, u sche Vus essas renconuschì sco fugitiv u senza stadi. Las reglas variieschan tenor chantun. En cas da dubi dumandai tar l’uffizi da stipendis.', du: 'I po esser auter, sche ti has vivì suenter ina emprima furmaziun u quatter onns activitad da gudogn almain dus onns en in chantun e finanzià tai sez, sche tes geniturs vivan a l’exteriur u en differents chantuns, u sche ti es renconuschì sco fugitiv u senza stadi. Las reglas variieschan tenor chantun. En cas da dubi dumonda tar l’uffizi da stipendis.' },
     cantonalLink: 'Uffizis chantunals da stipendis (register CDEP)',
     officeLink: 'Stipendis: {canton}',
     yourCanton: { sie: 'Voss chantun: {canton}', du: 'Tes chantun: {canton}' },

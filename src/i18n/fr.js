@@ -7072,6 +7072,7 @@ export default {
     },
     whereTitle: 'Où faire la demande ?',
     where: { sie: 'Déposez une demande formelle auprès du service des bourses de votre canton — c’est en général le canton de domicile de vos parents qui est compétent.', du: 'Dépose une demande formelle auprès du service des bourses de ton canton — c’est en général le canton de domicile de tes parents qui est compétent.' },
+    whereAusnahmen: { sie: 'Il peut en aller autrement si, après une première formation ou quatre ans d’activité lucrative, vous avez vécu au moins deux ans dans un canton en subvenant à vos besoins, si vos parents vivent à l’étranger ou dans des cantons différents, ou si vous êtes réfugié·e reconnu·e ou apatride. Les règles varient selon le canton. En cas de doute, adressez-vous au service des bourses.', du: 'Il peut en aller autrement si, après une première formation ou quatre ans d’activité lucrative, tu as vécu au moins deux ans dans un canton en subvenant à tes besoins, si tes parents vivent à l’étranger ou dans des cantons différents, ou si tu es réfugié·e reconnu·e ou apatride. Les règles varient selon le canton. En cas de doute, adresse-toi au service des bourses.' },
     cantonalLink: 'Services cantonaux des bourses (répertoire CDIP)',
     officeLink: 'Bourses d’études : {canton}',
     yourCanton: { sie: 'Votre canton : {canton}', du: 'Ton canton : {canton}' },
