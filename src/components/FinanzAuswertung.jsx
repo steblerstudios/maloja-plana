@@ -200,6 +200,7 @@ export const druckAbschnitte = (t, w) => {
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : w.sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   if (w.sozialhilfe.ansatzTiefer) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ansatzTiefer')) + '</td></tr>' });
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
+  if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
@@ -502,14 +503,15 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
         // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
         + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
       // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
-      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
+      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t('sozialhilfe.notEntitled'),
     statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
     detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
       + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
       + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf)
       + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : '')
-      + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : ''),
+      + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : '')
+      + (sozialhilfe.ohneFreibetrag ? ' | ' + t('pegel.ohneFreibetrag') : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });
 };
@@ -626,7 +628,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   }
   const fruechte = chapters.length ? bereichsFruechte(chapters, data, astFarben(chapters, palette, isDarkMode)) : [];
   // Offen, sobald ein Anspruch möglich ist — dieselben Signale wie die Karten selbst.
-  const anspruch = !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.el.eligible);
+  const anspruch = !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen || w.el.eligible);
   const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).

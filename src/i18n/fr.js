@@ -6437,7 +6437,7 @@ export default {
     premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
   },
   pegel: {
-    ohneFreibetrag: "Calculé sans franchise sur le revenu pour les personnes en formation. Le canton décide si elle s’applique.",
+    ohneFreibetrag: "Calculé sans franchise sur le revenu pour les personnes en formation. De nombreux cantons leur accordent une franchise ou un supplément d’intégration. Le canton décide de ce qui s’applique.",
     vorBeitraegen: "Le revenu de l’activité indépendante est calculé tel qu’il est saisi. Les cotisations AVS et de caisse de pension personnelles ne sont pas déduites.",
     ansatzTiefer: "Avec un permis F, N ou S, l’aide est le plus souvent inférieure à ce calcul : le taux est inférieur à celui de la population résidente, le canton le fixe, et l’aide peut prendre la forme de prestations en nature (LAsi art. 82 al. 1 et 3, LEI art. 86 al. 1). Le droit peut aussi disparaître entièrement. Font exception les réfugiés admis à titre provisoire et les apatrides : les mêmes normes d’aide sociale que pour les réfugiés ayant obtenu l’asile s’appliquent à eux (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',

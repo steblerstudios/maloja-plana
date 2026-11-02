@@ -6501,7 +6501,7 @@ export default {
     premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
   },
   pegel: {
-    ohneFreibetrag: "Für Lernende ohne Einkommensfreibetrag gerechnet. Ob er zählt, regelt der Kanton.",
+    ohneFreibetrag: "Für Lernende ohne Einkommensfreibetrag gerechnet. Zahlreiche Kantone geben ihnen einen Freibetrag oder eine Integrationszulage. Was gilt, regelt der Kanton.",
     vorBeitraegen: "Das Einkommen aus der Selbständigkeit ist gerechnet, wie es eingetragen ist. Eigene AHV- und Pensionskassen-Beiträge sind nicht abgezogen.",
     ansatzTiefer: "Mit Ausweis F, N oder S fällt die Unterstützung meist tiefer aus als in dieser Rechnung: Der Ansatz liegt unter dem für Einheimische, der Kanton regelt ihn, teils gibt es Sachleistungen (AsylG Art. 82 Abs. 1 und 3, AIG Art. 86 Abs. 1). Ein Anspruch kann auch ganz entfallen. Ausgenommen sind vorläufig aufgenommene Flüchtlinge und Staatenlose: Für sie gelten die gleichen Sozialhilfestandards wie für Flüchtlinge mit Asyl (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',

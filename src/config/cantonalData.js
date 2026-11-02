@@ -324,9 +324,10 @@ export function calculateSozialhilfe(data) {
   const effectiveRent = rent + utilities;
   const effectiveKK = kkPremium;
 
+  const ohneFreibetrag = erwerbstaetig && erwerbseinkommen > 0 && !freibetragGilt(data.finanzen);
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
-    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen), kanton: canton,
+    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;
@@ -362,9 +363,9 @@ export function calculateSozialhilfe(data) {
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
-    ohneFreibetrag: erwerbstaetig && !freibetragGilt(data.finanzen),
+    ohneFreibetrag,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
-    anspruchOffen: erwerbstaetig && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
+    anspruchOffen: erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine

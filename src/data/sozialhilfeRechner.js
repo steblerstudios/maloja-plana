@@ -11,7 +11,7 @@
 import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
-import { EFB_PARAMS, einkommensfreibetrag, sozialhilfeBilanz } from './sozialhilfeKern.js';
+import { EFB_PARAMS, einkommensfreibetrag, sozialhilfeBilanz, KNAPP_OBEN } from './sozialhilfeKern.js';
 import { grundbedarf, gblStand } from './skosGrundbedarf.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
@@ -114,6 +114,7 @@ export function berechneSozialhilfe({
   vermoegen = 0,
   erwerbstaetig = false,
   ohneFreibetrag = false,
+  erwerbsunkostenErfasst = false,
   integrationsMassnahme = false,
   kanton, // Kantonskürzel; ohne → SKOS-Empfehlung beim Vermögensfreibetrag
   stichtag, // optional, Standard heute: welches Jahr der GBL-Tabelle gilt
@@ -134,7 +135,7 @@ export function berechneSozialhilfe({
   // Bedarf, Erwerbsunkosten, Freibetrag und Lücke: dieselbe Rechnung wie die Schnellrechnung.
   const bilanz = sozialhilfeBilanz({
     grundbedarf: gbl, wohnkosten, kvgPraemie, erwerbsunkosten,
-    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: erwerbstaetig && !ohneFreibetrag, kanton,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: erwerbstaetig && !ohneFreibetrag, freibetragUngewiss: erwerbstaetig && ohneFreibetrag, kanton,
   });
   const { bedarf, efb, totalEinkommen, anrechenbaresEinkommen, efbEntscheidet } = bilanz;
   const sozialhilfeAnspruch = bilanz.luecke;
@@ -145,6 +146,9 @@ export function berechneSozialhilfe({
   const vermoegensfreibetrag = vermoegensfreibetragKanton(kanton, adults, minderjaehrigeKinder);
   const anrechenbaresVermoegen = Math.max(0, vermoegen - vermoegensfreibetrag);
   const hatAnspruch = anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch > 0;
+  // Wie calculateSozialhilfe, aber nur solange das Feld leer ist: eine eingetragene Zahl beantwortet die offene Frage.
+  const anspruchOffen = erwerbstaetig && !erwerbsunkostenErfasst && !(Number(erwerbsunkosten) > 0) && Number(erwerbseinkommen) > 0
+    && anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch <= 0 && bedarf > 0 && totalEinkommen / bedarf <= KNAPP_OBEN;
   // Vermögen erfasst UND der Freibetrag dieses Kantons ist kantonal nicht bestätigt.
   const vfbUnbestaetigt = vermoegen > 0 && vermoegensfreibetragUnbestaetigt(kanton, minderjaehrigeKinder);
 
@@ -159,7 +163,7 @@ export function berechneSozialhilfe({
     erwerbsunkosten: bilanz.erwerbsunkosten,
     bedarf,
     efb,
-    efbEntscheidet,
+    efbEntscheidet: efbEntscheidet && anrechenbaresVermoegen <= 0,
     izu,
     totalEinkommen,
     anrechenbaresEinkommen,
@@ -168,6 +172,7 @@ export function berechneSozialhilfe({
     vermoegensfreibetrag,
     anrechenbaresVermoegen,
     hatAnspruch,
+    anspruchOffen,
     vfbUnbestaetigt,
     haushaltGroesse,
     kinderImHaushalt,

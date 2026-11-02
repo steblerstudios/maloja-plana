@@ -850,6 +850,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
+      sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.
@@ -857,6 +858,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
+      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich')
+      : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen')
       : t('sozialhilfe.notEntitled');
     sections.push({
       key: 'sozialhilfe',
@@ -1065,6 +1068,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       income: sozialhilfe.income || 0,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
+      anspruchOffen: !!sozialhilfe.anspruchOffen,
+      ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
       deficit: sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };

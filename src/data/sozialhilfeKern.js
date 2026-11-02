@@ -32,8 +32,12 @@
 //    700». Das war eine eigene, unbelegte Abstufung: 700 schon ab 1309 Fr. Lohn, und unter 400 Fr.
 //    Lohn ein Freibetrag über dem Lohn (Fachprüfung swiss-precision zu PR #389).
 //    🟡 UNSICHER bleibt: Andere Kantone geben mehr (bis 700) oder rechnen nach Pensum. Die Anzeige
-//    nennt den Betrag deshalb «geschätzt». Lernende nehmen viele Kantone vom EFB aus (D.2 Erl. b);
-//    die Rechnung gibt ihnen darum keinen (`freibetragGilt`, Predeploy 02.11.2026).
+//    nennt den Betrag deshalb «geschätzt». Lernende: Die SKOS-RL (Arbeitsdokument, Version 1.1.2021,
+//    gelesen 02.11.2026; die aktuelle Fassung nicht) sagen beides: «In zahlreichen Kantonen» kein EFB,
+//    dafür IZU (D.2 Erl. b), und «in zahlreichen Kantonen» keine IZU, dafür ein EFB (C.6.7 Erl. c). Die
+//    Rechnung gibt ihnen darum keinen (`freibetragGilt`), behauptet aber auch kein Nein
+//    (`freibetragUngewiss`). Auch Basel-Stadt: Ziff. 4.3 und 12.1 URL sagen «pro erwerbstätige Person»
+//    und nennen Lernende nicht, Ziff. 12.2.1 kennt aber eine IZU für Ausbildung. Klar ist es dort nicht.
 //
 // 3. Freibetrag beim EINTRITT (ob überhaupt ein Anspruch entsteht). Laut C.2 Abs. 3 «können» EFB bei
 //    der materiellen Grundsicherung berücksichtigt werden. D.2 Erl. c empfiehlt, sie «sowohl bei der
@@ -69,7 +73,7 @@ export function einkommensfreibetrag(erwerbseinkommen) {
 // Anstellungstyp gewählt, zählt ein eingetragener Arbeitgeber. «Rentner» geht vor einem
 // liegen gebliebenen Arbeitgeber. Dieselbe Regel gilt für die Vorbefüllung des Rechners.
 const ERWERBSTAETIG = ['employed', 'apprentice', 'selfEmployed', 'freelance'];
-// Der Freibetrag: nicht für Lernende, viele Kantone nehmen sie aus (D.2 Erl. b, nicht gelesen). Für die Erwerbsunkosten zählen sie weiter.
+// Der Freibetrag: nicht für Lernende (siehe oben). Für die Erwerbsunkosten zählen sie weiter.
 export const freibetragGilt = (finanzen) => istErwerbstaetig(finanzen) && finanzen?.employmentType !== 'apprentice';
 
 export function istErwerbstaetig(finanzen) {
@@ -86,6 +90,7 @@ const plus = (v) => Math.max(0, Number(v) || 0);
 //   erwerbsunkosten                      belegte Mehrkosten der Arbeit (C.6.3); ohne Angabe 0
 //   erwerbseinkommen / andereEinkuenfte  der Freibetrag gilt nur auf das Erwerbseinkommen
 //   kanton                               für die belegten Eintrittsregeln (ZH, BS)
+//   freibetragUngewiss                   Lernende: gerechnet ohne Freibetrag, ob er gilt, ist offen
 export function sozialhilfeBilanz({
   grundbedarf = 0,
   wohnkosten = 0,
@@ -94,6 +99,7 @@ export function sozialhilfeBilanz({
   erwerbseinkommen = 0,
   andereEinkuenfte = 0,
   erwerbstaetig = false,
+  freibetragUngewiss = false,
   kanton = '',
 }) {
   const eu = plus(erwerbsunkosten);
@@ -108,6 +114,9 @@ export function sozialhilfeBilanz({
   const eintritt = bedarf - (totalEinkommen - eintrittsAbzug) > 0;
   const lueckeMitEfb = Math.max(0, bedarf - anrechenbaresEinkommen);
   const luecke = eintritt ? lueckeMitEfb : 0;
+  // Lernende: Würde die Person wie angestellt gerechnet, gäbe es einen Anspruch? Dann offen, nicht Nein.
+  const abzugUngewiss = freibetragUngewiss ? (regel ? regel(erwerb) : einkommensfreibetrag(erwerb)) : 0;
+  const offenUngewiss = !eintritt && abzugUngewiss > 0 && bedarf - (totalEinkommen - abzugUngewiss) > 0;
   return {
     bedarf,
     erwerbsunkosten: eu,
@@ -116,6 +125,6 @@ export function sozialhilfeBilanz({
     anrechenbaresEinkommen,
     luecke,
     // Kein Anspruch ohne Freibetrag, aber einer mit: in einem Kanton ohne belegte Regel offen.
-    efbEntscheidet: !eintritt && !regel && lueckeMitEfb > 0,
+    efbEntscheidet: offenUngewiss || (!eintritt && !regel && lueckeMitEfb > 0),
   };
 }
