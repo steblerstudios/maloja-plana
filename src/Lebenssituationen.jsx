@@ -315,7 +315,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     : ipvA.art === 'offen' ? ablesung(ipvTitel, [t(ipv.noteKey, ipv.noteParams)])
     : ipvA.art === 'ohneGlas' ? ablesung(ipvTitel, ipv.eligible
       ? [t('pegel.perMonthPossible', { amount: fmt(ipv.amount) }), t('beleg.geschaetzt'), ipvA.fristVorbei && t(ipv.noteKey, ipv.noteParams)]
-      : [ipv.cantonData?.maxIncome != null ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome }) : t(ipv.noteKey, ipv.noteParams)])
+      : [t(ipv.noteKey, ipv.noteParams)])
     : null;
 
   // Der Ergebnis-Satz: «Mit diesen Angaben zeigt sich …» — nur positive Wege, nie ein Verdikt.

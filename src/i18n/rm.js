@@ -3463,7 +3463,7 @@ export default {
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
-    incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
+    incomeAboveLimit: 'Entrada decisiva probablamain sur la limita (CHF {value} per onn)',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
     orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
@@ -4080,6 +4080,8 @@ export default {
     sectionEL: 'Prestaziuns cumplementaras (PC)',
     sectionSteuern: 'Orientaziun taglia federala',
     elNotApplicable: 'Betg applitgabel (mo cun ina prestaziun AVS/AI)',
+    ipvNein: 'Tenor quint approximativ nagina reducziun; quai n’è betg ina decisiun',
+    elKeinHinweis: 'Tenor quint approximativ nagin indizi per PC; quai n’è betg ina decisiun',
     footerPrivacy: 'Quest document è vegnì creà localmain. Naginas datas èn vegnidas tramessas.',
     footerCredit: 'Maloja Plana — Organisatur svizzer da vita (Open Source)',
     empty: { sie: 'Emplenai emprim Vossas indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.', du: 'Emplenescha emprim Tias indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.' },
@@ -4107,7 +4109,7 @@ export default {
     noIncome: 'Nagina entrada registrada',
     noData: { sie: "Anc naginas datas finanzialas avant maun. Endatai Vossa entrada per vesair la survista.", du: "Anc naginas datas finanzialas avant maun. Endatescha Tia entrada per vesair la survista." },
     enterIncome: "Endatar l'entrada",
-    notEligible: 'Nagin dretg',
+    notEligible: 'Probablamain nagin dretg',
     notApplicable: 'Betg applitgabel',
     selectCanton: 'Tscherna in chantun per la calculaziun chantunalas',
     toBudget: 'Survista dal budget',
@@ -4816,10 +4818,11 @@ export default {
     cantonSavedHint: { sie: 'Nus al surpigliain er sut "Basa persunala". Là pudais Vus al midar da tut temp.', du: 'Nus al surpigliain er sut "Basa persunala". Là pos ti al midar da tut temp.' },
     feldImProfil: { sie: 'Vegn er memorisà en Voss profil e vala dapertut.', du: 'Vegn er memorisà en tes profil e vala dapertut.' },
     enterIncome: { sie: 'Voss chantun è vegnì surpiglià. Endatai ussa Vossa entrada mensila qua per calcular Vossa reducziun da premias.', du: 'Tes chantun è vegnì surpiglià. Endatescha ussa Tia entrada mensila qua per calcular Tia reducziun da premias.' },
-    eligible: 'Autorisà',
+    eligible: 'Dretg pussaivel',
     eligibleAntrag: 'Import pussaivel — mo sin dumonda',
     disclaimer: "Agid d'orientaziun. Il dretg effectiv vegn examinà da la post cumpetenta.",
-    notEligible: 'Betg autorisà',
+    notEligible: 'Probablamain nagin dretg',
+    keineAuszahlung: 'Probablamain nagin pajament',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (B-1, 16.09.2026).
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     schnellcheckGerechnet: 'Calculà cun las cifras da «A tge hai jau dretg?»',
@@ -4871,7 +4874,7 @@ export default {
     deductIncome: 'Deducziun: Entrada',
     deficit: 'Sustegn pussaivel',
     entitled: 'Sustegn pussaivel',
-    notEntitled: "L'entrada basta",
+    notEntitled: 'Tenor quest quint basta l’entrada',
     noEntitlementNote: { sie: "Vossa entrada cuvra il basegn calculà — quai è ina buna posiziun da partenza.", du: "Tia entrada cuvra il basegn calculà — quai è ina buna posiziun da partenza." },
     ipvSection: 'Reducziun da premias (IPV)',
     elSection: 'Prestaziuns cumplementaras (PC)',
@@ -5896,7 +5899,7 @@ export default {
     integrationHint: "p.ex. lavur voluntara regulara, programs u stages — supplement CHF 100–300/mais, tenor il giudizi da l'autoritad sociala.",
     anspruch: "Dretg d'agid social",
     monat: 'Mais',
-    keinAnspruch: 'Nagin dretg',
+    keinAnspruch: 'Probablamain nagin dretg',
     inklusiveIzu: "Incl. allocaziun d'integraziun (IZU)",
     position: 'Posiziun',
     gbl: 'Basegn fundamental (GBL)',
@@ -7478,7 +7481,7 @@ export default {
     geschaetzt: 'stimaziun · orientaziun',
     verfuegungOhneJahr: 'decisiun senza onn', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     orientierung: 'orientaziun · senza import', // TODO(rm): provisorisch
-    keineVerbilligung: 'Sur la limita — nagina reducziun. I dat autras vias.',
+    keineVerbilligung: 'Probablamain nagina reducziun. I dat autras vias.',
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
@@ -7500,7 +7503,7 @@ export default {
     empty: 'Endatar entrada e chantun — lura mussa l’indicatur il spazi disponibel.',
     clear: 'L’entrada è sut la limita — il dretg exista, cun spazi.',
     edge: 'Just sut la limita — quai pudess bastar.',
-    over: 'Sur la limita — per quai datti autras vias.',
+    over: 'Probablamain sur la limita, per quai datti autras vias.',
     perMonthPossible: 'radund {amount} / mais pussaivel',
     bedarf: 'Basegns',
     aufstockung: 'Cumplettaziun',

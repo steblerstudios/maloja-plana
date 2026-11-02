@@ -1,3 +1,4 @@
+import { ipvUnterMindestbetrag } from '../config/ipvMindestbetrag.js';
 import React from 'react';
 import { Icon, hinweisZeichen, erledigtZeichen } from '../IconSystem.jsx';
 import { hatAusweisFNS } from '../data/ausweis.js';
@@ -202,7 +203,7 @@ export const druckAbschnitte = (t, w) => {
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
   for (const k of w.sozialhilfe.hinweise || []) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t(k)) + '</td></tr>' });
-  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? t('sozialhilfe.elPossible') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? t('sozialhilfe.elPossible') : w.el.isAHVIV ? t('behoerdenDossier.elKeinHinweis') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
     zeilen.push({ label: t('finanzUebersicht.assets'), html: '<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(w.totalAssets) + '</td></tr>' });
@@ -469,7 +470,7 @@ export const ipvKarte = ({ palette, t, onNavigate, w }) => {
       ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
       : ipv.belegt === false
         ? t('ipv.statusOffen')
-        : t('finanzUebersicht.notEligible'),
+        : t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'finanzUebersicht.notEligible'),
     statusColor: ipvVerfuegung != null || ipvOhneJahr != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
     // Kein Jahresbetrag aus der Verfügung: sie kann unterjährig beginnen, «× 12» wäre geraten.
     detail: ipvVerfuegung != null
@@ -482,13 +483,10 @@ export const ipvKarte = ({ palette, t, onNavigate, w }) => {
         + (w.ipvRuht ? '. ' + t('ipv.ruhtMitSozialhilfe') : '')
       : ipv.belegt === false
         ? t(ipv.noteKey, ipv.noteParams)
-        // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht
-        // in der Kachel «Einkommen über Grenze (CHF )», eine Grenze ohne Zahl. Dann sagt der
-        // Kanton selbst, warum es keinen Anspruch gibt (Befund Fachprüfung 20.09.2026).
+        // Der Kanton sagt selbst, warum es keinen Anspruch gibt. «Über der Grenze» nur, wo sein Modul das meldet:
+        // Das Nein kann auch vom Selbstbehalt oder Mindestbetrag kommen, und nicht jeder Kanton hat eine Grenze.
         : ipv.canton
-          ? (ipv.cantonData?.maxIncome != null
-            ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
-            : t(ipv.noteKey, ipv.noteParams))
+          ? t(ipv.noteKey, ipv.noteParams)
           : t('finanzUebersicht.selectCanton'),
     onClick: () => onNavigate('premium'),
   });
@@ -531,7 +529,7 @@ export const elKarte = ({ palette, t, onNavigate, w }) => {
       ? t('sozialhilfe.elPossible')
       : el.noteKey === 'elCalc.onlyAhvIv'
         ? t('sozialhilfe.elOnlyAhvIv')
-        : t('finanzUebersicht.notApplicable'),
+        : t('behoerdenDossier.elKeinHinweis'),
     statusColor: el.eligible ? (palette.goldDeep || palette.gold) : palette.mid,
     onClick: () => onNavigate('ergaenzungsleistungen'),
   });

@@ -10,6 +10,7 @@
 //   generateBehoerdenDossier(data, chapters, t, calculations) → HTML string
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
+import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import { getFullName } from './config/constants.js';
 import { feldNameOhneEinheit } from './utils/feldName.js';
 import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
@@ -906,12 +907,14 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       ? t('premium.eligible')
       : ipv.belegt === false
         ? t('ipv.statusOffen')
-        : t('premium.notEligible');
+        : t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'behoerdenDossier.ipvNein');
     sections.push({
       key: 'ipv',
       title: t('behoerdenDossier.sectionIPV'),
       rows: iRows,
       status,
+      // Ein Nein steht auf dem Blatt ans Amt nie ohne Grund (Rechtsprüfung 02.11.2026).
+      notes: !ipv.eligible && ipv.belegt !== false && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
       statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: ipv.eligible,
     });
@@ -922,7 +925,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       key: 'el',
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
-      status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
+      status: el.eligible ? t('sozialhilfe.elPossible') : t(el.isAHVIV ? 'behoerdenDossier.elKeinHinweis' : 'behoerdenDossier.elNotApplicable'),
       statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: el.eligible,
     });
