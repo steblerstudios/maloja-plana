@@ -224,8 +224,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     if (!onUpdateData || !hasIncome) return null;
     // Ein bereits beantragter/bestätigter Status bleibt sichtbar, auch wenn die
     // aktuelle Live-Schätzung knapp unter die Grenze fällt — sonst verschwänden
-    // real eingetragene Verfügungsdaten. Nur im reinen Schätz-Zustand blenden wir
-    // die Lebenslinie aus, wenn (noch) kein Anspruch geschätzt wird.
+    // real eingetragene Verfügungsdaten. Ohne geschätzten Anspruch bleibt im reinen
+    // Schätz-Zustand nur der Rat stehen.
     const h = React.createElement;
     const weg = (children) => h('section', {
       'aria-labelledby': 'ipv-weg-titel',
@@ -236,7 +236,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       badge || null
     );
     const lead = (s) => h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', marginBottom: space.sm } }, s);
-    // Art. 65 Abs. 3 KVG gilt für alle Kantone und alle Zustände, auch ohne geschätzten Anspruch.
+    // Art. 65 Abs. 3 KVG nennt den Antrag ausdrücklich, darum steht der Rat in jedem Zustand mit
+    // Einkommen, auch ohne geschätzten Anspruch.
     const aenderung = lead(t('ipvStatus.aenderung'));
     if (!anspruchMoeglich && ipvStatus.status === IPV_STATUS.GESCHAETZT) return weg([head(), aenderung]);
 

@@ -21,16 +21,16 @@ describe('Prämienverbilligung: keine Zusage einer automatischen Neuberechnung',
 });
 
 // Rechtsprüfung #641: «Sie müssen nichts tun» galt pauschal, und der Rat stand nur im
-// Schätz-Zustand. Art. 65 Abs. 3 KVG gilt für alle Kantone und alle Zustände.
+// Schätz-Zustand. Art. 65 Abs. 3 KVG nennt den Antrag ausdrücklich, darum steht der Rat in jedem Zustand.
 describe('Prämienverbilligung: Rat bei Änderungen', () => {
   const ipvStatus = (text) => text.slice(text.indexOf('wayAuto:'), text.indexOf('wayApply:'));
   const zeile = (text, schluessel) => text.split('\n').find((z) => z.trim().startsWith(`${schluessel}:`)) || '';
 
   it.each([
     ['de', 'Sie müssen nichts tun', 'du musst nichts tun', 'zuständigen Stelle'],
-    ['en', 'you do nothing,', 'you do nothing,', 'competent office'],
-    ['fr', 'vous n’avez rien à faire,', 'tu n’as rien à faire,', 'organe compétent'],
-    ['it', 'non deve fare nulla,', 'non devi fare nulla,', 'servizio competente'],
+    ['en', 'you do nothing,', 'you do nothing,', 'responsible office'],
+    ['fr', 'vous n’avez rien à faire,', 'tu n’as rien à faire,', 'office compétent'],
+    ['it', 'non deve fare nulla,', 'non devi fare nulla,', 'ufficio competente'],
     ['rm', 'na stuais Vus far nagut,', 'na stos ti far nagut,', 'post cumpetent'],
   ])('%s: wayAuto ohne Pauschale, aenderung nennt die Stelle', (sprache, sie, du, stelle) => {
     const text = lies(sprache);
