@@ -101,3 +101,10 @@ Aus der Einstiegsdatei, nicht neu erhoben.
 - Auf 375 px läuft keine Seite seitlich über.
 - Nachgerechnet und stimmig: Versicherungen 609, Ausgaben 3’965, frei 2’235, Steuer 8’431 und netto 65’969, Reserve 4.7 Monate, Wohndauer, Anstellungsdauer.
 - Die Fehler aus Fassung 7 zu Mietbarometer, Zimmerzahl, Nettoeinkommen, Dossier-Beschriftung und HF/Bachelor sind live behoben.
+
+## Gebaut nach Prüfern (02.11., spät)
+
+- **F8-F3:** Rechtsprüfer: nicht überall dasselbe Wort. Am Bildschirm «Voraussichtlich kein Anspruch», im Dossier «Nach grober Rechnung keine Verbilligung, kein Entscheid» mit Grund, unter dem Mindestbetrag «Voraussichtlich keine Auszahlung», ein Ja heisst «Möglicher Anspruch». Entwurf #666.
+- **F8-F2:** Die Grenze bezieht sich auf das massgebende Einkommen pro Jahr (SVA Zürich, Einkommensgrenzen 2026), nicht auf brutto oder netto. Entwurf #666.
+- **F8-G6:** Die Annahme stimmte nicht: `finanzen.ivRente` hat keine Eingabe. Neues Feld `finanzen.ivBezug`. SKOS D.3.3 Abs. 3 am Original gelesen, Version vom 01.01.2021. Entwurf #667.
+- **Offen aus den Prüfern:** F8-G5-Rest (Stand-Jahr beim Freibetrag, 3a bei fehlendem Geburtsdatum), 2. Säule zählt nicht (`bvgBalance`), EL rechnet nur mit `ahvRente` und `ivRente`, die keine Eingabe haben, Obstgarten-Schrift am Handy, VorlesenButton 24 px, Doppelansage in AblaufSchale.
