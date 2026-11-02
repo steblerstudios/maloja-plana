@@ -7073,6 +7073,7 @@ export default {
     whereTitle: 'Où faire la demande ?',
     where: { sie: 'Déposez une demande formelle auprès du service des bourses de votre canton — c’est en général le canton de domicile de vos parents qui est compétent.', du: 'Dépose une demande formelle auprès du service des bourses de ton canton — c’est en général le canton de domicile de tes parents qui est compétent.' },
     cantonalLink: 'Services cantonaux des bourses (répertoire CDIP)',
+    officeLink: 'Bourses d’études : {canton}',
     yourCanton: { sie: 'Votre canton : {canton}', du: 'Ton canton : {canton}' },
     formTitle: 'Bourse ou prêt ?',
     formNote: { sie: 'Les bourses ne se remboursent pas, les prêts oui. De nombreux cantons combinent les deux.', du: 'Les bourses ne se remboursent pas, les prêts oui. De nombreux cantons combinent les deux.' },

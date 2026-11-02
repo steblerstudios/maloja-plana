@@ -7073,6 +7073,7 @@ export default {
     whereTitle: 'Where to apply?',
     where: 'Submit a formal application to your canton’s scholarship office — usually the canton where your parents reside is responsible.',
     cantonalLink: 'Cantonal scholarship offices (EDK directory)',
+    officeLink: 'Scholarships: {canton}',
     yourCanton: 'Your canton: {canton}',
     formTitle: 'Scholarship or loan?',
     formNote: 'Scholarships don’t have to be repaid, loans do. Many cantons combine both.',

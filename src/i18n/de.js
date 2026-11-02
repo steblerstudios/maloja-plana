@@ -7036,6 +7036,7 @@ export default {
     whereTitle: 'Wo beantragen?',
     where: { sie: 'Reichen Sie ein formelles Gesuch bei der Stipendienstelle Ihres Kantons ein — zuständig ist in der Regel der Wohnsitzkanton Ihrer Eltern.', du: 'Reiche ein formelles Gesuch bei der Stipendienstelle Deines Kantons ein — zuständig ist in der Regel der Wohnsitzkanton Deiner Eltern.' },
     cantonalLink: 'Kantonale Stipendienstellen (EDK-Verzeichnis)',
+    officeLink: 'Stipendien: {canton}',
     yourCanton: { sie: 'Ihr Kanton: {canton}', du: 'Dein Kanton: {canton}' },
     formTitle: 'Stipendium oder Darlehen?',
     formNote: { sie: 'Stipendien müssen Sie nicht zurückzahlen, Darlehen schon. Viele Kantone kombinieren beides.', du: 'Stipendien musst Du nicht zurückzahlen, Darlehen schon. Viele Kantone kombinieren beides.' },

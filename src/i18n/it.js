@@ -7022,6 +7022,7 @@ export default {
     whereTitle: 'Dove fare domanda?',
     where: { sie: 'Presenti una domanda formale all’ufficio borse di studio del Suo cantone — di norma è competente il cantone di domicilio dei Suoi genitori.', du: 'Presenta una domanda formale all’ufficio borse di studio del tuo cantone — di norma è competente il cantone di domicilio dei tuoi genitori.' },
     cantonalLink: 'Uffici cantonali borse di studio (elenco CDPE)',
+    officeLink: 'Borse di studio: {canton}',
     yourCanton: { sie: 'Il Suo cantone: {canton}', du: 'Il tuo cantone: {canton}' },
     formTitle: 'Borsa di studio o prestito?',
     formNote: { sie: 'Le borse di studio non vanno rimborsate, i prestiti sì. Molti cantoni combinano entrambi.', du: 'Le borse di studio non vanno rimborsate, i prestiti sì. Molti cantoni combinano entrambi.' },

@@ -8041,6 +8041,7 @@ export default {
     whereTitle: 'Nua far dumonda?',
     where: { sie: 'Inoltrai ina dumonda formala tar l’uffizi da stipendis da Voss chantun — savens è cumpetent il chantun da domicil da Voss geniturs.', du: 'Inoltra ina dumonda formala tar l’uffizi da stipendis da tes chantun — savens è cumpetent il chantun da domicil da tes geniturs.' },
     cantonalLink: 'Uffizis chantunals da stipendis (register CDEP)',
+    officeLink: 'Stipendis: {canton}',
     yourCanton: { sie: 'Voss chantun: {canton}', du: 'Tes chantun: {canton}' },
     formTitle: 'Stipendi u mutg?',
     formNote: { sie: 'Stipendis na stuais Vus betg pajar enavos, mutgs gia. Blers chantuns combineschan omadus.', du: 'Stipendis na stos ti betg pajar enavos, mutgs gia. Blers chantuns combineschan omadus.' },

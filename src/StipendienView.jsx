@@ -3,7 +3,7 @@ import { hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
-import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
+import { STIPENDIEN_OFFICIAL, STIPENDIEN_KANTONE_URL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
 import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -26,6 +26,7 @@ export const stipResultMarker = (tone) => tone === 'yes' ? 'voll' : tone === 'no
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const canton = data?.basis?.canton || '';
+  const stelleKanton = STIPENDIEN_KANTONE_URL[canton];
 
   // Kurz-Check Berechtigung (harmonisierte Mindestkriterien, Orientierung)
   const [status, setStatus] = useState('');
@@ -97,8 +98,9 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
           t('stip.yourCanton', { canton: getCantonName(canton, t) }))
       ),
     },
-    stelle: React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border } },
-      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...linkStyle, fontWeight: weight.semi } }, t('stip.cantonalLink'))),
+    stelle: React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border, display: 'flex', flexDirection: 'column', gap: space.sm + 'px' } },
+      stelleKanton && React.createElement(ExternerLink, { t, href: stelleKanton, style: { ...linkStyle, fontWeight: weight.semi } }, t('stip.officeLink', { canton: getCantonName(canton, t) })),
+      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...linkStyle, fontWeight: stelleKanton ? undefined : weight.semi } }, t('stip.cantonalLink'))),
     quelle: React.createElement(React.Fragment, null, hinweisZeichen(), renderSource(t('stip.source'), null, t)),
   },
     // Wer kann beantragen?
