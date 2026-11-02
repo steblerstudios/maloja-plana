@@ -11,6 +11,19 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+---
+
+## [0.1.49-beta] — 2026-11-02 (Deploy durch Stebler Studios)
+
+### Fassung 8
+- **Sozialhilfe: eine Rechnung, die den Eingaben folgt** (#661): Kein Widerspruch mehr zwischen Betrag und «Kein Anspruch», kein Betrag aus einem leeren Einkommen in Rechner, Karte, Dossier und Export (#663).
+- **Fristen im Wegweiser** (#662): Kassenfrist bis 30.11. auf der Übersicht und im Kalender, offene Arztrechnungen mit abgelaufener Frist.
+- **Ein Ergebnis, ein Wort** (#666): Ein gerechnetes Nein heisst «Voraussichtlich kein Anspruch», im Dossier «Nach grober Rechnung keine Verbilligung, kein Entscheid» mit Grund, unter dem Mindestbetrag «Voraussichtlich keine Auszahlung».
+- **IPV-Grenze mit Einheit** (#666): massgebendes Einkommen pro Jahr, nicht neben dem Monatslohn ohne Bezug.
+- **Bezug einer IV-Rente** (#667): neues freiwilliges Feld. Mit ganzer Rente zählt die Säule 3a (SKOS D.3.3 Abs. 3), Ergänzungsleistungen heissen ohne Rentenbetrag «prüfen lassen».
+- **Zugänglichkeit** (#664): Tippziele in Kopf, Knöpfen und Prämientabelle, Ansagen im Kalender und im Ergebnis, eine h1 je Seite.
+- **Finanzen** (#665): Gruppen wie im Budget, Jahr des Branchenwerts genannt.
+
 ### Geändert
 - **Fusszeile am Handy mit 5 statt 7 Plätzen** (#545): Übersicht · Rucksack | ＋ | Anspruch · Menü. Kalender
   liegt im ＋-Fächer («Frist») und im Menü, die Suche oben im Menü und neu als Lupe in der Kopfzeile.
