@@ -15,6 +15,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
+import { festeFristen } from './utils/festeFristen.js';
 import { naechsterTermin, bisHeuteWeiter, INTERVALLE } from './utils/wiederholung.js';
 import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
@@ -279,11 +280,21 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement('span', { style: { color: palette.mid } }, artName), ' · ', React.createElement('span', { style: { color: dueColor } }, wann), herkunft ? ' · ' + herkunft : null),
         extra
       ),
-      React.createElement('button', { type: 'button', 'aria-label': toggleLabel + ': ' + titel + (d ? ', ' + datumLang(iso) : ''), onClick: onToggle, style: leiseKnopf },
+      onToggle && React.createElement('button', { type: 'button', 'aria-label': toggleLabel + ': ' + titel + (d ? ', ' + datumLang(iso) : ''), onClick: onToggle, style: leiseKnopf },
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', borderRadius: radius.full, display: 'grid', placeItems: 'center', boxSizing: 'border-box', border: '2px solid ' + (done ? palette.sage : palette.mid), background: done ? palette.sage : 'none', color: palette.bg } },
           done ? React.createElement(Icon, { name: 'check', size: 12 }) : null)),
     );
   };
+
+  // Feste Fristen aus den Kapiteln stehen in derselben Liste (F8-D3), ohne Haken: Sie gehören keiner Erinnerung.
+  const titelFest = { kvg: t('calendar.jahreskreis.kvgTitle'), steuer: t('behördenStatus.taxDeadline') };
+  const festOffen = festeFristen(data, today)
+    .filter((f) => !upcoming.some((r) => r.dueDate === f.iso && (r.title === titelFest[f.key] || (f.key === 'steuer' && r.title === t('calendar.templates.taxDeadline')))))
+    .map((f) => ({ ...f, titel: titelFest[f.key] }));
+  const renderFesteFrist = (f) => zeile({
+    key: 'fest-' + f.key, iso: f.iso, art: 'frist', bereich: kategorieBereich(f.kategorie),
+    icon: CATEGORY_ICON_KEYS[f.kategorie] || 'basis', titel: f.titel, wann: getDueLabel(f.iso),
+  });
 
   const renderReminderCard = (r) => zeile({
     key: r.id, iso: r.done ? (r.completedDate || r.dueDate) : r.dueDate, art: artVon(r), bereich: kategorieBereich(r.category),
@@ -362,6 +373,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const offenAlle = [
     ...upcoming.map(r => ({ datum: r.dueDate, titel: r.title, ablauf: r.ablauf || '', herkunft: r.ablauf ? t('calendar.ausAblauf', { name: ablaufName(r.ablauf) }) : '', el: () => renderReminderCard(r) })),
     ...aufgabenOffen.map(m => ({ datum: m.tag, titel: m.text, herkunft: t('calendar.ausMerkliste'), el: () => renderAufgabe(m) })),
+    ...festOffen.map(f => ({ datum: f.iso, titel: f.titel, herkunft: '', el: () => renderFesteFrist(f) })),
   ].sort((a, b) => a.datum.localeCompare(b.datum));
   const erledigtAlle = [
     ...completed.map(r => ({ datum: r.completedDate || '', el: () => renderReminderCard(r) })),
