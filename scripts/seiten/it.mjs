@@ -29,7 +29,7 @@ export const SEITEN = [
       {
         titel: 'Tre livelli che non si coordinano',
         absaetze: [
-          'La <strong>Confederazione</strong> fissa spesso soltanto il quadro: prescrive che una prestazione debba esistere e ne lascia la configurazione ai Cantoni. Vale ad esempio per la riduzione dei premi.',
+          'La <strong>Confederazione</strong> fissa spesso soltanto il quadro: prescrive che una prestazione debba esistere e ne lascia in gran parte la configurazione ai Cantoni. Vale ad esempio per la riduzione dei premi.',
           'I <strong>Cantoni</strong> riempiono questo quadro — con limiti propri, moduli propri, termini propri. Due economie domestiche con cifre identiche possono essere trattate diversamente in due Cantoni. Non è un difetto del sistema, è il sistema.',
           'I <strong>Comuni</strong> eseguono in diversi ambiti quanto il Cantone decide — nell’aiuto sociale sono spesso l’interlocutore con cui si ha effettivamente a che fare.',
           'In pratica: non esiste una risposta generale alla domanda «ne ho diritto?». Esiste solo la risposta per il suo luogo di domicilio, la sua situazione e il suo anno.',
@@ -83,12 +83,12 @@ export const SEITEN = [
       'La riduzione individuale dei premi (RIP) è un contributo al premio della cassa malati. La Confederazione fissa il quadro, i Cantoni decidono — che cosa significa per lei.',
     brotkrume: 'Riduzione dei premi',
     vorspann:
-      'La riduzione individuale dei premi — spesso abbreviata RIP — è un contributo dell’ente pubblico al premio dell’assicurazione malattie. È prevista dalla legge sull’assicurazione malattie (LAMal), ma la Confederazione non la esegue: lo fanno i Cantoni, ciascuno secondo regole proprie.',
+      'La riduzione individuale dei premi — spesso abbreviata RIP — è un contributo dell’ente pubblico al premio dell’assicurazione malattie. È prevista dalla legge sull’assicurazione malattie (LAMal), ma la Confederazione non la esegue: lo fanno i Cantoni, ciascuno secondo regole proprie, nel quadro del diritto federale.',
     abschnitte: [
       {
         titel: 'Che cosa prescrive la Confederazione e che cosa decide il Cantone',
         absaetze: [
-          'La Confederazione prescrive <em>che</em> una riduzione dei premi debba esistere e partecipa al suo finanziamento. Chi la riceve e in quale misura lo decide il Cantone.',
+          'La Confederazione prescrive <em>che</em> una riduzione dei premi debba esistere, fissa a tal fine requisiti minimi e partecipa al suo finanziamento. Nel quadro di questi requisiti, il Cantone decide chi la riceve e in quale misura.',
           'Concretamente, da Cantone a Cantone differiscono: i limiti di reddito e di sostanza, il modo stesso in cui il reddito determinante viene calcolato, il fatto di dover presentare una domanda oppure di essere contattati, e i termini.',
           'Ovunque uguale è invece <strong>dove va il denaro</strong>: il Cantone versa il contributo direttamente alla cassa malati, non alla persona assicurata. Ciò figura nella LAMal e non rientra nel margine di manovra cantonale.',
           'Per questo la frase «da noi si riceve qualcosa a partire da un reddito di X» porta raramente lontano. Vale al massimo per un Cantone, e anche lì soltanto per un anno.',
@@ -98,7 +98,7 @@ export const SEITEN = [
         titel: 'Quali cifre contano',
         absaetze: [
           'Di regola i Cantoni si basano sui dati fiscali — e spesso non su quelli dell’anno in corso, bensì su una tassazione anteriore già cresciuta in giudicato. Ciò ha una conseguenza che sorprende: chi quest’anno guadagna nettamente meno non lo vede riflesso da sé in molti Cantoni — altri ne tengono conto soltanto con il conteggio definitivo successivo.',
-          'Diversi Cantoni conoscono per questi casi una procedura propria, nella quale un cambiamento essenziale delle condizioni viene considerato a posteriori. Se e come, lo indica il servizio competente — per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni però l’amministrazione delle contribuzioni o il Comune di domicilio.',
+          'La LAMal prescrive tuttavia che, nell’esame delle condizioni d’ottenimento, i Cantoni considerino, su richiesta particolare della persona assicurata, le circostanze economiche e familiari più recenti (art. 65 cpv. 3 LAMal). Il suo Cantone disciplina i dettagli, ad esempio condizioni, documenti, termini e decorrenza. Un diritto alla riduzione non ne deriva automaticamente. Le informazioni sono fornite dal servizio competente — per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni però l’amministrazione delle contribuzioni o il Comune di domicilio.',
         ],
       },
       {
@@ -128,10 +128,10 @@ export const SEITEN = [
       {
         frage: 'E se il mio reddito è fortemente diminuito?',
         antwort:
-          'Allora vale la pena informarsi in modo particolare. Diversi Cantoni considerano, su richiesta, un cambiamento essenziale delle condizioni economiche, anche se la tassazione alla base indica ancora un reddito più elevato.',
+          'Allora vale la pena informarsi in modo particolare. La LAMal prescrive che, nell’esame delle condizioni d’ottenimento, i Cantoni considerino, su richiesta particolare della persona assicurata, le circostanze economiche e familiari più recenti (art. 65 cpv. 3 LAMal). Il suo Cantone disciplina i dettagli, ad esempio condizioni, documenti, termini e decorrenza. Un diritto alla riduzione non ne deriva automaticamente. Conviene informarsi presso il servizio competente, anche se la tassazione determinante indica ancora un reddito più elevato.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Aiuto sociale ────────────────────────────────────────────────────────

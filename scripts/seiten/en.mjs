@@ -33,7 +33,7 @@ export const SEITEN = [
       {
         titel: 'Three levels that do not coordinate',
         absaetze: [
-          'For many benefits, the <strong>federal government</strong> only sets the framework: it requires that something must exist and leaves the design to the cantons. This applies to premium reduction, for example.',
+          'For many benefits, the <strong>federal government</strong> only sets the framework: it requires that something must exist and leaves most of the design to the cantons. This applies to premium reduction, for example.',
           'The <strong>cantons</strong> fill in that framework — with their own limits, their own forms, their own deadlines. Two households with identical figures can be treated differently in two cantons. That is not a flaw in the system; that is the system.',
           'In several areas the <strong>municipalities</strong> carry out what the canton decides — in social assistance they are often the office you actually deal with.',
           'In practice this means: there is no general answer to “am I entitled to this?”. There is only the answer for your place of residence, your situation and your year.',
@@ -87,14 +87,14 @@ export const SEITEN = [
       'Premium reduction (Prämienverbilligung, IPV) is a contribution towards your health insurance premium. The federal government sets the framework, the cantons decide — what that means for you.',
     brotkrume: 'Premium reduction',
     vorspann:
-      'Individual premium reduction — in German usually shortened to IPV — is a contribution by the public authorities towards the health insurance premium. It is provided for in the Health Insurance Act (KVG), but the federal government does not administer it: the cantons do, each according to its own rules.',
+      'Individual premium reduction — in German usually shortened to IPV — is a contribution by the public authorities towards the health insurance premium. It is provided for in the Health Insurance Act (KVG), but the federal government does not administer it: the cantons do, each according to its own rules, within federal law.',
     abschnitte: [
       {
         titel: 'What the federal government prescribes and what the canton decides',
         absaetze: [
-          'The federal government prescribes <em>that</em> there must be a premium reduction and contributes to its funding. Who receives it and how much is decided by the canton.',
+          'The federal government prescribes <em>that</em> there must be a premium reduction, sets minimum requirements for it and contributes to its funding. Within these requirements, the canton decides who receives it and how much.',
           'Specifically, these differ from canton to canton: the income and asset limits, how the relevant income is calculated in the first place, whether you have to apply or are contacted, and the deadlines.',
-          'One thing is the same everywhere, however: <strong>where the money goes</strong>. The canton pays the contribution directly to the health insurer, not to the insured person. This is set out in the Health Insurance Act and is not within cantonal discretion.',
+          'By contrast, what is the same everywhere is <strong>where the money goes</strong>. The canton pays the contribution directly to the health insurer, not to the insured person. This is set out in the Health Insurance Act and is not within cantonal discretion.',
           'That is why the sentence “here you get it from an income of X” rarely helps. At best it is true for one canton, and there only for one year.',
         ],
       },
@@ -102,7 +102,7 @@ export const SEITEN = [
         titel: 'Which figures count',
         absaetze: [
           'As a rule the cantons rely on tax data — and often not on that of the current year but on an earlier assessment that has already become legally binding. This has a consequence that surprises people: someone earning considerably less this year will not see that reflected automatically in many cantons — others only take it into account with the later final settlement.',
-          'Several cantons have their own procedure for such cases, in which a substantial change in circumstances is taken into account retrospectively. Whether and how is a matter for the competent office — usually the cantonal social insurance institution (SVA) or the compensation office, but in some cantons the tax administration or the municipality of residence.',
+          'However, the KVG requires the cantons, when reviewing eligibility, to take the most recent income and family circumstances into account, in particular upon request (Art. 65 para. 3 KVG). Your canton sets the details, for example conditions, evidence, deadlines and when it takes effect. This does not automatically give you a right to a reduction. The competent office can tell you — usually the cantonal social insurance institution (SVA) or the compensation office, but in some cantons the tax administration or the municipality of residence.',
         ],
       },
       {
@@ -132,10 +132,10 @@ export const SEITEN = [
       {
         frage: 'What if my income has fallen sharply?',
         antwort:
-          'Then it is particularly worth asking. Several cantons take a substantial change in economic circumstances into account upon request, even if the underlying assessment still shows a higher income.',
+          'Then it is particularly worth asking. The KVG requires the cantons, when reviewing eligibility, to take the most recent income and family circumstances into account, in particular upon request (Art. 65 para. 3 KVG). Your canton sets the details, for example conditions, evidence, deadlines and when it takes effect. This does not automatically give you a right to a reduction. Ask the competent office, even if the relevant assessment still shows a higher income.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Social assistance ────────────────────────────────────────────────────

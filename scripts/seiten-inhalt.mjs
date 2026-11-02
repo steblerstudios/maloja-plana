@@ -79,7 +79,7 @@ export const GEPRUEFT = 'September 2026';
 // `src/__tests__/oeffentlicheSeiten.test.js` prüft die Form, nicht die
 // Erreichbarkeit — ein Test, der ins Netz greift, ist kein Test.
 export const QUELLEN = {
-  // Amtliche Sammlung des Bundes. Steht hier, weil das Impressum den Artikel
+  // Systematische Sammlung des Bundesrechts (SR). Steht hier, weil das Impressum den Artikel
   // nennt, auf den es sich stützt — und wer einen Artikel nennt, soll ihn
   // belegen können. Dieselbe Adresse verwendet das Studio-Impressum
   // (stebler-studios/website/impressum.html, 22.09.2026), bewusst wörtlich
@@ -93,20 +93,43 @@ export const QUELLEN = {
   // SPA-Hülle zurück, alle vier md5-identisch. Der Statuscode 200 misst dort
   // das Werkzeug, nicht den Bestand. Was nicht belegbar ist, wird nicht
   // behauptet: die rätoromanische Seite verlinkt die deutsche Fassung, wie es
-  // die englische auch tut. Englisch fehlt aus demselben Grund — Fedlex führt
-  // Bundesrecht nicht auf Englisch.
+  // die englische auch tut.
+  //
+  // Nachtrag 02.11.2026, über die Fedlex-Metadaten gemessen: rm hat für UWG und KVG
+  // keine Datei. Englisch gibt es beim UWG (Stand 1.1.2025, ohne Rechtskraft), es
+  // ist bewusst nicht verlinkt. Beim KVG gibt es keine englische Datei, /en leitete
+  // am 01.11.2026 im Browser auf /de um.
   fedlexUwgArt3: {
     url: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3',
-    text: 'UWG Art. 3 Abs. 1 Bst. s Ziff. 1 (SR 241, amtliche Sammlung)',
+    text: 'UWG Art. 3 Abs. 1 Bst. s Ziff. 1 (SR 241, Systematische Sammlung)',
     sprachen: {
       fr: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/fr#art_3',
       it: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3',
     },
     texte: {
-      fr: 'LCD art. 3 al. 1 let. s ch. 1 (RS 241, recueil officiel)',
-      it: 'LCSl art. 3 cpv. 1 lett. s n. 1 (RS 241, raccolta ufficiale)',
+      fr: 'LCD art. 3 al. 1 let. s ch. 1 (RS 241, recueil systématique)',
+      it: 'LCSl art. 3 cpv. 1 lett. s n. 1 (RS 241, raccolta sistematica)',
       en: 'Swiss Unfair Competition Act, Art. 3 para. 1 lit. s no. 1 (SR 241)',
-      rm: 'LCSL art. 3 al. 1 lit. s cifra 1 (DS 241, collecziun uffiziala)',
+      rm: 'LCSL art. 3 al. 1 lit. s cifra 1 (CS 241)',
+    },
+  },
+  // Art. 65 KVG am 01.11.2026 im Browser gelesen, de/fr/it, Stand 1. Juli 2026
+  // (`curl` bekommt von Fedlex nur die SPA-Hülle, s. o.). 🛑 In Abs. 3 decken sich
+  // die Fassungen nicht: de «insbesondere auf Antrag», fr «notamment à la demande», it «su
+  // richiesta particolare». Die italienische Seite folgt deshalb dem italienischen
+  // Wortlaut. Art. 66 steht in der Angabe wegen des Bundesbeitrags.
+  fedlexKvgArt65: {
+    url: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65',
+    text: 'KVG Art. 65 und 66 (SR 832.10, Systematische Sammlung)',
+    sprachen: {
+      fr: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_65',
+      it: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_65',
+    },
+    texte: {
+      fr: 'LAMal art. 65 et 66 (RS 832.10, recueil systématique)',
+      it: 'LAMal art. 65 e 66 (RS 832.10, raccolta sistematica)',
+      en: 'Swiss Health Insurance Act (KVG), Art. 65 and 66 (SR 832.10)',
+      rm: 'LAMal art. 65 e 66 (CS 832.10)',
     },
   },
   estvRechner: {
@@ -217,7 +240,7 @@ export const SEITEN = [
       {
         titel: 'Drei Ebenen, die sich nicht abstimmen',
         absaetze: [
-          'Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.',
+          'Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung weitgehend den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.',
           'Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Das ist kein Fehler im System, das ist das System.',
           'Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der man tatsächlich zu tun hat.',
           'Praktisch heisst das: Eine allgemeine Antwort auf «steht mir das zu?» gibt es nicht. Es gibt nur die Antwort für Ihren Wohnort, Ihre Situation und Ihr Jahr.',
@@ -271,12 +294,12 @@ export const SEITEN = [
       'Die Prämienverbilligung (IPV) ist ein Beitrag an die Krankenkassenprämie. Der Bund setzt den Rahmen, die Kantone entscheiden — was das für Sie bedeutet.',
     brotkrume: 'Prämienverbilligung',
     vorspann:
-      'Die individuelle Prämienverbilligung — meist kurz IPV — ist ein Beitrag der öffentlichen Hand an die Krankenkassenprämie. Sie ist im Krankenversicherungsgesetz (KVG) angelegt, aber der Bund führt sie nicht aus: das tun die Kantone, jeder nach eigenen Regeln.',
+      'Die individuelle Prämienverbilligung — meist kurz IPV — ist ein Beitrag der öffentlichen Hand an die Krankenkassenprämie. Sie ist im Krankenversicherungsgesetz (KVG) angelegt, aber der Bund führt sie nicht aus: das tun die Kantone, jeder nach eigenen Regeln, im Rahmen des Bundesrechts.',
     abschnitte: [
       {
         titel: 'Was der Bund vorgibt und was der Kanton entscheidet',
         absaetze: [
-          'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, und beteiligt sich an der Finanzierung. Wer sie bekommt und wie viel, entscheidet der Kanton.',
+          'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, setzt dafür Mindestvorgaben und beteiligt sich an der Finanzierung. Im Rahmen dieser Vorgaben entscheidet der Kanton, wer sie bekommt und wie viel.',
           'Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.',
           'Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.',
           'Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.',
@@ -286,7 +309,7 @@ export const SEITEN = [
         titel: 'Welche Zahlen zählen',
         absaetze: [
           'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.',
-          'Mehrere Kantone kennen für solche Fälle ein eigenes Verfahren, bei dem eine wesentliche Änderung der Verhältnisse nachträglich berücksichtigt wird. Ob und wie, steht bei der zuständigen Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.',
+          'Das KVG verlangt jedoch, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Auskunft gibt die zuständige Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.',
         ],
       },
       {
@@ -316,10 +339,10 @@ export const SEITEN = [
       {
         frage: 'Was, wenn mein Einkommen stark gesunken ist?',
         antwort:
-          'Dann lohnt sich die Nachfrage besonders. Mehrere Kantone berücksichtigen eine wesentliche Änderung der wirtschaftlichen Verhältnisse auf Gesuch hin, auch wenn die zugrunde liegende Veranlagung noch ein höheres Einkommen ausweist.',
+          'Dann lohnt sich die Nachfrage besonders. Das KVG verlangt, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Fragen Sie bei der zuständigen Stelle nach, auch wenn die massgebende Veranlagung noch ein höheres Einkommen ausweist.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Sozialhilfe ──────────────────────────────────────────────────────────

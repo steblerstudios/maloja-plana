@@ -42,7 +42,7 @@ export const SEITEN = [
       {
         titel: 'Trais nivels che na s’accordan betg',
         absaetze: [
-          'La <strong>Confederaziun</strong> fixescha tar bleras prestaziuns mo il rom: ella prescriva che i stoppia dar insatge e lascha la concepziun als chantuns. Quai vala per exempel per la reducziun da premi.',
+          'La <strong>Confederaziun</strong> fixescha tar bleras prestaziuns mo il rom: ella prescriva che i stoppia dar insatge e lascha per gronda part la concepziun als chantuns. Quai vala per exempel per la reducziun da premi.',
           'Ils <strong>chantuns</strong> emplenischan quest rom — cun agens limits, agens formulars, agens termins. Duas chasadas cun las medemas cifras pon vegnir tractadas differentamain en dus chantuns. Quai n’è betg in sbagl dal sistem, quai è il sistem.',
           'Las <strong>vischnancas</strong> exequeschan en pliras secziuns quai ch’il chantun decida — en l’agid social èn ellas savens il post cun il qual ins ha propi da far.',
           'En pratica vul quai dir: ina resposta generala a la dumonda «hai jau dretg a quai?» n’exista betg. I dat mo la resposta per Voss lieu da domicil, Vossa situaziun e Voss onn.',
@@ -96,12 +96,12 @@ export const SEITEN = [
       'La reducziun individuala da premi è ina contribuziun al premi da la cassa da malsauns. La Confederaziun fixescha il rom, ils chantuns decidan — tge che quai munta per Vus.',
     brotkrume: 'Reducziun da premi',
     vorspann:
-      'La reducziun individuala da premi è ina contribuziun da la maun publica al premi da l’assicuranza da malsauns. Ella è prevista en la Lescha davart l’assicuranza da malsauns (LAMal), ma la Confederaziun n’exequescha betg: quai fan ils chantuns, mintgin tenor agnas reglas.',
+      'La reducziun individuala da premi è ina contribuziun da la maun publica al premi da l’assicuranza da malsauns. Ella è prevista en la Lescha davart l’assicuranza da malsauns (LAMal), ma la Confederaziun n’exequescha betg: quai fan ils chantuns, mintgin tenor agnas reglas, en il rom dal dretg federal.',
     abschnitte: [
       {
         titel: 'Tge che la Confederaziun prescriva e tge ch’il chantun decida',
         absaetze: [
-          'La Confederaziun prescriva <em>che</em> i stoppia dar ina reducziun da premi e sa participescha al finanziament. Tgi ch’la survegn e quant bler decida il chantun.',
+          'La Confederaziun prescriva <em>che</em> i stoppia dar ina reducziun da premi, fixescha per quai pretensiuns minimalas e sa participescha al finanziament. En il rom da questas pretensiuns decida il chantun tgi ch’la survegn e quant bler.',
           'Concretamain differeschan da chantun a chantun: ils limits d’entrada e da facultad, la moda co che l’entrada decisiva vegn insumma calculada, sche ins sto inoltrar ina dumonda u sche ins vegn contactà, ed ils termins.',
           'Dapertut medem è percunter <strong>nua ch’ils daners van</strong>: il chantun paja la contribuziun directamain a la cassa da malsauns, betg a la persuna assicurada. Quai stat en la LAMal e n’è betg spazi da moviment chantunal.',
           'Perquai na maina la frasa «tar nus survegn ins quai a partir d’ina entrada da X» rara vart. Ella vala il pli auter per in chantun, e là mo per in onn.',
@@ -111,7 +111,7 @@ export const SEITEN = [
         titel: 'Tge cifras che quintan',
         absaetze: [
           'Ils chantuns sa basan per regla sin las datas fiscalas — e savens betg sin quellas da l’onn current, mabain sin ina taxaziun pli veglia ch’è gia entrada en vigur. Quai ha ina consequenza che surprenda: tgi che gudogna quest onn considerablamain damain, na vesa quai betg da sasez en blers chantuns — auters quintan quai mo suenter cun il decount definitiv posteriur.',
-          'Plirs chantuns enconuschan per tals cas ina procedura atgna, en la quala ina midada essenziala da las relaziuns vegn resguardada posteriuramain. Sche e co, quai stat tar il post cumpetent — per il pli la cassa da cumpensaziun chantunala u l’institut chantunal d’assicuranzas socialas, en singuls chantuns dentant l’administraziun da taglia u la vischnanca da domicil.',
+          'La LAMal pretenda dentant ch’ils chantuns resguardian, tar la verificaziun dal dretg, las relaziuns d’entrada e da famiglia las pli actualas, en spezial sin dumonda (art. 65 al. 3 LAMal). Voss chantun regla ils detagls, per exempel las cundiziuns, ils mussaments, ils termins e l’entrada en vigur. Da quai na resulta betg automaticamain in dretg a la reducziun. Il post cumpetent dat infurmaziun — per il pli la cassa da cumpensaziun chantunala u l’institut chantunal d’assicuranzas socialas, en singuls chantuns dentant l’administraziun da taglia u la vischnanca da domicil.',
         ],
       },
       {
@@ -141,10 +141,10 @@ export const SEITEN = [
       {
         frage: 'E sche mia entrada è sedruccada fermamain?',
         antwort:
-          'Lura vala ei particularmain la paina da dumandar. Plirs chantuns resguardan, sin dumonda, ina midada essenziala da las relaziuns economicas, era sche la taxaziun da basa mussa anc ina entrada pli auta.',
+          'Lura vala ei particularmain la paina da dumandar. La LAMal pretenda ch’ils chantuns resguardian, tar la verificaziun dal dretg, las relaziuns d’entrada e da famiglia las pli actualas, en spezial sin dumonda (art. 65 al. 3 LAMal). Voss chantun regla ils detagls, per exempel las cundiziuns, ils mussaments, ils termins e l’entrada en vigur. Da quai na resulta betg automaticamain in dretg a la reducziun. Dumandai tar il post cumpetent, era sche la taxaziun determinanta mussa anc ina entrada pli auta.',
       },
     ],
-    quellen: ['priminfo'],
+    quellen: ['priminfo', 'fedlexKvgArt65'],
   },
 
   // ─── Agid social ──────────────────────────────────────────────────────────
