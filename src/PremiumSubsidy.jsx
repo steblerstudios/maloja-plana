@@ -1,3 +1,4 @@
+import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { hatAusweisFNS } from './data/ausweis.js';
@@ -486,7 +487,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       ruhtHinweis
     );
     return React.createElement('div', { style: { marginBottom: space.md } },
-      urteil(t('premium.notEligible'), palette.text),
+      urteil(t(ipvUnterMindestbetrag(ipvResult) ? 'premium.keineAuszahlung' : 'premium.notEligible'), palette.text),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
     );
   };
