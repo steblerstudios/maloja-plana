@@ -365,7 +365,7 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
-    anspruchOffen: erwerbstaetig && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
+    anspruchOffen: erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine

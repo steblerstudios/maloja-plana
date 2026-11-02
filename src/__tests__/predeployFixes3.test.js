@@ -96,6 +96,14 @@ describe('Lernende: kein Nein ohne Grundlage (Predeploy 02.11.2026, vierte Runde
     expect(berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 2200, erwerbstaetig: true, kanton: 'ZH' }).anspruchOffen).toBe(false);
   });
 
+  it('Rechner: eingetippte 0, kein Lohn und zu hohes Vermögen sind nicht offen', () => {
+    const r = (x) => berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 2000, erwerbstaetig: true, kanton: 'ZH', ...x });
+    expect(r({ erwerbsunkostenErfasst: true }).anspruchOffen).toBe(false);
+    expect(r({ erwerbseinkommen: 0, andereEinkuenfte: 2000 }).anspruchOffen).toBe(false);
+    expect(r({ kanton: 'AG', erwerbseinkommen: 2011, vermoegen: 100000 }).efbEntscheidet).toBe(false);
+    expect(r({ kanton: 'AG', erwerbseinkommen: 2011 }).efbEntscheidet).toBe(true);
+  });
+
   it('Ohne Erwerb kein Lernenden-Fall', () => {
     expect(berechneSozialhilfe({ adults: 1, miete: 600, krankenkassePraemie: 300, erwerbseinkommen: 2250, erwerbstaetig: false, ohneFreibetrag: true, kanton: 'AG' }).efbEntscheidet).toBe(false);
     expect(calculateSozialhilfe(fall('apprentice', 'AG', 0)).ohneFreibetrag).toBe(false);
