@@ -6771,7 +6771,7 @@ export default {
     erwerbsunkostenZeile: 'Spese dovute al lavoro',
     anrechenbar: 'Reddito computabile',
     sozialhilfe: 'Diritto all\'aiuto sociale',
-    vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
+    vermoegenHinweis: 'Patrimonio oltre la franchigia: viene conteggiato per primo',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
     lohnEingeben: { sie: "Nel profilo c’è un salario, ma non un importo netto. Inserisca qui sotto il reddito netto per calcolare il diritto.", du: "Nel profilo c’è un salario, ma non un importo netto. Inserisci qui sotto il reddito netto per calcolare il diritto." },

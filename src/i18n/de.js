@@ -6861,7 +6861,7 @@ export default {
     erwerbsunkostenZeile: 'Mehrkosten für die Arbeit',
     anrechenbar: 'Anrechenbares Einkommen',
     sozialhilfe: 'Sozialhilfe-Anspruch',
-    vermoegenHinweis: 'Vermögen übersteigt Freibetrag – kein Anspruch',
+    vermoegenHinweis: 'Vermögen über dem Freibetrag, es wird zuerst angerechnet',
     freibetrag: 'Freibetrag',
     eingeben: { sie: 'Geben Sie Miete und KVG-Prämie ein, um den Anspruch zu berechnen.', du: 'Gib Miete und KVG-Prämie ein, um den Anspruch zu berechnen.' },
     lohnEingeben: { sie: "Im Profil steht ein Lohn, aber kein Nettobetrag. Tragen Sie unten das Netto-Einkommen ein, um den Anspruch zu berechnen.", du: "Im Profil steht ein Lohn, aber kein Nettobetrag. Trag unten das Netto-Einkommen ein, um den Anspruch zu berechnen." },

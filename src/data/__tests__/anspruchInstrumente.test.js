@@ -32,8 +32,9 @@ describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
     const data = { ...gapData, finanzen: { ...gapData.finanzen, savingsAccount: 30000 } };
     const sh = calculateSozialhilfe(data);
     const state = sozialhilfePegelState(data);
-    // Die Berechnung meldet weiterhin ein Defizit …
-    expect(sh.deficit).toBeGreaterThan(0);
+    // Die Berechnung meldet keinen Betrag mehr, sondern den offenen Fall (SKOS-RL D.3.1 Abs. 2 und 3) …
+    expect(sh.deficit).toBe(0);
+    expect(sh.vermoegenZuerst).toBe(true);
     expect(sh.vermoegenUeberFreibetrag).toBeGreaterThan(0);
     // … der Pegel darf aber KEINEN Aufstockungs-Betrag zeigen (sonst widerspräche
     // er der Ergebnisliste, die Sozialhilfe bei Vermögen über Freibetrag weglässt).

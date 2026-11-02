@@ -125,7 +125,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         sozialhilfe.eligible && sozialhilfe.efb > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } }, t('sozialhilfe.efbGeschaetzt')),
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: text.body, fontWeight: weight.bold, borderTop: '1px solid ' + palette.border, marginTop: space.xs } },
           React.createElement('span', null, t('sozialhilfe.deficit')),
-          React.createElement('span', { style: { color: palette.text } }, sozialhilfe.konkubinatBetragOffen ? '—' : formatCHF(sozialhilfe.deficit) + t('common.perMonth'))
+          React.createElement('span', { style: { color: palette.text } }, sozialhilfe.betragOffen ? '—' : formatCHF(sozialhilfe.deficit) + t('common.perMonth'))
         )
       )
     ),
@@ -148,7 +148,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // Vermögensfreibetrag-Orientierung (je Kanton, data/sozialhilfeRechner.js) — nur wenn ein
     // Anspruch besteht UND das Vermögen über dem Freibetrag liegt (sonst nicht entscheidungsrelevant)
-    sozialhilfe.eligible && sozialhilfe.vermoegenUeberFreibetrag > 0 && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
+    sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0 && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), t('sozialhilfe.assetLimitTitle')),
       React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.text } }, t('sozialhilfe.assetLimitNote', { basis: t('sozialhilfe.assetLimitBasisCanton', { name: getCantonName(canton, t) }), freibetrag: formatCHF(sozialhilfe.vermoegensfreibetrag), ueberschuss: formatCHF(sozialhilfe.vermoegenUeberFreibetrag) })),
       sozialhilfe.vfbUnbestaetigt && React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.mid, marginTop: space.xs } }, t('sozialhilfe.assetLimitUnconfirmed'))

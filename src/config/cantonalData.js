@@ -341,7 +341,6 @@ export function calculateSozialhilfe(data) {
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;
   const konkubinatBetragOffen = einheit.konkubinatMitLohn && (bilanz.luecke > 0 || bilanz.efbEntscheidet);
-  const deficit = konkubinatBetragOffen ? 0 : bilanz.luecke;
 
   // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
@@ -350,6 +349,12 @@ export function calculateSozialhilfe(data) {
   const minorChildren = einheit.kinder;
   const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
+  // Über dem Freibetrag: weder Betrag noch Nein. SKOS-RL D.3.1 Abs. 2 und 3: Ausnahmen, Frist zur Verwertung, in der
+  // Zwischenzeit Unterstützung. Deckt das Einkommen den Bedarf ohnehin, ist das Vermögen nicht der Grund.
+  const knapp = erwerbstaetig && erwerbseinkommen > 0 && bilanz.luecke <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN;
+  const vermoegenZuerst = !konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
+  const betragOffen = konkubinatBetragOffen || vermoegenZuerst;
+  const deficit = betragOffen ? 0 : bilanz.luecke;
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
   const gbl = gblStand();
@@ -368,20 +373,22 @@ export function calculateSozialhilfe(data) {
     income,
     efb: bilanz.efb,
     anrechenbaresEinkommen: bilanz.anrechenbaresEinkommen,
-    efbEntscheidet: bilanz.efbEntscheidet && !konkubinatBetragOffen,
+    efbEntscheidet: bilanz.efbEntscheidet && !betragOffen,
     // Einkommen aus brutto geschätzt (Anzeige: «≈ … (geschätzt)»).
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
-    anspruchOffen: konkubinatBetragOffen || (erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN),
+    anspruchOffen: betragOffen || knapp,
     konkubinatBetragOffen,
-    offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : 'pegel.coveredOffen',
+    vermoegenZuerst,
+    betragOffen,
+    offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine

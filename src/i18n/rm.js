@@ -5906,7 +5906,7 @@ export default {
     erwerbsunkostenZeile: 'Custs supplementars per la lavur',
     anrechenbar: 'Entrada imputabla',
     sozialhilfe: "Dretg d'agid social",
-    vermoegenHinweis: 'La facultad surpassa la limita libra — nagin dretg',
+    vermoegenHinweis: 'Facultad sur la limita libra: ella vegn quintada l’emprim',
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },

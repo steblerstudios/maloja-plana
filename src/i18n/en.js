@@ -6796,7 +6796,7 @@ export default {
     erwerbsunkostenZeile: 'Extra costs of working',
     anrechenbar: 'Countable income',
     sozialhilfe: 'Social assistance',
-    vermoegenHinweis: 'Assets exceed exemption – no entitlement',
+    vermoegenHinweis: 'Assets above the exemption are counted first',
     freibetrag: 'exemption',
     eingeben: 'Enter rent and health insurance premium to calculate entitlement.',
     lohnEingeben: "Your profile has a salary but no net amount. Enter your net income below to calculate the entitlement.",

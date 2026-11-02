@@ -6796,7 +6796,7 @@ export default {
     erwerbsunkostenZeile: 'Frais liés au travail',
     anrechenbar: 'Revenu déterminant',
     sozialhilfe: 'Aide sociale',
-    vermoegenHinweis: 'La fortune dépasse la franchise – pas de droit',
+    vermoegenHinweis: 'Fortune supérieure à la franchise : elle est prise en compte d’abord',
     freibetrag: 'franchise',
     eingeben: { sie: 'Saisissez le loyer et la prime LAMal pour calculer le droit.', du: 'Saisis le loyer et la prime LAMal pour calculer le droit.' },
     lohnEingeben: { sie: "Le profil indique un salaire, mais pas de montant net. Saisissez le revenu net ci-dessous pour calculer le droit.", du: "Le profil indique un salaire, mais pas de montant net. Saisis le revenu net ci-dessous pour calculer le droit." },
