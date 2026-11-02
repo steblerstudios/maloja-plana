@@ -538,7 +538,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                 React.createElement('td', { style: { ...cell, padding: 0 } },
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
-                    style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
+                    style: { ...s.nameBtn, padding: '5px 8px', minHeight: '44px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
                   }, zahl(f.franchise, { hoechstens: 2 }))
                 ),
                 hasOhne ? variantCell('mit', f.premium)
