@@ -15,6 +15,12 @@ Ja: F8-S1, S3, S4, S5, S6, S7, G1, G3. Besprechen: F8-S2, G2. Noch nicht gebaut.
 
 **F8-S2 entschieden (Stebler Studios, 02.11.2026: «Ja, nur einmal»):** Eine Rechnung, die den Eingaben folgt. Der untere Block fällt weg, damit ist F8-S1 gelöst, der Pegel bleibt. F8-G2: vorerst Hinweis am Feld.
 
+**Runde 2 (Stebler Studios, 02.11.2026, Knopf «Entscheide kopieren», alle 43 Punkte):**
+Ja (31): F8-S1, S3, S4, S5, S6, S7, G1, G3, P4, G4, G5, G6, D1, D2, D3, D5, F1, F2, F3, F4, F5, A1, A2, R2, R3, Q1, O1, O4, O6, O7, O8.
+Besprechen (12): F8-S2, G2, P1, P2, P3, D4, V1, N1, R1, O2, O3, O5.
+F8-S2 steht auf der Seite noch auf Besprechen, im Gespräch aber entschieden («Ja, nur einmal»). F8-G2: Der Hinweis am Feld besteht schon (`otherAssets`), es gibt nichts zu bauen, nur die Trennung bleibt offen.
+Damit bleiben zehn Punkte zu besprechen.
+
 <!-- PUNKTE -->
 ## Sozialhilfe
 
