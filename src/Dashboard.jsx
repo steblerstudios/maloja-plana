@@ -525,7 +525,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const zeile = (key, inhalt, view) => React.createElement('button', {
           key, type: 'button', onClick: () => onNavigate(view),
           style: { display: 'block', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, padding: space.xs + 'px 0' },
-        }, inhalt, ' ›');
+        }, inhalt, React.createElement('span', { 'aria-hidden': 'true' }, ' ›'));
         return (offen || kvg) && React.createElement('div', { 'data-teil': 'dringend', style: { marginTop: space.sm + 'px' } },
           offen && zeile('rechnung', t(offen.anzahl === 1 ? 'dashboard.rechnungFristVorbei' : 'dashboard.rechnungenFristVorbei', { anzahl: offen.anzahl, betrag: betrag(offen.summe) }), 'schulden'),
           kvg && zeile('kvg', t('dashboard.kvgFristZeile', { datum: kalenderdatum(kvg, lang, { day: 'numeric', month: 'long' }) }), 'kvgwechsel'));
@@ -579,7 +579,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             palette, onClick: () => onNavigate('export'),
             style: { minHeight: '44px', alignSelf: 'flex-end' },
             icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
-          }, t('dashboard.exportReminderAction'), ' ›'));
+          }, t('dashboard.exportReminderAction'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')));
       })()
     ),
 
@@ -656,7 +656,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
           fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
         },
-      }, t('gepaeck.menuAlle'), ' ›'),
+      }, t('gepaeck.menuAlle'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')),
       (() => {
         const renderTool = (tool) => {
           // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
@@ -751,7 +751,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
-              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+              style: { cursor: 'pointer', padding: space.sm + 'px 2px', minHeight: '44px', boxSizing: 'border-box', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
                 React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),

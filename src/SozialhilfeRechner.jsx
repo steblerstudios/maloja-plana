@@ -112,10 +112,10 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   const field = (labelKey, value, setter, placeholder, hint) =>
     React.createElement('div', { style: s.inputGroup },
       React.createElement('div', { style: s.label }, t(labelKey)),
-      hint && React.createElement('div', { style: s.hint }, hint),
+      hint && React.createElement('div', { id: 'sh-hinweis-' + labelKey, style: s.hint }, hint),
       React.createElement('input', {
         style: s.input, type: 'number', inputMode: 'decimal', value, placeholder,
-        'aria-label': t(labelKey),
+        'aria-label': t(labelKey), 'aria-describedby': hint ? 'sh-hinweis-' + labelKey : undefined,
         onChange: e => setter(e.target.value),
       })
     );

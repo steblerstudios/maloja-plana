@@ -330,7 +330,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
 
   return h('div', { style: { maxWidth: '640px' } },
     // Kopf links (Fassung 5): Titel und ein Satz für beides.
-    h('h1', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' } }, t('dashboard.anspruchTitle')),
+    h('h2', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' } }, t('dashboard.anspruchTitle')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, t('wasStehtMirZu.intro')),
 
     // (1) Mit Ihren Angaben

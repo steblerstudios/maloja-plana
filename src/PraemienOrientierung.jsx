@@ -156,7 +156,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
     input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    gemeindeBtn: (active) => ({ padding: '6px 12px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
+    gemeindeBtn: (active) => ({ padding: '6px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
     // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
@@ -525,7 +525,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                         onClick: () => { setPickedFranchise(f.franchise); setWithUnfall(variant === 'mit'); },
                         style: {
                           background: isActive ? palette.sage + '22' : 'none',
-                          border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
+                          minHeight: '44px', border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
                           borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
                           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                           color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
@@ -538,7 +538,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                 React.createElement('td', { style: { ...cell, padding: 0 } },
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
-                    style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
+                    style: { ...s.nameBtn, padding: '5px 8px', minHeight: '44px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
                   }, zahl(f.franchise, { hoechstens: 2 }))
                 ),
                 hasOhne ? variantCell('mit', f.premium)
