@@ -40,7 +40,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const sperre = lohnVergleichSperre(data, rentenalter);
   const bruttoSchaetzung = basis === 'netto' && profilLohn > 0 && sperre !== 'keinLohn' && sperre !== 'quellensteuer'
     ? nettoZuBruttoRichtwert(profilLohn, bvgAlter, rentenalter, undefined, beitragsfrei) : 0;
-  const [eingetippt, setEingetippt] = useState(basis === 'brutto' && profilLohn > 0 ? String(data.finanzen.monthlyIncome) : null);
+  const [eingetippt, setEingetippt] = useState(basis === 'brutto' && profilLohn > 0 && sperre !== 'keinLohn' ? String(data.finanzen.monthlyIncome) : null);
   const geschaetzt = eingetippt == null && bruttoSchaetzung > 0;
   const bruttolohn = eingetippt != null ? eingetippt : (geschaetzt ? String(bruttoSchaetzung) : '');
   const [hatKinder, setHatKinder] = useState(householdChildren > 0);
@@ -73,6 +73,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const lohnHinweis = geschaetzt
     ? t('alv.bruttoGeschaetzt', { netto: zahl(profilLohn) })
+    : sperre === 'keinLohn' ? t('alv.keinLohnHint')
     : basis === 'netto' ? t('alv.bruttoNettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('alv.bruttolohnHint');
 
   const zahlFeld = (id, labelText, value, onChange, hint, opts = {}) => React.createElement('div', { style: { marginBottom: space.md + 'px' } },

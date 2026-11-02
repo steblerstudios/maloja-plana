@@ -6435,7 +6435,7 @@ export default {
     premiumHint: 'Enter your health-insurance premium to see the split.',
   },
   pegel: {
-    vorBeitraegen: "Calculated with income before your own AHV and pension fund contributions. Less remains after them.",
+    vorBeitraegen: "Calculated with the amount entered. Personal AHV and pension fund contributions are not deducted.",
     ansatzTiefer: "With an F, N or S permit, support is usually lower than in this calculation: the rate is below that for the resident population, the canton sets it, and part may be given in kind (AsylG Art. 82 paras 1 and 3, AIG Art. 86 para. 1). An entitlement can also lapse entirely. Provisionally admitted refugees and stateless persons are an exception: the same social assistance standards apply to them as to refugees granted asylum (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',
     grenze: 'Limit',
@@ -6989,6 +6989,7 @@ export default {
     bruttolohn: "Previous gross salary per month (CHF)",
     bruttolohnHint: "Your AHV-liable gross salary over the last 6 months. Max insured: CHF 12,350/month.",
     bruttoNettoHint: "The saved income is marked as net — please enter the gross salary for unemployment insurance here.",
+    keinLohnHint: "The profile shows no salary from employment, so the field stays empty. The unemployment fund clarifies whether there is an entitlement.",
     bruttoGeschaetzt: "Estimated from the net wage in your profile (CHF {netto}). Enter your gross wage if you know it — it takes priority.",
     beitragsmonate: "Contribution months",
     beitragsmonateHint: "How many months did you work in the last 2 years? You usually qualify from 12 months.",

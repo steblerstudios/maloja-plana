@@ -427,11 +427,12 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
             + (sozialhilfe.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
           // Freibetrag-Fall (Predeploy 25.09.2026): kein «voraussichtlich nicht relevant».
           : sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet')
+          : sozialhilfe.erwerbsunkostenOffen ? t('pegel.coveredOffen')
           : t('budgetSync.skosNoClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '')
+        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '', sozialhilfe?.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : '')
       )
     ),
 

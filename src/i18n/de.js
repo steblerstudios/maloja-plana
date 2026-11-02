@@ -6499,7 +6499,7 @@ export default {
     premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
   },
   pegel: {
-    vorBeitraegen: "Gerechnet mit dem Einkommen vor den eigenen AHV- und Pensionskassen-Beiträgen. Nach diesen Beiträgen bleibt weniger.",
+    vorBeitraegen: "Gerechnet mit dem eingetragenen Betrag. Eigene AHV- und Pensionskassen-Beiträge sind nicht abgezogen.",
     ansatzTiefer: "Mit Ausweis F, N oder S fällt die Unterstützung meist tiefer aus als in dieser Rechnung: Der Ansatz liegt unter dem für Einheimische, der Kanton regelt ihn, teils gibt es Sachleistungen (AsylG Art. 82 Abs. 1 und 3, AIG Art. 86 Abs. 1). Ein Anspruch kann auch ganz entfallen. Ausgenommen sind vorläufig aufgenommene Flüchtlinge und Staatenlose: Für sie gelten die gleichen Sozialhilfestandards wie für Flüchtlinge mit Asyl (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',
     grenze: 'Grenze',
@@ -6952,6 +6952,7 @@ export default {
     bruttolohn: "Bisheriger Bruttolohn pro Monat (CHF)",
     bruttolohnHint: { sie: "Ihr AHV-pflichtiger Bruttolohn der letzten 6 Monate. Versichert sind max. CHF 12’350/Monat.", du: "Dein AHV-pflichtiger Bruttolohn der letzten 6 Monate. Versichert sind max. CHF 12’350/Monat." },
     bruttoNettoHint: "Das hinterlegte Einkommen ist als Netto markiert — für die ALV bitte den Bruttolohn eintragen.",
+    keinLohnHint: "Das Profil zeigt keinen Lohn aus einer Anstellung, darum bleibt das Feld leer. Ob ein Anspruch besteht, klärt die Arbeitslosenkasse.",
     bruttoGeschaetzt: { sie: "Geschätzt aus dem Nettolohn im Profil (CHF {netto}). Tragen Sie den Bruttolohn ein, wenn Sie ihn kennen — er hat Vorrang.", du: "Geschätzt aus dem Nettolohn im Profil (CHF {netto}). Trag den Bruttolohn ein, wenn du ihn kennst — er hat Vorrang." },
     beitragsmonate: "Beitragsmonate",
     beitragsmonateHint: { sie: "Wie viele Monate haben Sie in den letzten 2 Jahren gearbeitet? Ab 12 Monaten besteht meist Anspruch.", du: "Wie viele Monate hast Du in den letzten 2 Jahren gearbeitet? Ab 12 Monaten besteht meist Anspruch." },

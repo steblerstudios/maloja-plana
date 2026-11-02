@@ -63,7 +63,7 @@ describe('die alten Adressen öffnen die passende Auswahl', () => {
 
   it('main.jsx: eine Seite, die drei alten Zweige sind weg', () => {
     const main = quelle('main.jsx');
-    expect(main).toMatch(/view === 'drucken' && React\.createElement\(UnterlagenDrucken, \{[^\n]*wahl, onWahl: setWahl/);
+    expect(main).toMatch(/view === 'drucken' && React\.createElement\(UnterlagenDrucken, \{[^\n]*wahl, onWahl: waehle/);
     for (const [v, k] of [['lebensmappe', 'Lebensmappe'], ['behoerdendossier', 'BehoerdenDossier'], ['notfalldossier', 'NotfallDossier']]) {
       expect(main).not.toMatch(new RegExp("view === '" + v + "' && React\\.createElement"));
       expect(main).not.toMatch(new RegExp("import\\('\\./" + k + "\\.jsx'\\)"));

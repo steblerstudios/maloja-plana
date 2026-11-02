@@ -7465,7 +7465,7 @@ export default {
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
-    vorBeitraegen: "Quintà cun l’entrada avant las atgnas contribuziuns AVS e da la cassa da pensiun. Suenter questas contribuziuns resta damain.", // TODO(rm): provisorisch
+    vorBeitraegen: "Quintà cun l’import endatà. Las atgnas contribuziuns AVS e da la cassa da pensiun n’èn betg deducidas.", // TODO(rm): provisorisch
     ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)
     coveredOffen: 'En quest quint basta l’entrada. Custs da lavur mancan — il dretg scleresch il servetsch social.',
@@ -7954,6 +7954,7 @@ export default {
     bruttolohn: "Salari brut mensil fin ussa (CHF)",
     bruttolohnHint: { sie: "Voss salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais.", du: "Tes salari brut suttamess a l'AVS dals ultims 6 mais. Maximum assicurà: CHF 12’350/mais." },
     bruttoNettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari brut per l'AC.",
+    keinLohnHint: "Il profil na mussa nagin salari d’ina occupaziun, perquai resta il champ vid. La cassa da dischoccupaziun scleresch, sch’i dat in dretg.", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     bruttoGeschaetzt: { sie: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgai la paja brutta, sche Vus la enconuschais — ella ha la prioritad.", du: "Stimà a basa da la paja netta en il profil (CHF {netto}). Inditgescha la paja brutta, sche ti la enconuschas — ella ha la prioritad." },
     beitragsmonate: "Mais da contribuziun",

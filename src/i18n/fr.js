@@ -6435,7 +6435,7 @@ export default {
     premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
   },
   pegel: {
-    vorBeitraegen: "Calculé avec le revenu avant les cotisations AVS et de caisse de pension propres. Après ces cotisations, il reste moins.",
+    vorBeitraegen: "Calculé avec le montant saisi. Les cotisations AVS et de caisse de pension personnelles ne sont pas déduites.",
     ansatzTiefer: "Avec un permis F, N ou S, l’aide est le plus souvent inférieure à ce calcul : le taux est inférieur à celui de la population résidente, le canton le fixe, et l’aide peut prendre la forme de prestations en nature (LAsi art. 82 al. 1 et 3, LEI art. 86 al. 1). Le droit peut aussi disparaître entièrement. Font exception les réfugiés admis à titre provisoire et les apatrides : les mêmes normes d’aide sociale que pour les réfugiés ayant obtenu l’asile s’appliquent à eux (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',
     grenze: 'Limite',
@@ -6989,6 +6989,7 @@ export default {
     bruttolohn: "Salaire brut mensuel précédent (CHF)",
     bruttolohnHint: { sie: "Votre salaire brut soumis à l'AVS des 6 derniers mois. Maximum assuré : CHF 12’350/mois.", du: "Ton salaire brut soumis à l'AVS des 6 derniers mois. Maximum assuré : CHF 12’350/mois." },
     bruttoNettoHint: "Le revenu enregistré est indiqué comme net — veuillez saisir ici le salaire brut pour l'AC.",
+    keinLohnHint: "Le profil n’indique pas de salaire d’un emploi salarié, le champ reste donc vide. La caisse de chômage clarifie s’il existe un droit.",
     bruttoGeschaetzt: { sie: "Estimé à partir du salaire net du profil (CHF {netto}). Indiquez le salaire brut si vous le connaissez — il a la priorité.", du: "Estimé à partir du salaire net du profil (CHF {netto}). Indique le salaire brut si tu le connais — il a la priorité." },
     beitragsmonate: "Mois de cotisation",
     beitragsmonateHint: { sie: "Combien de mois avez-vous travaillé ces 2 dernières années ? Un droit existe en général dès 12 mois.", du: "Combien de mois as-tu travaillé ces 2 dernières années ? Un droit existe en général dès 12 mois." },

@@ -6409,7 +6409,7 @@ export default {
     premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
   },
   pegel: {
-    vorBeitraegen: "Calcolato con il reddito prima dei propri contributi AVS e di cassa pensioni. Dopo questi contributi resta meno.",
+    vorBeitraegen: "Calcolato con l’importo inserito. I contributi AVS e di cassa pensioni personali non sono dedotti.",
     ansatzTiefer: "Con permesso F, N o S il sostegno è per lo più inferiore a questo calcolo: la tariffa è inferiore a quella per la popolazione residente, la stabilisce il cantone e in parte si tratta di prestazioni in natura (LAsi art. 82 cpv. 1 e 3, LStrI art. 86 cpv. 1). Il diritto può anche venire meno del tutto. Fanno eccezione i rifugiati ammessi provvisoriamente e gli apolidi: per loro valgono gli stessi standard di aiuto sociale dei rifugiati con asilo (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
     grenze: 'Limite',
@@ -6938,6 +6938,7 @@ export default {
     bruttolohn: "Salario lordo mensile precedente (CHF)",
     bruttolohnHint: { sie: "Il Suo salario lordo soggetto all'AVS degli ultimi 6 mesi. Massimo assicurato: CHF 12’350/mese.", du: "Il tuo salario lordo soggetto all'AVS degli ultimi 6 mesi. Massimo assicurato: CHF 12’350/mese." },
     bruttoNettoHint: "Il reddito salvato è indicato come netto — inserire qui il salario lordo per l'AD.",
+    keinLohnHint: "Il profilo non indica un salario da lavoro dipendente, perciò il campo resta vuoto. La cassa di disoccupazione chiarisce se esiste un diritto.",
     bruttoGeschaetzt: { sie: "Stimato dal salario netto del profilo (CHF {netto}). Inserisca il salario lordo se lo conosce: ha la precedenza.", du: "Stimato dal salario netto del profilo (CHF {netto}). Inserisci il salario lordo se lo conosci: ha la precedenza." },
     beitragsmonate: "Mesi di contribuzione",
     beitragsmonateHint: { sie: 'Quanti mesi ha lavorato negli ultimi 2 anni? Di norma il diritto sussiste da 12 mesi.', du: 'Quanti mesi hai lavorato negli ultimi 2 anni? Di norma il diritto sussiste da 12 mesi.' },
