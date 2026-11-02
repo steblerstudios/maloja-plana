@@ -380,7 +380,7 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
@@ -389,7 +389,9 @@ export function calculateSozialhilfe(data) {
     vermoegenZuerst,
     // Kein Betrag zu nennen, auch keine 0: offen wegen Konkubinat, Vermögen oder knapp über dem Bedarf.
     betragOffen: betragOffen || knapp,
-    offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst ? 'pegel.vermoegen' : 'pegel.coveredOffen',
+    // Sparkonto über dem Freibetrag: D.3.1 Abs. 1 zählt verfügbare Mittel, darum keine Überschrift «möglich», nur Abs. 2 liesse eine Ausnahme zu.
+    offenTitel: betragOffen && vermoegenUeberFreibetrag > 0 ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
+    offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine

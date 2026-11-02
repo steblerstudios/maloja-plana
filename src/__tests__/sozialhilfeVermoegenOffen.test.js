@@ -73,7 +73,7 @@ describe('Hauptlohn 0 und Nebenerwerb nicht netto', () => {
     it(`${name}: Feld leer, kein Betrag aus Einkommen 0`, () => {
       const p = profil({ monthlyIncome: 0, sideIncome: 2000, ...f });
       expect(sozialhilfeVorbefuellung(p).einkommen).toBe('');
-      expect(render(p)).toContain(de.sh.lohnEingeben.sie);
+      expect(render(p)).toContain(de.sh.nebenEingeben.sie);
     });
   }
   it('Gegenprobe: Hauptlohn 0 ohne Nebenerwerb bleibt eine Antwort', () => {
@@ -147,11 +147,11 @@ describe('Fachprüfung 44c6808f', () => {
   it('Nebenerwerb brutto bei Hauptlohn über 0: kein Betrag, bis das Netto eingetragen ist', () => {
     const html = render(profil(brutto));
     expect(html).not.toContain('/ ' + de.sh.monat);
-    expect(html).toContain(de.sh.lohnEingeben.sie);
+    expect(html).toContain(de.sh.nebenEingeben.sie);
     expect(html).toMatch(/value="1500"/);
   });
   it('Nebenerwerb ohne Art: dasselbe', () => {
-    expect(render(profil({ monthlyIncome: 1500, sideIncome: 2000 }))).toContain(de.sh.lohnEingeben.sie);
+    expect(render(profil({ monthlyIncome: 1500, sideIncome: 2000 }))).toContain(de.sh.nebenEingeben.sie);
   });
   it('Vermögen beim gewöhnlichen Nein: kein Vermögenssatz im Rechner', () => {
     const html = render(profil({ monthlyIncome: 6000, savingsAccount: 100000 }));

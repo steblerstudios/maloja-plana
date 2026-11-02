@@ -156,6 +156,9 @@ export function berechneSozialhilfe({
     hatAnspruch,
     anspruchOffen,
     vermoegenZuerst,
+    knapp,
+    // Vor der Vermögensprüfung: Das Konkubinat sperrt auch, wenn das Vermögen den Betrag schon wegnimmt.
+    offenOhneVermoegen: bilanz.luecke > 0 || efbEntscheidet,
     vfbUnbestaetigt,
     haushaltGroesse,
     kinderImHaushalt,

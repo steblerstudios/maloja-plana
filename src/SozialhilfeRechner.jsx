@@ -70,7 +70,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, lohnOffen, integration, kanton]);
 
   // Konkubinat mit Partnerlohn: kein Betrag, wo eine Lücke bleibt. Deckt das eigene Einkommen den Bedarf, gilt das gewöhnliche Nein.
-  const konkubinatGesperrt = !!(result && vorbefuellt.konkubinatBetragOffen && (result.sozialhilfeAnspruch > 0 || result.efbEntscheidet));
+  const konkubinatGesperrt = !!(result && vorbefuellt.konkubinatBetragOffen && result.offenOhneVermoegen);
   const zeige = konkubinatGesperrt ? null : result;
 
   const s = {
@@ -134,7 +134,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         },
           result.hatAnspruch
             ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
-            : t(result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
+            : t(result.vermoegenZuerst ? 'sh.vermoegenZuerstTitel' : result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
@@ -143,6 +143,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
           t('sozialhilfe.efbEntscheidet')
         ),
+        result.knapp && result.vermoegenZuerst && React.createElement('div', { style: s.hint }, t('pegel.coveredOffen')),
         !result.hatAnspruch && !result.efbEntscheidet && result.anspruchOffen && React.createElement('div', { style: s.hint }, t(result.vermoegenZuerst ? 'pegel.vermoegen' : 'pegel.coveredOffen')),
         // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
         // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
@@ -215,7 +216,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,
-    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : lohnOffen ? 'sh.lohnEingeben' : 'sh.eingeben'),
+    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : lohnOffen ? (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen ? 'sh.lohnEingeben' : 'sh.nebenEingeben') : 'sh.eingeben'),
     art: konkubinatGesperrt ? null : sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
     vorbehalt: zeige && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.hinweise.length > 0 || vorbefuellt.vorBeitraegen || vorbefuellt.nebenerwerbBrutto || vorbefuellt.nebenerwerbBasisOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
       [
