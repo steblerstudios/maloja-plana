@@ -325,7 +325,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
             : vorbefuellt.nebenerwerbBasisOffen ? t('einkommensart.nebenOffen')
             : vorbefuellt.einkommenMitNebenerwerb ? t('sh.ausProfilHint') : null),
         field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
-          vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
+          vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : t('sh.andereEinkuenfteHint'))),
         field('sh.vermoegen', vermoegen, setVermoegen, '0', vorbefuellt.vermoegenMit3a ? t('sh.inkl3aHint') : vorbefuellt.vermoegen ? t('sh.ausProfilHint') : null),
       ),
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },
@@ -338,7 +338,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       )
     ),
     },
-    tun: tun && tunSichtbar ? tun(zeige) : undefined, stelle,
+    tun: tun ? tun(zeige, tunSichtbar) : undefined, stelle,
     quelle: renderSource(t('sh.source', { jahr: gblStand().jahr }), null, t),
   }, weiteres || null);
 };

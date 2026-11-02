@@ -167,7 +167,8 @@ export const DocumentTresor = ({
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm, font: 'inherit',
   };
 
-  const satz = documents.length === 0 ? t('tresor.ordnerEmpty')
+  // Bei leerer Ablage sagt die Überschrift darunter dasselbe (F8-R3).
+  const satz = documents.length === 0 ? null
     : documents.length < 5 ? t('tresor.ordnerStarting')
     : documents.length < 15 ? t('tresor.ordnerGrowing')
     : t('tresor.ordnerFull');
@@ -287,7 +288,7 @@ export const DocumentTresor = ({
     style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('tresor.title')),
-    React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 0 ' + space.lg + 'px' } }, satz),
+    satz && React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 0 ' + space.lg + 'px' } }, satz),
 
     !hatInhalt
       // Leer: ruhiges Bild, Titel und Satz der App.
