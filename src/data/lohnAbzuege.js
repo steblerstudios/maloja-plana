@@ -86,6 +86,16 @@ export function referenzalterMonate({ geschlecht, geburtsjahr } = {}) {
 }
 
 /**
+ * Frühester AHV-Vorbezug als Alter in MONATEN. Frauen der Übergangsgeneration ab dem vollendeten 62. Altersjahr
+ * (AHVG Art. 40c, Fassung 1.1.2026; Merkblatt 3.04, Stand 1.1.2026: «Jahrgang 1961 bis 1969»), sonst zwei Jahre vor
+ * dem Referenzalter. Monatsgenau: Der Vorbezug beginnt erst im Monat nach dem Geburtstag, das ist hier nicht abgebildet.
+ */
+export function fruehesterVorbezugMonate({ geschlecht, geburtsjahr } = {}) {
+  if (geschlecht === 'female' && geburtsjahr >= 1961 && geburtsjahr <= 1969) return 62 * 12;
+  return referenzalterMonate({ geschlecht, geburtsjahr }) - VORBEZUG_MAX_MONATE;
+}
+
+/**
  * Berechne den BVG-Mindestlohn und Koordinationsabzug.
  */
 export const BVG_EINTRITTSSCHWELLE_JAHR = LOHN_HEUTE.eintrittsschwelle; // ¾ der max. AHV-Rente, Art. 2 Abs. 1 BVG
