@@ -219,7 +219,7 @@ describe('Offene Befunde aus #651 geschlossen', () => {
   it('Nebenerwerb nicht übernommen: kein Betrag, der Rechner fragt und sagt warum', () => {
     const html = render(profil({ monthlyIncome: 1000, incomeType: 'netto', sideIncome: 400 }));
     expect(html).toContain(de.einkommensart.nebenOffen);
-    expect(html).toContain(de.sh.lohnEingeben.sie);
+    expect(html).toContain(de.sh.nebenEingeben.sie);
   });
   it('sechs Kinder: das Formular kappt nicht mehr', () => {
     const p = profil({ monthlyIncome: 1000, incomeType: 'netto' }, { household: { adults: 1, children: Array.from({ length: 6 }, () => ({ age: 5 })) } });

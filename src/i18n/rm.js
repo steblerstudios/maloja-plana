@@ -5906,10 +5906,12 @@ export default {
     erwerbsunkostenZeile: 'Custs supplementars per la lavur',
     anrechenbar: 'Entrada imputabla',
     sozialhilfe: "Dretg d'agid social",
-    vermoegenHinweis: 'Facultad sur la limita libra: ella vegn quintada l’emprim',
+    vermoegenHinweis: 'Facultad sur la limita libra: ella vegn per regla quintada l’emprim', // TODO(rm): provisorisch
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
+    vermoegenZuerstTitel: "L’emprim la facultad", // TODO(rm): provisorisch
+    nebenEingeben: { sie: "L’activitad accessorica n’è betg en il profil sco import net. Endatai sutvart tut l’entrada netta per calcular il dretg. Fin lura resta ina cifra dal profil ina stima.", du: "L’activitad accessorica n’è betg en il profil sco import net. Endatescha sutvart tut l’entrada netta per calcular il dretg. Fin lura resta ina cifra dal profil ina stima." }, // TODO(rm): provisorisch
     lohnEingeben: { sie: "En il profil stat ina paja, ma nagin import net. Endatai sutvart l’entrada netta per calcular il dretg.", du: "En il profil stat ina paja, ma nagin import net. Endatescha sutvart l’entrada netta per calcular il dretg." }, // TODO(rm): provisorisch
     // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
     source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.{jahr}), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
@@ -7495,7 +7497,7 @@ export default {
     gap: 'L’entrada è sut il minim d’existenza — la cumplettaziun colma la largia.',
     covered: 'L’entrada cuvra il minim d’existenza — nagina cumplettaziun necessaria.',
     deckt: 'pudess cuvrir radund {amount} / mais',
-    vermoegen: 'Facultad sur la franchisa — quai vegn quintà avant. Il dretg controllescha il servetsch social.',
+    vermoegen: 'Facultad sur la franchisa — quai vegn per regla quintà avant. Il dretg controllescha il servetsch social.', // TODO(rm): provisorisch
   },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',
