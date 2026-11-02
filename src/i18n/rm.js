@@ -2099,6 +2099,10 @@ export default {
     nextUpTitle: 'Tge è ussa da far?',
     nextUpAllDone: 'Tia basa è en plaz — bel.',
     nextUpReassure: { sie: 'Mo ina proposta — Vus fixais il tempo.', du: 'Mo ina proposta — ti fixeschas il tempo.' },
+    // TODO(rm)
+    rechnungFristVorbei: 'Quint dal medi avert, termin passà: {betrag}',
+    rechnungenFristVorbei: '{anzahl} quints dal medi averts, termin passà: {betrag}',
+    kvgFristZeile: 'Midar la cassa? Retschaida tar la cassa fin ils {datum}',
     glanceDeadline: 'Proxim termin',
     glanceNoDeadline: 'nagin avert',
     // TODO(rm): provisorisch — Gegenlese (verpasste Steuerfrist, 21.10.2026)
