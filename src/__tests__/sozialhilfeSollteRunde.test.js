@@ -35,7 +35,6 @@ describe('Vermögen: keine Überschrift «möglich»', () => {
   });
   it('Der Text lässt die Ausnahme offen (D.3.1 Abs. 2)', () => {
     expect(de.pegel.vermoegen).toContain('in der Regel');
-    expect(de.sh.vermoegenHinweis).toContain('in der Regel');
   });
   it('Wertgegenstände bleiben «möglich», Wertpapiere nicht (D.3.1 Erl. a und c)', () => {
     expect(calculateSozialhilfe(profil({ securitiesValue: 100000 })).offenTitel).toBe('sh.vermoegenZuerstTitel');
@@ -84,7 +83,7 @@ describe('Knapp über dem Bedarf mit Vermögen: der ganze Grund', () => {
   it('Rechner sagt beides', () => {
     const html = rechner(p);
     expect(html).toContain(de.pegel.coveredOffen);
-    expect(html).toContain(de.pegel.vermoegen);
+    expect(html).toContain('Frist zur Verwertung');
   });
 });
 

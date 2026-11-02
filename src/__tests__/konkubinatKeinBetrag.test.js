@@ -38,7 +38,7 @@ describe('Konkubinat mit Partnerlohn: kein Betrag', () => {
 
   it('Keine 0 als Aussage: Seite und Dossier zeigen keine Zeile mit Betrag', () => {
     const quelle = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
-    expect(quelle('../SozialhilfeView.jsx')).toContain("sozialhilfe.betragOffen || sozialhilfe.efbEntscheidet ? '—'");
+    expect(quelle('../SozialhilfeRechner.jsx')).toContain('const zeige = konkubinatGesperrt ? null : result');
     expect(quelle('../dossierGenerator.js')).toContain("!sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit')");
   });
 
