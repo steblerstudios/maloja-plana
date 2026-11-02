@@ -5,6 +5,7 @@ import { renderToString } from 'react-dom/server';
 import { calculateSozialhilfe } from '../config/cantonalData.js';
 import { useEinkommen } from '../components/EinkommenFeld.jsx';
 import { merkeWahl, leseWahl } from '../utils/hashRouter.js';
+import { sozialhilfePegelState } from '../data/pegel.js';
 
 const quelle = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 const profil = (f, v = {}) => ({ basis: { canton: 'ZH', dateOfBirth: '1985-03-01' }, wohnen: { rentAmount: '1200' }, finanzen: f, versicherungen: v });
@@ -35,7 +36,7 @@ describe('Predeploy 02.11.2026, zweite Runde', () => {
     expect(e.geschaetzt).toBe(true);
   });
 
-  it('Die Sperre liest die Art aus dem Feld: Ausweis B ohne Art im Profil zeigt kein Brutto', () => {
+  it('Mögliche Quellensteuer, Feld auf netto: kein Brutto; die Art kommt aus dem Feld', () => {
     const data = { ...profil({ employmentType: 'employed', monthlyIncome: '4000', incomeType: 'netto' }) };
     data.basis = { ...data.basis, nationality: 'other', residencePermit: 'B' };
     const mitNetto = feld(data);
@@ -58,8 +59,21 @@ describe('Predeploy 02.11.2026, zweite Runde', () => {
     for (const p of ['../BudgetSync.jsx', '../components/FinanzAuswertung.jsx', '../components/Leistungsliste.jsx']) {
       const s = quelle(p);
       expect(s).toContain("t('pegel.vorBeitraegen')");
-      expect(s).toContain("t('pegel.coveredOffen')");
+      expect(s).toContain('anspruchOffen ?');
     }
+  });
+
+  it('Der offene Satz gilt nur knapp über dem Bedarf', () => {
+    const lohn = (monthlyIncome) => calculateSozialhilfe(profil({ employmentType: 'employed', monthlyIncome, incomeType: 'netto' }));
+    const bedarf = lohn('12000').totalBedarf;
+    expect(lohn('12000').anspruchOffen).toBe(false);
+    expect(lohn('12000').erwerbsunkostenOffen).toBe(true);
+    expect(sozialhilfePegelState(profil({ employmentType: 'employed', monthlyIncome: '12000', incomeType: 'netto' })).mode).toBe('covered');
+    const knapp = lohn(String(Math.round(bedarf * 1.05)));
+    expect(knapp.eligible).toBe(false);
+    expect(knapp.anspruchOffen || knapp.efbEntscheidet).toBe(true);
+    expect(lohn(String(Math.round(bedarf * 1.2))).anspruchOffen).toBe(false);
+    expect(calculateSozialhilfe(profil({ employmentType: 'retired', monthlyIncome: String(Math.round(bedarf * 1.05)), incomeType: 'netto' })).anspruchOffen).toBe(false);
   });
 
   it('ALV-Rechner: bei keinLohn kein Vorbefüllen und ein eigener Hinweis', () => {

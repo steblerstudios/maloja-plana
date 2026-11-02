@@ -241,7 +241,7 @@ describe('Fachprüfung 01.11.2026', () => {
   });
   it('der Pegel sagt nicht «keine Aufstockung nötig», solange Erwerbsunkosten fehlen', () => {
     const q = fs.readFileSync(path.resolve(__dirname, '../data/pegel.js'), 'utf8');
-    expect(q).toContain("sh?.erwerbsunkostenOffen ? 'offen' : 'covered'");
+    expect(q).toContain("sh?.anspruchOffen ? 'offen' : 'covered'");
   });
 });
 

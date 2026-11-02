@@ -50,6 +50,9 @@
 
 const EFB_ANTEIL = 1 / 3;
 const EFB_MAX = 400;
+// «Knapp über dem Bedarf»: bis hier bleibt die Frage nach dem Anspruch offen. Arbeitswert, keine SKOS-Grenze (Stebler Studios 02.11.2026).
+export const KNAPP_OBEN = 1.10;
+
 export const EFB_PARAMS = { anteil: EFB_ANTEIL, max: EFB_MAX };
 
 // Kantone, deren Regel für den Eintritt belegt ist (Quellen oben).

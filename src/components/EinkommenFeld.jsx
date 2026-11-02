@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { text, weight, space, radius } from '../config/tokens.js';
 import { bruttoZuNettoRichtwert, nettoZuBruttoRichtwert } from '../data/lohnAbzuege.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
+import { KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { zahl } from '../utils/geld.js';
 
@@ -22,7 +23,8 @@ import { zahl } from '../utils/geld.js';
 // liegt fast immer tiefer (NBU, KTG, PK-Risiko/-Überobligatorium, Quellensteuer fehlen). Darum
 // asymmetrisch: geschätztes Netto zwischen 97 % und 110 % des SKOS-Bedarfs; ohne Alter fehlt der
 // PK-Abzug ganz (bis ~5.7 %) → Obergrenze 115 %. Eine Regel für Dashboard und Schnellcheck.
-export const KNAPP_UNTEN = 0.97, KNAPP_OBEN = 1.10, KNAPP_OBEN_OHNE_ALTER = 1.15;
+export { KNAPP_OBEN };
+export const KNAPP_UNTEN = 0.97, KNAPP_OBEN_OHNE_ALTER = 1.15;
 export const istKnapp = (sh, ohneAlter = false) => {
   if (!sh || !(sh.totalBedarf > 0)) return false;
   const q = sh.income / sh.totalBedarf;
