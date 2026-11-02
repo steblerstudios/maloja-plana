@@ -13,6 +13,8 @@ Nichts davon ist gebaut. Jeder Punkt wartet auf den Entscheid von Stebler Studio
 **Runde 1 (Stebler Studios, 02.11.2026, Knopf «Entscheide kopieren», Bereich Sozialhilfe):**
 Ja: F8-S1, S3, S4, S5, S6, S7, G1, G3. Besprechen: F8-S2, G2. Noch nicht gebaut.
 
+**F8-S2 entschieden (Stebler Studios, 02.11.2026: «Ja, nur einmal»):** Eine Rechnung, die den Eingaben folgt. Der untere Block fällt weg, damit ist F8-S1 gelöst, der Pegel bleibt. F8-G2: vorerst Hinweis am Feld.
+
 <!-- PUNKTE -->
 ## Sozialhilfe
 
