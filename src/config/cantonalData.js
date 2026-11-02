@@ -374,7 +374,7 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...einheit.hinweise, kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', haupt.offen && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...einheit.hinweise, kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.

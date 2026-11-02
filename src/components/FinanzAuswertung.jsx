@@ -513,7 +513,7 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
       + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : '')
       + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : '')
       + (sozialhilfe.ohneFreibetrag ? ' | ' + t('pegel.ohneFreibetrag') : '')
-      + (sozialhilfe.hinweise || []).map((k) => ' | ' + t(k)).join(''),
+      + (sozialhilfe.hinweise?.length ? ' | ' + t('pegel.rechnungOffen') : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });
 };

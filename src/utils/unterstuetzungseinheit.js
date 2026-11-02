@@ -15,7 +15,7 @@
 
 import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
 import { giltAlsVerheiratet } from './zivilstand.js';
-import { referenzalterMonate } from '../data/lohnAbzuege.js';
+import { referenzalterMonate, VORBEZUG_MAX_MONATE } from '../data/lohnAbzuege.js';
 
 // Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
 export function alterInMonaten(geburtsdatum, heute) {
@@ -35,17 +35,20 @@ export function kindAlter(kind, heute = new Date()) {
   return Number.isFinite(a) && kind?.age !== '' && kind?.age != null ? a : null;
 }
 
-export function saeule3aBeziehbar(basis, heute = new Date()) {
+// Die Säule 3a ist «grundsätzlich zusammen mit dem AHV-Vorbezug» herauszulösen (SKOS-RL D.3.3 Abs. 3, Erl. b), also
+// ab dem frühesten Vorbezug. Bis 02.11.2026 galten hier fünf Jahre vor dem Referenzalter (BVV 3 Art. 3 Abs. 1): Das
+// sagt, ab wann man beziehen KANN, nicht, ab wann die Sozialhilfe es verlangt. «Grundsätzlich»: kantonal nicht geprüft.
+export function saeule3aZaehlt(basis, heute = new Date()) {
   const alter = alterInMonaten(basis?.dateOfBirth, heute);
   if (alter == null) return false;
   const jahrgang = new Date(basis.dateOfBirth).getFullYear();
-  return alter >= referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: jahrgang }) - 60;
+  return alter >= referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: jahrgang }) - VORBEZUG_MAX_MONATE;
 }
 
 // Die Felder, die als Vermögen zählen: Sparkonto, Wertschriften, übriges, Säule 3b (SKOS-RL D.3.3 Abs. 6),
-// die Säule 3a erst, wenn sie beziehbar ist. Rohwerte, damit ein leeres Feld leer bleibt.
+// die Säule 3a erst ab dem frühesten AHV-Vorbezug. Rohwerte, damit ein leeres Feld leer bleibt.
 export function vermoegensFelder(finanzen, basis, heute = new Date()) {
-  const mit3a = saeule3aBeziehbar(basis, heute) && Number(finanzen?.pension3aBalance) > 0;
+  const mit3a = saeule3aZaehlt(basis, heute) && Number(finanzen?.pension3aBalance) > 0;
   const f = finanzen || {};
   return { mit3a, felder: [f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined] };
 }

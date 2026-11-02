@@ -191,7 +191,7 @@ describe('Offene Befunde aus #651 geschlossen', () => {
     expect(calculateSozialhilfe(p).vermoegen).toBe(Number(sozialhilfeVorbefuellung(p).vermoegen));
   });
   it('Vermögen: beziehbare Säule 3a auf beiden Wegen gleich', () => {
-    const jg = heute.getFullYear() - 62;
+    const jg = heute.getFullYear() - 64;
     const p = profil({ savingsAccount: 1000, pension3aBalance: 20000 }, { dateOfBirth: `${jg}-01-01`, gender: 'male' });
     expect(calculateSozialhilfe(p).vermoegen).toBe(21000);
     expect(Number(sozialhilfeVorbefuellung(p).vermoegen)).toBe(21000);
@@ -229,5 +229,28 @@ describe('Offene Befunde aus #651 geschlossen', () => {
     expect(JSON.stringify(fr)).toMatch(/caisse de compensation\.[^"]*double/);
     expect(JSON.stringify(itTranslations)).toMatch(/cassa di compensazione\.[^"]*due volte/);
     expect(JSON.stringify(rm)).toMatch(/supplements da furmaziun\.[^"]*dubel/);
+  });
+});
+
+describe('Fachprüfung a7d2744c', () => {
+  it('Säule 3a zählt erst ab dem frühesten AHV-Vorbezug, nicht fünf Jahre vorher (D.3.3 Abs. 3)', () => {
+    const am = (dob) => calculateSozialhilfe({ ...profil({ pension3aBalance: 30000 }, { dateOfBirth: dob, gender: 'male' }) }).vermoegen;
+    const j = new Date().getFullYear();
+    expect(am(`${j - 62}-12-31`)).toBe(0);
+    expect(am(`${j - 64}-01-01`)).toBe(30000);
+    expect(de.sh.inkl3aHint).not.toMatch(/fünf Jahren/);
+  });
+  it('Selbständige ohne Lohnart: Rechner und Seite gleich, Hinweis zu den Beiträgen', () => {
+    const p = profil({ employmentType: 'selfEmployed', monthlyIncome: 1100 });
+    expect(sozialhilfeVorbefuellung(p).lohnNichtUebernommen).toBe(false);
+    expect(sozialhilfeVorbefuellung(p).einkommen).toBe('1100');
+    expect(rechner(p).sozialhilfeAnspruch).toBe(calculateSozialhilfe(p).deficit);
+    expect(render(p)).toContain(de.pegel.vorBeitraegen);
+  });
+  it('Nebenerwerb ohne Art: auch die Seite sagt es', () => {
+    expect(calculateSozialhilfe(profil({ monthlyIncome: 1000, incomeType: 'netto', sideIncome: 400 })).hinweise).toContain('pegel.lohnartOffen');
+  });
+  it('Haushaltsführung: 950 nicht als feste Obergrenze bei Kinderbetreuung (D.4.5 Abs. 3)', () => {
+    expect(de.pegel.haushaltsfuehrungOffen).toMatch(/Kinderbetreuung/);
   });
 });

@@ -2370,7 +2370,7 @@ export default {
         sideHoursPerWeek: 'Necessari per la controlla dal salari minimal da l’activitad accessorica: senza uras na po nagin salari per ura vegnir calculà.',
         employerAddress: 'Per brevs al patrun — via, NPA e lieu.',
         taxableIncome: 'Entrada taxabla da la decleraziun da taglia (per onn, suenter deducziuns). Mo per orientaziun — po alimentar il quintader da taglia.',
-        familienzulagen: "Incl. supplements d'uffants e supplements da furmaziun. Sche las allocaziuns èn gia cuntegnidas en la paja endatada, betg endatar nagut qua, uschiglio dumbran ellas dubel.",
+        familienzulagen: "Incl. supplements d'uffants e supplements da furmaziun. Sche las allocaziuns èn gia cuntegnidas en la paja endatada, betg endatar nagut qua, uschiglio dumbran ellas dubel.", // TODO(rm): provisorisch
         monthlyTax: 'Stimà u tenor quint da taglia.',
         groceries: 'Vivondas, drogheria, basegns dal ménaschi per mais.',
         communication: 'Internet, telefon mobil, telefon fix per mais.',
@@ -5869,7 +5869,7 @@ export default {
     ausProfilHint: "Summà ord il profil — qua libramain adattabel.",
     nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai na vegn ella betg quintada — qua agiuntar l'import net.",
     konkubinatHint: "En concubinat na quinta betg l'entir salari da la partenaria u dal partenari, mabain ina contribuziun da concubinat — il servetsch social la fixescha. Perquai na vegn nagut preemplenì qua.",
-    inkl3aHint: 'Summà ord il profil, inclusiv il pilaster 3a — el po vegnir retratg a partir da tschintg onns avant la vegliadetgna da referenza e quinta lura sco facultad.',
+    inkl3aHint: "Summà ord il profil, inclusiv il pilaster 3a — l’agid social pretenda per princip ch’el vegnia retratg ensemen cun l’anticipaziun da l’AVS; el quinta perquai da lura davent sco facultad.", // TODO(rm): provisorisch
     erwachseneHint: 'La persuna che fa la dumonda e, en cas da maridaglia u da partenadi registrà, la partenaria u il partenari.',
     jungeErwachseneHint: "Sut 25 onns po il basegn da basa esser pli bass tenor il chantun — per plaschair s'infurmar tar il servetsch social.",
     weiterePersonen: "Ulteriuras persunas en l'economia da chasa",
@@ -7472,10 +7472,11 @@ export default {
     ohneFreibetrag: "Quintà senza franchisa sin l’entrada per persunas en furmaziun. Blers chantuns dattan ad ellas ina franchisa u in’allocaziun d’integraziun. Il chantun decida tge che vala.", // TODO(rm): provisorisch
     konkubinatOffen: "Quintà senza contribuziun da concubinat. En in concubinat stabil po il servetsch social dumbrar ina contribuziun da la partenaria u dal partenari sco entrada, il dretg po esser pli bass u crudar davent.", // TODO(rm): provisorisch
     zivilstandOffen: "Il stadi civil manca en il profil. Quintà sco pèr cun tegnairchasa cuminaivel; senza matrimoni u partenadi registrà è il quint auter.", // TODO(rm): provisorisch
-    haushaltsfuehrungOffen: "Indemnisaziun per manar il tegnairchasa betg quintada. Tgi che maina il tegnairchasa per conabitants che lavuran, a quel po il servetsch social dumbrar fin 950 francs per persuna sco entrada.", // TODO(rm): provisorisch
+    rechnungOffen: "Quint incomplet, detagls sin la pagina agid social.", // TODO(rm): provisorisch
+    haushaltsfuehrungOffen: "Indemnisaziun per manar il tegnairchasa betg quintada. Tgi che maina il tegnairchasa per conabitants che lavuran, a quel po il servetsch social dumbrar fin 950 francs per persuna sco entrada, cun tgira d’uffants dapli.", // TODO(rm): provisorisch
     kinderEinnahmen: "Alimentaziun ed allocaziuns per uffants èn quintadas cumplettamain. Entradas d’in uffant minoren dumbran mo fin a sia part dal budget, il dretg po esser pli aut.", // TODO(rm): provisorisch
-    zweitePersonFehlt: "Registrada è mo ina persuna creschida: la paja da la partenaria u dal partenari dumbra, ses basegn manca en il quint. Registrar la segunda persuna en il tegnairchasa.", // TODO(rm): provisorisch
-    lohnartOffen: "Tar la paja manca l’indicaziun brut u net. Quintada è ella sco netta; sch’ella è bruta, po exister in dretg.", // TODO(rm): provisorisch
+    zweitePersonFehlt: "Registrada è mo ina persuna creschida: la paja da la partenaria u dal partenari dumbra, ses basegn manca en il quint.", // TODO(rm): provisorisch
+    lohnartOffen: "Tar la paja manca l’indicaziun brut u net. Quintada è ella sco netta. Sch’ella è bruta, po il dretg esser pli aut u nascher pir lura.", // TODO(rm): provisorisch
     vorBeitraegen: "L’entrada da l’activitad independenta è quintada sco endatada. Las atgnas contribuziuns AVS e da la cassa da pensiun n’èn betg deducidas.", // TODO(rm): provisorisch
     ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)

@@ -13,8 +13,8 @@
 //   Schätzung. Im Konkubinat zählt nach SKOS nicht der ganze Lohn, sondern ein
 //   Konkubinatsbeitrag: dort nichts vorbefüllen, der Rechner zeigt einen Hinweis.
 // - Vermögen = Sparkonto + Wertschriften + übriges Vermögen + freie Vorsorge 3b. Die Säule 3a
-//   ist gebunden und zählt erst, wenn sie bezogen werden kann: frühestens fünf Jahre vor dem
-//   Referenzalter (BVV 3 Art. 3 Abs. 1) — ab dann mit eigenem Hinweis.
+//   ist gebunden und zählt ab dem frühesten AHV-Vorbezug (SKOS-RL D.3.3 Abs. 3,
+//   utils/unterstuetzungseinheit.js) — ab dann mit eigenem Hinweis.
 // - Haushalt: zur Unterstützungseinheit zählen die antragstellende Person und, bei Ehe oder
 //   eingetragener Partnerschaft, die Partnerin/der Partner. Alle übrigen Erwachsenen im Haushalt
 //   (Konkubinat, WG, erwachsene Kinder) sind «weitere Personen»; die Wohnform startet dann mit
@@ -28,11 +28,12 @@
 //   ein eingetragener Arbeitgeber. «Rentner» geht vor einem liegen gebliebenen Arbeitgeber.
 
 import { partnerEinkommenRoh } from './partnereinkommen.js';
+import { zahltBeitraegeSelbst } from './monatsrechnung.js';
 import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
 
-export { kindAlter, saeule3aBeziehbar } from './unterstuetzungseinheit.js';
+export { kindAlter, saeule3aZaehlt } from './unterstuetzungseinheit.js';
 
 const betrag = (v) => {
   const n = Number(v);
@@ -48,8 +49,10 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const f = data?.finanzen || {};
   const basis = data?.basis || {};
 
-  const hauptBrutto = lohnBasis(f) === 'brutto';
-  const hauptBasisOffen = lohnBasisOffen(f);
+  // Selbständige: Der Betrag gilt, wie er eingetragen ist, wie auf der Seite (config/cantonalData.js).
+  const selbst = zahltBeitraegeSelbst(f);
+  const hauptBrutto = !selbst && lohnBasis(f) === 'brutto';
+  const hauptBasisOffen = !selbst && lohnBasisOffen(f);
   const nebenerwerbBrutto = f.sideIncomeType === 'brutto' && betrag(f.sideIncome) > 0;
   const nebenerwerbBasisOffen = f.sideIncomeType !== 'brutto' && f.sideIncomeType !== 'netto' && betrag(f.sideIncome) > 0;
   const nebenZaehlt = f.sideIncomeType === 'netto' && betrag(f.sideIncome) > 0;
@@ -82,6 +85,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     einkommenMitNebenerwerb: !hauptBrutto && !hauptBasisOffen && nebenZaehlt,
     hauptBrutto,
     hauptBasisOffen,
+    vorBeitraegen: selbst && betrag(f.monthlyIncome) > 0,
     // Lohn im Profil, aber das Feld bleibt leer: Dann gibt es keinen Betrag, leer hiesse Einkommen 0.
     lohnNichtUebernommen: hauptBasisOffen || (hauptBrutto && betrag(f.monthlyIncome) > 0),
     andereEinkuenfte,
