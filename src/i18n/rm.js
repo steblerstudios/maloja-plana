@@ -4811,7 +4811,7 @@ export default {
     canton: 'Chantun: {name}',
     cantonUnknown: 'Betg enconuschent',
     model: 'Model: {value}',
-    maxIncome: 'Entrada max.: CHF {value}',
+    maxIncome: 'Limita da l’entrada decisiva: CHF {value} per onn',
     note: 'Indicaziun: {value}',
     enterCanton: { sie: 'Per plaschair endatai Voss chantun sut "Basa persunala" u Vossa PLZ sut "Abitar".', du: 'Per plaschair endatescha Tes chantun sut "Basa persunala" u Tia PLZ sut "Abitar".' },
     cantonChoose: { sie: 'En tge chantun abitais Vus?', du: 'En tge chantun abitas ti?' },
