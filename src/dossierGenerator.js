@@ -16,6 +16,7 @@ import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
 import { organListe } from './utils/organspende.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
@@ -834,6 +835,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     // formatCHF gibt bei 0 '' zurück; mit Vor- oder Nachsatz blieb dann «− » bzw. «/Mt.»
     // ohne Betrag stehen (Fassung 6, Fix 7). Ohne Betrag fällt die Zeile weg.
     const mit = (vor, wert, nach = '') => { const b = formatCHF(wert); return b ? vor + b + nach : ''; };
+    const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
+    const { mit3a } = vermoegensFelder(data.finanzen, data.basis);
     const sRows = [
       { label: t('sozialhilfe.basicNeeds') + (sozialhilfe.haushalt > sozialhilfe.einheit ? ' (' + t('sh.gblAnteil', { einheit: sozialhilfe.einheit, haushalt: sozialhilfe.haushalt }) + ')' : ''), value: formatCHF(sozialhilfe.grundbedarf) },
       { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
@@ -843,11 +846,21 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
       sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
       !sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
+      // Nur wenn das Vermögen der Grund für den offenen Status ist, wie auf der Seite: 3a und 3b stehen sonst nirgends.
+      ...(vermoegenGrund ? [
+        Number(d('finanzen', 'pension3bBalance')) > 0 && { label: lbl('finanzen', 'pension3bBalance'), value: chf('finanzen', 'pension3bBalance') },
+        mit3a && { label: lbl('finanzen', 'pension3aBalance'), value: chf('finanzen', 'pension3aBalance') },
+        { label: t('sozialhilfe.vermoegenGesamt'), value: formatCHF(sozialhilfe.vermoegen) },
+        { label: t('sozialhilfe.vermoegensfreibetrag'), value: formatCHF(sozialhilfe.vermoegensfreibetrag) },
+      ] : []),
     ].filter(r => r && r.value);
     // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
     const notes = [
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
+      sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || sozialhilfe.eligible) && t('sozialhilfe.assetLimitUnconfirmedShort'),
+      vermoegenGrund && !d('basis', 'canton') && t('sozialhilfe.assetLimitKeinKanton'),
+      vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
@@ -1060,6 +1073,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
   };
 
   if (sozialhilfe) {
+    const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
     dossier.calculations.sozialhilfe = {
       eligible: !!sozialhilfe.eligible,
       grundbedarf: sozialhilfe.grundbedarf || 0,
@@ -1072,6 +1086,11 @@ export function generateBehoerdenJSON(data, calculations, t) {
       anspruchOffen: !!sozialhilfe.anspruchOffen,
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
       vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
+      vermoegen: vermoegenGrund ? Math.round(sozialhilfe.vermoegen) : undefined,
+      saeule3b: vermoegenGrund && Number(data.finanzen?.pension3bBalance) > 0 ? Number(data.finanzen.pension3bBalance) : undefined,
+      saeule3a: vermoegenGrund && vermoegensFelder(data.finanzen, data.basis).mit3a ? Number(data.finanzen.pension3aBalance) : undefined,
+      vermoegensfreibetrag: vermoegenGrund ? sozialhilfe.vermoegensfreibetrag : undefined,
+      vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt,
       offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,
       hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k)),
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,

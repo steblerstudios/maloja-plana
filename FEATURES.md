@@ -13,6 +13,7 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
+| **Fassung 7 mit Sozialhilfe-Fixes (#637 bis #658)** | `deployed` | live `ca276eac` seit 02.11. 17:31, Bundle `index-CeFyAi_b.js` = Build, de-Chunk byte-gleich; hinter der Code-Wand nicht geklickt, darum nicht `verified-live` | Ampel `_handoffs/2026-11-02-predeploy-ampel.md` |
 **Stand:** 2026-10-27 02:20 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `d9aa8e06` (Merge-Nacht #563, #610, #612–#614, #616, #618–#623 + #624 «Was ansteht» nach Entwurf G) gebaut, nicht deployt.
 
 *Vorheriger Stand (bleibt als Beleg):*
