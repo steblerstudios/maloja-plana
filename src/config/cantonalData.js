@@ -389,8 +389,9 @@ export function calculateSozialhilfe(data) {
     vermoegenZuerst,
     // Kein Betrag zu nennen, auch keine 0: offen wegen Konkubinat, Vermögen oder knapp über dem Bedarf.
     betragOffen: betragOffen || knapp,
-    // Sparkonto über dem Freibetrag: D.3.1 Abs. 1 zählt verfügbare Mittel, darum keine Überschrift «möglich», nur Abs. 2 liesse eine Ausnahme zu.
-    offenTitel: betragOffen && vermoegenUeberFreibetrag > 0 ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
+    // Sparkonto allein über dem Freibetrag: verfügbare Mittel (D.3.1 Abs. 1, Erl. a), nur Abs. 2 liesse eine Ausnahme zu. Gebundene
+    // Werte (Erl. c) und der Knapp-Fall bleiben «möglich», dort ist das Vermögen nicht die ganze Antwort.
+    offenTitel: betragOffen && !knapp && plus(data.finanzen?.savingsAccount) > vermoegensfreibetrag ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
     offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     eligible: deficit > 0,

@@ -5906,7 +5906,7 @@ export default {
     erwerbsunkostenZeile: 'Custs supplementars per la lavur',
     anrechenbar: 'Entrada imputabla',
     sozialhilfe: "Dretg d'agid social",
-    vermoegenHinweis: 'Facultad sur la limita libra: ella vegn per regla quintada l’emprim',
+    vermoegenHinweis: 'Facultad sur la limita libra: ella vegn per regla quintada l’emprim', // TODO(rm): provisorisch
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
@@ -7497,7 +7497,7 @@ export default {
     gap: 'L’entrada è sut il minim d’existenza — la cumplettaziun colma la largia.',
     covered: 'L’entrada cuvra il minim d’existenza — nagina cumplettaziun necessaria.',
     deckt: 'pudess cuvrir radund {amount} / mais',
-    vermoegen: 'Facultad sur la franchisa — quai vegn per regla quintà avant. Il dretg controllescha il servetsch social.',
+    vermoegen: 'Facultad sur la franchisa — quai vegn per regla quintà avant. Il dretg controllescha il servetsch social.', // TODO(rm): provisorisch
   },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',

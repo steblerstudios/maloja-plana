@@ -113,7 +113,7 @@ describe('Nachtrag Rechtsprüfer 2a1d09d0', () => {
   });
   it('JSON-Export: offener Betrag ist null, Hinweise lesbar', async () => {
     const quelle = (await import('node:fs')).readFileSync(new URL('../dossierGenerator.js', import.meta.url), 'utf8');
-    expect(quelle).toContain('deficit: sozialhilfe.betragOffen ? null : sozialhilfe.deficit || 0');
+    expect(quelle).toContain('deficit: sozialhilfe.betragOffen || sozialhilfe.efbEntscheidet ? null : sozialhilfe.deficit || 0');
     expect(quelle).toContain('hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k))');
   });
 });

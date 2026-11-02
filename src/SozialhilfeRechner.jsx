@@ -134,7 +134,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         },
           result.hatAnspruch
             ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
-            : t(result.vermoegenZuerst ? 'sh.vermoegenZuerstTitel' : result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
+            : t(result.vermoegenZuerst && !result.knapp && (Number(data?.finanzen?.savingsAccount) || 0) > result.vermoegensfreibetrag ? 'sh.vermoegenZuerstTitel' : result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
@@ -216,7 +216,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,
-    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : lohnOffen ? (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen ? 'sh.lohnEingeben' : 'sh.nebenEingeben') : 'sh.eingeben'),
+    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : lohnOffen ? (Number(data?.finanzen?.monthlyIncome) > 0 && (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen) ? 'sh.lohnEingeben' : 'sh.nebenEingeben') : 'sh.eingeben'),
     art: konkubinatGesperrt ? null : sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
     vorbehalt: zeige && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.hinweise.length > 0 || vorbefuellt.vorBeitraegen || vorbefuellt.nebenerwerbBrutto || vorbefuellt.nebenerwerbBasisOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
       [

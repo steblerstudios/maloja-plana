@@ -84,7 +84,7 @@ describe('Lernende: kein Nein ohne Grundlage (Predeploy 02.11.2026, vierte Runde
   it('Der offene Fall steht auch in der grossen Anzeige, im Dossier und auf der Karte', () => {
     expect(quelle('../SozialhilfeRechner.jsx')).toContain("result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch'");
     expect(quelle('../dossierGenerator.js')).toContain("sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText)");
-    expect(quelle('../components/FinanzAuswertung.jsx')).toContain(": sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) : t('sozialhilfe.notEntitled'),");
+    expect(quelle('../components/FinanzAuswertung.jsx')).toContain(": sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) +");
     expect(quelle('../SozialhilfeView.jsx')).toContain("sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) : t(sozialhilfe.noteKey");
   });
 

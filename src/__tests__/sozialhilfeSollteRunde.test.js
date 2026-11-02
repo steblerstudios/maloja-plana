@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -36,6 +37,13 @@ describe('Vermögen: keine Überschrift «möglich»', () => {
     expect(de.pegel.vermoegen).toContain('in der Regel');
     expect(de.sh.vermoegenHinweis).toContain('in der Regel');
   });
+  it('Gebundene Werte bleiben «möglich» (D.3.1 Erl. c): Fahrzeug, Wertschriften', () => {
+    const p2 = profil({ otherAssets: 100000 });
+    expect(calculateSozialhilfe(p2).offenTitel).toBe('dashboard.anspruchMoeglich');
+    expect(rechner(p2)).toContain(de.dashboard.anspruchMoeglich);
+    expect(rechner(p2)).not.toContain(de.sh.vermoegenZuerstTitel);
+    expect(seite(p2)).not.toContain(de.sh.vermoegenZuerstTitel);
+  });
   it('Gegenprobe: ohne Vermögen bleibt der offene Fall «möglich»', () => {
     const offen = profil({ monthlyIncome: 2000 });
     expect(calculateSozialhilfe(offen).offenTitel).toBe('dashboard.anspruchMoeglich');
@@ -63,6 +71,13 @@ describe('Knapp über dem Bedarf mit Vermögen: der ganze Grund', () => {
     expect(s.offenText).toBe('pegel.coveredOffen');
     expect(s.hinweise).toContain('pegel.vermoegen');
   });
+  it('Überschrift und Listen passen dazu', () => {
+    expect(calculateSozialhilfe(p).offenTitel).toBe('dashboard.anspruchMoeglich');
+    expect(rechner(p)).not.toContain(de.sh.vermoegenZuerstTitel);
+    const quelle = (f) => fs.readFileSync(new URL(f, import.meta.url), 'utf8');
+    expect(quelle('../components/Leistungsliste.jsx')).toContain("sh.vermoegenZuerst && sh.offenText !== 'pegel.vermoegen'");
+    expect(quelle('../components/FinanzAuswertung.jsx')).toContain("sozialhilfe.vermoegenZuerst && sozialhilfe.offenText !== 'pegel.vermoegen'");
+  });
   it('Rechner sagt beides', () => {
     const html = rechner(p);
     expect(html).toContain(de.pegel.coveredOffen);
@@ -76,6 +91,11 @@ describe('Nebenerwerb nicht netto: Rechner sagt den richtigen Grund', () => {
     expect(html).toContain(de.sh.nebenEingeben.sie);
     expect(html).not.toContain(de.sh.lohnEingeben.sie);
   });
+  it('Hauptlohn 0 mit Lohnart brutto: nicht «im Profil steht ein Lohn»', () => {
+    const html = rechner(profil({ monthlyIncome: 0, incomeType: 'brutto', sideIncome: 2000, sideIncomeType: 'brutto' }));
+    expect(html).toContain(de.sh.nebenEingeben.sie);
+    expect(html).not.toContain(de.sh.lohnEingeben.sie);
+  });
   it('Gegenprobe: Hauptlohn brutto behält seinen Satz', () => {
     expect(rechner(profil({ monthlyIncome: 3000, incomeType: 'brutto' }))).toContain(de.sh.lohnEingeben.sie);
   });
@@ -83,6 +103,7 @@ describe('Nebenerwerb nicht netto: Rechner sagt den richtigen Grund', () => {
     const p = profil({ monthlyIncome: 2300 }, { canton: 'AG' }, 600, 300);
     expect(calculateSozialhilfe(p).efbEntscheidet).toBe(true);
     expect(seite(p)).not.toMatch(/CHF\s*0\//);
+    expect(fs.readFileSync(new URL('../dossierGenerator.js', import.meta.url), 'utf8')).toContain('deficit: sozialhilfe.betragOffen || sozialhilfe.efbEntscheidet ? null');
   });
 });
 
