@@ -4,14 +4,15 @@
 // am Fehlerschirm: Betreff + abgetrennter Kontext-Block. Nichts wird automatisch
 // gesendet — die Person sieht den Text vorher in der App und schickt ihn selbst aus
 // dem eigenen Mailprogramm. Nur die Antworten aus dem Formular plus drei unkritische
-// Werte, keine Daten aus dem Lebensordner.
+// Werte, keine Daten aus dem Lebensordner. Die Zahl der Nutzungstage kommt nur dazu, wenn die
+// Person sie selbst ankreuzt (`nutzungstage`, sonst null).
 
 const ANTWORT_SCHLUESSEL = {
   q1: { yes: 'scaleYes', mostly: 'scaleMostly', unclear: 'scaleUnclear' },
   q2: { high: 'trustHigh', ok: 'trustOk', low: 'trustLow' },
 };
 
-export function betaFeedbackText({ q1, q2, q3, t, version, lang }) {
+export function betaFeedbackText({ q1, q2, q3, t, version, lang, nutzungstage = null }) {
   const teile = [];
   for (const [frage, wert] of [['q1', q1], ['q2', q2]]) {
     const k = ANTWORT_SCHLUESSEL[frage][wert];
@@ -23,7 +24,8 @@ export function betaFeedbackText({ q1, q2, q3, t, version, lang }) {
     + '\n\n— — —\n' + t('beta.feedbackContext') + '\n'
     + 'Version: ' + version + '\n'
     + 'Ansicht: Beta-Feedback\n'
-    + 'Sprache: ' + lang;
+    + 'Sprache: ' + lang
+    + (nutzungstage ? '\n' + t('beta.feedback.nutzungZeile', { n: nutzungstage }) : '');
 }
 
 export function betaFeedbackHref(text) {

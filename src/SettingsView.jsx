@@ -4,6 +4,7 @@ import { text, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { DatenLoeschen } from './components/DatenLoeschen.jsx';
+import { NutzungsZaehlung } from './components/NutzungsZaehlung.jsx';
 
 // Zentraler Einstellungen-Bereich: bündelt die App-Bedienelemente mit
 // beschrifteten Zeilen (zugänglicher als die reinen Icon-Knöpfe in der
@@ -73,6 +74,8 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, onNo
         React.createElement('span', null, t('nav.notifications'))
       ) : null
     ),
+
+    React.createElement(NutzungsZaehlung, { palette, t, demoMode }),
 
     // ── E18 · Alle Daten auf diesem Gerät löschen (eigene Karte, ruhig am Ende) ──
     React.createElement(DatenLoeschen, { palette, t, demoMode, onExport })

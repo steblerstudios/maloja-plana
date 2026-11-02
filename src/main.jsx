@@ -147,6 +147,7 @@ import { inDays } from './utils/helpers.js';
 // YYYY-MM-DD) und liegt ohnehin hier (Startbündel-Diät 26.10.2026).
 import { uebernehmen, nachSchuldenSpeichern } from './utils/offenePosten.js';
 import { installiereNeuLadenNachDeploy } from './utils/neuLadenNachDeploy.js';
+import { tagMerken } from './utils/nutzungsTage.js';
 
 // Tab über einen Deploy offen gelassen → nachgeladene Ansicht fehlt → einmal neu laden.
 installiereNeuLadenNachDeploy();
@@ -441,6 +442,9 @@ const useViewport = () => {
 
 // demo: nur gesetzt, wenn die Code-Wand die Demo öffnet (K7) — { data, onLeave }.
 const AppInner = ({ demo }) => {
+  // Zählt nur auf dem Gerät, siehe utils/nutzungsTage.js. Das Beispiel zählt nicht mit.
+  // Im Initialisierer, damit das Beta-Feedback den heutigen Tag schon sieht.
+  useState(() => { if (!demo) tagMerken(); return null; });
   const { t, lang, setLanguage, supportedLanguages, anrede, setAnrede } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const [readable, setReadable] = useState(() => { try { return localStorage.getItem('or5_readable') === 'true'; } catch { return false; } });

@@ -33,8 +33,9 @@ const CONTRIBUTION_URL = '';
 // via {date} eingesetzt (legal.lastUpdated), damit die Datumsangabe nicht driftet.
 // K39 (16.09.2026): Datenschutz-/Nutzungstexte an Verschlüsselung als Voreinstellung (E10)
 // und den Löschweg (E18) angeglichen → Stand September 2026. TODO(rm): Monatsname gegenlesen.
+// 02.11.2026: Abschnitt «Zählung auf diesem Gerät» → Stand November 2026.
 const LEGAL_LAST_UPDATED = {
-  de: 'September 2026', fr: 'septembre 2026', it: 'settembre 2026', en: 'September 2026', rm: 'settember 2026',
+  de: 'November 2026', fr: 'novembre 2026', it: 'novembre 2026', en: 'November 2026', rm: 'november 2026',
 };
 
 const LEGAL_LINKS = {
@@ -219,6 +220,9 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
       Section({ title: t('legal.privacy.cookiesTitle'), palette, children: [
         P({ children: t('legal.privacy.cookies1') }),
       ]}),
+      Section({ title: t('legal.privacy.zaehlungTitle'), palette, children: [
+        P({ children: t('legal.privacy.zaehlung1') }),
+      ] }),
       Section({ title: t('legal.privacy.notificationsTitle'), palette, children: [
         P({ children: t('legal.privacy.notifications1') }),
       ]}),

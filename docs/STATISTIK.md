@@ -18,11 +18,21 @@
 
 - **Keine Personen.** Keine Cookies, kein Fingerprinting, keine Wiedererkennung
   einzelner Besucherinnen, keine Profile, keine A/B-Experimente.
-- **Kein Verhalten in der App.** Die App nutzt Hash-Routen (`#/…`) — die erreichen
+- **Kein Verhalten in der App beim Server.** Einzige Ausnahme auf dem Gerät: der Tageszähler
+  unten, der nichts sendet. Die App nutzt Hash-Routen (`#/…`) — die erreichen
   den Server nie. Der Hoster sieht nur, *dass* die Seite geladen wurde, nicht,
   was jemand im Lebensordner tut. Das ist kein Mangel, sondern der eingebaute
   Beweis der Privatheit. Wer Ansichts-Zahlen will, bräuchte einen Zähler in der
   App — das wäre ein Grundsatzentscheid (siehe „Später"), kein Nebenbei.
+
+## Wiederkehr auf dem Gerät (Entscheid 02.11.2026)
+
+Regel: **Zählen ja, drängen nein.** Die App zählt nur auf dem Gerät, an wie vielen Tagen
+sie im laufenden Monat geöffnet wurde (`src/utils/nutzungsTage.js`). Sie sendet nichts. Die
+Zahl geht nur mit, wenn die Person sie im Beta-Feedback ankreuzt und die E-Mail selbst
+sendet. Das Zählen lässt sich in den Einstellungen ablehnen und endet nach dem Beta-Feedback.
+Die Auswertung bleibt deshalb eine Stichprobe von Freiwilligen. Anonyme Summen an
+einen eigenen Empfänger sind bis zur Backend-Frage geparkt (siehe «Später»).
 
 ## Einmalige Einrichtung (im Infomaniak Manager)
 

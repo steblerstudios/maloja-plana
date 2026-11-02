@@ -10,7 +10,8 @@
 // Nicht gelöscht: der Service-Worker-Cache. Er enthält nur die App selbst (HTML, JS,
 // CSS), keine Angaben — so bleibt Maloja nach dem Neustart auch offline nutzbar.
 // Bewusst behalten: `or5_beta_access` — kein persönlicher Inhalt; ohne ihn stünde man
-// nach dem Neustart vor der Code-Wand.
+// nach dem Neustart vor der Code-Wand. Ebenso `or5_nutzungstage_aus`: Wer das Zählen
+// abgelehnt hat, soll nach dem Löschen nicht wieder gezählt werden.
 //
 // Reihenfolge: zuerst Schreiben und neues Öffnen sperren (sonst könnte der Auto-Save
 // oder die Auto-Sicherung zwischen Löschen und Neustart alles zurückschreiben), dann
@@ -25,7 +26,7 @@
 // Im Beispiel (demo) wird nichts angefasst: die angezeigten Daten sind nicht die
 // eigenen, und «löschen» darf dort nie den echten Stand treffen (B-3).
 
-export const BEHALTEN = ['or5_beta_access'];
+export const BEHALTEN = ['or5_beta_access', 'or5_nutzungstage_aus'];
 // Alt-Namen sind meist gar nicht vorhanden; ihr «Löschen» gelingt dann trotzdem.
 export const APP_DATENBANKEN = ['maloja-plana-documents', 'maloja-plana-backups', 'ordnung-ruhe-documents', 'ordnung-ruhe-backups'];
 

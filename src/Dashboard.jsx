@@ -22,6 +22,7 @@ import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
 import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
+import { nutzungstageImMonat, tageLoeschen } from './utils/nutzungsTage.js';
 import { inZwischenablage } from './utils/zwischenablage.js';
 import { version as APP_VERSION } from '../package.json';
 
@@ -173,9 +174,12 @@ const BetaFeedback = ({ palette, t }) => {
   const [q2, setQ2] = useState('');
   const [q3, setQ3] = useState('');
   const [kopie, setKopie] = useState(''); // '' · 'ok' · 'fehler'
+  // Zahl der Tage im Monat: bleibt auf dem Gerät, geht nur angekreuzt in den Entwurf (02.11.2026).
+  const [tage, setTage] = useState(() => nutzungstageImMonat());
+  const [nutzungMit, setNutzungMit] = useState(false);
 
   const leer = !q1 && !q2 && !q3.trim();
-  const entwurf = betaFeedbackText({ q1, q2, q3, t, version: APP_VERSION, lang });
+  const entwurf = betaFeedbackText({ q1, q2, q3, t, version: APP_VERSION, lang, nutzungstage: nutzungMit ? tage : null });
   const href = betaFeedbackHref(entwurf);
 
   const kopieren = async () => {
@@ -285,6 +289,18 @@ const BetaFeedback = ({ palette, t }) => {
           boxSizing: 'border-box',
         }
       })
+    ),
+
+    tage > 0 && React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
+      React.createElement('label', { style: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', minHeight: '44px', cursor: 'pointer', fontSize: text.sm, color: palette.text } },
+        React.createElement('input', { type: 'checkbox', checked: nutzungMit, onChange: (e) => setNutzungMit(e.target.checked), style: { marginTop: '3px' } }),
+        React.createElement('span', null, t('beta.feedback.nutzungKaestchen', { n: tage }))
+      ),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('beta.feedback.nutzungHinweis')),
+      React.createElement('button', {
+        type: 'button', style: linkKnopf,
+        onClick: () => { tageLoeschen(); setTage(0); setNutzungMit(false); },
+      }, t('beta.feedback.nutzungLoeschen'))
     ),
 
     // Vorschau: genau der Text, der im Entwurf steht — erst wenn etwas beantwortet ist.
