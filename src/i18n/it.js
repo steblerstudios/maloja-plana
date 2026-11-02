@@ -1942,7 +1942,7 @@ export default {
     tierCore: { sie: 'La Sua quotidianità', du: 'La tua quotidianità' },
     tierSupporting: { sie: 'La Sua copertura', du: 'La tua copertura' },
     tierProtective: { sie: 'La Sua protezione', du: 'La tua protezione' },
-    toolsAndFeatures: 'Strumenti e funzioni',
+    toolsAndFeatures: 'Strumenti',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
     toolGroups: {
       gesundheit: 'Salute',
@@ -3005,6 +3005,7 @@ export default {
   },
 
   budgetSync: {
+    csvBeispiel: '01.10.2026,Affitto,1500,rent,expense\n02.10.2026,Salario,4000,income,income\n05.10.2026,Premio LAMal,280,insurance,expense',
     title: 'Budget mensile',
     income: 'Entrate',
     expenses: 'Uscite',
@@ -3165,6 +3166,7 @@ export default {
     orientationNote: { sie: 'Questa stima è puramente indicativa. Per una valutazione vincolante, si rivolga al Suo comune o a un servizio specializzato.', du: 'Questa stima è puramente indicativa. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.' },
     childrenNote: { sie: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Si informi presso il servizio sociale.', du: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.' },
     childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',
+    einkommenNichtErfasst: 'Reddito non inserito, nessun importo',
     assetLimitNote: 'Il patrimonio oltre una franchigia viene di regola conteggiato ({basis}: {freibetrag} per questa economia domestica). Il patrimonio in questo calcolo la supera di circa {ueberschuss}. Se non è subito disponibile, sono previsti un termine adeguato per la realizzazione e, se necessario, un sostegno nel frattempo a titolo di anticipo; questi importi vanno di regola rimborsati. Orientamento, senza carattere vincolante.',
     assetLimitBasisCanton: 'Cantone {name}',
     assetLimitBasisSkos: 'raccomandazione COSAS',
@@ -5139,7 +5141,7 @@ export default {
     referenzalterBS: 'Dall’età di riferimento AVS Basilea Città non versa più contributi all’affitto (legge sui contributi all’affitto § 4 cpv. 2). In caso di pensionamento anticipato può esserci un diritto — lo chiarisce l’ufficio dei contributi sociali.',
     kindOhneAlter: 'Per almeno un figlio manca l’età — calcolato come figlio minorenne. Dai 18 anni conta solo in prima formazione; l’età si può completare nell’economia domestica.',
     mietbelastungZG: 'Tra CHF 50’000 e 60’000 Zugo concede un contributo solo se l’affitto dopo la riduzione supera il 25 % del reddito — qui è già inferiore prima.',
-    basis: 'Base: reddito CHF {income}/anno · affitto CHF {rent}/mese · economia domestica {size} pers.',
+    basis: 'Base: reddito CHF {income}/anno · costi di alloggio CHF {rent}/mese · economia domestica {size} pers.',
     result_likely: { sie: 'Vale la pena verificare il diritto: il Suo reddito (CHF {income}) è sotto il limite indicativo (CHF {limit}). Il diritto esatto lo determina il servizio cantonale.', du: 'Vale la pena verificare il diritto: il tuo reddito (CHF {income}) è sotto il limite indicativo (CHF {limit}). Il diritto esatto lo determina il servizio cantonale.' },
     result_incomeHigh: { sie: 'Il Suo reddito (CHF {income}) supera il limite indicativo (CHF {limit}). Un diritto è piuttosto improbabile — ma in un caso limite vale comunque la pena verificare.', du: 'Il tuo reddito (CHF {income}) supera il limite indicativo (CHF {limit}). Un diritto è piuttosto improbabile — ma in un caso limite vale comunque la pena verificare.' },
     result_familiesOnly: 'In questo cantone i sussidi per l\'affitto esistono solo per economie domestiche con almeno un figlio.',
@@ -5616,7 +5618,7 @@ export default {
     monthlyIncome: 'Reddito mensile',
     assets: 'Patrimonio',
     assetsDetail: 'Titoli, risparmi e altri beni (valore fiscale)',
-    healthCosts: 'Costi sanitari (LAMal)',
+    healthCosts: 'Costi sanitari pagati (LAMal)',
     healthCostsDetail: 'Fatture mediche pagate {year}',
     healthCostsOpen: 'ancora aperto: {amount}',
     taxMonthlyCompare: { sie: '≈ {estimate} al mese stimati · La Sua indicazione nel budget: {angabe} al mese.', du: '≈ {estimate} al mese stimati · La tua indicazione nel budget: {angabe} al mese.' },

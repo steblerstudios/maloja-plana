@@ -355,6 +355,11 @@ export function calculateSozialhilfe(data) {
   const vermoegenZuerst = !konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
   const betragOffen = konkubinatBetragOffen || vermoegenZuerst;
   const deficit = betragOffen ? 0 : bilanz.luecke;
+  // Kein Einkommen erfasst: Die Rechnung läuft weiter (Schnellcheck rechnet mit Proben), aber Karte und Dossier nennen keinen
+  // Betrag aus einem leeren Feld (F8-S4). Dieselbe Regel wie im Rechner: Andere Einkünfte reichen nur bei einer Lage ohne Erwerb.
+  const feldLeer = (v) => v == null || String(v).trim() === '';
+  const einkommenFehlt = feldLeer(data.finanzen?.monthlyIncome) && feldLeer(data.finanzen?.sideIncome)
+    && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0);
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
   const gbl = gblStand();
@@ -394,6 +399,7 @@ export function calculateSozialhilfe(data) {
     offenTitel: !konkubinatBetragOffen && betragOffen && !knapp && verfuegbarUeberFreibetrag(data.finanzen, vermoegensfreibetrag) ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
     offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
+    einkommenFehlt,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
     // Mietzins-Limite, siehe oben). Jeder Leser setzt dann `sozialhilfe.mitGanzerMiete` dazu.

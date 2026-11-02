@@ -1942,7 +1942,7 @@ export default {
     tierCore: { sie: 'Votre quotidien', du: 'Ton quotidien' },
     tierSupporting: { sie: 'Votre couverture', du: 'Ta couverture' },
     tierProtective: { sie: 'Votre protection', du: 'Ta protection' },
-    toolsAndFeatures: 'Outils et fonctionnalités',
+    toolsAndFeatures: 'Outils',
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: { sie: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.', du: 'Calculateurs et outils — utilisables indépendamment de tes chapitres.' },
     toolGroups: {
@@ -3005,6 +3005,7 @@ export default {
   },
 
   budgetSync: {
+    csvBeispiel: '01.10.2026,Loyer,1500,rent,expense\n02.10.2026,Salaire,4000,income,income\n05.10.2026,Prime LAMal,280,insurance,expense',
     title: 'Budget mensuel',
     income: 'Revenus',
     expenses: 'Dépenses',
@@ -3165,6 +3166,7 @@ export default {
     orientationNote: { sie: 'Cette estimation est donnée à titre indicatif. Pour une évaluation contraignante, adressez-vous à votre commune ou à un service spécialisé.', du: 'Cette estimation est donnée à titre indicatif. Pour une évaluation contraignante, adresse-toi à ta commune ou à un service spécialisé.' },
     childrenNote: { sie: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.', du: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseigne-toi auprès du service social.' },
     childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',
+    einkommenNichtErfasst: 'Revenu non saisi, pas de montant',
     assetLimitNote: 'La fortune au-dessus d’une franchise est en règle générale prise en compte ({basis} : {freibetrag} pour ce ménage). La fortune dans ce calcul la dépasse d’environ {ueberschuss}. Si elle n’est pas disponible immédiatement, un délai approprié pour la réalisation et, si nécessaire, un soutien entre-temps sous forme d’avance sont prévus ; ces montants sont en règle générale à rembourser. Orientation, sans valeur contraignante.',
     assetLimitBasisCanton: 'canton de {name}',
     assetLimitBasisSkos: 'recommandation CSIAS',
@@ -5166,7 +5168,7 @@ export default {
     referenzalterBS: 'Dès l’âge de référence AVS, Bâle-Ville ne verse plus d’aide au loyer (loi sur les aides au loyer § 4 al. 2). En cas de retraite anticipée, un droit peut exister — l’office des contributions sociales le précise.',
     kindOhneAlter: 'L’âge manque pour au moins un enfant — calculé comme un enfant mineur. Dès 18 ans, il ne compte qu’en première formation ; l’âge peut être complété dans le ménage.',
     mietbelastungZG: 'Entre CHF 50 000 et 60 000, Zoug n’accorde une aide que si le loyer après réduction dépasse 25 % du revenu — ici, il est déjà inférieur avant.',
-    basis: 'Base : revenu CHF {income}/an · loyer CHF {rent}/mois · ménage {size} pers.',
+    basis: 'Base : revenu CHF {income}/an · frais de logement CHF {rent}/mois · ménage {size} pers.',
     result_likely: { sie: 'Cela vaut la peine de vérifier votre droit : votre revenu (CHF {income}) est inférieur à la limite indicative (CHF {limit}). Le service cantonal détermine le droit exact.', du: 'Cela vaut la peine de vérifier ton droit : ton revenu (CHF {income}) est inférieur à la limite indicative (CHF {limit}). Le service cantonal détermine le droit exact.' },
     result_incomeHigh: { sie: 'Votre revenu (CHF {income}) dépasse la limite indicative (CHF {limit}). Un droit est plutôt improbable — mais dans un cas limite, cela vaut quand même la peine de vérifier.', du: 'Ton revenu (CHF {income}) dépasse la limite indicative (CHF {limit}). Un droit est plutôt improbable — mais dans un cas limite, cela vaut quand même la peine de vérifier.' },
     result_familiesOnly: 'Dans ce canton, les aides au loyer n\'existent que pour les ménages avec au moins un enfant.',
@@ -5643,7 +5645,7 @@ export default {
     monthlyIncome: 'Revenu mensuel',
     assets: 'Patrimoine',
     assetsDetail: 'Titres, épargne et autres actifs (valeur fiscale)',
-    healthCosts: 'Frais de santé (LAMal)',
+    healthCosts: 'Frais de santé payés (LAMal)',
     healthCostsDetail: 'Factures médicales payées {year}',
     healthCostsOpen: 'encore ouvert : {amount}',
     taxMonthlyCompare: { sie: '≈ {estimate} par mois estimés · Votre indication dans le budget : {angabe} par mois.', du: '≈ {estimate} par mois estimés · Ton indication dans le budget : {angabe} par mois.' },

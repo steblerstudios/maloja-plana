@@ -83,10 +83,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, praefix('kaestchen', 14), t('budgetImport.formatExample') + ':'),
         React.createElement('code', { style: { display: 'block', fontSize: text.xs, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginTop: '6px' } },
-          `Date,Description,Amount,Category,Type
-01.04.2024,Rent,1500,rent,expense
-02.04.2024,Salary,4000,income,income
-05.04.2024,KK Premium,280,insurance,expense`
+          'Date,Description,Amount,Category,Type\n' + t('budgetSync.csvBeispiel')
         )
       )
     ),

@@ -1952,7 +1952,7 @@ export default {
     tierCore: { sie: 'Ihr Alltag', du: 'Dein Alltag' },
     tierSupporting: { sie: 'Ihre Absicherung', du: 'Deine Absicherung' },
     tierProtective: { sie: 'Ihr Schutz', du: 'Dein Schutz' },
-    toolsAndFeatures: 'Werkzeuge & Features',
+    toolsAndFeatures: 'Werkzeuge',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
     toolGroups: {
       gesundheit: 'Gesundheit',
@@ -3017,6 +3017,7 @@ export default {
   },
 
   budgetSync: {
+    csvBeispiel: '01.10.2026,Miete,1500,rent,expense\n02.10.2026,Lohn,4000,income,income\n05.10.2026,KK-Prämie,280,insurance,expense',
     title: 'Monatsbudget',
     income: 'Einkommen',
     expenses: 'Ausgaben',
@@ -3177,6 +3178,7 @@ export default {
     orientationNote: { sie: 'Diese Schätzung dient der Orientierung. Für eine verbindliche Einschätzung wenden Sie sich bitte an Ihre Gemeinde oder eine Fachstelle.', du: 'Diese Schätzung dient der Orientierung. Für eine verbindliche Einschätzung wende dich bitte an deine Gemeinde oder eine Fachstelle.' },
     childrenNote: { sie: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Klären Sie dies mit dem Sozialdienst.', du: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.' },
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
+    einkommenNichtErfasst: 'Einkommen nicht erfasst, kein Betrag',
     assetLimitNote: 'Vermögen über einem Freibetrag wird in der Regel angerechnet ({basis}: {freibetrag} für diesen Haushalt). Das Vermögen in dieser Rechnung liegt rund {ueberschuss} darüber. Ist es nicht sofort verfügbar, sind eine angemessene Frist zur Verwertung und in der Zwischenzeit bei Bedarf Unterstützung als Vorschuss vorgesehen; diese Beträge sind in der Regel zurückzuzahlen. Orientierung, keine verbindliche Auskunft.',
     assetLimitBasisCanton: 'Kanton {name}',
     assetLimitBasisSkos: 'SKOS-Empfehlung',
@@ -5208,7 +5210,7 @@ export default {
     referenzalterBS: 'Ab dem AHV-Referenzalter gibt es in Basel-Stadt keine Mietbeiträge mehr (Mietbeitragsgesetz § 4 Abs. 2). Bei einer Frühpensionierung kann ein Anspruch bestehen — das klärt das Amt für Sozialbeiträge.',
     kindOhneAlter: 'Bei mindestens einem Kind fehlt das Alter — gerechnet wie ein minderjähriges Kind. Ab 18 zählt es nur in Erstausbildung; das Alter lässt sich im Haushalt ergänzen.',
     mietbelastungZG: 'Zwischen CHF 50’000 und 60’000 gibt es in Zug nur einen Beitrag, wenn die Miete nach der Verbilligung mehr als 25 % des Einkommens ausmacht — hier liegt sie schon vorher darunter.',
-    basis: 'Grundlage: Einkommen CHF {income}/Jahr · Miete CHF {rent}/Monat · Haushalt {size} Pers.',
+    basis: 'Grundlage: Einkommen CHF {income}/Jahr · Wohnkosten CHF {rent}/Monat · Haushalt {size} Pers.',
     result_likely: { sie: 'Es lohnt sich, den Anspruch zu prüfen: Ihr Einkommen (CHF {income}) liegt unter der Richtgrenze (CHF {limit}). Den genauen Anspruch klärt die kantonale Stelle.', du: 'Es lohnt sich, den Anspruch zu prüfen: dein Einkommen (CHF {income}) liegt unter der Richtgrenze (CHF {limit}). Den genauen Anspruch klärt die kantonale Stelle.' },
     result_incomeHigh: { sie: 'Ihr Einkommen (CHF {income}) liegt über der Richtgrenze (CHF {limit}). Ein Anspruch ist eher unwahrscheinlich — bei knappem Fall lohnt die Prüfung trotzdem.', du: 'Dein Einkommen (CHF {income}) liegt über der Richtgrenze (CHF {limit}). Ein Anspruch ist eher unwahrscheinlich — bei knappem Fall lohnt die Prüfung trotzdem.' },
     result_familiesOnly: 'In diesem Kanton gibt es Mietzinsbeiträge nur für Haushalte mit mindestens einem Kind.',
@@ -5686,7 +5688,7 @@ export default {
     monthlyIncome: 'Monatliches Einkommen',
     assets: 'Vermögen',
     assetsDetail: 'Wertschriften, Ersparnisse und übriges Vermögen (Steuerwert)',
-    healthCosts: 'Gesundheitskosten (KVG)',
+    healthCosts: 'Bezahlte Gesundheitskosten (KVG)',
     healthCostsDetail: 'Bezahlte Arztrechnungen {year}',
     healthCostsOpen: 'noch offen: {amount}',
     taxMonthlyCompare: { sie: '≈ {estimate} pro Monat geschätzt · Ihre Angabe im Budget: {angabe} pro Monat.', du: '≈ {estimate} pro Monat geschätzt · Deine Angabe im Budget: {angabe} pro Monat.' },

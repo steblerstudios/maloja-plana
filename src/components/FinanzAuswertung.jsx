@@ -499,13 +499,14 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
   return React.createElement(StatusCard, {
     palette, icon: 'home',
     title: t('finanzUebersicht.sozialhilfe'),
-    status: sozialhilfe.eligible
+    status: sozialhilfe.einkommenFehlt ? t('sozialhilfe.einkommenNichtErfasst')
+      : sozialhilfe.eligible
       ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
         // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
         + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
       // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) + (sozialhilfe.hinweise?.includes('pegel.vermoegen') ? ' ' + t('pegel.vermoegen') : '') : t('sozialhilfe.notEntitled'),
-    statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
+    statusColor: sozialhilfe.einkommenFehlt ? palette.mid : sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
     detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
       + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
