@@ -201,7 +201,7 @@ export const druckAbschnitte = (t, w) => {
   if (w.sozialhilfe.ansatzTiefer) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ansatzTiefer')) + '</td></tr>' });
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
-  if (w.sozialhilfe.konkubinatOffen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.konkubinatOffen')) + '</td></tr>' });
+  if (w.sozialhilfe.haushaltOffen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t(w.sozialhilfe.haushaltOffen)) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
@@ -513,7 +513,7 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
       + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : '')
       + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : '')
       + (sozialhilfe.ohneFreibetrag ? ' | ' + t('pegel.ohneFreibetrag') : '')
-      + (sozialhilfe.konkubinatOffen ? ' | ' + t('pegel.konkubinatOffen') : ''),
+      + (sozialhilfe.haushaltOffen ? ' | ' + t(sozialhilfe.haushaltOffen) : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });
 };

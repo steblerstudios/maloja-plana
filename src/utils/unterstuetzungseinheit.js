@@ -9,7 +9,7 @@
 //   der ganzen Haushaltsgrösse, davon der Anteil (C.3.1 Abs. 2, data/skosGrundbedarf.js).
 // - C.4.2 Abs. 2: Die Wohnkosten «werden auf die Personen aufgeteilt».
 // - D.4.4: Im stabilen Konkubinat zählt nicht der Lohn, sondern ein Konkubinatsbeitrag als Einnahme. Den
-//   kann die App nicht rechnen (erweitertes SKOS-Budget der anderen Person), darum `konkubinatOffen`.
+//   kann die App nicht rechnen (erweitertes SKOS-Budget der anderen Person), darum `haushaltOffen`.
 
 import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
 import { giltAlsVerheiratet } from './zivilstand.js';
@@ -32,12 +32,17 @@ export function kindAlter(kind, heute = new Date()) {
   return Number.isFinite(a) && kind?.age !== '' && kind?.age != null ? a : null;
 }
 
-// `kinderListe`: die Kinder im Haushalt; die Schnellrechnung gibt auch die aus dem alten Feld `dependents` mit.
-// Ohne Alter gilt ein Kind als minderjährig.
-export function unterstuetzungseinheit(basis, heute = new Date(), kinderListe = basis?.household?.children) {
-  const kinderAlle = Array.isArray(kinderListe) ? kinderListe : [];
-  const verheiratet = giltAlsVerheiratet(basis?.maritalStatus);
-  const erwachsene = erwachseneImHaushalt(basis?.household);
+// Die Kinder im Haushalt, ohne Haushaltsangabe aus dem alten Feld `dependents`. Ohne Alter gilt ein Kind als
+// minderjährig. Zivilstand leer und zwei Erwachsene: gerechnet als Paar, wie bis 02.11.2026 auf der Seite. Getrennt
+// gerechnet käme aus einem nicht ausgefüllten Feld ein Betrag (Fachprüfung 02.11.2026). `haushaltOffen` sagt es.
+export function unterstuetzungseinheit(basis, heute = new Date()) {
+  const hh = basis?.household;
+  const kinderAlle = hh && typeof hh === 'object'
+    ? (Array.isArray(hh.children) ? hh.children : [])
+    : Array.from({ length: Number(basis?.dependents) || 0 }, () => ({ age: 0 }));
+  const erwachsene = erwachseneImHaushalt(hh);
+  const zivilstandOffen = !basis?.maritalStatus && erwachsene >= 2;
+  const verheiratet = giltAlsVerheiratet(basis?.maritalStatus) || zivilstandOffen;
   const adults = verheiratet && erwachsene >= 2 ? 2 : 1;
   const erwachseneKinder = kinderAlle.filter(k => { const a = kindAlter(k, heute); return a != null && a >= 18; }).length;
   const kinder = kinderAlle.length - erwachseneKinder;
@@ -47,8 +52,9 @@ export function unterstuetzungseinheit(basis, heute = new Date(), kinderListe = 
     verheiratet, adults, kinder, weiterePersonen,
     einheit: adults + kinder,
     haushalt: adults + kinder + weiterePersonen,
-    // Bei erfasstem Partnerlohn ohne Ehe, oder im Konkubinat mit Mitbewohnenden.
-    konkubinatOffen: !verheiratet && (partner > 0 || (basis?.maritalStatus === 'cohabiting' && weiterePersonen > 0)),
+    // Der Hinweis zur Rechnung (i18n-Schlüssel) oder null. Konkubinat: bei erfasstem Partnerlohn ohne Ehe oder beim Zivilstand selbst.
+    haushaltOffen: zivilstandOffen ? 'pegel.zivilstandOffen'
+      : !verheiratet && (partner > 0 || basis?.maritalStatus === 'cohabiting') ? 'pegel.konkubinatOffen' : null,
   };
 }
 

@@ -115,9 +115,9 @@ describe('Zwei Erwachsene ohne Ehe: keine Unterstützungseinheit (C.2 Erl. b, C.
     const p = profil({ monthlyIncome: 800, incomeType: 'netto' }, { maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 5000 } });
     const sh = calculateSozialhilfe(p);
     expect(sh.income).toBe(800);
-    expect(sh.konkubinatOffen).toBe(true);
+    expect(sh.haushaltOffen).toBe('pegel.konkubinatOffen');
     expect(sh.deficit).toBe(rechner(p).sozialhilfeAnspruch);
-    expect(sozialhilfePegelState(p).konkubinatOffen).toBe(true);
+    expect(sozialhilfePegelState(p).haushaltOffen).toBe('pegel.konkubinatOffen');
     expect(render(p)).toContain(de.pegel.konkubinatOffen);
   });
   it('Kind ab 18 zählt nicht zur Einheit, auch auf der Seite', () => {
@@ -135,8 +135,50 @@ describe('Nebenkosten gehören zu den Wohnkosten (C.4.1 Abs. 2, Erl. c)', () => 
     expect(rechner(p).bedarf).toBe(calculateSozialhilfe(p).totalBedarf);
   });
   it('im geteilten Haushalt der Anteil an beidem', () => {
-    const p = profil({}, { household: { adults: 2, children: [] } }, { utilities: 150 });
+    const p = profil({}, { maritalStatus: 'single', household: { adults: 2, children: [] } }, { utilities: 150 });
     expect(sozialhilfeVorbefuellung(p).miete).toBe('375');
     expect(calculateSozialhilfe(p).effectiveRent).toBe(375);
+  });
+});
+
+describe('Nachbesserung nach Fachprüfung e1383af5', () => {
+  const zwei = { household: { adults: 2, children: [], partnerIncome: 4000 } };
+  it('Zivilstand leer, zwei Erwachsene: als Paar gerechnet wie bisher, kein Betrag aus dem Nichts, und gesagt', () => {
+    const p = profil({ employmentType: 'unemployed' }, zwei, { rentAmount: 1700 });
+    const sh = calculateSozialhilfe(p);
+    expect(sh.grundbedarf).toBe(1624);
+    expect(sh.effectiveRent).toBe(1700);
+    expect(sh.income).toBe(4000);
+    expect(sh.vermoegensfreibetrag).toBe(calculateSozialhilfe({ ...p, basis: { ...p.basis, maritalStatus: 'married' } }).vermoegensfreibetrag);
+    expect(sh.haushaltOffen).toBe('pegel.zivilstandOffen');
+    expect(sh.deficit).toBe(rechner(p).sozialhilfeAnspruch);
+    expect(render(p)).toContain(de.pegel.zivilstandOffen);
+  });
+  it('ledig, zwei Erwachsene: bleibt getrennt, ohne Zivilstands-Hinweis', () => {
+    const sh = calculateSozialhilfe(profil({}, { maritalStatus: 'single', household: { adults: 2, children: [] } }));
+    expect(sh.grundbedarf).toBe(812);
+    expect(sh.haushaltOffen).toBe(null);
+  });
+  it('Konkubinat mit nur einer erfassten Person: Hinweis trotzdem', () => {
+    expect(calculateSozialhilfe(profil({}, { maritalStatus: 'cohabiting' })).haushaltOffen).toBe('pegel.konkubinatOffen');
+  });
+  it('Altfeld dependents: Rechner und Seite gleich', () => {
+    const p = profil({ monthlyIncome: 1000, incomeType: 'netto' }, { household: undefined, dependents: 2 });
+    expect(rechner(p).bedarf).toBe(calculateSozialhilfe(p).totalBedarf);
+    expect(rechner(p).vermoegensfreibetrag).toBe(calculateSozialhilfe(p).vermoegensfreibetrag);
+  });
+  it('Miete mit Rappen im geteilten Haushalt: kein Franken Unterschied', () => {
+    const p = profil({}, { maritalStatus: 'single', household: { adults: 3, children: [] } }, { rentAmount: 1000.5, utilities: 100.4 });
+    expect(Number(sozialhilfeVorbefuellung(p).miete)).toBe(calculateSozialhilfe(p).effectiveRent);
+  });
+  it('die Texte behaupten nicht mehr die ganze Miete, in keiner Sprache', () => {
+    for (const lang of [de, en, fr, itTranslations, rm]) {
+      const s = JSON.stringify([lang.sozialhilfe.mitGanzerMiete, lang.sozialhilfe.rentLimitDossier, lang.sozialhilfe.rentLimitUnbekannt]);
+      expect(s).not.toMatch(/ganze Miete|ganzen Miete|full rent|loyer entier|intero affitto|entira fittanza/);
+    }
+  });
+  it('Seite nennt den Anteil am Grundbedarf', () => {
+    const sh = calculateSozialhilfe(profil({}, { maritalStatus: 'cohabiting', household: { adults: 2, children: [] } }));
+    expect([sh.einheit, sh.haushalt]).toEqual([1, 2]);
   });
 });

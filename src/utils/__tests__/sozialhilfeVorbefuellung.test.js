@@ -5,7 +5,7 @@ import { sozialhilfeVorbefuellung as vb, saeule3aBeziehbar } from '../sozialhilf
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ ohneFreibetrag: false, adults: 1, kinder: 0, weiterePersonen: 0, miete: '', mieteAnteil: false, wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, hauptBasisOffen: false, lohnNichtUebernommen: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, nebenerwerbBasisOffen: false, partnerKonkubinat: false });
+    expect(vb({})).toEqual({ ohneFreibetrag: false, adults: 1, kinder: 0, weiterePersonen: 0, miete: '', mieteAnteil: false, wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, hauptBasisOffen: false, lohnNichtUebernommen: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, nebenerwerbBasisOffen: false, partnerKonkubinat: false, haushaltOffen: null });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 
@@ -107,7 +107,7 @@ describe('sozialhilfeVorbefuellung', () => {
     });
     it('Miete: allein aus dem Profil, bei weiteren Personen der Anteil nach Köpfen (SKOS-RL C.4.2 Abs. 2)', () => {
       expect(vb({ wohnen: { rentAmount: 1400 } }).miete).toBe('1400');
-      expect(vb({ wohnen: { rentAmount: 1400 }, basis: { household: { adultsList: [{}] } } }).miete).toBe('700');
+      expect(vb({ wohnen: { rentAmount: 1400 }, basis: { maritalStatus: 'single', household: { adultsList: [{}] } } }).miete).toBe('700');
     });
     it('Konkubinat ohne erfassten Partnerlohn: Konkubinatsbeitrag-Hinweis trotzdem', () => {
       expect(vb({ basis: { maritalStatus: 'cohabiting', household: { adultsList: [{}] } } }).partnerKonkubinat).toBe(true);

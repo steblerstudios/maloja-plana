@@ -4860,9 +4860,9 @@ export default {
     skosCalculation: 'Calculaziun dal basegn COSAS',
     basicNeeds: 'Basegn fundamental (COSAS)',
     housingCosts: "Custs d'abitar (effectivs)",
-    rentLimitUnbekannt: { sie: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da Voss lieu da domicil — il servetsch social cumpetent la enconuscha.', du: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da tes lieu da domicil — il servetsch social cumpetent la enconuscha.' },
-    rentLimitDossier: 'Quintada è l’entira fittanza cun ils custs accessorics. Quant che vegn renconuschì, dependa da la limita da fittanza al lieu da domicil; l’app na la enconuscha betg.',
-    mitGanzerMiete: 'stimà cun l’entira fittanza',
+    rentLimitUnbekannt: { sie: 'Qua èn quintads la fittanza ed ils custs accessorics, en in tegnairchasa spartì l’atgna part. Quant che l’agid social renconuscha, dependa da la limita da fittanza da Voss lieu da domicil — il servetsch social cumpetent la enconuscha.', du: 'Qua èn quintads la fittanza ed ils custs accessorics, en in tegnairchasa spartì l’atgna part. Quant che l’agid social renconuscha, dependa da la limita da fittanza da tes lieu da domicil — il servetsch social cumpetent la enconuscha.' },
+    rentLimitDossier: 'Quintads èn la fittanza ed ils custs accessorics, en in tegnairchasa spartì l’atgna part. Quant che vegn renconuschì, dependa da la limita da fittanza al lieu da domicil; l’app na la enconuscha betg.',
+    mitGanzerMiete: 'stimà senza limita da fittanza',
     healthInsurance: 'Cassa da malsauns (LAMal)',
     totalNeeds: 'Basegn total',
     deductIncome: 'Deducziun: Entrada',
@@ -7470,7 +7470,8 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Quintà senza franchisa sin l’entrada per persunas en furmaziun. Blers chantuns dattan ad ellas ina franchisa u in’allocaziun d’integraziun. Il chantun decida tge che vala.", // TODO(rm): provisorisch
-    konkubinatOffen: "Quintà senza contribuziun da concubinat. En in concubinat stabil dumbra il servetsch social ina contribuziun da la partenaria u dal partenari sco entrada, il dretg po esser pli bass u crudar davent.", // TODO(rm): provisorisch
+    konkubinatOffen: "Quintà senza contribuziun da concubinat. En in concubinat stabil po il servetsch social dumbrar ina contribuziun da la partenaria u dal partenari sco entrada, il dretg po esser pli bass u crudar davent.", // TODO(rm): provisorisch
+    zivilstandOffen: "Il stadi civil manca en il profil. Quintà sco pèr cun tegnairchasa cuminaivel; senza matrimoni u partenadi registrà è il quint auter.", // TODO(rm): provisorisch
     vorBeitraegen: "L’entrada da l’activitad independenta è quintada sco endatada. Las atgnas contribuziuns AVS e da la cassa da pensiun n’èn betg deducidas.", // TODO(rm): provisorisch
     ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)

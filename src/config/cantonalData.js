@@ -298,7 +298,7 @@ export function getGrundbedarf(householdSize) {
 // - Andere Einkünfte ohne Freibetrag, wie im Rechner: Familienzulagen und Unterhaltsbeiträge (SKOS-RL
 //   D.1 Erl. a, Version 1.1.2026; bis 02.11.2026 fehlten sie hier) und der Partnerlohn bei Ehe oder
 //   eingetragener Partnerschaft. Einnahmen von Minderjährigen zählen laut D.1 Abs. 2 nur bis zu deren
-//   Anteil am Budget. Das kann die App nicht trennen: Sie rechnet alles an, im Zweifel zu vorsichtig.
+//   Anteil am Budget. Das kann die App nicht trennen: Sie rechnet alles an, die Lücke kann dann zu tief sein.
 // - Haushalt und Wohnkosten nach der Unterstützungseinheit (utils/unterstuetzungseinheit.js).
 // - Erwerbsunkosten (SKOS-RL C.6.3): das Profil hat dafür kein Feld, deshalb 0. Bei Erwerbstätigen
 //   ist der Bedarf also zu tief; `erwerbsunkostenOffen` sagt das der Anzeige, und im Rechner
@@ -325,9 +325,9 @@ export function calculateSozialhilfe(data) {
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
 
-  const einheit = unterstuetzungseinheit(data.basis, new Date(), hh.children);
+  const einheit = unterstuetzungseinheit(data.basis);
   const grundbedarf = grundbedarfNachWohnform(einheit.einheit, einheit.weiterePersonen, 'familienaehnlich');
-  // Die ganze erfasste Miete, ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
+  // Die erfasste Miete (im geteilten Haushalt der Anteil), ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
   // (siehe oben). Die Anzeige sagt das, statt eine Zahl zu erfinden.
   const effectiveRent = wohnkostenAnteil(rent + utilities, einheit);
   const effectiveKK = kkPremium;
@@ -373,8 +373,10 @@ export function calculateSozialhilfe(data) {
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
-    // Im stabilen Konkubinat fehlt der Konkubinatsbeitrag in der Rechnung (SKOS-RL D.4.4): die Anzeigen sagen es.
-    konkubinatOffen: einheit.konkubinatOffen,
+    // Was am Haushalt offen ist (Konkubinatsbeitrag SKOS-RL D.4.4, Zivilstand leer): die Anzeigen sagen es.
+    haushaltOffen: einheit.haushaltOffen,
+    einheit: einheit.einheit,
+    haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
     anspruchOffen: erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,

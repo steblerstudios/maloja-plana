@@ -65,7 +65,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
 
   const partner = partnerEinkommenRoh(basis);
   const haushalt = unterstuetzungseinheit(basis, heute);
-  const { verheiratet, adults, kinder, weiterePersonen, konkubinatOffen } = haushalt;
+  const { verheiratet, adults, kinder, weiterePersonen, haushaltOffen } = haushalt;
   const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined]);
 
   const mit3a = saeule3aBeziehbar(basis, heute) && betrag(f.pension3aBalance) > 0;
@@ -83,7 +83,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     adults,
     kinder,
     weiterePersonen,
-    miete: mieteAnteil ? String(wohnkostenAnteil(Number(wohnkosten), haushalt)) : wohnkosten,
+    miete: mieteAnteil ? String(wohnkostenAnteil(betrag(data?.wohnen?.rentAmount) + betrag(data?.wohnen?.utilities), haushalt)) : wohnkosten,
     mieteAnteil,
     wohnform: weiterePersonen > 0 ? 'familienaehnlich' : 'allein',
     einkommen,
@@ -100,6 +100,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     erwerbstaetig,
     nebenerwerbBrutto,
     nebenerwerbBasisOffen,
-    partnerKonkubinat: konkubinatOffen,
+    partnerKonkubinat: haushaltOffen === 'pegel.konkubinatOffen',
+    haushaltOffen,
   };
 }
