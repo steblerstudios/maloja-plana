@@ -751,7 +751,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
-              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+              style: { cursor: 'pointer', padding: space.sm + 'px 2px', minHeight: '44px', boxSizing: 'border-box', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
                 React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),
