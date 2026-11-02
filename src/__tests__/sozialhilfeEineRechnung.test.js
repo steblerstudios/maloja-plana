@@ -48,8 +48,24 @@ describe('F8-S4: leeres Einkommen ergibt keinen Betrag', () => {
     expect(html).not.toContain('/ ' + de.sh.monat);
     expect(html).toContain(de.sh.einkommenEingeben.sie);
   });
+  it('eine 0 bei den Familienzulagen ersetzt den Lohn nicht', () => {
+    const html = seite(profil({ familienzulagen: 0 }));
+    expect(html).not.toContain('/ ' + de.sh.monat);
+    expect(html).toContain(de.sh.einkommenEingeben.sie);
+  });
   it('Gegenprobe: eine 0 ist eine Antwort', () => {
     expect(seite(profil({ monthlyIncome: 0, savingsAccount: 0 }))).not.toContain(de.sh.einkommenEingeben.sie);
+  });
+});
+
+describe('Fachprüfung 532cb632: Vorbehalte bleiben', () => {
+  it('Konkubinat mit Vermögen im Kanton ohne bestätigten Freibetrag', () => {
+    const d = profil({ monthlyIncome: 800, savingsAccount: 30000 });
+    d.basis = { ...d.basis, canton: 'VD', maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 4000 } };
+    expect(seite(d)).toContain(t('sozialhilfe.assetLimitUnconfirmed'));
+  });
+  it('der Betrag im Pegel nennt die ganze Miete', () => {
+    expect(seite(profil({ monthlyIncome: 800, savingsAccount: 0 }))).toContain(t('sozialhilfe.mitGanzerMiete'));
   });
 });
 

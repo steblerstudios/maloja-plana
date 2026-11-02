@@ -47,8 +47,10 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   // Lohn im Profil, das Feld trägt ihn nicht oder nur zum Teil, und niemand hat es angepasst.
   const lohnOffen = (vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '') || (vorbefuellt.lohnUnvollstaendig && String(einkommen) === vorbefuellt.einkommen);
 
-  // Kein Einkommen eingetragen, auch keine anderen Einkünfte: Ohne Sperre stünde der ganze Bedarf als Betrag da (F8-S4). Eine 0 ist eine Antwort.
-  const einkommenLeer = String(einkommen ?? '').trim() === '' && String(andereEinkuenfte ?? '').trim() === '';
+  // Kein Einkommen eingetragen: Ohne Sperre stünde der ganze Bedarf als Betrag da (F8-S4). Eine 0 ist eine Antwort.
+  // Andere Einkünfte sagen nichts über den Lohn (Fachprüfung 532cb632), ausser das Profil nennt eine Lage ohne Erwerb.
+  const ohneErwerb = !erwerbstaetig && !!data?.finanzen?.employmentType && Number(andereEinkuenfte) > 0;
+  const einkommenLeer = String(einkommen ?? '').trim() === '' && !ohneErwerb;
 
   const result = useMemo(() => {
     const m = Number(miete) || 0;
@@ -230,8 +232,9 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   );
   // Wer erwerbstätig ist, hat fünf Angaben: Sonst stünde «4 von 4» neben «Noch eine Angabe nötig» (F8-S3).
   const angabenWerte = [miete, kvg, einkommen, vermoegen, ...(erwerbstaetig ? [erwerbsunkosten] : [])];
-  const vorbehalte = zeige ? [
-    !zeige.gblBelegt && t('sh.gblNichtBelegt', { jahr: zeige.gblJahr, laufend: new Date().getFullYear() }),
+  // Der Jahreshinweis gilt auch ohne Ergebnis: Darunter steht die SKOS-Tabelle.
+  const gbl = gblStand();
+  const vorbehalte = [!gbl.belegt && t('sh.gblNichtBelegt', { jahr: gbl.jahr, laufend: new Date().getFullYear() })].concat(zeige ? [
     hatAusweisFNS(data) && t('pegel.ansatzTiefer'),
     vorbefuellt.ohneFreibetrag && t('pegel.ohneFreibetrag'),
     vorbefuellt.vorBeitraegen && t('pegel.vorBeitraegen'),
@@ -239,7 +242,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     vorbefuellt.nebenerwerbBrutto && t('sh.nebenerwerbBruttoHint'),
     vorbefuellt.nebenerwerbBasisOffen && t('einkommensart.nebenOffen'),
     erwerbstaetig && String(erwerbsunkosten).trim() === '' && t('sozialhilfe.erwerbsunkostenOffen'),
-  ].filter(Boolean) : (konkubinatGesperrt && result.vermoegenZuerst ? [t('pegel.vermoegen')] : []);
+  ] : (konkubinatGesperrt && result.vermoegenZuerst ? [t('pegel.vermoegen'), result.vfbUnbestaetigt && t('sozialhilfe.assetLimitUnconfirmed')] : [])).filter(Boolean);
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,

@@ -70,6 +70,8 @@ export function sozialhilfePegelAusRechner(result) {
     show: true, variant: 'aufstockung', mode,
     fraction: Math.max(0, Math.min(PEGEL_SCALE, income / result.bedarf)),
     income, bedarf: result.bedarf, amount: mode === 'gap' ? result.totalUnterstuetzung : 0,
+    // Betrag mit der ganzen Miete gerechnet: Der Zusatz gehört zu jeder Zahl (cantonalData.js).
+    mitGanzerMiete: mode === 'gap' && result.wohnkosten > 0,
   };
 }
 
