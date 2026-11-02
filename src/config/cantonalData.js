@@ -8,7 +8,7 @@ import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
-import { sozialhilfeBilanz, istErwerbstaetig, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
+import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { grundbedarf as skosGrundbedarf, gblStand } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 
@@ -326,7 +326,7 @@ export function calculateSozialhilfe(data) {
 
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
-    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig, kanton: canton,
+    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen), kanton: canton,
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;
@@ -362,6 +362,7 @@ export function calculateSozialhilfe(data) {
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
+    ohneFreibetrag: erwerbstaetig && !freibetragGilt(data.finanzen),
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
     anspruchOffen: erwerbstaetig && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,

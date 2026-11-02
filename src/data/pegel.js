@@ -57,7 +57,7 @@ export function pegelState(data) {
 // wird als Aufstockung gefüllt. Reine Anzeige über calculateSozialhilfe.
 export function sozialhilfePegelState(data) {
   const sh = calculateSozialhilfe(data);
-  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen };
+  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, ohneFreibetrag: !!sh?.ohneFreibetrag };
 }
 
 function sozialhilfePegelRoh(data) {

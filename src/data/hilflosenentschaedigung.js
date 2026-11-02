@@ -18,7 +18,7 @@
 //     Abs. 4bis: die IV-HE endet beim Vorbezug der GANZEN Altersrente oder mit dem Referenzalter.
 //     Abs. 3: lebenspraktische Begleitung nur zu Hause, immer leichter Grad; bei ausschliesslich
 //     psychischer Beeinträchtigung nur mit Rentenanspruch. Art. 42bis Abs. 5: Minderjährige nicht
-//     allein wegen lebenspraktischer Begleitung. Art. 48: Nachzahlung höchstens zwölf Monate.
+//     allein wegen lebenspraktischer Begleitung. Art. 48: Nachzahlung zwölf Monate, Ausnahme Abs. 2.
 //   AHV, AHVG Art. 43bis Abs. 1: Personen, «die ihre ganze Altersrente beziehen», oder mit EL,
 //     Wohnsitz und gewöhnlicher Aufenthalt in der Schweiz. Abs. 3 (Fedlex, Stand 1.1.2026):
 //     80 / 50 / 20 % des MINDESTbetrages der Altersrente. Abs. 1bis: «Der Anspruch auf die
