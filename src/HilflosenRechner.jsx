@@ -90,6 +90,7 @@ export const HilflosenRechner = ({ palette, t }) => {
     // Lebenspraktische Begleitung gilt nur bei der IV, für Erwachsene zu Hause (IVG Art. 42 Abs. 3,
     // Art. 42bis Abs. 5) — die AHV kennt sie nicht.
     person === 'iv' && wohnen === 'zuhause' && React.createElement('div', { style: s.note }, t('hilflos.gradBegleitung')),
+    person === 'iv' && React.createElement('div', { style: s.note }, t('hilflos.aufschubNote')),
     person === 'ahv' && auswahl(t('hilflos.frageBesitzstand'), [
       { v: false, l: t('common.no') },
       { v: true, l: t('common.yes') },

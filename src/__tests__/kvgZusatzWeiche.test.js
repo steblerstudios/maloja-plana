@@ -76,9 +76,14 @@ describe('Weiche in Schritt 1', () => {
     expect(html).toContain(esc(t('zusatzWechsel.intro')));
     expect(html).not.toContain(esc(ohneNummer(t('kvgWechsel.step2Title'))));
   });
-  it('die Wahl bleibt gespeichert (im Beispiel nicht)', () => {
+  it('die Wahl bleibt nur mitten im Ablauf, ein neuer Einstieg führt zur Grundversicherung', () => {
     store.or5_ablauf_kvgwechsel_weg = 'zusatz';
-    expect(zeichne(KVGWechsel)).toContain(esc(ohneNummer(t('zusatzWechsel.step2Title'))));
+    store.or5_ablauf_kvgwechsel = JSON.stringify({ schritt: 1, fertig: false });
+    expect(zeichne(KVGWechsel)).toContain(esc(t('zusatzWechsel.intro')));
+    store.or5_ablauf_kvgwechsel = JSON.stringify({ schritt: 0, fertig: false });
+    expect(zeichne(KVGWechsel)).toContain(esc(t('kvgWechsel.intro')));
+    store.or5_ablauf_kvgwechsel = JSON.stringify({ schritt: 3, fertig: true });
+    expect(zeichne(KVGWechsel)).toContain(esc(t('kvgWechsel.intro')));
   });
   it('die Verweise «Zusatzversicherung» im KVG-Weg stellen die Weiche, statt die Seite zu wechseln', () => {
     const src = readFileSync(resolve(__dirname, '..', 'KVGWechsel.jsx'), 'utf8');

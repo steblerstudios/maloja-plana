@@ -33,7 +33,7 @@
 //    Lohn ein Freibetrag über dem Lohn (Fachprüfung swiss-precision zu PR #389).
 //    🟡 UNSICHER bleibt: Andere Kantone geben mehr (bis 700) oder rechnen nach Pensum. Die Anzeige
 //    nennt den Betrag deshalb «geschätzt». Lernende nehmen viele Kantone vom EFB aus (D.2 Erl. b);
-//    das ist hier nicht abgebildet.
+//    die Rechnung gibt ihnen darum keinen (`freibetragGilt`, Predeploy 02.11.2026).
 //
 // 3. Freibetrag beim EINTRITT (ob überhaupt ein Anspruch entsteht). Laut C.2 Abs. 3 «können» EFB bei
 //    der materiellen Grundsicherung berücksichtigt werden. D.2 Erl. c empfiehlt, sie «sowohl bei der
@@ -69,6 +69,9 @@ export function einkommensfreibetrag(erwerbseinkommen) {
 // Anstellungstyp gewählt, zählt ein eingetragener Arbeitgeber. «Rentner» geht vor einem
 // liegen gebliebenen Arbeitgeber. Dieselbe Regel gilt für die Vorbefüllung des Rechners.
 const ERWERBSTAETIG = ['employed', 'apprentice', 'selfEmployed', 'freelance'];
+// Der Freibetrag: nicht für Lernende, viele Kantone nehmen sie aus (D.2 Erl. b, nicht gelesen). Für die Erwerbsunkosten zählen sie weiter.
+export const freibetragGilt = (finanzen) => istErwerbstaetig(finanzen) && finanzen?.employmentType !== 'apprentice';
+
 export function istErwerbstaetig(finanzen) {
   const typ = finanzen?.employmentType;
   if (typ) return ERWERBSTAETIG.includes(typ);

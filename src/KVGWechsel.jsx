@@ -50,9 +50,11 @@ export const fristKnopfDatum = (iso) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}.
 
 export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) => {
   const vorlaeufig = useVorlaeufig();
-  const [gewaehlt, setGewaehlt] = useState(() => startWeg || wegLaden(vorlaeufig));
-  const weg = gewaehlt || 'grund';
   const [stand, setStand] = useAblaufStand('kvgwechsel', 4);
+  // Die Wahl gilt nur, solange man mitten im Ablauf ist. Wer neu einsteigt, etwa über «Kündigung bis 30.11.»,
+  // bekommt die Grundversicherung, nicht die Frist 30.09. eines früheren Besuchs (Predeploy 02.11.2026).
+  const [gewaehlt, setGewaehlt] = useState(() => startWeg || (stand.schritt > 0 && !stand.fertig ? wegLaden(vorlaeufig) : null));
+  const weg = gewaehlt || 'grund';
   // Eine Wahl führt an den Anfang des gewählten Wegs (Schritt 1 gehört beiden).
   const waehle = (w) => { setGewaehlt(w); wegSichern(w, vorlaeufig); if (stand.schritt !== 0 || stand.fertig) setStand({ schritt: 0, fertig: false }); };
   const textFarbe = ablaufTextFarbe(palette, 'kvgwechsel') || palette.sageDeep || palette.mid;

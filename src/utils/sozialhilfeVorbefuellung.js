@@ -30,7 +30,7 @@ import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js
 import { giltAlsVerheiratet } from './zivilstand.js';
 import { referenzalterMonate } from '../data/ahvRechner.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
-import { istErwerbstaetig } from '../data/sozialhilfeKern.js';
+import { freibetragGilt } from '../data/sozialhilfeKern.js';
 
 // Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
 function alterInMonaten(geburtsdatum, heute) {
@@ -86,7 +86,8 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const mit3a = saeule3aBeziehbar(basis, heute) && betrag(f.pension3aBalance) > 0;
   const vermoegen = summeAlsFeld([f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined]);
 
-  const erwerbstaetig = istErwerbstaetig(f);
+  // Der Schalter im Rechner trägt den Freibetrag: gleiche Regel wie calculateSozialhilfe.
+  const erwerbstaetig = freibetragGilt(f);
 
   const erwachsene = erwachseneImHaushalt(basis.household);
   const einheitErwachsene = verheiratet && erwachsene >= 2 ? 2 : 1;

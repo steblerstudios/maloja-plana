@@ -84,6 +84,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
           // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt).
           + (sh.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
+          + (sh.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
           + (sh.vorBeitraegen ? ' · ' + t('pegel.vorBeitraegen') : ''),
       };
       // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem

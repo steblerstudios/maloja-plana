@@ -77,7 +77,7 @@ export function absicherungJeRisiko(data = {}, heute = new Date()) {
       // Fehlt die Krankenkasse, ist das unter Krankheit schon «offen» — hier nicht doppelt zählen.
       uvgDa ? zeile('uvgErfasst', 'erfasst') : kkErfasst ? zeile('unfallKk', 'hinweis') : zeile('unfallOhneKk', 'hinweis'),
       selbstaendig && !uvgDa ? zeile('uvgFreiwillig', 'hinweis') : null,
-      // Ohne Anstellungstyp: Arbeitslose sind obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).
+      // Ohne Anstellungstyp: nur wer AVIG Art. 8 erfüllt oder Art. 29 bezieht, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).
       !art && !uvgDa ? zeile('unfallArbeitslos', 'hinweis') : null,
     ];
 
