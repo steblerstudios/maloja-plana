@@ -41,13 +41,15 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   // darum leer; gerechnet wird nur mit einem eingetragenen Betrag (data/sozialhilfeKern.js).
   const [erwerbsunkosten, setErwerbsunkosten] = useState('');
 
+  // Lohn im Profil, das Feld trägt ihn nicht oder nur zum Teil, und niemand hat es angepasst.
+  const lohnOffen = (vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '') || (vorbefuellt.lohnUnvollstaendig && String(einkommen) === vorbefuellt.einkommen);
+
   const result = useMemo(() => {
     const m = Number(miete) || 0;
     const k = Number(kvg) || 0;
     if (m <= 0 && k <= 0) return null;
     // Lohn im Profil, aber nicht als Netto: Ohne Eintrag gäbe es sonst einen Betrag aus einem Einkommen von 0.
-    if (vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '') return null;
-    if (vorbefuellt.konkubinatBetragOffen) return null;
+    if (lohnOffen) return null;
     return berechneSozialhilfe({
       adults,
       kinderImHaushalt: kinderCount,
@@ -65,7 +67,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       integrationsMassnahme: integration,
       kanton,
     });
-  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, vorbefuellt.lohnNichtUebernommen, integration, kanton]);
+  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, lohnOffen, integration, kanton]);
+
+  // Konkubinat mit Partnerlohn: kein Betrag, wo eine Lücke bleibt. Deckt das eigene Einkommen den Bedarf, gilt das gewöhnliche Nein.
+  const konkubinatGesperrt = !!(result && vorbefuellt.konkubinatBetragOffen && (result.sozialhilfeAnspruch > 0 || result.efbEntscheidet));
+  const zeige = konkubinatGesperrt ? null : result;
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -114,7 +120,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   // Rechner-Form X (F7-A2, 27.10.2026): Anspruch gross zuerst (Live-Region), darunter die Rechnung als Tabelle,
   // dann «Ihre Angaben». Steht der Rechner in der Sozialhilfe-Seite, bringt sie Titel, Satz, ihre Orientierung
   // aus dem Profil (`weiteres`) und die offizielle Stelle mit. Rechnung unverändert.
-  const ergebnis = result && React.createElement(React.Fragment, null,
+  const ergebnis = zeige && React.createElement(React.Fragment, null,
       React.createElement('div', {
         style: {
           ...s.highlight,
@@ -137,7 +143,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
           t('sozialhilfe.efbEntscheidet')
         ),
-        !result.hatAnspruch && !result.efbEntscheidet && result.anspruchOffen && React.createElement('div', { style: s.hint }, t('pegel.coveredOffen')),
+        !result.hatAnspruch && !result.efbEntscheidet && result.anspruchOffen && React.createElement('div', { style: s.hint }, t(result.vermoegenZuerst ? 'pegel.vermoegen' : 'pegel.coveredOffen')),
         // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
         // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
         result.hatAnspruch && result.vfbUnbestaetigt && React.createElement('div', { style: s.hint },
@@ -193,11 +199,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
           ),
           React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, fontWeight: weight.bold } }, t('sh.sozialhilfe')),
-            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.bold } }, fmt(result.sozialhilfeAnspruch))
+            React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.bold } }, result.anspruchOffen || result.efbEntscheidet ? '—' : fmt(result.sozialhilfeAnspruch))
           )
         )
       ),
-      result.anrechenbaresVermoegen > 0 && React.createElement('div', {
+      result.vermoegenZuerst && React.createElement('div', {
         style: { ...s.section, marginTop: space.md + 'px', color: palette.warn || palette.mid, border: '1px solid ' + (palette.warn || palette.mid), background: (palette.warn || palette.mid) + '15' }
       },
         t('sh.vermoegenHinweis') + ' (CHF ' + fmt(result.vermoegensfreibetrag) + ' ' + t('sh.freibetrag') + ', '
@@ -209,9 +215,9 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,
-    ergebnis, ohneErgebnis: t(vorbefuellt.konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vorbefuellt.lohnNichtUebernommen && String(einkommen).trim() === '' ? 'sh.lohnEingeben' : 'sh.eingeben'),
-    art: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
-    vorbehalt: result && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.hinweise.length > 0 || vorbefuellt.vorBeitraegen || vorbefuellt.nebenerwerbBrutto || vorbefuellt.nebenerwerbBasisOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
+    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : lohnOffen ? 'sh.lohnEingeben' : 'sh.eingeben'),
+    art: konkubinatGesperrt ? null : sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
+    vorbehalt: zeige && (!result.gblBelegt || hatAusweisFNS(data) || vorbefuellt.ohneFreibetrag || vorbefuellt.hinweise.length > 0 || vorbefuellt.vorBeitraegen || vorbefuellt.nebenerwerbBrutto || vorbefuellt.nebenerwerbBasisOffen) && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
       [
         !result.gblBelegt && t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() }),
         hatAusweisFNS(data) && t('pegel.ansatzTiefer'),

@@ -6439,7 +6439,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calculated without the income allowance for apprentices. Many cantons give them an income allowance or an integration allowance. The canton decides what applies.",
-    konkubinatBetragOffen: "No amount: in a stable cohabiting relationship, social services may count a contribution from the partner as income, so the entitlement may lapse. The app does not know this contribution. Social services will clarify the entitlement.",
+    konkubinatBetragOffen: "No amount: in a stable cohabiting relationship, social services may count a contribution from the partner as income, so the entitlement may be lower or lapse. The app does not know this contribution. Social services will clarify the entitlement.",
     konkubinatOffen: "Calculated without a cohabitation contribution. In a stable cohabiting relationship, social services may count a contribution from the partner as income, so the entitlement may be lower or lapse.",
     zivilstandOffen: "Marital status is missing from your profile. Calculated as a couple with a joint household; without marriage or a registered partnership the calculation differs.",
     rechnungOffen: "Calculation incomplete, details on the social assistance page.",
@@ -6796,7 +6796,7 @@ export default {
     erwerbsunkostenZeile: 'Extra costs of working',
     anrechenbar: 'Countable income',
     sozialhilfe: 'Social assistance',
-    vermoegenHinweis: 'Assets exceed exemption – no entitlement',
+    vermoegenHinweis: 'Assets above the exemption are counted first',
     freibetrag: 'exemption',
     eingeben: 'Enter rent and health insurance premium to calculate entitlement.',
     lohnEingeben: "Your profile has a salary but no net amount. Enter your net income below to calculate the entitlement.",

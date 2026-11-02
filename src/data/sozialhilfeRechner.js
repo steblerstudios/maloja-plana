@@ -118,17 +118,19 @@ export function berechneSozialhilfe({
     erwerbseinkommen, andereEinkuenfte, erwerbstaetig: erwerbstaetig && !ohneFreibetrag, freibetragUngewiss: erwerbstaetig && ohneFreibetrag, kanton,
   });
   const { bedarf, efb, totalEinkommen, anrechenbaresEinkommen, efbEntscheidet } = bilanz;
-  const sozialhilfeAnspruch = bilanz.luecke;
-  const totalUnterstuetzung = sozialhilfeAnspruch + izu;
-
   // Vermögensfreibetrag je Kanton (ohne Kanton: SKOS-Empfehlung D.3.1) — vereinheitlichter Helper
   const minderjaehrigeKinder = Math.max(0, haushaltGroesse - adults);
   const vermoegensfreibetrag = vermoegensfreibetragKanton(kanton, adults, minderjaehrigeKinder);
   const anrechenbaresVermoegen = Math.max(0, vermoegen - vermoegensfreibetrag);
+  // Wie calculateSozialhilfe: über dem Freibetrag weder Betrag noch Nein (SKOS-RL D.3.1 Abs. 2 und 3).
+  const knapp = erwerbstaetig && !erwerbsunkostenErfasst && !(Number(erwerbsunkosten) > 0) && Number(erwerbseinkommen) > 0
+    && bilanz.luecke <= 0 && bedarf > 0 && totalEinkommen / bedarf <= KNAPP_OBEN;
+  const vermoegenZuerst = anrechenbaresVermoegen > 0 && (bilanz.luecke > 0 || efbEntscheidet || knapp);
+  const sozialhilfeAnspruch = vermoegenZuerst ? 0 : bilanz.luecke;
+  const totalUnterstuetzung = sozialhilfeAnspruch + (vermoegenZuerst ? 0 : izu);
   const hatAnspruch = anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch > 0;
   // Wie calculateSozialhilfe, aber nur solange das Feld leer ist: eine eingetragene Zahl beantwortet die offene Frage.
-  const anspruchOffen = erwerbstaetig && !erwerbsunkostenErfasst && !(Number(erwerbsunkosten) > 0) && Number(erwerbseinkommen) > 0
-    && anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch <= 0 && bedarf > 0 && totalEinkommen / bedarf <= KNAPP_OBEN;
+  const anspruchOffen = vermoegenZuerst || (knapp && anrechenbaresVermoegen <= 0);
   // Vermögen erfasst UND der Freibetrag dieses Kantons ist kantonal nicht bestätigt.
   const vfbUnbestaetigt = vermoegen > 0 && vermoegensfreibetragUnbestaetigt(kanton, minderjaehrigeKinder);
 
@@ -153,6 +155,7 @@ export function berechneSozialhilfe({
     anrechenbaresVermoegen,
     hatAnspruch,
     anspruchOffen,
+    vermoegenZuerst,
     vfbUnbestaetigt,
     haushaltGroesse,
     kinderImHaushalt,

@@ -6413,7 +6413,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calcolato senza franchigia sul reddito per le persone in formazione. Numerosi cantoni concedono loro una franchigia o un supplemento d’integrazione. Il cantone decide cosa si applica.",
-    konkubinatBetragOffen: "Nessun importo: in un concubinato stabile il servizio sociale può conteggiare come reddito un contributo della o del partner, il diritto può venire meno. L’app non conosce questo contributo. Il servizio sociale chiarisce il diritto.",
+    konkubinatBetragOffen: "Nessun importo: in un concubinato stabile il servizio sociale può conteggiare come reddito un contributo della o del partner, il diritto può essere inferiore o venire meno. L’app non conosce questo contributo. Il servizio sociale chiarisce il diritto.",
     konkubinatOffen: "Calcolato senza contributo di concubinato. In un concubinato stabile il servizio sociale può conteggiare come reddito un contributo della o del partner: il diritto può essere inferiore o venire meno.",
     zivilstandOffen: "Nel profilo manca lo stato civile. Calcolato come coppia con economia domestica comune; senza matrimonio o unione domestica registrata il calcolo è diverso.",
     rechnungOffen: "Calcolo incompleto, dettagli nella pagina aiuto sociale.",
@@ -6771,7 +6771,7 @@ export default {
     erwerbsunkostenZeile: 'Spese dovute al lavoro',
     anrechenbar: 'Reddito computabile',
     sozialhilfe: 'Diritto all\'aiuto sociale',
-    vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
+    vermoegenHinweis: 'Patrimonio oltre la franchigia: viene conteggiato per primo',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
     lohnEingeben: { sie: "Nel profilo c’è un salario, ma non un importo netto. Inserisca qui sotto il reddito netto per calcolare il diritto.", du: "Nel profilo c’è un salario, ma non un importo netto. Inserisci qui sotto il reddito netto per calcolare il diritto." },

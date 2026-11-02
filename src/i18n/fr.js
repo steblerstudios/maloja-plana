@@ -6439,7 +6439,7 @@ export default {
   },
   pegel: {
     ohneFreibetrag: "Calculé sans franchise sur le revenu pour les personnes en formation. De nombreux cantons leur accordent une franchise ou un supplément d’intégration. Le canton décide de ce qui s’applique.",
-    konkubinatBetragOffen: "Pas de montant : dans un concubinage stable, le service social peut compter une contribution de la ou du partenaire comme revenu, le droit peut disparaître. L’application ne connaît pas cette contribution. Le service social clarifie le droit.",
+    konkubinatBetragOffen: "Pas de montant : dans un concubinage stable, le service social peut compter une contribution de la ou du partenaire comme revenu, le droit peut être plus bas ou disparaître. L’application ne connaît pas cette contribution. Le service social clarifie le droit.",
     konkubinatOffen: "Calculé sans contribution de concubinage. Dans un concubinage stable, le service social peut compter une contribution de la ou du partenaire comme revenu ; le droit peut être plus bas ou disparaître.",
     zivilstandOffen: "L’état civil manque dans le profil. Calculé comme un couple partageant le ménage ; sans mariage ni partenariat enregistré, le calcul est différent.",
     rechnungOffen: "Calcul incomplet, détails sur la page aide sociale.",
@@ -6796,7 +6796,7 @@ export default {
     erwerbsunkostenZeile: 'Frais liés au travail',
     anrechenbar: 'Revenu déterminant',
     sozialhilfe: 'Aide sociale',
-    vermoegenHinweis: 'La fortune dépasse la franchise – pas de droit',
+    vermoegenHinweis: 'Fortune supérieure à la franchise : elle est prise en compte d’abord',
     freibetrag: 'franchise',
     eingeben: { sie: 'Saisissez le loyer et la prime LAMal pour calculer le droit.', du: 'Saisis le loyer et la prime LAMal pour calculer le droit.' },
     lohnEingeben: { sie: "Le profil indique un salaire, mais pas de montant net. Saisissez le revenu net ci-dessous pour calculer le droit.", du: "Le profil indique un salaire, mais pas de montant net. Saisis le revenu net ci-dessous pour calculer le droit." },
