@@ -49,6 +49,8 @@ describe('Blatt an die Behörde: Vermögen über dem Freibetrag', () => {
     const { sicht, datei } = blatt(profil('ZH', { pension3bBalance: 50000, pension3aBalance: 100000 }));
     expect(sicht).not.toContain('pension3aBalance');
     expect(sicht).toContain('Die Säule 3a ist hier nicht mitgezählt');
+    expect(sicht).toContain('ganzen IV-Rente');
+    expect(sicht).toContain('grundsätzlich');
     expect(datei.vermoegen).toBe(50000);
     expect(datei.saeule3b).toBe(50000);
     expect(datei.saeule3a).toBeUndefined();
@@ -96,7 +98,7 @@ describe('Hinweis auf der Seite: kein absoluter Satz', () => {
     const satz = sprache.sozialhilfe.assetLimitNote;
     expect(satz).not.toMatch(/aufgebraucht|suppose que|presuppone|requires assets/);
     expect(satz).toMatch(/Vorschuss|avance|anticipo|advance/);
-    expect(satz).toMatch(/Frist|délai|termine|period/);
+    expect(satz).toMatch(/Frist zur Verwertung|délai approprié pour la réalisation|termine adeguato per la realizzazione|period to realise/);
     expect(satz).toMatch(/zurückzuzahlen|rembourser|rimborsati|repaid/);
     for (const platz of ['{basis}', '{freibetrag}', '{ueberschuss}']) expect(satz).toContain(platz);
   });
