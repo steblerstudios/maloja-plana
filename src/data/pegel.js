@@ -57,7 +57,7 @@ export function pegelState(data) {
 // wird als Aufstockung gefüllt. Reine Anzeige über calculateSozialhilfe.
 export function sozialhilfePegelState(data) {
   const sh = calculateSozialhilfe(data);
-  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, ohneFreibetrag: !!sh?.ohneFreibetrag, hinweise: sh?.hinweise || [] };
+  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, offenText: sh?.offenText, ohneFreibetrag: !!sh?.ohneFreibetrag, hinweise: sh?.hinweise || [] };
 }
 
 function sozialhilfePegelRoh(data) {
@@ -70,6 +70,8 @@ function sozialhilfePegelRoh(data) {
   // SKOS-RL D.2) — nur so ergeben Wasser + Aufstockung genau den Bedarf.
   const income = Number(deficit > 0 ? sh?.anrechenbaresEinkommen : sh?.income) || 0;
   const vermoegenUeber = Number(sh?.vermoegenUeberFreibetrag) || 0;
+
+  if (sh?.konkubinatBetragOffen) return { show: true, variant: 'aufstockung', mode: 'offen', fraction: Math.max(0, Math.min(PEGEL_SCALE, income / bedarf)), income, bedarf, amount: 0, canton, vermoegenUeber };
 
   // Ohne Kanton, Miet-Kontext oder Bedarf ist die Berechnung unvollständig.
   if (!canton || rent <= 0 || bedarf <= 0 || income <= 0) {

@@ -73,6 +73,8 @@ export function unterstuetzungseinheit(basis, heute = new Date()) {
     verheiratet, adults, kinder, weiterePersonen,
     einheit: adults + kinder,
     haushalt: adults + kinder + weiterePersonen,
+    // Stebler Studios 02.11.2026: dann kein Betrag. D.4.4: Ein Beitrag zählt als Einnahme, die App kennt Dauer und Budget nicht.
+    konkubinatMitLohn: !verheiratet && partner > 0,
     // Was an der Rechnung offen ist, als i18n-Schlüssel. Konkubinat: bei erfasstem Partnerlohn ohne Ehe oder beim Zivilstand selbst.
     hinweise: [
       zivilstandOffen && 'pegel.zivilstandOffen',
