@@ -25,9 +25,27 @@ export function startModule(eintrag) {
   return [...gesehen];
 }
 
-// Was ein erstes Bild zeigen kann: das Startbündel und die Code-Wand der Beta.
+// import(), das nicht über lazyMitTexten oder React.lazy läuft. Solcher Code läuft früh mit dem
+// t des Startbündels: Erinnerungen schreiben seine Texte sogar in den Speicher.
+const FRUEHER_IMPORT = /(?<!(?:lazyMitTexten|React\.lazy)\(\s*\(\)\s*=>\s*)(?<![\w.])import\(\s*['"](\.{1,2}\/[^'"]+)['"]/g;
+
+// Was vor dem Rest der Sprache Text braucht: Startbündel, Code-Wand der Beta und alles, was
+// beide ohne Warten nachladen.
 export function ersteBilder(src) {
-  return [...new Set([...startModule(path.join(src, 'main.jsx')), ...startModule(path.join(src, 'BetaGate.jsx'))])];
+  const gesehen = new Set();
+  const offen = [path.join(src, 'main.jsx'), path.join(src, 'BetaGate.jsx')];
+  while (offen.length) {
+    const eintrag = offen.pop();
+    for (const datei of startModule(eintrag)) {
+      if (gesehen.has(datei)) continue;
+      gesehen.add(datei);
+      for (const treffer of fs.readFileSync(datei, 'utf8').matchAll(FRUEHER_IMPORT)) {
+        const ziel = path.resolve(path.dirname(datei), treffer[1]);
+        if (ENDUNGEN.test(ziel) && fs.existsSync(ziel)) offen.push(ziel);
+      }
+    }
+  }
+  return [...gesehen];
 }
 
 function allePfade(baum, vorne = '', ziel = new Set()) {

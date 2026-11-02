@@ -30,6 +30,14 @@ describe('Sprachen teilen', () => {
     expect(module.length).toBeGreaterThan(30);
   });
 
+  // Läuft früh mit dem t des Startbündels. Ein leerer Titel würde im Kalender gespeichert.
+  it('Texte für Code, der nicht auf den Rest wartet, liegen im Kern', () => {
+    expect(pfade).toContain('docReminder.title');
+    expect(pfade).toContain('docReminder.notes');
+    expect(pfade).toContain('overdue.notificationTitle');
+    expect(pfade).toContain('overdue.notificationBody');
+  });
+
   it('fehlt ein Schlüssel, solange der Rest kommt, bleibt er leer, danach zeigt er sich', () => {
     const tabelle = { de: { a: 'A' } };
     expect(createT(tabelle, 'de', 'sie', true)('b.c')).toBe('');
