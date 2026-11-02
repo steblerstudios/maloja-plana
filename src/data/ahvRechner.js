@@ -2,7 +2,7 @@
 // im Startbündel für die Sozialhilfe-Schnellrechnung). Hier nur importiert und weitergereicht —
 // bestehende Importe aus ahvRechner.js funktionieren unverändert.
 import { werteFuerStichtag } from './jahrestabelle.js';
-import { REFERENZALTER, KOORDINATIONSABZUG, LOHN_WERTE_JE_JAHR, lohnWerte, referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, BVG_GUTSCHRIFTEN, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert } from './lohnAbzuege.js';
+import { REFERENZALTER, KOORDINATIONSABZUG, LOHN_WERTE_JE_JAHR, lohnWerte, referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, BVG_GUTSCHRIFTEN, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert, VORBEZUG_MAX_MONATE } from './lohnAbzuege.js';
 export { LOHN_WERTE_JE_JAHR, lohnWerte, referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert };
 // AHV-Rentenrechner für Maloja Plana
 // Quelle: Art. 34–40 AHVG, Verordnung über die AHV (AHVV)
@@ -20,7 +20,6 @@ const VOLLE_BEITRAGSJAHRE = 44;   // Skala 44 = Vollrente
 // 17:23 UTC) führt die Sätze je Monat auf eine Nachkommastelle gerundet: 1 Monat 0,6 %,
 // 15 Monate 8,5 %, 24 Monate 13,6 %. Genau das ergibt 6,8/12 je Monat, auf 0,1 % gerundet.
 // Nicht abgebildet: die tieferen Sätze der Frauen JG 1961–1969 (einkommensabhängig, Ziff. 4).
-const VORBEZUG_MAX_MONATE = 24;
 
 /**
  * Kürzungssatz beim Vorbezug in Prozent (Merkblatt 3.04 Ziff. 4).

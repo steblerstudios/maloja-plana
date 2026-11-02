@@ -107,7 +107,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', { style: { marginBottom: space.lg + 4 } },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'rechner', size: 20 }), style: { marginBottom: space.sm + 4 } }, t('sozialhilfe.skosCalculation')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
-        Row(t('sozialhilfe.basicNeeds'), formatCHF(sozialhilfe.grundbedarf)),
+        Row(t('sozialhilfe.basicNeeds') + (sozialhilfe.haushalt > sozialhilfe.einheit ? ' (' + t('sh.gblAnteil', { einheit: sozialhilfe.einheit, haushalt: sozialhilfe.haushalt }) + ')' : ''), formatCHF(sozialhilfe.grundbedarf)),
         Row(t('sozialhilfe.housingCosts'), formatCHF(sozialhilfe.effectiveRent)),
         // Ganze Miete eingerechnet: die Mietzins-Limite der Gemeinde kennt die App nicht (cantonalData.js).
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } }, t('sozialhilfe.rentLimitUnbekannt')),

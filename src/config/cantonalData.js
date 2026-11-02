@@ -5,11 +5,12 @@
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
+import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen } from '../utils/unterstuetzungseinheit.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
-import { grundbedarf as skosGrundbedarf, gblStand } from '../data/skosGrundbedarf.js';
+import { grundbedarf as skosGrundbedarf, gblStand, grundbedarfNachWohnform } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 
 // PLZ → Kanton/Gemeinde, Kantonscodes und -namen liegen seit 28.09.2026 in kantonPLZ.js (klein, für
@@ -294,12 +295,18 @@ export function getGrundbedarf(householdSize) {
 // Bedarf ↔ Einkommen rechnet data/sozialhilfeKern.js, derselbe Kern wie im ausführlichen Rechner
 // (dort stehen die Quellen). Die Schnellrechnung bringt nur mit, was das Profil hergibt:
 // - Erwerbseinkommen = Monatslohn + Nebenerwerb. Freibetrag (SKOS-RL D.2) nur bei Erwerbstätigkeit.
-//   Der Lohn der Partnerin oder des Partners zählt als andere Einkunft ohne Freibetrag, wie im Rechner.
+// - Andere Einkünfte ohne Freibetrag, wie im Rechner: Familienzulagen und Unterhaltsbeiträge (SKOS-RL
+//   D.1 Erl. a, Version 1.1.2026; bis 02.11.2026 fehlten sie hier) und der Partnerlohn bei Ehe oder
+//   eingetragener Partnerschaft. Einnahmen von Minderjährigen zählen laut D.1 Abs. 2 nur bis zu deren
+//   Anteil am Budget. Das kann die App nicht trennen: Sie rechnet alles an, die Lücke kann dann zu tief sein.
+// - Haushalt und Wohnkosten nach der Unterstützungseinheit (utils/unterstuetzungseinheit.js).
 // - Erwerbsunkosten (SKOS-RL C.6.3): das Profil hat dafür kein Feld, deshalb 0. Bei Erwerbstätigen
 //   ist der Bedarf also zu tief; `erwerbsunkostenOffen` sagt das der Anzeige, und im Rechner
 //   lassen sie sich eintragen.
 // - Eintritt vorsichtig ohne Freibetrag (ausser ZH/BS mit belegter Regel). `efbEntscheidet`: erst
 //   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
+const plus = (v) => Math.max(0, Number(v) || 0);
+
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
@@ -318,16 +325,18 @@ export function calculateSozialhilfe(data) {
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
 
-  const grundbedarf = getGrundbedarf(householdSize);
-  // Die ganze erfasste Miete, ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
+  const einheit = unterstuetzungseinheit(data.basis);
+  const grundbedarf = grundbedarfNachWohnform(einheit.einheit, einheit.weiterePersonen, 'familienaehnlich');
+  // Die erfasste Miete (im geteilten Haushalt der Anteil), ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
   // (siehe oben). Die Anzeige sagt das, statt eine Zahl zu erfinden.
-  const effectiveRent = rent + utilities;
+  const effectiveRent = wohnkostenAnteil(rent + utilities, einheit);
   const effectiveKK = kkPremium;
 
   const ohneFreibetrag = erwerbstaetig && erwerbseinkommen > 0 && !freibetragGilt(data.finanzen);
+  const andereEinkuenfte = plus(data.finanzen?.familienzulagen) + plus(data.finanzen?.alimenteReceived) + (einheit.verheiratet ? hh.partnerIncome : 0);
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
-    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;
@@ -336,9 +345,9 @@ export function calculateSozialhilfe(data) {
   // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
-  const vermoegen = Number(data.finanzen?.securitiesValue || 0) + Number(data.finanzen?.otherAssets || 0) + Number(data.finanzen?.savingsAccount || 0);
-  const minorChildren = hh.children.filter(c => (Number(c.age) || 0) < 18).length;
-  const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, hh.adults, minorChildren);
+  const vermoegen = vermoegensFelder(data.finanzen, data.basis).felder.reduce((s, v) => s + plus(v), 0);
+  const minorChildren = einheit.kinder;
+  const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
@@ -364,6 +373,10 @@ export function calculateSozialhilfe(data) {
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
+    // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
+    hinweise: [...einheit.hinweise, kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    einheit: einheit.einheit,
+    haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
     anspruchOffen: erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,

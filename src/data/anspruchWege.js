@@ -27,7 +27,7 @@ export function wegeAusProbe(probe) {
       const sh = calculateSozialhilfe(probe);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({
         key: 'soz', monthly: sh.deficit, vfbUnbestaetigt: !!sh.vfbUnbestaetigt, mitGanzerMiete: !!sh.mitGanzerMiete,
-        ansatzTiefer: !!sh.ansatzTiefer, ohneFreibetrag: !!sh.ohneFreibetrag,
+        ansatzTiefer: !!sh.ansatzTiefer, ohneFreibetrag: !!sh.ohneFreibetrag, hinweise: sh.hinweise || [],
       });
     }
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.

@@ -5,6 +5,8 @@
 import { werteFuerStichtag } from './jahrestabelle.js';
 
 export const REFERENZALTER = 65;
+// Frühester AHV-Vorbezug in Monaten vor dem Referenzalter (Quelle in data/ahvRechner.js).
+export const VORBEZUG_MAX_MONATE = 24;
 
 // === BVG-Grenzbeträge und Lohnabzüge je Kalenderjahr (Weg A, Entscheid Stebler Studios 21.10.2026) ===
 // Auswahl nach Stichtag über `lohnWerte(stichtag)`; die Konstanten weiter unten sind der Stand
