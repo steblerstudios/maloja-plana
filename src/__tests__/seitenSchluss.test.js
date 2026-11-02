@@ -25,7 +25,7 @@ describe('Seitenschluss', () => {
     expect(seite('installApp')).toContain('Übersicht');
   });
   it('der Schluss liegt nicht im Hauptbündel', () => {
-    expect(quelle('main.jsx')).toContain("React.lazy(() => import('./components/SeitenSchluss.jsx'))");
+    expect(quelle('main.jsx')).toContain("lazyMitTexten(() => import('./components/SeitenSchluss.jsx'))");
   });
   it('«Jemand schuldet Geld» hat einen Eingang aus dem Kapitel Behörden (F7-L1)', () => {
     expect(quelle('ChapterView.jsx')).toContain("weg('selbstmahnen')");

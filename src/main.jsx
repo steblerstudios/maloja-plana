@@ -10,7 +10,7 @@ import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './con
 // DEMO_DATA wird lazy geladen (nur im Beispiel-Modus gebraucht) — hält den ~3 KB
 // grossen Demo-Datensatz aus dem eager index-Chunk (Byte-Budget).
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/kantonPLZ.js';
-import { I18nProvider, useT } from './i18n/index.js';
+import { I18nProvider, useT, lazyMitTexten } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
@@ -27,26 +27,26 @@ import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStell
 import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
-const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
+const SettingsView = lazyMitTexten(() => import('./SettingsView.jsx'));
 import Dashboard from './Dashboard.jsx';
-const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
+const ChapterView = lazyMitTexten(() => import('./ChapterView.jsx'));
 // Nachgeladen (25.09.2026): das Hauptbundle hatte 20 B Luft, die Startbildschirm-Karte im Panorama
 // brauchte mehr. Der Hinweis erscheint nur bei fälligen Erinnerungen.
-const OverdueBanner = React.lazy(() => import('./OverdueBanner.jsx'));
+const OverdueBanner = lazyMitTexten(() => import('./OverdueBanner.jsx'));
 import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
-const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
-const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
+const Onboarding = lazyMitTexten(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
+const Tour = lazyMitTexten(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { istFremdeAenderung } from './utils/fremdeAenderung.js';
-const LegalView = React.lazy(() => import('./LegalView.jsx'));
-const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
-const InstallHinweis = React.lazy(() => import('./InstallHinweis.jsx'));
+const LegalView = lazyMitTexten(() => import('./LegalView.jsx'));
+const InstallGuide = lazyMitTexten(() => import('./InstallGuide.jsx'));
+const InstallHinweis = lazyMitTexten(() => import('./InstallHinweis.jsx'));
 // Nur das Tor im Startbündel; die Code-Wand (BetaGate.jsx) lädt es bei Bedarf nach.
 import BetaGateTor from './BetaGateTor.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
 // Luft unter dem 65-KB-Deckel. Damit das erste Antippen trotzdem nicht stockt, wird
 // das Stück nach dem ersten Bild im Leerlauf vorgeladen (siehe `vorladen` unten).
-const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
+const MobileNav = lazyMitTexten(() => import('./MobileNav.jsx'));
 import { Icon, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
 import { tagInZuerich } from './utils/zuerichTag.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
@@ -54,91 +54,91 @@ import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
-const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
-const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
+const DocumentTresor = lazyMitTexten(() => import('./DocumentTresor.jsx'));
+const KKScanner = lazyMitTexten(() => import('./KKScanner.jsx'));
 // BudgetImport: seit 27.10.2026 keine eigene Seite — Teil «CSV importieren» im Monatsbudget (UMLEITUNGEN, BudgetSync.jsx).
-const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
-const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
-const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
-const BudgetSync = React.lazy(() => import('./BudgetSync.jsx'));
-const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
-const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
-const SeitenSchluss = React.lazy(() => import('./components/SeitenSchluss.jsx'));
+const SchuldenManager = lazyMitTexten(() => import('./SchuldenManager.jsx'));
+const TaxCalculator = lazyMitTexten(() => import('./TaxCalculator.jsx'));
+const OrganDonation = lazyMitTexten(() => import('./OrganDonation.jsx'));
+const BudgetSync = lazyMitTexten(() => import('./BudgetSync.jsx'));
+const PremiumSubsidy = lazyMitTexten(() => import('./PremiumSubsidy.jsx'));
+const CVGenerator = lazyMitTexten(() => import('./CVGenerator.jsx'));
+const SeitenSchluss = lazyMitTexten(() => import('./components/SeitenSchluss.jsx'));
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
-const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
+const ZipExport = lazyMitTexten(() => import('./ZipExport.jsx'));
 // MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
 // Lebensmappe, Notfall- und Behörden-Dossier: seit 27.10.2026 eine Seite mit drei Auswahlen (F7-S2, UMLEITUNGEN).
-const UnterlagenDrucken = React.lazy(() => import('./UnterlagenDrucken.jsx'));
-const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
-const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
-const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
-const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
+const UnterlagenDrucken = lazyMitTexten(() => import('./UnterlagenDrucken.jsx'));
+const BriefGenerator = lazyMitTexten(() => import('./BriefGenerator.jsx'));
+const SozialhilfeView = lazyMitTexten(() => import('./SozialhilfeView.jsx'));
+const CalendarReminders = lazyMitTexten(() => import('./CalendarReminders.jsx'));
+const NotificationSettings = lazyMitTexten(() => import('./NotificationSettings.jsx'));
 // NotfallEinstieg: seit 24.10.2026 keine eigene Seite — im Kapitel Notfall (UMLEITUNGEN, components/NotfallImKapitel.jsx).
-const ArztkofferView = React.lazy(() => import('./ArztkofferView.jsx'));
-const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx'));
-const NotfallpassBlatt = React.lazy(() => import('./NotfallpassBlatt.jsx'));
-const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
-const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
-const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
-const Stundenlohn = React.lazy(() => import('./Stundenlohn.jsx'));
-const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
+const ArztkofferView = lazyMitTexten(() => import('./ArztkofferView.jsx'));
+const NotfallVorlesekarte = lazyMitTexten(() => import('./NotfallVorlesekarte.jsx'));
+const NotfallpassBlatt = lazyMitTexten(() => import('./NotfallpassBlatt.jsx'));
+const PraemienOrientierung = lazyMitTexten(() => import('./PraemienOrientierung.jsx'));
+const MietzinsOrientierung = lazyMitTexten(() => import('./MietzinsOrientierung.jsx'));
+const Kreditkarte = lazyMitTexten(() => import('./Kreditkarte.jsx'));
+const Stundenlohn = lazyMitTexten(() => import('./Stundenlohn.jsx'));
+const KVGWechsel = lazyMitTexten(() => import('./KVGWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
 // (ternär mit import.meta.env.DEV) → im Prod-Build wird der Import wegoptimiert,
 // Haupt-Bundle bleibt byte-neutral.
-const LockScreen = import.meta.env.DEV ? React.lazy(() => import('./LockScreen.jsx')) : null;
-const UmzugAblauf = React.lazy(() => import('./UmzugAblauf.jsx'));
-const UnfallKrankheit = React.lazy(() => import('./UnfallKrankheit.jsx'));
-const NeuerJob = React.lazy(() => import('./NeuerJob.jsx'));
-const StelleVerloren = React.lazy(() => import('./StelleVerloren.jsx'));
-const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
-const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
-const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
+const LockScreen = import.meta.env.DEV ? lazyMitTexten(() => import('./LockScreen.jsx')) : null;
+const UmzugAblauf = lazyMitTexten(() => import('./UmzugAblauf.jsx'));
+const UnfallKrankheit = lazyMitTexten(() => import('./UnfallKrankheit.jsx'));
+const NeuerJob = lazyMitTexten(() => import('./NeuerJob.jsx'));
+const StelleVerloren = lazyMitTexten(() => import('./StelleVerloren.jsx'));
+const Lebenssituationen = lazyMitTexten(() => import('./Lebenssituationen.jsx'));
+const KKErstAnmeldung = lazyMitTexten(() => import('./KKErstAnmeldung.jsx'));
+const Pensionierung = lazyMitTexten(() => import('./Pensionierung.jsx'));
 // Mahnung und Betreibung: seit 24.10.2026 eine Seite «Rechnung nicht bezahlt», die Adresse wählt die Stufe.
-const RechnungOffen = React.lazy(() => import('./RechnungOffen.jsx'));
-const SelbstMahnen = React.lazy(() => import('./SelbstMahnen.jsx'));
-const Dienst = React.lazy(() => import('./Dienst.jsx'));
-const DigitaleOrdnung = React.lazy(() => import('./DigitaleOrdnung.jsx'));
-const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
-const Lehre = React.lazy(() => import('./Lehre.jsx'));
-const BetreibungsAuszug = React.lazy(() => import('./BetreibungsAuszug.jsx'));
-const Ausweis = React.lazy(() => import('./Ausweis.jsx'));
-const Wegzug = React.lazy(() => import('./Wegzug.jsx'));
-const Adoption = React.lazy(() => import('./Adoption.jsx'));
-const Zusammenziehen = React.lazy(() => import('./Zusammenziehen.jsx'));
-const Ergaenzungsleistungen = React.lazy(() => import('./Ergaenzungsleistungen.jsx'));
-const Vorsorgeauftrag = React.lazy(() => import('./Vorsorgeauftrag.jsx'));
-const Patientenverfuegung = React.lazy(() => import('./Patientenverfuegung.jsx'));
-const Bestattung = React.lazy(() => import('./Bestattung.jsx'));
-const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
-const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
+const RechnungOffen = lazyMitTexten(() => import('./RechnungOffen.jsx'));
+const SelbstMahnen = lazyMitTexten(() => import('./SelbstMahnen.jsx'));
+const Dienst = lazyMitTexten(() => import('./Dienst.jsx'));
+const DigitaleOrdnung = lazyMitTexten(() => import('./DigitaleOrdnung.jsx'));
+const Volljaehrig = lazyMitTexten(() => import('./Volljaehrig.jsx'));
+const Lehre = lazyMitTexten(() => import('./Lehre.jsx'));
+const BetreibungsAuszug = lazyMitTexten(() => import('./BetreibungsAuszug.jsx'));
+const Ausweis = lazyMitTexten(() => import('./Ausweis.jsx'));
+const Wegzug = lazyMitTexten(() => import('./Wegzug.jsx'));
+const Adoption = lazyMitTexten(() => import('./Adoption.jsx'));
+const Zusammenziehen = lazyMitTexten(() => import('./Zusammenziehen.jsx'));
+const Ergaenzungsleistungen = lazyMitTexten(() => import('./Ergaenzungsleistungen.jsx'));
+const Vorsorgeauftrag = lazyMitTexten(() => import('./Vorsorgeauftrag.jsx'));
+const Patientenverfuegung = lazyMitTexten(() => import('./Patientenverfuegung.jsx'));
+const Bestattung = lazyMitTexten(() => import('./Bestattung.jsx'));
+const Einbuergerung = lazyMitTexten(() => import('./Einbuergerung.jsx'));
+const ZuzugAusland = lazyMitTexten(() => import('./ZuzugAusland.jsx'));
 // Aussteuerung: seit 24.10.2026 keine eigene Seite — letzter Teil von «Stelle verloren» (UMLEITUNGEN).
-const Quellensteuer = React.lazy(() => import('./Quellensteuer.jsx'));
-const WohnungGekuendigt = React.lazy(() => import('./WohnungGekuendigt.jsx'));
-const Selbstaendigkeit = React.lazy(() => import('./Selbstaendigkeit.jsx'));
-const Heirat = React.lazy(() => import('./Heirat.jsx'));
-const KindBekommen = React.lazy(() => import('./KindBekommen.jsx'));
-const Trennung = React.lazy(() => import('./Trennung.jsx'));
-const BewilligungFristen = React.lazy(() => import('./BewilligungFristen.jsx'));
-const Fuehrerausweis = React.lazy(() => import('./Fuehrerausweis.jsx'));
-const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
-const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
-const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
-const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
+const Quellensteuer = lazyMitTexten(() => import('./Quellensteuer.jsx'));
+const WohnungGekuendigt = lazyMitTexten(() => import('./WohnungGekuendigt.jsx'));
+const Selbstaendigkeit = lazyMitTexten(() => import('./Selbstaendigkeit.jsx'));
+const Heirat = lazyMitTexten(() => import('./Heirat.jsx'));
+const KindBekommen = lazyMitTexten(() => import('./KindBekommen.jsx'));
+const Trennung = lazyMitTexten(() => import('./Trennung.jsx'));
+const BewilligungFristen = lazyMitTexten(() => import('./BewilligungFristen.jsx'));
+const Fuehrerausweis = lazyMitTexten(() => import('./Fuehrerausweis.jsx'));
+const Todesfall = lazyMitTexten(() => import('./Todesfall.jsx'));
+const IvVerfahren = lazyMitTexten(() => import('./IvVerfahren.jsx'));
+const PflegeAblauf = lazyMitTexten(() => import('./PflegeAblauf.jsx'));
+const VorsorgeRechner = lazyMitTexten(() => import('./VorsorgeRechner.jsx'));
 // Schnellcheck: seit 27.10.2026 keine eigene Seite — #/schnellcheck und #/ansprueche führen auf «Was steht mir zu?»
 // (UMLEITUNGEN); er bleibt Schritt 1 des geführten Anspruch-Checks (AnspruchCheck.jsx).
-const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
-const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
-const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
-const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
-const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
-const AsylView = React.lazy(() => import('./AsylView.jsx'));
-const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
+const AnspruchCheck = lazyMitTexten(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
+const Obstgarten = lazyMitTexten(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
+const Gepaeck = lazyMitTexten(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
+const StipendienView = lazyMitTexten(() => import('./StipendienView.jsx'));
+const AlvRechner = lazyMitTexten(() => import('./AlvRechner.jsx'));
+const AsylView = lazyMitTexten(() => import('./AsylView.jsx'));
+const EOrechner = lazyMitTexten(() => import('./EOrechner.jsx'));
 // FinanzUebersicht: seit 24.10.2026 keine eigene Seite — #/finanzuebersicht führt ins Kapitel Finanzen (UMLEITUNGEN).
-const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
-const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
-const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
+const DirektLinks = lazyMitTexten(() => import('./DirektLinks.jsx'));
+const KVGLeistungen = lazyMitTexten(() => import('./KVGLeistungen.jsx'));
+const FlyerView = lazyMitTexten(() => import('./FlyerView.jsx'));
 // MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
-const SearchView = React.lazy(() => import('./SearchView.jsx'));
+const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
