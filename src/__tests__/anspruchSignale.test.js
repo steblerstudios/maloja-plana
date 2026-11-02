@@ -33,7 +33,7 @@ describe('anspruchSignale: gedeckte Ansprüche → Lebensbaum-Ast', () => {
     const data = { basis: { canton: 'BS' }, finanzen: { monthlyIncome: 0 }, wohnen: { rentAmount: 1500 } };
     const sig = anspruchSignale(data);
     // mitGanzerMiete: die ganze Miete ist eingerechnet (keine Mietzins-Limite bekannt, #452).
-    expect(sig.behoerden).toEqual([{ key: 'sozialhilfe', view: 'sozialhilfe', mitGanzerMiete: true }]);
+    expect(sig.behoerden).toEqual([{ key: 'sozialhilfe', view: 'sozialhilfe', mitGanzerMiete: true, hinweise: [] }]);
   });
 
   it('Vermögen über dem Freibetrag unterdrückt das Sozialhilfe-Signal', () => {
