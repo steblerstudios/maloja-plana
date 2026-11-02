@@ -22,6 +22,12 @@ const profil = (finanzen = {}) => ({
 
 // F7-K2-2 (Stebler Studios 01.11.2026): Zahl, Balken und Kuchen sind ein Bild.
 describe('Monatsring: «Wofür geht es weg?»', () => {
+  it('Säule 3a zählt wie im Budget zu Steuern & Vorsorge, nicht zum Übrigen (F8-F1)', () => {
+    const d = profil({ pension3a: 1200 });
+    const { gruppen } = ringDaten({ data: d, t, palette, einkommen: 5000, verplant: sumAllExpenses(d) });
+    expect(gruppen.find((g) => g.key === 'steuern').wert).toBe(500);
+    expect(gruppen.find((g) => g.key === 'uebriges').posten.map((p) => p.key)).not.toContain('pension3a');
+  });
   const ring = (d) => {
     const verplant = sumAllExpenses(d.finanzen, d);
     return { data: d, t, palette, einkommen: Number(d.finanzen.monthlyIncome) || 0, verplant, titel: 'Jeden Monat bleiben', titelJahr: 'Jedes Jahr bleiben', zahl: (Number(d.finanzen.monthlyIncome) || 0) - verplant };

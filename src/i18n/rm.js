@@ -4141,6 +4141,8 @@ export default {
     adults: 'creschids',
     branchenvergleich: { sie: 'Voss salari en cumparegliaziun da la branscha (salari brut median):', du: 'Tes salari en cumparegliaziun da la branscha (salari brut median):' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
+    // TODO(rm)
+    brancheAltesJahr: 'Questa valur da la branscha è da {jahr}, la mediana svizra da 2024. Las cifras èn be approximativamain cumparablas.',
     eigeneBranche: { sie: 'Vossa branscha:', du: 'Tia branscha:' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     andereBranchen: 'Autras branschas ({n})',

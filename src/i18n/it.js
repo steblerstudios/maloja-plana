@@ -5654,6 +5654,7 @@ export default {
     povertyLine: 'Soglia di povertà',
     median: 'Mediana CH',
     branchenvergleich: { sie: 'Il Suo stipendio per settore (salario lordo mediano):', du: 'Il tuo stipendio per settore (salario lordo mediano):' },
+    brancheAltesJahr: 'Questo valore di settore è del {jahr}, la mediana svizzera del 2024. I dati sono confrontabili solo in modo approssimativo.',
     eigeneBranche: { sie: 'Il Suo settore:', du: 'Il tuo settore:' },
     andereBranchen: 'Altri settori ({n})',
     brancheVergleichen: 'Confronta con altri settori ({n})',
