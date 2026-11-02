@@ -392,6 +392,8 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
                 React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
                   React.createElement('span', { style: { fontSize: text.xs, color: palette.text } }, t('finanzUebersicht.eigeneBranche')),
                   chip(eigeneBranche)),
+                // Branchenwert und Median stammen teils aus verschiedenen Jahren (data/branchenLohn.js): sagen, nicht verstecken (F8-A2).
+                eigeneBranche.jahr !== 2024 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } }, t('finanzUebersicht.brancheAltesJahr', { jahr: eigeneBranche.jahr })),
                 zuklapp(t('finanzUebersicht.andereBranchen', { n: andere.length })))
             : React.createElement(React.Fragment, null,
                 zuklapp(t('finanzUebersicht.brancheVergleichen', { n: andere.length })),

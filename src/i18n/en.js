@@ -5683,6 +5683,7 @@ export default {
     povertyLine: 'Poverty line',
     median: 'Median CH',
     branchenvergleich: 'Your salary compared by industry (gross median):',
+    brancheAltesJahr: 'This sector figure is from {jahr}, the Swiss median from 2024. The figures are only roughly comparable.',
     eigeneBranche: 'Your industry:',
     andereBranchen: 'Other industries ({n})',
     brancheVergleichen: 'Compare with other industries ({n})',

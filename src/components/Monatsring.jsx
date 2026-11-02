@@ -13,7 +13,8 @@ import { ausgabenPosten } from './Geldfluss.jsx';
 const GRUPPEN = {
   wohnen: ['rent', 'utilities', 'mortgage', 'buildingsInsurance'],
   versicherungen: ['healthInsurance', 'kkZusatz', 'uvgZusatz', 'lifeInsurance', 'householdInsurance', 'liabilityInsurance', 'otherInsurance'],
-  steuern: ['tax'],
+  // Dieselbe Gruppe wie im Monatsbudget (F8-F1): Vorsorge gehört zu den Steuern, nicht ins Übrige.
+  steuern: ['tax', 'pension3a', 'ahvSelbst', 'bvgSelbst'],
 };
 
 // Daten ohne React, damit Tests die Stücke nachrechnen können. Grösster Bereich zuerst.
@@ -77,7 +78,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
         style: { display: 'block', width: '100%', minHeight: '44px', boxSizing: 'border-box', padding: '4px 0', background: 'none', border: 0, fontFamily: 'inherit', fontSize: text.sm, textAlign: 'left', color: palette.text, cursor: knopf ? 'pointer' : 'default' },
       },
         React.createElement('span', { style: raster },
-          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t('chapters.finanzen.monat.teil.' + g.key)),
+          React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t(g.key === 'steuern' ? 'budgetSync.group.taxProvision' : 'chapters.finanzen.monat.teil.' + g.key)),
           React.createElement('span', { style: zahlen }, chf(g.wert)),
           React.createElement('span', { style: { ...zahlen, fontSize: text.xs, color: palette.mid } }, anteil(g.wert, basis)),
           React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid, textAlign: 'center', transform: auf ? 'rotate(90deg)' : 'none', transition: 'transform 150ms ease' } }, knopf ? '›' : '')

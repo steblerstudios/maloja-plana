@@ -5683,6 +5683,7 @@ export default {
     povertyLine: 'Seuil de pauvreté',
     median: 'Médiane CH',
     branchenvergleich: { sie: 'Votre salaire par branche (salaire brut médian) :', du: 'Ton salaire par branche (salaire brut médian) :' },
+    brancheAltesJahr: 'Cette valeur de branche date de {jahr}, la médiane suisse de 2024. Les chiffres ne sont comparables qu’approximativement.',
     eigeneBranche: { sie: 'Votre branche :', du: 'Ta branche :' },
     andereBranchen: 'Autres branches ({n})',
     brancheVergleichen: 'Comparer avec d\'autres branches ({n})',

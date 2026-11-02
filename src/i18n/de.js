@@ -5730,6 +5730,7 @@ export default {
     povertyLine: 'Armutsgrenze',
     median: 'Median CH',
     branchenvergleich: { sie: 'Ihr Lohn im Branchenvergleich (Median-Bruttolohn):', du: 'Dein Lohn im Branchenvergleich (Median-Bruttolohn):' },
+    brancheAltesJahr: 'Dieser Branchenwert stammt aus {jahr}, der Schweizer Median aus 2024. Die Zahlen sind nur ungefähr vergleichbar.',
     eigeneBranche: { sie: 'Ihre Branche:', du: 'Deine Branche:' },
     andereBranchen: 'Andere Branchen ({n})',
     brancheVergleichen: 'Mit anderen Branchen vergleichen ({n})',
