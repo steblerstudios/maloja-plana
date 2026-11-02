@@ -125,7 +125,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         sozialhilfe.eligible && sozialhilfe.efb > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } }, t('sozialhilfe.efbGeschaetzt')),
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: text.body, fontWeight: weight.bold, borderTop: '1px solid ' + palette.border, marginTop: space.xs } },
           React.createElement('span', null, t('sozialhilfe.deficit')),
-          React.createElement('span', { style: { color: palette.text } }, formatCHF(sozialhilfe.deficit) + t('common.perMonth'))
+          React.createElement('span', { style: { color: palette.text } }, sozialhilfe.konkubinatBetragOffen ? '—' : formatCHF(sozialhilfe.deficit) + t('common.perMonth'))
         )
       )
     ),
@@ -143,7 +143,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(),
         t(sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sozialhilfe.notEntitled')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } },
-        sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen') : t(sozialhilfe.noteKey, sozialhilfe.noteParams))
+        sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) : t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
     // Vermögensfreibetrag-Orientierung (je Kanton, data/sozialhilfeRechner.js) — nur wenn ein

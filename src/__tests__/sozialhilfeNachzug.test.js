@@ -10,10 +10,9 @@ const konkubinat = {
 };
 
 describe('Nachzug: Hinweise auch am Signal', () => {
-  it('Konkubinat mit Partnerlohn: das Anspruch-Signal trägt den Hinweis zum fehlenden Beitrag', () => {
-    expect(calculateSozialhilfe(konkubinat).eligible).toBe(true);
-    const s = (anspruchSignale(konkubinat).behoerden || []).find((x) => x.key === 'sozialhilfe');
-    expect(s.hinweise).toContain('pegel.konkubinatOffen');
+  it('Konkubinat mit Partnerlohn: kein Anspruch-Signal, der Betrag ist offen', () => {
+    expect(calculateSozialhilfe(konkubinat).eligible).toBe(false);
+    expect((anspruchSignale(konkubinat).behoerden || []).find((x) => x.key === 'sozialhilfe')).toBeUndefined();
   });
 });
 
