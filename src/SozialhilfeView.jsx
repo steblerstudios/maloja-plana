@@ -64,14 +64,15 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
   return rechner({
     // Der EL-Schritt hängt nicht am Sozialhilfe-Ergebnis: Rentnerinnen und Rentner brauchen ihn auch bei einem Nein.
-    tun: (ergebnis, sozialdienst) => (sozialdienst || el.eligible) ? ({ titel: t('sozialhilfe.nextSteps'), inhalt: React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
+    tun: (ergebnis, sozialdienst) => (sozialdienst || el.eligible || el.elPruefen) ? ({ titel: t('sozialhilfe.nextSteps'), inhalt: React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
         sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step1')),
         sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step2')),
         sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step3')),
         ergebnis?.hatAnspruch && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step4')),
-        el.eligible && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step5'))
+        (el.eligible || el.elPruefen) && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step5'))
       ) }) : undefined,
     weiteres: React.createElement('div', { style: { paddingTop: space.lg } },
+    sozialhilfe.ivUnklar3a && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.lg + 'px' } }, t('sh.ivUnklar3a')),
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },
       React.createElement('div', { style: { fontWeight: weight.semi } }, hinweisZeichen(), t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),

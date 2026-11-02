@@ -345,7 +345,8 @@ export function calculateSozialhilfe(data) {
   // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
-  const vermoegen = vermoegensFelder(data.finanzen, data.basis).felder.reduce((s, v) => s + plus(v), 0);
+  const vermoegenAngaben = vermoegensFelder(data.finanzen, data.basis);
+  const vermoegen = vermoegenAngaben.felder.reduce((s, v) => s + plus(v), 0);
   const minorChildren = einheit.kinder;
   const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
@@ -385,7 +386,7 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...(vermoegenAngaben.durchIv ? ['sh.ivGanz3a'] : []), ...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
@@ -400,6 +401,10 @@ export function calculateSozialhilfe(data) {
     offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     einkommenFehlt,
+    // Nur für die Seite, nicht fürs Dossier: Eine Vermutung zur IV gehört nicht auf ein Blatt ans Amt (Rechtsprüfung 02.11.2026).
+    ivUnklar3a: (Number(data.finanzen?.ivRente) > 0 || data.finanzen?.employmentType === 'retired') && !data.finanzen?.ivBezug
+      && !vermoegenAngaben.mit3a && vermoegenUeberFreibetrag === 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet)
+      && vermoegen + plus(data.finanzen?.pension3aBalance) > vermoegensfreibetrag,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
     // Mietzins-Limite, siehe oben). Jeder Leser setzt dann `sozialhilfe.mitGanzerMiete` dazu.
@@ -534,11 +539,15 @@ export function checkELEligibility(data) {
 
   const totalIncome = income + ahvRente + ivRente + bvgRente;
   const totalExpenses = rent + kkPremium;
-  const isAHVIV = ahvRente > 0 || ivRente > 0;
+  const rentenBetrag = ahvRente > 0 || ivRente > 0;
+  // Rente ohne Betrag: ELG Art. 4 Abs. 1 Bst. c gilt auch für Teilrenten, die Formel hätte aber kein Einkommen dazu.
+  const elPruefen = !rentenBetrag && ['ganz', 'teil'].includes(data.finanzen?.ivBezug);
+  const isAHVIV = rentenBetrag || elPruefen;
 
   return {
-    eligible: isAHVIV && totalIncome < totalExpenses + 2000,
+    eligible: rentenBetrag && totalIncome < totalExpenses + 2000,
     isAHVIV,
+    elPruefen,
     totalIncome,
     totalExpenses,
     noteKey: isAHVIV ? 'elCalc.possible' : 'elCalc.onlyAhvIv',

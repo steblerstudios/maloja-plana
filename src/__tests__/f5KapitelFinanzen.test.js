@@ -179,8 +179,8 @@ describe('Nebenerwerb — die fünf Felder erst mit Nebenerwerb', () => {
     expect(nebenerwerbAngegeben({ sideIncome: 0 })).toBe(true);
   });
 
-  it('alle fünf Felder bleiben im Formular (alle 37 Felder bleiben)', () => {
-    expect(kapitel('finanzen').fields).toHaveLength(37);
+  it('alle fünf Felder bleiben im Formular (alle 38 Felder bleiben)', () => {
+    expect(kapitel('finanzen').fields).toHaveLength(38);
     const html = render('finanzen', DEMO_DATA.finanzen, { anfangsOffen: 'alle' });
     for (const k of NEBENERWERB_FELDER) {
       const label = kapitel('finanzen').fields.find((f) => f.k === k).label;

@@ -203,7 +203,7 @@ export const druckAbschnitte = (t, w) => {
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
   for (const k of w.sozialhilfe.hinweise || []) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t(k)) + '</td></tr>' });
-  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? t('sozialhilfe.elPossible') : w.el.isAHVIV ? t('behoerdenDossier.elKeinHinweis') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? t('sozialhilfe.elPossible') : w.el.elPruefen ? t('sozialhilfe.elPruefen') : w.el.isAHVIV ? t('behoerdenDossier.elKeinHinweis') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
     zeilen.push({ label: t('finanzUebersicht.assets'), html: '<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(w.totalAssets) + '</td></tr>' });
@@ -529,10 +529,11 @@ export const elKarte = ({ palette, t, onNavigate, w }) => {
     // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
     status: el.eligible
       ? t('sozialhilfe.elPossible')
+      : el.elPruefen ? t('sozialhilfe.elPruefen')
       : el.noteKey === 'elCalc.onlyAhvIv'
         ? t('sozialhilfe.elOnlyAhvIv')
         : t('behoerdenDossier.elKeinHinweis'),
-    statusColor: el.eligible ? (palette.goldDeep || palette.gold) : palette.mid,
+    statusColor: el.eligible || el.elPruefen ? (palette.goldDeep || palette.gold) : palette.mid,
     onClick: () => onNavigate('ergaenzungsleistungen'),
   });
 };

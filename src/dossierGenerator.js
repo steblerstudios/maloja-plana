@@ -925,7 +925,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       key: 'el',
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
-      status: el.eligible ? t('sozialhilfe.elPossible') : t(el.isAHVIV ? 'behoerdenDossier.elKeinHinweis' : 'behoerdenDossier.elNotApplicable'),
+      status: el.eligible ? t('sozialhilfe.elPossible') : el.elPruefen ? t('sozialhilfe.elPruefen') : t(el.isAHVIV ? 'behoerdenDossier.elKeinHinweis' : 'behoerdenDossier.elNotApplicable'),
       statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: el.eligible,
     });
