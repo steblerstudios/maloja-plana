@@ -848,7 +848,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       !sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
       // Nur wenn das Vermögen der Grund für den offenen Status ist, wie auf der Seite: 3a und 3b stehen sonst nirgends.
       ...(vermoegenGrund ? [
-        { label: lbl('finanzen', 'pension3bBalance'), value: chf('finanzen', 'pension3bBalance') },
+        Number(d('finanzen', 'pension3bBalance')) > 0 && { label: lbl('finanzen', 'pension3bBalance'), value: chf('finanzen', 'pension3bBalance') },
         mit3a && { label: lbl('finanzen', 'pension3aBalance'), value: chf('finanzen', 'pension3aBalance') },
         { label: t('sozialhilfe.vermoegenGesamt'), value: formatCHF(sozialhilfe.vermoegen) },
         { label: t('sozialhilfe.vermoegensfreibetrag'), value: formatCHF(sozialhilfe.vermoegensfreibetrag) },
@@ -858,7 +858,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     const notes = [
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
-      sozialhilfe.vfbUnbestaetigt && t('sozialhilfe.assetLimitUnconfirmedShort'),
+      sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || sozialhilfe.eligible) && t('sozialhilfe.assetLimitUnconfirmedShort'),
+      vermoegenGrund && !d('basis', 'canton') && t('sozialhilfe.assetLimitKeinKanton'),
+      vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
@@ -1085,6 +1087,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
       vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
       vermoegen: vermoegenGrund ? Math.round(sozialhilfe.vermoegen) : undefined,
+      saeule3b: vermoegenGrund && Number(data.finanzen?.pension3bBalance) > 0 ? Number(data.finanzen.pension3bBalance) : undefined,
+      saeule3a: vermoegenGrund && vermoegensFelder(data.finanzen, data.basis).mit3a ? Number(data.finanzen.pension3aBalance) : undefined,
       vermoegensfreibetrag: vermoegenGrund ? sozialhilfe.vermoegensfreibetrag : undefined,
       vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt,
       offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,

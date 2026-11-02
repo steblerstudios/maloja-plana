@@ -39,7 +39,7 @@ describe('Blatt an die Behörde: Vermögen über dem Freibetrag', () => {
   it('Säule 3b allein: das Blatt zeigt die Zahl, aus der der Status folgt', () => {
     const { sozialhilfe, sicht, datei } = blatt(profil('ZH', { pension3bBalance: 50000 }));
     expect(sozialhilfe.vermoegenUeberFreibetrag).toBeGreaterThan(0);
-    expect(sicht).toContain('Erfasstes Vermögen, gesamt');
+    expect(sicht).toContain('Vermögen in dieser Rechnung, gesamt');
     expect(sicht).toMatch(/50.000/);
     expect(sicht).toContain('Vermögensfreibetrag');
     expect(datei.vermoegen).toBe(50000);
@@ -48,7 +48,10 @@ describe('Blatt an die Behörde: Vermögen über dem Freibetrag', () => {
   it('Säule 3a zählt noch nicht: keine 3a-Zeile, die Summe ohne sie', () => {
     const { sicht, datei } = blatt(profil('ZH', { pension3bBalance: 50000, pension3aBalance: 100000 }));
     expect(sicht).not.toContain('pension3aBalance');
+    expect(sicht).toContain('Die Säule 3a ist hier nicht mitgezählt');
     expect(datei.vermoegen).toBe(50000);
+    expect(datei.saeule3b).toBe(50000);
+    expect(datei.saeule3a).toBeUndefined();
   });
   it('Säule 3a zählt ab dem frühesten AHV-Vorbezug: eigene Zeile, in der Summe', () => {
     const p = profil('ZH', { pension3aBalance: 200000 });
@@ -56,22 +59,34 @@ describe('Blatt an die Behörde: Vermögen über dem Freibetrag', () => {
     const { sicht, datei } = blatt(p);
     expect(sicht).toMatch(/200.000/);
     expect(sicht).toContain('pension3aBalance');
+    expect(sicht).not.toContain('nicht mitgezählt');
     expect(datei.vermoegen).toBe(200000);
+    expect(datei.saeule3a).toBe(200000);
   });
   it('Einkommen reicht: das Vermögen ist nicht der Grund und bleibt vom Blatt fern', () => {
     const { sozialhilfe, sicht, datei } = blatt(profil('ZH', { monthlyIncome: 9000, pension3bBalance: 50000 }));
     expect(sozialhilfe.vermoegenUeberFreibetrag).toBeGreaterThan(0);
     expect(sozialhilfe.betragOffen).toBe(false);
-    expect(sicht).not.toContain('Erfasstes Vermögen, gesamt');
+    expect(sicht).not.toContain('Vermögen in dieser Rechnung, gesamt');
     expect(datei.vermoegen).toBeUndefined();
   });
-  it('kein Kanton gewählt: Vorbehalt, die Zahl ist nicht kantonal belegt', () => {
-    expect(blatt(profil('', { savingsAccount: 9000 })).sicht).toContain(VORBEHALT);
+  it('kein Kanton gewählt: das Blatt nennt die SKOS-Empfehlung, nicht «kantonal nicht bestätigt»', () => {
+    const { sicht } = blatt(profil('', { savingsAccount: 9000 }));
+    expect(sicht).toContain('nach SKOS-Empfehlung, kein Kanton erfasst');
+    expect(sicht).not.toContain(VORBEHALT);
+  });
+  it('Vorbehalt nur, wo der Freibetrag etwas sagt', () => {
+    expect(blatt(profil('BL', { monthlyIncome: 9000, savingsAccount: 1000 })).sicht).not.toContain(VORBEHALT);
+  });
+  it('negative Säule 3b: keine Zeile neben einer Summe, die nicht aufgeht', () => {
+    const { sicht, datei } = blatt(profil('ZH', { pension3bBalance: -5000, securitiesValue: 20000 }));
+    expect(sicht).not.toContain('pension3bBalance');
+    expect(datei.saeule3b).toBeUndefined();
   });
   it('unter dem Freibetrag bleibt die Summe vom Blatt fern', () => {
     const { sozialhilfe, sicht, datei } = blatt(profil('ZH', { pension3bBalance: 500 }));
     expect(sozialhilfe.vermoegenUeberFreibetrag).toBe(0);
-    expect(sicht).not.toContain('Erfasstes Vermögen, gesamt');
+    expect(sicht).not.toContain('Vermögen in dieser Rechnung, gesamt');
     expect(datei.vermoegen).toBeUndefined();
   });
 });
@@ -80,7 +95,8 @@ describe('Hinweis auf der Seite: kein absoluter Satz', () => {
   it.each([['de', de], ['fr', fr], ['it', itTranslations], ['en', en]])('%s nennt den Vorschuss und verlangt nicht das Aufbrauchen', (_, sprache) => {
     const satz = sprache.sozialhilfe.assetLimitNote;
     expect(satz).not.toMatch(/aufgebraucht|suppose que|presuppone|requires assets/);
-    expect(satz).toMatch(/bevorschussend|avance|anticipo|advance/);
+    expect(satz).toMatch(/Vorschuss|avance|anticipo|advance/);
+    expect(satz).toMatch(/Frist|délai|termine|period/);
     expect(satz).toMatch(/zurückzuzahlen|rembourser|rimborsati|repaid/);
     for (const platz of ['{basis}', '{freibetrag}', '{ueberschuss}']) expect(satz).toContain(platz);
   });
