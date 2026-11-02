@@ -3103,7 +3103,7 @@ export default {
     canton: 'Kanton: {name}',
     cantonUnknown: 'Nicht erkannt',
     model: 'Modell: {value}',
-    maxIncome: 'Max. Einkommen: CHF {value}',
+    maxIncome: 'Grenze massgebendes Einkommen: CHF {value} pro Jahr',
     note: 'Hinweis: {value}',
     enterCanton: { sie: 'Bitte geben Sie Ihren Kanton unter "Persönliche Basis" oder Ihre PLZ unter "Wohnen" ein.', du: 'Bitte gib Deinen Kanton unter "Persönliche Basis" oder Deine PLZ unter "Wohnen" ein.' },
     cantonChoose: { sie: 'In welchem Kanton wohnen Sie?', du: 'In welchem Kanton wohnst Du?' },

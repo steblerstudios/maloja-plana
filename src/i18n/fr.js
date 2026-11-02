@@ -3091,7 +3091,7 @@ export default {
     canton: 'Canton : {name}',
     cantonUnknown: 'Non reconnu',
     model: 'Modèle : {value}',
-    maxIncome: 'Revenu max. : CHF {value}',
+    maxIncome: 'Limite du revenu déterminant : CHF {value} par an',
     note: 'Remarque : {value}',
     enterCanton: { sie: 'Veuillez entrer votre canton sous « Données personnelles » ou votre code postal sous « Logement ».', du: 'Entre ton canton sous « Données personnelles » ou ton code postal sous « Logement ».' },
     cantonChoose: { sie: 'Dans quel canton habitez-vous ?', du: 'Dans quel canton habites-tu ?' },

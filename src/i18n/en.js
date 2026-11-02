@@ -3091,7 +3091,7 @@ export default {
     canton: 'Canton: {name}',
     cantonUnknown: 'Not recognized',
     model: 'Model: {value}',
-    maxIncome: 'Max. income: CHF {value}',
+    maxIncome: 'Qualifying income limit: CHF {value} per year',
     note: 'Note: {value}',
     enterCanton: 'Please enter your canton under "Personal basics" or your postal code under "Housing".',
     cantonChoose: 'Which canton do you live in?',
