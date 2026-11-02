@@ -428,7 +428,7 @@ export default {
     besitzstandNote: 'Qui touchait auparavant une allocation pour impotent de l’AI reçoit de l’AVS au moins le montant antérieur (LAVS art. 43bis al. 4). Le calcul utilise le montant AI actuel ; le montant exact figure dans la décision antérieure.',
     kindHeim: 'Pour les jours en home, le droit n’existe que si les parents assument eux-mêmes les frais du home (mémento 4.13, ch. 8). Ce calcul ne le couvre pas — l’office AI renseigne.',
     ahvLeichtHeim: 'En cas d’impotence faible, l’AVS ne verse pas d’allocation en home (LAVS art. 43bis al. 1bis). En cas d’impotence moyenne ou grave, oui.',
-    aufschubNote: "Dès l’âge de référence, l’AI ne verse plus d’allocation pour impotent (LAI art. 42 al. 4bis). L’AVS ne la verse qu’avec la rente de vieillesse entière ou des prestations complémentaires (LAVS art. 43bis al. 1). En cas d’ajournement de la rente de vieillesse, la garantie des droits acquis tombe également (mémento 3.01, ch. 28).",
+    aufschubNote: "Dès l’âge de référence ou l’anticipation de la rente de vieillesse entière, l’AI ne verse plus d’allocation pour impotent (LAI art. 42 al. 4bis). L’AVS ne la verse qu’avec la rente de vieillesse entière ou des prestations complémentaires (LAVS art. 43bis al. 1). En cas d’ajournement de la rente de vieillesse, la garantie des droits acquis tombe également (mémento 3.01, ch. 28).",
     wartezeitIv: 'Le droit naît au plus tôt lorsque l’impotence a duré une année sans interruption notable (LAI art. 42 al. 4). Une demande déposée plus d’un an après la naissance du droit donne en règle générale seulement les douze mois précédant la demande (LAI art. 48 al. 1). Le versement porte sur une période plus longue si la personne ne pouvait pas connaître les faits et fait valoir son droit au plus tard douze mois après en avoir eu connaissance (al. 2).',
     wartezeitAhv: 'Pour l’AVS, l’impotence doit avoir duré au moins six mois sans interruption (LAVS art. 43bis al. 2).',
     unabhaengig: 'L’allocation pour impotent ne dépend ni du revenu ni de la fortune.',
@@ -6437,6 +6437,7 @@ export default {
     premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
   },
   pegel: {
+    ohneFreibetrag: "Calculé sans franchise sur le revenu pour les personnes en formation. Le canton décide si elle s’applique.",
     vorBeitraegen: "Le revenu de l’activité indépendante est calculé tel qu’il est saisi. Les cotisations AVS et de caisse de pension personnelles ne sont pas déduites.",
     ansatzTiefer: "Avec un permis F, N ou S, l’aide est le plus souvent inférieure à ce calcul : le taux est inférieur à celui de la population résidente, le canton le fixe, et l’aide peut prendre la forme de prestations en nature (LAsi art. 82 al. 1 et 3, LEI art. 86 al. 1). Le droit peut aussi disparaître entièrement. Font exception les réfugiés admis à titre provisoire et les apatrides : les mêmes normes d’aide sociale que pour les réfugiés ayant obtenu l’asile s’appliquent à eux (LEI art. 86 al. 1bis).",
     coveredOffen: 'Dans ce calcul, le revenu suffit. Les frais liés à l’activité lucrative n’y figurent pas — le service social détermine le droit.',

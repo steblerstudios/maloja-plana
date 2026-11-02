@@ -543,7 +543,7 @@ export default {
     besitzstandNote: 'Tgi che survegniva pli baud ina indemnisaziun d’impotenza da l’AI, survegn da l’AVS almain l’import da fin ussa (AHVG art. 43bis al. 4). Quintà cun l’import AI dad oz; l’import exact stat en la disposiziun da fin ussa.',
     kindHeim: 'Per dis en ina chasa da tgira datti mo in dretg, sch’ils geniturs pajan sezs ils custs da la chasa (fegl d’infurmaziun 4.13, cifra 8). Quai na quinta quest calculatur betg — il post AI dat infurmaziuns.',
     ahvLeichtHeim: 'Tar ina impotenza leva na paja l’AVS nagina indemnisaziun en ina chasa da tgira (AHVG art. 43bis al. 1bis). Tar ina impotenza mesauna u greva bain.',
-    aufschubNote: "Ab dem Referenzalter zahlt die IV keine Hilflosenentschädigung mehr (IVG Art. 42 Abs. 4bis). Die AHV zahlt sie nur mit der ganzen Altersrente oder mit Ergänzungsleistungen (AHVG Art. 43bis Abs. 1). Bei aufgeschobener Altersrente fällt auch die Besitzstandsgarantie weg (Merkblatt 3.01, Ziff. 28).", // TODO(rm): provisorisch
+    aufschubNote: "Ab dem Referenzalter oder dem Vorbezug der ganzen Altersrente zahlt die IV keine Hilflosenentschädigung mehr (IVG Art. 42 Abs. 4bis). Die AHV zahlt sie nur mit der ganzen Altersrente oder mit Ergänzungsleistungen (AHVG Art. 43bis Abs. 1). Bei aufgeschobener Altersrente fällt auch die Besitzstandsgarantie weg (Merkblatt 3.01, Ziff. 28).", // TODO(rm): provisorisch
     wartezeitIv: 'Il dretg nascha il pli baud, cura che l’impotenza ha durà in onn senza interrupziun considerabla (IVG art. 42 al. 4). Tgi che s’annunzia dapli ch’in onn pli tard, survegn per regla mo ils dudesch mais avant l’annunzia (IVG art. 48 al. 1). Pli ditg vegn pajà, sche la persuna na pudeva betg enconuscher ils fatgs e fa valair il dretg il pli tard dudesch mais suenter avair gì enconuschientscha (al. 2).',
     wartezeitAhv: 'Tar l’AVS sto l’impotenza avair durà almain sis mais senza interrupziun (AHVG art. 43bis al. 2).',
     unabhaengig: 'L’indemnisaziun d’impotenza na dependa betg da l’entrada u da la facultad.',
@@ -5609,7 +5609,7 @@ export default {
       pkGuthaben: 'Eingetragen ist nur ein Guthaben, keine Pensionskasse mit laufenden Beiträgen.',
       pkOhneGeburtsdatum: 'Pensionskasse: Alterssparen ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7) — dafür fehlt das Geburtsdatum.',
       nbuUnter8: 'Unter 8 Stunden pro Woche beim selben Arbeitgeber sind Freizeitunfälle nicht versichert; der Arbeitsweg gilt als Berufsunfall (UVG Art. 8 Abs. 2, UVV Art. 13).',
-      unfallArbeitslos: 'Bei Arbeitslosigkeit gilt: Wer die Voraussetzungen nach AVIG Art. 8 erfüllt oder Entschädigungen nach AVIG Art. 29 bezieht, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).',
+      unfallArbeitslos: 'Bei Arbeitslosigkeit gilt: Wer die Voraussetzungen nach AVIG Art. 8 erfüllt oder Entschädigungen nach AVIG Art. 29 bezieht, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).', // TODO(rm): provisorisch
     },
     satz: { sie: 'Vossas assicuranzas en ina survista — sin basa da Vossas indicaziuns.', du: 'Tias assicuranzas en ina survista — sin basa da tias indicaziuns.' },
     darin: 'Tge che quai cuntegna',
@@ -7467,6 +7467,7 @@ export default {
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
   },
   pegel: {
+    ohneFreibetrag: "Quintà senza franchisa sin l’entrada per persunas en furmaziun. Il chantun decida, sch’ella vala.", // TODO(rm): provisorisch
     vorBeitraegen: "L’entrada da l’activitad independenta è quintada sco endatada. Las atgnas contribuziuns AVS e da la cassa da pensiun n’èn betg deducidas.", // TODO(rm): provisorisch
     ansatzTiefer: "Cun la permissiun F, N u S è il sustegn per il solit pli bass che en quest quint: La tariffa è sut quella per la populaziun indigena, il chantun la regla, per part dat i prestaziuns en natura (AsylG art. 82 al. 1 e 3, AIG art. 86 al. 1). In dretg po er crudar davent dal tuttafatg. Excepziun fan fugitivs admess provisoricamain e persunas senza stadi: Per els valan ils medems standards d’agid social sco per fugitivs cun asil (AIG art. 86 al. 1bis).", // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (F7, 01.11.2026)

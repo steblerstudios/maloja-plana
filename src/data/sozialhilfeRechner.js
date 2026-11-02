@@ -113,6 +113,7 @@ export function berechneSozialhilfe({
   andereEinkuenfte = 0,
   vermoegen = 0,
   erwerbstaetig = false,
+  ohneFreibetrag = false,
   integrationsMassnahme = false,
   kanton, // Kantonskürzel; ohne → SKOS-Empfehlung beim Vermögensfreibetrag
   stichtag, // optional, Standard heute: welches Jahr der GBL-Tabelle gilt
@@ -133,7 +134,7 @@ export function berechneSozialhilfe({
   // Bedarf, Erwerbsunkosten, Freibetrag und Lücke: dieselbe Rechnung wie die Schnellrechnung.
   const bilanz = sozialhilfeBilanz({
     grundbedarf: gbl, wohnkosten, kvgPraemie, erwerbsunkosten,
-    erwerbseinkommen, andereEinkuenfte, erwerbstaetig, kanton,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: erwerbstaetig && !ohneFreibetrag, kanton,
   });
   const { bedarf, efb, totalEinkommen, anrechenbaresEinkommen, efbEntscheidet } = bilanz;
   const sozialhilfeAnspruch = bilanz.luecke;

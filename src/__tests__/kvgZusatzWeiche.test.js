@@ -82,7 +82,11 @@ describe('Weiche in Schritt 1', () => {
     expect(zeichne(KVGWechsel)).toContain(esc(t('zusatzWechsel.intro')));
     store.or5_ablauf_kvgwechsel = JSON.stringify({ schritt: 0, fertig: false });
     expect(zeichne(KVGWechsel)).toContain(esc(t('kvgWechsel.intro')));
+    store.or5_ablauf_kvgwechsel_weg = 'zusatz';
     store.or5_ablauf_kvgwechsel = JSON.stringify({ schritt: 3, fertig: true });
+    expect(zeichne(KVGWechsel)).toContain(esc(t('kvgWechsel.intro')));
+    // Die alte Wahl ist weg: «nochmals» führt nicht zurück in den Zusatz-Weg.
+    store.or5_ablauf_kvgwechsel = JSON.stringify({ schritt: 1, fertig: false });
     expect(zeichne(KVGWechsel)).toContain(esc(t('kvgWechsel.intro')));
   });
   it('die Verweise «Zusatzversicherung» im KVG-Weg stellen die Weiche, statt die Seite zu wechseln', () => {

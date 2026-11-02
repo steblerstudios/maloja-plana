@@ -428,7 +428,7 @@ export default {
     besitzstandNote: 'Anyone who received a helplessness allowance from the IV before gets at least the previous amount from the AHV (AHVG Art. 43bis para. 4). Calculated with today’s IV amount; the exact one is in the previous decision.',
     kindHeim: 'For days in a care home there is only an entitlement if the parents pay the home costs themselves (fact sheet 4.13, no. 8). This calculator does not cover that — the IV office can advise.',
     ahvLeichtHeim: 'For mild helplessness the AHV pays no allowance in a care home (AHVG Art. 43bis para. 1bis). For moderate or severe helplessness it does.',
-    aufschubNote: "From reference age, the IV no longer pays the helplessness allowance (IVG Art. 42 para. 4bis). The AHV pays it only with the full old-age pension or supplementary benefits (AHVG Art. 43bis para. 1). If the old-age pension is deferred, the protection of the previous amount also lapses (leaflet 3.01, no. 28).",
+    aufschubNote: "From reference age or early drawing of the full old-age pension, the IV no longer pays the helplessness allowance (IVG Art. 42 para. 4bis). The AHV pays it only with the full old-age pension or supplementary benefits (AHVG Art. 43bis para. 1). If the old-age pension is deferred, the protection of the previous amount also lapses (leaflet 3.01, no. 28).",
     wartezeitIv: 'The entitlement arises at the earliest once the helplessness has lasted one year without significant interruption (IVG Art. 42 para. 4). Registering more than a year later generally means only the twelve months before registration are paid (IVG Art. 48 para. 1). A longer period is paid if the person could not have known the facts and claims within twelve months of learning them (para. 2).',
     wartezeitAhv: 'For the AHV the helplessness must have lasted at least six months without interruption (AHVG Art. 43bis para. 2).',
     unabhaengig: 'The helplessness allowance does not depend on income or assets.',
@@ -6437,6 +6437,7 @@ export default {
     premiumHint: 'Enter your health-insurance premium to see the split.',
   },
   pegel: {
+    ohneFreibetrag: "Calculated without the income allowance for apprentices. The canton decides whether it applies.",
     vorBeitraegen: "Income from self-employment is calculated as entered. Personal AHV and pension fund contributions are not deducted.",
     ansatzTiefer: "With an F, N or S permit, support is usually lower than in this calculation: the rate is below that for the resident population, the canton sets it, and part may be given in kind (AsylG Art. 82 paras 1 and 3, AIG Art. 86 para. 1). An entitlement can also lapse entirely. Provisionally admitted refugees and stateless persons are an exception: the same social assistance standards apply to them as to refugees granted asylum (AIG Art. 86 para. 1bis).",
     coveredOffen: 'In this calculation the income is enough. Work-related costs are missing from it — social services decide on entitlement.',

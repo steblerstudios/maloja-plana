@@ -30,7 +30,7 @@ import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js
 import { giltAlsVerheiratet } from './zivilstand.js';
 import { referenzalterMonate } from '../data/ahvRechner.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
-import { freibetragGilt } from '../data/sozialhilfeKern.js';
+import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
 
 // Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
 function alterInMonaten(geburtsdatum, heute) {
@@ -86,8 +86,9 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const mit3a = saeule3aBeziehbar(basis, heute) && betrag(f.pension3aBalance) > 0;
   const vermoegen = summeAlsFeld([f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined]);
 
-  // Der Schalter im Rechner trägt den Freibetrag: gleiche Regel wie calculateSozialhilfe.
-  const erwerbstaetig = freibetragGilt(f);
+  const erwerbstaetig = istErwerbstaetig(f);
+  // Lernende: erwerbstätig, aber ohne Freibetrag, gleiche Regel wie calculateSozialhilfe.
+  const ohneFreibetrag = erwerbstaetig && !freibetragGilt(f);
 
   const erwachsene = erwachseneImHaushalt(basis.household);
   const einheitErwachsene = verheiratet && erwachsene >= 2 ? 2 : 1;
@@ -97,6 +98,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const konkubinat = basis.maritalStatus === 'cohabiting';
 
   return {
+    ohneFreibetrag,
     adults: einheitErwachsene,
     kinder: kinderListe.length - erwachseneKinder,
     weiterePersonen,

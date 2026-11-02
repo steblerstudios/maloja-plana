@@ -77,7 +77,9 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
       note: t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
         // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
-        + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : ''),
+        + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
+        + (w.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
+        + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
       key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,

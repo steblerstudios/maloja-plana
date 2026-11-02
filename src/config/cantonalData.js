@@ -362,6 +362,7 @@ export function calculateSozialhilfe(data) {
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
+    ohneFreibetrag: erwerbstaetig && !freibetragGilt(data.finanzen),
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
     anspruchOffen: erwerbstaetig && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
     deficit,

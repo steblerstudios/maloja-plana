@@ -27,7 +27,7 @@ const wegLaden = (vorlaeufig) => {
 };
 const wegSichern = (w, vorlaeufig) => {
   if (vorlaeufig) return;
-  try { localStorage.setItem(WEG_KEY, w); } catch { /* Speicher voll — die Wahl gilt dann nur jetzt */ }
+  try { if (w) localStorage.setItem(WEG_KEY, w); else localStorage.removeItem(WEG_KEY); } catch { /* Speicher voll — die Wahl gilt dann nur jetzt */ }
 };
 // Zum Ansteuern von aussen (Umleitung, Querverweise): die Sprungmarke des Knopfs «Zusatzversicherung».
 export const ZUSATZ_ANKER = 'mp-kvg-zusatz';
@@ -51,9 +51,15 @@ export const fristKnopfDatum = (iso) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}.
 export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) => {
   const vorlaeufig = useVorlaeufig();
   const [stand, setStand] = useAblaufStand('kvgwechsel', 4);
-  // Die Wahl gilt nur, solange man mitten im Ablauf ist. Wer neu einsteigt, etwa über «Kündigung bis 30.11.»,
-  // bekommt die Grundversicherung, nicht die Frist 30.09. eines früheren Besuchs (Predeploy 02.11.2026).
-  const [gewaehlt, setGewaehlt] = useState(() => startWeg || (stand.schritt > 0 && !stand.fertig ? wegLaden(vorlaeufig) : null));
+  // Die Wahl gilt nur, solange der Ablauf läuft. Wer am Anfang steht oder fertig ist, bekommt die Grundversicherung
+  // mit der Frist 30.11., und die alte Wahl wird gelöscht (Predeploy 02.11.2026). Offen bleibt: Wer den Zusatz-Weg
+  // mittendrin verlassen hat, kommt auch über «Kündigung bis 30.11.» wieder dorthin; die Weiche steht in Schritt 1.
+  const [gewaehlt, setGewaehlt] = useState(() => {
+    if (startWeg) return startWeg;
+    if (stand.schritt > 0 && !stand.fertig) return wegLaden(vorlaeufig);
+    wegSichern(null, vorlaeufig);
+    return null;
+  });
   const weg = gewaehlt || 'grund';
   // Eine Wahl führt an den Anfang des gewählten Wegs (Schritt 1 gehört beiden).
   const waehle = (w) => { setGewaehlt(w); wegSichern(w, vorlaeufig); if (stand.schritt !== 0 || stand.fertig) setStand({ schritt: 0, fertig: false }); };

@@ -429,7 +429,7 @@ export default {
     besitzstandNote: 'Wer vorher eine Hilflosenentschädigung der IV bezog, erhält von der AHV mindestens den bisherigen Betrag (AHVG Art. 43bis Abs. 4). Gerechnet ist mit dem heutigen IV-Betrag; der genaue steht in der bisherigen Verfügung.',
     kindHeim: 'Für Tage im Heim besteht nur Anspruch, wenn die Eltern die Heimkosten selber tragen (Merkblatt 4.13, Ziff. 8). Das rechnet dieser Rechner nicht — die IV-Stelle gibt Auskunft.',
     ahvLeichtHeim: 'Bei leichter Hilflosigkeit zahlt die AHV im Heim keine Entschädigung (AHVG Art. 43bis Abs. 1bis). Bei mittlerer oder schwerer Hilflosigkeit schon.',
-    aufschubNote: "Ab dem Referenzalter zahlt die IV keine Hilflosenentschädigung mehr (IVG Art. 42 Abs. 4bis). Die AHV zahlt sie nur mit der ganzen Altersrente oder mit Ergänzungsleistungen (AHVG Art. 43bis Abs. 1). Bei aufgeschobener Altersrente fällt auch die Besitzstandsgarantie weg (Merkblatt 3.01, Ziff. 28).",
+    aufschubNote: "Ab dem Referenzalter oder dem Vorbezug der ganzen Altersrente zahlt die IV keine Hilflosenentschädigung mehr (IVG Art. 42 Abs. 4bis). Die AHV zahlt sie nur mit der ganzen Altersrente oder mit Ergänzungsleistungen (AHVG Art. 43bis Abs. 1). Bei aufgeschobener Altersrente fällt auch die Besitzstandsgarantie weg (Merkblatt 3.01, Ziff. 28).",
     wartezeitIv: 'Der Anspruch entsteht frühestens, wenn die Hilflosigkeit ein Jahr ohne wesentlichen Unterbruch bestanden hat (IVG Art. 42 Abs. 4). Wer sich mehr als ein Jahr danach anmeldet, erhält in der Regel nur die zwölf Monate vor der Anmeldung (IVG Art. 48 Abs. 1). Länger nachgezahlt wird, wenn die Person den Sachverhalt nicht kennen konnte und den Anspruch spätestens zwölf Monate nach Kenntnis geltend macht (Abs. 2).',
     wartezeitAhv: 'Bei der AHV muss die Hilflosigkeit mindestens sechs Monate ununterbrochen bestanden haben (AHVG Art. 43bis Abs. 2).',
     unabhaengig: 'Die Hilflosenentschädigung hängt nicht von Einkommen oder Vermögen ab.',
@@ -6501,6 +6501,7 @@ export default {
     premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
   },
   pegel: {
+    ohneFreibetrag: "Für Lernende ohne Einkommensfreibetrag gerechnet. Ob er zählt, regelt der Kanton.",
     vorBeitraegen: "Das Einkommen aus der Selbständigkeit ist gerechnet, wie es eingetragen ist. Eigene AHV- und Pensionskassen-Beiträge sind nicht abgezogen.",
     ansatzTiefer: "Mit Ausweis F, N oder S fällt die Unterstützung meist tiefer aus als in dieser Rechnung: Der Ansatz liegt unter dem für Einheimische, der Kanton regelt ihn, teils gibt es Sachleistungen (AsylG Art. 82 Abs. 1 und 3, AIG Art. 86 Abs. 1). Ein Anspruch kann auch ganz entfallen. Ausgenommen sind vorläufig aufgenommene Flüchtlinge und Staatenlose: Für sie gelten die gleichen Sozialhilfestandards wie für Flüchtlinge mit Asyl (AIG Art. 86 Abs. 1bis).",
     coveredOffen: 'In dieser Rechnung reicht das Einkommen. Erwerbsunkosten fehlen darin — den Anspruch klärt der Sozialdienst.',

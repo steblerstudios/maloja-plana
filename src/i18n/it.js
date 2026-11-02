@@ -428,7 +428,7 @@ export default {
     besitzstandNote: 'Chi prima riceveva un assegno per grandi invalidi dell’AI riceve dall’AVS almeno l’importo precedente (LAVS art. 43bis cpv. 4). Il calcolo usa l’importo AI attuale; quello esatto figura nella decisione precedente.',
     kindHeim: 'Per i giorni in istituto il diritto sussiste solo se i genitori sostengono loro stessi le spese dell’istituto (opuscolo 4.13, n. 8). Questo calcolo non lo considera — l’ufficio AI fornisce informazioni.',
     ahvLeichtHeim: 'Per una grande invalidità di grado lieve l’AVS non versa alcun assegno in istituto (LAVS art. 43bis cpv. 1bis). Per il grado medio o elevato sì.',
-    aufschubNote: "Dall’età di riferimento l’AI non versa più l’assegno per grandi invalidi (LAI art. 42 cpv. 4bis). L’AVS lo versa solo con la rendita di vecchiaia intera o con prestazioni complementari (LAVS art. 43bis cpv. 1). Se la rendita di vecchiaia è rinviata, viene meno anche la garanzia dei diritti acquisiti (opuscolo 3.01, n. 28).",
+    aufschubNote: "Dall’età di riferimento o dall’anticipazione della rendita di vecchiaia intera l’AI non versa più l’assegno per grandi invalidi (LAI art. 42 cpv. 4bis). L’AVS lo versa solo con la rendita di vecchiaia intera o con prestazioni complementari (LAVS art. 43bis cpv. 1). Se la rendita di vecchiaia è rinviata, viene meno anche la garanzia dei diritti acquisiti (opuscolo 3.01, n. 28).",
     wartezeitIv: 'Il diritto nasce al più presto quando la grande invalidità è durata un anno senza interruzioni notevoli (LAI art. 42 cpv. 4). Chi si annuncia più di un anno dopo riceve di regola solo i dodici mesi precedenti la richiesta (LAI art. 48 cpv. 1). Il versamento copre un periodo più lungo se la persona non poteva conoscere i fatti e fa valere il diritto al più tardi dodici mesi dopo averne avuto conoscenza (cpv. 2).',
     wartezeitAhv: 'Per l’AVS la grande invalidità deve essere durata almeno sei mesi senza interruzione (LAVS art. 43bis cpv. 2).',
     unabhaengig: 'L’assegno per grandi invalidi non dipende dal reddito né dalla sostanza.',
@@ -6411,6 +6411,7 @@ export default {
     premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
   },
   pegel: {
+    ohneFreibetrag: "Calcolato senza franchigia sul reddito per le persone in formazione. Il cantone decide se si applica.",
     vorBeitraegen: "Il reddito da attività indipendente è calcolato come inserito. I contributi AVS e di cassa pensioni personali non sono dedotti.",
     ansatzTiefer: "Con permesso F, N o S il sostegno è per lo più inferiore a questo calcolo: la tariffa è inferiore a quella per la popolazione residente, la stabilisce il cantone e in parte si tratta di prestazioni in natura (LAsi art. 82 cpv. 1 e 3, LStrI art. 86 cpv. 1). Il diritto può anche venire meno del tutto. Fanno eccezione i rifugiati ammessi provvisoriamente e gli apolidi: per loro valgono gli stessi standard di aiuto sociale dei rifugiati con asilo (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
