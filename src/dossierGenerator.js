@@ -843,11 +843,15 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
       sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
       !sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
+      // Der Status nennt das Vermögen über dem Freibetrag: die Zahlen dazu gehören aufs Blatt, 3a und 3b stehen sonst nirgends.
+      sozialhilfe.vermoegenUeberFreibetrag > 0 && { label: t('sozialhilfe.vermoegenGesamt'), value: formatCHF(sozialhilfe.vermoegen) },
+      sozialhilfe.vermoegenUeberFreibetrag > 0 && { label: t('sozialhilfe.vermoegensfreibetrag'), value: formatCHF(sozialhilfe.vermoegensfreibetrag) },
     ].filter(r => r && r.value);
     // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
     const notes = [
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
+      sozialhilfe.vfbUnbestaetigt && t('sozialhilfe.assetLimitUnconfirmedShort'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
@@ -1072,6 +1076,9 @@ export function generateBehoerdenJSON(data, calculations, t) {
       anspruchOffen: !!sozialhilfe.anspruchOffen,
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
       vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
+      vermoegen: sozialhilfe.vermoegenUeberFreibetrag > 0 ? sozialhilfe.vermoegen : undefined,
+      vermoegensfreibetrag: sozialhilfe.vermoegenUeberFreibetrag > 0 ? sozialhilfe.vermoegensfreibetrag : undefined,
+      vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt,
       offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,
       hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k)),
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,

@@ -4889,7 +4889,7 @@ export default {
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     assetLimitTitle: 'Facultad sur la franchisa',
-    assetLimitNote: 'L’agid social premetta che la facultad vegnia duvrada fin ad ina franchisa ({basis}: {freibetrag} per questa chasada). La facultad registrada surpassa quai per radund {ueberschuss} — questa part sto per regla vegnir duvrada l’emprim. Orientaziun, nagina infurmaziun obligatorica.',
+    assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad registrada surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, po il servetsch social sustegnair en il fratemp. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
     assetLimitBasisCanton: 'Chantun {name}',
     assetLimitBasisSkos: 'recumandaziun SKOS',
@@ -4897,6 +4897,8 @@ export default {
     // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
     assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
     assetLimitUnconfirmedShort: 'Franchisa da facultad betg confermada dal chantun.',
+    vermoegenGesamt: 'Facultad registrada, total (cun pitga 3b, pitga 3a a partir da la vegliadetgna da retratga anticipada)', // TODO(rm): provisorisch
+    vermoegensfreibetrag: 'Franchisa da facultad', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (25.09.2026)
     efbEntscheidet: { sie: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Vossa vischnanca.', du: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Tia vischnanca.' },
     erwerbsunkostenOffen: 'Custs supplementars per la lavur, sco mangiar ordaifer u il viadi a la lavur, n’èn betg quintads qua. Els augmentan il basegn — en il quintader sutvart pon ins endatar els.',
@@ -7497,7 +7499,7 @@ export default {
     gap: 'L’entrada è sut il minim d’existenza — la cumplettaziun colma la largia.',
     covered: 'L’entrada cuvra il minim d’existenza — nagina cumplettaziun necessaria.',
     deckt: 'pudess cuvrir radund {amount} / mais',
-    vermoegen: 'Facultad sur la franchisa — quai vegn per regla quintà avant. Il dretg controllescha il servetsch social.', // TODO(rm): provisorisch
+    vermoegen: 'Facultad registrada sur la franchisa — quai vegn per regla quintà avant. Il dretg controllescha il servetsch social.', // TODO(rm): provisorisch
   },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',
