@@ -401,8 +401,8 @@ export function calculateSozialhilfe(data) {
     vermoegen,
     vermoegensfreibetrag,
     vermoegenUeberFreibetrag,
-    // Vermögen erfasst UND Freibetrag kantonal nicht bestätigt (R4) — auch unter dem Freibetrag.
-    vfbUnbestaetigt: vermoegen > 0 && vermoegensfreibetragUnbestaetigt(canton, minorChildren),
+    // Vermögen erfasst UND Freibetrag kantonal nicht bestätigt (R4) oder kein Kanton gewählt — auch unter dem Freibetrag.
+    vfbUnbestaetigt: vermoegen > 0 && (!canton || vermoegensfreibetragUnbestaetigt(canton, minorChildren)),
     householdSize,
     adults: hh.adults,
     childrenCount: hh.childrenCount,

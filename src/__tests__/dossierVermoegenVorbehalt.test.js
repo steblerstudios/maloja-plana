@@ -45,6 +45,29 @@ describe('Blatt an die Behörde: Vermögen über dem Freibetrag', () => {
     expect(datei.vermoegen).toBe(50000);
     expect(datei.vermoegensfreibetrag).toBe(sozialhilfe.vermoegensfreibetrag);
   });
+  it('Säule 3a zählt noch nicht: keine 3a-Zeile, die Summe ohne sie', () => {
+    const { sicht, datei } = blatt(profil('ZH', { pension3bBalance: 50000, pension3aBalance: 100000 }));
+    expect(sicht).not.toContain('pension3aBalance');
+    expect(datei.vermoegen).toBe(50000);
+  });
+  it('Säule 3a zählt ab dem frühesten AHV-Vorbezug: eigene Zeile, in der Summe', () => {
+    const p = profil('ZH', { pension3aBalance: 200000 });
+    p.basis.dateOfBirth = '1960-03-01';
+    const { sicht, datei } = blatt(p);
+    expect(sicht).toMatch(/200.000/);
+    expect(sicht).toContain('pension3aBalance');
+    expect(datei.vermoegen).toBe(200000);
+  });
+  it('Einkommen reicht: das Vermögen ist nicht der Grund und bleibt vom Blatt fern', () => {
+    const { sozialhilfe, sicht, datei } = blatt(profil('ZH', { monthlyIncome: 9000, pension3bBalance: 50000 }));
+    expect(sozialhilfe.vermoegenUeberFreibetrag).toBeGreaterThan(0);
+    expect(sozialhilfe.betragOffen).toBe(false);
+    expect(sicht).not.toContain('Erfasstes Vermögen, gesamt');
+    expect(datei.vermoegen).toBeUndefined();
+  });
+  it('kein Kanton gewählt: Vorbehalt, die Zahl ist nicht kantonal belegt', () => {
+    expect(blatt(profil('', { savingsAccount: 9000 })).sicht).toContain(VORBEHALT);
+  });
   it('unter dem Freibetrag bleibt die Summe vom Blatt fern', () => {
     const { sozialhilfe, sicht, datei } = blatt(profil('ZH', { pension3bBalance: 500 }));
     expect(sozialhilfe.vermoegenUeberFreibetrag).toBe(0);
@@ -54,10 +77,14 @@ describe('Blatt an die Behörde: Vermögen über dem Freibetrag', () => {
 });
 
 describe('Hinweis auf der Seite: kein absoluter Satz', () => {
-  it.each([['de', de], ['fr', fr], ['it', itTranslations], ['en', en]])('%s nennt den Weg über den Sozialdienst und verlangt nicht das Aufbrauchen', (_, sprache) => {
+  it.each([['de', de], ['fr', fr], ['it', itTranslations], ['en', en]])('%s nennt den Vorschuss und verlangt nicht das Aufbrauchen', (_, sprache) => {
     const satz = sprache.sozialhilfe.assetLimitNote;
     expect(satz).not.toMatch(/aufgebraucht|suppose que|presuppone|requires assets/);
-    expect(satz).toMatch(/Sozialdienst|service social|servizio sociale|social services/);
+    expect(satz).toMatch(/bevorschussend|avance|anticipo|advance/);
+    expect(satz).toMatch(/zurückzuzahlen|rembourser|rimborsati|repaid/);
     for (const platz of ['{basis}', '{freibetrag}', '{ueberschuss}']) expect(satz).toContain(platz);
+  });
+  it('rm trägt dieselben Platzhalter und den Vorschuss', () => {
+    for (const platz of ['{basis}', '{freibetrag}', '{ueberschuss}', 'anticip']) expect(rm.sozialhilfe.assetLimitNote).toContain(platz);
   });
 });
