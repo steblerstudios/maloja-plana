@@ -11,7 +11,7 @@
 import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
-import { EFB_PARAMS, einkommensfreibetrag, sozialhilfeBilanz } from './sozialhilfeKern.js';
+import { EFB_PARAMS, einkommensfreibetrag, lernendeMitFreibetrag, sozialhilfeBilanz } from './sozialhilfeKern.js';
 import { grundbedarf, gblStand } from './skosGrundbedarf.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
@@ -132,9 +132,10 @@ export function berechneSozialhilfe({
   }
 
   // Bedarf, Erwerbsunkosten, Freibetrag und Lücke: dieselbe Rechnung wie die Schnellrechnung.
+  const ohneFreibetragHier = ohneFreibetrag && !lernendeMitFreibetrag(kanton);
   const bilanz = sozialhilfeBilanz({
     grundbedarf: gbl, wohnkosten, kvgPraemie, erwerbsunkosten,
-    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: erwerbstaetig && !ohneFreibetrag, kanton,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: erwerbstaetig && !ohneFreibetragHier, freibetragUngewiss: ohneFreibetragHier, kanton,
   });
   const { bedarf, efb, totalEinkommen, anrechenbaresEinkommen, efbEntscheidet } = bilanz;
   const sozialhilfeAnspruch = bilanz.luecke;

@@ -6411,7 +6411,7 @@ export default {
     premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
   },
   pegel: {
-    ohneFreibetrag: "Calcolato senza franchigia sul reddito per le persone in formazione. Il cantone decide se si applica.",
+    ohneFreibetrag: "Calcolato senza franchigia sul reddito per le persone in formazione. Numerosi cantoni concedono loro una franchigia o un supplemento d’integrazione. Il cantone decide cosa si applica.",
     vorBeitraegen: "Il reddito da attività indipendente è calcolato come inserito. I contributi AVS e di cassa pensioni personali non sono dedotti.",
     ansatzTiefer: "Con permesso F, N o S il sostegno è per lo più inferiore a questo calcolo: la tariffa è inferiore a quella per la popolazione residente, la stabilisce il cantone e in parte si tratta di prestazioni in natura (LAsi art. 82 cpv. 1 e 3, LStrI art. 86 cpv. 1). Il diritto può anche venire meno del tutto. Fanno eccezione i rifugiati ammessi provvisoriamente e gli apolidi: per loro valgono gli stessi standard di aiuto sociale dei rifugiati con asilo (LStrI art. 86 cpv. 1bis).",
     coveredOffen: 'In questo calcolo il reddito basta. Le spese di lavoro non sono incluse — il diritto lo accerta il servizio sociale.',
