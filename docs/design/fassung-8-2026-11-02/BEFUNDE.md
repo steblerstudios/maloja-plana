@@ -8,6 +8,11 @@ Angefangen 02.11.2026 auf Entscheid von Stebler Studios («Ja, wie empfohlen»).
 
 Nichts davon ist gebaut. Jeder Punkt wartet auf den Entscheid von Stebler Studios.
 
+## Entscheide
+
+**Runde 1 (Stebler Studios, 02.11.2026, Knopf «Entscheide kopieren», Bereich Sozialhilfe):**
+Ja: F8-S1, S3, S4, S5, S6, S7, G1, G3. Besprechen: F8-S2, G2. Noch nicht gebaut.
+
 <!-- PUNKTE -->
 ## Sozialhilfe
 
