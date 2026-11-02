@@ -9,6 +9,7 @@ import { zahl } from './utils/geld.js';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { hatAusweisFNS } from './data/ausweis.js';
+import { verfuegbarUeberFreibetrag } from './utils/unterstuetzungseinheit.js';
 
 const KINDER_MAX = 12;
 
@@ -134,7 +135,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
         },
           result.hatAnspruch
             ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')
-            : t(result.vermoegenZuerst && !result.knapp && (Number(data?.finanzen?.savingsAccount) || 0) > result.vermoegensfreibetrag ? 'sh.vermoegenZuerstTitel' : result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
+            : t(result.vermoegenZuerst && !result.knapp && (String(vermoegen) !== String(vorbefuellt.vermoegen) || verfuegbarUeberFreibetrag(data?.finanzen, result.vermoegensfreibetrag)) ? 'sh.vermoegenZuerstTitel' : result.efbEntscheidet || result.anspruchOffen ? 'dashboard.anspruchMoeglich' : 'sh.keinAnspruch')
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)

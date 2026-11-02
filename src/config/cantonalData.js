@@ -5,7 +5,7 @@
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
-import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen } from '../utils/unterstuetzungseinheit.js';
+import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, verfuegbarUeberFreibetrag } from '../utils/unterstuetzungseinheit.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
@@ -389,9 +389,9 @@ export function calculateSozialhilfe(data) {
     vermoegenZuerst,
     // Kein Betrag zu nennen, auch keine 0: offen wegen Konkubinat, Vermögen oder knapp über dem Bedarf.
     betragOffen: betragOffen || knapp,
-    // Sparkonto allein über dem Freibetrag: verfügbare Mittel (D.3.1 Abs. 1, Erl. a), nur Abs. 2 liesse eine Ausnahme zu. Gebundene
-    // Werte (Erl. c) und der Knapp-Fall bleiben «möglich», dort ist das Vermögen nicht die ganze Antwort.
-    offenTitel: betragOffen && !knapp && plus(data.finanzen?.savingsAccount) > vermoegensfreibetrag ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
+    // Bankguthaben und Wertpapiere über dem Freibetrag sind kurzfristig verfügbar (D.3.1 Abs. 1, Erl. a), nur Abs. 2 liesse eine Ausnahme
+    // zu. Wertgegenstände (Erl. c) und der Knapp-Fall bleiben «möglich», dort ist das Vermögen nicht die ganze Antwort.
+    offenTitel: !konkubinatBetragOffen && betragOffen && !knapp && verfuegbarUeberFreibetrag(data.finanzen, vermoegensfreibetrag) ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
     offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     eligible: deficit > 0,

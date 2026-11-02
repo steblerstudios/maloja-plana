@@ -51,7 +51,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
 
   // Selbständige: Der Betrag gilt, wie er eingetragen ist, wie auf der Seite (config/cantonalData.js).
   const selbst = zahltBeitraegeSelbst(f);
-  const hauptBrutto = !selbst && lohnBasis(f) === 'brutto';
+  const hauptBrutto = !selbst && lohnBasis(f) === 'brutto' && betrag(f.monthlyIncome) > 0;
   const hauptBasisOffen = !selbst && lohnBasisOffen(f);
   const nebenerwerbBrutto = f.sideIncomeType === 'brutto' && betrag(f.sideIncome) > 0;
   const nebenerwerbBasisOffen = f.sideIncomeType !== 'brutto' && f.sideIncomeType !== 'netto' && betrag(f.sideIncome) > 0;
