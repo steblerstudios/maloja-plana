@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { text, weight, space, radius } from '../config/tokens.js';
 import { bruttoZuNettoRichtwert, nettoZuBruttoRichtwert } from '../data/lohnAbzuege.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
+import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { zahl } from '../utils/geld.js';
 
 // Monatseinkommen brutto ODER netto (Wunsch 25.09.2026: «man sollte immer vor und zurück rechnen
@@ -37,13 +38,16 @@ export function useEinkommen(data) {
   // Alter und Rentenalter: dieselbe Regel wie die Sozialhilfe-Schnellrechnung (utils/nettoAusProfil.js).
   const { alter, bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
   const zahlWert = Math.max(0, Number(betrag) || 0);
-  const nettoMonat = art === 'netto' ? zahlWert : bruttoZuNettoRichtwert(zahlWert, bvgAlter, rentenalter, undefined, beitragsfrei);
-  const sperre = lohnVergleichSperre(data || {}, rentenalter);
-  const ohneBrutto = art === 'netto' && (sperre === 'keinLohn' || sperre === 'quellensteuer');
+  // Selbständige: eine Regel mit calculateSozialhilfe, der Betrag bleibt, wie er eingetragen ist (Predeploy 02.11.2026).
+  const selbst = zahltBeitraegeSelbst(data?.finanzen);
+  const nettoMonat = art === 'netto' || selbst ? zahlWert : bruttoZuNettoRichtwert(zahlWert, bvgAlter, rentenalter, undefined, beitragsfrei);
+  // Die Art aus dem Feld zählt, nicht die aus dem Profil: dort kann sie fehlen oder anders stehen.
+  const sperre = lohnVergleichSperre({ ...data, finanzen: { ...data?.finanzen, incomeType: art } }, rentenalter);
+  const ohneBrutto = selbst || (art === 'netto' && (sperre === 'keinLohn' || sperre === 'quellensteuer'));
   const gegenwert = zahlWert > 0 && !ohneBrutto ? (art === 'netto' ? nettoZuBruttoRichtwert(zahlWert, bvgAlter, rentenalter, undefined, beitragsfrei) : nettoMonat) : 0;
   return {
     betrag, setBetrag, art, setArt, alter, ohneAlter: alter == null, nettoMonat, gegenwert,
-    geschaetzt: art === 'brutto' && zahlWert > 0,
+    geschaetzt: art === 'brutto' && !selbst && zahlWert > 0,
     offen: !bekannt && profilWert != null && String(profilWert).trim() !== '' && betrag === '',
   };
 }

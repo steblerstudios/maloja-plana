@@ -15,9 +15,9 @@ import rm from '../i18n/rm.js';
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const seite = (d) => renderToStaticMarkup(React.createElement(FinanzUebersicht, { palette, t, data: d, onNavigate: () => {} }));
-const knapp = (dateOfBirth) => ({
+const knapp = (dateOfBirth, employmentType) => ({
   basis: { canton: 'ZH', maritalStatus: 'single', dateOfBirth, gender: 'male' },
-  finanzen: { monthlyIncome: '1800', incomeType: 'netto', sideIncome: '600' },
+  finanzen: { monthlyIncome: '1800', incomeType: 'netto', sideIncome: '600', employmentType },
   wohnen: { rentAmount: '1400' },
   versicherungen: { kkPremium: '350' },
 });
@@ -25,8 +25,14 @@ const knapp = (dateOfBirth) => ({
 beforeAll(() => { preloadPLZ(); });
 
 describe('povertyBruttoHint: eigene Fassung im Rentenalter', () => {
-  it('im Rentenalter: Rente-Fassung mit Freibetrag', () => {
+  it('im Rentenalter ohne Anstellung: kein Satz zum Lohn, das Einkommen ist vermutlich eine Rente', () => {
     const html = seite(knapp('1950-03-01'));
+    expect(html).toContain('finanzUebersicht.belowPoverty');
+    expect(html).not.toContain('povertyBruttoHint');
+  });
+
+  it('im Rentenalter und angestellt: Rente-Fassung mit Freibetrag', () => {
+    const html = seite(knapp('1950-03-01', 'employed'));
     expect(html).toContain('finanzUebersicht.belowPoverty');
     expect(html).toContain('finanzUebersicht.povertyBruttoHintRente(');
     expect(html).toMatch(/povertyBruttoHintRente\([^)]*\|CHF 1.400\)/);

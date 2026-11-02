@@ -168,8 +168,15 @@ export function setHash(view, chapterIndex) {
  * wo man im Werkzeug stand). Liest onHashChange als `stelle` wieder aus.
  */
 // Reiter oder Auswahl einer Seite (Merkliste, «Für ein Amt»): für diesen Tab gemerkt, nie im Hash.
+// Nur diese Seiten kennen eine Wahl; `extra` heisst bei anderen Seiten etwas anderes (Vorlage, Reiter).
+export const SEITEN_MIT_WAHL = ['calendar', 'drucken'];
+
+// Ohne Wahl wird der Eintrag geleert: wer neu eintritt, sieht die Grundwahl, auch nach «Zurück».
 export function merkeWahl(view, wahl) {
-  try { sessionStorage.setItem('or5_wahl_' + view, wahl); } catch { /* Storage blockiert, dann gilt die Grundwahl */ }
+  try {
+    if (wahl) sessionStorage.setItem('or5_wahl_' + view, wahl);
+    else sessionStorage.removeItem('or5_wahl_' + view);
+  } catch { /* Storage blockiert, dann gilt die Grundwahl */ }
 }
 
 export function leseWahl(view) {

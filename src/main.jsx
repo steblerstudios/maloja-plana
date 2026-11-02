@@ -23,7 +23,7 @@ import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
-import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle, merkeWahl, leseWahl, UMLEITUNGEN, springeZuAnker } from './utils/hashRouter.js';
+import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle, merkeWahl, leseWahl, SEITEN_MIT_WAHL, UMLEITUNGEN, springeZuAnker } from './utils/hashRouter.js';
 import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
@@ -579,9 +579,11 @@ const AppInner = ({ demo }) => {
   const [legalSection, setLegalSection] = useState('privacy');
   // Reiter bzw. Auswahl einer Seite, die frühere Seiten bündelt (F7, 27.10.2026): «Merkliste» in «Was ansteht»,
   // «Alles / Für ein Amt / Für den Notfall» in «Unterlagen drucken». Kommt aus UMLEITUNGEN (`wahl`) oder `extra`.
-  const [wahl, setWahl] = useState(() => { const p = parseHash() || {}; return p.wahl ?? leseWahl(p.view); });
+  const [wahl, setWahl] = useState(() => { const p = parseHash() || {}; if (p.wahl) merkeWahl(p.view, p.wahl); return p.wahl ?? leseWahl(p.view); });
   // Bleibt nach Zurück und Neuladen: Sonst stünde nach «Für ein Amt» wieder die ganze Lebensmappe da (Predeploy 02.11.2026).
-  useEffect(() => { if (typeof wahl === 'string') merkeWahl(view, wahl); }, [view, wahl]);
+  // Gemerkt wird dort, wo die Wahl fällt, nicht in einem Effekt auf [view, wahl]: beim Wegnavigieren
+  // kommt `wahl` vor `view`, ein Effekt schrieb die neue Wahl unter die alte Seite (Predeploy 02.11.2026).
+  const waehle = (neu) => { setWahl(neu); merkeWahl(view, neu); };
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
@@ -731,6 +733,7 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
+        if (parsed.wahl) merkeWahl(parsed.view, parsed.wahl);
         setWahl(parsed.wahl ?? leseWahl(parsed.view));
         setHerkunft(leseHerkunft());
       });
@@ -1020,6 +1023,7 @@ const AppInner = ({ demo }) => {
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
     setWahl(extra);
+    if (SEITEN_MIT_WAHL.includes(viewName)) merkeWahl(viewName, typeof extra === 'string' ? extra : undefined);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
       setActiveChapter(chapterIdx);
     }
@@ -1770,7 +1774,7 @@ const AppInner = ({ demo }) => {
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
-        view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: setWahl }),
+        view === 'drucken' && React.createElement(UnterlagenDrucken, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate, wahl, onWahl: waehle }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
@@ -1778,7 +1782,7 @@ const AppInner = ({ demo }) => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
         // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
-        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: setWahl }),
+        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: waehle }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),

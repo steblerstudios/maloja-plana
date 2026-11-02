@@ -51,7 +51,7 @@ describe('#/merkliste öffnet den Reiter in «Was ansteht»', () => {
     const main = lies('main.jsx');
     expect(main).not.toMatch(/view === 'merkliste' && React\.createElement/);
     expect(main).not.toMatch(/import\('\.\/MerklisteView\.jsx'\)/);
-    expect(main).toMatch(/React\.createElement\(CalendarReminders, \{[^\n]*reiter: wahl, onReiter: setWahl/);
+    expect(main).toMatch(/React\.createElement\(CalendarReminders, \{[^\n]*reiter: wahl, onReiter: waehle/);
     expect(main).toContain('handleNavigate(umleitung.view, umleitung.chapterIndex, umleitung.wahl || extra)');
     expect(main).toContain('setWahl(parsed.wahl ?? leseWahl(parsed.view))');
     // Das ＋-Fächer ruft weiter 'merkliste' auf — über handleNavigate, also die Umleitung.
