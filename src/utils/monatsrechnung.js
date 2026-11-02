@@ -86,7 +86,7 @@ export const einkommenIstKeinLohn = (data) => !!data?.basis?.household?.isRetire
 
 // Der kantonale Mindestlohn gilt für Lohn aus Arbeitsverhältnissen, aber nicht für Lehrverhältnisse:
 // GE LIRT Art. 39J · TI LSM Art. 3 · JU RSJU 822.41 Art. 3 al. 2 · NE RSalMin Art. 3 Abs. 2 lit. b (Stand 1.11.2025)
-// · BS Regierungsrat in der Antwort an den Grossen Rat: «Lernende fallen nicht unter das kantonale Mindestlohngesetz».
+// · BS MiLoG § 2 Abs. 2 lit. c (SG 812.200, in Kraft seit 1.7.2022): «Lernende in anerkannten Lehrbetrieben».
 export const mindestlohnNichtAnwendbar = (data) => einkommenIstKeinLohn(data) || istLernend(data?.finanzen);
 
 // Summe der Versicherungen pro Monat, wie sie die Versicherungs-Karte zeigt. `p` = monatsAusgaben().
