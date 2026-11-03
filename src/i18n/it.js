@@ -3166,7 +3166,7 @@ export default {
     step2: 'Portare tutta la documentazione sul reddito',
     step3: 'Tenere pronti il contratto di locazione e la polizza assicurativa',
     step4: 'I contributi AVS/LPP possono essere coperti',
-    step5: 'Verificare la richiesta di PC presso l’ufficio PC del Cantone',
+    step5: 'Verificare la richiesta di PC presso l’ufficio PC competente',
     orientationNote: { sie: 'Questa stima è puramente indicativa. Per una valutazione vincolante, si rivolga al Suo comune o a un servizio specializzato.', du: 'Questa stima è puramente indicativa. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.' },
     childrenNote: { sie: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Si informi presso il servizio sociale.', du: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.' },
     childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',

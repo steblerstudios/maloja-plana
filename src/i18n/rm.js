@@ -4893,7 +4893,7 @@ export default {
     step2: "Purtar tut las cumprovas d'entrada",
     step3: 'Avair pront il contract da locaziun e la polizza CM',
     step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
-    step5: 'Examinar la dumonda PC tar il post PC dal chantun', // TODO(rm)
+    step5: 'Examinar la dumonda PC tar il post PC cumpetent', // TODO(rm)
     orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",

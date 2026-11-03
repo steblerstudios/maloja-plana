@@ -3166,7 +3166,7 @@ export default {
     step2: 'Bring all income documentation',
     step3: 'Have rental contract and insurance policy ready',
     step4: 'AHV/BVG contributions may be covered',
-    step5: 'Check an EL application with the canton’s EL office',
+    step5: 'Check an EL application with the responsible EL office',
     orientationNote: 'This estimate is for orientation only. For a binding assessment, please contact your municipality or a specialist office.',
     childrenNote: 'Additional benefits may be available for children (childcare, school supplies, clothing). Discuss this with social services.',
     childrenEducationNote: 'Children aged 16+ in education may receive training allowances.',

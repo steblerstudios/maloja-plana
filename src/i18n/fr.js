@@ -3166,7 +3166,7 @@ export default {
     step2: 'Apportez tous les justificatifs de revenu',
     step3: 'Ayez le contrat de bail et la police d\'assurance à disposition',
     step4: 'Les cotisations AVS/LPP peuvent être prises en charge',
-    step5: 'Vérifiez la demande de PC auprès de l’organe PC du canton',
+    step5: 'Vérifiez la demande de PC auprès de l’organe PC compétent',
     orientationNote: { sie: 'Cette estimation est donnée à titre indicatif. Pour une évaluation contraignante, adressez-vous à votre commune ou à un service spécialisé.', du: 'Cette estimation est donnée à titre indicatif. Pour une évaluation contraignante, adresse-toi à ta commune ou à un service spécialisé.' },
     childrenNote: { sie: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.', du: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseigne-toi auprès du service social.' },
     childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',

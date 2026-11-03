@@ -3178,7 +3178,7 @@ export default {
     step2: 'Alle Einkommensnachweise mitbringen',
     step3: 'Mietvertrag und KK-Police bereithalten',
     step4: 'AHV/BVG-Beiträge werden ggf. übernommen',
-    step5: 'EL-Antrag bei der EL-Stelle des Kantons prüfen',
+    step5: 'EL-Antrag bei der zuständigen EL-Stelle prüfen',
     orientationNote: { sie: 'Diese Schätzung dient der Orientierung. Für eine verbindliche Einschätzung wenden Sie sich bitte an Ihre Gemeinde oder eine Fachstelle.', du: 'Diese Schätzung dient der Orientierung. Für eine verbindliche Einschätzung wende dich bitte an deine Gemeinde oder eine Fachstelle.' },
     childrenNote: { sie: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Klären Sie dies mit dem Sozialdienst.', du: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.' },
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
