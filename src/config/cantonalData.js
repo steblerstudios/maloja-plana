@@ -346,7 +346,8 @@ export function calculateSozialhilfe(data) {
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
   const vermoegenAngaben = vermoegensFelder(data.finanzen, data.basis);
-  const vermoegen = vermoegenAngaben.felder.reduce((s, v) => s + plus(v), 0);
+  // Jede Zeile auf Franken gerundet, wie Blatt und JSON: Mit Rappen kippte sonst die Grenze anders, als das Blatt sie zeigt (F8-G5).
+  const vermoegen = vermoegenAngaben.felder.reduce((s, v) => s + Math.round(plus(v)), 0);
   const minorChildren = einheit.kinder;
   const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
