@@ -24,13 +24,14 @@ function applyHtmlLang(lang) {
   document.documentElement.dir = isRTL(lang) ? 'rtl' : 'ltr';
 }
 
-// Je Sprache Kern (Startbündel, vor dem ersten Bild) und Rest (danach). Siehe scripts/i18nKern.mjs.
+// Je Sprache der Kern: die Texte des Startbündels, vor dem ersten Bild. Der Rest kommt aus
+// rest.js nach. Siehe scripts/i18nKern.mjs.
 const loaders = {
-  en: { kern: () => import('virtual:sprache/en-kern'), rest: () => import('virtual:sprache/en-rest') },
-  de: { kern: () => import('virtual:sprache/de-kern'), rest: () => import('virtual:sprache/de-rest') },
-  fr: { kern: () => import('virtual:sprache/fr-kern'), rest: () => import('virtual:sprache/fr-rest') },
-  it: { kern: () => import('virtual:sprache/it-kern'), rest: () => import('virtual:sprache/it-rest') },
-  rm: { kern: () => import('virtual:sprache/rm-kern'), rest: () => import('virtual:sprache/rm-rest') },
+  en: () => import('virtual:sprache/en-kern'),
+  de: () => import('virtual:sprache/de-kern'),
+  fr: () => import('virtual:sprache/fr-kern'),
+  it: () => import('virtual:sprache/it-kern'),
+  rm: () => import('virtual:sprache/rm-kern'),
 };
 
 const cache = {};
@@ -38,35 +39,24 @@ const vollstaendig = new Set();
 
 async function loadKern(lang) {
   if (cache[lang]) return cache[lang];
-  const mod = await loaders[lang].kern();
+  const mod = await loaders[lang]();
   if (!cache[lang]) cache[lang] = mod.default;
   return cache[lang];
 }
 
 async function loadTranslation(lang) {
   if (vollstaendig.has(lang)) return cache[lang];
-  const [kern, rest] = await Promise.all([loaders[lang].kern(), loaders[lang].rest()]);
-  cache[lang] = zusammenfuegen(kern.default, rest.default);
+  const [kern, { mitRest }] = await Promise.all([loaders[lang](), import('./rest.js')]);
+  cache[lang] = await mitRest(kern.default, lang);
   vollstaendig.add(lang);
   return cache[lang];
 }
 
-// Exportiert für Unit-Tests. Blätter (auch { sie, du } und Listen) stehen ganz in einem Teil.
-export function zusammenfuegen(a, b) {
-  const ziel = { ...a };
-  for (const [name, wert] of Object.entries(b)) {
-    const beide = wert && typeof wert === 'object' && !Array.isArray(wert) && ziel[name] && typeof ziel[name] === 'object';
-    ziel[name] = beide ? zusammenfuegen(ziel[name], wert) : wert;
-  }
-  return ziel;
-}
+// Eine Sprache samt Rückfall-Sprache vollständig.
+const mitRueckfall = (lang) => Promise.all([...new Set([lang, FALLBACK_LANG])].map(loadTranslation));
 
-// Ansichten ausserhalb des Startbündels brauchen alle Texte: sie warten darauf, wie auf ihr
-// eigenes Stück. Scheitert das Laden, fängt es dieselbe Grenze wie ein fehlendes Stück.
 export function texteBereit() {
-  const lang = detectLanguage();
-  const gebraucht = lang === FALLBACK_LANG ? [lang] : [lang, FALLBACK_LANG];
-  return Promise.all(gebraucht.map(loadTranslation));
+  return mitRueckfall(detectLanguage());
 }
 
 export function lazyMitTexten(lade) {
@@ -321,8 +311,7 @@ export function I18nProvider({ children }) {
     };
     // Nach dem ersten Bild den Rest holen. Scheitert das, einmal neu laden wie beim Start (K60).
     const restHolen = (l) => {
-      const gebraucht = l === FALLBACK_LANG ? [l] : [l, FALLBACK_LANG];
-      Promise.all(gebraucht.map(loadTranslation)).then(
+      mitRueckfall(l).then(
         () => { if (!gestoppt) setTranslations({ ...cache }); },
         () => { if (!gestoppt) neuLadenEinmal({ storage: sessionStore(), reload: () => window.location.reload() }); },
       );

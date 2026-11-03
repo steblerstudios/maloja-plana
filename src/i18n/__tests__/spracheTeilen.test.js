@@ -9,7 +9,8 @@ import en from '../en.js';
 import fr from '../fr.js';
 import itSprache from '../it.js';
 import rm from '../rm.js';
-import { createT, zusammenfuegen } from '../index.js';
+import { createT } from '../index.js';
+import { zusammenfuegen } from '../rest.js';
 import { ersteBilder, startModule, kernPfade, teilen } from '../../../scripts/i18nKern.mjs';
 
 const src = path.resolve(__dirname, '../..');
