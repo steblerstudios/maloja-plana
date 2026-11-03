@@ -70,6 +70,10 @@ const VFB_KANTON = {
   TI: [100, 0, 100],
 };
 
+// Jahr, für das die Werte oben gelesen sind: SKOS-RL D.3.1 ab 1.1.2026, die Kantone am 16.09.2026 für 2026
+// (docs/sources/skos-vermoegensfreibetrag-2026.md). Blatt und Rechner nennen es neben dem Freibetrag (F8-G5).
+export const VFB_STAND_JAHR = 2026;
+
 export function vermoegensfreibetragKanton(kanton, adults = 1, minorChildren = 0) {
   const w = VFB_KANTON[kanton] || 60; // ohne Eintrag: SKOS-Empfehlung D.3.1
   const [einzel, kind, max] = w.length ? w : [w, w / 2, w * 2.5];

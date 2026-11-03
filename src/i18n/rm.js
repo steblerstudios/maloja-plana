@@ -4902,8 +4902,8 @@ export default {
     renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
-    assetLimitBasisCanton: 'Chantun {name}',
-    assetLimitBasisSkos: 'recumandaziun SKOS',
+    assetLimitBasisCanton: 'Chantun {name}, stadi {jahr}',
+    assetLimitBasisSkos: 'recumandaziun SKOS, stadi {jahr}',
     assetLimitUnconfirmed: { sie: "Betg confermà dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "Betg confermà dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
     // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
     assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
@@ -4912,6 +4912,7 @@ export default {
     vermoegensfreibetrag: 'Franchisa da facultad', // TODO(rm): provisorisch
     assetLimitKeinKanton: 'Franchisa da facultad tenor recumandaziun SKOS, nagin chantun registrà.', // TODO(rm): provisorisch
     saeule3aNichtGezaehlt: "La pitga 3a n’è betg quintada qua. Ella sto per princip vegnir retratga pir ensemen cun il retratg anticipà da l’AVS u cun il retratg d’ina renta AI entira.", // TODO(rm): provisorisch
+    saeule3aOhneGeburtsdatum: "Senza data da naschientscha n’èsi betg cler, sche la pitga 3a quinta gia: ella sto per princip vegnir retratga ensemen cun il retratg anticipà da l’AVS (SKOS D.3.3 al. 3). Qua n’è ella betg quintada.", // TODO(rm)
     // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (25.09.2026)
     efbEntscheidet: { sie: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Vossa vischnanca.', du: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Tia vischnanca.' },
     erwerbsunkostenOffen: 'Custs supplementars per la lavur, sco mangiar ordaifer u il viadi a la lavur, n’èn betg quintads qua. Els augmentan il basegn — tar las indicaziuns pon ins endatar els.',

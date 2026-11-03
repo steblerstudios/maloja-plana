@@ -4,6 +4,7 @@ import { RechnerForm } from './components/RechnerForm.jsx';
 import { Pegel } from './components/Pegel.jsx';
 import { sozialhilfePegelAusRechner } from './data/pegel.js';
 import { berechneSozialhilfe, sozialhilfeErgebnis } from './data/sozialhilfeRechner.js';
+import { VFB_STAND_JAHR } from './data/vermoegensfreibetragKanton.js';
 import { aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -227,7 +228,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       },
         // Der eine Vermögenssatz der Seite (F8-G3), mit Frist und Vorschuss nach SKOS D.3.1 Abs. 2 und 3.
         t('sozialhilfe.assetLimitNote', {
-          basis: kanton ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + kanton) }) : t('sozialhilfe.assetLimitBasisSkos'),
+          basis: kanton ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + kanton), jahr: VFB_STAND_JAHR }) : t('sozialhilfe.assetLimitBasisSkos', { jahr: VFB_STAND_JAHR }),
           freibetrag: betrag(result.vermoegensfreibetrag), ueberschuss: betrag(result.anrechenbaresVermoegen),
         }),
         result.vfbUnbestaetigt && React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('sozialhilfe.assetLimitUnconfirmed'))

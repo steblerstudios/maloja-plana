@@ -18,6 +18,11 @@ import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
+import { VFB_STAND_JAHR } from './data/vermoegensfreibetragKanton.js';
+
+// Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
+// von den Zeilen ab (F8-G4), und das JSON rundete erst die Summe (F8-G5). Negativ zählt als 0.
+const vermoegenGerundet = (finanzen, basis) => vermoegensFelder(finanzen, basis).felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
 import { organListe } from './utils/organspende.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
@@ -838,10 +843,12 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     // ohne Betrag stehen (Fassung 6, Fix 7). Ohne Betrag fällt die Zeile weg.
     const mit = (vor, wert, nach = '') => { const b = formatCHF(wert); return b ? vor + b + nach : ''; };
     const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
-    const { mit3a, felder } = vermoegensFelder(data.finanzen, data.basis);
-    // Summe aus den gerundeten Zeilen des Blatts, sonst weicht sie bei Rappen um 1 Franken ab (F8-G4).
-    const vermoegenBlatt = felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
-    const freibetragBasis = d('basis', 'canton') ? t('sozialhilfe.assetLimitBasisCanton', { name: d('basis', 'canton') ? t('cantons.' + d('basis', 'canton')) : '' }) : t('sozialhilfe.assetLimitBasisSkos');
+    const { mit3a } = vermoegensFelder(data.finanzen, data.basis);
+    const vermoegenBlatt = vermoegenGerundet(data.finanzen, data.basis);
+    // Basis und Stand-Jahr beim Freibetrag (F8-G5).
+    const freibetragBasis = d('basis', 'canton') ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + d('basis', 'canton')), jahr: VFB_STAND_JAHR }) : t('sozialhilfe.assetLimitBasisSkos', { jahr: VFB_STAND_JAHR });
+    // Ohne Geburtsdatum weiss die App nicht, ob die 3a schon zählt (D.3.3 Abs. 3): Sie bleibt draussen, das Blatt sagt es.
+    const ohneGeburtsdatum3a = !mit3a && !d('basis', 'dateOfBirth') && Number(d('finanzen', 'pension3aBalance')) > 0;
     const sRows = [
       { label: t('sozialhilfe.basicNeeds') + (sozialhilfe.haushalt > sozialhilfe.einheit ? ' (' + t('sh.gblAnteil', { einheit: sozialhilfe.einheit, haushalt: sozialhilfe.haushalt }) + ')' : ''), value: formatCHF(sozialhilfe.grundbedarf) },
       { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
@@ -865,7 +872,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || sozialhilfe.eligible) && t('sozialhilfe.assetLimitUnconfirmedShort'),
       vermoegenGrund && !d('basis', 'canton') && t('sozialhilfe.assetLimitKeinKanton'),
-      vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
+      ohneGeburtsdatum3a && (vermoegenGrund || sozialhilfe.eligible) ? t('sozialhilfe.saeule3aOhneGeburtsdatum')
+        : vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
@@ -1096,10 +1104,13 @@ export function generateBehoerdenJSON(data, calculations, t) {
       anspruchOffen: !!sozialhilfe.anspruchOffen,
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
       vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
-      vermoegen: vermoegenGrund ? Math.round(sozialhilfe.vermoegen) : undefined,
+      vermoegen: vermoegenGrund ? vermoegenGerundet(data.finanzen, data.basis) : undefined,
       saeule3b: vermoegenGrund && Number(data.finanzen?.pension3bBalance) > 0 ? Number(data.finanzen.pension3bBalance) : undefined,
       saeule3a: vermoegenGrund && vermoegensFelder(data.finanzen, data.basis).mit3a ? Number(data.finanzen.pension3aBalance) : undefined,
       vermoegensfreibetrag: vermoegenGrund ? sozialhilfe.vermoegensfreibetrag : undefined,
+      vermoegensfreibetragStand: vermoegenGrund ? VFB_STAND_JAHR : undefined,
+      // Wie auf dem Blatt: 3a vorhanden, Geburtsdatum fehlt, darum nicht gezählt (F8-G5).
+      saeule3aOhneGeburtsdatum: (vermoegenGrund || (!!sozialhilfe.eligible && !sozialhilfe.einkommenFehlt)) && !vermoegensFelder(data.finanzen, data.basis).mit3a && !data.basis?.dateOfBirth && Number(data.finanzen?.pension3aBalance) > 0,
       // Nur, wo es das Blatt auch sagt: Sonst stünde die Angabe im JSON ohne Grund (F8-G5).
       vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || !!sozialhilfe.eligible),
       offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,
