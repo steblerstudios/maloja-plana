@@ -974,7 +974,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   'aria-checked': selected,
                   onClick: () => handleFieldChange(field.k, selected ? '' : opt.value),
                   style: {
-                    padding: '7px 14px',
+                    padding: '7px 14px', minHeight: '44px',
                     fontSize: text.sm,
                     fontFamily: 'inherit',
                     fontWeight: selected ? weight.semi : weight.normal,
@@ -1165,7 +1165,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const rows = [];
       const felder = [];
       if (name) { rows.push('<div style="font-size:18px;font-weight:500">' + escapeHtml(name) + '</div>'); felder.push(tr('zipExport.manifest.name')); }
-      if (dob) { rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>'); felder.push(tr('notfallSummary.cardDateOfBirth')); }
+      if (dob) { rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + escapeHtml(dob) + '</div>'); felder.push(tr('notfallSummary.cardDateOfBirth')); }
       sections.push({ title: tr('notfallSummary.cardPerson'), felder, html: rows.join('') });
     }
     if (data.emergencyContact) {

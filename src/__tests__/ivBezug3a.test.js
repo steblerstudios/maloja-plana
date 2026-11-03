@@ -43,3 +43,19 @@ describe('ivBezug und Säule 3a', () => {
     expect(calculateSozialhilfe(profil({})).ivUnklar3a).toBe(false);
   });
 });
+
+describe('Predeploy 03.11.: Rente ohne Betrag', () => {
+  const rentner = { basis: { canton: 'ZH', dateOfBirth: '1950-05-01', household: { adults: 1, children: [] } }, finanzen: { employmentType: 'retired', monthlyIncome: 0 }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 300 } };
+  it('IV-Bezug oder Ruhestand: kein Betrag in Karte und Dossier', () => {
+    for (const d of [profil({ ivBezug: 'ganz', monthlyIncome: 0, pension3aBalance: 0 }), profil({ ivBezug: 'teil' }), rentner]) {
+      const s = calculateSozialhilfe(d);
+      expect(s.einkommenFehlt).toBe(true);
+      expect(s.renteFehlt).toBe(true);
+    }
+  });
+  it('Rentner im AHV-Alter: EL prüfen lassen, nie «nur bei AHV oder IV»', () => {
+    expect(checkELEligibility(rentner)).toMatchObject({ elPruefen: true, isAHVIV: true });
+    const jung = { ...rentner, basis: { ...rentner.basis, dateOfBirth: '1980-05-01' } };
+    expect(checkELEligibility(jung).elPruefen).toBe(false);
+  });
+});

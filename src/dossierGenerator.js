@@ -875,7 +875,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.
       sozialhilfe.gblBelegt === false && t('sh.gblNichtBelegt', { jahr: sozialhilfe.gblJahr, laufend: new Date().getFullYear() }),
     ].filter(Boolean);
-    const status = sozialhilfe.einkommenFehlt ? t('sozialhilfe.einkommenNichtErfasst')
+    const status = sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
       : sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich')
@@ -1115,6 +1115,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' }
       : {
           eligible: !!ipv.eligible,
+          // Ein Nein nie ohne Grund, auch nicht in der Datei (Rechtsprüfung 02.11.2026).
+          ...(!ipv.eligible && ipv.noteKey ? { grund: t ? t(ipv.noteKey, ipv.noteParams) : ipv.noteKey, unterMindestbetrag: ipvUnterMindestbetrag(ipv) } : {}),
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
           ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
@@ -1124,7 +1126,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
         };
   }
   if (el) {
-    dossier.calculations.el = { eligible: !!el.eligible };
+    dossier.calculations.el = { eligible: !!el.eligible, pruefen: !!el.elPruefen };
   }
   if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {

@@ -96,6 +96,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     vermoegen,
     vermoegenMit3a: mit3a,
     vermoegen3aDurchIv: durchIv,
+    renteFehlt: ['ganz', 'teil'].includes(f.ivBezug) || f.employmentType === 'retired',
     // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS-RL C.3.2 Abs. 4) — nur Hinweis, keine Rechnung.
     jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,

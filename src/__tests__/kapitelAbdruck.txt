@@ -393,7 +393,7 @@ it   k=creditCardBalance type="currency" hint~4c455f1c label~35de924c
 it   k=loans type="currency" label~4b5d67ce
 it   k=pension3a type="currency" section~27393e0b orientation~07e87d60 label~286ed9c2 sectionIntro~25dd5d73 weitere=jahr+secondary
 it   k=pension3aBalance type="currency" hint~bb2ea7e2 label~f122c2ef weitere=secondary
-it   k=ivBezug type="select" naOk=true hint~38319487 label~920dd2b4 options=3 optWerte~2def05cf optLabels~a00804cd weitere=secondary
+it   k=ivBezug type="select" naOk=true hint~6cf79de2 label~920dd2b4 options=3 optWerte~2def05cf optLabels~a00804cd weitere=secondary
 it   k=pension3b type="select" orientation~dd2acdbe label~1551817e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
 it   k=pension3bBalance type="currency" hint~b59dc695 label~fad3cae4 weitere=secondary
 it   k=investmentFunds type="select" label~6be024fe options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
@@ -717,7 +717,7 @@ rm   k=creditCardBalance type="currency" hint~d0d2f065 label~b83031db
 rm   k=loans type="currency" label~655f7754
 rm   k=pension3a type="currency" section~9067c1a5 orientation~d037ec79 label~b25df0ea sectionIntro~d5548bf7 weitere=jahr+secondary
 rm   k=pension3aBalance type="currency" hint~28562c7a label~213cc08d weitere=secondary
-rm   k=ivBezug type="select" naOk=true hint~a30dba7f label~1b18a73d options=3 optWerte~2def05cf optLabels~9b923f6a weitere=secondary
+rm   k=ivBezug type="select" naOk=true hint~29c9d4f9 label~1b18a73d options=3 optWerte~2def05cf optLabels~9b923f6a weitere=secondary
 rm   k=pension3b type="select" orientation~9356eed0 label~02bec3b3 options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
 rm   k=pension3bBalance type="currency" hint~1f923040 label~8de8ffe0 weitere=secondary
 rm   k=investmentFunds type="select" label~2905109f options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary

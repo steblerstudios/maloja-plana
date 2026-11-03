@@ -23,6 +23,8 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Bezug einer IV-Rente** (#667): neues freiwilliges Feld. Mit ganzer Rente zählt die Säule 3a (SKOS D.3.3 Abs. 3), Ergänzungsleistungen heissen ohne Rentenbetrag «prüfen lassen».
 - **Zugänglichkeit** (#664): Tippziele in Kopf, Knöpfen und Prämientabelle, Ansagen im Kalender und im Ergebnis, eine h1 je Seite.
 - **Finanzen** (#665): Gruppen wie im Budget, Jahr des Branchenwerts genannt.
+- **Rente ohne Betrag**: Mit IV-Bezug oder im Ruhestand nennen Karte und Dossier keinen Sozialhilfe-Betrag, bis die Rente eingetragen ist; im Rentenalter heisst EL «prüfen lassen».
+- **Stand der Rechtstexte** November 2026 (IV-Rente bei den Gesundheitsdaten).
 
 ### Geändert
 - **Fusszeile am Handy mit 5 statt 7 Plätzen** (#545): Übersicht · Rucksack | ＋ | Anspruch · Menü. Kalender

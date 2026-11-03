@@ -41,7 +41,8 @@ export function anspruchSignale(data = {}) {
       }
     }
     // EL: nur im AHV-/IV-Renten-Kontext.
-    if (checkELEligibility(data)?.eligible) {
+    const el = checkELEligibility(data);
+    if (el?.eligible || el?.elPruefen) {
       add('finanzen', { key: 'el', view: 'finanzuebersicht' });
     }
   } catch { /* Orientierung, nie blockierend */ }

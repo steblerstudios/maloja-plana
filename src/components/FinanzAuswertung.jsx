@@ -192,13 +192,13 @@ export const druckAbschnitte = (t, w) => {
   const ipvBetragText = ipvVerfuegt || ipvOhneJahr
     ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t(ipvVerfuegt ? 'finanzUebersicht.ipvLautVerfuegung' : 'finanzUebersicht.ipvVerfuegungOhneJahr') + ')'
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
-  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t(ipvUnterMindestbetrag(w.ipv) ? 'premium.keineAuszahlung' : 'finanzUebersicht.notEligible')) + '</td></tr>' });
   // Geschätzter Betrag bei offener Frage nach dem 13. Monatslohn: die Annahme gehört dazu (wie bei der Steuer).
   const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? [...ipvAnnahmenTexte(t, w.ipv.annahmen), ...(w.ipvRuht ? [t('ipv.ruhtMitSozialhilfe')] : [])] : [];
   if (ipvAnnahmen.length) {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
-  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.einkommenFehlt ? t('sozialhilfe.einkommenNichtErfasst') : w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : w.sozialhilfe.anspruchOffen ? t(w.sozialhilfe.offenText) : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.einkommenFehlt ? t(w.sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : w.sozialhilfe.anspruchOffen ? t(w.sozialhilfe.offenText) : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   if (w.sozialhilfe.ansatzTiefer) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ansatzTiefer')) + '</td></tr>' });
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
@@ -499,7 +499,7 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
   return React.createElement(StatusCard, {
     palette, icon: 'home',
     title: t('finanzUebersicht.sozialhilfe'),
-    status: sozialhilfe.einkommenFehlt ? t('sozialhilfe.einkommenNichtErfasst')
+    status: sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
       : sozialhilfe.eligible
       ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
         // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
@@ -631,7 +631,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   }
   const fruechte = chapters.length ? bereichsFruechte(chapters, data, astFarben(chapters, palette, isDarkMode)) : [];
   // Offen, sobald ein Anspruch möglich ist — dieselben Signale wie die Karten selbst.
-  const anspruch = !!((w.sozialhilfe.eligible && !w.sozialhilfe.einkommenFehlt) || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen || w.el.eligible);
+  const anspruch = (!w.sozialhilfe.einkommenFehlt && !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen)) || !!(w.el.eligible || w.el.elPruefen);
   const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).
