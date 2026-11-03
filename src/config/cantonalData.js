@@ -355,6 +355,8 @@ export function calculateSozialhilfe(data) {
   const knapp = erwerbstaetig && erwerbseinkommen > 0 && bilanz.luecke <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN;
   const vermoegenZuerst = !konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
   // 2. Säule ab AHV-Vorbezug oder ganzer IV-Rente: kein Betrag, solange unbekannt ist, was ausbezahlt wird (D.3.3 Abs. 3 und 5).
+  // Der Satz steht nur, wo er einen fehlenden Betrag erklärt, auch neben «Rente noch nicht erfasst». Deckt der Lohn den
+  // Bedarf, schweigt er: Auf dem Blatt ans Amt wäre er sonst eine Aussage über die Person ohne Anlass (Rechtsprüfung).
   const bvgOffen = bvgHerausloesen(data.finanzen, data.versicherungen, data.basis);
   const bvgZuerst = !konkubinatBetragOffen && bvgOffen && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
   const betragOffen = konkubinatBetragOffen || vermoegenZuerst || bvgZuerst;
@@ -393,7 +395,7 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...(vermoegenAngaben.durchIv ? ['sh.ivGanz3a'] : []), ...(bvgOffen && offenText !== 'sh.bvgHerausloesen' ? ['sh.bvgHerausloesen'] : []), ...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...(vermoegenAngaben.durchIv ? ['sh.ivGanz3a'] : []), ...(bvgZuerst && (einkommenFehlt || offenText !== 'sh.bvgHerausloesen') ? ['sh.bvgHerausloesen'] : []), ...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.

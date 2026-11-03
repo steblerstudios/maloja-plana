@@ -53,8 +53,10 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   const einkommenLeer = String(einkommen ?? '').trim() === '' && !ohneErwerb;
   // Rente ohne Betrag im Profil (wie Karte und Dossier): erst rechnen, wenn bei den anderen Einkünften etwas dazukam.
   const renteOffen = !!vorbefuellt.renteFehlt && String(andereEinkuenfte) === String(vorbefuellt.andereEinkuenfte);
-  // Wie die Rente: Erst wenn das Vermögen angepasst ist, rechnet die Seite (2. Säule, SKOS-RL D.3.3 Abs. 3).
-  const bvgOffen = !!vorbefuellt.bvgOffen && String(vermoegen) === String(vorbefuellt.vermoegen);
+  // 2. Säule (SKOS-RL D.3.3 Abs. 3): Kapital kommt zum Vermögen, eine Rente zu den anderen Einkünften. Bis eines der
+  // beiden Felder angepasst ist, rechnet die Seite nicht, sofern eine Lücke daran hängen kann (unten).
+  const bvgOffen = !!vorbefuellt.bvgOffen && String(vermoegen) === String(vorbefuellt.vermoegen)
+    && String(andereEinkuenfte) === String(vorbefuellt.andereEinkuenfte);
 
   const result = useMemo(() => {
     const m = Number(miete) || 0;
@@ -63,8 +65,8 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     if (einkommenLeer) return null;
     // Lohn im Profil, aber nicht als Netto: Ohne Eintrag gäbe es sonst einen Betrag aus einem Einkommen von 0.
     if (lohnOffen) return null;
-    if (renteOffen || bvgOffen) return null;
-    return berechneSozialhilfe({
+    if (renteOffen) return null;
+    const r = berechneSozialhilfe({
       adults,
       kinderImHaushalt: kinderCount,
       weiterePersonen,
@@ -81,6 +83,8 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       integrationsMassnahme: integration,
       kanton,
     });
+    // Deckt der Lohn den Bedarf klar, ändert die 2. Säule nichts an der Antwort.
+    return bvgOffen && (r.offenOhneVermoegen || r.knapp) ? null : r;
   }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, lohnOffen, einkommenLeer, renteOffen, bvgOffen, integration, kanton]);
 
   // Konkubinat mit Partnerlohn: kein Betrag, wo eine Lücke bleibt. Deckt das eigene Einkommen den Bedarf, gilt das gewöhnliche Nein.

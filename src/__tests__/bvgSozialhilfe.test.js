@@ -51,10 +51,18 @@ describe('2. Säule in der Sozialhilfe (SKOS-RL D.3.3 Abs. 3)', () => {
     expect(b.bvgOffen).toBe(false);
   });
 
-  it('Lohn deckt den Bedarf: kein Betrag zu sperren, aber der Hinweis bleibt', () => {
+  // Rechtsprüfung 05296d0e: ohne Anlass kein Satz über die Person auf dem Blatt ans Amt.
+  it('Lohn deckt den Bedarf: nichts zu sperren und kein Satz', () => {
     const s = calculateSozialhilfe(profil(vorbezug, { bvgBalance: 80000 }, { monthlyIncome: 9000 }));
     expect(s.deficit).toBe(0);
     expect(s.offenText).not.toBe('sh.bvgHerausloesen');
+    expect(s.hinweise).not.toContain('sh.bvgHerausloesen');
+  });
+
+  // Fachprüfung 05296d0e: Neben «Rente noch nicht erfasst» stand der Grund sonst nirgends.
+  it('Rente noch nicht erfasst: der Grund steht trotzdem in den Hinweisen', () => {
+    const s = calculateSozialhilfe(profil(vorbezug, { bvgBalance: 80000 }, { employmentType: 'retired', monthlyIncome: '' }));
+    expect(s.einkommenFehlt).toBe(true);
     expect(s.hinweise).toContain('sh.bvgHerausloesen');
   });
 
@@ -64,8 +72,12 @@ describe('2. Säule in der Sozialhilfe (SKOS-RL D.3.3 Abs. 3)', () => {
   });
 
   it('die Texte nennen die Fundstelle und keinen Betrag', () => {
-    expect(de.sh.bvgHerausloesen).toContain('D.3.3 Abs. 3 und 5');
+    expect(de.sh.bvgHerausloesen).toContain('D.3.3 Abs. 3');
+    expect(de.sh.bvgHerausloesen).toContain('Empfehlung');
+    expect(de.sh.bvgHerausloesen).toContain('nicht zusätzlich versichert');
+    expect(de.sh.bvgHerausloesen).toContain('entscheidet der Sozialdienst');
     expect(de.sh.bvgEintragen.sie).toContain('D.3.3 Abs. 3');
+    expect(de.sh.bvgEintragen.sie).toContain('bei den anderen Einkünften');
     expect(de.sh.bvgHerausloesen).not.toMatch(/\d['’]\d{3}/);
   });
 
@@ -78,7 +90,8 @@ describe('2. Säule in der Sozialhilfe (SKOS-RL D.3.3 Abs. 3)', () => {
     expect(rechner).toContain(de.sh.bvgEintragen.sie.slice(0, 40));
     const seite = render(SozialhilfeView, d);
     expect(seite).toContain(de.sh.bvgHerausloesen.slice(0, 40));
-    // Gegenprobe: ohne Guthaben rechnet der Rechner.
+    // Gegenprobe: ohne Guthaben rechnet der Rechner, und mit Guthaben, wenn der Lohn den Bedarf klar deckt.
     expect(render(SozialhilfeRechner, profil(vorbezug, {}, { employmentType: 'employed' }))).not.toContain(de.sh.bvgEintragen.sie.slice(0, 40));
+    expect(render(SozialhilfeRechner, profil(vorbezug, { bvgBalance: 80000 }, { employmentType: 'employed', monthlyIncome: 9000 }))).not.toContain(de.sh.bvgEintragen.sie.slice(0, 40));
   });
 });

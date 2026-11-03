@@ -57,9 +57,10 @@ export function vermoegensFelder(finanzen, basis, heute = new Date()) {
 
 // Die 2. Säule hängt am selben Auslöser wie die 3a: «Vermögen der 2. Säule und der Säule 3a sind grundsätzlich zusammen
 // mit dem AHV-Vorbezug oder dem Bezug einer ganzen IV-Rente herauszulösen» (SKOS-RL D.3.3 Abs. 3, Version vom 1.1.2026,
-// gelesen 03.11.2026), ausgelöst zählen sie zum Vermögen (Abs. 5). Ob und wie viel als Kapital kommt, entscheidet die
-// Vorsorgeeinrichtung, das Profil kennt nur das Guthaben (`versicherungen.bvgBalance`). Darum keine Zahl im Vermögen,
-// sondern offen: Die Rechnung nennt dann keinen Betrag (F8-Prüfer, 03.11.2026).
+// gelesen 03.11.2026), ausgelöst zählen sie zum Vermögen (Abs. 5). Bei der IV nach Erl. b nur, wenn das Invaliditätsrisiko
+// nicht zusätzlich versichert ist; die Texte sagen es. Ob Kapital oder Rente und wie viel, hängt von Reglement und Begehren
+// ab, die Auflage macht der Sozialdienst. Das Profil kennt nur das Guthaben (`versicherungen.bvgBalance`): keine Zahl im
+// Vermögen, sondern kein Betrag, solange die Lücke daran hängen kann (F8-Prüfer, 03.11.2026).
 export function bvgHerausloesen(finanzen, versicherungen, basis, heute = new Date()) {
   return (saeule3aZaehlt(basis, heute) || finanzen?.ivBezug === 'ganz') && Number(versicherungen?.bvgBalance) > 0;
 }
