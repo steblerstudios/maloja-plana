@@ -11,7 +11,7 @@ import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.j
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { grundbedarf as skosGrundbedarf, gblStand, grundbedarfNachWohnform } from '../data/skosGrundbedarf.js';
-import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
+import { nettoMonatAusProfil, alterUndRentenalter } from '../utils/nettoAusProfil.js';
 
 // PLZ → Kanton/Gemeinde, Kantonscodes und -namen liegen seit 28.09.2026 in kantonPLZ.js (klein, für
 // die Startdatei). Hier nur weitergereicht, damit bestehende Importe gültig bleiben.
@@ -359,8 +359,11 @@ export function calculateSozialhilfe(data) {
   // Kein Einkommen erfasst: Die Rechnung läuft weiter (Schnellcheck rechnet mit Proben), aber Karte und Dossier nennen keinen
   // Betrag aus einem leeren Feld (F8-S4). Dieselbe Regel wie im Rechner: Andere Einkünfte reichen nur bei einer Lage ohne Erwerb.
   const feldLeer = (v) => v == null || String(v).trim() === '';
-  const einkommenFehlt = feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
-    && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0);
+  // Eine Rente zählt zu den Einnahmen (SKOS-RL D.1 Abs. 1, Version vom 1.1.2021), das Profil kennt aber ihre Höhe nicht:
+  // Mit IV-Bezug oder im Ruhestand nennen Karte und Dossier darum keinen Betrag (Fachprüfung 03.11.2026).
+  const renteFehlt = ['ganz', 'teil'].includes(data.finanzen?.ivBezug) || data.finanzen?.employmentType === 'retired';
+  const einkommenFehlt = renteFehlt || (feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
+    && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0));
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
   const gbl = gblStand();
@@ -401,9 +404,10 @@ export function calculateSozialhilfe(data) {
     offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
     deficit,
     einkommenFehlt,
+    renteFehlt,
     // Nur für die Seite, nicht fürs Dossier: Eine Vermutung zur IV gehört nicht auf ein Blatt ans Amt (Rechtsprüfung 02.11.2026).
     ivUnklar3a: (Number(data.finanzen?.ivRente) > 0 || data.finanzen?.employmentType === 'retired') && !data.finanzen?.ivBezug
-      && !vermoegenAngaben.mit3a && vermoegenUeberFreibetrag === 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet)
+      && !vermoegenAngaben.mit3a && vermoegenUeberFreibetrag === 0 && !feldLeer(data.finanzen?.monthlyIncome) && (bilanz.luecke > 0 || bilanz.efbEntscheidet)
       && vermoegen + plus(data.finanzen?.pension3aBalance) > vermoegensfreibetrag,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
@@ -541,7 +545,9 @@ export function checkELEligibility(data) {
   const totalExpenses = rent + kkPremium;
   const rentenBetrag = ahvRente > 0 || ivRente > 0;
   // Rente ohne Betrag: ELG Art. 4 Abs. 1 Bst. c gilt auch für Teilrenten, die Formel hätte aber kein Einkommen dazu.
-  const elPruefen = !rentenBetrag && ['ganz', 'teil'].includes(data.finanzen?.ivBezug);
+  // Im Rentenalter gilt dasselbe für die AHV-Altersrente (ELG Art. 4 Abs. 1 Bst. a, Fassung 1.1.2026).
+  const elPruefen = !rentenBetrag && (['ganz', 'teil'].includes(data.finanzen?.ivBezug)
+    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter));
   const isAHVIV = rentenBetrag || elPruefen;
 
   return {

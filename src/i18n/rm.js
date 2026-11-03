@@ -2388,7 +2388,7 @@ export default {
         securitiesValue: 'Valur fiscala d’aczias, fonds ed obligaziuns ils 31.12 — relevant per la taglia sin la facultad.',
         otherAssets: 'Daners blut, metals prezius, criptomonedas, vehichels e.u.v. (valur fiscala).',
         pension3aBalance: { sie: 'L’import total spargnà fin ussa sin Voss conto 3a — betg la contribuziun annuala.', du: 'L’import total spargnà fin ussa sin tes conto 3a — betg la contribuziun annuala.' },
-        ivBezug: { sie: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che Vus al dais vinavant sezza.", du: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che ti al das vinavant sez." }, // TODO(rm)
+        ivBezug: { sie: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che Vus transmettais la decisiun.", du: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che ti transmettas la decisiun." }, // TODO(rm)
         pension3bBalance: { sie: 'Il valur actual da Vossa prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).', du: 'Il valur actual da tia prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).' },
       },
       docs: {
@@ -2707,7 +2707,7 @@ export default {
       dataLoss2: { sie: "Stizzar las datas dal navigatur, midar il navigatur u reinizialisar l'apparat po manar a la perdita da Vossas datas. Dovrai regularmain la funcziun d'export per crear backups.", du: "Stizzar las datas dal navigatur, midar il navigatur u reinizialisar l'apparat po manar a la perdita da Tias datas. Dovra regularmain la funcziun d'export per crear backups." },
       changesTitle: 'Midadas',
       changes1: "Questas cundiziuns d'utilisaziun pon vegnir adattadas da tut temp. Midadas entran en vigur cun la proxima utilisaziun da l'applicaziun.",
-      changes2: 'Stadi: settember 2026',
+      changes2: 'Stadi: november 2026',
     },
     imprint: {
       operatorTitle: 'Exploratrice',
@@ -4899,6 +4899,7 @@ export default {
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
     einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
+    renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
     assetLimitBasisCanton: 'Chantun {name}',
@@ -5884,7 +5885,8 @@ export default {
     nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai na vegn ella betg quintada — qua agiuntar l'import net.",
     konkubinatHint: "En concubinat na quinta betg l'entir salari da la partenaria u dal partenari, mabain ina contribuziun da concubinat — il servetsch social la fixescha. Perquai na vegn nagut preemplenì qua.",
     inkl3aHint: "Summà ord il profil, inclusiv il pilaster 3a — l’agid social pretenda per princip ch’el vegnia retratg ensemen cun l’anticipaziun da l’AVS; el quinta perquai da lura davent sco facultad.", // TODO(rm): provisorisch
-    inkl3aIvHint: "Sumà ord il profil, inclus il pilier 3a: el sto per regla vegnir retratg ensemen cun ina renta AI entira.", // TODO(rm)
+    inkl3aIvHint: "Sumà ord il profil, inclus il pilier 3a: el sto per regla vegnir retratg ensemen cun ina renta AI entira, sche il ristg d’invaliditad n’è betg assicurà.", // TODO(rm)
+    renteEintragen: { sie: "Endatai Vossa renta tar las autras entradas. Senza ella fiss l’import memia aut.", du: "Endatescha Tia renta tar las autras entradas. Senza ella fiss l’import memia aut." }, // TODO(rm)
     ivGanz3a: "Il pilier 3a è quintà, perquai ch’ina renta AI entira è endatada: el sto per regla vegnir retratg ensemen cun questa renta, sche il ristg d’invaliditad n’è betg assicurà (SKOS D.3.3 al. 3, OPP 3 art. 3 al. 2 lit. a). Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC.", // TODO(rm)
     ivUnklar3a: { sie: "Sche Vus retschavais ina renta AI entira: cun il pilier 3a fiss la facultad sur la franchisa da l’agid social. Il dretg sclerescha il servetsch social. Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC.", du: "Sche ti retschaves ina renta AI entira: cun il pilier 3a fiss la facultad sur la franchisa da l’agid social. Il dretg sclerescha il servetsch social. Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC." }, // TODO(rm)
     erwachseneHint: 'La persuna che fa la dumonda e, en cas da maridaglia u da partenadi registrà, la partenaria u il partenari.',
@@ -7509,7 +7511,7 @@ export default {
     grenze: 'Limita',
     luft: 'spazi',
     empty: 'Endatar entrada e chantun — lura mussa l’indicatur il spazi disponibel.',
-    clear: 'L’entrada è sut la limita — il dretg exista, cun spazi.',
+    clear: "L’entrada è sut la limita — in dretg è pussaivel, cun spazi.", // TODO(rm)
     edge: 'Just sut la limita — quai pudess bastar.',
     over: 'Probablamain sur la limita, per quai datti autras vias.',
     perMonthPossible: 'radund {amount} / mais pussaivel',

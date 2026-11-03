@@ -291,7 +291,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // Feste Fristen aus den Kapiteln stehen in derselben Liste (F8-D3), ohne Haken: Sie gehören keiner Erinnerung.
   const titelFest = { kvg: t('calendar.jahreskreis.kvgTitle'), steuer: t('behördenStatus.taxDeadline') };
   const festOffen = festeFristen(data, today)
-    .filter((f) => !upcoming.some((r) => r.dueDate === f.iso && (r.title === titelFest[f.key] || (f.key === 'steuer' && r.title === t('calendar.templates.taxDeadline')))))
+    // Auch eine erledigte Erinnerung zum selben Termin deckt die Frist: sonst bliebe sie stehen und liesse sich nicht abhaken.
+    .filter((f) => !reminders.some((r) => r.dueDate === f.iso && (r.title === titelFest[f.key] || (f.key === 'steuer' && r.title === t('calendar.templates.taxDeadline')))))
     .map((f) => ({ ...f, titel: titelFest[f.key] }));
   const renderFesteFrist = (f) => zeile({
     key: 'fest-' + f.key, iso: f.iso, art: 'frist', bereich: kategorieBereich(f.kategorie),
