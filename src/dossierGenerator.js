@@ -925,9 +925,10 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       key: 'el',
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
-      status: el.eligible ? t('sozialhilfe.elPossible') : el.elPruefen ? t('sozialhilfe.elPruefen') : t(el.isAHVIV ? 'behoerdenDossier.elKeinHinweis' : 'behoerdenDossier.elNotApplicable'),
-      statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
-      statusOk: el.eligible,
+      status: el.elPruefen ? t('sozialhilfe.elPruefen') : t('behoerdenDossier.elNotApplicable'),
+      // Nie grün: «prüfen lassen» ist eine Bitte, kein Befund (F8-Prüfer, 03.11.2026).
+      statusColor: DRUCK.grau,
+      statusOk: false,
     });
   }
 
@@ -1126,7 +1127,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
         };
   }
   if (el) {
-    dossier.calculations.el = { eligible: !!el.eligible, pruefen: !!el.elPruefen };
+    dossier.calculations.el = { pruefen: !!el.elPruefen };
   }
   if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {
