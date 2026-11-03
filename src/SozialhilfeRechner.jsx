@@ -54,9 +54,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   // Rente ohne Betrag im Profil (wie Karte und Dossier): erst rechnen, wenn bei den anderen Einkünften etwas dazukam.
   const renteOffen = !!vorbefuellt.renteFehlt && String(andereEinkuenfte) === String(vorbefuellt.andereEinkuenfte);
   // 2. Säule (SKOS-RL D.3.3 Abs. 3): Kapital kommt zum Vermögen, eine Rente zu den anderen Einkünften. Bis eines der
-  // beiden Felder angepasst ist, rechnet die Seite nicht, sofern eine Lücke daran hängen kann (unten).
+  // beiden Felder angepasst ist, rechnet die Seite nicht, sofern eine Lücke daran hängen kann (unten). Fehlt auch die
+  // AHV- oder IV-Rente, ist die Änderung bei den Einkünften diese Rente: Dann gibt nur das Vermögen frei, und beide
+  // Sätze stehen zusammen da (Nachprüfung 09ec9269, Muss).
   const bvgOffen = !!vorbefuellt.bvgOffen && String(vermoegen) === String(vorbefuellt.vermoegen)
-    && String(andereEinkuenfte) === String(vorbefuellt.andereEinkuenfte);
+    && (!!vorbefuellt.renteFehlt || String(andereEinkuenfte) === String(vorbefuellt.andereEinkuenfte));
 
   const result = useMemo(() => {
     const m = Number(miete) || 0;
@@ -255,7 +257,11 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,
-    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : renteOffen ? 'sh.renteEintragen' : bvgOffen ? 'sh.bvgEintragen' : lohnOffen ? (Number(data?.finanzen?.monthlyIncome) > 0 && (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen) ? 'sh.lohnEingeben' : 'sh.nebenEingeben') : ohneMieteUndPraemie ? 'sh.eingeben' : 'sh.einkommenEingeben'),
+    // Der Lohn vor der 2. Säule: Er ist die grössere Lücke (Nachprüfung 09ec9269).
+    ergebnis, ohneErgebnis: konkubinatGesperrt ? t('pegel.konkubinatBetragOffen')
+      : renteOffen ? t('sh.renteEintragen') + (bvgOffen ? ' ' + t('sh.bvgEintragen') : '')
+      : lohnOffen ? t(Number(data?.finanzen?.monthlyIncome) > 0 && (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen) ? 'sh.lohnEingeben' : 'sh.nebenEingeben')
+      : bvgOffen ? t('sh.bvgEintragen') : t(ohneMieteUndPraemie ? 'sh.eingeben' : 'sh.einkommenEingeben'),
     art: konkubinatGesperrt ? null : sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: ohneErwerb ? '0' : einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
     // Vorbehalte als Liste, nicht als ein Absatz (F8-G3).
     vorbehalt: vorbehalte.length > 0 && React.createElement('ul', { style: { ...s.hint, marginTop: space.sm + 'px', paddingLeft: '18px' } },

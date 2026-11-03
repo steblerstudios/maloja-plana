@@ -94,4 +94,14 @@ describe('2. Säule in der Sozialhilfe (SKOS-RL D.3.3 Abs. 3)', () => {
     expect(render(SozialhilfeRechner, profil(vorbezug, {}, { employmentType: 'employed' }))).not.toContain(de.sh.bvgEintragen.sie.slice(0, 40));
     expect(render(SozialhilfeRechner, profil(vorbezug, { bvgBalance: 80000 }, { employmentType: 'employed', monthlyIncome: 9000 }))).not.toContain(de.sh.bvgEintragen.sie.slice(0, 40));
   });
+
+  // Nachprüfung 09ec9269, Muss: Mit ganzer IV-Rente fehlen Rente und 2. Säule zugleich. Beide Sätze stehen zusammen da,
+  // und das Eintragen der Rente allein gibt die 2. Säule nicht frei (sonst ein Betrag ohne sie).
+  it('ganze IV-Rente: Rente und 2. Säule zusammen verlangt', () => {
+    const t = createT({ de, en, fr, it: itTranslations, rm }, 'de');
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const html = renderToStaticMarkup(React.createElement(SozialhilfeRechner, { palette, t, data: profil(jung, { bvgBalance: 80000 }, { ivBezug: 'ganz', monthlyIncome: 0 }), onNavigate: () => {} }));
+    expect(html).toContain(de.sh.renteEintragen.sie.slice(0, 30));
+    expect(html).toContain(de.sh.bvgEintragen.sie.slice(0, 40));
+  });
 });
