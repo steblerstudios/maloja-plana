@@ -4893,7 +4893,7 @@ export default {
     step2: "Purtar tut las cumprovas d'entrada",
     step3: 'Avair pront il contract da locaziun e la polizza CM',
     step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
-    step5: 'Examinar la dumonda PC tar la filiala AVS',
+    step5: 'Examinar la dumonda PC tar il post PC cumpetent', // TODO(rm)
     orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
@@ -7543,7 +7543,7 @@ export default {
     ipvOhneBetragNote: 'Vala la paina dad examinar — dretg ed import decida il chantun.', // TODO(rm): provisorisch
     sozNote: 'Cuvra la largia fin al minimum existenzial (COSAS).',
     el: 'Prestaziuns cumplementaras (PC)',
-    elNote: 'Cun ina renta AVS u AI che na basta betg per viver.',
+    elNote: 'Cun ina renta AVS u AI. Il post PC calcula sch’ella basta per viver.', // TODO(rm)
     pruefen: 'verifitgar',
     noResult: 'Cun questas datas mussa la verifica svelta nagin dretg monetar cler — las vias sutvart cseries dapli, e la gronda part na dependa betg mo da l’entrada.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

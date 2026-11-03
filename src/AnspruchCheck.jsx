@@ -60,7 +60,8 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
             label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '') });
         }
       }
-      if (checkELEligibility(probe)?.eligible) {
+      // EL ohne Rechnung: ein Rentenbezug führt hin, ein «Möglicher Anspruch» wird nicht mehr errechnet (F8-Prüfer).
+      if (checkELEligibility(probe)?.elPruefen) {
         incomeBenefits.push({ key: 'el', label: t('anspruch.items.el.label'), view: 'finanzuebersicht' });
       }
     } catch { /* Orientierung, nie blockierend */ }

@@ -42,7 +42,7 @@ export function anspruchSignale(data = {}) {
     }
     // EL: nur im AHV-/IV-Renten-Kontext.
     const el = checkELEligibility(data);
-    if (el?.eligible || el?.elPruefen) {
+    if (el?.elPruefen) {
       add('finanzen', { key: 'el', view: 'finanzuebersicht' });
     }
   } catch { /* Orientierung, nie blockierend */ }

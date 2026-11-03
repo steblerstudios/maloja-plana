@@ -19,8 +19,9 @@ describe('IPV-Wort im Dossier', () => {
     expect(blatt(ipv).sections.find((s) => s.key === 'ipv').status).toBe('premium.keineAuszahlung');
   });
   it('EL: bei Rente nie «nur bei AHV- oder IV-Leistung»', () => {
-    const a = blatt(undefined, { eligible: false, isAHVIV: true }).sections.find((s) => s.key === 'el');
-    expect(a.status).toBe('behoerdenDossier.elKeinHinweis');
+    // Seit 03.11.2026 ist ein Rentenbezug immer «prüfen lassen», nie grün und nie ein «kein Hinweis» aus einer Marge.
+    const a = blatt(undefined, { isAHVIV: true, elPruefen: true }).sections.find((s) => s.key === 'el');
+    expect(a).toMatchObject({ status: 'sozialhilfe.elPruefen', statusOk: false });
   });
   it('die Grenze trägt Einheit und Bezug', () => {
     expect(de.ipv.incomeAboveLimit).toContain('pro Jahr');
