@@ -99,7 +99,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     // EL (Predeploy 25.09.2026): nur im AHV-/IV-Renten-Kontext, qualitativ ohne Betrag — wie im
     // vollen Schnellcheck. Bis dahin fehlte sie hier, und der Kompass zählte anders als der Schnellcheck.
     // Nicht, solange die Einkommensart offen ist (sonst zählte ein leeres Feld als 0 Einkommen).
-    if (!e.offen && checkELEligibility(probe)?.eligible) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
+    // Seit 03.11.2026 ohne errechneten Anspruch: der Rentenbezug genügt, wie in data/anspruchWege.js.
+    if (!e.offen && checkELEligibility(probe)?.elPruefen) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
   } catch { /* Orientierung, nie blockierend */ }
 
   // Wie der volle Schnellcheck (Schnellcheck.jsx): bei Sozialhilfe steckt die IPV schon

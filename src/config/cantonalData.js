@@ -543,15 +543,19 @@ export function checkELEligibility(data) {
 
   const totalIncome = income + ahvRente + ivRente + bvgRente;
   const totalExpenses = rent + kkPremium;
+  // `ahvRente` und `ivRente` haben keine Eingabe, ein Betrag kommt nur aus einem Import oder alten Daten.
+  // Er zeigt den Bezug an, trägt aber keine Rechnung: Bis 03.11.2026 stand hier «Einnahmen < Ausgaben + 2000»,
+  // eine Marge ohne Quelle, ohne Lebensbedarf und Vermögen nach ELG Art. 9–11 (Audit D5, Oktober 2026).
+  // Ein Bezug heisst darum immer «prüfen lassen», nie «Möglicher Anspruch» (F8-Prüfer, 03.11.2026).
   const rentenBetrag = ahvRente > 0 || ivRente > 0;
-  // Rente ohne Betrag: ELG Art. 4 Abs. 1 Bst. c gilt auch für Teilrenten, die Formel hätte aber kein Einkommen dazu.
-  // Im Rentenalter gilt dasselbe für die AHV-Altersrente (ELG Art. 4 Abs. 1 Bst. a, Fassung 1.1.2026).
-  const elPruefen = !rentenBetrag && (['ganz', 'teil'].includes(data.finanzen?.ivBezug)
-    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter));
-  const isAHVIV = rentenBetrag || elPruefen;
+  // ELG Art. 4 Abs. 1 Bst. c gilt auch für Teilrenten; im Rentenalter gilt dasselbe für die AHV-Altersrente
+  // (ELG Art. 4 Abs. 1 Bst. a, Fassung 1.1.2026).
+  const elPruefen = rentenBetrag || ['ganz', 'teil'].includes(data.finanzen?.ivBezug)
+    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter);
+  const isAHVIV = elPruefen;
 
   return {
-    eligible: rentenBetrag && totalIncome < totalExpenses + 2000,
+    eligible: false,
     isAHVIV,
     elPruefen,
     totalIncome,

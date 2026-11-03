@@ -314,25 +314,25 @@ describe('checkELEligibility — Ergänzungsleistungen', () => {
     expect(r.noteKey).toBe('elCalc.onlyAhvIv');
   });
 
-  it('is possible with an AHV pension and a gap below the threshold', () => {
+  // F8-Prüfer 03.11.2026: `ahvRente` und `ivRente` haben keine Eingabe. Ein Betrag (Import, alte Daten) zeigt den
+  // Bezug an, aber kein Ergebnis kommt aus der unbelegten Marge «Ausgaben + 2000» (Audit D5).
+  it('with an AHV pension amount: «prüfen lassen», never a computed claim', () => {
     const r = el({ finanzen: { ahvRente: 1500 }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } });
-    expect(r.isAHVIV).toBe(true);
+    expect(r).toMatchObject({ isAHVIV: true, elPruefen: true, eligible: false, noteKey: 'elCalc.possible' });
     expect(r.totalIncome).toBe(1500);
     expect(r.totalExpenses).toBe(1600);
-    expect(r.eligible).toBe(true); // 1500 < 1600 + 2000
-    expect(r.noteKey).toBe('elCalc.possible');
   });
 
-  it('also recognises an IV pension', () => {
+  it('also recognises an IV pension amount, without a claim', () => {
     const r = el({ finanzen: { ivRente: 1400 }, wohnen: { rentAmount: 1000 }, versicherungen: { kkPremium: 350 } });
-    expect(r.isAHVIV).toBe(true);
-    expect(r.eligible).toBe(true);
+    expect(r).toMatchObject({ isAHVIV: true, elPruefen: true, eligible: false });
   });
 
-  it('is not eligible when income clears expenses plus the CHF 2000 buffer', () => {
-    const r = el({ finanzen: { ahvRente: 6000 }, wohnen: { rentAmount: 1000 }, versicherungen: { kkPremium: 300 } });
-    expect(r.isAHVIV).toBe(true);
-    expect(r.eligible).toBe(false); // 6000 >= 1300 + 2000
+  it('the result does not depend on the size of the gap', () => {
+    const knapp = el({ finanzen: { ahvRente: 100 }, wohnen: { rentAmount: 3000 }, versicherungen: { kkPremium: 600 } });
+    const reich = el({ finanzen: { ahvRente: 6000 }, wohnen: { rentAmount: 1000 }, versicherungen: { kkPremium: 300 } });
+    const ohneMarge = (r) => ({ eligible: r.eligible, elPruefen: r.elPruefen, isAHVIV: r.isAHVIV, noteKey: r.noteKey });
+    expect(ohneMarge(knapp)).toEqual(ohneMarge(reich));
   });
 
   it('counts partner income in totalIncome', () => {
