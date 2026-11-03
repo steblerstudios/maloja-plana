@@ -76,7 +76,10 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       const sh = calculateSozialhilfe(probe);
       // Knapp: ist das Netto nur geschätzt und liegt es nahe am Bedarf, kann die Schätzung kippen.
       knappSoz = e.geschaetzt && istKnapp(sh, e.ohneAlter);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
+      // Rente oder Einkommen nicht erfasst: kein Betrag, nur der Grund (wie data/anspruchWege.js).
+      if (sh?.einkommenFehlt) {
+        if ((sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
+      } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
         detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
@@ -106,7 +109,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // Wie der volle Schnellcheck (Schnellcheck.jsx): bei Sozialhilfe steckt die IPV schon
   // im Bedarf — sie zählt dann nicht zusätzlich. Bis 25.09.2026 zählte das Dashboard
   // beide zusammen und zeigte damit mehr Entlastung als der Schnellcheck selbst.
-  const ipvSubsumed = !!found.soz && !!found.ipv && found.ipv.monthly > 0;
+  const ipvSubsumed = !!found.soz && found.soz.monthly > 0 && !!found.ipv && found.ipv.monthly > 0;
   const counted = ['ipv', 'soz'].filter(k => found[k] && found[k].monthly > 0 && !(ipvSubsumed && k === 'ipv'));
   const totalMonthly = counted.reduce((sum, k) => sum + found[k].monthly, 0);
   const maxMonthly = Math.max(0, ...counted.map(k => found[k].monthly));

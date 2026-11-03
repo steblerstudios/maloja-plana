@@ -25,7 +25,11 @@ export function wegeAusProbe(probe) {
     // Bedarf + Vermögen unter Freibetrag — sonst wäre «Anspruch» unehrlich.
     if (rent > 0) {
       const sh = calculateSozialhilfe(probe);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({
+      // Einkommen oder Rente nicht erfasst: ein Weg ohne Betrag, wie Seite, Karte und Dossier (F8-S4). Bis 03.11.2026
+      // nannte er hier einen Betrag aus Einkommen 0, etwa CHF 2561 für eine Rentnerin ohne erfasste Rente.
+      if (sh?.einkommenFehlt) {
+        if ((sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({ key: 'soz', qualitative: true, renteFehlt: !!sh.renteFehlt });
+      } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({
         key: 'soz', monthly: sh.deficit, vfbUnbestaetigt: !!sh.vfbUnbestaetigt, mitGanzerMiete: !!sh.mitGanzerMiete,
         ansatzTiefer: !!sh.ansatzTiefer, ohneFreibetrag: !!sh.ohneFreibetrag, hinweise: sh.hinweise || [],
       });
