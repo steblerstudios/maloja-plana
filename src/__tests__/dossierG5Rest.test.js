@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { calculateSozialhilfe } from '../config/cantonalData.js';
 import { getBehoerdenDossierPreview, generateBehoerdenJSON } from '../dossierGenerator.js';
-import { VFB_STAND_JAHR } from '../data/vermoegensfreibetragKanton.js';
+import { VFB_KANTON_GELESEN } from '../data/vermoegensfreibetragKanton.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -25,19 +25,21 @@ const blatt = (p) => {
 const OHNE_GEBURTSDATUM = de.sozialhilfe.saeule3aOhneGeburtsdatum;
 
 describe('F8-G5-Rest: Dossier', () => {
-  it('der Freibetrag nennt Basis und Stand-Jahr, auf dem Blatt und in der Datei', () => {
+  // Rechtsprüfung f0ce1d03 (Muss): kein «Stand 2026», das eine Geltung behauptet. Belegt sind Fassung und Lesedatum.
+  it('der Freibetrag nennt seine Basis, auf dem Blatt und in der Datei gleich', () => {
     const { sicht, datei } = blatt(profil({}, { savingsAccount: 100000 }));
-    expect(sicht).toContain('(Kanton Zürich, Stand ' + VFB_STAND_JAHR + ')');
-    expect(datei.vermoegensfreibetragStand).toBe(VFB_STAND_JAHR);
+    expect(sicht).toContain('(Kanton Zürich, Quelle gelesen am ' + VFB_KANTON_GELESEN + ')');
+    expect(datei.vermoegensfreibetragBasis).toBe('Kanton Zürich, Quelle gelesen am ' + VFB_KANTON_GELESEN);
     const ohneKanton = blatt(profil({ canton: '' }, { savingsAccount: 100000 }));
-    expect(ohneKanton.sicht).toContain('(SKOS-Empfehlung, Stand ' + VFB_STAND_JAHR + ')');
+    expect(ohneKanton.sicht).toContain('(SKOS-RL D.3.1, Version vom 1.1.2026)');
+    expect(sicht).not.toMatch(/Stand 20\d\d/);
   });
 
   it('kein Platzhalter bleibt stehen, in keiner Sprache', () => {
     for (const l of [de, fr, itTranslations, en, rm]) {
       const tl = createT({ de, en, fr, it: itTranslations, rm }, l === de ? 'de' : l === fr ? 'fr' : l === itTranslations ? 'it' : l === en ? 'en' : 'rm');
-      expect(tl('sozialhilfe.assetLimitBasisSkos', { jahr: 2026 })).toContain('2026');
-      expect(tl('sozialhilfe.assetLimitBasisCanton', { name: 'X', jahr: 2026 })).not.toMatch(/\{/);
+      expect(tl('sozialhilfe.assetLimitBasisSkos')).toContain('D.3.1');
+      expect(tl('sozialhilfe.assetLimitBasisCanton', { name: 'X', datum: VFB_KANTON_GELESEN })).toContain(VFB_KANTON_GELESEN);
     }
   });
 
@@ -49,6 +51,18 @@ describe('F8-G5-Rest: Dossier', () => {
     const mitGrund = blatt(profil({ dateOfBirth: '' }, { pension3aBalance: 50000, savingsAccount: 100000 }));
     expect(mitGrund.sicht).toContain(OHNE_GEBURTSDATUM);
     expect(mitGrund.sicht).not.toContain(de.sozialhilfe.saeule3aNichtGezaehlt);
+  });
+
+  // Fachprüfung f0ce1d03: auch wenn der Freibetrag entscheidet oder der Status offen ist; Blatt und Datei gleich.
+  it('3a ohne Geburtsdatum bei offenem Status und ohne Einkommen: Blatt und Datei gleich', () => {
+    const offen = blatt(profil({ dateOfBirth: '' }, { pension3aBalance: 50000, monthlyIncome: 2700 }));
+    expect(offen.sozialhilfe.eligible || offen.sozialhilfe.efbEntscheidet || offen.sozialhilfe.anspruchOffen).toBe(true);
+    expect(offen.sozialhilfe.eligible).toBe(false);
+    expect(offen.sicht).toContain(OHNE_GEBURTSDATUM);
+    expect(offen.datei.saeule3aOhneGeburtsdatum).toBe(true);
+    const ohneEinkommen = blatt(profil({ dateOfBirth: '' }, { pension3aBalance: 50000, monthlyIncome: '' }));
+    expect(ohneEinkommen.sicht.includes(OHNE_GEBURTSDATUM)).toBe(ohneEinkommen.datei.saeule3aOhneGeburtsdatum);
+    expect(de.sozialhilfe.saeule3aOhneGeburtsdatum).toContain('ganzen IV-Rente');
   });
 
   it('mit Geburtsdatum oder ohne 3a: kein solcher Satz', () => {
@@ -63,5 +77,9 @@ describe('F8-G5-Rest: Dossier', () => {
     const { sicht, datei } = blatt(profil({}, { savingsAccount: 100000.5, securitiesValue: 0.5, otherAssets: 0.5 }));
     expect(datei.vermoegen).toBe(100003);
     expect(sicht).toContain('CHF 100’003');
+    // Auch der Entscheid über die Grenze rechnet mit dieser Summe.
+    const grenze = calculateSozialhilfe(profil({}, { savingsAccount: 3000.3, securitiesValue: 3000.3 }));
+    expect(grenze.vermoegen).toBe(6000);
+    expect(grenze.vermoegenUeberFreibetrag).toBe(0);
   });
 });

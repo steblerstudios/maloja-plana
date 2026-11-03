@@ -46,8 +46,8 @@ export function saeule3aZaehlt(basis, heute = new Date()) {
 }
 
 // Die Felder, die als Vermögen zählen: Sparkonto, Wertschriften, übriges, Säule 3b (SKOS-RL D.3.3 Abs. 6),
-// die Säule 3a erst ab dem frühesten AHV-Vorbezug oder mit einer ganzen IV-Rente (D.3.3 Abs. 3, Version vom 1.1.2021,
-// gelesen 02.11.2026). Eine Teilrente löst sie nicht aus: BVV 3 Art. 3 Abs. 2 Bst. a. Rohwerte, damit ein leeres Feld leer bleibt.
+// die Säule 3a erst ab dem frühesten AHV-Vorbezug oder mit einer ganzen IV-Rente (D.3.3 Abs. 3, Version vom 1.1.2026, gelesen
+// 03.11.2026). Eine Teilrente löst sie nicht aus: BVV 3 Art. 3 Abs. 2 Bst. a. Rohwerte, damit ein leeres Feld leer bleibt.
 export function vermoegensFelder(finanzen, basis, heute = new Date()) {
   const nachAlter = saeule3aZaehlt(basis, heute);
   const mit3a = (nachAlter || finanzen?.ivBezug === 'ganz') && Number(finanzen?.pension3aBalance) > 0;
