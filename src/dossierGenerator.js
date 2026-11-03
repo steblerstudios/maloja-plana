@@ -17,12 +17,12 @@ import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
-import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
+import { vermoegensFelder, vermoegenSumme } from './utils/unterstuetzungseinheit.js';
 import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
 
 // Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
 // von den Zeilen ab (F8-G4), und das JSON rundete erst die Summe (F8-G5). Negativ zählt als 0.
-const vermoegenGerundet = (finanzen, basis) => vermoegensFelder(finanzen, basis).felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
+const vermoegenGerundet = (finanzen, basis) => vermoegenSumme(vermoegensFelder(finanzen, basis).felder);
 
 // Basis des Freibetrags, eine Fassung für Blatt und JSON (F8-G5).
 const freibetragBasisText = (canton, t) => (canton

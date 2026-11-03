@@ -5,7 +5,7 @@
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
-import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, verfuegbarUeberFreibetrag, bvgHerausloesen } from '../utils/unterstuetzungseinheit.js';
+import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSumme, kinderEinnahmenOffen, verfuegbarUeberFreibetrag, bvgHerausloesen } from '../utils/unterstuetzungseinheit.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
@@ -346,8 +346,8 @@ export function calculateSozialhilfe(data) {
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
   const vermoegenAngaben = vermoegensFelder(data.finanzen, data.basis);
-  // Jede Zeile auf Franken gerundet, wie Blatt und JSON: Mit Rappen kippte sonst die Grenze anders, als das Blatt sie zeigt (F8-G5).
-  const vermoegen = vermoegenAngaben.felder.reduce((s, v) => s + Math.round(plus(v)), 0);
+  // Eine Rundungsregel mit Blatt, JSON und Rechner (utils/unterstuetzungseinheit.js).
+  const vermoegen = vermoegenSumme(vermoegenAngaben.felder);
   const minorChildren = einheit.kinder;
   const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);

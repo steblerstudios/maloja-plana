@@ -55,6 +55,12 @@ export function vermoegensFelder(finanzen, basis, heute = new Date()) {
   return { mit3a, durchIv: mit3a && !nachAlter, felder: [f.savingsAccount, f.securitiesValue, f.otherAssets, f.pension3bBalance, mit3a ? f.pension3aBalance : undefined] };
 }
 
+// Eine Rundungsregel für das Vermögen, für Karte, Dossier, JSON und Rechner: jede Zeile auf Franken, wie das Blatt sie
+// zeigt (F8-G4), negativ als 0. Bis 03.11.2026 rundete der Rechner erst die Summe: Sparkonto 3000.40 plus Wertschriften
+// 3000.40 ergab dort 6001 («Vermögen zuerst»), auf Karte und Blatt 6000 (Betrag). Eine Abweichung unter einem Franken
+// je Zeile nimmt die Regel hin; die Felder sind Franken-Beträge (Predeploy 1e6819ab).
+export const vermoegenSumme = (felder) => felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
+
 // Die 2. Säule hängt am selben Auslöser wie die 3a: «Vermögen der 2. Säule und der Säule 3a sind grundsätzlich zusammen
 // mit dem AHV-Vorbezug oder dem Bezug einer ganzen IV-Rente herauszulösen» (SKOS-RL D.3.3 Abs. 3, Version vom 1.1.2026,
 // gelesen 03.11.2026), ausgelöst zählen sie zum Vermögen (Abs. 5). Bei der IV nach Erl. b nur, wenn das Invaliditätsrisiko
