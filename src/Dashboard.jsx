@@ -368,6 +368,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const bergBuehne = React.useRef(null);
   React.useEffect(() => bergKleben(bergBuehne.current), []);
+  // Fristen nachladen: Das Dashboard liegt im Startbündel (Grenze 65 kB). Fehlt das Modul, bleibt die Zeile weg.
+  const [festeFristenModul, setFesteFristenModul] = useState(null);
+  React.useEffect(() => {
+    let aktiv = true;
+    import('./utils/festeFristen.js').then((m) => { if (aktiv) setFesteFristenModul(m); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
 
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
@@ -510,6 +517,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       mvo.fields.some((f) => !f.done) && React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
       }, t('dashboard.nextUpReassure')),
+      // Was die App schon weiss und drängt (F8-D1, D2): überfällige Arztrechnung, dann die Kassenfrist im Herbst.
+      (() => {
+        const heute = inDays(0);
+        const offen = festeFristenModul?.ueberfaelligeRechnungen(data, heute);
+        const kvg = festeFristenModul?.kvgFristImFenster(data, heute);
+        const zeile = (key, inhalt, view) => React.createElement('button', {
+          key, type: 'button', onClick: () => onNavigate(view),
+          style: { display: 'block', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, padding: space.xs + 'px 0' },
+        }, inhalt, React.createElement('span', { 'aria-hidden': 'true' }, ' ›'));
+        return (offen || kvg) && React.createElement('div', { 'data-teil': 'dringend', style: { marginTop: space.sm + 'px' } },
+          offen && zeile('rechnung', t(offen.anzahl === 1 ? 'dashboard.rechnungFristVorbei' : 'dashboard.rechnungenFristVorbei', { anzahl: offen.anzahl, betrag: betrag(offen.summe) }), 'schulden'),
+          kvg && zeile('kvg', t('dashboard.kvgFristZeile', { datum: kalenderdatum(kvg, lang, { day: 'numeric', month: 'long' }) }), 'kvgwechsel'));
+      })(),
       (() => {
         // Neben den Erinnerungen auch die Steuerfrist aus dem Kapitel Behörden — bis
         // 27.09.2026 stand hier «keine offene», während das Kapitel dieselbe Frist
@@ -518,6 +538,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const steuerfrist = data.behoerden && data.behoerden.taxFilingDeadline;
         const kandidaten = loadReminders().filter((r) => !r.done && r.dueDate);
         if (steuerfrist) kandidaten.push({ title: t('behördenStatus.taxDeadline'), dueDate: steuerfrist });
+        const kvgFrist = festeFristenModul?.kvgFristImFenster(data, today);
+        if (kvgFrist) kandidaten.push({ title: t('calendar.jahreskreis.kvgTitle'), dueDate: kvgFrist });
         const upcoming = kandidaten
           .filter((r) => r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
@@ -557,7 +579,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             palette, onClick: () => onNavigate('export'),
             style: { minHeight: '44px', alignSelf: 'flex-end' },
             icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
-          }, t('dashboard.exportReminderAction'), ' ›'));
+          }, t('dashboard.exportReminderAction'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')));
       })()
     ),
 
@@ -634,7 +656,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
           fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
         },
-      }, t('gepaeck.menuAlle'), ' ›'),
+      }, t('gepaeck.menuAlle'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')),
       (() => {
         const renderTool = (tool) => {
           // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
@@ -729,7 +751,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
-              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+              style: { cursor: 'pointer', padding: space.sm + 'px 2px', minHeight: '44px', boxSizing: 'border-box', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
                 React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),

@@ -85,7 +85,7 @@ describe('Beispiel Maria: dieselben Ergebnisse wie das Kapitel Finanzen', () => 
     expect(html).toContain('Netto ' + betrag(6200) + ' / Mt.');
     expect(html).toContain('Miete ' + betrag(1650));
     expect(html).toContain('KK ' + betrag(540.3));
-    expect(html).toContain('Zürich · 1 Person(en)');
+    expect(html).toContain('Zürich · 1 Person');
   });
 
   const profil = (canton, postalCode, monthlyIncome) => ({

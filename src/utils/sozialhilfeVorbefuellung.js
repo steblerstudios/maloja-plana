@@ -65,7 +65,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const { verheiratet, adults, kinder, weiterePersonen } = haushalt;
   const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined]);
 
-  const { mit3a, felder } = vermoegensFelder(f, basis, heute);
+  const { mit3a, durchIv, felder } = vermoegensFelder(f, basis, heute);
   const vermoegen = summeAlsFeld(felder);
 
   const erwerbstaetig = istErwerbstaetig(f);
@@ -95,6 +95,8 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     andereEinkuenfte,
     vermoegen,
     vermoegenMit3a: mit3a,
+    vermoegen3aDurchIv: durchIv,
+    renteFehlt: ['ganz', 'teil'].includes(f.ivBezug) || f.employmentType === 'retired',
     // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS-RL C.3.2 Abs. 4) — nur Hinweis, keine Rechnung.
     jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,

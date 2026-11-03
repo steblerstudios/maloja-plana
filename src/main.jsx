@@ -249,7 +249,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
     style: {
       padding: '6px 8px', minHeight: '44px', minWidth: '44px',
       background: vorlesen.enabled ? palette.sand + '30' : 'transparent',
-      color: vorlesen.enabled ? palette.sand : palette.mid,
+      color: vorlesen.enabled ? palette.text : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
       border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
       borderRadius: radius.xs,
@@ -1081,8 +1081,9 @@ const AppInner = ({ demo }) => {
   const ctrlBtn = (active, accent, opts = {}) => ({
     padding: '6px 9px', minHeight: '44px', minWidth: '44px',
     background: active ? accent + (opts.bgAlpha || '22') : 'transparent',
-    color: active ? (opts.activeColor || accent) : palette.mid,
-    border: '1px solid ' + (active ? accent + '55' : palette.border),
+    // Aktiv trägt der Text den Kontrast, die Akzentfarbe liegt in Fläche und Rand (4.5:1 in beiden Modi).
+    color: active ? (opts.activeColor || palette.text) : palette.mid,
+    border: '1px solid ' + (active ? palette.mid : palette.border),
     borderRadius: radius.sm, cursor: 'pointer',
     lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
     display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',

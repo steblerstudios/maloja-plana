@@ -20,7 +20,6 @@ export const VorlesenButton = ({ text, speak, size = 14, color, style = {}, labe
       // auf sichere Antippbarkeit angewiesen ist.
       minWidth: '24px',
       minHeight: '24px',
-      opacity: 0.45,
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',

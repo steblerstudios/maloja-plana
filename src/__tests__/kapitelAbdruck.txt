@@ -34,7 +34,7 @@ de   k=buildingsInsurance type="currency" label~1da85b29 weitere=jahr+secondary
 de   doc k=lease label~2292b1c9
 de   doc k=insurance label~68f53ecd
 de   doc k=deposit label~25dd044a
-de kapitel=finanzen title~815ac648 short~93e7cfca description~eaac6bbb felder=37 docs=3
+de kapitel=finanzen title~815ac648 short~93e7cfca description~eaac6bbb felder=38 docs=3
 de   k=monthlyIncome type="currency" mvo=true section~983ce564 orientation~e7644eb3 hint~df7ceba5 label~b34ce9dc sectionIntro~886ab738
 de   k=sideIncome type="currency" hint~88a04524 label~396916f9
 de   k=sideEmployer type="text" hint~ee7f4af3 label~cc5f9c0c
@@ -69,6 +69,7 @@ de   k=creditCardBalance type="currency" hint~fc7b50e6 label~338fa8d7
 de   k=loans type="currency" label~922e1b38
 de   k=pension3a type="currency" section~7074ad60 orientation~3f1dd2e3 label~1bb6f7a8 sectionIntro~f42320a6 weitere=jahr+secondary
 de   k=pension3aBalance type="currency" hint~3bb19401 label~f70878b7 weitere=secondary
+de   k=ivBezug type="select" naOk=true hint~d33f6ee9 label~3eacc357 options=3 optWerte~2def05cf optLabels~dde47ad8 weitere=secondary
 de   k=pension3b type="select" orientation~7508f8f6 label~3d286587 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
 de   k=pension3bBalance type="currency" hint~025d7f7c label~3680e522 weitere=secondary
 de   k=investmentFunds type="select" label~b27a4fc5 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
@@ -195,7 +196,7 @@ fr   k=buildingsInsurance type="currency" label~6459c42d weitere=jahr+secondary
 fr   doc k=lease label~238fa6cd
 fr   doc k=insurance label~41e8ca5d
 fr   doc k=deposit label~95fc26bf
-fr kapitel=finanzen title~791c82da short~791c82da description~05cec89d felder=37 docs=3
+fr kapitel=finanzen title~791c82da short~791c82da description~05cec89d felder=38 docs=3
 fr   k=monthlyIncome type="currency" mvo=true section~f604eb7d orientation~f95f04a5 hint~2789285c label~4b56cc07 sectionIntro~4bea5a92
 fr   k=sideIncome type="currency" hint~a20fe93d label~b416eb33
 fr   k=sideEmployer type="text" hint~cb7c499b label~c28597bb
@@ -230,6 +231,7 @@ fr   k=creditCardBalance type="currency" hint~c4be50ec label~c656f865
 fr   k=loans type="currency" label~30a93699
 fr   k=pension3a type="currency" section~7e99e423 orientation~5f3e4d5a label~c2ed4733 sectionIntro~56ce2669 weitere=jahr+secondary
 fr   k=pension3aBalance type="currency" hint~7fbe134b label~039bf1f3 weitere=secondary
+fr   k=ivBezug type="select" naOk=true hint~9f3793e5 label~dbc8da01 options=3 optWerte~2def05cf optLabels~f728bdcd weitere=secondary
 fr   k=pension3b type="select" orientation~12609e61 label~fc2ecff7 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
 fr   k=pension3bBalance type="currency" hint~3175f3c6 label~17ffdf4a weitere=secondary
 fr   k=investmentFunds type="select" label~9ebd6846 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
@@ -356,7 +358,7 @@ it   k=buildingsInsurance type="currency" label~27f53152 weitere=jahr+secondary
 it   doc k=lease label~88f43a54
 it   doc k=insurance label~77be3d69
 it   doc k=deposit label~7b1210e2
-it kapitel=finanzen title~91a47720 short~91a47720 description~a48669fe felder=37 docs=3
+it kapitel=finanzen title~91a47720 short~91a47720 description~a48669fe felder=38 docs=3
 it   k=monthlyIncome type="currency" mvo=true section~8d4e2bde orientation~c8da23fe hint~d5bf4387 label~21f267cd sectionIntro~6abaa1bb
 it   k=sideIncome type="currency" hint~40e503ca label~70c1dae7
 it   k=sideEmployer type="text" hint~d333de51 label~d2e01f32
@@ -391,6 +393,7 @@ it   k=creditCardBalance type="currency" hint~4c455f1c label~35de924c
 it   k=loans type="currency" label~4b5d67ce
 it   k=pension3a type="currency" section~27393e0b orientation~07e87d60 label~286ed9c2 sectionIntro~25dd5d73 weitere=jahr+secondary
 it   k=pension3aBalance type="currency" hint~bb2ea7e2 label~f122c2ef weitere=secondary
+it   k=ivBezug type="select" naOk=true hint~6cf79de2 label~920dd2b4 options=3 optWerte~2def05cf optLabels~a00804cd weitere=secondary
 it   k=pension3b type="select" orientation~dd2acdbe label~1551817e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
 it   k=pension3bBalance type="currency" hint~b59dc695 label~fad3cae4 weitere=secondary
 it   k=investmentFunds type="select" label~6be024fe options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
@@ -517,7 +520,7 @@ en   k=buildingsInsurance type="currency" label~1fb7fab3 weitere=jahr+secondary
 en   doc k=lease label~d8ed1503
 en   doc k=insurance label~bf4c7bdf
 en   doc k=deposit label~cece48e1
-en kapitel=finanzen title~791c82da short~791c82da description~02b69f63 felder=37 docs=3
+en kapitel=finanzen title~791c82da short~791c82da description~02b69f63 felder=38 docs=3
 en   k=monthlyIncome type="currency" mvo=true section~c129d37e orientation~4ee67b0e hint~4300a911 label~3be3d7af sectionIntro~70c1e37d
 en   k=sideIncome type="currency" hint~0cfe05fd label~4a6a2a7f
 en   k=sideEmployer type="text" hint~34ffcd3d label~1c9f26c2
@@ -552,6 +555,7 @@ en   k=creditCardBalance type="currency" hint~f5ec3a15 label~e12b7c59
 en   k=loans type="currency" label~ce3bb934
 en   k=pension3a type="currency" section~5f22c760 orientation~c4aa9762 label~13de36a9 sectionIntro~9e23f9f9 weitere=jahr+secondary
 en   k=pension3aBalance type="currency" hint~06ea535b label~0961e5a5 weitere=secondary
+en   k=ivBezug type="select" naOk=true hint~ca557a48 label~4a3c1e1c options=3 optWerte~2def05cf optLabels~1e99b3db weitere=secondary
 en   k=pension3b type="select" orientation~cddf5a0c label~f04ccb36 options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
 en   k=pension3bBalance type="currency" hint~520e4143 label~975d0300 weitere=secondary
 en   k=investmentFunds type="select" label~c8095fad options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
@@ -678,7 +682,7 @@ rm   k=buildingsInsurance type="currency" label~f5fd0b3d weitere=jahr+secondary
 rm   doc k=lease label~979d8b95
 rm   doc k=insurance label~d41a893d
 rm   doc k=deposit label~86bb601e
-rm kapitel=finanzen title~49686d10 short~b0f0f7cd description~3497eb10 felder=37 docs=3
+rm kapitel=finanzen title~49686d10 short~b0f0f7cd description~3497eb10 felder=38 docs=3
 rm   k=monthlyIncome type="currency" mvo=true section~49e53544 orientation~0e46c773 hint~d757bfe2 label~6cefbb57 sectionIntro~1bba8649
 rm   k=sideIncome type="currency" hint~18739de3 label~845dbcee
 rm   k=sideEmployer type="text" hint~84a4df84 label~c5d6aeaa
@@ -713,6 +717,7 @@ rm   k=creditCardBalance type="currency" hint~d0d2f065 label~b83031db
 rm   k=loans type="currency" label~655f7754
 rm   k=pension3a type="currency" section~9067c1a5 orientation~d037ec79 label~b25df0ea sectionIntro~d5548bf7 weitere=jahr+secondary
 rm   k=pension3aBalance type="currency" hint~28562c7a label~213cc08d weitere=secondary
+rm   k=ivBezug type="select" naOk=true hint~29c9d4f9 label~1b18a73d options=3 optWerte~2def05cf optLabels~9b923f6a weitere=secondary
 rm   k=pension3b type="select" orientation~9356eed0 label~02bec3b3 options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
 rm   k=pension3bBalance type="currency" hint~1f923040 label~8de8ffe0 weitere=secondary
 rm   k=investmentFunds type="select" label~2905109f options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary

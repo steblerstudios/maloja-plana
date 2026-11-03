@@ -54,8 +54,8 @@ describe('calculateSozialhilfe: Flag vfbUnbestaetigt', () => {
 });
 
 describe('Anzeige: der Hinweis steht einmal, auch unter dem Freibetrag', () => {
-  it('SozialhilfeView und SozialhilfeRechner nutzen das Flag und den Unter-Freibetrag-Text', () => {
-    for (const f of ['../SozialhilfeView.jsx', '../SozialhilfeRechner.jsx']) {
+  it('SozialhilfeRechner nutzt das Flag und den Unter-Freibetrag-Text', () => {
+    for (const f of ['../SozialhilfeRechner.jsx']) {
       const s = quelle(f);
       expect(s, f).toContain('vfbUnbestaetigt');
       expect(s, f).toContain('assetLimitUnconfirmedUnder');

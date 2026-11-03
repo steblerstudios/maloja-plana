@@ -295,7 +295,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     numIncome > 0 && (e.geschaetzt ? t('wasStehtMirZu.markeNettoGeschaetzt', { betrag: fmt(numIncome) }) : t('wasStehtMirZu.markeNetto', { betrag: fmt(numIncome) })),
     numRent > 0 && t('wasStehtMirZu.markeMiete', { betrag: fmt(numRent) }),
     numKk > 0 && t('wasStehtMirZu.markeKK', { betrag: fmt(numKk) }),
-    canton && t('wasStehtMirZu.markeHaushalt', { canton: getCantonName(canton, t) || canton, size: hh.householdSize }),
+    canton && t('wasStehtMirZu.markeHaushalt', { canton: getCantonName(canton, t) || canton, personen: t(hh.householdSize === 1 ? 'common.person' : 'common.persons', { count: hh.householdSize }) }),
   ].filter(Boolean);
 
   // Eine Ablesung ohne Glas — gleiche Form wie der Pegel (Kasten), für die Fälle, in denen ein
@@ -315,7 +315,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     : ipvA.art === 'offen' ? ablesung(ipvTitel, [t(ipv.noteKey, ipv.noteParams)])
     : ipvA.art === 'ohneGlas' ? ablesung(ipvTitel, ipv.eligible
       ? [t('pegel.perMonthPossible', { amount: fmt(ipv.amount) }), t('beleg.geschaetzt'), ipvA.fristVorbei && t(ipv.noteKey, ipv.noteParams)]
-      : [ipv.cantonData?.maxIncome != null ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome }) : t(ipv.noteKey, ipv.noteParams)])
+      : [t(ipv.noteKey, ipv.noteParams)])
     : null;
 
   // Der Ergebnis-Satz: «Mit diesen Angaben zeigt sich …» — nur positive Wege, nie ein Verdikt.
@@ -330,7 +330,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
 
   return h('div', { style: { maxWidth: '640px' } },
     // Kopf links (Fassung 5): Titel und ein Satz für beides.
-    h('h1', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' } }, t('dashboard.anspruchTitle')),
+    h('h2', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' } }, t('dashboard.anspruchTitle')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, t('wasStehtMirZu.intro')),
 
     // (1) Mit Ihren Angaben
@@ -345,7 +345,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
           feld(t('schnellcheck.rent'), rent, setRent, '1500'),
           feld(t('schnellcheck.kk'), kk, setKk, '350')),
         h('div', { style: s.fuss },
-          canton ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, size: hh.householdSize }) : t('schnellcheck.contextNoCanton'),
+          canton ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, personen: t(hh.householdSize === 1 ? 'common.person' : 'common.persons', { count: hh.householdSize }) }) : t('schnellcheck.contextNoCanton'),
           ' ',
           h('button', { type: 'button', onClick: () => onNavigate && onNavigate('chapter', 0), style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.skyDeep } }, t('schnellcheck.adjustProfile'))))),
 

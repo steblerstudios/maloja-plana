@@ -32,7 +32,7 @@ export function wegeAusProbe(probe) {
     }
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
     const el = checkELEligibility(probe);
-    if (el?.eligible) wege.push({ key: 'el', qualitative: true });
+    if (el?.eligible || el?.elPruefen) wege.push({ key: 'el', qualitative: true });
   } catch { /* Orientierung, nie blockierend */ }
   // IPV ist subsidiär: greift Sozialhilfe, wird die volle Prämie schon über den Sozialhilfe-
   // Bedarf mitgetragen — dann kein zusätzlicher Geldbetrag. Quelle: SKOS-Faktenblatt

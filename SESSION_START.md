@@ -17,6 +17,17 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 03.11.2026, 10:35 — Fassung 8 ist LIVE: 0.1.49-beta, `a312b9a0`, gebaut 10:30, Deploy Stebler Studios.** Überholt alle Stände darunter.
+>
+> - **Belegt 10:31:** `version.json` = `a312b9a0` = `main`, Bundle `index-DNBc9yCt.js` = lokaler Build, de-Chunk byte-gleich, Lizenzen, keine Konsolenfehler. Hinter der Code-Wand nicht geklickt. Stage und Ultrareview vor dem Deploy nicht belegt.
+> - **Offen:** F8-P4 PDF drucken, F8-O8 mit Beta-Code öffnen, Sollte aus `_handoffs/2026-11-02-predeploy-ampel.md` (unterste Blöcke), rm-Gegenlese, #660, #655, #652 Entwürfe.
+>
+> 🧾 **Nachtrag 02.11.2026, 17:40 — Fassung 7 ist LIVE: `ca276eac`, gebaut 17:31, Deploy Stebler Studios.** Überholt alle «NICHT live» darunter.
+>
+> - **Belegt 17:37:** `version.json` = `ca276eac` = `main`, Bundle `index-CeFyAi_b.js` = lokaler Build, de-Chunk byte-gleich, Lizenzen 8/8, keine Konsolenfehler. Hinter der Code-Wand nicht geklickt. Ob Stage und Ultrareview vor dem Deploy liefen, ist hier nicht belegt.
+> - **Danach:** Rechts-Sollte zum Dossier und zu `assetLimitNote` auf `fix/dossier-vermoegen-2026-11-02`, Entwurf, gemergt wird nur auf Wort.
+> - **Nächster Schritt:** Fassung 8, noch ohne Dokument und ohne Thema. Rundgang am Live-Stand, dabei #655, #652 und die Sollte aus `_handoffs/2026-11-02-predeploy-ampel.md` einsammeln.
+>
 > 🧾 **Nachtrag 02.11.2026, 00:20 — Fassung 7 ist auf `main`, NICHT live. Der Entscheid «erst nach Fassung 8» ist damit überholt.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 00:17): main = `f430a357` · live = `4299bfb9` (0.1.48-beta) · 350 Commits dazwischen. CI auf `main` grün.

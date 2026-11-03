@@ -67,9 +67,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     // Rechner eingeben», während das Kapitel Finanzen aus denselben Daten «Einkommen über Grenze (CHF …)»
     // zeigte. Jetzt dieselbe sachliche Lage wie im Kapitel (FinanzAuswertung ipvKarte), kein Urteil.
     // Ohne amtlich belegten Kanton (belegt === false) bleibt der allgemeine Untertitel.
-    else if (ipv && ipv.belegt !== false && ipv.canton) ipvLage = ipv.cantonData?.maxIncome != null
-      ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
-      : t(ipv.noteKey, ipv.noteParams);
+    else if (ipv && ipv.belegt !== false && ipv.canton) ipvLage = t(ipv.noteKey, ipv.noteParams);
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
     // sonst wäre ein „Anspruch möglich" unehrlich.

@@ -32,9 +32,10 @@ const CONTRIBUTION_URL = '';
 // Datum abgeleitet (das wäre eine falsche Aktualitäts-Aussage). Wird in alle 5 Sprachen
 // via {date} eingesetzt (legal.lastUpdated), damit die Datumsangabe nicht driftet.
 // K39 (16.09.2026): Datenschutz-/Nutzungstexte an Verschlüsselung als Voreinstellung (E10)
-// und den Löschweg (E18) angeglichen → Stand September 2026. TODO(rm): Monatsname gegenlesen.
+// und den Löschweg (E18) angeglichen → Stand September 2026. 03.11.2026: IV-Rente in der Liste der Gesundheitsdaten
+// (Fassung 8) → November 2026. TODO(rm): Monatsname gegenlesen.
 const LEGAL_LAST_UPDATED = {
-  de: 'September 2026', fr: 'septembre 2026', it: 'settembre 2026', en: 'September 2026', rm: 'settember 2026',
+  de: 'November 2026', fr: 'novembre 2026', it: 'novembre 2026', en: 'November 2026', rm: 'november 2026',
 };
 
 const LEGAL_LINKS = {

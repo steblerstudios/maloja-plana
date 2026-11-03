@@ -237,10 +237,11 @@ describe('Schulden in der Form X', () => {
 
 describe('Sozialhilfe in der Form X', () => {
   const mit = { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 2000, incomeType: 'netto' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } };
-  it('Anspruch aus dem Rechner zuerst; der Pegel (R3) steht bei der Orientierung aus dem Profil', () => {
+  it('Anspruch aus dem Rechner zuerst; der Pegel steht direkt darunter, vor den Angaben (F8-S2)', () => {
     const html = render(SozialhilfeView, mit);
     expect(ergebnisTeil(html)).toContain(de.sh.anspruch);
-    expect(html.indexOf('pegel-aufstockung')).toBeGreaterThan(html.indexOf('data-teil="angaben"'));
+    expect(html.indexOf('pegel-aufstockung')).toBeGreaterThan(html.indexOf('data-teil="ergebnis"'));
+    expect(html.indexOf('pegel-aufstockung')).toBeLessThan(html.indexOf('data-teil="angaben"'));
   });
   it('ohne Kanton rechnet der Rechner trotzdem, der Hinweis steht darunter', () => {
     const html = render(SozialhilfeView, leer);

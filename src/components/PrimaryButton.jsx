@@ -13,7 +13,7 @@ export const PrimaryButton = ({ palette, onClick, children, icon, disabled, styl
     disabled: !!disabled,
     style: {
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: space.xs + 'px',
-      padding: '10px 16px',
+      padding: '10px 16px', minHeight: '44px',
       background: disabled ? palette.mid : palette.sand,
       color: palette.onSand,
       border: 'none', borderRadius: radius.sm + 'px',
