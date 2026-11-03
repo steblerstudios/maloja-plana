@@ -53,6 +53,8 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   const einkommenLeer = String(einkommen ?? '').trim() === '' && !ohneErwerb;
   // Rente ohne Betrag im Profil (wie Karte und Dossier): erst rechnen, wenn bei den anderen Einkünften etwas dazukam.
   const renteOffen = !!vorbefuellt.renteFehlt && String(andereEinkuenfte) === String(vorbefuellt.andereEinkuenfte);
+  // Wie die Rente: Erst wenn das Vermögen angepasst ist, rechnet die Seite (2. Säule, SKOS-RL D.3.3 Abs. 3).
+  const bvgOffen = !!vorbefuellt.bvgOffen && String(vermoegen) === String(vorbefuellt.vermoegen);
 
   const result = useMemo(() => {
     const m = Number(miete) || 0;
@@ -61,7 +63,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
     if (einkommenLeer) return null;
     // Lohn im Profil, aber nicht als Netto: Ohne Eintrag gäbe es sonst einen Betrag aus einem Einkommen von 0.
     if (lohnOffen) return null;
-    if (renteOffen) return null;
+    if (renteOffen || bvgOffen) return null;
     return berechneSozialhilfe({
       adults,
       kinderImHaushalt: kinderCount,
@@ -79,7 +81,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       integrationsMassnahme: integration,
       kanton,
     });
-  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, lohnOffen, einkommenLeer, renteOffen, integration, kanton]);
+  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, vorbefuellt.ohneFreibetrag, lohnOffen, einkommenLeer, renteOffen, bvgOffen, integration, kanton]);
 
   // Konkubinat mit Partnerlohn: kein Betrag, wo eine Lücke bleibt. Deckt das eigene Einkommen den Bedarf, gilt das gewöhnliche Nein.
   const konkubinatGesperrt = !!(result && vorbefuellt.konkubinatBetragOffen && result.offenOhneVermoegen);
@@ -249,7 +251,7 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   return React.createElement(RechnerForm, {
     palette, t, view: 'sozialhilfe', onNavigate,
     titel: titel || t('sh.title'), satz,
-    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : renteOffen ? 'sh.renteEintragen' : lohnOffen ? (Number(data?.finanzen?.monthlyIncome) > 0 && (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen) ? 'sh.lohnEingeben' : 'sh.nebenEingeben') : ohneMieteUndPraemie ? 'sh.eingeben' : 'sh.einkommenEingeben'),
+    ergebnis, ohneErgebnis: t(konkubinatGesperrt ? 'pegel.konkubinatBetragOffen' : renteOffen ? 'sh.renteEintragen' : bvgOffen ? 'sh.bvgEintragen' : lohnOffen ? (Number(data?.finanzen?.monthlyIncome) > 0 && (vorbefuellt.hauptBrutto || vorbefuellt.hauptBasisOffen) ? 'sh.lohnEingeben' : 'sh.nebenEingeben') : ohneMieteUndPraemie ? 'sh.eingeben' : 'sh.einkommenEingeben'),
     art: konkubinatGesperrt ? null : sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: ohneErwerb ? '0' : einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }),
     // Vorbehalte als Liste, nicht als ein Absatz (F8-G3).
     vorbehalt: vorbehalte.length > 0 && React.createElement('ul', { style: { ...s.hint, marginTop: space.sm + 'px', paddingLeft: '18px' } },
