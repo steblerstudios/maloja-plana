@@ -2220,9 +2220,9 @@ export default {
         otherAssets: 'Cash, precious metals, cryptocurrencies, vehicles, etc. (tax value).',
         pension3aBalance: 'The total amount saved so far in your Pillar 3a account — not the yearly contribution.',
         ivBezug: { sie: "Stated in the IV office’s decision. Optional. Used only for orientation on social assistance and supplementary benefits, and stays on this device until you pass it on yourself.", du: "Stated in the IV office’s decision. Optional. Used only for orientation on social assistance and supplementary benefits, and stays on this device until you pass it on yourself." },
-        ahvRente: "As stated in the compensation office’s pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction from retirement age.",
+        ahvRente: "As stated in the compensation office’s pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction from retirement age or in retirement.",
         ivRente: { sie: "As stated in the pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction with an IV pension. Optional. Stays on this device until you pass it on yourself.", du: "As stated in the pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction with an IV pension. Optional. Stays on this device until you pass it on yourself." },
-        bvgRente: "As stated in the pension fund’s pension certificate, amount per month. Anything drawn as capital, even in part, belongs to assets. In retirement, 0 if none is drawn; without an entry, the app then shows no amount.",
+        bvgRente: "As stated in the pension fund’s pension certificate, amount per month. Anything drawn as capital, even in part, belongs to assets. In retirement, 0 if none is drawn; without an entry, the app then shows no amount for social assistance and premium reduction.",
         pension3bBalance: 'The current value of your free Pillar 3b provision (savings account, life insurance, securities).',
       },
       docs: {

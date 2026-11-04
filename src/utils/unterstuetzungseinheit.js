@@ -84,10 +84,15 @@ export const rentenMonat = (finanzen) => RENTEN_FELDER.reduce((s, k) => s + Math
 // braucht die IV-Rente, Ruhestand oder Rentenalter die AHV-Rente. Eine Pensionskassen-Rente allein hebt die Sperre nicht
 // auf (Fachprüfung 376149dc, Muss: sonst Lücke 2411 statt 611 und IPV 450 statt 242). Im Ruhestand braucht es beide,
 // AHV und Pensionskasse: Frühpensionierte leben meist von der PK, AHV 0 allein gab die volle IPV (Nachprüfung 79c961c7).
-export const renteOhneBetrag = (finanzen, basis, heute = new Date()) =>
-  (['ganz', 'teil'].includes(finanzen?.ivBezug) && !eingetragen(finanzen?.ivRente))
-  || ((finanzen?.employmentType === 'retired' || alterUndRentenalter(basis, heute).rentenalter) && !eingetragen(finanzen?.ahvRente))
-  || (finanzen?.employmentType === 'retired' && !eingetragen(finanzen?.bvgRente));
+// Mit IV-Bezug genügt vor dem Rentenalter die IV-Rente, auch wenn «Ruhestand» gewählt ist (Schlussprüfung 85a6094d).
+export const renteOhneBetrag = (finanzen, basis, heute = new Date()) => {
+  const iv = ['ganz', 'teil'].includes(finanzen?.ivBezug);
+  const rentenalter = alterUndRentenalter(basis, heute).rentenalter;
+  const ruhestandOhneIv = finanzen?.employmentType === 'retired' && !iv;
+  return (iv && !eingetragen(finanzen?.ivRente))
+    || ((rentenalter || ruhestandOhneIv) && !eingetragen(finanzen?.ahvRente))
+    || (ruhestandOhneIv && !eingetragen(finanzen?.bvgRente));
+};
 
 // Die Kinder im Haushalt, ohne Haushaltsangabe aus dem alten Feld `dependents`. Ohne Alter gilt ein Kind als
 // minderjährig. Zivilstand leer und zwei Erwachsene: gerechnet als Paar, wie bis 02.11.2026 auf der Seite. Getrennt

@@ -62,6 +62,13 @@ describe('Rentenfelder im Kapitel Finanzen', () => {
     expect(calculateIPV({ ...frueh, finanzen: { ...frueh.finanzen, bvgRente: 2500 } }).amount).toBeGreaterThan(0);
   });
 
+  // Schlussprüfung 85a6094d: IV-Vollrente mit «Ruhestand» vor dem Rentenalter braucht nur die IV-Rente.
+  it('IV-Bezug im Ruhestand vor dem Rentenalter: die IV-Rente genügt', () => {
+    const iv = { ...rentnerin({ ivBezug: 'ganz', ivRente: 2000 }), basis: { canton: 'AG', dateOfBirth: '1971-03-01', gender: 'female', household: { adults: 1, children: [] } } };
+    expect(renteOhneBetrag(iv.finanzen, iv.basis)).toBe(false);
+    expect(calculateSozialhilfe(iv).einkommenFehlt).toBe(false);
+  });
+
   it('Renten je Feld auf Franken, wie im Dossier', () => {
     const p = rentnerin({ ahvRente: 1500.6, bvgRente: 300.6 });
     expect(calculateSozialhilfe(p).income).toBe(1802);

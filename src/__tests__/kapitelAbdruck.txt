@@ -70,9 +70,9 @@ de   k=loans type="currency" label~922e1b38
 de   k=pension3a type="currency" section~7074ad60 orientation~3f1dd2e3 label~1bb6f7a8 sectionIntro~f42320a6 weitere=jahr+secondary
 de   k=pension3aBalance type="currency" hint~3bb19401 label~f70878b7 weitere=secondary
 de   k=ivBezug type="select" naOk=true hint~d33f6ee9 label~3eacc357 options=3 optWerte~2def05cf optLabels~dde47ad8 weitere=secondary
-de   k=ahvRente type="currency" hint~8de20467 label~f95e0dc2 weitere=secondary
+de   k=ahvRente type="currency" hint~3d72b523 label~f95e0dc2 weitere=secondary
 de   k=ivRente type="currency" hint~4d1c8155 label~3a18d93a weitere=secondary
-de   k=bvgRente type="currency" hint~33936e38 label~d36ad341 weitere=secondary
+de   k=bvgRente type="currency" hint~707d6e2c label~d36ad341 weitere=secondary
 de   k=pension3b type="select" orientation~7508f8f6 label~3d286587 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
 de   k=pension3bBalance type="currency" hint~025d7f7c label~3680e522 weitere=secondary
 de   k=investmentFunds type="select" label~b27a4fc5 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
@@ -235,9 +235,9 @@ fr   k=loans type="currency" label~30a93699
 fr   k=pension3a type="currency" section~7e99e423 orientation~5f3e4d5a label~c2ed4733 sectionIntro~56ce2669 weitere=jahr+secondary
 fr   k=pension3aBalance type="currency" hint~7fbe134b label~039bf1f3 weitere=secondary
 fr   k=ivBezug type="select" naOk=true hint~9f3793e5 label~dbc8da01 options=3 optWerte~2def05cf optLabels~f728bdcd weitere=secondary
-fr   k=ahvRente type="currency" hint~0f944930 label~5b202e95 weitere=secondary
+fr   k=ahvRente type="currency" hint~c7dd9515 label~5b202e95 weitere=secondary
 fr   k=ivRente type="currency" hint~ffbad995 label~d50b3259 weitere=secondary
-fr   k=bvgRente type="currency" hint~3673cadb label~04dc7b34 weitere=secondary
+fr   k=bvgRente type="currency" hint~244a7ec9 label~04dc7b34 weitere=secondary
 fr   k=pension3b type="select" orientation~12609e61 label~fc2ecff7 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
 fr   k=pension3bBalance type="currency" hint~3175f3c6 label~17ffdf4a weitere=secondary
 fr   k=investmentFunds type="select" label~9ebd6846 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
@@ -400,9 +400,9 @@ it   k=loans type="currency" label~4b5d67ce
 it   k=pension3a type="currency" section~27393e0b orientation~07e87d60 label~286ed9c2 sectionIntro~25dd5d73 weitere=jahr+secondary
 it   k=pension3aBalance type="currency" hint~bb2ea7e2 label~f122c2ef weitere=secondary
 it   k=ivBezug type="select" naOk=true hint~6cf79de2 label~920dd2b4 options=3 optWerte~2def05cf optLabels~a00804cd weitere=secondary
-it   k=ahvRente type="currency" hint~a2e80b70 label~702f0294 weitere=secondary
+it   k=ahvRente type="currency" hint~615a9fef label~702f0294 weitere=secondary
 it   k=ivRente type="currency" hint~4cb49c95 label~4c0d0b5e weitere=secondary
-it   k=bvgRente type="currency" hint~2312d8fb label~46075120 weitere=secondary
+it   k=bvgRente type="currency" hint~0472f79b label~46075120 weitere=secondary
 it   k=pension3b type="select" orientation~dd2acdbe label~1551817e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
 it   k=pension3bBalance type="currency" hint~b59dc695 label~fad3cae4 weitere=secondary
 it   k=investmentFunds type="select" label~6be024fe options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
@@ -565,9 +565,9 @@ en   k=loans type="currency" label~ce3bb934
 en   k=pension3a type="currency" section~5f22c760 orientation~c4aa9762 label~13de36a9 sectionIntro~9e23f9f9 weitere=jahr+secondary
 en   k=pension3aBalance type="currency" hint~06ea535b label~0961e5a5 weitere=secondary
 en   k=ivBezug type="select" naOk=true hint~ca557a48 label~4a3c1e1c options=3 optWerte~2def05cf optLabels~1e99b3db weitere=secondary
-en   k=ahvRente type="currency" hint~544bad3e label~27acbb0a weitere=secondary
+en   k=ahvRente type="currency" hint~49fc801f label~27acbb0a weitere=secondary
 en   k=ivRente type="currency" hint~6d37fd72 label~f9562ae2 weitere=secondary
-en   k=bvgRente type="currency" hint~cd01e212 label~8350fdac weitere=secondary
+en   k=bvgRente type="currency" hint~35cab443 label~8350fdac weitere=secondary
 en   k=pension3b type="select" orientation~cddf5a0c label~f04ccb36 options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
 en   k=pension3bBalance type="currency" hint~520e4143 label~975d0300 weitere=secondary
 en   k=investmentFunds type="select" label~c8095fad options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
@@ -730,9 +730,9 @@ rm   k=loans type="currency" label~655f7754
 rm   k=pension3a type="currency" section~9067c1a5 orientation~d037ec79 label~b25df0ea sectionIntro~d5548bf7 weitere=jahr+secondary
 rm   k=pension3aBalance type="currency" hint~28562c7a label~213cc08d weitere=secondary
 rm   k=ivBezug type="select" naOk=true hint~29c9d4f9 label~1b18a73d options=3 optWerte~2def05cf optLabels~9b923f6a weitere=secondary
-rm   k=ahvRente type="currency" hint~33a231a2 label~42245daf weitere=secondary
+rm   k=ahvRente type="currency" hint~d5f409d9 label~42245daf weitere=secondary
 rm   k=ivRente type="currency" hint~88cca060 label~c402f203 weitere=secondary
-rm   k=bvgRente type="currency" hint~d4962832 label~351f52b7 weitere=secondary
+rm   k=bvgRente type="currency" hint~ba86d74b label~351f52b7 weitere=secondary
 rm   k=pension3b type="select" orientation~9356eed0 label~02bec3b3 options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
 rm   k=pension3bBalance type="currency" hint~1f923040 label~8de8ffe0 weitere=secondary
 rm   k=investmentFunds type="select" label~2905109f options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
