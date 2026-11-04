@@ -49,13 +49,18 @@ describe('Wege ohne Betrag aus nicht erfasstem Einkommen', () => {
     for (const monthlyIncome of [4000, 9000]) {
       expect(wegeAusProbe(rentnerin({ monthlyIncome })).wege.some((x) => x.key === 'soz')).toBe(false);
     }
+    // Nachprüfung 0e9c094f: auch knapp über dem Bedarf (bis 110 %), hier IV-Teilrente und angestellt.
+    const knapp = rentnerin({ employmentType: 'employed', ivBezug: 'teil', monthlyIncome: 2700 });
+    expect(calculateSozialhilfe(knapp)).toMatchObject({ einkommenFehlt: true, bedarfUngedeckt: false });
+    expect(wegeAusProbe(knapp).wege.some((x) => x.key === 'soz')).toBe(false);
   });
 
   // Fachprüfung d18ef9f6, Sollte: das Monatsbudget verglich das Einkommen ohne Rente mit dem Unterstützungsbudget.
   // Das Monatsbudget lädt asynchron (useEffect) und lässt sich nicht statisch rendern: Reihenfolge an der Quelle.
   it('Monatsbudget: der Grund steht vor «Einkommen unter dem Unterstützungsbudget»', () => {
     const quelle = fs.readFileSync(new URL('../BudgetSync.jsx', import.meta.url), 'utf8');
-    const grund = quelle.indexOf("sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst'");
+    expect(quelle).toContain('const renteOderEinkommenOffen = !!(sozialhilfe?.einkommenFehlt && sozialhilfe.bedarfUngedeckt);');
+    const grund = quelle.indexOf("renteOderEinkommenOffen ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst'");
     expect(grund).toBeGreaterThan(-1);
     expect(grund).toBeLessThan(quelle.indexOf("t('budgetSync.skosClaim'"));
   });

@@ -78,7 +78,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       knappSoz = e.geschaetzt && istKnapp(sh, e.ohneAlter);
       // Rente oder Einkommen nicht erfasst: kein Betrag, nur der Grund (wie data/anspruchWege.js).
       if (sh?.einkommenFehlt) {
-        if ((sh.eligible || sh.efbEntscheidet || sh.betragOffen) && (sh.vermoegenUeberFreibetrag || 0) === 0) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
+        if (sh.bedarfUngedeckt && (sh.vermoegenUeberFreibetrag || 0) === 0) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
       } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
