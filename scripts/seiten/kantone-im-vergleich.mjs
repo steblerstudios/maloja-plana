@@ -23,7 +23,7 @@ export const KANTONE_IM_VERGLEICH = {
     'Prämie, Steuern, Miete, Unterstützung, Familie, Arbeit: die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.',
   brotkrume: 'Kantone im Vergleich',
   kicker: 'Kantone im Vergleich',
-  inhaltTitel: 'Sechs Fragen',
+  inhaltTitel: 'Inhalt',
   stand: 'Prämien 2027 (BAG, September 2026), Steuern 2026, Mieten und Löhne 2024, Sozialhilfe 2024, EL Dezember 2025, Leerwohnungen Juni 2026, Arbeitslosigkeit September 2026, Familienzulagen und Kita-Abzug 2026.',
   // Die Zahlen veralten in Schüben: Familienzulagen im Januar, Kita-Abzüge im
   // Februar, Sozialhilfe im Dezember. Nach diesem Datum wird der Test rot.
