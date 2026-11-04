@@ -454,8 +454,29 @@ export function calculateSozialhilfe(data) {
 // nur für den Hauptlohn. Das Partnereinkommen bleibt ×12 — nach seinem 13. fragt die App nicht.
 // Renten ×12 wie in kantonsModell.js rohesEinkommenJahr, damit Pegel und Kantonsmodelle dasselbe Einkommen sehen.
 export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
-  return Number(data?.finanzen?.monthlyIncome || 0) * hauptlohnMonate(data?.finanzen?.dreizehnter)
-    + (Number(data?.finanzen?.sideIncome || 0) + (hh.partnerIncome || 0) + rentenMonat(data?.finanzen)) * 12;
+  const f = ipvFinanzenNetto(data).data?.finanzen;
+  return Number(f?.monthlyIncome || 0) * hauptlohnMonate(f?.dreizehnter)
+    + (Number(f?.sideIncome || 0) + (hh.partnerIncome || 0) + rentenMonat(f)) * 12;
+}
+
+// Die IPV rechnet mit dem NETTOLOHN (kantonsModell.js: «Netto ist was auf Ihrem Konto ankommt»).
+// Bis 04.11.2026 las keiner der beiden Einkommenswege `incomeType`: ein brutto erfasster Lohn (z. B.
+// aus dem Steuerimport, taxImport.js) zählte als netto — massgebendes Einkommen rund 8–10 % zu hoch,
+// Verbilligung zu tief (Nachrechnung Beispielhaushalte K1). Jetzt dieselbe Regel wie die Sozialhilfe
+// (nettoMonatAusProfil): brutto → Netto-Richtwert, Selbständige wie eingetragen, der Nebenerwerb mit
+// seiner eigenen Art. Danach steht beides auf 'netto' — ein zweiter Aufruf rechnet nicht nochmals um.
+// Offen: das Partnereinkommen (getHouseholdInfo) hat keine Art und zählt weiter, wie erfasst.
+export function ipvFinanzenNetto(data) {
+  const f = data?.finanzen;
+  if (!f) return { data, geschaetzt: false };
+  const selbst = zahltBeitraegeSelbst(f);
+  const haupt = nettoMonatAusProfil(f.monthlyIncome, selbst ? 'netto' : f.incomeType, data.basis);
+  const neben = nettoMonatAusProfil(f.sideIncome, f.sideIncomeType, data.basis);
+  if (!haupt.geschaetzt && !neben.geschaetzt) return { data, geschaetzt: false };
+  const finanzen = { ...f };
+  if (haupt.geschaetzt) Object.assign(finanzen, { monthlyIncome: haupt.netto, incomeType: 'netto' });
+  if (neben.geschaetzt) Object.assign(finanzen, { sideIncome: neben.netto, sideIncomeType: 'netto' });
+  return { data: { ...data, finanzen }, geschaetzt: true };
 }
 
 // Kantonale IPV-Berechnung — einkommensabhängig
@@ -475,8 +496,11 @@ export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
 //                    Hauptlohn ist erfasst, die Frage nach dem 13. Monatslohn aber offen — gerechnet
 //                    ×12. Mit 13. läge das Einkommen 8,3 % höher (13/12) und die Verbilligung tiefer.
 //   annahmen.partnerOhneDreizehnten  Partnereinkommen erfasst — immer ×12 gerechnet (keine Frage dazu).
-export function calculateIPV(data) {
-  const r = ipvRechnen(data);
+//   einkommenGeschaetzt  Haupt- oder Nebenerwerb stand brutto im Profil — gerechnet mit dem
+//                    Netto-Richtwert (ipvFinanzenNetto), wie bei der Sozialhilfe.
+export function calculateIPV(roheDaten) {
+  const { data, geschaetzt } = ipvFinanzenNetto(roheDaten);
+  const r = { ...ipvRechnen(data), einkommenGeschaetzt: geschaetzt };
   if (!r.eligible) return r;
   const ohneDreizehnten = Number(data.finanzen?.monthlyIncome) > 0 && dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
   // Das Partnereinkommen zählt ×12 — nach dem 13. der zweiten Person fragt die App nicht.

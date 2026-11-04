@@ -57,7 +57,10 @@ describe('IPV-Jahreseinkommen mit und ohne 13. Monatslohn', () => {
       const data = { basis: {}, finanzen: f };
       const steuer = steuerEingabenAusDaten(data).nettolohnJahr;
       expect(rohesEinkommenJahr(f)).toBe(steuer);
-      expect(ipvJahreseinkommen(data)).toBe(steuer);
+      // Die IPV rechnet mit netto (seit 04.11.2026, ipvBruttoBasis.test.js): ein brutto erfasster Lohn wird
+      // dort erst umgerechnet. Die 13.-Regel ist dieselbe — verglichen mit demselben Betrag, als netto erfasst.
+      expect(ipvJahreseinkommen({ ...data, finanzen: { ...f, incomeType: 'netto' } })).toBe(steuer);
+      expect(ipvJahreseinkommen(data)).toBeLessThan(steuer);
       expect(Number(jahreslohnAusProfil(f))).toBe(steuer - 500 * 12);
     },
   );
