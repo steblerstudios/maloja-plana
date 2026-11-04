@@ -17,7 +17,7 @@ import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
-import { vermoegensFelder, rentenMonat } from './utils/unterstuetzungseinheit.js';
+import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
 import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
 
 // Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
@@ -35,6 +35,7 @@ const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.f
   && !data.basis?.dateOfBirth && Number(data.finanzen?.pension3aBalance) > 0
   && !!(sozialhilfe.eligible || sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen);
 import { organListe } from './utils/organspende.js';
+import { rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
 
