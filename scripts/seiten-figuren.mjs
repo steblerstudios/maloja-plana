@@ -241,7 +241,7 @@ export function figurAlter() {
     ...saeulen,
     `<line class="f-marke" x1="${L}" y1="${ys}" x2="${B - R}" y2="${ys}"/>`,
     `<text class="f-text f-stark" x="${L + 4}" y="${r1(ys - 6)}">Schnitt ab 26: ${fr(ALTER_SCHNITT_AB_26)}</text>`,
-    `<text class="f-text" x="${B - R}" y="${H - 6}" text-anchor="end">Alter in Jahren</text>`,
+    `<text class="f-text" x="${B - R}" y="${OBEN - 2}" text-anchor="end">Alter in Jahren</text>`,
   ];
   return figur('fig-alter', B, H,
     'Kosten je versicherte Person nach Alter, 2024',
@@ -267,7 +267,7 @@ export function figurKostenteil() {
     `<line class="f-raster" x1="${L}" y1="${r1(y(v))}" x2="${B - R}" y2="${r1(y(v))}"/>` +
     `<text class="f-text" x="${L - 6}" y="${r1(y(v) + 4)}" text-anchor="end">${fr(v)}</text>`);
   const rasterX = [0, 3000, 6000, 9000, 12000].map((k) =>
-    `<text class="f-text" x="${r1(x(k))}" y="${H - UNTEN + 16}" text-anchor="middle">${fr(k)}</text>`);
+    `<text class="f-text" x="${r1(x(k))}" y="${H - UNTEN + 16}" text-anchor="${k === kMax ? 'end' : 'middle'}">${fr(k)}</text>`);
   const dachMin = frMin + SELBSTBEHALT_MAX, dachMax = frMax + SELBSTBEHALT_MAX;
   const inhalt = [
     ...rasterY,
@@ -277,7 +277,7 @@ export function figurKostenteil() {
     `<polyline class="f-linie f-gestrichelt" points="${linie(frMax)}"/>`,
     `<text class="f-text f-stark" x="${B - R}" y="${r1(y(dachMin) - 7)}" text-anchor="end">Franchise ${fr(frMin)}: höchstens ${fr(dachMin)}</text>`,
     `<text class="f-text f-stark" x="${B - R}" y="${r1(y(dachMax) - 7)}" text-anchor="end">Franchise ${fr(frMax)} (gestrichelt): höchstens ${fr(dachMax)}</text>`,
-    `<text class="f-text" x="${B - R}" y="${H - 4}" text-anchor="end">Kosten im Jahr, Franken</text>`,
+    `<text class="f-text" x="${(B + L) / 2}" y="${H - 2}" text-anchor="middle">Kosten im Jahr, Franken</text>`,
   ];
   return figur('fig-kostenteil', B, H,
     'Eigener Anteil je nach Jahreskosten, bei der tiefsten und der höchsten Franchise',
@@ -308,7 +308,8 @@ export function figurKantone() {
         teile.push(`<line class="f-strich" x1="${r1(x(r.erwachsene))}" y1="${y0 - 1}" x2="${r1(x(r.erwachsene))}" y2="${y0 + h + 1}"/>`);
       }
     }
-    const wert = k.eineRegion ? rp(k.tief) : `${rp(k.tief)} – ${rp(k.hoch)}`;
+    // Jede Region mit ihrer Zahl, von der günstigsten zur teuersten.
+    const wert = k.regionen.map((r) => r.erwachsene).sort((a, b) => a - b).map(rp).join(' · ');
     teile.push(`<text class="f-text" x="${r1(x(k.hoch) + 6)}" y="${r1(y0 + h - 2)}">${wert}</text>`);
     return teile.join('');
   });
