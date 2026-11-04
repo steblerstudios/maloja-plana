@@ -2353,14 +2353,14 @@ export default {
         pension3a: '3. pitga A pajà CHF/onn',
         pension3aBalance: '3. pitga A — avair (total) CHF',
         ivBezug: { label: "Renta AI", options: { keine: "Nagina", teil: "Renta parziala", ganz: "Renta entira" } }, // TODO(rm)
+        ahvRente: 'Renta AVS per mais CHF', // TODO(rm)
+        ivRente: 'Renta AI per mais CHF', // TODO(rm)
+        bvgRente: 'Renta da la cassa da pensiun per mais CHF', // TODO(rm)
         pension3bBalance: '3. pitga B — avair (total) CHF',
         familienzulagen: 'Supplements da famiglia per mais CHF',
         alimenteReceived: 'Aliments retschavids CHF/mais',
         alimentePaid: 'Aliments pajads CHF/mais',
         debtPayments: 'Pajaments da debits CHF/mais',
-        ahvRente: 'Renta AVS CHF/mais',
-        ivRente: 'Renta AI CHF/mais',
-        bvgRente: 'Renta LPP CHF/mais',
         pension3b: { label: '3. pitga B', options: { no: 'Na', yes: 'Gea' } },
         investmentFunds: { label: 'Fond da investiziun avant maun?', options: { no: 'Na', yes: 'Gea' } },
       },
@@ -2389,6 +2389,9 @@ export default {
         otherAssets: 'Daners blut, metals prezius, criptomonedas, vehichels e.u.v. (valur fiscala).',
         pension3aBalance: { sie: 'L’import total spargnà fin ussa sin Voss conto 3a — betg la contribuziun annuala.', du: 'L’import total spargnà fin ussa sin tes conto 3a — betg la contribuziun annuala.' },
         ivBezug: { sie: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che Vus transmettais la decisiun.", du: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che ti transmettas la decisiun." }, // TODO(rm)
+        ahvRente: "Tenor la decisiun da renta da la cassa da cumpensaziun, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias a partir da la vegliadetgna da pensiun.", // TODO(rm)
+        ivRente: "Tenor la decisiun dal post AI, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias cun ina renta AI.", // TODO(rm)
+        bvgRente: "Tenor il quint da la cassa da pensiun, import per mais. In retratg da chapital tutga tar la facultad, betg qua.", // TODO(rm)
         pension3bBalance: { sie: 'Il valur actual da Vossa prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).', du: 'Il valur actual da tia prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).' },
       },
       docs: {
@@ -3469,7 +3472,7 @@ export default {
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
     orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
-    renteNichtEnthalten: 'La renta n’è betg cumpigliada en quest quint, il profil n’ha nagin champ per ella. Perquai na numna l’app nagin import. Sch’igl exista in dretg, decida il chantun; cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.', // TODO(rm)
+    renteNichtEnthalten: "La renta n’è anc betg endatada (chapitel «Finanzas & daners», rentas). Perquai na numna l’app nagin import. Sch’igl exista in dretg, decida il chantun; cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.", // TODO(rm)
     statusOffen: 'Examinar tar il chantun',
     zurStelle: 'Al post chantunal per la reducziun da premias',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K69/K84).
@@ -4900,7 +4903,7 @@ export default {
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
     einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
-    renteNichtErfasst: "Renta betg cumpigliada en quest quint, import avert", // TODO(rm)
+    renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
     assetLimitBasisCanton: 'Chantun {name}, funtauna legida ils {datum}',

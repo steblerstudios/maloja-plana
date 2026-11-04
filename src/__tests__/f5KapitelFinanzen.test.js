@@ -179,8 +179,9 @@ describe('Nebenerwerb — die fünf Felder erst mit Nebenerwerb', () => {
     expect(nebenerwerbAngegeben({ sideIncome: 0 })).toBe(true);
   });
 
-  it('alle fünf Felder bleiben im Formular (alle 38 Felder bleiben)', () => {
-    expect(kapitel('finanzen').fields).toHaveLength(38);
+  // 41 seit 04.11.2026: drei Rentenfelder (AHV, IV, Pensionskasse) neben dem IV-Bezug.
+  it('alle fünf Felder bleiben im Formular (alle 41 Felder bleiben)', () => {
+    expect(kapitel('finanzen').fields).toHaveLength(41);
     const html = render('finanzen', DEMO_DATA.finanzen, { anfangsOffen: 'alle' });
     for (const k of NEBENERWERB_FELDER) {
       const label = kapitel('finanzen').fields.find((f) => f.k === k).label;
