@@ -29,9 +29,10 @@
 
 import { partnerEinkommenRoh } from './partnereinkommen.js';
 import { zahltBeitraegeSelbst } from './monatsrechnung.js';
-import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, bvgHerausloesen, renteOhneBetrag } from './unterstuetzungseinheit.js';
+import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
+import { renteOhneBetrag } from './unterstuetzungseinheit.js';
 
 export { kindAlter, saeule3aZaehlt } from './unterstuetzungseinheit.js';
 
