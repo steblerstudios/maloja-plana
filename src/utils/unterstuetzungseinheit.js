@@ -75,16 +75,19 @@ export const RENTEN_FELDER = ['ahvRente', 'ivRente', 'bvgRente'];
 const eingetragen = (v) => v != null && String(v).trim() !== '' && Number.isFinite(Number(v)) && Number(v) >= 0;
 // Eingetragen heisst: das Feld hat eine Zahl, auch eine 0 («keine Rente», etwa bei Aufschub).
 export const renteEingetragen = (finanzen) => RENTEN_FELDER.some((k) => eingetragen(finanzen?.[k]));
-export const rentenMonat = (finanzen) => RENTEN_FELDER.reduce((s, k) => s + Math.max(0, Number(finanzen?.[k]) || 0), 0);
+// Je Feld auf Franken, wie das Dossier sie zeigt (Nachprüfung 79c961c7, wie vermoegenSumme).
+export const rentenMonat = (finanzen) => RENTEN_FELDER.reduce((s, k) => s + Math.max(0, Math.round(Number(finanzen?.[k]) || 0)), 0);
 
 // Rente bezogen, ihre Höhe aber nicht eingetragen: kein Betrag aus einem Einkommen ohne die Rente, eine Regel für
 // Sozialhilfe, Rechner und IPV (Fachprüfung 03.11.2026). Ab dem Referenzalter fliesst fast immer eine AHV-Rente, auch
 // bei Erwerbstätigen (Fachprüfung 8ac049b5); wer sie aufschiebt, trägt eine 0 ein. Das Feld muss zur Lage passen: IV-Bezug
 // braucht die IV-Rente, Ruhestand oder Rentenalter die AHV-Rente. Eine Pensionskassen-Rente allein hebt die Sperre nicht
-// auf (Fachprüfung 376149dc, Muss: sonst Lücke 2411 statt 611 und IPV 450 statt 242).
+// auf (Fachprüfung 376149dc, Muss: sonst Lücke 2411 statt 611 und IPV 450 statt 242). Im Ruhestand braucht es beide,
+// AHV und Pensionskasse: Frühpensionierte leben meist von der PK, AHV 0 allein gab die volle IPV (Nachprüfung 79c961c7).
 export const renteOhneBetrag = (finanzen, basis, heute = new Date()) =>
   (['ganz', 'teil'].includes(finanzen?.ivBezug) && !eingetragen(finanzen?.ivRente))
-  || ((finanzen?.employmentType === 'retired' || alterUndRentenalter(basis, heute).rentenalter) && !eingetragen(finanzen?.ahvRente));
+  || ((finanzen?.employmentType === 'retired' || alterUndRentenalter(basis, heute).rentenalter) && !eingetragen(finanzen?.ahvRente))
+  || (finanzen?.employmentType === 'retired' && !eingetragen(finanzen?.bvgRente));
 
 // Die Kinder im Haushalt, ohne Haushaltsangabe aus dem alten Feld `dependents`. Ohne Alter gilt ein Kind als
 // minderjährig. Zivilstand leer und zwei Erwachsene: gerechnet als Paar, wie bis 02.11.2026 auf der Seite. Getrennt

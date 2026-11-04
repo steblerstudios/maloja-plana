@@ -56,12 +56,21 @@ describe('Rentenfelder im Kapitel Finanzen', () => {
     const ivMitAhvNull = { ...rentnerin({ employmentType: 'employed', ivBezug: 'ganz', ahvRente: 0, monthlyIncome: 0 }), basis: { canton: 'AG', dateOfBirth: '1980-01-01', household: { adults: 1, children: [] } } };
     expect(calculateIPV(ivMitAhvNull).amount).toBeNull();
     expect(renteOhneBetrag({ ivBezug: 'ganz', ivRente: 0 }, {})).toBe(false);
+    // Nachprüfung 79c961c7, Muss: Frühpensionierte (62) mit AHV 0, PK leer gab die volle IPV.
+    const frueh = { ...rentnerin({ ahvRente: 0 }), basis: { canton: 'AG', dateOfBirth: '1964-03-01', gender: 'female', household: { adults: 1, children: [] } } };
+    expect(calculateIPV(frueh).amount).toBeNull();
+    expect(calculateIPV({ ...frueh, finanzen: { ...frueh.finanzen, bvgRente: 2500 } }).amount).toBeGreaterThan(0);
+  });
+
+  it('Renten je Feld auf Franken, wie im Dossier', () => {
+    const p = rentnerin({ ahvRente: 1500.6, bvgRente: 300.6 });
+    expect(calculateSozialhilfe(p).income).toBe(1802);
   });
 
   it('Sozialhilfe: die Rente zählt als Einnahme, ohne Einkommensfreibetrag, ein Betrag steht', () => {
     const ohne = calculateSozialhilfe(rentnerin());
     expect(ohne.einkommenFehlt).toBe(true);
-    const mit = calculateSozialhilfe(rentnerin({ ahvRente: 1500 }));
+    const mit = calculateSozialhilfe(rentnerin({ ahvRente: 1500, bvgRente: 0 }));
     expect(mit).toMatchObject({ einkommenFehlt: false, renteFehlt: false, efb: 0 });
     expect(mit.income).toBe(1500);
     expect(mit.deficit).toBe(mit.totalBedarf - 1500);
@@ -77,8 +86,8 @@ describe('Rentenfelder im Kapitel Finanzen', () => {
 
   it('IPV: mit Rente ein Betrag aus dem Einkommen samt Rente, ohne Rente keiner', () => {
     expect(calculateIPV(rentnerin()).amount).toBeNull();
-    const klein = calculateIPV(rentnerin({ ahvRente: 1200 }));
-    const gross = calculateIPV(rentnerin({ ahvRente: 4500 }));
+    const klein = calculateIPV(rentnerin({ ahvRente: 1200, bvgRente: 0 }));
+    const gross = calculateIPV(rentnerin({ ahvRente: 4500, bvgRente: 0 }));
     expect(klein.amount).toBeGreaterThan(0);
     expect(gross.amount ?? 0).toBeLessThan(klein.amount);
   });
