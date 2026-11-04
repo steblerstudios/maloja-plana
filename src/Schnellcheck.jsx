@@ -73,9 +73,9 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       note: t(w.qualitative ? 'schnellcheck.ipvOhneBetragNote' : 'schnellcheck.ipvNote'),
     } : w.key === 'soz' ? {
       key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
-      label: t('nav.sozialhilfe'), monthly: w.monthly,
+      label: t('nav.sozialhilfe'), monthly: w.monthly, qualitative: w.qualitative,
       // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
-      note: t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
+      note: w.qualitative ? t(w.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
         // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
         + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
         + (w.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
