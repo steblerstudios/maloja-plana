@@ -922,6 +922,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
       if (ipv.annahmen?.partnerOhneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten') });
     }
+    // Brutto im Profil: die Stelle sieht den Bruttolohn, gerechnet ist mit dem Netto-Richtwert — auch ohne Anspruch.
+    if (ipv.belegt !== false && ipv.einkommenGeschaetzt) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeAusBrutto') });
     // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
       ? t('premium.eligible')
@@ -1040,6 +1042,8 @@ export const STEUER_KENNUNG = Object.freeze({
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
   // IPV (25.09.2026): Partnereinkommen ×12, nach dessen 13. Monatslohn fragt die App nicht.
   annahmePartnerOhneDreizehnten: 'partner_ohne_13_monatslohn',
+  // IPV (04.11.2026): Lohn brutto im Profil, gerechnet mit dem Netto-Richtwert (ipvFinanzenNetto).
+  annahmeAusBrutto: 'lohn_brutto_netto_geschaetzt',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
   annahmeEinzeln: 'einzeln_konkubinat',
   // Gate 24.09.2026: Konkubinat mit Kindern, ganzer Kinderabzug bei der Person (KS 30, Ziff. 14.8.1).
@@ -1145,9 +1149,10 @@ export function generateBehoerdenJSON(data, calculations, t) {
           ...(!ipv.eligible && ipv.noteKey ? { grund: t ? t(ipv.noteKey, ipv.noteParams) : ipv.noteKey, unterMindestbetrag: ipvUnterMindestbetrag(ipv) } : {}),
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
-          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
-            ...(ipv.annahmen.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
-            ...(ipv.annahmen.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten || ipv.einkommenGeschaetzt ? { assumptions: [
+            ...(ipv.annahmen?.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
+            ...(ipv.annahmen?.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+            ...(ipv.einkommenGeschaetzt ? [erl('annahmeAusBrutto')] : []),
           ] } : {}),
         };
   }
