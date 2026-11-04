@@ -27,7 +27,11 @@ import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
 import { HINTERGRUND } from './seiten/krankenkasse.mjs';
-import { zahlen, einsetzen, BLOECKE, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
+import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
+import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
+
+// Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
+const BLOECKE = { ...BLOECKE_FIGUREN, ...BLOECKE_VERGLEICH };
 
 // Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
 // Quellen, Querverweisen), SONDERSEITEN die Rechtliches-Seite — sie hat nichts
@@ -396,6 +400,13 @@ const stilHintergrund = `
     /* Zahlenansicht: Balken in der Tabelle, Fläche in Heidelbeere, ab null. */
     .zahlen td.balken{ width:42%; padding-right:12px; vertical-align:middle }
     .zahlen td.balken span{ display:block; height:10px; border-radius:3px; background:var(--heidel) }
+    /* Zweite Reihe (z. B. «nach Verbilligung»): gleiche Farbe, als Umriss — Form statt Farbe. */
+    .zahlen td.balken span.b1{ margin-top:3px; background:transparent; border:1.5px solid var(--heidel-text); height:8px }
+    .zahlen tr.ch th, .zahlen tr.ch td, .breit tr.ch th, .breit tr.ch td{ font-weight:600; border-top:1.5px solid var(--leise) }
+    .legende span{ display:inline-block; width:18px; height:9px; border-radius:2px; vertical-align:middle; margin-right:4px }
+    .legende span.b0{ background:var(--heidel) } .legende span.b1{ border:1.5px solid var(--heidel-text) }
+    .tabelle.breit table{ min-width:760px; font-size:14px } .tabelle.breit th[scope="col"]{ vertical-align:bottom }
+    .tabelle.breit:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     .zahlen th[scope="row"]{ white-space:nowrap }
     @media (max-width:600px){ .zahlen td.balken{ width:30% } }
 
@@ -522,7 +533,7 @@ function quellenListe(quellen, nummer, stellen) {
 function hintergrundBauen(seite) {
   const sprache = SPRACHEN.find((s) => s.code === 'de');
   const R = RAHMEN.de;
-  const werte = zahlen();
+  const werte = { ...zahlen(), ...vergleichZahlen() };
   const z = (s) => einsetzen(s, werte);
   const seitenUrl = url(seite.pfad, sprache);
   const titel = z(seite.titel), beschreibung = z(seite.beschreibung);
@@ -553,7 +564,7 @@ function hintergrundBauen(seite) {
   };
 
   const inhaltsverzeichnis = seite.inhaltsverzeichnis ? `      <nav class="inhalt" aria-label="Inhalt dieser Seite">
-        <p>Acht Fragen</p>
+        <p>${esc(seite.inhaltTitel || 'Inhalt')}</p>
         <ol>
 ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.replace(/^\d+\.\s*/, ''))}</a></li>`).join('\n')}
         </ol>
@@ -570,7 +581,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
-  const weiter = [...inhaltFuer('de').seiten].map((s) =>
+  const weiter = [...inhaltFuer('de').seiten, ...HINTERGRUND.filter((h) => h.pfad !== seite.pfad)].map((s) =>
     `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a></li>`).join('\n');
 
   return `${kopf({
@@ -586,7 +597,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
   })}
 
     <main>
-      <p class="kicker">Krankenkasse erklärt</p>
+      <p class="kicker">${esc(seite.kicker || seite.brotkrume)}</p>
       <h1>${esc(titel)}</h1>
       <p class="vorspann">${z(seite.vorspann)}</p>
       <p class="stand"><strong>Stand der Zahlen:</strong> ${esc(z(seite.stand))}</p>

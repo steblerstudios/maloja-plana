@@ -2,6 +2,9 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
+import { KANTONE_IM_VERGLEICH } from '../../scripts/seiten/kantone-im-vergleich.mjs';
+import { KANTONE, EBENEN, PAARE, korrelation } from '../../scripts/seiten-vergleich.mjs';
+import de from '../i18n/de.js';
 import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT, ATLAS_PRAEMIEN } from '../../scripts/seiten-figuren.mjs';
 import { BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { PRAEMIEN, GEMEINDEN } from '../data/praemienRegionenDaten.js';
@@ -96,7 +99,7 @@ describe('Hintergrundseiten', () => {
 
     it('jede Figur ist ein beschriftetes Bild mit Titel und Beschreibung', () => {
       const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)];
-      expect(svgs.length).toBe(5);
+      if (pfad === 'krankenkasse') expect(svgs.length).toBe(5);
       for (const [ganz, innen] of svgs) {
         expect(ganz).toMatch(/role="img"/);
         expect(ganz).toMatch(/aria-labelledby="[^"]+-t [^"]+-d"/);
@@ -203,6 +206,49 @@ describe('Hintergrundseiten', () => {
       for (const n of ['Winterthur', 'Uster', 'Dietikon']) expect(region(n)).toBe(2);
       for (const n of ['Bülach', 'Andelfingen']) expect(region(n)).toBe(3);
       expect(text).toContain('Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3');
+    });
+  });
+
+  // ─── Kantone im Vergleich: Zahlen aus dem Kantonsatlas, ohne Rangliste ────
+  describe('/kantone-im-vergleich/', () => {
+    const html = lies('kantone-im-vergleich');
+    const text = sichtbar(html);
+
+    it('ordnet die Kantone nicht: keine Platzziffer, kein Rang, keine Wertungsfarben', () => {
+      expect(text).not.toMatch(/\b(Rang|Platz \d|bester|schlechtester|Spitzenreiter|Schlusslicht)/i);
+      expect(html).not.toMatch(/class="[^"]*(gut|schlecht|rot|gruen)[^"]*"/);
+    });
+
+    it('jede Ebene stammt aus dem Kantonsatlas — für jeden Kanton', () => {
+      const nebeneinander = html.match(/<div class="tabelle breit"[\s\S]*?<\/table>/)[0];
+      for (const k of KANTONE) {
+        const zeile = nebeneinander.match(new RegExp(`<tr><th scope="row">${de.cantons[k]}</th>(.*?)</tr>`))[1];
+        for (const key of ['praemie', 'lastNachIpv', 'steuer', 'miete', 'leer', 'sozialhilfe', 'el', 'alq', 'kinderzulage']) {
+          expect(zeile, `${k} ${key}`).toContain(`>${EBENEN[key].fmt(EBENEN[key].wert(k))}<`);
+        }
+      }
+      expect((nebeneinander.match(/<tr><th scope="row">/g) || []).length).toBe(26);
+    });
+
+    it('die Zusammenhänge sind aus den Daten gerechnet, nicht abgetippt', () => {
+      for (const [, a, b] of PAARE) {
+        const r = korrelation(a, b).toFixed(2).replace('.', ',').replace('-', '−');
+        expect(html).toContain(`<td class="n">${r}</td>`);
+      }
+      expect(text).toContain('Ein Zusammenhang ist keine Erklärung');
+    });
+
+    it('nennt bei jeder Ebene, woher die Zahl kommt, und die Vorbehalte des Atlas', () => {
+      for (const key of Object.keys(EBENEN)) {
+        expect(KANTONE_IM_VERGLEICH.quellen.map((q) => q.key), key).toContain(EBENEN[key].quelle);
+      }
+      expect(text).toContain('Medianeinkommen 2022');
+      expect(text).toContain('Grossregionen');
+      expect(text).toContain('nicht, wer Anspruch hätte');
+    });
+
+    it('ist aus «Was steht mir zu?», «Prämienverbilligung» und der Krankenkassen-Seite verlinkt', () => {
+      for (const p of ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse']) expect(lies(p)).toContain('href="/kantone-im-vergleich/"');
     });
   });
 
