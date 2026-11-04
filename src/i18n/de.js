@@ -72,7 +72,7 @@ export default {
       berechtigungen: {
         iv: { titel: 'IV-Leistungen', text: 'Eingliederung vor Rente: berufliche Massnahmen, Hilfsmittel und bei Bedarf eine Rente. Früh anmelden zählt am meisten.' },
         hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: { sie: 'Ein monatlicher Betrag, wenn Sie im Alltag regelmässig Hilfe brauchen — unabhängig vom Einkommen.', du: 'Ein monatlicher Betrag, wenn du im Alltag regelmässig Hilfe brauchst — unabhängig vom Einkommen.' } },
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf. Das ist ein Recht, keine Fürsorge.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf. Das ist ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, bekommt die Prämie als Pauschale angerechnet — höchstens die kantonale Durchschnittsprämie. Eine Befreiung ist es nicht. Bei tiefem Einkommen ohne EL besteht oft trotzdem Anspruch.' },
         steuern: { titel: 'Behinderungsbedingte Steuerabzüge', text: 'Krankheits- und Behinderungskosten — Betreuung, Hilfsmittel, Fahrten — lassen sich vom steuerbaren Einkommen abziehen.' },
         serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Wer Ergänzungsleistungen (EL) bezieht, ist auf Antrag von der SERAFE-Abgabe befreit — rückwirkend nachforderbar.' },
@@ -128,10 +128,10 @@ export default {
     rentnerin: {
       label: 'Pensioniert / im AHV-Alter',
       frage: { sie: 'Beziehen Sie eine AHV-Rente oder stehen Sie kurz davor?', du: 'Beziehst du eine AHV-Rente oder stehst kurz davor?' },
-      intro: 'Im Alter gibt es Ansprüche, die man anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
+      intro: 'Im Alter gibt es Ansprüche, die man anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, kein Entgegenkommen.',
       berechtigungen: {
         pensionierung: { titel: 'Übergang in die Pensionierung', text: { sie: 'Stehen Sie kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.', du: 'Stehst du kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.' } },
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie. Ein Recht, keine Fürsorge.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie. Ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Rentnerinnen und Rentner mit tiefem Einkommen — und alle mit Ergänzungsleistungen — können sich die Krankenkassenprämien vom Kanton mitfinanzieren lassen.' },
         hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: 'Ein monatlicher Betrag, wenn man im Alltag regelmässig auf Hilfe angewiesen ist — unabhängig vom Einkommen und getrennt von der EL.' },
         steuern: { titel: 'Abzüge im Rentenalter', text: 'Krankheits-, Pflege- und behinderungsbedingte Kosten lassen sich vom steuerbaren Einkommen abziehen — die Belege übers Jahr aufzuheben lohnt sich.' },
@@ -146,7 +146,7 @@ export default {
         rav: { titel: 'Rechtzeitig beim RAV anmelden', text: { sie: 'Die RAV-Anmeldung ist die wichtigste Frist — am besten am ersten Tag ohne Stelle, bevor Sie Taggeld beziehen. Jeder zu späte Tag kostet Taggeld. Der geführte Ablauf zeigt die Schritte und legt die Frist in Ihren Kalender.', du: 'Die RAV-Anmeldung ist die wichtigste Frist — am besten am ersten Tag ohne Stelle, bevor du Taggeld beziehst. Jeder zu späte Tag kostet Taggeld. Der geführte Ablauf zeigt die Schritte und legt die Frist in deinen Kalender.' } },
         alv: { titel: 'Arbeitslosentaggeld (ALV)', text: { sie: 'Melden Sie sich so früh wie möglich beim RAV an — die Taggelder hängen von Ihren Beitragsmonaten ab, und eine späte Anmeldung kostet Tage.', du: 'Melde dich so früh wie möglich beim RAV an — die Taggelder hängen von deinen Beitragsmonaten ab, und eine späte Anmeldung kostet Tage.' } },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Ein tieferes Einkommen bedeutet oft einen neuen Anspruch auf Hilfe bei den Krankenkassenprämien — beim Kanton neu beantragen, nicht warten.' },
-        sozialhilfe: { titel: 'Sozialhilfe (auch nach der Aussteuerung)', text: 'Sind die Taggelder erschöpft, kann die Sozialhilfe die Lücke überbrücken. Ein Recht, keine Fürsorge — und getrennt vom RAV.' },
+        sozialhilfe: { titel: 'Sozialhilfe (auch nach der Aussteuerung)', text: 'Sind die Taggelder erschöpft, kann die Sozialhilfe die Lücke überbrücken. Ein Recht, kein Entgegenkommen — und getrennt vom RAV.' },
         franchise: { titel: 'Franchise prüfen', text: 'Bei tieferem Einkommen kann eine tiefe Franchise sicherer, eine hohe günstiger sein, wenn man selten zum Arzt geht — jeden Herbst prüfen.' },
         steuern: { titel: 'Steuern bei tieferem Einkommen', text: 'Arbeitslosentaggelder sind steuerbar, doch ein tieferes Jahreseinkommen bedeutet meist weniger Steuern — Quellensteuer lässt sich oft zurückfordern.' },
       },
@@ -160,7 +160,7 @@ export default {
         mahnung: { titel: 'Mahnung erhalten', text: 'Eine Mahnung ist noch keine Betreibung — jetzt ist der Spielraum am grössten: prüfen, bestreiten oder Raten vorschlagen.' },
         betreibung: { titel: 'Betreibung verstehen', text: 'Eine Betreibung ist ein Ablauf mit klaren Schritten und Fristen — sie ruhig zu kennen macht aus Angst etwas Handhabbares.' },
         existenzminimum: { titel: 'Existenzminimum schützen', text: 'Bei einer Lohnpfändung bleibt ein geschütztes Existenzminimum von Gesetzes wegen unantastbar — ein klares Budget hilft, es zu sehen und zu wahren.' },
-        sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht mehr deckt, kann die Sozialhilfe aufstocken — ein Recht, keine Fürsorge, und unabhängig von den Schulden selbst.' },
+        sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht mehr deckt, kann die Sozialhilfe aufstocken — ein Recht, kein Entgegenkommen, und unabhängig von den Schulden selbst.' },
         steuern: { titel: 'Steuerstundung oder -erlass', text: 'In einer echten Notlage können die Steuerbehörden die Zahlung stunden oder Steuern erlassen — besser fragen, als Ausstände wachsen lassen.' },
       },
     },
@@ -170,7 +170,7 @@ export default {
       intro: 'Nach dem Tod eines Elternteils haben Kinder klare Ansprüche, die in einer schweren Zeit leicht untergehen — eine Waisenrente, und ergänzende Hilfe, falls sie nicht reicht.',
       berechtigungen: {
         waisenrente: { titel: 'Waisenrente (AHV/IV)', text: 'Ein Kind, dessen Elternteil verstorben ist, erhält eine monatliche Rente — bis 18, in Ausbildung bis 25. Sie wird bei der Ausgleichskasse beantragt.' },
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung. Ein Recht, keine Fürsorge.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung. Ein Recht, kein Entgegenkommen.' },
         stipendien: { titel: 'Stipendien', text: 'Zusätzlich zur Waisenrente können kantonale Stipendien Ausbildung oder Studium unterstützen — parallel prüfen, mit eigenen Fristen.' },
         steuern: { titel: 'Steuerliche Entlastung', text: 'Ein hinterbliebener Elternteil kann Elterntarif und Kinderabzüge geltend machen; auch Kosten rund um den Verlust können die Steuer senken.' },
       },
@@ -789,7 +789,7 @@ export default {
   },
   ergaenzungsleistungen: {
     title: 'Ergänzungsleistungen beantragen',
-    intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, keine Fürsorge. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
+    intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, kein Entgegenkommen. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
     step1Title: '1 · Kommen EL in Frage?',
     step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld seit mindestens sechs Monaten —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist die Sozialhilfe der Wohngemeinde zuständig.',
     step1LinkAnspruch: 'Ansprüche in Ruhe prüfen',
