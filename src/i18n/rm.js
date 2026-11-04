@@ -3468,7 +3468,7 @@ export default {
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
-    annahmeAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada: Maloja deducescha las contribuziuns usitadas. Cun la paja netta dal quint da paja è la cifra pli exacta. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    annahmeAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada: Maloja deducescha forfetarmain las deducziuns usitadas. Cun la paja netta dal quint da paja è il resultat pli exact. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada decisiva probablamain sur la limita (CHF {value} per onn)',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
@@ -4073,7 +4073,7 @@ export default {
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmePartnerOhneDreizehnten: "Entrada da la segunda persuna quintada senza 13avla paja", // TODO(rm): provisorisch
-      annahmeAusBrutto: "Paja inditgada brut, quintada cun ina paja netta stimada", // TODO(rm): provisorisch
+      annahmeAusBrutto: "Paja inditgada brut, quintada cun ina paja netta stimada (deducziuns forfetaras)", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
       annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       annahmeKinderabzugKonkubinat: "Concubinat cun uffants: entira deducziun per uffants quintada tar la persuna (mesadad cun autoritad parentala cuminaivla, circular AFC nr. 30, cifra 14.8.1)", // TODO(rm): provisorisch

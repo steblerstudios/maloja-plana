@@ -115,9 +115,9 @@ describe('calculateIPV in den Kantonsmodulen', () => {
     const offen = calculateIPV(profil(canton, plz, city, 2160));
     const nein = calculateIPV(profil(canton, plz, city, 2160, NEIN));
     expect(offen.annual).toBe(nein.annual);
-    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false });
-    expect(nein.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
-    expect(calculateIPV(profil(canton, plz, city, 2160, JA)).annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
+    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false, ausBrutto: false });
+    expect(nein.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false, ausBrutto: false });
+    expect(calculateIPV(profil(canton, plz, city, 2160, JA)).annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false, ausBrutto: false });
   });
 
   it('der IPV-Rechner zeigt die Annahme nur bei offener Frage', () => {
@@ -148,7 +148,7 @@ describe('calculateIPV in einem Muster-Kanton (Beleg simuliert)', () => {
       expect(ipvJahreseinkommen(paar)).toBe(2160 * 13 + 1000 * 12);
       const r = calculateIPV(paar);
       expect(r.eligible).toBe(true);
-      expect(r.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: true });
+      expect(r.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: true, ausBrutto: false });
       expect(calculateIPV(mit13).annahmen.partnerOhneDreizehnten).toBe(false);
     } finally { zurueck(); }
   });

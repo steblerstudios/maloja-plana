@@ -308,8 +308,8 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(mit.amount).toBe(294);
     expect(ohne.amount).toBe(348);
     expect(offen.amount).toBe(348);
-    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false });
-    expect(ohne.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
+    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false, ausBrutto: false });
+    expect(ohne.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false, ausBrutto: false });
   });
 
   it('Vermögen zählt mit einem Fünfzehntel (LRDU Art. 8 Abs. 2 [4]): 15 Franken kippen die Grenze', () => {
