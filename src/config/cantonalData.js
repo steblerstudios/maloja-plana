@@ -554,9 +554,10 @@ export function checkELEligibility(data) {
   // Ein Bezug heisst darum immer «prüfen lassen», nie «Möglicher Anspruch» (F8-Prüfer, 03.11.2026).
   const rentenBetrag = ahvRente > 0 || ivRente > 0;
   // ELG Art. 4 Abs. 1 Bst. c unterscheidet nicht zwischen ganzer und Teilrente. Bst. a setzt den Bezug einer
-  // Altersrente voraus; der Ruhestand im Rentenalter steht hier dafür (Wortlaut am 03.11.2026 nicht neu gelesen).
+  // Altersrente voraus; das erreichte Rentenalter steht hier dafür, wie bei Sozialhilfe und IPV (renteOhneBetrag), auch
+  // bei Erwerbstätigen (Nachprüfung 92d73e70; Wortlaut am 03.11.2026 nicht neu gelesen).
   const elPruefen = rentenBetrag || ['ganz', 'teil'].includes(data.finanzen?.ivBezug)
-    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter);
+    || alterUndRentenalter(data.basis).rentenalter;
   const isAHVIV = elPruefen;
 
   // Kein `eligible` mehr: ohne Rechnung gibt es keinen «Möglichen Anspruch», an den eine Anzeige anknüpfen könnte.
