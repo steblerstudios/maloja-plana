@@ -9,7 +9,7 @@ import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSu
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
-import { renteOhneBetrag } from '../utils/unterstuetzungseinheit.js';
+import { renteOhneBetrag, rentenMonat } from '../utils/unterstuetzungseinheit.js';
 import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { grundbedarf as skosGrundbedarf, gblStand, grundbedarfNachWohnform } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil, alterUndRentenalter } from '../utils/nettoAusProfil.js';
@@ -336,7 +336,8 @@ export function calculateSozialhilfe(data) {
   const effectiveKK = kkPremium;
 
   const ohneFreibetrag = erwerbstaetig && erwerbseinkommen > 0 && !freibetragGilt(data.finanzen);
-  const andereEinkuenfte = plus(data.finanzen?.familienzulagen) + plus(data.finanzen?.alimenteReceived) + (einheit.verheiratet ? hh.partnerIncome : 0);
+  // Renten aus dem Kapitel Finanzen zählen als Einnahme, nicht als Erwerb (utils/unterstuetzungseinheit.js).
+  const andereEinkuenfte = plus(data.finanzen?.familienzulagen) + plus(data.finanzen?.alimenteReceived) + rentenMonat(data.finanzen) + (einheit.verheiratet ? hh.partnerIncome : 0);
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
     erwerbseinkommen, andereEinkuenfte, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
@@ -368,7 +369,7 @@ export function calculateSozialhilfe(data) {
   // Kein Einkommen erfasst: Die Rechnung läuft weiter (Schnellcheck rechnet mit Proben), aber Karte und Dossier nennen keinen
   // Betrag aus einem leeren Feld (F8-S4). Dieselbe Regel wie im Rechner: Andere Einkünfte reichen nur bei einer Lage ohne Erwerb.
   const feldLeer = (v) => v == null || String(v).trim() === '';
-  // Eine Rente zählt zu den Einnahmen (SKOS-RL D.1 Abs. 1, Version vom 1.1.2021), das Profil kennt aber ihre Höhe nicht:
+  // Eine Rente zählt zu den Einnahmen (SKOS-RL D.1 Abs. 1, Version vom 1.1.2026), ist ihre Höhe nicht eingetragen:
   // Mit IV-Bezug oder im Ruhestand nennen Karte und Dossier darum keinen Betrag (Fachprüfung 03.11.2026).
   const renteFehlt = renteOhneBetrag(data.finanzen, data.basis);
   const einkommenFehlt = renteFehlt || (feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
@@ -450,9 +451,10 @@ export function calculateSozialhilfe(data) {
 // sonst stünde der Pegel neben einer anderen Grenze-Rechnung).
 // 13. Monatslohn: dieselbe Regel wie im Steuerrechner und in den Kantonsmodulen (utils/dreizehnter.js),
 // nur für den Hauptlohn. Das Partnereinkommen bleibt ×12 — nach seinem 13. fragt die App nicht.
+// Renten ×12 wie in kantonsModell.js rohesEinkommenJahr, damit Pegel und Kantonsmodelle dasselbe Einkommen sehen.
 export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
   return Number(data?.finanzen?.monthlyIncome || 0) * hauptlohnMonate(data?.finanzen?.dreizehnter)
-    + (Number(data?.finanzen?.sideIncome || 0) + (hh.partnerIncome || 0)) * 12;
+    + (Number(data?.finanzen?.sideIncome || 0) + (hh.partnerIncome || 0) + rentenMonat(data?.finanzen)) * 12;
 }
 
 // Kantonale IPV-Berechnung — einkommensabhängig
@@ -555,8 +557,8 @@ function ipvRechnen(data) {
 export function checkELEligibility(data) {
   const ahvRente = Number(data.finanzen?.ahvRente || 0);
   const ivRente = Number(data.finanzen?.ivRente || 0);
-  // `ahvRente` und `ivRente` haben keine Eingabe, ein Betrag kommt nur aus einem Import oder alten Daten.
-  // Er zeigt den Bezug an, trägt aber keine Rechnung: Bis 03.11.2026 stand hier «Einnahmen < Ausgaben + 2000»,
+  // `ahvRente` und `ivRente` sind seit 04.11.2026 Felder im Kapitel Finanzen. Ein Betrag zeigt den Bezug an, trägt aber
+  // keine Rechnung: Bis 03.11.2026 stand hier «Einnahmen < Ausgaben + 2000»,
   // eine Marge ohne Quelle, ohne Lebensbedarf und Vermögen nach ELG Art. 9–11 (Audit D5, Oktober 2026).
   // Ein Bezug heisst darum immer «prüfen lassen», nie «Möglicher Anspruch» (F8-Prüfer, 03.11.2026).
   const rentenBetrag = ahvRente > 0 || ivRente > 0;

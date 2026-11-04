@@ -35,6 +35,7 @@ const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.f
   && !data.basis?.dateOfBirth && Number(data.finanzen?.pension3aBalance) > 0
   && !!(sozialhilfe.eligible || sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen);
 import { organListe } from './utils/organspende.js';
+import { rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
 
@@ -836,6 +837,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionFinanzen'),
       rows: [
         { label: lbl('finanzen', 'monthlyIncome'), value: chf('finanzen', 'monthlyIncome') },
+        // Renten als eine Summe: Das Amt sieht, was in den Einnahmen steckt, ohne die Art (IV) einzeln (Fach und Recht 376149dc).
+        { label: t('behoerdenDossier.rentenSumme'), value: rentenMonat(data.finanzen) > 0 ? formatCHF(rentenMonat(data.finanzen)) : '' },
         { label: lbl('finanzen', 'employmentType'), value: sel('finanzen', 'employmentType') },
         { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
         { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },

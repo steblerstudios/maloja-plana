@@ -316,6 +316,10 @@ export function getChapters(t) {
         { k: 'pension3a', type: 'currency', jahr: true, sec: 'provision', secondary: true, orientation: or(t, 'saeule3a') },
         { k: 'pension3aBalance', type: 'currency', hint: 1, secondary: true },
         { k: 'ivBezug', type: 'select', sel: 1, hint: 1, secondary: true, naOk: true },
+        // Renten (04.11.2026): ohne sie nennen Sozialhilfe und IPV ab dem Rentenalter oder mit IV-Bezug keinen Betrag.
+        { k: 'ahvRente', type: 'currency', hint: 1, secondary: true },
+        { k: 'ivRente', type: 'currency', hint: 1, secondary: true },
+        { k: 'bvgRente', type: 'currency', hint: 1, secondary: true },
         { k: 'pension3b', type: 'select', sel: 1, secondary: true, orientation: or(t, 'saeule3b') },
         { k: 'pension3bBalance', type: 'currency', hint: 1, secondary: true },
         { k: 'investmentFunds', type: 'select', sel: 1, secondary: true },

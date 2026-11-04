@@ -69,16 +69,37 @@ export const vermoegenSumme = (felder) => felder.reduce((s, v) => s + Math.max(0
 // nicht zusätzlich versichert ist; die Texte sagen es. Ob Kapital oder Rente und wie viel, hängt von Reglement und Begehren
 // ab, die Auflage macht der Sozialdienst. Das Profil kennt nur das Guthaben (`versicherungen.bvgBalance`): keine Zahl im
 // Vermögen, sondern kein Betrag, solange die Lücke daran hängen kann (F8-Prüfer, 03.11.2026).
+// Ist eine Rente der Pensionskasse eingetragen, ist die Frage Kapital oder Rente beantwortet: dann nicht mehr offen.
 export function bvgHerausloesen(finanzen, versicherungen, basis, heute = new Date()) {
-  return (saeule3aZaehlt(basis, heute) || finanzen?.ivBezug === 'ganz') && Number(versicherungen?.bvgBalance) > 0;
+  return (saeule3aZaehlt(basis, heute) || finanzen?.ivBezug === 'ganz') && Number(versicherungen?.bvgBalance) > 0
+    && !(Number(finanzen?.bvgRente) > 0);
 }
 
-// Rente bezogen, ihre Höhe aber nicht erfasst: Das Profil hat für AHV- und IV-Rente kein Feld (nur `ivBezug`). Eine
-// Regel für Sozialhilfe, Rechner und IPV: kein Betrag aus einem Einkommen ohne die Rente (Fachprüfung 03.11.2026).
-// Ab dem Referenzalter fliesst fast immer eine AHV-Rente, auch bei Erwerbstätigen (Fachprüfung 8ac049b5); wer sie
-// aufschiebt, bekommt ebenfalls keinen Betrag, das ist die vorsichtige Seite.
-export const renteOhneBetrag = (finanzen, basis, heute = new Date()) => ['ganz', 'teil'].includes(finanzen?.ivBezug)
-  || finanzen?.employmentType === 'retired' || alterUndRentenalter(basis, heute).rentenalter;
+// Die Rentenfelder im Kapitel Finanzen (seit 04.11.2026), Beträge pro Monat. Sie zählen als Einnahme (SKOS-RL D.1 Abs. 1,
+// Version vom 1.1.2026: «alle verfügbaren Einnahmen», Erl. a: «einschliesslich Renten der AHV/IV/UV»), nicht als Erwerb:
+// kein Einkommensfreibetrag (D.2 Abs. 1 nur auf Erwerbseinkommen).
+export const RENTEN_FELDER = ['ahvRente', 'ivRente', 'bvgRente'];
+const eingetragen = (v) => v != null && String(v).trim() !== '' && Number.isFinite(Number(v)) && Number(v) >= 0;
+// Eingetragen heisst: das Feld hat eine Zahl, auch eine 0 («keine Rente», etwa bei Aufschub).
+export const renteEingetragen = (finanzen) => RENTEN_FELDER.some((k) => eingetragen(finanzen?.[k]));
+// Je Feld auf Franken, wie das Dossier sie zeigt (Nachprüfung 79c961c7, wie vermoegenSumme).
+export const rentenMonat = (finanzen) => RENTEN_FELDER.reduce((s, k) => s + Math.max(0, Math.round(Number(finanzen?.[k]) || 0)), 0);
+
+// Rente bezogen, ihre Höhe aber nicht eingetragen: kein Betrag aus einem Einkommen ohne die Rente, eine Regel für
+// Sozialhilfe, Rechner und IPV (Fachprüfung 03.11.2026). Ab dem Referenzalter fliesst fast immer eine AHV-Rente, auch
+// bei Erwerbstätigen (Fachprüfung 8ac049b5); wer sie aufschiebt, trägt eine 0 ein. Das Feld muss zur Lage passen: IV-Bezug
+// braucht die IV-Rente, Ruhestand oder Rentenalter die AHV-Rente. Eine Pensionskassen-Rente allein hebt die Sperre nicht
+// auf (Fachprüfung 376149dc, Muss: sonst Lücke 2411 statt 611 und IPV 450 statt 242). Im Ruhestand braucht es beide,
+// AHV und Pensionskasse: Frühpensionierte leben meist von der PK, AHV 0 allein gab die volle IPV (Nachprüfung 79c961c7).
+// Mit IV-Bezug genügt vor dem Rentenalter die IV-Rente, auch wenn «Ruhestand» gewählt ist (Schlussprüfung 85a6094d).
+export const renteOhneBetrag = (finanzen, basis, heute = new Date()) => {
+  const iv = ['ganz', 'teil'].includes(finanzen?.ivBezug);
+  const rentenalter = alterUndRentenalter(basis, heute).rentenalter;
+  const ruhestandOhneIv = finanzen?.employmentType === 'retired' && !iv;
+  return (iv && !eingetragen(finanzen?.ivRente))
+    || ((rentenalter || ruhestandOhneIv) && !eingetragen(finanzen?.ahvRente))
+    || (ruhestandOhneIv && !eingetragen(finanzen?.bvgRente));
+};
 
 // Die Kinder im Haushalt, ohne Haushaltsangabe aus dem alten Feld `dependents`. Ohne Alter gilt ein Kind als
 // minderjährig. Zivilstand leer und zwei Erwachsene: gerechnet als Paar, wie bis 02.11.2026 auf der Seite. Getrennt
