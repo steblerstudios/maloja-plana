@@ -144,7 +144,7 @@
     @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2');
       font-weight:700; font-display:swap }
     :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3;
-           --hl-plate:#FBFBFA; --hl-hi:#4A6A88; --hl-edge:#9E9A92; --hl-mid:#C6C2BA; --hl-lo:#E2DFD9 }
+           --hl-plate:#FBFBFA; --hl-hi:#4A6A88; --hl-edge:#8A877F; --hl-mid:#C6C2BA; --hl-lo:#E2DFD9 }
     @media (prefers-color-scheme: dark){
       :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038;
              --hl-plate:#2A2927; --hl-hi:#8CAAC6; --hl-edge:#7A766F; --hl-mid:#4D4A45; --hl-lo:#3A3936 }
@@ -230,20 +230,24 @@
     .iso svg .iso-dots[data-tone="lo"] circle{ opacity:.22 } .iso svg .iso-dots[data-tone="faint"] circle{ opacity:.12 }
 
     /* Belege: hochgestellte Nummer, Sprung zur Quelle und zurück. */
-    sup.beleg{ font-size:.7em; line-height:0; vertical-align:super; margin-left:1px }
-    sup.beleg a{ text-decoration:none; color:var(--heidel-text); font-weight:600; padding:0 1px }
+    /* Trefferfläche grösser als die Ziffer (a11y-Prüfung 04.11.2026), ohne die Zeile zu sprengen. */
+    sup.beleg{ font-size:.75em; line-height:0; vertical-align:super; margin-left:1px }
+    sup.beleg a{ display:inline-block; min-width:24px; padding:10px 4px; margin:-10px -6px; text-align:center;
+      text-decoration:none; color:var(--heidel-text); font-weight:600 }
     sup.beleg a:hover{ text-decoration:underline }
     sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
     :target{ scroll-margin-top:24px }
     ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
     ol.quellen li{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-bottom:1px solid var(--rand) }
     ol.quellen li:target{ background:var(--heidel-hauch); border-radius:10px }
+    ol.quellen li:target .q-her, ol.quellen li:target .q-zurueck, ol.quellen li:target .q-art{ color:var(--text) }
     .q-nr{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-weight:600; color:var(--heidel-text); text-align:right; padding-top:1px }
     .q-titel{ margin:0; font-weight:600 } .q-titel a{ text-underline-offset:3px }
     .q-her{ margin:2px 0 0; font-size:14px; color:var(--leise) }
     .q-belegt{ margin:4px 0 0; font-size:14px }
     .q-zurueck{ margin:4px 0 0; font-size:13px; color:var(--leise) }
-    .q-zurueck a{ color:var(--heidel-text); text-decoration:none; padding:0 2px } .q-zurueck a:hover{ text-decoration:underline }
+    .q-zurueck a{ display:inline-block; min-width:24px; padding:8px 4px; margin:-8px 0; text-align:center;
+      color:var(--heidel-text); text-decoration:none } .q-zurueck a:hover{ text-decoration:underline }
     .q-art{ display:inline-block; font-size:12px; border:1px solid var(--rand); border-radius:6px; padding:0 6px; margin-left:6px; color:var(--leise) }
     .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
     .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
