@@ -40,7 +40,7 @@ export default {
       berechtigungen: {
         ipv: { titel: 'Réduction des primes (RIP)', text: 'Le canton aide à payer les primes d’assurance-maladie pour les revenus bas et moyens. Beaucoup d’ayants droit ne font jamais de demande.' },
         mietzins: { titel: 'Aide au logement', text: 'Certains cantons et communes participent au loyer lorsqu’il pèse trop lourd sur un faible revenu.' },
-        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre pas l’essentiel, l’aide sociale peut compléter. C’est un droit, pas une charité.' },
+        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre pas l’essentiel, l’aide sociale peut compléter. C’est un droit, pas une faveur.' },
         stipendien: { titel: 'Bourses d’études', text: 'Des bourses existent pour la formation et les études à faible revenu — remboursables ou non.' },
         franchise: { titel: 'Vérifier la franchise', text: 'Avec peu de visites médicales, une franchise plus élevée réduit la prime mensuelle — à revoir chaque automne.' },
         betreuungsgutscheine: { titel: 'Bons de garde (crèche & accueil)', text: { sie: 'De nombreuses communes et cantons réduisent le coût de l’accueil extrafamilial selon le revenu. Renseignez-vous auprès de votre commune sur les bons de garde ou les places subventionnées.', du: 'De nombreuses communes et cantons réduisent le coût de l’accueil extrafamilial selon le revenu. Renseigne-toi auprès de ta commune sur les bons de garde ou les places subventionnées.' } },
@@ -67,8 +67,8 @@ export default {
     },
     beeintraechtigung: {
       label: 'Avec un handicap ou une maladie chronique',
-      frage: { sie: 'Vivez-vous avec un handicap, une maladie chronique ou une indication reconnue ?', du: 'Vis-tu avec un handicap, une maladie chronique ou une indication reconnue ?' },
-      intro: 'Une indication peut ouvrir un soutien plus tôt ou plus largement qu’on ne le pense.',
+      frage: { sie: 'Vivez-vous avec un handicap, une maladie chronique ou un diagnostic confirmé par un médecin ?', du: 'Vis-tu avec un handicap, une maladie chronique ou un diagnostic confirmé par un médecin ?' },
+      intro: 'Un diagnostic confirmé par un médecin peut ouvrir un soutien plus tôt ou plus largement qu’on ne le pense.',
       berechtigungen: {
         iv: { titel: 'Prestations AI', text: 'Réadaptation avant la rente : mesures professionnelles, moyens auxiliaires et, si nécessaire, une rente. S’annoncer tôt compte le plus.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: { sie: 'Un montant mensuel si vous avez besoin d’aide régulière au quotidien — indépendant du revenu.', du: 'Un montant mensuel si tu as besoin d’aide régulière au quotidien — indépendant du revenu.' } },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'En formation',
       frage: 'En apprentissage, à l’école ou aux études ?',
-      intro: 'Être en formation ouvre des soutiens — et fait naître discrètement quelques obligations à surveiller.',
+      intro: 'Être en formation ouvre l’accès à des soutiens — et entraîne quelques obligations à garder à l’œil.',
       berechtigungen: {
         stipendien: { titel: 'Bourses d’études', text: { sie: 'Les bourses et prêts cantonaux soutiennent l’apprentissage et les études — selon votre revenu et celui de vos parents, avec des délais de dépôt.', du: 'Les bourses et prêts cantonaux soutiennent l’apprentissage et les études — selon ton revenu et celui de tes parents, avec des délais de dépôt.' } },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Les jeunes adultes en formation à faible revenu ont souvent droit à une aide pour les primes d’assurance-maladie — pour eux-mêmes.' },
@@ -131,7 +131,7 @@ export default {
       intro: 'À la retraite, certains droits doivent être demandés — par exemple les prestations complémentaires. Beaucoup relèvent d’un droit, pas de l’assistance.',
       berechtigungen: {
         pensionierung: { titel: 'Passage à la retraite', text: { sie: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.', du: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.' } },
-        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent. Un droit, pas de la charité.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent. Un droit, pas de l’assistance.' },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Les retraités à faible revenu — et toute personne au bénéfice des prestations complémentaires — peuvent faire aider le canton à payer les primes d’assurance-maladie.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: 'Un montant mensuel lorsqu’on a régulièrement besoin d’aide pour les actes quotidiens — indépendant du revenu et distinct des PC.' },
         steuern: { titel: 'Déductions à la retraite', text: 'Les frais de maladie, de soins et liés au handicap se déduisent du revenu imposable — mieux vaut garder les justificatifs tout au long de l’année.' },
@@ -146,7 +146,7 @@ export default {
         rav: { titel: 'S’inscrire à temps à l’ORP', text: { sie: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Chaque jour de retard coûte des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans votre calendrier.', du: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Chaque jour de retard coûte des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans ton calendrier.' } },
         alv: { titel: 'Indemnités de chômage (AC)', text: { sie: 'Inscrivez-vous à l’ORP le plus tôt possible — les indemnités dépendent de vos mois de cotisation, et une inscription tardive coûte des jours.', du: 'Inscris-toi à l’ORP le plus tôt possible — les indemnités dépendent de tes mois de cotisation, et une inscription tardive coûte des jours.' } },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Un revenu plus bas ouvre souvent un nouveau droit à l’aide pour les primes d’assurance-maladie — à redemander au canton, sans attendre.' },
-        sozialhilfe: { titel: 'Aide sociale (aussi en fin de droits)', text: 'Une fois les indemnités épuisées, l’aide sociale peut combler l’écart. Un droit, pas de la charité — et distinct de l’ORP.' },
+        sozialhilfe: { titel: 'Aide sociale (aussi en fin de droits)', text: 'Une fois les indemnités épuisées, l’aide sociale peut combler l’écart. Un droit, pas une faveur — et distinct de l’ORP.' },
         franchise: { titel: 'Vérifier la franchise', text: 'Avec un revenu plus bas, une franchise basse peut être plus sûre, une haute plus avantageuse si l’on consulte peu — à revoir chaque automne.' },
         steuern: { titel: 'Impôts à revenu réduit', text: 'Les indemnités de chômage sont imposables, mais un revenu annuel plus bas signifie souvent moins d’impôts — l’impôt à la source peut souvent être récupéré.' },
       },
@@ -160,7 +160,7 @@ export default {
         mahnung: { titel: 'Rappel reçu', text: 'Un rappel n’est pas encore une poursuite — c’est maintenant que la marge de manœuvre est la plus grande : vérifier, contester ou proposer des acomptes.' },
         betreibung: { titel: 'Comprendre la poursuite', text: 'Une poursuite est une procédure avec des étapes et des délais clairs — les connaître calmement transforme la peur en quelque chose sur quoi agir.' },
         existenzminimum: { titel: 'Protéger le minimum vital', text: 'Lors d’une saisie sur salaire, un minimum vital reste intouchable par la loi — un budget clair aide à le voir et à le défendre.' },
-        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre plus l’essentiel, l’aide sociale peut compléter — un droit, pas de la charité, et indépendant des dettes elles-mêmes.' },
+        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre plus l’essentiel, l’aide sociale peut compléter — un droit, pas une faveur, et indépendant des dettes elles-mêmes.' },
         steuern: { titel: 'Sursis ou remise d’impôt', text: 'En cas de réelle détresse, l’administration fiscale peut accorder un sursis ou remettre l’impôt — mieux vaut demander que laisser les arriérés grandir.' },
       },
     },
@@ -170,7 +170,7 @@ export default {
       intro: 'Après le décès d’un parent, les enfants ont des droits clairs, faciles à manquer dans un moment difficile — une rente d’orphelin, et un soutien complémentaire si elle ne suffit pas.',
       berechtigungen: {
         waisenrente: { titel: 'Rente d’orphelin (AVS/AI)', text: 'Un enfant dont un parent est décédé reçoit une rente mensuelle — jusqu’à 18 ans, ou 25 ans en formation. Elle se demande à la caisse de compensation.' },
-        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente d’orphelin ne couvre pas le coût de la vie, les PC peuvent compléter — aussi pour les enfants et les jeunes en formation. Un droit, pas de la charité.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente d’orphelin ne couvre pas le coût de la vie, les PC peuvent compléter — aussi pour les enfants et les jeunes en formation. Un droit, pas de l’assistance.' },
         stipendien: { titel: 'Bourses d’études', text: 'En plus de la rente d’orphelin, des bourses cantonales peuvent soutenir une formation ou des études — à vérifier en parallèle, avec leurs propres délais.' },
         steuern: { titel: 'Allègement fiscal', text: 'Le parent survivant peut faire valoir le barème parental et les déductions pour enfants ; certains frais liés au décès peuvent aussi réduire l’impôt.' },
       },

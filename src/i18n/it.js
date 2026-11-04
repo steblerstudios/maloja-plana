@@ -40,7 +40,7 @@ export default {
       berechtigungen: {
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Il Cantone aiuta a pagare i premi della cassa malati per i redditi bassi e medi. Molti aventi diritto non fanno mai domanda.' },
         mietzins: { titel: 'Contributo per la pigione', text: 'Alcuni Cantoni e Comuni partecipano alla pigione quando pesa troppo su un reddito basso.' },
-        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre il necessario, l’aiuto sociale può integrarlo. È un diritto, non un’elemosina.' },
+        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre il necessario, l’aiuto sociale può integrarlo. È un diritto, non un favore.' },
         stipendien: { titel: 'Borse di studio', text: 'Per la formazione e gli studi con un reddito basso esistono borse di studio — rimborsabili o meno.' },
         franchise: { titel: 'Verificare la franchigia', text: 'Con poche visite mediche, una franchigia più alta riduce il premio mensile — da rivedere ogni autunno.' },
         betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: { sie: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito. Chieda al suo Comune di buoni per la custodia o posti sovvenzionati.', du: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito. Chiedi al tuo Comune di buoni per la custodia o posti sovvenzionati.' } },
@@ -53,7 +53,7 @@ export default {
     alleinerziehend: {
       label: 'Crescere i figli da solo/a',
       frage: { sie: 'Cresce uno o più figli da solo/a?', du: 'Cresci uno o più figli da solo/a?' },
-      intro: 'Chi cresce i figli da solo porta di più — e proprio per questa situazione esistono diverse forme di sostegno.',
+      intro: 'Le famiglie monoparentali portano un carico maggiore — e proprio per questa situazione esistono diverse forme di sostegno.',
       berechtigungen: {
         alimente: { titel: 'Anticipo degli alimenti & aiuto all’incasso', text: 'Se i contributi di mantenimento non arrivano, il Comune può anticiparli e aiutare a incassarli — così il figlio non resta senza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Le economie domestiche monoparentali hanno spesso diritto a un aiuto per i premi della cassa malati — per il genitore e i figli.' },
@@ -67,8 +67,8 @@ export default {
     },
     beeintraechtigung: {
       label: 'Con una disabilità o malattia cronica',
-      frage: { sie: 'Vive con una disabilità, una malattia cronica o un’indicazione riconosciuta?', du: 'Vivi con una disabilità, una malattia cronica o un’indicazione riconosciuta?' },
-      intro: 'Un’indicazione può aprire un sostegno prima o in modo più ampio di quanto si pensi.',
+      frage: { sie: 'Vive con una disabilità, una malattia cronica o una diagnosi confermata da un medico?', du: 'Vivi con una disabilità, una malattia cronica o una diagnosi confermata da un medico?' },
+      intro: 'Una diagnosi confermata da un medico può aprire un sostegno prima o in modo più ampio di quanto si pensi.',
       berechtigungen: {
         iv: { titel: 'Prestazioni AI', text: 'Reintegrazione prima della rendita: provvedimenti professionali, mezzi ausiliari e, se necessario, una rendita. Annunciarsi presto conta di più.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: { sie: 'Un importo mensile se ha bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito.', du: 'Un importo mensile se hai bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito.' } },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In formazione',
       frage: 'In tirocinio, a scuola o all’università?',
-      intro: 'Essere in formazione apre sostegni — e avvia in sordina alcuni obblighi da tenere d’occhio.',
+      intro: 'Essere in formazione apre l’accesso a dei sostegni — e comporta alcuni obblighi da tenere d’occhio.',
       berechtigungen: {
         stipendien: { titel: 'Borse di studio', text: { sie: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al suo reddito e a quello dei suoi genitori, con termini di presentazione.', du: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al reddito tuo e dei tuoi genitori, con termini di presentazione.' } },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I giovani adulti in formazione con reddito basso hanno spesso diritto a un aiuto per i premi della cassa malati — per sé stessi.' },
@@ -131,7 +131,7 @@ export default {
       intro: 'In età avanzata alcuni diritti vanno richiesti — per esempio le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
       berechtigungen: {
         pensionierung: { titel: 'Passaggio al pensionamento', text: { sie: 'È vicino/a al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.', du: 'Sei vicino al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.' } },
-        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano. Un diritto, non carità.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano. Un diritto, non assistenza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I pensionati con reddito basso — e tutti coloro che ricevono prestazioni complementari — possono farsi aiutare dal cantone a pagare i premi della cassa malati.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se si ha regolarmente bisogno di aiuto negli atti quotidiani — indipendente dal reddito e distinto dalle PC.' },
         steuern: { titel: 'Deduzioni in pensione', text: 'Le spese di malattia, cura e legate alla disabilità si deducono dal reddito imponibile — conviene conservare le ricevute durante l’anno.' },
@@ -146,7 +146,7 @@ export default {
         rav: { titel: 'Iscriversi per tempo all’URC', text: { sie: 'L’iscrizione all’URC è il termine più importante — idealmente il primo giorno senza lavoro, prima di chiedere le indennità. Ogni giorno di ritardo costa indennità. Il percorso guidato mostra i passi e salva il termine nel suo calendario.', du: 'L’iscrizione all’URC è il termine più importante — idealmente il primo giorno senza lavoro, prima di chiedere le indennità. Ogni giorno di ritardo costa indennità. Il percorso guidato mostra i passi e salva il termine nel tuo calendario.' } },
         alv: { titel: 'Indennità di disoccupazione (AD)', text: { sie: 'Si iscriva all’URC il prima possibile — le indennità dipendono dai mesi di contribuzione, e un’iscrizione tardiva costa giorni.', du: 'Iscriviti all’URC il prima possibile — le indennità dipendono dai mesi di contribuzione, e un’iscrizione tardiva costa giorni.' } },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Un reddito più basso apre spesso un nuovo diritto all’aiuto per i premi della cassa malati — da richiedere di nuovo al cantone, senza attendere.' },
-        sozialhilfe: { titel: 'Aiuto sociale (anche a fine diritto)', text: 'Esaurite le indennità, l’aiuto sociale può colmare il divario. Un diritto, non carità — e distinto dall’URC.' },
+        sozialhilfe: { titel: 'Aiuto sociale (anche a fine diritto)', text: 'Esaurite le indennità, l’aiuto sociale può colmare il divario. Un diritto, non un favore — e distinto dall’URC.' },
         franchise: { titel: 'Verificare la franchigia', text: 'Con un reddito più basso una franchigia bassa può essere più sicura, una alta più conveniente se si va raramente dal medico — da rivedere ogni autunno.' },
         steuern: { titel: 'Imposte con reddito ridotto', text: 'Le indennità di disoccupazione sono imponibili, ma un reddito annuo più basso significa di solito meno imposte — l’imposta alla fonte è spesso recuperabile.' },
       },
@@ -160,7 +160,7 @@ export default {
         mahnung: { titel: 'Sollecito ricevuto', text: 'Un sollecito non è ancora un’esecuzione — ora il margine di manovra è il più ampio: verificare, contestare o proporre delle rate.' },
         betreibung: { titel: 'Capire l’esecuzione', text: 'Un’esecuzione è una procedura con passi e termini chiari — conoscerli con calma trasforma la paura in qualcosa su cui agire.' },
         existenzminimum: { titel: 'Proteggere il minimo vitale', text: 'In un pignoramento del salario un minimo vitale resta intoccabile per legge — un budget chiaro aiuta a vederlo e a difenderlo.' },
-        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre più l’essenziale, l’aiuto sociale può integrare — un diritto, non carità, e indipendente dai debiti stessi.' },
+        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre più l’essenziale, l’aiuto sociale può integrare — un diritto, non un favore, e indipendente dai debiti stessi.' },
         steuern: { titel: 'Dilazione o condono d’imposta', text: 'In una reale difficoltà, le autorità fiscali possono dilazionare o condonare le imposte — meglio chiedere che lasciar crescere gli arretrati.' },
       },
     },
@@ -169,8 +169,8 @@ export default {
       frage: { sie: 'Un genitore è deceduto, e lei o suo figlio avete meno di 25 anni o siete in formazione?', du: 'Un genitore è deceduto, e tu o tuo figlio avete meno di 25 anni o siete in formazione?' },
       intro: 'Dopo la morte di un genitore, i figli hanno diritti chiari, facili da perdere in un momento difficile — una rendita per orfani e un sostegno complementare se non basta.',
       berechtigungen: {
-        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Un figlio che ha perso un genitore riceve una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione.' },
-        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita per orfani non copre il costo della vita, le PC possono integrare — anche per bambini e giovani in formazione. Un diritto, non carità.' },
+        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Chi ha perso un genitore riceve una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita per orfani non copre il costo della vita, le PC possono integrare — anche per bambini e giovani in formazione. Un diritto, non assistenza.' },
         stipendien: { titel: 'Borse di studio', text: 'Oltre alla rendita per orfani, borse cantonali possono sostenere una formazione o gli studi — da verificare in parallelo, con termini propri.' },
         steuern: { titel: 'Sgravio fiscale', text: 'Il genitore superstite può far valere la tariffa per genitori e le deduzioni per figli; anche alcune spese legate al lutto possono ridurre l’imposta.' },
       },

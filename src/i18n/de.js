@@ -67,8 +67,8 @@ export default {
     },
     beeintraechtigung: {
       label: 'Mit Beeinträchtigung oder chronischer Krankheit',
-      frage: { sie: 'Leben Sie mit einer Beeinträchtigung, chronischen Krankheit oder anerkannten Indikation?', du: 'Lebst du mit einer Beeinträchtigung, chronischen Krankheit oder anerkannten Indikation?' },
-      intro: 'Eine Indikation kann Unterstützung früher oder breiter eröffnen, als man denkt.',
+      frage: { sie: 'Leben Sie mit einer Beeinträchtigung, chronischen Krankheit oder einer ärztlich bestätigten Diagnose?', du: 'Lebst du mit einer Beeinträchtigung, chronischen Krankheit oder einer ärztlich bestätigten Diagnose?' },
+      intro: 'Eine ärztlich bestätigte Diagnose kann Unterstützung früher oder breiter eröffnen, als man denkt.',
       berechtigungen: {
         iv: { titel: 'IV-Leistungen', text: 'Eingliederung vor Rente: berufliche Massnahmen, Hilfsmittel und bei Bedarf eine Rente. Früh anmelden zählt am meisten.' },
         hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: { sie: 'Ein monatlicher Betrag, wenn Sie im Alltag regelmässig Hilfe brauchen — unabhängig vom Einkommen.', du: 'Ein monatlicher Betrag, wenn du im Alltag regelmässig Hilfe brauchst — unabhängig vom Einkommen.' } },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In Ausbildung',
       frage: 'In einer Lehre, an der Schule oder im Studium?',
-      intro: 'Eine Ausbildung öffnet Unterstützung — und beginnt still ein paar Pflichten, die man im Auge behalten sollte.',
+      intro: 'Eine Ausbildung öffnet den Zugang zu Unterstützung — und bringt ein paar Pflichten mit, die man im Auge behalten sollte.',
       berechtigungen: {
         stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: { sie: 'Kantonale Stipendien und Darlehen unterstützen Lehre und Studium — abhängig von Ihrem Einkommen und dem Ihrer Eltern, und mit Fristen bei der Anmeldung.', du: 'Kantonale Stipendien und Darlehen unterstützen Lehre und Studium — abhängig vom Einkommen von dir und deinen Eltern, und mit Fristen bei der Anmeldung.' } },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Junge Erwachsene in Ausbildung mit tiefem Einkommen haben oft Anspruch auf Hilfe bei den Krankenkassenprämien — für sich selbst.' },

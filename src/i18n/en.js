@@ -40,7 +40,7 @@ export default {
       berechtigungen: {
         ipv: { titel: 'Premium reduction (IPV)', text: 'The canton helps pay health-insurance premiums for low and middle incomes. Many who qualify never apply.' },
         mietzins: { titel: 'Rent assistance', text: 'Some cantons and communes contribute to rent when it weighs too heavily on a low income.' },
-        sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income doesn’t cover the basics, social assistance can top it up. It is a right, not charity.' },
+        sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income doesn’t cover the basics, social assistance can top it up. It is a right, not a favour.' },
         stipendien: { titel: 'Education grants', text: 'Grants exist for training and studies on a low income — repayable or not.' },
         franchise: { titel: 'Check your deductible', text: 'With few doctor visits, a higher deductible lowers the monthly premium — worth reviewing each autumn.' },
         betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income. Ask your municipality about childcare vouchers or subsidised places.' },
@@ -67,8 +67,8 @@ export default {
     },
     beeintraechtigung: {
       label: 'Living with a disability or chronic illness',
-      frage: 'Living with a disability, chronic illness or a recognised indication?',
-      intro: 'An indication can open support earlier or more broadly than people expect.',
+      frage: 'Living with a disability, chronic illness or a diagnosis confirmed by a doctor?',
+      intro: 'A diagnosis confirmed by a doctor can open support earlier or more broadly than people expect.',
       berechtigungen: {
         iv: { titel: 'Disability insurance (IV)', text: 'Reintegration before pension: vocational measures, aids and, if needed, a pension. Registering early matters most.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you need regular help with everyday acts — independent of income.' },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In education or training',
       frage: 'In an apprenticeship, at school or studying?',
-      intro: 'Being in education opens support — and quietly starts a few obligations worth keeping an eye on.',
+      intro: 'Being in education opens the door to support — and brings a few obligations worth keeping an eye on.',
       berechtigungen: {
         stipendien: { titel: 'Education grants', text: 'Cantonal grants and loans support training and studies — depending on your and your parents’ income, with application deadlines.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Young adults in education on a low income often qualify for help with health-insurance premiums — for themselves.' },
@@ -131,7 +131,7 @@ export default {
       intro: 'Later in life some entitlements have to be claimed — supplementary benefits, for example. Much of it is a right, not assistance.',
       berechtigungen: {
         pensionierung: { titel: 'Moving into retirement', text: 'Close to retirement? Registering for the AHV pension, choosing pension or lump sum from your pension fund, and staggering the third pillar all need early decisions — the guided flow shows the steps and deadlines.' },
-        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up. It is a right, not charity.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up. It is a right, not assistance.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Pensioners on a low income — and everyone on supplementary benefits — can have the canton help pay health-insurance premiums.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you regularly need help with everyday acts — independent of income and separate from EL.' },
         steuern: { titel: 'Deductions for pensioners', text: 'Illness, care and disability costs can be deducted from taxable income — worth keeping the receipts through the year.' },
@@ -146,7 +146,7 @@ export default {
         rav: { titel: 'Register with the RAV in time', text: 'The RAV registration is the most important deadline — ideally on your first day without work, before you claim benefits. Every late day costs allowance. The guided flow shows the steps and saves the deadline to your calendar.' },
         alv: { titel: 'Unemployment benefits (ALV)', text: 'Register with the RAV as early as possible — daily allowances depend on your contribution months, and registering late costs days of cover.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'A lower income often means a new entitlement to help with health-insurance premiums — worth reapplying to the canton, not waiting.' },
-        sozialhilfe: { titel: 'Social assistance (also after benefits end)', text: 'When unemployment benefits are exhausted, social assistance can bridge the gap. It is a right, not charity — and separate from the RAV.' },
+        sozialhilfe: { titel: 'Social assistance (also after benefits end)', text: 'When unemployment benefits are exhausted, social assistance can bridge the gap. It is a right, not a favour — and separate from the RAV.' },
         franchise: { titel: 'Check your deductible', text: 'On a lower income a lower deductible can be safer, a higher one cheaper if you rarely see a doctor — worth reviewing each autumn.' },
         steuern: { titel: 'Tax on a lower income', text: 'Unemployment benefits are taxable, but a lower yearly income usually means less tax — and withholding-tax deductions can often be reclaimed.' },
       },
@@ -160,7 +160,7 @@ export default {
         mahnung: { titel: 'Payment reminder received', text: 'A reminder is not yet debt collection — now you have the most room to act: check, dispute or propose instalments.' },
         betreibung: { titel: 'Understanding debt collection', text: 'A Betreibung is a process with clear steps and deadlines — knowing them calmly turns fear into something you can act on.' },
         existenzminimum: { titel: 'Protecting your minimum for living', text: 'During a wage seizure a protected minimum stays untouchable by law — a clear budget helps you see and defend it.' },
-        sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income no longer covers the basics, social assistance can top it up — a right, not charity, and independent of the debt itself.' },
+        sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income no longer covers the basics, social assistance can top it up — a right, not a favour, and independent of the debt itself.' },
         steuern: { titel: 'Tax deferral or remission', text: 'In a genuine hardship, tax authorities can defer payment or waive taxes — worth asking rather than letting arrears grow.' },
       },
     },
@@ -170,7 +170,7 @@ export default {
       intro: 'After a parent’s death, children have clear entitlements that are easy to miss in a hard time — an orphan’s pension, and support on top of it if that isn’t enough.',
       berechtigungen: {
         waisenrente: { titel: 'Orphan’s pension (AHV/IV)', text: 'A child whose parent has died receives a monthly pension — until 18, or until 25 while in education. It is claimed with the compensation office.' },
-        el: { titel: 'Supplementary benefits (EL)', text: 'If the orphan’s pension doesn’t cover living costs, EL can top it up — also for children and young people in education. A right, not charity.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the orphan’s pension doesn’t cover living costs, EL can top it up — also for children and young people in education. A right, not assistance.' },
         stipendien: { titel: 'Education grants', text: 'On top of an orphan’s pension, cantonal grants can support training or studies — worth checking alongside, with their own deadlines.' },
         steuern: { titel: 'Tax relief', text: 'A surviving parent can claim the parent tariff and child deductions; costs linked to the loss may also lower the tax bill.' },
       },
