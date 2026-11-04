@@ -8,6 +8,7 @@ import { sozialhilfeVorbefuellung } from '../utils/sozialhilfeVorbefuellung.js';
 import { Schnellcheck } from '../Schnellcheck.jsx';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { betrag } from '../utils/geld.js';
+import de from '../i18n/de.js';
 
 // Predeploy 83348731: Rentnerin, AG, AHV 1800 im Rentenfeld, PK 0, Lohn leer. Seite und Dossier nannten Sozialhilfe
 // CHF 1011 und IPV 295; Schnellcheck, Lebenssituationen, Dashboard und AnspruchCheck verlangten «Einkommen eingeben».
@@ -47,6 +48,8 @@ describe('Rente als Einnahme in den Wegen', () => {
     const html = renderToStaticMarkup(React.createElement(Schnellcheck, { palette, t, onNavigate: () => {}, data: rentnerin() }));
     expect(html).not.toContain('schnellcheck.enterIncome');
     expect(html).toContain('einkommensfeld.rentenEingerechnet(' + '1’800' + ')');
+    // Rechtsprüfung dbd28d79: nicht «nur Lohn» (Taggeld, Selbständige), nicht «übriges» (Nebenerwerb, Zulagen zählen schon).
+    expect(de.einkommensfeld.rentenEingerechnet).toContain('Haupteinkommen');
     expect(html).toContain(betrag(calculateSozialhilfe(rentnerin()).deficit).replace('CHF ', ''));
   });
 
