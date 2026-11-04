@@ -6762,6 +6762,7 @@ export default {
     brutto: 'brut',
     nettoGeschaetzt: '≈ net CHF {value} (estimé)',
     bruttoGeschaetzt: '≈ brut CHF {value} (estimé)',
+    rentenEingerechnet: 'Les rentes du profil sont déjà comptées : CHF {value} par mois. N’indiquer ici que le salaire.',
     knapp: 'Juste — l’estimation ne tient pas compte de l’AANP ni de l’impôt à la source ; à vérifier avec le salaire net exact.',
   },
   einkommensart: {

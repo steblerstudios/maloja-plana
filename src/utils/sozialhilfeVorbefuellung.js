@@ -32,7 +32,7 @@ import { zahltBeitraegeSelbst } from './monatsrechnung.js';
 import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSumme, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
-import { renteOhneBetrag, RENTEN_FELDER } from './unterstuetzungseinheit.js';
+import { renteOhneBetrag, RENTEN_FELDER, frankenSumme } from './unterstuetzungseinheit.js';
 
 export { kindAlter, saeule3aZaehlt } from './unterstuetzungseinheit.js';
 
@@ -65,7 +65,9 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const haushalt = unterstuetzungseinheit(basis, heute);
   const { verheiratet, adults, kinder, weiterePersonen } = haushalt;
   // Eingetragene Renten gehören zu den anderen Einkünften, wie in calculateSozialhilfe.
-  const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined, ...RENTEN_FELDER.map((k) => f[k])]);
+  // Je Zeile auf Franken, wie calculateSozialhilfe (frankenSumme). Leer bleibt leer.
+  const andereWerte = [f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined, ...RENTEN_FELDER.map((k) => f[k])];
+  const andereEinkuenfte = andereWerte.some(erfasst) ? String(frankenSumme(andereWerte)) : '';
 
   const { mit3a, durchIv, felder } = vermoegensFelder(f, basis, heute);
   // Dieselbe Rundung wie Karte und Blatt (je Zeile), sonst kippt die Grenze im Rechner anders. Leer bleibt leer.

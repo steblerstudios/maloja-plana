@@ -61,7 +61,10 @@ export function vermoegensFelder(finanzen, basis, heute = new Date()) {
 // 3000.40 ergab dort 6001 («Vermögen zuerst»), auf Karte und Blatt 6000 (Betrag). Eine Abweichung bis 50 Rappen je
 // Zeile nimmt die Regel hin. Eine SKOS-Regel zur Rundung ist nicht belegt: Das ist eine Festlegung der App, keine
 // Rechtsregel, und braucht die Bestätigung von Stebler Studios (Predeploy 1e6819ab, Fachprüfung 639b6495).
-export const vermoegenSumme = (felder) => felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
+// Die Rundungsregel gilt für jede Summe aus Profilfeldern, die Karte und Rechner beide zeigen: Vermögen, andere Einkünfte,
+// Renten (Predeploy 83348731: Renten mit Rappen, Karte 1309 gegen Rechner 1310).
+export const frankenSumme = (felder) => felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
+export const vermoegenSumme = frankenSumme;
 
 // Die 2. Säule hängt am selben Auslöser wie die 3a: «Vermögen der 2. Säule und der Säule 3a sind grundsätzlich zusammen
 // mit dem AHV-Vorbezug oder dem Bezug einer ganzen IV-Rente herauszulösen» (SKOS-RL D.3.3 Abs. 3, Version vom 1.1.2026,
@@ -83,7 +86,12 @@ const eingetragen = (v) => v != null && String(v).trim() !== '' && Number.isFini
 // Eingetragen heisst: das Feld hat eine Zahl, auch eine 0 («keine Rente», etwa bei Aufschub).
 export const renteEingetragen = (finanzen) => RENTEN_FELDER.some((k) => eingetragen(finanzen?.[k]));
 // Je Feld auf Franken, wie das Dossier sie zeigt (Nachprüfung 79c961c7, wie vermoegenSumme).
-export const rentenMonat = (finanzen) => RENTEN_FELDER.reduce((s, k) => s + Math.max(0, Math.round(Number(finanzen?.[k]) || 0)), 0);
+export const rentenMonat = (finanzen) => frankenSumme(RENTEN_FELDER.map((k) => finanzen?.[k]));
+
+// Einnahmen erfasst: Lohn über 0 oder eine Rente über 0 in den Rentenfeldern. Die eine Bedingung für Schnellcheck,
+// Lebenssituationen, Dashboard, AnspruchCheck und die Wege (Predeploy 83348731: Rentnerin mit AHV 1800 und leerem Lohn
+// sah dort «Einkommen eingeben», tippte sie die AHV ein, zählte die Rente doppelt).
+export const einnahmenErfasst = (finanzen) => Number(finanzen?.monthlyIncome) > 0 || rentenMonat(finanzen) > 0;
 
 // Rente bezogen, ihre Höhe aber nicht eingetragen: kein Betrag aus einem Einkommen ohne die Rente, eine Regel für
 // Sozialhilfe, Rechner und IPV (Fachprüfung 03.11.2026). Ab dem Referenzalter fliesst fast immer eine AHV-Rente, auch

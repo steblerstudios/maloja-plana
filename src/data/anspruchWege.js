@@ -6,18 +6,18 @@
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
 import { pegelState, sozialhilfePegelState } from './pegel.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from './ipvAbzug.js';
+import { einnahmenErfasst } from '../utils/unterstuetzungseinheit.js';
 
 // Die möglichen Wege aus einem Satz Angaben (`probe`: Profil mit den hier angepassten Zahlen).
 // Nur POSITIVE Hinweise, nie ein «Nein»-Verdikt. Wirft eine Rechnung, bleibt die Liste leer
 // (Orientierung, nie blockierend).
 export function wegeAusProbe(probe) {
   const canton = probe?.basis?.canton || '';
-  const income = Number(probe?.finanzen?.monthlyIncome) || 0;
   const rent = Number(probe?.wohnen?.rentAmount) || 0;
   const wege = [];
   try {
-    // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
-    const ipv = (income > 0 && canton) ? calculateIPV(probe) : null;
+    // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag. Lohn oder Rente (einnahmenErfasst).
+    const ipv = (einnahmenErfasst(probe?.finanzen) && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
     if (ipv && ipv.eligible) wege.push({ key: 'ipv', monthly: ipv.amount });
     else if (ipv && ipv.anspruchMoeglich) wege.push({ key: 'ipv', qualitative: true });
@@ -61,8 +61,7 @@ export function wegeAusProbe(probe) {
 //   art 'ohneGlas'   → gleiche Aussage wie calculateIPV, ohne Wasserstand
 export function ipvAnzeige(probe) {
   const canton = probe?.basis?.canton || '';
-  const income = Number(probe?.finanzen?.monthlyIncome) || 0;
-  if (!canton || income <= 0) return { art: 'leer' };
+  if (!canton || !einnahmenErfasst(probe?.finanzen)) return { art: 'leer' };
   const ipv = calculateIPV(probe);
   const abzug = ipvAbzug(probe, ipv);
   if (abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT || abzug.grund === IPV_ABZUG_GRUND.VERFUEGUNG_UNZUGEORDNET) {
@@ -81,8 +80,7 @@ export function ipvAnzeige(probe) {
 // Sozialhilfe-Pegel: braucht Kanton, Einkommen und Miete, sonst wäre der Bedarf unvollständig.
 export function sozialhilfeAnzeige(probe) {
   const canton = probe?.basis?.canton || '';
-  const income = Number(probe?.finanzen?.monthlyIncome) || 0;
   const rent = Number(probe?.wohnen?.rentAmount) || 0;
-  if (!canton || income <= 0 || rent <= 0) return null;
+  if (!canton || !einnahmenErfasst(probe?.finanzen) || rent <= 0) return null;
   return sozialhilfePegelState(probe);
 }

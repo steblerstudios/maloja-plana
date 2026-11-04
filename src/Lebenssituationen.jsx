@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { getCantonName, getHouseholdInfo, calculateSozialhilfe, ladeIPVModelle } from './config/cantonalData.js';
 import { wegeAusProbe, ipvAnzeige, sozialhilfeAnzeige } from './data/anspruchWege.js';
@@ -258,6 +259,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     wohnen: { ...(data?.wohnen || {}), rentAmount: numRent },
     versicherungen: { ...(data?.versicherungen || {}), kkPremium: numKk },
   };
+  const erfasst = einnahmenErfasst(probe.finanzen); // Lohn oder Rente, wie die Wege
 
   // Dieselben Ehrlichkeits-/Crash-Gates wie bisher im Schnellcheck: wirft eine Rechnung, bleibt
   // die Seite stehen und sagt weniger, statt leer zu werden.
@@ -321,7 +323,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
   // Der Ergebnis-Satz: «Mit diesen Angaben zeigt sich …» — nur positive Wege, nie ein Verdikt.
   // Sozialhilfe ohne Betrag sagt den Grund, wie der Schnellcheck (Fachprüfung d18ef9f6).
   const labels = w.wege.map((x) => wegLabel[x.key] + (x.key === 'soz' && x.qualitative ? ' (' + t(x.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') + ')' : ''));
-  const satz = numIncome <= 0 ? t('schnellcheck.enterIncome')
+  const satz = !erfasst ? t('schnellcheck.enterIncome')
     : !canton ? t('schnellcheck.noResultNoCanton')
     : labels.length === 0 ? t('wasStehtMirZu.ergebnisKeiner')
     : labels.length === 1 ? t('wasStehtMirZu.ergebnisEiner', { weg: labels[0] })
@@ -358,7 +360,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       h('p', { style: s.satz }, satz),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
-    w.wege.length > 0 && numIncome > 0 && canton && h('div', { style: { marginTop: space.xs + 'px' } },
+    w.wege.length > 0 && erfasst && canton && h('div', { style: { marginTop: space.xs + 'px' } },
       w.wege.map((x) => h('button', {
         key: x.key, type: 'button', className: 'mp-link', style: s.link,
         onClick: () => onNavigate && (x.key === 'ipv' ? onNavigate(wegView.ipv, undefined, uebergabe) : onNavigate(wegView[x.key])),

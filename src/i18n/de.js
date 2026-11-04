@@ -6827,6 +6827,7 @@ export default {
     brutto: 'brutto',
     nettoGeschaetzt: '≈ netto CHF {value} (geschätzt)',
     bruttoGeschaetzt: '≈ brutto CHF {value} (geschätzt)',
+    rentenEingerechnet: 'Renten aus dem Profil sind schon eingerechnet: CHF {value} pro Monat. Hier nur Lohn eintragen.',
     knapp: 'Knapp — die Schätzung rechnet ohne NBU und Quellensteuer; mit dem genauen Nettolohn nachprüfen.',
   },
   einkommensart: {

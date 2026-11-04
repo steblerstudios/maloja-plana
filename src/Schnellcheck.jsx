@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateSozialhilfe, getCantonName, getHouseholdInfo, ladeIPVModelle } from './config/cantonalData.js';
 import { wegeAusProbe } from './data/anspruchWege.js';
@@ -60,6 +61,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // Ansicht) passiert nichts. Kanton bleibt profilgebunden (kein Feld hier).
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Absicht: bei Änderung der Roh-Eingaben feuern und das abgeleitete `probe` durchreichen. `probe` (jedes Render neu) / `onProbeChange` (Prop) als Dep würden bei jedem Render feuern.
   useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [numIncome, rent, kk, data]);
+  // Lohn oder Rente aus dem Profil: dieselbe Bedingung wie die Wege (utils/unterstuetzungseinheit.js).
+  const erfasst = einnahmenErfasst(probe.finanzen);
 
   // Gedeckte Leistungen sammeln — dieselben Gates wie auf «Was steht mir zu?» (data/anspruchWege.js).
   // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
@@ -92,8 +95,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // ganze Ansicht sonst zum leeren Screen statt sanft zu „keine Angabe".
   let belegState = null, sozPegelState = null, knappSoz = false;
   try {
-    if (canton && numIncome > 0) belegState = praemienBelegState(probe);
-    if (canton && numIncome > 0 && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
+    if (canton && erfasst) belegState = praemienBelegState(probe);
+    if (canton && erfasst && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
     if (e.geschaetzt && numRent > 0) knappSoz = istKnapp(calculateSozialhilfe(probe), e.ohneAlter);
   } catch { /* Orientierung, nie blockierend */ }
 
@@ -233,7 +236,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
 
     // Leistungs-Kompass: Peilung über dem Ergebnis (Instrument über derselben Logik)
     React.createElement(LeistungsKompass, {
-      palette, t, benefitCount: benefits.length, topLabel, hasIncome: numIncome > 0,
+      palette, t, benefitCount: benefits.length, topLabel, hasIncome: erfasst,
     }),
 
     // IPV-Instrument: Prämien-Beleg (Papier) — bewusst anderes Material als der
@@ -253,7 +256,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
 
     // Ergebnis
-    numIncome > 0
+    erfasst
       ? (benefits.length > 0
           ? React.createElement('div', null,
               React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, t('schnellcheck.resultTitle')),

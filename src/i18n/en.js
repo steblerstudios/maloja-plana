@@ -6762,6 +6762,7 @@ export default {
     brutto: 'gross',
     nettoGeschaetzt: '≈ net CHF {value} (estimated)',
     bruttoGeschaetzt: '≈ gross CHF {value} (estimated)',
+    rentenEingerechnet: 'Pensions from the profile are already included: CHF {value} per month. Enter only wages here.',
     knapp: 'Close — the estimate leaves out accident insurance (NBU) and withholding tax; check again with your exact net pay.',
   },
   einkommensart: {
