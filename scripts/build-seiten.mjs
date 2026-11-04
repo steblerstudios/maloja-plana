@@ -357,21 +357,27 @@ const stilHintergrund = `
     table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
     caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
-    th{ font-weight:600 }
+    th{ font-weight:600 } th[scope="row"]{ font-weight:400 }
     td.n,th.n{ text-align:right; white-space:nowrap }
     .fig{ margin:18px 0 22px }
-    .fig svg{ display:block; width:100%; height:auto; font-family:inherit }
+    .fig-schieben{ overflow-x:auto }
+    .fig svg{ display:block; width:100%; min-width:520px; height:auto; font-family:inherit }
     .fig figcaption{ font-size:14px; color:var(--leise); margin-top:6px }
+    .fig details{ margin-top:10px; font-size:15px }
+    .fig summary{ cursor:pointer }
+    h2[tabindex]:focus{ outline:none }
+    a:focus-visible, .knopf:focus-visible, summary:focus-visible, .fig-schieben:focus-visible{
+      outline:2px solid var(--text); outline-offset:2px }
     .f-achse{ stroke:var(--leise); stroke-width:1 }
     .f-raster{ stroke:var(--rand); stroke-width:1 }
     .f-saeule{ fill:var(--leise) }
     .f-hell{ fill:var(--salbei) }
-    .f-spanne{ fill:var(--salbei); opacity:.45 }
+    .f-spanne{ fill:var(--bg); stroke:var(--leise); stroke-width:1.5 }
     .f-strich{ stroke:var(--text); stroke-width:1.5 }
     .f-marke{ stroke:var(--text); stroke-width:1.5; stroke-dasharray:5 4 }
     .f-linie{ fill:none; stroke:var(--text); stroke-width:2 }
     .f-gestrichelt{ stroke-dasharray:7 5 }
-    .f-text{ fill:var(--leise); font-size:12px }
+    .f-text{ fill:var(--leise); font-size:13px }
     .f-stark{ fill:var(--text) }
     ol.quellen{ margin:0 0 14px 22px; font-size:15px }`;
 
@@ -416,7 +422,9 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
       </nav>` : '';
 
   const abschnitte = seite.abschnitte.map((a) =>
-    `      <h2 id="${a.id}">${esc(a.titel)}</h2>${einsetzen(a.html, werte, BLOECKE)}`).join('\n\n');
+    // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
+    // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
+    `      <h2 id="${a.id}" tabindex="-1">${esc(a.titel)}</h2>${einsetzen(a.html, werte, BLOECKE)}`).join('\n\n');
 
   const quellen = seite.quellen.map((q) =>
     `        <li><a href="${esc(q.url)}" rel="noopener">${esc(q.text)}</a>: ${esc(q.zweck)}</li>`).join('\n');

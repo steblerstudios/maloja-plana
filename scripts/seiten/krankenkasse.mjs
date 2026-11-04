@@ -31,9 +31,9 @@ export const KRANKENKASSE = {
   pfad: 'krankenkasse',
   titel: 'Warum die Krankenkasse so viel kostet',
   beschreibung:
-    'Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum Ihr Nachbar weniger zahlt. Die Grundversicherung in acht Fragen, mit den Prämien {{jahr}}.',
+    'Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum andere weniger zahlen. Die Grundversicherung in acht Fragen, mit den Prämien {{jahr}}.',
   brotkrume: 'Krankenkasse erklärt',
-  stand: 'Prämien {{jahr}} (BAG, September 2026), Kosten 2024 und 2025 (BAG). Fachlich gegengelesen November 2026.',
+  stand: 'Prämien {{jahr}} (BAG, September und Oktober 2026), Kosten 2024 und 2025 (BAG). Fachlich gegengelesen November 2026.',
   pruefenBis: '2027-10-15',
   // Eigene Hinweise statt der Rahmentexte der Erklärseiten: jene sagen «nennt
   // bewusst keine Beträge», das wäre hier falsch.
@@ -42,7 +42,7 @@ export const KRANKENKASSE = {
   vorbehalt:
     'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Anders als die übrigen Erklärseiten nennt sie Zahlen, damit sich das System verstehen lässt. Es sind Durchschnitte mit dem oben genannten Stand, und sie ändern jedes Jahr. Massgebend sind die eigene Police, die eigene Kasse und die zuständige Stelle.',
   vorspann:
-    'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, nimmt heraus. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.',
+    'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.',
   inhaltsverzeichnis: true,
   abschnitte: [
     {
@@ -53,7 +53,7 @@ export const KRANKENKASSE = {
         <p>Das Bild zeigt dieses Dorf mit echten Zahlen. Jede Säule ist ein Mensch, die Höhe ist, was 2024 für diese Person über die Grundversicherung abgerechnet wurde. Der Kantonsanteil am Spital ist nicht dabei.</p>
 <!--FIG:dorf-->
 <!--TAB:dorf-->
-        <p class="merke"><strong>Das Wichtigste auf dieser Seite:</strong> Die 61 Menschen, die am wenigsten kosten, brauchen zusammen rund 11 % des Geldes oder weniger. Die 5 Teuersten brauchen mindestens 27 %, vermutlich deutlich mehr. Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen. Und nächstes Jahr kann man selbst zu den wenigen gehören.</p>`,
+        <p class="merke"><strong>Das Wichtigste auf dieser Seite:</strong> Die 61 Menschen, die am wenigsten kosten, brauchen zusammen rund 11 % des Geldes oder weniger. Die 5 Teuersten brauchen mindestens 27 %, vermutlich deutlich mehr. Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen. Und nächstes Jahr können auch Sie zu den wenigen gehören.</p>`,
     },
     {
       id: 'querfinanzierung',
@@ -75,13 +75,13 @@ export const KRANKENKASSE = {
       id: 'franchise',
       titel: '3. Warum gibt es Franchise und Selbstbehalt?',
       html: `
-        <p>Stellen Sie sich ein Buffet vor, bei dem alle schon bezahlt haben. Man nimmt mehr, als man sonst nehmen würde. Die Kostenbeteiligung soll genau das bremsen. Sie hat zwei Ziele: Kleinigkeiten nicht über die Versicherung laufen zu lassen und die Eigenverantwortung zu stärken. Die Studien zeigen, dass das wirkt: Steigt die Kostenbeteiligung für alle, sinken die Leistungskosten.</p>
+        <p>Stellen Sie sich ein Buffet vor, bei dem alle schon bezahlt haben. Wer schon bezahlt hat, nimmt eher mehr. Die Kostenbeteiligung soll genau das bremsen. Sie hat laut Bundesrat zwei Ziele: Kleinigkeiten nicht über die Versicherung laufen zu lassen und die Eigenverantwortung zu stärken. Laut Bundesrat wirkt das auch: Steigt die Kostenbeteiligung für alle, sinken die Leistungskosten.</p>
         <p><strong>Franchise:</strong> Der Betrag, den Sie jedes Jahr zuerst selbst zahlen. Erwachsene wählen zwischen {{franchise.min}} und {{franchise.max}} Franken. Je höher, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab.</p>
-        <p><strong>Selbstbehalt:</strong> Danach zahlen Sie noch {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr. Das ist der Schutz: Der Selbstbehalt hat ein Dach. Zusammen mit der Franchise zahlen Sie im Jahr höchstens {{dach.min}} bis {{dach.max}} Franken, je nach gewählter Franchise. Im Bild knickt die Linie dort ab und läuft waagrecht weiter.</p>
+        <p><strong>Selbstbehalt:</strong> Danach zahlen Sie noch {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr. Das ist der Schutz: Der Selbstbehalt hat ein Dach. Zusammen mit der Franchise zahlen Sie im Jahr höchstens {{dach.min}} bis {{dach.max}} Franken, je nach gewählter Franchise. Im Bild knicken die Linien dort ab und laufen waagrecht weiter.</p>
 <!--FIG:kostenteil-->
-        <p>Das Bild zeigt die Grundregel. Zwei Dinge liegen ausserhalb: 15 Franken je Spitaltag, und bei gewissen Medikamenten, für die es günstigere Alternativen gibt, 40 statt 10 % Selbstbehalt, der nur zum Teil ans Dach zählt. Für Kinder gilt keine Franchise und die Hälfte des Dachs, also {{selbstbehalt.kinder}} Franken. Die Pflege im Heim hat eigene Regeln.</p>
+        <p>Das Bild zeigt die Grundregel. Zwei Dinge liegen ausserhalb: 15 Franken je Spitaltag, und bei gewissen Medikamenten, für die es günstigere Alternativen gibt, 40 statt 10 % Selbstbehalt, der nur zum Teil ans Dach zählt. Für Kinder gilt keine ordentliche Franchise (wählbar sind tiefe Stufen) und die Hälfte des Dachs, also {{selbstbehalt.kinder}} Franken. Die Pflege im Heim hat eigene Regeln.</p>
         <p>Das hat Folgen, die man im Alltag merkt. Von den 26- bis 30-Jährigen bekamen 2024 rund 64 von 100 im ganzen Jahr keinen Franken von der Kasse. Bei 28 davon lag der Kasse gar keine Rechnung vor, bei 36 blieb alles innerhalb der eigenen Kostenbeteiligung. Prämien zahlten sie trotzdem. Über alle Altersgruppen waren es 37 von 100.</p>
-        <p>Und der Haken: Die Bremse wirkt bei allen gleich stark in Franken, aber nicht gleich stark im Leben. 500 Franken sind für manche ein Abendessen, für andere ein Monatsbudget. Fast ein Viertel der Bevölkerung gab 2023 an, im letzten Jahr aus Kostengründen auf eine Behandlung verzichtet zu haben. Die Befragung sagt allerdings nicht, ob das aus Not oder freiwillig geschah. Auch der Bundesrat hält fest: Wer zu spät zum Arzt geht, kann später deutlich höhere Kosten auslösen. Und hohe Franchisen wählen vor allem Menschen, die ohnehin wenig Kosten erwarten.</p>`,
+        <p>Und der Haken: Die Bremse wirkt bei allen gleich stark in Franken, aber nicht gleich stark im Leben. 500 Franken sind für manche ein Abendessen, für andere ein Monatsbudget. Fast ein Viertel der Bevölkerung gab 2023 an, im letzten Jahr aus Kostengründen auf eine Behandlung verzichtet zu haben. Die Befragung sagt allerdings nicht, ob das aus Not oder freiwillig geschah. Auch der Bundesrat hält fest: Wird eine Behandlung aufgeschoben, können später deutlich höhere Kosten entstehen. Und hohe Franchisen wählen vor allem Menschen, die ohnehin wenig Kosten erwarten.</p>`,
     },
     {
       id: 'preise',
@@ -93,7 +93,7 @@ export const KRANKENKASSE = {
           <tr><th scope="col">Bereich</th><th scope="col" class="n">Fr./Mt.</th><th scope="col">So entsteht der Preis</th></tr>
           <tr><td>Arzt ambulant</td><td class="n">93</td><td>Eine Preisliste für Arbeitsschritte (TARDOC, seit 2026) und Pauschalen. Jede Leistung hat Punkte, die Punkte mal Taxpunktwert ergeben den Preis.</td></tr>
           <tr><td>Medikamente</td><td class="n">89</td><td>Das BAG legt den Preis in der Spezialitätenliste fest und schaut dabei auf das Ausland und auf den Nutzen.</td></tr>
-          <tr><td>Spital stationär</td><td class="n">75</td><td>Eine Pauschale pro Fall (SwissDRG): schwierigerer Fall gleich mehr Geld. Den Grundpreis handeln Spital und Kassen aus, der Kanton genehmigt ihn.</td></tr>
+          <tr><td>Spital stationär</td><td class="n">75</td><td>Eine Pauschale pro Fall (SwissDRG): ein schwierigerer Fall bringt mehr Geld. Den Grundpreis handeln Spital und Kassen aus, der Kanton genehmigt ihn.</td></tr>
           <tr><td>Spital ambulant</td><td class="n">56</td><td>Dieselbe Tarifstruktur wie in der Praxis, der Taxpunktwert kann abweichen.</td></tr>
           <tr><td>Pflegeheime</td><td class="n">21</td><td>Die Kasse zahlt einen festen Beitrag je Pflegestufe, den Rest der Pflege teilen sich Bewohnende und Kantone.</td></tr>
           <tr><td>Labor, Physio, Spitex, Hilfsmittel, Übriges</td><td class="n">77</td><td>Eigene Tarife und Listen.</td></tr>
@@ -105,30 +105,30 @@ export const KRANKENKASSE = {
       id: 'praemie',
       titel: '5. Wie wird daraus die Prämie?',
       html: `
-        <p>Jetzt zusammensetzen. Jede Kasse rechnet für jede Region und Altersgruppe wie mit einem Rezept. Hier mit den echten Zahlen von 2025, pro Person und Monat:</p>
+        <p>So setzt sich die Prämie zusammen. Jede Kasse rechnet für jede Region und Altersgruppe wie mit einem Rezept. Hier mit den echten Zahlen von 2025, pro Person und Monat:</p>
         <div class="tabelle"><table>
           <caption>Das Rezept der Prämie, 2025, je Person und Monat</caption>
-          <tr><td>Was die Grundversicherung für Behandlungen bezahlte (ohne Kantonsanteil am Spital)</td><td class="n">411 Fr.</td></tr>
-          <tr><td>minus was die Versicherten selbst zahlten</td><td class="n">− 54 Fr.</td></tr>
-          <tr><td>bleibt für den Topf</td><td class="n">357 Fr.</td></tr>
-          <tr><td>plus Verwaltung der Kassen (Wert 2024)</td><td class="n">+ 16 Fr.</td></tr>
-          <tr><td>plus oder minus Reserven</td><td class="n">je nach Kasse</td></tr>
+          <tr><th scope="row">Was die Grundversicherung für Behandlungen bezahlte (ohne Kantonsanteil am Spital)</th><td class="n">411 Fr.</td></tr>
+          <tr><th scope="row">minus was die Versicherten selbst zahlten</th><td class="n">− 54 Fr.</td></tr>
+          <tr><th scope="row">bleibt für den Topf</th><td class="n">357 Fr.</td></tr>
+          <tr><th scope="row">plus Verwaltung der Kassen (Wert 2024)</th><td class="n">+ 16 Fr.</td></tr>
+          <tr><th scope="row">plus oder minus Reserven</th><td class="n">je nach Kasse</td></tr>
         </table></div>
         <p class="leise">Bei der einzelnen Kasse kommt der Risikoausgleich dazu, als Zuschlag oder als Abzug. Über alle Kassen hebt er sich auf.</p>
         <p>Das ist eine Schätzung fürs nächste Jahr, denn die Prämie muss im Voraus feststehen. Die Kassen reichen ihre Rechnung beim BAG ein. Das BAG lehnt ab, wenn die Prämie die Kosten nicht deckt, zu weit darüber liegt oder zu viel Reserve aufbaut. Verdienen darf die Kasse an der Grundversicherung nichts: Das Geld darf nur für die Grundversicherung verwendet werden, Überschüsse bleiben dort, etwa in den Reserven.</p>
-        <p class="merke"><strong>Merke:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien. Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
+        <p class="merke"><strong>Kurz gesagt:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien. Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
 <!--TAB:mittel-->`,
     },
     {
       id: 'nachbar',
-      titel: '6. Warum zahlt der Nachbar weniger?',
+      titel: '6. Warum zahlen andere weniger?',
       html: `
         <p>Die mittlere Prämie von {{mittel.gesamtFr}} Franken zahlt fast niemand genau. Das BAG zählt für {{jahr}} über 200'000 verschiedene Prämien. Welche davon die eigene ist, hängt von sieben Dingen ab.</p>
         <h3>Der Kanton</h3>
         <p>Die Kasse muss die Prämien nach den Kosten im Kanton abstufen. Massgebend ist, wo Sie wohnen, nicht wo Sie arbeiten oder sich behandeln lassen. Erwachsene zahlen {{jahr}} im Schnitt in {{kanton.tiefName}} {{kanton.tief}} Franken, in {{kanton.hochName}} {{kanton.hoch}} Franken, also fast das Doppelte.</p>
 <!--FIG:kantone-->
 <!--TAB:kantone-->
-        <p>Der Vergleich zeigt: Die Prämie folgt den Kosten im Kanton sehr eng. Über alle 26 Kantone laufen die beiden Zahlen fast im Gleichschritt. Teure Prämie heisst also vor allem: Dort fallen pro Person höhere Kosten an. Das ist so gewollt, denn die Prämien müssen die Kosten im Kanton decken. Ob dort zu viel behandelt wird oder die Menschen mehr Pflege brauchen, zeigt diese Zahl nicht. Zug fällt auf: Es kostet mehr als Appenzell Innerrhoden, hat aber die tiefere Prämie; der Grund liess sich nicht belegen.</p>
+        <p>Der Vergleich zeigt: Die Prämie folgt den Kosten im Kanton sehr eng. Über alle 26 Kantone laufen die beiden Zahlen fast im Gleichschritt. Teure Prämie heisst also vor allem: Dort fallen pro Person höhere Kosten an. Das ist so gewollt, denn die Prämien müssen die Kosten im Kanton decken. Ob dort zu viel behandelt wird oder die Menschen mehr Pflege brauchen, zeigt diese Zahl nicht. Der Kanton Zug fällt auf: Er kostet mehr als Appenzell Innerrhoden, hat aber die tiefere Prämie; der Grund liess sich nicht belegen.</p>
         <p>Warum die Kosten verschieden sind, ist nicht abschliessend geklärt. Ältere Studien deuten darauf hin, dass die Menge der Behandlungen mehr erklärt als deren Preis, und dass in Kantonen mit mehr Ärztinnen und Ärzten mehr Leistungen bezogen werden. Beim Alter ist das Bild nicht einheitlich: Eine Studie konnte den Einfluss nicht belegen, andere fanden ihn. Auch Armut, Arbeitslosigkeit und Invalidität spielen eine Rolle.</p>
         <h3>Die Prämienregion</h3>
         <p>Auch innerhalb eines Kantons kann die Prämie verschieden sein, weil die Stadt oft mehr kostet als das Land. Darum sind Kantone mit grossen Kostenunterschieden in Prämienregionen aufgeteilt. Jede Gemeinde gehört fest zu einer Region. Meist ist Region 1 die teuerste. Die Kassen dürfen in den anderen Regionen tiefere Prämien verlangen, sie müssen aber nicht. Ausnahmen gibt es auch: {{jahr}} verlangt eine Kasse in drei Kantonen in Region 2 mehr als in Region 1.</p>
@@ -139,47 +139,49 @@ export const KRANKENKASSE = {
           <tr><td>zwei</td><td>Basel-Landschaft, Schaffhausen, Tessin, Waadt, Wallis: 15 %. Freiburg: 10 %.</td></tr>
           <tr><td>eine</td><td>alle übrigen 15 Kantone</td></tr>
         </table></div>
-        <p>Im Kanton Zürich zum Beispiel gehört nur die Stadt Zürich zur Region 1. Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3. Ein Umzug um wenige Kilometer kann die Prämie also verändern, ohne dass sich an der Gesundheit etwas ändert. Das EDI legt für jeden dieser Kantone fest, wie gross der Unterschied von Region zu Region höchstens sein darf. Er darf den Kostenunterschied nicht übersteigen.</p>
+        <p>Im Kanton Zürich zum Beispiel gehört nur die Stadt Zürich zur Region 1. Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3. Ein Umzug um wenige Kilometer kann die Prämie also verändern, ohne dass sich an der Gesundheit etwas ändert. Das EDI legt für jeden dieser Kantone fest, wie gross der Unterschied von Region zu Region höchstens sein darf. Dieser Unterschied darf den Kostenunterschied nicht übersteigen.</p>
         <p><strong>Der Haken:</strong> Die Einteilung stammt im Kern aus dem Jahr 2004 und stützt sich auf eine ETH-Studie von 2001. Vorschläge für eine neue Einteilung lehnte das Parlament ab, seither bleibt sie bis auf wenige Sonderfälle wie Gemeindefusionen unverändert. Die Grenzen zeigen also teilweise ein altes Kostenbild. Die Höchstrabatte dagegen gelten je Kanton erst seit 2023 und werden regelmässig überprüft, und Kantone können selbst eine Änderung vorschlagen.</p>
         <h3>Das Alter</h3>
-        <p>Es gibt nur drei Gruppen: Kinder bis 18, junge Erwachsene von 19 bis 25, Erwachsene ab 26. Für die ersten beiden muss die Prämie tiefer sein. {{jahr}} sind das im Schnitt {{mittel.kinder}}, {{mittel.junge}} und {{mittel.erwachsene}} Franken im Monat. Innerhalb einer Gruppe zählt das Alter nicht mehr. Gewechselt wird immer am 1. Januar nach dem 18. und nach dem 25. Geburtstag.</p>
+        <p>Es gibt nur drei Gruppen: Kinder bis 18, junge Erwachsene von 19 bis 25, Erwachsene ab 26. Für Kinder muss die Prämie tiefer sein, für junge Erwachsene darf die Kasse sie tiefer ansetzen. {{jahr}} sind das im Schnitt {{mittel.kinder}}, {{mittel.junge}} und {{mittel.erwachsene}} Franken im Monat. Innerhalb einer Gruppe zählt das Alter nicht mehr. Gewechselt wird immer am 1. Januar nach dem 18. und nach dem 25. Geburtstag.</p>
         <h3>Die Franchise</h3>
-        <p>Wer eine höhere Franchise wählt, bekommt Rabatt, aber nicht beliebig viel: Er darf höchstens 70 % des zusätzlichen Risikos betragen. Von {{franchise.min}} auf {{franchise.max}} Franken übernehmen Sie {{franchise.differenz}} Franken mehr Risiko, der Rabatt liegt also bei höchstens {{rabatt.jahr}} Franken im Jahr, rund {{rabatt.monat}} Franken im Monat.</p>
+        <p>Wer eine höhere Franchise wählt, bekommt Rabatt, aber nicht beliebig viel: Der Rabatt darf höchstens 70 % des zusätzlichen Risikos betragen. Von {{franchise.min}} auf {{franchise.max}} Franken übernehmen Sie {{franchise.differenz}} Franken mehr Risiko, der Rabatt liegt also bei höchstens {{rabatt.jahr}} Franken im Jahr, rund {{rabatt.monat}} Franken im Monat.</p>
         <h3>Das Modell</h3>
-        <p>Bei Hausarzt-, HMO- oder Telmed-Modellen gehen Sie zuerst an eine bestimmte Stelle und verzichten auf die freie Wahl. Dafür kann die Kasse Rabatt geben. Er darf nur Kostenunterschiede weitergeben, die wirklich aus dem Modell stammen, nicht daraus, dass dort gesündere Menschen versichert sind.</p>
-        <h3>Die Unfalldeckung und die Kasse</h3>
-        <p>Wer mindestens acht Stunden pro Woche beim selben Arbeitgeber arbeitet, ist über ihn auch in der Freizeit gegen Unfälle versichert. Dann können Sie die Unfalldeckung bei der Kasse schriftlich ausschliessen lassen, mit einer Bestätigung des Arbeitgebers. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, müssen Sie das der Kasse melden, sonst zahlen Sie nach. Und schliesslich die Kasse selbst: Die Leistungen sind überall gleich, die Prämie nicht.</p>
-        <p class="merke"><strong>Merke:</strong> Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht: Die Kasse darf deshalb keine höhere Prämie verlangen.</p>`,
+        <p>Bei Hausarzt-, HMO- oder Telmed-Modellen gehen Sie zuerst an eine bestimmte Stelle und verzichten auf die freie Wahl. Dafür kann die Kasse Rabatt geben. Der Rabatt darf nur Kostenunterschiede weitergeben, die wirklich aus dem Modell stammen, nicht daraus, dass dort gesündere Menschen versichert sind.</p>
+        <h3>Die Unfalldeckung</h3>
+        <p>Wer mindestens acht Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber arbeitet, ist über die Stelle auch in der Freizeit gegen Unfälle versichert. Dann lässt sich die Unfalldeckung bei der Kasse schriftlich ausschliessen, mit einer Bestätigung der Arbeitgeberseite. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, braucht die Kasse eine Meldung, sonst wird die Prämie nachgefordert.</p>
+        <h3>Die Kasse</h3>
+        <p>Die Leistungen der Grundversicherung sind bei allen Kassen gleich, die Prämie nicht.</p>
+        <p class="merke"><strong>Kurz gesagt:</strong> Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht: Die Kasse darf deshalb keine höhere Prämie verlangen.</p>`,
     },
     {
       id: 'problem',
       titel: '7. Wo liegt das Problem?',
       html: `
-        <p>Zuerst das, was kein Fehler ist. Wir werden älter, und es gibt Therapien, die es früher nicht gab. Das kostet Geld, und das ist gut so. Das BAG nennt beides als Gründe. Dazu kommen aber Gründe, die nicht sein müssten.</p>
+        <p>Zuerst das, was kein Fehler ist. Die Bevölkerung wird älter, und es gibt Therapien, die es früher nicht gab. Das kostet Geld, und das ist gut so. Das BAG nennt beides als Gründe. Dazu kommen aber Gründe, die nicht sein müssten.</p>
         <p>Eine Studie im Auftrag des BAG schätzte, dass 16 bis 19 % der Kosten vermeidbar wären, für 2016 waren das 7 bis 8 Milliarden Franken. Auf die heutige Prämie umgelegt wären das grob {{vermeidbar.tief}} bis {{vermeidbar.hoch}} Franken im Monat. Die Forschenden warnen selbst: Ganz erreichen lässt sich das kaum. Sie nennen drei Hauptursachen: zu viel Menge, zu hohe Preise, schlechte Abläufe. Dahinter stecken vor allem diese Mechanismen.</p>
         <h3>Wer mehr macht, verdient mehr</h3>
-        <p>Wer pro Handgriff bezahlt wird, verdient an jedem zusätzlichen Schritt, und der Tarif belohnt das Weglassen nicht. Das Gesetz verlangt zwar, sich aufs Nötige zu beschränken, doch der Anreiz bleibt. Wer pro Pinselstrich bezahlt wird, malt nicht schneller. Das Geld fliesst für Behandlungen, nicht für gesunde Menschen. Im Verhältnis zu den Kosten sieht die Studie das grösste Sparpotenzial bei ambulanter Radiologie, stationärer Psychiatrie, spitalambulanten Behandlungen und Labor. Solche Unterschiede sind laut den Forschenden aber mit Vorsicht zu lesen.</p>
+        <p>Wer pro Handgriff bezahlt wird, verdient an jedem zusätzlichen Schritt, und der Tarif belohnt das Weglassen nicht. Das Gesetz verlangt zwar, sich aufs Nötige zu beschränken, doch der Anreiz bleibt. Das Geld fliesst für Behandlungen, nicht für gesunde Menschen. Im Verhältnis zu den Kosten sieht die Studie das grösste Sparpotenzial bei ambulanter Radiologie, stationärer Psychiatrie, spitalambulanten Behandlungen und Labor. Solche Unterschiede sind laut den Forschenden aber mit Vorsicht zu lesen.</p>
         <h3>Wer bestellt, zahlt nicht</h3>
-        <p>Die Ärztin empfiehlt, die Patientin sagt ja, die Kasse zahlt. Keine der drei hat den vollen Anreiz, auf den Preis zu schauen. Ist die Franchise erreicht, zahlt man nur noch {{selbstbehalt.satz}} % jeder Rechnung, und ist das Dach erreicht, gar nichts mehr ausser dem Spitalbeitrag.</p>
-        <h3>Der Kanton trägt zu viele Hüte</h3>
-        <p>Der Kanton plant die Spitäler, besitzt oft eines davon, genehmigt dessen Preise und zahlt mit. Der Bundesrat nennt das selbst eine Mehrfachrolle als Regulator, teilweise Eigentümer und Zahler. Er sieht mögliche Interessenkonflikte allerdings als entschärft an und hält im Bericht vom Januar 2026 keine neuen Regeln dafür für nötig; das ist umstritten. Dazu kommt die Politik: Kaum jemand will, dass das eigene Regionalspital schliesst, auch wenn das nächste nah ist.</p>
+        <p>Die Ärztin oder der Arzt empfiehlt, die versicherte Person sagt ja, die Kasse zahlt. Keine der drei Seiten hat den vollen Anreiz, auf den Preis zu schauen. Ist die Franchise erreicht, zahlt man nur noch {{selbstbehalt.satz}} % jeder Rechnung, und ist das Dach erreicht, gar nichts mehr ausser dem Spitalbeitrag.</p>
+        <h3>Der Kanton hat mehrere Rollen</h3>
+        <p>Der Kanton plant die Spitäler, besitzt oft eines davon, genehmigt dessen Preise und zahlt mit. Der Bundesrat nennt das selbst eine Mehrfachrolle: regulierende Stelle, teilweise Eigentümer und zahlende Stelle. Er sieht mögliche Interessenkonflikte allerdings als entschärft an und hält im Bericht vom Januar 2026 keine neuen Regeln dafür für nötig; das ist umstritten. Dazu kommt die Politik: Kaum jemand will, dass das eigene Regionalspital schliesst, auch wenn das nächste nah ist.</p>
         <h3>Das Geld schaut auf den Ort, nicht auf den Sinn</h3>
-        <p>Stationär zahlt heute der Kanton mit, ambulant zahlt die Kasse allein. Wird eine Operation vom Spitalbett in die Tagesklinik verlegt, ist das oft billiger, aber die Prämienzahlenden tragen plötzlich alles. Was für alle gut ist, ist für einzelne Zahler schlecht.</p>
-        <h3>Generika sind teurer als nötig</h3>
+        <p>Stationär zahlt heute der Kanton mit, ambulant zahlt die Kasse allein. Wird eine Operation vom Spitalbett in die Tagesklinik verlegt, ist das oft billiger, aber die Prämienzahlenden tragen plötzlich alles. Was für alle gut ist, ist für einzelne Zahlende schlecht.</p>
+        <h3>Generika kosten mehr als im Ausland</h3>
         <p>Generika sind Kopien von Medikamenten, deren Patent abgelaufen ist. Laut Preisüberwacher kosten die günstigsten in der Schweiz 2,4-mal so viel wie im Ausland. Ein Vergleich von santésuisse und Interpharma von 2023 kommt mit anderer Methode auf knapp das Doppelte. Teurer sind sie in beiden Rechnungen.</p>
-        <h3>Alle ziehen an einem anderen Ende</h3>
-        <p>Jede Sparmassnahme nimmt jemandem Einkommen weg: Ärzteschaft, Spitälern, Pharma, Kantonen, Kassen. Alle haben gute Argumente und eine Lobby. Darum geht es langsam voran. Der Bundesrat will Ende 2026 erstmals Kosten- und Qualitätsziele für 2028 bis 2031 festlegen.</p>
+        <h3>Alle haben andere Interessen</h3>
+        <p>Jede Sparmassnahme nimmt jemandem Einkommen weg: Ärzteschaft, Spitälern, Pharma, Kantonen, Kassen. Alle haben gute Argumente und eine Interessenvertretung. Darum geht es langsam voran. Für die Jahre 2028 bis 2031 soll der Bundesrat erstmals Kosten- und Qualitätsziele festlegen; angekündigt war das für Ende 2026.</p>
         <h3>Und wen trifft es?</h3>
-        <p>Weil die Prämie pro Kopf gleich ist, drückt sie unten am stärksten. Die Prämien stiegen über zwanzig Jahre von rund 4 auf rund 7 % des verfügbaren Einkommens, das sind Durchschnittswerte. Das Gesundheitswesen kostete 2024 rund 97 Milliarden Franken. Davon trugen die Haushalte 21 % direkt aus der eigenen Tasche und weitere 41 % indirekt, vor allem über die Prämien. Die öffentliche Hand trug 31 %.</p>`,
+        <p>Weil die Prämie pro Kopf gleich ist, drückt sie bei tiefen Einkommen am stärksten. Die Prämien stiegen über zwanzig Jahre von rund 4 auf rund 7 % des verfügbaren Einkommens, das sind Durchschnittswerte. Das Gesundheitswesen kostete 2024 rund 97 Milliarden Franken. Davon trugen die Haushalte 21 % direkt aus der eigenen Tasche und weitere 41 % indirekt, vor allem über die Prämien. Die öffentliche Hand trug 31 %.</p>`,
     },
     {
       id: 'aenderungen',
       titel: '8. Was ändert sich?',
       html: `
-        <p><strong>2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen ersetzt TARMED und führt mehr Pauschalen ein. Die Umstellung läuft noch, Rechnungen kommen teils verspätet.</p>
+        <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst und mehr Pauschalen eingeführt. Im ersten Jahr kamen Rechnungen teils verspätet.</p>
         <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen festen Anteil an den Kosten nach Abzug der Kostenbeteiligung, zuerst je nach Kanton 21,3 bis 28,5 %, ab 2031 in der Regel rund 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht.</p>
-        <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nennt die Mitteilung vom 13.03.2026 nicht.</p>
-        <p><strong>Für Sie:</strong> Wer auf den 1. Januar die Kasse wechseln will, muss so kündigen, dass die Kündigung spätestens am 30. November bei der Kasse eingetroffen ist. Mit offenen Ausständen ist ein Wechsel nicht möglich. Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes, verlinkt unten bei den Quellen.</p>
+        <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nannte die Mitteilung vom 13.03.2026 nicht.</p>
+        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Mit offenen Ausständen ist ein Wechsel nicht möglich. Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes, verlinkt unten bei den Quellen.</p>
         <p>Ob Sie Anspruch auf eine Verbilligung der Prämie haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>`,
     },
   ],
@@ -214,11 +216,11 @@ export const KRANKENKASSE = {
   ],
   // Gesetzesstellen ohne eigenen Link (Fedlex rendert clientseitig, siehe
   // seiten-inhalt.mjs). Stand der Prüfung: 02.11.2026.
-  gesetze: 'KVV Art. 11, 91a, 91b, 95, 101, 103 bis 104a; KLV Art. 38a; KVAG Art. 2, 5, 16, 17; EDI-Verordnung über die Prämienregionen SR 832.106, Stand 1.1.2027; UVG Art. 8; UVV Art. 13.',
+  gesetze: 'KVG Art. 64a; KVV Art. 11, 91a, 91b, 93, 95, 101, 103 bis 104a; KLV Art. 38a; KVAG Art. 2, 5, 16, 17; EDI-Verordnung über die Prämienregionen SR 832.106, Stand 1.1.2027; UVG Art. 8; UVV Art. 13.',
   eigeneRechnungen: [
-    'Dorf: Die BAG-Anteile sind auf 100 Menschen gerundet, die Säulen stehen auf der Mitte ihrer Stufe. Die 11 % und 27 % sind harte Grenzen, gerechnet mit den oberen beziehungsweise unteren Stufenrändern und dem BAG-Mittel von 4\'634 Franken; die wahre Spanne für die fünf Teuersten liegt zwischen 27 und 63 %.',
+    'Dorf: Die BAG-Anteile sind auf 100 Menschen gerundet, die Säulen stehen auf der Mitte ihrer Stufe. Die 11 % und 27 % sind harte Grenzen, gerechnet mit den oberen beziehungsweise unteren Stufenrändern und dem BAG-Mittel von 4\'634 Franken; die wahre Spanne für die fünf Teuersten liegt grob zwischen 27 und 64 %, je nach Rundung der BAG-Anteile.',
     'Schnitt der Erwachsenen: gewichtet ab 26 Jahren.',
-    '{{vermeidbar.tief}} bis {{vermeidbar.hoch}} Franken: 16 bis 19 % der mittleren Prämie von {{mittel.gesamt}} Franken; die Studie bezieht sich auf alle KVG-Leistungen 2016, nicht auf die Prämie {{jahr}}.',
+    '{{vermeidbar.tief}} bis {{vermeidbar.hoch}} Franken: 16 bis 19 % der mittleren Prämie von {{mittel.gesamtFr}} Franken; die Studie bezieht sich auf alle KVG-Leistungen 2016, nicht auf die Prämie {{jahr}}.',
     'Kantone: Die Prämien {{jahr}} je Prämienregion stammen aus der BAG-Datei, die Maloja Plana für den Prämienrechner führt. Für Kantone mit mehreren Regionen nennt diese Datei keinen Kantonsmittelwert; darum steht dort die Spanne der Regionen. Die Korrelation zwischen der kantonalen Prämie {{jahr}} und den Kosten 2024 über 26 Kantone beträgt 0,97 (gerechnet mit den Kantonsmitteln des BAG). Die ETH-Studie und die Motion 18.3713 sind nur über das BAG-Faktenblatt belegt.',
     'Ausnahmen bei den Regionen: eigene Auswertung der BAG-Prämiendaten {{jahr}}, Erwachsene, Standardmodell, Franchise {{franchise.min}}. Die mittlere Prämie enthält auch die Wahl von Franchise und Modell, ist also nicht nur Kosten.',
     'Die Prämienverbilligung 2023 ist nur über die CSS-Infografik belegt; das BAG nennt für 2022 rund 5,4 Milliarden.',

@@ -107,6 +107,10 @@ export function zahlen() {
   if (!mittel) throw new Error(`Kein Schweizer Mittel für ${PRAEMIENJAHR}`);
   const kantone = kantonsPraemien();
   const billig = kantone[0], teuer = kantone[kantone.length - 1];
+  // Der Text sagt «im Schnitt in …» — das stimmt nur für Kantone mit einer Region.
+  if (!billig.eineRegion || !teuer.eineRegion) {
+    throw new Error(`Tiefster oder höchster Wert ist eine Region (${billig.kanton}/${teuer.kanton}) — Satz «im Schnitt in …» in krankenkasse.mjs anpassen`);
+  }
   const frMin = Math.min(...FRANCHISE_STUFEN), frMax = Math.max(...FRANCHISE_STUFEN);
   // Höchstrabatt für eine höhere Franchise: 70 % des zusätzlichen Risikos (KVV Art. 95 Abs. 2bis).
   const rabattJahr = 0.7 * (frMax - frMin);
@@ -163,14 +167,19 @@ export function einsetzen(html, werte, bloecke = {}) {
 const svgEsc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const r1 = (n) => Math.round(n * 10) / 10;
 
-function figur(id, breite, hoehe, titel, beschreibung, inhalt, legende) {
+// Auf dem Handy würde die Schrift im Bild mitschrumpfen (a11y-Prüfung
+// 04.11.2026: rund 6 px). Darum hat das Bild eine Mindestbreite und lässt sich
+// waagrecht schieben; der Schiebebereich ist per Tastatur erreichbar.
+function figur(id, breite, hoehe, titel, beschreibung, inhalt, legende, nachher = '') {
   return `<figure class="fig">
+        <div class="fig-schieben" tabindex="0" role="group" aria-labelledby="${id}-t">
         <svg viewBox="0 0 ${breite} ${hoehe}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">
           <title id="${id}-t">${svgEsc(titel)}</title>
           <desc id="${id}-d">${svgEsc(beschreibung)}</desc>
 ${inhalt.map((z) => `          ${z}`).join('\n')}
         </svg>
-        <figcaption>${legende}</figcaption>
+        </div>
+        <figcaption>${legende}</figcaption>${nachher}
       </figure>`;
 }
 
@@ -281,9 +290,9 @@ export function figurKostenteil() {
   ];
   return figur('fig-kostenteil', B, H,
     'Eigener Anteil je nach Jahreskosten, bei der tiefsten und der höchsten Franchise',
-    `Zwei Linien. Beide steigen zuerst steil bis zur Franchise, dann flacher mit ${Math.round(SELBSTBEHALT_RATE * 100)} Prozent, und laufen ab dem Dach waagrecht weiter: bei Franchise ${fr(frMin)} auf ${fr(dachMin)} Franken, bei Franchise ${fr(frMax)} auf ${fr(dachMax)} Franken.`,
+    `Zwei Linien: durchgezogen die Franchise ${fr(frMin)}, gestrichelt die Franchise ${fr(frMax)}. Beide steigen zuerst steil bis zur Franchise, dann flacher mit ${Math.round(SELBSTBEHALT_RATE * 100)} Prozent, und laufen ab dem Dach waagrecht weiter: bei Franchise ${fr(frMin)} auf ${fr(dachMin)} Franken, bei Franchise ${fr(frMax)} auf ${fr(dachMax)} Franken.`,
     inhalt,
-    `Erwachsene, Grundregel nach KVG Art. 64: Franchise, danach ${Math.round(SELBSTBEHALT_RATE * 100)} % Selbstbehalt bis höchstens ${fr(SELBSTBEHALT_MAX)} Franken im Jahr. Ohne Spitalbeitrag und ohne den höheren Selbstbehalt bei gewissen Medikamenten.`);
+    `Erwachsene, Grundregel: Franchise, danach ${Math.round(SELBSTBEHALT_RATE * 100)} % Selbstbehalt bis höchstens ${fr(SELBSTBEHALT_MAX)} Franken im Jahr (KVG Art. 64, KVV Art. 93 und 103). Ohne Spitalbeitrag und ohne den höheren Selbstbehalt bei gewissen Medikamenten.`);
 }
 
 // ─── Figur: Prämien je Kanton ────────────────────────────────────────────────
@@ -323,11 +332,34 @@ export function figurKantone() {
     `<text class="f-text" x="${B - 8}" y="${H - 4}" text-anchor="end">Franken im Monat</text>`,
   ];
   const billig = kantone[0], teuer = kantone[kantone.length - 1];
+  // Alle Werte auch als Tabelle — für Vorlese-Programme und vergrösserten Text.
+  const alle = kantone.map((k) => `            <tr><td>${k.name}</td><td class="n">${k.regionen
+    .map((r) => (k.eineRegion ? rp(r.erwachsene) : `Region ${r.region}: ${rp(r.erwachsene)}`)).join('<br>')}</td></tr>`).join('\n');
+  const tabelle = `
+        <details>
+          <summary>Alle ${kantone.length} Kantone als Tabelle</summary>
+          <div class="tabelle"><table>
+            <caption>Mittlere Monatsprämie Erwachsene ${PRAEMIENJAHR}, je Kanton und Prämienregion</caption>
+            <tr><th scope="col">Kanton</th><th scope="col" class="n">Franken im Monat</th></tr>
+${alle}
+          </table></div>
+        </details>`;
   return figur('fig-kantone', B, H,
-    `Mittlere Monatsprämie für Erwachsene ${PRAEMIENJAHR} je Kanton`,
-    `Liegende Balken für alle ${kantone.length} Kantone, von ${billig.name} mit ${rp(billig.tief)} Franken bis ${teuer.name} mit ${rp(teuer.hoch)} Franken. Bei ${kantone.filter((k) => !k.eineRegion).length} Kantonen mit mehreren Prämienregionen zeigt ein heller Teil die Spanne zwischen der günstigsten und der teuersten Region.`,
+    `Mittlere Monatsprämie für Erwachsene ${PRAEMIENJAHR}, je Kanton oder Prämienregion`,
+    `Liegende Balken für alle ${kantone.length} Kantone, sortiert nach der teuersten Region, von ${billig.name} mit ${rp(billig.tief)} Franken bis ${teuer.name} mit ${rp(teuer.hoch)} Franken. Bei ${kantone.filter((k) => !k.eineRegion).length} Kantonen mit mehreren Prämienregionen zeigt ein umrandeter Teil die Spanne zwischen der günstigsten und der teuersten Region. Alle Werte stehen in der Tabelle unter dem Bild.`,
     inhalt,
-    `Erwachsene ab 26, alle Kassen zusammen. Heller Teil mit Strichen: Kantone mit mehreren Prämienregionen, ein Strich je Region. Quelle: ${svgEsc(praemienQuelle())}, in Maloja Plana geführt.`);
+    `Erwachsene ab 26, alle Kassen zusammen. Umrandeter Teil mit Strichen: Kantone mit mehreren Prämienregionen, ein Strich und eine Zahl je Region; einen Kantonsmittelwert zeigt das Bild dort nicht. Sortiert nach der teuersten Region. Quelle: ${quelleLesbar()}, in Maloja Plana geführt.`,
+    tabelle);
+}
+
+// «priminfo.admin.ch — praemienregionen-2027.xlsx, Stand 22.10.2026 (…)» →
+// «Prämiendaten des Bundes (priminfo.admin.ch), Stand 22. Oktober 2026».
+// Das Datum kommt aus der Datenquelle, nicht von Hand.
+const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+function quelleLesbar() {
+  const m = praemienQuelle().match(/Stand (\d{2})\.(\d{2})\.(\d{4})/);
+  if (!m) throw new Error(`Kein Stand-Datum in der Prämienquelle: ${praemienQuelle()}`);
+  return `Prämiendaten des Bundes (priminfo.admin.ch), Stand ${Number(m[1])}. ${MONATE[Number(m[2]) - 1]} ${m[3]}`;
 }
 
 export function tabelleKantone() {
