@@ -111,6 +111,7 @@ describe('Rentenfelder im Kapitel Finanzen', () => {
 
   it('der Lohn-Hinweis schickt Renten in die Rentenfelder (keine Doppelzählung)', () => {
     expect(de.chapters.finanzen.hints.monthlyIncome.sie).toContain('Rentenfeldern');
+    expect(de.chapters.finanzen.hints.bvgRente).toContain('Im Ruhestand eine 0');
   });
 
   it('die Sätze zeigen auf die Felder statt «kein Feld»', () => {

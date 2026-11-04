@@ -2231,7 +2231,7 @@ export default {
         ivBezug: { sie: "Steht im Entscheid der IV-Stelle. Freiwillig. Dient nur der Orientierung zu Sozialhilfe und Ergänzungsleistungen und bleibt auf diesem Gerät, bis Sie es selbst weitergeben.", du: "Steht im Entscheid der IV-Stelle. Freiwillig. Dient nur der Orientierung zu Sozialhilfe und Ergänzungsleistungen und bleibt auf diesem Gerät, bis du es selbst weitergibst." },
         ahvRente: "Laut Rentenverfügung der Ausgleichskasse, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App ab dem Rentenalter keinen Betrag für Sozialhilfe und Prämienverbilligung.",
         ivRente: { sie: "Laut Rentenverfügung, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App mit IV-Bezug keinen Betrag für Sozialhilfe und Prämienverbilligung. Freiwillig. Bleibt auf diesem Gerät, bis Sie es selbst weitergeben.", du: "Laut Rentenverfügung, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App mit IV-Bezug keinen Betrag für Sozialhilfe und Prämienverbilligung. Freiwillig. Bleibt auf diesem Gerät, bis du es selbst weitergibst." },
-        bvgRente: "Laut Rentenbescheinigung der Pensionskasse, Betrag pro Monat. Was als Kapital bezogen wird, auch ein Teil, gehört zum Vermögen.",
+        bvgRente: "Laut Rentenbescheinigung der Pensionskasse, Betrag pro Monat. Was als Kapital bezogen wird, auch ein Teil, gehört zum Vermögen. Im Ruhestand eine 0, wenn keine bezogen wird; ohne Eintrag nennt die App dann keinen Betrag.",
         pension3bBalance: { sie: 'Der aktuelle Wert Ihrer freien Vorsorge 3b (Sparkonto, Lebensversicherung, Wertschriften).', du: 'Der aktuelle Wert deiner freien Vorsorge 3b (Sparkonto, Lebensversicherung, Wertschriften).' },
       },
       docs: {
