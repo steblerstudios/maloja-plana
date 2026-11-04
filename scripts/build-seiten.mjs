@@ -26,6 +26,8 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
+import { HINTERGRUND } from './seiten/krankenkasse.mjs';
+import { zahlen, einsetzen, BLOECKE } from './seiten-figuren.mjs';
 
 // Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
 // Quellen, Querverweisen), SONDERSEITEN die Rechtliches-Seite — sie hat nichts
@@ -168,6 +170,14 @@ function seiteBauen(seite, sprache) {
   const weiterlesen = (istErklaerseite ? andere : inhalt.seiten).map((s) =>
     `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a></li>`).join('\n');
 
+  // Hintergrundseiten gibt es nur auf Deutsch — darum verweist nur die deutsche
+  // Fassung darauf, nie eine Übersetzung auf eine Seite in einer anderen Sprache.
+  const hintergrundVerweise = (sprache.code === 'de' ? seite.hintergrund || [] : []).map((p) => {
+    const z = HINTERGRUND.find((h) => h.pfad === p);
+    if (!z) throw new Error(`${seite.pfad}: unbekannte Hintergrundseite ${p}`);
+    return `\n          <li><a href="${pfadIntern(z.pfad, sprache)}">${esc(z.titel)}</a></li>`;
+  }).join('');
+
   // JSON-LD. FAQPage ist hier zulässig, WEIL die Fragen und Antworten auf der
   // Seite sichtbar stehen — Google verlangt genau das. Der Text im strukturierten
   // Datum ist derselbe wie im sichtbaren, nur ohne Tags.
@@ -206,61 +216,11 @@ function seiteBauen(seite, sprache) {
     ],
   };
 
-  return `<!DOCTYPE html>
-<html lang="${sprache.htmlLang}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
-       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
-       script-src. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
-  <!-- ERZEUGT — nicht von Hand bearbeiten.
-       Quelle: ${sprache.code === 'de' ? 'scripts/seiten-inhalt.mjs' : `scripts/seiten/${sprache.code}.mjs`}
-       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
-       Generator: scripts/build-seiten.mjs
-       Neu bauen:  node scripts/build-seiten.mjs
-       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <!-- ${sprache.freigegeben
-    ? 'Freigegeben: diese Sprache ist gegengelesen und darf indexiert werden.'
-    : 'NICHT freigegeben: Übersetzung ohne menschliche Gegenlesung. noindex, bis ein Mensch sie gelesen und scripts/seiten-sprachen.mjs umgestellt hat.'} -->
-  <meta name="robots" content="${sprache.freigegeben ? 'index, follow' : 'noindex, follow'}">
-  <meta name="author" content="Stebler Studios">
-  <meta name="theme-color" content="#F2F2F0">
-  <title>${esc(seite.titel)} — Maloja Plana</title>
-  <meta name="description" content="${esc(seite.beschreibung)}">
-  <link rel="canonical" href="${seitenUrl}">${hreflangRing(seite.pfad)}
-
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="${esc(seite.titel)}">
-  <meta property="og:description" content="${esc(seite.beschreibung)}">
-  <meta property="og:url" content="${seitenUrl}">
-  <meta property="og:image" content="${BASIS}/og-image.png">
-  <meta property="og:locale" content="${sprache.ogLocale}">
-  <meta property="og:site_name" content="Maloja Plana">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${esc(seite.titel)}">
-  <meta name="twitter:description" content="${esc(seite.beschreibung)}">
-  <meta name="twitter:image" content="${BASIS}/og-image.png">
-
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <script type="application/ld+json">
-${JSON.stringify(ld, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
-  </script>
-  <style>${stil}
-  </style>
-</head>
-<body>
-  <div class="rahmen">
-    <header>
-      <a class="marke" href="/">Maloja&nbsp;Plana</a>
-      <nav class="krume" aria-label="${esc(R.krumeLabel)}">
-        <a href="/">${esc(R.start)}</a> › ${esc(seite.brotkrume)}
-      </nav>
-    </header>
+  return `${kopf({
+    seite, sprache, seitenUrl, ld,
+    quelle: sprache.code === 'de' ? 'scripts/seiten-inhalt.mjs' : `scripts/seiten/${sprache.code}.mjs`,
+    hreflang: hreflangRing(seite.pfad),
+  })}
 
     <main>
 ${R.entwurfBanner ? `      <p class="entwurf" role="note">${esc(R.entwurfBanner)}</p>\n` : ''}      <h1>${esc(seite.titel)}</h1>
@@ -291,12 +251,79 @@ ${istErklaerseite ? `      <p class="vorbehalt">${R.vorbehalt}${sprache.geprueft
 
       <h2>${esc(R.weiterlesenTitel)}</h2>
       <ul>
-${weiterlesen}
+${weiterlesen}${hintergrundVerweise}
 ${istErklaerseite ? `          <li><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a></li>` : ''}
       </ul>
     </main>
 
-    <footer>
+${fuss(sprache, `${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}`)}`;
+}
+
+// ─── Kopf und Fuss — gemeinsam für Erklär- und Hintergrundseiten ─────────────
+function kopf({ seite, sprache, seitenUrl, ld, quelle, hreflang, robots, robotsNotiz, extraStil = '' }) {
+  const R = RAHMEN[sprache.code];
+  const index = robots ?? (sprache.freigegeben ? 'index, follow' : 'noindex, follow');
+  const notiz = robotsNotiz ?? (sprache.freigegeben
+    ? 'Freigegeben: diese Sprache ist gegengelesen und darf indexiert werden.'
+    : 'NICHT freigegeben: Übersetzung ohne menschliche Gegenlesung. noindex, bis ein Mensch sie gelesen und scripts/seiten-sprachen.mjs umgestellt hat.');
+  return `<!DOCTYPE html>
+<html lang="${sprache.htmlLang}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: ${quelle}
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- ${notiz} -->
+  <meta name="robots" content="${index}">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>${esc(seite.titel)} — Maloja Plana</title>
+  <meta name="description" content="${esc(seite.beschreibung)}">
+  <link rel="canonical" href="${seitenUrl}">${hreflang}
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="${esc(seite.titel)}">
+  <meta property="og:description" content="${esc(seite.beschreibung)}">
+  <meta property="og:url" content="${seitenUrl}">
+  <meta property="og:image" content="${BASIS}/og-image.png">
+  <meta property="og:locale" content="${sprache.ogLocale}">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${esc(seite.titel)}">
+  <meta name="twitter:description" content="${esc(seite.beschreibung)}">
+  <meta name="twitter:image" content="${BASIS}/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+${JSON.stringify(ld, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
+  </script>
+  <style>${stil}${extraStil}
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="${esc(R.krumeLabel)}">
+        <a href="/">${esc(R.start)}</a> › ${esc(seite.brotkrume)}
+      </nav>
+    </header>`;
+}
+
+function fuss(sprache, sprachZeile) {
+  const R = RAHMEN[sprache.code];
+  return `    <footer>
       <p>${esc(R.fussProjekt)} ·
       <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
       <p>${esc(R.fussQuelloffen)}
@@ -309,12 +336,137 @@ ${istErklaerseite ? `          <li><a href="${pfadIntern('rechtliches', sprache)
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=${encodeURIComponent('Maloja Plana: ' + R.meldenLink)}">${esc(R.meldenLink)}</a></p>
-      <p class="sprachen">${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}</p>
+      <p class="sprachen">${sprachZeile}</p>
     </footer>
   </div>
 </body>
 </html>
 `;
+}
+
+// ─── Hintergrundseiten (seit 04.11.2026) ─────────────────────────────────────
+// Längere Stücke mit Zahlen und Bildern, z. B. /krankenkasse/. Anders als die
+// Erklärseiten: nur Deutsch, mit Zahlen aus Malojas Daten, mit sichtbarem Stand.
+// Warum: scripts/seiten/krankenkasse.mjs, Kopfkommentar.
+const stilHintergrund = `
+    .stand{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    nav.inhalt{ font-size:15px; margin:20px 0 8px }
+    nav.inhalt ol{ margin:6px 0 0 22px } nav.inhalt li{ margin-bottom:4px }
+    .merke{ border-left:2px solid var(--salbei); padding:2px 0 2px 14px; margin:20px 0 }
+    .tabelle{ overflow-x:auto; margin:12px 0 18px }
+    table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
+    caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
+    th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
+    th{ font-weight:600 }
+    td.n,th.n{ text-align:right; white-space:nowrap }
+    .fig{ margin:18px 0 22px }
+    .fig svg{ display:block; width:100%; height:auto; font-family:inherit }
+    .fig figcaption{ font-size:14px; color:var(--leise); margin-top:6px }
+    .f-achse{ stroke:var(--leise); stroke-width:1 }
+    .f-raster{ stroke:var(--rand); stroke-width:1 }
+    .f-saeule{ fill:var(--leise) }
+    .f-hell{ fill:var(--salbei) }
+    .f-spanne{ fill:var(--salbei); opacity:.45 }
+    .f-strich{ stroke:var(--text); stroke-width:1.5 }
+    .f-marke{ stroke:var(--text); stroke-width:1.5; stroke-dasharray:5 4 }
+    .f-linie{ fill:none; stroke:var(--text); stroke-width:2 }
+    .f-gestrichelt{ stroke-dasharray:7 5 }
+    .f-text{ fill:var(--leise); font-size:12px }
+    .f-stark{ fill:var(--text) }
+    ol.quellen{ margin:0 0 14px 22px; font-size:15px }`;
+
+function hintergrundBauen(seite) {
+  const sprache = SPRACHEN.find((s) => s.code === 'de');
+  const R = RAHMEN.de;
+  const werte = zahlen();
+  const z = (s) => einsetzen(s, werte);
+  const seitenUrl = url(seite.pfad, sprache);
+  const titel = z(seite.titel), beschreibung = z(seite.beschreibung);
+
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${seitenUrl}#webpage`,
+        url: seitenUrl,
+        name: titel,
+        description: beschreibung,
+        inLanguage: sprache.ldLang,
+        isPartOf: { '@id': `${BASIS}/#website` },
+        publisher: { '@id': `${BASIS}/#org` },
+        about: { '@id': `${BASIS}/#app` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${seitenUrl}#krume`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Maloja Plana', item: `${BASIS}/` },
+          { '@type': 'ListItem', position: 2, name: seite.brotkrume, item: seitenUrl },
+        ],
+      },
+    ],
+  };
+
+  const inhaltsverzeichnis = seite.inhaltsverzeichnis ? `      <nav class="inhalt" aria-label="Inhalt dieser Seite">
+        <strong>Acht Fragen</strong>
+        <ol>
+${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.replace(/^\d+\.\s*/, ''))}</a></li>`).join('\n')}
+        </ol>
+      </nav>` : '';
+
+  const abschnitte = seite.abschnitte.map((a) =>
+    `      <h2 id="${a.id}">${esc(a.titel)}</h2>${einsetzen(a.html, werte, BLOECKE)}`).join('\n\n');
+
+  const quellen = seite.quellen.map((q) =>
+    `        <li><a href="${esc(q.url)}" rel="noopener">${esc(q.text)}</a>: ${esc(q.zweck)}</li>`).join('\n');
+
+  const weiter = [...inhaltFuer('de').seiten].map((s) =>
+    `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a></li>`).join('\n');
+
+  return `${kopf({
+    seite: { ...seite, titel, beschreibung }, sprache, seitenUrl, ld,
+    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen: scripts/seiten-figuren.mjs`,
+    hreflang: '',
+    robots: 'index, follow',
+    robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
+    extraStil: stilHintergrund,
+  })}
+
+    <main>
+      <h1>${esc(titel)}</h1>
+      <p class="vorspann">${z(seite.vorspann)}</p>
+      <p class="stand"><strong>Stand der Zahlen:</strong> ${esc(z(seite.stand))}</p>
+      <p class="hinweis">${esc(seite.hinweis)}</p>
+${inhaltsverzeichnis}
+
+${abschnitte}
+
+      <div class="karte">
+        <p><strong>${esc(R.karteTitel)}</strong></p>
+        <p>${esc(R.karteText)}</p>
+        <p>${R.karteBeta}</p>
+        <p><a class="knopf" href="/">${esc(R.karteKnopf)}</a></p>
+      </div>
+
+      <h2 id="quellen">${esc(R.quellenTitel)}</h2>
+      <ol class="quellen">
+${quellen}
+      </ol>
+      <p class="leise"><strong>Gesetzesstellen:</strong> ${esc(seite.gesetze)}</p>
+      <p class="leise"><strong>Eigene Rechnungen.</strong> ${seite.eigeneRechnungen.map(z).join(' ')}</p>
+      <p class="leise">${esc(R.quellenLeise)}</p>
+
+      <p class="vorbehalt">${seite.vorbehalt}</p>
+
+      <h2>${esc(R.weiterlesenTitel)}</h2>
+      <ul>
+${weiter}
+          <li><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a></li>
+      </ul>
+    </main>
+
+${fuss(sprache, `${esc(R.spracheLabel)}: <span aria-current="true">${SPRACHNAME.de}</span> <span class="leise">(diese Seite gibt es bisher nur auf Deutsch)</span>`)}`;
 }
 
 // Die Sitemap kommt aus derselben Quelle wie die Seiten. Von Hand gepflegt ist
@@ -343,6 +495,8 @@ function sitemapBauen() {
     const i = inhaltFuer(s.code);
     zeilen.push(...i.seiten.map((x) => eintrag(url(x.pfad, s), '0.8', x.pfad)));
     zeilen.push(...i.sonderseiten.map((x) => eintrag(url(x.pfad, s), '0.3', x.pfad)));
+    // Hintergrundseiten: nur Deutsch, darum ohne Sprach-Alternativen.
+    if (s.code === 'de') zeilen.push(...HINTERGRUND.map((x) => eintrag(url(x.pfad, s), '0.8', null)));
   }
 
   const nichtFrei = SPRACHEN.filter((s) => !s.freigegeben).map((s) => s.code);
@@ -389,6 +543,14 @@ for (const sprache of SPRACHEN) {
   }
 }
 
+for (const h of HINTERGRUND) {
+  seitenAusgaben.push({
+    ziel: resolve(WURZEL, 'public', h.pfad, 'index.html'),
+    inhalt: hintergrundBauen(h),
+    name: `${h.pfad}/index.html`,
+  });
+}
+
 const ausgaben = [
   ...seitenAusgaben,
   { ziel: resolve(WURZEL, 'public', 'sitemap.xml'), inhalt: sitemapBauen(), name: 'sitemap.xml' },
@@ -425,7 +587,8 @@ if (NUR_PRUEFEN) {
   }
   console.log(`\n✓ Alle ${seitenAusgaben.length} Seiten und die Sitemap stimmen mit der Quelle überein.`);
 } else {
-  console.log(`\n✓ ${seitenAusgaben.length} Seiten (${ALLE.length} × ${SPRACHEN.length} Sprachen) + sitemap.xml erzeugt.`);
+  console.log(`\n✓ ${seitenAusgaben.length} Seiten (${ALLE.length} × ${SPRACHEN.length} Sprachen` +
+    ` + ${HINTERGRUND.length} Hintergrundseite(n), nur Deutsch) + sitemap.xml erzeugt.`);
 }
 console.log(`  indexierbar: ${frei.join(', ')}` +
   (offen.length ? `  ·  noindex bis zur Gegenlesung: ${offen.join(', ')}` : ''));

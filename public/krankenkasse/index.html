@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten/krankenkasse.mjs · Zahlen: scripts/seiten-figuren.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine. -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>Warum die Krankenkasse so viel kostet — Maloja Plana</title>
+  <meta name="description" content="Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum Ihr Nachbar weniger zahlt. Die Grundversicherung in acht Fragen, mit den Prämien 2027.">
+  <link rel="canonical" href="https://malojaplana.ch/krankenkasse/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Warum die Krankenkasse so viel kostet">
+  <meta property="og:description" content="Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum Ihr Nachbar weniger zahlt. Die Grundversicherung in acht Fragen, mit den Prämien 2027.">
+  <meta property="og:url" content="https://malojaplana.ch/krankenkasse/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Warum die Krankenkasse so viel kostet">
+  <meta name="twitter:description" content="Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum Ihr Nachbar weniger zahlt. Die Grundversicherung in acht Fragen, mit den Prämien 2027.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/krankenkasse/#webpage",
+        "url": "https://malojaplana.ch/krankenkasse/",
+        "name": "Warum die Krankenkasse so viel kostet",
+        "description": "Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum Ihr Nachbar weniger zahlt. Die Grundversicherung in acht Fragen, mit den Prämien 2027.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/krankenkasse/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Krankenkasse erklärt",
+            "item": "https://malojaplana.ch/krankenkasse/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
+           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    a:hover{ color:var(--salbei) }
+    header{ padding:28px 0 0 }
+    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    main{ padding:8px 0 16px }
+    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
+    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
+    p{ margin-bottom:14px }
+    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
+      padding:20px 22px; margin:28px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:10px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
+    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
+      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
+    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:14px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    footer p{ margin-bottom:6px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:14px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
+    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
+      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    .stand{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    nav.inhalt{ font-size:15px; margin:20px 0 8px }
+    nav.inhalt ol{ margin:6px 0 0 22px } nav.inhalt li{ margin-bottom:4px }
+    .merke{ border-left:2px solid var(--salbei); padding:2px 0 2px 14px; margin:20px 0 }
+    .tabelle{ overflow-x:auto; margin:12px 0 18px }
+    table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
+    caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
+    th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
+    th{ font-weight:600 }
+    td.n,th.n{ text-align:right; white-space:nowrap }
+    .fig{ margin:18px 0 22px }
+    .fig svg{ display:block; width:100%; height:auto; font-family:inherit }
+    .fig figcaption{ font-size:14px; color:var(--leise); margin-top:6px }
+    .f-achse{ stroke:var(--leise); stroke-width:1 }
+    .f-raster{ stroke:var(--rand); stroke-width:1 }
+    .f-saeule{ fill:var(--leise) }
+    .f-hell{ fill:var(--salbei) }
+    .f-spanne{ fill:var(--salbei); opacity:.45 }
+    .f-strich{ stroke:var(--text); stroke-width:1.5 }
+    .f-marke{ stroke:var(--text); stroke-width:1.5; stroke-dasharray:5 4 }
+    .f-linie{ fill:none; stroke:var(--text); stroke-width:2 }
+    .f-gestrichelt{ stroke-dasharray:7 5 }
+    .f-text{ fill:var(--leise); font-size:12px }
+    .f-stark{ fill:var(--text) }
+    ol.quellen{ margin:0 0 14px 22px; font-size:15px }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › Krankenkasse erklärt
+      </nav>
+    </header>
+
+    <main>
+      <h1>Warum die Krankenkasse so viel kostet</h1>
+      <p class="vorspann">Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, nimmt heraus. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.</p>
+      <p class="stand"><strong>Stand der Zahlen:</strong> Prämien 2027 (BAG, September 2026), Kosten 2024 und 2025 (BAG). Fachlich gegengelesen November 2026.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung. Die Zahlen sind Durchschnitte; die eigene Prämie zeigt der Prämienrechner des Bundes.</p>
+      <nav class="inhalt" aria-label="Inhalt dieser Seite">
+        <strong>Acht Fragen</strong>
+        <ol>
+          <li><a href="#topf">Warum ein gemeinsamer Topf?</a></li>
+          <li><a href="#querfinanzierung">Wer zahlt für wen? Die Querfinanzierung</a></li>
+          <li><a href="#franchise">Warum gibt es Franchise und Selbstbehalt?</a></li>
+          <li><a href="#preise">Woher kommen die Preise?</a></li>
+          <li><a href="#praemie">Wie wird daraus die Prämie?</a></li>
+          <li><a href="#nachbar">Warum zahlt der Nachbar weniger?</a></li>
+          <li><a href="#problem">Wo liegt das Problem?</a></li>
+          <li><a href="#aenderungen">Was ändert sich?</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="topf">1. Warum ein gemeinsamer Topf?</h2>
+        <p>Stellen Sie sich ein Dorf mit 100 Menschen vor. Niemand weiss, wen es dieses Jahr trifft. Eine Krebstherapie kann mehr kosten, als eine Familie je sparen könnte. Allein wäre das nicht zu bezahlen. Zu hundert schon.</p>
+        <p>Das Bild zeigt dieses Dorf mit echten Zahlen. Jede Säule ist ein Mensch, die Höhe ist, was 2024 für diese Person über die Grundversicherung abgerechnet wurde. Der Kantonsanteil am Spital ist nicht dabei.</p>
+<figure class="fig">
+        <svg viewBox="0 0 640 220" role="img" aria-labelledby="fig-dorf-t fig-dorf-d" focusable="false">
+          <title id="fig-dorf-t">Hundert Menschen, eine Säule je Person, so hoch wie ihre Kosten 2024</title>
+          <desc id="fig-dorf-d">Sortierte Säulen von links nach rechts. Die ersten 16 sind ohne Kosten, die meisten weiteren kaum sichtbar. Ganz rechts ragt eine einzige Säule bis 50'000 Franken.</desc>
+          <line class="f-achse" x1="52" y1="190" x2="628" y2="190"/>
+          <line class="f-raster" x1="52" y1="14" x2="628" y2="14"/>
+          <text class="f-text" x="46" y="18" text-anchor="end">50'000</text>
+          <text class="f-text" x="46" y="194" text-anchor="end">0</text>
+          <rect class="f-saeule" x="144.2" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="149.9" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="155.7" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="161.4" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="167.2" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="173" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="178.7" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="184.5" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="190.2" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="196" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="201.8" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="207.5" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="213.3" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="219" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="224.8" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="230.6" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="236.3" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="242.1" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="247.8" y="189.1" width="4.5" height="0.9"/>
+          <rect class="f-saeule" x="253.6" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="259.4" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="265.1" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="270.9" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="276.6" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="282.4" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="288.2" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="293.9" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="299.7" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="305.4" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="311.2" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="317" y="187.4" width="4.5" height="2.6"/>
+          <rect class="f-saeule" x="322.7" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="328.5" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="334.2" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="340" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="345.8" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="351.5" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="357.3" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="363" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="368.8" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="374.6" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="380.3" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="386.1" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="391.8" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="397.6" y="184.7" width="4.5" height="5.3"/>
+          <rect class="f-saeule" x="403.4" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="409.1" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="414.9" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="420.6" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="426.4" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="432.2" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="437.9" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="443.7" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="449.4" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="455.2" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="461" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="466.7" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="472.5" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="478.2" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="484" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="489.8" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="495.5" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="501.3" y="177.7" width="4.5" height="12.3"/>
+          <rect class="f-saeule" x="507" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="512.8" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="518.6" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="524.3" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="530.1" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="535.8" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="541.6" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="547.4" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="553.1" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="558.9" y="163.6" width="4.5" height="26.4"/>
+          <rect class="f-saeule" x="564.6" y="137.2" width="4.5" height="52.8"/>
+          <rect class="f-saeule" x="570.4" y="137.2" width="4.5" height="52.8"/>
+          <rect class="f-saeule" x="576.2" y="137.2" width="4.5" height="52.8"/>
+          <rect class="f-saeule" x="581.9" y="137.2" width="4.5" height="52.8"/>
+          <rect class="f-saeule" x="587.7" y="137.2" width="4.5" height="52.8"/>
+          <rect class="f-saeule" x="593.4" y="137.2" width="4.5" height="52.8"/>
+          <rect class="f-saeule" x="599.2" y="66.8" width="4.5" height="123.2"/>
+          <rect class="f-saeule" x="605" y="66.8" width="4.5" height="123.2"/>
+          <rect class="f-saeule" x="610.7" y="66.8" width="4.5" height="123.2"/>
+          <rect class="f-saeule" x="616.5" y="66.8" width="4.5" height="123.2"/>
+          <rect class="f-saeule f-hell" x="622.2" y="14" width="4.5" height="176"/>
+          <text class="f-text" x="52" y="210">16 Menschen ohne Rechnung</text>
+          <text class="f-text" x="628" y="210" text-anchor="end">1 Mensch über 50'000 Franken</text>
+        </svg>
+        <figcaption>Franken im Jahr, über die Grundversicherung abgerechnet, ohne Kantonsanteil am Spital. Die höchste Säule steht auf der Untergrenze von 50'000 Franken; in Wirklichkeit ragt sie oft weit höher. Quelle: BAG, EFIND 2024.</figcaption>
+      </figure>
+<div class="tabelle"><table>
+          <caption>Über die Grundversicherung abgerechnet 2024, auf 100 Menschen gerundet</caption>
+          <tr><th scope="col">Kosten im Jahr</th><th scope="col" class="n">Menschen</th></tr>
+          <tr><td>nichts abgerechnet</td><td class="n">16</td></tr>
+          <tr><td>bis 2'000 Franken</td><td class="n">45</td></tr>
+          <tr><td>2'000 bis 10'000 Franken</td><td class="n">28</td></tr>
+          <tr><td>10'000 bis 50'000 Franken</td><td class="n">10</td></tr>
+          <tr><td>über 50'000 Franken</td><td class="n">1</td></tr>
+        </table></div>
+        <p class="merke"><strong>Das Wichtigste auf dieser Seite:</strong> Die 61 Menschen, die am wenigsten kosten, brauchen zusammen rund 11 % des Geldes oder weniger. Die 5 Teuersten brauchen mindestens 27 %, vermutlich deutlich mehr. Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen. Und nächstes Jahr kann man selbst zu den wenigen gehören.</p>
+
+      <h2 id="querfinanzierung">2. Wer zahlt für wen? Die Querfinanzierung</h2>
+        <p>«Querfinanzierung» heisst: Die einen zahlen mehr ein, als sie brauchen, und andere bekommen mehr heraus, als sie einzahlen. Das ist kein Fehler. Es ist der Sinn der Sache. In der Grundversicherung gibt es vier solche Ströme.</p>
+        <h3>Von Gesund zu Krank</h3>
+        <p>Das ist der Grundgedanke. Die Kasse darf niemanden ablehnen und von Kranken keine höhere Prämie verlangen.</p>
+        <h3>Von Jung zu Alt</h3>
+        <p>Ab 26 zahlen bei gleicher Kasse, gleichem Modell, gleicher Franchise, gleicher Unfalldeckung und gleicher Region alle dieselbe Prämie, egal wie alt. Die Kosten sind aber überhaupt nicht gleich:</p>
+<figure class="fig">
+        <svg viewBox="0 0 640 250" role="img" aria-labelledby="fig-alter-t fig-alter-d" focusable="false">
+          <title id="fig-alter-t">Kosten je versicherte Person nach Alter, 2024</title>
+          <desc id="fig-alter-d">Neunzehn Säulen von 0–5 bis über 90 Jahre. Sie bleiben bis Mitte fünfzig tief und steigen dann steil, bis 20'389 Franken. Eine gestrichelte Linie markiert den Schnitt ab 26 Jahren bei 4'863 Franken.</desc>
+          <line class="f-raster" x1="52" y1="170.5" x2="628" y2="170.5"/><text class="f-text" x="46" y="174.5" text-anchor="end">5'000</text>
+          <line class="f-raster" x1="52" y1="125.1" x2="628" y2="125.1"/><text class="f-text" x="46" y="129.1" text-anchor="end">10'000</text>
+          <line class="f-raster" x1="52" y1="79.6" x2="628" y2="79.6"/><text class="f-text" x="46" y="83.6" text-anchor="end">15'000</text>
+          <line class="f-raster" x1="52" y1="34.2" x2="628" y2="34.2"/><text class="f-text" x="46" y="38.2" text-anchor="end">20'000</text>
+          <line class="f-achse" x1="52" y1="216" x2="628" y2="216"/>
+          <rect class="f-saeule" x="56.2" y="201.3" width="21.8" height="14.7"/><text class="f-text" x="67.2" y="231" text-anchor="middle">0–5</text>
+          <rect class="f-saeule" x="86.6" y="205.8" width="21.8" height="10.2"/>
+          <rect class="f-saeule" x="116.9" y="202.9" width="21.8" height="13.1"/>
+          <rect class="f-saeule" x="147.2" y="200.4" width="21.8" height="15.6"/><text class="f-text" x="158.1" y="231" text-anchor="middle">16–20</text>
+          <rect class="f-saeule" x="177.5" y="200.5" width="21.8" height="15.5"/>
+          <rect class="f-saeule" x="207.8" y="198.7" width="21.8" height="17.3"/>
+          <rect class="f-saeule" x="238.1" y="195.5" width="21.8" height="20.5"/><text class="f-text" x="249.1" y="231" text-anchor="middle">31–35</text>
+          <rect class="f-saeule" x="268.5" y="195.5" width="21.8" height="20.5"/>
+          <rect class="f-saeule" x="298.8" y="194.6" width="21.8" height="21.4"/>
+          <rect class="f-saeule" x="329.1" y="190.7" width="21.8" height="25.3"/><text class="f-text" x="340" y="231" text-anchor="middle">46–50</text>
+          <rect class="f-saeule" x="359.4" y="184.6" width="21.8" height="31.4"/>
+          <rect class="f-saeule" x="389.7" y="177.8" width="21.8" height="38.2"/>
+          <rect class="f-saeule" x="420" y="168.4" width="21.8" height="47.6"/><text class="f-text" x="430.9" y="231" text-anchor="middle">61–65</text>
+          <rect class="f-saeule" x="450.3" y="155.2" width="21.8" height="60.8"/>
+          <rect class="f-saeule" x="480.7" y="138.8" width="21.8" height="77.2"/>
+          <rect class="f-saeule" x="511" y="119.8" width="21.8" height="96.2"/><text class="f-text" x="521.9" y="231" text-anchor="middle">76–80</text>
+          <rect class="f-saeule" x="541.3" y="100.2" width="21.8" height="115.8"/>
+          <rect class="f-saeule" x="571.6" y="73.2" width="21.8" height="142.8"/>
+          <rect class="f-saeule" x="601.9" y="30.6" width="21.8" height="185.4"/><text class="f-text" x="612.8" y="231" text-anchor="middle">über 90</text>
+          <line class="f-marke" x1="52" y1="171.8" x2="628" y2="171.8"/>
+          <text class="f-text f-stark" x="56" y="165.8">Schnitt ab 26: 4'863</text>
+          <text class="f-text" x="628" y="244" text-anchor="end">Alter in Jahren</text>
+        </svg>
+        <figcaption>Franken im Jahr je versicherte Person, nach Abzug der Kostenbeteiligung. Gestrichelt: der Schnitt aller ab 26 Jahren. Quelle: BAG, EFIND 2024, Tabelle 2.2.</figcaption>
+      </figure>
+        <p>Eine Person zwischen 26 und 30 kostete die Kasse 2024 im Schnitt 1'903 Franken, eine zwischen 81 und 85 schon 12'738 Franken, also fast siebenmal so viel. Im Schnitt aller ab 26 waren es 4'863 Franken. Bis 60 liegt man darunter, ab 61 darüber. Über das ganze Leben gleicht sich das teilweise aus: Heute Junge sind später selbst die Alten.</p>
+        <h3>Von Reich zu Arm</h3>
+        <p>Die Prämie selbst kennt keinen Reichtum: Sie ist pro Kopf gleich, ob jemand 40'000 oder 400'000 Franken verdient. Der Ausgleich läuft über die Steuern. Bund und Kantone verbilligten 2023 die Prämien von knapp 2,5 Millionen Menschen mit rund 5,9 Milliarden Franken. Und bei stationären Behandlungen in Listenspitälern zahlt der Wohnkanton aus Steuern mindestens 55 % der Vergütung.</p>
+        <h3>Von Kasse zu Kasse</h3>
+        <p>Eine Kasse mit vielen Jungen und Gesunden wäre sonst billig, eine mit vielen Alten teuer, und alle würden nur noch Gesunde anlocken. Darum gibt es den Risikoausgleich: Kassen mit günstigen Versicherten zahlen an Kassen mit teuren. Für 2024 flossen so netto rund 1,1 Milliarden Franken.</p>
+
+      <h2 id="franchise">3. Warum gibt es Franchise und Selbstbehalt?</h2>
+        <p>Stellen Sie sich ein Buffet vor, bei dem alle schon bezahlt haben. Man nimmt mehr, als man sonst nehmen würde. Die Kostenbeteiligung soll genau das bremsen. Sie hat zwei Ziele: Kleinigkeiten nicht über die Versicherung laufen zu lassen und die Eigenverantwortung zu stärken. Die Studien zeigen, dass das wirkt: Steigt die Kostenbeteiligung für alle, sinken die Leistungskosten.</p>
+        <p><strong>Franchise:</strong> Der Betrag, den Sie jedes Jahr zuerst selbst zahlen. Erwachsene wählen zwischen 300 und 2'500 Franken. Je höher, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab.</p>
+        <p><strong>Selbstbehalt:</strong> Danach zahlen Sie noch 10 % jeder Rechnung, bis höchstens 700 Franken im Jahr. Das ist der Schutz: Der Selbstbehalt hat ein Dach. Zusammen mit der Franchise zahlen Sie im Jahr höchstens 1'000 bis 3'200 Franken, je nach gewählter Franchise. Im Bild knickt die Linie dort ab und läuft waagrecht weiter.</p>
+<figure class="fig">
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="fig-kostenteil-t fig-kostenteil-d" focusable="false">
+          <title id="fig-kostenteil-t">Eigener Anteil je nach Jahreskosten, bei der tiefsten und der höchsten Franchise</title>
+          <desc id="fig-kostenteil-d">Zwei Linien. Beide steigen zuerst steil bis zur Franchise, dann flacher mit 10 Prozent, und laufen ab dem Dach waagrecht weiter: bei Franchise 300 auf 1'000 Franken, bei Franchise 2'500 auf 3'200 Franken.</desc>
+          <line class="f-raster" x1="56" y1="166.8" x2="624" y2="166.8"/><text class="f-text" x="50" y="170.8" text-anchor="end">1'000</text>
+          <line class="f-raster" x1="56" y1="109.6" x2="624" y2="109.6"/><text class="f-text" x="50" y="113.6" text-anchor="end">2'000</text>
+          <line class="f-raster" x1="56" y1="52.3" x2="624" y2="52.3"/><text class="f-text" x="50" y="56.3" text-anchor="end">3'000</text>
+          <line class="f-achse" x1="56" y1="224" x2="624" y2="224"/>
+          <text class="f-text" x="56" y="240" text-anchor="middle">0</text>
+          <text class="f-text" x="198" y="240" text-anchor="middle">3'000</text>
+          <text class="f-text" x="340" y="240" text-anchor="middle">6'000</text>
+          <text class="f-text" x="482" y="240" text-anchor="middle">9'000</text>
+          <text class="f-text" x="624" y="240" text-anchor="middle">12'000</text>
+          <polyline class="f-linie" points="56,224 58.4,221.1 60.7,218.3 63.1,215.4 65.5,212.6 67.8,209.7 70.2,206.8 72.6,206.5 74.9,206.3 77.3,206 79.7,205.7 82,205.4 84.4,205.1 86.8,204.8 89.1,204.5 91.5,204.3 93.9,204 96.2,203.7 98.6,203.4 101,203.1 103.3,202.8 105.7,202.5 108.1,202.3 110.4,202 112.8,201.7 115.2,201.4 117.5,201.1 119.9,200.8 122.3,200.5 124.6,200.3 127,200 129.4,199.7 131.7,199.4 134.1,199.1 136.5,198.8 138.8,198.5 141.2,198.3 143.6,198 145.9,197.7 148.3,197.4 150.7,197.1 153,196.8 155.4,196.5 157.8,196.2 160.1,196 162.5,195.7 164.9,195.4 167.2,195.1 169.6,194.8 172,194.5 174.3,194.2 176.7,194 179.1,193.7 181.4,193.4 183.8,193.1 186.2,192.8 188.5,192.5 190.9,192.2 193.3,192 195.6,191.7 198,191.4 200.4,191.1 202.7,190.8 205.1,190.5 207.5,190.2 209.8,190 212.2,189.7 214.6,189.4 216.9,189.1 219.3,188.8 221.7,188.5 224,188.2 226.4,188 228.8,187.7 231.1,187.4 233.5,187.1 235.9,186.8 238.2,186.5 240.6,186.2 243,185.9 245.3,185.7 247.7,185.4 250.1,185.1 252.4,184.8 254.8,184.5 257.2,184.2 259.5,183.9 261.9,183.7 264.3,183.4 266.6,183.1 269,182.8 271.4,182.5 273.7,182.2 276.1,181.9 278.5,181.7 280.8,181.4 283.2,181.1 285.6,180.8 287.9,180.5 290.3,180.2 292.7,179.9 295,179.7 297.4,179.4 299.8,179.1 302.1,178.8 304.5,178.5 306.9,178.2 309.2,177.9 311.6,177.7 314,177.4 316.3,177.1 318.7,176.8 321.1,176.5 323.4,176.2 325.8,175.9 328.2,175.6 330.5,175.4 332.9,175.1 335.3,174.8 337.6,174.5 340,174.2 342.4,173.9 344.7,173.6 347.1,173.4 349.5,173.1 351.8,172.8 354.2,172.5 356.6,172.2 358.9,171.9 361.3,171.6 363.7,171.4 366,171.1 368.4,170.8 370.8,170.5 373.1,170.2 375.5,169.9 377.9,169.6 380.2,169.4 382.6,169.1 385,168.8 387.3,168.5 389.7,168.2 392.1,167.9 394.4,167.6 396.8,167.4 399.2,167.1 401.5,166.8 403.9,166.8 406.3,166.8 408.6,166.8 411,166.8 413.4,166.8 415.7,166.8 418.1,166.8 420.5,166.8 422.8,166.8 425.2,166.8 427.6,166.8 429.9,166.8 432.3,166.8 434.7,166.8 437,166.8 439.4,166.8 441.8,166.8 444.1,166.8 446.5,166.8 448.9,166.8 451.2,166.8 453.6,166.8 456,166.8 458.3,166.8 460.7,166.8 463.1,166.8 465.4,166.8 467.8,166.8 470.2,166.8 472.5,166.8 474.9,166.8 477.3,166.8 479.6,166.8 482,166.8 484.4,166.8 486.7,166.8 489.1,166.8 491.5,166.8 493.8,166.8 496.2,166.8 498.6,166.8 500.9,166.8 503.3,166.8 505.7,166.8 508,166.8 510.4,166.8 512.8,166.8 515.1,166.8 517.5,166.8 519.9,166.8 522.2,166.8 524.6,166.8 527,166.8 529.3,166.8 531.7,166.8 534.1,166.8 536.4,166.8 538.8,166.8 541.2,166.8 543.5,166.8 545.9,166.8 548.3,166.8 550.6,166.8 553,166.8 555.4,166.8 557.7,166.8 560.1,166.8 562.5,166.8 564.8,166.8 567.2,166.8 569.6,166.8 571.9,166.8 574.3,166.8 576.7,166.8 579,166.8 581.4,166.8 583.8,166.8 586.1,166.8 588.5,166.8 590.9,166.8 593.2,166.8 595.6,166.8 598,166.8 600.3,166.8 602.7,166.8 605.1,166.8 607.4,166.8 609.8,166.8 612.2,166.8 614.5,166.8 616.9,166.8 619.3,166.8 621.6,166.8 624,166.8"/>
+          <polyline class="f-linie f-gestrichelt" points="56,224 58.4,221.1 60.7,218.3 63.1,215.4 65.5,212.6 67.8,209.7 70.2,206.8 72.6,204 74.9,201.1 77.3,198.3 79.7,195.4 82,192.5 84.4,189.7 86.8,186.8 89.1,183.9 91.5,181.1 93.9,178.2 96.2,175.4 98.6,172.5 101,169.6 103.3,166.8 105.7,163.9 108.1,161.1 110.4,158.2 112.8,155.3 115.2,152.5 117.5,149.6 119.9,146.8 122.3,143.9 124.6,141 127,138.2 129.4,135.3 131.7,132.4 134.1,129.6 136.5,126.7 138.8,123.9 141.2,121 143.6,118.1 145.9,115.3 148.3,112.4 150.7,109.6 153,106.7 155.4,103.8 157.8,101 160.1,98.1 162.5,95.3 164.9,92.4 167.2,89.5 169.6,86.7 172,83.8 174.3,80.9 176.7,80.7 179.1,80.4 181.4,80.1 183.8,79.8 186.2,79.5 188.5,79.2 190.9,78.9 193.3,78.7 195.6,78.4 198,78.1 200.4,77.8 202.7,77.5 205.1,77.2 207.5,76.9 209.8,76.7 212.2,76.4 214.6,76.1 216.9,75.8 219.3,75.5 221.7,75.2 224,74.9 226.4,74.7 228.8,74.4 231.1,74.1 233.5,73.8 235.9,73.5 238.2,73.2 240.6,72.9 243,72.6 245.3,72.4 247.7,72.1 250.1,71.8 252.4,71.5 254.8,71.2 257.2,70.9 259.5,70.6 261.9,70.4 264.3,70.1 266.6,69.8 269,69.5 271.4,69.2 273.7,68.9 276.1,68.6 278.5,68.4 280.8,68.1 283.2,67.8 285.6,67.5 287.9,67.2 290.3,66.9 292.7,66.6 295,66.4 297.4,66.1 299.8,65.8 302.1,65.5 304.5,65.2 306.9,64.9 309.2,64.6 311.6,64.4 314,64.1 316.3,63.8 318.7,63.5 321.1,63.2 323.4,62.9 325.8,62.6 328.2,62.3 330.5,62.1 332.9,61.8 335.3,61.5 337.6,61.2 340,60.9 342.4,60.6 344.7,60.3 347.1,60.1 349.5,59.8 351.8,59.5 354.2,59.2 356.6,58.9 358.9,58.6 361.3,58.3 363.7,58.1 366,57.8 368.4,57.5 370.8,57.2 373.1,56.9 375.5,56.6 377.9,56.3 380.2,56.1 382.6,55.8 385,55.5 387.3,55.2 389.7,54.9 392.1,54.6 394.4,54.3 396.8,54.1 399.2,53.8 401.5,53.5 403.9,53.2 406.3,52.9 408.6,52.6 411,52.3 413.4,52 415.7,51.8 418.1,51.5 420.5,51.2 422.8,50.9 425.2,50.6 427.6,50.3 429.9,50 432.3,49.8 434.7,49.5 437,49.2 439.4,48.9 441.8,48.6 444.1,48.3 446.5,48 448.9,47.8 451.2,47.5 453.6,47.2 456,46.9 458.3,46.6 460.7,46.3 463.1,46 465.4,45.8 467.8,45.5 470.2,45.2 472.5,44.9 474.9,44.6 477.3,44.3 479.6,44 482,43.8 484.4,43.5 486.7,43.2 489.1,42.9 491.5,42.6 493.8,42.3 496.2,42 498.6,41.7 500.9,41.5 503.3,41.2 505.7,40.9 508,40.9 510.4,40.9 512.8,40.9 515.1,40.9 517.5,40.9 519.9,40.9 522.2,40.9 524.6,40.9 527,40.9 529.3,40.9 531.7,40.9 534.1,40.9 536.4,40.9 538.8,40.9 541.2,40.9 543.5,40.9 545.9,40.9 548.3,40.9 550.6,40.9 553,40.9 555.4,40.9 557.7,40.9 560.1,40.9 562.5,40.9 564.8,40.9 567.2,40.9 569.6,40.9 571.9,40.9 574.3,40.9 576.7,40.9 579,40.9 581.4,40.9 583.8,40.9 586.1,40.9 588.5,40.9 590.9,40.9 593.2,40.9 595.6,40.9 598,40.9 600.3,40.9 602.7,40.9 605.1,40.9 607.4,40.9 609.8,40.9 612.2,40.9 614.5,40.9 616.9,40.9 619.3,40.9 621.6,40.9 624,40.9"/>
+          <text class="f-text f-stark" x="624" y="159.8" text-anchor="end">Franchise 300: höchstens 1'000</text>
+          <text class="f-text f-stark" x="624" y="33.9" text-anchor="end">Franchise 2'500 (gestrichelt): höchstens 3'200</text>
+          <text class="f-text" x="624" y="256" text-anchor="end">Kosten im Jahr, Franken</text>
+        </svg>
+        <figcaption>Erwachsene, Grundregel nach KVG Art. 64: Franchise, danach 10 % Selbstbehalt bis höchstens 700 Franken im Jahr. Ohne Spitalbeitrag und ohne den höheren Selbstbehalt bei gewissen Medikamenten.</figcaption>
+      </figure>
+        <p>Das Bild zeigt die Grundregel. Zwei Dinge liegen ausserhalb: 15 Franken je Spitaltag, und bei gewissen Medikamenten, für die es günstigere Alternativen gibt, 40 statt 10 % Selbstbehalt, der nur zum Teil ans Dach zählt. Für Kinder gilt keine Franchise und die Hälfte des Dachs, also 350 Franken. Die Pflege im Heim hat eigene Regeln.</p>
+        <p>Das hat Folgen, die man im Alltag merkt. Von den 26- bis 30-Jährigen bekamen 2024 rund 64 von 100 im ganzen Jahr keinen Franken von der Kasse. Bei 28 davon lag der Kasse gar keine Rechnung vor, bei 36 blieb alles innerhalb der eigenen Kostenbeteiligung. Prämien zahlten sie trotzdem. Über alle Altersgruppen waren es 37 von 100.</p>
+        <p>Und der Haken: Die Bremse wirkt bei allen gleich stark in Franken, aber nicht gleich stark im Leben. 500 Franken sind für manche ein Abendessen, für andere ein Monatsbudget. Fast ein Viertel der Bevölkerung gab 2023 an, im letzten Jahr aus Kostengründen auf eine Behandlung verzichtet zu haben. Die Befragung sagt allerdings nicht, ob das aus Not oder freiwillig geschah. Auch der Bundesrat hält fest: Wer zu spät zum Arzt geht, kann später deutlich höhere Kosten auslösen. Und hohe Franchisen wählen vor allem Menschen, die ohnehin wenig Kosten erwarten.</p>
+
+      <h2 id="preise">4. Woher kommen die Preise?</h2>
+        <p>Im Laden sieht man den Preis und entscheidet. Beim Arzt nicht. Man kennt den Preis nicht, kann schlecht vergleichen, und oft entscheidet jemand anderes, was nötig ist. Darum gibt es keinen freien Markt. Preise werden ausgehandelt oder vom Staat festgelegt.</p>
+        <div class="tabelle"><table>
+          <caption>Was die Grundversicherung 2025 je Person und Monat bezahlte</caption>
+          <tr><th scope="col">Bereich</th><th scope="col" class="n">Fr./Mt.</th><th scope="col">So entsteht der Preis</th></tr>
+          <tr><td>Arzt ambulant</td><td class="n">93</td><td>Eine Preisliste für Arbeitsschritte (TARDOC, seit 2026) und Pauschalen. Jede Leistung hat Punkte, die Punkte mal Taxpunktwert ergeben den Preis.</td></tr>
+          <tr><td>Medikamente</td><td class="n">89</td><td>Das BAG legt den Preis in der Spezialitätenliste fest und schaut dabei auf das Ausland und auf den Nutzen.</td></tr>
+          <tr><td>Spital stationär</td><td class="n">75</td><td>Eine Pauschale pro Fall (SwissDRG): schwierigerer Fall gleich mehr Geld. Den Grundpreis handeln Spital und Kassen aus, der Kanton genehmigt ihn.</td></tr>
+          <tr><td>Spital ambulant</td><td class="n">56</td><td>Dieselbe Tarifstruktur wie in der Praxis, der Taxpunktwert kann abweichen.</td></tr>
+          <tr><td>Pflegeheime</td><td class="n">21</td><td>Die Kasse zahlt einen festen Beitrag je Pflegestufe, den Rest der Pflege teilen sich Bewohnende und Kantone.</td></tr>
+          <tr><td>Labor, Physio, Spitex, Hilfsmittel, Übriges</td><td class="n">77</td><td>Eigene Tarife und Listen.</td></tr>
+        </table></div>
+        <p class="leise">Franken je Monat und Person, 2025, noch unter dem alten Tarif, vor Abzug der Kostenbeteiligung. Zusammen 411 Franken (gerundet). Beim Spital stationär nur der Kassenanteil; der Kanton zahlt mindestens 55 % dazu.</p>
+        <p>Ein Preis allein macht aber noch keine Kosten. Es gilt immer: <strong>Kosten = Preis mal Menge.</strong> Die Rechnung steigt, wenn eine Behandlung teurer wird oder wenn mehr davon gemacht wird. Das ist wichtig für Frage 7.</p>
+
+      <h2 id="praemie">5. Wie wird daraus die Prämie?</h2>
+        <p>Jetzt zusammensetzen. Jede Kasse rechnet für jede Region und Altersgruppe wie mit einem Rezept. Hier mit den echten Zahlen von 2025, pro Person und Monat:</p>
+        <div class="tabelle"><table>
+          <caption>Das Rezept der Prämie, 2025, je Person und Monat</caption>
+          <tr><td>Was die Grundversicherung für Behandlungen bezahlte (ohne Kantonsanteil am Spital)</td><td class="n">411 Fr.</td></tr>
+          <tr><td>minus was die Versicherten selbst zahlten</td><td class="n">− 54 Fr.</td></tr>
+          <tr><td>bleibt für den Topf</td><td class="n">357 Fr.</td></tr>
+          <tr><td>plus Verwaltung der Kassen (Wert 2024)</td><td class="n">+ 16 Fr.</td></tr>
+          <tr><td>plus oder minus Reserven</td><td class="n">je nach Kasse</td></tr>
+        </table></div>
+        <p class="leise">Bei der einzelnen Kasse kommt der Risikoausgleich dazu, als Zuschlag oder als Abzug. Über alle Kassen hebt er sich auf.</p>
+        <p>Das ist eine Schätzung fürs nächste Jahr, denn die Prämie muss im Voraus feststehen. Die Kassen reichen ihre Rechnung beim BAG ein. Das BAG lehnt ab, wenn die Prämie die Kosten nicht deckt, zu weit darüber liegt oder zu viel Reserve aufbaut. Verdienen darf die Kasse an der Grundversicherung nichts: Das Geld darf nur für die Grundversicherung verwendet werden, Überschüsse bleiben dort, etwa in den Reserven.</p>
+        <p class="merke"><strong>Merke:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien. Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
+<div class="tabelle"><table>
+          <caption>Mittlere Monatsprämie 2027, ganze Schweiz</caption>
+          <tr><th scope="col">Altersgruppe</th><th scope="col" class="n">Franken</th></tr>
+          <tr><td>Erwachsene ab 26</td><td class="n">487.60</td></tr>
+          <tr><td>Junge Erwachsene 19 bis 25</td><td class="n">338.80</td></tr>
+          <tr><td>Kinder bis 18</td><td class="n">128.10</td></tr>
+          <tr><td>Alle zusammen</td><td class="n">412.00</td></tr>
+        </table></div>
+
+      <h2 id="nachbar">6. Warum zahlt der Nachbar weniger?</h2>
+        <p>Die mittlere Prämie von 412 Franken zahlt fast niemand genau. Das BAG zählt für 2027 über 200'000 verschiedene Prämien. Welche davon die eigene ist, hängt von sieben Dingen ab.</p>
+        <h3>Der Kanton</h3>
+        <p>Die Kasse muss die Prämien nach den Kosten im Kanton abstufen. Massgebend ist, wo Sie wohnen, nicht wo Sie arbeiten oder sich behandeln lassen. Erwachsene zahlen 2027 im Schnitt in Zug 324.90 Franken, in Genf 610.60 Franken, also fast das Doppelte.</p>
+<figure class="fig">
+        <svg viewBox="0 0 640 532" role="img" aria-labelledby="fig-kantone-t fig-kantone-d" focusable="false">
+          <title id="fig-kantone-t">Mittlere Monatsprämie für Erwachsene 2027 je Kanton</title>
+          <desc id="fig-kantone-d">Liegende Balken für alle 26 Kantone, von Zug mit 324.90 Franken bis Genf mit 610.60 Franken. Bei 11 Kantonen mit mehreren Prämienregionen zeigt ein heller Teil die Spanne zwischen der günstigsten und der teuersten Region.</desc>
+          <line class="f-raster" x1="109.2" y1="4" x2="109.2" y2="504"/><text class="f-text" x="109.2" y="518" text-anchor="middle">100</text>
+          <line class="f-raster" x1="178.5" y1="4" x2="178.5" y2="504"/><text class="f-text" x="178.5" y="518" text-anchor="middle">200</text>
+          <line class="f-raster" x1="247.7" y1="4" x2="247.7" y2="504"/><text class="f-text" x="247.7" y="518" text-anchor="middle">300</text>
+          <line class="f-raster" x1="316.9" y1="4" x2="316.9" y2="504"/><text class="f-text" x="316.9" y="518" text-anchor="middle">400</text>
+          <line class="f-raster" x1="386.2" y1="4" x2="386.2" y2="504"/><text class="f-text" x="386.2" y="518" text-anchor="middle">500</text>
+          <line class="f-raster" x1="455.4" y1="4" x2="455.4" y2="504"/><text class="f-text" x="455.4" y="518" text-anchor="middle">600</text>
+          <line class="f-achse" x1="40" y1="4" x2="40" y2="504"/>
+          <text class="f-text" x="34" y="19" text-anchor="end">ZG</text><rect class="f-saeule" x="40" y="8" width="224.9" height="13"/><text class="f-text" x="270.9" y="19">324.90</text>
+          <text class="f-text" x="34" y="38" text-anchor="end">AI</text><rect class="f-saeule" x="40" y="27" width="235.7" height="13"/><text class="f-text" x="281.7" y="38">340.50</text>
+          <text class="f-text" x="34" y="57" text-anchor="end">UR</text><rect class="f-saeule" x="40" y="46" width="261.5" height="13"/><text class="f-text" x="307.5" y="57">377.70</text>
+          <text class="f-text" x="34" y="76" text-anchor="end">OW</text><rect class="f-saeule" x="40" y="65" width="267.7" height="13"/><text class="f-text" x="313.7" y="76">386.70</text>
+          <text class="f-text" x="34" y="95" text-anchor="end">NW</text><rect class="f-saeule" x="40" y="84" width="275" height="13"/><text class="f-text" x="321" y="95">397.20</text>
+          <text class="f-text" x="34" y="114" text-anchor="end">SZ</text><rect class="f-saeule" x="40" y="103" width="289.7" height="13"/><text class="f-text" x="335.7" y="114">418.50</text>
+          <text class="f-text" x="34" y="133" text-anchor="end">AR</text><rect class="f-saeule" x="40" y="122" width="292.4" height="13"/><text class="f-text" x="338.4" y="133">422.30</text>
+          <text class="f-text" x="34" y="152" text-anchor="end">GL</text><rect class="f-saeule" x="40" y="141" width="295.3" height="13"/><text class="f-text" x="341.3" y="152">426.50</text>
+          <text class="f-text" x="34" y="171" text-anchor="end">TG</text><rect class="f-saeule" x="40" y="160" width="299.9" height="13"/><text class="f-text" x="345.9" y="171">433.20</text>
+          <text class="f-text" x="34" y="190" text-anchor="end">GR</text><rect class="f-saeule" x="40" y="179" width="273.8" height="13"/><rect class="f-spanne" x="313.8" y="179" width="32.1" height="13"/><line class="f-strich" x1="345.9" y1="178" x2="345.9" y2="193"/><line class="f-strich" x1="324.5" y1="178" x2="324.5" y2="193"/><line class="f-strich" x1="313.8" y1="178" x2="313.8" y2="193"/><text class="f-text" x="351.9" y="190">395.50 – 441.90</text>
+          <text class="f-text" x="34" y="209" text-anchor="end">LU</text><rect class="f-saeule" x="40" y="198" width="276.9" height="13"/><rect class="f-spanne" x="316.9" y="198" width="32" height="13"/><line class="f-strich" x1="348.8" y1="197" x2="348.8" y2="212"/><line class="f-strich" x1="325.5" y1="197" x2="325.5" y2="212"/><line class="f-strich" x1="316.9" y1="197" x2="316.9" y2="212"/><text class="f-text" x="354.8" y="209">399.90 – 446.10</text>
+          <text class="f-text" x="34" y="228" text-anchor="end">SG</text><rect class="f-saeule" x="40" y="217" width="277.1" height="13"/><rect class="f-spanne" x="317.1" y="217" width="39.2" height="13"/><line class="f-strich" x1="356.3" y1="216" x2="356.3" y2="231"/><line class="f-strich" x1="333.3" y1="216" x2="333.3" y2="231"/><line class="f-strich" x1="317.1" y1="216" x2="317.1" y2="231"/><text class="f-text" x="362.3" y="228">400.30 – 456.90</text>
+          <text class="f-text" x="34" y="247" text-anchor="end">AG</text><rect class="f-saeule" x="40" y="236" width="321.7" height="13"/><text class="f-text" x="367.7" y="247">464.70</text>
+          <text class="f-text" x="34" y="266" text-anchor="end">VS</text><rect class="f-saeule" x="40" y="255" width="288.8" height="13"/><rect class="f-spanne" x="328.8" y="255" width="41.7" height="13"/><line class="f-strich" x1="370.4" y1="254" x2="370.4" y2="269"/><line class="f-strich" x1="328.8" y1="254" x2="328.8" y2="269"/><text class="f-text" x="376.4" y="266">417.10 – 477.30</text>
+          <text class="f-text" x="34" y="285" text-anchor="end">SH</text><rect class="f-saeule" x="40" y="274" width="312.1" height="13"/><rect class="f-spanne" x="352.1" y="274" width="23.7" height="13"/><line class="f-strich" x1="375.8" y1="273" x2="375.8" y2="288"/><line class="f-strich" x1="352.1" y1="273" x2="352.1" y2="288"/><text class="f-text" x="381.8" y="285">450.80 – 485.00</text>
+          <text class="f-text" x="34" y="304" text-anchor="end">SO</text><rect class="f-saeule" x="40" y="293" width="341.7" height="13"/><text class="f-text" x="387.7" y="304">493.50</text>
+          <text class="f-text" x="34" y="323" text-anchor="end">FR</text><rect class="f-saeule" x="40" y="312" width="312.7" height="13"/><rect class="f-spanne" x="352.7" y="312" width="29.5" height="13"/><line class="f-strich" x1="382.2" y1="311" x2="382.2" y2="326"/><line class="f-strich" x1="352.7" y1="311" x2="352.7" y2="326"/><text class="f-text" x="388.2" y="323">451.70 – 494.30</text>
+          <text class="f-text" x="34" y="342" text-anchor="end">ZH</text><rect class="f-saeule" x="40" y="331" width="309.6" height="13"/><rect class="f-spanne" x="349.6" y="331" width="45.6" height="13"/><line class="f-strich" x1="395.2" y1="330" x2="395.2" y2="345"/><line class="f-strich" x1="370.1" y1="330" x2="370.1" y2="345"/><line class="f-strich" x1="349.6" y1="330" x2="349.6" y2="345"/><text class="f-text" x="401.2" y="342">447.20 – 513.00</text>
+          <text class="f-text" x="34" y="361" text-anchor="end">BE</text><rect class="f-saeule" x="40" y="350" width="315.2" height="13"/><rect class="f-spanne" x="355.2" y="350" width="52.5" height="13"/><line class="f-strich" x1="407.8" y1="349" x2="407.8" y2="364"/><line class="f-strich" x1="378.2" y1="349" x2="378.2" y2="364"/><line class="f-strich" x1="355.2" y1="349" x2="355.2" y2="364"/><text class="f-text" x="413.8" y="361">455.30 – 531.20</text>
+          <text class="f-text" x="34" y="380" text-anchor="end">JU</text><rect class="f-saeule" x="40" y="369" width="381.5" height="13"/><text class="f-text" x="427.5" y="380">551.00</text>
+          <text class="f-text" x="34" y="399" text-anchor="end">VD</text><rect class="f-saeule" x="40" y="388" width="361.6" height="13"/><rect class="f-spanne" x="401.6" y="388" width="21.8" height="13"/><line class="f-strich" x1="423.4" y1="387" x2="423.4" y2="402"/><line class="f-strich" x1="401.6" y1="387" x2="401.6" y2="402"/><text class="f-text" x="429.4" y="399">522.30 – 553.80</text>
+          <text class="f-text" x="34" y="418" text-anchor="end">BL</text><rect class="f-saeule" x="40" y="407" width="357" height="13"/><rect class="f-spanne" x="397" y="407" width="28" height="13"/><line class="f-strich" x1="424.9" y1="406" x2="424.9" y2="421"/><line class="f-strich" x1="397" y1="406" x2="397" y2="421"/><text class="f-text" x="430.9" y="418">515.60 – 556.00</text>
+          <text class="f-text" x="34" y="437" text-anchor="end">NE</text><rect class="f-saeule" x="40" y="426" width="386.9" height="13"/><text class="f-text" x="432.9" y="437">558.80</text>
+          <text class="f-text" x="34" y="456" text-anchor="end">BS</text><rect class="f-saeule" x="40" y="445" width="395" height="13"/><text class="f-text" x="441" y="456">570.60</text>
+          <text class="f-text" x="34" y="475" text-anchor="end">TI</text><rect class="f-saeule" x="40" y="464" width="391.4" height="13"/><rect class="f-spanne" x="431.4" y="464" width="30.5" height="13"/><line class="f-strich" x1="461.8" y1="463" x2="461.8" y2="478"/><line class="f-strich" x1="431.4" y1="463" x2="431.4" y2="478"/><text class="f-text" x="467.8" y="475">565.30 – 609.30</text>
+          <text class="f-text" x="34" y="494" text-anchor="end">GE</text><rect class="f-saeule" x="40" y="483" width="422.7" height="13"/><text class="f-text" x="468.7" y="494">610.60</text>
+          <text class="f-text" x="632" y="528" text-anchor="end">Franken im Monat</text>
+        </svg>
+        <figcaption>Erwachsene ab 26, alle Kassen zusammen. Heller Teil mit Strichen: Kantone mit mehreren Prämienregionen, ein Strich je Region. Quelle: priminfo.admin.ch — praemienregionen-2027.xlsx, Stand 22.10.2026 (Prämienregionen gültig ab 01.01.2027), in Maloja Plana geführt.</figcaption>
+      </figure>
+<div class="tabelle"><table>
+          <caption>Prämie und Kosten in sechs Kantonen</caption>
+          <tr><th scope="col">Kanton</th><th scope="col" class="n">Prämie Erwachsene 2027, Fr./Mt.</th><th scope="col" class="n">Kosten je Person 2024, Fr./Jahr</th></tr>
+          <tr><td>Zug</td><td class="n">324.90</td><td class="n">3'869</td></tr>
+          <tr><td>Appenzell Innerrhoden</td><td class="n">340.50</td><td class="n">3'366</td></tr>
+          <tr><td>Zürich</td><td class="n">447.20 bis 513.00 <span class="leise">(3 Regionen)</span></td><td class="n">4'516</td></tr>
+          <tr><td>Basel-Stadt</td><td class="n">570.60</td><td class="n">5'591</td></tr>
+          <tr><td>Tessin</td><td class="n">565.30 bis 609.30 <span class="leise">(2 Regionen)</span></td><td class="n">5'796</td></tr>
+          <tr><td>Genf</td><td class="n">610.60</td><td class="n">5'616</td></tr>
+        </table></div>
+        <p>Der Vergleich zeigt: Die Prämie folgt den Kosten im Kanton sehr eng. Über alle 26 Kantone laufen die beiden Zahlen fast im Gleichschritt. Teure Prämie heisst also vor allem: Dort fallen pro Person höhere Kosten an. Das ist so gewollt, denn die Prämien müssen die Kosten im Kanton decken. Ob dort zu viel behandelt wird oder die Menschen mehr Pflege brauchen, zeigt diese Zahl nicht. Zug fällt auf: Es kostet mehr als Appenzell Innerrhoden, hat aber die tiefere Prämie; der Grund liess sich nicht belegen.</p>
+        <p>Warum die Kosten verschieden sind, ist nicht abschliessend geklärt. Ältere Studien deuten darauf hin, dass die Menge der Behandlungen mehr erklärt als deren Preis, und dass in Kantonen mit mehr Ärztinnen und Ärzten mehr Leistungen bezogen werden. Beim Alter ist das Bild nicht einheitlich: Eine Studie konnte den Einfluss nicht belegen, andere fanden ihn. Auch Armut, Arbeitslosigkeit und Invalidität spielen eine Rolle.</p>
+        <h3>Die Prämienregion</h3>
+        <p>Auch innerhalb eines Kantons kann die Prämie verschieden sein, weil die Stadt oft mehr kostet als das Land. Darum sind Kantone mit grossen Kostenunterschieden in Prämienregionen aufgeteilt. Jede Gemeinde gehört fest zu einer Region. Meist ist Region 1 die teuerste. Die Kassen dürfen in den anderen Regionen tiefere Prämien verlangen, sie müssen aber nicht. Ausnahmen gibt es auch: 2027 verlangt eine Kasse in drei Kantonen in Region 2 mehr als in Region 1.</p>
+        <div class="tabelle"><table>
+          <caption>Kantone mit mehreren Prämienregionen</caption>
+          <tr><th scope="col">Regionen</th><th scope="col">Kantone und grösster erlaubter Unterschied</th></tr>
+          <tr><td>drei</td><td>Bern, Graubünden, Zürich: 15 % von Region 1 zu 2, 10 % von 2 zu 3. Luzern: 15 und 5 %. St. Gallen: 10 und 10 %.</td></tr>
+          <tr><td>zwei</td><td>Basel-Landschaft, Schaffhausen, Tessin, Waadt, Wallis: 15 %. Freiburg: 10 %.</td></tr>
+          <tr><td>eine</td><td>alle übrigen 15 Kantone</td></tr>
+        </table></div>
+        <p>Im Kanton Zürich zum Beispiel gehört nur die Stadt Zürich zur Region 1. Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3. Ein Umzug um wenige Kilometer kann die Prämie also verändern, ohne dass sich an der Gesundheit etwas ändert. Das EDI legt für jeden dieser Kantone fest, wie gross der Unterschied von Region zu Region höchstens sein darf. Er darf den Kostenunterschied nicht übersteigen.</p>
+        <p><strong>Der Haken:</strong> Die Einteilung stammt im Kern aus dem Jahr 2004 und stützt sich auf eine ETH-Studie von 2001. Vorschläge für eine neue Einteilung lehnte das Parlament ab, seither bleibt sie bis auf wenige Sonderfälle wie Gemeindefusionen unverändert. Die Grenzen zeigen also teilweise ein altes Kostenbild. Die Höchstrabatte dagegen gelten je Kanton erst seit 2023 und werden regelmässig überprüft, und Kantone können selbst eine Änderung vorschlagen.</p>
+        <h3>Das Alter</h3>
+        <p>Es gibt nur drei Gruppen: Kinder bis 18, junge Erwachsene von 19 bis 25, Erwachsene ab 26. Für die ersten beiden muss die Prämie tiefer sein. 2027 sind das im Schnitt 128.10, 338.80 und 487.60 Franken im Monat. Innerhalb einer Gruppe zählt das Alter nicht mehr. Gewechselt wird immer am 1. Januar nach dem 18. und nach dem 25. Geburtstag.</p>
+        <h3>Die Franchise</h3>
+        <p>Wer eine höhere Franchise wählt, bekommt Rabatt, aber nicht beliebig viel: Er darf höchstens 70 % des zusätzlichen Risikos betragen. Von 300 auf 2'500 Franken übernehmen Sie 2'200 Franken mehr Risiko, der Rabatt liegt also bei höchstens 1'540 Franken im Jahr, rund 128 Franken im Monat.</p>
+        <h3>Das Modell</h3>
+        <p>Bei Hausarzt-, HMO- oder Telmed-Modellen gehen Sie zuerst an eine bestimmte Stelle und verzichten auf die freie Wahl. Dafür kann die Kasse Rabatt geben. Er darf nur Kostenunterschiede weitergeben, die wirklich aus dem Modell stammen, nicht daraus, dass dort gesündere Menschen versichert sind.</p>
+        <h3>Die Unfalldeckung und die Kasse</h3>
+        <p>Wer mindestens acht Stunden pro Woche beim selben Arbeitgeber arbeitet, ist über ihn auch in der Freizeit gegen Unfälle versichert. Dann können Sie die Unfalldeckung bei der Kasse schriftlich ausschliessen lassen, mit einer Bestätigung des Arbeitgebers. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, müssen Sie das der Kasse melden, sonst zahlen Sie nach. Und schliesslich die Kasse selbst: Die Leistungen sind überall gleich, die Prämie nicht.</p>
+        <p class="merke"><strong>Merke:</strong> Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht: Die Kasse darf deshalb keine höhere Prämie verlangen.</p>
+
+      <h2 id="problem">7. Wo liegt das Problem?</h2>
+        <p>Zuerst das, was kein Fehler ist. Wir werden älter, und es gibt Therapien, die es früher nicht gab. Das kostet Geld, und das ist gut so. Das BAG nennt beides als Gründe. Dazu kommen aber Gründe, die nicht sein müssten.</p>
+        <p>Eine Studie im Auftrag des BAG schätzte, dass 16 bis 19 % der Kosten vermeidbar wären, für 2016 waren das 7 bis 8 Milliarden Franken. Auf die heutige Prämie umgelegt wären das grob 65 bis 80 Franken im Monat. Die Forschenden warnen selbst: Ganz erreichen lässt sich das kaum. Sie nennen drei Hauptursachen: zu viel Menge, zu hohe Preise, schlechte Abläufe. Dahinter stecken vor allem diese Mechanismen.</p>
+        <h3>Wer mehr macht, verdient mehr</h3>
+        <p>Wer pro Handgriff bezahlt wird, verdient an jedem zusätzlichen Schritt, und der Tarif belohnt das Weglassen nicht. Das Gesetz verlangt zwar, sich aufs Nötige zu beschränken, doch der Anreiz bleibt. Wer pro Pinselstrich bezahlt wird, malt nicht schneller. Das Geld fliesst für Behandlungen, nicht für gesunde Menschen. Im Verhältnis zu den Kosten sieht die Studie das grösste Sparpotenzial bei ambulanter Radiologie, stationärer Psychiatrie, spitalambulanten Behandlungen und Labor. Solche Unterschiede sind laut den Forschenden aber mit Vorsicht zu lesen.</p>
+        <h3>Wer bestellt, zahlt nicht</h3>
+        <p>Die Ärztin empfiehlt, die Patientin sagt ja, die Kasse zahlt. Keine der drei hat den vollen Anreiz, auf den Preis zu schauen. Ist die Franchise erreicht, zahlt man nur noch 10 % jeder Rechnung, und ist das Dach erreicht, gar nichts mehr ausser dem Spitalbeitrag.</p>
+        <h3>Der Kanton trägt zu viele Hüte</h3>
+        <p>Der Kanton plant die Spitäler, besitzt oft eines davon, genehmigt dessen Preise und zahlt mit. Der Bundesrat nennt das selbst eine Mehrfachrolle als Regulator, teilweise Eigentümer und Zahler. Er sieht mögliche Interessenkonflikte allerdings als entschärft an und hält im Bericht vom Januar 2026 keine neuen Regeln dafür für nötig; das ist umstritten. Dazu kommt die Politik: Kaum jemand will, dass das eigene Regionalspital schliesst, auch wenn das nächste nah ist.</p>
+        <h3>Das Geld schaut auf den Ort, nicht auf den Sinn</h3>
+        <p>Stationär zahlt heute der Kanton mit, ambulant zahlt die Kasse allein. Wird eine Operation vom Spitalbett in die Tagesklinik verlegt, ist das oft billiger, aber die Prämienzahlenden tragen plötzlich alles. Was für alle gut ist, ist für einzelne Zahler schlecht.</p>
+        <h3>Generika sind teurer als nötig</h3>
+        <p>Generika sind Kopien von Medikamenten, deren Patent abgelaufen ist. Laut Preisüberwacher kosten die günstigsten in der Schweiz 2,4-mal so viel wie im Ausland. Ein Vergleich von santésuisse und Interpharma von 2023 kommt mit anderer Methode auf knapp das Doppelte. Teurer sind sie in beiden Rechnungen.</p>
+        <h3>Alle ziehen an einem anderen Ende</h3>
+        <p>Jede Sparmassnahme nimmt jemandem Einkommen weg: Ärzteschaft, Spitälern, Pharma, Kantonen, Kassen. Alle haben gute Argumente und eine Lobby. Darum geht es langsam voran. Der Bundesrat will Ende 2026 erstmals Kosten- und Qualitätsziele für 2028 bis 2031 festlegen.</p>
+        <h3>Und wen trifft es?</h3>
+        <p>Weil die Prämie pro Kopf gleich ist, drückt sie unten am stärksten. Die Prämien stiegen über zwanzig Jahre von rund 4 auf rund 7 % des verfügbaren Einkommens, das sind Durchschnittswerte. Das Gesundheitswesen kostete 2024 rund 97 Milliarden Franken. Davon trugen die Haushalte 21 % direkt aus der eigenen Tasche und weitere 41 % indirekt, vor allem über die Prämien. Die öffentliche Hand trug 31 %.</p>
+
+      <h2 id="aenderungen">8. Was ändert sich?</h2>
+        <p><strong>2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen ersetzt TARMED und führt mehr Pauschalen ein. Die Umstellung läuft noch, Rechnungen kommen teils verspätet.</p>
+        <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen festen Anteil an den Kosten nach Abzug der Kostenbeteiligung, zuerst je nach Kanton 21,3 bis 28,5 %, ab 2031 in der Regel rund 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht.</p>
+        <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nennt die Mitteilung vom 13.03.2026 nicht.</p>
+        <p><strong>Für Sie:</strong> Wer auf den 1. Januar die Kasse wechseln will, muss so kündigen, dass die Kündigung spätestens am 30. November bei der Kasse eingetroffen ist. Mit offenen Ausständen ist ein Wechsel nicht möglich. Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes, verlinkt unten bei den Quellen.</p>
+        <p>Ob Sie Anspruch auf eine Verbilligung der Prämie haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
+
+      <div class="karte">
+        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
+      </div>
+
+      <h2 id="quellen">Quellen und Rechner</h2>
+      <ol class="quellen">
+        <li><a href="https://www.bag.admin.ch/dam/de/sd-web/Rf0wOvVWkGNj/EFIND2024_d_Kosten_pro_Versicherte_nach_Kanton_Alter_Geschlecht_Spitalaufenthalt_PCGs.pdf" rel="noopener">BAG, EFIND 2024</a>: Kostenstufen, Kosten nach Alter und Kanton</li>
+        <li><a href="https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/09/29/f21880a8-516b-414a-8044-15f6e1c84c18.pdf" rel="noopener">BAG, Kantonale Prämien 2026/2027</a>: Prämien je Kanton</li>
+        <li><a href="https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/09/29/c875537a-fbce-4445-ac8c-e0f40290151d.pdf" rel="noopener">BAG, Faktenblatt Mittlere Prämie</a>: Schweizer Mittel</li>
+        <li><a href="https://www.bag.admin.ch/de/krankenversicherung-praemienregionen" rel="noopener">BAG, Prämienregionen</a>: Gemeindeliste ab 1.1.2027</li>
+        <li><a href="https://www.bag.admin.ch/dam/de/sd-web/DMKQLbZIkPNL/faktenblatt-praemienregionen-stand-maerz-2024.pdf" rel="noopener">BAG, Faktenblatt Prämienregionen</a>: Geschichte und Höchstrabatte</li>
+        <li><a href="https://digitalcollection.zhaw.ch/bitstream/11475/83/1/1486960037.pdf" rel="noopener">ZHAW, Kantonale Mengenindizes der OKP-Leistungen (2007)</a>: Gründe für Kostenunterschiede, ältere Quelle</li>
+        <li><a href="https://www.obsan.admin.ch/sites/default/files/arbeitsdokument-30.pdf" rel="noopener">Obsan, Arbeitsdokument 30</a>: Gründe für Kostenunterschiede, ältere Quelle</li>
+        <li><a href="https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/09/29/fdc63d94-7058-4201-8e08-4e6add2cea3b.pdf" rel="noopener">BAG, Faktenblatt Leistungen 2025</a>: Kostengruppen, 411, 54 und 357 Franken</li>
+        <li><a href="https://www.bag.admin.ch/de/newnsb/BfuGvedj0OOX" rel="noopener">BAG, Prämien 2027</a>: Kostenwachstum, Gründe, Kostenziele</li>
+        <li><a href="https://www.bag.admin.ch/dam/en/sd-web/S45VrqfyLzCZ/PG26-FB-Kennzahlen%20Krankenversicherer_DE.pdf" rel="noopener">BAG, Kennzahlen Krankenversicherer</a>: Verwaltungskosten 2024</li>
+        <li><a href="https://www.infras.ch/media/filer_public/12/f2/12f205ad-4355-4cdc-933e-901d09235391/schlussbericht_effizienzpotenziale_2020_01_31.pdf" rel="noopener">WIG/ZHAW und INFRAS, Effizienzpotenziale in der OKP</a>: im Auftrag des BAG, Daten 2016</li>
+        <li><a href="https://www.admin.ch/de/newnsb/j2rSvoYBZ7n589CpirkcB" rel="noopener">BFS, Gesundheitskosten 2024</a>: 97 Milliarden, Anteile der Finanzierung</li>
+        <li><a href="https://dialog.css.ch/wp-content/uploads/2026/06/Download_D_04-05_Infografik_02_2026.pdf" rel="noopener">CSS, Infografik 2/2026 nach BFS und BAG</a>: Prämienverbilligung 2023</li>
+        <li><a href="https://www.kvg.org/wp-content/uploads/jahresbericht-2025-risikoausgleich.pdf" rel="noopener">Gemeinsame Einrichtung KVG, Jahresbericht 2025</a>: Risikoausgleich 2024</li>
+        <li><a href="https://www.admin.ch/de/newnsb/ANZligvxioXqvnqrZATk7" rel="noopener">Bundesrat, Bericht zur Mehrfachrolle der Kantone</a>: Januar 2026</li>
+        <li><a href="https://www.preisueberwacher.admin.ch/dam/pue/de/dokumente/newsletter/newsletter_08_24.pdf.download.pdf/Newsletter_08_24_d.pdf" rel="noopener">Preisüberwacher, Newsletter 8/2024</a>: Generikapreise</li>
+        <li><a href="https://www.interpharma.ch/wp-content/uploads/2023/05/PRESS-Swiss-Price-benchmarking_Interpharma_15.05.23_V.DE_.pdf" rel="noopener">Interpharma, Preisvergleich Mai 2023</a>: Generikapreise, andere Methode</li>
+        <li><a href="https://www.srf.ch/news/wirtschaft/grosse-preisunterschiede-medikamente-nach-wie-vor-teuer-die-preise-sind-jedoch-gesunken" rel="noopener">SRF zum Preisvergleich von santésuisse und Interpharma</a>: Generikapreise</li>
+        <li><a href="https://www.zwp-online.info/zwpnews/dental-news/branchenmeldungen/schweizer-mehrheitlich-zufrieden-mit-der-gesundheitsversorgung" rel="noopener">Bericht zur Commonwealth-Fund-Befragung 2023</a>: Verzicht aus Kostengründen</li>
+        <li><a href="https://www.bfh.ch/de/aktuell/storys/2024/praemien-krankenkasse-initiativen-2024/" rel="noopener">Berner Fachhochschule</a>: Prämienlast am Einkommen</li>
+        <li><a href="https://www.parlament.ch/centers/eparl/curia/2013/20133250/Bericht%20BR%20D.pdf" rel="noopener">Bundesrat, Bericht zur Franchise</a>: Zweck und Wirkung der Kostenbeteiligung</li>
+        <li><a href="https://www.bag.admin.ch/de/newnsb/XwGuCzuLkCYzd1V5uKSav" rel="noopener">Bundesrat, Vernehmlassung Mindestfranchise</a>: 13.03.2026</li>
+        <li><a href="https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de" rel="noopener">KVG, SR 832.10</a>: Art. 7, 8, 10, 49a, 61, 62, 64; EFAS: AS 2025 107</li>
+        <li><a href="https://www.priminfo.admin.ch/de/praemien" rel="noopener">Prämienrechner des Bundesamts für Gesundheit (Priminfo)</a>: Prämien vergleichen</li>
+      </ol>
+      <p class="leise"><strong>Gesetzesstellen:</strong> KVV Art. 11, 91a, 91b, 95, 101, 103 bis 104a; KLV Art. 38a; KVAG Art. 2, 5, 16, 17; EDI-Verordnung über die Prämienregionen SR 832.106, Stand 1.1.2027; UVG Art. 8; UVV Art. 13.</p>
+      <p class="leise"><strong>Eigene Rechnungen.</strong> Dorf: Die BAG-Anteile sind auf 100 Menschen gerundet, die Säulen stehen auf der Mitte ihrer Stufe. Die 11 % und 27 % sind harte Grenzen, gerechnet mit den oberen beziehungsweise unteren Stufenrändern und dem BAG-Mittel von 4'634 Franken; die wahre Spanne für die fünf Teuersten liegt zwischen 27 und 63 %. Schnitt der Erwachsenen: gewichtet ab 26 Jahren. 65 bis 80 Franken: 16 bis 19 % der mittleren Prämie von 412.00 Franken; die Studie bezieht sich auf alle KVG-Leistungen 2016, nicht auf die Prämie 2027. Kantone: Die Prämien 2027 je Prämienregion stammen aus der BAG-Datei, die Maloja Plana für den Prämienrechner führt. Für Kantone mit mehreren Regionen nennt diese Datei keinen Kantonsmittelwert; darum steht dort die Spanne der Regionen. Die Korrelation zwischen der kantonalen Prämie 2027 und den Kosten 2024 über 26 Kantone beträgt 0,97 (gerechnet mit den Kantonsmitteln des BAG). Die ETH-Studie und die Motion 18.3713 sind nur über das BAG-Faktenblatt belegt. Ausnahmen bei den Regionen: eigene Auswertung der BAG-Prämiendaten 2027, Erwachsene, Standardmodell, Franchise 300. Die mittlere Prämie enthält auch die Wahl von Franchise und Modell, ist also nicht nur Kosten. Die Prämienverbilligung 2023 ist nur über die CSS-Infografik belegt; das BAG nennt für 2022 rund 5,4 Milliarden.</p>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind Empfehlungen.</p>
+
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Anders als die übrigen Erklärseiten nennt sie Zahlen, damit sich das System verstehen lässt. Es sind Durchschnitte mit dem oben genannten Stand, und sie ändern jedes Jahr. Massgebend sind die eigene Police, die eigene Kasse und die zuständige Stelle.</p>
+
+      <h2>Weiterlesen</h2>
+      <ul>
+          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+          <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+          <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> <span class="leise">(diese Seite gibt es bisher nur auf Deutsch)</span></p>
+    </footer>
+  </div>
+</body>
+</html>
