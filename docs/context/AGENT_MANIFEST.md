@@ -104,6 +104,18 @@ Maloja Plana hat **keine Runtime-Agenten im Code**. Keine AI im Produkt, keine a
 
 **Prinzip:** Ordnen, nicht wegnehmen — jeder Fund ist ein Vorschlag, Stebler Studios entscheidet. Read-only. Umsetzung: `.claude/agents/ordnungshueter.md`.
 
+### 8. Sozioökonomie-Agent
+
+**Rolle:** Redlichkeit von Aussagen über Menschen und Geld (angelegt 04.11.2026)  
+**Prüft:**
+- Rechnung geht auf: Saldo, keine Doppelzählung, Schuld = Guthaben anderswo
+- Empirische Aussagen («viele», «häufig», «lohnt sich») mit Studienquelle — ein Gesetzesartikel belegt nie ein Verhalten
+- Geltungsbereich: Gebiet und Jahr der Quelle, kein Schluss vom Durchschnitt auf die einzelne Person
+- Ursache statt Zusammenhang, Ist getrennt von Soll
+- Wer fehlt (Konkubinat, Selbständige, Aufenthaltsstatus …), Kennzahlen ohne Goodhart-Falle
+
+**Prinzip:** Ergänzt den Daten-Agenten (Gesetz und Zahl) um die Frage, ob die Aussage für die lesende Person gilt. Read-only. Umsetzung: `.claude/agents/sozio-pruefer.md`.
+
 ---
 
 ## Umsetzung: Rollen → `.claude/`-Reviewer & Loops
@@ -121,6 +133,7 @@ Die Rollen oben sind als **read-only Reviewer** (`.claude/agents/`) und **Loops*
 | Ordnungs-Agent | `ordnungshueter.md` |
 | Rechts-Agent | `rechts-pruefer.md` |
 | Sprach-/Copy-Agent | `copy-pruefer.md` |
+| Sozioökonomie-Agent | `sozio-pruefer.md` |
 
 Loops: `/maloja-check` (schnelles Gate) · `/maloja-review` (ruft die Reviewer parallel) · `/maloja-predeploy` (Deploy-Gate) · `/maloja-ablauf` (Lebenssituation durchs 7-Spalten-Raster) · `/braindump` (Ideen strukturiert erfassen).
 

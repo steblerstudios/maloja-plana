@@ -36,16 +36,16 @@ export default {
     tiefesEinkommen: {
       label: 'Wenn das Geld knapp ist',
       frage: 'Reicht das Einkommen oft nicht bis Ende Monat?',
-      intro: 'Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung — vieles bleibt ungenutzt, weil man es schlicht nicht kennt.',
+      intro: 'Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung.',
       berechtigungen: {
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Der Kanton hilft bei den Krankenkassen-Prämien für tiefe und mittlere Einkommen. Viele Berechtigte stellen nie einen Antrag.' },
         mietzins: { titel: 'Mietzinsbeitrag', text: 'Einzelne Kantone und Gemeinden beteiligen sich an der Miete, wenn sie bei tiefem Einkommen zu schwer wiegt.' },
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht deckt, kann die Sozialhilfe aufstocken. Das ist ein Recht, kein Almosen.' },
         stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: 'Für Ausbildung und Studium bei tiefem Einkommen gibt es Stipendien — rückzahlbar oder nicht.' },
         franchise: { titel: 'Franchise prüfen', text: 'Bei wenigen Arztbesuchen senkt eine höhere Franchise die monatliche Prämie — lohnt sich jeden Herbst zu prüfen.' },
-        betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: { sie: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig — oft unbekannt. Fragen Sie bei Ihrer Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.', du: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig — oft unbekannt. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' } },
-        familienEL: { titel: 'Ergänzungsleistungen für Familien', text: { sie: 'Ihr Kanton zahlt erwerbstätigen Familien mit kleinen Kindern und knappem Einkommen eine monatliche Ergänzungsleistung — damit eine Familie nicht in die Sozialhilfe rutscht. Oft unbekannt.', du: 'Dein Kanton zahlt erwerbstätigen Familien mit kleinen Kindern und knappem Einkommen eine monatliche Ergänzungsleistung — damit eine Familie nicht in die Sozialhilfe rutscht. Oft unbekannt.' } },
-        mutterschaftsbeihilfe: { titel: 'Mutterschaftsbeihilfe', text: { sie: 'Einige Kantone zahlen Ihnen nach der Geburt während mehreren Monaten eine Beihilfe, damit Sie Ihr Kleinkind selbst betreuen können, wenn das Einkommen den Lebensbedarf nicht deckt. Oft unbekannt.', du: 'Einige Kantone zahlen dir nach der Geburt während mehreren Monaten eine Beihilfe, damit du dein Kleinkind selbst betreuen kannst, wenn das Einkommen den Lebensbedarf nicht deckt. Oft unbekannt.' } },
+        betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: { sie: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig. Fragen Sie bei Ihrer Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.', du: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' } },
+        familienEL: { titel: 'Ergänzungsleistungen für Familien', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
+        mutterschaftsbeihilfe: { titel: 'Mutterschaftsbeihilfe', text: { sie: 'Einige Kantone zahlen Ihnen nach der Geburt während mehreren Monaten eine Beihilfe, damit Sie Ihr Kleinkind selbst betreuen können, wenn das Einkommen den Lebensbedarf nicht deckt.', du: 'Einige Kantone zahlen dir nach der Geburt während mehreren Monaten eine Beihilfe, damit du dein Kleinkind selbst betreuen kannst, wenn das Einkommen den Lebensbedarf nicht deckt.' } },
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'Der Ausweis für kleine Budgets: mindestens 30% Rabatt auf tausende Angebote in Kultur, Sport, Bildung (z.B. Kurse) und Gesundheit (z.B. Zahnbehandlung). Das Angebot ist je Region verschieden — Ihre kantonale KulturLegi zeigt, was bei Ihnen gilt.', du: 'Der Ausweis für kleine Budgets: mindestens 30% Rabatt auf tausende Angebote in Kultur, Sport, Bildung (z.B. Kurse) und Gesundheit (z.B. Zahnbehandlung). Das Angebot ist je Region verschieden — deine kantonale KulturLegi zeigt, was bei dir gilt.' } },
         rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Mit der KulturLegi ermöglicht die Reka-Stiftung armutsbetroffenen Familien und Alleinstehenden eine Ferienwoche für rund 200 Franken — Unterkunft und Anreise mit dem ÖV inklusive.' },
       },
@@ -53,14 +53,14 @@ export default {
     alleinerziehend: {
       label: 'Kinder allein grossziehen',
       frage: { sie: 'Ziehen Sie ein oder mehrere Kinder allein gross?', du: 'Ziehst du ein oder mehrere Kinder allein gross?' },
-      intro: 'Alleinerziehende tragen mehr — und genau für diese Situation gibt es mehrere Formen der Unterstützung, vieles bleibt aber ungenutzt.',
+      intro: 'Alleinerziehende tragen mehr — und genau für diese Situation gibt es mehrere Formen der Unterstützung.',
       berechtigungen: {
         alimente: { titel: 'Alimentenbevorschussung & Inkassohilfe', text: 'Kommen die Unterhaltszahlungen nicht, kann die Gemeinde sie bevorschussen und beim Inkasso helfen — damit das Kind nicht leer ausgeht.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Einelternhaushalte haben oft Anspruch auf Hilfe bei den Krankenkassen-Prämien — für den Elternteil und die Kinder.' },
         familienzulagen: { titel: 'Familienzulagen', text: 'Kinder- und Ausbildungszulagen pro Kind — rückwirkend nachforderbar, wenn verpasst. Sie folgen dem arbeitenden Elternteil.' },
-        betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: { sie: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig — oft unbekannt. Fragen Sie bei Ihrer Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.', du: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig — oft unbekannt. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' } },
-        familienEL: { titel: 'Ergänzungsleistungen für Familien', text: { sie: 'Ihr Kanton zahlt erwerbstätigen Familien mit kleinen Kindern und knappem Einkommen eine monatliche Ergänzungsleistung — damit eine Familie nicht in die Sozialhilfe rutscht. Oft unbekannt.', du: 'Dein Kanton zahlt erwerbstätigen Familien mit kleinen Kindern und knappem Einkommen eine monatliche Ergänzungsleistung — damit eine Familie nicht in die Sozialhilfe rutscht. Oft unbekannt.' } },
-        mutterschaftsbeihilfe: { titel: 'Mutterschaftsbeihilfe', text: { sie: 'Einige Kantone zahlen Ihnen nach der Geburt während mehreren Monaten eine Beihilfe, damit Sie Ihr Kleinkind selbst betreuen können, wenn das Einkommen den Lebensbedarf nicht deckt. Oft unbekannt.', du: 'Einige Kantone zahlen dir nach der Geburt während mehreren Monaten eine Beihilfe, damit du dein Kleinkind selbst betreuen kannst, wenn das Einkommen den Lebensbedarf nicht deckt. Oft unbekannt.' } },
+        betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: { sie: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig. Fragen Sie bei Ihrer Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.', du: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' } },
+        familienEL: { titel: 'Ergänzungsleistungen für Familien', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
+        mutterschaftsbeihilfe: { titel: 'Mutterschaftsbeihilfe', text: { sie: 'Einige Kantone zahlen Ihnen nach der Geburt während mehreren Monaten eine Beihilfe, damit Sie Ihr Kleinkind selbst betreuen können, wenn das Einkommen den Lebensbedarf nicht deckt.', du: 'Einige Kantone zahlen dir nach der Geburt während mehreren Monaten eine Beihilfe, damit du dein Kleinkind selbst betreuen kannst, wenn das Einkommen den Lebensbedarf nicht deckt.' } },
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Die Sozialhilfe anerkennt den höheren Bedarf eines Einelternhaushalts und kann ein knappes Einkommen aufstocken.' },
         steuern: { titel: 'Elterntarif & Kinderabzug', text: 'Alleinerziehende werden zum tieferen Elterntarif besteuert und können Abzüge für Kinder und Betreuung geltend machen.' },
       },
@@ -68,10 +68,10 @@ export default {
     beeintraechtigung: {
       label: 'Mit Beeinträchtigung oder chronischer Krankheit',
       frage: { sie: 'Leben Sie mit einer Beeinträchtigung, chronischen Krankheit oder anerkannten Indikation?', du: 'Lebst du mit einer Beeinträchtigung, chronischen Krankheit oder anerkannten Indikation?' },
-      intro: 'Eine Indikation kann Unterstützung früher oder breiter eröffnen, als man denkt — vieles wird kaum genannt und leicht übersehen.',
+      intro: 'Eine Indikation kann Unterstützung früher oder breiter eröffnen, als man denkt.',
       berechtigungen: {
         iv: { titel: 'IV-Leistungen', text: 'Eingliederung vor Rente: berufliche Massnahmen, Hilfsmittel und bei Bedarf eine Rente. Früh anmelden zählt am meisten.' },
-        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: { sie: 'Ein monatlicher Betrag, wenn Sie im Alltag regelmässig Hilfe brauchen — unabhängig vom Einkommen, oft übersehen.', du: 'Ein monatlicher Betrag, wenn du im Alltag regelmässig Hilfe brauchst — unabhängig vom Einkommen, oft übersehen.' } },
+        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: { sie: 'Ein monatlicher Betrag, wenn Sie im Alltag regelmässig Hilfe brauchen — unabhängig vom Einkommen.', du: 'Ein monatlicher Betrag, wenn du im Alltag regelmässig Hilfe brauchst — unabhängig vom Einkommen.' } },
         el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf. Das ist ein Recht, keine Fürsorge.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, bekommt die Prämie als Pauschale angerechnet — höchstens die kantonale Durchschnittsprämie. Eine Befreiung ist es nicht. Bei tiefem Einkommen ohne EL besteht oft trotzdem Anspruch.' },
         steuern: { titel: 'Behinderungsbedingte Steuerabzüge', text: 'Krankheits- und Behinderungskosten — Betreuung, Hilfsmittel, Fahrten — lassen sich vom steuerbaren Einkommen abziehen.' },
@@ -82,7 +82,7 @@ export default {
     pflegendeAngehoerige: {
       label: 'Angehörige pflegen',
       frage: { sie: 'Pflegen Sie regelmässig eine angehörige oder nahestehende Person?', du: 'Pflegst du regelmässig eine angehörige oder nahestehende Person?' },
-      intro: 'Pflege, die still geleistet wird, bleibt oft unbeachtet — dabei kann sie Rentengutschriften und Ansprüche schaffen. Auch Entlastungsdienste und Beratung gibt es.',
+      intro: 'Pflege, die still geleistet wird, kann Rentengutschriften und Ansprüche schaffen. Auch Entlastungsdienste und Beratung gibt es.',
       berechtigungen: {
         pflege: { titel: 'Der geführte Ablauf: Angehörige pflegen', text: 'Der geführte Ablauf zeigt die Schritte der Reihe nach: Gutschrift, Entschädigung, Entlastung.' },
         betreuungsgutschriften: { titel: 'Betreuungsgutschriften (AHV)', text: { sie: 'Die Pflege naher Angehöriger kann Ihrem AHV-Konto gutgeschrieben werden und die spätere Rente erhöhen — jährlich bei der Ausgleichskasse anmelden.', du: 'Die Pflege naher Angehöriger kann deinem AHV-Konto gutgeschrieben werden und die spätere Rente erhöhen — jährlich bei der Ausgleichskasse anmelden.' } },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In Ausbildung',
       frage: 'In einer Lehre, an der Schule oder im Studium?',
-      intro: 'Eine Ausbildung öffnet Unterstützung, die viele nie beziehen — und beginnt still ein paar Pflichten, die man im Auge behalten sollte.',
+      intro: 'Eine Ausbildung öffnet Unterstützung — und beginnt still ein paar Pflichten, die man im Auge behalten sollte.',
       berechtigungen: {
         stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: { sie: 'Kantonale Stipendien und Darlehen unterstützen Lehre und Studium — abhängig von Ihrem Einkommen und dem Ihrer Eltern, und mit Fristen bei der Anmeldung.', du: 'Kantonale Stipendien und Darlehen unterstützen Lehre und Studium — abhängig vom Einkommen von dir und deinen Eltern, und mit Fristen bei der Anmeldung.' } },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Junge Erwachsene in Ausbildung mit tiefem Einkommen haben oft Anspruch auf Hilfe bei den Krankenkassenprämien — für sich selbst.' },
@@ -128,12 +128,12 @@ export default {
     rentnerin: {
       label: 'Pensioniert / im AHV-Alter',
       frage: { sie: 'Beziehen Sie eine AHV-Rente oder stehen Sie kurz davor?', du: 'Beziehst du eine AHV-Rente oder stehst kurz davor?' },
-      intro: 'Im Alter bleibt manches ungenutzt — allen voran die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
+      intro: 'Im Alter gibt es Ansprüche, die man anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
       berechtigungen: {
         pensionierung: { titel: 'Übergang in die Pensionierung', text: { sie: 'Stehen Sie kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.', du: 'Stehst du kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.' } },
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie — eine der am häufigsten nicht bezogenen Leistungen der Schweiz. Ein Recht, keine Fürsorge.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie. Ein Recht, keine Fürsorge.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Rentnerinnen und Rentner mit tiefem Einkommen — und alle mit Ergänzungsleistungen — können sich die Krankenkassenprämien vom Kanton mitfinanzieren lassen.' },
-        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: 'Ein monatlicher Betrag, wenn man im Alltag regelmässig auf Hilfe angewiesen ist — unabhängig vom Einkommen und getrennt von der EL, doch oft übersehen.' },
+        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: 'Ein monatlicher Betrag, wenn man im Alltag regelmässig auf Hilfe angewiesen ist — unabhängig vom Einkommen und getrennt von der EL.' },
         steuern: { titel: 'Abzüge im Rentenalter', text: 'Krankheits-, Pflege- und behinderungsbedingte Kosten lassen sich vom steuerbaren Einkommen abziehen — die Belege übers Jahr aufzuheben lohnt sich.' },
         serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Haushalte mit Ergänzungsleistungen (EL) werden auf Antrag von der SERAFE-Abgabe befreit — rückwirkend rückforderbar.' },
       },
@@ -141,7 +141,7 @@ export default {
     erwerbslos: {
       label: 'Ohne Arbeit / zwischen Stellen',
       frage: 'Arbeitslos, zwischen zwei Stellen oder ausgesteuert?',
-      intro: 'Ohne Arbeit öffnet sich Unterstützung, die nicht automatisch kommt — und nach der Aussteuerung gibt es weitere Hilfe, nach der viele gar nicht fragen.',
+      intro: 'Ohne Arbeit öffnet sich Unterstützung, die nicht automatisch kommt — und nach der Aussteuerung gibt es weitere Hilfe.',
       berechtigungen: {
         rav: { titel: 'Rechtzeitig beim RAV anmelden', text: { sie: 'Die RAV-Anmeldung ist die wichtigste Frist — am besten am ersten Tag ohne Stelle, bevor Sie Taggeld beziehen. Jeder zu späte Tag kostet Taggeld. Der geführte Ablauf zeigt die Schritte und legt die Frist in Ihren Kalender.', du: 'Die RAV-Anmeldung ist die wichtigste Frist — am besten am ersten Tag ohne Stelle, bevor du Taggeld beziehst. Jeder zu späte Tag kostet Taggeld. Der geführte Ablauf zeigt die Schritte und legt die Frist in deinen Kalender.' } },
         alv: { titel: 'Arbeitslosentaggeld (ALV)', text: { sie: 'Melden Sie sich so früh wie möglich beim RAV an — die Taggelder hängen von Ihren Beitragsmonaten ab, und eine späte Anmeldung kostet Tage.', du: 'Melde dich so früh wie möglich beim RAV an — die Taggelder hängen von deinen Beitragsmonaten ab, und eine späte Anmeldung kostet Tage.' } },
@@ -169,7 +169,7 @@ export default {
       frage: { sie: 'Ist ein Elternteil verstorben, und sind Sie oder Ihr Kind unter 25 oder in Ausbildung?', du: 'Ist ein Elternteil verstorben, und bist du oder dein Kind unter 25 oder in Ausbildung?' },
       intro: 'Nach dem Tod eines Elternteils haben Kinder klare Ansprüche, die in einer schweren Zeit leicht untergehen — eine Waisenrente, und ergänzende Hilfe, falls sie nicht reicht.',
       berechtigungen: {
-        waisenrente: { titel: 'Waisenrente (AHV/IV)', text: 'Ein Kind, dessen Elternteil verstorben ist, erhält eine monatliche Rente — bis 18, in Ausbildung bis 25. Sie wird bei der Ausgleichskasse beantragt und startet oft zu spät.' },
+        waisenrente: { titel: 'Waisenrente (AHV/IV)', text: 'Ein Kind, dessen Elternteil verstorben ist, erhält eine monatliche Rente — bis 18, in Ausbildung bis 25. Sie wird bei der Ausgleichskasse beantragt.' },
         el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung. Ein Recht, keine Fürsorge.' },
         stipendien: { titel: 'Stipendien', text: 'Zusätzlich zur Waisenrente können kantonale Stipendien Ausbildung oder Studium unterstützen — parallel prüfen, mit eigenen Fristen.' },
         steuern: { titel: 'Steuerliche Entlastung', text: 'Ein hinterbliebener Elternteil kann Elterntarif und Kinderabzüge geltend machen; auch Kosten rund um den Verlust können die Steuer senken.' },
@@ -794,6 +794,7 @@ export default {
     step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld seit mindestens sechs Monaten —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist die Sozialhilfe der Wohngemeinde zuständig.',
     step1LinkAnspruch: 'Ansprüche in Ruhe prüfen',
     step1LinkSozialhilfe: 'Ohne AHV/IV-Rente: Sozialhilfe verstehen',
+    step1Nichtbezug: 'Nicht alle, denen EL zustehen, melden sich an. Eine Studie im Auftrag des Bundes (2025) nennt aus der Fachliteratur als häufige Gründe: Man versteht nicht, wie die EL funktionieren, es fehlt an Unterstützung, oder die Anmeldung ist aufwendig. Eine Studie zu Sozialleistungen in Basel-Stadt, darunter die EL, fand zusätzlich Scham und Unsicherheit, auch bei Menschen, die von ihrem Anspruch wussten. Beide Studien betreffen die EL zur AHV. Wer unsicher ist, fragt bei der EL-Stelle nach: Dafür ist sie da.',
     step2Title: '2 · Vermögen: die Schwelle',
     step2Text: { sie: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente (ELG Art. 9a, Stand 2026); eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit. Vermögen, auf das Sie verzichtet haben — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).', du: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente (ELG Art. 9a, Stand 2026); eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit. Vermögen, auf das du verzichtet hast — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).' },
     step3Title: '3 · Anmelden — beim Wohnkanton, so früh wie möglich',
@@ -820,7 +821,7 @@ export default {
     step5Text: 'Rechtmässig bezogene EL müssen nach dem Tod aus dem Nachlass zurückerstattet werden — aber nur aus dem Teil, der 40 000 Franken übersteigt; bei Ehepaaren erst aus dem Nachlass der zweitverstorbenen Person (ELG Art. 16a). Das ist kein Grund, auf EL zu verzichten.',
     step5LinkTodesfall: 'Todesfall im Umfeld',
     footerNote: { sie: 'Die EL-Stelle Ihres Kantons informiert und rechnet Ihren Anspruch aus (ELG Art. 21). Dies ist Orientierung, keine Rechtsberatung; Beträge, vergütete Kosten und Anmeldestellen unterscheiden sich je nach Kanton.', du: 'Die EL-Stelle deines Kantons informiert und rechnet deinen Anspruch aus (ELG Art. 21). Dies ist Orientierung, keine Rechtsberatung; Beträge, vergütete Kosten und Anmeldestellen unterscheiden sich je nach Kanton.' },
-    quelle: 'Quellen: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (geprüft im September 2026).',
+    quelle: 'Quellen: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (geprüft im September 2026); [[Medienmitteilung BSV zur Studie Ecoplan/Interface, 4.12.2025|https://www.admin.ch/de/newnsb/NVMCO0Uym_s2toZHrVwo6]], [[Studie BFH für Basel-Stadt, 2021|https://www.bs.ch/news/2021-studie-nichtbezug-von-bedarfsabhaengigen-sozialleistungen-im-kanton-basel-stadt-ausmass-und-beweggruende]] (geprüft im November 2026).',
   },
   zusammenziehen: {
     title: 'Zusammenziehen ohne Trauschein',

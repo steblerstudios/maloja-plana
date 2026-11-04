@@ -22,6 +22,7 @@ Ablauf:
    - `copy-pruefer` — Wording/Ton/gender-neutral/Sie-Du/i18n-Ton (bei neuer/geänderter Copy).
    - `rechts-pruefer` — Disclaimer/nDSG-Wahrheit/Impressum/Quellen (bei Rechnern, Rechtsaussagen, Datenschutz-Copy).
    - `link-checker` — Behörden-/externe Links (nur wenn Links betroffen).
+   - `sozio-pruefer` — Rechnung geht auf, «viele/häufig» mit Studienquelle, Ist/Soll, wer fehlt (bei Rechnern, Kennzahlen und Copy über Verhalten oder Anspruch).
    Gib jedem Agenten den Umfang + die geänderten Dateien mit.
 3. Sammle die Berichte und führe sie zu **einem** priorisierten Ergebnis zusammen, dedupliziert:
    - 🔴 Blocker (Deploy-verhindernd) · ⚠️ Sollte · 💡 Kann/Politur · ✅ Bestätigt gut.

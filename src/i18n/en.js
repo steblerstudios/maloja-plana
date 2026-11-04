@@ -36,16 +36,16 @@ export default {
     tiefesEinkommen: {
       label: 'When money is tight',
       frage: 'Income often doesn’t stretch to the end of the month?',
-      intro: 'On a low income, several forms of support exist — much goes unclaimed simply because people don’t know about it.',
+      intro: 'On a low income, several forms of support exist.',
       berechtigungen: {
         ipv: { titel: 'Premium reduction (IPV)', text: 'The canton helps pay health-insurance premiums for low and middle incomes. Many who qualify never apply.' },
         mietzins: { titel: 'Rent assistance', text: 'Some cantons and communes contribute to rent when it weighs too heavily on a low income.' },
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income doesn’t cover the basics, social assistance can top it up. It is a right, not charity.' },
         stipendien: { titel: 'Education grants', text: 'Grants exist for training and studies on a low income — repayable or not.' },
         franchise: { titel: 'Check your deductible', text: 'With few doctor visits, a higher deductible lowers the monthly premium — worth reviewing each autumn.' },
-        betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income — often unknown. Ask your municipality about childcare vouchers or subsidised places.' },
-        familienEL: { titel: 'Supplementary benefits for families', text: 'Your canton pays working families with young children and a tight income a monthly supplementary benefit — so a family doesn’t fall into social assistance. Often unknown.' },
-        mutterschaftsbeihilfe: { titel: 'Maternity assistance', text: 'Some cantons pay a benefit for several months after birth so you can care for your young child yourself when your income doesn’t cover living costs. Often unknown.' },
+        betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income. Ask your municipality about childcare vouchers or subsidised places.' },
+        familienEL: { titel: 'Supplementary benefits for families', text: 'Your canton of residence has supplementary benefits for families on a tight income. Whether and how much you receive depends on the canton’s conditions, such as the children’s ages and income. Your canton’s official page sets them out.' },
+        mutterschaftsbeihilfe: { titel: 'Maternity assistance', text: 'Some cantons pay a benefit for several months after birth so you can care for your young child yourself when your income doesn’t cover living costs.' },
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: 'The card for tight budgets: at least 30% off thousands of offers in culture, sport, education (e.g. courses) and health (e.g. dental care). Offers vary by region — your cantonal KulturLegi shows what applies where you live.' },
         rekaFerien: { titel: 'Reka holidays for CHF 200', text: 'With the KulturLegi, the Reka Foundation lets families and single people affected by poverty take a week’s holiday for around 200 francs — accommodation and public-transport travel included.' },
       },
@@ -53,14 +53,14 @@ export default {
     alleinerziehend: {
       label: 'Raising children alone',
       frage: 'Raising one or more children on your own?',
-      intro: 'Single parents carry more — and several forms of support exist precisely for this situation, though many go unclaimed.',
+      intro: 'Single parents carry more — and several forms of support exist precisely for this situation.',
       berechtigungen: {
         alimente: { titel: 'Advance on alimony & collection help', text: 'If maintenance payments don’t arrive, the commune can advance them and help collect — so the child doesn’t go without.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Single-parent households often qualify for help with health-insurance premiums — for the parent and the children.' },
         familienzulagen: { titel: 'Family allowances', text: 'Child and education allowances per child — claimable retroactively if missed. They follow the working parent.' },
-        betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income — often unknown. Ask your municipality about childcare vouchers or subsidised places.' },
-        familienEL: { titel: 'Supplementary benefits for families', text: 'Your canton pays working families with young children and a tight income a monthly supplementary benefit — so a family doesn’t fall into social assistance. Often unknown.' },
-        mutterschaftsbeihilfe: { titel: 'Maternity assistance', text: 'Some cantons pay a benefit for several months after birth so you can care for your young child yourself when your income doesn’t cover living costs. Often unknown.' },
+        betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income. Ask your municipality about childcare vouchers or subsidised places.' },
+        familienEL: { titel: 'Supplementary benefits for families', text: 'Your canton of residence has supplementary benefits for families on a tight income. Whether and how much you receive depends on the canton’s conditions, such as the children’s ages and income. Your canton’s official page sets them out.' },
+        mutterschaftsbeihilfe: { titel: 'Maternity assistance', text: 'Some cantons pay a benefit for several months after birth so you can care for your young child yourself when your income doesn’t cover living costs.' },
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'Social assistance recognises the higher needs of a single-parent household and can top up a tight income.' },
         steuern: { titel: 'Parent tariff & child deduction', text: 'Single parents are taxed at the lower parent tariff and can claim deductions for children and childcare.' },
       },
@@ -68,10 +68,10 @@ export default {
     beeintraechtigung: {
       label: 'Living with a disability or chronic illness',
       frage: 'Living with a disability, chronic illness or a recognised indication?',
-      intro: 'An indication can open support earlier or more broadly than people expect — much of it is rarely mentioned and easy to miss.',
+      intro: 'An indication can open support earlier or more broadly than people expect.',
       berechtigungen: {
         iv: { titel: 'Disability insurance (IV)', text: 'Reintegration before pension: vocational measures, aids and, if needed, a pension. Registering early matters most.' },
-        hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you need regular help with everyday acts — independent of income, often overlooked.' },
+        hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you need regular help with everyday acts — independent of income.' },
         el: { titel: 'Supplementary benefits (EL)', text: 'If a pension or income doesn’t cover living costs, EL tops it up. It is a right, not assistance.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'With supplementary benefits the premium is counted as a flat amount — at most the cantonal average premium. That is not an exemption. On a low income without supplementary benefits, you often still qualify.' },
         steuern: { titel: 'Disability-related tax deductions', text: 'Illness and disability costs — care, aids, transport — can be deducted from taxable income.' },
@@ -82,7 +82,7 @@ export default {
     pflegendeAngehoerige: {
       label: 'Caring for a relative',
       frage: 'Regularly caring for a relative or close person?',
-      intro: 'Care given quietly is rarely recognised — yet it can build pension credits and entitlements. Relief services and counselling exist too.',
+      intro: 'Care given quietly can build pension credits and entitlements. Relief services and counselling exist too.',
       berechtigungen: {
         pflege: { titel: 'Guided steps: caring for relatives', text: 'The guided steps show what to do, in order: credit, compensation, support.' },
         betreuungsgutschriften: { titel: 'Care credits (AHV)', text: 'Caring for a close relative can be credited to your AHV account and raise your future pension — claimed yearly with the compensation office.' },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In education or training',
       frage: 'In an apprenticeship, at school or studying?',
-      intro: 'Being in education opens support that many never claim — and quietly starts a few obligations worth keeping an eye on.',
+      intro: 'Being in education opens support — and quietly starts a few obligations worth keeping an eye on.',
       berechtigungen: {
         stipendien: { titel: 'Education grants', text: 'Cantonal grants and loans support training and studies — depending on your and your parents’ income, with application deadlines.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Young adults in education on a low income often qualify for help with health-insurance premiums — for themselves.' },
@@ -128,12 +128,12 @@ export default {
     rentnerin: {
       label: 'Retired / at AHV age',
       frage: 'Drawing an AHV pension, or close to retirement age?',
-      intro: 'Later in life several entitlements go unclaimed — supplementary benefits above all. Much of it is a right, not assistance.',
+      intro: 'Later in life some entitlements have to be claimed — supplementary benefits, for example. Much of it is a right, not assistance.',
       berechtigungen: {
         pensionierung: { titel: 'Moving into retirement', text: 'Close to retirement? Registering for the AHV pension, choosing pension or lump sum from your pension fund, and staggering the third pillar all need early decisions — the guided flow shows the steps and deadlines.' },
-        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up — one of Switzerland’s most often unclaimed benefits. It is a right, not charity.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up. It is a right, not charity.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Pensioners on a low income — and everyone on supplementary benefits — can have the canton help pay health-insurance premiums.' },
-        hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you regularly need help with everyday acts — independent of income and separate from EL, yet often overlooked.' },
+        hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you regularly need help with everyday acts — independent of income and separate from EL.' },
         steuern: { titel: 'Deductions for pensioners', text: 'Illness, care and disability costs can be deducted from taxable income — worth keeping the receipts through the year.' },
         serafe: { titel: 'Radio/TV fee exemption', text: 'Households receiving supplementary benefits (EL) are exempt from the SERAFE radio/TV fee on request — and can claim it back retroactively.' },
       },
@@ -141,7 +141,7 @@ export default {
     erwerbslos: {
       label: 'Out of work / between jobs',
       frage: 'Unemployed, between jobs, or your benefits have run out?',
-      intro: 'Being out of work opens support that isn’t automatic — and after unemployment benefits end, further help exists that many don’t know to ask for.',
+      intro: 'Being out of work opens support that isn’t automatic — and after unemployment benefits end, further help exists.',
       berechtigungen: {
         rav: { titel: 'Register with the RAV in time', text: 'The RAV registration is the most important deadline — ideally on your first day without work, before you claim benefits. Every late day costs allowance. The guided flow shows the steps and saves the deadline to your calendar.' },
         alv: { titel: 'Unemployment benefits (ALV)', text: 'Register with the RAV as early as possible — daily allowances depend on your contribution months, and registering late costs days of cover.' },
@@ -169,7 +169,7 @@ export default {
       frage: 'Has a parent died, and are you or your child under 25 or in education?',
       intro: 'After a parent’s death, children have clear entitlements that are easy to miss in a hard time — an orphan’s pension, and support on top of it if that isn’t enough.',
       berechtigungen: {
-        waisenrente: { titel: 'Orphan’s pension (AHV/IV)', text: 'A child whose parent has died receives a monthly pension — until 18, or until 25 while in education. It is claimed with the compensation office and often starts late.' },
+        waisenrente: { titel: 'Orphan’s pension (AHV/IV)', text: 'A child whose parent has died receives a monthly pension — until 18, or until 25 while in education. It is claimed with the compensation office.' },
         el: { titel: 'Supplementary benefits (EL)', text: 'If the orphan’s pension doesn’t cover living costs, EL can top it up — also for children and young people in education. A right, not charity.' },
         stipendien: { titel: 'Education grants', text: 'On top of an orphan’s pension, cantonal grants can support training or studies — worth checking alongside, with their own deadlines.' },
         steuern: { titel: 'Tax relief', text: 'A surviving parent can claim the parent tariff and child deductions; costs linked to the loss may also lower the tax bill.' },
@@ -793,6 +793,7 @@ export default {
     step1Text: 'EL requires a benefit from the AHV or IV — for example an old-age, survivors’ or IV pension, an IV helplessness allowance, or IV daily allowances for at least six months — plus residence and habitual abode in Switzerland (ELG Art. 4). Staying abroad for more than three months in a row, or for more than three months in total in a calendar year, interrupts residence. Foreign nationals must as a rule have lived here without interruption for ten years, refugees and stateless persons for five years (ELG Art. 5). Without an AHV or IV benefit, social assistance in your municipality of residence is responsible.',
     step1LinkAnspruch: 'Check your entitlements calmly',
     step1LinkSozialhilfe: 'No AHV/IV pension: understanding social assistance',
+    step1Nichtbezug: 'Not everyone entitled to EL applies. A study commissioned by the Confederation (2025) names frequent reasons from the specialist literature: people do not understand how EL works, support is lacking, or applying takes a lot of effort. A study of social benefits in Basel-Stadt, EL included, also found shame and uncertainty, even among people who knew about their entitlement. Both studies concern EL to the AHV. If in doubt, ask the EL office: that is what it is there for.',
     step2Title: '2 · Assets: the threshold',
     step2Text: 'Only those whose net assets are below the asset threshold are eligible: CHF 100,000 for single persons, CHF 200,000 for married couples, CHF 50,000 for orphans entitled to a pension and children giving entitlement to a child’s pension (ELG Art. 9a, as of 2026); a property you own and live in yourself is not counted. Assets you have given up — for example through a gift — are counted (ELG Art. 11a). The amount of EL is calculated by the EL office: it covers the gap between recognised expenses and countable income (ELG Art. 9).',
     step3Title: '3 · Apply — in your canton of residence, as early as possible',
@@ -819,7 +820,7 @@ export default {
     step5Text: 'EL lawfully received must be repaid from the estate after death — but only from the part exceeding CHF 40,000; for married couples, only from the estate of the second spouse to die (ELG Art. 16a). This is no reason to forgo EL.',
     step5LinkTodesfall: 'A death in your circle',
     footerNote: 'The EL office in your canton provides information and calculates your entitlement (ELG Art. 21). This is orientation, not legal advice; amounts, reimbursed costs and application offices vary by canton.',
-    quelle: 'Sources: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (German text where no English exists, checked September 2026).',
+    quelle: 'Sources: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (German text where no English exists, checked September 2026); [[FSIO media release on the Ecoplan/Interface study, 4.12.2025|https://www.admin.ch/de/newnsb/NVMCO0Uym_s2toZHrVwo6]], [[BFH study for Basel-Stadt, 2021|https://www.bs.ch/news/2021-studie-nichtbezug-von-bedarfsabhaengigen-sozialleistungen-im-kanton-basel-stadt-ausmass-und-beweggruende]] (German text, checked November 2026).',
   },
   zusammenziehen: {
     title: 'Moving in together without being married',
