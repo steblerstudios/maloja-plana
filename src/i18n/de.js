@@ -2206,7 +2206,7 @@ export default {
         investmentFunds: { label: 'Anlagefonds vorhanden?', options: { no: 'Nein', yes: 'Ja' } },
       },
       hints: {
-        monthlyIncome: { sie: 'Ihr Einkommen — Netto ist was auf Ihrem Konto ankommt.', du: 'Dein Einkommen — Netto ist was auf deinem Konto ankommt.' },
+        monthlyIncome: { sie: 'Ihr Einkommen — Netto ist was auf Ihrem Konto ankommt. Renten nicht hier, sondern bei den Rentenfeldern.', du: 'Dein Einkommen — Netto ist was auf deinem Konto ankommt. Renten nicht hier, sondern bei den Rentenfeldern.' },
         creditCardLimit: 'Summe aller Kartenlimiten zusammen.',
         creditCardBalance: 'Aktuell offener Betrag auf den Karten — zählt als Schuld, oft mit hohen Zinsen.',
         sideIncome: 'Zusätzliches Einkommen neben dem Hauptjob (Nebenjob, Honorare). Wird zum Einkommen gezählt.',
@@ -2230,8 +2230,8 @@ export default {
         pension3aBalance: { sie: 'Der gesamte bisher angesparte Betrag auf Ihrem 3a-Konto — nicht die Jahreseinzahlung.', du: 'Der gesamte bisher angesparte Betrag auf deinem 3a-Konto — nicht die Jahreseinzahlung.' },
         ivBezug: { sie: "Steht im Entscheid der IV-Stelle. Freiwillig. Dient nur der Orientierung zu Sozialhilfe und Ergänzungsleistungen und bleibt auf diesem Gerät, bis Sie es selbst weitergeben.", du: "Steht im Entscheid der IV-Stelle. Freiwillig. Dient nur der Orientierung zu Sozialhilfe und Ergänzungsleistungen und bleibt auf diesem Gerät, bis du es selbst weitergibst." },
         ahvRente: "Laut Rentenverfügung der Ausgleichskasse, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App ab dem Rentenalter keinen Betrag für Sozialhilfe und Prämienverbilligung.",
-        ivRente: "Laut Verfügung der IV-Stelle, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App mit IV-Bezug keinen Betrag für Sozialhilfe und Prämienverbilligung.",
-        bvgRente: "Laut Abrechnung der Pensionskasse, Betrag pro Monat. Ein Kapitalbezug gehört zum Vermögen, nicht hierher.",
+        ivRente: { sie: "Laut Rentenverfügung, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App mit IV-Bezug keinen Betrag für Sozialhilfe und Prämienverbilligung. Freiwillig. Bleibt auf diesem Gerät, bis Sie es selbst weitergeben.", du: "Laut Rentenverfügung, Betrag pro Monat. Eine 0, wenn keine bezogen wird. Ohne Eintrag nennt die App mit IV-Bezug keinen Betrag für Sozialhilfe und Prämienverbilligung. Freiwillig. Bleibt auf diesem Gerät, bis du es selbst weitergibst." },
+        bvgRente: "Laut Rentenbescheinigung der Pensionskasse, Betrag pro Monat. Was als Kapital bezogen wird, auch ein Teil, gehört zum Vermögen.",
         pension3bBalance: { sie: 'Der aktuelle Wert Ihrer freien Vorsorge 3b (Sparkonto, Lebensversicherung, Wertschriften).', du: 'Der aktuelle Wert deiner freien Vorsorge 3b (Sparkonto, Lebensversicherung, Wertschriften).' },
       },
       docs: {
@@ -5547,6 +5547,7 @@ export default {
     sectionEL: 'Ergänzungsleistungen (EL)',
     sectionSteuern: 'Bundessteuer-Orientierung',
     elNotApplicable: 'Nicht anwendbar (nur bei AHV- oder IV-Leistung)',
+    rentenSumme: 'Renten pro Monat',
     ipvNein: 'Nach grober Rechnung keine Verbilligung, kein Entscheid',
     elKeinHinweis: 'Nach grober Rechnung kein Hinweis auf EL, kein Entscheid',
     footerPrivacy: 'Dieses Dokument wurde lokal erstellt. Keine Daten wurden übermittelt.',

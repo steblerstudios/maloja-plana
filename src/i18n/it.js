@@ -2197,7 +2197,7 @@ export default {
         investmentFunds: { label: 'Fondi d\'investimento?', options: { no: 'No', yes: 'Sì' } },
       },
       hints: {
-        monthlyIncome: { sie: 'Il Suo salario netto — quello che arriva sul Suo conto.', du: 'Il tuo salario netto — quello che arriva sul tuo conto.' },
+        monthlyIncome: { sie: 'Il Suo salario netto — quello che arriva sul Suo conto. Le rendite non vanno qui, ma nei campi delle rendite.', du: 'Il tuo salario netto — quello che arriva sul tuo conto. Le rendite non vanno qui, ma nei campi delle rendite.' },
         creditCardLimit: 'La somma di tutti i limiti delle carte.',
         creditCardBalance: 'Importo attualmente dovuto sulle carte — conta come debito, spesso a tassi elevati.',
         sideIncome: 'Reddito aggiuntivo oltre all’attività principale (lavoretto, onorari). Conta come reddito.',
@@ -2221,8 +2221,8 @@ export default {
         pension3aBalance: { sie: 'L’importo totale finora risparmiato sul suo conto 3a — non il versamento annuo.', du: 'L’importo totale finora risparmiato sul tuo conto 3a — non il versamento annuo.' },
         ivBezug: { sie: "Figura nella decisione dell’ufficio AI. Facoltativo. Serve solo come orientamento per aiuto sociale e prestazioni complementari e resta su questo dispositivo finché non lo trasmette Lei.", du: "Figura nella decisione dell’ufficio AI. Facoltativo. Serve solo come orientamento per aiuto sociale e prestazioni complementari e resta su questo dispositivo finché non lo trasmetti tu." },
         ahvRente: "Secondo la decisione di rendita della cassa di compensazione, importo al mese. 0 se non si riceve alcuna rendita. Senza inserimento l’app non indica un importo per aiuto sociale e riduzione dei premi dall’età di pensionamento.",
-        ivRente: "Secondo la decisione dell’ufficio AI, importo al mese. 0 se non si riceve alcuna rendita. Senza inserimento l’app non indica un importo per aiuto sociale e riduzione dei premi con una rendita AI.",
-        bvgRente: "Secondo il conteggio della cassa pensioni, importo al mese. Un prelievo di capitale fa parte della sostanza, non va qui.",
+        ivRente: { sie: "Secondo la decisione di rendita, importo al mese. 0 se non si riceve alcuna rendita. Senza inserimento l’app non indica un importo per aiuto sociale e riduzione dei premi con una rendita AI. Facoltativo. Resta su questo dispositivo finché non lo trasmette Lei.", du: "Secondo la decisione di rendita, importo al mese. 0 se non si riceve alcuna rendita. Senza inserimento l’app non indica un importo per aiuto sociale e riduzione dei premi con una rendita AI. Facoltativo. Resta su questo dispositivo finché non lo trasmetti tu." },
+        bvgRente: "Secondo l’attestato di rendita della cassa pensioni, importo al mese. Ciò che viene prelevato come capitale, anche in parte, fa parte della sostanza.",
         pension3bBalance: { sie: 'Il valore attuale della sua previdenza libera 3b (conto di risparmio, assicurazione sulla vita, titoli).', du: 'Il valore attuale della tua previdenza libera 3b (conto di risparmio, assicurazione sulla vita, titoli).' },
       },
       docs: {
@@ -5477,6 +5477,7 @@ export default {
     sectionEL: 'Prestazioni complementari (PC)',
     sectionSteuern: 'Orientamento imposta federale',
     elNotApplicable: 'Non applicabile (solo con una prestazione AVS/AI)',
+    rentenSumme: 'Rendite al mese',
     ipvNein: 'Secondo un calcolo approssimativo nessuna riduzione; non è una decisione',
     elKeinHinweis: 'Secondo un calcolo approssimativo nessun indizio di PC; non è una decisione',
     footerPrivacy: 'Questo documento è stato creato localmente. Nessun dato è stato trasmesso.',

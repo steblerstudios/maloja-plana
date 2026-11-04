@@ -2197,7 +2197,7 @@ export default {
         investmentFunds: { label: 'Fonds de placement ?', options: { no: 'Non', yes: 'Oui' } },
       },
       hints: {
-        monthlyIncome: { sie: 'Votre revenu — le net est ce qui arrive sur votre compte.', du: 'Ton revenu — le net est ce qui arrive sur ton compte.' },
+        monthlyIncome: { sie: 'Votre revenu — le net est ce qui arrive sur votre compte. Les rentes ne vont pas ici, mais dans les champs de rente.', du: 'Ton revenu — le net est ce qui arrive sur ton compte. Les rentes ne vont pas ici, mais dans les champs de rente.' },
         creditCardLimit: 'La somme de toutes les limites de cartes.',
         creditCardBalance: 'Montant actuellement dû sur les cartes — compte comme dette, souvent à taux élevé.',
         sideIncome: 'Revenu supplémentaire en plus de l’activité principale (petit boulot, honoraires). Compté comme revenu.',
@@ -2221,8 +2221,8 @@ export default {
         pension3aBalance: { sie: 'Le montant total épargné à ce jour sur votre compte 3a — pas la cotisation annuelle.', du: 'Le montant total épargné à ce jour sur ton compte 3a — pas la cotisation annuelle.' },
         ivBezug: { sie: "Figure dans la décision de l’office AI. Facultatif. Sert uniquement d’orientation pour l’aide sociale et les prestations complémentaires et reste sur cet appareil, jusqu’à ce que vous le transmettiez vous-même.", du: "Figure dans la décision de l’office AI. Facultatif. Sert uniquement d’orientation pour l’aide sociale et les prestations complémentaires et reste sur cet appareil, jusqu’à ce que tu le transmettes toi-même." },
         ahvRente: "Selon la décision de rente de la caisse de compensation, montant par mois. 0 si aucune rente n’est perçue. Sans saisie, l’app n’indique pas de montant pour l’aide sociale et la réduction de primes dès l’âge de la retraite.",
-        ivRente: "Selon la décision de l’office AI, montant par mois. 0 si aucune rente n’est perçue. Sans saisie, l’app n’indique pas de montant pour l’aide sociale et la réduction de primes en cas de rente AI.",
-        bvgRente: "Selon le décompte de la caisse de pension, montant par mois. Un retrait en capital fait partie de la fortune, pas d’ici.",
+        ivRente: { sie: "Selon la décision de rente, montant par mois. 0 si aucune rente n’est perçue. Sans saisie, l’app n’indique pas de montant pour l’aide sociale et la réduction de primes en cas de rente AI. Facultatif. Reste sur cet appareil, jusqu’à ce que vous le transmettiez vous-même.", du: "Selon la décision de rente, montant par mois. 0 si aucune rente n’est perçue. Sans saisie, l’app n’indique pas de montant pour l’aide sociale et la réduction de primes en cas de rente AI. Facultatif. Reste sur cet appareil, jusqu’à ce que tu le transmettes toi-même." },
+        bvgRente: "Selon l’attestation de rente de la caisse de pension, montant par mois. Ce qui est retiré en capital, même en partie, fait partie de la fortune.",
         pension3bBalance: { sie: 'La valeur actuelle de votre prévoyance libre 3b (compte épargne, assurance-vie, titres).', du: 'La valeur actuelle de ta prévoyance libre 3b (compte épargne, assurance-vie, titres).' },
       },
       docs: {
@@ -5504,6 +5504,7 @@ export default {
     sectionEL: 'Prestations complémentaires (PC)',
     sectionSteuern: 'Orientation impôt fédéral',
     elNotApplicable: 'Non applicable (uniquement avec une prestation AVS/AI)',
+    rentenSumme: 'Rentes par mois',
     ipvNein: 'Selon un calcul approximatif, pas de réduction ; ce n’est pas une décision',
     elKeinHinweis: 'Selon un calcul approximatif, aucun indice de PC ; ce n’est pas une décision',
     footerPrivacy: 'Ce document a été créé localement. Aucune donnée n\'a été transmise.',

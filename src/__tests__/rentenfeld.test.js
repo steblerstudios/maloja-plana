@@ -5,6 +5,7 @@ import { calculateSozialhilfe, calculateIPV, checkELEligibility, ladeIPVModelle 
 import { renteOhneBetrag, renteEingetragen, bvgHerausloesen } from '../utils/unterstuetzungseinheit.js';
 import { sozialhilfeVorbefuellung } from '../utils/sozialhilfeVorbefuellung.js';
 import { getChapters } from '../config/constants.js';
+import { getBehoerdenDossierPreview } from '../dossierGenerator.js';
 import { SozialhilfeRechner } from '../SozialhilfeRechner.jsx';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -24,6 +25,7 @@ const rentnerin = (finanzen = {}, canton = 'AG') => ({
 });
 
 beforeAll(async () => { await ladeIPVModelle(); });
+const rentenfeldProfil = () => rentnerin({ ahvRente: 1500, bvgRente: 300 });
 
 describe('Rentenfelder im Kapitel Finanzen', () => {
   it('drei Felder, freiwillig, in fünf Sprachen beschriftet', () => {
@@ -43,6 +45,17 @@ describe('Rentenfelder im Kapitel Finanzen', () => {
     expect(renteOhneBetrag({}, rentnerin().basis)).toBe(true);
     expect(renteOhneBetrag({ ahvRente: 0 }, rentnerin().basis)).toBe(false);
     expect(renteOhneBetrag({ ivBezug: 'teil', ivRente: 900 }, {})).toBe(false);
+  });
+
+  // Fachprüfung 376149dc, Muss: das Feld muss zur Lage passen.
+  it('nur die passende Rente hebt die Sperre auf', () => {
+    const nurPk = rentnerin({ bvgRente: 300 });
+    expect(renteOhneBetrag(nurPk.finanzen, nurPk.basis)).toBe(true);
+    expect(calculateSozialhilfe(nurPk).einkommenFehlt).toBe(true);
+    expect(calculateIPV(nurPk).amount).toBeNull();
+    const ivMitAhvNull = { ...rentnerin({ employmentType: 'employed', ivBezug: 'ganz', ahvRente: 0, monthlyIncome: 0 }), basis: { canton: 'AG', dateOfBirth: '1980-01-01', household: { adults: 1, children: [] } } };
+    expect(calculateIPV(ivMitAhvNull).amount).toBeNull();
+    expect(renteOhneBetrag({ ivBezug: 'ganz', ivRente: 0 }, {})).toBe(false);
   });
 
   it('Sozialhilfe: die Rente zählt als Einnahme, ohne Einkommensfreibetrag, ein Betrag steht', () => {
@@ -78,6 +91,17 @@ describe('Rentenfelder im Kapitel Finanzen', () => {
 
   it('EL bleibt «prüfen lassen» mit eingetragener Rente', () => {
     expect(checkELEligibility(rentnerin({ ahvRente: 1500 })).elPruefen).toBe(true);
+  });
+
+  it('Dossier: die Renten als eine Summe im Abschnitt Finanzen, in allen Sprachen beschriftet', () => {
+    const p = rentenfeldProfil();
+    const fin = getBehoerdenDossierPreview(p, [], t, {}).sections.find((x) => x.key === 'finanzen');
+    expect(fin.rows.find((r) => r.label === de.behoerdenDossier.rentenSumme).value).toContain('1’800');
+    for (const l of [fr, itTranslations, en, rm]) expect(l.behoerdenDossier.rentenSumme).toBeTruthy();
+  });
+
+  it('der Lohn-Hinweis schickt Renten in die Rentenfelder (keine Doppelzählung)', () => {
+    expect(de.chapters.finanzen.hints.monthlyIncome.sie).toContain('Rentenfeldern');
   });
 
   it('die Sätze zeigen auf die Felder statt «kein Feld»', () => {

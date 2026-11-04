@@ -17,7 +17,7 @@ import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
-import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
+import { vermoegensFelder, rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
 
 // Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
@@ -836,6 +836,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionFinanzen'),
       rows: [
         { label: lbl('finanzen', 'monthlyIncome'), value: chf('finanzen', 'monthlyIncome') },
+        // Renten als eine Summe: Das Amt sieht, was in den Einnahmen steckt, ohne die Art (IV) einzeln (Fach und Recht 376149dc).
+        { label: t('behoerdenDossier.rentenSumme'), value: rentenMonat(data.finanzen) > 0 ? formatCHF(rentenMonat(data.finanzen)) : '' },
         { label: lbl('finanzen', 'employmentType'), value: sel('finanzen', 'employmentType') },
         { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
         { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },

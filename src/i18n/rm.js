@@ -2366,7 +2366,7 @@ export default {
       },
       hints: {
         // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-        monthlyIncome: { sie: 'Salari mensil net (quai che arriva sin il conto)', du: 'Salari mensil net (quai che arriva sin il conto)' },
+        monthlyIncome: { sie: 'Salari mensil net (quai che arriva sin il conto) Las rentas betg qua, mabain tar ils champs da rentas.', du: 'Salari mensil net (quai che arriva sin il conto) Las rentas betg qua, mabain tar ils champs da rentas.' },
         creditCardLimit: 'La summa da tut ils limits da tias cartas.',
         creditCardBalance: 'Import actualmain debit sin tias cartas — quinta sco debit, savens cun auts tschains.',
         sideIncome: 'Entrada supplementara ultra l’activitad principala. Vegn quintada sco entrada.',
@@ -2390,8 +2390,8 @@ export default {
         pension3aBalance: { sie: 'L’import total spargnà fin ussa sin Voss conto 3a — betg la contribuziun annuala.', du: 'L’import total spargnà fin ussa sin tes conto 3a — betg la contribuziun annuala.' },
         ivBezug: { sie: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che Vus transmettais la decisiun.", du: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che ti transmettas la decisiun." }, // TODO(rm)
         ahvRente: "Tenor la decisiun da renta da la cassa da cumpensaziun, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias a partir da la vegliadetgna da pensiun.", // TODO(rm)
-        ivRente: "Tenor la decisiun dal post AI, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias cun ina renta AI.", // TODO(rm)
-        bvgRente: "Tenor il quint da la cassa da pensiun, import per mais. In retratg da chapital tutga tar la facultad, betg qua.", // TODO(rm)
+        ivRente: { sie: "Tenor la decisiun da renta, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias cun ina renta AI. Facultativ. Resta sin quest apparat, enfin che Vus al transmettais.", du: "Tenor la decisiun da renta, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias cun ina renta AI. Facultativ. Resta sin quest apparat, enfin che ti al transmettas." }, // TODO(rm)
+        bvgRente: "Tenor l’attestaziun da renta da la cassa da pensiun, import per mais. Quai che vegn retratg sco chapital, er ina part, tutga tar la facultad.", // TODO(rm)
         pension3bBalance: { sie: 'Il valur actual da Vossa prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).', du: 'Il valur actual da tia prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).' },
       },
       docs: {
@@ -4086,6 +4086,7 @@ export default {
     sectionEL: 'Prestaziuns cumplementaras (PC)',
     sectionSteuern: 'Orientaziun taglia federala',
     elNotApplicable: 'Betg applitgabel (mo cun ina prestaziun AVS/AI)',
+    rentenSumme: 'Rentas per mais', // TODO(rm)
     ipvNein: 'Tenor quint approximativ nagina reducziun; quai n’è betg ina decisiun',
     elKeinHinweis: 'Tenor quint approximativ nagin indizi per PC; quai n’è betg ina decisiun',
     footerPrivacy: 'Quest document è vegnì creà localmain. Naginas datas èn vegnidas tramessas.',

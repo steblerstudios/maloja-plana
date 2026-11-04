@@ -2197,7 +2197,7 @@ export default {
         investmentFunds: { label: 'Investment funds?', options: { no: 'No', yes: 'Yes' } },
       },
       hints: {
-        monthlyIncome: 'Your income — net is what arrives in your account.',
+        monthlyIncome: 'Your income — net is what arrives in your account. Pensions do not go here but in the pension fields.',
         creditCardLimit: 'The sum of all your card limits.',
         creditCardBalance: 'Amount currently owed on your cards — counts as debt, often at high interest.',
         sideIncome: 'Additional income alongside your main job (side job, fees). Counted as income.',
@@ -2221,8 +2221,8 @@ export default {
         pension3aBalance: 'The total amount saved so far in your Pillar 3a account — not the yearly contribution.',
         ivBezug: { sie: "Stated in the IV office’s decision. Optional. Used only for orientation on social assistance and supplementary benefits, and stays on this device until you pass it on yourself.", du: "Stated in the IV office’s decision. Optional. Used only for orientation on social assistance and supplementary benefits, and stays on this device until you pass it on yourself." },
         ahvRente: "As stated in the compensation office’s pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction from retirement age.",
-        ivRente: "As stated in the IV office’s decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction with an IV pension.",
-        bvgRente: "As stated in the pension fund’s statement, amount per month. A capital withdrawal belongs to assets, not here.",
+        ivRente: { sie: "As stated in the pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction with an IV pension. Optional. Stays on this device until you pass it on yourself.", du: "As stated in the pension decision, amount per month. 0 if no pension is drawn. Without an entry, the app shows no amount for social assistance and premium reduction with an IV pension. Optional. Stays on this device until you pass it on yourself." },
+        bvgRente: "As stated in the pension fund’s pension certificate, amount per month. Anything drawn as capital, even in part, belongs to assets.",
         pension3bBalance: 'The current value of your free Pillar 3b provision (savings account, life insurance, securities).',
       },
       docs: {
@@ -5504,6 +5504,7 @@ export default {
     sectionEL: 'Supplementary Benefits (EL)',
     sectionSteuern: 'Federal Tax Orientation',
     elNotApplicable: 'Not applicable (AHV/IV recipients only)',
+    rentenSumme: 'Pensions per month',
     ipvNein: 'Rough calculation: no reduction. This is not a decision',
     elKeinHinweis: 'Rough calculation: no sign of supplementary benefits. This is not a decision',
     footerPrivacy: 'This document was created locally. No data was transmitted.',
