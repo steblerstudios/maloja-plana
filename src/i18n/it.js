@@ -43,9 +43,9 @@ export default {
         sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre il necessario, l’aiuto sociale può integrarlo. È un diritto, non un’elemosina.' },
         stipendien: { titel: 'Borse di studio', text: 'Per la formazione e gli studi con un reddito basso esistono borse di studio — rimborsabili o meno.' },
         franchise: { titel: 'Verificare la franchigia', text: 'Con poche visite mediche, una franchigia più alta riduce il premio mensile — da rivedere ogni autunno.' },
-        betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: { sie: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito — spesso poco noto. Chieda al suo Comune di buoni per la custodia o posti sovvenzionati.', du: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito — spesso poco noto. Chiedi al tuo Comune di buoni per la custodia o posti sovvenzionati.' } },
-        familienEL: { titel: 'Prestazioni complementari per famiglie', text: { sie: 'Il suo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale. Spesso poco noto.', du: 'Il tuo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale. Spesso poco noto.' } },
-        mutterschaftsbeihilfe: { titel: 'Aiuto alla maternità', text: { sie: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale. Spesso poco noto.', du: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale. Spesso poco noto.' } },
+        betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: { sie: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito. Chieda al suo Comune di buoni per la custodia o posti sovvenzionati.', du: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito. Chiedi al tuo Comune di buoni per la custodia o posti sovvenzionati.' } },
+        familienEL: { titel: 'Prestazioni complementari per famiglie', text: { sie: 'Il suo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale.', du: 'Il tuo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale.' } },
+        mutterschaftsbeihilfe: { titel: 'Aiuto alla maternità', text: { sie: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale.', du: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale.' } },
         kulturlegi: { titel: 'CartaCultura (Caritas)', text: { sie: 'La tessera per piccoli budget: almeno il 30% di sconto su migliaia di offerte in cultura, sport, formazione (p. es. corsi) e salute (p. es. cure dentarie). L’offerta varia a seconda della regione — la sua CartaCultura cantonale mostra cosa vale da lei.', du: 'La tessera per piccoli budget: almeno il 30% di sconto su migliaia di offerte in cultura, sport, formazione (p. es. corsi) e salute (p. es. cure dentarie). L’offerta varia a seconda della regione — la tua CartaCultura cantonale mostra cosa vale da te.' } },
         rekaFerien: { titel: 'Vacanze Reka per 200.–', text: 'Con la CartaCultura, la Fondazione Reka permette a famiglie e persone sole colpite dalla povertà una settimana di vacanza per circa 200 franchi — alloggio e viaggio con i trasporti pubblici inclusi.' },
       },
@@ -58,9 +58,9 @@ export default {
         alimente: { titel: 'Anticipo degli alimenti & aiuto all’incasso', text: 'Se i contributi di mantenimento non arrivano, il Comune può anticiparli e aiutare a incassarli — così il figlio non resta senza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Le economie domestiche monoparentali hanno spesso diritto a un aiuto per i premi della cassa malati — per il genitore e i figli.' },
         familienzulagen: { titel: 'Assegni familiari', text: 'Assegni per i figli e di formazione per ogni figlio — recuperabili retroattivamente se dimenticati. Seguono il genitore che lavora.' },
-        betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: { sie: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito — spesso poco noto. Chieda al suo Comune di buoni per la custodia o posti sovvenzionati.', du: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito — spesso poco noto. Chiedi al tuo Comune di buoni per la custodia o posti sovvenzionati.' } },
-        familienEL: { titel: 'Prestazioni complementari per famiglie', text: { sie: 'Il suo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale. Spesso poco noto.', du: 'Il tuo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale. Spesso poco noto.' } },
-        mutterschaftsbeihilfe: { titel: 'Aiuto alla maternità', text: { sie: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale. Spesso poco noto.', du: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale. Spesso poco noto.' } },
+        betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: { sie: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito. Chieda al suo Comune di buoni per la custodia o posti sovvenzionati.', du: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito. Chiedi al tuo Comune di buoni per la custodia o posti sovvenzionati.' } },
+        familienEL: { titel: 'Prestazioni complementari per famiglie', text: { sie: 'Il suo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale.', du: 'Il tuo Cantone versa alle famiglie che lavorano, con bambini piccoli e reddito modesto, una prestazione complementare mensile — per non dover ricorrere all’aiuto sociale.' } },
+        mutterschaftsbeihilfe: { titel: 'Aiuto alla maternità', text: { sie: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale.', du: 'Alcuni Cantoni versano, dopo la nascita e per diversi mesi, un aiuto per potersi occupare personalmente del proprio bambino piccolo quando il reddito non copre il fabbisogno vitale.' } },
         sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'L’aiuto sociale riconosce il fabbisogno maggiore di un’economia domestica monoparentale e può integrare un reddito basso.' },
         steuern: { titel: 'Tariffa per genitori & deduzione per figli', text: 'I genitori soli sono tassati con la tariffa per genitori più bassa e possono dedurre le spese per i figli e la custodia.' },
       },
@@ -68,10 +68,10 @@ export default {
     beeintraechtigung: {
       label: 'Con una disabilità o malattia cronica',
       frage: { sie: 'Vive con una disabilità, una malattia cronica o un’indicazione riconosciuta?', du: 'Vivi con una disabilità, una malattia cronica o un’indicazione riconosciuta?' },
-      intro: 'Un’indicazione può aprire un sostegno prima o in modo più ampio di quanto si pensi — molte cose vengono menzionate di rado e si perdono facilmente.',
+      intro: 'Un’indicazione può aprire un sostegno prima o in modo più ampio di quanto si pensi.',
       berechtigungen: {
         iv: { titel: 'Prestazioni AI', text: 'Reintegrazione prima della rendita: provvedimenti professionali, mezzi ausiliari e, se necessario, una rendita. Annunciarsi presto conta di più.' },
-        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: { sie: 'Un importo mensile se ha bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito, spesso trascurato.', du: 'Un importo mensile se hai bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito, spesso trascurato.' } },
+        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: { sie: 'Un importo mensile se ha bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito.', du: 'Un importo mensile se hai bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito.' } },
         el: { titel: 'Prestazioni complementari (PC)', text: 'Se una rendita o un reddito non copre le spese di vita, le PC integrano. È un diritto, non assistenza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Per chi riceve PC il premio è riconosciuto come importo forfettario — al massimo il premio medio cantonale. Non è un esonero. Con un reddito basso senza PC si ha comunque spesso diritto a un aiuto.' },
         steuern: { titel: 'Deduzioni fiscali legate alla disabilità', text: 'Le spese di malattia e disabilità — cure, mezzi ausiliari, trasporti — sono deducibili dal reddito imponibile.' },
@@ -82,7 +82,7 @@ export default {
     pflegendeAngehoerige: {
       label: 'Assistere un familiare',
       frage: { sie: 'Assiste regolarmente un familiare o una persona vicina?', du: 'Assisti regolarmente un familiare o una persona vicina?' },
-      intro: 'L’assistenza prestata in silenzio viene raramente riconosciuta — eppure può creare accrediti di rendita e diritti. Esistono anche servizi di sgravio e consulenza.',
+      intro: 'L’assistenza prestata in silenzio può creare accrediti di rendita e diritti. Esistono anche servizi di sgravio e consulenza.',
       berechtigungen: {
         pflege: { titel: 'Il percorso guidato: assistere i propri cari', text: 'Il percorso guidato mostra i passi in ordine: accredito, indennità, sgravio.' },
         betreuungsgutschriften: { titel: 'Accrediti per compiti assistenziali (AVS)', text: { sie: 'L’assistenza a un familiare stretto può essere accreditata sul suo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.', du: 'L’assistenza a un familiare stretto può essere accreditata sul tuo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.' } },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In formazione',
       frage: 'In tirocinio, a scuola o all’università?',
-      intro: 'Essere in formazione apre sostegni che molti non richiedono mai — e avvia in sordina alcuni obblighi da tenere d’occhio.',
+      intro: 'Essere in formazione apre sostegni — e avvia in sordina alcuni obblighi da tenere d’occhio.',
       berechtigungen: {
         stipendien: { titel: 'Borse di studio', text: { sie: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al suo reddito e a quello dei suoi genitori, con termini di presentazione.', du: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al reddito tuo e dei tuoi genitori, con termini di presentazione.' } },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I giovani adulti in formazione con reddito basso hanno spesso diritto a un aiuto per i premi della cassa malati — per sé stessi.' },
@@ -131,9 +131,9 @@ export default {
       intro: 'In età avanzata diversi diritti restano inutilizzati — anzitutto le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
       berechtigungen: {
         pensionierung: { titel: 'Passaggio al pensionamento', text: { sie: 'È vicino/a al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.', du: 'Sei vicino al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.' } },
-        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano — una delle prestazioni più spesso non richieste in Svizzera. Un diritto, non carità.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano. Un diritto, non carità.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I pensionati con reddito basso — e tutti coloro che ricevono prestazioni complementari — possono farsi aiutare dal cantone a pagare i premi della cassa malati.' },
-        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se si ha regolarmente bisogno di aiuto negli atti quotidiani — indipendente dal reddito e distinto dalle PC, ma spesso trascurato.' },
+        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se si ha regolarmente bisogno di aiuto negli atti quotidiani — indipendente dal reddito e distinto dalle PC.' },
         steuern: { titel: 'Deduzioni in pensione', text: 'Le spese di malattia, cura e legate alla disabilità si deducono dal reddito imponibile — conviene conservare le ricevute durante l’anno.' },
         serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Le economie domestiche che ricevono prestazioni complementari (PC) sono esentate dal canone SERAFE su richiesta — con rimborso retroattivo.' },
       },
@@ -141,7 +141,7 @@ export default {
     erwerbslos: {
       label: 'Senza lavoro / tra due impieghi',
       frage: 'Disoccupato, tra due impieghi o a fine diritto?',
-      intro: 'Senza lavoro esistono aiuti che non arrivano da soli — e dopo la fine del diritto ci sono ulteriori sostegni che molti non sanno di poter chiedere.',
+      intro: 'Senza lavoro esistono aiuti che non arrivano da soli — e dopo la fine del diritto ci sono ulteriori sostegni.',
       berechtigungen: {
         rav: { titel: 'Iscriversi per tempo all’URC', text: { sie: 'L’iscrizione all’URC è il termine più importante — idealmente il primo giorno senza lavoro, prima di chiedere le indennità. Ogni giorno di ritardo costa indennità. Il percorso guidato mostra i passi e salva il termine nel suo calendario.', du: 'L’iscrizione all’URC è il termine più importante — idealmente il primo giorno senza lavoro, prima di chiedere le indennità. Ogni giorno di ritardo costa indennità. Il percorso guidato mostra i passi e salva il termine nel tuo calendario.' } },
         alv: { titel: 'Indennità di disoccupazione (AD)', text: { sie: 'Si iscriva all’URC il prima possibile — le indennità dipendono dai mesi di contribuzione, e un’iscrizione tardiva costa giorni.', du: 'Iscriviti all’URC il prima possibile — le indennità dipendono dai mesi di contribuzione, e un’iscrizione tardiva costa giorni.' } },
@@ -169,7 +169,7 @@ export default {
       frage: { sie: 'Un genitore è deceduto, e lei o suo figlio avete meno di 25 anni o siete in formazione?', du: 'Un genitore è deceduto, e tu o tuo figlio avete meno di 25 anni o siete in formazione?' },
       intro: 'Dopo la morte di un genitore, i figli hanno diritti chiari, facili da perdere in un momento difficile — una rendita per orfani e un sostegno complementare se non basta.',
       berechtigungen: {
-        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Un figlio che ha perso un genitore riceve una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione e spesso parte troppo tardi.' },
+        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Un figlio che ha perso un genitore riceve una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione.' },
         el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita per orfani non copre il costo della vita, le PC possono integrare — anche per bambini e giovani in formazione. Un diritto, non carità.' },
         stipendien: { titel: 'Borse di studio', text: 'Oltre alla rendita per orfani, borse cantonali possono sostenere una formazione o gli studi — da verificare in parallelo, con termini propri.' },
         steuern: { titel: 'Sgravio fiscale', text: 'Il genitore superstite può far valere la tariffa per genitori e le deduzioni per figli; anche alcune spese legate al lutto possono ridurre l’imposta.' },
