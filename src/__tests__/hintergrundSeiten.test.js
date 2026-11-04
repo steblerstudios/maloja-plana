@@ -96,7 +96,7 @@ describe('Hintergrundseiten', () => {
 
     it('jede Figur ist ein beschriftetes Bild mit Titel und Beschreibung', () => {
       const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)];
-      expect(svgs.length).toBeGreaterThanOrEqual(4);
+      expect(svgs.length).toBe(5);
       for (const [ganz, innen] of svgs) {
         expect(ganz).toMatch(/role="img"/);
         expect(ganz).toMatch(/aria-labelledby="[^"]+-t [^"]+-d"/);
@@ -107,7 +107,7 @@ describe('Hintergrundseiten', () => {
 
     it('verlinkt nach aussen nur die eingetragenen Quellen', () => {
       const erlaubt = new Set([
-        ...seite.quellen.map((q) => q.url),
+        ...seite.quellen.flatMap((q) => [q.url, q.auch?.url].filter(Boolean)),
         'https://www.gnu.org/licenses/agpl-3.0.html',
         'https://github.com/steblerstudios/maloja-plana',
       ]);
@@ -130,25 +130,26 @@ describe('Hintergrundseiten', () => {
   describe('/krankenkasse/ · Zahlen aus src/data', () => {
     const html = lies('krankenkasse');
     const text = sichtbar(html);
-    const figur = html.match(/<svg [^>]*aria-labelledby="fig-kantone-t[\s\S]*?<\/svg>/)[0];
+    // Die Tabelle aller Kantone unter dem Kantonsbild trägt die Zahlen; das
+    // Bild zeigt nur die Verhältnisse (kein Text im Bild).
+    const alle = html.match(/<details>[\s\S]*?Alle 26 Kantone[\s\S]*?<\/details>/)[0];
 
-    it('jede Kantonsregion steht mit ihrer Prämie im Kantonsbild', () => {
+    it('jede Kantonsregion steht mit ihrer Prämie in der Tabelle aller Kantone', () => {
       const tabelle = PRAEMIEN[PRAEMIENJAHR];
       expect(Object.keys(tabelle).length).toBeGreaterThan(26);
       for (const [schluessel, werte] of Object.entries(tabelle)) {
-        expect(figur, `${schluessel} fehlt`).toContain(rp(werte[2]));
+        expect(alle, `${schluessel} fehlt`).toContain(rp(werte[2]));
       }
-      // Alle 26 Kantone, je eine Zeile.
       const kantone = kantonsPraemien();
       expect(kantone.length).toBe(26);
-      for (const k of kantone) expect(figur).toContain(`>${k.kanton}</text>`);
+      for (const k of kantone) expect(alle).toContain(`<td>${k.name}</td>`);
     });
 
-    it('nennt für Kantone mit mehreren Regionen die Spanne, keinen selbst gemittelten Wert', () => {
+    it('nennt für Kantone mit mehreren Regionen jede Region, keinen selbst gemittelten Wert', () => {
       const mehrere = kantonsPraemien().filter((k) => !k.eineRegion);
       expect(mehrere.map((k) => k.kanton).sort()).toEqual(
         ['BE', 'BL', 'FR', 'GR', 'LU', 'SG', 'SH', 'TI', 'VD', 'VS', 'ZH']);
-      for (const k of mehrere) expect(figur).toContain(`>${rp(k.tief)} · `);
+      for (const k of mehrere) for (const r of k.regionen) expect(alle).toContain(`Region ${r.region}: ${rp(r.erwachsene)}`);
       // Die Zürcher Tabellenzeile: Spanne der drei Regionen.
       expect(text).toMatch(new RegExp(`Zürich ${rp(Math.min(...[1, 2, 3].map((r) => PRAEMIEN[PRAEMIENJAHR]['ZH' + r][2])))} bis`));
     });
@@ -181,6 +182,54 @@ describe('Hintergrundseiten', () => {
       for (const n of ['Winterthur', 'Uster', 'Dietikon']) expect(region(n)).toBe(2);
       for (const n of ['Bülach', 'Andelfingen']) expect(region(n)).toBe(3);
       expect(text).toContain('Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3');
+    });
+  });
+
+  // ─── Belege und Standbilder ──────────────────────────────────────────────
+  describe('/krankenkasse/ · Belege und Bilder', () => {
+    const html = lies('krankenkasse');
+
+    it('jeder Beleg im Text führt zu einer Quelle, und jede Quelle führt zurück', () => {
+      const belege = [...html.matchAll(/<sup class="beleg"><a href="#quelle-([a-zA-Z0-9]+)" id="(beleg-[a-zA-Z0-9]+-\d+)"/g)];
+      expect(belege.length).toBeGreaterThan(30);
+      for (const [, key, id] of belege) {
+        expect(html, `Quelle ${key} fehlt`).toContain(`<li id="quelle-${key}">`);
+        expect(html, `Rücksprung ${id} fehlt`).toContain(`href="#${id}"`);
+      }
+      // Jede eingetragene Quelle wird im Text gebraucht.
+      for (const q of KRANKENKASSE.quellen) expect(html).toContain(`href="#quelle-${q.key}"`);
+      // Nummern laufen ab 1 lückenlos in der Reihenfolge des ersten Auftretens.
+      const erste = [];
+      for (const [, key] of belege) if (!erste.includes(key)) erste.push(key);
+      const nummern = [...html.matchAll(/<li id="quelle-([a-zA-Z0-9]+)">\s*<span class="q-nr">(\d+)<\/span>/g)];
+      expect(nummern.map(([, k]) => k)).toEqual(erste);
+      expect(nummern.map(([, , n]) => Number(n))).toEqual(erste.map((_, i) => i + 1));
+    });
+
+    it('nicht amtliche Quellen sind als solche gekennzeichnet', () => {
+      for (const q of KRANKENKASSE.quellen.filter((x) => !x.amtlich)) {
+        const eintrag = html.slice(html.indexOf(`<li id="quelle-${q.key}">`), html.indexOf('</li>', html.indexOf(`<li id="quelle-${q.key}">`)));
+        expect(eintrag).toContain('keine Behörde');
+      }
+    });
+
+    it('die Standbilder sind eingesetzt: Strichfiguren und die isometrische Prämien-Maschine', () => {
+      for (const id of ['abb-dorf', 'abb-alter', 'abb-kostenteil', 'abb-praemie', 'abb-kantone']) {
+        expect(html).toContain(`<figure class="abb" id="${id}">`);
+      }
+      expect((html.match(/class="abb-bild hl"/g) || []).length).toBe(4);
+      expect((html.match(/class="abb-bild iso"/g) || []).length).toBe(1);
+      // Kein Text im Bild, kein Skript, keine fremde Adresse.
+      for (const [, innen] of html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)) {
+        expect(innen).not.toMatch(/<text|<script|<foreignObject|<image|https?:/);
+      }
+      // Abbildungen sind fortlaufend nummeriert.
+      expect([...html.matchAll(/<strong>Abb\. (\d+)\.<\/strong>/g)].map((m) => Number(m[1]))).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    it('das Dach je Franchise kommt aus berechneFranchise', () => {
+      const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+      for (const f of FRANCHISE_STUFEN) expect(html).toContain(`<td class="n">${fmt(f)}</td><td class="n">${fmt(f + SELBSTBEHALT_MAX)}</td>`);
     });
   });
 

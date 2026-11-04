@@ -349,37 +349,155 @@ function fuss(sprache, sprachZeile) {
 // Erklärseiten: nur Deutsch, mit Zahlen aus Malojas Daten, mit sichtbarem Stand.
 // Warum: scripts/seiten/krankenkasse.mjs, Kopfkommentar.
 const stilHintergrund = `
+    /* ─── Hintergrundseite · Maloja-Stil ───────────────────────────────────
+       Überschriften in Hanken Grotesk (Markenhandbuch §3), Lesetext Lexend.
+       Bereichsfarbe Heidelbeere (Versicherungen, data/lebensbereiche.js):
+       --heidel für Grafik, --heidel-text (= skyDeep) für Text, beide AA. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2');
+      font-weight:700; font-display:swap }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3;
+           --hl-plate:#FBFBFA; --hl-hi:#4A6A88; --hl-edge:#9E9A92; --hl-mid:#C6C2BA; --hl-lo:#E2DFD9 }
+    @media (prefers-color-scheme: dark){
+      :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038;
+             --hl-plate:#2A2927; --hl-hi:#8CAAC6; --hl-edge:#7A766F; --hl-mid:#4D4A45; --hl-lo:#3A3936 }
+    }
+    h1,h2,h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,sans-serif }
+    h1{ font-weight:700; font-size:36px; line-height:1.15; letter-spacing:-0.015em }
+    h2{ font-size:24px; font-weight:600; margin:56px 0 12px; line-height:1.25 }
+    h2 .nr{ display:inline-block; min-width:1.6em; color:var(--heidel-text) }
+    h3{ font-size:18px; font-weight:600; margin:28px 0 6px }
+    .kicker{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--heidel-text); margin:18px 0 0 }
     .stand{ font-size:14px; color:var(--leise); margin:0 0 4px }
-    nav.inhalt{ font-size:15px; margin:20px 0 8px }
-    nav.inhalt ol{ margin:6px 0 0 22px } nav.inhalt li{ margin-bottom:4px }
-    .merke{ border-left:2px solid var(--salbei); padding:2px 0 2px 14px; margin:20px 0 }
+    h2[tabindex]:focus{ outline:none }
+    a:focus-visible, .knopf:focus-visible, summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+
+    /* Inhaltsverzeichnis: acht Fragen als ruhige, nummerierte Karte. */
+    nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
+    nav.inhalt p{ margin:0 0 8px; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--leise) }
+    nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
+    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
+    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+
+    .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
+
+    /* Tabellen */
     .tabelle{ overflow-x:auto; margin:12px 0 18px }
     table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
     caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
     th{ font-weight:600 } th[scope="row"]{ font-weight:400 }
     td.n,th.n{ text-align:right; white-space:nowrap }
-    .fig{ margin:18px 0 22px }
-    .fig-schieben{ overflow-x:auto }
-    .fig svg{ display:block; width:100%; min-width:520px; height:auto; font-family:inherit }
-    .fig figcaption{ font-size:14px; color:var(--leise); margin-top:6px }
-    .fig details{ margin-top:10px; font-size:15px }
-    .fig summary{ cursor:pointer }
-    h2[tabindex]:focus{ outline:none }
-    a:focus-visible, .knopf:focus-visible, summary:focus-visible, .fig-schieben:focus-visible{
-      outline:2px solid var(--text); outline-offset:2px }
-    .f-achse{ stroke:var(--leise); stroke-width:1 }
-    .f-raster{ stroke:var(--rand); stroke-width:1 }
-    .f-saeule{ fill:var(--leise) }
-    .f-hell{ fill:var(--salbei) }
-    .f-spanne{ fill:var(--bg); stroke:var(--leise); stroke-width:1.5 }
-    .f-strich{ stroke:var(--text); stroke-width:1.5 }
-    .f-marke{ stroke:var(--text); stroke-width:1.5; stroke-dasharray:5 4 }
-    .f-linie{ fill:none; stroke:var(--text); stroke-width:2 }
-    .f-gestrichelt{ stroke-dasharray:7 5 }
-    .f-text{ fill:var(--leise); font-size:13px }
-    .f-stark{ fill:var(--text) }
-    ol.quellen{ margin:0 0 14px 22px; font-size:15px }`;
+
+    /* Abbildungen: Karte wie in der App — «Abb. n» oben links, Kurztitel oben
+       rechts, der Wert unten rechts; im Bild selbst steht kein Text. */
+    .abb{ margin:22px 0 26px }
+    .abb-karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:12px 16px 10px }
+    .abb-kopf,.abb-fuss{ display:flex; justify-content:space-between; gap:12px; margin:0; font-size:13px; color:var(--leise) }
+    .abb-fuss{ justify-content:flex-end }
+    .abb-wert{ color:var(--text); font-variant-numeric:tabular-nums }
+    .abb-bild svg{ display:block; width:100%; height:auto; max-height:460px; margin:4px auto }
+    .abb figcaption{ font-size:14px; color:var(--leise); margin-top:8px }
+    .abb figcaption strong{ color:var(--text); font-weight:600 }
+    .abb details{ margin-top:10px; font-size:15px } .abb summary{ cursor:pointer; color:var(--heidel-text) }
+
+    /* Strichfiguren (Hairline): eine Linie, Flächen in der Kartenfarbe, das
+       hervorgehobene Teil in Heidelbeere. Regeln nach dem Hairline-Kernel (MIT). */
+    .hl svg :where(path,polygon,ellipse,line){ fill:var(--hl-plate); stroke:var(--hl-mid); stroke-width:.9;
+      vector-effect:non-scaling-stroke; stroke-linejoin:round; stroke-linecap:round }
+    .hl svg .nf{ fill:none } .hl svg .fo{ stroke:none }
+    .hl svg .sil{ stroke:var(--hl-edge) } .hl svg .hi{ stroke:var(--hl-hi); stroke-width:1.3 } .hl svg .lo{ stroke:var(--hl-lo) }
+    .hl svg .dash{ stroke-dasharray:1 3 } .hl svg .dot{ stroke:none; fill:var(--hl-hi) }
+    .hl svg .dot.m{ fill:var(--hl-edge) } .hl svg .dot.off{ fill:var(--hl-lo) } .hl svg .ghost path{ fill:none; stroke:var(--hl-mid) }
+
+    /* Isometrische Figur (Anatomy): vier Töne, Granit statt Grau. Regeln nach iso.css (MIT). */
+    .iso{ --anatomy-paper:#FBFBFA; --anatomy-face:#FFFFFF; --anatomy-top:#FFFFFF;
+      --anatomy-shade-0:#DCD9D3; --anatomy-shade-1:#E5E2DC; --anatomy-shade-2:#EDEBE6; --anatomy-shade-3:#F4F3EF;
+      --anatomy-lit-top:#FFFFFF; --anatomy-lit-shade:#E9EEF3;
+      --anatomy-hi:#24262A; --anatomy-mid:#8A877F; --anatomy-lo:#B5B1A9; --anatomy-faint:#D6D3CC; --anatomy-lit:#4A6A88;
+      --anatomy-halo:#8A877F; --anatomy-halo-opacity:.28; --anatomy-dot:#3A3936; --anatomy-weight:.6px }
+    @media (prefers-color-scheme: dark){
+      .iso{ --anatomy-paper:#2A2927; --anatomy-face:#33322F; --anatomy-top:#34332F;
+        --anatomy-shade-0:#262523; --anatomy-shade-1:#292826; --anatomy-shade-2:#2D2C29; --anatomy-shade-3:#31302C;
+        --anatomy-lit-top:#3A4048; --anatomy-lit-shade:#323840;
+        --anatomy-hi:#E6E3DC; --anatomy-mid:#8E8A82; --anatomy-lo:#5E5B55; --anatomy-faint:#45433F; --anatomy-lit:#8CAAC6;
+        --anatomy-halo:#000000; --anatomy-halo-opacity:.5; --anatomy-dot:#E6E3DC }
+    }
+    .iso svg .iso-fill{ fill:var(--anatomy-paper); stroke:none }
+    .iso svg .iso-solid[data-lit]>.iso-fill{ fill:var(--anatomy-face) }
+    .iso svg .iso-shade,.iso svg .iso-top{ stroke:none }
+    .iso svg .iso-shade[data-shade="0"]{ fill:var(--anatomy-shade-0) } .iso svg .iso-shade[data-shade="1"]{ fill:var(--anatomy-shade-1) }
+    .iso svg .iso-shade[data-shade="2"]{ fill:var(--anatomy-shade-2) } .iso svg .iso-shade[data-shade="3"]{ fill:var(--anatomy-shade-3) }
+    .iso svg .iso-top{ fill:var(--anatomy-top) }
+    .iso svg .iso-solid[data-lit]>.iso-top{ fill:var(--anatomy-lit-top) } .iso svg .iso-solid[data-lit]>.iso-shade{ fill:var(--anatomy-lit-shade) }
+    .iso svg .iso-solid[data-lit]>.iso-edge{ stroke:var(--anatomy-lit) }
+    .iso svg .iso-halo{ fill:var(--anatomy-halo); stroke:none; filter:blur(9px); opacity:var(--anatomy-halo-opacity); transform:translateY(3px) }
+    .iso svg .iso-line{ fill:none; stroke:var(--anatomy-lo); stroke-width:var(--anatomy-weight); stroke-linecap:round; stroke-linejoin:round }
+    .iso svg .iso-line[data-tone="hi"]{ stroke:var(--anatomy-hi) } .iso svg .iso-line[data-tone="mid"]{ stroke:var(--anatomy-mid) }
+    .iso svg .iso-line[data-tone="lo"]{ stroke:var(--anatomy-lo) } .iso svg .iso-line[data-tone="faint"]{ stroke:var(--anatomy-faint) }
+    .iso svg .iso-line[data-tone="lit"]{ stroke:var(--anatomy-lit) }
+    .iso svg .iso-line[data-dotted]{ stroke-dasharray:.01 3.5; stroke-width:1 } .iso svg .iso-line[data-dashed]{ stroke-dasharray:3 3 }
+    .iso svg .iso-dots circle{ fill:var(--anatomy-dot); stroke:none; opacity:.32 }
+    .iso svg .iso-dots[data-tone="hi"] circle{ opacity:.85 } .iso svg .iso-dots[data-tone="mid"] circle{ opacity:.45 }
+    .iso svg .iso-dots[data-tone="lo"] circle{ opacity:.22 } .iso svg .iso-dots[data-tone="faint"] circle{ opacity:.12 }
+
+    /* Belege: hochgestellte Nummer, Sprung zur Quelle und zurück. */
+    sup.beleg{ font-size:.7em; line-height:0; vertical-align:super; margin-left:1px }
+    sup.beleg a{ text-decoration:none; color:var(--heidel-text); font-weight:600; padding:0 1px }
+    sup.beleg a:hover{ text-decoration:underline }
+    sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
+    :target{ scroll-margin-top:24px }
+    ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
+    ol.quellen li{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-bottom:1px solid var(--rand) }
+    ol.quellen li:target{ background:var(--heidel-hauch); border-radius:10px }
+    .q-nr{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-weight:600; color:var(--heidel-text); text-align:right; padding-top:1px }
+    .q-titel{ margin:0; font-weight:600 } .q-titel a{ text-underline-offset:3px }
+    .q-her{ margin:2px 0 0; font-size:14px; color:var(--leise) }
+    .q-belegt{ margin:4px 0 0; font-size:14px }
+    .q-zurueck{ margin:4px 0 0; font-size:13px; color:var(--leise) }
+    .q-zurueck a{ color:var(--heidel-text); text-decoration:none; padding:0 2px } .q-zurueck a:hover{ text-decoration:underline }
+    .q-art{ display:inline-block; font-size:12px; border:1px solid var(--rand); border-radius:6px; padding:0 6px; margin-left:6px; color:var(--leise) }
+    .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
+    .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
+    @media (max-width:600px){ h1{ font-size:28px } h2{ font-size:21px } .abb-karte{ padding:10px 10px 8px } }`;
+
+// Belege: [[q:schluessel]] → hochgestellte Nummer. Nummeriert nach dem ersten
+// Auftreten; jede Stelle bekommt eine eigene id, damit die Quelle zurückführt.
+// Unbekannte Schlüssel und Quellen ohne Verweis brechen den Bau ab.
+function belegeSetzen(html, quellen) {
+  const nummer = new Map(), stellen = new Map();
+  const text = html.replace(/\s*\[\[q:([a-zA-Z0-9]+)\]\]/g, (_, k) => {
+    if (!quellen.some((q) => q.key === k)) throw new Error(`Unbekannte Quelle [[q:${k}]]`);
+    if (!nummer.has(k)) nummer.set(k, nummer.size + 1);
+    const i = (stellen.get(k) || 0) + 1;
+    stellen.set(k, i);
+    return `<sup class="beleg"><a href="#quelle-${k}" id="beleg-${k}-${i}" aria-label="Quelle ${nummer.get(k)}">${nummer.get(k)}</a></sup>`;
+  });
+  const ohne = quellen.filter((q) => !nummer.has(q.key)).map((q) => q.key);
+  if (ohne.length) throw new Error(`Quellen ohne Verweis im Text: ${ohne.join(', ')}`);
+  return { text, nummer, stellen };
+}
+
+function quellenListe(quellen, nummer, stellen) {
+  return [...quellen].sort((a, b) => nummer.get(a.key) - nummer.get(b.key)).map((q) => {
+    const n = nummer.get(q.key);
+    const anzahl = stellen.get(q.key);
+    const zurueck = 'Zurück zum Text: ' + Array.from({ length: anzahl }, (_, i) =>
+      `<a href="#beleg-${q.key}-${i + 1}" aria-label="Zurück zur Stelle ${i + 1} im Text">${anzahl > 1 ? i + 1 : '↩'}</a>`).join(' · ');
+    const auch = q.auch ? `\n            <p class="q-her">Dazu: <a href="${esc(q.auch.url)}" rel="noopener">${esc(q.auch.text)}</a></p>` : '';
+    return `        <li id="quelle-${q.key}">
+          <span class="q-nr">${n}</span>
+          <div>
+            <p class="q-titel"><a href="${esc(q.url)}" rel="noopener">${esc(q.titel)}</a></p>
+            <p class="q-her">${esc(q.herausgeber)}${q.datum ? ` · ${esc(q.datum)}` : ''}${q.amtlich ? '' : '<span class="q-art">keine Behörde</span>'}</p>
+            <p class="q-belegt">Belegt: ${esc(q.belegt)}</p>${auch}
+            <p class="q-zurueck">${zurueck}</p>
+          </div>
+        </li>`;
+  }).join('\n');
+}
 
 function hintergrundBauen(seite) {
   const sprache = SPRACHEN.find((s) => s.code === 'de');
@@ -415,26 +533,29 @@ function hintergrundBauen(seite) {
   };
 
   const inhaltsverzeichnis = seite.inhaltsverzeichnis ? `      <nav class="inhalt" aria-label="Inhalt dieser Seite">
-        <strong>Acht Fragen</strong>
+        <p>Acht Fragen</p>
         <ol>
 ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.replace(/^\d+\.\s*/, ''))}</a></li>`).join('\n')}
         </ol>
       </nav>` : '';
 
-  const abschnitte = seite.abschnitte.map((a) =>
+  // Abbildungen werden über die ganze Seite durchgezählt.
+  const ctx = { abb: 0 };
+  const roh = seite.abschnitte.map((a) => {
+    const m = a.titel.match(/^(\d+)\.\s*(.*)$/);
+    const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
     // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
     // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
-    `      <h2 id="${a.id}" tabindex="-1">${esc(a.titel)}</h2>${einsetzen(a.html, werte, BLOECKE)}`).join('\n\n');
-
-  const quellen = seite.quellen.map((q) =>
-    `        <li><a href="${esc(q.url)}" rel="noopener">${esc(q.text)}</a>: ${esc(q.zweck)}</li>`).join('\n');
+    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, BLOECKE, ctx)}`;
+  }).join('\n\n');
+  const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
   const weiter = [...inhaltFuer('de').seiten].map((s) =>
     `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a></li>`).join('\n');
 
   return `${kopf({
     seite: { ...seite, titel, beschreibung }, sprache, seitenUrl, ld,
-    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen: scripts/seiten-figuren.mjs`,
+    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: scripts/seiten-figuren.mjs`,
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
@@ -442,6 +563,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
   })}
 
     <main>
+      <p class="kicker">Krankenkasse erklärt</p>
       <h1>${esc(titel)}</h1>
       <p class="vorspann">${z(seite.vorspann)}</p>
       <p class="stand"><strong>Stand der Zahlen:</strong> ${esc(z(seite.stand))}</p>
@@ -457,13 +579,19 @@ ${abschnitte}
         <p><a class="knopf" href="/">${esc(R.karteKnopf)}</a></p>
       </div>
 
-      <h2 id="quellen">${esc(R.quellenTitel)}</h2>
+      <h2 id="quellen">Quellen</h2>
+      <p class="leise">Die hochgestellten Nummern im Text führen hierher, «Zurück zum Text» wieder an die Stelle.</p>
       <ol class="quellen">
-${quellen}
+${quellenListe(seite.quellen, nummer, stellen)}
       </ol>
-      <p class="leise"><strong>Gesetzesstellen:</strong> ${esc(seite.gesetze)}</p>
-      <p class="leise"><strong>Eigene Rechnungen.</strong> ${seite.eigeneRechnungen.map(z).join(' ')}</p>
       <p class="leise">${esc(seite.quellenHinweis)}</p>
+
+      <div class="anhang">
+        <h3>Gesetzesstellen</h3>
+        <p>${esc(seite.gesetze)}</p>
+        <h3>Eigene Rechnungen</h3>
+${seite.eigeneRechnungen.map((r) => `        <p>${z(r)}</p>`).join('\n')}
+      </div>
 
       <p class="vorbehalt">${seite.vorbehalt}</p>
 
