@@ -32,7 +32,7 @@ import { zahltBeitraegeSelbst } from './monatsrechnung.js';
 import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSumme, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
-import { renteOhneBetrag, RENTEN_FELDER } from './unterstuetzungseinheit.js';
+import { renteOhneBetrag, RENTEN_FELDER, frankenSumme } from './unterstuetzungseinheit.js';
 
 export { kindAlter, saeule3aZaehlt } from './unterstuetzungseinheit.js';
 
@@ -59,13 +59,16 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const nebenZaehlt = f.sideIncomeType === 'netto' && betrag(f.sideIncome) > 0;
   // Eine 0 mit Nebenerwerb, der nicht zählt, wäre keine Antwort: dann leer, und der Rechner fragt nach.
   const nebenFehlt = !betrag(f.monthlyIncome) && betrag(f.sideIncome) > 0 && !nebenZaehlt;
-  const einkommen = hauptBrutto || hauptBasisOffen || nebenFehlt ? '' : summeAlsFeld([f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined]);
+  const lohnWerte = [f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined];
+  const einkommen = hauptBrutto || hauptBasisOffen || nebenFehlt ? '' : lohnWerte.some(erfasst) ? String(frankenSumme(lohnWerte)) : '';
 
   const partner = partnerEinkommenRoh(basis);
   const haushalt = unterstuetzungseinheit(basis, heute);
   const { verheiratet, adults, kinder, weiterePersonen } = haushalt;
   // Eingetragene Renten gehören zu den anderen Einkünften, wie in calculateSozialhilfe.
-  const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined, ...RENTEN_FELDER.map((k) => f[k])]);
+  // Je Zeile auf Franken, wie calculateSozialhilfe (frankenSumme). Leer bleibt leer.
+  const andereWerte = [f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined, ...RENTEN_FELDER.map((k) => f[k])];
+  const andereEinkuenfte = andereWerte.some(erfasst) ? String(frankenSumme(andereWerte)) : '';
 
   const { mit3a, durchIv, felder } = vermoegensFelder(f, basis, heute);
   // Dieselbe Rundung wie Karte und Blatt (je Zeile), sonst kippt die Grenze im Rechner anders. Leer bleibt leer.

@@ -9,7 +9,7 @@ import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSu
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
-import { renteOhneBetrag, rentenMonat } from '../utils/unterstuetzungseinheit.js';
+import { renteOhneBetrag, rentenMonat, frankenSumme } from '../utils/unterstuetzungseinheit.js';
 import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { grundbedarf as skosGrundbedarf, gblStand, grundbedarfNachWohnform } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil, alterUndRentenalter } from '../utils/nettoAusProfil.js';
@@ -306,7 +306,6 @@ export function getGrundbedarf(householdSize) {
 //   lassen sie sich eintragen.
 // - Eintritt vorsichtig ohne Freibetrag (ausser ZH/BS mit belegter Regel). `efbEntscheidet`: erst
 //   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
-const plus = (v) => Math.max(0, Number(v) || 0);
 
 export { renteOhneBetrag };
 
@@ -321,7 +320,8 @@ export function calculateSozialhilfe(data) {
   const selbst = zahltBeitraegeSelbst(data.finanzen);
   const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, selbst ? 'netto' : data.finanzen?.incomeType, data.basis);
   const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, data.finanzen?.sideIncomeType, data.basis);
-  const erwerbseinkommen = haupt.netto + neben.netto;
+  // Je Zeile auf Franken wie die anderen Einkünfte und der Rechner (Fachprüfung 65fa06d4: Lohn 2100.50 gab 905 gegen 904).
+  const erwerbseinkommen = frankenSumme([haupt.netto, neben.netto]);
   const einkommenGeschaetzt = haupt.geschaetzt || neben.geschaetzt;
   const erwerbstaetig = istErwerbstaetig(data.finanzen);
   const rent = Number(data.wohnen?.rentAmount || 0);
@@ -337,7 +337,8 @@ export function calculateSozialhilfe(data) {
 
   const ohneFreibetrag = erwerbstaetig && erwerbseinkommen > 0 && !freibetragGilt(data.finanzen);
   // Renten aus dem Kapitel Finanzen zählen als Einnahme, nicht als Erwerb (utils/unterstuetzungseinheit.js).
-  const andereEinkuenfte = plus(data.finanzen?.familienzulagen) + plus(data.finanzen?.alimenteReceived) + rentenMonat(data.finanzen) + (einheit.verheiratet ? hh.partnerIncome : 0);
+  // Je Zeile auf Franken, wie der Rechner (frankenSumme, utils/unterstuetzungseinheit.js).
+  const andereEinkuenfte = frankenSumme([data.finanzen?.familienzulagen, data.finanzen?.alimenteReceived, einheit.verheiratet ? hh.partnerIncome : 0]) + rentenMonat(data.finanzen);
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
     erwerbseinkommen, andereEinkuenfte, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,

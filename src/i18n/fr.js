@@ -6762,6 +6762,8 @@ export default {
     brutto: 'brut',
     nettoGeschaetzt: '≈ net CHF {value} (estimé)',
     bruttoGeschaetzt: '≈ brut CHF {value} (estimé)',
+    rentenEingerechnet: 'Les rentes du profil (AVS, AI, caisse de pension) sont déjà prises en compte : CHF {value} par mois. Indiquer ici le revenu principal (salaire, indemnités journalières, activité indépendante), sans ces rentes ni ce qui figure déjà dans le profil.',
+    renteImLohn: 'Le montant ici est égal à une rente du profil. S’il s’agit de la même rente, l’enlever ici, sinon elle compte deux fois.',
     knapp: 'Juste — l’estimation ne tient pas compte de l’AANP ni de l’impôt à la source ; à vérifier avec le salaire net exact.',
   },
   einkommensart: {
