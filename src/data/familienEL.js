@@ -21,8 +21,8 @@ const FAMILIEN_EL = {
 };
 
 // Je Kanton: Gesetz, Fassung, Altersgrenze und Erwerbs-Bedingung — so wie gelesen, mit der
-// Stelle, an der es steht. Noch von keiner Anzeige gelesen; Grundlage für einen späteren
-// Altersfilter (heute zählt Lebenssituationen.jsx Kinder jeden Alters).
+// Stelle, an der es steht. Die Anzeige liest nur die Altersgrenze daraus, als Zahl in
+// FAMILIEN_EL_KINDER_UNTER unten.
 export const FAMILIEN_EL_GRUNDLAGE = {
   TI: {
     gesetz: 'Legge sugli assegni di famiglia (LAF) del 18 dicembre 2008; Legge sull’armonizzazione e il coordinamento delle prestazioni sociali (LAPS) del 5 giugno 2000',
@@ -59,4 +59,36 @@ export const FAMILIEN_EL_GRUNDLAGE = {
 export function getFamilienEL(canton) {
   const url = FAMILIEN_EL[(canton || '').trim()];
   return url ? { has: true, url } : { has: false, url: null };
+}
+
+// Altersgrenze je Kanton: Kinder «unter» dieser Zahl (aus FAMILIEN_EL_GRUNDLAGE.kinder, ein Test
+// hält beides gleich). Getrennt gehalten, damit die Anzeige die langen Rechtstexte nicht ins
+// Startbündel zieht. TI: AFI (unter 15) ist die weitere der zwei Leistungen. GE: 25, weil die
+// App nicht weiss, ob ein Kind über 18 in Ausbildung ist — lieber zeigen als still ausschliessen.
+export const FAMILIEN_EL_KINDER_UNTER = { TI: 15, VD: 16, SO: 6, GE: 25 };
+
+// Alter eines Kindes, nur wenn es bekannt ist: aus dem Geburtsdatum, sonst aus einer
+// eingetragenen Zahl über 0. «0» ohne Geburtsdatum ist der Vorgabewert eines neu angelegten
+// Kindes (ChapterView) und heisst darum «unbekannt», nicht «Säugling».
+function bekanntesAlter(kind, heute) {
+  const bd = typeof kind?.birthDate === 'string' && /^\d{4}-\d{2}-\d{2}/.test(kind.birthDate) ? new Date(kind.birthDate.slice(0, 10)) : null;
+  if (bd && !Number.isNaN(bd.getTime())) {
+    let alter = heute.getFullYear() - bd.getFullYear();
+    if (heute.getMonth() < bd.getMonth() || (heute.getMonth() === bd.getMonth() && heute.getDate() < bd.getDate())) alter--;
+    return Math.max(0, alter);
+  }
+  const zahl = Number(kind?.age);
+  return Number.isFinite(zahl) && zahl > 0 ? zahl : null;
+}
+
+// Passt die Familie zur Altersgrenze des Kantons? Nein nur dann, wenn JEDES Kind ein bekanntes
+// Alter auf oder über der Grenze hat. Ein Kind mit unbekanntem Alter hält die Karte sichtbar
+// (sozio-pruefer, Frage 6: niemand fällt still aus der Anzeige). Ohne Kinderliste: sichtbar.
+export function familienELPasstZumKindesalter(canton, children, heute = new Date()) {
+  const grenze = FAMILIEN_EL_KINDER_UNTER[(canton || '').trim()];
+  if (!grenze || !Array.isArray(children) || children.length === 0) return true;
+  return children.some((k) => {
+    const alter = bekanntesAlter(k, heute);
+    return alter === null || alter < grenze;
+  });
 }

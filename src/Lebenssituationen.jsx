@@ -11,7 +11,7 @@ import { aufklappZeichen } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
-import { getFamilienEL } from './data/familienEL.js';
+import { getFamilienEL, familienELPasstZumKindesalter } from './data/familienEL.js';
 import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -167,6 +167,9 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           // Familien-EL: nur zeigen, wenn der Wohnkanton sie tatsächlich anbietet
           // (kein falsches Versprechen; Eintrag verschwindet in anderen Kantonen).
           .filter((b) => !b.familienEL || getFamilienEL(userCanton).has)
+          // … und nur, wenn nicht alle Kinder bekannt über der Altersgrenze des Kantons liegen
+          // (SO unter 6, TI 15, VD 16, GE 25; unbekanntes Alter zeigt die Karte weiter).
+          .filter((b) => !b.familienEL || familienELPasstZumKindesalter(userCanton, data?.basis?.household?.children))
           // Mutterschaftsbeihilfe: gleiches kanton-bewusste Muster.
           .filter((b) => !b.mutterschaftsbeihilfe || getMutterschaftsbeihilfe(userCanton).has)
           .map((b) => {
