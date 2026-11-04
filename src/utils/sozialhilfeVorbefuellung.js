@@ -29,7 +29,7 @@
 
 import { partnerEinkommenRoh } from './partnereinkommen.js';
 import { zahltBeitraegeSelbst } from './monatsrechnung.js';
-import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
+import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, bvgHerausloesen, renteOhneBetrag } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
 
@@ -98,7 +98,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     vermoegen3aDurchIv: durchIv,
     // 2. Säule ab AHV-Vorbezug oder ganzer IV-Rente: Der Rechner wartet, bis das Vermögen angepasst ist (D.3.3 Abs. 3).
     bvgOffen: bvgHerausloesen(f, data?.versicherungen, basis, heute),
-    renteFehlt: ['ganz', 'teil'].includes(f.ivBezug) || f.employmentType === 'retired',
+    renteFehlt: renteOhneBetrag(f, basis, heute),
     // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS-RL C.3.2 Abs. 4) — nur Hinweis, keine Rechnung.
     jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,

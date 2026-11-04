@@ -4354,6 +4354,7 @@ export default {
     incomeAboveLimit: 'Reddito determinante probabilmente superiore al limite (CHF {value} all’anno)',
     eligible: 'Diritto alla riduzione dei premi: CHF {value}/mese',
     orientierungOffen: { sie: 'Se ha diritto a una riduzione e di quale importo lo stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificarlo presso il servizio cantonale.', du: 'Se hai diritto a una riduzione e di quale importo lo stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificarlo presso il servizio cantonale.' },
+    renteNichtEnthalten: 'La rendita non è compresa in questo calcolo, il profilo non ha un campo per essa. Per questo l’app non indica un importo. Se esiste un diritto lo stabilisce il Cantone; soprattutto con una rendita modesta vale la pena verificarlo presso il servizio cantonale.',
     statusOffen: 'Da verificare presso il Cantone',
     zurStelle: 'Al servizio cantonale per la riduzione dei premi',
     jahrRegion: 'Calcolo per l’anno di diritto {jahr}, regione di premio {region}.',

@@ -4401,6 +4401,7 @@ export default {
     incomeAboveLimit: 'Massgebendes Einkommen voraussichtlich über der Grenze (CHF {value} pro Jahr)',
     eligible: 'Anspruch auf Prämienverbilligung: CHF {value}/Monat',
     orientierungOffen: 'Ob ein Anspruch besteht und wie hoch er ist, legt der Kanton fest. Gerade bei knappem Budget lohnt es sich, das bei der kantonalen Stelle zu prüfen.',
+    renteNichtEnthalten: 'Die Rente ist in dieser Rechnung nicht enthalten, das Profil hat dafür kein Feld. Darum nennt die App keinen Betrag. Ob ein Anspruch besteht, legt der Kanton fest; gerade mit knapper Rente lohnt es sich, das bei der kantonalen Stelle zu prüfen.',
     statusOffen: 'Beim Kanton prüfen',
     zurStelle: 'Zur kantonalen Stelle für die Prämienverbilligung',
     // K31/ZH: Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte gehören zu jeder

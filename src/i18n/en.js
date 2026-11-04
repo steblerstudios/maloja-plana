@@ -4353,6 +4353,7 @@ export default {
     incomeAboveLimit: 'Qualifying income probably above the limit (CHF {value} per year)',
     eligible: 'Entitled to premium subsidy: CHF {value}/month',
     orientierungOffen: 'Whether you are entitled, and to how much, is decided by the canton. Especially on a tight budget, it is worth checking with the cantonal office.',
+    renteNichtEnthalten: 'The pension is not included in this calculation; the profile has no field for it. That is why the app shows no amount. Whether there is an entitlement is decided by the canton; especially with a small pension, it is worth checking with the cantonal office.',
     statusOffen: 'Check with the canton',
     zurStelle: 'To the cantonal office for premium reductions',
     jahrRegion: 'Calculated for the {jahr} entitlement year, premium region {region}.',

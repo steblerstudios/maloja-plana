@@ -3469,6 +3469,7 @@ export default {
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
     orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
+    renteNichtEnthalten: 'La renta n’è betg cumpigliada en quest quint, il profil n’ha nagin champ per ella. Perquai na numna l’app nagin import. Sch’igl exista in dretg, decida il chantun; cunzunt cun ina renta pitschna vala la paina da examinar quai tar il post chantunal.', // TODO(rm)
     statusOffen: 'Examinar tar il chantun',
     zurStelle: 'Al post chantunal per la reducziun da premias',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K69/K84).

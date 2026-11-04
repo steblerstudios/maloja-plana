@@ -5,7 +5,7 @@
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
-import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, verfuegbarUeberFreibetrag, bvgHerausloesen } from '../utils/unterstuetzungseinheit.js';
+import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, verfuegbarUeberFreibetrag, bvgHerausloesen, renteOhneBetrag } from '../utils/unterstuetzungseinheit.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
@@ -307,9 +307,7 @@ export function getGrundbedarf(householdSize) {
 //   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
 const plus = (v) => Math.max(0, Number(v) || 0);
 
-// Rente bezogen, ihre Höhe aber nicht erfasst: Das Profil hat für AHV- und IV-Rente kein Feld (nur `ivBezug` und den
-// Ruhestand). Eine Regel für Sozialhilfe und IPV: kein Betrag aus einem Einkommen ohne die Rente (Fachprüfung 03.11.2026).
-export const renteOhneBetrag = (finanzen) => ['ganz', 'teil'].includes(finanzen?.ivBezug) || finanzen?.employmentType === 'retired';
+export { renteOhneBetrag };
 
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
@@ -371,7 +369,7 @@ export function calculateSozialhilfe(data) {
   const feldLeer = (v) => v == null || String(v).trim() === '';
   // Eine Rente zählt zu den Einnahmen (SKOS-RL D.1 Abs. 1, Version vom 1.1.2021), das Profil kennt aber ihre Höhe nicht:
   // Mit IV-Bezug oder im Ruhestand nennen Karte und Dossier darum keinen Betrag (Fachprüfung 03.11.2026).
-  const renteFehlt = renteOhneBetrag(data.finanzen);
+  const renteFehlt = renteOhneBetrag(data.finanzen, data.basis);
   const einkommenFehlt = renteFehlt || (feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
     && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0));
 
@@ -501,7 +499,7 @@ function ipvRechnen(data) {
   });
   // Rente nicht erfasst: Das Einkommen wäre zu tief, die Verbilligung zu hoch (Kanton AG, Rentnerin mit 500 erfasst:
   // volle CHF 450/Mt.). Wie bei der Sozialhilfe kein Betrag, der Grund als Hinweis (Predeploy 1e6819ab).
-  if (renteOhneBetrag(data.finanzen)) return { ...orientierung(), noteKey: 'sozialhilfe.renteNichtErfasst', renteFehlt: true };
+  if (renteOhneBetrag(data.finanzen, data.basis)) return { ...orientierung(), noteKey: 'ipv.renteNichtEnthalten', renteFehlt: true };
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
   // K31: ein Kanton mit Modul im Register IPV_MODULE rechnet nach seinem eigenen amtlichen Modell.
   // Solange PLZ-Daten (wo gebraucht) und Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie

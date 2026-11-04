@@ -4353,6 +4353,7 @@ export default {
     incomeAboveLimit: 'Revenu déterminant probablement supérieur à la limite (CHF {value} par an)',
     eligible: 'Droit à la réduction de primes : CHF {value}/mois',
     orientierungOffen: { sie: 'C’est le canton qui décide si vous avez droit à une réduction et de son montant. Surtout avec un budget serré, il vaut la peine de vérifier auprès du service cantonal.', du: 'C’est le canton qui décide si tu as droit à une réduction et de son montant. Surtout avec un budget serré, cela vaut la peine de vérifier auprès du service cantonal.' },
+    renteNichtEnthalten: 'La rente n’est pas comprise dans ce calcul, le profil n’a pas de champ pour elle. L’app n’indique donc pas de montant. C’est le canton qui décide s’il existe un droit ; surtout avec une rente modeste, il vaut la peine de vérifier auprès du service cantonal.',
     statusOffen: 'À vérifier auprès du canton',
     zurStelle: 'Vers le service cantonal de la réduction des primes',
     jahrRegion: 'Calcul pour l’année de droit {jahr}, région de primes {region}.',
