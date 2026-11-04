@@ -36,7 +36,7 @@ export default {
     tiefesEinkommen: {
       label: 'Quand l’argent est juste',
       frage: 'Le revenu ne suffit souvent pas jusqu’à la fin du mois ?',
-      intro: 'Avec un faible revenu, plusieurs formes de soutien existent — beaucoup restent inutilisées faute d’être connues.',
+      intro: 'Avec un faible revenu, plusieurs formes de soutien existent.',
       berechtigungen: {
         ipv: { titel: 'Réduction des primes (RIP)', text: 'Le canton aide à payer les primes d’assurance-maladie pour les revenus bas et moyens. Beaucoup d’ayants droit ne font jamais de demande.' },
         mietzins: { titel: 'Aide au logement', text: 'Certains cantons et communes participent au loyer lorsqu’il pèse trop lourd sur un faible revenu.' },
@@ -53,7 +53,7 @@ export default {
     alleinerziehend: {
       label: 'Élever ses enfants seul·e',
       frage: { sie: 'Élevez-vous un ou plusieurs enfants seul·e ?', du: 'Élèves-tu un ou plusieurs enfants seul·e ?' },
-      intro: 'Les parents seuls portent davantage — et plusieurs aides existent précisément pour cette situation, mais beaucoup restent inutilisées.',
+      intro: 'Les parents seuls portent davantage — et plusieurs aides existent précisément pour cette situation.',
       berechtigungen: {
         alimente: { titel: 'Avance sur pensions & aide au recouvrement', text: 'Si les contributions d’entretien n’arrivent pas, la commune peut les avancer et aider à les recouvrer — pour que l’enfant ne manque de rien.' },
         ipv: { titel: 'Réduction des primes (RIP)', text: 'Les familles monoparentales ont souvent droit à une aide pour les primes d’assurance-maladie — pour le parent et les enfants.' },
@@ -128,7 +128,7 @@ export default {
     rentnerin: {
       label: 'Retraité / à l’âge AVS',
       frage: { sie: 'Vous touchez une rente AVS ou en êtes proche ?', du: 'Tu touches une rente AVS ou tu en es proche ?' },
-      intro: 'À la retraite, plusieurs droits restent inutilisés — les prestations complémentaires avant tout. Beaucoup relèvent d’un droit, pas de l’assistance.',
+      intro: 'À la retraite, certains droits doivent être demandés soi-même — par exemple les prestations complémentaires. Beaucoup relèvent d’un droit, pas de l’assistance.',
       berechtigungen: {
         pensionierung: { titel: 'Passage à la retraite', text: { sie: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.', du: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.' } },
         el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent. Un droit, pas de la charité.' },

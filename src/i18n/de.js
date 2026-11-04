@@ -36,7 +36,7 @@ export default {
     tiefesEinkommen: {
       label: 'Wenn das Geld knapp ist',
       frage: 'Reicht das Einkommen oft nicht bis Ende Monat?',
-      intro: 'Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung — vieles bleibt ungenutzt, weil man es schlicht nicht kennt.',
+      intro: 'Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung.',
       berechtigungen: {
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Der Kanton hilft bei den Krankenkassen-Prämien für tiefe und mittlere Einkommen. Viele Berechtigte stellen nie einen Antrag.' },
         mietzins: { titel: 'Mietzinsbeitrag', text: 'Einzelne Kantone und Gemeinden beteiligen sich an der Miete, wenn sie bei tiefem Einkommen zu schwer wiegt.' },
@@ -53,7 +53,7 @@ export default {
     alleinerziehend: {
       label: 'Kinder allein grossziehen',
       frage: { sie: 'Ziehen Sie ein oder mehrere Kinder allein gross?', du: 'Ziehst du ein oder mehrere Kinder allein gross?' },
-      intro: 'Alleinerziehende tragen mehr — und genau für diese Situation gibt es mehrere Formen der Unterstützung, vieles bleibt aber ungenutzt.',
+      intro: 'Alleinerziehende tragen mehr — und genau für diese Situation gibt es mehrere Formen der Unterstützung.',
       berechtigungen: {
         alimente: { titel: 'Alimentenbevorschussung & Inkassohilfe', text: 'Kommen die Unterhaltszahlungen nicht, kann die Gemeinde sie bevorschussen und beim Inkasso helfen — damit das Kind nicht leer ausgeht.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Einelternhaushalte haben oft Anspruch auf Hilfe bei den Krankenkassen-Prämien — für den Elternteil und die Kinder.' },
@@ -128,7 +128,7 @@ export default {
     rentnerin: {
       label: 'Pensioniert / im AHV-Alter',
       frage: { sie: 'Beziehen Sie eine AHV-Rente oder stehen Sie kurz davor?', du: 'Beziehst du eine AHV-Rente oder stehst kurz davor?' },
-      intro: 'Im Alter bleibt manches ungenutzt — allen voran die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
+      intro: 'Im Alter gibt es Ansprüche, die man selbst anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
       berechtigungen: {
         pensionierung: { titel: 'Übergang in die Pensionierung', text: { sie: 'Stehen Sie kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.', du: 'Stehst du kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.' } },
         el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie. Ein Recht, keine Fürsorge.' },

@@ -11,11 +11,11 @@ import rm from '../i18n/rm.js';
 // dieser Test hält sie draussen. Wer so einen Satz wieder will, braucht eine Quelle im Text —
 // und dann gehört die Formulierung hier begründet aus der Liste.
 const UNBELEGT = {
-  de: ['oft unbekannt', 'oft übersehen', 'oft unbeachtet', 'kaum genannt', 'viele nie beziehen', 'viele gar nicht fragen', 'am häufigsten nicht bezogen', 'oft zu spät'],
-  fr: ['souvent méconnu', 'souvent oublié', 'rarement reconnus', 'rarement mentionnées', 'beaucoup ne demandent jamais', 'beaucoup ignorent', 'plus souvent non demandées', 'souvent trop tard'],
-  it: ['spesso poco noto', 'spesso trascurato', 'raramente riconosciuta', 'menzionate di rado', 'molti non richiedono mai', 'molti non sanno', 'più spesso non richieste', 'spesso parte troppo tardi'],
-  en: ['often unknown', 'often overlooked', 'rarely recognised', 'rarely mentioned', 'many never claim', 'many don’t know', 'most often unclaimed', 'often starts late'],
-  rm: ['savens nunenconuschent', 'savens survis', 'savens sursvieu', 'savens nunconsiderada', 'numnà darar', 'blers na dumondan mai', 'blers na san betg', 'pli savens betg dumandadas', 'savens memia tard'],
+  de: ['oft unbekannt', 'oft übersehen', 'oft unbeachtet', 'kaum genannt', 'viele nie beziehen', 'viele gar nicht fragen', 'am häufigsten nicht bezogen', 'oft zu spät', 'bleibt manches ungenutzt', 'allen voran die ergänzungsleistungen', 'bleibt ungenutzt'],
+  fr: ['souvent méconnu', 'souvent oublié', 'rarement reconnus', 'rarement mentionnées', 'beaucoup ne demandent jamais', 'beaucoup ignorent', 'plus souvent non demandées', 'souvent trop tard', 'restent inutilisés', 'restent inutilisées'],
+  it: ['spesso poco noto', 'spesso trascurato', 'raramente riconosciuta', 'menzionate di rado', 'molti non richiedono mai', 'molti non sanno', 'più spesso non richieste', 'spesso parte troppo tardi', 'restano inutilizzati', 'restano inutilizzate'],
+  en: ['often unknown', 'often overlooked', 'rarely recognised', 'rarely mentioned', 'many never claim', 'many don’t know', 'most often unclaimed', 'often starts late', 'go unclaimed', 'goes unclaimed'],
+  rm: ['savens nunenconuschent', 'savens survis', 'savens sursvieu', 'savens nunconsiderada', 'numnà darar', 'blers na dumondan mai', 'blers na san betg', 'pli savens betg dumandadas', 'savens memia tard', 'dretgs nunduvrads', 'restan nunduvradas', 'restan dentant nunduvradas'],
 };
 const SPRACHEN = { de, fr, it: it_, en, rm };
 

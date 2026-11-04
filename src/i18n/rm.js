@@ -45,7 +45,7 @@ export default {
     tiefesEinkommen: {
       label: 'Cura ch’ils raps èn stretgs',
       frage: 'Il retgav na basta savens betg fin la fin dal mais?',
-      intro: 'Cun in bass retgav existan diversas furmas da sustegn — bleras restan nunduvradas perquai ch’ellas n’èn simplamain betg enconuschentas.',
+      intro: 'Cun in bass retgav existan diversas furmas da sustegn.',
       berechtigungen: {
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Il chantun gida a pajar las premias da la cassa da malsauns per bass e mez retgavs. Blers cun dretg na fan mai ina dumonda.' },
         mietzins: { titel: 'Contribuziun a la pigiun', text: 'Tscherts chantuns e vischnancas sa participeschan a la pigiun, sch’ella pesa memia ferm sin in bass retgav.' },
@@ -67,7 +67,7 @@ export default {
       label: 'Crescher uffants sulet/sula',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       frage: { sie: 'Creschais Vus in u plirs uffants sulet/sula?', du: 'Creschas ti in u plirs uffants sulet/sula?' },
-      intro: 'Geniturs suls portan dapli — e propri per questa situaziun existan diversas furmas da sustegn, bleras restan dentant nunduvradas.',
+      intro: 'Geniturs suls portan dapli — e propri per questa situaziun existan diversas furmas da sustegn.',
       berechtigungen: {
         alimente: { titel: 'Avanzament dals alimors & agid d’incasso', text: 'Sche las contribuziuns d’mantegniment n’arrivan betg, po la vischnanca las avanzar ed gidar a las incassar — uschia che l’uffant na resta betg senza.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Chasadas cun in sulet genitur han savens dretg sin in agid per las premias da la cassa da malsauns — per il genitur ed ils uffants.' },
@@ -154,7 +154,7 @@ export default {
     rentnerin: {
       label: 'Pensiunà / en la vegliadetgna da l’AVS',
       frage: 'Retschaivas ti ina renta da l’AVS u ta stas ti datiers?',
-      intro: 'En la vegliadetgna restan blers dretgs nunduvrads — surtut las prestaziuns cumplementaras. Bler da quai è in dretg, betg assistenza.',
+      intro: 'Im Alter gibt es Ansprüche, die man selbst anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },

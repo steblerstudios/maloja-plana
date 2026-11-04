@@ -36,7 +36,7 @@ export default {
     tiefesEinkommen: {
       label: 'When money is tight',
       frage: 'Income often doesn’t stretch to the end of the month?',
-      intro: 'On a low income, several forms of support exist — much goes unclaimed simply because people don’t know about it.',
+      intro: 'On a low income, several forms of support exist.',
       berechtigungen: {
         ipv: { titel: 'Premium reduction (IPV)', text: 'The canton helps pay health-insurance premiums for low and middle incomes. Many who qualify never apply.' },
         mietzins: { titel: 'Rent assistance', text: 'Some cantons and communes contribute to rent when it weighs too heavily on a low income.' },
@@ -53,7 +53,7 @@ export default {
     alleinerziehend: {
       label: 'Raising children alone',
       frage: 'Raising one or more children on your own?',
-      intro: 'Single parents carry more — and several forms of support exist precisely for this situation, though many go unclaimed.',
+      intro: 'Single parents carry more — and several forms of support exist precisely for this situation.',
       berechtigungen: {
         alimente: { titel: 'Advance on alimony & collection help', text: 'If maintenance payments don’t arrive, the commune can advance them and help collect — so the child doesn’t go without.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Single-parent households often qualify for help with health-insurance premiums — for the parent and the children.' },
@@ -128,7 +128,7 @@ export default {
     rentnerin: {
       label: 'Retired / at AHV age',
       frage: 'Drawing an AHV pension, or close to retirement age?',
-      intro: 'Later in life several entitlements go unclaimed — supplementary benefits above all. Much of it is a right, not assistance.',
+      intro: 'Later in life some entitlements have to be claimed yourself — supplementary benefits, for example. Much of it is a right, not assistance.',
       berechtigungen: {
         pensionierung: { titel: 'Moving into retirement', text: 'Close to retirement? Registering for the AHV pension, choosing pension or lump sum from your pension fund, and staggering the third pillar all need early decisions — the guided flow shows the steps and deadlines.' },
         el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up. It is a right, not charity.' },

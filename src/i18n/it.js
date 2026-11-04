@@ -36,7 +36,7 @@ export default {
     tiefesEinkommen: {
       label: 'Quando i soldi non bastano',
       frage: 'Il reddito spesso non arriva a fine mese?',
-      intro: 'Con un reddito basso esistono diverse forme di sostegno — molte restano inutilizzate perché semplicemente non si conoscono.',
+      intro: 'Con un reddito basso esistono diverse forme di sostegno.',
       berechtigungen: {
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Il Cantone aiuta a pagare i premi della cassa malati per i redditi bassi e medi. Molti aventi diritto non fanno mai domanda.' },
         mietzins: { titel: 'Contributo per la pigione', text: 'Alcuni Cantoni e Comuni partecipano alla pigione quando pesa troppo su un reddito basso.' },
@@ -53,7 +53,7 @@ export default {
     alleinerziehend: {
       label: 'Crescere i figli da solo/a',
       frage: { sie: 'Cresce uno o più figli da solo/a?', du: 'Cresci uno o più figli da solo/a?' },
-      intro: 'Chi cresce i figli da solo porta di più — e proprio per questa situazione esistono diverse forme di sostegno, molte delle quali restano inutilizzate.',
+      intro: 'Chi cresce i figli da solo porta di più — e proprio per questa situazione esistono diverse forme di sostegno.',
       berechtigungen: {
         alimente: { titel: 'Anticipo degli alimenti & aiuto all’incasso', text: 'Se i contributi di mantenimento non arrivano, il Comune può anticiparli e aiutare a incassarli — così il figlio non resta senza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Le economie domestiche monoparentali hanno spesso diritto a un aiuto per i premi della cassa malati — per il genitore e i figli.' },
@@ -128,7 +128,7 @@ export default {
     rentnerin: {
       label: 'In pensione / in età AVS',
       frage: { sie: 'Riceve una rendita AVS o ci è vicino/a?', du: 'Ricevi una rendita AVS o ci sei vicino?' },
-      intro: 'In età avanzata diversi diritti restano inutilizzati — anzitutto le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
+      intro: 'In età avanzata alcuni diritti vanno richiesti di persona — per esempio le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
       berechtigungen: {
         pensionierung: { titel: 'Passaggio al pensionamento', text: { sie: 'È vicino/a al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.', du: 'Sei vicino al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.' } },
         el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano. Un diritto, non carità.' },
