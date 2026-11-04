@@ -22,7 +22,6 @@ import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
 import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
-import { inZwischenablage } from './utils/zwischenablage.js';
 import { version as APP_VERSION } from '../package.json';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
@@ -179,7 +178,10 @@ const BetaFeedback = ({ palette, t }) => {
   const href = betaFeedbackHref(entwurf);
 
   const kopieren = async () => {
-    const ok = await inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf);
+    // Erst beim Klick geladen: hält das Startbündel unter dem size-limit.
+    const ok = await import('./utils/zwischenablage.js')
+      .then((m) => m.inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf))
+      .catch(() => false);
     setKopie(ok ? 'ok' : 'fehler');
   };
 
