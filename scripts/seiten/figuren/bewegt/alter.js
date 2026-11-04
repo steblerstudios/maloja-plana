@@ -51,8 +51,9 @@ function mount({ stage, svg, read }, value) {
     if (best === act) return;
     act = best;
     mark();
-    read.textContent = act < 0 ? "" : AGES[act][0] + " Jahre · " + chf(AGES[act][1]) + " Fr. im Jahr";
+    say();
   }
+  function say() { read.textContent = act < 0 ? "" : AGES[act][0] + " Jahre · " + chf(AGES[act][1]) + " Fr. im Jahr"; }
   bag.add(pointer(stage, { move: pick, leave: () => { act = -1; mark(); read.textContent = ""; } }));
   bag.add(() => svg.replaceChildren());
   mark();
@@ -60,6 +61,8 @@ function mount({ stage, svg, read }, value) {
 
   return {
     set: (v) => { stretch = clamp(v, 0.6, 1.25); posts.forEach((q, i) => { q.h.t = Z * AGES[i][1] * stretch; }); B.wake(); },
+    anzahl: N,
+    waehle: (i) => { act = i; mark(); say(); },
     destroy: bag.dispose,
   };
 }

@@ -56,6 +56,9 @@ function mount({ stage, svg, read }, value) {
     if (next === act) return;
     act = next;
     mark();
+    say();
+  }
+  function say() {
     read.textContent = act < 0 ? "" : BANDS[act][0] + (BANDS[act][0] === 1 ? " Mensch · " : " Menschen · ") + BANDS[act][2];
   }
   bag.add(pointer(stage, { move: pick, leave: () => { act = -1; mark(); read.textContent = ""; } }));
@@ -65,6 +68,9 @@ function mount({ stage, svg, read }, value) {
 
   return {
     set: (v) => { stretch = clamp(v, 0.6, 1.4); houses.forEach((q) => { q.h.t = Z * q.cost * stretch; }); B.wake(); },
+    // Tastatur (Maloja-Bühne): Stufe i von der tiefsten zur höchsten.
+    anzahl: BANDS.length,
+    waehle: (i) => { act = i < 0 ? -1 : BANDS.length - 1 - i; mark(); say(); },
     destroy: bag.dispose,
   };
 }

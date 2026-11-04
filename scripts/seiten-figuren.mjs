@@ -195,15 +195,13 @@ export function standbildSvg(datei, id, titel, beschreibung) {
 
 function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, legende, nachher = '' }) {
   ctx.abb += 1;
-  // Die bewegte Fassung lädt erst beim Aufklappen: ein Rahmen in einem
-  // geschlossenen <details> wird nicht geladen, loading="lazy" sichert es ab.
+  // Die bewegte Fassung ist eine eigene Seite und lädt erst, wenn man sie öffnet.
   const name = id.replace(/^abb-/, '');
+  // Ein Link, kein eingebetteter Rahmen: der Server verbietet das Einbetten
+  // (frame-ancestors 'none'), und die Hauptseite bleibt so ganz ohne Skript.
   const bewegt = BEWEGT[name] ? `
-          <details class="bewegt ${BEWEGT[name].art}">
-            <summary>Bewegte Fassung zum Ausprobieren</summary>
-            <iframe src="/krankenkasse/bewegt/${name}/" title="Bewegte Fassung: ${BEWEGT[name].titel}" loading="lazy"></iframe>
-            <p class="leise"><a href="/krankenkasse/bewegt/${name}/">In eigenem Fenster öffnen</a></p>
-          </details>` : '';
+          <p class="bewegt"><a href="/krankenkasse/bewegt/${name}/">Bewegte Fassung zum Ausprobieren</a>
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>` : '';
   return `
         <figure class="abb" id="${id}">
           <div class="abb-karte">
@@ -389,14 +387,33 @@ export const BEWEGT = {
   praemie: { art: 'iso', titel: 'Die Prämie als Messaufbau', ruhe: '' },
 };
 
-// Die Skripte einer bewegten Seite, in der Reihenfolge, in der sie laufen.
+// Die Skripte werden als eigene Dateien unter /krankenkasse/bewegt/ ausgeliefert:
+// Der Server schickt `script-src 'self'` (public/.htaccess, Abschrift) — eingebettete
+// Skripte liefen live nicht, Dateien von der eigenen Adresse schon
+// (Sicherheitsprüfung 04.11.2026). Fremdcode (MIT) nennt im Kopf seinen Lizenztext.
+const KOPF_HAIRLINE = '/*! Hairline (Lucas Marques), MIT, Lizenz: /licenses/hairline-LICENSE.txt */\n';
+const KOPF_ANATOMY = '/*! Anatomy-Kit, MIT, Lizenz: /licenses/anatomy-LICENSE.txt — angepasst: keine Autotour */\n';
+
+// JSON, das auch in einem <script>-Kontext harmlos bleibt (kein «<»), und als
+// Funktion eingesetzt, damit «$'» o. Ä. in Daten nicht als Ersatzmuster wirkt.
+const datenJson = (x) => JSON.stringify(x).replace(/</g, '\\u003c');
+
+export function bewegtGemeinsam() {
+  return {
+    'hairline-kernel.js': KOPF_HAIRLINE + lies('fremd/hairline-kernel.js'),
+    'buehne.js': lies('buehne.js'),
+    'anatomy-praemie.js': KOPF_ANATOMY + lies('fremd/anatomy-praemie.js'),
+  };
+}
+
+// Die Skripte einer bewegten Seite, in der Reihenfolge, in der sie laufen:
+// Pfade unter /krankenkasse/bewegt/ und, für die Strichfiguren, die Figur mit Daten.
 export function bewegtSkripte(name) {
   if (!BEWEGT[name]) throw new Error(`Unbekannte bewegte Figur ${name}`);
-  // Fremdcode (MIT) liegt in bewegt/fremd/; der Kopf nennt den mitgelieferten Lizenztext.
-  if (BEWEGT[name].art === 'iso') return ['/*! Anatomy-Kit, MIT, Lizenz: /licenses/anatomy-LICENSE.txt */\n' + lies('fremd/anatomy-praemie.js')];
+  if (BEWEGT[name].art === 'iso') return { pfade: ['anatomy-praemie.js'], figur: null };
   const figur = lies(`${name}.js`);
   if (figur.split('/*DATEN*/').length !== 2) throw new Error(`${name}.js: genau eine Marke DATEN erwartet`);
-  return ['/*! Hairline, MIT, Lizenz: /licenses/hairline-LICENSE.txt */\n' + lies('fremd/hairline-kernel.js'), lies('buehne.js'), figur.replace('/*DATEN*/null', JSON.stringify(datenFuer(name)))];
+  return { pfade: ['hairline-kernel.js', 'buehne.js', `${name}/figur.js`], figur: figur.replace('/*DATEN*/null', () => datenJson(datenFuer(name))) };
 }
 
 // Das Standbild der Prämien-Maschine, als Bühne der bewegten Fassung: mit den

@@ -48,8 +48,9 @@ function mount({ stage, svg, read }, value) {
     if (best === act) return;
     act = best;
     mark();
-    read.textContent = act < 0 ? "" : CANTONS[act][0] + " · " + CANTONS[act][1].toFixed(2) + " Fr.";
+    say();
   }
+  function say() { read.textContent = act < 0 ? "" : CANTONS[act][0] + " · " + CANTONS[act][1].toFixed(2) + " Fr."; }
   bag.add(pointer(stage, { move: pick, leave: () => { act = -1; mark(); read.textContent = ""; } }));
   bag.add(() => svg.replaceChildren());
   mark();
@@ -57,6 +58,8 @@ function mount({ stage, svg, read }, value) {
 
   return {
     set: (v) => { stretch = clamp(v, 0.7, 1.25); posts.forEach((q, i) => { q.h.t = Z * CANTONS[i][1] * stretch; }); B.wake(); },
+    anzahl: N,
+    waehle: (i) => { act = i; mark(); say(); },
     destroy: bag.dispose,
   };
 }

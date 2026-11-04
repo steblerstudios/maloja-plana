@@ -75,6 +75,9 @@ function mount({ stage, svg, read }, value) {
       posts.forEach((q, i) => { q.h.t = Z * own((i + 1) * STEP, fr); });
       mark(); say(); B.wake();
     },
+    anzahl: N,
+    waehle: (i) => { act = i; mark(); say(); },
+    wertText: (v) => "Franchise " + chf(STEPS.reduce((best, f) => (Math.abs(f - v) < Math.abs(best - v) ? f : best))) + " Franken",
     destroy: bag.dispose,
   };
 }

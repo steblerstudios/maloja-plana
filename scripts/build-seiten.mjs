@@ -27,8 +27,7 @@ import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
 import { HINTERGRUND } from './seiten/krankenkasse.mjs';
-import { zahlen, einsetzen, BLOECKE, BEWEGT, bewegtSkripte, praemieBuehneSvg } from './seiten-figuren.mjs';
-import { createHash } from 'node:crypto';
+import { zahlen, einsetzen, BLOECKE, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 
 // Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
 // Quellen, Querverweisen), SONDERSEITEN die Rechtliches-Seite — sie hat nichts
@@ -405,11 +404,9 @@ const stilHintergrund = `
     .abb figcaption{ font-size:14px; color:var(--leise); margin-top:8px }
     .abb figcaption strong{ color:var(--text); font-weight:600 }
     .abb details{ margin-top:10px; font-size:15px } .abb summary{ cursor:pointer; color:var(--heidel-text) }
-    .abb{ container-type:inline-size }
-    details.bewegt summary{ display:inline-block; padding:6px 0 }
-    details.bewegt iframe{ display:block; width:100%; border:0; margin-top:8px;
-      height:calc(100cqi * 0.8 + 120px) }
-    details.bewegt.iso iframe{ height:calc(100cqi * 0.78 + 120px) }
+    p.bewegt{ margin:10px 0 0; font-size:15px }
+    p.bewegt a{ display:inline-block; padding:10px 0; color:var(--heidel-text); font-weight:600; text-underline-offset:3px }
+    p.bewegt .leise{ margin-left:8px; font-size:13px }
 
     /* Strichfiguren (Hairline): eine Linie, Flächen in der Kartenfarbe, das
        hervorgehobene Teil in Heidelbeere. Regeln nach dem Hairline-Kernel (MIT). */
@@ -572,9 +569,6 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
     extraStil: stilHintergrund,
-    // Kein Skript auf dieser Seite. frame-src 'self' nur für die bewegten
-    // Fassungen, die erst beim Aufklappen laden (eigene Seiten, eigene CSP).
-    csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';"),
   })}
 
     <main>
@@ -621,19 +615,19 @@ ${fuss(sprache, `${esc(R.spracheLabel)}: <span aria-current="true">${SPRACHNAME.
 }
 
 // ─── Bewegte Fassungen der Figuren (seit 04.11.2026) ─────────────────────────
-// Je Figur eine kleine Seite unter /krankenkasse/bewegt/<name>/. Sie ist die
-// einzige Stelle mit Skript: ihre CSP erlaubt genau die eingebetteten Skripte,
-// jedes über seine SHA-256-Prüfsumme, nichts sonst (kein 'unsafe-inline' für
-// Skripte, keine fremde Quelle). noindex, nicht in der Sitemap.
-const sha = (t) => `'sha256-${createHash('sha256').update(t, 'utf8').digest('base64')}'`;
-const skriptSicher = (t) => t.replace(/<\/(script)/gi, '<\\/$1');
-
+// Je Figur eine kleine Seite unter /krankenkasse/bewegt/<name>/, von der
+// Hauptseite aus verlinkt. Die einzigen öffentlichen Seiten mit Skript. Die
+// Skripte liegen als Dateien daneben (script-src 'self' — so verlangt es auch
+// der Server-Header), kein eingebettetes Skript, nichts von aussen. noindex,
+// nicht in der Sitemap.
 const stilBewegt = `
     body{ background:var(--bg) } main{ padding:4px 2px 8px }
     .karte-b{ position:relative; background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:10px 12px 8px }
     .anzeige{ margin:0; min-height:1.6em; text-align:right; font-size:14px; color:var(--text); font-variant-numeric:tabular-nums }
     .regler{ display:flex; align-items:center; gap:12px; margin:10px 2px 0; font-size:14px; color:var(--leise) }
-    .regler input{ flex:1; accent-color:var(--heidel) }
+    .regler input{ flex:1; min-height:44px; accent-color:var(--heidel) }
+    .anzeige .ruhe{ color:var(--leise) } .anzeige #anzeige:not(:empty) + .ruhe{ display:none }
+    #stage:focus-visible{ outline:2px solid var(--text); outline-offset:4px; border-radius:10px }
     .hinweis-b{ font-size:13px; color:var(--leise); margin:8px 2px 0 }
     [data-hairline]{ --hairline-plate:#FBFBFA; --hairline-hi:#4A6A88; --hairline-edge:#8A877F; --hairline-mid:#C6C2BA; --hairline-lo:#E2DFD9; --hairline-stroke:0.9 }
     @media (prefers-color-scheme: dark){
@@ -644,27 +638,27 @@ const stilBewegt = `
 
 function bewegtSeiteBauen(name) {
   const b = BEWEGT[name];
-  const skripte = bewegtSkripte(name);
-  const csp = CSP.replace("default-src 'none';", `default-src 'none'; script-src ${skripte.map((t) => sha(skriptSicher(t))).join(' ')};`);
-  const zurueck = `<a href="/krankenkasse/#abb-${name}" target="_top">Warum die Krankenkasse so viel kostet</a>`;
+  const { pfade } = bewegtSkripte(name);
+  const csp = CSP.replace("default-src 'none';", "default-src 'none'; script-src 'self';");
+  const zurueck = `<a href="/krankenkasse/#abb-${name}">Warum die Krankenkasse so viel kostet</a>`;
   const buehne = b.art === 'iso' ? `
     <div class="karte-b iso">
       <div class="iso-stage" tabindex="0" role="slider" aria-label="Prämienjahr; die Pfeiltasten wechseln das Jahr" aria-valuemin="2025" aria-valuemax="2027" aria-valuenow="2027">${praemieBuehneSvg()}</div>
       <p class="anzeige" data-readout aria-live="polite"></p>
     </div>
-    <p class="hinweis-b">Von links nach rechts über das Bild fahren wählt das Jahr 2025 bis 2027, auf einen Block zeigen nennt ihn. Mit der Tastatur: ins Bild springen, dann Pfeiltasten.</p>` : `
+    <p class="hinweis-b">Von links nach rechts über das Bild fahren wählt das Jahr 2025 bis 2027, auf einen Block zeigen nennt ihn. Mit der Tastatur: ins Bild springen, dann Pfeiltasten für das Jahr. Das Bild bewegt sich nur, wenn Sie es tun.</p>` : `
     <div class="karte-b">
-      <div id="stage"></div>
-      <p class="anzeige" id="anzeige" aria-live="polite">${esc(b.ruhe)}</p>
+      <div id="stage" aria-label="${esc(b.titel)}" aria-describedby="hinweis-${name}"></div>
+      <p class="anzeige"><span id="anzeige" aria-live="polite"></span><span class="ruhe" aria-hidden="true">${esc(b.ruhe)}</span></p>
     </div>
     <div class="regler"><label for="regler">${esc(b.regler)}</label><input id="regler" type="range" min="0" max="1" step="0.01" value="0.5"></div>
-    <p class="hinweis-b">Mit Maus oder Finger auf die Figur zeigen. Der Regler ${name === 'kostenteil' ? 'stellt die Franchise ein' : 'streckt nur die Höhen, die Verhältnisse bleiben'}.</p>`;
+    <p class="hinweis-b" id="hinweis-${name}">Mit Maus oder Finger auf die Figur zeigen, oder mit der Tastatur ins Bild springen und die Pfeiltasten nutzen. Der Regler ${name === 'kostenteil' ? 'stellt die Franchise ein' : 'streckt nur die Höhen, die Verhältnisse bleiben'}.</p>`;
   return `<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Skript nur hier, und nur genau diese ${skripte.length}: script-src mit Prüfsummen. -->
+  <!-- Skript nur hier, als Dateien von der eigenen Adresse (script-src 'self'). -->
   <meta http-equiv="Content-Security-Policy" content="${csp}">
   <!-- ERZEUGT — nicht von Hand bearbeiten. Quelle: scripts/seiten/figuren/bewegt/ · Generator: scripts/build-seiten.mjs
        Engines: Hairline und Anatomy-Kit, beide MIT, Texte unter /licenses/. -->
@@ -680,7 +674,7 @@ function bewegtSeiteBauen(name) {
   <main>${buehne}
     <p class="hinweis-b">Teil der Seite ${zurueck} · Maloja Plana</p>
   </main>
-${skripte.map((t) => `  <script>${skriptSicher(t)}</script>`).join('\n')}
+${pfade.map((pf) => `  <script src="/krankenkasse/bewegt/${pf}"></script>`).join('\n')}
 </body>
 </html>
 `;
@@ -760,12 +754,16 @@ for (const sprache of SPRACHEN) {
   }
 }
 
+const bewegtDatei = (pfad, inhalt) => ({
+  ziel: resolve(WURZEL, 'public', 'krankenkasse', 'bewegt', ...pfad.split('/')),
+  inhalt,
+  name: `krankenkasse/bewegt/${pfad}`,
+});
+for (const [pfad, inhalt] of Object.entries(bewegtGemeinsam())) seitenAusgaben.push(bewegtDatei(pfad, inhalt));
 for (const name of Object.keys(BEWEGT)) {
-  seitenAusgaben.push({
-    ziel: resolve(WURZEL, 'public', 'krankenkasse', 'bewegt', name, 'index.html'),
-    inhalt: bewegtSeiteBauen(name),
-    name: `krankenkasse/bewegt/${name}/index.html`,
-  });
+  seitenAusgaben.push(bewegtDatei(`${name}/index.html`, bewegtSeiteBauen(name)));
+  const { figur } = bewegtSkripte(name);
+  if (figur) seitenAusgaben.push(bewegtDatei(`${name}/figur.js`, figur));
 }
 
 for (const h of HINTERGRUND) {
@@ -812,8 +810,8 @@ if (NUR_PRUEFEN) {
   }
   console.log(`\n✓ Alle ${seitenAusgaben.length} Seiten und die Sitemap stimmen mit der Quelle überein.`);
 } else {
-  console.log(`\n✓ ${seitenAusgaben.length} Seiten (${ALLE.length} × ${SPRACHEN.length} Sprachen` +
-    ` + ${HINTERGRUND.length} Hintergrundseite(n), nur Deutsch) + sitemap.xml erzeugt.`);
+  console.log(`\n✓ ${seitenAusgaben.length} Dateien (${ALLE.length} × ${SPRACHEN.length} Sprachen` +
+    ` + ${HINTERGRUND.length} Hintergrundseite(n) und ihre bewegten Fassungen, nur Deutsch) + sitemap.xml erzeugt.`);
 }
 console.log(`  indexierbar: ${frei.join(', ')}` +
   (offen.length ? `  ·  noindex bis zur Gegenlesung: ${offen.join(', ')}` : ''));

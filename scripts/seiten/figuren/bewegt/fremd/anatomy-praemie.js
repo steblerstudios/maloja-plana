@@ -736,7 +736,8 @@ const still = matchMedia("(prefers-reduced-motion: reduce)");
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const chf = (n) => n.toFixed(0) + " Fr.";
 let t = 2, target = 2, picked = -1, drawnPick = -1, drawnT = -1;
-let frame = 0, last = 0, clock = 0, touring = !still.matches, visible = false, idle = 0;
+// Maloja: keine Autotour (WCAG 2.2.2, a11y-Prüfung 04.11.2026) — das Bild bewegt sich nur auf Eingabe.
+let frame = 0, last = 0, clock = 0, touring = false, visible = false, idle = 0;
 const names = [...GROUPS.map((g) => g[0]), "Rest: Verwaltung, Reserven, Rundung"];
 function draw() {
   const s = stateAt(t), own = s.own * SCALE, top = (s.gross + s.rest) * SCALE;
@@ -770,7 +771,7 @@ function tick(now) {
   frame = visible && (touring || t !== target) ? requestAnimationFrame(tick) : 0;
 }
 const run = () => { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } };
-const hold = () => { touring = false; clearTimeout(idle); idle = setTimeout(() => { picked = -1; touring = !still.matches; clock = 0; run(); draw(); }, 5000); };
+const hold = () => { touring = false; clearTimeout(idle); idle = setTimeout(() => { picked = -1; draw(); }, 5000); };
 new IntersectionObserver((e) => { visible = e[e.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
 const topOf = (s) => {
   const parts = [...GROUPS.map((g) => g[1] * s.grow), s.rest];

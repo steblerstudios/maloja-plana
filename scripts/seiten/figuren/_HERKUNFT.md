@@ -27,9 +27,13 @@ die Bilder zeigen Grössenverhältnisse.
 
 **Bewegte Fassungen** (seit 04.11.2026): `bewegt/` enthält die Figuren-Skripte mit der Marke DATEN
 (die Zahlen setzt der Bau ein), die eigene Bühne `buehne.js` und unter `bewegt/fremd/` den
-unveränderten Hairline-Kernel und das Anatomy-Skript der Prämien-Maschine. Daraus baut
-`scripts/build-seiten.mjs` je Figur eine Seite unter `/krankenkasse/bewegt/<name>/`, deren CSP genau
-diese Skripte per SHA-256 erlaubt.
+unveränderten Hairline-Kernel und das Anatomy-Skript der Prämien-Maschine (einzige Anpassung: keine
+Autotour, WCAG 2.2.2). Daraus baut `scripts/build-seiten.mjs` je Figur eine Seite unter
+`/krankenkasse/bewegt/<name>/`; die Skripte liegen als Dateien daneben und laufen mit
+`script-src 'self'` — so verlangt es der Server-Header (`public/.htaccess`, Abschrift). Eingebettete
+Skripte und das Einbetten in Rahmen (`frame-ancestors 'none'`) würden live blockiert, darum verlinkt
+die Hauptseite die bewegten Fassungen nur. Die Strichfiguren sind per Tastatur bedienbar (`buehne.js`
+mit `anzahl`/`waehle` der Figur).
 
 **Lizenz:** Hairline (Lucas Marques) und das Anatomy-Kit sind MIT-lizenziert; die Texte liegen unter
 `public/licenses/hairline-LICENSE.txt` und `anatomy-LICENSE.txt` und sind in
