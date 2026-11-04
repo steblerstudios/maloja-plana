@@ -67,12 +67,12 @@ export default {
     },
     beeintraechtigung: {
       label: 'Avec un handicap ou une maladie chronique',
-      frage: { sie: 'Vivez-vous avec un handicap, une maladie chronique ou un diagnostic confirmé par un médecin ?', du: 'Vis-tu avec un handicap, une maladie chronique ou un diagnostic confirmé par un médecin ?' },
-      intro: 'Un diagnostic confirmé par un médecin peut ouvrir un soutien plus tôt ou plus largement qu’on ne le pense.',
+      frage: { sie: 'Vivez-vous avec un handicap ou une maladie chronique ?', du: 'Vis-tu avec un handicap ou une maladie chronique ?' },
+      intro: 'Une attestation médicale peut ouvrir un soutien plus tôt ou plus largement qu’on ne le pense.',
       berechtigungen: {
         iv: { titel: 'Prestations AI', text: 'Réadaptation avant la rente : mesures professionnelles, moyens auxiliaires et, si nécessaire, une rente. S’annoncer tôt compte le plus.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: { sie: 'Un montant mensuel si vous avez besoin d’aide régulière au quotidien — indépendant du revenu.', du: 'Un montant mensuel si tu as besoin d’aide régulière au quotidien — indépendant du revenu.' } },
-        el: { titel: 'Prestations complémentaires (PC)', text: 'Si une rente ou un revenu ne couvre pas les frais de vie, les PC complètent. C’est un droit, pas de l’assistance.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si une rente ou un revenu ne couvre pas les frais de vie, les PC complètent. C’est un droit, pas une faveur.' },
         ipv: { titel: 'Réduction des primes (RIP)', text: 'Pour les bénéficiaires de PC, la prime est prise en compte sous forme de forfait — au plus la prime moyenne cantonale. Ce n’est pas une exonération. Avec un faible revenu sans PC, on a souvent droit à une aide malgré tout.' },
         steuern: { titel: 'Déductions fiscales liées au handicap', text: 'Les frais de maladie et de handicap — soins, moyens auxiliaires, déplacements — sont déductibles du revenu imposable.' },
         serafe: { titel: 'Exonération de la redevance radio/TV', text: 'Les bénéficiaires de prestations complémentaires (PC) sont exonérés de la redevance SERAFE sur demande — récupérable rétroactivement.' },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'En formation',
       frage: 'En apprentissage, à l’école ou aux études ?',
-      intro: 'Être en formation ouvre l’accès à des soutiens — et entraîne quelques obligations à garder à l’œil.',
+      intro: 'Être en formation ouvre l’accès à des soutiens — et s’accompagne de quelques obligations à ne pas perdre de vue.',
       berechtigungen: {
         stipendien: { titel: 'Bourses d’études', text: { sie: 'Les bourses et prêts cantonaux soutiennent l’apprentissage et les études — selon votre revenu et celui de vos parents, avec des délais de dépôt.', du: 'Les bourses et prêts cantonaux soutiennent l’apprentissage et les études — selon ton revenu et celui de tes parents, avec des délais de dépôt.' } },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Les jeunes adultes en formation à faible revenu ont souvent droit à une aide pour les primes d’assurance-maladie — pour eux-mêmes.' },
@@ -128,10 +128,10 @@ export default {
     rentnerin: {
       label: 'Retraité / à l’âge AVS',
       frage: { sie: 'Vous touchez une rente AVS ou en êtes proche ?', du: 'Tu touches une rente AVS ou tu en es proche ?' },
-      intro: 'À la retraite, certains droits doivent être demandés — par exemple les prestations complémentaires. Beaucoup relèvent d’un droit, pas de l’assistance.',
+      intro: 'À la retraite, certains droits doivent être demandés — par exemple les prestations complémentaires. Beaucoup relèvent d’un droit, pas d’une faveur.',
       berechtigungen: {
         pensionierung: { titel: 'Passage à la retraite', text: { sie: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.', du: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.' } },
-        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent. Un droit, pas de l’assistance.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent. Un droit, pas une faveur.' },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Les retraités à faible revenu — et toute personne au bénéfice des prestations complémentaires — peuvent faire aider le canton à payer les primes d’assurance-maladie.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: 'Un montant mensuel lorsqu’on a régulièrement besoin d’aide pour les actes quotidiens — indépendant du revenu et distinct des PC.' },
         steuern: { titel: 'Déductions à la retraite', text: 'Les frais de maladie, de soins et liés au handicap se déduisent du revenu imposable — mieux vaut garder les justificatifs tout au long de l’année.' },
@@ -170,7 +170,7 @@ export default {
       intro: 'Après le décès d’un parent, les enfants ont des droits clairs, faciles à manquer dans un moment difficile — une rente d’orphelin, et un soutien complémentaire si elle ne suffit pas.',
       berechtigungen: {
         waisenrente: { titel: 'Rente d’orphelin (AVS/AI)', text: 'Un enfant dont un parent est décédé reçoit une rente mensuelle — jusqu’à 18 ans, ou 25 ans en formation. Elle se demande à la caisse de compensation.' },
-        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente d’orphelin ne couvre pas le coût de la vie, les PC peuvent compléter — aussi pour les enfants et les jeunes en formation. Un droit, pas de l’assistance.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente d’orphelin ne couvre pas le coût de la vie, les PC peuvent compléter — aussi pour les enfants et les jeunes en formation. Un droit, pas une faveur.' },
         stipendien: { titel: 'Bourses d’études', text: 'En plus de la rente d’orphelin, des bourses cantonales peuvent soutenir une formation ou des études — à vérifier en parallèle, avec leurs propres délais.' },
         steuern: { titel: 'Allègement fiscal', text: 'Le parent survivant peut faire valoir le barème parental et les déductions pour enfants ; certains frais liés au décès peuvent aussi réduire l’impôt.' },
       },

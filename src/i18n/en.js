@@ -67,12 +67,12 @@ export default {
     },
     beeintraechtigung: {
       label: 'Living with a disability or chronic illness',
-      frage: 'Living with a disability, chronic illness or a diagnosis confirmed by a doctor?',
-      intro: 'A diagnosis confirmed by a doctor can open support earlier or more broadly than people expect.',
+      frage: 'Living with a disability or chronic illness?',
+      intro: 'A medical certificate can open support earlier or more broadly than people expect.',
       berechtigungen: {
         iv: { titel: 'Disability insurance (IV)', text: 'Reintegration before pension: vocational measures, aids and, if needed, a pension. Registering early matters most.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you need regular help with everyday acts — independent of income.' },
-        el: { titel: 'Supplementary benefits (EL)', text: 'If a pension or income doesn’t cover living costs, EL tops it up. It is a right, not assistance.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If a pension or income doesn’t cover living costs, EL tops it up. It is a right, not a favour.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'With supplementary benefits the premium is counted as a flat amount — at most the cantonal average premium. That is not an exemption. On a low income without supplementary benefits, you often still qualify.' },
         steuern: { titel: 'Disability-related tax deductions', text: 'Illness and disability costs — care, aids, transport — can be deducted from taxable income.' },
         serafe: { titel: 'Radio/TV fee exemption', text: 'Households receiving supplementary benefits (EL) are exempt from the SERAFE radio/TV fee on request — and can claim it back retroactively.' },
@@ -128,10 +128,10 @@ export default {
     rentnerin: {
       label: 'Retired / at AHV age',
       frage: 'Drawing an AHV pension, or close to retirement age?',
-      intro: 'Later in life some entitlements have to be claimed — supplementary benefits, for example. Much of it is a right, not assistance.',
+      intro: 'Later in life some entitlements have to be claimed — supplementary benefits, for example. Much of it is a right, not a favour.',
       berechtigungen: {
         pensionierung: { titel: 'Moving into retirement', text: 'Close to retirement? Registering for the AHV pension, choosing pension or lump sum from your pension fund, and staggering the third pillar all need early decisions — the guided flow shows the steps and deadlines.' },
-        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up. It is a right, not assistance.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up. It is a right, not a favour.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Pensioners on a low income — and everyone on supplementary benefits — can have the canton help pay health-insurance premiums.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you regularly need help with everyday acts — independent of income and separate from EL.' },
         steuern: { titel: 'Deductions for pensioners', text: 'Illness, care and disability costs can be deducted from taxable income — worth keeping the receipts through the year.' },
@@ -170,7 +170,7 @@ export default {
       intro: 'After a parent’s death, children have clear entitlements that are easy to miss in a hard time — an orphan’s pension, and support on top of it if that isn’t enough.',
       berechtigungen: {
         waisenrente: { titel: 'Orphan’s pension (AHV/IV)', text: 'A child whose parent has died receives a monthly pension — until 18, or until 25 while in education. It is claimed with the compensation office.' },
-        el: { titel: 'Supplementary benefits (EL)', text: 'If the orphan’s pension doesn’t cover living costs, EL can top it up — also for children and young people in education. A right, not assistance.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the orphan’s pension doesn’t cover living costs, EL can top it up — also for children and young people in education. A right, not a favour.' },
         stipendien: { titel: 'Education grants', text: 'On top of an orphan’s pension, cantonal grants can support training or studies — worth checking alongside, with their own deadlines.' },
         steuern: { titel: 'Tax relief', text: 'A surviving parent can claim the parent tariff and child deductions; costs linked to the loss may also lower the tax bill.' },
       },

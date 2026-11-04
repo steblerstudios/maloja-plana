@@ -67,12 +67,12 @@ export default {
     },
     beeintraechtigung: {
       label: 'Con una disabilità o malattia cronica',
-      frage: { sie: 'Vive con una disabilità, una malattia cronica o una diagnosi confermata da un medico?', du: 'Vivi con una disabilità, una malattia cronica o una diagnosi confermata da un medico?' },
-      intro: 'Una diagnosi confermata da un medico può aprire un sostegno prima o in modo più ampio di quanto si pensi.',
+      frage: { sie: 'Vive con una disabilità o una malattia cronica?', du: 'Vivi con una disabilità o una malattia cronica?' },
+      intro: 'Un certificato medico può aprire un sostegno prima o in modo più ampio di quanto si pensi.',
       berechtigungen: {
         iv: { titel: 'Prestazioni AI', text: 'Reintegrazione prima della rendita: provvedimenti professionali, mezzi ausiliari e, se necessario, una rendita. Annunciarsi presto conta di più.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: { sie: 'Un importo mensile se ha bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito.', du: 'Un importo mensile se hai bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito.' } },
-        el: { titel: 'Prestazioni complementari (PC)', text: 'Se una rendita o un reddito non copre le spese di vita, le PC integrano. È un diritto, non assistenza.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se una rendita o un reddito non copre le spese di vita, le PC integrano. È un diritto, non un favore.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Per chi riceve PC il premio è riconosciuto come importo forfettario — al massimo il premio medio cantonale. Non è un esonero. Con un reddito basso senza PC si ha comunque spesso diritto a un aiuto.' },
         steuern: { titel: 'Deduzioni fiscali legate alla disabilità', text: 'Le spese di malattia e disabilità — cure, mezzi ausiliari, trasporti — sono deducibili dal reddito imponibile.' },
         serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Chi riceve prestazioni complementari (PC) è esentato dal canone SERAFE su richiesta — recuperabile retroattivamente.' },
@@ -106,7 +106,7 @@ export default {
     inAusbildung: {
       label: 'In formazione',
       frage: 'In tirocinio, a scuola o all’università?',
-      intro: 'Essere in formazione apre l’accesso a dei sostegni — e comporta alcuni obblighi da tenere d’occhio.',
+      intro: 'Essere in formazione apre l’accesso a diversi sostegni — e comporta alcuni obblighi da tenere d’occhio.',
       berechtigungen: {
         stipendien: { titel: 'Borse di studio', text: { sie: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al suo reddito e a quello dei suoi genitori, con termini di presentazione.', du: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al reddito tuo e dei tuoi genitori, con termini di presentazione.' } },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I giovani adulti in formazione con reddito basso hanno spesso diritto a un aiuto per i premi della cassa malati — per sé stessi.' },
@@ -128,10 +128,10 @@ export default {
     rentnerin: {
       label: 'In pensione / in età AVS',
       frage: { sie: 'Riceve una rendita AVS o ci è vicino/a?', du: 'Ricevi una rendita AVS o ci sei vicino?' },
-      intro: 'In età avanzata alcuni diritti vanno richiesti — per esempio le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
+      intro: 'In età avanzata alcuni diritti vanno richiesti — per esempio le prestazioni complementari. Molto di questo è un diritto, non un favore.',
       berechtigungen: {
         pensionierung: { titel: 'Passaggio al pensionamento', text: { sie: 'È vicino/a al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.', du: 'Sei vicino al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.' } },
-        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano. Un diritto, non assistenza.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano. Un diritto, non un favore.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I pensionati con reddito basso — e tutti coloro che ricevono prestazioni complementari — possono farsi aiutare dal cantone a pagare i premi della cassa malati.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se si ha regolarmente bisogno di aiuto negli atti quotidiani — indipendente dal reddito e distinto dalle PC.' },
         steuern: { titel: 'Deduzioni in pensione', text: 'Le spese di malattia, cura e legate alla disabilità si deducono dal reddito imponibile — conviene conservare le ricevute durante l’anno.' },
@@ -166,11 +166,11 @@ export default {
     },
     halbwaise: {
       label: 'Un genitore è deceduto (rendita per orfani)',
-      frage: { sie: 'Un genitore è deceduto, e lei o sua figlia o suo figlio avete meno di 25 anni o siete in formazione?', du: 'Un genitore è deceduto, e tu o tua figlia o tuo figlio avete meno di 25 anni o siete in formazione?' },
+      frage: { sie: 'Un genitore è deceduto, e lei, o un suo figlio o una sua figlia, ha meno di 25 anni o è in formazione?', du: 'Un genitore è deceduto, e tu, o un tuo figlio o una tua figlia, hai meno di 25 anni o sei in formazione?' },
       intro: 'Dopo la morte di un genitore, i figli hanno diritti chiari, facili da perdere in un momento difficile — una rendita per orfani e un sostegno complementare se non basta.',
       berechtigungen: {
-        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Chi ha perso un genitore riceve una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione.' },
-        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita per orfani non copre il costo della vita, le PC possono integrare — anche per bambini e giovani in formazione. Un diritto, non assistenza.' },
+        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Bambini e giovani che hanno perso un genitore ricevono una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita per orfani non copre il costo della vita, le PC possono integrare — anche per bambini e giovani in formazione. Un diritto, non un favore.' },
         stipendien: { titel: 'Borse di studio', text: 'Oltre alla rendita per orfani, borse cantonali possono sostenere una formazione o gli studi — da verificare in parallelo, con termini propri.' },
         steuern: { titel: 'Sgravio fiscale', text: 'Il genitore superstite può far valere la tariffa per genitori e le deduzioni per figli; anche alcune spese legate al lutto possono ridurre l’imposta.' },
       },
