@@ -303,7 +303,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               key: idx, type: 'button', role: 'radio', 'aria-checked': selected,
               onClick: () => onSelect(opt.value),
               style: {
-                padding: '7px 14px', fontSize: text.sm, fontFamily: 'inherit',
+                padding: '7px 14px', minHeight: '44px', fontSize: text.sm, fontFamily: 'inherit',
                 fontWeight: selected ? weight.semi : weight.normal,
                 border: '1px solid ' + (selected ? palette.sage : palette.border),
                 borderRadius: radius.sm + 'px',
@@ -974,7 +974,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   'aria-checked': selected,
                   onClick: () => handleFieldChange(field.k, selected ? '' : opt.value),
                   style: {
-                    padding: '7px 14px',
+                    padding: '7px 14px', minHeight: '44px',
                     fontSize: text.sm,
                     fontFamily: 'inherit',
                     fontWeight: selected ? weight.semi : weight.normal,
@@ -1165,7 +1165,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const rows = [];
       const felder = [];
       if (name) { rows.push('<div style="font-size:18px;font-weight:500">' + escapeHtml(name) + '</div>'); felder.push(tr('zipExport.manifest.name')); }
-      if (dob) { rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>'); felder.push(tr('notfallSummary.cardDateOfBirth')); }
+      if (dob) { rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + escapeHtml(dob) + '</div>'); felder.push(tr('notfallSummary.cardDateOfBirth')); }
       sections.push({ title: tr('notfallSummary.cardPerson'), felder, html: rows.join('') });
     }
     if (data.emergencyContact) {
@@ -2387,8 +2387,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
+        'aria-pressed': expandedSection === 'fields',
         style: {
-          padding: space.sm + 'px ' + space.md + 'px',
+          minHeight: '44px', padding: space.sm + 'px ' + space.md + 'px',
           background: expandedSection === 'fields' ? palette.sand : 'transparent',
           color: expandedSection === 'fields' ? '#000' : palette.text,
           border: 'none',
@@ -2400,8 +2401,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       }, tr('chapterView.fields')),
       React.createElement('button', {
         onClick: () => setExpandedSection('documents'),
+        'aria-pressed': expandedSection === 'documents',
         style: {
-          padding: space.sm + 'px ' + space.md + 'px',
+          minHeight: '44px', padding: space.sm + 'px ' + space.md + 'px',
           background: expandedSection === 'documents' ? palette.sand : 'transparent',
           color: expandedSection === 'documents' ? '#000' : palette.text,
           border: 'none',

@@ -17,6 +17,11 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 03.11.2026, 10:35 — Fassung 8 ist LIVE: 0.1.49-beta, `a312b9a0`, gebaut 10:30, Deploy Stebler Studios.** Überholt alle Stände darunter.
+>
+> - **Belegt 10:31:** `version.json` = `a312b9a0` = `main`, Bundle `index-DNBc9yCt.js` = lokaler Build, de-Chunk byte-gleich, Lizenzen, keine Konsolenfehler. Hinter der Code-Wand nicht geklickt. Stage und Ultrareview vor dem Deploy nicht belegt.
+> - **Offen:** F8-P4 PDF drucken, F8-O8 mit Beta-Code öffnen, Sollte aus `_handoffs/2026-11-02-predeploy-ampel.md` (unterste Blöcke), rm-Gegenlese, #660, #655, #652 Entwürfe.
+>
 > 🧾 **Nachtrag 02.11.2026, 17:40 — Fassung 7 ist LIVE: `ca276eac`, gebaut 17:31, Deploy Stebler Studios.** Überholt alle «NICHT live» darunter.
 >
 > - **Belegt 17:37:** `version.json` = `ca276eac` = `main`, Bundle `index-CeFyAi_b.js` = lokaler Build, de-Chunk byte-gleich, Lizenzen 8/8, keine Konsolenfehler. Hinter der Code-Wand nicht geklickt. Ob Stage und Ultrareview vor dem Deploy liefen, ist hier nicht belegt.

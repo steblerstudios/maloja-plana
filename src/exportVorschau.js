@@ -25,6 +25,7 @@ export const KAPITEL = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbil
 // heikel sind. Nur Namen von Feldern, keine Werte.
 const GESUNDHEIT = {
   notfall: ['bloodType', 'allergies', 'medications', 'chronicDiseases'],
+  finanzen: ['ivBezug'],
   versicherungen: ['kkBelege'],
 };
 

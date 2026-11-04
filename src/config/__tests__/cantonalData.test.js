@@ -309,36 +309,29 @@ describe('checkELEligibility — Ergänzungsleistungen', () => {
 
   it('is never eligible without an AHV or IV pension', () => {
     const r = el({ finanzen: { monthlyIncome: 0 }, wohnen: { rentAmount: 2000 } });
-    expect(r.isAHVIV).toBe(false);
-    expect(r.eligible).toBe(false);
-    expect(r.noteKey).toBe('elCalc.onlyAhvIv');
+    expect(r).toMatchObject({ isAHVIV: false, elPruefen: false, noteKey: 'elCalc.onlyAhvIv' });
   });
 
-  it('is possible with an AHV pension and a gap below the threshold', () => {
+  // F8-Prüfer 03.11.2026: `ahvRente` und `ivRente` haben keine Eingabe. Ein Betrag (Import, alte Daten) zeigt den
+  // Bezug an, aber kein Ergebnis kommt aus der unbelegten Marge «Ausgaben + 2000» (Audit D5).
+  it('with an AHV pension amount: «prüfen lassen», never a computed claim', () => {
     const r = el({ finanzen: { ahvRente: 1500 }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } });
-    expect(r.isAHVIV).toBe(true);
-    expect(r.totalIncome).toBe(1500);
-    expect(r.totalExpenses).toBe(1600);
-    expect(r.eligible).toBe(true); // 1500 < 1600 + 2000
-    expect(r.noteKey).toBe('elCalc.possible');
+    expect(r).toMatchObject({ isAHVIV: true, elPruefen: true, noteKey: 'sozialhilfe.elPruefen' });
+    expect('eligible' in r).toBe(false);
   });
 
-  it('also recognises an IV pension', () => {
+  it('also recognises an IV pension amount, without a claim', () => {
     const r = el({ finanzen: { ivRente: 1400 }, wohnen: { rentAmount: 1000 }, versicherungen: { kkPremium: 350 } });
-    expect(r.isAHVIV).toBe(true);
-    expect(r.eligible).toBe(true);
+    expect(r).toMatchObject({ isAHVIV: true, elPruefen: true });
+    expect('eligible' in r).toBe(false);
   });
 
-  it('is not eligible when income clears expenses plus the CHF 2000 buffer', () => {
-    const r = el({ finanzen: { ahvRente: 6000 }, wohnen: { rentAmount: 1000 }, versicherungen: { kkPremium: 300 } });
-    expect(r.isAHVIV).toBe(true);
-    expect(r.eligible).toBe(false); // 6000 >= 1300 + 2000
+  it('the result does not depend on the size of the gap', () => {
+    const knapp = el({ finanzen: { ahvRente: 100 }, wohnen: { rentAmount: 3000 }, versicherungen: { kkPremium: 600 } });
+    const reich = el({ finanzen: { ahvRente: 6000 }, wohnen: { rentAmount: 1000 }, versicherungen: { kkPremium: 300 } });
+    expect(knapp).toEqual(reich);
   });
 
-  it('counts partner income in totalIncome', () => {
-    const r = el({ basis: { household: { adults: 2, partnerIncome: 1000 } }, finanzen: { ahvRente: 1000 } });
-    expect(r.totalIncome).toBe(2000); // (0 + 1000 partner) + 1000 AHV
-  });
 });
 
 // R4 (16.09.2026): der verwaiste Datei-Stand '2024/2025' ist weg (nirgends angezeigt).

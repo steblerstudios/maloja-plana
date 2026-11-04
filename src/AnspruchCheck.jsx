@@ -51,7 +51,8 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         // B-1/E22: die Zahlen aus Schritt 1 gehen an den IPV-Rechner mit (nicht ins Profil).
         incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium', uebergabe: uebergabeAusProbe(probe) });
       }
-      if (rent > 0) {
+      // income > 0 wie bei der IPV: Schritt 1 macht aus einem leeren Feld eine 0 (F8-S4).
+      if (income > 0 && rent > 0) {
         const sh = calculateSozialhilfe(probe);
         if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
           // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — der «Anspruch» sagt es.
@@ -59,7 +60,8 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
             label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '') });
         }
       }
-      if (checkELEligibility(probe)?.eligible) {
+      // EL ohne Rechnung: ein Rentenbezug führt hin, ein «Möglicher Anspruch» wird nicht mehr errechnet (F8-Prüfer).
+      if (checkELEligibility(probe)?.elPruefen) {
         incomeBenefits.push({ key: 'el', label: t('anspruch.items.el.label'), view: 'finanzuebersicht' });
       }
     } catch { /* Orientierung, nie blockierend */ }

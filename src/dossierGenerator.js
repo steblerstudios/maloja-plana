@@ -10,6 +10,7 @@
 //   generateBehoerdenDossier(data, chapters, t, calculations) → HTML string
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
+import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import { getFullName } from './config/constants.js';
 import { feldNameOhneEinheit } from './utils/feldName.js';
 import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
@@ -17,6 +18,22 @@ import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
+import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
+
+// Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
+// von den Zeilen ab (F8-G4), und das JSON rundete erst die Summe (F8-G5). Negativ zählt als 0.
+const vermoegenGerundet = (finanzen, basis) => vermoegensFelder(finanzen, basis).felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
+
+// Basis des Freibetrags, eine Fassung für Blatt und JSON (F8-G5).
+const freibetragBasisText = (canton, t) => (canton
+  ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + canton), datum: VFB_KANTON_GELESEN })
+  : t('sozialhilfe.assetLimitBasisSkos'));
+
+// 3a erfasst, Geburtsdatum fehlt: Ob sie zählt, weiss die App nicht (SKOS-RL D.3.3 Abs. 3). Der Satz steht, sobald der
+// Status von der Vermögensgrenze abhängen kann: Betrag, Freibetrag entscheidet, offen. Blatt und JSON dieselbe Regel.
+const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.finanzen, data.basis).mit3a
+  && !data.basis?.dateOfBirth && Number(data.finanzen?.pension3aBalance) > 0
+  && !!(sozialhilfe.eligible || sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen);
 import { organListe } from './utils/organspende.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
@@ -826,7 +843,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
         { label: lbl('versicherungen', 'franchise'), value: formatCHF(String(d('versicherungen', 'franchise')).replace(/\D/g, '')) },
         { label: lbl('finanzen', 'securitiesValue'), value: chf('finanzen', 'securitiesValue') },
         { label: lbl('finanzen', 'otherAssets'), value: chf('finanzen', 'otherAssets') },
-        { label: lbl('finanzen', 'savingsAccount'), value: chf('finanzen', 'savingsAccount') },
+        // Ein negativer Saldo zählt im Vermögen als 0: Er stünde sonst neben einer Summe, die ihn nicht enthält (F8-G5).
+        { label: lbl('finanzen', 'savingsAccount'), value: Number(d('finanzen', 'savingsAccount')) > 0 ? chf('finanzen', 'savingsAccount') : '' },
       ].filter(r => r.value),
     },
   ];
@@ -837,21 +855,24 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     const mit = (vor, wert, nach = '') => { const b = formatCHF(wert); return b ? vor + b + nach : ''; };
     const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
     const { mit3a } = vermoegensFelder(data.finanzen, data.basis);
+    const vermoegenBlatt = vermoegenGerundet(data.finanzen, data.basis);
+    const freibetragBasis = freibetragBasisText(d('basis', 'canton'), t);
+    const ohneGeburtsdatum3a = saeule3aOhneGeburtsdatum(data, sozialhilfe);
     const sRows = [
       { label: t('sozialhilfe.basicNeeds') + (sozialhilfe.haushalt > sozialhilfe.einheit ? ' (' + t('sh.gblAnteil', { einheit: sozialhilfe.einheit, haushalt: sozialhilfe.haushalt }) + ')' : ''), value: formatCHF(sozialhilfe.grundbedarf) },
       { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
       { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
       { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
-      { label: t('sozialhilfe.deductIncome'), value: mit('− ', sozialhilfe.income) },
+      !sozialhilfe.einkommenFehlt && { label: t('sozialhilfe.deductIncome'), value: mit('− ', sozialhilfe.income) },
       // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
-      sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
-      !sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
+      sozialhilfe.eligible && !sozialhilfe.einkommenFehlt && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
+      !sozialhilfe.einkommenFehlt && !sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
       // Nur wenn das Vermögen der Grund für den offenen Status ist, wie auf der Seite: 3a und 3b stehen sonst nirgends.
       ...(vermoegenGrund ? [
         Number(d('finanzen', 'pension3bBalance')) > 0 && { label: lbl('finanzen', 'pension3bBalance'), value: chf('finanzen', 'pension3bBalance') },
         mit3a && { label: lbl('finanzen', 'pension3aBalance'), value: chf('finanzen', 'pension3aBalance') },
-        { label: t('sozialhilfe.vermoegenGesamt'), value: formatCHF(sozialhilfe.vermoegen) },
-        { label: t('sozialhilfe.vermoegensfreibetrag'), value: formatCHF(sozialhilfe.vermoegensfreibetrag) },
+        { label: t('sozialhilfe.vermoegenGesamt'), value: formatCHF(vermoegenBlatt) },
+        { label: t('sozialhilfe.vermoegensfreibetrag') + ' (' + freibetragBasis + ')', value: formatCHF(sozialhilfe.vermoegensfreibetrag) },
       ] : []),
     ].filter(r => r && r.value);
     // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
@@ -860,7 +881,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || sozialhilfe.eligible) && t('sozialhilfe.assetLimitUnconfirmedShort'),
       vermoegenGrund && !d('basis', 'canton') && t('sozialhilfe.assetLimitKeinKanton'),
-      vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
+      ohneGeburtsdatum3a ? t('sozialhilfe.saeule3aOhneGeburtsdatum')
+        : vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
@@ -870,7 +892,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.
       sozialhilfe.gblBelegt === false && t('sh.gblNichtBelegt', { jahr: sozialhilfe.gblJahr, laufend: new Date().getFullYear() }),
     ].filter(Boolean);
-    const status = sozialhilfe.eligible
+    const status = sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
+      : sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich')
       : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText)
@@ -880,8 +903,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionSozialhilfe'),
       rows: sRows,
       status,
-      statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
-      statusOk: sozialhilfe.eligible,
+      // Ohne Einkommen kein Erfolg: Das Blatt nennt dann keinen Betrag und darf nicht grün sein (F8-S4).
+      statusColor: sozialhilfe.eligible && !sozialhilfe.einkommenFehlt ? DRUCK.gruen : DRUCK.grau,
+      statusOk: sozialhilfe.eligible && !sozialhilfe.einkommenFehlt,
       notes,
     });
   }
@@ -900,12 +924,14 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       ? t('premium.eligible')
       : ipv.belegt === false
         ? t('ipv.statusOffen')
-        : t('premium.notEligible');
+        : t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'behoerdenDossier.ipvNein');
     sections.push({
       key: 'ipv',
       title: t('behoerdenDossier.sectionIPV'),
       rows: iRows,
       status,
+      // Ein Nein steht auf dem Blatt ans Amt nie ohne Grund (Rechtsprüfung 02.11.2026).
+      notes: !ipv.eligible && ipv.belegt !== false && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
       statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: ipv.eligible,
     });
@@ -916,9 +942,10 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       key: 'el',
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
-      status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
-      statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
-      statusOk: el.eligible,
+      status: el.elPruefen ? t('sozialhilfe.elPruefen') : t('behoerdenDossier.elNotApplicable'),
+      // Nie grün: «prüfen lassen» ist eine Bitte, kein Befund (F8-Prüfer, 03.11.2026).
+      statusColor: DRUCK.grau,
+      statusOk: false,
     });
   }
 
@@ -1075,26 +1102,32 @@ export function generateBehoerdenJSON(data, calculations, t) {
   if (sozialhilfe) {
     const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
     dossier.calculations.sozialhilfe = {
-      eligible: !!sozialhilfe.eligible,
+      eligible: !!sozialhilfe.eligible && !sozialhilfe.einkommenFehlt,
+      einkommenFehlt: !!sozialhilfe.einkommenFehlt,
       grundbedarf: sozialhilfe.grundbedarf || 0,
       effectiveRent: sozialhilfe.effectiveRent || 0,
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
-      income: sozialhilfe.income || 0,
+      income: sozialhilfe.einkommenFehlt ? null : sozialhilfe.income || 0,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,
       konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
       vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
-      vermoegen: vermoegenGrund ? Math.round(sozialhilfe.vermoegen) : undefined,
-      saeule3b: vermoegenGrund && Number(data.finanzen?.pension3bBalance) > 0 ? Number(data.finanzen.pension3bBalance) : undefined,
-      saeule3a: vermoegenGrund && vermoegensFelder(data.finanzen, data.basis).mit3a ? Number(data.finanzen.pension3aBalance) : undefined,
+      vermoegen: vermoegenGrund ? vermoegenGerundet(data.finanzen, data.basis) : undefined,
+      // Gerundet wie die Summe, damit die Teile sie ergeben.
+      saeule3b: vermoegenGrund && Number(data.finanzen?.pension3bBalance) > 0 ? Math.round(Number(data.finanzen.pension3bBalance)) : undefined,
+      saeule3a: vermoegenGrund && vermoegensFelder(data.finanzen, data.basis).mit3a ? Math.round(Number(data.finanzen.pension3aBalance)) : undefined,
       vermoegensfreibetrag: vermoegenGrund ? sozialhilfe.vermoegensfreibetrag : undefined,
-      vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt,
+      vermoegensfreibetragBasis: vermoegenGrund && t ? freibetragBasisText(data.basis?.canton, t) : undefined,
+      // Wie auf dem Blatt: 3a vorhanden, Geburtsdatum fehlt, darum nicht gezählt (F8-G5).
+      saeule3aOhneGeburtsdatum: saeule3aOhneGeburtsdatum(data, sozialhilfe),
+      // Nur, wo es das Blatt auch sagt: Sonst stünde die Angabe im JSON ohne Grund (F8-G5).
+      vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || !!sozialhilfe.eligible),
       offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,
       hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k)),
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
-      deficit: sozialhilfe.betragOffen || sozialhilfe.efbEntscheidet ? null : sozialhilfe.deficit || 0,
+      deficit: sozialhilfe.betragOffen || sozialhilfe.efbEntscheidet ? null : sozialhilfe.einkommenFehlt ? null : sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };
   }
@@ -1104,6 +1137,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' }
       : {
           eligible: !!ipv.eligible,
+          // Ein Nein nie ohne Grund, auch nicht in der Datei (Rechtsprüfung 02.11.2026).
+          ...(!ipv.eligible && ipv.noteKey ? { grund: t ? t(ipv.noteKey, ipv.noteParams) : ipv.noteKey, unterMindestbetrag: ipvUnterMindestbetrag(ipv) } : {}),
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
           ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
@@ -1113,7 +1148,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
         };
   }
   if (el) {
-    dossier.calculations.el = { eligible: !!el.eligible };
+    dossier.calculations.el = { pruefen: !!el.elPruefen };
   }
   if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {

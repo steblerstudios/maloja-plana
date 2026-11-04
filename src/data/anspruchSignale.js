@@ -35,13 +35,14 @@ export function anspruchSignale(data = {}) {
     // Freibetrag — sonst wäre der Ring unehrlich.
     if (rent > 0) {
       const sh = calculateSozialhilfe(data);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
+      if (sh?.eligible && !sh.einkommenFehlt && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
         // mitGanzerMiete: die Anzeige sagt, dass die ganze Miete eingerechnet ist.
         add('behoerden', { key: 'sozialhilfe', view: 'sozialhilfe', mitGanzerMiete: !!sh.mitGanzerMiete, hinweise: sh.hinweise || [] });
       }
     }
     // EL: nur im AHV-/IV-Renten-Kontext.
-    if (checkELEligibility(data)?.eligible) {
+    const el = checkELEligibility(data);
+    if (el?.elPruefen) {
       add('finanzen', { key: 'el', view: 'finanzuebersicht' });
     }
   } catch { /* Orientierung, nie blockierend */ }

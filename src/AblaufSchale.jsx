@@ -188,7 +188,11 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
   return React.createElement(React.Fragment, null,
     // Ein einziger Schritt (z. B. «Jemand schuldet Geld») braucht keine Strasse — nur eine leere Fläche mit einem Punkt.
     total > 1 && React.createElement(AblaufPass, { palette, name, total, aktuell: nr, fertig: stand.fertig, namen: passNamen }),
-    React.createElement('div', { ref: flaeche, tabIndex: -1, 'data-ablauf-flaeche': '', style: { outline: 'none' } },
+    // Der Fokus landet hier: Mit Rolle und Namen sagt der Screenreader den neuen Schritt an (F8-O4).
+    React.createElement('div', {
+      ref: flaeche, tabIndex: -1, 'data-ablauf-flaeche': '', role: 'group', style: { outline: 'none' },
+      'aria-label': stand.fertig ? t('ablauf.fertigTitel', { n: String(total) }) : t('onboarding.stepOf', { current: nr + 1, total }) + ': ' + (ohneNummer(schritte[nr]?.props?.title) || ''),
+    },
       stand.fertig && React.createElement('div', { 'data-ablauf-schritt': 'fertig' },
         React.createElement('span', { style: { display: 'inline-flex', color: markenFarbe } }, React.createElement(Icon, { name: 'check', size: 28 })),
         React.createElement(PanelTitle, { palette, style: { margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t('ablauf.fertigTitel', { n: String(total) })),
