@@ -28,7 +28,7 @@ describe('ivBezug und Säule 3a', () => {
   });
   it('EL: Rente ohne Betrag heisst prüfen, nicht «nur bei AHV oder IV»', () => {
     const el = checkELEligibility(profil({ ivBezug: 'teil' }));
-    expect(el).toMatchObject({ eligible: false, elPruefen: true, isAHVIV: true });
+    expect(el).toMatchObject({ elPruefen: true, isAHVIV: true });
     expect(checkELEligibility(profil({ ivBezug: 'keine' })).elPruefen).toBe(false);
   });
   it('unklare Rente: Satz nur auf der Seite, nie im Dossier', () => {

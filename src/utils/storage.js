@@ -64,12 +64,15 @@ const ensureStore = (db) => {
 const openDB = (name, version) =>
   openIDB(name, { version, onUpgrade: ensureStore, errorMessage: 'IDB open failed' });
 
-const migrateFromOldDB = async (newDb) => {
+// Exportiert, damit die Reihenfolge Kopie → Löschen ohne Browser prüfbar ist
+// (src/utils/__tests__/storageMigration.test.js).
+export const migrateFromOldDB = async (newDb) => {
+  let oldDb = null;
   try {
     const dbs = await indexedDB.databases();
     if (!dbs.some(d => d.name === OLD_DB_NAME)) return;
 
-    const oldDb = await openDB(OLD_DB_NAME);
+    oldDb = await openDB(OLD_DB_NAME);
     const tx = oldDb.transaction(STORE_NAME, 'readonly');
     const items = await new Promise((res, rej) => {
       const req = tx.objectStore(STORE_NAME).getAll();
@@ -80,13 +83,23 @@ const migrateFromOldDB = async (newDb) => {
     if (items.length > 0) {
       const tx2 = newDb.transaction(STORE_NAME, 'readwrite');
       const store2 = tx2.objectStore(STORE_NAME);
+      const done = new Promise((res, rej) => {
+        tx2.oncomplete = () => res();
+        tx2.onabort = () => rej(tx2.error || new Error('IDB transaction aborted'));
+        tx2.onerror = () => rej(tx2.error || new Error('IDB transaction error'));
+      });
       for (const item of items) store2.put(item);
+      // Erst nach bestätigter Kopie löschen: put() merkt nur vor. Bricht die
+      // Transaktion ab (z.B. QuotaExceededError), bleibt die alte DB stehen
+      // und der nächste Start versucht es erneut.
+      await done;
       console.info('[storage] Migrated', items.length, 'docs from', OLD_DB_NAME);
     }
 
     oldDb.close();
     indexedDB.deleteDatabase(OLD_DB_NAME);
   } catch (e) {
+    oldDb?.close();
     console.warn('[storage] Old DB migration skipped:', e.message);
   }
 };

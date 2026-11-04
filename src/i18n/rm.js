@@ -4893,7 +4893,7 @@ export default {
     step2: "Purtar tut las cumprovas d'entrada",
     step3: 'Avair pront il contract da locaziun e la polizza CM',
     step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
-    step5: 'Examinar la dumonda PC tar la filiala AVS',
+    step5: 'Examinar la dumonda PC tar il post PC cumpetent', // TODO(rm)
     orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
@@ -4902,8 +4902,8 @@ export default {
     renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
-    assetLimitBasisCanton: 'Chantun {name}',
-    assetLimitBasisSkos: 'recumandaziun SKOS',
+    assetLimitBasisCanton: 'Chantun {name}, funtauna legida ils {datum}',
+    assetLimitBasisSkos: 'directivas SKOS D.3.1, versiun dals 1.1.2026',
     assetLimitUnconfirmed: { sie: "Betg confermà dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "Betg confermà dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
     // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
     assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
@@ -4912,6 +4912,7 @@ export default {
     vermoegensfreibetrag: 'Franchisa da facultad', // TODO(rm): provisorisch
     assetLimitKeinKanton: 'Franchisa da facultad tenor recumandaziun SKOS, nagin chantun registrà.', // TODO(rm): provisorisch
     saeule3aNichtGezaehlt: "La pitga 3a n’è betg quintada qua. Ella sto per princip vegnir retratga pir ensemen cun il retratg anticipà da l’AVS u cun il retratg d’ina renta AI entira.", // TODO(rm): provisorisch
+    saeule3aOhneGeburtsdatum: "Senza data da naschientscha n’èsi betg cler, sche la pitga 3a quinta gia: ella sto per princip vegnir retratga ensemen cun il retratg anticipà da l’AVS u cun il retratg d’ina renta AI entira (SKOS D.3.3 al. 3). Qua n’è ella betg quintada.", // TODO(rm)
     // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (25.09.2026)
     efbEntscheidet: { sie: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Vossa vischnanca.', du: 'Cun la limita d’entrada libra fiss in dretg pussaivel. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument. Il quint è perquai prudent e la lascha davent — il servetsch social sa, tge regla che vala en Tia vischnanca.' },
     erwerbsunkostenOffen: 'Custs supplementars per la lavur, sco mangiar ordaifer u il viadi a la lavur, n’èn betg quintads qua. Els augmentan il basegn — tar las indicaziuns pon ins endatar els.',
@@ -5888,6 +5889,8 @@ export default {
     inkl3aIvHint: "Sumà ord il profil, inclus il pilier 3a: el sto per regla vegnir retratg ensemen cun ina renta AI entira, sche il ristg d’invaliditad n’è betg assicurà.", // TODO(rm)
     renteEintragen: { sie: "Endatai Vossa renta tar las autras entradas. Senza ella fiss l’import memia aut.", du: "Endatescha Tia renta tar las autras entradas. Senza ella fiss l’import memia aut." }, // TODO(rm)
     ivGanz3a: "Il pilier 3a è quintà, perquai ch’ina renta AI entira è endatada: el sto per regla vegnir retratg ensemen cun questa renta, sche il ristg d’invaliditad n’è betg assicurà (SKOS D.3.3 al. 3, OPP 3 art. 3 al. 2 lit. a). Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC.", // TODO(rm)
+    bvgHerausloesen: "2. pilier: tenor las directivas SKOS (recumandaziun, D.3.3 al. 3) vegn l’avair per regla retratg ensemen cun l’anticipaziun da la renta AVS, u cun ina renta AI entira, tar in avair da libra circulaziun sch’il ristg d’invaliditad n’è betg assicurà supplementarmain (explicaziun b). Quai che vegn pajà ora sco chapital quinta sco facultad (al. 5), ina renta sco entrada. Quant, dependa dal reglament; sch’e cura, decida il servetsch social. La pagina n’al quinta betg.", // TODO(rm)
+    bvgEintragen: { sie: "2. pilier: tenor las directivas SKOS (recumandaziun, D.3.3 al. 3) vegn l’avair per regla retratg ensemen cun l’anticipaziun da la renta AVS u cun ina renta AI entira. Endatai quai che vegn pajà ora: chapital tar la facultad, ina renta tar las autras entradas. Senza quai pudess l’import esser memia aut.", du: "2. pilier: tenor las directivas SKOS (recumandaziun, D.3.3 al. 3) vegn l’avair per regla retratg ensemen cun l’anticipaziun da la renta AVS u cun ina renta AI entira. Endatescha quai che vegn pajà ora: chapital tar la facultad, ina renta tar las autras entradas. Senza quai pudess l’import esser memia aut." }, // TODO(rm)
     ivUnklar3a: { sie: "Sche Vus retschavais ina renta AI entira: cun il pilier 3a fiss la facultad sur la franchisa da l’agid social. Il dretg sclerescha il servetsch social. Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC.", du: "Sche ti retschaves ina renta AI entira: cun il pilier 3a fiss la facultad sur la franchisa da l’agid social. Il dretg sclerescha il servetsch social. Prestaziuns supplementaras han atgnas limitas da facultad (LPC art. 9a). Cumpetent è il post PC." }, // TODO(rm)
     erwachseneHint: 'La persuna che fa la dumonda e, en cas da maridaglia u da partenadi registrà, la partenaria u il partenari.',
     jungeErwachseneHint: "Sut 25 onns po il basegn da basa esser pli bass tenor il chantun — per plaschair s'infurmar tar il servetsch social.",
@@ -7543,7 +7546,7 @@ export default {
     ipvOhneBetragNote: 'Vala la paina dad examinar — dretg ed import decida il chantun.', // TODO(rm): provisorisch
     sozNote: 'Cuvra la largia fin al minimum existenzial (COSAS).',
     el: 'Prestaziuns cumplementaras (PC)',
-    elNote: 'Cun ina renta AVS u AI che na basta betg per viver.',
+    elNote: 'Cun ina renta AVS u AI. Il post PC calcula sch’ella basta per viver.', // TODO(rm)
     pruefen: 'verifitgar',
     noResult: 'Cun questas datas mussa la verifica svelta nagin dretg monetar cler — las vias sutvart cseries dapli, e la gronda part na dependa betg mo da l’entrada.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

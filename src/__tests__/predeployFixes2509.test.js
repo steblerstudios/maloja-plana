@@ -30,7 +30,7 @@ describe('Freibetrag-Fall: offen statt «keine Aufstockung nötig»', () => {
 
 describe('EL in der Dashboard-Liste (wie im Schnellcheck)', () => {
   const rentner = (extra = {}) => ({ basis: { canton: 'BE', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 0, incomeType: 'netto', ahvRente: 1600, ...extra }, wohnen: { rentAmount: 1300 }, versicherungen: { kkPremium: 400 } });
-  it('mit AHV-Rente, die nicht reicht: EL-Zeile, zum EL-Rechner', () => {
+  it('mit AHV-Rente: EL-Zeile, zum EL-Rechner (ohne errechneten Anspruch)', () => {
     const html = render(rentner());
     expect(html).toContain('schnellcheck.el');
   });

@@ -40,9 +40,11 @@ describe('EL-Karte der Finanzübersicht', () => {
     expect(html).toContain('sozialhilfe.elOnlyAhvIv');
     expect(html).not.toContain('finanzUebersicht.notApplicable');
   });
-  it('mit IV-Rente und knappem Einkommen: möglicher Anspruch', () => {
+  // `ivRente` hat keine Eingabe: ein Betrag aus einem Import führt hin, errechnet aber keinen Anspruch (F8-Prüfer, 03.11.2026).
+  it('mit IV-Rente aus einem Import: prüfen lassen, kein «Möglicher Anspruch»', () => {
     const html = seite(allein({ monthlyIncome: '500', ivRente: '1200' }));
-    expect(html).toContain('sozialhilfe.elPossible');
+    expect(html).toContain('sozialhilfe.elPruefen');
+    expect(html).not.toContain('sozialhilfe.elPossible');
   });
   it('ist ein Knopf wie die Nachbarkarten (führt zur EL-Seite)', () => {
     const html = seite(allein());

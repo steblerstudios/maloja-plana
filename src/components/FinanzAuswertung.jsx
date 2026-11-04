@@ -203,7 +203,7 @@ export const druckAbschnitte = (t, w) => {
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
   for (const k of w.sozialhilfe.hinweise || []) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t(k)) + '</td></tr>' });
-  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? t('sozialhilfe.elPossible') : w.el.elPruefen ? t('sozialhilfe.elPruefen') : w.el.isAHVIV ? t('behoerdenDossier.elKeinHinweis') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.elPruefen ? t('sozialhilfe.elPruefen') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
     zeilen.push({ label: t('finanzUebersicht.assets'), html: '<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(w.totalAssets) + '</td></tr>' });
@@ -527,13 +527,9 @@ export const elKarte = ({ palette, t, onNavigate, w }) => {
     // checkELEligibility (config/cantonalData.js) liefert `elCalc.onlyAhvIv`; bis 28.09.2026
     // verglich die Karte mit `el.onlyAhvIv` und zeigte darum immer «Nicht anwendbar» — ohne
     // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
-    status: el.eligible
-      ? t('sozialhilfe.elPossible')
-      : el.elPruefen ? t('sozialhilfe.elPruefen')
-      : el.noteKey === 'elCalc.onlyAhvIv'
-        ? t('sozialhilfe.elOnlyAhvIv')
-        : t('behoerdenDossier.elKeinHinweis'),
-    statusColor: el.eligible || el.elPruefen ? (palette.goldDeep || palette.gold) : palette.mid,
+    // Seit 03.11.2026 nur noch zwei Zustände: Rentenbezug → prüfen lassen, sonst nur mit Rente (F8-Prüfer).
+    status: el.elPruefen ? t('sozialhilfe.elPruefen') : t('sozialhilfe.elOnlyAhvIv'),
+    statusColor: el.elPruefen ? (palette.goldDeep || palette.gold) : palette.mid,
     onClick: () => onNavigate('ergaenzungsleistungen'),
   });
 };
@@ -631,7 +627,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   }
   const fruechte = chapters.length ? bereichsFruechte(chapters, data, astFarben(chapters, palette, isDarkMode)) : [];
   // Offen, sobald ein Anspruch möglich ist — dieselben Signale wie die Karten selbst.
-  const anspruch = (!w.sozialhilfe.einkommenFehlt && !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen)) || !!(w.el.eligible || w.el.elPruefen);
+  const anspruch = (!w.sozialhilfe.einkommenFehlt && !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen)) || !!w.el.elPruefen;
   const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).

@@ -5,7 +5,7 @@
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
-import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, verfuegbarUeberFreibetrag } from '../utils/unterstuetzungseinheit.js';
+import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, verfuegbarUeberFreibetrag, bvgHerausloesen } from '../utils/unterstuetzungseinheit.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
@@ -346,7 +346,8 @@ export function calculateSozialhilfe(data) {
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
   const vermoegenAngaben = vermoegensFelder(data.finanzen, data.basis);
-  const vermoegen = vermoegenAngaben.felder.reduce((s, v) => s + plus(v), 0);
+  // Jede Zeile auf Franken gerundet, wie Blatt und JSON: Mit Rappen kippte sonst die Grenze anders, als das Blatt sie zeigt (F8-G5).
+  const vermoegen = vermoegenAngaben.felder.reduce((s, v) => s + Math.round(plus(v)), 0);
   const minorChildren = einheit.kinder;
   const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
@@ -354,7 +355,12 @@ export function calculateSozialhilfe(data) {
   // Zwischenzeit Unterstützung. Deckt das Einkommen den Bedarf ohnehin, ist das Vermögen nicht der Grund.
   const knapp = erwerbstaetig && erwerbseinkommen > 0 && bilanz.luecke <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN;
   const vermoegenZuerst = !konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
-  const betragOffen = konkubinatBetragOffen || vermoegenZuerst;
+  // 2. Säule ab AHV-Vorbezug oder ganzer IV-Rente: kein Betrag, solange unbekannt ist, was ausbezahlt wird (D.3.3 Abs. 3 und 5).
+  // Der Satz steht nur, wo er einen fehlenden Betrag erklärt, auch neben «Rente noch nicht erfasst». Deckt der Lohn den
+  // Bedarf, schweigt er: Auf dem Blatt ans Amt wäre er sonst eine Aussage über die Person ohne Anlass (Rechtsprüfung).
+  const bvgOffen = bvgHerausloesen(data.finanzen, data.versicherungen, data.basis);
+  const bvgZuerst = !konkubinatBetragOffen && bvgOffen && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
+  const betragOffen = konkubinatBetragOffen || vermoegenZuerst || bvgZuerst;
   const deficit = betragOffen ? 0 : bilanz.luecke;
   // Kein Einkommen erfasst: Die Rechnung läuft weiter (Schnellcheck rechnet mit Proben), aber Karte und Dossier nennen keinen
   // Betrag aus einem leeren Feld (F8-S4). Dieselbe Regel wie im Rechner: Andere Einkünfte reichen nur bei einer Lage ohne Erwerb.
@@ -367,6 +373,7 @@ export function calculateSozialhilfe(data) {
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
   const gbl = gblStand();
+  const offenText = konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : bvgZuerst && !knapp ? 'sh.bvgHerausloesen' : 'pegel.coveredOffen';
   return {
     grundbedarf,
     // F, N, S (Stebler Studios 01.11.2026: Zahl mit Hinweis): Der Ansatz liegt unter dem für Einheimische und ist kantonal
@@ -389,7 +396,7 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
     // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
-    hinweise: [...(vermoegenAngaben.durchIv ? ['sh.ivGanz3a'] : []), ...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    hinweise: [...(vermoegenAngaben.durchIv ? ['sh.ivGanz3a'] : []), ...(bvgZuerst && (einkommenFehlt || offenText !== 'sh.bvgHerausloesen') ? ['sh.bvgHerausloesen'] : []), ...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
     einheit: einheit.einheit,
     haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
@@ -401,7 +408,8 @@ export function calculateSozialhilfe(data) {
     // Bankguthaben und Wertpapiere über dem Freibetrag sind kurzfristig verfügbar (D.3.1 Abs. 1, Erl. a), nur Abs. 2 liesse eine Ausnahme
     // zu. Wertgegenstände (Erl. c) und der Knapp-Fall bleiben «möglich», dort ist das Vermögen nicht die ganze Antwort.
     offenTitel: !konkubinatBetragOffen && betragOffen && !knapp && verfuegbarUeberFreibetrag(data.finanzen, vermoegensfreibetrag) ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
-    offenText: konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : 'pegel.coveredOffen',
+    offenText,
+    bvgOffen,
     deficit,
     einkommenFehlt,
     renteFehlt,
@@ -533,30 +541,24 @@ function ipvRechnen(data) {
 
 // EL (Ergänzungsleistungen) Berechtigungsprüfung
 export function checkELEligibility(data) {
-  const hh = getHouseholdInfo(data);
-  const income = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome;
-  const rent = Number(data.wohnen?.rentAmount || 0);
-  const kkPremium = Number(data.versicherungen?.kkPremium || 0);
   const ahvRente = Number(data.finanzen?.ahvRente || 0);
   const ivRente = Number(data.finanzen?.ivRente || 0);
-  const bvgRente = Number(data.finanzen?.bvgRente || 0);
-
-  const totalIncome = income + ahvRente + ivRente + bvgRente;
-  const totalExpenses = rent + kkPremium;
+  // `ahvRente` und `ivRente` haben keine Eingabe, ein Betrag kommt nur aus einem Import oder alten Daten.
+  // Er zeigt den Bezug an, trägt aber keine Rechnung: Bis 03.11.2026 stand hier «Einnahmen < Ausgaben + 2000»,
+  // eine Marge ohne Quelle, ohne Lebensbedarf und Vermögen nach ELG Art. 9–11 (Audit D5, Oktober 2026).
+  // Ein Bezug heisst darum immer «prüfen lassen», nie «Möglicher Anspruch» (F8-Prüfer, 03.11.2026).
   const rentenBetrag = ahvRente > 0 || ivRente > 0;
-  // Rente ohne Betrag: ELG Art. 4 Abs. 1 Bst. c gilt auch für Teilrenten, die Formel hätte aber kein Einkommen dazu.
-  // Im Rentenalter gilt dasselbe für die AHV-Altersrente (ELG Art. 4 Abs. 1 Bst. a, Fassung 1.1.2026).
-  const elPruefen = !rentenBetrag && (['ganz', 'teil'].includes(data.finanzen?.ivBezug)
-    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter));
-  const isAHVIV = rentenBetrag || elPruefen;
+  // ELG Art. 4 Abs. 1 Bst. c unterscheidet nicht zwischen ganzer und Teilrente. Bst. a setzt den Bezug einer
+  // Altersrente voraus; der Ruhestand im Rentenalter steht hier dafür (Wortlaut am 03.11.2026 nicht neu gelesen).
+  const elPruefen = rentenBetrag || ['ganz', 'teil'].includes(data.finanzen?.ivBezug)
+    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter);
+  const isAHVIV = elPruefen;
 
+  // Kein `eligible` mehr: ohne Rechnung gibt es keinen «Möglichen Anspruch», an den eine Anzeige anknüpfen könnte.
   return {
-    eligible: rentenBetrag && totalIncome < totalExpenses + 2000,
     isAHVIV,
     elPruefen,
-    totalIncome,
-    totalExpenses,
-    noteKey: isAHVIV ? 'elCalc.possible' : 'elCalc.onlyAhvIv',
+    noteKey: isAHVIV ? 'sozialhilfe.elPruefen' : 'elCalc.onlyAhvIv',
     noteParams: {},
   };
 }
