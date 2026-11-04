@@ -141,6 +141,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   const skosShown = !!(budget.householdContext && budget.income > 0);
   // Faden 4 / Inkr. B — Sozialhilfe-Anspruch (ganzes Unterstützungsbudget, nicht nur Grundbedarf)
   const sozialhilfe = skosShown ? calculateSozialhilfe(data) : null;
+  // Nur wenn das erfasste Einkommen den Bedarf nicht deckt; sonst gilt der Vergleich, die Rente kann nur dazukommen.
+  const renteOderEinkommenOffen = !!sozialhilfe?.wegOhneBetrag;
   const allInfoKeys = [];
   groupData.forEach(g => {
     if (groupHasInfo(g)) allInfoKeys.push(g.key);
@@ -418,10 +420,13 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         sozialhilfe && React.createElement('div', {
           style: {
             marginBottom: space.xs,
-            color: sozialhilfe.eligible ? palette.mid : palette.soft,
-            fontStyle: sozialhilfe.eligible ? 'normal' : 'italic',
+            // Grund ohne Ergebnis: neutral, damit die Form nichts aus dem leeren Feld verrät (Nachprüfung 0e9c094f).
+            color: sozialhilfe.eligible || renteOderEinkommenOffen ? palette.mid : palette.soft,
+            fontStyle: sozialhilfe.eligible || renteOderEinkommenOffen ? 'normal' : 'italic',
           }
-        }, sozialhilfe.eligible
+        // Einkommen oder Rente nicht erfasst: kein Vergleich mit dem Budget aus einem leeren Feld (Fachprüfung d18ef9f6).
+        }, renteOderEinkommenOffen ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
+          : sozialhilfe.eligible
           ? t('budgetSync.skosClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
             // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt).
             + (sozialhilfe.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')

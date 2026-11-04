@@ -29,7 +29,7 @@
 
 import { partnerEinkommenRoh } from './partnereinkommen.js';
 import { zahltBeitraegeSelbst } from './monatsrechnung.js';
-import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
+import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSumme, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
 import { renteOhneBetrag, RENTEN_FELDER } from './unterstuetzungseinheit.js';
@@ -68,7 +68,8 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined, ...RENTEN_FELDER.map((k) => f[k])]);
 
   const { mit3a, durchIv, felder } = vermoegensFelder(f, basis, heute);
-  const vermoegen = summeAlsFeld(felder);
+  // Dieselbe Rundung wie Karte und Blatt (je Zeile), sonst kippt die Grenze im Rechner anders. Leer bleibt leer.
+  const vermoegen = felder.some(erfasst) ? String(vermoegenSumme(felder)) : '';
 
   const erwerbstaetig = istErwerbstaetig(f);
   // Lernende: erwerbstätig, aber ohne Freibetrag, gleiche Regel wie calculateSozialhilfe.

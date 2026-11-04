@@ -319,7 +319,8 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     : null;
 
   // Der Ergebnis-Satz: «Mit diesen Angaben zeigt sich …» — nur positive Wege, nie ein Verdikt.
-  const labels = w.wege.map((x) => wegLabel[x.key]);
+  // Sozialhilfe ohne Betrag sagt den Grund, wie der Schnellcheck (Fachprüfung d18ef9f6).
+  const labels = w.wege.map((x) => wegLabel[x.key] + (x.key === 'soz' && x.qualitative ? ' (' + t(x.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') + ')' : ''));
   const satz = numIncome <= 0 ? t('schnellcheck.enterIncome')
     : !canton ? t('schnellcheck.noResultNoCanton')
     : labels.length === 0 ? t('wasStehtMirZu.ergebnisKeiner')
