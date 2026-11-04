@@ -37,12 +37,21 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // hier — ins Profil geht es erst mit «Ins Profil übernehmen». null = nicht bewegt.
   const [regler, setRegler] = useState(null);
   const profilEinkommen = Number(profil && profil.finanzen && profil.finanzen.monthlyIncome) || 0;
-  const schnellcheckOffen = abweichungen(profil, schnellcheckZahlen);
+  // Der Schnellcheck übergibt nur NETTO eingetippte Löhne (Schnellcheck.jsx, Leistungsliste.jsx). Steht das Profil auf
+  // brutto, weicht die Zahl auch bei gleichem Betrag ab, und mit ihr geht die Art 'netto' mit — sonst rechnete die IPV
+  // sie ein zweites Mal herunter (Fachprüfung 04.11.2026, calculateIPV/ipvFinanzenNetto).
+  const profilBrutto = profil?.finanzen?.incomeType === 'brutto';
+  const uebergabeLohn = Number(schnellcheckZahlen?.monthlyIncome) || 0;
+  const schnellcheckAbw = abweichungen(profil, schnellcheckZahlen);
+  const schnellcheckOffen = profilBrutto && uebergabeLohn > 0 && !schnellcheckAbw.some(([, feld]) => feld === 'monthlyIncome')
+    ? [...schnellcheckAbw, ['finanzen', 'monthlyIncome', uebergabeLohn]] : schnellcheckAbw;
   // Ist der Regler bewegt, gilt sein Wert fürs Einkommen — auch wenn er wieder auf dem
   // Profilwert steht (dann ist das Einkommen nicht mehr «offen»).
   const schnellcheckListe = regler != null ? schnellcheckOffen.filter(([, feld]) => feld !== 'monthlyIncome') : schnellcheckOffen;
   const reglerOffen = regler != null && regler !== profilEinkommen ? [['finanzen', 'monthlyIncome', regler]] : [];
-  const offeneZahlen = [...schnellcheckListe, ...reglerOffen];
+  // Der Regler bewegt den Betrag in der Art, von der er ausging: vom Netto aus dem Schnellcheck, sonst von der Art im Profil.
+  const lohnNetto = profilBrutto && uebergabeLohn > 0 && [...schnellcheckListe, ...reglerOffen].some(([, feld]) => feld === 'monthlyIncome');
+  const offeneZahlen = [...schnellcheckListe, ...reglerOffen, ...(lohnNetto ? [['finanzen', 'incomeType', 'netto']] : [])];
   const data = mitUebergabe(profil, offeneZahlen);
   const [showCalculation, setShowCalculation] = useState(true);
   // IPV-Lebenslinie (Phase 2): der Beleg als Gesicht seines Ablaufs. Verfügungs-
