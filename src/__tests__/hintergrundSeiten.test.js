@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
 import { KANTONE_IM_VERGLEICH } from '../../scripts/seiten/kantone-im-vergleich.mjs';
-import { KANTONE, EBENEN, PAARE, korrelation } from '../../scripts/seiten-vergleich.mjs';
+import { KANTONE, EBENEN, PAARE, korrelation, rangkorrelation, staerke } from '../../scripts/seiten-vergleich.mjs';
 import de from '../i18n/de.js';
 import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT, ATLAS_PRAEMIEN } from '../../scripts/seiten-figuren.mjs';
 import { BASIS } from '../../scripts/seiten-inhalt.mjs';
@@ -215,7 +215,8 @@ describe('Hintergrundseiten', () => {
     const text = sichtbar(html);
 
     it('ordnet die Kantone nicht: keine Platzziffer, kein Rang, keine Wertungsfarben', () => {
-      expect(text).not.toMatch(/\b(Rang|Platz \d|bester|schlechtester|Spitzenreiter|Schlusslicht)/i);
+      // «Rangfolge» (die Kontrollrechnung) ist erlaubt, eine Platzierung nicht.
+      expect(text).not.toMatch(/\b(Rang \d|\d+\. Rang|Rang(liste)?:|Platz \d|\d+\. Platz|bester Kanton|schlechtester|Spitzenreiter|Schlusslicht)/i);
       expect(html).not.toMatch(/class="[^"]*(gut|schlecht|rot|gruen)[^"]*"/);
     });
 
@@ -231,18 +232,34 @@ describe('Hintergrundseiten', () => {
     });
 
     it('die Zusammenhänge sind aus den Daten gerechnet, nicht abgetippt', () => {
-      for (const [, a, b] of PAARE) {
+      for (const [, a, b, t] of PAARE) {
         const r = korrelation(a, b).toFixed(2).replace('.', ',').replace('-', '−');
+        expect(html).toContain(`<th scope="row">${t.paar}</th>`);
         expect(html).toContain(`<td class="n">${r}</td>`);
       }
-      expect(text).toContain('Ein Zusammenhang ist keine Erklärung');
+      expect(text).toContain('Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen');
+      // Der Beispielsatz im Merkkasten muss von den Daten getragen sein.
+      expect(staerke('praemie', 'sozialhilfe')).toBe('deutlich');
+      expect(korrelation('praemie', 'sozialhilfe')).toBeGreaterThan(0);
+    });
+
+    it('nimmt die schwächere Stufe, wenn Pearson und Rangfolge auseinandergehen', () => {
+      // Miete–Leerwohnungen: Pearson −0,70, Rangfolge −0,58 → «teilweise», nicht «deutlich».
+      expect(Math.abs(korrelation('miete', 'leer'))).toBeGreaterThanOrEqual(0.6);
+      expect(Math.abs(rangkorrelation('miete', 'leer'))).toBeLessThan(0.6);
+      expect(staerke('miete', 'leer')).toBe('teilweise');
+    });
+
+    it('nennt den Kita-Abzug des Bundes mit seinem Steuerjahr, nicht dem Prämienjahr', () => {
+      expect(text).toMatch(/Bei der direkten Bundessteuer liegt sie im Steuerjahr 2026 bei 25'800 Franken je Kind, ab 2027 bei 25'900 Franken/);
+      expect(html).toContain('/eli/cc/1991/1184_1184_1184/20260101/de');
     });
 
     it('nennt bei jeder Ebene, woher die Zahl kommt, und die Vorbehalte des Atlas', () => {
       for (const key of Object.keys(EBENEN)) {
         expect(KANTONE_IM_VERGLEICH.quellen.map((q) => q.key), key).toContain(EBENEN[key].quelle);
       }
-      expect(text).toContain('Medianeinkommen 2022');
+      expect(text).toContain('Median-Reineinkommen 2022');
       expect(text).toContain('Grossregionen');
       expect(text).toContain('nicht, wer Anspruch hätte');
     });

@@ -50,23 +50,23 @@ const pz = (n, stellen = 1) => `${Number(n).toFixed(stellen).replace('.', ',')} 
 export const EBENEN = {
   praemie: { titel: 'Prämie Erwachsene', einheit: 'Fr. im Monat', kurz: 'Prämie',
     wert: (k) => A.praemien[k].erw.y27, ch: A.praemien.CH.erw.y27, fmt: rp, quelle: 'praemienKantone' },
-  last: { titel: 'Prämienlast vor Verbilligung', einheit: '% des Medianeinkommens', kurz: 'Last vor',
+  last: { titel: 'Prämienlast vor Verbilligung', einheit: '% des Median-Reineinkommens', kurz: 'Prämienlast vor Verbilligung',
     wert: (k) => A.last[k].lastSingle, ch: A.last.CH.lastSingle, fmt: (n) => pz(n), quelle: 'estvStatistik' },
-  lastNachIpv: { titel: 'Prämienlast nach Verbilligung', einheit: '% des Medianeinkommens', kurz: 'Last nach',
+  lastNachIpv: { titel: 'Prämienlast nach Verbilligung', einheit: '% des Median-Reineinkommens, Rechenwert', kurz: 'Prämienlast nach Verbilligung',
     wert: (k) => A.last[k].lastNachIpv, ch: A.last.CH.lastNachIpv, fmt: (n) => pz(n), quelle: 'bagOkp' },
-  steuer: { titel: 'Steuern bei 80\'000 Fr. Lohn', einheit: '% des Bruttolohns', kurz: 'Steuern',
+  steuer: { titel: 'Steuern bei 80\'000 Fr. Lohn', einheit: '% des Bruttolohns', kurz: 'Steuern bei 80\'000 Fr.',
     wert: (k) => A.steuern[k].p80, ch: null, fmt: (n) => pz(n), quelle: 'estvSteuerrechner' },
-  miete: { titel: 'Miete 3 Zimmer', einheit: 'Fr. im Monat', kurz: 'Miete',
+  miete: { titel: 'Miete 3 Zimmer', einheit: 'Fr. im Monat', kurz: 'Miete 3 Zimmer',
     wert: (k) => A.lohnMiete[k].miete3, ch: A.lohnMiete.CH.miete3, fmt: fr, quelle: 'bfsMiete' },
-  mieteAnteil: { titel: 'Miete 3 Zimmer am Medianlohn', einheit: '% des Medianlohns', kurz: 'Miete/Lohn',
+  mieteAnteil: { titel: 'Miete 3 Zimmer am Medianlohn', einheit: '% des Medianlohns (Vollzeit, brutto)', kurz: 'Miete am Medianlohn',
     wert: (k) => A.lohnMiete[k].anteil, ch: Math.round((A.lohnMiete.CH.miete3 / A.lohnMiete.CH.lohn24) * 1000) / 10, fmt: (n) => pz(n), quelle: 'bfsLse' },
-  leer: { titel: 'Leerwohnungsziffer', einheit: '% der Wohnungen', kurz: 'Leer',
+  leer: { titel: 'Leerwohnungsziffer', einheit: '% der Wohnungen', kurz: 'Leerwohnungen',
     wert: (k) => A.leer[k].z, ch: A.leer.CH.z, fmt: (n) => pz(n, 2), quelle: 'bfsLeer' },
-  sozialhilfe: { titel: 'Sozialhilfequote', einheit: '% der Bevölkerung', kurz: 'Sozialhilfe',
+  sozialhilfe: { titel: 'Sozialhilfequote', einheit: '% der Bevölkerung', kurz: 'Sozialhilfequote',
     wert: (k) => A.sozialhilfe[k].q24, ch: A.sozialhilfe.CH.q24, fmt: (n) => pz(n), quelle: 'bfsSozialhilfe' },
-  el: { titel: 'EL-Quote zur AHV', einheit: '% der Altersrenten', kurz: 'EL-Quote',
+  el: { titel: 'Ergänzungsleistungen zur AHV', einheit: '% der Menschen mit Altersrente', kurz: 'Ergänzungsleistungen (EL)',
     wert: (k) => A.el[k].ahv, ch: A.el.CH.ahv, fmt: (n) => pz(n), quelle: 'bsvEl' },
-  alq: { titel: 'Arbeitslosenquote', einheit: '%, September 2026', kurz: 'Arbeitslos',
+  alq: { titel: 'Arbeitslosenquote', einheit: '% der Erwerbspersonen', kurz: 'Arbeitslosenquote',
     wert: (k) => A.alq[k].q, ch: A.alq.CH.q, fmt: (n) => pz(n), quelle: 'seco' },
   kinderzulage: { titel: 'Kinderzulage', einheit: 'Fr. im Monat je Kind', kurz: 'Kinderzulage',
     wert: (k) => A.famz[k].kind, ch: null, fmt: fr, quelle: 'bsvFamz' },
@@ -78,6 +78,9 @@ const werte = (key) => KANTONE.map((k) => ({ k, name: de.cantons[k], v: EBENEN[k
 const tief = (key) => werte(key).reduce((a, b) => (b.v < a.v ? b : a));
 const hoch = (key) => werte(key).reduce((a, b) => (b.v > a.v ? b : a));
 
+// Kein Schweizer Wert in der Quelle: sichtbar ein Strich, vorgelesen in Worten.
+const KEIN = '<span aria-hidden="true">–</span><span class="sr-only">kein Wert</span>';
+
 // ─── Tabelle je Ebene: Werte mit Balken, nach Wert sortiert, ohne Platzziffer ─
 // Ein Balken in der Tabelle (echter Text, auf dem Handy lesbar), ab null.
 // Zwei Ebenen nebeneinander (z. B. vor/nach Verbilligung) teilen die Skala.
@@ -85,29 +88,30 @@ function tabelle(keys, { caption, sortiere = keys[0], zusatz = null }) {
   const reihen = werte(sortiere).sort((a, b) => a.v - b.v || a.name.localeCompare(b.name, 'de'));
   const max = Math.max(...keys.flatMap((key) => werte(key).map((w) => w.v)));
   const balken = (v, i) => `<span class="b${i}" style="width:${(v / max * 100).toFixed(1)}%"></span>`;
-  const kopf = keys.map((key) => `<th scope="col" class="n">${EBENEN[key].kurz}</th>`).join('');
+  const kopf = keys.map((key) => `<th scope="col" class="n">${EBENEN[key].kurz}<br><span class="leise">${EBENEN[key].einheit}</span></th>`).join('');
   const zeilen = reihen.map(({ k, name }) => {
     const vs = keys.map((key) => EBENEN[key].wert(k));
     return `              <tr><th scope="row">${name}</th><td class="balken" aria-hidden="true">${vs.map(balken).join('')}</td>${vs.map((v, i) => `<td class="n">${EBENEN[keys[i]].fmt(v)}</td>`).join('')}${zusatz ? `<td class="n leise">${zusatz(k)}</td>` : ''}</tr>`;
   }).join('\n');
   const chZeile = keys.some((key) => EBENEN[key].ch != null)
-    ? `\n              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td>${keys.map((key) => `<td class="n">${EBENEN[key].ch != null ? EBENEN[key].fmt(EBENEN[key].ch) : '–'}</td>`).join('')}${zusatz ? '<td></td>' : ''}</tr>` : '';
+    ? `\n              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td>${keys.map((key) => `<td class="n">${EBENEN[key].ch != null ? EBENEN[key].fmt(EBENEN[key].ch) : KEIN}</td>`).join('')}${zusatz ? '<td></td>' : ''}</tr>` : '';
   const legende = keys.length > 1
     ? `<p class="leise legende" aria-hidden="true">${keys.map((key, i) => `<span class="b${i}"></span> ${EBENEN[key].titel}`).join(' · ')}</p>` : '';
-  return `
-        <div class="tabelle zahlen"><table>
-          <caption>${caption}</caption>
+  return `${legende}
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="${caption.replace(/<[^>]+>/g, '')}"><table>
+          <caption>${caption}, sortiert nach ${EBENEN[sortiere].titel}</caption>
           <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th>${kopf}${zusatz ? `<th scope="col" class="n">${zusatz(null)}</th>` : ''}</tr>
 ${zeilen}${chZeile}
-        </table></div>${legende}`;
+        </table></div>`;
 }
 
 // ─── Nebeneinander: alle Kantone, alle Ebenen, alphabetisch ──────────────────
 const NEBENEINANDER = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'leer', 'sozialhilfe', 'el', 'alq', 'kinderzulage'];
 function nebeneinander() {
   const kopf = NEBENEINANDER.map((key) => `<th scope="col" class="n">${EBENEN[key].kurz}<br><span class="leise">${EBENEN[key].einheit}</span></th>`).join('');
+  // Die erste Spalte bleibt beim waagrechten Verschieben stehen (CSS: position sticky).
   const zeilen = KANTONE.map((k) => `            <tr><th scope="row">${de.cantons[k]}</th>${NEBENEINANDER.map((key) => `<td class="n">${EBENEN[key].fmt(EBENEN[key].wert(k))}</td>`).join('')}</tr>`).join('\n');
-  const ch = `            <tr class="ch"><th scope="row">Ganze Schweiz</th>${NEBENEINANDER.map((key) => `<td class="n">${EBENEN[key].ch != null ? EBENEN[key].fmt(EBENEN[key].ch) : '–'}</td>`).join('')}</tr>`;
+  const ch = `            <tr class="ch"><th scope="row">Ganze Schweiz</th>${NEBENEINANDER.map((key) => `<td class="n">${EBENEN[key].ch != null ? EBENEN[key].fmt(EBENEN[key].ch) : KEIN}</td>`).join('')}</tr>`;
   return `
         <div class="tabelle breit" tabindex="0" role="region" aria-label="Alle Kantone nebeneinander, waagrecht verschiebbar"><table>
           <caption>Alle Kantone nebeneinander, alphabetisch. Quellen und Stand wie in den Abschnitten oben.</caption>
@@ -127,33 +131,54 @@ export function korrelation(a, b) {
   return sxy / Math.sqrt(sxx * syy);
 }
 
-export const PAARE = [
-  ['arbeitslos', 'alq', 'sozialhilfe'],
-  ['praemieSozial', 'praemie', 'sozialhilfe'],
-  ['lastSozial', 'lastNachIpv', 'sozialhilfe'],
-  ['mieteLeer', 'miete', 'leer'],
-  ['steuerPraemie', 'steuer', 'praemie'],
-  ['elSozial', 'el', 'sozialhilfe'],
-];
-
-export const staerke = (r) => (Math.abs(r) >= 0.7 ? 'eng' : Math.abs(r) >= 0.4 ? 'teilweise' : 'kaum');
-
-function satz(a, b, r) {
-  const A1 = EBENEN[a].titel, B1 = EBENEN[b].titel;
-  if (staerke(r) === 'kaum') return `${A1} und ${B1}: kein klarer Zusammenhang.`;
-  const richtung = r > 0 ? 'höher' : 'tiefer';
-  return `${A1} und ${B1} hängen ${staerke(r)} zusammen: Wo das eine höher ist, ist das andere meist ${richtung}.`;
+// Rangkorrelation (Spearman) als Kontrolle: weniger anfällig für einzelne
+// Ausreisser. Weichen die Stufen ab, gilt die schwächere (Fachprüfung 04.11.2026:
+// Miete–Leerwohnungen hing sonst an einem einzigen Kanton).
+const raenge = (xs) => {
+  const sortiert = xs.map((x, i) => [x, i]).sort((a, b) => a[0] - b[0]);
+  const r = new Array(xs.length);
+  for (let i = 0; i < sortiert.length;) {
+    let j = i; while (j + 1 < sortiert.length && sortiert[j + 1][0] === sortiert[i][0]) j++;
+    for (let k = i; k <= j; k++) r[sortiert[k][1]] = (i + j) / 2 + 1;
+    i = j + 1;
+  }
+  return r;
+};
+export function rangkorrelation(a, b) {
+  const rx = raenge(KANTONE.map((k) => EBENEN[a].wert(k))), ry = raenge(KANTONE.map((k) => EBENEN[b].wert(k)));
+  const m = (rx.length + 1) / 2;
+  let sxy = 0, sxx = 0, syy = 0;
+  rx.forEach((x, i) => { sxy += (x - m) * (ry[i] - m); sxx += (x - m) ** 2; syy += (ry[i] - m) ** 2; });
+  return sxy / Math.sqrt(sxx * syy);
 }
 
+// Je Paar ein von Hand formulierter Satz mit den Kantonen als Subjekt, ohne
+// Ursache-Ton (Copy-Prüfung 04.11.2026). gleich: Satz bei gleichläufigem,
+// gegen: bei gegenläufigem Zusammenhang.
+export const PAARE = [
+  ['arbeitslos', 'alq', 'sozialhilfe', { paar: 'Arbeitslosenquote und Sozialhilfequote', gleich: 'In Kantonen mit höherer Arbeitslosenquote ist meist auch die Sozialhilfequote höher.', gegen: 'In Kantonen mit höherer Arbeitslosenquote ist die Sozialhilfequote meist tiefer.' }],
+  ['praemieSozial', 'praemie', 'sozialhilfe', { paar: 'Prämie und Sozialhilfequote', gleich: 'In Kantonen mit höherer Prämie ist meist auch die Sozialhilfequote höher.', gegen: 'In Kantonen mit höherer Prämie ist die Sozialhilfequote meist tiefer.' }],
+  ['elSozial', 'el', 'sozialhilfe', { paar: 'Ergänzungsleistungen und Sozialhilfequote', gleich: 'In Kantonen, in denen mehr Menschen mit Altersrente Ergänzungsleistungen beziehen, ist meist auch die Sozialhilfequote höher.', gegen: 'In Kantonen mit mehr Ergänzungsleistungen ist die Sozialhilfequote meist tiefer.' }],
+  ['mieteLeer', 'miete', 'leer', { paar: 'Miete und Leerwohnungen', gleich: 'In Kantonen mit höheren Mieten stehen meist auch mehr Wohnungen leer.', gegen: 'In Kantonen mit höheren Mieten stehen meist weniger Wohnungen leer.' }],
+  ['steuerPraemie', 'steuer', 'praemie', { paar: 'Steuern und Prämie', gleich: 'In Kantonen mit höheren Steuern ist meist auch die Prämie höher.', gegen: 'In Kantonen mit höheren Steuern ist die Prämie meist tiefer.' }],
+];
+
+const STUFEN = ['kaum', 'teilweise', 'deutlich'];
+const stufe = (r) => (Math.abs(r) >= 0.6 ? 2 : Math.abs(r) >= 0.3 ? 1 : 0);
+export const staerke = (a, b) => STUFEN[Math.min(stufe(korrelation(a, b)), stufe(rangkorrelation(a, b)))];
+
+const rText = (r) => r.toFixed(2).replace('.', ',').replace('-', '−');
+
 function zusammenhaenge() {
-  const zeilen = PAARE.map(([, a, b]) => {
-    const r = korrelation(a, b);
-    return `          <tr><td>${satz(a, b, r)}</td><td class="n">${r.toFixed(2).replace('.', ',').replace('-', '−')}</td></tr>`;
+  const zeilen = PAARE.map(([, a, b, t]) => {
+    const r = korrelation(a, b), st = staerke(a, b);
+    const satz = st === 'kaum' ? 'Kein klarer Zusammenhang.' : (r > 0 ? t.gleich : t.gegen);
+    return `          <tr><th scope="row">${t.paar}</th><td>${st === 'kaum' ? 'kaum' : `${st}, ${r > 0 ? 'gleichläufig' : 'gegenläufig'}`}</td><td class="n">${rText(r)}</td><td>${satz}</td></tr>`;
   }).join('\n');
   return `
-        <div class="tabelle"><table>
-          <caption>Zusammenhang über die 26 Kantone (Korrelationskoeffizient r, von −1 bis +1)</caption>
-          <tr><th scope="col">Beobachtung</th><th scope="col" class="n">r</th></tr>
+        <div class="tabelle" tabindex="0" role="region" aria-label="Zusammenhänge über die 26 Kantone"><table>
+          <caption>Zusammenhang über die 26 Kantone. r reicht von −1 (genau gegenläufig) über 0 (kein linearer Zusammenhang) bis +1 (genau gleichläufig).</caption>
+          <tr><th scope="col">Zahlen</th><th scope="col">Stärke</th><th scope="col" class="n">r</th><th scope="col">Was das heisst</th></tr>
 ${zeilen}
         </table></div>`;
 }
@@ -163,18 +188,20 @@ export function vergleichZahlen() {
   const z = {};
   for (const key of Object.keys(EBENEN)) {
     const t = tief(key), h = hoch(key);
-    z[`v.${key}.tiefName`] = t.name; z[`v.${key}.tief`] = EBENEN[key].fmt(t.v);
-    z[`v.${key}.hochName`] = h.name; z[`v.${key}.hoch`] = EBENEN[key].fmt(h.v);
+    // «im Kanton Tessin» statt «in Tessin»: immer richtig, ohne Artikelregeln.
+    z[`v.${key}.tiefName`] = `im Kanton ${t.name}`; z[`v.${key}.tief`] = EBENEN[key].fmt(t.v);
+    z[`v.${key}.hochName`] = `im Kanton ${h.name}`; z[`v.${key}.hoch`] = EBENEN[key].fmt(h.v);
     if (EBENEN[key].ch != null) z[`v.${key}.ch`] = EBENEN[key].fmt(EBENEN[key].ch);
   }
   z['v.kita.bund'] = fr(A.kita.CH_BUND.chf);
   z['v.kita.unterBund'] = String(KANTONE.filter((k) => A.kita[k].chf < A.kita.CH_BUND.chf).length);
   z['v.kita.abBund'] = String(KANTONE.filter((k) => A.kita[k].chf >= A.kita.CH_BUND.chf).length);
-  for (const [name, a, b] of PAARE) z[`v.r.${name}`] = korrelation(a, b).toFixed(2).replace('.', ',').replace('-', '−');
+  for (const [name, a, b] of PAARE) z[`v.r.${name}`] = rText(korrelation(a, b));
+  z['v.kita.bundJahr'] = String(A.kita.CH_BUND.jahr);
   return z;
 }
 
-const gemeinden = (k) => (k === null ? 'Gemeinden im Kanton' : `${pz(A.steuern[k].min[1])} bis ${pz(A.steuern[k].max[1])}`);
+const gemeinden = (k) => (k === null ? 'Gemeinden im Kanton<br><span class="leise">tiefste bis höchste Belastung</span>' : `${pz(A.steuern[k].min[1])} bis ${pz(A.steuern[k].max[1])}`);
 
 export const BLOECKE_VERGLEICH = {
   'TAB:vpraemie': () => tabelle(['praemie'], { caption: 'Mittlere Monatsprämie Erwachsene 2027, in Franken' }),
