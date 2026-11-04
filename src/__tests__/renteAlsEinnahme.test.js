@@ -63,9 +63,10 @@ describe('Rente als Einnahme in den Wegen', () => {
   });
 
   it('Rappen: Karte und Rechner zählen die anderen Einkünfte gleich (je Zeile auf Franken)', () => {
-    const p = rentnerin({ ahvRente: 1500.6, bvgRente: 300.6, familienzulagen: 0.4, monthlyIncome: '' });
+    // 1500.40 + 300.40 + 0.40: je Zeile 1800, als Summe gerundet 1801. Die Regel ist je Zeile.
+    const p = rentnerin({ ahvRente: 1500.4, bvgRente: 300.4, familienzulagen: 0.4, monthlyIncome: '' });
     const karte = calculateSozialhilfe(p).income;
-    expect(karte).toBe(1802);
+    expect(karte).toBe(1800);
     expect(Number(sozialhilfeVorbefuellung(p).andereEinkuenfte)).toBe(karte);
   });
 });
