@@ -12,7 +12,7 @@ import { betrag, zahl } from './utils/geld.js';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { hatAusweisFNS } from './data/ausweis.js';
-import { verfuegbarUeberFreibetrag } from './utils/unterstuetzungseinheit.js';
+import { verfuegbarUeberFreibetrag, vermoegenSumme } from './utils/unterstuetzungseinheit.js';
 
 const KINDER_MAX = 12;
 
@@ -79,7 +79,8 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
       erwerbsunkosten: erwerbstaetig ? Number(erwerbsunkosten) || 0 : 0,
       erwerbseinkommen: Number(einkommen) || 0,
       andereEinkuenfte: Number(andereEinkuenfte) || 0,
-      vermoegen: Number(vermoegen) || 0,
+      // Rappen im Feld nach derselben Regel wie Karte und Blatt (Fachprüfung 639b6495).
+      vermoegen: vermoegenSumme([vermoegen]),
       erwerbstaetig,
       erwerbsunkostenErfasst: String(erwerbsunkosten).trim() !== '',
       ohneFreibetrag: vorbefuellt.ohneFreibetrag,

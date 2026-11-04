@@ -48,6 +48,17 @@ describe('Rappen an der Freibetrags-Grenze: Seite = Rechner = Blatt', () => {
     expect(rechner(drueber)).toContain(de.sh.vermoegenZuerstTitel);
   });
 
+  // Fachprüfung 639b6495: dieselbe Regel für den Titel und für Rappen, die direkt ins Feld getippt werden.
+  it('Titel «Vermögen zuerst» und Rechnerfeld runden gleich', () => {
+    const halb = profil({ savingsAccount: 3000.5, securitiesValue: 2999.5 });
+    const s = calculateSozialhilfe(halb);
+    expect(s.vermoegen).toBe(6001);
+    expect(s.offenTitel).toBe('sh.vermoegenZuerstTitel');
+    const feld = { ...profil({ savingsAccount: 6000.4 }) };
+    expect(calculateSozialhilfe(feld).vermoegenZuerst).toBe(false);
+    expect(rechner(feld)).not.toContain(de.sh.vermoegenZuerstTitel);
+  });
+
   it('leer bleibt leer im Rechner', () => {
     expect(sozialhilfeVorbefuellung(profil({})).vermoegen).toBe('');
     expect(sozialhilfeVorbefuellung(profil({ savingsAccount: 0 })).vermoegen).toBe('0');

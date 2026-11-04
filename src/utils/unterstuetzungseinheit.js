@@ -57,8 +57,9 @@ export function vermoegensFelder(finanzen, basis, heute = new Date()) {
 
 // Eine Rundungsregel für das Vermögen, für Karte, Dossier, JSON und Rechner: jede Zeile auf Franken, wie das Blatt sie
 // zeigt (F8-G4), negativ als 0. Bis 03.11.2026 rundete der Rechner erst die Summe: Sparkonto 3000.40 plus Wertschriften
-// 3000.40 ergab dort 6001 («Vermögen zuerst»), auf Karte und Blatt 6000 (Betrag). Eine Abweichung unter einem Franken
-// je Zeile nimmt die Regel hin; die Felder sind Franken-Beträge (Predeploy 1e6819ab).
+// 3000.40 ergab dort 6001 («Vermögen zuerst»), auf Karte und Blatt 6000 (Betrag). Eine Abweichung bis 50 Rappen je
+// Zeile nimmt die Regel hin. Eine SKOS-Regel zur Rundung ist nicht belegt: Das ist eine Festlegung der App, keine
+// Rechtsregel, und braucht die Bestätigung von Stebler Studios (Predeploy 1e6819ab, Fachprüfung 639b6495).
 export const vermoegenSumme = (felder) => felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
 
 // Die 2. Säule hängt am selben Auslöser wie die 3a: «Vermögen der 2. Säule und der Säule 3a sind grundsätzlich zusammen
@@ -107,7 +108,8 @@ export function unterstuetzungseinheit(basis, heute = new Date()) {
 export const wohnkostenAnteil = (wohnkosten, { einheit, haushalt }) => Math.round(wohnkosten * einheit / haushalt);
 
 // Kurzfristig verfügbar (SKOS-RL D.3.1 Erl. a und c): Bankguthaben und Wertpapiere.
-export const verfuegbarUeberFreibetrag = (finanzen, freibetrag) => (Number(finanzen?.savingsAccount) || 0) + (Number(finanzen?.securitiesValue) || 0) > freibetrag;
+// Dieselbe Rundung wie die Summe (vermoegenSumme), sonst kippt der Titel an der Grenze anders (Fachprüfung 639b6495).
+export const verfuegbarUeberFreibetrag = (finanzen, freibetrag) => vermoegenSumme([finanzen?.savingsAccount, finanzen?.securitiesValue]) > freibetrag;
 
 // Einnahmen Minderjähriger zählen nur bis zu ihrem Anteil am Budget (SKOS-RL D.1 Abs. 2). Die App rechnet sie ganz an.
 export const kinderEinnahmenOffen = (finanzen, { kinder }) => kinder > 0 && (Number(finanzen?.alimenteReceived) > 0 || Number(finanzen?.familienzulagen) > 0);

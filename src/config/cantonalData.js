@@ -416,7 +416,7 @@ export function calculateSozialhilfe(data) {
     // Nur für die Seite, nicht fürs Dossier: Eine Vermutung zur IV gehört nicht auf ein Blatt ans Amt (Rechtsprüfung 02.11.2026).
     ivUnklar3a: (Number(data.finanzen?.ivRente) > 0 || data.finanzen?.employmentType === 'retired') && !data.finanzen?.ivBezug
       && !vermoegenAngaben.mit3a && vermoegenUeberFreibetrag === 0 && !feldLeer(data.finanzen?.monthlyIncome) && (bilanz.luecke > 0 || bilanz.efbEntscheidet)
-      && vermoegen + plus(data.finanzen?.pension3aBalance) > vermoegensfreibetrag,
+      && vermoegen + vermoegenSumme([data.finanzen?.pension3aBalance]) > vermoegensfreibetrag,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
     // Mietzins-Limite, siehe oben). Jeder Leser setzt dann `sozialhilfe.mitGanzerMiete` dazu.
