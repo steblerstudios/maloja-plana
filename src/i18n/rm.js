@@ -154,7 +154,7 @@ export default {
     rentnerin: {
       label: 'Pensiunà / en la vegliadetgna da l’AVS',
       frage: 'Retschaivas ti ina renta da l’AVS u ta stas ti datiers?',
-      intro: 'Im Alter gibt es Ansprüche, die man anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
+      intro: 'Im Alter gibt es Ansprüche, die man anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, kein Entgegenkommen.',
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },
@@ -963,7 +963,7 @@ export default {
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
   ergaenzungsleistungen: {
     title: 'Ergänzungsleistungen beantragen',
-    intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, keine Fürsorge. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
+    intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, kein Entgegenkommen. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
     step1Title: '1 · Kommen EL in Frage?',
     step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld seit mindestens sechs Monaten —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist die Sozialhilfe der Wohngemeinde zuständig.',
     step1LinkAnspruch: 'Ansprüche in Ruhe prüfen',
