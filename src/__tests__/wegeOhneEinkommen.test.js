@@ -59,10 +59,20 @@ describe('Wege ohne Betrag aus nicht erfasstem Einkommen', () => {
   // Das Monatsbudget lädt asynchron (useEffect) und lässt sich nicht statisch rendern: Reihenfolge an der Quelle.
   it('Monatsbudget: der Grund steht vor «Einkommen unter dem Unterstützungsbudget»', () => {
     const quelle = fs.readFileSync(new URL('../BudgetSync.jsx', import.meta.url), 'utf8');
-    expect(quelle).toContain('const renteOderEinkommenOffen = !!(sozialhilfe?.einkommenFehlt && sozialhilfe.bedarfUngedeckt);');
+    expect(quelle).toContain('const renteOderEinkommenOffen = !!sozialhilfe?.wegOhneBetrag;');
     const grund = quelle.indexOf("renteOderEinkommenOffen ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst'");
     expect(grund).toBeGreaterThan(-1);
     expect(grund).toBeLessThan(quelle.indexOf("t('budgetSync.skosClaim'"));
+  });
+
+  // Schlussprüfung 5d34f259: Konkubinat und Vermögen über dem Freibetrag gehen dem Rente-Satz vor.
+  it('Konkubinat oder Vermögen über dem Freibetrag: kein Weg «Rente noch nicht erfasst»', () => {
+    const konkubinat = { ...rentnerin({ employmentType: 'employed', ivBezug: 'teil', monthlyIncome: 500 }), basis: { ...rentnerin().basis, maritalStatus: 'cohabiting', household: { adults: 2, children: [], partnerIncome: 5000 } } };
+    expect(calculateSozialhilfe(konkubinat).konkubinatBetragOffen).toBe(true);
+    expect(wegeAusProbe(konkubinat).wege.some((x) => x.key === 'soz')).toBe(false);
+    const vermoegen = rentnerin({ monthlyIncome: 500, savingsAccount: 60000 });
+    expect(calculateSozialhilfe(vermoegen)).toMatchObject({ einkommenFehlt: true, wegOhneBetrag: false });
+    expect(wegeAusProbe(vermoegen).wege.some((x) => x.key === 'soz')).toBe(false);
   });
 
   it('Gegenprobe: mit erfasstem Lohn bleibt der Betrag', () => {

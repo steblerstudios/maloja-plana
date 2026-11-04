@@ -142,7 +142,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   // Faden 4 / Inkr. B — Sozialhilfe-Anspruch (ganzes Unterstützungsbudget, nicht nur Grundbedarf)
   const sozialhilfe = skosShown ? calculateSozialhilfe(data) : null;
   // Nur wenn das erfasste Einkommen den Bedarf nicht deckt; sonst gilt der Vergleich, die Rente kann nur dazukommen.
-  const renteOderEinkommenOffen = !!(sozialhilfe?.einkommenFehlt && sozialhilfe.bedarfUngedeckt);
+  const renteOderEinkommenOffen = !!sozialhilfe?.wegOhneBetrag;
   const allInfoKeys = [];
   groupData.forEach(g => {
     if (groupHasInfo(g)) allInfoKeys.push(g.key);

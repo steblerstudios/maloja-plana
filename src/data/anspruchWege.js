@@ -29,7 +29,7 @@ export function wegeAusProbe(probe) {
       // nannte er hier einen Betrag aus Einkommen 0, etwa CHF 2561 für eine Rentnerin ohne erfasste Rente.
       if (sh?.einkommenFehlt) {
         // Nur, wenn schon das erfasste Einkommen den Bedarf nicht deckt: eine fehlende Rente kann es nur erhöhen (Fachprüfung d18ef9f6).
-        if (sh.bedarfUngedeckt && (sh.vermoegenUeberFreibetrag || 0) === 0) wege.push({ key: 'soz', qualitative: true, renteFehlt: !!sh.renteFehlt });
+        if (sh.wegOhneBetrag) wege.push({ key: 'soz', qualitative: true, renteFehlt: !!sh.renteFehlt });
       } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({
         key: 'soz', monthly: sh.deficit, vfbUnbestaetigt: !!sh.vfbUnbestaetigt, mitGanzerMiete: !!sh.mitGanzerMiete,
         ansatzTiefer: !!sh.ansatzTiefer, ohneFreibetrag: !!sh.ohneFreibetrag, hinweise: sh.hinweise || [],

@@ -56,7 +56,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         const sh = calculateSozialhilfe(probe);
         if (sh?.einkommenFehlt) {
           // Rente oder Einkommen nicht erfasst: der Weg mit dem Grund, wie in data/anspruchWege.js.
-          if (sh.bedarfUngedeckt && (sh.vermoegenUeberFreibetrag || 0) === 0) incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
+          if (sh.wegOhneBetrag) incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
             label: t('anspruch.items.sozialhilfe.label') + ' · ' + t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') });
         } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
           // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — der «Anspruch» sagt es.
