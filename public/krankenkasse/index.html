@@ -176,6 +176,12 @@
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
     th{ font-weight:600 } th[scope="row"]{ font-weight:400 }
     td.n,th.n{ text-align:right; white-space:nowrap }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    /* Zahlenansicht: Balken in der Tabelle, Fläche in Heidelbeere, ab null. */
+    .zahlen td.balken{ width:42%; padding-right:12px; vertical-align:middle }
+    .zahlen td.balken span{ display:block; height:10px; border-radius:3px; background:var(--heidel) }
+    .zahlen th[scope="row"]{ white-space:nowrap }
+    @media (max-width:600px){ .zahlen td.balken{ width:30% } }
 
     /* Abbildungen: Karte wie in der App — «Abb. n» oben links, Kurztitel oben
        rechts, der Wert unten rechts; im Bild selbst steht kein Text. */
@@ -446,37 +452,53 @@
             <iframe src="/krankenkasse/bewegt/kantone/" title="Bewegte Fassung zum Ausprobieren: Prämien 2027 je Region" loading="lazy"></iframe>
             <p class="bewegt"><a href="/krankenkasse/bewegt/kantone/">In eigenem Fenster öffnen</a> <span class="leise">Auf die Figur zeigen, oder ins Bild springen und die Pfeiltasten nutzen.</span></p>
           </details>
+          <div class="tabelle zahlen"><table>
+            <caption>Zahlenansicht: mittlere Monatsprämie Erwachsene 2027 je Kanton, in Franken. Ganze Schweiz: 487.60.</caption>
+            <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Prämie</th><th scope="col" class="n">zum Vorjahr</th></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span style="width:53.2%"></span></td><td class="n">324.90</td><td class="n">+4,4 %</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span style="width:55.8%"></span></td><td class="n">340.50</td><td class="n">+5,9 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span style="width:61.9%"></span></td><td class="n">377.70</td><td class="n">+4,5 %</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span style="width:63.3%"></span></td><td class="n">386.70</td><td class="n">+4,2 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span style="width:65.1%"></span></td><td class="n">397.20</td><td class="n">+5,6 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span style="width:68.1%"></span></td><td class="n">415.60</td><td class="n">+3,9 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span style="width:68.5%"></span></td><td class="n">418.50</td><td class="n">+4,8 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span style="width:69.1%"></span></td><td class="n">422.20</td><td class="n">+4,5 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span style="width:69.2%"></span></td><td class="n">422.30</td><td class="n">+4,0 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span style="width:69.8%"></span></td><td class="n">426.50</td><td class="n">+2,7 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span style="width:70.0%"></span></td><td class="n">427.40</td><td class="n">+5,0 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span style="width:70.9%"></span></td><td class="n">433.20</td><td class="n">+4,9 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span style="width:75.5%"></span></td><td class="n">460.90</td><td class="n">+5,7 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span style="width:76.1%"></span></td><td class="n">464.70</td><td class="n">+5,6 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span style="width:76.2%"></span></td><td class="n">465.50</td><td class="n">+5,2 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span style="width:77.1%"></span></td><td class="n">470.60</td><td class="n">+5,9 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span style="width:78.1%"></span></td><td class="n">477.00</td><td class="n">+5,7 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span style="width:80.8%"></span></td><td class="n">493.50</td><td class="n">+5,7 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span style="width:81.0%"></span></td><td class="n">494.40</td><td class="n">+5,0 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span style="width:89.0%"></span></td><td class="n">543.50</td><td class="n">+3,2 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span style="width:89.2%"></span></td><td class="n">544.50</td><td class="n">+4,2 %</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span style="width:90.2%"></span></td><td class="n">551.00</td><td class="n">+5,9 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span style="width:91.5%"></span></td><td class="n">558.80</td><td class="n">+5,3 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span style="width:93.4%"></span></td><td class="n">570.60</td><td class="n">+4,5 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span style="width:98.9%"></span></td><td class="n">603.60</td><td class="n">+3,7 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span style="width:100.0%"></span></td><td class="n">610.60</td><td class="n">+4,3 %</td></tr>
+          </table></div>
+          <p class="leise">Kantonsmittel und Veränderung laut BAG-Tabelle der kantonalen Prämien vom 29. September 2026, wie im Kantonsatlas geführt. Die Veränderung bezieht sich auf den angepassten Vorjahreswert des BAG; die 2026 ursprünglich genehmigten Prämien weichen davon um wenige Franken ab.</p>
           <details>
-            <summary>Alle 26 Kantone als Tabelle</summary>
+            <summary>Werte je Prämienregion (11 Kantone)</summary>
             <div class="tabelle"><table>
-              <caption>Mittlere Monatsprämie Erwachsene 2027, je Kanton und Prämienregion, sortiert nach der teuersten Region</caption>
+              <caption>Mittlere Monatsprämie Erwachsene 2027 je Prämienregion</caption>
               <tr><th scope="col">Kanton</th><th scope="col" class="n">Franken im Monat</th></tr>
-              <tr><td>Zug</td><td class="n">324.90</td></tr>
-              <tr><td>Appenzell Innerrhoden</td><td class="n">340.50</td></tr>
-              <tr><td>Uri</td><td class="n">377.70</td></tr>
-              <tr><td>Obwalden</td><td class="n">386.70</td></tr>
-              <tr><td>Nidwalden</td><td class="n">397.20</td></tr>
-              <tr><td>Schwyz</td><td class="n">418.50</td></tr>
-              <tr><td>Appenzell Ausserrhoden</td><td class="n">422.30</td></tr>
-              <tr><td>Glarus</td><td class="n">426.50</td></tr>
-              <tr><td>Thurgau</td><td class="n">433.20</td></tr>
               <tr><td>Graubünden</td><td class="n">Region 1: 441.90<br>Region 2: 410.90<br>Region 3: 395.50</td></tr>
               <tr><td>Luzern</td><td class="n">Region 1: 446.10<br>Region 2: 412.40<br>Region 3: 399.90</td></tr>
               <tr><td>St. Gallen</td><td class="n">Region 1: 456.90<br>Region 2: 423.70<br>Region 3: 400.30</td></tr>
-              <tr><td>Aargau</td><td class="n">464.70</td></tr>
               <tr><td>Wallis</td><td class="n">Region 1: 477.30<br>Region 2: 417.10</td></tr>
               <tr><td>Schaffhausen</td><td class="n">Region 1: 485.00<br>Region 2: 450.80</td></tr>
-              <tr><td>Solothurn</td><td class="n">493.50</td></tr>
               <tr><td>Freiburg</td><td class="n">Region 1: 494.30<br>Region 2: 451.70</td></tr>
               <tr><td>Zürich</td><td class="n">Region 1: 513.00<br>Region 2: 476.80<br>Region 3: 447.20</td></tr>
               <tr><td>Bern</td><td class="n">Region 1: 531.20<br>Region 2: 488.50<br>Region 3: 455.30</td></tr>
-              <tr><td>Jura</td><td class="n">551.00</td></tr>
               <tr><td>Waadt</td><td class="n">Region 1: 553.80<br>Region 2: 522.30</td></tr>
               <tr><td>Basel-Landschaft</td><td class="n">Region 1: 556.00<br>Region 2: 515.60</td></tr>
-              <tr><td>Neuenburg</td><td class="n">558.80</td></tr>
-              <tr><td>Basel-Stadt</td><td class="n">570.60</td></tr>
               <tr><td>Tessin</td><td class="n">Region 1: 609.30<br>Region 2: 565.30</td></tr>
-              <tr><td>Genf</td><td class="n">610.60</td></tr>
             </table></div>
           </details>
         </figure>
@@ -485,9 +507,9 @@
           <tr><th scope="col">Kanton</th><th scope="col" class="n">Prämie Erwachsene 2027, Fr./Mt.</th><th scope="col" class="n">Kosten je Person 2024, Fr./Jahr</th></tr>
           <tr><td>Zug</td><td class="n">324.90</td><td class="n">3'869</td></tr>
           <tr><td>Appenzell Innerrhoden</td><td class="n">340.50</td><td class="n">3'366</td></tr>
-          <tr><td>Zürich</td><td class="n">447.20 bis 513.00 <span class="leise">(3 Regionen)</span></td><td class="n">4'516</td></tr>
+          <tr><td>Zürich</td><td class="n">477.00 <span class="leise">(Regionen 447.20 bis 513.00)</span></td><td class="n">4'516</td></tr>
           <tr><td>Basel-Stadt</td><td class="n">570.60</td><td class="n">5'591</td></tr>
-          <tr><td>Tessin</td><td class="n">565.30 bis 609.30 <span class="leise">(2 Regionen)</span></td><td class="n">5'796</td></tr>
+          <tr><td>Tessin</td><td class="n">603.60 <span class="leise">(Regionen 565.30 bis 609.30)</span></td><td class="n">5'796</td></tr>
           <tr><td>Genf</td><td class="n">610.60</td><td class="n">5'616</td></tr>
         </table></div>
         <p>Der Vergleich zeigt: Die Prämie folgt den Kosten im Kanton sehr eng. Über alle 26 Kantone laufen die beiden Zahlen fast im Gleichschritt. Teure Prämie heisst also vor allem: Dort fallen pro Person höhere Kosten an. Das ist so gewollt, denn die Prämien müssen die Kosten im Kanton decken. Ob dort zu viel behandelt wird oder die Menschen mehr Pflege brauchen, zeigt diese Zahl nicht. Der Kanton Zug fällt auf: Er kostet mehr als Appenzell Innerrhoden, hat aber die tiefere Prämie; der Grund liess sich nicht belegen.</p>
@@ -768,7 +790,7 @@
         <p>Dorf: Die BAG-Anteile sind auf 100 Menschen gerundet, die Säulen stehen auf der Mitte ihrer Stufe. Die 11 % und 27 % sind harte Grenzen, gerechnet mit den oberen beziehungsweise unteren Stufenrändern und dem BAG-Mittel von 4'634 Franken; die wahre Spanne für die fünf Teuersten liegt grob zwischen 27 und 64 %, je nach Rundung der BAG-Anteile.</p>
         <p>Schnitt der Erwachsenen: gewichtet ab 26 Jahren.</p>
         <p>65 bis 80 Franken: 16 bis 19 % der mittleren Prämie von 412 Franken; die Studie bezieht sich auf alle KVG-Leistungen 2016, nicht auf die Prämie 2027.</p>
-        <p>Kantone: Die Prämien 2027 je Prämienregion stammen aus der BAG-Datei, die Maloja Plana für den Prämienrechner führt. Für Kantone mit mehreren Regionen nennt diese Datei keinen Kantonsmittelwert; darum steht dort die Spanne der Regionen. Die Korrelation zwischen der kantonalen Prämie 2027 und den Kosten 2024 über 26 Kantone beträgt 0,97 (gerechnet mit den Kantonsmitteln des BAG). Die ETH-Studie und die Motion 18.3713 sind nur über das BAG-Faktenblatt belegt.</p>
+        <p>Kantone: Die Kantonsmittel 2027 stammen aus der BAG-Tabelle der kantonalen Prämien, wie sie der Maloja-Kantonsatlas führt; die Werte je Prämienregion aus der BAG-Datei, die Maloja Plana für den Prämienrechner führt. Für 2027 stimmen beide überein: Bei Kantonen mit einer Region sind sie gleich, sonst liegt das Kantonsmittel zwischen den Regionswerten. Die Korrelation zwischen der kantonalen Prämie 2027 und den Kosten 2024 über 26 Kantone beträgt 0,97 (gerechnet mit den Kantonsmitteln des BAG). Die ETH-Studie und die Motion 18.3713 sind nur über das BAG-Faktenblatt belegt.</p>
         <p>Ausnahmen bei den Regionen: eigene Auswertung der BAG-Prämiendaten 2027, Erwachsene, Standardmodell, Franchise 300. Die mittlere Prämie enthält auch die Wahl von Franchise und Modell, ist also nicht nur Kosten.</p>
         <p>Die Prämienverbilligung 2023 ist nur über die CSS-Infografik belegt; das BAG nennt für 2022 rund 5,4 Milliarden.</p>
       </div>

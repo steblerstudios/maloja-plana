@@ -109,6 +109,12 @@
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
     th{ font-weight:600 } th[scope="row"]{ font-weight:400 }
     td.n,th.n{ text-align:right; white-space:nowrap }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    /* Zahlenansicht: Balken in der Tabelle, Fläche in Heidelbeere, ab null. */
+    .zahlen td.balken{ width:42%; padding-right:12px; vertical-align:middle }
+    .zahlen td.balken span{ display:block; height:10px; border-radius:3px; background:var(--heidel) }
+    .zahlen th[scope="row"]{ white-space:nowrap }
+    @media (max-width:600px){ .zahlen td.balken{ width:30% } }
 
     /* Abbildungen: Karte wie in der App — «Abb. n» oben links, Kurztitel oben
        rechts, der Wert unten rechts; im Bild selbst steht kein Text. */

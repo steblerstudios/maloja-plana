@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
-import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT } from '../../scripts/seiten-figuren.mjs';
+import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT, ATLAS_PRAEMIEN } from '../../scripts/seiten-figuren.mjs';
 import { BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { PRAEMIEN, GEMEINDEN } from '../data/praemienRegionenDaten.js';
 import { NATIONAL_AVG_PREMIUM_JE_JAHR } from '../data/praemienRegionen.js';
@@ -130,37 +130,58 @@ describe('Hintergrundseiten', () => {
   describe('/krankenkasse/ · Zahlen aus src/data', () => {
     const html = lies('krankenkasse');
     const text = sichtbar(html);
-    // Die Tabelle aller Kantone unter dem Kantonsbild trägt die Zahlen; das
-    // Bild zeigt nur die Verhältnisse (kein Text im Bild).
-    const alle = html.match(/<details>[\s\S]*?Alle 26 Kantone[\s\S]*?<\/details>/)[0];
+    // Die Zahlenansicht unter dem Kantonsbild trägt die Kantonsmittel, aufklappbar
+    // darunter die Werte je Region; das Bild zeigt nur die Verhältnisse.
+    const zahlenansicht = html.match(/<div class="tabelle zahlen">[\s\S]*?<\/details>/)[0];
 
-    it('jede Kantonsregion steht mit ihrer Prämie in der Tabelle aller Kantone', () => {
-      const tabelle = PRAEMIEN[PRAEMIENJAHR];
-      expect(Object.keys(tabelle).length).toBeGreaterThan(26);
-      for (const [schluessel, werte] of Object.entries(tabelle)) {
-        expect(alle, `${schluessel} fehlt`).toContain(rp(werte[2]));
+    it('die Kantonsatlas-Kopie passt 2027 zur Prämienregionen-Datei', () => {
+      // Eine Quelle, zwei Dateien: bei einer Region gleich, sonst dazwischen.
+      for (const k of Object.keys(ATLAS_PRAEMIEN).filter((x) => x !== 'CH')) {
+        const regionen = Object.entries(PRAEMIEN[PRAEMIENJAHR]).filter(([key]) => key.slice(0, 2) === k);
+        expect(regionen.length, k).toBeGreaterThan(0);
+        ['kind', 'jung', 'erw'].forEach((g, i) => {
+          const werte = regionen.map(([, w]) => w[i]);
+          const a = ATLAS_PRAEMIEN[k][g][`y${PRAEMIENJAHR.slice(2)}`];
+          if (werte.length === 1) expect(a, `${k} ${g}`).toBe(werte[0]);
+          else {
+            expect(a, `${k} ${g}`).toBeGreaterThanOrEqual(Math.min(...werte));
+            expect(a, `${k} ${g}`).toBeLessThanOrEqual(Math.max(...werte));
+          }
+        });
       }
-      const kantone = kantonsPraemien();
-      expect(kantone.length).toBe(26);
-      for (const k of kantone) expect(alle).toContain(`<td>${k.name}</td>`);
+      // Das Schweizer Mittel des Atlas ist dasselbe wie in praemienRegionen.js.
+      const m = NATIONAL_AVG_PREMIUM_JE_JAHR[PRAEMIENJAHR];
+      expect(ATLAS_PRAEMIEN.CH.erw.y27).toBe(m.erwachsene);
+      expect(ATLAS_PRAEMIEN.CH.alle.y27).toBe(m.gesamt);
     });
 
-    it('nennt für Kantone mit mehreren Regionen jede Region, keinen selbst gemittelten Wert', () => {
+    it('die Zahlenansicht zeigt jeden Kanton mit seinem Kantonsmittel, aufsteigend', () => {
+      const kantone = kantonsPraemien();
+      expect(kantone.length).toBe(26);
+      const zeilen = [...zahlenansicht.matchAll(/<tr><th scope="row">([^<]+)<\/th><td class="balken"[^>]*><span style="width:[\d.]+%"><\/span><\/td><td class="n">([\d.]+)<\/td>/g)];
+      expect(zeilen.length).toBe(26);
+      const werte = zeilen.map((z) => Number(z[2]));
+      expect(werte).toEqual([...werte].sort((x, y) => x - y));
+      for (const k of kantone) expect(zahlenansicht).toContain(`<th scope="row">${k.name}</th>`);
+      for (const k of kantone) expect(werte).toContain(ATLAS_PRAEMIEN[k.kanton].erw.y27);
+    });
+
+    it('nennt für Kantone mit mehreren Regionen jede Region, aufklappbar', () => {
       const mehrere = kantonsPraemien().filter((k) => !k.eineRegion);
       expect(mehrere.map((k) => k.kanton).sort()).toEqual(
         ['BE', 'BL', 'FR', 'GR', 'LU', 'SG', 'SH', 'TI', 'VD', 'VS', 'ZH']);
-      for (const k of mehrere) for (const r of k.regionen) expect(alle).toContain(`Region ${r.region}: ${rp(r.erwachsene)}`);
-      // Die Zürcher Tabellenzeile: Spanne der drei Regionen.
-      expect(text).toMatch(new RegExp(`Zürich ${rp(Math.min(...[1, 2, 3].map((r) => PRAEMIEN[PRAEMIENJAHR]['ZH' + r][2])))} bis`));
+      for (const k of mehrere) for (const r of k.regionen) expect(zahlenansicht).toContain(`Region ${r.region}: ${rp(r.erwachsene)}`);
+      // Die Zürcher Tabellenzeile: Kantonsmittel, dahinter die Spanne der Regionen.
+      expect(text).toContain(`Zürich ${rp(ATLAS_PRAEMIEN.ZH.erw.y27)} (Regionen ${rp(PRAEMIEN[PRAEMIENJAHR].ZH3[2])} bis ${rp(PRAEMIEN[PRAEMIENJAHR].ZH1[2])})`);
     });
 
     it('der tiefste und der höchste Kanton im Text sind die aus den Daten', () => {
-      const alle = Object.entries(PRAEMIEN[PRAEMIENJAHR]).map(([k, w]) => [k, w[2]]);
-      const tief = alle.reduce((a, b) => (b[1] < a[1] ? b : a));
-      const hoch = alle.reduce((a, b) => (b[1] > a[1] ? b : a));
+      const mittel = Object.entries(ATLAS_PRAEMIEN).filter(([k]) => k !== 'CH').map(([k, v]) => [k, v.erw.y27]);
+      const tief = mittel.reduce((a, b) => (b[1] < a[1] ? b : a));
+      const hoch = mittel.reduce((a, b) => (b[1] > a[1] ? b : a));
       expect(text).toContain(`im Schnitt in Zug ${rp(tief[1])} Franken, in Genf ${rp(hoch[1])} Franken`);
-      expect(tief[0]).toBe('ZG0');
-      expect(hoch[0]).toBe('GE0');
+      expect(tief[0]).toBe('ZG');
+      expect(hoch[0]).toBe('GE');
     });
 
     it('das Schweizer Mittel stammt aus praemienRegionen.js', () => {

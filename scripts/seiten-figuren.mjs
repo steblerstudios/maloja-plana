@@ -30,6 +30,14 @@ import { fileURLToPath } from 'node:url';
 
 const FIGUREN = resolve(dirname(fileURLToPath(import.meta.url)), 'seiten', 'figuren');
 
+// ─── Kantonsmittel aus dem Kantonsatlas (seit 04.11.2026) ────────────────────
+// Eine Quelle für Atlas und Maloja: scripts/daten/kantonsatlas/praemien.json ist
+// die Datei des Kantonsatlas (BAG-Tabelle «Kantonale Prämien 2026/2027»), mit
+// scripts/kantonsatlas-abgleich.mjs gleich gehalten. Sie trägt die
+// Kantonsmittel, die der Prämienregionen-Datei für Kantone mit mehreren
+// Regionen fehlen. Für 2027 stimmen beide überein (Test).
+export const ATLAS_PRAEMIEN = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), 'daten', 'kantonsatlas', 'praemien.json'), 'utf8'));
+
 export const PRAEMIENJAHR = '2027';
 
 // ─── Zahlenformat ────────────────────────────────────────────────────────────
@@ -87,6 +95,9 @@ export function kantonsPraemien(jahr = PRAEMIENJAHR) {
   return Object.entries(je).map(([kanton, regionen]) => {
     regionen.sort((a, b) => a.region - b.region);
     const werte = regionen.map((r) => r.erwachsene);
+    const atlas = ATLAS_PRAEMIEN[kanton];
+    if (!atlas) throw new Error(`Kantonsatlas: kein Eintrag für ${kanton}`);
+    const y = `y${String(jahr).slice(2)}`;
     return {
       kanton,
       name: de.cantons[kanton],
@@ -94,6 +105,10 @@ export function kantonsPraemien(jahr = PRAEMIENJAHR) {
       tief: Math.min(...werte),
       hoch: Math.max(...werte),
       eineRegion: regionen.length === 1,
+      // Kantonsmittel Erwachsene laut BAG-Tabelle (Kantonsatlas) und die
+      // Veränderung gegenüber dem angepassten Vorjahreswert des BAG.
+      mittel: atlas.erw[y],
+      veraenderung: atlas.erw.pct,
     };
   }).sort((a, b) => a.hoch - b.hoch || a.kanton.localeCompare(b.kanton));
 }
@@ -101,8 +116,8 @@ export function kantonsPraemien(jahr = PRAEMIENJAHR) {
 export const praemienQuelle = (jahr = PRAEMIENJAHR) => PRAEMIEN_QUELLEN[jahr];
 
 const praemieText = (k) => (k.eineRegion
-  ? rp(k.tief)
-  : `${rp(k.tief)} bis ${rp(k.hoch)} <span class="leise">(${k.regionen.length} Regionen)</span>`);
+  ? rp(k.mittel)
+  : `${rp(k.mittel)} <span class="leise">(Regionen ${rp(k.tief)} bis ${rp(k.hoch)})</span>`);
 
 // ─── Platzhalter im Text ─────────────────────────────────────────────────────
 // Der Text schreibt {{schluessel}}; hier steht, woher die Zahl kommt. Ein
@@ -110,12 +125,9 @@ const praemieText = (k) => (k.eineRegion
 export function zahlen() {
   const mittel = NATIONAL_AVG_PREMIUM_JE_JAHR[PRAEMIENJAHR];
   if (!mittel) throw new Error(`Kein Schweizer Mittel für ${PRAEMIENJAHR}`);
-  const kantone = kantonsPraemien();
-  const billig = kantone[0], teuer = kantone[kantone.length - 1];
-  // Der Text sagt «im Schnitt in …» — das stimmt nur für Kantone mit einer Region.
-  if (!billig.eineRegion || !teuer.eineRegion) {
-    throw new Error(`Tiefster oder höchster Wert ist eine Region (${billig.kanton}/${teuer.kanton}) — Satz «im Schnitt in …» in krankenkasse.mjs anpassen`);
-  }
+  // «Im Schnitt in …»: nach Kantonsmittel, nicht nach Region.
+  const nachMittel = [...kantonsPraemien()].sort((a, b) => a.mittel - b.mittel);
+  const billig = nachMittel[0], teuer = nachMittel[nachMittel.length - 1];
   const frMin = Math.min(...FRANCHISE_STUFEN), frMax = Math.max(...FRANCHISE_STUFEN);
   // Höchstrabatt für eine höhere Franchise: 70 % des zusätzlichen Risikos (KVV Art. 95 Abs. 2bis).
   const rabattJahr = 0.7 * (frMax - frMin);
@@ -131,9 +143,9 @@ export function zahlen() {
     'vermeidbar.tief': fr(Math.floor((0.16 * mittel.gesamt) / 5) * 5),
     'vermeidbar.hoch': fr(Math.ceil((0.19 * mittel.gesamt) / 5) * 5),
     'kanton.tiefName': billig.name,
-    'kanton.tief': rp(billig.tief),
+    'kanton.tief': rp(billig.mittel),
     'kanton.hochName': teuer.name,
-    'kanton.hoch': rp(teuer.hoch),
+    'kanton.hoch': rp(teuer.mittel),
     'franchise.min': fr(frMin),
     'franchise.max': fr(frMax),
     'franchise.differenz': fr(frMax - frMin),
@@ -296,16 +308,30 @@ export function figurKantone(ctx) {
   });
 }
 
+// Die Zahlenansicht: alle Kantone nach Kantonsmittel, mit einem Balken in der
+// Tabelle (echter Text, auf dem Handy lesbar), dazu die Veränderung gegenüber dem
+// Vorjahr. Die Werte je Prämienregion stehen aufklappbar darunter.
 function tabelleKantoneAlle(kantone) {
-  const alle = kantone.map((k) => `              <tr><td>${k.name}</td><td class="n">${k.regionen
-    .map((r) => (k.eineRegion ? rp(r.erwachsene) : `Region ${r.region}: ${rp(r.erwachsene)}`)).join('<br>')}</td></tr>`).join('\n');
+  const nachMittel = [...kantone].sort((a, b) => a.mittel - b.mittel || a.kanton.localeCompare(b.kanton));
+  const max = Math.max(...nachMittel.map((k) => k.mittel));
+  const zahl = (n) => Number(n).toFixed(1).replace('.', ',');
+  const zeilen = nachMittel.map((k) => `              <tr><th scope="row">${k.name}</th><td class="balken" aria-hidden="true"><span style="width:${(k.mittel / max * 100).toFixed(1)}%"></span></td><td class="n">${rp(k.mittel)}</td><td class="n">+${zahl(k.veraenderung)} %</td></tr>`).join('\n');
+  const regionen = kantone.filter((k) => !k.eineRegion).map((k) => `              <tr><td>${k.name}</td><td class="n">${k.regionen
+    .map((r) => `Region ${r.region}: ${rp(r.erwachsene)}`).join('<br>')}</td></tr>`).join('\n');
+  const ch = ATLAS_PRAEMIEN.CH.erw;
   return `
+          <div class="tabelle zahlen"><table>
+            <caption>Zahlenansicht: mittlere Monatsprämie Erwachsene ${PRAEMIENJAHR} je Kanton, in Franken. Ganze Schweiz: ${rp(ch[`y${PRAEMIENJAHR.slice(2)}`])}.</caption>
+            <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Prämie</th><th scope="col" class="n">zum Vorjahr</th></tr>
+${zeilen}
+          </table></div>
+          <p class="leise">Kantonsmittel und Veränderung laut BAG-Tabelle der kantonalen Prämien vom 29. September 2026, wie im Kantonsatlas geführt. Die Veränderung bezieht sich auf den angepassten Vorjahreswert des BAG; die 2026 ursprünglich genehmigten Prämien weichen davon um wenige Franken ab.</p>
           <details>
-            <summary>Alle ${kantone.length} Kantone als Tabelle</summary>
+            <summary>Werte je Prämienregion (${kantone.filter((k) => !k.eineRegion).length} Kantone)</summary>
             <div class="tabelle"><table>
-              <caption>Mittlere Monatsprämie Erwachsene ${PRAEMIENJAHR}, je Kanton und Prämienregion, sortiert nach der teuersten Region</caption>
+              <caption>Mittlere Monatsprämie Erwachsene ${PRAEMIENJAHR} je Prämienregion</caption>
               <tr><th scope="col">Kanton</th><th scope="col" class="n">Franken im Monat</th></tr>
-${alle}
+${regionen}
             </table></div>
           </details>`;
 }
