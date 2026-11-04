@@ -59,6 +59,15 @@ describe('Rappen an der Freibetrags-Grenze: Seite = Rechner = Blatt', () => {
     expect(rechner(feld)).not.toContain(de.sh.vermoegenZuerstTitel);
   });
 
+  // Schlussprüfung 8fa8721c: Ein negativer Kontostand zählt als 0, auch im Titel (wie Karte und Blatt), nicht als Abzug.
+  it('negativer Kontostand zählt als 0, auch für den Titel', () => {
+    const p = profil({ savingsAccount: -10, securitiesValue: 6000.6 });
+    const s = calculateSozialhilfe(p);
+    expect(s.vermoegen).toBe(6001);
+    expect(s.offenTitel).toBe('sh.vermoegenZuerstTitel');
+    expect(Number(sozialhilfeVorbefuellung(p).vermoegen)).toBe(6001);
+  });
+
   it('leer bleibt leer im Rechner', () => {
     expect(sozialhilfeVorbefuellung(profil({})).vermoegen).toBe('');
     expect(sozialhilfeVorbefuellung(profil({ savingsAccount: 0 })).vermoegen).toBe('0');
