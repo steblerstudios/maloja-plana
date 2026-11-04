@@ -33,14 +33,14 @@ export const KRANKENKASSE = {
   beschreibung:
     'Wie aus den Behandlungskosten Ihre Prämie wird, wer für wen zahlt und warum andere weniger zahlen. Die Grundversicherung in acht Fragen, mit den Prämien {{jahr}}.',
   brotkrume: 'Krankenkasse erklärt',
-  stand: 'Prämien {{jahr}} (BAG, September und Oktober 2026), Kosten 2024 und 2025 (BAG). Fachlich gegengelesen November 2026.',
+  stand: 'Prämien {{jahr}} (BAG, September und Oktober 2026), Kosten 2024 und 2025 (BAG). Fach- und Rechtsprüfung am 4. November 2026, Befunde eingearbeitet.',
   pruefenBis: '2027-10-15',
   // Eigene Hinweise statt der Rahmentexte der Erklärseiten: jene sagen «nennt
   // bewusst keine Beträge», das wäre hier falsch.
   hinweis:
     'Orientierung, keine Rechts- oder Finanzberatung. Die Zahlen sind Durchschnitte; die eigene Prämie zeigt der Prämienrechner des Bundes.',
   vorbehalt:
-    'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Anders als die übrigen Erklärseiten nennt sie Zahlen, damit sich das System verstehen lässt. Es sind Durchschnitte mit dem oben genannten Stand, und sie ändern jedes Jahr. Massgebend sind die eigene Police, die eigene Kasse und die zuständige Stelle.',
+    'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Anders als die übrigen Erklärseiten nennt sie Zahlen, damit sich das System verstehen lässt. Es sind Durchschnitte mit dem oben genannten Stand, und sie ändern jedes Jahr. Massgebend sind der Gesetzestext, die eigene Police, die eigene Kasse und die zuständige Stelle.',
   vorspann:
     'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.',
   inhaltsverzeichnis: true,
@@ -79,7 +79,7 @@ export const KRANKENKASSE = {
         <p><strong>Franchise:</strong> Der Betrag, den Sie jedes Jahr zuerst selbst zahlen. Erwachsene wählen zwischen {{franchise.min}} und {{franchise.max}} Franken. Je höher, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab.</p>
         <p><strong>Selbstbehalt:</strong> Danach zahlen Sie noch {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr. Das ist der Schutz: Der Selbstbehalt hat ein Dach. Zusammen mit der Franchise zahlen Sie im Jahr höchstens {{dach.min}} bis {{dach.max}} Franken, je nach gewählter Franchise. Im Bild knicken die Linien dort ab und laufen waagrecht weiter.</p>
 <!--FIG:kostenteil-->
-        <p>Das Bild zeigt die Grundregel. Zwei Dinge liegen ausserhalb: 15 Franken je Spitaltag, und bei gewissen Medikamenten, für die es günstigere Alternativen gibt, 40 statt 10 % Selbstbehalt, der nur zum Teil ans Dach zählt. Für Kinder gilt keine ordentliche Franchise (wählbar sind tiefe Stufen) und die Hälfte des Dachs, also {{selbstbehalt.kinder}} Franken. Die Pflege im Heim hat eigene Regeln.</p>
+        <p>Das Bild zeigt die Grundregel. Zwei Dinge liegen ausserhalb: 15 Franken je Spitaltag (nicht für Kinder, junge Erwachsene in Ausbildung und bei Mutterschaft), und bei gewissen Medikamenten, für die es günstigere Alternativen gibt, 40 statt 10 % Selbstbehalt, der nur zum Teil ans Dach zählt. Für Kinder gilt keine ordentliche Franchise (wählbar sind tiefe Stufen) und die Hälfte des Dachs, also {{selbstbehalt.kinder}} Franken. Die Pflege im Heim hat eigene Regeln.</p>
         <p>Das hat Folgen, die man im Alltag merkt. Von den 26- bis 30-Jährigen bekamen 2024 rund 64 von 100 im ganzen Jahr keinen Franken von der Kasse. Bei 28 davon lag der Kasse gar keine Rechnung vor, bei 36 blieb alles innerhalb der eigenen Kostenbeteiligung. Prämien zahlten sie trotzdem. Über alle Altersgruppen waren es 37 von 100.</p>
         <p>Und der Haken: Die Bremse wirkt bei allen gleich stark in Franken, aber nicht gleich stark im Leben. 500 Franken sind für manche ein Abendessen, für andere ein Monatsbudget. Fast ein Viertel der Bevölkerung gab 2023 an, im letzten Jahr aus Kostengründen auf eine Behandlung verzichtet zu haben. Die Befragung sagt allerdings nicht, ob das aus Not oder freiwillig geschah. Auch der Bundesrat hält fest: Wird eine Behandlung aufgeschoben, können später deutlich höhere Kosten entstehen. Und hohe Franchisen wählen vor allem Menschen, die ohnehin wenig Kosten erwarten.</p>`,
     },
@@ -140,15 +140,15 @@ export const KRANKENKASSE = {
           <tr><td>eine</td><td>alle übrigen 15 Kantone</td></tr>
         </table></div>
         <p>Im Kanton Zürich zum Beispiel gehört nur die Stadt Zürich zur Region 1. Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3. Ein Umzug um wenige Kilometer kann die Prämie also verändern, ohne dass sich an der Gesundheit etwas ändert. Das EDI legt für jeden dieser Kantone fest, wie gross der Unterschied von Region zu Region höchstens sein darf. Dieser Unterschied darf den Kostenunterschied nicht übersteigen.</p>
-        <p><strong>Der Haken:</strong> Die Einteilung stammt im Kern aus dem Jahr 2004 und stützt sich auf eine ETH-Studie von 2001. Vorschläge für eine neue Einteilung lehnte das Parlament ab, seither bleibt sie bis auf wenige Sonderfälle wie Gemeindefusionen unverändert. Die Grenzen zeigen also teilweise ein altes Kostenbild. Die Höchstrabatte dagegen gelten je Kanton erst seit 2023 und werden regelmässig überprüft, und Kantone können selbst eine Änderung vorschlagen.</p>
+        <p><strong>Der Haken:</strong> Die Einteilung stammt im Kern aus dem Jahr 2004 und stützt sich auf eine ETH-Studie von 2001. Vorschläge für eine neue Einteilung lehnte das Parlament ab, seither bleibt sie bis auf wenige Sonderfälle wie Gemeindefusionen unverändert. Die Grenzen zeigen also teilweise ein altes Kostenbild. Die Höchstrabatte dagegen gelten je Kanton erst seit 2023, die Regionen werden periodisch überprüft, und Kantone können selbst eine Änderung vorschlagen.</p>
         <h3>Das Alter</h3>
-        <p>Es gibt nur drei Gruppen: Kinder bis 18, junge Erwachsene von 19 bis 25, Erwachsene ab 26. Für Kinder muss die Prämie tiefer sein, für junge Erwachsene darf die Kasse sie tiefer ansetzen. {{jahr}} sind das im Schnitt {{mittel.kinder}}, {{mittel.junge}} und {{mittel.erwachsene}} Franken im Monat. Innerhalb einer Gruppe zählt das Alter nicht mehr. Gewechselt wird immer am 1. Januar nach dem 18. und nach dem 25. Geburtstag.</p>
+        <p>Es gibt nur drei Gruppen: Kinder bis 18, junge Erwachsene von 19 bis 25, Erwachsene ab 26. Für Kinder und junge Erwachsene muss die Prämie tiefer sein als für Erwachsene, für Kinder noch tiefer als für junge Erwachsene. {{jahr}} sind das im Schnitt {{mittel.kinder}}, {{mittel.junge}} und {{mittel.erwachsene}} Franken im Monat. Innerhalb einer Gruppe zählt das Alter nicht mehr. Gewechselt wird immer am 1. Januar nach dem 18. und nach dem 25. Geburtstag.</p>
         <h3>Die Franchise</h3>
         <p>Wer eine höhere Franchise wählt, bekommt Rabatt, aber nicht beliebig viel: Der Rabatt darf höchstens 70 % des zusätzlichen Risikos betragen. Von {{franchise.min}} auf {{franchise.max}} Franken übernehmen Sie {{franchise.differenz}} Franken mehr Risiko, der Rabatt liegt also bei höchstens {{rabatt.jahr}} Franken im Jahr, rund {{rabatt.monat}} Franken im Monat.</p>
         <h3>Das Modell</h3>
         <p>Bei Hausarzt-, HMO- oder Telmed-Modellen gehen Sie zuerst an eine bestimmte Stelle und verzichten auf die freie Wahl. Dafür kann die Kasse Rabatt geben. Der Rabatt darf nur Kostenunterschiede weitergeben, die wirklich aus dem Modell stammen, nicht daraus, dass dort gesündere Menschen versichert sind.</p>
         <h3>Die Unfalldeckung</h3>
-        <p>Wer mindestens acht Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber arbeitet, ist über die Stelle auch in der Freizeit gegen Unfälle versichert. Dann lässt sich die Unfalldeckung bei der Kasse schriftlich ausschliessen, mit einer Bestätigung der Arbeitgeberseite. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, braucht die Kasse eine Meldung, sonst wird die Prämie nachgefordert.</p>
+        <p>Wer mindestens acht Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber arbeitet, ist über die Stelle auch in der Freizeit gegen Unfälle versichert. Dann lässt sich die Unfalldeckung bei der Kasse schriftlich ruhen lassen, mit einer Bestätigung der Arbeitgeberseite. Das senkt die Prämie um höchstens 7 %. Endet die Stelle, melden Sie das der Kasse innert eines Monats; die Unfalldeckung gilt dann automatisch wieder. Ohne Meldung kann die Kasse den Prämienanteil für die Unfalldeckung mit Zins nachfordern.</p>
         <h3>Die Kasse</h3>
         <p>Die Leistungen der Grundversicherung sind bei allen Kassen gleich, die Prämie nicht.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht: Die Kasse darf deshalb keine höhere Prämie verlangen.</p>`,
@@ -179,9 +179,9 @@ export const KRANKENKASSE = {
       titel: '8. Was ändert sich?',
       html: `
         <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst und mehr Pauschalen eingeführt. Im ersten Jahr kamen Rechnungen teils verspätet.</p>
-        <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen festen Anteil an den Kosten nach Abzug der Kostenbeteiligung, zuerst je nach Kanton 21,3 bis 28,5 %, ab 2031 in der Regel rund 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht.</p>
+        <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen Anteil an den Kosten nach Abzug der Kostenbeteiligung, den jeder Kanton selbst festlegt, aber mit einem Mindestsatz: 2028 je nach Kanton mindestens 21,3 bis 28,5 %, ab 2031 meist mindestens 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht.</p>
         <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nannte die Mitteilung vom 13.03.2026 nicht.</p>
-        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Mit offenen Ausständen ist ein Wechsel nicht möglich. Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes, verlinkt unten bei den Quellen.</p>
+        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Wer gemahnte Prämien oder Kostenbeteiligungen offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht. Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes, verlinkt unten bei den Quellen.</p>
         <p>Ob Sie Anspruch auf eine Verbilligung der Prämie haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>`,
     },
   ],
@@ -214,9 +214,14 @@ export const KRANKENKASSE = {
     { url: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de', text: 'KVG, SR 832.10', zweck: 'Art. 7, 8, 10, 49a, 61, 62, 64; EFAS: AS 2025 107' },
     { url: 'https://www.priminfo.admin.ch/de/praemien', text: 'Prämienrechner des Bundesamts für Gesundheit (Priminfo)', zweck: 'Prämien vergleichen' },
   ],
+  // Eigener Satz statt RAHMEN.quellenLeise: jener nennt die SKOS, die hier nicht
+  // vorkommt (Rechtsprüfung 04.11.2026). Hier haben gerade die Nicht-Behörden
+  // eigene Interessen, das soll dastehen.
+  quellenHinweis:
+    'Maloja Plana steht mit diesen Stellen in keiner Verbindung; die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle Quellen sind Behörden: Die CSS ist ein Krankenversicherer, Interpharma und santésuisse vertreten Branchen.',
   // Gesetzesstellen ohne eigenen Link (Fedlex rendert clientseitig, siehe
-  // seiten-inhalt.mjs). Stand der Prüfung: 02.11.2026.
-  gesetze: 'KVG Art. 64a; KVV Art. 11, 91a, 91b, 93, 95, 101, 103 bis 104a; KLV Art. 38a; KVAG Art. 2, 5, 16, 17; EDI-Verordnung über die Prämienregionen SR 832.106, Stand 1.1.2027; UVG Art. 8; UVV Art. 13.',
+  // seiten-inhalt.mjs). Am Volltext geprüft am 04.11.2026 (rechts-pruefer, über den Fedlex-SPARQL-Endpunkt): KVG Stand 1.7.2026, KVV/KLV 1.8.2026, UVG/UVV und SR 832.106 1.1.2026, AS 2026 483, AS 2025 107.
+  gesetze: 'KVG Art. 64a; KVV Art. 11, 91a, 91b, 93, 95, 101, 103 bis 104a, 105l; KLV Art. 38a; KVAG Art. 2, 5, 16, 17; EDI-Verordnung über die Prämienregionen SR 832.106, Stand 1.1.2027; UVG Art. 8; UVV Art. 13.',
   eigeneRechnungen: [
     'Dorf: Die BAG-Anteile sind auf 100 Menschen gerundet, die Säulen stehen auf der Mitte ihrer Stufe. Die 11 % und 27 % sind harte Grenzen, gerechnet mit den oberen beziehungsweise unteren Stufenrändern und dem BAG-Mittel von 4\'634 Franken; die wahre Spanne für die fünf Teuersten liegt grob zwischen 27 und 64 %, je nach Rundung der BAG-Anteile.',
     'Schnitt der Erwachsenen: gewichtet ab 26 Jahren.',
