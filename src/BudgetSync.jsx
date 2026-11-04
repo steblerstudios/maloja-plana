@@ -421,7 +421,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
             color: sozialhilfe.eligible ? palette.mid : palette.soft,
             fontStyle: sozialhilfe.eligible ? 'normal' : 'italic',
           }
-        }, sozialhilfe.eligible
+        // Einkommen oder Rente nicht erfasst: kein Vergleich mit dem Budget aus einem leeren Feld (Fachprüfung d18ef9f6).
+        }, sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
+          : sozialhilfe.eligible
           ? t('budgetSync.skosClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
             // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt).
             + (sozialhilfe.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')

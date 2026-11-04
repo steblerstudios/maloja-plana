@@ -5,6 +5,7 @@ import { calculateSozialhilfe } from '../config/cantonalData.js';
 import { wegeAusProbe, sozialhilfeAnzeige } from '../data/anspruchWege.js';
 import { sozialhilfePegelState } from '../data/pegel.js';
 import { Schnellcheck } from '../Schnellcheck.jsx';
+import fs from 'node:fs';
 import { betrag } from '../utils/geld.js';
 
 // Predeploy 1e6819ab, Altbestand live: wegeAusProbe prüfte einkommenFehlt nicht. Eine Rentnerin ohne erfasste Rente bekam
@@ -41,6 +42,22 @@ describe('Wege ohne Betrag aus nicht erfasstem Einkommen', () => {
     const html = renderToStaticMarkup(React.createElement(Schnellcheck, { palette, t, onNavigate: () => {}, data: p }));
     expect(html).not.toContain(betrag(roh.deficit).replace('CHF ', ''));
     expect(html).toContain('sozialhilfe.renteNichtErfasst');
+  });
+
+  // Fachprüfung d18ef9f6, Muss: deckt schon das erfasste Einkommen den Bedarf, kein Weg (eine Rente kann es nur erhöhen).
+  it('Rentnerin, deren erfasstes Einkommen den Bedarf deckt: kein Sozialhilfe-Weg', () => {
+    for (const monthlyIncome of [4000, 9000]) {
+      expect(wegeAusProbe(rentnerin({ monthlyIncome })).wege.some((x) => x.key === 'soz')).toBe(false);
+    }
+  });
+
+  // Fachprüfung d18ef9f6, Sollte: das Monatsbudget verglich das Einkommen ohne Rente mit dem Unterstützungsbudget.
+  // Das Monatsbudget lädt asynchron (useEffect) und lässt sich nicht statisch rendern: Reihenfolge an der Quelle.
+  it('Monatsbudget: der Grund steht vor «Einkommen unter dem Unterstützungsbudget»', () => {
+    const quelle = fs.readFileSync(new URL('../BudgetSync.jsx', import.meta.url), 'utf8');
+    const grund = quelle.indexOf("sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst'");
+    expect(grund).toBeGreaterThan(-1);
+    expect(grund).toBeLessThan(quelle.indexOf("t('budgetSync.skosClaim'"));
   });
 
   it('Gegenprobe: mit erfasstem Lohn bleibt der Betrag', () => {

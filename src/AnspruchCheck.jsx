@@ -54,7 +54,11 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       // income > 0 wie bei der IPV: Schritt 1 macht aus einem leeren Feld eine 0 (F8-S4).
       if (income > 0 && rent > 0) {
         const sh = calculateSozialhilfe(probe);
-        if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
+        if (sh?.einkommenFehlt) {
+          // Rente oder Einkommen nicht erfasst: der Weg mit dem Grund, wie in data/anspruchWege.js.
+          if ((sh.eligible || sh.efbEntscheidet || sh.betragOffen) && (sh.vermoegenUeberFreibetrag || 0) === 0) incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
+            label: t('anspruch.items.sozialhilfe.label') + ' · ' + t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') });
+        } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
           // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — der «Anspruch» sagt es.
           incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
             label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '') });
