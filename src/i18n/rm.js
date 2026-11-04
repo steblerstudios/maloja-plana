@@ -5865,7 +5865,8 @@ export default {
     brutto: 'brut',
     nettoGeschaetzt: '≈ net CHF {value} (stimà)',
     bruttoGeschaetzt: '≈ brut CHF {value} (stimà)',
-    rentenEingerechnet: 'Las rentas dal profil èn gia quintadas: CHF {value} per mais. Endatar qua mo la paga.', // TODO(rm)
+    rentenEingerechnet: 'Las rentas dal profil (AVS, AI, cassa da pensiun) èn gia quintadas: CHF {value} per mais. Endatar qua mo las autras entradas, senza questas rentas.', // TODO(rm)
+    renteImLohn: 'L’import qua è uschè aut sco ina renta en il profil. Sch’i sa tracta da la medema renta, stizzar qua, uschiglio quinta ella duas giadas.', // TODO(rm)
     knapp: 'Stretg — la stimaziun quinta senza AINP ed senza taglia a la funtauna; controllar cun la paja netta exacta.',
   },
   einkommensart: {

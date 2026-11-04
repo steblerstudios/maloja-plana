@@ -56,6 +56,22 @@ describe('Rente als Einnahme in den Wegen', () => {
     expect(html).toContain('einkommensfeld.rentenEingerechnet(');
   });
 
+  // Fachprüfung 65fa06d4: steht die Rente im Profil schon im Lohnfeld, sagt das Feld es sichtbar.
+  it('Rente auch im Lohnfeld: sichtbarer Hinweis, sonst keiner', () => {
+    const doppelt = renderToStaticMarkup(React.createElement(Schnellcheck, { palette, t, onNavigate: () => {}, data: rentnerin({ monthlyIncome: 1800 }) }));
+    expect(doppelt).toContain('einkommensfeld.renteImLohn');
+    const nebenjob = renderToStaticMarkup(React.createElement(Schnellcheck, { palette, t, onNavigate: () => {}, data: rentnerin({ monthlyIncome: 600 }) }));
+    expect(nebenjob).not.toContain('einkommensfeld.renteImLohn');
+  });
+
+  it('Lohn mit Rappen: Karte und Rechner gleich (je Zeile auf Franken)', () => {
+    const p = { ...rentnerin({ employmentType: 'employed', ahvRente: '', bvgRente: '', monthlyIncome: 2100.5, familienzulagen: 215.5 }), basis: { canton: 'AG', dateOfBirth: '1980-01-01', household: { adults: 1, children: [] } } };
+    const s = calculateSozialhilfe(p);
+    const v = sozialhilfeVorbefuellung(p);
+    expect(Number(v.einkommen)).toBe(2101);
+    expect(s.income).toBe(2101 + 216);
+  });
+
   it('ohne Lohn und ohne Rente bleibt es bei «Einkommen eingeben»', () => {
     const html = renderToStaticMarkup(React.createElement(Schnellcheck, { palette, t, onNavigate: () => {}, data: rentnerin({ ahvRente: '', bvgRente: '' }) }));
     expect(html).toContain('schnellcheck.enterIncome');

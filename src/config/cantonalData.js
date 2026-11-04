@@ -320,7 +320,8 @@ export function calculateSozialhilfe(data) {
   const selbst = zahltBeitraegeSelbst(data.finanzen);
   const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, selbst ? 'netto' : data.finanzen?.incomeType, data.basis);
   const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, data.finanzen?.sideIncomeType, data.basis);
-  const erwerbseinkommen = haupt.netto + neben.netto;
+  // Je Zeile auf Franken wie die anderen Einkünfte und der Rechner (Fachprüfung 65fa06d4: Lohn 2100.50 gab 905 gegen 904).
+  const erwerbseinkommen = frankenSumme([haupt.netto, neben.netto]);
   const einkommenGeschaetzt = haupt.geschaetzt || neben.geschaetzt;
   const erwerbstaetig = istErwerbstaetig(data.finanzen);
   const rent = Number(data.wohnen?.rentAmount || 0);

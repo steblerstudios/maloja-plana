@@ -6737,7 +6737,8 @@ export default {
     brutto: 'lordo',
     nettoGeschaetzt: '≈ netto CHF {value} (stimato)',
     bruttoGeschaetzt: '≈ lordo CHF {value} (stimato)',
-    rentenEingerechnet: 'Le rendite del profilo sono già conteggiate: CHF {value} al mese. Inserire qui solo il salario.',
+    rentenEingerechnet: 'Le rendite del profilo (AVS, AI, cassa pensioni) sono già considerate: CHF {value} al mese. Inserire qui solo gli altri redditi, senza queste rendite.',
+    renteImLohn: 'L’importo qui è uguale a una rendita del profilo. Se è la stessa rendita, toglierla qui, altrimenti conta due volte.',
     knapp: 'Al limite — la stima non considera l’AINP né l’imposta alla fonte; da verificare con il salario netto esatto.',
   },
   einkommensart: {

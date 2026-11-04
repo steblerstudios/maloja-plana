@@ -59,7 +59,8 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const nebenZaehlt = f.sideIncomeType === 'netto' && betrag(f.sideIncome) > 0;
   // Eine 0 mit Nebenerwerb, der nicht zählt, wäre keine Antwort: dann leer, und der Rechner fragt nach.
   const nebenFehlt = !betrag(f.monthlyIncome) && betrag(f.sideIncome) > 0 && !nebenZaehlt;
-  const einkommen = hauptBrutto || hauptBasisOffen || nebenFehlt ? '' : summeAlsFeld([f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined]);
+  const lohnWerte = [f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined];
+  const einkommen = hauptBrutto || hauptBasisOffen || nebenFehlt ? '' : lohnWerte.some(erfasst) ? String(frankenSumme(lohnWerte)) : '';
 
   const partner = partnerEinkommenRoh(basis);
   const haushalt = unterstuetzungseinheit(basis, heute);
