@@ -45,15 +45,15 @@ export const rp = (n) => {
 // Kostenstufen: Tabelle 1.1, auf 100 Menschen gerundet. Die Höhe ist die Mitte
 // der Stufe; die oberste steht auf ihrer Untergrenze (über 50'000).
 export const DORF_STUFEN = [
-  { menschen: 16, hoehe: 0, gruppe: 'nichts abgerechnet' },
-  { menschen: 19, hoehe: 250, gruppe: "bis 2'000 Franken" },
-  { menschen: 12, hoehe: 750, gruppe: "bis 2'000 Franken" },
-  { menschen: 14, hoehe: 1500, gruppe: "bis 2'000 Franken" },
-  { menschen: 18, hoehe: 3500, gruppe: "2'000 bis 10'000 Franken" },
-  { menschen: 10, hoehe: 7500, gruppe: "2'000 bis 10'000 Franken" },
-  { menschen: 6, hoehe: 15000, gruppe: "10'000 bis 50'000 Franken" },
-  { menschen: 4, hoehe: 35000, gruppe: "10'000 bis 50'000 Franken" },
-  { menschen: 1, hoehe: 50000, gruppe: "über 50'000 Franken" },
+  { menschen: 16, hoehe: 0, gruppe: 'nichts abgerechnet', stufe: 'nichts abgerechnet' },
+  { menschen: 19, hoehe: 250, gruppe: "bis 2'000 Franken", stufe: 'bis 500 Fr.' },
+  { menschen: 12, hoehe: 750, gruppe: "bis 2'000 Franken", stufe: "500 bis 1'000 Fr." },
+  { menschen: 14, hoehe: 1500, gruppe: "bis 2'000 Franken", stufe: "1'000 bis 2'000 Fr." },
+  { menschen: 18, hoehe: 3500, gruppe: "2'000 bis 10'000 Franken", stufe: "2'000 bis 5'000 Fr." },
+  { menschen: 10, hoehe: 7500, gruppe: "2'000 bis 10'000 Franken", stufe: "5'000 bis 10'000 Fr." },
+  { menschen: 6, hoehe: 15000, gruppe: "10'000 bis 50'000 Franken", stufe: "10'000 bis 20'000 Fr." },
+  { menschen: 4, hoehe: 35000, gruppe: "10'000 bis 50'000 Franken", stufe: "20'000 bis 50'000 Fr." },
+  { menschen: 1, hoehe: 50000, gruppe: "über 50'000 Franken", stufe: "über 50'000 Fr." },
 ];
 
 // Kosten je versicherte Person nach Alter, nach Abzug der Kostenbeteiligung,
@@ -195,6 +195,15 @@ export function standbildSvg(datei, id, titel, beschreibung) {
 
 function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, legende, nachher = '' }) {
   ctx.abb += 1;
+  // Die bewegte Fassung lädt erst beim Aufklappen: ein Rahmen in einem
+  // geschlossenen <details> wird nicht geladen, loading="lazy" sichert es ab.
+  const name = id.replace(/^abb-/, '');
+  const bewegt = BEWEGT[name] ? `
+          <details class="bewegt ${BEWEGT[name].art}">
+            <summary>Bewegte Fassung zum Ausprobieren</summary>
+            <iframe src="/krankenkasse/bewegt/${name}/" title="Bewegte Fassung: ${BEWEGT[name].titel}" loading="lazy"></iframe>
+            <p class="leise"><a href="/krankenkasse/bewegt/${name}/">In eigenem Fenster öffnen</a></p>
+          </details>` : '';
   return `
         <figure class="abb" id="${id}">
           <div class="abb-karte">
@@ -202,7 +211,7 @@ function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, lege
             <div class="abb-bild ${stil}">${standbildSvg(datei, id, titel, beschreibung)}</div>
             <p class="abb-fuss"><span class="abb-wert">${wert}</span></p>
           </div>
-          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
+          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${bewegt}${nachher}
         </figure>`;
 }
 
@@ -350,3 +359,49 @@ export const BLOECKE = {
   'TAB:kantone': tabelleKantone,
   'TAB:mittel': tabelleMittel,
 };
+
+// ─── Bewegte Fassungen ───────────────────────────────────────────────────────
+// Je Figur eine eigene kleine Seite unter /krankenkasse/bewegt/<name>/, auf der
+// Hauptseite erst beim Aufklappen geladen (die Hauptseite bleibt ohne Skript).
+// Die Strichfiguren bekommen ihre Zahlen hier an der Marke DATEN, aus denselben
+// Quellen wie Standbild und Tabellen. Die Prämien-Maschine trägt ihr Modell im
+// Skript (BAG 2025, hochgerechnet); der Test prüft, dass ihre Prämie 2027 mit
+// praemienRegionen.js übereinstimmt.
+const BEWEGT_ORDNER = resolve(FIGUREN, 'bewegt');
+const lies = (datei) => readFileSync(resolve(BEWEGT_ORDNER, datei), 'utf8');
+
+function datenFuer(name) {
+  if (name === 'dorf') return [...DORF_STUFEN].sort((a, b) => b.hoehe - a.hoehe).map((s) => [s.menschen, s.hoehe, s.stufe]);
+  if (name === 'alter') return { alter: ALTER_KOSTEN, schnitt: ALTER_SCHNITT_AB_26 };
+  if (name === 'kostenteil') return { stufen: FRANCHISE_STUFEN, satz: SELBSTBEHALT_RATE, dach: SELBSTBEHALT_MAX };
+  if (name === 'kantone') {
+    return kantonsPraemien().flatMap((k, i) => [...k.regionen].sort((a, b) => b.erwachsene - a.erwachsene)
+      .map((r) => [k.eineRegion ? k.name : `${k.name}, Region ${r.region}`, r.erwachsene, i]));
+  }
+  throw new Error(`Keine Daten für die bewegte Figur ${name}`);
+}
+
+export const BEWEGT = {
+  dorf: { art: 'hl', titel: 'Ein Dorf mit 100 Menschen', regler: 'Höhen strecken', ruhe: 'Zeigen Sie auf ein Haus' },
+  alter: { art: 'hl', titel: 'Kosten nach Alter', regler: 'Höhen strecken', ruhe: 'Zeigen Sie auf eine Säule' },
+  kostenteil: { art: 'hl', titel: 'Der eigene Anteil', regler: 'Franchise wählen', ruhe: 'Zeigen Sie auf einen Pfosten' },
+  kantone: { art: 'hl', titel: `Prämien ${PRAEMIENJAHR} je Region`, regler: 'Höhen strecken', ruhe: 'Zeigen Sie auf einen Pfosten' },
+  praemie: { art: 'iso', titel: 'Die Prämie als Messaufbau', ruhe: '' },
+};
+
+// Die Skripte einer bewegten Seite, in der Reihenfolge, in der sie laufen.
+export function bewegtSkripte(name) {
+  if (!BEWEGT[name]) throw new Error(`Unbekannte bewegte Figur ${name}`);
+  // Fremdcode (MIT) liegt in bewegt/fremd/; der Kopf nennt den mitgelieferten Lizenztext.
+  if (BEWEGT[name].art === 'iso') return ['/*! Anatomy-Kit, MIT, Lizenz: /licenses/anatomy-LICENSE.txt */\n' + lies('fremd/anatomy-praemie.js')];
+  const figur = lies(`${name}.js`);
+  if (figur.split('/*DATEN*/').length !== 2) throw new Error(`${name}.js: genau eine Marke DATEN erwartet`);
+  return ['/*! Hairline, MIT, Lizenz: /licenses/hairline-LICENSE.txt */\n' + lies('fremd/hairline-kernel.js'), lies('buehne.js'), figur.replace('/*DATEN*/null', JSON.stringify(datenFuer(name)))];
+}
+
+// Das Standbild der Prämien-Maschine, als Bühne der bewegten Fassung: mit den
+// data-part-Gruppen, die das Skript bewegt.
+export function praemieBuehneSvg() {
+  return standbildSvg('krankenkasse-praemie.svg', 'bewegt-praemie', 'Die Prämie als Messaufbau', 'Ein Stapel aus Kostenblöcken auf einer Grundplatte, daneben ein Höhenmessgerät auf einem Sockel. Der Sockel ist der eigene Anteil, der Taster oben auf dem Stapel zeigt die mittlere Monatsprämie des gewählten Jahres.')
+    .replace('<svg ', '<svg class="iso-svg" ');
+}

@@ -25,5 +25,13 @@ in die Datei hier schreiben, dann `node scripts/build-seiten.mjs`. Die Zahlen, d
 Leser sehen, stehen ohnehin in den Tabellen und kommen aus `src/data` bzw. `seiten-figuren.mjs`;
 die Bilder zeigen Grössenverhältnisse.
 
-**Lizenz:** Die Kits sind MIT-lizenziert; die CSS-Regeln für die Strichklassen in
+**Bewegte Fassungen** (seit 04.11.2026): `bewegt/` enthält die Figuren-Skripte mit der Marke DATEN
+(die Zahlen setzt der Bau ein), die eigene Bühne `buehne.js` und unter `bewegt/fremd/` den
+unveränderten Hairline-Kernel und das Anatomy-Skript der Prämien-Maschine. Daraus baut
+`scripts/build-seiten.mjs` je Figur eine Seite unter `/krankenkasse/bewegt/<name>/`, deren CSP genau
+diese Skripte per SHA-256 erlaubt.
+
+**Lizenz:** Hairline (Lucas Marques) und das Anatomy-Kit sind MIT-lizenziert; die Texte liegen unter
+`public/licenses/hairline-LICENSE.txt` und `anatomy-LICENSE.txt` und sind in
+`docs/legal/third-party-licenses.md` eingetragen. Die CSS-Regeln für die Strichklassen in
 `scripts/build-seiten.mjs` sind daran angelehnt.

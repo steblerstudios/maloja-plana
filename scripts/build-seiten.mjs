@@ -27,7 +27,8 @@ import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
 import { HINTERGRUND } from './seiten/krankenkasse.mjs';
-import { zahlen, einsetzen, BLOECKE } from './seiten-figuren.mjs';
+import { zahlen, einsetzen, BLOECKE, BEWEGT, bewegtSkripte, praemieBuehneSvg } from './seiten-figuren.mjs';
+import { createHash } from 'node:crypto';
 
 // Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
 // Quellen, Querverweisen), SONDERSEITEN die Rechtliches-Seite — sie hat nichts
@@ -260,7 +261,9 @@ ${fuss(sprache, `${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}`)
 }
 
 // ─── Kopf und Fuss — gemeinsam für Erklär- und Hintergrundseiten ─────────────
-function kopf({ seite, sprache, seitenUrl, ld, quelle, hreflang, robots, robotsNotiz, extraStil = '' }) {
+const CSP = "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'";
+
+function kopf({ seite, sprache, seitenUrl, ld, quelle, hreflang, robots, robotsNotiz, extraStil = '', csp = CSP }) {
   const R = RAHMEN[sprache.code];
   const index = robots ?? (sprache.freigegeben ? 'index, follow' : 'noindex, follow');
   const notiz = robotsNotiz ?? (sprache.freigegeben
@@ -274,7 +277,7 @@ function kopf({ seite, sprache, seitenUrl, ld, quelle, hreflang, robots, robotsN
   <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
        Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
        script-src. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="${csp}">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
        Quelle: ${quelle}
        Sprachen + Freigabe: scripts/seiten-sprachen.mjs
@@ -402,6 +405,11 @@ const stilHintergrund = `
     .abb figcaption{ font-size:14px; color:var(--leise); margin-top:8px }
     .abb figcaption strong{ color:var(--text); font-weight:600 }
     .abb details{ margin-top:10px; font-size:15px } .abb summary{ cursor:pointer; color:var(--heidel-text) }
+    .abb{ container-type:inline-size }
+    details.bewegt summary{ display:inline-block; padding:6px 0 }
+    details.bewegt iframe{ display:block; width:100%; border:0; margin-top:8px;
+      height:calc(100cqi * 0.8 + 120px) }
+    details.bewegt.iso iframe{ height:calc(100cqi * 0.78 + 120px) }
 
     /* Strichfiguren (Hairline): eine Linie, Flächen in der Kartenfarbe, das
        hervorgehobene Teil in Heidelbeere. Regeln nach dem Hairline-Kernel (MIT). */
@@ -564,6 +572,9 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
     extraStil: stilHintergrund,
+    // Kein Skript auf dieser Seite. frame-src 'self' nur für die bewegten
+    // Fassungen, die erst beim Aufklappen laden (eigene Seiten, eigene CSP).
+    csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';"),
   })}
 
     <main>
@@ -607,6 +618,72 @@ ${weiter}
     </main>
 
 ${fuss(sprache, `${esc(R.spracheLabel)}: <span aria-current="true">${SPRACHNAME.de}</span> <span class="leise">(diese Seite gibt es bisher nur auf Deutsch)</span>`)}`;
+}
+
+// ─── Bewegte Fassungen der Figuren (seit 04.11.2026) ─────────────────────────
+// Je Figur eine kleine Seite unter /krankenkasse/bewegt/<name>/. Sie ist die
+// einzige Stelle mit Skript: ihre CSP erlaubt genau die eingebetteten Skripte,
+// jedes über seine SHA-256-Prüfsumme, nichts sonst (kein 'unsafe-inline' für
+// Skripte, keine fremde Quelle). noindex, nicht in der Sitemap.
+const sha = (t) => `'sha256-${createHash('sha256').update(t, 'utf8').digest('base64')}'`;
+const skriptSicher = (t) => t.replace(/<\/(script)/gi, '<\\/$1');
+
+const stilBewegt = `
+    body{ background:var(--bg) } main{ padding:4px 2px 8px }
+    .karte-b{ position:relative; background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:10px 12px 8px }
+    .anzeige{ margin:0; min-height:1.6em; text-align:right; font-size:14px; color:var(--text); font-variant-numeric:tabular-nums }
+    .regler{ display:flex; align-items:center; gap:12px; margin:10px 2px 0; font-size:14px; color:var(--leise) }
+    .regler input{ flex:1; accent-color:var(--heidel) }
+    .hinweis-b{ font-size:13px; color:var(--leise); margin:8px 2px 0 }
+    [data-hairline]{ --hairline-plate:#FBFBFA; --hairline-hi:#4A6A88; --hairline-edge:#8A877F; --hairline-mid:#C6C2BA; --hairline-lo:#E2DFD9; --hairline-stroke:0.9 }
+    @media (prefers-color-scheme: dark){
+      [data-hairline]{ --hairline-plate:#2A2927; --hairline-hi:#8CAAC6; --hairline-edge:#7A766F; --hairline-mid:#4D4A45; --hairline-lo:#3A3936 }
+    }
+    .iso-stage{ outline-offset:4px } .iso-stage:focus-visible{ outline:2px solid var(--text); border-radius:10px }
+    .iso-stage svg{ display:block; width:100%; height:auto }`;
+
+function bewegtSeiteBauen(name) {
+  const b = BEWEGT[name];
+  const skripte = bewegtSkripte(name);
+  const csp = CSP.replace("default-src 'none';", `default-src 'none'; script-src ${skripte.map((t) => sha(skriptSicher(t))).join(' ')};`);
+  const zurueck = `<a href="/krankenkasse/#abb-${name}" target="_top">Warum die Krankenkasse so viel kostet</a>`;
+  const buehne = b.art === 'iso' ? `
+    <div class="karte-b iso">
+      <div class="iso-stage" tabindex="0" role="slider" aria-label="Prämienjahr; die Pfeiltasten wechseln das Jahr" aria-valuemin="2025" aria-valuemax="2027" aria-valuenow="2027">${praemieBuehneSvg()}</div>
+      <p class="anzeige" data-readout aria-live="polite"></p>
+    </div>
+    <p class="hinweis-b">Von links nach rechts über das Bild fahren wählt das Jahr 2025 bis 2027, auf einen Block zeigen nennt ihn. Mit der Tastatur: ins Bild springen, dann Pfeiltasten.</p>` : `
+    <div class="karte-b">
+      <div id="stage"></div>
+      <p class="anzeige" id="anzeige" aria-live="polite">${esc(b.ruhe)}</p>
+    </div>
+    <div class="regler"><label for="regler">${esc(b.regler)}</label><input id="regler" type="range" min="0" max="1" step="0.01" value="0.5"></div>
+    <p class="hinweis-b">Mit Maus oder Finger auf die Figur zeigen. Der Regler ${name === 'kostenteil' ? 'stellt die Franchise ein' : 'streckt nur die Höhen, die Verhältnisse bleiben'}.</p>`;
+  return `<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Skript nur hier, und nur genau diese ${skripte.length}: script-src mit Prüfsummen. -->
+  <meta http-equiv="Content-Security-Policy" content="${csp}">
+  <!-- ERZEUGT — nicht von Hand bearbeiten. Quelle: scripts/seiten/figuren/bewegt/ · Generator: scripts/build-seiten.mjs
+       Engines: Hairline und Anatomy-Kit, beide MIT, Texte unter /licenses/. -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
+  <meta name="author" content="Stebler Studios">
+  <title>Bewegte Fassung: ${esc(b.titel)} — Maloja Plana</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>${stil}${stilHintergrund}${stilBewegt}
+  </style>
+</head>
+<body>
+  <main>${buehne}
+    <p class="hinweis-b">Teil der Seite ${zurueck} · Maloja Plana</p>
+  </main>
+${skripte.map((t) => `  <script>${skriptSicher(t)}</script>`).join('\n')}
+</body>
+</html>
+`;
 }
 
 // Die Sitemap kommt aus derselben Quelle wie die Seiten. Von Hand gepflegt ist
@@ -681,6 +758,14 @@ for (const sprache of SPRACHEN) {
       name,
     });
   }
+}
+
+for (const name of Object.keys(BEWEGT)) {
+  seitenAusgaben.push({
+    ziel: resolve(WURZEL, 'public', 'krankenkasse', 'bewegt', name, 'index.html'),
+    inhalt: bewegtSeiteBauen(name),
+    name: `krankenkasse/bewegt/${name}/index.html`,
+  });
 }
 
 for (const h of HINTERGRUND) {

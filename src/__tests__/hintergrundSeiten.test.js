@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
-import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR } from '../../scripts/seiten-figuren.mjs';
+import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT } from '../../scripts/seiten-figuren.mjs';
+import { createHash } from 'node:crypto';
 import { BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { PRAEMIEN, GEMEINDEN } from '../data/praemienRegionenDaten.js';
 import { NATIONAL_AVG_PREMIUM_JE_JAHR } from '../data/praemienRegionen.js';
@@ -230,6 +231,66 @@ describe('Hintergrundseiten', () => {
     it('das Dach je Franchise kommt aus berechneFranchise', () => {
       const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "'");
       for (const f of FRANCHISE_STUFEN) expect(html).toContain(`<td class="n">${fmt(f)}</td><td class="n">${fmt(f + SELBSTBEHALT_MAX)}</td>`);
+    });
+  });
+
+  // ─── Bewegte Fassungen ───────────────────────────────────────────────────
+  // Die einzigen Seiten mit Skript. Riegel: die CSP erlaubt genau die
+  // eingebetteten Skripte über ihre Prüfsumme, nichts von aussen, kein
+  // 'unsafe-inline' für Skripte; die Hauptseite bleibt ohne Skript und lädt
+  // die Unterseiten nur in einem geschlossenen <details>.
+  describe('/krankenkasse/bewegt/', () => {
+    const haupt = lies('krankenkasse');
+    const namen = Object.keys(BEWEGT);
+    const cspVon = (h) => h.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
+
+    it('die Hauptseite rahmt nur die eigene Adresse und lädt selbst kein Skript', () => {
+      const csp = cspVon(haupt);
+      expect(csp).toContain("frame-src 'self'");
+      expect(csp).not.toContain('script-src');
+      expect(haupt).not.toMatch(/<script(?![^>]*application\/ld\+json)/);
+      for (const n of namen) {
+        expect(haupt).toMatch(new RegExp(`<details class="bewegt [a-z]+">\\s*<summary>[^<]+</summary>\\s*<iframe src="/krankenkasse/bewegt/${n}/" title="[^"]+" loading="lazy">`));
+      }
+    });
+
+    it.each(namen)('%s: Skripte nur über ihre Prüfsumme, nichts von aussen', (n) => {
+      const html = lies(`krankenkasse/bewegt/${n}`);
+      const csp = cspVon(html);
+      const skripte = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+      expect(skripte.length).toBeGreaterThan(0);
+      expect(html).not.toMatch(/<script [^>]*src=/);
+      const erlaubt = csp.match(/script-src ([^;]+);/)[1].trim().split(/\s+/);
+      expect(erlaubt.every((x) => /^'sha256-[A-Za-z0-9+/=]+'$/.test(x))).toBe(true);
+      expect(erlaubt.sort()).toEqual(skripte.map((t) => `'sha256-${createHash('sha256').update(t, 'utf8').digest('base64')}'`).sort());
+      expect(csp).toContain("default-src 'none'");
+      expect(csp).not.toMatch(/https?:|unsafe-eval/);
+      expect(html).toContain('<meta name="robots" content="noindex, follow">');
+      expect(html).toContain(`href="/krankenkasse/#abb-${n}" target="_top"`);
+      // Fremdcode nennt seinen mitgelieferten Lizenztext.
+      if (BEWEGT[n].art === 'hl') expect(skripte[0]).toContain('/licenses/hairline-LICENSE.txt');
+      else expect(skripte[0]).toContain('/licenses/anatomy-LICENSE.txt');
+    });
+
+    it('die bewegten Seiten stehen nicht in der Sitemap', () => {
+      const xml = fs.readFileSync(path.resolve(WURZEL, 'public', 'sitemap.xml'), 'utf8');
+      expect(xml).not.toContain('/bewegt/');
+    });
+
+    it('die Zahlen der bewegten Strichfiguren kommen aus src/data', () => {
+      const kantone = lies('krankenkasse/bewegt/kantone');
+      for (const [, werte] of Object.entries(PRAEMIEN[PRAEMIENJAHR])) expect(kantone).toContain(`,${werte[2]},`);
+      expect(kantone).toContain('"Zürich, Region 1"');
+      const kosten = lies('krankenkasse/bewegt/kostenteil');
+      expect(kosten).toContain(`const REGEL = ${JSON.stringify({ stufen: FRANCHISE_STUFEN, satz: 0.1, dach: SELBSTBEHALT_MAX })};`);
+      expect(lies('krankenkasse/bewegt/dorf')).not.toContain('/*DATEN*/');
+    });
+
+    it('die Prämien-Maschine zeigt für 2027 die mittlere Prämie aus praemienRegionen.js', () => {
+      const html = lies('krankenkasse/bewegt/praemie');
+      const m = html.match(/\{ year: 2027, grow: [^,]+, premium: ([\d.]+) \}/);
+      expect(m, 'Modellzeile 2027 nicht gefunden').toBeTruthy();
+      expect(Number(m[1])).toBe(NATIONAL_AVG_PREMIUM_JE_JAHR[PRAEMIENJAHR].gesamt);
     });
   });
 
