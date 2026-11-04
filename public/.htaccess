@@ -22,6 +22,18 @@ Header always set Content-Security-Policy "default-src 'self'; script-src 'self'
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
 </IfModule>
 
+# ⏸️ VORBEREITET 04.11.2026, AUF DEM SERVER NOCH NICHT GESETZT — Block «krankenkasse/bewegt».
+# Die Seite /krankenkasse/ klappt bewegte Figuren als Rahmen auf. Die CSP oben verbietet
+# jedes Einbetten (frame-ancestors 'none'). Für diese Unterseiten erlaubt der Block das
+# Einbetten nur von der eigenen Adresse; alles andere bleibt gleich wie oben.
+# Übernehmen: in die Server-.htaccess innerhalb <IfModule mod_headers.c> einfügen, dann
+#   curl -sI https://malojaplana.ch/krankenkasse/bewegt/dorf/ | grep -i content-security
+# muss «frame-ancestors 'self'» zeigen. Danach hier die Raute vor den drei Zeilen entfernen
+# und den Kopf dieses Blocks auf «gesetzt am …» ändern.
+#<If "%{REQUEST_URI} =~ m#^/krankenkasse/bewegt/#">
+#  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+#</If>
+
 # Long-term caching only for versioned assets and fonts
 <If "%{REQUEST_URI} =~ m#^/(assets|fonts)/#">
   Header set Cache-Control "public, max-age=31536000, immutable"

@@ -197,11 +197,23 @@ function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, lege
   ctx.abb += 1;
   // Die bewegte Fassung ist eine eigene Seite und lädt erst, wenn man sie öffnet.
   const name = id.replace(/^abb-/, '');
-  // Ein Link, kein eingebetteter Rahmen: der Server verbietet das Einbetten
-  // (frame-ancestors 'none'), und die Hauptseite bleibt so ganz ohne Skript.
-  const bewegt = BEWEGT[name] ? `
-          <p class="bewegt"><a href="/krankenkasse/bewegt/${name}/">Bewegte Fassung zum Ausprobieren</a>
-          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>` : '';
+  // Aufklappen (ctx.einbetten, Schalter `bewegtEinbetten` in krankenkasse.mjs):
+  // ein Rahmen in einem geschlossenen <details>, erst beim Öffnen geladen
+  // (loading="lazy"). Braucht auf dem Server frame-ancestors 'self' für
+  // /krankenkasse/bewegt/ (public/.htaccess, vorbereiteter Block). Der Link
+  // bleibt immer da — als Ausweg, falls der Rahmen leer bleibt.
+  // Ohne Schalter: nur der Link, die Hauptseite bleibt ganz ohne Rahmen.
+  const link = `<a href="/krankenkasse/bewegt/${name}/">${ctx.einbetten ? 'In eigenem Fenster öffnen' : 'Bewegte Fassung zum Ausprobieren'}</a>`;
+  const bewegt = !BEWEGT[name] ? '' : ctx.einbetten ? `
+          <details class="bewegt ${BEWEGT[name].art}">
+            <summary>Bewegte Fassung zum Ausprobieren</summary>
+            <iframe src="/krankenkasse/bewegt/${name}/" title="Bewegte Fassung zum Ausprobieren: ${BEWEGT[name].titel}" loading="lazy"></iframe>
+            <p class="bewegt">${link} <span class="leise">${BEWEGT[name].art === 'iso'
+    ? 'Über das Bild fahren wählt das Jahr, auf einen Block zeigen nennt ihn; mit der Tastatur: ins Bild springen, dann Pfeiltasten. Das Bild bewegt sich nur, wenn Sie es tun.'
+    : 'Auf die Figur zeigen, oder ins Bild springen und die Pfeiltasten nutzen.'}</span></p>
+          </details>` : `
+          <p class="bewegt">${link}
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>`;
   return `
         <figure class="abb" id="${id}">
           <div class="abb-karte">
@@ -402,6 +414,7 @@ export function bewegtGemeinsam() {
   return {
     'hairline-kernel.js': KOPF_HAIRLINE + lies('fremd/hairline-kernel.js'),
     'buehne.js': lies('buehne.js'),
+    'rahmen.js': lies('rahmen.js'),
     'anatomy-praemie.js': KOPF_ANATOMY + lies('fremd/anatomy-praemie.js'),
   };
 }
@@ -410,10 +423,10 @@ export function bewegtGemeinsam() {
 // Pfade unter /krankenkasse/bewegt/ und, für die Strichfiguren, die Figur mit Daten.
 export function bewegtSkripte(name) {
   if (!BEWEGT[name]) throw new Error(`Unbekannte bewegte Figur ${name}`);
-  if (BEWEGT[name].art === 'iso') return { pfade: ['anatomy-praemie.js'], figur: null };
+  if (BEWEGT[name].art === 'iso') return { pfade: ['rahmen.js', 'anatomy-praemie.js'], figur: null };
   const figur = lies(`${name}.js`);
   if (figur.split('/*DATEN*/').length !== 2) throw new Error(`${name}.js: genau eine Marke DATEN erwartet`);
-  return { pfade: ['hairline-kernel.js', 'buehne.js', `${name}/figur.js`], figur: figur.replace('/*DATEN*/null', () => datenJson(datenFuer(name))) };
+  return { pfade: ['rahmen.js', 'hairline-kernel.js', 'buehne.js', `${name}/figur.js`], figur: figur.replace('/*DATEN*/null', () => datenJson(datenFuer(name))) };
 }
 
 // Das Standbild der Prämien-Maschine, als Bühne der bewegten Fassung: mit den

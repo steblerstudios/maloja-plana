@@ -35,6 +35,12 @@ export const KRANKENKASSE = {
   brotkrume: 'Krankenkasse erklärt',
   stand: 'Prämien {{jahr}} (BAG, September und Oktober 2026), Kosten 2024 und 2025 (BAG). Fach- und Rechtsprüfung am 4. November 2026, Befunde eingearbeitet.',
   pruefenBis: '2027-10-15',
+  // Bewegte Fassungen in der Seite aufklappen (Entscheid Stebler Studios
+  // 04.11.2026: «Ja, aufklappen»). Funktioniert live erst, wenn auf dem Server
+  // für /krankenkasse/bewegt/ frame-ancestors 'self' gilt — vorbereiteter Block
+  // in public/.htaccess; scripts/check-deploy.sh prüft das nach dem Deploy.
+  // false = nur der Link, ohne Rahmen.
+  bewegtEinbetten: true,
   // Eigene Hinweise statt der Rahmentexte der Erklärseiten: jene sagen «nennt
   // bewusst keine Beträge», das wäre hier falsch.
   hinweis:

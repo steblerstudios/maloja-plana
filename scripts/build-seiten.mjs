@@ -404,6 +404,11 @@ const stilHintergrund = `
     .abb figcaption{ font-size:14px; color:var(--leise); margin-top:8px }
     .abb figcaption strong{ color:var(--text); font-weight:600 }
     .abb details{ margin-top:10px; font-size:15px } .abb summary{ cursor:pointer; color:var(--heidel-text) }
+    .abb{ container-type:inline-size }
+    details.bewegt{ margin-top:6px }
+    details.bewegt summary{ padding:12px 0; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.bewegt iframe{ display:block; width:100%; border:0; border-radius:16px; height:calc(100cqi * 0.8 + 96px) }
+    details.bewegt.iso iframe{ height:calc(100cqi * 0.78 + 44px) }
     p.bewegt{ margin:10px 0 0; font-size:15px }
     p.bewegt a{ display:inline-block; padding:10px 0; color:var(--heidel-text); font-weight:600; text-underline-offset:3px }
     p.bewegt .leise{ margin-left:8px; font-size:13px }
@@ -549,7 +554,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
       </nav>` : '';
 
   // Abbildungen werden über die ganze Seite durchgezählt.
-  const ctx = { abb: 0 };
+  const ctx = { abb: 0, einbetten: !!seite.bewegtEinbetten };
   const roh = seite.abschnitte.map((a) => {
     const m = a.titel.match(/^(\d+)\.\s*(.*)$/);
     const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
@@ -569,6 +574,9 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
     extraStil: stilHintergrund,
+    // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
+    // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
+    ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),
   })}
 
     <main>
@@ -634,7 +642,9 @@ const stilBewegt = `
       [data-hairline]{ --hairline-plate:#2A2927; --hairline-hi:#8CAAC6; --hairline-edge:#7A766F; --hairline-mid:#4D4A45; --hairline-lo:#3A3936 }
     }
     .iso-stage{ outline-offset:4px } .iso-stage:focus-visible{ outline:2px solid var(--text); border-radius:10px }
-    .iso-stage svg{ display:block; width:100%; height:auto }`;
+    .iso-stage svg{ display:block; width:100%; height:auto }
+    /* Im Rahmen der Hauptseite (rahmen.js): Hinweise stehen dort, hier nur Bild und Regler. */
+    .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }`;
 
 function bewegtSeiteBauen(name) {
   const b = BEWEGT[name];
@@ -646,13 +656,13 @@ function bewegtSeiteBauen(name) {
       <div class="iso-stage" tabindex="0" role="slider" aria-label="Prämienjahr; die Pfeiltasten wechseln das Jahr" aria-valuemin="2025" aria-valuemax="2027" aria-valuenow="2027">${praemieBuehneSvg()}</div>
       <p class="anzeige" data-readout aria-live="polite"></p>
     </div>
-    <p class="hinweis-b">Von links nach rechts über das Bild fahren wählt das Jahr 2025 bis 2027, auf einen Block zeigen nennt ihn. Mit der Tastatur: ins Bild springen, dann Pfeiltasten für das Jahr. Das Bild bewegt sich nur, wenn Sie es tun.</p>` : `
+    <p class="hinweis-b nur-allein">Von links nach rechts über das Bild fahren wählt das Jahr 2025 bis 2027, auf einen Block zeigen nennt ihn. Mit der Tastatur: ins Bild springen, dann Pfeiltasten für das Jahr. Das Bild bewegt sich nur, wenn Sie es tun.</p>` : `
     <div class="karte-b">
       <div id="stage" aria-label="${esc(b.titel)}" aria-describedby="hinweis-${name}"></div>
       <p class="anzeige"><span id="anzeige" aria-live="polite"></span><span class="ruhe" aria-hidden="true">${esc(b.ruhe)}</span></p>
     </div>
     <div class="regler"><label for="regler">${esc(b.regler)}</label><input id="regler" type="range" min="0" max="1" step="0.01" value="0.5"></div>
-    <p class="hinweis-b" id="hinweis-${name}">Mit Maus oder Finger auf die Figur zeigen, oder mit der Tastatur ins Bild springen und die Pfeiltasten nutzen. Der Regler ${name === 'kostenteil' ? 'stellt die Franchise ein' : 'streckt nur die Höhen, die Verhältnisse bleiben'}.</p>`;
+    <p class="hinweis-b nur-allein" id="hinweis-${name}">Mit Maus oder Finger auf die Figur zeigen, oder mit der Tastatur ins Bild springen und die Pfeiltasten nutzen. Der Regler ${name === 'kostenteil' ? 'stellt die Franchise ein' : 'streckt nur die Höhen, die Verhältnisse bleiben'}.</p>`;
   return `<!DOCTYPE html>
 <html lang="de">
 <head>
@@ -672,7 +682,7 @@ function bewegtSeiteBauen(name) {
 </head>
 <body>
   <main>${buehne}
-    <p class="hinweis-b">Teil der Seite ${zurueck} · Maloja Plana</p>
+    <p class="hinweis-b nur-allein">Teil der Seite ${zurueck} · Maloja Plana</p>
   </main>
 ${pfade.map((pf) => `  <script src="/krankenkasse/bewegt/${pf}"></script>`).join('\n')}
 </body>

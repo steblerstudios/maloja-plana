@@ -121,6 +121,11 @@
     .abb figcaption{ font-size:14px; color:var(--leise); margin-top:8px }
     .abb figcaption strong{ color:var(--text); font-weight:600 }
     .abb details{ margin-top:10px; font-size:15px } .abb summary{ cursor:pointer; color:var(--heidel-text) }
+    .abb{ container-type:inline-size }
+    details.bewegt{ margin-top:6px }
+    details.bewegt summary{ padding:12px 0; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.bewegt iframe{ display:block; width:100%; border:0; border-radius:16px; height:calc(100cqi * 0.8 + 96px) }
+    details.bewegt.iso iframe{ height:calc(100cqi * 0.78 + 44px) }
     p.bewegt{ margin:10px 0 0; font-size:15px }
     p.bewegt a{ display:inline-block; padding:10px 0; color:var(--heidel-text); font-weight:600; text-underline-offset:3px }
     p.bewegt .leise{ margin-left:8px; font-size:13px }
@@ -202,6 +207,8 @@
     }
     .iso-stage{ outline-offset:4px } .iso-stage:focus-visible{ outline:2px solid var(--text); border-radius:10px }
     .iso-stage svg{ display:block; width:100%; height:auto }
+    /* Im Rahmen der Hauptseite (rahmen.js): Hinweise stehen dort, hier nur Bild und Regler. */
+    .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }
   </style>
 </head>
 <body>
@@ -211,9 +218,10 @@
       <p class="anzeige"><span id="anzeige" aria-live="polite"></span><span class="ruhe" aria-hidden="true">Zeigen Sie auf einen Pfosten</span></p>
     </div>
     <div class="regler"><label for="regler">Höhen strecken</label><input id="regler" type="range" min="0" max="1" step="0.01" value="0.5"></div>
-    <p class="hinweis-b" id="hinweis-kantone">Mit Maus oder Finger auf die Figur zeigen, oder mit der Tastatur ins Bild springen und die Pfeiltasten nutzen. Der Regler streckt nur die Höhen, die Verhältnisse bleiben.</p>
-    <p class="hinweis-b">Teil der Seite <a href="/krankenkasse/#abb-kantone">Warum die Krankenkasse so viel kostet</a> · Maloja Plana</p>
+    <p class="hinweis-b nur-allein" id="hinweis-kantone">Mit Maus oder Finger auf die Figur zeigen, oder mit der Tastatur ins Bild springen und die Pfeiltasten nutzen. Der Regler streckt nur die Höhen, die Verhältnisse bleiben.</p>
+    <p class="hinweis-b nur-allein">Teil der Seite <a href="/krankenkasse/#abb-kantone">Warum die Krankenkasse so viel kostet</a> · Maloja Plana</p>
   </main>
+  <script src="/krankenkasse/bewegt/rahmen.js"></script>
   <script src="/krankenkasse/bewegt/hairline-kernel.js"></script>
   <script src="/krankenkasse/bewegt/buehne.js"></script>
   <script src="/krankenkasse/bewegt/kantone/figur.js"></script>

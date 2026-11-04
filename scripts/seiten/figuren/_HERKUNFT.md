@@ -31,8 +31,11 @@ unveränderten Hairline-Kernel und das Anatomy-Skript der Prämien-Maschine (ein
 Autotour, WCAG 2.2.2). Daraus baut `scripts/build-seiten.mjs` je Figur eine Seite unter
 `/krankenkasse/bewegt/<name>/`; die Skripte liegen als Dateien daneben und laufen mit
 `script-src 'self'` — so verlangt es der Server-Header (`public/.htaccess`, Abschrift). Eingebettete
-Skripte und das Einbetten in Rahmen (`frame-ancestors 'none'`) würden live blockiert, darum verlinkt
-die Hauptseite die bewegten Fassungen nur. Die Strichfiguren sind per Tastatur bedienbar (`buehne.js`
+Skripte würden live blockiert. Die Hauptseite klappt die bewegten Fassungen als Rahmen auf
+(`bewegtEinbetten` in `krankenkasse.mjs`, Entscheid 04.11.2026); dafür muss auf dem Server für
+`/krankenkasse/bewegt/` `frame-ancestors 'self'` gelten — vorbereiteter Block in `public/.htaccess`,
+`scripts/check-deploy.sh` prüft es nach dem Deploy. Der Link darunter bleibt als Ausweg. Im Rahmen
+blendet `rahmen.js` die Hinweise der Unterseite aus. Die Strichfiguren sind per Tastatur bedienbar (`buehne.js`
 mit `anzahl`/`waehle` der Figur).
 
 **Lizenz:** Hairline (Lucas Marques) und das Anatomy-Kit sind MIT-lizenziert; die Texte liegen unter

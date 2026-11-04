@@ -244,11 +244,30 @@ describe('Hintergrundseiten', () => {
     const cspVon = (h) => h.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
     const datei = (pf) => fs.readFileSync(path.resolve(WURZEL, 'public', 'krankenkasse', 'bewegt', ...pf.split('/')), 'utf8');
 
-    it('die Hauptseite verlinkt jede bewegte Fassung, ohne Skript und ohne Rahmen', () => {
-      expect(cspVon(haupt)).not.toMatch(/script-src|frame-src/);
+    it('die Hauptseite klappt jede bewegte Fassung auf oder verlinkt sie — selbst ohne Skript', () => {
+      expect(cspVon(haupt)).not.toMatch(/script-src/);
       expect(haupt).not.toMatch(/<script(?![^>]*application\/ld\+json)/);
-      expect(haupt).not.toContain('<iframe');
-      for (const n of namen) expect(haupt).toContain(`<p class="bewegt"><a href="/krankenkasse/bewegt/${n}/">`);
+      for (const n of namen) {
+        // Der Link ist immer da: als Ausweg, falls der Rahmen leer bleibt.
+        expect(haupt).toContain(`<a href="/krankenkasse/bewegt/${n}/">`);
+        if (KRANKENKASSE.bewegtEinbetten) {
+          expect(haupt).toMatch(new RegExp(`<details class="bewegt [a-z]+">\\s*<summary>[^<]+</summary>\\s*<iframe src="/krankenkasse/bewegt/${n}/" title="[^"]+" loading="lazy">`));
+        }
+      }
+      if (KRANKENKASSE.bewegtEinbetten) expect(cspVon(haupt)).toContain("frame-src 'self'");
+      else { expect(haupt).not.toContain('<iframe'); expect(cspVon(haupt)).not.toContain('frame-src'); }
+    });
+
+    it('wer aufklappt, hat den Server-Block vorbereitet und die Deploy-Prüfung scharf', () => {
+      // Der Server-Header verbietet Rahmen (frame-ancestors 'none'). Ohne den Block
+      // für /krankenkasse/bewegt/ bleiben die Rahmen live leer; check-deploy.sh merkt es.
+      if (!KRANKENKASSE.bewegtEinbetten) return;
+      const ht = fs.readFileSync(path.resolve(WURZEL, 'public', '.htaccess'), 'utf8');
+      expect(ht).toMatch(/<If "%\{REQUEST_URI\} =~ m#\^\/krankenkasse\/bewegt\/#">/);
+      expect(ht).toMatch(/frame-ancestors 'self'/);
+      const check = fs.readFileSync(path.resolve(WURZEL, 'scripts', 'check-deploy.sh'), 'utf8');
+      expect(check).toContain("frame-ancestors 'self'");
+      expect(check).toContain('/krankenkasse/bewegt/dorf/');
     });
 
     it.each(namen)('%s: Skripte nur als Dateien von der eigenen Adresse', (n) => {
@@ -260,6 +279,7 @@ describe('Hintergrundseiten', () => {
       expect(html).not.toMatch(/<script>|<script(?![^>]*\ssrc=)[^>]*>/);
       const quellen = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map((m) => m[1]);
       expect(quellen.length).toBeGreaterThan(0);
+      expect(quellen[0]).toBe('/krankenkasse/bewegt/rahmen.js');
       for (const q of quellen) {
         expect(q).toMatch(/^\/krankenkasse\/bewegt\/[a-z/-]+\.js$/);
         expect(() => datei(q.replace('/krankenkasse/bewegt/', ''))).not.toThrow();
