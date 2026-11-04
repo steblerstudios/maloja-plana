@@ -16,6 +16,7 @@
 import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
 import { giltAlsVerheiratet } from './zivilstand.js';
 import { fruehesterVorbezugMonate } from '../data/lohnAbzuege.js';
+import { alterUndRentenalter } from './nettoAusProfil.js';
 
 // Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
 export function alterInMonaten(geburtsdatum, heute) {
@@ -71,6 +72,13 @@ export const vermoegenSumme = (felder) => felder.reduce((s, v) => s + Math.max(0
 export function bvgHerausloesen(finanzen, versicherungen, basis, heute = new Date()) {
   return (saeule3aZaehlt(basis, heute) || finanzen?.ivBezug === 'ganz') && Number(versicherungen?.bvgBalance) > 0;
 }
+
+// Rente bezogen, ihre Höhe aber nicht erfasst: Das Profil hat für AHV- und IV-Rente kein Feld (nur `ivBezug`). Eine
+// Regel für Sozialhilfe, Rechner und IPV: kein Betrag aus einem Einkommen ohne die Rente (Fachprüfung 03.11.2026).
+// Ab dem Referenzalter fliesst fast immer eine AHV-Rente, auch bei Erwerbstätigen (Fachprüfung 8ac049b5); wer sie
+// aufschiebt, bekommt ebenfalls keinen Betrag, das ist die vorsichtige Seite.
+export const renteOhneBetrag = (finanzen, basis, heute = new Date()) => ['ganz', 'teil'].includes(finanzen?.ivBezug)
+  || finanzen?.employmentType === 'retired' || alterUndRentenalter(basis, heute).rentenalter;
 
 // Die Kinder im Haushalt, ohne Haushaltsangabe aus dem alten Feld `dependents`. Ohne Alter gilt ein Kind als
 // minderjährig. Zivilstand leer und zwei Erwachsene: gerechnet als Paar, wie bis 02.11.2026 auf der Seite. Getrennt

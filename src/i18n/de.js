@@ -3183,7 +3183,7 @@ export default {
     childrenNote: { sie: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Klären Sie dies mit dem Sozialdienst.', du: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.' },
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
     einkommenNichtErfasst: 'Einkommen noch nicht erfasst, Betrag offen',
-    renteNichtErfasst: "Rente noch nicht erfasst, Betrag offen",
+    renteNichtErfasst: "Rente nicht in dieser Rechnung, Betrag offen",
     assetLimitNote: 'Vermögen über einem Freibetrag wird in der Regel angerechnet ({basis}: {freibetrag} für diesen Haushalt). Das Vermögen in dieser Rechnung liegt rund {ueberschuss} darüber. Ist es nicht sofort verfügbar, sind eine angemessene Frist zur Verwertung und in der Zwischenzeit bei Bedarf Unterstützung als Vorschuss vorgesehen; diese Beträge sind in der Regel zurückzuzahlen. Orientierung, keine verbindliche Auskunft.',
     assetLimitBasisCanton: 'Kanton {name}, Quelle gelesen am {datum}',
     assetLimitBasisSkos: 'SKOS-RL D.3.1, Version vom 1.1.2026',
@@ -4401,6 +4401,7 @@ export default {
     incomeAboveLimit: 'Massgebendes Einkommen voraussichtlich über der Grenze (CHF {value} pro Jahr)',
     eligible: 'Anspruch auf Prämienverbilligung: CHF {value}/Monat',
     orientierungOffen: 'Ob ein Anspruch besteht und wie hoch er ist, legt der Kanton fest. Gerade bei knappem Budget lohnt es sich, das bei der kantonalen Stelle zu prüfen.',
+    renteNichtEnthalten: 'Die Rente ist in dieser Rechnung nicht enthalten, das Profil hat dafür kein Feld. Darum nennt die App keinen Betrag. Ob ein Anspruch besteht, legt der Kanton fest; gerade bei knappem Budget lohnt es sich, das bei der kantonalen Stelle zu prüfen.',
     statusOffen: 'Beim Kanton prüfen',
     zurStelle: 'Zur kantonalen Stelle für die Prämienverbilligung',
     // K31/ZH: Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte gehören zu jeder

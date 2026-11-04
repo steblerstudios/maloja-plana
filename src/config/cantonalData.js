@@ -9,6 +9,7 @@ import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSu
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
+import { renteOhneBetrag } from '../utils/unterstuetzungseinheit.js';
 import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { grundbedarf as skosGrundbedarf, gblStand, grundbedarfNachWohnform } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil, alterUndRentenalter } from '../utils/nettoAusProfil.js';
@@ -307,6 +308,8 @@ export function getGrundbedarf(householdSize) {
 //   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
 const plus = (v) => Math.max(0, Number(v) || 0);
 
+export { renteOhneBetrag };
+
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
@@ -367,7 +370,7 @@ export function calculateSozialhilfe(data) {
   const feldLeer = (v) => v == null || String(v).trim() === '';
   // Eine Rente zählt zu den Einnahmen (SKOS-RL D.1 Abs. 1, Version vom 1.1.2021), das Profil kennt aber ihre Höhe nicht:
   // Mit IV-Bezug oder im Ruhestand nennen Karte und Dossier darum keinen Betrag (Fachprüfung 03.11.2026).
-  const renteFehlt = ['ganz', 'teil'].includes(data.finanzen?.ivBezug) || data.finanzen?.employmentType === 'retired';
+  const renteFehlt = renteOhneBetrag(data.finanzen, data.basis);
   const einkommenFehlt = renteFehlt || (feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
     && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0));
 
@@ -501,6 +504,9 @@ function ipvRechnen(data) {
     eligible: false, belegt: false, amount: null, noteKey: 'ipv.orientierungOffen',
     anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton, ...(offen && { offen }),
   });
+  // Rente nicht erfasst: Das Einkommen wäre zu tief, die Verbilligung zu hoch (Kanton AG, Rentnerin mit 500 erfasst:
+  // volle CHF 450/Mt.). Wie bei der Sozialhilfe kein Betrag, der Grund als Hinweis (Predeploy 1e6819ab).
+  if (renteOhneBetrag(data.finanzen, data.basis)) return { ...orientierung(), noteKey: 'ipv.renteNichtEnthalten', renteFehlt: true };
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
   // K31: ein Kanton mit Modul im Register IPV_MODULE rechnet nach seinem eigenen amtlichen Modell.
   // Solange PLZ-Daten (wo gebraucht) und Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie
@@ -555,9 +561,10 @@ export function checkELEligibility(data) {
   // Ein Bezug heisst darum immer «prüfen lassen», nie «Möglicher Anspruch» (F8-Prüfer, 03.11.2026).
   const rentenBetrag = ahvRente > 0 || ivRente > 0;
   // ELG Art. 4 Abs. 1 Bst. c unterscheidet nicht zwischen ganzer und Teilrente. Bst. a setzt den Bezug einer
-  // Altersrente voraus; der Ruhestand im Rentenalter steht hier dafür (Wortlaut am 03.11.2026 nicht neu gelesen).
+  // Altersrente voraus; das erreichte Rentenalter steht hier dafür, wie bei Sozialhilfe und IPV (renteOhneBetrag), auch
+  // bei Erwerbstätigen (Nachprüfung 92d73e70; Wortlaut am 03.11.2026 nicht neu gelesen).
   const elPruefen = rentenBetrag || ['ganz', 'teil'].includes(data.finanzen?.ivBezug)
-    || (data.finanzen?.employmentType === 'retired' && alterUndRentenalter(data.basis).rentenalter);
+    || alterUndRentenalter(data.basis).rentenalter;
   const isAHVIV = elPruefen;
 
   // Kein `eligible` mehr: ohne Rechnung gibt es keinen «Möglichen Anspruch», an den eine Anzeige anknüpfen könnte.

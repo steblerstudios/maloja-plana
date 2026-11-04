@@ -931,7 +931,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       rows: iRows,
       status,
       // Ein Nein steht auf dem Blatt ans Amt nie ohne Grund (Rechtsprüfung 02.11.2026).
-      notes: !ipv.eligible && ipv.belegt !== false && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
+      // Rente nicht enthalten: der Grund steht auf dem Blatt, sonst läse das Amt nur «Beim Kanton prüfen» (Fachprüfung 8ac049b5).
+      notes: !ipv.eligible && (ipv.belegt !== false || ipv.renteFehlt) && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
       statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: ipv.eligible,
     });
@@ -1134,7 +1135,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
   if (ipv) {
     // E9: ohne amtlich belegten Kanton gehen keine Beträge in die Datei.
     dossier.calculations.ipv = ipv.belegt === false
-      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' }
+      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen', ...(ipv.renteFehlt ? { grund: 'rente-nicht-enthalten' } : {}) }
       : {
           eligible: !!ipv.eligible,
           // Ein Nein nie ohne Grund, auch nicht in der Datei (Rechtsprüfung 02.11.2026).
