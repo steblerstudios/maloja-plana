@@ -7,6 +7,8 @@ import it_ from '../i18n/it.js';
 import en from '../i18n/en.js';
 import rm from '../i18n/rm.js';
 import { Ergaenzungsleistungen } from '../Ergaenzungsleistungen.jsx';
+import { createT } from '../i18n/index.js';
+import { LIGHT_PALETTE } from '../config/constants.js';
 
 // Wissensschicht EL-Nichtbezug (04.11.2026): Der Satz über das Verhalten von Berechtigten ist
 // eine empirische Aussage. Ein Gesetzesartikel belegt sie nicht — sie hält nur, solange beide
@@ -28,9 +30,8 @@ describe('EL-Nichtbezug ist belegt', () => {
   }
 
   it('der Hinweis steht im Ablauf', () => {
-    const t = (k) => k.split('.').reduce((o, p) => (o && typeof o === 'object' ? o[p] : undefined), de)
-      ?.sie ?? k.split('.').reduce((o, p) => (o && typeof o === 'object' ? o[p] : undefined), de) ?? k;
-    const html = renderToStaticMarkup(React.createElement(Ergaenzungsleistungen, { palette: {}, t, onNavigate: () => {} }));
-    expect(html).toContain('Nicht alle, denen EL zustehen');
+    const t = createT({ de }, 'de', 'sie');
+    const html = renderToStaticMarkup(React.createElement(Ergaenzungsleistungen, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+    expect(html).toContain(de.ergaenzungsleistungen.step1Nichtbezug.slice(0, 40));
   });
 });

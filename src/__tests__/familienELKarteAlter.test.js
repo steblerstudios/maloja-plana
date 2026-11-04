@@ -16,7 +16,7 @@ beforeAll(() => {
   alt = globalThis.localStorage;
   globalThis.localStorage = { getItem: (k) => (k === 'or5_lebenszustaende' ? '["alleinerziehend"]' : null), setItem: () => {}, removeItem: () => {} };
 });
-afterAll(() => { globalThis.localStorage = alt; });
+afterAll(() => { if (alt === undefined) delete globalThis.localStorage; else globalThis.localStorage = alt; });
 
 const karte = (children, plz = '4500') => renderToStaticMarkup(React.createElement(LebenslagenAuswahl, {
   palette: LIGHT_PALETTE, t, onNavigate: () => {},

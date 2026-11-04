@@ -71,10 +71,12 @@ export const FAMILIEN_EL_KINDER_UNTER = { TI: 15, VD: 16, SO: 6, GE: 25 };
 // eingetragenen Zahl über 0. «0» ohne Geburtsdatum ist der Vorgabewert eines neu angelegten
 // Kindes (ChapterView) und heisst darum «unbekannt», nicht «Säugling».
 function bekanntesAlter(kind, heute) {
-  const bd = typeof kind?.birthDate === 'string' && /^\d{4}-\d{2}-\d{2}/.test(kind.birthDate) ? new Date(kind.birthDate.slice(0, 10)) : null;
-  if (bd && !Number.isNaN(bd.getTime())) {
-    let alter = heute.getFullYear() - bd.getFullYear();
-    if (heute.getMonth() < bd.getMonth() || (heute.getMonth() === bd.getMonth() && heute.getDate() < bd.getDate())) alter--;
+  // Datum selbst zerlegen: new Date('JJJJ-MM-TT') liest UTC, die Vergleiche unten rechnen lokal.
+  const m = typeof kind?.birthDate === 'string' ? /^(\d{4})-(\d{2})-(\d{2})/.exec(kind.birthDate) : null;
+  if (m) {
+    const [jahr, monat, tag] = [Number(m[1]), Number(m[2]) - 1, Number(m[3])];
+    let alter = heute.getFullYear() - jahr;
+    if (heute.getMonth() < monat || (heute.getMonth() === monat && heute.getDate() < tag)) alter--;
     return Math.max(0, alter);
   }
   const zahl = Number(kind?.age);
