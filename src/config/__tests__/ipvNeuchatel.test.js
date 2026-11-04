@@ -201,7 +201,8 @@ describe('K31 calculateIPV für NE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ finanzen: { employmentType: 'selfEmployed' } }))).toMatchObject({ belegt: false, amount: null, offen: 'neIndependant' });
     expect(calculateIPV(person({ finanzen: { employmentType: 'freelance' } }))).toMatchObject({ offen: 'neIndependant' });
     expect(calculateIPV(person({ finanzen: { employmentType: 'employed' } }))).toMatchObject({ amount: 515, noteKey: 'ipv.noteAutoOcab' });
-    expect(calculateIPV(person({ finanzen: { employmentType: 'retired' } })).amount).toBe(515);
+    // Seit 04.11.2026: im Ruhestand ohne erfasste Rente kein Betrag (renteOhneBetrag, wie die Sozialhilfe).
+    expect(calculateIPV(person({ finanzen: { employmentType: 'retired' } }))).toMatchObject({ amount: null, noteKey: 'sozialhilfe.renteNichtErfasst' });
   });
 
   // Fachprüfung 28.09.2026, Wichtig 3 — Art. 16 misst NACH den Abzügen; Band 2 000 gewählt.
