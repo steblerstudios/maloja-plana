@@ -463,7 +463,7 @@ ${quellen}
       </ol>
       <p class="leise"><strong>Gesetzesstellen:</strong> ${esc(seite.gesetze)}</p>
       <p class="leise"><strong>Eigene Rechnungen.</strong> ${seite.eigeneRechnungen.map(z).join(' ')}</p>
-      <p class="leise">${esc(R.quellenLeise)}</p>
+      <p class="leise">${esc(seite.quellenHinweis)}</p>
 
       <p class="vorbehalt">${seite.vorbehalt}</p>
 

@@ -67,6 +67,12 @@ describe('Hintergrundseiten', () => {
       expect(text).toContain('keine Rechts-, Versicherungs- oder Finanzberatung');
     });
 
+    it('nennt im Quellen-Hinweis keine Stelle, die gar nicht verlinkt ist', () => {
+      // Rechtsprüfung 04.11.2026: der Rahmentext der Erklärseiten nennt die SKOS.
+      expect(text).toContain(seite.quellenHinweis);
+      if (!seite.quellen.some((q) => /skos/i.test(q.url))) expect(text).not.toContain('SKOS');
+    });
+
     it('ist indexierbar, auf Deutsch, mit sich selbst als kanonischer Adresse', () => {
       expect(html).toContain('<html lang="de">');
       expect(html).toContain('<meta name="robots" content="index, follow">');
