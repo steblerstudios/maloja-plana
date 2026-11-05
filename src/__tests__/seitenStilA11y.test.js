@@ -34,7 +34,9 @@ const SEITEN = htmlDateien(PUBLIC)
   .map((p) => ({ name: path.relative(PUBLIC, p), html: fs.readFileSync(p, 'utf8') }))
   .filter((s) => s.html.includes('<style>'));
 
-const stilVon = (html) => (html.match(/<style>([\s\S]*?)<\/style>/g) || []).join('\n');
+// Ohne CSS-Kommentare: Sonst landet ein Kommentar vor einer Regel im Selektor
+// (Mutationsprobe 05.11.2026: Kommas im Kommentar wurden zu «Selektoren»).
+const stilVon = (html) => (html.match(/<style>([\s\S]*?)<\/style>/g) || []).join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
 
 function luminanz(hex) {
   const h = hex.replace('#', '');
