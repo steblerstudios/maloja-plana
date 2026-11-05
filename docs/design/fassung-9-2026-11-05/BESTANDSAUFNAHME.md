@@ -12,6 +12,23 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
 
 **Nichts davon ist gebaut.** Jeder Punkt wartet auf den Entscheid von Stebler Studios.
 
+## Entscheide
+
+**05.11.2026, Stebler Studios, im Gespräch:**
+
+- **F9-B1 Du-Schreibung: klein.** Wortlaut: «mach so wie es orthographisch stimmt beim du und
+  nicht wie ich gedacht habe». Die amtliche Rechtschreibung gilt auch in der Schweiz: «du» klein
+  ist der Standard, gross ist nur in Briefen erlaubt. Damit werden 177 grossgeschriebene Stellen
+  in der Du-Fassung angeglichen, und ein Test hält die Form. Die frühere Notiz «Du gross ist
+  Hausregel» ist damit überholt.
+- **F9-C1 Zitierregel: Fussnote und Aufklappen kombiniert (Skizze C + D).** Im Satz steht eine
+  kleine Ziffer. Am Ende des Blocks steht eine leise Zeile «Belegt mit N Quellen · geprüft im
+  <Monat> <Jahr>». Aufgeklappt zeigt sie die nummerierten Belege in der Form aus F9-C. Die
+  statischen Seiten folgen derselben Form. Die Einzelheiten (Darstellung auf dem Handy, Ansage
+  für Screenreader, Druck) werden vor dem Bau als Skizze gezeigt.
+- **F9-A2 Hauptknopf: Grün bevorzugt, noch nicht bestätigt.** Stebler Studios mag das Grün. Die
+  Frage war unklar gestellt. Die Erklärung wurde nachgereicht, die Bestätigung steht aus.
+
 ## Gesamturteil in fünf Sätzen
 
 1. Das Fundament steht: Tokens tragen die App (Schriftgrössen 1 623 über Token gegen 94 roh,
