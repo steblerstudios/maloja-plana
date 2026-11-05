@@ -25,30 +25,21 @@ const profil = (incomeType) => ({
 });
 const render = (data) => renderToStaticMarkup(React.createElement(PremiumSubsidy, { palette, t, data }));
 
-describe('IPV: geschätzter Nettolohn ist sichtbar', () => {
-  it('brutto erfasst: Hinweis mit einem Netto unter dem Bruttobetrag, mit dem Regler verknüpft', () => {
+// Aufräumen 05.11.2026: #686 (ipv.annahmeAusBrutto im Ergebnis) und #687 (premium.nettoGeschaetzt
+// unter dem Regler) sagten dasselbe. Es bleibt der Hinweis im Ergebnis — genau einmal.
+const anzahl = (html, k) => html.split(k).length - 1;
+
+describe('IPV: geschätzter Nettolohn steht genau einmal da', () => {
+  it('brutto erfasst: ein Hinweis im Ergebnis, keiner unter dem Regler', () => {
     const html = render(profil('brutto'));
     expect(html).toContain('id="ipv-regler"');
-    const m = html.match(/<p id="ipv-netto-geschaetzt"[^>]*>premium\.nettoGeschaetzt\(([^)]*)\)<\/p>/);
-    expect(m).not.toBeNull();
-    const netto = Number(m[1].replace(/[^\d]/g, ''));
-    expect(netto).toBeGreaterThan(0);
-    expect(netto).toBeLessThan(3000);
-    expect(html).toContain('aria-describedby="ipv-netto-geschaetzt"');
-  });
-
-  it('nur der Nebenerwerb brutto: kein Hinweis, der Hauptlohn ist nicht geschätzt (Rechtsprüfung 05.11.)', () => {
-    const p = profil('netto');
-    p.finanzen = { ...p.finanzen, sideIncome: 800, sideIncomeType: 'brutto' };
-    const html = render(p);
-    expect(html).toContain('id="ipv-regler"');
+    expect(anzahl(html, 'ipv.annahmeAusBrutto')).toBe(1);
     expect(html).not.toContain('premium.nettoGeschaetzt');
   });
 
   it('netto erfasst: kein Hinweis', () => {
     const html = render(profil('netto'));
     expect(html).toContain('id="ipv-regler"');
-    expect(html).not.toContain('premium.nettoGeschaetzt');
-    expect(html).not.toContain('ipv-netto-geschaetzt');
+    expect(html).not.toContain('ipv.annahmeAusBrutto');
   });
 });

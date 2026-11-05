@@ -3092,7 +3092,6 @@ export default {
   },
 
   premium: {
-    nettoGeschaetzt: 'Le salaire est saisi en brut. Le calcul utilise un salaire net estimé d’environ {netto} par mois.',
     title: 'Réduction de primes (IPV)',
     lageTitle: { sie: 'Votre situation', du: 'Ta situation' },
     subtitle: { sie: 'Réduction individuelle des primes — le canton prend en charge une partie de votre prime d\'assurance maladie si votre revenu est inférieur à un certain seuil.', du: 'Réduction individuelle des primes — le canton prend en charge une partie de ta prime d\'assurance maladie si ton revenu est inférieur à un certain seuil.' },
