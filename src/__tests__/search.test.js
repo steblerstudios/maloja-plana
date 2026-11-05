@@ -38,8 +38,10 @@ describe('SearchView Katalog', () => {
       // Der Label-Key muss nicht unter `nav.` liegen (zwei Abläufe tragen ihren
       // Titel); dass er in jeder Sprache auflöst, prüft der i18n-Block unten.
       expect(typeof v.nav === 'string' && v.nav.length > 0).toBe(true);
-      // sub ist optional — nicht jedes Werkzeug hat einen Beschreibungs-Key.
-      if (v.sub !== undefined) expect(v.sub.startsWith('nav.sub.')).toBe(true);
+      // sub ist optional — nicht jedes Werkzeug hat einen Beschreibungs-Key. Wie beim Label
+      // muss er nicht unter `nav.sub.` liegen («Was steht mir zu?» trägt seinen Seiten-Untertitel,
+      // seit F9-D1 suchbar); dass er in jeder Sprache auflöst, prüft der i18n-Block unten.
+      if (v.sub !== undefined) expect(typeof v.sub === 'string' && v.sub.length > 0).toBe(true);
       expect(v.icon).toBeTruthy();
     }
   });
