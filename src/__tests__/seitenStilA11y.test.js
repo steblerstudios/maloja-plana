@@ -54,10 +54,13 @@ function variablen(stil) {
   const lesen = (block, ziel) => {
     for (const [, k, v] of block.matchAll(/--([\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b/g)) if (!(k in ziel)) ziel[k] = v;
   };
-  const dunkelBlock = stil.match(/prefers-color-scheme:\s*dark\)\s*\{([\s\S]*?)\n\s*\}/);
-  const ohneDunkel = dunkelBlock ? stil.replace(dunkelBlock[0], '') : stil;
+  // ALLE Dunkel-Blöcke: Die Hintergrundseiten setzen --heidel-text erst in einem
+  // zweiten @media-Block. Mit nur dem ersten galt dunkel der helle Wert (05.11.2026).
+  const dunkelBloecke = [...stil.matchAll(/prefers-color-scheme:\s*dark\)\s*\{([\s\S]*?)\n\s*\}/g)];
+  let ohneDunkel = stil;
+  for (const b of dunkelBloecke) ohneDunkel = ohneDunkel.replace(b[0], '');
   for (const m of ohneDunkel.matchAll(/:root\s*\{([^}]*)\}/g)) lesen(m[1], hell);
-  if (dunkelBlock) for (const m of dunkelBlock[1].matchAll(/:root\s*\{([^}]*)\}/g)) lesen(m[1], dunkel);
+  for (const b of dunkelBloecke) for (const m of b[1].matchAll(/:root\s*\{([^}]*)\}/g)) lesen(m[1], dunkel);
   return { hell, dunkel: { ...hell, ...dunkel } };
 }
 
@@ -92,6 +95,67 @@ describe('Öffentliche Seiten · gemeinsamer Stil', () => {
       }
     }
     expect(schwach).toEqual([]);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Links im Fliesstext nicht nur an der Farbe erkennbar (WCAG 1.4.1) · 05.11.2026
+//
+// Ohne Unterstreichung bleibt nur die Farbe, und die müsste sich mit 3:1 vom
+// umgebenden Text abheben. Die Belege (sup.beleg a) hatten mit --heidel-text
+// gegen den Fliesstext nur 2.68:1 hell und 1.94:1 dunkel, «Zurück zum Text»
+// (.q-zurueck a) gegen den leisen Text 1.10:1 und 1.01:1.
+//
+// Deshalb eine ERLAUBNISLISTE: Jede Regel mit text-decoration:none (ausser
+// :hover/:focus) muss hier mit Grund stehen. Wer eine neue einführt, muss
+// begründen, warum der Link ohne Unterstreichung erkennbar bleibt.
+// ─────────────────────────────────────────────────────────────
+const OHNE_UNTERSTRICH_ERLAUBT = {
+  '.marke': 'Wortmarke im Kopf, kein Link im Fliesstext',
+  '.knopf': 'Knopfform mit Goldfläche, Form statt Farbe',
+  '.weiter a': 'Liste, in der jeder Eintrag ein Link ist, halbfett; Hover unterstreicht',
+  'nav.inhalt a': 'Inhaltsverzeichnis in nav, jeder Eintrag ein Link; Hover unterstreicht',
+};
+
+describe('Links im Text sind nicht nur an der Farbe erkennbar (WCAG 1.4.1)', () => {
+  it.each(SEITEN.map((s) => [s.name, s]))('%s: text-decoration:none nur für erlaubte Regeln', (_, s) => {
+    const fremd = [];
+    for (const [, regel, rumpf] of stilVon(s.html).matchAll(/([^{}]*)\{([^}]*)\}/g)) {
+      const sel = regel.trim();
+      if (/:hover|:focus/.test(sel)) continue;
+      if (!/text-decoration\s*:\s*none/.test(rumpf)) continue;
+      for (const teil of sel.split(',').map((t) => t.trim())) if (!(teil in OHNE_UNTERSTRICH_ERLAUBT)) fremd.push(teil);
+    }
+    expect(fremd).toEqual([]);
+  });
+
+  const mitBelegen = SEITEN.filter((s) => /<sup class="beleg">/.test(s.html));
+  it('es gibt Seiten mit Belegen (sonst prüft dieser Wächter nichts)', () => {
+    expect(mitBelegen.length).toBeGreaterThan(0);
+  });
+
+  // Positiv geprüft, nicht nur «kein none»: so fällt auch auf, wenn die Regel
+  // verschwindet und eine spätere Regel die Unterstreichung anders wegnimmt.
+  it.each(mitBelegen.map((s) => [s.name, s]))('%s: Beleg- und Zurück-Links sind im Ruhezustand unterstrichen', (_, s) => {
+    const stil = stilVon(s.html);
+    for (const sel of ['sup\\.beleg a', '\\.q-zurueck a']) {
+      const regeln = [...stil.matchAll(new RegExp(`(?:^|[}\\s])${sel}\\s*\\{([^}]*)\\}`, 'g'))].map((m) => m[1]);
+      expect(regeln.length, `keine Regel für ${sel}`).toBeGreaterThan(0);
+      expect(regeln.some((r) => /text-decoration\s*:\s*underline/.test(r)), `${sel} nicht unterstrichen`).toBe(true);
+    }
+  });
+
+  // Der Grund für die Unterstreichung bleibt sichtbar: Die Linkfarbe allein
+  // reicht gegen den Fliesstext nicht. Steigt sie einmal über 3:1, darf dieser
+  // Test angepasst werden, die Unterstreichung bleibt trotzdem die ruhigere Wahl.
+  it('Belegfarbe gegen Fliesstext liegt unter 3:1 (darum unterstrichen)', () => {
+    const s = mitBelegen[0];
+    const { hell, dunkel } = variablen(stilVon(s.html));
+    expect(kontrast(hell['heidel-text'], hell.text)).toBeLessThan(3);
+    expect(kontrast(dunkel['heidel-text'], dunkel.text)).toBeLessThan(3);
+    // und gegen den Grund genügt sie 1.4.3
+    expect(kontrast(hell['heidel-text'], hell.bg)).toBeGreaterThanOrEqual(4.5);
+    expect(kontrast(dunkel['heidel-text'], dunkel.bg)).toBeGreaterThanOrEqual(4.5);
   });
 });
 

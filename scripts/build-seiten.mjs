@@ -483,9 +483,14 @@ const stilHintergrund = `
     /* Belege: hochgestellte Nummer, Sprung zur Quelle und zurück. */
     /* Trefferfläche grösser als die Ziffer (a11y-Prüfung 04.11.2026), ohne die Zeile zu sprengen. */
     sup.beleg{ font-size:.75em; line-height:0; vertical-align:super; margin-left:1px }
+    /* Unterstrichen schon im Ruhezustand (WCAG 1.4.1): --heidel-text hat gegen den
+       Fliesstext nur 2.68:1 (hell) bzw. 1.94:1 (dunkel), unter den 3:1, die eine reine
+       Farbunterscheidung bräuchte. Dünn und mit Abstand, damit die Ziffer ruhig bleibt;
+       beim Überfahren verdickt sie sich wie bei allen Links. */
     sup.beleg a{ display:inline-block; min-width:24px; padding:10px 4px; margin:-10px -6px; text-align:center;
-      text-decoration:none; color:var(--heidel-text); font-weight:600 }
-    sup.beleg a:hover{ text-decoration:underline }
+      text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+      color:var(--heidel-text); font-weight:600 }
+    sup.beleg a:hover{ text-decoration-thickness:2px }
     sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
     :target{ scroll-margin-top:24px }
     ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
@@ -498,7 +503,9 @@ const stilHintergrund = `
     .q-belegt{ margin:4px 0 0; font-size:14px }
     .q-zurueck{ margin:4px 0 0; font-size:13px; color:var(--leise) }
     .q-zurueck a{ display:inline-block; min-width:24px; padding:8px 4px; margin:-8px 0; text-align:center;
-      color:var(--heidel-text); text-decoration:none } .q-zurueck a:hover{ text-decoration:underline }
+      color:var(--heidel-text); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Gleicher Grund wie bei sup.beleg: gegen den leisen Text davor nur 1.10:1 / 1.01:1. */
+    .q-zurueck a:hover{ text-decoration-thickness:2px }
     .q-art{ display:inline-block; font-size:12px; border:1px solid var(--rand); border-radius:6px; padding:0 6px; margin-left:6px; color:var(--leise) }
     .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
     .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
