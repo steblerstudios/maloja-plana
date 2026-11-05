@@ -26,13 +26,13 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
   <Monat> <Jahr>». Aufgeklappt zeigt sie die nummerierten Belege in der Form aus F9-C. Die
   statischen Seiten folgen derselben Form. Die Einzelheiten (Darstellung auf dem Handy, Ansage
   für Screenreader, Druck) werden vor dem Bau als Skizze gezeigt.
-- **F9-A2 Hauptknopf: grün (Sage), der Code folgt dem Markenhandbuch.** Wortlaut: «Ja, folgen».
-  Die Farbrollen gelten bereits: Sage = handeln (Knöpfe, Links), Gold = hinweisen (Frist,
-  Hervorhebung, Fokus, Logo-Berg), Rose = warnen, Sky = informieren. Das steht in
-  `docs/brand/brand-guidelines.md` und `docs/design/farb-und-daten-system.md`. Abgewichen ist
-  nur `PrimaryButton` (Sand seit `a1d2ac1a`, 07.07.). Neu dazu kommt eine Regel: ein Hauptknopf
-  je Seite als volle Fläche, alle anderen als Nebenknopf mit Rand. Links sind immer
-  unterstrichen. Die Farbe muss im Dunkelmodus vor dem Bau am Bildschirm geprüft werden.
+- **F9-A2 Farbrollen: Gold = handeln (Variante B), entschieden.** Wortlaut: «Ja, so» (05.11.2026,
+  nach Vergleich der Varianten A/B/C in Hell und Dunkel). ⟨überholt, bewusst stehengelassen⟩ Vorher
+  galt am selben Tag «Hauptknopf grün, Code folgt dem Markenhandbuch» («Ja, folgen»). Die Messung
+  danach zeigte, dass sich das dunkle Grün im Dunkelmodus kaum von der Fläche abhebt (1.8:1).
+  Neu: Gold/Sand = handeln (Hauptknopf gefüllt, Nebenknopf und Links in `sandDeep`),
+  Grün = gut/erledigt, Blau = informieren und Fristen, Rot = warnen/Gefahr. Markenhandbuch
+  nachgeführt in #691. Offen als eigene Pakete: Fristen von Gold auf Blau, Links auf Gold.
 
 ## Gesamturteil in fünf Sätzen
 
