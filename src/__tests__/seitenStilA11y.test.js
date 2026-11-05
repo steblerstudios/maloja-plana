@@ -115,6 +115,7 @@ describe('Öffentliche Seiten · gemeinsamer Stil', () => {
 const OHNE_UNTERSTRICH_ERLAUBT = {
   '.marke': 'Wortmarke im Kopf, kein Link im Fliesstext',
   '.knopf': 'Knopfform mit Goldfläche, Form statt Farbe',
+  // Hängt an der leisen Beschreibung (<span>) darunter: ohne sie wäre nur das Gewicht übrig.
   '.weiter a': 'Liste, in der jeder Eintrag ein Link ist, halbfett; Hover unterstreicht',
   'nav.inhalt a': 'Inhaltsverzeichnis in nav, jeder Eintrag ein Link; Hover unterstreicht',
 };
@@ -125,7 +126,7 @@ describe('Links im Text sind nicht nur an der Farbe erkennbar (WCAG 1.4.1)', () 
     for (const [, regel, rumpf] of stilVon(s.html).matchAll(/([^{}]*)\{([^}]*)\}/g)) {
       const sel = regel.trim();
       if (/:hover|:focus/.test(sel)) continue;
-      if (!/text-decoration\s*:\s*none/.test(rumpf)) continue;
+      if (!/text-decoration(?:-line)?\s*:\s*none/.test(rumpf)) continue;
       for (const teil of sel.split(',').map((t) => t.trim())) if (!(teil in OHNE_UNTERSTRICH_ERLAUBT)) fremd.push(teil);
     }
     expect(fremd).toEqual([]);
@@ -144,6 +145,10 @@ describe('Links im Text sind nicht nur an der Farbe erkennbar (WCAG 1.4.1)', () 
       const regeln = [...stil.matchAll(new RegExp(`(?:^|[}\\s])${sel}\\s*\\{([^}]*)\\}`, 'g'))].map((m) => m[1]);
       expect(regeln.length, `keine Regel für ${sel}`).toBeGreaterThan(0);
       expect(regeln.some((r) => /text-decoration\s*:\s*underline/.test(r)), `${sel} nicht unterstrichen`).toBe(true);
+      // Und keine Regel macht die Linie wieder unsichtbar (a11y-Prüfung 05.11.2026).
+      const unsichtbar = regeln.filter((r) =>
+        /text-decoration(?:-line)?\s*:\s*none|text-decoration-color\s*:\s*transparent|text-decoration-thickness\s*:\s*0(?![.\d])/.test(r));
+      expect(unsichtbar, `${sel}: Unterstreichung wird wieder weggenommen`).toEqual([]);
     }
   });
 
