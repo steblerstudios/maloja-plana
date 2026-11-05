@@ -129,7 +129,7 @@ export const SCHLUSS_ZIELE = {
   sync: { kapitel: 'finanzen' },
   direktlinks: { ziel: 'situationen' },
   export: { ziel: 'tresor' },
-  notifications: { ziel: 'calendar' },
+  // notifications: seit 05.11.2026 Abschnitt der Einstellungen (Umleitung), kein eigener Schluss mehr.
   flyer: {},
   installApp: {},
 };

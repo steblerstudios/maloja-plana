@@ -72,7 +72,7 @@ const UnterlagenDrucken = lazyMitTexten(() => import('./UnterlagenDrucken.jsx'))
 const BriefGenerator = lazyMitTexten(() => import('./BriefGenerator.jsx'));
 const SozialhilfeView = lazyMitTexten(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = lazyMitTexten(() => import('./CalendarReminders.jsx'));
-const NotificationSettings = lazyMitTexten(() => import('./NotificationSettings.jsx'));
+// NotificationSettings: seit 05.11.2026 keine eigene Seite — Abschnitt in SettingsView (UMLEITUNGEN, Seitenlandkarte Z2).
 // NotfallEinstieg: seit 24.10.2026 keine eigene Seite — im Kapitel Notfall (UMLEITUNGEN, components/NotfallImKapitel.jsx).
 const ArztkofferView = lazyMitTexten(() => import('./ArztkofferView.jsx'));
 const NotfallVorlesekarte = lazyMitTexten(() => import('./NotfallVorlesekarte.jsx'));
@@ -1784,7 +1784,6 @@ const AppInner = ({ demo }) => {
         // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
         // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
         view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: waehle }),
-        view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
         }),
@@ -1794,7 +1793,6 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
-          onNotifications: () => handleNavigate('notifications'),
           demoMode,
         }),
       )),
