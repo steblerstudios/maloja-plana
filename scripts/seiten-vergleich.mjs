@@ -74,6 +74,15 @@ export const EBENEN = {
     wert: (k) => A.kita[k].chf, ch: null, fmt: fr, quelle: 'estvKantonsblaetter' },
 };
 
+// Kita-Abzug: Kantone ohne festen Höchstbetrag zählen beim Vergleich mit dem
+// Bund nicht mit (Fachprüfung 05.11.2026). NE: Art. 36 Abs. 3 LCdir, Abzug bis zur
+// Höhe der Elternbeiträge; die Zahl im Atlas ist ein Wert aus dem Steuermäppchen 2025.
+export const KITA_OHNE_FESTE_GRENZE = ['NE'];
+// Bundesabzug ab Steuerjahr 2027: Verordnung über die kalte Progression vom
+// 11.09.2026, AS 2026 486 (Erlasstext gelesen 05.11.2026). Steht noch nicht im
+// Atlas; der Atlas führt das Steuerjahr 2026.
+export const KITA_BUND_2027 = 25900;
+
 const werte = (key) => KANTONE.map((k) => ({ k, name: de.cantons[k], v: EBENEN[key].wert(k) }));
 const tief = (key) => werte(key).reduce((a, b) => (b.v < a.v ? b : a));
 const hoch = (key) => werte(key).reduce((a, b) => (b.v > a.v ? b : a));
@@ -171,9 +180,12 @@ const rText = (r) => r.toFixed(2).replace('.', ',').replace('-', '−');
 
 function zusammenhaenge() {
   const zeilen = PAARE.map(([, a, b, t]) => {
-    const r = korrelation(a, b), st = staerke(a, b);
+    const r = korrelation(a, b), st = staerke(a, b), rs = rangkorrelation(a, b);
     const satz = st === 'kaum' ? 'Kein klarer Zusammenhang.' : (r > 0 ? t.gleich : t.gegen);
-    return `          <tr><th scope="row">${t.paar}</th><td>${st === 'kaum' ? 'kaum' : `${st}, ${r > 0 ? 'gleichläufig' : 'gegenläufig'}`}</td><td class="n">${rText(r)}</td><td>${satz}</td></tr>`;
+    // Gibt die Rangfolge die Stufe vor, steht ihr Wert dabei, sonst wirkt das r
+    // über der Schwelle wie ein Widerspruch zur Stufe (Fachprüfung 05.11.2026).
+    const rangHinweis = stufe(rs) < stufe(r) ? ` <span class="leise">(nach Rangfolge ${rText(rs)})</span>` : '';
+    return `          <tr><th scope="row">${t.paar}</th><td>${st === 'kaum' ? 'kaum' : `${st}, ${r > 0 ? 'gleichläufig' : 'gegenläufig'}`}${rangHinweis}</td><td class="n">${rText(r)}</td><td>${satz}</td></tr>`;
   }).join('\n');
   return `
         <div class="tabelle" tabindex="0" role="region" aria-label="Zusammenhänge über die 26 Kantone"><table>
@@ -193,9 +205,17 @@ export function vergleichZahlen() {
     z[`v.${key}.hochName`] = `im Kanton ${h.name}`; z[`v.${key}.hoch`] = EBENEN[key].fmt(h.v);
     if (EBENEN[key].ch != null) z[`v.${key}.ch`] = EBENEN[key].fmt(EBENEN[key].ch);
   }
+  // Zwei fast gleich hohe Spitzenwerte nicht als einen einzigen Höchstwert
+  // ausgeben (Fachprüfung 05.11.2026: TI 17,3 %, GE 17,2 % liegen in der Unschärfe).
+  const nachIpv = werte('lastNachIpv').sort((a, b) => b.v - a.v);
+  z['v.lastNachIpv.hochZusatz'] = nachIpv[0].v - nachIpv[1].v <= 0.2
+    ? `, fast gleich hoch im Kanton ${nachIpv[1].name} (${pz(nachIpv[1].v)})` : '';
   z['v.kita.bund'] = fr(A.kita.CH_BUND.chf);
-  z['v.kita.unterBund'] = String(KANTONE.filter((k) => A.kita[k].chf < A.kita.CH_BUND.chf).length);
-  z['v.kita.abBund'] = String(KANTONE.filter((k) => A.kita[k].chf >= A.kita.CH_BUND.chf).length);
+  z['v.kita.bund2027'] = fr(KITA_BUND_2027);
+  const mitGrenze = KANTONE.filter((k) => !KITA_OHNE_FESTE_GRENZE.includes(k));
+  z['v.kita.unterBund'] = String(mitGrenze.filter((k) => A.kita[k].chf < A.kita.CH_BUND.chf).length);
+  z['v.kita.abBund'] = String(mitGrenze.filter((k) => A.kita[k].chf >= A.kita.CH_BUND.chf).length);
+  z['v.kita.ohneGrenzeName'] = KITA_OHNE_FESTE_GRENZE.map((k) => de.cantons[k]).join(' und ');
   for (const [name, a, b] of PAARE) z[`v.r.${name}`] = rText(korrelation(a, b));
   z['v.kita.bundJahr'] = String(A.kita.CH_BUND.jahr);
   return z;
@@ -212,7 +232,8 @@ export const BLOECKE_VERGLEICH = {
   'TAB:vleer': () => tabelle(['leer'], { caption: 'Leerwohnungsziffer am 1. Juni 2026' }),
   'TAB:vunterstuetzung': () => tabelle(['sozialhilfe', 'el'], { caption: 'Sozialhilfequote 2024 und EL-Quote zur AHV, Dezember 2025', sortiere: 'sozialhilfe' }),
   'TAB:vfamilie': () => tabelle(['kinderzulage'], { caption: 'Kinderzulage 2026 je Kind und Monat (erster Ansatz), in Franken' }),
-  'TAB:vkita': () => tabelle(['kita'], { caption: 'Höchster Abzug für Kinderbetreuung durch Dritte, Steuerjahr 2026, in Franken je Kind' }),
+  'TAB:vkita': () => tabelle(['kita'], { caption: 'Höchster Abzug für Kinderbetreuung durch Dritte, Steuerjahr 2026, in Franken je Kind',
+    zusatz: (k) => (k === null ? 'Hinweis' : KITA_OHNE_FESTE_GRENZE.includes(k) ? 'kein fester Höchstbetrag, Wert 2025' : '') }),
   'TAB:valq': () => tabelle(['alq'], { caption: 'Arbeitslosenquote September 2026' }),
   'TAB:nebeneinander': nebeneinander,
   'TAB:zusammenhang': zusammenhaenge,

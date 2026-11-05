@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
 import { KANTONE_IM_VERGLEICH } from '../../scripts/seiten/kantone-im-vergleich.mjs';
-import { KANTONE, EBENEN, PAARE, korrelation, rangkorrelation, staerke } from '../../scripts/seiten-vergleich.mjs';
+import { KANTONE, EBENEN, PAARE, korrelation, rangkorrelation, staerke, KITA_OHNE_FESTE_GRENZE, KITA_BUND_2027 } from '../../scripts/seiten-vergleich.mjs';
 import de from '../i18n/de.js';
 import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT, ATLAS_PRAEMIEN } from '../../scripts/seiten-figuren.mjs';
 import { BASIS } from '../../scripts/seiten-inhalt.mjs';
@@ -251,8 +251,31 @@ describe('Hintergrundseiten', () => {
     });
 
     it('nennt den Kita-Abzug des Bundes mit seinem Steuerjahr, nicht dem Prämienjahr', () => {
-      expect(text).toMatch(/Bei der direkten Bundessteuer liegt sie im Steuerjahr 2026 bei 25'800 Franken je Kind, ab 2027 bei 25'900 Franken/);
+      expect(text).toMatch(/Bei der direkten Bundessteuer liegt die Grenze im Steuerjahr 2026 bei 25'800 Franken je Kind/);
+      expect(text).toMatch(/Ab 2027 sind es 25'900 Franken/);
       expect(html).toContain('/eli/cc/1991/1184_1184_1184/20260101/de');
+    });
+
+    it('nennt für den Kita-Abzug des Bundes die richtige Fundstelle (Rechtsprüfung 05.11.2026)', () => {
+      // 25'800 Fr. gelten seit 1.1.2025 (AS 2024 479, Fussnote zu DBG Art. 33 Abs. 3);
+      // AS 2025 579 ändert Art. 33 Abs. 3 nicht. 25'900 Fr. ab 2027 nur im Erlass AS 2026 486.
+      expect(html).toContain('AS 2024 479');
+      expect(html).not.toContain('AS 2025 579');
+      expect(html).toContain('https://www.fedlex.admin.ch/eli/oc/2026/486/de');
+      expect(KITA_BUND_2027).toBe(25900);
+      expect(text).not.toMatch(/1\.1\.2027 am Volltext gelesen/);
+      // Bedingungen des Gesetzes: belegte Kosten, gleicher Haushalt, Person, die für das Kind sorgt.
+      expect(text).toContain('die belegten Kosten abziehen');
+      expect(text).toContain('im gleichen Haushalt leben wie die Person, die für sie sorgt');
+    });
+
+    it('zählt Kantone ohne festen Kita-Höchstbetrag nicht beim Vergleich mit dem Bund mit', () => {
+      expect(KITA_OHNE_FESTE_GRENZE).toEqual(['NE']);
+      const mitGrenze = KANTONE.filter((k) => !KITA_OHNE_FESTE_GRENZE.includes(k));
+      const unter = mitGrenze.filter((k) => EBENEN.kita.wert(k) < 25800).length;
+      expect(mitGrenze.length).toBe(25);
+      expect(text).toContain(`${unter} Kantone liegen im Steuerjahr 2026 darunter, ${25 - unter} auf oder über dem Bund; Neuenburg kennt keinen festen Höchstbetrag`);
+      expect(html).toContain('kein fester Höchstbetrag, Wert 2025');
     });
 
     it('nennt bei jeder Ebene, woher die Zahl kommt, und die Vorbehalte des Atlas', () => {
