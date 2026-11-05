@@ -64,6 +64,11 @@ export const ABLAEUFE = [
   { view: 'todesfall', bereich: 'familie', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
+// «Ankommen in der Schweiz» (Seitenlandkarte G1, 05.11.2026): die Abläufe, die eine Person nach dem
+// Zuzug nacheinander braucht, aus drei Lebensbereichen. Reihenfolge = Reihenfolge in der Übersicht.
+// Nur Verweise auf ABLAEUFE — Titel, Untertitel und Zeichen kommen von dort (Wächter: gruppeAnkommen.test.js).
+export const ANKOMMEN = ['zuzug', 'kkerst', 'bewilligung', 'quellensteuer', 'einbuergerung'];
+
 // Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
 // sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
 export const SEARCH_VIEWS = [

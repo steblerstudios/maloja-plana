@@ -10,7 +10,7 @@ import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFr
 import { useT, lazyMitTexten } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
-import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
+import { ABLAEUFE, ANKOMMEN, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
@@ -691,11 +691,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             )
           );
         };
+        const alsEintrag = (a) => ({ label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon });
         const groups = [
           // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
-          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map((a) => (
-            { label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon }
-          )) },
+          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map(alsEintrag) },
+          // G1 (05.11.2026): die Abläufe nach dem Zuzug als Reihe; sie bleiben auch oben stehen.
+          { label: t('dashboard.toolGroups.ankommen'), items: ANKOMMEN.map((v) => ABLAEUFE.find((a) => a.view === v)).filter(Boolean).map(alsEintrag) },
           { label: t('dashboard.toolGroups.gesundheit'), items: [
             { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
           ] },
@@ -736,20 +737,22 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
         let offen = [];
         try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
-        const merkeGruppe = (gi, istOffen) => {
+        // Seit 05.11.2026 nach Titel (g.label), nicht nach Stelle: mit einer neuen Gruppe hätte die gemerkte
+        // Stelle sonst eine andere Gruppe geöffnet. Ältere Einträge (Zahlen) und ein Sprachwechsel treffen nichts — dann starten alle zu.
+        const merkeGruppe = (name, istOffen) => {
           try {
-            const rest = offen.filter((i) => i !== gi);
-            offen = istOffen ? rest.concat(gi) : rest;
+            const rest = offen.filter((i) => i !== name);
+            offen = istOffen ? rest.concat(name) : rest;
             sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
           } catch { /* ohne Speicher: nichts merken */ }
         };
         return React.createElement(React.Fragment, null,
-          ...groups.map((g, gi) => React.createElement('details', {
+          ...groups.map((g) => React.createElement('details', {
             // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
             // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
-            key: 'tg-' + gi,
-            open: Array.isArray(offen) && offen.includes(gi),
-            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
+            key: 'tg-' + g.label,
+            open: Array.isArray(offen) && offen.includes(g.label),
+            onToggle: (e) => merkeGruppe(g.label, e.currentTarget.open),
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
