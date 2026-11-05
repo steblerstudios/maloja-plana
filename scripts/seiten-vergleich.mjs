@@ -74,10 +74,11 @@ export const EBENEN = {
     wert: (k) => A.kita[k].chf, ch: null, fmt: fr, quelle: 'estvKantonsblaetter' },
 };
 
-// Kita-Abzug: Kantone ohne festen Höchstbetrag zählen beim Vergleich mit dem
-// Bund nicht mit (Fachprüfung 05.11.2026). NE: Art. 36 Abs. 3 LCdir, Abzug bis zur
-// Höhe der Elternbeiträge; die Zahl im Atlas ist ein Wert aus dem Steuermäppchen 2025.
-export const KITA_OHNE_FESTE_GRENZE = ['NE'];
+// Kita-Abzug: Kantone, deren Wert nicht vergleichbar ist, zählen beim Vergleich
+// mit dem Bund nicht mit (Fach- und Rechtsprüfung 05.11.2026). NE: nur Wert 2025
+// (ESTV-Steuermäppchen 2025: 20'400 Fr., höchstens die Elternbeiträge nach LAE);
+// «kein fester Höchstbetrag» liess sich nicht belegen.
+export const KITA_NICHT_VERGLICHEN = ['NE'];
 // Bundesabzug ab Steuerjahr 2027: Verordnung über die kalte Progression vom
 // 11.09.2026, AS 2026 486 (Erlasstext gelesen 05.11.2026). Steht noch nicht im
 // Atlas; der Atlas führt das Steuerjahr 2026.
@@ -212,10 +213,10 @@ export function vergleichZahlen() {
     ? `, fast gleich hoch im Kanton ${nachIpv[1].name} (${pz(nachIpv[1].v)})` : '';
   z['v.kita.bund'] = fr(A.kita.CH_BUND.chf);
   z['v.kita.bund2027'] = fr(KITA_BUND_2027);
-  const mitGrenze = KANTONE.filter((k) => !KITA_OHNE_FESTE_GRENZE.includes(k));
+  const mitGrenze = KANTONE.filter((k) => !KITA_NICHT_VERGLICHEN.includes(k));
   z['v.kita.unterBund'] = String(mitGrenze.filter((k) => A.kita[k].chf < A.kita.CH_BUND.chf).length);
   z['v.kita.abBund'] = String(mitGrenze.filter((k) => A.kita[k].chf >= A.kita.CH_BUND.chf).length);
-  z['v.kita.ohneGrenzeName'] = KITA_OHNE_FESTE_GRENZE.map((k) => de.cantons[k]).join(' und ');
+  z['v.kita.nichtVerglichenName'] = KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ');
   for (const [name, a, b] of PAARE) z[`v.r.${name}`] = rText(korrelation(a, b));
   z['v.kita.bundJahr'] = String(A.kita.CH_BUND.jahr);
   return z;
@@ -233,7 +234,7 @@ export const BLOECKE_VERGLEICH = {
   'TAB:vunterstuetzung': () => tabelle(['sozialhilfe', 'el'], { caption: 'Sozialhilfequote 2024 und EL-Quote zur AHV, Dezember 2025', sortiere: 'sozialhilfe' }),
   'TAB:vfamilie': () => tabelle(['kinderzulage'], { caption: 'Kinderzulage 2026 je Kind und Monat (erster Ansatz), in Franken' }),
   'TAB:vkita': () => tabelle(['kita'], { caption: 'Höchster Abzug für Kinderbetreuung durch Dritte, Steuerjahr 2026, in Franken je Kind',
-    zusatz: (k) => (k === null ? 'Hinweis' : KITA_OHNE_FESTE_GRENZE.includes(k) ? 'kein fester Höchstbetrag, Wert 2025' : '') }),
+    zusatz: (k) => (k === null ? 'Hinweis' : KITA_NICHT_VERGLICHEN.includes(k) ? 'Wert 2025, auf Elternbeiträge begrenzt' : '') }),
   'TAB:valq': () => tabelle(['alq'], { caption: 'Arbeitslosenquote September 2026' }),
   'TAB:nebeneinander': nebeneinander,
   'TAB:zusammenhang': zusammenhaenge,
