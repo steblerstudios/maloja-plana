@@ -88,8 +88,9 @@ describe('F8-R1 · keine Fachwörter Break-even und KVG-Tracker', () => {
   for (const [l, d] of Object.entries(SPRACHEN)) {
     it(l, () => {
       const alle = texte(d);
-      expect(alle.filter((s) => /break-even/i.test(s)), l).toEqual([]);
-      expect(alle.filter((s) => /KVG-Tracker|tracker LAMal|health insurance tracker/i.test(s)), l).toEqual([]);
+      // Auch die Lehnwörter der anderen Sprachen (Sprachprüfung 05.11.2026).
+      expect(alle.filter((s) => /break-even|seuil de rentabilit|punto di pareggio|punct d.equiliber|punct da pareglia/i.test(s)), l).toEqual([]);
+      expect(alle.filter((s) => /KVG-Tracker|tracker LAMal|suivi LAMal|health insurance tracker/i.test(s)), l).toEqual([]);
     });
   }
   it('Referenz heisst jetzt, was es ist: der Tarif der eigenen Kasse', () => {

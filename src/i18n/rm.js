@@ -5649,8 +5649,9 @@ export default {
     franchise: 'Franchisa',
     eher: 'Plitost {franchise}',
     passt: 'Va bain',
-    franchiseSub: 'Punct d’equiliber var CHF {breakeven} custs da sanadad per onn · la franchisa auta spargna var CHF {saving}/onn premias · premias {jahr}',
-    franchiseOhne: 'Cun cassa e numer postal calculescha l’app il punct d’equiliber.',
+    // TODO(rm): provisorisch — Gegenlese (F8-R1, 05.11.2026), ganzer Franchise-Block
+    franchiseSub: 'La franchisa auta vala la paina fin var CHF {breakeven} custs da sanadad per onn · ella spargna var CHF {saving}/onn premias · premias {jahr}',
+    franchiseOhne: 'Cun cassa e numer postal calculescha l’app fin tar tge custs da sanadad che la franchisa auta vala la paina.',
     wechsel: 'Midar la cassa da malsauns',
     kuendigung: 'Arrivada tar la cassa fin ils {datum}',
     wechselSub: 'Ina franchisa pli auta vala dal cumenzament da l’onn, ina pli bassa cun il medem termin da disditga (OAMal art. 94)',
@@ -5665,7 +5666,7 @@ export default {
     pkGuthaben: 'Avair tenor certificat da la cassa da pensiun CHF {betrag}',
     vorsorgeSub: 'AVS & cassa da pensiun · tge che vegn en la vegliadetgna',
     zeilenAria: 'Assicuranzas en detagl',
-    breakEven: 'Punct d’equiliber ≈ {breakeven}',
+    breakEven: 'Franchisa auta vala la paina fin var CHF {breakeven} custs da sanadad per onn',
     regional: 'Premia regiunala vs. Svizra',
     vergleich: 'Cumparegliaziun da premias e protecziun d’accidents',
     // TODO(rm): provisorisch — Gegenlese (F8-R1, 05.11.2026)
@@ -5693,12 +5694,12 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF {breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    tachoBreakeven: 'Punct d’equiliber',
+    tachoBreakeven: 'Punct da midada',
     tachoLegendHigh: 'franchisa auta pli favuraivla',
     tachoLegendLow: 'franchisa bassa pli favuraivla',
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-    tachoReadoutBelow: { sie: 'Fin ussa CHF {costs} quest onn. Sut il punct d’equiliber (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.', du: 'Fin ussa CHF {costs} quest onn. Sut il punct d’equiliber (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.' },
-    tachoReadoutAbove: 'Fin ussa CHF {costs} quest onn — sur il punct d’equiliber (CHF {be}). Quest onn fiss la franchisa bassa (CHF {low}) stada pli favuraivla.',
+    tachoReadoutBelow: { sie: 'Fin ussa CHF {costs} quest onn. Sch’ils custs restan sut CHF {be}, è la franchisa auta (CHF {high}) pli favuraivla.', du: 'Fin ussa CHF {costs} quest onn. Sch’ils custs restan sut CHF {be}, è la franchisa auta (CHF {high}) pli favuraivla.' },
+    tachoReadoutAbove: 'Fin ussa CHF {costs} quest onn — dapli che CHF {be}. Quest onn fiss la franchisa bassa (CHF {low}) stada pli favuraivla.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     tachoOrientation: { sie: 'Uschespert che Vus registrais ils custs da sanadad, mussa la sajetta nua che Vus essas quest onn.', du: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.' },
     tachoTrackLink: 'Registrar ils custs da sanadad',
@@ -5717,7 +5718,7 @@ export default {
     kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
     kreuzOrientation: { sie: 'Uschespert che Vus registrais custs da sanadad, mussa ina strivla, nua che Vus stais en l’onn.', du: 'Uschespert che ti registreschas custs da sanadad, mussa ina strivla, nua che ti stas en l’onn.' },
     kreuzTooltip: 'Tar CHF {c}: franchisa {low} ≈ CHF {tief} · franchisa {high} ≈ CHF {hoch}',
-    kreuzAria: 'Custs totals per onn per la franchisa {low} e {high}; las lingias sa cruschan al punct da pareglia da CHF {be}.',
+    kreuzAria: 'Custs totals per onn per la franchisa {low} e {high}; las lingias sa cruschan tar CHF {be}, sutvart è la franchisa auta pli bunmartgada.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     reserveCheck_strong: { sie: 'Vossa reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per Vus.', du: 'Tia reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
