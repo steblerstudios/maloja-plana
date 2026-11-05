@@ -9,6 +9,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -42,13 +43,13 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const wege = React.createElement(React.Fragment, null,
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.medium, marginTop: space.md }
     }, t('nav.finanzUebersicht')),
 
     // Mietzinsbeiträge können ein Anspruch VOR/neben der Sozialhilfe sein — ruhig dorthin verweisen.
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('mietzins'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' }
+      style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' }
     }, t('nav.mietzins'))
   );
   const rechner = (extra) => React.createElement(SozialhilfeRechner, { palette, t, data, onNavigate, titel: t('sozialhilfe.title'), satz, stelle, mitPegel: true, ...extra });
