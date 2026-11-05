@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { SecondaryButton, linkStil } from './components/PrimaryButton.jsx';
+import { text, space, radius } from './config/tokens.js';
 import { laeuftAlsApp, aktuellesGeraet } from './utils/geraetErkennung.js';
 
 // ─── Der Hinweis auf den Weg zum Startbildschirm ──────────────────────────────
@@ -102,7 +102,8 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
     // bleibt sie der ruhige Zweitweg darunter: nie zwei Hauptknöpfe in einer Karte.
     installPrompt
       ? React.createElement(React.Fragment, null,
-        React.createElement(PrimaryButton, {
+        // Fassung 9 (S5): auf der Übersicht trägt nur «Was ist jetzt dran?» einen Hauptknopf.
+        React.createElement(SecondaryButton, {
           palette,
           onClick: () => installAusloesen(installPrompt, onPromptWeg),
           style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
@@ -110,9 +111,9 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
         !klein && React.createElement('button', {
           type: 'button',
           onClick: () => onNavigate('installApp'),
-          style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap', minHeight: '44px', padding: 0 },
+          style: { ...linkStil(palette), whiteSpace: 'nowrap', minHeight: '44px' },
         }, t('pwa.anleitung')))
-      : React.createElement(PrimaryButton, {
+      : React.createElement(SecondaryButton, {
         palette,
         'data-testid': 'install-anleitung-cta',
         onClick: () => onNavigate('installApp'),

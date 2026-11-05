@@ -1092,6 +1092,8 @@ const AppInner = ({ demo }) => {
     ...(opts.extra || {}),
   });
   // «‹ Übersicht» und «‹ Zurück zu …» führen nur zurück: Link (M2), 44px-Zeile.
+  // Fusszeilen-Links: gold und unterstrichen (M2), klein.
+  const fussLink = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px', letterSpacing: '0.3px' };
   const zurueckLink = { ...linkStil(palette), padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px' };
   const settingsControls = [
     React.createElement(VorlesenToggle, { key: 'voice', palette, t, vorlesen }),
@@ -1232,12 +1234,12 @@ const AppInner = ({ demo }) => {
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('a', {
       href: feedbackHref,
-      style: { display: 'inline-flex', alignItems: 'center', minHeight: '44px', color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: { ...fussLink, display: 'inline-flex', alignItems: 'center' }
     }, t('beta.feedbackMail')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
       onClick: () => handleNavigate('legal'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: fussLink
     }, t('legal.footerLink')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
@@ -1246,13 +1248,13 @@ const AppInner = ({ demo }) => {
         else if (demoMode) { beispielVerlassen(); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
         else beispielBetreten();
       },
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: fussLink
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
     !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
         onClick: enterSandbox,
-        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+        style: fussLink
       }, t('sandbox.footerLink'))
     ),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
