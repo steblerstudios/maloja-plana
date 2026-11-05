@@ -136,7 +136,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
       React.createElement(PrimaryButton, {
         palette,
         onClick: () => installAusloesen(installPrompt, onPromptWeg),
-        icon: React.createElement(Icon, { name: 'download', size: 14, color: palette.onSageBtn }),
+        icon: React.createElement(Icon, { name: 'download', size: 14, color: '#fff' }),
       }, t('install.jetztInstallieren')),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: leading.relaxed },

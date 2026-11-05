@@ -336,7 +336,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sageBtn, color: palette.onSageBtn, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
@@ -442,7 +442,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'flex', gap: space.sm } },
             React.createElement('button', {
               ref: bestaetigenKnopf, onClick: wiederherstellen,
-              style: { ...btnStyle(palette.sageBtn, palette.onSageBtn), flex: 1 },
+              style: { ...btnStyle(palette.sageBtn, '#fff'), flex: 1 },
             }, t('backup.restoreJa')),
             React.createElement('button', {
               onClick: () => setWartendeSicherung(null),

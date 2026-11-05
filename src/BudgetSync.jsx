@@ -480,7 +480,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         onClick: () => setShowAnnual(!showAnnual),
         style: {
           flex: 1, padding: '9px', background: showAnnual ? palette.sageBtn : palette.up,
-          color: showAnnual ? palette.onSageBtn : palette.mid, border: '1px solid ' + palette.border,
+          color: showAnnual ? '#fff' : palette.mid, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
