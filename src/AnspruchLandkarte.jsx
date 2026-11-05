@@ -2,6 +2,7 @@ import React from 'react';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { ANSPRUCH_GRUPPEN } from './data/anspruchLandkarte.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // Anspruchs-Landkarte (#4.4.1): ruhiger Überblick über alle möglichen
 // Berechtigungen, gruppiert nach Auslöser. Seit 27.09.2026 keine eigene Seite mehr; bis
@@ -74,11 +75,7 @@ export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [], mitFuss = 
     mitFuss && React.createElement('button', {
       type: 'button',
       onClick: () => onNavigate('anspruchcheck'),
-      style: {
-        display: 'block', minHeight: '44px', background: 'none', border: 'none',
-        padding: 0, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left',
-        fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage,
-      },
+      style: { ...linkStil(palette), display: 'block', minHeight: '44px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
     }, t('anspruch.gefuehrtLink')),
 
     mitFuss && React.createElement('p', {
