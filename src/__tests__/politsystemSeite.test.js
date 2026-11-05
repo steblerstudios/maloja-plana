@@ -125,12 +125,15 @@ describe('/politsystem/', () => {
 
   it('Bereichsfarbe Zwetschge (Behörden), nicht Heidelbeere (Versicherungen)', () => {
     expect(html).toContain('--heidel-text:#5A6472');
-    expect(html).toContain('--heidel-text:#8E98A8');
+    expect(html).toContain('--heidel-text:#9AA4B3');
+    // Die Kugel trägt ihre Kontur über diesen Selektor; ändert der Abgriff die Schreibweise, fiele sie still weg.
+    expect(html).toContain('.iso svg circle[style*="--kb-gold"]{ stroke:var(--anatomy-hi)');
+    expect(html).toMatch(/<circle [^>]*style="fill:var\(--kb-gold\)"/);
   });
 
   it('Schrittliste, Bundesrat und Ständemehr stehen als Text bzw. beschriftetes Bild da', () => {
-    expect(html).toMatch(/<ol class="schritte" aria-label="[^"]+">/);
-    expect((html.match(/<ol class="schritte"[\s\S]*?<\/ol>/)[0].match(/<li>/g) || []).length).toBe(6);
+    expect(html).toMatch(/<ol class="schritte" role="list" aria-label="[^"]+">/);
+    expect((html.match(/<ol class="schritte"[\s\S]*?<\/ol>/)[0].match(/<li role="listitem">/g) || []).length).toBe(6);
     expect(html).toContain('role="img" aria-label="7 gleich grosse Sitze im Bundesrat, November 2026: SVP 2, SP 2, FDP 2, Mitte 1"');
     const kaestchen = html.match(/<div class="bundesrat"[\s\S]*?<\/div>/)[0];
     expect((kaestchen.match(/<span><\/span>/g) || []).length).toBe(REGELN.bundesrat);

@@ -174,17 +174,18 @@ ${zeilen}
 // Schrittliste als Schlüssel zur Kugelbahn: Text im HTML, nicht im Bild.
 function schritte() {
   const s = [
-    ['Bundesrat', 'Entwurf, vorher Vernehmlassung'],
-    ['Nationalrat', 'berät und beschliesst'],
-    ['Ständerat', 'berät und beschliesst'],
-    ['Einigung', 'bis beide dasselbe wollen'],
-    [`${REGELN.referendumTage} Tage`, 'Frist für ein Referendum'],
-    ['Urne', 'nur wenn verlangt; bei der Verfassung immer'],
+    ['Entwurf', 'meist vom Bundesrat; bei wichtigen Vorhaben vorher Vernehmlassung'],
+    ['Erster Rat', 'Nationalrat oder Ständerat, berät und beschliesst'],
+    ['Zweiter Rat', 'berät und beschliesst ebenso'],
+    ['Einigung', 'bis beide dasselbe beschliessen, sonst scheitert die Vorlage'],
+    [`${REGELN.referendumTage} Tage`, 'ab der Veröffentlichung: Frist für ein Referendum'],
+    ['Urne', 'bei Gesetzen in der Regel nur, wenn verlangt; bei der Verfassung immer'],
   ];
   return `
-        <ol class="schritte" aria-label="Der Weg eines Bundesgesetzes in sechs Schritten">
-${s.map(([t, u]) => `          <li><strong>${t}</strong><span>${u}</span></li>`).join('\n')}
-        </ol>`;
+        <ol class="schritte" role="list" aria-label="Der Weg eines Bundesgesetzes in sechs Schritten">
+${s.map(([t, u]) => `          <li role="listitem"><strong>${t}</strong><span>${u}</span></li>`).join('\n')}
+        </ol>
+        <p class="leise">Die Schritte vereinfacht, als Schlüssel zum Bild darüber. [[q:bv]] [[q:parlg]]</p>`;
 }
 
 // Bundesrat: sieben gleiche Kästchen, nach Partei gruppiert, in Grau
@@ -196,14 +197,14 @@ function sitzeBundesrat() {
   return `
         <figure class="sitzbild">
           <div class="bundesrat" role="img" aria-label="${REGELN.bundesrat} gleich grosse Sitze im Bundesrat, November 2026: ${lesbar}">${gruppen}</div>
-          <figcaption>Die ${REGELN.bundesrat} Sitze im Bundesrat nach Partei, November 2026. Jedes Kästchen ist gleich gross, wie die Mitglieder. [[q:bundesrat]]</figcaption>
+          <figcaption>Die ${REGELN.bundesrat} Sitze im Bundesrat nach Partei, November 2026. Jedes Kästchen ist gleich gross, denn kein Mitglied steht über den anderen. [[q:bundesrat]]</figcaption>
         </figure>`;
 }
 
 // Ständemehr: 26 Felder in der Reihenfolge der Verfassung, halbe Kantone halb
 // so breit. Die Linie in der Mitte ist die Hälfte von 23; Ja braucht mehr.
 function streifenStaende() {
-  const felder = KANTONE.map((k) => `<span class="${HALBE.includes(k) ? 'halb' : 'ganz'}" title="${name(k)}"></span>`).join('');
+  const felder = KANTONE.map((k) => `<span class="${HALBE.includes(k) ? 'halb' : 'ganz'}"></span>`).join('');
   return `
         <figure class="sitzbild">
           <div class="staende" role="img" aria-label="${KANTONE.length} Kantone als Felder: ${KANTONE.length - HALBE.length} ganze und ${HALBE.length} halbe Standesstimmen, zusammen ${REGELN.standesstimmen}. Die Mitte liegt bei ${String(REGELN.standesstimmen / 2).replace('.', ',')}; ein Ja braucht mindestens ${Math.floor(REGELN.standesstimmen / 2) + 1}.">${felder}<span class="mitte" aria-hidden="true"></span></div>
@@ -248,34 +249,36 @@ export const POLITSYSTEM = {
   // Zwetschge = «behoerden» aus src/data/lebensbereiche.js statt Heidelbeere
   // (Versicherungen). Die Variablen heissen im gemeinsamen Stil weiter
   // --heidel*; hier werden nur ihre Werte ersetzt. Text hell #5A6472 (5.4:1 auf
-  // --bg), dunkel #8E98A8 (5.5:1; #7C8798 nur für Flächen, 4.4:1 wäre zu knapp).
+  // --bg), dunkel #9AA4B3 (6.4:1 auf --bg, 5.4:1 auf dem Hauch; #7C8798 nur für Flächen, 4.4:1 wäre zu knapp).
   // Hervorhebung in den Figuren in Salbei wie in der Werkstatt-Kugelbahn
   // (#5A7868 / #8FB0A0). Gold der Kugel wie in der Marke (#C4A870), der
   // Kontrast kommt von der dunklen Kontur, nicht von der Füllung.
   stilZusatz: `
     :root{ --heidel:#5A6472; --heidel-text:#5A6472; --heidel-hauch:#E9EBEE; --hl-hi:#5A7868 }
-    @media (prefers-color-scheme: dark){ :root{ --heidel:#7C8798; --heidel-text:#8E98A8; --heidel-hauch:#2C2E33; --hl-hi:#8FB0A0 } }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#7C8798; --heidel-text:#9AA4B3; --heidel-hauch:#2C2E33; --hl-hi:#8FB0A0 } }
     .iso{ --kb-gold:#C4A870; --anatomy-lit:#5A7868; --anatomy-lit-top:#FFFFFD; --anatomy-lit-shade:#ECEAE3 }
     @media (prefers-color-scheme: dark){ .iso{ --anatomy-lit:#8FB0A0; --anatomy-lit-top:#3A3934; --anatomy-lit-shade:#2F2E2A } }
     .iso svg circle[style*="--kb-gold"]{ stroke:var(--anatomy-hi); stroke-width:1.2 }
     .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     .sitze table{ font-size:14px } .sitze th[scope="row"], .sitze th.n{ white-space:normal } .sitze td.n{ width:2.6em; padding-right:6px }
-    .sitze .aend{ display:block; font-size:12px; line-height:1.2 }
+    .sitze .aend{ display:block; font-size:13px; line-height:1.2 }
     @media (max-width:600px){ .sitze td.balken{ width:22% } }
     ol.schritte{ list-style:none; counter-reset:schritt; margin:14px 0 20px; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px }
     ol.schritte li{ counter-increment:schritt; background:var(--flaeche); border:1px solid var(--rand); border-radius:12px; padding:10px 12px; font-size:14px; line-height:1.45 }
     ol.schritte li strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-weight:600 }
     ol.schritte li strong::before{ content:counter(schritt) " "; color:var(--heidel-text) }
     ol.schritte li span{ color:var(--leise) }
+    @media (max-width:600px){ ol.schritte{ grid-template-columns:1fr; gap:18px } ol.schritte li{ position:relative } ol.schritte li + li::before{ content:"↓"; position:absolute; top:-18px; left:14px; color:var(--leise); font-size:13px; line-height:18px } }
     figure.sitzbild{ margin:18px 0 22px }
     .bundesrat{ display:flex; flex-wrap:wrap; gap:14px 22px }
     .bundesrat .gruppe{ display:flex; flex-direction:column; gap:6px }
     .bundesrat .kaestchen{ display:flex; gap:6px } .bundesrat .kaestchen span{ width:30px; height:30px; border-radius:6px; border:1.5px solid var(--leise); background:var(--flaeche) }
-    .bundesrat .was{ font-size:13px; color:var(--leise) }
+    .bundesrat .was{ font-size:14px; color:var(--leise) }
     .staende{ position:relative; display:flex; gap:3px; height:34px }
     .staende span.ganz{ flex:2; border-radius:4px; background:var(--heidel-hauch); border:1px solid var(--heidel) }
     .staende span.halb{ flex:1; border-radius:4px; background:var(--flaeche); border:1px dashed var(--heidel) }
     .staende .mitte{ position:absolute; left:50%; top:-6px; bottom:-6px; width:2px; margin-left:-1px; background:var(--text) }
+    @media (max-width:600px){ .staende{ height:44px; gap:2px } .staende span.halb{ border-width:2px } }
     .staende-skala{ display:flex; justify-content:space-between; margin:6px 0 0; font-size:13px; color:var(--leise) }
     figure.sitzbild figcaption{ font-size:14px; color:var(--leise); margin-top:10px }`,
   hinweis:
