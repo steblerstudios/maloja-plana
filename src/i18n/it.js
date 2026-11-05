@@ -3177,7 +3177,7 @@ export default {
     childrenNote: { sie: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Si informi presso il servizio sociale.', du: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.' },
     childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',
     einkommenNichtErfasst: 'Reddito non ancora inserito, importo aperto',
-    einkommenAusBrutto: 'Salario indicato lordo: calcolo con un salario netto stimato (trattenute forfettarie). Con il salario netto del conteggio salariale il risultato è più preciso.',
+    einkommenAusBrutto: 'Il salario è indicato lordo nel profilo. Il calcolo usa un salario netto stimato (trattenute forfettarie). Con il salario netto del conteggio salariale il risultato è più preciso.',
     renteNichtErfasst: "Rendita non ancora inserita, importo aperto",
     assetLimitNote: 'Il patrimonio oltre una franchigia viene di regola conteggiato ({basis}: {freibetrag} per questa economia domestica). Il patrimonio in questo calcolo la supera di circa {ueberschuss}. Se non è subito disponibile, sono previsti un termine adeguato per la realizzazione e, se necessario, un sostegno nel frattempo a titolo di anticipo; questi importi vanno di regola rimborsati. Orientamento, senza carattere vincolante.',
     assetLimitBasisCanton: 'Cantone {name}, fonte letta il {datum}',

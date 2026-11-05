@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateSozialhilfe, calculateIPV, ladeIPVModelle, preloadPLZ } from '../config/cantonalData.js';
 import { finanzWerte, druckAbschnitte, sozialhilfeKarte, ipvKarte } from '../components/FinanzAuswertung.jsx';
@@ -41,9 +40,9 @@ describe('Sozialhilfe: Hinweis «aus brutto geschätzt»', () => {
   });
 
   it('Finanz-Übersicht: Karte und Druck sagen es, bei netto nicht', () => {
-    expect(karte(profil('brutto'))).toContain(HINWEIS);
+    expect(karte(profil('brutto'))).toContain('behoerdenDossier.jsonTexte.annahmeAusBrutto');
     expect(druckText(profil('brutto'))).toContain(HINWEIS);
-    expect(karte(profil('netto'))).not.toContain(HINWEIS);
+    expect(karte(profil('netto'))).not.toContain('behoerdenDossier.jsonTexte.annahmeAusBrutto');
     expect(druckText(profil('netto'))).not.toContain(HINWEIS);
   });
 
@@ -62,7 +61,7 @@ describe('Sozialhilfe: Hinweis «aus brutto geschätzt»', () => {
   it('Selbständige: nicht geschätzt, kein Hinweis', () => {
     const p = profil('brutto', { employmentType: 'selfEmployed' });
     expect(calculateSozialhilfe(p).einkommenGeschaetzt).toBe(false);
-    expect(karte(p)).not.toContain(HINWEIS);
+    expect(karte(p)).not.toContain('behoerdenDossier.jsonTexte.annahmeAusBrutto');
   });
 
   it('der Text steht in allen fünf Sprachen', () => {

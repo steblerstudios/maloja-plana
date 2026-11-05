@@ -4906,7 +4906,7 @@ export default {
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
     einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
-    einkommenAusBrutto: 'Paja inditgada brut: quintà cun ina paja netta stimada (deducziuns forfetaras). Cun la paja netta dal quint da paja è il resultat pli exact.', // TODO(rm): provisorisch
+    einkommenAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada (deducziuns forfetaras). Cun la paja netta dal quint da paja è il resultat pli exact.', // TODO(rm): provisorisch
     renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen

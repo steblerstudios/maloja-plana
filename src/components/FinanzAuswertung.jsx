@@ -517,7 +517,8 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
       + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : '')
       + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : '')
       + (sozialhilfe.ohneFreibetrag ? ' | ' + t('pegel.ohneFreibetrag') : '')
-      + (sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt ? ' | ' + t('sozialhilfe.einkommenAusBrutto') : '')
+      // In der « | »-Zeile die kurze Fassung (dieselbe wie im Dossier); im Druck und auf dem Blatt der ganze Satz.
+      + (sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt ? ' | ' + t('behoerdenDossier.jsonTexte.annahmeAusBrutto') : '')
       + (sozialhilfe.hinweise?.length ? ' | ' + t('pegel.rechnungOffen') : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });
