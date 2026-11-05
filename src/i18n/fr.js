@@ -3312,7 +3312,7 @@ export default {
     kapitelZeile: 'Impôt fédéral {bund} · canton et commune {kanton} — estimation grossière pour le chef-lieu, sans impôt ecclésiastique.',
     annahmeOhneDreizehntenHier: { sie: 'Calculé sans 13e salaire — avec un 13e, l’impôt est plus élevé. Vous pouvez l’indiquer plus haut sous «Revenu».', du: 'Calculé sans 13e salaire — avec un 13e, l’impôt est plus élevé. Tu peux l’indiquer plus haut sous «Revenu».' },
     // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
-    annahmeOhneDreizehntenBlatt: 'Calculé sans 13e salaire — avec un 13e salaire, l’impôt est plus élevé.',
+    annahmeOhneDreizehntenBlatt: 'Calculé sans 13e salaire (indication manquante) — avec un 13e salaire, l’impôt est plus élevé.',
     // E37/E38 : pas de montant cantonal là où le tableau de l’AFC ne s’applique pas
     bandOutside: { sie: 'Pour ce revenu imposable, Maloja n\'affiche pas de montant ici. Le tableau issu du calculateur d\'impôts de l\'AFC va de CHF {min} à CHF {max} (chef-lieu, année fiscale {year}) ; en dehors, Maloja ne le prolonge pas. Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.', du: 'Pour ce revenu imposable, Maloja n\'affiche pas de montant ici. Le tableau issu du calculateur d\'impôts de l\'AFC va de CHF {min} à CHF {max} (chef-lieu, année fiscale {year}) ; en dehors, Maloja ne le prolonge pas. Le calculateur d\'impôts de l\'AFC calcule le montant pour ta commune.' },
     bandNotChecked: { sie: 'Pour cette situation, Maloja n\'affiche pas de montant ici. L\'impôt cantonal et communal a été mesuré pour les personnes célibataires et mariées ayant jusqu\'à trois enfants ; pour les personnes non mariées, seulement si les enfants vivent dans le même ménage (confirmation au barème parental). Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.', du: 'Pour cette situation, Maloja n\'affiche pas de montant ici. L\'impôt cantonal et communal a été mesuré pour les personnes célibataires et mariées ayant jusqu\'à trois enfants ; pour les personnes non mariées, seulement si les enfants vivent dans le même ménage (confirmation au barème parental). Le calculateur d\'impôts de l\'AFC calcule le montant pour ta commune.' },
@@ -5644,7 +5644,7 @@ export default {
     subtitle: { sie: 'Votre aperçu personnel — les informations principales en un coup d\'oeil.', du: 'Ton aperçu personnel — les informations principales en un coup d\'oeil.' },
     // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
     gesundheitLabel: 'Santé',
-    gesundheitHinweis: 'Le groupe sanguin, les allergies et les médicaments figurent dans le dossier d\'urgence.',
+    gesundheitHinweis: 'Le groupe sanguin, les allergies, les médicaments et les maladies figurent dans le dossier d’urgence.',
     name: 'Nom',
     address: 'Adresse',
     documents: 'Documents enregistrés',
@@ -6193,7 +6193,7 @@ export default {
     breakEven: 'Franchise élevée avantageuse jusqu’à env. CHF {breakeven} de frais de santé par an',
     regional: 'Prime régionale vs Suisse',
     vergleich: 'Comparaison des primes et couverture accidents',
-    referenz: 'Tarif de la caisse CHF {betrag}',
+    referenz: 'Tarif standard de la caisse CHF {betrag}/mois',
     kassenZahl: '{n} caisses',
     alleKassen: 'Afficher les {n} caisses',
     wenigerKassen: 'Seulement les cinq moins chères',
@@ -6256,7 +6256,7 @@ export default {
     insurerNotFoundHint: 'Le nom n\'a pas pu être associé à un assureur agréé. Vérifiez l\'orthographe.',
     comparison: 'Comparaison des primes',
     yourPremium: { sie: 'Votre prime : CHF {amount}/mois', du: 'Ta prime : CHF {amount}/mois' },
-    refPremium: 'Prime de référence OFSP (franchise {franchise}) : CHF {amount}/mois',
+    refPremium: 'Tarif standard de la caisse (franchise {franchise}) : CHF {amount}/mois',
     premiumAbove: { sie: 'Votre prime dépasse la référence de CHF {diff}. Envisagez des modèles alternatifs.', du: 'Ta prime dépasse la référence de CHF {diff}. Envisage des modèles alternatifs.' },
     premiumBelow: { sie: 'Votre prime est inférieure de CHF {diff} à la référence.', du: 'Ta prime est inférieure de CHF {diff} à la référence.' },
     franchiseTable: 'Primes de référence {insurer} (modèle standard)',
@@ -6599,8 +6599,11 @@ export default {
     einkommenHint: 'Revenu moyen déterminant',
     nettoHint: "Le revenu enregistré est indiqué comme net — veuillez saisir ici le salaire annuel brut pour l'AVS et la LPP.",
     // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
-    bruttoVorschlag: 'Estimé à partir du salaire net du profil (CHF {netto} par mois) : environ CHF {betrag} brut par an. C\'est une estimation — le certificat de salaire est plus précis.',
+    bruttoVorschlag: 'Estimé à partir du salaire net du profil (CHF {netto} par mois) : environ CHF {betrag} brut par an, salaire principal seulement. C’est une estimation — le salaire soumis à l’AVS sur la fiche de salaire est plus précis.',
     bruttoUebernehmen: 'Reprendre l\'estimation',
+    bruttoVorschlagZulagen: 'Si des allocations familiales sont comprises dans le salaire net, l’estimation est trop élevée.',
+    bruttoVorschlagOhneDreizehnten: 'Calculé sans 13e salaire (indication manquante).',
+    bruttoUebernommen: 'Estimé à partir du salaire net. Avec le salaire soumis à l’AVS de la fiche de salaire, le calcul est plus précis.',
     partnerNettoHint: 'Veuillez saisir le salaire annuel brut — le profil ne contient que le salaire net, qui serait ici une base erronée.',
     beitragsjahre: 'Années de cotisation',
     beitragsjahreHint: { sie: 'Jusqu’à l’âge de référence ({referenzalter}) : vos années selon l’extrait CI plus les années attendues d’ici là. Vide = sans lacune.', du: 'Jusqu’à l’âge de référence ({referenzalter}) : tes années selon l’extrait CI plus les années attendues d’ici là. Vide = sans lacune.' },

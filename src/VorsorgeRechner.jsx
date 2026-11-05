@@ -19,7 +19,7 @@ import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahre
 import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
-import { hauptlohnMonate } from './utils/dreizehnter.js';
+import { hauptlohnMonate, dreizehnterStatus } from './utils/dreizehnter.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -71,6 +71,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     const monat = nettoZuBruttoRichtwert(Number(data.finanzen.monthlyIncome), bvgAlter, rentenalter, undefined, beitragsfrei);
     return monat > 0 ? Math.round(monat * hauptlohnMonate(data.finanzen?.dreizehnter)) : 0;
   })();
+  // Fachprüfung 05.11.2026: die Annahmen des Vorschlags offen nennen (13. Monatslohn offen → 12 Monate; Familienzulagen
+  // im Netto heben die Schätzung). Nach der Übernahme ersetzt ein eigener Hinweis den Satz «bitte Brutto eintragen».
+  const vorschlagOhneDreizehnten = dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
+  const vorschlagUebernommen = bruttoVorschlag > 0 && String(einkommen) === String(bruttoVorschlag);
   const [beitragsjahre, setBeitragsjahre] = useState('');
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
@@ -504,9 +508,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Die Zukunftsgrafik ist das Instrument des Reiters (F7-R3) und steht unter der Live-Region. Rechnung unverändert.
   const angabenGemeinsam = React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
-        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint'),
+        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: vorschlagUebernommen ? t('vr.bruttoUebernommen') : nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint'),
           extra: bruttoVorschlag > 0 && !String(einkommen).trim() && React.createElement('div', { 'data-vr-vorschlag': '', style: { ...s.sublabel, maxWidth: '260px', marginTop: space.xs + 'px' } },
             t('vr.bruttoVorschlag', { betrag: zahl(bruttoVorschlag), netto: zahl(Number(data.finanzen.monthlyIncome)) }), ' ',
+            vorschlagOhneDreizehnten ? t('vr.bruttoVorschlagOhneDreizehnten') + ' ' : '',
+            t('vr.bruttoVorschlagZulagen'), ' ',
             React.createElement('button', { type: 'button', onClick: () => setEinkommen(String(bruttoVorschlag)),
               style: { background: 'none', border: 'none', padding: '4px 0', minHeight: '44px', color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } },
               t('vr.bruttoUebernehmen'))) }),

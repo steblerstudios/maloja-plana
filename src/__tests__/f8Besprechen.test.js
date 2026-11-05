@@ -24,7 +24,7 @@ describe('F8-P1 · Blatt fürs Amt ohne App-Anleitung', () => {
   const html = generateBehoerdenDossier(DEMO_DATA, chapters, t, calc);
 
   it('nennt die Annahme, aber nicht, wo man sie in der App angibt', () => {
-    expect(html).toContain('Ohne 13. Monatslohn gerechnet — mit einem 13. Monatslohn liegt die Steuer höher.');
+    expect(html).toContain('Ohne 13. Monatslohn gerechnet (Angabe fehlt) — mit einem 13. Monatslohn liegt die Steuer höher.');
     expect(html).not.toMatch(/Angeben lässt sich/);
     expect(html).not.toMatch(/im Kapitel «Finanzen/);
   });
@@ -72,12 +72,19 @@ describe('F8-P3 · Lebensmappe: Arbeitgeber einmal, Gesundheit nur als Verweis',
     const html = generateLebensmappe(DEMO_DATA, chapters, t, []);
     expect(html).not.toContain('Penicillin');
     expect(html).not.toContain('Euthyrox');
-    expect(html).toContain('Blutgruppe, Allergien und Medikamente stehen im Notfall-Dossier.');
+    expect(html).toContain('Blutgruppe, Allergien, Medikamente und Erkrankungen stehen im Notfall-Dossier.');
     expect(html).not.toContain('alle wichtigen Angaben');
   });
 
+  it('auch nur erfasste Erkrankungen lösen den Verweis aus (Fachprüfung 05.11.2026)', () => {
+    const nf = { ...DEMO_DATA.notfall, bloodType: '', allergies: '', medications: '', medicationsList: [], chronicDiseasesList: [{ name: 'Asthma' }] };
+    const html = generateLebensmappe({ ...DEMO_DATA, notfall: nf }, chapters, t, []);
+    expect(html).toContain('stehen im Notfall-Dossier');
+    expect(html).not.toContain('Asthma');
+  });
+
   it('ohne Gesundheitsangaben kein Verweis', () => {
-    const nf = { ...DEMO_DATA.notfall, bloodType: '', allergies: '', medications: '', medicationsList: [] };
+    const nf = { ...DEMO_DATA.notfall, bloodType: '', allergies: '', medications: '', medicationsList: [], chronicDiseases: '', chronicDiseasesList: [] };
     const html = generateLebensmappe({ ...DEMO_DATA, notfall: nf }, chapters, t, []);
     expect(html).not.toContain('stehen im Notfall-Dossier');
   });
@@ -94,7 +101,9 @@ describe('F8-R1 · keine Fachwörter Break-even und KVG-Tracker', () => {
     });
   }
   it('Referenz heisst jetzt, was es ist: der Tarif der eigenen Kasse', () => {
-    expect(de.vu.referenz).toBe('Tarif der Kasse CHF {betrag}');
+    // Fachprüfung 05.11.2026: es ist der Standardtarif (Grundmodell) der eigenen Kasse, nicht der eigene Tarif.
+    expect(de.vu.referenz).toBe('Standardtarif der Kasse CHF {betrag}/Mt.');
+    expect(de.po.refPremium).toContain('Standardtarif der Kasse');
   });
 });
 
@@ -107,10 +116,22 @@ describe('F8-V1 · Vorsorge-Rechner schlägt das geschätzte Brutto vor, überni
     expect(html).toContain('data-vr-vorschlag');
     expect(html).toContain('Schätzung übernehmen');
     expect(html).toContain('Geschätzt aus dem Nettolohn im Profil (CHF 5’137 im Monat)');
+    expect(html).toContain('nur der Hauptlohn');
     // nichts automatisch im Feld: kein value mit dem Vorschlag
     const betrag = /rund CHF ([\d’]+) brutto im Jahr/.exec(html)[1].replace(/’/g, '');
     expect(Number(betrag)).toBeGreaterThan(LOHN * 12);
     expect(html).not.toContain(`value="${betrag}"`);
+  });
+
+  it('nennt die Annahmen: Familienzulagen immer, 13. Monatslohn nur wenn offen', () => {
+    const offen = render({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: LOHN, incomeType: 'netto', dreizehnter: '' } });
+    expect(offen).toContain('Ohne 13. Monatslohn gerechnet (Angabe fehlt).');
+    expect(offen).toContain('Sind Familienzulagen im Nettolohn enthalten, liegt die Schätzung zu hoch.');
+    const nein = render({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: LOHN, incomeType: 'netto', dreizehnter: 'no' } });
+    expect(nein).not.toContain('Angabe fehlt');
+    const ja = render({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: LOHN, incomeType: 'netto', dreizehnter: 'yes' } });
+    const jahr = (h) => Number(/rund CHF ([\d’]+) brutto im Jahr/.exec(h)[1].replace(/’/g, ''));
+    expect(jahr(ja) / jahr(nein)).toBeCloseTo(13 / 12, 2);
   });
 
   it('brutto erfasst: vorbefüllt wie bisher, kein Vorschlag', () => {
@@ -128,6 +149,7 @@ describe('F8-V1 · Vorsorge-Rechner schlägt das geschätzte Brutto vor, überni
     for (const [l, d] of Object.entries(SPRACHEN)) {
       expect(d.vr.bruttoVorschlag, l).toContain('{betrag}');
       expect(d.vr.bruttoUebernehmen, l).toBeTruthy();
+      for (const k of ['bruttoVorschlagZulagen', 'bruttoVorschlagOhneDreizehnten', 'bruttoUebernommen']) expect(d.vr[k], `${l} ${k}`).toBeTruthy();
     }
   });
 });

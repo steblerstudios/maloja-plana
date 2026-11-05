@@ -3312,7 +3312,7 @@ export default {
     kapitelZeile: 'Federal tax {bund} · canton and municipality {kanton} — rough estimate for the cantonal capital, without church tax.',
     annahmeOhneDreizehntenHier: 'Calculated without a 13th month salary — with one, the tax is higher. You can enter it above under «Income».',
     // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
-    annahmeOhneDreizehntenBlatt: 'Calculated without a 13th month salary — with one, the tax is higher.',
+    annahmeOhneDreizehntenBlatt: 'Calculated without a 13th month salary (not specified) — with one, the tax is higher.',
     // E37/E38: no cantonal figure where the FTA table does not apply
     bandOutside: 'Maloja shows no amount here for this taxable income. The table from the FTA tax calculator covers CHF {min} to CHF {max} (cantonal capital, tax year {year}); Maloja does not extend it outside that range. The FTA tax calculator works out the amount for your municipality.',
     bandNotChecked: 'Maloja shows no amount here for this situation. Cantonal and municipal tax has been measured for single and married people with up to three children; for people who are not married, only if the children live in the same household (confirmation under the parent tariff). The FTA tax calculator works out the amount for your municipality.',
@@ -5644,7 +5644,7 @@ export default {
     subtitle: 'Your personal overview — the main details at a glance.',
     // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
     gesundheitLabel: 'Health',
-    gesundheitHinweis: 'Blood type, allergies and medication are in the emergency dossier.',
+    gesundheitHinweis: 'Blood type, allergies, medication and illnesses are in the emergency dossier.',
     name: 'Name',
     address: 'Address',
     documents: 'Stored documents',
@@ -6193,7 +6193,7 @@ export default {
     breakEven: 'A high deductible pays off up to around CHF {breakeven} of health costs a year',
     regional: 'Regional premium vs. Switzerland',
     vergleich: 'Premium comparison and accident cover',
-    referenz: 'Insurer’s premium CHF {betrag}',
+    referenz: 'Insurer’s standard premium CHF {betrag}/mo.',
     kassenZahl: '{n} insurers',
     alleKassen: 'Show all {n} insurers',
     wenigerKassen: 'Only the five cheapest',
@@ -6256,7 +6256,7 @@ export default {
     insurerNotFoundHint: 'The name could not be matched to an approved insurer. Check the spelling.',
     comparison: 'Premium comparison',
     yourPremium: 'Your premium: CHF {amount}/mo.',
-    refPremium: 'FOPH reference premium (deductible {franchise}): CHF {amount}/mo.',
+    refPremium: 'Insurer’s standard premium (deductible {franchise}): CHF {amount}/mo.',
     premiumAbove: 'Your premium is CHF {diff} above the reference. Consider alternative models.',
     premiumBelow: 'Your premium is CHF {diff} below the reference.',
     franchiseTable: 'Reference premiums {insurer} (standard model)',
@@ -6599,8 +6599,11 @@ export default {
     einkommenHint: 'Average insured income',
     nettoHint: 'The saved income is marked as net — please enter the gross annual salary for AHV and BVG here.',
     // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
-    bruttoVorschlag: 'Estimated from the net salary in your profile (CHF {netto} a month): around CHF {betrag} gross a year. An estimate — your salary statement is more precise.',
+    bruttoVorschlag: 'Estimated from the net salary in your profile (CHF {netto} a month): around CHF {betrag} gross a year, main salary only. An estimate — the AHV salary on your payslip is more precise.',
     bruttoUebernehmen: 'Use the estimate',
+    bruttoVorschlagZulagen: 'If family allowances are included in the net salary, the estimate is too high.',
+    bruttoVorschlagOhneDreizehnten: 'Calculated without a 13th month salary (not specified).',
+    bruttoUebernommen: 'Estimated from the net salary. With the AHV salary from your payslip, the calculation is more precise.',
     partnerNettoHint: 'Please enter the gross annual salary — the profile only holds the net salary, which would be the wrong basis here.',
     beitragsjahre: 'Contribution years',
     beitragsjahreHint: 'Up to the reference age ({referenzalter}): your years according to the IK statement plus the years expected until then. Empty = no gaps.',

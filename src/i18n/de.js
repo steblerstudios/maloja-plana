@@ -3346,7 +3346,7 @@ export default {
     kapitelZeile: 'Bundessteuer {bund} · Kanton und Gemeinde {kanton} — grobe Schätzung für den Hauptort, ohne Kirchensteuer.',
     annahmeOhneDreizehntenHier: { sie: 'Ohne 13. Monatslohn gerechnet — mit einem 13. liegt die Steuer höher. Angeben lässt er sich oben bei «Einkommen».', du: 'Ohne 13. Monatslohn gerechnet — mit einem 13. liegt die Steuer höher. Angeben lässt er sich oben bei «Einkommen».' },
     // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
-    annahmeOhneDreizehntenBlatt: 'Ohne 13. Monatslohn gerechnet — mit einem 13. Monatslohn liegt die Steuer höher.',
+    annahmeOhneDreizehntenBlatt: 'Ohne 13. Monatslohn gerechnet (Angabe fehlt) — mit einem 13. Monatslohn liegt die Steuer höher.',
     // E37/E38: wo die ESTV-Tabelle nicht trägt, keine Kantonszahl
     bandOutside: { sie: 'Für Ihr steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Tabelle aus dem Steuerrechner der ESTV reicht von CHF {min} bis CHF {max} (Hauptort, Steuerjahr {year}); ausserhalb davon rechnet Maloja nicht weiter. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für dein steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Tabelle aus dem Steuerrechner der ESTV reicht von CHF {min} bis CHF {max} (Hauptort, Steuerjahr {year}); ausserhalb davon rechnet Maloja nicht weiter. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
     bandNotChecked: { sie: 'Für diese Situation zeigt Maloja hier keinen Betrag. Gemessen ist die Kantons- und Gemeindesteuer für alleinstehende und verheiratete Personen mit bis zu drei Kindern; bei Personen, die nicht verheiratet sind, nur, wenn die Kinder im gleichen Haushalt leben (Bestätigung beim Elterntarif). Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für diese Situation zeigt Maloja hier keinen Betrag. Gemessen ist die Kantons- und Gemeindesteuer für alleinstehende und verheiratete Personen mit bis zu drei Kindern; bei Personen, die nicht verheiratet sind, nur, wenn die Kinder im gleichen Haushalt leben (Bestätigung beim Elterntarif). Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
@@ -5687,7 +5687,7 @@ export default {
     subtitle: { sie: 'Ihre persönliche Gesamtübersicht — die wichtigsten Angaben auf einen Blick.', du: 'Deine persönliche Gesamtübersicht — die wichtigsten Angaben auf einen Blick.' },
     // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
     gesundheitLabel: 'Gesundheit',
-    gesundheitHinweis: 'Blutgruppe, Allergien und Medikamente stehen im Notfall-Dossier.',
+    gesundheitHinweis: 'Blutgruppe, Allergien, Medikamente und Erkrankungen stehen im Notfall-Dossier.',
     name: 'Name',
     address: 'Adresse',
     documents: 'Gespeicherte Dokumente',
@@ -6248,7 +6248,7 @@ export default {
     breakEven: 'Hohe Franchise lohnt sich bis rund CHF {breakeven} Gesundheitskosten im Jahr',
     regional: 'Prämie regional vs. Schweiz',
     vergleich: 'Prämienvergleich und Unfalldeckung',
-    referenz: 'Tarif der Kasse CHF {betrag}',
+    referenz: 'Standardtarif der Kasse CHF {betrag}/Mt.',
     kassenZahl: '{n} Kassen',
     alleKassen: 'Alle {n} Kassen anzeigen',
     wenigerKassen: 'Nur die fünf günstigsten',
@@ -6313,7 +6313,7 @@ export default {
     insurerNotFoundHint: 'Der Name konnte keinem zugelassenen Versicherer zugeordnet werden. Prüfe die Schreibweise.',
     comparison: 'Prämienvergleich',
     yourPremium: { sie: 'Ihre Prämie: CHF {amount}/Mt.', du: 'Deine Prämie: CHF {amount}/Mt.' },
-    refPremium: 'BAG-Referenzprämie (Franchise {franchise}): CHF {amount}/Mt.',
+    refPremium: 'Standardtarif der Kasse (Franchise {franchise}): CHF {amount}/Mt.',
     premiumAbove: { sie: 'Ihre Prämie liegt CHF {diff} über der Referenz. Prüfen Sie alternative Modelle.', du: 'Deine Prämie liegt CHF {diff} über der Referenz. Prüfe alternative Modelle.' },
     premiumBelow: { sie: 'Ihre Prämie liegt CHF {diff} unter der Referenz.', du: 'Deine Prämie liegt CHF {diff} unter der Referenz.' },
     franchiseTable: 'Referenzprämien {insurer} (Standardmodell)',
@@ -6673,8 +6673,11 @@ export default {
     einkommenHint: 'Massgebendes Durchschnittseinkommen',
     nettoHint: 'Das hinterlegte Einkommen ist als Netto markiert — für AHV und BVG bitte den Bruttojahreslohn eintragen.',
     // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
-    bruttoVorschlag: 'Geschätzt aus dem Nettolohn im Profil (CHF {netto} im Monat): rund CHF {betrag} brutto im Jahr. Eine Schätzung — der Lohnausweis ist genauer.',
+    bruttoVorschlag: 'Geschätzt aus dem Nettolohn im Profil (CHF {netto} im Monat): rund CHF {betrag} brutto im Jahr, nur der Hauptlohn. Eine Schätzung — genauer ist der AHV-pflichtige Lohn auf der Lohnabrechnung.',
     bruttoUebernehmen: 'Schätzung übernehmen',
+    bruttoVorschlagZulagen: 'Sind Familienzulagen im Nettolohn enthalten, liegt die Schätzung zu hoch.',
+    bruttoVorschlagOhneDreizehnten: 'Ohne 13. Monatslohn gerechnet (Angabe fehlt).',
+    bruttoUebernommen: 'Geschätzt aus dem Nettolohn. Mit dem AHV-pflichtigen Lohn von der Lohnabrechnung wird die Rechnung genauer.',
     partnerNettoHint: 'Bitte den Bruttojahreslohn eintragen — im Profil ist nur der Nettolohn erfasst, und der wäre hier die falsche Basis.',
     beitragsjahre: 'Beitragsjahre',
     beitragsjahreHint: { sie: 'Bis zum Referenzalter ({referenzalter}): Ihre Jahre laut IK-Auszug plus die erwarteten Jahre bis dahin. Leer = ohne Lücke.', du: 'Bis zum Referenzalter ({referenzalter}): deine Jahre laut IK-Auszug plus die erwarteten Jahre bis dahin. Leer = ohne Lücke.' },

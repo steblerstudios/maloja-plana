@@ -3915,7 +3915,7 @@ export default {
     subtitle: { sie: 'Vossa survista persunala cumpleta — las indicaziuns principalas en ina egliada.', du: 'Tia survista persunala cumpleta — las indicaziuns principalas en ina egliada.' },
     // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
     gesundheitLabel: 'Sanadad',
-    gesundheitHinweis: 'Gruppa da sang, allergias e medicaments stattan en il dossier d\'urgenza.',
+    gesundheitHinweis: 'Gruppa da sang, allergias, medicaments e malsognas stattan en il dossier d’urgenza.',
     name: 'Num',
     address: 'Adressa',
     documents: 'Documents memorisads',
@@ -4992,7 +4992,7 @@ export default {
     kapitelZeile: 'Taglia federala {bund} · chantun e vischnanca {kanton} — stimaziun aproximativa per il chalieu, senza taglia ecclesiastica.',
     annahmeOhneDreizehntenHier: { sie: 'Quintà senza 13avla paja — cun ina 13avla è la taglia pli auta. Vus pudais inditgar quai survart sut «Entrada».', du: 'Quintà senza 13avla paja — cun ina 13avla è la taglia pli auta. Ti pos inditgar quai survart sut «Entrada».' },
     // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
-    annahmeOhneDreizehntenBlatt: 'Quintà senza 13avla paja — cun ina 13avla paja è la taglia pli auta.',
+    annahmeOhneDreizehntenBlatt: 'Quintà senza 13avla paja (indicaziun manca) — cun ina 13avla paja è la taglia pli auta.',
     // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
     bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
@@ -5670,7 +5670,7 @@ export default {
     regional: 'Premia regiunala vs. Svizra',
     vergleich: 'Cumparegliaziun da premias e protecziun d’accidents',
     // TODO(rm): provisorisch — Gegenlese (F8-R1, 05.11.2026)
-    referenz: 'Tariffa da la cassa CHF {betrag}',
+    referenz: 'Tariffa standard da la cassa CHF {betrag}/mt.',
     kassenZahl: '{n} cassas',
     alleKassen: 'Mussar tut las {n} cassas',
     wenigerKassen: 'Mo las tschintg las pli bunmartgadas',
@@ -5749,7 +5749,7 @@ export default {
     insurerNotFoundHint: { sie: "Il num n'ha betg pudì vegnir attribuì ad in assicurader autorisà. Controllai la scripziun.", du: "Il num n'ha betg pudì vegnir attribuì ad in assicurader autorisà. Controllescha la scripziun." },
     comparison: 'Cumparegliaziun da premias',
     yourPremium: { sie: 'Vossa premia: CHF {amount}/mt.', du: 'Tia premia: CHF {amount}/mt.' },
-    refPremium: 'Premia da referenza BAG (franschischa {franchise}): CHF {amount}/mt.',
+    refPremium: 'Tariffa standard da la cassa (franschischa {franchise}): CHF {amount}/mt.',
     premiumAbove: { sie: 'Vossa premia è CHF {diff} sur la referenza. Examinai models alternativs.', du: 'Tia premia è CHF {diff} sur la referenza. Examinescha models alternativs.' },
     premiumBelow: { sie: 'Vossa premia è CHF {diff} sut la referenza.', du: 'Tia premia è CHF {diff} sut la referenza.' },
     franchiseTable: 'Premias da referenza {insurer} (model standard)',
@@ -7667,8 +7667,11 @@ export default {
     nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari annual brut per AVS e LPP.",
     // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
     // TODO(rm): provisorisch — Gegenlese (F8-V1, 05.11.2026)
-    bruttoVorschlag: 'Stimà dal salari net en il profil (CHF {netto} per mais): var CHF {betrag} brut per onn. Ina stima — il certificat da salari è pli exact.',
+    bruttoVorschlag: 'Stimà dal salari net en il profil (CHF {netto} per mais): var CHF {betrag} brut per onn, mo il salari principal. Ina stima — pli exact è il salari obligà a l’AVS sin il quint da salari.',
     bruttoUebernehmen: 'Surpigliar la stima',
+    bruttoVorschlagZulagen: 'Sche supplements da famiglia èn cuntegnids en il salari net, è la stima memia auta.',
+    bruttoVorschlagOhneDreizehnten: 'Quintà senza 13avla paja (indicaziun manca).',
+    bruttoUebernommen: 'Stimà dal salari net. Cun il salari obligà a l’AVS dal quint da salari daventa il quint pli exact.',
     partnerNettoHint: 'Endatar per plaschair il salari annual brut — en il profil è mo il salari net registrà, e quel fiss qua la basa sbagliada.',
     beitragsjahre: 'Onns da contribuziun',
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)

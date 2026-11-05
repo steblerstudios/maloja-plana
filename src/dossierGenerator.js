@@ -222,7 +222,8 @@ function getSections(data, chapters, t) {
 const gleicherText = (a, b) => !!a && !!b && String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
 const hatGesundheitsangaben = (nf) => {
   const n = nf || {};
-  return !!(n.bloodType || n.allergies || n.medications || (Array.isArray(n.medicationsList) && n.medicationsList.length));
+  const liste = (x) => Array.isArray(x) && x.length > 0;
+  return !!(n.bloodType || n.allergies || n.medications || n.chronicDiseases || liste(n.medicationsList) || liste(n.chronicDiseasesList));
 };
 
 // ─── Preview Data (for React rendering) ──────────────────
