@@ -47,7 +47,7 @@ mit `anzahl`/`waehle` der Figur).
 
 # Standbilder für die Hintergrundseite /politsystem/ (seit 05.11.2026)
 
-Sechs isometrische Figuren (Anatomy-Stil) aus der Erklärfigur «Schweizer Politsystem als Kugelbahn»
+Isometrische Figuren (Anatomy-Stil) aus der Erklärfigur «Schweizer Politsystem als Kugelbahn»
 von Stebler Studios (Fassung 02.11.2026, Werkstatt `in Arbeit/schweizer-politsystem/`, ausserhalb
 dieses Repos). Sie stehen als **ruhige Standbilder** in der Seite, ohne Skript; Titel und
 Beschreibung setzt `scripts/seiten/politsystem.mjs` ein, die Farben kommen aus dem Seitenstil
@@ -55,12 +55,16 @@ Beschreibung setzt `scripts/seiten/politsystem.mjs` ein, die Farben kommen aus d
 
 | Datei | Figur | Zustand | Abgriff |
 |---|---|---|---|
-| `politsystem-ebenen.svg` | Sortierbahn Bund · Kantone · Gemeinden | Ruhe | aus dem gebauten HTML |
+| `politsystem-ebenen.svg` | **Strichfigur** (Hairline-Stil): drei Terrassen Bund · Kantone · Gemeinden | Ruhe | **erzeugt** von `politsystem-ebenen.mjs` mit dem Hairline-Kernel aus `bewegt/fremd/` (nur Geometrie, kein DOM); seit 05.11.2026 abends |
 | `politsystem-bahn.svg` | Kugelbahn: Bundesrat, Nationalrat, Ständerat, Referendum, Urne | Kugel am Start | aus dem gebauten HTML |
-| `politsystem-uhrwerk.svg` | Bundesrat als Uhrwerk, sieben Räder | Vorsitz bei Rad 1 | im Browser nach dem Einschwingen |
 | `politsystem-mehr.svg` | Prüfstand doppeltes Mehr | Beispiel «Volk 50,6 %, Stände 6 von 23» | im Browser nach dem Einschwingen |
 | `politsystem-wahlbank.svg` | Wahlbank, 200 Sitze in 26 Säulen (Sitze seit 2023) | Zürich gewählt, kleine Partei 8 % → 13 · 12 · 8 · 3 | im Browser nach dem Einschwingen |
-| `politsystem-waage.svg` | Waage der Räte, 200 : 46 | Ruhe | im Browser nach dem Einschwingen |
+
+**Überarbeitung 05.11.2026 abends (Stebler Studios, «A bis E»):** Uhrwerk und Waage sind entfernt. Sie
+waren Bilder ohne zusätzliche Information. An ihrer Stelle stehen kleine Darstellungen ohne Bilddatei, gebaut in
+`scripts/seiten/politsystem.mjs`: sieben Kästchen für den Bundesrat und ein Streifen der 23 Standesstimmen.
+Dazu kommt eine Schrittliste zur Kugelbahn. Die Sortierbahn ist durch die Strichfigur ersetzt. Seither drei
+isometrische Bilder und eine Strichfigur, Bereichsfarbe Zwetschge (Behörden).
 
 **Bereinigt beim Abgriff:** unsichtbare Bedienflächen (`kb-ziel`), ausgeblendete Ebenen
 (`opacity:0`), `id`/`role`/`tabindex`/`aria-*` und alle `data-*` ausser denen, die der Stil liest

@@ -101,7 +101,7 @@ describe('/politsystem/', () => {
 
   it('jede Figur ist ein beschriftetes Bild ohne Fremdes, Clip-Pfade mit eigener id', () => {
     const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)];
-    expect(svgs.length).toBe(6);
+    expect(svgs.length).toBe(4);
     for (const [ganz, innen] of svgs) {
       expect(ganz).toMatch(/role="img"/);
       expect(ganz).toMatch(/aria-labelledby="[^"]+-t [^"]+-d"/);
@@ -111,6 +111,49 @@ describe('/politsystem/', () => {
     }
     // Jeder Verweis url(#…) zeigt auf eine id, die es in der Seite gibt (sonst zeichnet der Browser schwarz).
     for (const [, id] of html.matchAll(/url\(#([^)]+)\)/g)) expect(html).toContain(`id="${id}"`);
+  });
+
+  it('Bildmix: drei isometrische Bilder, eine Strichfigur, keine Uhr und keine Waage mehr', () => {
+    expect((html.match(/<div class="abb-bild iso">/g) || []).length).toBe(3);
+    expect((html.match(/<div class="abb-bild hl">/g) || []).length).toBe(1);
+    expect(html).not.toContain('abb-uhrwerk');
+    expect(html).not.toContain('abb-waage');
+    for (const f of ['politsystem-uhrwerk.svg', 'politsystem-waage.svg']) {
+      expect(fs.existsSync(path.resolve(WURZEL, 'scripts', 'seiten', 'figuren', f))).toBe(false);
+    }
+  });
+
+  it('Bereichsfarbe Zwetschge (Behörden), nicht Heidelbeere (Versicherungen)', () => {
+    expect(html).toContain('--heidel-text:#5A6472');
+    expect(html).toContain('--heidel-text:#8E98A8');
+  });
+
+  it('Schrittliste, Bundesrat und Ständemehr stehen als Text bzw. beschriftetes Bild da', () => {
+    expect(html).toMatch(/<ol class="schritte" aria-label="[^"]+">/);
+    expect((html.match(/<ol class="schritte"[\s\S]*?<\/ol>/)[0].match(/<li>/g) || []).length).toBe(6);
+    expect(html).toContain('role="img" aria-label="7 gleich grosse Sitze im Bundesrat, November 2026: SVP 2, SP 2, FDP 2, Mitte 1"');
+    const kaestchen = html.match(/<div class="bundesrat"[\s\S]*?<\/div>/)[0];
+    expect((kaestchen.match(/<span><\/span>/g) || []).length).toBe(REGELN.bundesrat);
+    const streifen = html.match(/<div class="staende"[\s\S]*?<\/div>/)[0];
+    expect((streifen.match(/class="ganz"/g) || []).length).toBe(20);
+    expect((streifen.match(/class="halb"/g) || []).length).toBe(HALBE.length);
+    expect(streifen).toContain('ein Ja braucht mindestens 12');
+  });
+
+  it('die Sitztabelle ist offen sichtbar, mit Balken ab null', () => {
+    expect(html).not.toContain('<details class="abb-tabelle">');
+    expect(html).toContain('<div class="tabelle zahlen sitze" role="region" aria-label="Sitze je Kanton" tabindex="0">');
+    expect(html).toMatch(/<th scope="row">Zürich<\/th><td class="balken" aria-hidden="true"><span style="width:100%"><\/span><\/td><td class="n">36<\/td>/);
+  });
+
+  it('das Trennkomma steht nur zwischen direkt aufeinanderfolgenden Belegen', () => {
+    // «sup + sup» griff über Text hinweg (Befund 05.11.2026); jetzt nur mit Klasse «folge».
+    expect(html).toContain('sup.beleg.folge::before');
+    expect(html).not.toMatch(/sup\.beleg \+ sup\.beleg/);
+    for (const m of html.matchAll(/(.{6})<sup class="beleg folge">/g)) expect(m[1]).toBe('</sup>');
+    expect(html).toMatch(/<\/sup><sup class="beleg folge">/);
+    const kk = lies('krankenkasse');
+    for (const m of kk.matchAll(/(.{6})<sup class="beleg folge">/g)) expect(m[1]).toBe('</sup>');
   });
 
   it('verlinkt nach aussen nur die eingetragenen Quellen', () => {
@@ -181,8 +224,8 @@ describe('/politsystem/ · Zahlen', () => {
   it('die Sitztabelle zeigt jeden Kanton mit seinen Sitzen', () => {
     const z = zahlenPolitsystem();
     expect(text).toContain(`Zürich wählt ${z['sitze.zh']} Mitglieder des Nationalrats, Uri ${z['sitze.ur']}.`);
-    expect(text).toMatch(/Bern 24 23 \(−1\) 2/);
-    expect(text).toMatch(/Luzern 9 10 \(\+1\) 2/);
+    expect(text).toMatch(/Bern 24 23 −1 2/);
+    expect(text).toMatch(/Luzern 9 10 \+1 2/);
     expect(text).toMatch(/Basel-Stadt 4 4 1/);
     expect(text).toMatch(/Zusammen 200 200 46/);
   });

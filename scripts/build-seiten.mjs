@@ -465,7 +465,9 @@ const stilHintergrund = `
     sup.beleg a{ display:inline-block; min-width:24px; padding:10px 4px; margin:-10px -6px; text-align:center;
       text-decoration:none; color:var(--heidel-text); font-weight:600 }
     sup.beleg a:hover{ text-decoration:underline }
-    sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
+    /* Komma nur zwischen direkt aufeinanderfolgenden Belegen (Klasse «folge», gesetzt in
+       belegeSetzen). «sup + sup» griff auch über Text hinweg (Befund 05.11.2026). */
+    sup.beleg.folge::before{ content:","; color:var(--leise) }
     :target{ scroll-margin-top:24px }
     ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
     ol.quellen li{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-bottom:1px solid var(--rand) }
@@ -497,7 +499,8 @@ function belegeSetzen(html, quellen) {
   });
   const ohne = quellen.filter((q) => !nummer.has(q.key)).map((q) => q.key);
   if (ohne.length) throw new Error(`Quellen ohne Verweis im Text: ${ohne.join(', ')}`);
-  return { text, nummer, stellen };
+  // Direkt aufeinanderfolgende Belege («1,2») bekommen das Trennkomma, sonst keiner.
+  return { text: text.replace(/<\/sup><sup class="beleg">/g, '</sup><sup class="beleg folge">'), nummer, stellen };
 }
 
 function quellenListe(quellen, nummer, stellen) {

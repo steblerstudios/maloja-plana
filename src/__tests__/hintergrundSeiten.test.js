@@ -211,7 +211,7 @@ describe('Hintergrundseiten', () => {
     const html = lies('krankenkasse');
 
     it('jeder Beleg im Text führt zu einer Quelle, und jede Quelle führt zurück', () => {
-      const belege = [...html.matchAll(/<sup class="beleg"><a href="#quelle-([a-zA-Z0-9]+)" id="(beleg-[a-zA-Z0-9]+-\d+)"/g)];
+      const belege = [...html.matchAll(/<sup class="beleg(?: folge)?"><a href="#quelle-([a-zA-Z0-9]+)" id="(beleg-[a-zA-Z0-9]+-\d+)"/g)];
       expect(belege.length).toBeGreaterThan(30);
       for (const [, key, id] of belege) {
         expect(html, `Quelle ${key} fehlt`).toContain(`<li id="quelle-${key}">`);

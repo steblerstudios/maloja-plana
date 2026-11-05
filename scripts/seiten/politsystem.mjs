@@ -123,26 +123,21 @@ export function zahlenPolitsystem() {
 // ─── Bilder und Tabellen ─────────────────────────────────────────────────────
 // Standbilder der Kugelbahn (isometrisch, Anatomy). Im Bild steht kein Text,
 // die Zahlen stehen in Legende und Tabelle.
-const fig = (id, datei, kurz, titel, beschreibung, wert, legende) => (ctx) =>
-  abbildung(ctx, { id, datei, stil: 'iso', kurz, titel, beschreibung, wert, legende });
+const fig = (id, datei, kurz, titel, beschreibung, wert, legende, stil = 'iso') => (ctx) =>
+  abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, legende });
 
+// Strichfigur (Hairline-Stil), erzeugt von scripts/seiten/figuren/politsystem-ebenen.mjs.
 const figEbenen = fig('abb-ebenen', 'politsystem-ebenen.svg', 'Drei Ebenen',
-  'Eine Sortierbahn mit drei Terrassen: Bund, Kantone, Gemeinden',
-  `Drei Terrassen übereinander. Oben eine einzige Platte für den Bund, in der Mitte 26 Felder für die Kantone, unten viele kleine Punkte für die Gemeinden. Eine Rinne führt an allen vorbei.`,
+  'Drei Terrassen: Bund, Kantone, Gemeinden',
+  `Drei Terrassen, von hinten oben nach vorne unten. Zuoberst eine Platte mit einem einzigen, hervorgehobenen Block für den Bund, darunter eine Platte mit 26 kleinen Klötzen für die Kantone, ganz vorne eine flache Platte mit einem dichten Feld aus Punkten für die Gemeinden.`,
   `1 Bund · 26 Kantone · ${fr(GEMEINDEN.zahl)} Gemeinden`,
-  `Die Rinne steht für den Weg einer Aufgabe: Sie biegt dort ab, wo die Aufgabe hingehört. Was die Verfassung dem Bund nicht zuweist, bleibt bei den Kantonen. Gemeinden: Stand ${GEMEINDEN.stand}. [[q:bv]] [[q:gemeinden]]`);
+  `Oben der Bund, in der Mitte die 26 Kantone, vorne die Gemeinden; die Punkte stehen für viele, nicht für jede einzelne. Was die Verfassung dem Bund nicht zuweist, bleibt bei den Kantonen. Gemeinden: Stand ${GEMEINDEN.stand}. [[q:bv]] [[q:gemeinden]]`, 'hl');
 
 const figBahn = fig('abb-bahn', 'politsystem-bahn.svg', 'Der Weg einer Vorlage',
   'Eine Kugelbahn: der Weg einer Vorlage durch Bundesrat, Parlament und Volk',
   `Eine Kugelbahn auf einer Grundplatte. Eine goldene Kugel, die Vorlage, rollt über fünf Türme bergab: Bundesrat mit ${REGELN.bundesrat} Knöpfen, Nationalrat mit ${REGELN.nationalrat} Stiften, Ständerat mit ${REGELN.staenderat} Stiften, eine Weiche mit Unterschriften-Uhr und ${REGELN.referendumTage}-Tage-Lineal, und die Urne mit 26 Fähnchen für die Stände. Unten liegen drei Schalen für die möglichen Ausgänge.`,
   'Bundesrat · Nationalrat · Ständerat · Referendum · Urne',
   'Von links oben nach rechts unten: Bundesrat, Nationalrat, Ständerat, die Weiche für das Referendum und die Urne. Die Kugel kann an jeder Station hängen bleiben. Die Türme stehen für die Stellen, nicht für ihre Grösse. [[q:bv]]');
-
-const figUhr = fig('abb-uhrwerk', 'politsystem-uhrwerk.svg', 'Sieben gleiche Räder',
-  'Der Bundesrat als Uhrwerk aus sieben gleich grossen Zahnrädern',
-  `${['', '', '', '', '', '', '', 'Sieben'][REGELN.bundesrat]} gleich grosse Zahnräder greifen in einer Kette ineinander. Dreht eines, drehen alle. Ein heller Ring auf dem ersten Rad steht für den Vorsitz.`,
-  `${REGELN.bundesrat} Mitglieder · 1 Jahr Vorsitz`,
-  'Kein Rad ist grösser als die anderen: Der Bundesrat entscheidet als Kollegium. Der Vorsitz wechselt jedes Jahr. [[q:bv]]');
 
 const figMehr = fig('abb-mehr', 'politsystem-mehr.svg', 'Das doppelte Mehr',
   'Ein Prüfstand für das doppelte Mehr: Volk und Stände',
@@ -156,38 +151,75 @@ const figWahl = fig('abb-wahlbank', 'politsystem-wahlbank.svg', 'Sitze nach Kant
   `${REGELN.nationalrat} Sitze · 26 Wahlkreise`,
   `Jede Säule ist ein Kanton, jede Scheibe ein Sitz im Nationalrat, seit den Wahlen 2023; die Zahlen stehen in der Tabelle darunter. [[q:sitze2023]] Vorne ein Beispiel mit vier erfundenen Parteien und erfundenen Stimmen: So verteilt die Rechnung des Gesetzes die ${SITZE_SEIT_2023.ZH} Zürcher Sitze, vereinfacht ohne Listenverbindungen. [[q:bpr]]`);
 
-const figWaage = fig('abb-waage', 'politsystem-waage.svg', 'Zwei gleich schwere Räte',
-  'Eine Balkenwaage: Nationalrat und Ständerat im Gleichgewicht',
-  `Eine Balkenwaage. Auf der linken Schale stehen ${REGELN.nationalrat} Stifte für den Nationalrat, auf der rechten ${REGELN.staenderat} für den Ständerat. Der Balken steht waagrecht.`,
-  `${REGELN.nationalrat} : ${REGELN.staenderat} · gleiches Gewicht`,
-  'Links mehr Sitze, rechts weniger, und doch steht der Balken waagrecht: Die Verfassung stellt beide Räte einander gleich. [[q:bv]]');
-
 function tabelleSitze() {
+  // Zahlenansicht wie auf /krankenkasse/: Balken ab null, längster = Zürich.
+  // Der Balken ist Schmuck (aria-hidden), die Zahl steht daneben als Text.
+  const max = Math.max(...Object.values(SITZE_SEIT_2023));
   const zeilen = KANTONE.map((k) => {
     const alt = SITZE_SEIT_2023[k], neu = SITZE_AB_2027[k];
     const d = neu - alt;
-    const neuText = d === 0 ? String(neu) : `${neu} <span class="leise">(${d > 0 ? '+' : '−'}${Math.abs(d)})</span>`;
-    return `            <tr><th scope="row">${name(k)}</th><td class="n">${alt}</td><td class="n">${neuText}</td><td class="n">${STAENDERAT[k]}</td></tr>`;
+    const neuText = d === 0 ? String(neu) : `${neu}<span class="leise aend"> ${d > 0 ? '+' : '−'}${Math.abs(d)}</span>`;
+    return `            <tr><th scope="row">${name(k)}</th><td class="balken" aria-hidden="true"><span style="width:${Math.round((alt / max) * 1000) / 10}%"></span></td><td class="n">${alt}</td><td class="n">${neuText}</td><td class="n">${STAENDERAT[k]}</td></tr>`;
   }).join('\n');
   return `
-        <details class="abb-tabelle">
-          <summary>Alle Kantone: Sitze im Nationalrat und im Ständerat</summary>
-          <div class="tabelle" role="region" aria-label="Sitze je Kanton" tabindex="0"><table>
-            <caption>Sitze je Kanton</caption>
-            <tr><th scope="col">Kanton</th><th scope="col" class="n">Nationalrat seit 2023</th><th scope="col" class="n">Nationalrat ab Wahl 2027</th><th scope="col" class="n">Ständerat</th></tr>
+        <div class="tabelle zahlen sitze" role="region" aria-label="Sitze je Kanton" tabindex="0"><table>
+          <caption>Sitze je Kanton. Nationalrat: seit den Wahlen 2023 und ab den Wahlen 2027; dazu der Ständerat</caption>
+          <tr><th scope="col">Kanton</th><td aria-hidden="true"></td><th scope="col" class="n"><span class="sr-only">Nationalrat seit </span>2023</th><th scope="col" class="n"><span class="sr-only">Nationalrat ab </span>2027</th><th scope="col" class="n">Stände&shy;rat</th></tr>
 ${zeilen}
-            <tr><th scope="row"><strong>Zusammen</strong></th><td class="n"><strong>${summe(SITZE_SEIT_2023)}</strong></td><td class="n"><strong>${summe(SITZE_AB_2027)}</strong></td><td class="n"><strong>${summe(STAENDERAT)}</strong></td></tr>
-          </table></div>
-        </details>`;
+          <tr><th scope="row"><strong>Zusammen</strong></th><td aria-hidden="true"></td><td class="n"><strong>${summe(SITZE_SEIT_2023)}</strong></td><td class="n"><strong>${summe(SITZE_AB_2027)}</strong></td><td class="n"><strong>${summe(STAENDERAT)}</strong></td></tr>
+        </table></div>`;
+}
+
+// ─── D: kleine Darstellungen ohne Skript, Zahlen aus den Daten ──────────────
+// Schrittliste als Schlüssel zur Kugelbahn: Text im HTML, nicht im Bild.
+function schritte() {
+  const s = [
+    ['Bundesrat', 'Entwurf, vorher Vernehmlassung'],
+    ['Nationalrat', 'berät und beschliesst'],
+    ['Ständerat', 'berät und beschliesst'],
+    ['Einigung', 'bis beide dasselbe wollen'],
+    [`${REGELN.referendumTage} Tage`, 'Frist für ein Referendum'],
+    ['Urne', 'nur wenn verlangt; bei der Verfassung immer'],
+  ];
+  return `
+        <ol class="schritte" aria-label="Der Weg eines Bundesgesetzes in sechs Schritten">
+${s.map(([t, u]) => `          <li><strong>${t}</strong><span>${u}</span></li>`).join('\n')}
+        </ol>`;
+}
+
+// Bundesrat: sieben gleiche Kästchen, nach Partei gruppiert, in Grau
+// (keine Parteifarben: Farbe folgt Bedeutung, und Maloja bleibt neutral).
+function sitzeBundesrat() {
+  const gruppen = BUNDESRAT_PARTEIEN.map(([p, n]) =>
+    `<span class="gruppe"><span class="kaestchen">${'<span></span>'.repeat(n)}</span><span class="was">${p} ${n}</span></span>`).join('');
+  const lesbar = BUNDESRAT_PARTEIEN.map(([p, n]) => `${p} ${n}`).join(', ');
+  return `
+        <figure class="sitzbild">
+          <div class="bundesrat" role="img" aria-label="${REGELN.bundesrat} gleich grosse Sitze im Bundesrat, November 2026: ${lesbar}">${gruppen}</div>
+          <figcaption>Die ${REGELN.bundesrat} Sitze im Bundesrat nach Partei, November 2026. Jedes Kästchen ist gleich gross, wie die Mitglieder. [[q:bundesrat]]</figcaption>
+        </figure>`;
+}
+
+// Ständemehr: 26 Felder in der Reihenfolge der Verfassung, halbe Kantone halb
+// so breit. Die Linie in der Mitte ist die Hälfte von 23; Ja braucht mehr.
+function streifenStaende() {
+  const felder = KANTONE.map((k) => `<span class="${HALBE.includes(k) ? 'halb' : 'ganz'}" title="${name(k)}"></span>`).join('');
+  return `
+        <figure class="sitzbild">
+          <div class="staende" role="img" aria-label="${KANTONE.length} Kantone als Felder: ${KANTONE.length - HALBE.length} ganze und ${HALBE.length} halbe Standesstimmen, zusammen ${REGELN.standesstimmen}. Die Mitte liegt bei ${String(REGELN.standesstimmen / 2).replace('.', ',')}; ein Ja braucht mindestens ${Math.floor(REGELN.standesstimmen / 2) + 1}.">${felder}<span class="mitte" aria-hidden="true"></span></div>
+          <p class="staende-skala" aria-hidden="true"><span>0</span><span>Mitte ${String(REGELN.standesstimmen / 2).replace('.', ',')}</span><span>${REGELN.standesstimmen}</span></p>
+          <figcaption>Die ${REGELN.standesstimmen} Standesstimmen: ${KANTONE.length - HALBE.length} ganze und ${HALBE.length} halbe Felder, in der Reihenfolge der Verfassung. Ein Ja braucht mehr als die Mitte, also mindestens ${Math.floor(REGELN.standesstimmen / 2) + 1} Stimmen (gerechnet). [[q:bv]]</figcaption>
+        </figure>`;
 }
 
 export const BLOECKE_POLITSYSTEM = {
   'FIG:ebenen': figEbenen,
   'FIG:bahn': figBahn,
-  'FIG:uhrwerk': figUhr,
+  'TAB:schritte': schritte,
+  'TAB:bundesrat': sitzeBundesrat,
   'FIG:mehr': figMehr,
+  'TAB:staende': streifenStaende,
   'FIG:wahlbank': figWahl,
-  'FIG:waage': figWaage,
   'TAB:sitze': tabelleSitze,
 };
 
@@ -212,12 +244,40 @@ export const POLITSYSTEM = {
   bloecke: BLOECKE_POLITSYSTEM,
   bilderQuelle: 'scripts/seiten/politsystem.mjs',
   inhaltsTitel: 'Sieben Fragen',
-  // Das Gold der Kugel aus der Vorlage, im Hellmodus abgedunkelt: #8F7232 hat
-  // auf der Platte 4.4:1, auf den hellsten Schattenflächen 3.2:1 (a11y 05.11.2026).
+  // Farbe (Entscheid Stebler Studios 05.11.2026, «A bis E»): Bereichsfarbe
+  // Zwetschge = «behoerden» aus src/data/lebensbereiche.js statt Heidelbeere
+  // (Versicherungen). Die Variablen heissen im gemeinsamen Stil weiter
+  // --heidel*; hier werden nur ihre Werte ersetzt. Text hell #5A6472 (5.4:1 auf
+  // --bg), dunkel #8E98A8 (5.5:1; #7C8798 nur für Flächen, 4.4:1 wäre zu knapp).
+  // Hervorhebung in den Figuren in Salbei wie in der Werkstatt-Kugelbahn
+  // (#5A7868 / #8FB0A0). Gold der Kugel wie in der Marke (#C4A870), der
+  // Kontrast kommt von der dunklen Kontur, nicht von der Füllung.
   stilZusatz: `
-    .iso{ --kb-gold:#8F7232 } @media (prefers-color-scheme: dark){ .iso{ --kb-gold:#C4A870 } }
-    details.abb-tabelle{ margin:4px 0 22px; font-size:15px } details.abb-tabelle summary{ cursor:pointer; color:var(--heidel-text); padding:10px 0 }
-    .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }`,
+    :root{ --heidel:#5A6472; --heidel-text:#5A6472; --heidel-hauch:#E9EBEE; --hl-hi:#5A7868 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#7C8798; --heidel-text:#8E98A8; --heidel-hauch:#2C2E33; --hl-hi:#8FB0A0 } }
+    .iso{ --kb-gold:#C4A870; --anatomy-lit:#5A7868; --anatomy-lit-top:#FFFFFD; --anatomy-lit-shade:#ECEAE3 }
+    @media (prefers-color-scheme: dark){ .iso{ --anatomy-lit:#8FB0A0; --anatomy-lit-top:#3A3934; --anatomy-lit-shade:#2F2E2A } }
+    .iso svg circle[style*="--kb-gold"]{ stroke:var(--anatomy-hi); stroke-width:1.2 }
+    .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+    .sitze table{ font-size:14px } .sitze th[scope="row"], .sitze th.n{ white-space:normal } .sitze td.n{ width:2.6em; padding-right:6px }
+    .sitze .aend{ display:block; font-size:12px; line-height:1.2 }
+    @media (max-width:600px){ .sitze td.balken{ width:22% } }
+    ol.schritte{ list-style:none; counter-reset:schritt; margin:14px 0 20px; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px }
+    ol.schritte li{ counter-increment:schritt; background:var(--flaeche); border:1px solid var(--rand); border-radius:12px; padding:10px 12px; font-size:14px; line-height:1.45 }
+    ol.schritte li strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-weight:600 }
+    ol.schritte li strong::before{ content:counter(schritt) " "; color:var(--heidel-text) }
+    ol.schritte li span{ color:var(--leise) }
+    figure.sitzbild{ margin:18px 0 22px }
+    .bundesrat{ display:flex; flex-wrap:wrap; gap:14px 22px }
+    .bundesrat .gruppe{ display:flex; flex-direction:column; gap:6px }
+    .bundesrat .kaestchen{ display:flex; gap:6px } .bundesrat .kaestchen span{ width:30px; height:30px; border-radius:6px; border:1.5px solid var(--leise); background:var(--flaeche) }
+    .bundesrat .was{ font-size:13px; color:var(--leise) }
+    .staende{ position:relative; display:flex; gap:3px; height:34px }
+    .staende span.ganz{ flex:2; border-radius:4px; background:var(--heidel-hauch); border:1px solid var(--heidel) }
+    .staende span.halb{ flex:1; border-radius:4px; background:var(--flaeche); border:1px dashed var(--heidel) }
+    .staende .mitte{ position:absolute; left:50%; top:-6px; bottom:-6px; width:2px; margin-left:-1px; background:var(--text) }
+    .staende-skala{ display:flex; justify-content:space-between; margin:6px 0 0; font-size:13px; color:var(--leise) }
+    figure.sitzbild figcaption{ font-size:14px; color:var(--leise); margin-top:10px }`,
   hinweis:
     'Orientierung, keine Rechtsberatung. Die Seite vereinfacht; massgebend sind die Bundesverfassung und die Gesetze.',
   vorbehalt:
@@ -252,6 +312,7 @@ export const POLITSYSTEM = {
       html: `
         <p>Vorlagen bereitet in der Regel der Bundesrat vor; er unterbreitet dem Parlament die Entwürfe. Ein neues Gesetz kann aber auch aus dem Parlament selbst kommen oder von einem Kanton angestossen werden. [[q:bv]] Bei wichtigen Vorhaben fragt der Bund zuerst die Kantone, die Parteien und interessierte Kreise nach ihrer Meinung. Das heisst Vernehmlassung. [[q:bv]]</p>
 <!--FIG:bahn-->
+<!--TAB:schritte-->
         <h3>Zwei Räte, ein Text</h3>
         <p>Dann beraten Nationalrat und Ständerat die Vorlage, jeder für sich. Ein Gesetz kommt nur zustande, wenn beide dasselbe beschliessen. [[q:bv]] Sind sie sich nicht einig, geht die Vorlage zwischen den Räten hin und her. Das heisst Differenzbereinigung. Bleibt nach drei Detailberatungen in jedem Rat ein Unterschied, sucht eine Einigungskonferenz einen Ausweg. Sie besteht aus je {{r.einigung}} Mitgliedern der beiden Kommissionen, die die Vorlage in ihrem Rat vorberaten haben. Lehnt ein Rat ihren Vorschlag ab, wird die Vorlage abgeschrieben: Sie ist gescheitert. [[q:parlg]]</p>
         <h3>Das Referendum</h3>
@@ -267,7 +328,7 @@ export const POLITSYSTEM = {
       titel: '3. Wer regiert?',
       html: `
         <p>Die Schweiz hat niemanden an der Spitze, der allein bestimmt. Die Regierung ist der Bundesrat mit {{r.bundesrat}} Mitgliedern, keines steht über den anderen. [[q:bundesrat]] Er entscheidet als Kollegium. [[q:bv]] Was beschlossen ist, vertreten alle Mitglieder. [[q:rvog]]</p>
-<!--FIG:uhrwerk-->
+<!--TAB:bundesrat-->
         <p>Die Bundesversammlung wählt die Mitglieder nach jeder Wahl des Nationalrats für vier Jahre, die beiden Räte gemeinsam. [[q:bv]] Den Vorsitz führt die Bundespräsidentin oder der Bundespräsident, für ein Jahr. Für das folgende Jahr ist eine Wiederwahl nicht möglich. [[q:bv]]</p>
         <p>Die grossen Parteien teilen sich die Sitze, statt sich als Regierung und Opposition gegenüberzustehen. Das heisst Konkordanz. Es ist eine freiwillige Übung, keine Regel der Verfassung. [[q:hls]] Von 1959 bis 2003 galt die «Zauberformel»: Die FDP, die Konservativen (später CVP) und die SP hatten je zwei Sitze, die Bauern-, Gewerbe- und Bürgerpartei (BGB) einen. [[q:hls]] Die BGB heisst seit 1971 SVP. [[q:hlsSvp]] 2003 gewann die SVP auf Kosten der CVP einen zweiten Sitz. [[q:hls]] Im November 2026 sitzen im Bundesrat {{bundesrat.parteien}}. [[q:bundesrat]]</p>`,
     },
@@ -277,7 +338,8 @@ export const POLITSYSTEM = {
       html: `
         <p>Für eine Änderung der Bundesverfassung reicht die Mehrheit der Stimmenden nicht. Es braucht auch die Mehrheit der Stände, also der Kantone. Das Ergebnis im Kanton gilt als dessen Standesstimme. [[q:bv]]</p>
 <!--FIG:mehr-->
-        <p>{{ganze.anzahl}} Kantone haben eine ganze Standesstimme, sechs eine halbe: {{halbe.namen}}. [[q:bv]] Zusammen sind das gerechnet {{r.standesstimmen}} Stimmen. Eine Mehrheit braucht mehr als die Hälfte; ein Unentschieden von {{r.standesHalb}} zu {{r.standesHalb}} reicht also nicht.</p>
+        <p>{{ganze.anzahl}} Kantone haben eine ganze Standesstimme, sechs eine halbe: {{halbe.namen}}. [[q:bv]] Zusammen sind das {{r.standesstimmen}} Stimmen (gerechnet). Eine Mehrheit braucht mehr als die Hälfte; ein Unentschieden von {{r.standesHalb}} zu {{r.standesHalb}} reicht also nicht.</p>
+<!--TAB:staende-->
         <p>Das schützt die kleinen Kantone. Zürich wählt {{sitze.zh}} Mitglieder des Nationalrats, Uri {{sitze.ur}}. Bei den Ständen zählen beide gleich viel. [[q:sitze2023]] [[q:bv]] So kann eine Vorlage beim Volk knapp angenommen und bei den Ständen abgelehnt werden. Dann gilt sie nicht.</p>`,
     },
     {
@@ -296,7 +358,6 @@ export const POLITSYSTEM = {
       titel: '6. Warum ist der Ständerat gleich wichtig?',
       html: `
         <p>Im Ständerat zählt die Grösse des Kantons nicht. {{ganze.anzahl}} Kantone haben je zwei Sitze, die sechs Kantone mit halber Standesstimme je einen. Das ergibt {{r.staenderat}} Sitze. Wie gewählt wird, bestimmt jeder Kanton selbst. [[q:bv]]</p>
-<!--FIG:waage-->
         <p>Trotz {{r.nationalrat}} zu {{r.staenderat}} Sitzen sind die beiden Räte einander gleichgestellt. Ein Gesetz gilt nur, wenn beide zustimmen. So zählen die Menschen und die Kantone zugleich. [[q:bv]] Bei Wahlen wie der des Bundesrats tagen beide Räte gemeinsam als Vereinigte Bundesversammlung. Dort zählt jede Stimme einzeln, und der grössere Nationalrat hat mehr Gewicht. [[q:bv]]</p>`,
     },
     {
