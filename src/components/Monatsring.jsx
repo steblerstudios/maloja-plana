@@ -3,6 +3,7 @@ import { text, weight, space, radius } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
+import { auswahlStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
 
 // Monatskarte im Kapitel Finanzen (F7-K2-2, Stebler Studios 01.11.2026: «fusionieren, kreativ», dann eine Karte statt vier Blöcken,
 // dann nach der Gestaltungsprüfung umgebaut). Der Ring ist das ganze Einkommen, die Antwort steht in der Mitte. Jeder Bereich trägt
@@ -64,8 +65,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   });
   const umschalter = (wert, name) => React.createElement('button', {
     type: 'button', 'aria-pressed': faktor === wert, onClick: () => setFaktor(wert),
-    style: { minHeight: '36px', padding: '0 ' + space.sm + 'px', border: 0, borderRadius: radius.full, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs,
-      fontWeight: weight.normal, background: faktor === wert ? palette.border : 'transparent', color: palette.text },
+    style: { ...auswahlStil(palette, faktor === wert), minHeight: '36px', padding: '0 ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.normal },
   }, name);
   const raster = { display: 'grid', gridTemplateColumns: SPALTEN, gap: space.xs + 'px', alignItems: 'baseline' };
   const zahlen = { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', textAlign: 'right' };
@@ -100,7 +100,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   return React.createElement('div', { 'data-teil': 'monatsring', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md } },
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: space.xs + 'px ' + space.md + 'px', marginBottom: space.md + 'px' } },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, kopf && kopf(faktor)),
-      React.createElement('div', { role: 'group', 'aria-label': t('chapters.finanzen.monat.ansicht'), style: { display: 'flex', padding: '2px', borderRadius: radius.full, background: palette.up } },
+      React.createElement('div', { role: 'group', 'aria-label': t('chapters.finanzen.monat.ansicht'), style: { display: 'flex', padding: '2px', borderRadius: KNOPF_RADIUS, background: palette.up } },
         umschalter(1, t('chapters.finanzen.monat.ansichtMonat')), umschalter(12, t('chapters.finanzen.monat.ansichtJahr')))
     ),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.lg + 'px', alignItems: 'center' } },
