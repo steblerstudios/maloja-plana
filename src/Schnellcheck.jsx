@@ -87,7 +87,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         + (w.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
-      key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,
+      key: 'el', view: 'ergaenzungsleistungen', color: palette.mid, textColor: palette.mid,
       label: t('schnellcheck.el'), qualitative: true, note: t('schnellcheck.elNote'),
     }));
 
@@ -186,11 +186,13 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     style: {
       display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left',
       padding: '12px 14px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
-      background: b.color + '10', color: palette.text,
-      border: '1px solid ' + b.color + '33', borderRadius: radius.sm + 'px',
+      // Fassung 9: die Zeilen sind neutral (keine Bedeutung über die Farbe); der Punkt bleibt
+      // als Legende zum Balken oben, dort sind die Farben Diagramm (farb-und-daten-system.md).
+      background: 'transparent', color: palette.text,
+      border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px',
     },
-    onMouseEnter: (e) => { e.currentTarget.style.background = b.color + '1e'; },
-    onMouseLeave: (e) => { e.currentTarget.style.background = b.color + '10'; },
+    onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+    onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
   },
     React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '50%', background: b.color, flexShrink: 0 }, 'aria-hidden': true }),
     React.createElement('div', { style: { minWidth: 0, flex: 1 } },

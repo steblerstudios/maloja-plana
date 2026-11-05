@@ -57,9 +57,10 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const costStyle = (cost) => ({
     fontSize: text.xs, fontWeight: weight.medium, padding: '1px 7px', borderRadius: radius.lg,
     marginLeft: space.xs + 'px', whiteSpace: 'nowrap',
-    background: cost === 'paid' ? palette.gold + '22' : cost === 'freemium' ? palette.sky + '18' : palette.sage + '18',
-    // Deep-Varianten für lesbaren Badge-Text (roh: gold 2.19 / sky 3.20 / sage 4.34 = AA-Fail).
-    color: cost === 'paid' ? palette.goldDeep : cost === 'freemium' ? palette.skyDeep : palette.sageDeep,
+    // Fassung 9 (Stebler Studios 05.11.2026): nur «gratis» trägt Farbe (Grün = gut); «Basis gratis»
+    // und «kostenpflichtig» sind neutral — das Wort sagt den Unterschied, Gold/Blau haben andere Rollen.
+    background: cost === 'free' ? palette.sage + '18' : palette.up,
+    color: cost === 'free' ? palette.sageDeep : palette.mid,
   });
 
   const toneFarbe = resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.sky;
