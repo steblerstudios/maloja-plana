@@ -91,6 +91,29 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
 - **F9-A13** (Sollte): Weitere Knöpfe unter 44 px über F8-Q1 hinaus: `BergDetail.jsx:118`,
   `MerklisteView.jsx:115`, `Monatsring.jsx:67`, `MedicationManager.jsx:179` und
   `DoctorManager.jsx:81`.
+- **F9-A14** (Sollte, aufgenommen 05.11.2026 abends): **Ein Zeichen für Fristen: das
+  Kalenderblatt.** Wortlaut der Frage: «so wie die steier frist im probiermodus aussieht unter
+  behörden und rechtluches so könnte jees datum / frist aussehen». Aufgenommen mit «Ja, in
+  Fassung 9». Heute gibt es das Blatt nur einmal, direkt gebaut in
+  `BehoerdenInstrument.jsx:63–67` (Monat · Tag · Jahr, `aria-hidden`; das Datum steht vorlesbar
+  im Satz daneben, darunter «in N Monaten · N offen»). Daten zeigt die App an rund 17 Stellen
+  (`toLocaleDateString`, gezählt in `src/` ohne Tests), am meisten in `CalendarReminders.jsx` (9).
+  *Vorschlag:*
+  - **Nur für Fristen mit Handlung**, nicht für jedes Datum. Gemeint sind Kassenfrist,
+    Kalender-Erinnerungen, Fristen im Jahreskreis und auf der Merkliste. Ausgenommen sind
+    Geburtsdatum, «Stand vom …», Export- und Importdatum. Sonst sieht alles wie eine Frist aus,
+    und das Zeichen sagt nichts mehr.
+  - **Ein Baustein** statt Kopien, mit dem Vorlese-Muster von heute (Blatt stumm, Satz trägt).
+  - **Farbe nach F9-A2:** Fristen sind blau, Überfälliges ist rot (entschieden in #696, Wächter
+    `fristenBlau.test.js`). Das Band oben am Blatt ist heute neutral (`palette.up`). Ob es blau
+    wird, ist vor dem Bau als Skizze zu zeigen (hell, dunkel, Handy).
+  - **Bündel:** Das Startbündel hat kaum Luft (64.97/65 kB auf main). Der Baustein muss klein
+    bleiben oder darf nur in nachgeladenen Teilen stehen. Nach dem Baustein-Commit `size-limit`
+    laufen lassen.
+  - Hängt mit **F9-B6** zusammen (Frist / Termin / Deadline): Wo ein Blatt steht, heisst es
+    «Frist».
+  Offen vor dem Bau: welche der rund 17 Stellen echte Fristen sind (Liste je Stelle), dann die
+  Skizze.
 
 ## B · Sprache (ein Wort je Sache)
 
@@ -237,6 +260,7 @@ Danach in dieser Reihenfolge, je ein PR mit Test:
 - Zitierregel als Test (C1–C6)
 - Hausbegriffe als Test (B1–B8)
 - Querverweise und Abfolge (D3–D6)
+- Kalenderblatt für Fristen (A14, zusammen mit B6), erst Liste der Stellen, dann Skizze
 
 Tönungen und Abstände (A5, A6) kommen als eigenes Aufräum-PR ohne sichtbare Änderung.
 
