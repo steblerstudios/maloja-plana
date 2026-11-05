@@ -17,6 +17,14 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 05.11.2026, 12:00 — `4f37d580` ist LIVE (0.1.49-beta, Version nicht erhöht), gebaut 11:48, Deploy Stebler Studios, vorher Stage 11:47.** Überholt alle Stände darunter.
+>
+> - **Drin:** #670 bis #682 (EL, 2. Säule, Dossier, Renten), #684 IPV brutto→netto, #676 EL-Hinweis Nichtbezug, #680, #660 Stipendien, #679 Hintergrundseite /krankenkasse/ (Figuren nur als Link), Doku #678 #685.
+> - **Belegt 11:55:** `version.json` Produktion und Stage = `4f37d580` = Predeploy-Marke; Bundle `index-C9PVXT2C.js` = lokaler Build, de-Chunk byte-gleich; /krankenkasse/ und die 5 bewegten Seiten byte-gleich mit dem Build, alle Skripte 200, ohne iframe, Server-CSP `script-src 'self'`; Lizenzen anatomy/hairline 200; erfundener Name 404. Konsole nicht im Browser geprüft, hinter der Code-Wand nicht geklickt. Ultrareview nicht gelaufen.
+> - **Danach gemergt, NICHT live (Stand 05.11. nachmittags):** #687 (amtliche Quellen /krankenkasse/, a11y, Sprache, Quellentitel Bundesrat), #686 (Hinweis «aus brutto geschätzt» in IPV und Sozialhilfe), #655 (Sprache in Kern und Rest geteilt), #690 (IPV-Hinweis nur einmal, #686 und #687 waren doppelt). Nächster Deploy braucht Predeploy.
+> - ⚠️ **Startbündel 64.95 / 65 kB auf main** (vorher 64.84): kaum Spielraum. Neues im Startbündel nachladen, Limit nie anheben.
+> - **Offen:** F8-P4 Probedruck zu #689 (Druck ohne Browser-Kopfzeile), F8-O8 mit Beta-Code öffnen, #683 (zweite Prüferlesung), #652, rm-Gegenlese, EFAS «meist» belegen.
+>
 > 🧾 **Nachtrag 03.11.2026, 10:35 — Fassung 8 ist LIVE: 0.1.49-beta, `a312b9a0`, gebaut 10:30, Deploy Stebler Studios.** Überholt alle Stände darunter.
 >
 > - **Belegt 10:31:** `version.json` = `a312b9a0` = `main`, Bundle `index-DNBc9yCt.js` = lokaler Build, de-Chunk byte-gleich, Lizenzen, keine Konsolenfehler. Hinter der Code-Wand nicht geklickt. Stage und Ultrareview vor dem Deploy nicht belegt.
