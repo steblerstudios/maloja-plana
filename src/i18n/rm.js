@@ -4906,6 +4906,7 @@ export default {
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
     einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
+    einkommenAusBrutto: 'Paja inditgada brut: quintà cun ina paja netta stimada (deducziuns forfetaras). Cun la paja netta dal quint da paja è il resultat pli exact.', // TODO(rm): provisorisch
     renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
@@ -7538,7 +7539,7 @@ export default {
     title: 'Verifica svelta da prestaziuns',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'In set d’infurmaziuns — a tge pudessas Vus avair dretg? Blers dretgs existan senza che la glieud al sappia. Vossas datas dal profil èn preemplenidas; Vus pudais las adattar liberamain qua per empruvar.', du: 'In set d’infurmaziuns — a tge pudessas ti avair dretg? Blers dretgs existan senza che la glieud al sappia. Tias datas dal profil èn preemplenidas; ti pos las adattar liberamain qua per empruvar.' },
-    income: 'Entrada mensila (brutto)',
+    income: 'Entrada mensila (net)',
     rent: 'Fittanza / mais',
     kk: 'Premia da la cassa da malsauns / mais',
     contextCanton: 'Chantun {canton} · chasa da {personen}.',

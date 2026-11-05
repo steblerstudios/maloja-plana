@@ -3177,6 +3177,7 @@ export default {
     childrenNote: 'Additional benefits may be available for children (childcare, school supplies, clothing). Discuss this with social services.',
     childrenEducationNote: 'Children aged 16+ in education may receive training allowances.',
     einkommenNichtErfasst: 'Income not entered yet, amount open',
+    einkommenAusBrutto: 'Salary entered as gross: calculated with an estimated net salary (flat-rate deductions). With the net salary from the payslip, the result is more precise.',
     renteNichtErfasst: "Pension not entered yet, amount open",
     assetLimitNote: 'Assets above an allowance are usually taken into account ({basis}: {freibetrag} for this household). The assets in this calculation are about {ueberschuss} above it. If they are not available right away, a reasonable period to realise them and, if needed, support in the meantime as an advance are provided for; these amounts usually have to be repaid. Orientation, not binding advice.',
     assetLimitBasisCanton: 'Canton of {name}, source read on {datum}',
@@ -6491,7 +6492,7 @@ export default {
   schnellcheck: {
     title: 'Benefits quick check',
     intro: 'One set of details — what might you be entitled to? Many things are available without people knowing. Your profile details are pre-filled; adjust them here freely to explore.',
-    income: 'Monthly income (gross)',
+    income: 'Monthly income (net)',
     rent: 'Rent / month',
     kk: 'Health insurance premium / month',
     contextCanton: 'Canton {canton} · household of {personen}.',

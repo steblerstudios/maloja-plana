@@ -3177,6 +3177,7 @@ export default {
     childrenNote: { sie: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.', du: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseigne-toi auprès du service social.' },
     childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',
     einkommenNichtErfasst: 'Revenu pas encore saisi, montant ouvert',
+    einkommenAusBrutto: 'Salaire saisi en brut : calcul avec un salaire net estimé (retenues forfaitaires). Avec le salaire net de la fiche de salaire, le résultat est plus précis.',
     renteNichtErfasst: "Rente pas encore saisie, montant ouvert",
     assetLimitNote: 'La fortune au-dessus d’une franchise est en règle générale prise en compte ({basis} : {freibetrag} pour ce ménage). La fortune dans ce calcul la dépasse d’environ {ueberschuss}. Si elle n’est pas disponible immédiatement, un délai approprié pour la réalisation et, si nécessaire, un soutien entre-temps sous forme d’avance sont prévus ; ces montants sont en règle générale à rembourser. Orientation, sans valeur contraignante.',
     assetLimitBasisCanton: 'canton de {name}, source lue le {datum}',
@@ -6491,7 +6492,7 @@ export default {
   schnellcheck: {
     title: 'Vérification rapide des prestations',
     intro: { sie: 'Un jeu d’informations — à quoi pourriez-vous avoir droit ? Beaucoup de prestations existent sans qu’on le sache. Vos données du profil sont préremplies ; adaptez-les librement ici pour explorer.', du: 'Un jeu d’informations — à quoi pourrais-tu avoir droit ? Beaucoup de prestations existent sans qu’on le sache. Tes données du profil sont préremplies ; adapte-les librement ici pour explorer.' },
-    income: 'Revenu mensuel (brut)',
+    income: 'Revenu mensuel (net)',
     rent: 'Loyer / mois',
     kk: 'Prime d’assurance-maladie / mois',
     contextCanton: 'Canton {canton} · ménage de {personen}.',

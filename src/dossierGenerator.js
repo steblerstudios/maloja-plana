@@ -889,6 +889,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
+      // Brutto im Profil: die Stelle sieht den Bruttolohn, abgezogen ist der Netto-Richtwert.
+      sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt && t('sozialhilfe.einkommenAusBrutto'),
       ...(sozialhilfe.hinweise || []).map((k) => t(k)),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
@@ -1117,6 +1119,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.einkommenFehlt ? null : sozialhilfe.income || 0,
+      // Lohn brutto erfasst: `income` ist der Netto-Richtwert, nicht der erfasste Betrag.
+      einkommenGeschaetzt: !!sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,

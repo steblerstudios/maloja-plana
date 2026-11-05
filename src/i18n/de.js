@@ -3189,6 +3189,7 @@ export default {
     childrenNote: { sie: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Klären Sie dies mit dem Sozialdienst.', du: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.' },
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
     einkommenNichtErfasst: 'Einkommen noch nicht erfasst, Betrag offen',
+    einkommenAusBrutto: 'Lohn brutto erfasst: gerechnet mit einem geschätzten Nettolohn (pauschale Lohnabzüge). Mit dem Nettolohn von der Lohnabrechnung wird das Ergebnis genauer.',
     renteNichtErfasst: "Rente noch nicht eingetragen, Betrag offen",
     assetLimitNote: 'Vermögen über einem Freibetrag wird in der Regel angerechnet ({basis}: {freibetrag} für diesen Haushalt). Das Vermögen in dieser Rechnung liegt rund {ueberschuss} darüber. Ist es nicht sofort verfügbar, sind eine angemessene Frist zur Verwertung und in der Zwischenzeit bei Bedarf Unterstützung als Vorschuss vorgesehen; diese Beträge sind in der Regel zurückzuzahlen. Orientierung, keine verbindliche Auskunft.',
     assetLimitBasisCanton: 'Kanton {name}, Quelle gelesen am {datum}',
@@ -6555,7 +6556,7 @@ export default {
   schnellcheck: {
     title: 'Leistungs-Schnellcheck',
     intro: { sie: 'Ein Satz Angaben — was könnte Ihnen zustehen? Vieles steht Menschen zu, ohne dass sie davon wissen. Ihre Angaben aus dem Profil sind vorbelegt; Sie können sie hier frei anpassen, um durchzuspielen.', du: 'Ein Satz Angaben — was könnte dir zustehen? Vieles steht Menschen zu, ohne dass sie davon wissen. Deine Angaben aus dem Profil sind vorbelegt; du kannst sie hier frei anpassen, um durchzuspielen.' },
-    income: 'Monatseinkommen (brutto)',
+    income: 'Monatseinkommen (netto)',
     rent: 'Miete / Monat',
     kk: 'Krankenkassen-Prämie / Monat',
     contextCanton: 'Kanton {canton} · Haushalt {personen}.',
