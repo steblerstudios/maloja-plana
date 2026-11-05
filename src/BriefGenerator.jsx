@@ -33,18 +33,18 @@ export function briefUebersetzer({ lang, anrede, selected, t, geladen }) {
 
 // ─── Lebensereignis-Briefe: Hinweise und Angaben (26.09.2026) ───
 // Die Hinweise stehen VOR dem Formular: bei Rechtsvorschlag und Todesfall ist die Frist
-// bzw. die Erbschafts-Falle wichtiger als der Brief selbst. Gold wie die Fristen in AsylView.
+// bzw. die Erbschafts-Falle wichtiger als der Brief selbst. Blau wie alle Fristen und Hinweise (Farbrollen Fassung 9, 05.11.2026).
 // Deploy-Gate 27.09.2026 (a11y): `id` + `tabIndex: -1` — Ziel des Fokus beim Sprung aus einem
 // Ablauf; die fett gesetzten Zeilen (Fristen) werden bei jeder Änderung höflich vorgelesen.
 const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElement('div', {
   role: 'note', id: 'brief-hinweis', tabIndex: -1,
   style: {
-    padding: '14px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
+    padding: '14px 16px', background: palette.sky + '18', border: '1px solid ' + palette.sky,
     borderRadius: radius.sm, marginBottom: space.md,
   },
 },
   React.createElement('div', {
-    style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.goldDeep, marginBottom: space.xs },
+    style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.skyDeep, marginBottom: space.xs },
   }, hinweisZeichen(icon), title),
   zeilen.filter(Boolean).map((z, i) => React.createElement('p', {
     key: i,
@@ -165,7 +165,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
           // beim Betreibungsamt auf (Fach-Prüfer 26.09.2026).
           f.type === 'betrag' && String(roh[f.key] == null ? '' : roh[f.key]).trim() !== '' && React.createElement('div', {
             'aria-live': 'polite',
-            style: { fontSize: textTokens.xs, color: a[f.key] > 0 ? palette.text : palette.goldDeep, lineHeight: leading.normal, marginTop: space.xs, fontWeight: weight.medium },
+            style: { fontSize: textTokens.xs, color: a[f.key] > 0 ? palette.text : palette.roseDeep, lineHeight: leading.normal, marginTop: space.xs, fontWeight: weight.medium },
           }, a[f.key] > 0 ? t('briefe.angaben.betragErkannt', { amount: zahl(a[f.key], { stellen: Number.isInteger(a[f.key]) ? 0 : 2 }) }) : t('briefe.angaben.betragUnklar'))
         );
       })

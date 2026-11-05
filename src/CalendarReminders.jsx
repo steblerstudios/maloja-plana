@@ -256,7 +256,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const leiseKnopf = { minWidth: '44px', minHeight: '44px', display: 'grid', placeItems: 'center', background: 'none', border: 'none', borderRadius: radius.full, cursor: 'pointer', padding: 0, flexShrink: 0, fontFamily: 'inherit' };
   const zeile = ({ key, iso, art, bereich, icon, titel, herkunft, wann, done, isJustDone, onToggle, toggleLabel, extra }) => {
     const farbe = bereichZeichenFarbe(bereich, palette);
-    const dueColor = !done && iso && iso < today ? (palette.sandDeep || palette.sand) : palette.soft; // nie rot (Entwurf G); sandDeep hält 4.5:1 auch hell
+    // Überfällig = Rot (Farbrollen Fassung 9, 05.11.2026; vorher bewusst nie rot, Entwurf G). Das Wort «überfällig» steht daneben.
+    const dueColor = !done && iso && iso < today ? palette.roseDeep : palette.soft;
     const d = iso ? datumVon(iso) : null;
     const artName = art === 'aufgabe' ? t('calendar.aufgabe') : t('calendar.legende.' + art);
     return React.createElement('div', {

@@ -159,7 +159,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '6px 12px', minHeight: '44px', fontSize: text.sm }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
-    warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
+    warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },
     // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
     // Die Namensspalte bricht um, die Betragsspalten bleiben schmal, «CHF» steht einmal im Kopf.
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, tableLayout: 'fixed' },
@@ -341,7 +341,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           h('dt', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } }, t('vu.risiko.' + r.key)),
           r.zeilen.map((z) => h('dd', { key: z.key, 'data-art': z.art, style: { margin: '2px 0 0', fontSize: text.sm, lineHeight: leading.normal, color: z.art === 'hinweis' ? palette.mid : palette.text } },
             z.art === 'erfasst' && erledigtZeichen(true, ''),
-            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.goldDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '6px' } }, t('vu.risiko.marke.' + z.art)),
+            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.skyDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '6px' } }, t('vu.risiko.marke.' + z.art)),
             t('vu.risiko.' + z.key, z.p)))))),
         h('p', { key: 'satz', style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal } }, t('vu.risiko.satz')),
       ]),
@@ -357,11 +357,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         t('po.franchiseOptReserve', { reserve: zahl(franchiseOpt.reserve, { hoechstens: 2 }), sb: franchiseOpt.sbMax })),
       franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
         t('po.franchiseOptBreakeven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) })),
-      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
+      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, blau = ruhiger Hinweis)
       reserveCheck && React.createElement('div', {
         style: {
           fontSize: text.sm,
-          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.goldDeep || palette.gold)),
+          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.skyDeep || palette.sky)),
           lineHeight: leading.normal, marginBottom: space.xs + 'px',
         },
       },
@@ -440,14 +440,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       regionInfo && teil('mp-vu-vergleich', t('vu.vergleich'), referenceData && referenceData.specificPremium ? t('vu.referenz', { betrag: zahl(referenceData.specificPremium, { hoechstens: 2 }) }) + refJahr : '', [
         h(UvgHinweis, { key: 'uvg', palette, t, data }),
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs + 'px' } },
         hinweisZeichen(), t('po.noInsurer')
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.noInsurerHint'))
     ),
 
     regionInfo && insurer && !insurerNr && React.createElement('div', { style: s.warn },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs + 'px' } },
         hinweisZeichen(), t('po.insurerNotFound', { name: insurer })
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.insurerNotFoundHint'))

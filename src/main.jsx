@@ -1427,8 +1427,8 @@ const AppInner = ({ demo }) => {
     dbBlocked && React.createElement('div', {
       style: {
         padding: '10px 16px',
-        background: palette.sand + '18',
-        borderBottom: '1px solid ' + palette.sand + '30',
+        background: palette.rose + '18',
+        borderBottom: '1px solid ' + palette.rose,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
         flexWrap: 'wrap',
       }
@@ -1442,8 +1442,8 @@ const AppInner = ({ demo }) => {
     demoMode && React.createElement('div', {
       style: {
         padding: '10px 16px',
-        background: palette.sand + '18',
-        borderBottom: '1px solid ' + palette.sand + '30',
+        background: palette.sky + '18',
+        borderBottom: '1px solid ' + palette.sky,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
         flexWrap: 'wrap',
       }

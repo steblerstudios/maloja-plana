@@ -279,7 +279,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         ),
 
         React.createElement('div', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, betrag(income)),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.skyDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, betrag(income)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t(beitragsNotizKey(data.finanzen)))),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, hinweisZeichen(), t(eingaben.dreizehnter === 'ja' ? 'tax.netIncomeNote13' : 'tax.netIncomeNote')),
 
@@ -413,7 +413,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
                 t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
               )
             ),
-            React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '30' } },
+            React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.sky } },
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.totalEstimate')),
               React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, '~ ' + betrag(kantonal.total, { hoechstens: 2 })),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },

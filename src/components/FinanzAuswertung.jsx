@@ -319,7 +319,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     unterArmutsgrenze && !ohneBefund && React.createElement('div', {
       style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
     },
-      React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
+      React.createElement('div', { style: { fontWeight: weight.medium, color: palette.skyDeep, marginBottom: '2px' } },
         t('finanzUebersicht.belowPoverty')),
       React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
         // Link führt zur BFS-Methodik (Erhebung Armutsstatistik), nicht zu einer
@@ -510,7 +510,7 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
         + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
       // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) + (sozialhilfe.hinweise?.includes('pegel.vermoegen') ? ' ' + t('pegel.vermoegen') : '') : t('sozialhilfe.notEntitled'),
-    statusColor: sozialhilfe.einkommenFehlt ? palette.mid : sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
+    statusColor: sozialhilfe.einkommenFehlt ? palette.mid : sozialhilfe.eligible ? palette.skyDeep : (palette.sageDeep || palette.sage),
     detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
       + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
@@ -535,7 +535,7 @@ export const elKarte = ({ palette, t, onNavigate, w }) => {
     // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
     // Seit 03.11.2026 nur noch zwei Zustände: Rentenbezug → prüfen lassen, sonst nur mit Rente (F8-Prüfer).
     status: el.elPruefen ? t('sozialhilfe.elPruefen') : t('sozialhilfe.elOnlyAhvIv'),
-    statusColor: el.elPruefen ? (palette.goldDeep || palette.gold) : palette.mid,
+    statusColor: el.elPruefen ? palette.skyDeep : palette.mid,
     onClick: () => onNavigate('ergaenzungsleistungen'),
   });
 };

@@ -285,7 +285,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     }
 
     if (ipvStatus.status === IPV_STATUS.BEANTRAGT) {
-      const badge = h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep } }, t('ipvStatus.appliedLabel'));
+      const badge = h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.skyDeep } }, t('ipvStatus.appliedLabel'));
       return weg([
         head(badge),
         lead(t('ipvStatus.appliedLead')),
@@ -366,8 +366,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     );
   };
 
-  // Hinweise je nach Lage (Fassung 5: im ruhigen Gold-Kasten wie im Mockup, Texte wie bisher).
-  const lageHinweisStil = { padding: '10px 12px', borderRadius: radius.md, background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: space.md };
+  // Hinweise je nach Lage (Fassung 5, Texte wie bisher; seit Fassung 9 blau: Hinweise informieren).
+  const lageHinweisStil = { padding: '10px 12px', borderRadius: radius.md, background: palette.sky + '18', border: '1px solid ' + palette.sky, fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: space.md };
 
   // Only block when the canton is genuinely missing. If the canton is set but the
   // income isn't yet, we still show the canton-specific info and prompt for income.
@@ -586,7 +586,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // Prämie ist der Hauptwohnsitz (KVG Art. 61 Abs. 2, Art. 65 Abs. 1). Gerechnet wird mit dem eingetragenen
       // Kanton — der Hinweis nennt ihn, damit auffällt, wenn dort der Arbeitsort steht.
       residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: lageHinweisStil },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'premium.weeklyResidence' : 'premium.nebenResidence')),
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'premium.weeklyResidence' : 'premium.nebenResidence')),
         React.createElement('div', null, t('premium.weeklyIpvNote')),
         React.createElement('div', null, t('premium.weeklyKkNote')),
         canton && React.createElement('div', null, t('premium.weeklyKanton', { kanton: kantonName(canton) }))

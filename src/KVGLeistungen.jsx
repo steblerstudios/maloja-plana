@@ -87,7 +87,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
         }, t('kvg.' + item.key + 'Note')),
         item.intervalKey && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sandDeep, marginTop: '4px', fontWeight: weight.medium }
+          style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '4px', fontWeight: weight.medium }
         }, hinweisZeichen(), t('kvg.' + item.intervalKey)),
         // Faden 3-II: einklappbarer Detail-Block — entweder die WHO/EU-Empfehlung
         // (Screenings) oder „Was genau gedeckt ist" (z. B. Schwangerschaft, Impfungen).
@@ -369,8 +369,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     : result.selbstbehaltAusgeschoepft
       ? { text: t('kvg.selbstbehaltDone'), color: palette.sageDeep || '#4A6657', icon: 'check' }
     : result.franchiseOffen > 0
-      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'info' }
-      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'info' };
+      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.skyDeep, icon: 'info' }
+      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.skyDeep, icon: 'info' };
 
   const barStyle = (_value, _max, _color) => ({
     height: '8px',
@@ -442,7 +442,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.goldDeep || '#c47a20' }
+          style: { fontWeight: weight.semi, color: palette.skyDeep }
         }, betrag(result.eigenanteil))
       ),
       React.createElement('div', {
@@ -684,7 +684,6 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         : React.createElement('div', null,
             yearBelege.map(b => {
               const offen = b.status === 'offen';
-              const gold = palette.gold || '#c47a20';
               return React.createElement('div', {
                 key: b.id,
                 style: { padding: '8px 0', borderBottom: '1px solid ' + palette.border }
@@ -696,8 +695,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                     React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, fmtDatum(b.datum)),
                     offen && React.createElement('span', {
                       style: {
-                        fontSize: text.xs, fontWeight: weight.medium, color: gold,
-                        background: gold + '18', padding: '1px 7px', borderRadius: radius.full,
+                        fontSize: text.xs, fontWeight: weight.medium, color: palette.skyDeep,
+                        background: palette.sky + '18', padding: '1px 7px', borderRadius: radius.full,
                       }
                     }, t('kvg.belegOpen'))
                   ),
@@ -786,7 +785,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
   // Form X: der Betrag zuerst, die Eingabe als «Ihre Angaben», die Quellen je Kanton darunter.
   return form({
     ergebnis: result ? result && React.createElement('div', {
-      style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
+      style: { padding: '14px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.sky }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
@@ -807,7 +806,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.body }
       },
         React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.berechneterBetrag')),
-        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, betrag(result.betrag, { stellen: 2 }))
+        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.skyDeep } }, betrag(result.betrag, { stellen: 2 }))
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }

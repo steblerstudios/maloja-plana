@@ -696,7 +696,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
         ),
         oldDoctor && !docList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('doctors.migrated')),
           React.createElement('div', null, oldDoctor + (oldPhone ? ' · ' + oldPhone : ''))
@@ -1019,7 +1019,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
         ),
         oldText && !medList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('medications.migrated')),
           React.createElement('div', null, oldText)
@@ -1051,7 +1051,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           )
         ),
         oldText && !langList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('langSkill.migrated')),
           React.createElement('div', null, oldText)
@@ -1075,7 +1075,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
         ),
         oldText && !dList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('diseases.migrated')),
           React.createElement('div', null, oldText)
