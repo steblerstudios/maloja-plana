@@ -624,7 +624,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         type: 'button',
         onClick: handleApplyOnline,
         disabled: !anspruchMoeglich,
-        style: { ...knopfStil(palette, 'haupt'), ...(anspruchMoeglich ? null : gesperrtStil) }
+        style: { ...knopfStil(palette, 'haupt'), ...(anspruchMoeglich ? null : { ...gesperrtStil, opacity: undefined }) }
       },
         // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
         // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
