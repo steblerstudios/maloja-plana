@@ -14,6 +14,8 @@ export const DARK_PALETTE = {
   // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
   // Fläche zu hell für weissen 15px-Text. Weiss auf sageBtn 8.17:1 / roseBtn 6.65:1 (AA).
   sageBtn: '#3E5449', roseBtn: '#8A4A4A',
+  // Schrift auf sageBtn (Hauptknopf, gewählte Option). Fassung 9: Grün = handeln (F9-A2).
+  onSageBtn: '#FFFFFF',
   // Legible-Varianten von sand/sky für Vordergrund (Text + bedeutungstragende Graphik):
   // sand besteht im Dunkeln (5.87 auf surface). sky #6E90B0 lag nur bei 4.30 (surface)
   // und fiel auf getönten Flächen (sky+'18') unter AA (3.44–3.78) → #8CAAC6 hält ≥4.75.
@@ -39,6 +41,8 @@ export const LIGHT_PALETTE = {
   // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
   // Fläche zu hell für weissen 15px-Text. Weiss auf sageBtn 8.17:1 / roseBtn 6.65:1 (AA).
   sageBtn: '#3E5449', roseBtn: '#8A4A4A',
+  // Schrift auf sageBtn (Hauptknopf, gewählte Option). Fassung 9: Grün = handeln (F9-A2).
+  onSageBtn: '#FFFFFF',
   // Legible-Varianten von sand/sky für Vordergrund im Hellmodus: sand (2.34:1) und
   // sky (3.20:1) sind auf surface zu hell für Text. sandDeep alt (#8A6D3B) fiel auf
   // getönten Flächen unter AA (up 4.10 / top 3.81) → #7A5F30 hält ≥4.70 überall.

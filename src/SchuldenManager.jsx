@@ -232,7 +232,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     gap: '4px',
     padding: space.sm + 'px ' + space.sm + 'px ' + space.sm + 'px ' + (space.sm + 4) + 'px',
     background: palette.sageBtn,
-    color: '#fff',
+    color: palette.onSageBtn,
     border: 'none',
     borderRadius: radius.sm,
     cursor: 'pointer',

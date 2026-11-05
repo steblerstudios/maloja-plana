@@ -188,11 +188,11 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {
           onClick: () => setScanMode('upload'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sageBtn : palette.up, color: scanMode === 'upload' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sageBtn : palette.up, color: scanMode === 'upload' ? palette.onSageBtn : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.photoScan')),
         React.createElement('button', {
           onClick: () => setScanMode('manual'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sageBtn : palette.up, color: scanMode === 'manual' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sageBtn : palette.up, color: scanMode === 'manual' ? palette.onSageBtn : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.manualEntry'))
       ),
 

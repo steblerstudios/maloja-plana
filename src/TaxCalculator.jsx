@@ -55,7 +55,7 @@ export const WohnkantonFrage = ({ palette, t, canton, onJa, onNein }) => {
   return React.createElement('div', { role: 'group', 'aria-live': 'polite', style: { marginBottom: space.md, padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('p', { style: { margin: 0, marginBottom: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('tax.wohnkantonFrage', { canton: getCantonName(canton, t) })),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },
-      React.createElement('button', { type: 'button', onClick: onJa, style: { ...knopf, background: palette.sageBtn, color: '#fff', border: 'none' } }, t('tax.wohnkantonJa')),
+      React.createElement('button', { type: 'button', onClick: onJa, style: { ...knopf, background: palette.sageBtn, color: palette.onSageBtn, border: 'none' } }, t('tax.wohnkantonJa')),
       React.createElement('button', { type: 'button', onClick: onNein, style: { ...knopf, background: 'none', color: palette.text, border: '1px solid ' + palette.border } }, t('tax.wohnkantonNein'))
     )
   );
@@ -213,7 +213,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
   const buttonStyle = {
     padding: '10px 16px',
     background: palette.sageBtn,
-    color: '#fff',
+    color: palette.onSageBtn,
     border: 'none',
     borderRadius: radius.sm,
     cursor: 'pointer',

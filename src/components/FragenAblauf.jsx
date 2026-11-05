@@ -28,7 +28,7 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
   const zeileStil = { display: 'flex', alignItems: 'center', gap: '10px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
   const knopf = (hervor) => ({ padding: '10px 18px', minHeight: '44px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium, borderRadius: radius.sm, cursor: 'pointer',
-    border: '1px solid ' + (hervor ? palette.sageBtn : palette.border), background: hervor ? palette.sageBtn : palette.surface, color: hervor ? '#fff' : palette.text });
+    border: '1px solid ' + (hervor ? palette.sageBtn : palette.border), background: hervor ? palette.sageBtn : palette.surface, color: hervor ? palette.onSageBtn : palette.text });
 
   const feld = (id, label, wert, onWert, { mehrzeilig = false, typ = 'text', schmal = false } = {}) => React.createElement('div', { key: id, style: { marginBottom: space.sm + 'px' } },
     React.createElement('label', { htmlFor: id, style: labelStil }, label),

@@ -103,7 +103,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sageBtn,
-    color: '#fff', border: 'none', borderRadius: radius.sm,
+    color: palette.onSageBtn, border: 'none', borderRadius: radius.sm,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: fontFamily, marginTop: space.md,
   };

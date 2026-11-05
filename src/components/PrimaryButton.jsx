@@ -3,8 +3,8 @@ import { text, weight, radius, space } from '../config/tokens.js';
 
 // Der EINE Primär-Button der App (Konsistenz-Baustein aus dem Design-Audit).
 // Fassung 9 (F9-A2, Stebler Studios 05.11.2026 «Ja, folgen»): Grün = handeln, wie im
-// Markenhandbuch (Sage: Buttons, Links). Fläche sageBtn, Schrift #fff (8.17:1, AA, wie die
-// bisherigen sageBtn-Knöpfe); im Farbenblind-Modus wird sageBtn blau. Sand bleibt Akzent (Frist, Hervorhebung, Fokus).
+// Markenhandbuch (Sage: Buttons, Links). Fläche sageBtn, weisse Schrift (8.17:1, AA);
+// im Farbenblind-Modus wird sageBtn blau. Sand bleibt Akzent (Frist, Hervorhebung, Fokus).
 // Regel: ein Hauptknopf je Seite, weitere Handlungen als SecondaryButton.
 // - icon: optionales Element links vom Text
 // - disabled: dimmt + sperrt (grauer Hintergrund)
@@ -18,7 +18,7 @@ export const PrimaryButton = ({ palette, onClick, children, icon, disabled, styl
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: space.xs + 'px',
       padding: '10px 16px', minHeight: '44px',
       background: disabled ? palette.mid : palette.sageBtn,
-      color: '#fff',
+      color: palette.onSageBtn,
       border: 'none', borderRadius: radius.sm + 'px',
       cursor: disabled ? 'not-allowed' : 'pointer',
       fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi,
