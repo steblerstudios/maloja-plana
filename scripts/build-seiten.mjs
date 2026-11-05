@@ -803,7 +803,10 @@ for (const h of HINTERGRUND) {
 // tabindex="0", der Name kommt aus der caption. Zentral hier statt in jedem
 // Tabellen-Baustein, damit keine neue Tabelle es vergessen kann. Blöcke, die es
 // schon selbst tragen (role= gesetzt), bleiben unberührt. Der sichtbare Fokus
-// steht im Stil bei `.tabelle`.
+// steht im Stil bei `.tabelle`. Name = caption ist bewusst so (gleiches Muster wie
+// die Sitztabelle in #693): Screenreader sagen ihn beim Betreten der Region und
+// dann als Tabellentitel; das ist doppelt, aber der Name stimmt immer mit dem
+// sichtbaren Titel überein.
 const TABELLE_MIT_CAPTION = /<div class="(tabelle(?: [^"]*)?)"><table>(\s*)<caption>([\s\S]*?)<\/caption>/g;
 function tabellenErreichbar(html) {
   return html.replace(TABELLE_MIT_CAPTION, (_, klasse, ws, caption) => {

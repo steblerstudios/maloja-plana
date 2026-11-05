@@ -111,14 +111,27 @@ describe('Scrollbare Tabellen sind per Tastatur erreichbar (WCAG 2.1.1)', () => 
     expect(kaputt).toEqual([]);
   });
 
+  it.each(mitTabellen.map((s) => [s.name, s]))('%s: jede <table> steckt in einer .tabelle mit caption', (_, s) => {
+    const tabellen = (s.html.match(/<table[\s>]/g) || []).length;
+    const huellen = (s.html.match(/<div class="tabelle[^"]*"[^>]*><table>\s*<caption>/g) || []).length;
+    expect(huellen).toBe(tabellen);
+  });
+
   it.each(mitTabellen.map((s) => [s.name, s]))('%s: der Name der Region ist die caption', (_, s) => {
+    let geprueft = 0;
     for (const [, name, caption] of s.html.matchAll(/<div class="tabelle[^"]*"[^>]*aria-label="([^"]*)"[^>]*><table>\s*<caption>([\s\S]*?)<\/caption>/g)) {
       const text = caption.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
       expect(name.replace(/&quot;/g, '"').replace(/&amp;/g, '&')).toBe(text.replace(/&amp;/g, '&'));
+      geprueft++;
     }
+    // Sonst liefe die Schleife bei geänderter Attributreihenfolge leer und bliebe grün.
+    expect(geprueft).toBe((s.html.match(/<div class="tabelle[ "]/g) || []).length);
   });
 
   it.each(mitTabellen.map((s) => [s.name, s]))('%s: fokussierte Tabelle hat einen sichtbaren Rahmen', (_, s) => {
-    expect(stilVon(s.html)).toMatch(/\.tabelle\[tabindex\]:focus-visible\s*\{[^}]*outline:\s*2px solid/);
+    const stil = stilVon(s.html);
+    expect(stil).toMatch(/\.tabelle\[tabindex\]:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--text\)/);
+    // Keine Regel für .tabelle darf den Rahmen wieder wegnehmen.
+    expect(stil).not.toMatch(/\.tabelle[^{]*\{[^}]*outline:\s*(?:none|0)\b/);
   });
 });
