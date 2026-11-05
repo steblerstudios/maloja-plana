@@ -259,7 +259,7 @@ export const POLITSYSTEM = {
         <h3>Wenn die Verfassung ändert</h3>
         <p>Jede Änderung der Bundesverfassung kommt zwingend vors Volk, auch ohne Unterschriften. Dann braucht es zwei Mehrheiten: die der Stimmenden und die der Kantone. Das ist das doppelte Mehr (Frage 4). [[q:bv]]</p>
         <h3>Die Volksinitiative</h3>
-        <p>Der Anstoss kann auch von aussen kommen: {{r.initiative}} Stimmberechtigte können innert {{r.initiativeMonate}} Monaten eine Änderung der Verfassung verlangen. Die Bundesversammlung prüft, ob die Initiative gültig ist, und gibt eine Empfehlung ab; sie kann einen Gegenentwurf daneben stellen. Aufhalten kann sie eine gültige Initiative nicht. Ist sie als fertiger Text formuliert, wie meistens, entscheiden am Ende Volk und Kantone. [[q:bv]]</p>
+        <p>Der Anstoss kann auch von aussen kommen: {{r.initiative}} Stimmberechtigte können innert {{r.initiativeMonate}} Monaten eine Änderung der Verfassung verlangen. Die Bundesversammlung prüft, ob die Initiative gültig ist, und gibt eine Empfehlung ab; sie kann einen Gegenentwurf daneben stellen. Aufhalten kann sie eine gültige Initiative nicht. Ist sie als fertiger Text formuliert, entscheiden am Ende Volk und Kantone. [[q:bv]]</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Ein Gesetz braucht beide Räte. Danach hat das Volk ein letztes Wort, wenn genug Menschen es verlangen. Bei der Verfassung hat es dieses Wort immer.</p>`,
     },
     {
@@ -269,7 +269,7 @@ export const POLITSYSTEM = {
         <p>Die Schweiz hat niemanden an der Spitze, der allein bestimmt. Die Regierung ist der Bundesrat mit {{r.bundesrat}} Mitgliedern, keines steht über den anderen. [[q:bundesrat]] Er entscheidet als Kollegium. [[q:bv]] Was beschlossen ist, vertreten alle Mitglieder. [[q:rvog]]</p>
 <!--FIG:uhrwerk-->
         <p>Die Bundesversammlung wählt die Mitglieder nach jeder Wahl des Nationalrats für vier Jahre, die beiden Räte gemeinsam. [[q:bv]] Den Vorsitz führt die Bundespräsidentin oder der Bundespräsident, für ein Jahr. Für das folgende Jahr ist eine Wiederwahl nicht möglich. [[q:bv]]</p>
-        <p>Die grossen Parteien teilen sich die Sitze, statt sich als Regierung und Opposition gegenüberzustehen. Das heisst Konkordanz. Es ist eine freiwillige Übung, keine Regel der Verfassung. [[q:hls]] Von 1959 bis 2003 galt die «Zauberformel»: Die FDP, die Konservativen (später CVP) und die SP hatten je zwei Sitze, die Bauern-, Gewerbe- und Bürgerpartei (BGB) einen. Die BGB heisst seit 1971 SVP. [[q:hlsSvp]] 2003 gewann die SVP auf Kosten der CVP einen zweiten Sitz. [[q:hls]] Im November 2026 sitzen im Bundesrat {{bundesrat.parteien}}. [[q:bundesrat]]</p>`,
+        <p>Die grossen Parteien teilen sich die Sitze, statt sich als Regierung und Opposition gegenüberzustehen. Das heisst Konkordanz. Es ist eine freiwillige Übung, keine Regel der Verfassung. [[q:hls]] Von 1959 bis 2003 galt die «Zauberformel»: Die FDP, die Konservativen (später CVP) und die SP hatten je zwei Sitze, die Bauern-, Gewerbe- und Bürgerpartei (BGB) einen. [[q:hls]] Die BGB heisst seit 1971 SVP. [[q:hlsSvp]] 2003 gewann die SVP auf Kosten der CVP einen zweiten Sitz. [[q:hls]] Im November 2026 sitzen im Bundesrat {{bundesrat.parteien}}. [[q:bundesrat]]</p>`,
     },
     {
       id: 'mehr',
