@@ -161,7 +161,7 @@ brauchen zwei Varianten (`{ sie, du }`) — Labels/Substantive/Buttons bleiben g
 
 | Sprache | Formell (Default) | Informell | Toggle aktiv |
 |---------|-------------------|-----------|:---:|
-| **DE** | Sie | Du | ✅ |
+| **DE** | Sie | du (klein, seit Fassung 9) | ✅ |
 | **IT** | Lei | tu | ✅ |
 | **RM** | Vus | ti | ✅ ⚠️ |
 | **FR** | vous | — | nur vous |
