@@ -29,9 +29,10 @@ export const PageTitle = ({ palette, children, icon, style, ...rest }) =>
     }, ...rest,
   }, icon || null, icon ? titelText(children) : children);
 
-// Karten-/Abschnittstitel (19px semi, optionales Icon).
-export const PanelTitle = ({ palette, children, icon, style, ...rest }) =>
-  React.createElement('h3', {
+// Karten-/Abschnittstitel (19px semi, optionales Icon). `as` setzt die Stufe, wo der Titel
+// eine Seite ohne PageTitle eröffnet (h2) — das Aussehen bleibt gleich (F9-A3).
+export const PanelTitle = ({ palette, children, icon, as = 'h3', style, ...rest }) =>
+  React.createElement(as, {
     style: {
       ...(icon ? { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px', maxWidth: '100%' } : {}),
       ...umbruch,
