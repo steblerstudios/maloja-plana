@@ -2,6 +2,8 @@ import { defineConfig, configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { ersteBilder, kernPfade, teilen } from './scripts/i18nKern.mjs';
 
 // ─── PWA: Cache-Name an Bundle-Hash koppeln ────────────────────────────────
 // Ersetzt '__BUILD_HASH__' in der ausgelieferten sw.js (im Ausgabeordner, auch mit
@@ -38,9 +40,30 @@ function stampServiceWorkerCacheVersion() {
   };
 }
 
+// ─── Sprachen in Kern und Rest teilen ─────────────────────────────────────
+// `virtual:sprache/de-kern` und `-rest` entstehen aus src/i18n/de.js (scripts/i18nKern.mjs).
+// Die fünf Sprachdateien bleiben die eine Quelle, die Paritätstests lesen sie unverändert.
+function spracheTeilen() {
+  const PRAEFIX = 'virtual:sprache/';
+  const quelle = (sprache) => path.resolve(__dirname, 'src/i18n', `${sprache}.js`);
+  const lese = async (datei) => (await import(`${pathToFileURL(datei)}?v=${fs.statSync(datei).mtimeMs}`)).default;
+  return {
+    name: 'maloja-sprache-teilen',
+    resolveId: (id) => (id.startsWith(PRAEFIX) ? `\0${id}` : null),
+    async load(id) {
+      if (!id.startsWith(`\0${PRAEFIX}`)) return null;
+      const [sprache, teil] = id.slice(PRAEFIX.length + 1).split('-');
+      this.addWatchFile(quelle(sprache));
+      const pfade = kernPfade(ersteBilder(path.resolve(__dirname, 'src')), await lese(quelle('de')));
+      const geteilt = teilen(await lese(quelle(sprache)), pfade);
+      return `export default ${JSON.stringify(geteilt[teil])};`;
+    },
+  };
+}
+
 export default defineConfig({
   base: process.env.BASE_URL || '/',
-  plugins: [react(), stampServiceWorkerCacheVersion()],
+  plugins: [react(), stampServiceWorkerCacheVersion(), spracheTeilen()],
   server: {
     port: Number(process.env.PORT) || 5174,
     strictPort: true,

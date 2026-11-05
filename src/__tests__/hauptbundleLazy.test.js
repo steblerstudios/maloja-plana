@@ -10,7 +10,7 @@ import { isOnboardingDone, isTourDone, markTourDone } from '../utils/einfuehrung
 
 const mainJsx = readFileSync(new URL('../main.jsx', import.meta.url), 'utf8');
 
-const lazyZiele = [...mainJsx.matchAll(/React\.lazy\(\s*\(\)\s*=>\s*import\(\s*'([^']+)'\s*\)/g)].map((m) => m[1]);
+const lazyZiele = [...mainJsx.matchAll(/lazyMitTexten\(\s*\(\)\s*=>\s*import\(\s*'([^']+)'\s*\)/g)].map((m) => m[1]);
 const statischeZiele = [...mainJsx.matchAll(/^import\s[^;]*?from\s+'([^']+)'/gm)].map((m) => m[1]);
 
 function speicher(start = {}) {
@@ -83,8 +83,8 @@ describe('einfuehrungStatus: gleiche Schlüssel, gleiches Verhalten', () => {
 describe('Berg-Detail lädt nach, das Dashboard hält es nicht fest (E36, 24.09.2026)', () => {
   const dashboardJsx = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
 
-  it('Dashboard lädt BergDetail per React.lazy und importiert es nicht statisch', () => {
-    expect(dashboardJsx).toMatch(/React\.lazy\(\(\) => import\('\.\/BergDetail\.jsx'\)\)/);
+  it('Dashboard lädt BergDetail per lazyMitTexten und importiert es nicht statisch', () => {
+    expect(dashboardJsx).toMatch(/lazyMitTexten\(\(\) => import\('\.\/BergDetail\.jsx'\)\)/);
     expect(dashboardJsx).not.toMatch(/^import[^;]*from '\.\/BergDetail\.jsx'/m);
   });
 
@@ -122,8 +122,9 @@ describe('Berg-Detail lädt nach, das Dashboard hält es nicht fest (E36, 24.09.
 describe('Startbündel: keine ganzen Fach-Dateien für eine kleine Hilfsfunktion', () => {
   const dashboard = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
   it('Dashboard holt die Zwischenablage aus utils/zwischenablage.js, nicht aus notfallpass.js', () => {
-    expect(dashboard).toMatch(/from '\.\/utils\/zwischenablage\.js'/);
-    expect(dashboard).not.toMatch(/from '\.\/utils\/notfallpass\.js'/);
+    // Seit #655 erst beim Klick per import() geladen; beide Formen zeigen auf die kleine Datei.
+    expect(dashboard).toMatch(/(from |import\()'\.\/utils\/zwischenablage\.js'/);
+    expect(dashboard).not.toMatch(/(from |import\()'\.\/utils\/notfallpass\.js'/);
   });
   it('main.jsx importiert utils/fristen.js nicht', () => {
     expect(mainJsx).not.toMatch(/from '\.\/utils\/fristen\.js'/);

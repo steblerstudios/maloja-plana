@@ -7,7 +7,7 @@ import { getCantonName } from './config/kantonPLZ.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
-import { useT } from './i18n/index.js';
+import { useT, lazyMitTexten } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
 import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
@@ -22,7 +22,6 @@ import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
 import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
-import { inZwischenablage } from './utils/zwischenablage.js';
 import { version as APP_VERSION } from '../package.json';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
@@ -37,13 +36,13 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // Lazy: hält die Instrumente (Tacho/Kompass/Tank/Schutzschild + Daten) aus dem
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
-const BergDetail = React.lazy(() => import('./BergDetail.jsx'));
+const BergDetail = lazyMitTexten(() => import('./BergDetail.jsx'));
 // Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
 const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
-const QuickCheck = React.lazy(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
-const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
+const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
+const InstrumentePanel = lazyMitTexten(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -179,7 +178,10 @@ const BetaFeedback = ({ palette, t }) => {
   const href = betaFeedbackHref(entwurf);
 
   const kopieren = async () => {
-    const ok = await inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf);
+    // Erst beim Klick geladen: hält das Startbündel unter dem size-limit.
+    const ok = await import('./utils/zwischenablage.js')
+      .then((m) => m.inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf))
+      .catch(() => false);
     setKopie(ok ? 'ok' : 'fehler');
   };
 
