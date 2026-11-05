@@ -634,7 +634,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).
     onEnterSandbox && React.createElement('button', {
       type: 'button', 'data-weg': 'probieren', onClick: onEnterSandbox,
-      style: { ...knopfStil(palette, 'neben'), margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px', minHeight: '32px', fontSize: text.xs, fontWeight: weight.medium },
+      style: { ...knopfStil(palette, 'neben'), margin: '0 0 ' + space.md + 'px 0' },
     }, t('sandbox.footerLink')),
     fruechte.length > 0 && React.createElement('div', { 'data-teil': 'lebensbaum' },
       React.createElement(Lebensbaum, {
