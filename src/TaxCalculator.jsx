@@ -20,6 +20,7 @@ import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
 import { beitragsNotizKey } from './utils/monatsrechnung.js';
+import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
 const TAX_IMPORT_ANKER = 'mp-steuer-import';
@@ -51,12 +52,11 @@ export const steuerkantonSpeichern = (data, canton, alsWohnkanton = false) => ({
 
 // Ruhige Rückfrage unter dem Kantonsfeld. Ohne Hooks, damit sie direkt prüfbar ist.
 export const WohnkantonFrage = ({ palette, t, canton, onJa, onNein }) => {
-  const knopf = { padding: '8px 12px', minHeight: '44px', borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium };
   return React.createElement('div', { role: 'group', 'aria-live': 'polite', style: { marginBottom: space.md, padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('p', { style: { margin: 0, marginBottom: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('tax.wohnkantonFrage', { canton: getCantonName(canton, t) })),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },
-      React.createElement('button', { type: 'button', onClick: onJa, style: { ...knopf, background: palette.sand, color: palette.onSand, border: 'none' } }, t('tax.wohnkantonJa')),
-      React.createElement('button', { type: 'button', onClick: onNein, style: { ...knopf, background: 'none', color: palette.text, border: '1px solid ' + palette.border } }, t('tax.wohnkantonNein'))
+      React.createElement('button', { type: 'button', onClick: onJa, style: knopfStil(palette, 'haupt') }, t('tax.wohnkantonJa')),
+      React.createElement('button', { type: 'button', onClick: onNein, style: knopfStil(palette, 'neben') }, t('tax.wohnkantonNein'))
     )
   );
 };
@@ -165,7 +165,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     return React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker',
       onClick: () => { handleInputChange('pension3a', wert); document.querySelector('[data-abzug="pension3a"]')?.focus(); }, // Der Knopf verschwindet danach: Fokus ins Feld.
-      style: { minHeight: '44px', padding: 0, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep, textAlign: 'left' },
+      style: { ...knopfStil(palette, 'neben'), padding: '6px 12px', fontSize: text.xs, textAlign: 'left' },
     }, t('tax.aus3aUebernehmen', { betrag: betrag(wert, { hoechstens: 2 }) }));
   };
 
@@ -210,16 +210,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     setAnsage(steuerAnsageText(t, teileJetzt ? teileJetzt.split('|') : []));
   }
 
-  const buttonStyle = {
-    padding: '10px 16px',
-    background: palette.sand,
-    color: palette.onSand,
-    border: 'none',
-    borderRadius: radius.sm,
-    cursor: 'pointer',
-    fontWeight: weight.semi,
-    fontSize: text.sm
-  };
+  const buttonStyle = knopfStil(palette, 'haupt');
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'money', size: 22 }), style: { marginBottom: space.sm } }, t('tax.title')),
@@ -473,13 +464,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.medium, marginTop: space.md }
     }, t('nav.finanzUebersicht')),
 
     // Crosslink: Frist nicht zu schaffen? → Fristverlängerungs-Brief (Vorlage existiert)
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('briefe'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
+      style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm }
     }, t('briefe.taxExtension.title'))
   );
 };
