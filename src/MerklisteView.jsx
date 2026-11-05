@@ -117,7 +117,7 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     txt: (d) => ({ display: 'block', fontSize: text.sm, color: d ? palette.mid : palette.text, textDecoration: d ? 'line-through' : 'none', lineHeight: 1.4 }),
     unter: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.normal },
     tagZeile: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', marginBottom: '4px' },
-    tagKnopf: { ...knopfStil(palette, 'neben'), padding: '4px 10px', fontSize: text.xs },
+    tagKnopf: { ...knopfStil(palette, 'neben'), padding: '4px 10px', minHeight: '44px', fontSize: text.xs },
     tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     erledigtAm: { fontSize: text.xs, color: palette.mid },
     del: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, minWidth: '44px', minHeight: '44px', background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
