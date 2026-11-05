@@ -3311,6 +3311,8 @@ export default {
     roughEstimateBadge: 'Estimation grossière',
     kapitelZeile: 'Impôt fédéral {bund} · canton et commune {kanton} — estimation grossière pour le chef-lieu, sans impôt ecclésiastique.',
     annahmeOhneDreizehntenHier: { sie: 'Calculé sans 13e salaire — avec un 13e, l’impôt est plus élevé. Vous pouvez l’indiquer plus haut sous «Revenu».', du: 'Calculé sans 13e salaire — avec un 13e, l’impôt est plus élevé. Tu peux l’indiquer plus haut sous «Revenu».' },
+    // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
+    annahmeOhneDreizehntenBlatt: 'Calculé sans 13e salaire — avec un 13e salaire, l’impôt est plus élevé.',
     // E37/E38 : pas de montant cantonal là où le tableau de l’AFC ne s’applique pas
     bandOutside: { sie: 'Pour ce revenu imposable, Maloja n\'affiche pas de montant ici. Le tableau issu du calculateur d\'impôts de l\'AFC va de CHF {min} à CHF {max} (chef-lieu, année fiscale {year}) ; en dehors, Maloja ne le prolonge pas. Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.', du: 'Pour ce revenu imposable, Maloja n\'affiche pas de montant ici. Le tableau issu du calculateur d\'impôts de l\'AFC va de CHF {min} à CHF {max} (chef-lieu, année fiscale {year}) ; en dehors, Maloja ne le prolonge pas. Le calculateur d\'impôts de l\'AFC calcule le montant pour ta commune.' },
     bandNotChecked: { sie: 'Pour cette situation, Maloja n\'affiche pas de montant ici. L\'impôt cantonal et communal a été mesuré pour les personnes célibataires et mariées ayant jusqu\'à trois enfants ; pour les personnes non mariées, seulement si les enfants vivent dans le même ménage (confirmation au barème parental). Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.', du: 'Pour cette situation, Maloja n\'affiche pas de montant ici. L\'impôt cantonal et communal a été mesuré pour les personnes célibataires et mariées ayant jusqu\'à trois enfants ; pour les personnes non mariées, seulement si les enfants vivent dans le même ménage (confirmation au barème parental). Le calculateur d\'impôts de l\'AFC calcule le montant pour ta commune.' },
@@ -5639,7 +5641,10 @@ export default {
 
   lebensmappe: {
     title: 'Dossier de vie',
-    subtitle: { sie: 'Votre aperçu personnel — toutes les informations importantes en un coup d\'oeil.', du: 'Ton aperçu personnel — toutes les informations importantes en un coup d\'oeil.' },
+    subtitle: { sie: 'Votre aperçu personnel — les informations principales en un coup d\'oeil.', du: 'Ton aperçu personnel — les informations principales en un coup d\'oeil.' },
+    // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
+    gesundheitLabel: 'Santé',
+    gesundheitHinweis: 'Le groupe sanguin, les allergies et les médicaments figurent dans le dossier d\'urgence.',
     name: 'Nom',
     address: 'Adresse',
     documents: 'Documents enregistrés',
@@ -6188,7 +6193,7 @@ export default {
     breakEven: 'Seuil de rentabilité ≈ {breakeven}',
     regional: 'Prime régionale vs Suisse',
     vergleich: 'Comparaison des primes et couverture accidents',
-    referenz: 'Référence CHF {betrag}',
+    referenz: 'Tarif de la caisse CHF {betrag}',
     kassenZahl: '{n} caisses',
     alleKassen: 'Afficher les {n} caisses',
     wenigerKassen: 'Seulement les cinq moins chères',
@@ -6207,11 +6212,11 @@ export default {
     franchiseOptSaving: { sie: 'Avec une franchise de CHF {high} au lieu de CHF {low}, vous économisez environ CHF {saving}/an de primes.', du: 'Avec une franchise de CHF {high} au lieu de CHF {low}, tu économises environ CHF {saving}/an de primes.' },
     franchiseOptReserve: { sie: 'En contrepartie, une mauvaise année, vous payez jusqu\'à CHF {reserve} vous-même (franchise + quote-part max. CHF {sb}). Vous devriez pouvoir mettre ce coussin de côté.', du: 'En contrepartie, une mauvaise année, tu paies jusqu\'à CHF {reserve} toi-même (franchise + quote-part max. CHF {sb}). Tu devrais pouvoir mettre ce coussin de côté.' },
     franchiseOptBreakeven: { sie: 'La franchise plus élevée est avantageuse tant que vos frais de santé restent en dessous d\'environ CHF {breakeven}/an.', du: 'La franchise plus élevée est avantageuse tant que tes frais de santé restent en dessous d\'environ CHF {breakeven}/an.' },
-    tachoBreakeven: 'Break-even',
+    tachoBreakeven: 'Seuil de rentabilité',
     tachoLegendHigh: 'franchise élevée plus avantageuse',
     tachoLegendLow: 'franchise basse plus avantageuse',
-    tachoReadoutBelow: { sie: 'CHF {costs} jusqu\'ici cette année. En dessous du break-even (CHF {be}), la franchise élevée (CHF {high}) revient moins cher.', du: 'CHF {costs} jusqu\'ici cette année. En dessous du break-even (CHF {be}), la franchise élevée (CHF {high}) revient moins cher.' },
-    tachoReadoutAbove: 'CHF {costs} jusqu\'ici cette année — au-dessus du break-even (CHF {be}). Cette année, la franchise basse (CHF {low}) aurait été plus avantageuse.',
+    tachoReadoutBelow: { sie: 'CHF {costs} jusqu\'ici cette année. En dessous du seuil de rentabilité (CHF {be}), la franchise élevée (CHF {high}) revient moins cher.', du: 'CHF {costs} jusqu\'ici cette année. En dessous du seuil de rentabilité (CHF {be}), la franchise élevée (CHF {high}) revient moins cher.' },
+    tachoReadoutAbove: 'CHF {costs} jusqu\'ici cette année — au-dessus du seuil de rentabilité (CHF {be}). Cette année, la franchise basse (CHF {low}) aurait été plus avantageuse.',
     tachoOrientation: { sie: 'Dès que vous saisissez des frais de santé, l\'aiguille indique où vous en êtes cette année.', du: 'Dès que tu saisis des frais de santé, l\'aiguille indique où tu en es cette année.' },
     tachoTrackLink: 'Saisir les frais de santé',
     kreuzAchse: 'Frais de santé par an',
@@ -6593,6 +6598,9 @@ export default {
     einkommen: 'Revenu annuel brut (CHF)',
     einkommenHint: 'Revenu moyen déterminant',
     nettoHint: "Le revenu enregistré est indiqué comme net — veuillez saisir ici le salaire annuel brut pour l'AVS et la LPP.",
+    // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
+    bruttoVorschlag: 'Estimé à partir du salaire net du profil (CHF {netto} par mois) : environ CHF {betrag} brut par an. C\'est une estimation — le certificat de salaire est plus précis.',
+    bruttoUebernehmen: 'Reprendre l\'estimation',
     partnerNettoHint: 'Veuillez saisir le salaire annuel brut — le profil ne contient que le salaire net, qui serait ici une base erronée.',
     beitragsjahre: 'Années de cotisation',
     beitragsjahreHint: { sie: 'Jusqu’à l’âge de référence ({referenzalter}) : vos années selon l’extrait CI plus les années attendues d’ici là. Vide = sans lacune.', du: 'Jusqu’à l’âge de référence ({referenzalter}) : tes années selon l’extrait CI plus les années attendues d’ici là. Vide = sans lacune.' },

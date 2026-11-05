@@ -3355,9 +3355,9 @@ export default {
       ausserdem: 'Ausserdem offen: {anzahl} Arztrechnungen · {betrag}',
       ausserdemEins: 'Ausserdem offen: eine Arztrechnung · {betrag}',
       naechsteFrist: 'nächste Zahlungsfrist {datum}',
-      zumTracker: 'zum KVG-Tracker',
+      zumTracker: 'zu den Arztrechnungen',
       titel: 'Offene Posten',
-      gruppeArzt: 'Arztrechnungen · im KVG-Tracker',
+      gruppeArzt: 'Arztrechnungen',
       gruppeForderungen: 'Schulden · im Schuldenmanager',
       rechnungVom: 'Arztrechnung vom {datum}',
       ohneDatum: 'Arztrechnung ohne Datum',
@@ -3912,7 +3912,10 @@ export default {
 
   lebensmappe: {
     title: 'Mappa da vita',
-    subtitle: { sie: 'Vossa survista persunala cumpleta — tut las indicaziuns impurtantas en ina egliada.', du: 'Tia survista persunala cumpleta — tut las indicaziuns impurtantas en ina egliada.' },
+    subtitle: { sie: 'Vossa survista persunala cumpleta — las indicaziuns principalas en ina egliada.', du: 'Tia survista persunala cumpleta — las indicaziuns principalas en ina egliada.' },
+    // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
+    gesundheitLabel: 'Sanadad',
+    gesundheitHinweis: 'Gruppa da sang, allergias e medicaments stattan en il dossier d\'urgenza.',
     name: 'Num',
     address: 'Adressa',
     documents: 'Documents memorisads',
@@ -4988,6 +4991,8 @@ export default {
     roughEstimateBadge: 'Stimaziun aproximativa',
     kapitelZeile: 'Taglia federala {bund} · chantun e vischnanca {kanton} — stimaziun aproximativa per il chalieu, senza taglia ecclesiastica.',
     annahmeOhneDreizehntenHier: { sie: 'Quintà senza 13avla paja — cun ina 13avla è la taglia pli auta. Vus pudais inditgar quai survart sut «Entrada».', du: 'Quintà senza 13avla paja — cun ina 13avla è la taglia pli auta. Ti pos inditgar quai survart sut «Entrada».' },
+    // F8-P1 (05.11.2026): Fassung fürs Blatt ans Amt, ohne Hinweis, wo man es in der App angibt.
+    annahmeOhneDreizehntenBlatt: 'Quintà senza 13avla paja — cun ina 13avla paja è la taglia pli auta.',
     // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
     bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
@@ -5663,7 +5668,8 @@ export default {
     breakEven: 'Punct d’equiliber ≈ {breakeven}',
     regional: 'Premia regiunala vs. Svizra',
     vergleich: 'Cumparegliaziun da premias e protecziun d’accidents',
-    referenz: 'Referenza CHF {betrag}',
+    // TODO(rm): provisorisch — Gegenlese (F8-R1, 05.11.2026)
+    referenz: 'Tariffa da la cassa CHF {betrag}',
     kassenZahl: '{n} cassas',
     alleKassen: 'Mussar tut las {n} cassas',
     wenigerKassen: 'Mo las tschintg las pli bunmartgadas',
@@ -5687,12 +5693,12 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF {breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    tachoBreakeven: 'Break-even',
+    tachoBreakeven: 'Punct d’equiliber',
     tachoLegendHigh: 'franchisa auta pli favuraivla',
     tachoLegendLow: 'franchisa bassa pli favuraivla',
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-    tachoReadoutBelow: { sie: 'Fin ussa CHF {costs} quest onn. Sut il break-even (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.', du: 'Fin ussa CHF {costs} quest onn. Sut il break-even (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.' },
-    tachoReadoutAbove: 'Fin ussa CHF {costs} quest onn — sur il break-even (CHF {be}). Quest onn fiss la franchisa bassa (CHF {low}) stada pli favuraivla.',
+    tachoReadoutBelow: { sie: 'Fin ussa CHF {costs} quest onn. Sut il punct d’equiliber (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.', du: 'Fin ussa CHF {costs} quest onn. Sut il punct d’equiliber (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.' },
+    tachoReadoutAbove: 'Fin ussa CHF {costs} quest onn — sur il punct d’equiliber (CHF {be}). Quest onn fiss la franchisa bassa (CHF {low}) stada pli favuraivla.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     tachoOrientation: { sie: 'Uschespert che Vus registrais ils custs da sanadad, mussa la sajetta nua che Vus essas quest onn.', du: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.' },
     tachoTrackLink: 'Registrar ils custs da sanadad',
@@ -7658,6 +7664,10 @@ export default {
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: 'Entrada media determinanta',
     nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari annual brut per AVS e LPP.",
+    // F8-V1 (05.11.2026): geschätztes Brutto als Vorschlag, nie automatisch.
+    // TODO(rm): provisorisch — Gegenlese (F8-V1, 05.11.2026)
+    bruttoVorschlag: 'Stimà dal salari net en il profil (CHF {netto} per mais): var CHF {betrag} brut per onn. Ina stima — il certificat da salari è pli exact.',
+    bruttoUebernehmen: 'Surpigliar la stima',
     partnerNettoHint: 'Endatar per plaschair il salari annual brut — en il profil è mo il salari net registrà, e quel fiss qua la basa sbagliada.',
     beitragsjahre: 'Onns da contribuziun',
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
