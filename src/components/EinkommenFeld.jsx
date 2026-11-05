@@ -6,6 +6,7 @@ import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { KNAPP_OBEN } from '../data/sozialhilfeKern.js';
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { zahl } from '../utils/geld.js';
+import { rentenMonat, RENTEN_FELDER } from '../utils/unterstuetzungseinheit.js';
 
 // Monatseinkommen brutto ODER netto (Wunsch 25.09.2026: «man sollte immer vor und zurück rechnen
 // können»). Ein Feld für die Dashboard-Leistungsliste und den Leistungs-Schnellcheck, damit beide
@@ -51,6 +52,12 @@ export function useEinkommen(data) {
     betrag, setBetrag, art, setArt, alter, ohneAlter: alter == null, nettoMonat, gegenwert,
     geschaetzt: art === 'brutto' && !selbst && zahlWert > 0,
     offen: !bekannt && profilWert != null && String(profilWert).trim() !== '' && betrag === '',
+    // Renten aus dem Profil rechnen schon mit: das Feld sagt es, damit niemand sie hier ein zweites Mal einträgt.
+    renten: rentenMonat(data?.finanzen),
+    // Im Ruhestand steht im Lohnfeld oft die Rente (kantonsModell.js). Ist der Betrag gleich hoch wie eine Rente im Profil
+    // oder ihre Summe, sagt das Feld es sichtbar: sonst zählt sie doppelt (Fachprüfung 65fa06d4).
+    renteImLohn: data?.finanzen?.employmentType === 'retired' && zahlWert > 0
+      && [...RENTEN_FELDER.map((k) => data?.finanzen?.[k]), rentenMonat(data?.finanzen)].some((v) => Math.round(Number(v) || 0) > 0 && Math.round(Number(v)) === Math.round(zahlWert)),
   };
 }
 
@@ -85,6 +92,10 @@ export const EinkommenFeld = ({ palette, t, e, stil = {} }) => {
     h('div', { 'aria-live': 'polite', style: { minHeight: '1.3em', marginTop: '4px', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
       e.gegenwert > 0
         ? t(e.art === 'netto' ? 'einkommensfeld.bruttoGeschaetzt' : 'einkommensfeld.nettoGeschaetzt', { value: zahl(e.gegenwert) })
-        : e.offen ? t('einkommensart.offenNetto') : '')
+        : e.offen ? t('einkommensart.offenNetto') : ''),
+    e.renten > 0 && h('div', { style: { marginTop: '2px', fontSize: text.xs, color: palette.mid, lineHeight: 1.4 } },
+      t('einkommensfeld.rentenEingerechnet', { value: zahl(e.renten) })),
+    e.renteImLohn && h('div', { role: 'status', style: { marginTop: '4px', fontSize: text.xs, color: palette.sandDeep || palette.text, fontWeight: weight.medium, lineHeight: 1.4 } },
+      t('einkommensfeld.renteImLohn'))
   );
 };

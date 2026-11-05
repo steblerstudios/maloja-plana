@@ -11,7 +11,7 @@
 //      Abhängigkeiten (über node_modules/<paket>/package.json). Für jedes Paket muss
 //      public/licenses/<name>-LICENSE.txt liegen, einen echten Lizenztext enthalten und in
 //      docs/legal/third-party-licenses.md genannt sein.
-//   B  Vendorierte Dateien in public/vendor/ und src/vendor/ — jede braucht einen Eintrag
+//   B  Vendorierte Dateien in public/vendor/, src/vendor/ und scripts/seiten/figuren/bewegt/fremd/ — jede braucht einen Eintrag
 //      in VENDOR und damit einen Lizenztext. Eine neue Datei ohne Eintrag macht den Test rot.
 //   C  Keine verwaisten Texte: jede Datei in public/licenses/ ist in der Tabelle erklärt.
 //   D  Gegenprobe: ein erfundenes Paket wird als fehlend gemeldet — der Wächter beisst.
@@ -28,10 +28,13 @@ const lies = (datei) => readFileSync(join(ROOT, datei), 'utf8');
 
 // Vendorierte Dateien (Ordner/Datei) → Name des Lizenztexts (public/licenses/<name>-LICENSE.txt).
 // Zwei Orte: public/vendor/ (wird roh ausgeliefert) und src/vendor/ (wird ins Bundle kompiliert).
-const VENDOR_ORDNER = ['public/vendor', 'src/vendor'];
+const VENDOR_ORDNER = ['public/vendor', 'src/vendor', 'scripts/seiten/figuren/bewegt/fremd'];
 const VENDOR = {
   'public/vendor/jsQR.js': 'jsQR',
   'src/vendor/qrcodejs.js': 'QRCode.js',
+  // Inline in die bewegten Figuren-Seiten /krankenkasse/bewegt/ gebaut (scripts/build-seiten.mjs).
+  'scripts/seiten/figuren/bewegt/fremd/hairline-kernel.js': 'hairline',
+  'scripts/seiten/figuren/bewegt/fremd/anatomy-praemie.js': 'anatomy',
 };
 
 const LIZENZ_MUSTER = /Permission is hereby granted|Apache License|Copyright \(c\)|Copyright ©|Lizenzhinweis/;

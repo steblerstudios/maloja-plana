@@ -75,7 +75,8 @@
 //   · Zuzug im Anspruchsjahr: «Für … Personen, die im Kanton Glarus Wohnsitz nehmen, beginnt die
 //     Berechtigung am 1. Januar des auf … den Zuzug folgenden Jahres» ([1] Art. 11 Abs. 2) — die
 //     App kennt den Zuzug nicht; für Zugezogene ist die Zahl dieses Jahr ZU HOCH (Anspruch 0).
-//   · Brutto erfasster Lohn wird wie netto gerechnet (Rahmen) — der Betrag fällt dann zu tief aus.
+//   · Brutto erfasster Lohn: seit 04.11.2026 vorher auf den Netto-Richtwert umgerechnet (cantonalData.js,
+//     ipvFinanzenNetto). Der Richtwert lässt NBU und überobligatorische PK weg — leicht ZU TIEF.
 //   · Neugeborene im Anspruchsjahr zählen nicht ([1] Art. 11 Abs. 2) — sie werden weggelassen.
 //
 // TOTAL DER EINKÜNFTE ⟨Re-Review #487 🛑 R1, 28.09.2026⟩: [1] Art. 15 Abs. 1 misst am «Total der

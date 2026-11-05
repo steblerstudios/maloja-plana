@@ -17,12 +17,12 @@ import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
-import { vermoegensFelder } from './utils/unterstuetzungseinheit.js';
+import { vermoegensFelder, vermoegenSumme } from './utils/unterstuetzungseinheit.js';
 import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
 
 // Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
 // von den Zeilen ab (F8-G4), und das JSON rundete erst die Summe (F8-G5). Negativ zählt als 0.
-const vermoegenGerundet = (finanzen, basis) => vermoegensFelder(finanzen, basis).felder.reduce((s, v) => s + Math.max(0, Math.round(Number(v) || 0)), 0);
+const vermoegenGerundet = (finanzen, basis) => vermoegenSumme(vermoegensFelder(finanzen, basis).felder);
 
 // Basis des Freibetrags, eine Fassung für Blatt und JSON (F8-G5).
 const freibetragBasisText = (canton, t) => (canton
@@ -35,6 +35,7 @@ const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.f
   && !data.basis?.dateOfBirth && Number(data.finanzen?.pension3aBalance) > 0
   && !!(sozialhilfe.eligible || sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen);
 import { organListe } from './utils/organspende.js';
+import { rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
 
@@ -836,6 +837,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionFinanzen'),
       rows: [
         { label: lbl('finanzen', 'monthlyIncome'), value: chf('finanzen', 'monthlyIncome') },
+        // Renten als eine Summe: Das Amt sieht, was in den Einnahmen steckt, ohne die Art (IV) einzeln (Fach und Recht 376149dc).
+        { label: t('behoerdenDossier.rentenSumme'), value: rentenMonat(data.finanzen) > 0 ? formatCHF(rentenMonat(data.finanzen)) : '' },
         { label: lbl('finanzen', 'employmentType'), value: sel('finanzen', 'employmentType') },
         { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
         { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },
@@ -886,6 +889,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
+      // Brutto im Profil: die Stelle sieht den Bruttolohn, abgezogen ist der Netto-Richtwert.
+      sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt && t('sozialhilfe.einkommenAusBrutto'),
       ...(sozialhilfe.hinweise || []).map((k) => t(k)),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
@@ -919,6 +924,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
       if (ipv.annahmen?.partnerOhneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten') });
     }
+    // Brutto im Profil: die Stelle sieht den Bruttolohn, gerechnet ist mit dem Netto-Richtwert — auch ohne Anspruch.
+    if (ipv.belegt !== false && ipv.einkommenGeschaetzt) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeAusBrutto') });
     // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
       ? t('premium.eligible')
@@ -931,7 +938,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       rows: iRows,
       status,
       // Ein Nein steht auf dem Blatt ans Amt nie ohne Grund (Rechtsprüfung 02.11.2026).
-      notes: !ipv.eligible && ipv.belegt !== false && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
+      // Rente nicht enthalten: der Grund steht auf dem Blatt, sonst läse das Amt nur «Beim Kanton prüfen» (Fachprüfung 8ac049b5).
+      notes: !ipv.eligible && (ipv.belegt !== false || ipv.renteFehlt) && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
       statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: ipv.eligible,
     });
@@ -1036,6 +1044,8 @@ export const STEUER_KENNUNG = Object.freeze({
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
   // IPV (25.09.2026): Partnereinkommen ×12, nach dessen 13. Monatslohn fragt die App nicht.
   annahmePartnerOhneDreizehnten: 'partner_ohne_13_monatslohn',
+  // IPV (04.11.2026): Lohn brutto im Profil, gerechnet mit dem Netto-Richtwert (ipvFinanzenNetto).
+  annahmeAusBrutto: 'lohn_brutto_netto_geschaetzt',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
   annahmeEinzeln: 'einzeln_konkubinat',
   // Gate 24.09.2026: Konkubinat mit Kindern, ganzer Kinderabzug bei der Person (KS 30, Ziff. 14.8.1).
@@ -1109,6 +1119,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.einkommenFehlt ? null : sozialhilfe.income || 0,
+      // Lohn brutto erfasst: `income` ist der Netto-Richtwert, nicht der erfasste Betrag.
+      einkommenGeschaetzt: !!sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,
@@ -1134,16 +1146,17 @@ export function generateBehoerdenJSON(data, calculations, t) {
   if (ipv) {
     // E9: ohne amtlich belegten Kanton gehen keine Beträge in die Datei.
     dossier.calculations.ipv = ipv.belegt === false
-      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' }
+      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen', ...(ipv.renteFehlt ? { grund: 'rente-nicht-enthalten' } : {}) }
       : {
           eligible: !!ipv.eligible,
           // Ein Nein nie ohne Grund, auch nicht in der Datei (Rechtsprüfung 02.11.2026).
           ...(!ipv.eligible && ipv.noteKey ? { grund: t ? t(ipv.noteKey, ipv.noteParams) : ipv.noteKey, unterMindestbetrag: ipvUnterMindestbetrag(ipv) } : {}),
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
-          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
-            ...(ipv.annahmen.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
-            ...(ipv.annahmen.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten || ipv.einkommenGeschaetzt ? { assumptions: [
+            ...(ipv.annahmen?.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
+            ...(ipv.annahmen?.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+            ...(ipv.einkommenGeschaetzt ? [erl('annahmeAusBrutto')] : []),
           ] } : {}),
         };
   }

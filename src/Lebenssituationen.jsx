@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { getCantonName, getHouseholdInfo, calculateSozialhilfe, ladeIPVModelle } from './config/cantonalData.js';
 import { wegeAusProbe, ipvAnzeige, sozialhilfeAnzeige } from './data/anspruchWege.js';
@@ -11,7 +12,7 @@ import { aufklappZeichen } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
-import { getFamilienEL } from './data/familienEL.js';
+import { getFamilienEL, familienELPasstZumKindesalter } from './data/familienEL.js';
 import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -167,6 +168,9 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           // Familien-EL: nur zeigen, wenn der Wohnkanton sie tatsächlich anbietet
           // (kein falsches Versprechen; Eintrag verschwindet in anderen Kantonen).
           .filter((b) => !b.familienEL || getFamilienEL(userCanton).has)
+          // … und nur, wenn nicht alle Kinder bekannt über der Altersgrenze des Kantons liegen
+          // (SO unter 6, TI 15, VD 16, GE 25; unbekanntes Alter zeigt die Karte weiter).
+          .filter((b) => !b.familienEL || familienELPasstZumKindesalter(userCanton, data?.basis?.household?.children))
           // Mutterschaftsbeihilfe: gleiches kanton-bewusste Muster.
           .filter((b) => !b.mutterschaftsbeihilfe || getMutterschaftsbeihilfe(userCanton).has)
           .map((b) => {
@@ -258,6 +262,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     wohnen: { ...(data?.wohnen || {}), rentAmount: numRent },
     versicherungen: { ...(data?.versicherungen || {}), kkPremium: numKk },
   };
+  const erfasst = einnahmenErfasst(probe.finanzen); // Lohn oder Rente, wie die Wege
 
   // Dieselben Ehrlichkeits-/Crash-Gates wie bisher im Schnellcheck: wirft eine Rechnung, bleibt
   // die Seite stehen und sagt weniger, statt leer zu werden.
@@ -319,8 +324,9 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     : null;
 
   // Der Ergebnis-Satz: «Mit diesen Angaben zeigt sich …» — nur positive Wege, nie ein Verdikt.
-  const labels = w.wege.map((x) => wegLabel[x.key]);
-  const satz = numIncome <= 0 ? t('schnellcheck.enterIncome')
+  // Sozialhilfe ohne Betrag sagt den Grund, wie der Schnellcheck (Fachprüfung d18ef9f6).
+  const labels = w.wege.map((x) => wegLabel[x.key] + (x.key === 'soz' && x.qualitative ? ' (' + t(x.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') + ')' : ''));
+  const satz = !erfasst ? t('schnellcheck.enterIncome')
     : !canton ? t('schnellcheck.noResultNoCanton')
     : labels.length === 0 ? t('wasStehtMirZu.ergebnisKeiner')
     : labels.length === 1 ? t('wasStehtMirZu.ergebnisEiner', { weg: labels[0] })
@@ -357,7 +363,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       h('p', { style: s.satz }, satz),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
-    w.wege.length > 0 && numIncome > 0 && canton && h('div', { style: { marginTop: space.xs + 'px' } },
+    w.wege.length > 0 && erfasst && canton && h('div', { style: { marginTop: space.xs + 'px' } },
       w.wege.map((x) => h('button', {
         key: x.key, type: 'button', className: 'mp-link', style: s.link,
         onClick: () => onNavigate && (x.key === 'ipv' ? onNavigate(wegView.ipv, undefined, uebergabe) : onNavigate(wegView[x.key])),

@@ -45,7 +45,7 @@ export default {
     tiefesEinkommen: {
       label: 'Cura ch’ils raps èn stretgs',
       frage: 'Il retgav na basta savens betg fin la fin dal mais?',
-      intro: 'Cun in bass retgav existan diversas furmas da sustegn — bleras restan nunduvradas perquai ch’ellas n’èn simplamain betg enconuschentas.',
+      intro: 'Cun in bass retgav existan diversas furmas da sustegn.',
       berechtigungen: {
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Il chantun gida a pajar las premias da la cassa da malsauns per bass e mez retgavs. Blers cun dretg na fan mai ina dumonda.' },
         mietzins: { titel: 'Contribuziun a la pigiun', text: 'Tscherts chantuns e vischnancas sa participeschan a la pigiun, sch’ella pesa memia ferm sin in bass retgav.' },
@@ -53,11 +53,11 @@ export default {
         stipendien: { titel: 'Stipendis', text: 'Per la furmaziun ed ils studis cun in bass retgav existan stipendis — restituibels u betg.' },
         franchise: { titel: 'Controllar la franchisa', text: 'Cun paucas visitas dal medi reducescha ina franchisa pli auta la premia mensila — da repetir mintga atun.' },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
+        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Voss chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.', du: 'Tes chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.' } },
+        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — Vossa KulturLegi chantunala mussa tge che vala tar Vus.', du: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' } },
         rekaFerien: { titel: 'Vacanzas Reka per 200.–', text: 'Cun la KulturLegi pussibilitescha la Fundaziun Reka a famiglias e persunas sulettas pertutgadas da la povradad ina emna da vacanzas per circa 200 francs — abitaziun e viadi cun il traffic public inclus.' },
@@ -67,17 +67,17 @@ export default {
       label: 'Crescher uffants sulet/sula',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       frage: { sie: 'Creschais Vus in u plirs uffants sulet/sula?', du: 'Creschas ti in u plirs uffants sulet/sula?' },
-      intro: 'Geniturs suls portan dapli — e propri per questa situaziun existan diversas furmas da sustegn, bleras restan dentant nunduvradas.',
+      intro: 'Geniturs suls portan dapli — e propri per questa situaziun existan diversas furmas da sustegn.',
       berechtigungen: {
         alimente: { titel: 'Avanzament dals alimors & agid d’incasso', text: 'Sche las contribuziuns d’mantegniment n’arrivan betg, po la vischnanca las avanzar ed gidar a las incassar — uschia che l’uffant na resta betg senza.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Chasadas cun in sulet genitur han savens dretg sin in agid per las premias da la cassa da malsauns — per il genitur ed ils uffants.' },
         familienzulagen: { titel: 'Supplements da famiglia', text: 'Supplements per uffants e da furmaziun per mintga uffant — recuperabels retroactivamain sche emblidads. Els suondan il genitur che lavura.' },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
+        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Voss chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.', du: 'Tes chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.' } },
+        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
         steuern: { titel: 'Tarifa per geniturs & deducziun per uffants', text: 'Geniturs suls vegnan taxads cun la tarifa pli bassa per geniturs e pon deducir las custas per uffants e la chüra.' },
       },
@@ -86,11 +86,11 @@ export default {
       label: 'Cun in impediment u ina malsogna cronica',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       frage: { sie: 'Vivais Vus cun in impediment, ina malsogna cronica u in’indicaziun renconuschida?', du: 'Vivas ti cun in impediment, ina malsogna cronica u in’indicaziun renconuschida?' },
-      intro: 'In’indicaziun po avrir in sustegn pli baud u pli ampel che quai ch’ins crai — bler vegn numnà darar ed è facil da surveseir.',
+      intro: 'In’indicaziun po avrir in sustegn pli baud u pli ampel che quai ch’ins crai.',
       berechtigungen: {
         iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
         // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
-        hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.' } },
+        hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.' } },
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
@@ -102,7 +102,7 @@ export default {
       label: 'Tgirar confamigliars',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       frage: { sie: 'Tgirais Vus regularmain ina persuna confamigliara u dativa?', du: 'Tgiras ti regularmain ina persuna confamigliara u dativa?' },
-      intro: 'La tgira ch’ins fa en silenzi resta savens nunconsiderada — e tuttina po ella crear bunificaziuns da renta e dretgs. I dat er servetschs da sgraventada e cussegliaziun.',
+      intro: 'La tgira ch’ins fa en silenzi po crear bunificaziuns da renta e dretgs. I dat er servetschs da sgraventada e cussegliaziun.',
       berechtigungen: {
         // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
         pflege: { titel: 'Der geführte Ablauf: Angehörige pflegen', text: 'Der geführte Ablauf zeigt die Schritte der Reihe nach: Gutschrift, Entschädigung, Entlastung.' },
@@ -130,7 +130,7 @@ export default {
     inAusbildung: {
       label: 'En furmaziun',
       frage: 'En in emprendissadi, a scola u en il studi?',
-      intro: 'Esser en furmaziun avra sustegns che blers na dumondan mai — e cumenza en silenzi intginas obligaziuns da tegnair en egl.',
+      intro: 'Esser en furmaziun avra sustegns — e cumenza en silenzi intginas obligaziuns da tegnair en egl.',
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: { sie: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor Vossa entrada e quella da Voss geniturs, cun termins d’annunzia.', du: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' } },
@@ -154,13 +154,13 @@ export default {
     rentnerin: {
       label: 'Pensiunà / en la vegliadetgna da l’AVS',
       frage: 'Retschaivas ti ina renta da l’AVS u ta stas ti datiers?',
-      intro: 'En la vegliadetgna restan blers dretgs nunduvrads — surtut las prestaziuns cumplementaras. Bler da quai è in dretg, betg assistenza.',
+      intro: 'Im Alter gibt es Ansprüche, die man anmelden muss — etwa die Ergänzungsleistungen. Vieles davon ist ein Recht, kein Entgegenkommen.',
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella — ina da las prestaziuns las pli savens betg dumandadas en Svizra. In dretg, betg carezza.' },
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella. In dretg, betg carezza.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
-        hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC, ma savens sursvieu.' },
+        hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC.' },
         steuern: { titel: 'Deducziuns en la vegliadetgna', text: 'Cuosts da malsogna, tgira ed impediment pon vegnir deducids da l’entrada taxabla — igl è utigl da tegnair las quittanzas durant l’onn.' },
         serafe: { titel: 'Exempziun da la taxa da radio/TV', text: 'Chasadas cun prestaziuns cumplementaras (PC) vegnan exemptadas da la taxa SERAFE sin dumonda — cun rembursament retroactiv.' },
       },
@@ -169,7 +169,7 @@ export default {
     erwerbslos: {
       label: 'Senza lavur / tranter duas plazzas',
       frage: 'Senza lavur, tranter duas plazzas u sortì da la garanzia?',
-      intro: 'Senza lavur avran ins sustegns che na vegnan betg automaticamain — e suenter la fin dals dretgs datti auters agids che blers na san betg dumandar.',
+      intro: 'Senza lavur avran ins sustegns che na vegnan betg automaticamain — e suenter la fin dals dretgs datti auters agids.',
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         rav: { titel: 'S’annunziar a temp tar l’URC', text: { sie: 'L’annunzia tar l’URC è la scadenza la pli impurtanta — il meglier il emprim di senza plaz, avant che Vus dumandais indemnisaziuns. Mintga di memia tard custa indemnisaziuns. L’access guidà mussa ils pass e memorisescha la scadenza en Voss chalender.', du: 'L’annunzia tar l’URC è la scadenza la pli impurtanta — il meglier il emprim di senza plaz, avant che ti dumondas indemnisaziuns. Mintga di memia tard custa indemnisaziuns. L’access guidà mussa ils pass e memorisescha la scadenza en tes chalender.' } },
@@ -203,7 +203,7 @@ export default {
       frage: { sie: 'È in genitur mort, e Vus u Voss uffant avais main che 25 onns u essas en furmaziun?', du: 'È in genitur mort, e ti u tes uffant avais main che 25 onns u essas en furmaziun?' },
       intro: 'Suenter la mort d’in genitur han ils uffants dretgs clers che van facilmain a perder en in temp grev — ina renta d’orfen, e sustegn cumplementar sch’ella na tanscha betg.',
       berechtigungen: {
-        waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun e cumenza savens memia tard.' },
+        waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun.' },
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta d’orfen na cuvra betg ils cuosts da viver, pon las PC cumplettar — era per uffants e giuvenils en furmaziun. In dretg, betg carezza.' },
         stipendien: { titel: 'Stipendis', text: 'Ultra da la renta d’orfen pon stipendis chantunals sustegnair ina furmaziun u studi — controllar en parallel, cun agens termins.' },
         steuern: { titel: 'Facilitaziun fiscala', text: 'Il genitur survivent po far valair la tarifa parentala e las deducziuns per uffants; era tscherts cuosts en connex cun la mort pon sbassar la taglia.' },
@@ -474,7 +474,7 @@ export default {
     step3Link: 'Guardar la prevenziun',
     step3LinkSituation: 'Sche in genitur è mort: la situaziun «mez orfen»',
     stepElTitle: '4 · Renta da survivents & prestaziuns cumplementaras',
-    stepElText: 'Survivents han savens dretg ad ina renta da vaivas, vaivs u orfens. Sche ella na cuvra betg ils custs da viver, pon prestaziuns cumplementaras (PC) la cumplettar — betg ina almosna, mabain in dretg legal.',
+    stepElText: 'Survivents pon avair dretg ad ina renta da vaivas, vaivs u orfens. Sche ella na cuvra betg ils custs da viver, pon prestaziuns cumplementaras (PC) la cumplettar — betg ina almosna, mabain in dretg legal.',
     step4Title: '5 · Ierta & lubientscha',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step4Text: 'Für den Nachlass braucht es je nach Situation einen Erbschein; ein Testament wird von der zuständigen Behörde eröffnet — welche das ist, regelt der Kanton (ZGB Art. 557). Wichtig: Ist der Nachlass überschuldet, kann das Erbe innert drei Monaten ausgeschlagen werden — sonst übernimmt man die Schulden mit. Bei Unsicherheit lieber früh beraten lassen.',
@@ -963,11 +963,12 @@ export default {
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
   ergaenzungsleistungen: {
     title: 'Ergänzungsleistungen beantragen',
-    intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, keine Fürsorge. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
+    intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, kein Entgegenkommen. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
     step1Title: '1 · Kommen EL in Frage?',
     step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld seit mindestens sechs Monaten —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist die Sozialhilfe der Wohngemeinde zuständig.',
     step1LinkAnspruch: 'Ansprüche in Ruhe prüfen',
     step1LinkSozialhilfe: 'Ohne AHV/IV-Rente: Sozialhilfe verstehen',
+    step1Nichtbezug: 'Nicht alle, denen EL zustehen, melden sich an. Eine Studie im Auftrag des Bundes (2025) nennt aus der Fachliteratur als häufige Gründe: Man versteht nicht, wie die EL funktionieren, es fehlt an Unterstützung, oder die Anmeldung ist aufwendig. Eine Studie zu Sozialleistungen in Basel-Stadt, darunter die EL, fand zusätzlich Scham und Unsicherheit, auch bei Menschen, die von ihrem Anspruch wussten. Beide Studien betreffen die EL zur AHV. Wer unsicher ist, fragt bei der EL-Stelle nach: Dafür ist sie da.',
     step2Title: '2 · Vermögen: die Schwelle',
     step2Text: { sie: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente (ELG Art. 9a, Stand 2026); eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit. Vermögen, auf das Sie verzichtet haben — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).', du: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente (ELG Art. 9a, Stand 2026); eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit. Vermögen, auf das du verzichtet hast — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).' },
     step3Title: '3 · Anmelden — beim Wohnkanton, so früh wie möglich',
@@ -994,7 +995,7 @@ export default {
     step5Text: 'Rechtmässig bezogene EL müssen nach dem Tod aus dem Nachlass zurückerstattet werden — aber nur aus dem Teil, der 40 000 Franken übersteigt; bei Ehepaaren erst aus dem Nachlass der zweitverstorbenen Person (ELG Art. 16a). Das ist kein Grund, auf EL zu verzichten.',
     step5LinkTodesfall: 'Todesfall im Umfeld',
     footerNote: { sie: 'Quai è orientaziun, betg cussegl giuridic. Die EL-Stelle Ihres Kantons informiert und rechnet Ihren Anspruch aus (ELG Art. 21). Dies ist Orientierung, keine Rechtsberatung; Beträge, vergütete Kosten und Anmeldestellen unterscheiden sich je nach Kanton.', du: 'Quai è orientaziun, betg cussegl giuridic. Die EL-Stelle deines Kantons informiert und rechnet deinen Anspruch aus (ELG Art. 21). Dies ist Orientierung, keine Rechtsberatung; Beträge, vergütete Kosten und Anmeldestellen unterscheiden sich je nach Kanton.' },
-    quelle: 'Quellen: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (geprüft im September 2026).',
+    quelle: 'Quellen: [[ELG Art. 4|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_4]], [[ELG Art. 5|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_5]], [[ELG Art. 9a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_9_a]], [[ELG Art. 12|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_12]], [[ELG Art. 14|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_14]], [[ELG Art. 16a|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_16_a]], [[ELG Art. 21|https://www.fedlex.admin.ch/eli/cc/2007/804/de#art_21]], [[ELV Art. 21|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_21]], [[ELV Art. 22|https://www.fedlex.admin.ch/eli/cc/1971/37_37_37/de#art_22]] (geprüft im September 2026); [[Medienmitteilung BSV zur Studie Ecoplan/Interface, 4.12.2025|https://www.admin.ch/de/newnsb/NVMCO0Uym_s2toZHrVwo6]], [[Studie BFH für Basel-Stadt, 2021|https://www.bs.ch/news/2021-studie-nichtbezug-von-bedarfsabhaengigen-sozialleistungen-im-kanton-basel-stadt-ausmass-und-beweggruende]] (geprüft im November 2026).',
   },
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
   zusammenziehen: {
@@ -1398,7 +1399,7 @@ export default {
     step3Link: 'Guardar la prevenziun',
     step4Title: '4 · Verifitgar las prestaziuns cumplementaras',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step4Text: { sie: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, avais Vus eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgai el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.', du: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.' },
+    step4Text: { sie: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, avais Vus eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgai el senza temma. En vegliadetgna da l’AVS po s’agiuntar dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.', du: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS po s’agiuntar dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.' },
     step4Link: 'Verifitgar il dretg',
     step4LinkSituation: 'Guardar la situaziun «pensiunà»',
     step5Title: '5 · Sche pli tard è basegn da cura',
@@ -2353,20 +2354,20 @@ export default {
         pension3a: '3. pitga A pajà CHF/onn',
         pension3aBalance: '3. pitga A — avair (total) CHF',
         ivBezug: { label: "Renta AI", options: { keine: "Nagina", teil: "Renta parziala", ganz: "Renta entira" } }, // TODO(rm)
+        ahvRente: 'Renta AVS per mais CHF', // TODO(rm)
+        ivRente: 'Renta AI per mais CHF', // TODO(rm)
+        bvgRente: 'Renta da la cassa da pensiun per mais CHF', // TODO(rm)
         pension3bBalance: '3. pitga B — avair (total) CHF',
         familienzulagen: 'Supplements da famiglia per mais CHF',
         alimenteReceived: 'Aliments retschavids CHF/mais',
         alimentePaid: 'Aliments pajads CHF/mais',
         debtPayments: 'Pajaments da debits CHF/mais',
-        ahvRente: 'Renta AVS CHF/mais',
-        ivRente: 'Renta AI CHF/mais',
-        bvgRente: 'Renta LPP CHF/mais',
         pension3b: { label: '3. pitga B', options: { no: 'Na', yes: 'Gea' } },
         investmentFunds: { label: 'Fond da investiziun avant maun?', options: { no: 'Na', yes: 'Gea' } },
       },
       hints: {
         // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-        monthlyIncome: { sie: 'Salari mensil net (quai che arriva sin il conto)', du: 'Salari mensil net (quai che arriva sin il conto)' },
+        monthlyIncome: { sie: 'Salari mensil net (quai che arriva sin il conto) Las rentas betg qua, mabain tar ils champs da rentas.', du: 'Salari mensil net (quai che arriva sin il conto) Las rentas betg qua, mabain tar ils champs da rentas.' },
         creditCardLimit: 'La summa da tut ils limits da tias cartas.',
         creditCardBalance: 'Import actualmain debit sin tias cartas — quinta sco debit, savens cun auts tschains.',
         sideIncome: 'Entrada supplementara ultra l’activitad principala. Vegn quintada sco entrada.',
@@ -2389,6 +2390,9 @@ export default {
         otherAssets: 'Daners blut, metals prezius, criptomonedas, vehichels e.u.v. (valur fiscala).',
         pension3aBalance: { sie: 'L’import total spargnà fin ussa sin Voss conto 3a — betg la contribuziun annuala.', du: 'L’import total spargnà fin ussa sin tes conto 3a — betg la contribuziun annuala.' },
         ivBezug: { sie: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che Vus transmettais la decisiun.", du: "Stat en la decisiun dal post AI. Facultativ. Serva mo per l’orientaziun tar agid social e prestaziuns supplementaras e resta sin quest apparat, enfin che ti transmettas la decisiun." }, // TODO(rm)
+        ahvRente: "Tenor la decisiun da renta da la cassa da cumpensaziun, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias a partir da la vegliadetgna da pensiun u en la pensiun.", // TODO(rm)
+        ivRente: { sie: "Tenor la decisiun da renta, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias cun ina renta AI. Facultativ. Resta sin quest apparat, enfin che Vus al transmettais.", du: "Tenor la decisiun da renta, import per mais. 0, sche nagina renta vegn retratga. Senza endataziun na numna l’app nagin import per agid social e reducziun da premias cun ina renta AI. Facultativ. Resta sin quest apparat, enfin che ti al transmettas." }, // TODO(rm)
+        bvgRente: "Tenor l’attestaziun da renta da la cassa da pensiun, import per mais. Quai che vegn retratg sco chapital, er ina part, tutga tar la facultad. En la pensiun 0, sche nagina renta vegn retratga; senza endataziun na numna l’app lura nagin import per agid social e reducziun da premias.", // TODO(rm)
         pension3bBalance: { sie: 'Il valur actual da Vossa prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).', du: 'Il valur actual da tia prevenziun libra 3b (conto da spargn, assicuranza da vita, titels).' },
       },
       docs: {
@@ -3465,10 +3469,12 @@ export default {
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
+    annahmeAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada: Maloja deducescha forfetarmain las deducziuns usitadas. Cun la paja netta dal quint da paja è il resultat pli exact. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada decisiva probablamain sur la limita (CHF {value} per onn)',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
     orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
+    renteNichtEnthalten: "La renta n’è anc betg endatada (chapitel «Finanzas & daners», rentas). Perquai na numna l’app nagin import. Sch’igl exista in dretg, decida il chantun; cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.", // TODO(rm)
     statusOffen: 'Examinar tar il chantun',
     zurStelle: 'Al post chantunal per la reducziun da premias',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K69/K84).
@@ -4068,6 +4074,7 @@ export default {
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmePartnerOhneDreizehnten: "Entrada da la segunda persuna quintada senza 13avla paja", // TODO(rm): provisorisch
+      annahmeAusBrutto: "Paja inditgada brut, quintada cun ina paja netta stimada (deducziuns forfetaras)", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
       annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       annahmeKinderabzugKonkubinat: "Concubinat cun uffants: entira deducziun per uffants quintada tar la persuna (mesadad cun autoritad parentala cuminaivla, circular AFC nr. 30, cifra 14.8.1)", // TODO(rm): provisorisch
@@ -4082,6 +4089,7 @@ export default {
     sectionEL: 'Prestaziuns cumplementaras (PC)',
     sectionSteuern: 'Orientaziun taglia federala',
     elNotApplicable: 'Betg applitgabel (mo cun ina prestaziun AVS/AI)',
+    rentenSumme: 'Rentas per mais', // TODO(rm)
     ipvNein: 'Tenor quint approximativ nagina reducziun; quai n’è betg ina decisiun',
     elKeinHinweis: 'Tenor quint approximativ nagin indizi per PC; quai n’è betg ina decisiun',
     footerPrivacy: 'Quest document è vegnì creà localmain. Naginas datas èn vegnidas tramessas.',
@@ -4808,6 +4816,8 @@ export default {
   },
 
   premium: {
+    // TODO(rm): provisorisch — Gegenlese (IPV Netto geschätzt, 05.11.2026)
+    nettoGeschaetzt: 'La paja è registrada brutto. Il quint fa diever d’ina paja netta stimada da circa {netto} per mais.',
     title: 'Reducziun da premias (IPV)',
     // rm ungeprüft F5
     lageTitle: { sie: 'Vossa situaziun', du: 'Tia situaziun' },
@@ -4899,6 +4909,7 @@ export default {
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
     einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
+    einkommenAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada (deducziuns forfetaras). Cun la paja netta dal quint da paja è il resultat pli exact.', // TODO(rm): provisorisch
     renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
@@ -5860,6 +5871,8 @@ export default {
     brutto: 'brut',
     nettoGeschaetzt: '≈ net CHF {value} (stimà)',
     bruttoGeschaetzt: '≈ brut CHF {value} (stimà)',
+    rentenEingerechnet: 'Las rentas dal profil (AVS, AI, cassa da pensiun) èn gia quintadas: CHF {value} per mais. Endatar qua l’entrada principala (paga, daners da di, activitad independenta), senza questas rentas e senza indicaziuns che stattan gia en il profil.', // TODO(rm)
+    renteImLohn: 'L’import qua è uschè aut sco ina renta en il profil. Sch’i sa tracta da la medema renta, stizzar qua, uschiglio quinta ella duas giadas.', // TODO(rm)
     knapp: 'Stretg — la stimaziun quinta senza AINP ed senza taglia a la funtauna; controllar cun la paja netta exacta.',
   },
   einkommensart: {
@@ -7529,7 +7542,7 @@ export default {
     title: 'Verifica svelta da prestaziuns',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'In set d’infurmaziuns — a tge pudessas Vus avair dretg? Blers dretgs existan senza che la glieud al sappia. Vossas datas dal profil èn preemplenidas; Vus pudais las adattar liberamain qua per empruvar.', du: 'In set d’infurmaziuns — a tge pudessas ti avair dretg? Blers dretgs existan senza che la glieud al sappia. Tias datas dal profil èn preemplenidas; ti pos las adattar liberamain qua per empruvar.' },
-    income: 'Entrada mensila (brutto)',
+    income: 'Entrada mensila (net)',
     rent: 'Fittanza / mais',
     kk: 'Premia da la cassa da malsauns / mais',
     contextCanton: 'Chantun {canton} · chasa da {personen}.',
@@ -8040,7 +8053,7 @@ export default {
     checkScopeQ: { sie: "Vossa furmaziun", du: "Tia furmaziun" },
     checkStatusOnlyEducation: "En Svizra mo per la furmaziun",
     checkScopeOther: "Auter / furmaziun cuntinuanta",
-    resultEligible: { sie: "Vus accompleschais las premissas da basa harmonisadas. Inoltrai la dumonda tar l'uffizi da stipendis da Voss chantun da domicil (u da quel dals geniturs) — il chantun fixescha ils imports e las limitas exactas.", du: "Ti accompleschas las premissas da basa harmonisadas. Inoltrescha la dumonda tar l'uffizi da stipendis da tes chantun da domicil (u da quel dals geniturs) — il chantun fixescha ils imports e las limitas exactas." },
+    resultEligible: { sie: "Vus accompleschais las premissas da basa harmonisadas. Inoltrai la dumonda tar il chantun cumpetent, per regla il chantun da domicil da Voss geniturs — il chantun fixescha ils imports e las limitas exactas.", du: "Ti accompleschas las premissas da basa harmonisadas. Inoltrescha la dumonda tar il chantun cumpetent, per regla il chantun da domicil da tes geniturs — il chantun fixescha ils imports e las limitas exactas." },
     resultNotEligible: "Persunas che sa trategnan en Svizra mo per lur furmaziun n'han per ordinari nagin dretg sin stipendis chantunals. Il register privat sutvart po esser in'alternativa.",
     resultScopeOther: { sie: "Per segundas furmaziuns e furmaziun cuntinuanta valan reglas pli strictas. Clerai Voss cas directamain cun l'uffizi chantunal da stipendis.", du: "Per segundas furmaziuns e furmaziun cuntinuanta valan reglas pli strictas. Clerescha tes cas directamain cun l'uffizi chantunal da stipendis." },
     resultUnclear: { sie: "Voss dretg n'è betg cler. Clerai el cun l'uffizi chantunal da stipendis — l'emprima examinaziun è gratuita.", du: "Tes dretg n'è betg cler. Clerescha el cun l'uffizi chantunal da stipendis — l'emprima examinaziun è gratuita." },
@@ -8061,9 +8074,11 @@ export default {
       bridge: 'Passarellas ed purschidas da transiziun',
     },
     whereTitle: 'Nua far dumonda?',
-    where: { sie: 'Inoltrai ina dumonda formala tar l’uffizi da stipendis da Voss chantun — savens è cumpetent il chantun da domicil da Voss geniturs.', du: 'Inoltra ina dumonda formala tar l’uffizi da stipendis da tes chantun — savens è cumpetent il chantun da domicil da tes geniturs.' },
+    where: { sie: 'Inoltrai ina dumonda formala tar l’uffizi da stipendis dal chantun cumpetent — quai è per regla il chantun da domicil da Voss geniturs.', du: 'Inoltra ina dumonda formala tar l’uffizi da stipendis dal chantun cumpetent — quai è per regla il chantun da domicil da tes geniturs.' },
+    whereAusnahmen: { sie: 'I po esser auter, sche Vus avais vivì suenter ina emprima furmaziun professiunala u quatter onns independenza finanziala tras atgna lavur almain dus onns en in chantun da Voss gudogn (lura è savens quest chantun cumpetent), sche Voss geniturs vivan a l’exteriur u en differents chantuns (Svizzers cun geniturs a l’exteriur: per il solit il chantun d’origin), u sche Vus essas renconuschì sco fugitiv u persuna senza stadi. Las reglas varieschan tenor chantun. En cas da dubi dumandai tar l’uffizi da stipendis.', du: 'I po esser auter, sche ti has vivì suenter ina emprima furmaziun professiunala u quatter onns independenza finanziala tras atgna lavur almain dus onns en in chantun da tes gudogn (lura è savens quest chantun cumpetent), sche tes geniturs vivan a l’exteriur u en differents chantuns (Svizzers cun geniturs a l’exteriur: per il solit il chantun d’origin), u sche ti es renconuschì sco fugitiv u persuna senza stadi. Las reglas varieschan tenor chantun. En cas da dubi dumonda tar l’uffizi da stipendis.' },
     cantonalLink: 'Uffizis chantunals da stipendis (register CDEP)',
-    yourCanton: { sie: 'Voss chantun: {canton}', du: 'Tes chantun: {canton}' },
+    officeLink: 'Stipendis: {canton}',
+    yourCanton: { sie: 'Voss chantun da domicil: {canton}', du: 'Tes chantun da domicil: {canton}' },
     formTitle: 'Stipendi u mutg?',
     formNote: { sie: 'Stipendis na stuais Vus betg pajar enavos, mutgs gia. Blers chantuns combineschan omadus.', du: 'Stipendis na stos ti betg pajar enavos, mutgs gia. Blers chantuns combineschan omadus.' },
     privateTitle: 'Refusà u betg avunda? Fundaziuns privatas',

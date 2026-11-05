@@ -2,7 +2,7 @@ import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { hatAusweisFNS } from './data/ausweis.js';
-import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
+import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName, ipvFinanzenNetto } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
@@ -37,12 +37,21 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // hier — ins Profil geht es erst mit «Ins Profil übernehmen». null = nicht bewegt.
   const [regler, setRegler] = useState(null);
   const profilEinkommen = Number(profil && profil.finanzen && profil.finanzen.monthlyIncome) || 0;
-  const schnellcheckOffen = abweichungen(profil, schnellcheckZahlen);
+  // Der Schnellcheck übergibt nur NETTO eingetippte Löhne (Schnellcheck.jsx, Leistungsliste.jsx). Steht das Profil auf
+  // brutto, weicht die Zahl auch bei gleichem Betrag ab, und mit ihr geht die Art 'netto' mit — sonst rechnete die IPV
+  // sie ein zweites Mal herunter (Fachprüfung 04.11.2026, calculateIPV/ipvFinanzenNetto).
+  const profilBrutto = profil?.finanzen?.incomeType === 'brutto';
+  const uebergabeLohn = Number(schnellcheckZahlen?.monthlyIncome) || 0;
+  const schnellcheckAbw = abweichungen(profil, schnellcheckZahlen);
+  const schnellcheckOffen = profilBrutto && uebergabeLohn > 0 && !schnellcheckAbw.some(([, feld]) => feld === 'monthlyIncome')
+    ? [...schnellcheckAbw, ['finanzen', 'monthlyIncome', uebergabeLohn]] : schnellcheckAbw;
   // Ist der Regler bewegt, gilt sein Wert fürs Einkommen — auch wenn er wieder auf dem
   // Profilwert steht (dann ist das Einkommen nicht mehr «offen»).
   const schnellcheckListe = regler != null ? schnellcheckOffen.filter(([, feld]) => feld !== 'monthlyIncome') : schnellcheckOffen;
   const reglerOffen = regler != null && regler !== profilEinkommen ? [['finanzen', 'monthlyIncome', regler]] : [];
-  const offeneZahlen = [...schnellcheckListe, ...reglerOffen];
+  // Der Regler bewegt den Betrag in der Art, von der er ausging: vom Netto aus dem Schnellcheck, sonst von der Art im Profil.
+  const lohnNetto = profilBrutto && uebergabeLohn > 0 && [...schnellcheckListe, ...reglerOffen].some(([, feld]) => feld === 'monthlyIncome');
+  const offeneZahlen = [...schnellcheckListe, ...reglerOffen, ...(lohnNetto ? [['finanzen', 'incomeType', 'netto']] : [])];
   const data = mitUebergabe(profil, offeneZahlen);
   const [showCalculation, setShowCalculation] = useState(true);
   // IPV-Lebenslinie (Phase 2): der Beleg als Gesicht seines Ablaufs. Verfügungs-
@@ -410,6 +419,11 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // Ausgangswerts — an keiner Stelle eine Aussage über den Anspruch.
   const einkommenJetzt = Number(data.finanzen?.monthlyIncome) || 0;
   const reglerMax = Math.max(12000, Math.ceil((Math.max(profilEinkommen, Number(schnellcheckZahlen?.monthlyIncome) || 0) * 2) / 1000) * 1000);
+  // Nur wenn der Hauptlohn selbst brutto war und umgerechnet wurde: Der Hinweis nennt den
+  // Hauptlohn. Ist nur der Nebenerwerb brutto, nennte er sonst einen Betrag, der gar nicht
+  // geschätzt ist (Rechtsprüfung 05.11.2026). Selbständige werden nicht umgerechnet.
+  const ipvNetto = ipvFinanzenNetto(data);
+  const hauptlohnGeschaetzt = ipvNetto.geschaetzt && data.finanzen?.incomeType !== 'netto' && ipvNetto.data.finanzen?.incomeType === 'netto' && einkommenJetzt > 0;
   const reglerBlock = () => React.createElement('div', { style: { margin: space.md + 'px 0' } },
     React.createElement('label', { htmlFor: 'ipv-regler', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, flexWrap: 'wrap', fontSize: text.sm, color: palette.text, marginBottom: space.xs } },
       React.createElement('span', null, t('finanzUebersicht.monthlyIncome')),
@@ -420,8 +434,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       value: Math.min(reglerMax, einkommenJetzt),
       'aria-valuetext': fmtCHF(einkommenJetzt) + ' ' + t('common.perMonth'),
       onChange: (e) => { setRegler(Number(e.target.value) || 0); setUebernommen(false); },
+      'aria-describedby': hauptlohnGeschaetzt ? 'ipv-netto-geschaetzt' : undefined,
       style: { width: '100%', minHeight: '44px', accentColor: palette.sand, cursor: 'pointer' },
-    })
+    }),
+    // Brutto erfasst: Der Regler zeigt den Bruttolohn, gerechnet wird mit dem Netto-Richtwert
+    // (ipvFinanzenNetto). Das muss dastehen (Fach- und Rechtsprüfung, Predeploy 05.11.2026).
+    hauptlohnGeschaetzt && React.createElement('p', { id: 'ipv-netto-geschaetzt', 'data-netto-geschaetzt': '', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      t('premium.nettoGeschaetzt', { netto: fmtCHF(Number(ipvNetto.data.finanzen?.monthlyIncome) || 0) }))
   );
 
   // B-1/E22 + Regler: sichtbar sagen, womit gerechnet wird. Ins Profil geht nichts ohne den Klick.
@@ -488,7 +507,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     );
     return React.createElement('div', { style: { marginBottom: space.md } },
       urteil(t(ipvUnterMindestbetrag(ipvResult) ? 'premium.keineAuszahlung' : 'premium.notEligible'), palette.text),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams)),
+      // Ohne Anspruch zählt die Schätzung erst recht: mit dem genauen Nettolohn kann einer bestehen.
+      ipvResult.einkommenGeschaetzt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, hinweisZeichen(), t('ipv.annahmeAusBrutto'))
     );
   };
 
@@ -517,7 +538,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ipvResult.annahmen?.ohneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
       hinweisZeichen(), t('ipv.annahmeOhneDreizehnten')),
     ipvResult.annahmen?.partnerOhneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
-      hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten'))
+      hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten')),
+    // Brutto im Profil: gerechnet mit dem Netto-Richtwert (calculateIPV, ipvFinanzenNetto). Sichtbar, nicht still geschätzt.
+    ipvResult.annahmen?.ausBrutto && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      hinweisZeichen(), t('ipv.annahmeAusBrutto'))
   );
 
   // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton

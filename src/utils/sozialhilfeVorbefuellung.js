@@ -29,9 +29,10 @@
 
 import { partnerEinkommenRoh } from './partnereinkommen.js';
 import { zahltBeitraegeSelbst } from './monatsrechnung.js';
-import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
+import { alterInMonaten, unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSumme, kinderEinnahmenOffen, bvgHerausloesen } from './unterstuetzungseinheit.js';
 import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 import { istErwerbstaetig, freibetragGilt } from '../data/sozialhilfeKern.js';
+import { renteOhneBetrag, RENTEN_FELDER, frankenSumme } from './unterstuetzungseinheit.js';
 
 export { kindAlter, saeule3aZaehlt } from './unterstuetzungseinheit.js';
 
@@ -58,15 +59,20 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const nebenZaehlt = f.sideIncomeType === 'netto' && betrag(f.sideIncome) > 0;
   // Eine 0 mit Nebenerwerb, der nicht zählt, wäre keine Antwort: dann leer, und der Rechner fragt nach.
   const nebenFehlt = !betrag(f.monthlyIncome) && betrag(f.sideIncome) > 0 && !nebenZaehlt;
-  const einkommen = hauptBrutto || hauptBasisOffen || nebenFehlt ? '' : summeAlsFeld([f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined]);
+  const lohnWerte = [f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined];
+  const einkommen = hauptBrutto || hauptBasisOffen || nebenFehlt ? '' : lohnWerte.some(erfasst) ? String(frankenSumme(lohnWerte)) : '';
 
   const partner = partnerEinkommenRoh(basis);
   const haushalt = unterstuetzungseinheit(basis, heute);
   const { verheiratet, adults, kinder, weiterePersonen } = haushalt;
-  const andereEinkuenfte = summeAlsFeld([f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined]);
+  // Eingetragene Renten gehören zu den anderen Einkünften, wie in calculateSozialhilfe.
+  // Je Zeile auf Franken, wie calculateSozialhilfe (frankenSumme). Leer bleibt leer.
+  const andereWerte = [f.familienzulagen, f.alimenteReceived, verheiratet ? partner : undefined, ...RENTEN_FELDER.map((k) => f[k])];
+  const andereEinkuenfte = andereWerte.some(erfasst) ? String(frankenSumme(andereWerte)) : '';
 
   const { mit3a, durchIv, felder } = vermoegensFelder(f, basis, heute);
-  const vermoegen = summeAlsFeld(felder);
+  // Dieselbe Rundung wie Karte und Blatt (je Zeile), sonst kippt die Grenze im Rechner anders. Leer bleibt leer.
+  const vermoegen = felder.some(erfasst) ? String(vermoegenSumme(felder)) : '';
 
   const erwerbstaetig = istErwerbstaetig(f);
   // Lernende: erwerbstätig, aber ohne Freibetrag, gleiche Regel wie calculateSozialhilfe.
@@ -98,7 +104,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     vermoegen3aDurchIv: durchIv,
     // 2. Säule ab AHV-Vorbezug oder ganzer IV-Rente: Der Rechner wartet, bis das Vermögen angepasst ist (D.3.3 Abs. 3).
     bvgOffen: bvgHerausloesen(f, data?.versicherungen, basis, heute),
-    renteFehlt: ['ganz', 'teil'].includes(f.ivBezug) || f.employmentType === 'retired',
+    renteFehlt: renteOhneBetrag(f, basis, heute),
     // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS-RL C.3.2 Abs. 4) — nur Hinweis, keine Rechnung.
     jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,

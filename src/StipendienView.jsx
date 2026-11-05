@@ -3,7 +3,7 @@ import { hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
-import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
+import { STIPENDIEN_OFFICIAL, STIPENDIEN_KANTONE_URL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
 import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -26,6 +26,7 @@ export const stipResultMarker = (tone) => tone === 'yes' ? 'voll' : tone === 'no
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const canton = data?.basis?.canton || '';
+  const stelleKanton = STIPENDIEN_KANTONE_URL[canton];
 
   // Kurz-Check Berechtigung (harmonisierte Mindestkriterien, Orientierung)
   const [status, setStatus] = useState('');
@@ -43,6 +44,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const panelMargin = { margin: space.lg + 'px 0 ' + space.xs + 'px 0' }; // Abstände der Abschnittstitel; Grösse/Gewicht kommt aus PanelTitle
   const intro = { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed };
   const linkStyle = { color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px', fontSize: text.sm, wordBreak: 'break-all' };
+  const stelleLink = { ...linkStyle, display: 'inline-flex', alignItems: 'center', minHeight: '44px' };
   const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '6px' };
   const bullet = { color: palette.sage, flexShrink: 0 };
 
@@ -93,12 +95,14 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
       titel: t('stip.whereTitle'),
       inhalt: React.createElement(React.Fragment, null,
         React.createElement('p', { style: { ...intro, margin: 0 } }, t('stip.where')),
+        React.createElement('p', { style: { ...intro, margin: space.sm + 'px 0 0 0' } }, t('stip.whereAusnahmen')),
         canton && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } },
           t('stip.yourCanton', { canton: getCantonName(canton, t) }))
       ),
     },
-    stelle: React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border } },
-      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...linkStyle, fontWeight: weight.semi } }, t('stip.cantonalLink'))),
+    stelle: React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border, display: 'flex', flexDirection: 'column' } },
+      stelleKanton && React.createElement(ExternerLink, { t, href: stelleKanton, style: { ...stelleLink, fontWeight: weight.semi } }, t('stip.officeLink', { canton: getCantonName(canton, t) })),
+      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...stelleLink, fontWeight: stelleKanton ? undefined : weight.semi } }, t('stip.cantonalLink'))),
     quelle: React.createElement(React.Fragment, null, hinweisZeichen(), renderSource(t('stip.source'), null, t)),
   },
     // Wer kann beantragen?

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { Schnellcheck } from './Schnellcheck.jsx';
 import { LebenslagenAuswahl } from './Lebenssituationen.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -44,17 +45,21 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     const incomeBenefits = [];
     try {
       const canton = probe?.basis?.canton || '';
-      const income = Number(probe?.finanzen?.monthlyIncome) || 0;
+      const erfasst = einnahmenErfasst(probe?.finanzen); // Lohn oder Rente, wie die Wege
       const rent = Number(probe?.wohnen?.rentAmount) || 0;
       // anspruchMoeglich: auch bei unbelegtem Kanton (E9) ein Weg — ohne Betrag.
-      if (income > 0 && canton && calculateIPV(probe)?.anspruchMoeglich) {
+      if (erfasst && canton && calculateIPV(probe)?.anspruchMoeglich) {
         // B-1/E22: die Zahlen aus Schritt 1 gehen an den IPV-Rechner mit (nicht ins Profil).
         incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium', uebergabe: uebergabeAusProbe(probe) });
       }
-      // income > 0 wie bei der IPV: Schritt 1 macht aus einem leeren Feld eine 0 (F8-S4).
-      if (income > 0 && rent > 0) {
+      // Wie bei der IPV: Schritt 1 macht aus einem leeren Feld eine 0 (F8-S4), darum Lohn oder Rente über 0.
+      if (erfasst && rent > 0) {
         const sh = calculateSozialhilfe(probe);
-        if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
+        if (sh?.einkommenFehlt) {
+          // Rente oder Einkommen nicht erfasst: der Weg mit dem Grund, wie in data/anspruchWege.js.
+          if (sh.wegOhneBetrag) incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
+            label: t('anspruch.items.sozialhilfe.label') + ' · ' + t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') });
+        } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
           // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — der «Anspruch» sagt es.
           incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
             label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '') });

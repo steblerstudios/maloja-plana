@@ -57,7 +57,11 @@ export function pegelState(data) {
 // wird als Aufstockung gefüllt. Reine Anzeige über calculateSozialhilfe.
 export function sozialhilfePegelState(data) {
   const sh = calculateSozialhilfe(data);
-  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, offenText: sh?.offenText, ohneFreibetrag: !!sh?.ohneFreibetrag, hinweise: sh?.hinweise || [] };
+  const roh = sozialhilfePegelRoh(data);
+  // Keine Lücke und kein «gedeckt» aus nicht erfasstem Einkommen oder fehlender Rente (wie anspruchWege). Der offene
+  // Pegel ohne Betrag (Konkubinat) bleibt.
+  if (sh?.einkommenFehlt && roh?.mode !== 'offen') return null;
+  return { ...roh, ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, offenText: sh?.offenText, ohneFreibetrag: !!sh?.ohneFreibetrag, hinweise: sh?.hinweise || [] };
 }
 
 // Derselbe Pegel aus dem Ergebnis des Rechners (F8-S2, 02.11.2026): die Seite hat eine Rechnung, die den

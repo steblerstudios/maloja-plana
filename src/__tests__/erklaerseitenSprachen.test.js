@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { GEPRUEFT, inhaltFuer, QUELLEN, quelleFuer, BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from '../../scripts/seiten-sprachen.mjs';
+import { HINTERGRUND } from '../../scripts/seiten/krankenkasse.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Die Erklärseiten in fünf Sprachen · seit 21.09.2026
@@ -130,7 +131,10 @@ describe('Erklärseiten in fünf Sprachen', () => {
         const i = inhaltFuer(s.code);
         return n + i.seiten.length + i.sonderseiten.length;
       }, 0) + 1; // + die Startseite
-      expect((xml.match(/<loc>/g) || []).length).toBe(erwartet);
+      // + die Hintergrundseiten: nur Deutsch, Deutsch ist freigegeben. Dass sie
+      // keine Sprach-Alternativen tragen, prüft hintergrundSeiten.test.js.
+      expect(SPRACHEN.find((s) => s.code === 'de').freigegeben).toBe(true);
+      expect((xml.match(/<loc>/g) || []).length).toBe(erwartet + HINTERGRUND.length);
     });
 
     it('hreflang nennt keine Sprache, die nicht freigegeben ist', () => {
