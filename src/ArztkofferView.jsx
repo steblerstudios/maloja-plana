@@ -77,7 +77,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
             style: {
               fontSize: '10px', color: palette.mid, fontWeight: weight.medium,
               border: '1px solid ' + palette.border, borderRadius: radius.sm,
-              padding: '1px 6px', textTransform: 'uppercase', letterSpacing: '0.3px',
+              padding: '1px 6px',
             },
           }, t('arztkoffer.inVorbereitung')),
         ),
@@ -116,7 +116,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       React.createElement('div', {
         style: {
           fontSize: text.xs, fontWeight: weight.semi, color: palette.mid,
-          textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 ' + space.sm + 'px 2px',
+          margin: '0 0 ' + space.sm + 'px 2px',
         },
       }, t('arztkoffer.inVorbereitungHint')),
       React.createElement('div', {

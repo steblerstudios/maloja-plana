@@ -1212,7 +1212,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const handleSaveCard = () => {
     const sections = notfallkarteAbschnitte();
     const sectionHtml = sections.map(s =>
-      '<div style="margin-bottom:16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
+      '<div style="margin-bottom:16px"><div style="font-size:11px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
     ).join('');
     const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + tr('notfallSummary.cardTitle') + '</title>' +
       '<style>@media print{body{margin:0;padding:20mm}@page{size:A4;margin:20mm}}body{font-family:-apple-system,system-ui,sans-serif;max-width:600px;margin:40px auto;padding:0 24px;color:#222;line-height:1.5}' +
@@ -1288,7 +1288,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               }
             },
               React.createElement('div', {
-                style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep || palette.mid, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: space.xs + 'px' }
+                style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep || palette.mid, marginBottom: space.xs + 'px' }
               }, t('nav.crosslink.relatedTitle')),
               items.map(([key, view, textKey]) => React.createElement('button', {
                 key: 'crosslink-' + key,

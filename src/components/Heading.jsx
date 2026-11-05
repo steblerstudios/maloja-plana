@@ -41,7 +41,8 @@ export const PanelTitle = ({ palette, children, icon, as = 'h3', style, ...rest 
   }, icon || null, icon ? titelText(children) : children);
 
 // Kleines Kicker-Label — standardmässig KEINE Überschrift (kein h*), damit die
-// Screenreader-Struktur sauber bleibt (13px uppercase).
+// Screenreader-Struktur sauber bleibt (13 px, Normalschrift seit Fassung 9 / F9-A4,
+// Stebler Studios 05.11.2026 «Normalschrift»: Grossbuchstaben-Kicker wirken nach Software).
 // `as` nur dort setzen, wo das Label tatsächlich einen Abschnitt betitelt und
 // nicht bloss darüber steht (z. B. «Werkzeuge & Features»). Das Aussehen bleibt
 // identisch — es ändert sich allein das Tag und damit die Sprungmarke.
@@ -50,7 +51,6 @@ export const Eyebrow = ({ palette, children, as = 'div', style, ...rest }) =>
     style: {
       // `margin: 0` ist für das <div> ein Nulleffekt und hält das Aussehen
       // gleich, sobald `as` ein h* ist (h3 brächte sonst den Browser-Rand mit).
-      fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase',
-      letterSpacing: '0.5px', color: palette.mid, margin: 0, ...style,
+      fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, margin: 0, ...style,
     }, ...rest,
   }, children);
