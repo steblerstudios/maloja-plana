@@ -2,7 +2,7 @@ import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { hatAusweisFNS } from './data/ausweis.js';
-import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
+import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName, ipvFinanzenNetto } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
@@ -419,6 +419,11 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // Ausgangswerts — an keiner Stelle eine Aussage über den Anspruch.
   const einkommenJetzt = Number(data.finanzen?.monthlyIncome) || 0;
   const reglerMax = Math.max(12000, Math.ceil((Math.max(profilEinkommen, Number(schnellcheckZahlen?.monthlyIncome) || 0) * 2) / 1000) * 1000);
+  // Nur wenn der Hauptlohn selbst brutto war und umgerechnet wurde: Der Hinweis nennt den
+  // Hauptlohn. Ist nur der Nebenerwerb brutto, nennte er sonst einen Betrag, der gar nicht
+  // geschätzt ist (Rechtsprüfung 05.11.2026). Selbständige werden nicht umgerechnet.
+  const ipvNetto = ipvFinanzenNetto(data);
+  const hauptlohnGeschaetzt = ipvNetto.geschaetzt && data.finanzen?.incomeType !== 'netto' && ipvNetto.data.finanzen?.incomeType === 'netto' && einkommenJetzt > 0;
   const reglerBlock = () => React.createElement('div', { style: { margin: space.md + 'px 0' } },
     React.createElement('label', { htmlFor: 'ipv-regler', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, flexWrap: 'wrap', fontSize: text.sm, color: palette.text, marginBottom: space.xs } },
       React.createElement('span', null, t('finanzUebersicht.monthlyIncome')),
@@ -429,8 +434,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       value: Math.min(reglerMax, einkommenJetzt),
       'aria-valuetext': fmtCHF(einkommenJetzt) + ' ' + t('common.perMonth'),
       onChange: (e) => { setRegler(Number(e.target.value) || 0); setUebernommen(false); },
+      'aria-describedby': hauptlohnGeschaetzt ? 'ipv-netto-geschaetzt' : undefined,
       style: { width: '100%', minHeight: '44px', accentColor: palette.sand, cursor: 'pointer' },
-    })
+    }),
+    // Brutto erfasst: Der Regler zeigt den Bruttolohn, gerechnet wird mit dem Netto-Richtwert
+    // (ipvFinanzenNetto). Das muss dastehen (Fach- und Rechtsprüfung, Predeploy 05.11.2026).
+    hauptlohnGeschaetzt && React.createElement('p', { id: 'ipv-netto-geschaetzt', 'data-netto-geschaetzt': '', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      t('premium.nettoGeschaetzt', { netto: fmtCHF(Number(ipvNetto.data.finanzen?.monthlyIncome) || 0) }))
   );
 
   // B-1/E22 + Regler: sichtbar sagen, womit gerechnet wird. Ins Profil geht nichts ohne den Klick.

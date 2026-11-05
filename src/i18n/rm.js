@@ -474,7 +474,7 @@ export default {
     step3Link: 'Guardar la prevenziun',
     step3LinkSituation: 'Sche in genitur è mort: la situaziun «mez orfen»',
     stepElTitle: '4 · Renta da survivents & prestaziuns cumplementaras',
-    stepElText: 'Survivents han savens dretg ad ina renta da vaivas, vaivs u orfens. Sche ella na cuvra betg ils custs da viver, pon prestaziuns cumplementaras (PC) la cumplettar — betg ina almosna, mabain in dretg legal.',
+    stepElText: 'Survivents pon avair dretg ad ina renta da vaivas, vaivs u orfens. Sche ella na cuvra betg ils custs da viver, pon prestaziuns cumplementaras (PC) la cumplettar — betg ina almosna, mabain in dretg legal.',
     step4Title: '5 · Ierta & lubientscha',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step4Text: 'Für den Nachlass braucht es je nach Situation einen Erbschein; ein Testament wird von der zuständigen Behörde eröffnet — welche das ist, regelt der Kanton (ZGB Art. 557). Wichtig: Ist der Nachlass überschuldet, kann das Erbe innert drei Monaten ausgeschlagen werden — sonst übernimmt man die Schulden mit. Bei Unsicherheit lieber früh beraten lassen.',
@@ -1399,7 +1399,7 @@ export default {
     step3Link: 'Guardar la prevenziun',
     step4Title: '4 · Verifitgar las prestaziuns cumplementaras',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step4Text: { sie: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, avais Vus eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgai el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.', du: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.' },
+    step4Text: { sie: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, avais Vus eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgai el senza temma. En vegliadetgna da l’AVS po s’agiuntar dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.', du: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS po s’agiuntar dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.' },
     step4Link: 'Verifitgar il dretg',
     step4LinkSituation: 'Guardar la situaziun «pensiunà»',
     step5Title: '5 · Sche pli tard è basegn da cura',
@@ -4814,6 +4814,8 @@ export default {
   },
 
   premium: {
+    // TODO(rm): provisorisch — Gegenlese (IPV Netto geschätzt, 05.11.2026)
+    nettoGeschaetzt: 'La paja è registrada brutto. Il quint fa diever d’ina paja netta stimada da circa {netto} per mais.',
     title: 'Reducziun da premias (IPV)',
     // rm ungeprüft F5
     lageTitle: { sie: 'Vossa situaziun', du: 'Tia situaziun' },

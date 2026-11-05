@@ -643,6 +643,9 @@ const stilBewegt = `
     .anzeige .ruhe{ color:var(--leise) } .anzeige #anzeige:not(:empty) + .ruhe{ display:none }
     #stage:focus-visible{ outline:2px solid var(--text); outline-offset:4px; border-radius:10px }
     .hinweis-b{ font-size:13px; color:var(--leise); margin:8px 2px 0 }
+    /* Orientierung für wer direkt hier landet (a11y-Prüfung Predeploy 05.11.2026): Rückweg oben, Titel als h1. */
+    .zurueck-b{ margin:0 0 4px; font-size:15px } .zurueck-b a{ display:inline-flex; align-items:center; min-height:44px; color:var(--text) }
+    .titel-b{ margin:0 0 12px; font-size:20px; line-height:1.3; color:var(--text) }
     [data-hairline]{ --hairline-plate:#FBFBFA; --hairline-hi:#4A6A88; --hairline-edge:#8A877F; --hairline-mid:#C6C2BA; --hairline-lo:#E2DFD9; --hairline-stroke:0.9 }
     @media (prefers-color-scheme: dark){
       [data-hairline]{ --hairline-plate:#2A2927; --hairline-hi:#8CAAC6; --hairline-edge:#7A766F; --hairline-mid:#4D4A45; --hairline-lo:#3A3936 }
@@ -687,7 +690,9 @@ function bewegtSeiteBauen(name) {
   </style>
 </head>
 <body>
-  <main>${buehne}
+  <main>
+    <p class="zurueck-b nur-allein"><a href="/krankenkasse/#abb-${name}">Zurück zu «Warum die Krankenkasse so viel kostet»</a></p>
+    <h1 class="titel-b nur-allein">${esc(b.titel)}</h1>${buehne}
     <p class="hinweis-b nur-allein">Teil der Seite ${zurueck} · Maloja Plana</p>
   </main>
 ${pfade.map((pf) => `  <script src="/krankenkasse/bewegt/${pf}"></script>`).join('\n')}

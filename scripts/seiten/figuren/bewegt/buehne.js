@@ -50,6 +50,10 @@
       stage.setAttribute('role', 'slider');
       stage.setAttribute('aria-valuemin', '1');
       stage.setAttribute('aria-valuemax', String(anzahl));
+      // Ein Slider braucht von Anfang an einen Wert (WCAG 4.1.2, a11y-Prüfung Predeploy 05.11.2026).
+      // Gewählt ist noch nichts: Der Text sagt das, die Zahl steht auf dem ersten Element.
+      stage.setAttribute('aria-valuenow', '1');
+      if (!stage.hasAttribute('aria-valuetext')) stage.setAttribute('aria-valuetext', 'Noch nichts gewählt. Mit den Pfeiltasten wählen.');
       stage.addEventListener('keydown', (e) => {
         const ziel = { ArrowRight: wahl + 1, ArrowUp: wahl + 1, ArrowLeft: wahl - 1, ArrowDown: wahl - 1, Home: 0, End: anzahl - 1 }[e.key];
         if (ziel === undefined) return;

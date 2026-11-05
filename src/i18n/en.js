@@ -365,7 +365,7 @@ export default {
     step3Link: 'View pension',
     step3LinkSituation: 'If a parent died: the “half-orphan” situation',
     stepElTitle: '4 · Survivor’s pension & supplementary benefits',
-    stepElText: 'Survivors are often entitled to a widow’s, widower’s or orphan’s pension. If it does not cover living costs, supplementary benefits (EL) can top it up — not a favour, but a legal entitlement.',
+    stepElText: 'Survivors may be entitled to a widow’s, widower’s or orphan’s pension. If it does not cover living costs, supplementary benefits (EL) can top it up — not a favour, but a legal entitlement.',
     step4Title: '5 · Inheritance & estate',
     step4Text: 'Depending on the situation the estate needs a certificate of inheritance; a will is opened by the competent authority — which one is set by the canton (ZGB Art. 557). Important: if the estate is over-indebted, the inheritance can be declined within three months — otherwise the debts are inherited too. If unsure, seek advice early.',
     step4Button: 'Add deadline “Review/decline inheritance” to calendar ({date})',
@@ -3092,6 +3092,7 @@ export default {
   },
 
   premium: {
+    nettoGeschaetzt: 'The wage is entered as gross. The calculation uses an estimated net wage of about {netto} per month.',
     title: 'Premium subsidy (IPV)',
     lageTitle: 'Your situation',
     subtitle: 'Individual premium reduction — the canton covers part of your health insurance premium if your income is below a certain threshold.',

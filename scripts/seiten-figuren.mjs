@@ -215,7 +215,10 @@ function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, lege
   // /krankenkasse/bewegt/ (public/.htaccess, vorbereiteter Block). Der Link
   // bleibt immer da — als Ausweg, falls der Rahmen leer bleibt.
   // Ohne Schalter: nur der Link, die Hauptseite bleibt ganz ohne Rahmen.
-  const link = `<a href="/krankenkasse/bewegt/${name}/">${ctx.einbetten ? 'In eigenem Fenster öffnen' : 'Bewegte Fassung zum Ausprobieren'}</a>`;
+  // Linktext mit Thema: fünf gleichlautende Links wären in der Linkliste nicht zu unterscheiden
+  // (WCAG 2.4.4, a11y-Prüfung Predeploy 05.11.2026).
+  const thema = BEWEGT[name] ? ': ' + BEWEGT[name].titel : '';
+  const link = `<a href="/krankenkasse/bewegt/${name}/">${ctx.einbetten ? 'In eigenem Fenster öffnen' : 'Bewegte Fassung zum Ausprobieren' + thema}</a>`;
   const bewegt = !BEWEGT[name] ? '' : ctx.einbetten ? `
           <details class="bewegt ${BEWEGT[name].art}">
             <summary>Bewegte Fassung zum Ausprobieren</summary>
