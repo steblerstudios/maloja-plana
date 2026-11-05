@@ -8,6 +8,7 @@ import { buildFlyerHtml } from './flyerGenerator.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { text, weight, space, radius } from './config/tokens.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 // Verteil-Flyer A5 (Vorder- und Rückseite) mit QR-Code zu malojaplana.ch (in der aktuell gewählten Sprache).
 // Für Beratungsstellen, Gemeinden, Aushänge — niederschwellige Verbreitung.
@@ -58,8 +59,9 @@ export const FlyerView = ({ palette, t, lang }) => {
     qrWrap: { display: 'inline-block', marginTop: space.md + 'px', background: '#fff', padding: space.sm + 'px', borderRadius: radius.sm + 'px' },
     urlText: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' },
     actions: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.lg + 'px', alignItems: 'center' },
-    button: { background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
-    shareButton: { background: 'none', color: palette.sageDeep || palette.sage, border: '1px solid ' + palette.sage, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    button: knopfStil(palette, 'haupt'),
+    // Fassung 9: Salbei ist keine Knopffarbe mehr — Nebenknopf mit goldenem Rand.
+    shareButton: knopfStil(palette, 'neben'),
     copied: { fontSize: text.xs, color: palette.sageDeep || palette.mid },
     hint: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.md + 'px', maxWidth: '520px' },
   };

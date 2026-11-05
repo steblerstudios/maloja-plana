@@ -16,7 +16,7 @@ import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -36,7 +36,8 @@ const styles = (palette) => ({
   stepText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed },
   // Querverweis: 44 px Tippziel (Seitenrundgang 27.09.2026 — vorher padding 0, rund 20 px
   // hoch); der Abstand nach oben entfällt dafür, die Zeilenhöhe trägt ihn.
-  link: { display: 'flex', alignItems: 'center', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
+  // Fassung 9 (M2): Text-Links gold und immer unterstrichen (linkStil).
+  link: { ...linkStil(palette), display: 'flex', alignItems: 'center', minHeight: '44px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
   done: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px', outline: 'none' },
   warn: { fontSize: text.sm, color: palette.goldDeep, marginTop: space.xs + 'px' },
   note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
@@ -102,7 +103,7 @@ export const ablaufKapitel = (name) => {
 const BAND_HOEHE = 112;
 const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
   const { t, onNavigate, bereichTitel, zumBereich } = kopf;
-  const stufe = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.mid, padding: 0, minHeight: '44px' };
+  const stufe = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px' };
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.soft } }, '›');
   const balken = farbe ? farbe.balken : palette.sage;
   return React.createElement(React.Fragment, null,
@@ -181,7 +182,7 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
     if (gewechselt.current && flaeche.current) flaeche.current.focus();
   }, [stand.schritt, stand.fertig]);
   const geheZu = (next) => { gewechselt.current = true; setStand(next); };
-  const ruhigerKnopf = { minHeight: '44px', background: 'none', border: 'none', padding: '0 ' + space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid };
+  const ruhigerKnopf = knopfStil(palette, 'neben');
   const titelStil = { marginTop: space.xs + 'px', fontFamily: fontFamilyDisplay, fontSize: '22px', lineHeight: 1.2 };
   const info = istInfoSchritt(schritte[nr]);
 
@@ -373,11 +374,7 @@ export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarL
         : null)
     : React.createElement('button', {
       type: 'button', onClick: handle, 'aria-label': buttonLabel || undefined,
-      style: {
-        display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
-        padding: '0 ' + space.md + 'px', background: 'none', border: '1.5px solid ' + palette.sand, borderRadius: radius.sm,
-        color: palette.sandDeep, fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit', cursor: 'pointer', flexShrink: 0,
-      },
+      style: { ...knopfStil(palette, 'neben'), flexShrink: 0 },
     }, zeichen, t('kvg.addToCalendar'));
   if (kompakt) return inhalt;
   return React.createElement('div', { 'data-frist-karte': 'offen', style: kartenStil(palette, false) },

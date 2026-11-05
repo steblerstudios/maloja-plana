@@ -7,7 +7,7 @@ import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier, notfallQrAbschnitte } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // Seit 27.10.2026 (F7-S2) keine eigene Seite mehr, sondern eine Auswahl in «Unterlagen drucken»
 // (UnterlagenDrucken.jsx): dort stehen Brotkrume und Seitentitel, hier ein Abschnittstitel.
@@ -177,18 +177,14 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
       }, t('notfallDossier.qrHint')),
       // Knopf «QR anzeigen» / «QR ausblenden». Die Fläche gibt es nur, solange der Code sichtbar ist.
-      // Rand in palette.mid und Aufklapp-Zeichen (a11y-pruefer 26.10.2026): der Rand in palette.border hob sich
-      // vom Kartengrund kaum ab; als Knopf erkennbar war er fast nur am Text.
+      // Aufklapp-Zeichen (a11y-pruefer 26.10.2026): der Rand in palette.border hob sich vom Kartengrund
+      // kaum ab. Seit Fassung 9 Nebenknopf mit goldenem Rand (sandDeep, 5.7:1).
       React.createElement('div', { style: { marginBottom: qrSichtbar ? '12px' : 0 } },
         React.createElement('button', {
           type: 'button',
           'aria-expanded': qrSichtbar,
           onClick: () => { setQrStatus('ok'); setQrSichtbar((v) => !v); },
-          style: {
-            minHeight: '44px', padding: '0 ' + space.md + 'px',
-            background: palette.surface, color: palette.text, border: '1px solid ' + palette.mid,
-            borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
-          },
+          style: knopfStil(palette, 'neben'),
         }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(qrSichtbar)),
         t(qrSichtbar ? 'notfallDossier.qrAusblenden' : 'notfallDossier.qrAnzeigen'))
       ),
@@ -212,10 +208,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('button', {
         type: 'button',
         onClick: () => onNavigate('notfallpass'),
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer', padding: 0, margin: '12px 0 0', minHeight: '44px',
-          fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium,
-        },
+        style: { ...linkStil(palette), margin: '12px 0 0', minHeight: '44px', fontSize: text.sm },
       }, t('notfallpass.dossierVerweis'))
     ),
 

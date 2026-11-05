@@ -4,7 +4,7 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, radius, space, leading } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import { SecondaryButton } from './components/PrimaryButton.jsx';
 import { FRAGEN_VA, vorlage, vorlageHtml, abweichendeVertretung } from './data/vorsorgeauftrag.js';
 import { PanelTitle } from './components/Heading.jsx';
 
@@ -75,7 +75,8 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step4Text')),
       // F7-A6 (Entscheid Stebler Studios 27.10.2026, nur der Ablauf-Teil): ein Knopf zum Formular
       // «Patientenverfügung erstellen» statt eines Querverweises — hier ist es der nächste Schritt.
-      onNavigate && React.createElement(PrimaryButton, { palette, 'data-pv-knopf': '', style: { minHeight: '44px', marginTop: space.sm + 'px' }, icon: React.createElement(Icon, { name: 'document', size: 16 }), onClick: () => onNavigate('patientenverfuegung') }, t('vorsorgeauftrag.step4LinkPv'))
+      // Fassung 9 (S2): der Hauptknopf des Schritts ist «Erledigt, weiter ›» — dieser ist Nebenknopf.
+      onNavigate && React.createElement(SecondaryButton, { palette, 'data-pv-knopf': '', style: { minHeight: '44px', marginTop: space.sm + 'px' }, icon: React.createElement(Icon, { name: 'document', size: 16 }), onClick: () => onNavigate('patientenverfuegung') }, t('vorsorgeauftrag.step4LinkPv'))
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step5Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step5Text')),

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageTitle } from './Heading.jsx';
 import { Icon } from '../IconSystem.jsx';
+import { knopfStil } from './PrimaryButton.jsx';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 
 // Fragen-Ablauf: eine Frage pro Seite, am Schluss eine Vorschau (Skizze Stebler Studios 27.09.2026).
@@ -27,8 +28,8 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   const hilfeStil = { margin: space.xs + 'px 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
   const zeileStil = { display: 'flex', alignItems: 'center', gap: '10px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
-  const knopf = (hervor) => ({ padding: '10px 18px', minHeight: '44px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium, borderRadius: radius.sm, cursor: 'pointer',
-    border: '1px solid ' + (hervor ? palette.sandDeep : palette.border), background: hervor ? palette.sand : palette.surface, color: hervor ? (palette.onSand || palette.text) : palette.text });
+  // Fassung 9: Haupt- und Nebenknopf aus dem Baustein (auch für die Vorschau der Fragen-Abläufe).
+  const knopf = (hervor) => knopfStil(palette, hervor ? 'haupt' : 'neben');
 
   const feld = (id, label, wert, onWert, { mehrzeilig = false, typ = 'text', schmal = false } = {}) => React.createElement('div', { key: id, style: { marginBottom: space.sm + 'px' } },
     React.createElement('label', { htmlFor: id, style: labelStil }, label),

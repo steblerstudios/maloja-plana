@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useRef } from 'react';
-import { PrimaryButton } from './PrimaryButton.jsx';
+import { PrimaryButton, SecondaryButton } from './PrimaryButton.jsx';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { leiteKategorienAb } from '../exportVorschau.js';
 
@@ -107,14 +107,7 @@ export const ExportVorschau = ({ palette, t, art, quelle, onWeiter, onZurueck })
     }, hinweisVerschluesselung),
 
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },
-      React.createElement('button', {
-        type: 'button', onClick: zurueck,
-        style: {
-          padding: '10px 16px', background: palette.up, color: palette.text,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer',
-          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        },
-      }, t('zipExport.vorschau.zurueck')),
+      React.createElement(SecondaryButton, { palette, onClick: zurueck }, t('zipExport.vorschau.zurueck')),
       React.createElement(PrimaryButton, { palette, onClick: onWeiter },
         t(druck ? 'zipExport.vorschau.weiterDruck' : 'zipExport.vorschau.weiterDatei'))
     )
