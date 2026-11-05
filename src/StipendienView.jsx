@@ -62,7 +62,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     color: cost === 'paid' ? palette.goldDeep : cost === 'freemium' ? palette.skyDeep : palette.sageDeep,
   });
 
-  const toneFarbe = resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold;
+  const toneFarbe = resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.sky;
   const ergebnis = resultKey && React.createElement('p', { style: { margin: 0, fontSize: text.lg, fontWeight: weight.semi, lineHeight: leading.normal, color: palette.text } },
     React.createElement(StatusForm, {
       form: stipResultMarker(resultTone), color: toneFarbe,

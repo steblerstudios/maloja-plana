@@ -353,7 +353,7 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // (Live-Region), statt verloren zu gehen.
 const kartenStil = (palette, vorbei) => ({
   marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
-  border: '1px solid ' + (vorbei ? palette.gold || palette.border : palette.border),
+  border: '1px solid ' + (vorbei ? palette.rose || palette.border : palette.border),
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
 export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarLabel, reminder: reminderRoh, onNavigate, onSaved, kompakt = false }) => {

@@ -153,7 +153,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
           f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
             : (l.key === 'soz' && sozPegel) ? sozPegel.detail : (l.key === 'ipv' && ipvLage) ? ipvLage : l.sub,
-          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.sandDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
+          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.skyDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
       ),
       // Pegel: Balken = Einkommen, Strich = SKOS-Bedarf, gemeinsame Skala (das Grössere).
       // Neutral eingefärbt — es ist eine Lage, kein Betrag, der zusteht.

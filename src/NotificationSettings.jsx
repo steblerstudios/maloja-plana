@@ -102,7 +102,7 @@ export const NotificationSettings = ({ palette, t }) => {
         React.createElement('div', {
           style: {
             width: '10px', height: '10px', borderRadius: '50%',
-            background: isGranted ? palette.sage : isDenied ? palette.rose : palette.gold,
+            background: isGranted ? palette.sage : isDenied ? palette.rose : palette.sky,
           }
         }),
         React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } },

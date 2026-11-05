@@ -299,7 +299,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
   const statusColor = backupStatus?.type === 'success' ? palette.sage
     : backupStatus?.type === 'error' ? palette.rose
-    : palette.gold;
+    : palette.sky;
 
   return React.createElement('div', { style: { maxWidth: '720px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
 
@@ -408,7 +408,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         ),
 
         // Decrypt passphrase prompt (shown for encrypted files)
-        importing && React.createElement('div', { style: { padding: space.md, background: palette.gold + '22', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.gold } },
+        importing && React.createElement('div', { style: { padding: space.md, background: palette.sky + '18', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.sky } },
           React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, t('backup.passphrase')),
           React.createElement('input', {
             type: 'password', value: importPassphrase, placeholder: t('backup.passphrase'),
@@ -461,7 +461,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         ),
 
         // Validation warnings
-        validationWarnings.length > 0 && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.gold, fontSize: text.sm } },
+        validationWarnings.length > 0 && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.sky, fontSize: text.sm } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('backup.validationErrors')),
           React.createElement('ul', { style: { margin: 0, paddingInlineStart: '18px', color: palette.mid } },
             validationWarnings.map((w, i) => React.createElement('li', { key: i }, w)))

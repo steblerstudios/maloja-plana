@@ -357,7 +357,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     h('div', { role: 'status', 'aria-live': 'polite', 'data-ergebnis': 'anspruch' },
       ipvTeil,
       sozPegel && h(Pegel, { palette, t, state: sozPegel }),
-      knappSoz && h('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+      knappSoz && h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
       h('p', { style: s.satz }, satz),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.

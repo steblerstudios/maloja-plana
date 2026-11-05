@@ -35,10 +35,10 @@ export const ablageZaehler = (documents) => ({
 
 const getExpiryStatus = (expiryDate, palette, t) => {
   const days = getDaysUntilExpiry(expiryDate);
-  // Lesbarer Text auf der Fläche (13px) — Deep-Varianten für AA. Fassung 5: «Bald fällig» in
-  // Gold als Hinweis, «Abgelaufen» ruhig in Grau statt in Rot (Notiz unter dem Mockup).
+  // Lesbarer Text auf der Fläche (13px) — Deep-Varianten für AA. Fassung 5: «Bald fällig» als
+  // Hinweis (Fassung 9: Fristen blau, skyDeep), «Abgelaufen» ruhig in Grau statt in Rot (Notiz unter dem Mockup).
   if (days < 0) return { status: 'expired', color: palette.mid, label: t('tresor.expired') };
-  if (days < 90) return { status: 'warning', color: palette.goldDeep, label: days + 'd' };
+  if (days < 90) return { status: 'warning', color: palette.skyDeep, label: days + 'd' };
   return { status: 'ok', color: palette.sageDeep, label: t('tresor.gueltig') };
 };
 
