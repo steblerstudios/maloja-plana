@@ -39,7 +39,7 @@ Der Durchgang zeigt: *jede Seite öffnet ohne Fehler*. Ob sie *richtig rechnet*,
 | # | Befund | Gewicht |
 |---|---|---|
 | K1 | `#/chapter/7`, `/8`, `/9` (es gibt nur 0–6) zeigen still das Kapitel Notfall, die Adresse bleibt falsch | klein. Nur bei getippten Adressen |
-| K2 | **hreflang ohne Selbstverweis:** `/sozialhilfe/` nennt en/fr/it/rm, aber nicht `de`; `/fr/sozialhilfe/` nennt alle ausser `fr`. Google erwartet, dass jede Sprachfassung sich selbst mit aufführt. Ein `x-default` fehlt auch | **vor der Freigabe fr/it/en beheben**, sonst greift hreflang nicht sauber |
+| ~~K2~~ | ⟨**korrigiert 05.11., kein Befund**⟩ ~~hreflang ohne Selbstverweis, `x-default` fehlt~~. Gemessen hatte ich die `hreflang`-Attribute der **Links im Sprachumschalter** (`<a hreflang>`). Diese lassen die aktive Sprache naturgemäss weg. `<link rel="alternate" hreflang>` gibt es live auf **keiner** Seite, und das ist gewollt: `hreflangRing()` in `scripts/build-seiten.mjs` schreibt den Ring erst, wenn mindestens zwei Sprachen freigegeben sind, und dann **mit** Selbstverweis und `x-default`. Heute ist nur `de` frei | keiner. Die Zahl beschrieb das Messgerät |
 | K3 | Die Erklärseiten verlinken die App nur über `/`, also über das Beta-Tor. Wer «Sozialhilfe» liest, landet nicht beim Sozialhilfe-Rechner | Ergänzen, siehe §3 E1 |
 | K4 | Die Seite Krankenkasse ist nur deutsch, die Kantone im Vergleich ebenso. Von den Sprachseiten führt kein Weg dorthin | bewusst (Weg A, Krankenkasse zuerst), notiert |
 
@@ -145,7 +145,7 @@ Heirat und Zusammenziehen (Ehe ≠ Konkubinat, darin liegt der Inhalt).
 | | Vorschlag | Warum | Empfehlung |
 |---|---|---|---|
 | **E1** | **Erklärseite → passendes Werkzeug:** am Schluss jeder Erklärseite ein Knopf «Im Beispiel ausprobieren» direkt auf `#/sozialhilfe`, `#/premium`, `#/tax`, `#/situationen` | heute führt jede Erklärseite nur auf `/`, also ans Tor (K3). Der Leser verliert den Faden | **ja**. Vorher prüfen, ob das Beta-Tor einen Tiefen-Link ins Beispiel durchlässt |
-| **E2** | **hreflang-Selbstverweis + `x-default`** auf allen Erklärseiten (K2) | Voraussetzung, damit die Freigabe fr/it/en bei Google wirkt | **ja, vor dem Freischalten**, gehört in den Zweig der Übersetzungs-Prüfung (#692) |
+| ~~E2~~ | ⟨**entfällt, 05.11.**⟩ ~~hreflang-Selbstverweis + `x-default`~~. Das ist schon gebaut, siehe K2 | — | entfällt |
 | **E3** | Kandidaten für weitere Erklärseiten (Weg A): **Ergänzungsleistungen**, **Arbeitslosigkeit/ALV**, **AHV/Pensionierung** | in der App gross und gut verlinkt (EL 15, ALV 11, Vorsorge 30 Verweise), öffentlich fehlt jede Erklärung | Reihenfolge entscheidet Stebler Studios. Jede Seite braucht den vollen Prüfdurchgang |
 | **E4** | «Nach Einkommen» in die Suche aufnehmen, falls Z1 nicht kommt | heute nur über drei Seiten zu finden | nur wenn Z1 nein |
 
@@ -164,8 +164,9 @@ Heirat und Zusammenziehen (Ehe ≠ Konkubinat, darin liegt der Inhalt).
 2. **Z2** Benachrichtigungen in die Einstellungen? *(Empfehlung: ja)*
 3. **G1–G3** drei Gruppen in der Übersicht? *(Empfehlung: ja, G1 zuerst)*
 4. **E1** Erklärseiten verlinken direkt ins Werkzeug? *(Empfehlung: ja)*
-5. **E2** hreflang-Fix im Zweig der Übersetzungs-Prüfung? *(Empfehlung: ja, vor dem Freischalten)*
+5. ~~**E2** hreflang-Fix~~ ⟨entfällt, siehe K2⟩
 6. **E3** welche Erklärseite als nächste? *(Empfehlung: Ergänzungsleistungen. In der App ist der Bereich schon gross und geprüft (EL-Hinweis, Sozio-Prüfer 04.11.), öffentlich fehlt er ganz)*
 7. **V1/V2** klein, auf ein Ja hin in einem Zweig?
 
-**Reihenfolge-Vorschlag:** E2 (blockiert die Freigabe) → V1 → Z2 → E1 → G1 → Z1 → E3.
+**Reihenfolge-Vorschlag:** ~~E2 (blockiert die Freigabe) →~~ V1 → Z2 → E1 → G1 → Z1 → E3.
+⟨korrigiert 05.11.: E2 entfällt, siehe K2⟩
