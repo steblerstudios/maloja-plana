@@ -619,8 +619,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           disabled: !(tpBetrag > 0),
           style: {
             padding: '6px 12px', borderRadius: radius.sm, border: 'none',
-            background: tpBetrag > 0 ? palette.sand : palette.border,
-            color: tpBetrag > 0 ? '#000' : palette.soft,
+            background: tpBetrag > 0 ? palette.sageBtn : palette.border,
+            color: tpBetrag > 0 ? palette.onSageBtn : palette.soft,
             fontSize: text.xs, fontWeight: weight.semi, fontFamily: 'inherit',
             cursor: tpBetrag > 0 ? 'pointer' : 'default', whiteSpace: 'nowrap',
           }
@@ -686,8 +686,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         disabled: !(Number(newBetrag) > 0),
         style: {
           width: '100%', padding: space.sm, borderRadius: radius.sm, border: 'none',
-          background: Number(newBetrag) > 0 ? palette.sand : palette.border,
-          color: Number(newBetrag) > 0 ? '#000' : palette.soft,
+          background: Number(newBetrag) > 0 ? palette.sageBtn : palette.border,
+          color: Number(newBetrag) > 0 ? palette.onSageBtn : palette.soft,
           fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit',
           cursor: Number(newBetrag) > 0 ? 'pointer' : 'default',
         }

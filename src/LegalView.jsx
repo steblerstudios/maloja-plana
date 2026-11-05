@@ -141,8 +141,8 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
           onClick: () => onNavigate('legal', undefined, tab.key),
           style: {
             padding: space.sm + 'px ' + space.md + 'px',
-            background: activeSection === tab.key ? palette.sand : 'transparent',
-            color: activeSection === tab.key ? '#000' : palette.text,
+            background: activeSection === tab.key ? palette.sageBtn : 'transparent',
+            color: activeSection === tab.key ? palette.onSageBtn : palette.text,
             border: 'none',
             borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
             cursor: 'pointer',
@@ -352,7 +352,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
               t, href: CONTRIBUTION_URL,
               style: {
                 display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
-                background: palette.sand, color: palette.onSand, borderRadius: radius.sm,
+                background: palette.sageBtn, color: palette.onSageBtn, borderRadius: radius.sm,
                 textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
               }
             }, t('legal.support.contributeCta'))

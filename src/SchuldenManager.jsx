@@ -231,8 +231,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     alignItems: 'center',
     gap: '4px',
     padding: space.sm + 'px ' + space.sm + 'px ' + space.sm + 'px ' + (space.sm + 4) + 'px',
-    background: palette.sand,
-    color: palette.onSand,
+    background: palette.sageBtn,
+    color: palette.onSageBtn,
     border: 'none',
     borderRadius: radius.sm,
     cursor: 'pointer',
@@ -518,7 +518,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           tier === 3 && React.createElement('div', { role: 'group', 'aria-label': t('schulden.planMethod'), style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', margin: space.xs + 'px 0' } },
             ['lawine', 'schneeball'].map(m => React.createElement('button', {
               key: m, type: 'button', onClick: () => setMethod(m), 'aria-pressed': method === m,
-              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
+              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sageDeep : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
             }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
           ),
           React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },

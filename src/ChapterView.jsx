@@ -2390,8 +2390,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         'aria-pressed': expandedSection === 'fields',
         style: {
           minHeight: '44px', padding: space.sm + 'px ' + space.md + 'px',
-          background: expandedSection === 'fields' ? palette.sand : 'transparent',
-          color: expandedSection === 'fields' ? '#000' : palette.text,
+          background: expandedSection === 'fields' ? palette.sageBtn : 'transparent',
+          color: expandedSection === 'fields' ? palette.onSageBtn : palette.text,
           border: 'none',
           borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
           cursor: 'pointer',
@@ -2404,8 +2404,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         'aria-pressed': expandedSection === 'documents',
         style: {
           minHeight: '44px', padding: space.sm + 'px ' + space.md + 'px',
-          background: expandedSection === 'documents' ? palette.sand : 'transparent',
-          color: expandedSection === 'documents' ? '#000' : palette.text,
+          background: expandedSection === 'documents' ? palette.sageBtn : 'transparent',
+          color: expandedSection === 'documents' ? palette.onSageBtn : palette.text,
           border: 'none',
           borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
           cursor: 'pointer',
