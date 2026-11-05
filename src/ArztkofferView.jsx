@@ -99,7 +99,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       }, React.createElement(FruchtSilhouette, { name: 'hagebutte', size: 40, title: t('arztkoffer.title') })),
       React.createElement(PageTitle, {
         palette,
-        style: { margin: '0 0 8px 0', letterSpacing: '-0.3px' },
+        style: { margin: '0 0 8px 0' },
       }, t('arztkoffer.title')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto' },

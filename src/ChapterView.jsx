@@ -2250,7 +2250,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ),
         // Titel wie Entwurf G (30 px Display, Stebler Studios 27.10.2026: «die Kapitel-Köpfe genauso angleichen»);
         // gleich wie der Kopf von «Was ansteht» (CalendarReminders), Wächter: kopfTitelGleich.test.js.
-        React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0, fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-0.015em' } }, chapter.title)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, chapter.title)
       ),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed, maxWidth: '560px' } }, introText)

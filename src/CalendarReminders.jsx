@@ -424,7 +424,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg, display: 'grid', placeItems: 'center', flexShrink: 0, background: palette.sage + '2E', boxShadow: 'inset 0 0 0 1px ' + palette.sage + '4D', color: palette.sageDeep || palette.sage } },
           React.createElement(Icon, { name: ansichtIkon('calendar'), size: 26 })),
-        React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0, fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-0.015em' } }, t('nav.wasAnsteht'))
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, t('nav.wasAnsteht'))
       ),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, t('calendar.untertitel'))
     ),
