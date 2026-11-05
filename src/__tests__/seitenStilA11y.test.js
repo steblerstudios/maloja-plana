@@ -117,11 +117,22 @@ describe('Scrollbare Tabellen sind per Tastatur erreichbar (WCAG 2.1.1)', () => 
     expect(huellen).toBe(tabellen);
   });
 
-  it.each(mitTabellen.map((s) => [s.name, s]))('%s: der Name der Region ist die caption', (_, s) => {
+  // Der Name gehört zum sichtbaren Titel: meist die ganze caption
+  // (tabellenErreichbar() in build-seiten.mjs). Seiten dürfen ihn von Hand
+  // kürzen oder umformulieren (/kantone-im-vergleich/), deshalb kein Wortlaut-
+  // Vergleich. Geprüft wird die Sache: nicht leer, nicht generisch, und
+  // mindestens ein tragendes Wort (ab 5 Buchstaben) steht auch in der caption.
+  const GENERISCH = /^(tabelle|table|tableau|tabella|daten|zahlen)$/i;
+  const woerter = (t) => new Set(t.toLowerCase().match(/[\p{L}]{5,}/gu) || []);
+  it.each(mitTabellen.map((s) => [s.name, s]))('%s: der Name der Region kommt aus der caption', (_, s) => {
     let geprueft = 0;
     for (const [, name, caption] of s.html.matchAll(/<div class="tabelle[^"]*"[^>]*aria-label="([^"]*)"[^>]*><table>\s*<caption>([\s\S]*?)<\/caption>/g)) {
-      const text = caption.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-      expect(name.replace(/&quot;/g, '"').replace(/&amp;/g, '&')).toBe(text.replace(/&amp;/g, '&'));
+      const text = caption.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().replace(/&amp;/g, '&');
+      const n = name.replace(/&quot;/g, '"').replace(/&amp;/g, '&').trim();
+      expect(n.length, `leerer Name zu «${text}»`).toBeGreaterThan(0);
+      expect(GENERISCH.test(n), `Name «${n}» ist generisch`).toBe(false);
+      const inCaption = woerter(text);
+      expect([...woerter(n)].some((w) => inCaption.has(w)), `Name «${n}» passt nicht zur caption «${text}»`).toBe(true);
       geprueft++;
     }
     // Sonst liefe die Schleife bei geänderter Attributreihenfolge leer und bliebe grün.
