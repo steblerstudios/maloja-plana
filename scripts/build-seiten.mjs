@@ -520,6 +520,9 @@ function quellenListe(quellen, nummer, stellen) {
 }
 
 function hintergrundBauen(seite) {
+  // Schalter für eine bewegte Fassung ohne Dateien dahinter: lieber abbrechen
+  // als einen toten Link ausliefern (scripts/seiten/politsystem.mjs).
+  if (seite.bewegtVerlinken) throw new Error(`${seite.pfad}: bewegtVerlinken ist gesetzt, aber es gibt keine bewegte Fassung im Repo`);
   const sprache = SPRACHEN.find((s) => s.code === 'de');
   const R = RAHMEN.de;
   // Eigene Zahlen und Bilder je Seite (z. B. scripts/seiten/politsystem.mjs);

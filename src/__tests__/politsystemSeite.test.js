@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  POLITSYSTEM, SITZE_AB_2027, SITZE_SEIT_2023, STAENDERAT, HALBE, REGELN, BUNDESRAT_PARTEIEN, zahlenPolitsystem,
+  POLITSYSTEM, GEMEINDEN, SITZE_AB_2027, SITZE_SEIT_2023, STAENDERAT, HALBE, REGELN, BUNDESRAT_PARTEIEN, zahlenPolitsystem,
 } from '../../scripts/seiten/politsystem.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 import { KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
@@ -47,6 +47,14 @@ describe('/politsystem/', () => {
     expect(heute <= seite.pruefenBis, `Prüfdatum ${seite.pruefenBis} überschritten`).toBe(true);
   });
 
+  it('die Gemeindezahl ist noch nicht über ihr eigenes Prüfdatum hinaus', () => {
+    // Fusionen gelten zum Jahreswechsel: Zahl im BFS-Verzeichnis neu zählen,
+    // dann GEMEINDEN in politsystem.mjs nachführen.
+    const heute = new Date().toISOString().slice(0, 10);
+    expect(heute <= GEMEINDEN.pruefenBis, `Gemeindezahl: Prüfdatum ${GEMEINDEN.pruefenBis} überschritten`).toBe(true);
+    expect(text).toContain(`Stand ${GEMEINDEN.stand}`);
+  });
+
   it('zeigt sichtbar, welchen Stand die Angaben haben, und sagt, dass sie vereinfacht', () => {
     expect(text).toContain('Stand der Zahlen:');
     expect(text).toContain('keine Rechtsberatung');
@@ -78,6 +86,7 @@ describe('/politsystem/', () => {
 
   it('zeigt die Kugelbahn nur als Standbild — keine bewegte Fassung, kein Link darauf', () => {
     expect(seite.bewegtEinbetten).toBe(false);
+    expect(seite.bewegtVerlinken).toBe(false);
     expect(html).not.toContain('/bewegt/');
     expect(fs.existsSync(path.resolve(WURZEL, 'public', 'politsystem', 'bewegt'))).toBe(false);
   });

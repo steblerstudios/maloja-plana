@@ -74,7 +74,7 @@ braucht rund 30 Sekunden), dann `document.querySelector('#<id> svg').outerHTML` 
 oben bereinigen. Die Zahlen, die Leserinnen und Leser sehen, stehen ohnehin im Text und in der
 Tabelle und kommen aus `scripts/seiten/politsystem.mjs`; die Bilder zeigen Verhältnisse.
 
-**Bewegte Fassung:** nicht übernommen (Gründe im Kopf von `scripts/seiten/politsystem.mjs`).
+**Bewegte Fassung:** nicht übernommen. Entscheid Stebler Studios 05.11.2026: «Erst Handy-Test», danach die Kugelbahn in eigene Skriptdateien zerlegen (Gründe im Kopf von `scripts/seiten/politsystem.mjs`).
 
 **Lizenz:** Gezeichnet mit dem Anatomy-Kit (MIT, Lizenztext `public/licenses/anatomy-LICENSE.txt`, in
 `docs/legal/third-party-licenses.md` wegen der bewegten Prämien-Maschine eingetragen). Die Standbilder
