@@ -111,6 +111,11 @@ describe('Öffentliche Seiten · gemeinsamer Stil', () => {
 // Deshalb eine ERLAUBNISLISTE: Jede Regel mit text-decoration:none (ausser
 // :hover/:focus) muss hier mit Grund stehen. Wer eine neue einführt, muss
 // begründen, warum der Link ohne Unterstreichung erkennbar bleibt.
+//
+// Offen, nicht Teil dieses Wächters (a11y-Prüfung 05.11.2026, Soll): Die
+// Beleg-Trefferfläche misst im Browser 24×20 px (line-height:0 in sup.beleg),
+// also unter 24px Höhe. Benachbarte Belege überlappen nicht (0 Fälle auf
+// /krankenkasse/), die Abstands-Ausnahme von 2.5.8 greift vermutlich.
 // ─────────────────────────────────────────────────────────────
 const OHNE_UNTERSTRICH_ERLAUBT = {
   '.marke': 'Wortmarke im Kopf, kein Link im Fliesstext',
