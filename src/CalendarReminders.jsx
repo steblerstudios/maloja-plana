@@ -760,8 +760,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         disabled: !newTitle.trim() || !newDate,
         style: {
           width: '100%', padding: '10px', borderRadius: radius.sm,
-          background: newTitle.trim() && newDate ? palette.sageBtn : palette.mid,
-          color: '#fff', border: 'none', cursor: newTitle.trim() && newDate ? 'pointer' : 'not-allowed',
+          background: newTitle.trim() && newDate ? palette.sand : palette.mid,
+          color: newTitle.trim() && newDate ? palette.onSand : '#fff', border: 'none', cursor: newTitle.trim() && newDate ? 'pointer' : 'not-allowed',
           fontWeight: weight.semi, fontSize: text.sm
         }
       }, '+ ' + t('calendar.addReminder')),

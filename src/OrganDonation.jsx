@@ -140,7 +140,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
         ORGAN_ENTSCHEIDE.map(wert => React.createElement('button', {
           key: wert, type: 'button', 'aria-pressed': status === wert,
           onClick: () => setStatus(wert),
-          style: { ...statusButtonStyle, textAlign: 'left', background: status === wert ? palette.sageBtn : palette.up, color: status === wert ? '#fff' : palette.text }
+          style: { ...statusButtonStyle, textAlign: 'left', background: status === wert ? palette.sand : palette.up, color: status === wert ? palette.onSand : palette.text }
         }, status === wert ? hinweisZeichen('check') : null, organEntscheidText(t, wert)))
       ),
 
