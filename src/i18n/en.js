@@ -3092,6 +3092,7 @@ export default {
   },
 
   premium: {
+    nettoGeschaetzt: 'The wage is entered as gross. The calculation uses an estimated net wage of about {netto} per month.',
     title: 'Premium subsidy (IPV)',
     lageTitle: 'Your situation',
     subtitle: 'Individual premium reduction — the canton covers part of your health insurance premium if your income is below a certain threshold.',

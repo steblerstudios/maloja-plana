@@ -4814,6 +4814,8 @@ export default {
   },
 
   premium: {
+    // TODO(rm): provisorisch — Gegenlese (IPV Netto geschätzt, 05.11.2026)
+    nettoGeschaetzt: 'La paja è registrada brutto. Il quint fa diever d’ina paja netta stimada da circa {netto} per mais.',
     title: 'Reducziun da premias (IPV)',
     // rm ungeprüft F5
     lageTitle: { sie: 'Vossa situaziun', du: 'Tia situaziun' },

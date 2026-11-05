@@ -3104,6 +3104,7 @@ export default {
   },
 
   premium: {
+    nettoGeschaetzt: 'Der Lohn ist brutto erfasst. Gerechnet wird mit einem geschätzten Nettolohn von rund {netto} pro Monat.',
     title: 'Prämienverbilligung (IPV)',
     lageTitle: { sie: 'Ihre Lage', du: 'Deine Lage' },
     subtitle: { sie: 'Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Ihrer Krankenkassenprämie, wenn Ihr Einkommen unter einer bestimmten Grenze liegt.', du: 'Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Deiner Krankenkassenprämie, wenn Dein Einkommen unter einer bestimmten Grenze liegt.' },

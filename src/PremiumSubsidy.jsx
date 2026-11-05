@@ -2,7 +2,7 @@ import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { hatAusweisFNS } from './data/ausweis.js';
-import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
+import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName, ipvFinanzenNetto } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
@@ -429,8 +429,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       value: Math.min(reglerMax, einkommenJetzt),
       'aria-valuetext': fmtCHF(einkommenJetzt) + ' ' + t('common.perMonth'),
       onChange: (e) => { setRegler(Number(e.target.value) || 0); setUebernommen(false); },
+      'aria-describedby': ipvResult.einkommenGeschaetzt ? 'ipv-netto-geschaetzt' : undefined,
       style: { width: '100%', minHeight: '44px', accentColor: palette.sand, cursor: 'pointer' },
-    })
+    }),
+    // Brutto erfasst: Der Regler zeigt den Bruttolohn, gerechnet wird mit dem Netto-Richtwert
+    // (ipvFinanzenNetto). Das muss dastehen (Fach- und Rechtsprüfung, Predeploy 05.11.2026).
+    ipvResult.einkommenGeschaetzt && React.createElement('p', { id: 'ipv-netto-geschaetzt', 'data-netto-geschaetzt': '', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      t('premium.nettoGeschaetzt', { netto: fmtCHF(Number(ipvFinanzenNetto(data).data.finanzen?.monthlyIncome) || 0) }))
   );
 
   // B-1/E22 + Regler: sichtbar sagen, womit gerechnet wird. Ins Profil geht nichts ohne den Klick.
