@@ -1453,7 +1453,8 @@ const AppInner = ({ demo }) => {
       React.createElement('button', {
         // Ohne das Klick-Ereignis weiterreichen (onLeave nimmt Orts-Objekte an, Fix 17.09.2026).
         onClick: demo ? () => demo.onLeave() : () => beispielVerlassen(),
-        style: { ...knopfStil(palette, 'neben'), flexShrink: 0 }
+        // a11y-Prüfung 26.10.2026: vorher 31 px — der Baustein hält 44 px, hier sichtbar für tippziele44.
+        style: { ...knopfStil(palette, 'neben'), flexShrink: 0, minHeight: '44px' }
       }, t('demo.leave'))
     ),
     sandboxActive && React.createElement('div', {
