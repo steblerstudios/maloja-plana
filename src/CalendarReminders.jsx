@@ -665,7 +665,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     upcoming.length + completed.length > 0 && React.createElement('p', { 'data-loesch-hinweis': 'true', style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal } }, t('calendar.loeschHinweis')),
     React.createElement('button', {
       type: 'button', 'aria-expanded': view === 'add',
-      style: { padding: '10px 16px', minHeight: '44px', marginTop: '12px', marginBottom: space.sm, background: view === 'add' ? palette.sageBtn : 'none', color: view === 'add' ? palette.onSageBtn : palette.text, border: '1px solid ' + (view === 'add' ? palette.sand : palette.border), borderRadius: radius.full, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: weight.semi },
+      style: { padding: '10px 16px', minHeight: '44px', marginTop: '12px', marginBottom: space.sm, background: view === 'add' ? palette.sand : 'none', color: view === 'add' ? palette.onSand : palette.text, border: '1px solid ' + (view === 'add' ? palette.sand : palette.border), borderRadius: radius.full, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: weight.semi },
       onClick: () => setView(view === 'add' ? 'upcoming' : 'add'),
     }, '+ ' + t('calendar.addReminder')),
 
@@ -719,8 +719,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
               style: {
                 padding: '6px 12px', borderRadius: radius.xs, cursor: 'pointer',
                 fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400',
-                background: newCoverage === opt ? palette.sageBtn : palette.surface,
-                color: newCoverage === opt ? palette.onSageBtn : palette.text,
+                background: newCoverage === opt ? palette.sand : palette.surface,
+                color: newCoverage === opt ? palette.onSand : palette.text,
                 border: '1px solid ' + (newCoverage === opt ? palette.sand : palette.border)
               }
             }, t('calendar.coverageThisYear.' + opt))
@@ -739,8 +739,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
               style: {
                 padding: '6px 12px', borderRadius: radius.xs, cursor: 'pointer',
                 fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400',
-                background: newRecurrence === freq ? palette.sageBtn : palette.surface,
-                color: newRecurrence === freq ? palette.onSageBtn : palette.text,
+                background: newRecurrence === freq ? palette.sand : palette.surface,
+                color: newRecurrence === freq ? palette.onSand : palette.text,
                 border: '1px solid ' + (newRecurrence === freq ? palette.sand : palette.border)
               }
             }, freq === 'once' ? t('calendar.oneTime') : t('calendar.' + freq))

@@ -9,10 +9,9 @@ import { InstallHinweis } from '../InstallHinweis.jsx';
 import { LIGHT_PALETTE } from '../config/constants.js';
 
 const t = (k) => k;
-// Hauptknopf = Fläche des PrimaryButton (seit Fassung 9 sageBtn, vorher Sand).
-const HAUPT = LIGHT_PALETTE.sageBtn.toLowerCase();
 const hauptknoepfe = (html) => (html.match(/<button[^>]*background:\s*#?[^;"]*;[^>]*>/g) || [])
-  .filter((b) => b.toLowerCase().replace(/background:\s*/g, 'background:').includes('background:' + HAUPT));
+  .filter((b) => b.includes('background:' + LIGHT_PALETTE.sand) || b.includes('background: ' + LIGHT_PALETTE.sand)
+    || b.toLowerCase().includes('background:' + LIGHT_PALETTE.sand.toLowerCase()));
 const rendern = (props) => renderToStaticMarkup(React.createElement(InstallHinweis, {
   palette: LIGHT_PALETTE, t, onNavigate: () => {}, onPromptWeg: () => {}, ...props,
 }));

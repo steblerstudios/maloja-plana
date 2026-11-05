@@ -190,8 +190,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     style: {
       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi,
       padding: '8px 14px', borderRadius: radius.sm, minHeight: '44px',
-      background: opts.primary ? palette.sageBtn : 'none',
-      color: opts.primary ? palette.onSageBtn : palette.sageDeep,
+      background: opts.primary ? palette.sand : 'none',
+      color: opts.primary ? palette.onSand : palette.sandDeep,
       border: opts.primary ? 'none' : '1px solid ' + palette.border,
     },
   }, label);
@@ -633,7 +633,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         type: 'button',
         onClick: handleApplyOnline,
         disabled: !anspruchMoeglich,
-        style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: palette.sageBtn, color: palette.onSageBtn, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+        style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
       },
         // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
         // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.

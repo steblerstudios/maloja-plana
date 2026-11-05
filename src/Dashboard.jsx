@@ -452,13 +452,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
-        // Gleiche Fläche wie PrimaryButton (sageBtn, onSageBtn, 6 px) — so sieht der Knopf aus wie
+        // Gleiche Fläche wie PrimaryButton (Sand, onSand, 6 px) — so sieht der Knopf aus wie
         // «So geht es» oben. Hier abgeschrieben statt importiert: der Kopf dieser Datei wird
         // am 25.09.2026 parallel umgebaut (Berg-Hero), ein Import dort hätte kollidiert.
         const ctaFlaeche = {
           display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', flexShrink: 0,
           padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
-          background: palette.sageBtn, color: palette.onSageBtn, borderRadius: radius.sm + 'px',
+          background: palette.sand, color: palette.onSand, borderRadius: radius.sm + 'px',
           fontSize: text.sm, fontWeight: weight.semi, whiteSpace: 'nowrap',
         };
         const nextField = naechsterSchritt(chapters, data);
@@ -580,7 +580,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           React.createElement(PrimaryButton, {
             palette, onClick: () => onNavigate('export'),
             style: { minHeight: '44px', alignSelf: 'flex-end' },
-            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSageBtn } }, Icons.sicherung()),
+            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
           }, t('dashboard.exportReminderAction'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')));
       })()
     ),

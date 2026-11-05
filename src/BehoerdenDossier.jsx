@@ -154,7 +154,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
         onClick: () => setVorschau('druck'),
         style: {
           flex: 1, padding: '12px',
-          background: palette.sageBtn, color: palette.onSageBtn, border: 'none',
+          background: palette.sand, color: palette.onSand, border: 'none',
           borderRadius: radius.sm, cursor: 'pointer',
           fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
           letterSpacing: '0.2px',
