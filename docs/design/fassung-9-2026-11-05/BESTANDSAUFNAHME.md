@@ -26,8 +26,13 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
   <Monat> <Jahr>». Aufgeklappt zeigt sie die nummerierten Belege in der Form aus F9-C. Die
   statischen Seiten folgen derselben Form. Die Einzelheiten (Darstellung auf dem Handy, Ansage
   für Screenreader, Druck) werden vor dem Bau als Skizze gezeigt.
-- **F9-A2 Hauptknopf: Grün bevorzugt, noch nicht bestätigt.** Stebler Studios mag das Grün. Die
-  Frage war unklar gestellt. Die Erklärung wurde nachgereicht, die Bestätigung steht aus.
+- **F9-A2 Hauptknopf: grün (Sage), der Code folgt dem Markenhandbuch.** Wortlaut: «Ja, folgen».
+  Die Farbrollen gelten bereits: Sage = handeln (Knöpfe, Links), Gold = hinweisen (Frist,
+  Hervorhebung, Fokus, Logo-Berg), Rose = warnen, Sky = informieren. Das steht in
+  `docs/brand/brand-guidelines.md` und `docs/design/farb-und-daten-system.md`. Abgewichen ist
+  nur `PrimaryButton` (Sand seit `a1d2ac1a`, 07.07.). Neu dazu kommt eine Regel: ein Hauptknopf
+  je Seite als volle Fläche, alle anderen als Nebenknopf mit Rand. Links sind immer
+  unterstrichen. Die Farbe muss im Dunkelmodus vor dem Bau am Bildschirm geprüft werden.
 
 ## Gesamturteil in fünf Sätzen
 
