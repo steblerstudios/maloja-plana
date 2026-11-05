@@ -3,6 +3,8 @@
 // Keine Ansicht setzt mehr textTransform uppercase. Ausnahmen mit Grund:
 // - BehoerdenInstrument: Monatskürzel im Kalenderblatt-Symbol («NOV»), Bildzeichen, kein Text-Label
 // - LebenslaufVorschau: Vorschau des gedruckten Lebenslaufs, folgt der Lebenslauf-Vorlage (cvGenerator)
+// Die statischen Seiten (scripts/build-seiten.mjs) folgen derselben Regel. Die fremden bewegten
+// Figuren (scripts/seiten/figuren/bewegt/fremd/) bleiben unverändert, sie sind übernommen.
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -31,5 +33,10 @@ describe('Kicker in Normalschrift', () => {
       if (/textTransform:\s*'uppercase'|text-transform:\s*uppercase/.test(src)) treffer.push(rel);
     }
     expect(treffer).toEqual([]);
+  });
+
+  it('die statischen Seiten setzen keine Grossbuchstaben-Kicker', () => {
+    const gen = fs.readFileSync(path.resolve(SRC, '..', 'scripts/build-seiten.mjs'), 'utf8');
+    expect(gen).not.toMatch(/text-transform:\s*uppercase/);
   });
 });

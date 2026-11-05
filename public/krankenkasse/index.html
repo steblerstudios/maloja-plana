@@ -154,14 +154,15 @@
     h2{ font-size:24px; font-weight:600; margin:56px 0 12px; line-height:1.25 }
     h2 .nr{ display:inline-block; min-width:1.6em; color:var(--heidel-text) }
     h3{ font-size:18px; font-weight:600; margin:28px 0 6px }
-    .kicker{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--heidel-text); margin:18px 0 0 }
+    /* Kicker in Normalschrift wie in der App (Fassung 9, F9-A4, Stebler Studios 05.11.2026). */
+    .kicker{ font-size:13px; font-weight:600; color:var(--heidel-text); margin:18px 0 0 }
     .stand{ font-size:14px; color:var(--leise); margin:0 0 4px }
     h2[tabindex]:focus{ outline:none }
     a:focus-visible, .knopf:focus-visible, summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
 
     /* Inhaltsverzeichnis: acht Fragen als ruhige, nummerierte Karte. */
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
-    nav.inhalt p{ margin:0 0 8px; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--leise) }
+    nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
     nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
