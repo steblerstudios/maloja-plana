@@ -13,7 +13,8 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-| **Fassung 8, 0.1.49-beta (#661 bis #668)** | `deployed` | live `a312b9a0` seit 03.11. 10:30, Bundle `index-DNBc9yCt.js` = Build, de-Chunk byte-gleich, keine Konsolenfehler; hinter der Code-Wand nicht geklickt, darum nicht `verified-live` | `_handoffs/2026-11-02-predeploy-ampel.md`, F8-P4 PDF, F8-O8 Beta-Code offen |
+| **Nachzug Fassung 8 und Hintergrundseite Krankenkasse (#670 bis #685, #679)** | `deployed` | live `4f37d580` seit 05.11. 11:48 (0.1.49-beta, Version nicht erhöht), Stage gleichen Stands 11:47; Bundle `index-C9PVXT2C.js` = Build, de-Chunk byte-gleich, /krankenkasse/ und 5 bewegte Seiten = Build, Skripte 200, Lizenzen 200, erfundener Name 404. Konsole nicht im Browser geprüft, hinter der Code-Wand nicht geklickt, darum nicht `verified-live` | `_handoffs/2026-11-02-predeploy-ampel.md`; #687 (Sollte) gemergt, noch nicht live |
+| **Fassung 8, 0.1.49-beta (#661 bis #668)** | `deployed` | live `a312b9a0` 03.11. 10:30 bis 05.11. 11:48, Bundle `index-DNBc9yCt.js` = Build, de-Chunk byte-gleich, keine Konsolenfehler; hinter der Code-Wand nicht geklickt, darum nicht `verified-live` | `_handoffs/2026-11-02-predeploy-ampel.md`, F8-P4 PDF, F8-O8 Beta-Code offen |
 | **Fassung 7 mit Sozialhilfe-Fixes (#637 bis #658)** | `deployed` | live `ca276eac` 02.11. 17:31, danach `0f3c72f4` 19:04, abgelöst durch 0.1.49, Bundle `index-CeFyAi_b.js` = Build, de-Chunk byte-gleich; hinter der Code-Wand nicht geklickt, darum nicht `verified-live` | Ampel `_handoffs/2026-11-02-predeploy-ampel.md` |
 **Stand:** 2026-10-27 02:20 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `d9aa8e06` (Merge-Nacht #563, #610, #612–#614, #616, #618–#623 + #624 «Was ansteht» nach Entwurf G) gebaut, nicht deployt.
 
