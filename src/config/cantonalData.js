@@ -505,7 +505,8 @@ export function calculateIPV(roheDaten) {
   const ohneDreizehnten = Number(data.finanzen?.monthlyIncome) > 0 && dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
   // Das Partnereinkommen zählt ×12 — nach dem 13. der zweiten Person fragt die App nicht.
   const partnerOhneDreizehnten = getHouseholdInfo(data).partnerIncome > 0;
-  return { ...r, annahmen: { ohneDreizehnten, partnerOhneDreizehnten } };
+  // ausBrutto: der Lohn stand brutto im Profil, gerechnet mit dem Netto-Richtwert — die Anzeige sagt es (wie beim 13.).
+  return { ...r, annahmen: { ohneDreizehnten, partnerOhneDreizehnten, ausBrutto: geschaetzt } };
 }
 
 function ipvRechnen(data) {

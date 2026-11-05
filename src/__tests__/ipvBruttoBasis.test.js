@@ -7,6 +7,7 @@ import { applyTaxToFinanzen } from '../taxImport.js';
 import { pegelState } from '../data/pegel.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { zahl } from '../utils/geld.js';
+import { getBehoerdenDossierPreview, generateBehoerdenJSON } from '../dossierGenerator.js';
 
 // ─────────────────────────────────────────────────────────────
 // Nachrechnung Beispielhaushalte 04.11.2026 (Stebler Studios, K1), Nebenbefund: die IPV las
@@ -160,5 +161,29 @@ describe('IPV-Rechner: Netto aus dem Schnellcheck bei einem Profil auf brutto', 
     const { gesehen } = renderMitProps({ data: profil({ monthlyIncome: 1500, incomeType: 'netto' }), schnellcheckZahlen: { monthlyIncome: 1400 }, onUpdateData: (...a) => writes.push(a) });
     gesehen.find((e) => e.typ === 'button' && textVon(e).includes('premium.schnellcheckUebernehmen')).p.onClick();
     expect(writes).toEqual([['finanzen', 'monthlyIncome', 1400]]);
+  });
+});
+
+// Die Schätzung steht sichtbar da: im IPV-Rechner (mit und ohne Anspruch) und im Behörden-Dossier (Druck und Datei).
+describe('Hinweis «aus brutto geschätzt»', () => {
+  const tt = (k) => k;
+  it('IPV-Rechner: Hinweis bei brutto, keiner bei netto', () => {
+    expect(render(profil({ monthlyIncome: 1500, incomeType: 'brutto' }))).toContain('ipv.annahmeAusBrutto');
+    expect(render(profil({ monthlyIncome: 1500, incomeType: 'netto' }))).not.toContain('ipv.annahmeAusBrutto');
+  });
+  it('IPV-Rechner ohne Anspruch: der Hinweis steht trotzdem', () => {
+    const p = profil({ monthlyIncome: 3900, incomeType: 'brutto' });
+    expect(calculateIPV(p).eligible).toBe(false);
+    expect(render(p)).toContain('ipv.annahmeAusBrutto');
+  });
+  it('Dossier: Annahmezeile im Druck und in der Datei', () => {
+    const p = profil({ monthlyIncome: 1500, incomeType: 'brutto' });
+    const ipv = calculateIPV(p);
+    const blatt = getBehoerdenDossierPreview(p, [], tt, { ipv }).sections.find((x) => x.key === 'ipv');
+    expect(JSON.stringify(blatt)).toContain('behoerdenDossier.jsonTexte.annahmeAusBrutto');
+    expect(generateBehoerdenJSON(p, { ipv }, tt).calculations.ipv.assumptions).toContainEqual(
+      { code: 'lohn_brutto_netto_geschaetzt', text: 'behoerdenDossier.jsonTexte.annahmeAusBrutto' });
+    const n = profil({ monthlyIncome: 1500, incomeType: 'netto' });
+    expect(generateBehoerdenJSON(n, { ipv: calculateIPV(n) }, tt).calculations.ipv.assumptions).toBeUndefined();
   });
 });

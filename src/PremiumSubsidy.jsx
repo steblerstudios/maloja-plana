@@ -507,7 +507,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     );
     return React.createElement('div', { style: { marginBottom: space.md } },
       urteil(t(ipvUnterMindestbetrag(ipvResult) ? 'premium.keineAuszahlung' : 'premium.notEligible'), palette.text),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams)),
+      // Ohne Anspruch zählt die Schätzung erst recht: mit dem genauen Nettolohn kann einer bestehen.
+      ipvResult.einkommenGeschaetzt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, hinweisZeichen(), t('ipv.annahmeAusBrutto'))
     );
   };
 
@@ -536,7 +538,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ipvResult.annahmen?.ohneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
       hinweisZeichen(), t('ipv.annahmeOhneDreizehnten')),
     ipvResult.annahmen?.partnerOhneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
-      hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten'))
+      hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten')),
+    // Brutto im Profil: gerechnet mit dem Netto-Richtwert (calculateIPV, ipvFinanzenNetto). Sichtbar, nicht still geschätzt.
+    ipvResult.annahmen?.ausBrutto && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      hinweisZeichen(), t('ipv.annahmeAusBrutto'))
   );
 
   // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton

@@ -43,6 +43,7 @@ import { GeldflussImKapitel } from './Geldfluss.jsx';
 const ipvAnnahmenTexte = (t, a) => [
   a?.ohneDreizehnten && t('ipv.annahmeOhneDreizehnten'),
   a?.partnerOhneDreizehnten && t('ipv.annahmePartnerOhneDreizehnten'),
+  a?.ausBrutto && t('ipv.annahmeAusBrutto'),
 ].filter(Boolean);
 
 export function formatCHF(value) {
@@ -201,6 +202,8 @@ export const druckAbschnitte = (t, w) => {
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.einkommenFehlt ? t(w.sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : w.sozialhilfe.anspruchOffen ? t(w.sozialhilfe.offenText) : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   if (w.sozialhilfe.ansatzTiefer) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ansatzTiefer')) + '</td></tr>' });
   if (w.sozialhilfe.vorBeitraegen) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.vorBeitraegen')) + '</td></tr>' });
+  // Brutto im Profil: mit dem Netto-Richtwert gerechnet (calculateSozialhilfe). Nicht bei fehlendem Einkommen — dort steht keine Rechnung.
+  if (w.sozialhilfe.einkommenGeschaetzt && !w.sozialhilfe.einkommenFehlt) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('sozialhilfe.einkommenAusBrutto')) + '</td></tr>' });
   if (w.sozialhilfe.ohneFreibetrag) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('pegel.ohneFreibetrag')) + '</td></tr>' });
   for (const k of w.sozialhilfe.hinweise || []) zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t(k)) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.elPruefen ? t('sozialhilfe.elPruefen') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
@@ -514,6 +517,8 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
       + (sozialhilfe.ansatzTiefer ? ' | ' + t('pegel.ansatzTiefer') : '')
       + (sozialhilfe.vorBeitraegen ? ' | ' + t('pegel.vorBeitraegen') : '')
       + (sozialhilfe.ohneFreibetrag ? ' | ' + t('pegel.ohneFreibetrag') : '')
+      // In der « | »-Zeile die kurze Fassung (dieselbe wie im Dossier); im Druck und auf dem Blatt der ganze Satz.
+      + (sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt ? ' | ' + t('behoerdenDossier.jsonTexte.annahmeAusBrutto') : '')
       + (sozialhilfe.hinweise?.length ? ' | ' + t('pegel.rechnungOffen') : ''),
     onClick: () => onNavigate('sozialhilfe'),
   });

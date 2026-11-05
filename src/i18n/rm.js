@@ -3469,6 +3469,7 @@ export default {
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
+    annahmeAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada: Maloja deducescha forfetarmain las deducziuns usitadas. Cun la paja netta dal quint da paja è il resultat pli exact. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada decisiva probablamain sur la limita (CHF {value} per onn)',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
@@ -4073,6 +4074,7 @@ export default {
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmePartnerOhneDreizehnten: "Entrada da la segunda persuna quintada senza 13avla paja", // TODO(rm): provisorisch
+      annahmeAusBrutto: "Paja inditgada brut, quintada cun ina paja netta stimada (deducziuns forfetaras)", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
       annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       annahmeKinderabzugKonkubinat: "Concubinat cun uffants: entira deducziun per uffants quintada tar la persuna (mesadad cun autoritad parentala cuminaivla, circular AFC nr. 30, cifra 14.8.1)", // TODO(rm): provisorisch
@@ -4907,6 +4909,7 @@ export default {
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     // TODO(rm)
     einkommenNichtErfasst: 'Entradas anc betg endatadas, import avert',
+    einkommenAusBrutto: 'La paja è inditgada brut en il profil. Quintà è cun ina paja netta stimada (deducziuns forfetaras). Cun la paja netta dal quint da paja è il resultat pli exact.', // TODO(rm): provisorisch
     renteNichtErfasst: "Renta anc betg endatada, import avert", // TODO(rm)
     assetLimitNote: 'Facultad sur ina franchisa vegn per regla quintada ({basis}: {freibetrag} per questa chasada). La facultad en quest quint surpassa quai per radund {ueberschuss}. Sch’ella n’è betg disponibla immediatamain, èn previs in termin adattà per la realisaziun e, sche necessari, in sustegn en il fratemp cun in anticip; quests imports ston per regla vegnir restituids. Orientaziun, nagina infurmaziun obligatorica.', // TODO(rm): provisorisch
     // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
@@ -7539,7 +7542,7 @@ export default {
     title: 'Verifica svelta da prestaziuns',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'In set d’infurmaziuns — a tge pudessas Vus avair dretg? Blers dretgs existan senza che la glieud al sappia. Vossas datas dal profil èn preemplenidas; Vus pudais las adattar liberamain qua per empruvar.', du: 'In set d’infurmaziuns — a tge pudessas ti avair dretg? Blers dretgs existan senza che la glieud al sappia. Tias datas dal profil èn preemplenidas; ti pos las adattar liberamain qua per empruvar.' },
-    income: 'Entrada mensila (brutto)',
+    income: 'Entrada mensila (net)',
     rent: 'Fittanza / mais',
     kk: 'Premia da la cassa da malsauns / mais',
     contextCanton: 'Chantun {canton} · chasa da {personen}.',
