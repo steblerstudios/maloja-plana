@@ -132,7 +132,7 @@ describe('Hintergrundseiten', () => {
     const text = sichtbar(html);
     // Die Zahlenansicht unter dem Kantonsbild trägt die Kantonsmittel, aufklappbar
     // darunter die Werte je Region; das Bild zeigt nur die Verhältnisse.
-    const zahlenansicht = html.match(/<div class="tabelle zahlen">[\s\S]*?<\/details>/)[0];
+    const zahlenansicht = html.match(/<div class="tabelle zahlen"[^>]*>[\s\S]*?<\/details>/)[0];
 
     it('die Kantonsatlas-Kopie passt 2027 zur Prämienregionen-Datei', () => {
       // Eine Quelle, zwei Dateien: bei einer Region gleich, sonst dazwischen.
