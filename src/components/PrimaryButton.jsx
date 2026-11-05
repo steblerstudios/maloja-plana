@@ -17,30 +17,18 @@ import { text, weight, radius, space } from '../config/tokens.js';
 // Rundung: alle Knöpfe und Auswahlen KNOPF_RADIUS (6 px). Kreise nur für reine Symbolknöpfe.
 export const KNOPF_RADIUS = radius.sm + 'px';
 
-const basis = {
-  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: space.xs + 'px',
-  padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
-  borderRadius: KNOPF_RADIUS, fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi,
-};
-
-export const knopfStil = (palette, art = 'haupt', { disabled = false, gefuellt = false } = {}) => {
-  const cursor = disabled ? 'not-allowed' : 'pointer';
-  if (art === 'leise') {
-    return { ...basis, padding: '6px 0', minHeight: '44px', background: 'none', border: 'none',
-      color: disabled ? palette.mid : palette.sandDeep, cursor };
+// Kompakt geschrieben: der Baustein liegt im Startbündel (Limit 65 kB).
+export const knopfStil = (p, art = 'haupt', { disabled: d = false, gefuellt: g = false } = {}) => {
+  const s = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: space.xs + 'px',
+    padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box', borderRadius: KNOPF_RADIUS,
+    fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, cursor: d ? 'not-allowed' : 'pointer' };
+  if (art === 'haupt' || (art === 'gefahr' && g)) {
+    return { ...s, border: 'none', background: d ? p.mid : g ? p.roseBtn : p.sand, color: d || g ? '#fff' : p.onSand };
   }
-  if (art === 'gefahr') {
-    return gefuellt
-      ? { ...basis, background: disabled ? palette.mid : palette.roseBtn, color: '#fff', border: 'none', cursor }
-      : { ...basis, background: 'transparent', color: disabled ? palette.mid : palette.roseDeep,
-          border: '1px solid ' + (disabled ? palette.border : palette.roseDeep), cursor };
-  }
-  if (art === 'neben') {
-    return { ...basis, background: 'transparent', color: disabled ? palette.mid : palette.sandDeep,
-      border: '1px solid ' + (disabled ? palette.border : palette.sandDeep), cursor };
-  }
-  return { ...basis, background: disabled ? palette.mid : palette.sand,
-    color: disabled ? '#fff' : palette.onSand, border: 'none', cursor, opacity: disabled ? 0.6 : 1 };
+  const c = d ? p.mid : art === 'gefahr' ? p.roseDeep : p.sandDeep;
+  return art === 'leise'
+    ? { ...s, padding: '6px 0', background: 'none', border: 'none', color: c }
+    : { ...s, background: 'transparent', color: c, border: '1px solid ' + (d ? p.border : c) };
 };
 
 // Link: als <button> oder <a>. Erbt die Schriftgrösse der Umgebung.
