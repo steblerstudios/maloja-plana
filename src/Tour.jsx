@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useCallback, useRef } from 'react';
 import { text, weight, radius, leading, space, fontFamily, ease, duration } from './config/tokens.js';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil } from './components/PrimaryButton.jsx';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
 
 // ─── Tour ──────────────────────────────────────────────────
@@ -90,11 +90,8 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
     cardPos = { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10002 };
   }
 
-  const btnGhost = {
-    padding: '11px 14px', background: 'transparent', color: palette.mid,
-    border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-    fontSize: text.sm, fontFamily,
-  };
+  // «Überspringen» und «Zurück» sind Nebenknöpfe (Fassung 9).
+  const btnGhost = { ...knopfStil(palette, 'neben'), padding: '11px 14px' };
 
   const dot = (on) => React.createElement('span', {
     style: { width: '7px', height: '7px', borderRadius: '50%', display: 'inline-block',

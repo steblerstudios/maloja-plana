@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { text, weight, ease, duration, radius } from './config/tokens.js';
 import { hinweisZeichen } from './IconKern.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, fremdGeaendert }) => {
   const [visible, setVisible] = useState(false);
@@ -47,7 +48,8 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, frem
       // Ruhig, kein Rot: nichts ist kaputt, es fehlt nur der eine Handgriff.
       React.createElement('button', {
         type: 'button', onClick: () => location.reload(),
-        style: { background: 'none', border: 0, padding: 0, font: 'inherit', color: palette.text, textDecoration: 'underline', cursor: 'pointer' },
+        // Eine Handlung, kein Weg: Nebenknopf (Fassung 9), in der Statuszeile knapp gepolstert.
+        style: { ...knopfStil(palette, 'neben'), padding: '4px 10px', minHeight: '32px' },
       }, t('error.reload'))
     ) : React.createElement('span', null,
       saveError ? t('common.saveError') : (isSaving ? t('common.saving') : t('common.saved'))
