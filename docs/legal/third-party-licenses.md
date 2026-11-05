@@ -25,6 +25,8 @@ seit dem 3D-Lebensbaum eine echte Laufzeit-Abhängigkeit und landet im Bundle.*
 |---|---|---|---|
 | qrcodejs | src/vendor/qrcodejs.js | MIT | QR-Code-Generierung (Organspende, KK-Scanner) |
 | jsQR | public/vendor/jsQR.js | Apache-2.0 | QR-Code-Scanning |
+| hairline | scripts/seiten/figuren/bewegt/fremd/hairline-kernel.js | MIT | Strichfiguren der bewegten Fassungen unter /krankenkasse/bewegt/ (Kernel von @lucasmarkes/hairline, unverändert) |
+| anatomy | scripts/seiten/figuren/bewegt/fremd/anatomy-praemie.js | MIT | Isometrische Prämien-Maschine unter /krankenkasse/bewegt/praemie/ (Anatomy-Kit, eingebettet mit der Figur) |
 
 ## Ausgelieferte Lizenztexte
 
@@ -34,7 +36,7 @@ genannt wird. Seit 23.09.2026 liegen darum **alle acht** Texte unter
 `public/licenses/` und im Build unter `/licenses/`:
 
 `react` · `react-dom` · `three` · `scheduler` · `loose-envify` · `js-tokens`
-(alle MIT) · `QRCode.js-LICENSE.txt` (MIT) · `jsQR-LICENSE.txt` (Apache-2.0)
+(alle MIT) · `QRCode.js-LICENSE.txt` (MIT) · `jsQR-LICENSE.txt` (Apache-2.0) · seit 04.11.2026 `hairline-LICENSE.txt` und `anatomy-LICENSE.txt` (beide MIT, für die bewegten Figuren der Seite /krankenkasse/)
 
 *Bis dahin waren es nur die zwei vendorierten Dateien. Die sechs npm-Pakete sind ins
 Bundle kompiliert, ihre Lizenztexte fehlten in der Auslieferung — aufgefallen bei der
