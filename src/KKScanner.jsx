@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import PrimaryButton, { knopfStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
@@ -174,7 +174,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
 
   // Ein Hauptknopf (PrimaryButton: Speichern, Übernehmen), alles andere ruhig im Umriss
   // (Seitenrundgang 27.09.2026 — vorher Sand, Salbei und Grau gefüllt nebeneinander).
-  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
+  const zweitKnopf = knopfStil(palette, 'neben');
 
   // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
   const [ablageProps, ablageAktiv] = useDateiAblage(handleFileUpload);
@@ -188,11 +188,11 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {
           onClick: () => setScanMode('upload'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { ...auswahlStil(palette, scanMode === 'upload'), flex: 1, padding: '10px', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.photoScan')),
         React.createElement('button', {
           onClick: () => setScanMode('manual'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { ...auswahlStil(palette, scanMode === 'manual'), flex: 1, padding: '10px', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.manualEntry'))
       ),
 

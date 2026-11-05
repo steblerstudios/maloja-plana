@@ -3,7 +3,7 @@ import { PanelTitle } from './components/Heading.jsx';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil } from './components/PrimaryButton.jsx';
 import { betrag } from './utils/geld.js';
 
 // Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung. Seit F7-L8 (31.10.2026) ein
@@ -106,7 +106,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },
                   preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
-                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { flex: 1, minHeight: '44px', padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
+                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { ...knopfStil(palette, 'neben'), flex: 1 } }, t('common.cancel'))
                 )
               )
         ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },

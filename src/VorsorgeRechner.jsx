@@ -16,6 +16,7 @@ import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
+import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -303,8 +304,6 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
-    // Schalter-Stil (IK «vorbelegen»). Die Reiter selbst kommen seit F7-A2 aus RechnerForm `Tabs`.
-    tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sageDeep : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) },
     intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
@@ -313,7 +312,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     intlSit: { paddingTop: space.sm + 'px', marginTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '66' },
     intlSitTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text },
     intlSitText: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '2px 0 4px' },
-    intlLink: { fontSize: text.xs, color: palette.skyDeep, textDecoration: 'none' },
+    intlLink: { ...linkStil(palette), fontSize: text.xs },
     intlContact: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontWeight: weight.medium },
   };
 
@@ -403,7 +402,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         description: t('vr.ikEmpty'),
         style: { marginTop: space.sm + 'px' },
         action: React.createElement(React.Fragment, null,
-          React.createElement('button', { style: s.tab(false), onClick: prefillIK, disabled: !birthYear }, t('vr.ikPrefill')),
+          React.createElement('button', { style: knopfStil(palette, 'haupt', { disabled: !birthYear }), onClick: prefillIK, disabled: !birthYear }, t('vr.ikPrefill')),
           !birthYear && React.createElement('div', { style: { ...s.sublabel, color: palette.goldDeep, marginTop: space.xs + 'px' } }, t('vr.geburtsdatumFehlt'))
         ),
       }),
@@ -465,7 +464,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ),
         React.createElement('button', {
           onClick: resetIK,
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', display: 'block', fontSize: text.xs, color: palette.mid, textDecoration: 'underline', fontFamily: 'inherit' }
+          style: { ...knopfStil(palette, 'gefahr'), marginTop: space.sm + 'px' }
         }, t('vr.ikReset')),
         React.createElement('div', { style: { ...s.sublabel, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.ikDisclaimer'))
       )
@@ -932,11 +931,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
           React.createElement('button', {
             onClick: () => setZukunftIkOpen(o => !o),
-            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', fontFamily: 'inherit' }
+            style: knopfStil(palette, 'leise')
           }, zukunftIkOpen ? t('vr.zukunftIkHide') : t('vr.zukunftIkEdit')),
           React.createElement('button', {
             onClick: () => setActiveTab('ahv'),
-            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.mid, textDecoration: 'underline', fontFamily: 'inherit' }
+            style: { ...linkStil(palette), fontSize: text.sm }
           }, t('vr.zukunftIkJump'))
         ),
         zukunftIkOpen && React.createElement('div', { style: { marginTop: space.sm + 'px' } }, renderIKAuszug())
@@ -952,7 +951,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         )),
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('pflege'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
+          style: { ...linkStil(palette), marginTop: space.xs + 'px', fontSize: text.sm, fontWeight: weight.medium },
         }, t('gepaeck.w.pflege'))
       ),
 
@@ -969,7 +968,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('situationen'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
+          style: { ...linkStil(palette), marginTop: space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium },
         }, t('vr.altersHilfenCheck'))
       ),
 
@@ -1083,7 +1082,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             React.createElement(ExternerLink, {
               t,
               href: link.url,
-              style: { fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none' }
+              style: { ...linkStil(palette), fontSize: text.sm }
             }, t('vr.fzLink' + link.key))
           )
         )
@@ -1110,7 +1109,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     weiteresJeReiter[activeTab] || null,
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+      style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.medium, marginTop: space.md + 'px' }
     }, t('nav.finanzUebersicht'))
   );
 };

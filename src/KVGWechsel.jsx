@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addTodo } from './utils/merkliste.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles, useAblaufStand, ablaufTextFarbe } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles, useAblaufStand } from './AblaufSchale.jsx';
 import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { ablaufStandKey } from './utils/ablaufStand.js';
 import { zusatzSchritte, zusatzFussNotizen } from './ZusatzWechsel.jsx';
+import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"), jetzt auf der wiederverwendbaren
 // Ablauf-Schale. Verkettet die vorhandenen Bausteine zu einem ruhigen Weg: Vergleich →
@@ -63,7 +64,6 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
   const weg = gewaehlt || 'grund';
   // Eine Wahl führt an den Anfang des gewählten Wegs (Schritt 1 gehört beiden).
   const waehle = (w) => { setGewaehlt(w); wegSichern(w, vorlaeufig); if (stand.schritt !== 0 || stand.fertig) setStand({ schritt: 0, fertig: false }); };
-  const textFarbe = ablaufTextFarbe(palette, 'kvgwechsel') || palette.sageDeep || palette.mid;
   const [chosenPath, setChosenPath] = useState(null); // null | '3a' | '3b'
   const [wunschKasse, setWunschKasse] = useState(data?.versicherungen?.targetInsurer || ''); // Ziel-Kasse, vorbelegt aus dem Vergleich
 
@@ -119,7 +119,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
       style: {
         scrollMarginTop: 'var(--mp-sprungabstand)',
         textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', padding: '12px', minHeight: '48px', fontSize: text.sm, color: palette.text,
-        background: an ? textFarbe + '24' : palette.surface, borderRadius: radius.lg + 'px', border: '1px solid ' + (an ? textFarbe : palette.border),
+        background: an ? palette.sand + '30' : palette.surface, borderRadius: KNOPF_RADIUS, border: '1px solid ' + (an ? palette.sand : palette.border),
       },
     }, erledigtZeichen(an, label));
   };

@@ -10,6 +10,7 @@ import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
@@ -286,13 +287,6 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
-  const btnStyle = (bg, fg) => ({
-    // inline-flex + gap: Präfix-Icons (Download, Schloss) sitzen mittig neben dem Text.
-    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-    padding: '10px', background: bg, color: fg || '#fff', border: 'none',
-    borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm,
-    width: '100%'
-  });
 
   // K53: gesperrte Knöpfe. Vorher Schwarz auf mid (hell 3.38:1, von WCAG 1.4.3 zwar
   // ausgenommen, aber schlecht lesbar). Jetzt die ruhige Fläche up mit Text mid
@@ -336,15 +330,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
+              style: { ...knopfStil(palette, 'neben'), padding: '10px', ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
+              style: { ...knopfStil(palette, 'neben'), padding: '10px', ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'CSV'),
             React.createElement('button', {
               onClick: () => setVorschau('manifest'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
+              style: { ...knopfStil(palette, 'neben'), padding: '10px', ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'Manifest')
           ),
           vorschauPanel('json', 'csv', 'manifest')
@@ -384,7 +378,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement('button', {
           onClick: () => { setBackupStatus(null); if (passphraseOk()) setVorschau('sicherungVerschluesselt'); },
           disabled: !passphraseLangGenug(passphrase) || passphrase !== passphraseConfirm,
-          style: passphraseLangGenug(passphrase) && passphrase === passphraseConfirm ? btnStyle(palette.gold, '#000') : { ...btnStyle(palette.gold, '#000'), ...gesperrtStil }
+          style: { ...knopfStil(palette, 'haupt'), width: '100%', ...(passphraseLangGenug(passphrase) && passphrase === passphraseConfirm ? null : gesperrtStil) }
         }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.exportEncrypted')),
         vorschauPanel('sicherungVerschluesselt'),
 
@@ -395,7 +389,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, lineHeight: '1.5' } }, t('backupVoreinstellung.hinweisUnverschluesselt')),
         React.createElement('button', {
           onClick: () => { setBackupStatus(null); setVorschau('sicherung'); },
-          style: { ...btnStyle(palette.up, palette.text), border: '1px solid ' + palette.border }
+          style: { ...knopfStil(palette, 'neben'), width: '100%' }
         }, React.createElement(Icon, { name: 'sicherung', size: 14 }), t('backup.exportPlain')),
         vorschauPanel('sicherung')
       )
@@ -424,11 +418,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'flex', gap: space.sm } },
             React.createElement('button', {
               onClick: handleDecryptAndImport, disabled: !importPassphrase,
-              style: { ...btnStyle(palette.gold, '#000'), ...(importPassphrase ? null : gesperrtStil), flex: 1 }
+              style: { ...knopfStil(palette, 'haupt'), ...(importPassphrase ? null : gesperrtStil), flex: 1 }
             }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.decrypting')),
             React.createElement('button', {
               onClick: cancelImport,
-              style: { ...btnStyle(palette.up, palette.text), flex: 1, border: '1px solid ' + palette.border }
+              style: { ...knopfStil(palette, 'neben'), flex: 1 }
             }, t('common.cancel'))
           )
         ),
@@ -442,11 +436,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'flex', gap: space.sm } },
             React.createElement('button', {
               ref: bestaetigenKnopf, onClick: wiederherstellen,
-              style: { ...btnStyle(palette.sand, palette.onSand), flex: 1 },
+              style: { ...knopfStil(palette, 'gefahr', { gefuellt: true }), flex: 1 },
             }, t('backup.restoreJa')),
             React.createElement('button', {
               onClick: () => setWartendeSicherung(null),
-              style: { ...btnStyle(palette.up, palette.text), flex: 1, border: '1px solid ' + palette.border },
+              style: { ...knopfStil(palette, 'neben'), flex: 1 },
             }, t('common.cancel'))
           )
         ),
