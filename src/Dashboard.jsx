@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import { SecondaryButton, knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { getCantonName } from './config/kantonPLZ.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
-import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
+import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT, lazyMitTexten } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
@@ -185,10 +185,8 @@ const BetaFeedback = ({ palette, t }) => {
     setKopie(ok ? 'ok' : 'fehler');
   };
 
-  const linkKnopf = {
-    background: 'none', border: 'none', padding: space.xs + 'px 0', minHeight: '44px', cursor: 'pointer',
-    color: palette.mid, fontSize: text.sm, fontFamily: 'inherit', textDecoration: 'underline',
-  };
+  // «Text kopieren» ist eine Handlung (Nebenknopf), «erneut öffnen» ein Link (Fassung 9).
+  const kopierKnopf = knopfStil(palette, 'neben');
   const kopieHinweis = kopie && React.createElement('div', {
     role: 'status', style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' },
   }, t(kopie === 'ok' ? 'beta.feedback.copied' : 'beta.feedback.copyFailed'));
@@ -210,9 +208,9 @@ const BetaFeedback = ({ palette, t }) => {
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, t('beta.feedback.thanksDetail')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.md + 'px' } },
         t('beta.feedback.noMailApp') + ' ',
-        React.createElement('button', { type: 'button', onClick: kopieren, style: linkKnopf }, t('beta.feedback.copy')),
+        React.createElement('button', { type: 'button', onClick: kopieren, style: kopierKnopf }, t('beta.feedback.copy')),
         ' · ',
-        React.createElement('a', { href, style: { ...linkKnopf, display: 'inline-block' } }, t('beta.feedback.reopen'))
+        React.createElement('a', { href, style: linkStil(palette) }, t('beta.feedback.reopen'))
       ),
       kopieHinweis
     );
@@ -222,21 +220,14 @@ const BetaFeedback = ({ palette, t }) => {
     return React.createElement('div', { style: { textAlign: 'center', margin: space.xl + 'px 0' } },
       React.createElement('button', {
         onClick: () => setExpanded(true),
-        style: {
-          background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
-          padding: space.sm + 'px ' + space.lg + 'px', cursor: 'pointer',
-          color: palette.mid, fontSize: text.sm, fontFamily: 'inherit',
-        }
+        style: knopfStil(palette, 'neben')
       }, t('beta.feedback.title'))
     );
   }
 
   const radioStyle = (selected) => ({
-    padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm, cursor: 'pointer',
-    border: '1px solid ' + (selected ? (palette.sage || palette.accent) : palette.border),
-    background: selected ? (palette.sageMist || palette.up) : 'transparent',
-    color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
-    fontWeight: selected ? weight.medium : weight.normal, transition: `background ${duration.fast}ms ${ease}, border-color ${duration.fast}ms ${ease}`,
+    ...auswahlStil(palette, selected), padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm,
+    fontWeight: selected ? weight.medium : weight.normal,
   });
 
   // Erst den Merker setzen, dann das Mailprogramm öffnen. Die Antworten werden nicht
@@ -307,15 +298,9 @@ const BetaFeedback = ({ palette, t }) => {
         type: 'button',
         onClick: handleSubmit,
         disabled: leer,
-        style: {
-          padding: space.sm + 'px ' + space.lg + 'px', minHeight: '44px', borderRadius: radius.sm,
-          border: 'none', cursor: leer ? 'default' : 'pointer',
-          background: leer ? palette.border : (palette.sage || palette.accent),
-          color: leer ? palette.mid : '#fff',
-          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        }
+        style: knopfStil(palette, 'haupt', { disabled: leer })
       }, t('beta.feedback.submit')),
-      !leer && React.createElement('button', { type: 'button', onClick: kopieren, style: linkKnopf }, t('beta.feedback.copy'))
+      !leer && React.createElement('button', { type: 'button', onClick: kopieren, style: kopierKnopf }, t('beta.feedback.copy'))
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' } }, t('beta.feedback.submitHint')),
     kopieHinweis
@@ -452,15 +437,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
-        // Gleiche Fläche wie PrimaryButton (Sand, onSand, 6 px) — so sieht der Knopf aus wie
-        // «So geht es» oben. Hier abgeschrieben statt importiert: der Kopf dieser Datei wird
-        // am 25.09.2026 parallel umgebaut (Berg-Hero), ein Import dort hätte kollidiert.
-        const ctaFlaeche = {
-          display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', flexShrink: 0,
-          padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
-          background: palette.sand, color: palette.onSand, borderRadius: radius.sm + 'px',
-          fontSize: text.sm, fontWeight: weight.semi, whiteSpace: 'nowrap',
-        };
+        // Der eine Hauptknopf der Übersicht (Fassung 9, S5): aus dem Baustein, nicht in der Bereichsfarbe.
+        const ctaFlaeche = { ...knopfStil(palette), flexShrink: 0, whiteSpace: 'nowrap' };
         const nextField = naechsterSchritt(chapters, data);
         if (nextField) {
           const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
@@ -493,7 +471,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             // Schritt trägt einen gefüllten Knopf, wie «So geht es» oben. Nur Darstellung —
             // die ganze Zeile bleibt EIN Knopf (kein Knopf im Knopf).
             // Seit 25.09. abends in der Farbe des Bereichs (wie der Punkt), nicht mehr Sand.
-            React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
+            React.createElement('span', { 'aria-hidden': 'true', style: ctaFlaeche }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
         // F7-D3 (Stebler Studios 01.11.2026): statt fester Tipps schlägt dieser eine Wegweiser auch Dokumente und Budget vor,
@@ -512,7 +490,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           (schritt || weiterIdx >= 0) && React.createElement('button', {
             type: 'button',
             onClick: () => (schritt ? onNavigate(schritt.view) : onSelectChapter(weiterIdx)),
-            style: { ...ctaFlaeche, border: 'none', cursor: 'pointer', fontFamily: 'inherit' },
+            style: ctaFlaeche,
           }, schritt ? t(schritt.text) : t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
         );
       })(),
@@ -526,7 +504,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const kvg = festeFristenModul?.kvgFristImFenster(data, heute);
         const zeile = (key, inhalt, view) => React.createElement('button', {
           key, type: 'button', onClick: () => onNavigate(view),
-          style: { display: 'block', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, padding: space.xs + 'px 0' },
+          style: { ...linkStil(palette), display: 'block', width: '100%', minHeight: '44px', textAlign: 'left', fontSize: text.sm, padding: space.xs + 'px 0' },
         }, inhalt, React.createElement('span', { 'aria-hidden': 'true' }, ' ›'));
         return (offen || kvg) && React.createElement('div', { 'data-teil': 'dringend', style: { marginTop: space.sm + 'px' } },
           offen && zeile('rechnung', t(offen.anzahl === 1 ? 'dashboard.rechnungFristVorbei' : 'dashboard.rechnungenFristVorbei', { anzahl: offen.anzahl, betrag: betrag(offen.summe) }), 'schulden'),
@@ -577,10 +555,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', marginTop: space.sm + 'px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' } },
             t('dashboard.exportReminder')),
-          React.createElement(PrimaryButton, {
+          React.createElement(SecondaryButton, {
             palette, onClick: () => onNavigate('export'),
-            style: { minHeight: '44px', alignSelf: 'flex-end' },
-            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
+            style: { alignSelf: 'flex-end' },
+            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0 } }, Icons.sicherung()),
           }, t('dashboard.exportReminderAction'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')));
       })()
     ),
@@ -653,11 +631,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       // sind ein eigener, offener Entscheid) — der Weg zu ALLEN Werkzeugen führt ins Gepäck.
       React.createElement('button', {
         type: 'button', onClick: () => onNavigate('gepaeck'),
-        style: {
-          display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 2px', margin: '0 0 ' + space.sm + 'px',
-          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
-        },
+        style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm },
       }, t('gepaeck.menuAlle'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')),
       (() => {
         const renderTool = (tool) => {
@@ -829,8 +803,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             style: {
               display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
               padding: item.primary ? '18px 20px' : '12px 14px',
-              background: item.primary ? palette.sand + '08' : 'transparent',
-              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
+              background: 'transparent',
+              border: '1px solid ' + palette.border + (item.primary ? '' : '44'),
               borderRadius: radius.md,
               cursor: 'pointer',
               fontFamily: 'inherit',
@@ -838,15 +812,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               color: palette.text,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = item.primary ? palette.sand + '66' : palette.border + '99'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
             // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
             // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Stebler Studios).
             React.createElement('div', {
               style: {
                 width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
-                background: item.primary ? palette.sand + '18' : palette.up,
+                background: palette.up,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0, color: item.primary ? palette.sand : palette.mid,
               }
@@ -872,11 +846,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           // Leistungs-Kompass auf dieselbe Seite).
           React.createElement('button', {
             onClick: () => onNavigate('situationen'),
-            style: {
-              // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
-              display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', marginTop: space.sm,
-              fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-            },
+            // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+            style: { ...linkStil(palette), display: 'block', padding: '8px 0', marginTop: space.sm, fontSize: text.sm },
           }, t('lebenszustaende.dashboardLink')),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
@@ -900,11 +871,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('button', {
               key: item.label,
               onClick: item.action,
-              style: {
-                background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
-                fontSize: text.sm, color: palette.sageDeep || palette.sage, textAlign: 'left', fontFamily: 'inherit',
-                display: 'flex', alignItems: 'center', gap: space.xs + 'px',
-              },
+              style: { ...linkStil(palette), padding: '2px 0', fontSize: text.sm, textAlign: 'left', display: 'flex', alignItems: 'center', gap: space.xs + 'px' },
               onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
               onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
             },

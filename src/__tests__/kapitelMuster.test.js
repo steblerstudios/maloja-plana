@@ -128,7 +128,9 @@ describe('M6 · «Als Nächstes» ruhig', () => {
     const html = render('wohnen', DEMO_DATA.wohnen, { nextChapter: kapitel('finanzen'), onNext: () => {} });
     const ende = html.slice(html.indexOf('data-teil="als-naechstes"'));
     expect(ende).toMatch(/^[^>]*text-align:center/);
-    expect(ende).toMatch(/<button[^>]*border:1px solid[^>]*border-radius:9999px[^>]*background:transparent/);
+    // Fassung 9 (05.11.2026, M9): Nebenknopf aus dem Baustein — leer, Rand, KNOPF_RADIUS statt Pille.
+    expect(ende).toMatch(/<button[^>]*border-radius:6px[^>]*background:transparent[^>]*border:1px solid/);
+    expect(ende).not.toMatch(/<button[^>]*border-radius:9999px/);
     expect(ende).not.toMatch(/text-transform:uppercase/);
   });
   it('Notfall: «Alle Kapitel durchgegangen» mit «Ihre Daten bleiben auf diesem Gerät.»', () => {

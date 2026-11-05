@@ -6,6 +6,7 @@ import { useFocusTrap } from './hooks/useFocusTrap.js';
 import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
 import { getBereichForChapter } from './data/lebensbereiche.js';
+import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // ─── Menü und Einstellungs-Schublade ──────────────────────
 // mode 'nav': das Menü, seit Fassung 5 (23.10.2026) bildschirmfüllend mit Karten.
@@ -76,9 +77,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         )),
         onStartTour ? React.createElement('button', {
           type: 'button', onClick: () => { onClose(); onStartTour(); },
-          style: { display: 'flex', alignItems: 'center', gap: space.sm, width: '100%', textAlign: 'left', padding: '14px 20px', background: 'transparent', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: 'inherit' },
+          // Startet den Rundgang: Nebenknopf (Fassung 9).
+          style: { ...knopfStil(palette, 'neben'), gap: space.sm, margin: '12px 20px', alignSelf: 'flex-start' },
         },
-          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIconEarly('info', '16px')),
+          React.createElement('span', { 'aria-hidden': 'true', style: { flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIconEarly('info', '16px')),
           t('tour.reopen')
         ) : null,
         // Konto & Daten — ehrlich: lokal, kein Login; „Konto" = Datenhoheit (Backup/Export).
@@ -87,9 +89,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } }, t('settingsDrawer.accountNote')),
           onNavigate ? React.createElement('button', {
             onClick: () => { onClose(); onNavigate('export'); },
-            style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', padding: '8px 12px', fontSize: text.sm, color: palette.text, fontFamily: 'inherit' },
+            // Führt nur zur Sicherung: Link (Fassung 9, M2).
+            style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', gap: space.sm, minHeight: '44px', fontSize: text.sm },
           },
-            React.createElement('span', { style: { color: palette.sage, display: 'inline-flex' } }, renderIconEarly('download', '15px')),
+            React.createElement('span', { style: { display: 'inline-flex' } }, renderIconEarly('download', '15px')),
             t('settingsDrawer.backup')
           ) : null
         ),
@@ -225,7 +228,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
     );
 
   // Kleiner Knopf / Link der unteren Reihe — Tippfläche 44 px, Farbe ausdrücklich gesetzt.
-  const kleinStil = { display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 4px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid, textDecoration: 'underline', textUnderlineOffset: '3px' };
+  const kleinStil = { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 4px', fontSize: text.sm };
 
   const suchErgebnisse = (q) => {
     const results = [];
@@ -297,9 +300,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, t('nav.completion', { value: completion })),
         !laeuftAlsApp() ? React.createElement('button', {
           type: 'button', onClick: () => { onClose(); onNavigate('installApp'); },
-          style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, minHeight: '44px', padding: '8px 14px', borderRadius: radius.full, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs },
+          // Führt nur zur Anleitung: Link (Fassung 9, M2).
+          style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', gap: space.sm, minHeight: '44px', fontSize: text.xs },
         },
-          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, width: '16px', height: '16px', display: 'inline-flex' } }, renderIcon('handy', '16px')),
+          React.createElement('span', { 'aria-hidden': 'true', style: { width: '16px', height: '16px', display: 'inline-flex' } }, renderIcon('handy', '16px')),
           t('install.navSub')
         ) : null
       ),
@@ -352,7 +356,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           ),
           React.createElement('button', {
             type: 'button', onClick: gepaeckEintrag.go, 'aria-current': activeView === 'gepaeck' ? 'page' : undefined,
-            style: { display: 'flex', alignItems: 'center', minHeight: '44px', padding: '0 4px', marginTop: space.xs + 'px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.sandDeep },
+            style: { ...linkStil(palette), display: 'flex', alignItems: 'center', minHeight: '44px', padding: '0 4px', marginTop: space.xs + 'px', fontSize: text.sm },
           }, gepaeckEintrag.label + ' ›')
         )
       ),

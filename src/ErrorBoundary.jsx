@@ -5,6 +5,7 @@ import { paletteAusSpeicher, DARK_PALETTE } from './config/constants.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
 import { meldungOhneEingaben } from './utils/meldungOhneEingaben.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -83,6 +84,8 @@ export class ErrorBoundary extends React.Component {
     const border = farbe('border');
     const sand = farbe('sand');
     const mid = farbe('mid');
+    // Knöpfe aus dem Baustein (Fassung 9); fehlende Farben aus DARK_PALETTE wie oben.
+    const knopfPalette = { ...DARK_PALETTE, ...palette };
 
     return React.createElement('div', {
       role: 'alert',
@@ -132,21 +135,13 @@ export class ErrorBoundary extends React.Component {
           React.createElement('button', {
             type: 'button',
             onClick: this.handleReset,
-            style: {
-              // mind. 44 hoch wie der Melde-Link darunter (WCAG 2.2, 2.5.8: mind. 24).
-              minHeight: '44px', padding: '10px 20px', background: sand, color: '#000',
-              border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-              fontWeight: weight.semi, fontSize: text.sm
-            }
+            // mind. 44 hoch wie der Melde-Link darunter (WCAG 2.2, 2.5.8: mind. 24) — hält der Baustein.
+            style: knopfStil(knopfPalette)
           }, tx('error.tryAgain', 'Try again')),
           React.createElement('button', {
             type: 'button',
             onClick: this.handleHardReset,
-            style: {
-              minHeight: '44px', padding: '10px 20px', background: 'transparent', color: textColor,
-              border: '1px solid ' + border, borderRadius: radius.sm,
-              cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
-            }
+            style: knopfStil(knopfPalette, 'neben')
           }, tx('error.reload', 'Reload page'))
         ),
 

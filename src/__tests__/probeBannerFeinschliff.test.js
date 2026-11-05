@@ -58,10 +58,13 @@ describe('Probier-Banner · Fokus nach «Zurück»', () => {
   });
 });
 
+// Seit Fassung 9 (05.11.2026) kommen die 44 px aus dem Baustein knopfStil (src/components/PrimaryButton.jsx,
+// dort in `basis`). Ein Knopf hält die Höhe, wenn er sie selbst setzt oder knopfStil nutzt.
 describe('Probier-Banner · Tippflächen 44 px', () => {
   for (const k of ['discard', 'apply', 'startBlank', 'replaceBack', 'replaceConfirm']) {
     it(`${k}: minHeight 44px`, () => {
-      expect(knopf(k)).toMatch(/minHeight: '44px'/);
+      expect(knopf(k)).toMatch(/minHeight: '44px'|knopfStil\(palette/);
+      expect(knopf(k)).not.toMatch(/minHeight: '(24|32|36)px'/);
     });
   }
 });

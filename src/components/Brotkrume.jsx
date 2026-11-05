@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space } from '../config/tokens.js';
 import { stufen } from '../config/brotkrumePfade.js';
+import { linkStil } from './PrimaryButton.jsx';
 
 export { PFADE, ELTERN_TITEL, stufen } from '../config/brotkrumePfade.js';
 
@@ -14,10 +15,9 @@ export { PFADE, ELTERN_TITEL, stufen } from '../config/brotkrumePfade.js';
 export const Brotkrume = ({ palette, t, view, onNavigate }) => {
   const liste = stufen(view);
   if (!liste) return null;
+  // Führt nur zurück: Link, gold und unterstrichen (Fassung 9, M2).
   const knopf = {
-    background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-    fontSize: text.sm, color: palette.mid, padding: '6px 0', minHeight: '44px', // App-Massstab: 44, wo es geht (tippflaechenGate)
-    textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: palette.border,
+    ...linkStil(palette), fontSize: text.sm, padding: '6px 0', minHeight: '44px', // App-Massstab: 44, wo es geht (tippflaechenGate)
   };
   return React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { margin: '0 0 ' + space.md + 'px' } },
     React.createElement('ol', {

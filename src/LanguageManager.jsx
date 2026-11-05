@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 const LEVELS = ['native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1'];
 
@@ -54,19 +55,14 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
         React.createElement('button', {
           onClick: () => removeLang(idx),
           'aria-label': t('common.delete'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 6px' }
+          // M4: kleines × bleibt Symbol, grau; 44 × 44 Tippfläche.
+          style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 6px', minWidth: '44px', minHeight: '44px' }
         }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
       )
     ),
     React.createElement('button', {
       onClick: addLang,
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
-        cursor: 'pointer', fontSize: text.sm, fontFamily,
-        fontWeight: weight.medium, alignSelf: 'flex-start',
-      }
+      style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }
     }, '+ ' + t('langSkill.add'))
   );
 };
