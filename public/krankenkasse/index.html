@@ -6,7 +6,7 @@
   <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
        Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
        script-src. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
        Quelle: scripts/seiten/krankenkasse.mjs · Zahlen und Bilder: scripts/seiten-figuren.mjs
        Sprachen + Freigabe: scripts/seiten-sprachen.mjs
@@ -308,11 +308,8 @@
             <p class="abb-fuss"><span class="abb-wert">16 ohne Rechnung · 1 über 50'000 Fr.</span></p>
           </div>
           <figcaption><strong>Abb. 1.</strong> Jedes Haus ist ein Mensch, die Höhe ist, was 2024 für diese Person über die Grundversicherung abgerechnet wurde, ohne Kantonsanteil am Spital. Das höchste Haus steht auf der Untergrenze von 50'000 Franken; in Wirklichkeit ragt es oft weit höher.<sup class="beleg"><a href="#quelle-efind" id="beleg-efind-1" aria-label="Quelle 1">1</a></sup></figcaption>
-          <details class="bewegt hl">
-            <summary>Bewegte Fassung zum Ausprobieren</summary>
-            <iframe src="/krankenkasse/bewegt/dorf/" title="Bewegte Fassung zum Ausprobieren: Ein Dorf mit 100 Menschen" loading="lazy"></iframe>
-            <p class="bewegt"><a href="/krankenkasse/bewegt/dorf/">In eigenem Fenster öffnen</a> <span class="leise">Auf die Figur zeigen, oder ins Bild springen und die Pfeiltasten nutzen.</span></p>
-          </details>
+          <p class="bewegt"><a href="/krankenkasse/bewegt/dorf/">Bewegte Fassung zum Ausprobieren</a>
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
         </figure>
 <div class="tabelle"><table>
           <caption>Über die Grundversicherung abgerechnet 2024, auf 100 Menschen gerundet</caption>
@@ -339,11 +336,8 @@
             <p class="abb-fuss"><span class="abb-wert">26–30: 1'903 Fr. · 81–85: 12'738 Fr.</span></p>
           </div>
           <figcaption><strong>Abb. 2.</strong> Eine Säule je Altersgruppe, so hoch wie die Kosten je versicherte Person 2024 nach Abzug der Kostenbeteiligung. Hervorgehoben ist die erste Säule über dem Schnitt aller ab 26 Jahren (4'863 Franken).<sup class="beleg"><a href="#quelle-efind" id="beleg-efind-3" aria-label="Quelle 1">1</a></sup></figcaption>
-          <details class="bewegt hl">
-            <summary>Bewegte Fassung zum Ausprobieren</summary>
-            <iframe src="/krankenkasse/bewegt/alter/" title="Bewegte Fassung zum Ausprobieren: Kosten nach Alter" loading="lazy"></iframe>
-            <p class="bewegt"><a href="/krankenkasse/bewegt/alter/">In eigenem Fenster öffnen</a> <span class="leise">Auf die Figur zeigen, oder ins Bild springen und die Pfeiltasten nutzen.</span></p>
-          </details>
+          <p class="bewegt"><a href="/krankenkasse/bewegt/alter/">Bewegte Fassung zum Ausprobieren</a>
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
         </figure>
         <p>Eine Person zwischen 26 und 30 kostete die Kasse 2024 im Schnitt 1'903 Franken, eine zwischen 81 und 85 schon 12'738 Franken, also fast siebenmal so viel.<sup class="beleg"><a href="#quelle-efind" id="beleg-efind-4" aria-label="Quelle 1">1</a></sup> Im Schnitt aller ab 26 waren es 4'863 Franken. Bis 60 liegt man darunter, ab 61 darüber. Über das ganze Leben gleicht sich das teilweise aus: Heute Junge sind später selbst die Alten.</p>
         <h3>Von Reich zu Arm</h3>
@@ -363,11 +357,8 @@
             <p class="abb-fuss"><span class="abb-wert">Franchise 1'000 · höchstens 1'700 Fr. im Jahr</span></p>
           </div>
           <figcaption><strong>Abb. 3.</strong> Ein Pfosten je 500 Franken Jahreskosten, so hoch wie der eigene Anteil, bei einer Franchise von 1'000 Franken. Erwachsene, Grundregel: Franchise, danach 10 % Selbstbehalt bis höchstens 700 Franken. Ohne Spitalbeitrag und ohne den höheren Selbstbehalt bei gewissen Medikamenten.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-5" aria-label="Quelle 2">2</a></sup></figcaption>
-          <details class="bewegt hl">
-            <summary>Bewegte Fassung zum Ausprobieren</summary>
-            <iframe src="/krankenkasse/bewegt/kostenteil/" title="Bewegte Fassung zum Ausprobieren: Der eigene Anteil" loading="lazy"></iframe>
-            <p class="bewegt"><a href="/krankenkasse/bewegt/kostenteil/">In eigenem Fenster öffnen</a> <span class="leise">Auf die Figur zeigen, oder ins Bild springen und die Pfeiltasten nutzen.</span></p>
-          </details>
+          <p class="bewegt"><a href="/krankenkasse/bewegt/kostenteil/">Bewegte Fassung zum Ausprobieren</a>
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
           <div class="tabelle"><table>
             <caption>Höchstens selbst bezahlt im Jahr, Erwachsene</caption>
             <tr><th scope="col" class="n">Franchise, Fr.</th><th scope="col" class="n">Franchise und Selbstbehalt zusammen höchstens, Fr.</th></tr>
@@ -419,11 +410,8 @@
             <p class="abb-fuss"><span class="abb-wert">2027 · mittlere Prämie 412 Fr.</span></p>
           </div>
           <figcaption><strong>Abb. 4.</strong> Der Stapel zeigt, was die Grundversicherung je Person und Monat kostet: sechs Kostenblöcke, oben ein schmaler Rest für Verwaltung und Reserven. Der Sockel ist der eigene Anteil aus Franchise und Selbstbehalt; er zählt nicht zur Prämie. Der Taster misst den Teil darüber, die mittlere Prämie. Blöcke nach dem BAG-Faktenblatt 2025, gleichmässig mit dem Kostenwachstum hochgerechnet (eigene Rechnung).<sup class="beleg"><a href="#quelle-leistungen2025" id="beleg-leistungen2025-4" aria-label="Quelle 7">7</a></sup><sup class="beleg"><a href="#quelle-mittel" id="beleg-mittel-1" aria-label="Quelle 8">8</a></sup></figcaption>
-          <details class="bewegt iso">
-            <summary>Bewegte Fassung zum Ausprobieren</summary>
-            <iframe src="/krankenkasse/bewegt/praemie/" title="Bewegte Fassung zum Ausprobieren: Die Prämie als Messaufbau" loading="lazy"></iframe>
-            <p class="bewegt"><a href="/krankenkasse/bewegt/praemie/">In eigenem Fenster öffnen</a> <span class="leise">Über das Bild fahren wählt das Jahr, auf einen Block zeigen nennt ihn; mit der Tastatur: ins Bild springen, dann Pfeiltasten. Das Bild bewegt sich nur, wenn Sie es tun.</span></p>
-          </details>
+          <p class="bewegt"><a href="/krankenkasse/bewegt/praemie/">Bewegte Fassung zum Ausprobieren</a>
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
         </figure>
         <p class="merke"><strong>Kurz gesagt:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien.<sup class="beleg"><a href="#quelle-kennzahlen" id="beleg-kennzahlen-1" aria-label="Quelle 9">9</a></sup> Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
 <div class="tabelle"><table>
@@ -447,11 +435,8 @@
             <p class="abb-fuss"><span class="abb-wert">Zug 324.90 · Genf 610.60 Fr.</span></p>
           </div>
           <figcaption><strong>Abb. 5.</strong> Ein Pfosten je Prämienregion, so hoch wie die mittlere Prämie für Erwachsene ab 26, alle Kassen zusammen. 15 Kantone haben eine Region, 11 haben zwei oder drei; deren Pfosten stehen nebeneinander. Die Pfosten beginnen bei null, das Verhältnis stimmt. Daten: Prämiendaten des Bundes (priminfo.admin.ch), Stand 22. Oktober 2026, in Maloja Plana geführt.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-2" aria-label="Quelle 11">11</a></sup></figcaption>
-          <details class="bewegt hl">
-            <summary>Bewegte Fassung zum Ausprobieren</summary>
-            <iframe src="/krankenkasse/bewegt/kantone/" title="Bewegte Fassung zum Ausprobieren: Prämien 2027 je Region" loading="lazy"></iframe>
-            <p class="bewegt"><a href="/krankenkasse/bewegt/kantone/">In eigenem Fenster öffnen</a> <span class="leise">Auf die Figur zeigen, oder ins Bild springen und die Pfeiltasten nutzen.</span></p>
-          </details>
+          <p class="bewegt"><a href="/krankenkasse/bewegt/kantone/">Bewegte Fassung zum Ausprobieren</a>
+          <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
           <div class="tabelle zahlen"><table>
             <caption>Zahlenansicht: mittlere Monatsprämie Erwachsene 2027 je Kanton, in Franken. Ganze Schweiz: 487.60.</caption>
             <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Prämie</th><th scope="col" class="n">zum Vorjahr</th></tr>
