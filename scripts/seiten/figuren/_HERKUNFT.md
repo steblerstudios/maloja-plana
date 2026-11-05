@@ -42,3 +42,43 @@ mit `anzahl`/`waehle` der Figur).
 `public/licenses/hairline-LICENSE.txt` und `anatomy-LICENSE.txt` und sind in
 `docs/legal/third-party-licenses.md` eingetragen. Die CSS-Regeln für die Strichklassen in
 `scripts/build-seiten.mjs` sind daran angelehnt.
+
+---
+
+# Standbilder für die Hintergrundseite /politsystem/ (seit 05.11.2026)
+
+Sechs isometrische Figuren (Anatomy-Stil) aus der Erklärfigur «Schweizer Politsystem als Kugelbahn»
+von Stebler Studios (Fassung 02.11.2026, Werkstatt `in Arbeit/schweizer-politsystem/`, ausserhalb
+dieses Repos). Sie stehen als **ruhige Standbilder** in der Seite, ohne Skript; Titel und
+Beschreibung setzt `scripts/seiten/politsystem.mjs` ein, die Farben kommen aus dem Seitenstil
+(`.iso`, dazu `--kb-gold` für die Kugel).
+
+| Datei | Figur | Zustand | Abgriff |
+|---|---|---|---|
+| `politsystem-ebenen.svg` | Sortierbahn Bund · Kantone · Gemeinden | Ruhe | aus dem gebauten HTML |
+| `politsystem-bahn.svg` | Kugelbahn: Bundesrat, Nationalrat, Ständerat, Referendum, Urne | Kugel am Start | aus dem gebauten HTML |
+| `politsystem-uhrwerk.svg` | Bundesrat als Uhrwerk, sieben Räder | Vorsitz bei Rad 1 | im Browser nach dem Einschwingen |
+| `politsystem-mehr.svg` | Prüfstand doppeltes Mehr | Beispiel «Volk 50,6 %, Stände 6 von 23» | im Browser nach dem Einschwingen |
+| `politsystem-wahlbank.svg` | Wahlbank, 200 Sitze in 26 Säulen (Sitze seit 2023) | Zürich gewählt, kleine Partei 8 % → 13 · 12 · 8 · 3 | im Browser nach dem Einschwingen |
+| `politsystem-waage.svg` | Waage der Räte, 200 : 46 | Ruhe | im Browser nach dem Einschwingen |
+
+**Bereinigt beim Abgriff:** unsichtbare Bedienflächen (`kb-ziel`), ausgeblendete Ebenen
+(`opacity:0`), `id`/`role`/`tabindex`/`aria-*` und alle `data-*` ausser denen, die der Stil liest
+(`data-shade`, `data-tone`, `data-lit`, `data-dotted`, `data-dashed`). Die beiden Clip-Pfade behalten
+ihre id, vorangestellt `ps-` (`ps-urnfahnen`, `ps-fahnen`), sonst zeichnet der Browser die Fläche
+schwarz. Zahlen auf eine Nachkommastelle gerundet (keine Matrix-Transformationen in den Figuren).
+
+**Neu abgreifen**, wenn sich die Quelle ändert (spätestens mit den Sitzen der Wahlen 2027): Quelle
+bauen, `index.html` lokal ausliefern, die Figur ins Bild scrollen, einschwingen lassen (die Wahlbank
+braucht rund 30 Sekunden), dann `document.querySelector('#<id> svg').outerHTML` abspeichern und wie
+oben bereinigen. Die Zahlen, die Leserinnen und Leser sehen, stehen ohnehin im Text und in der
+Tabelle und kommen aus `scripts/seiten/politsystem.mjs`; die Bilder zeigen Verhältnisse.
+
+**Bewegte Fassung:** nicht übernommen (Gründe im Kopf von `scripts/seiten/politsystem.mjs`).
+
+**Lizenz:** Gezeichnet mit dem Anatomy-Kit (MIT, Lizenztext `public/licenses/anatomy-LICENSE.txt`, in
+`docs/legal/third-party-licenses.md` wegen der bewegten Prämien-Maschine eingetragen). Die Standbilder
+enthalten keinen Code des Kits, nur dessen gezeichnete Ausgabe; die CSS-Regeln für `.iso` in
+`scripts/build-seiten.mjs` sind an dessen `iso.css` angelehnt (wie auf /krankenkasse/). Die Figuren
+selbst sind Werk von Stebler Studios. Die Schriften
+der Quelle (SIL OFL) sind nicht übernommen, die Seite nutzt Malojas eigene.

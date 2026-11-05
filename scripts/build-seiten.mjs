@@ -26,7 +26,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
-import { HINTERGRUND } from './seiten/krankenkasse.mjs';
+import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 
 // Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
@@ -522,7 +522,10 @@ function quellenListe(quellen, nummer, stellen) {
 function hintergrundBauen(seite) {
   const sprache = SPRACHEN.find((s) => s.code === 'de');
   const R = RAHMEN.de;
-  const werte = zahlen();
+  // Eigene Zahlen und Bilder je Seite (z. B. scripts/seiten/politsystem.mjs);
+  // ohne Angabe die der Krankenkasse aus scripts/seiten-figuren.mjs.
+  const werte = seite.zahlen ? seite.zahlen() : zahlen();
+  const bloecke = seite.bloecke || BLOECKE;
   const z = (s) => einsetzen(s, werte);
   const seitenUrl = url(seite.pfad, sprache);
   const titel = z(seite.titel), beschreibung = z(seite.beschreibung);
@@ -553,7 +556,7 @@ function hintergrundBauen(seite) {
   };
 
   const inhaltsverzeichnis = seite.inhaltsverzeichnis ? `      <nav class="inhalt" aria-label="Inhalt dieser Seite">
-        <p>Acht Fragen</p>
+        <p>${esc(seite.inhaltsTitel || 'Acht Fragen')}</p>
         <ol>
 ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.replace(/^\d+\.\s*/, ''))}</a></li>`).join('\n')}
         </ol>
@@ -566,7 +569,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
     // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
     // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
-    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, BLOECKE, ctx)}`;
+    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, bloecke, ctx)}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
@@ -575,18 +578,18 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
 
   return `${kopf({
     seite: { ...seite, titel, beschreibung }, sprache, seitenUrl, ld,
-    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: scripts/seiten-figuren.mjs`,
+    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: ${seite.bilderQuelle || 'scripts/seiten-figuren.mjs'}`,
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
-    extraStil: stilHintergrund,
+    extraStil: stilHintergrund + (seite.stilZusatz || ''),
     // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
     // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
     ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),
   })}
 
     <main>
-      <p class="kicker">Krankenkasse erklärt</p>
+      <p class="kicker">${esc(seite.kicker || 'Krankenkasse erklärt')}</p>
       <h1>${esc(titel)}</h1>
       <p class="vorspann">${z(seite.vorspann)}</p>
       <p class="stand"><strong>Stand der Zahlen:</strong> ${esc(z(seite.stand))}</p>
