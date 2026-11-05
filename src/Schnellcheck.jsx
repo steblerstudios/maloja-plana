@@ -254,7 +254,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       palette, t, state: sozPegelState,
     }),
     // Knapp: geschätztes Netto nahe am Bedarf — dieselbe Regel wie auf dem Dashboard.
-    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
 
     // Ergebnis
     erfasst

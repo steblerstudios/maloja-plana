@@ -93,7 +93,7 @@ export const EinkommenFeld = ({ palette, t, e, stil = {} }) => {
         : e.offen ? t('einkommensart.offenNetto') : ''),
     e.renten > 0 && h('div', { style: { marginTop: '2px', fontSize: text.xs, color: palette.mid, lineHeight: 1.4 } },
       t('einkommensfeld.rentenEingerechnet', { value: zahl(e.renten) })),
-    e.renteImLohn && h('div', { role: 'status', style: { marginTop: '4px', fontSize: text.xs, color: palette.sandDeep || palette.text, fontWeight: weight.medium, lineHeight: 1.4 } },
+    e.renteImLohn && h('div', { role: 'status', style: { marginTop: '4px', fontSize: text.xs, color: palette.skyDeep || palette.text, fontWeight: weight.medium, lineHeight: 1.4 } },
       t('einkommensfeld.renteImLohn'))
   );
 };

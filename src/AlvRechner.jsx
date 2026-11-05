@@ -79,7 +79,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const zahlFeld = (id, labelText, value, onChange, hint, opts = {}) => React.createElement('div', { style: { marginBottom: space.md + 'px' } },
     React.createElement('label', { htmlFor: id, style: label }, labelText,
-      opts.marke && React.createElement('span', { 'data-geschaetzt': '', style: { marginLeft: space.xs + 'px', padding: '1px 8px', borderRadius: radius.full + 'px', fontSize: text.xs, fontWeight: weight.medium, background: palette.gold + '22', color: palette.goldDeep || palette.text } }, opts.marke)),
+      opts.marke && React.createElement('span', { 'data-geschaetzt': '', style: { marginLeft: space.xs + 'px', padding: '1px 8px', borderRadius: radius.full + 'px', fontSize: text.xs, fontWeight: weight.medium, background: palette.sky + '18', color: palette.skyDeep || palette.text } }, opts.marke)),
     React.createElement('input', {
       id, type: 'number', inputMode: 'decimal', value, onChange: (e) => onChange(e.target.value),
       placeholder: opts.placeholder, min: opts.min, max: opts.max, 'aria-describedby': id + '-hinweis',

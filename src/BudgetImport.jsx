@@ -76,7 +76,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
       ),
 
-      importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
+      importing && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
 
       importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, praefix('kreuz', 14), importError),
 

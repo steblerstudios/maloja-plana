@@ -33,7 +33,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     crosslink: { ...linkStil(palette), display: 'block', minHeight: '44px', fontSize: text.sm, textAlign: 'start', marginTop: space.md + 'px' },
     rightItem: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', padding: '6px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55 },
     rightDot: { flexShrink: 0, color: palette.sage, marginTop: '1px' },
-    fristen: { background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
+    fristen: { background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
     fristenBody: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 },
     cantonBox: { background: palette.sageMist || palette.up, border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm + 'px', padding: space.md + 'px', marginTop: space.sm + 'px' },
     cantonOfficeLink: { display: 'block', textDecoration: 'none', color: palette.skyDeep, fontSize: text.sm, fontWeight: weight.semi },

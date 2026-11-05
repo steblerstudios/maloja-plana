@@ -208,7 +208,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
           role: 'status',
           style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '12px', borderRadius: radius.sm, margin: '0 0 12px' },
         }, t('kkScanner.nichtsGelesen')),
-        scanning && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('kkScanner.scanning'))
+        scanning && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('kkScanner.scanning'))
       ),
 
       scanMode === 'manual' && React.createElement('div', null,
@@ -240,8 +240,8 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px', color: palette.sageDeep } }, hinweisZeichen('check'), t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
       ),
 
-      conflicts && React.createElement('div', { style: { padding: space.md, background: palette.gold + '15', border: '1px solid ' + palette.gold, borderRadius: radius.sm, marginBottom: '12px' } },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.sm, fontSize: text.sm } }, hinweisZeichen(), t('kkScanner.conflictTitle')),
+      conflicts && React.createElement('div', { style: { padding: space.md, background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.sm, marginBottom: '12px' } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.sm, fontSize: text.sm } }, hinweisZeichen(), t('kkScanner.conflictTitle')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('kkScanner.conflictHint')),
         React.createElement('div', { style: { display: 'grid', gap: space.xs, marginBottom: space.md } },
           conflicts.fields.map(field =>

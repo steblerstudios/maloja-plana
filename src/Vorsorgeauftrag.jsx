@@ -35,7 +35,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
         abweichend && React.createElement('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('va.ui.abweichend')),
         // C — Warnsatz, abgesetzt und als «nicht abschreiben» markiert
-        React.createElement('div', { style: { border: '2px dashed ' + (palette.goldDeep || palette.sandDeep), borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+        React.createElement('div', { style: { border: '2px dashed ' + palette.sky, borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
           React.createElement('strong', { style: { color: palette.text } }, t('va.vorlage.nichtAbschreiben')), ' ', t('va.vorlage.warnung')),
         // D — der Text zum Abschreiben
         React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } },
