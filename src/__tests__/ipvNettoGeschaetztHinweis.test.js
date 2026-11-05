@@ -37,6 +37,14 @@ describe('IPV: geschätzter Nettolohn ist sichtbar', () => {
     expect(html).toContain('aria-describedby="ipv-netto-geschaetzt"');
   });
 
+  it('nur der Nebenerwerb brutto: kein Hinweis, der Hauptlohn ist nicht geschätzt (Rechtsprüfung 05.11.)', () => {
+    const p = profil('netto');
+    p.finanzen = { ...p.finanzen, sideIncome: 800, sideIncomeType: 'brutto' };
+    const html = render(p);
+    expect(html).toContain('id="ipv-regler"');
+    expect(html).not.toContain('premium.nettoGeschaetzt');
+  });
+
   it('netto erfasst: kein Hinweis', () => {
     const html = render(profil('netto'));
     expect(html).toContain('id="ipv-regler"');
