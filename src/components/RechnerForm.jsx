@@ -9,6 +9,7 @@ import { ansichtIkon } from '../config/ansichtenRegister.js';
 import { chapterColor } from '../data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from '../utils/lebensbereichFruechte.js';
 import { linkStil, auswahlStil } from './PrimaryButton.jsx';
+import { Belege } from './Belege.jsx';
 
 // Rechner-Form X — die EINE Hülle für alle Rechner (Entscheid Stebler Studios 24.10.2026, «Entwurf X passt
 // für alle Rechner»; gebaut F7-A2, 27.10.2026). Wortlaut: docs/design/mockups-stardust-2026-10-23/VERGLEICH.md,
@@ -115,7 +116,9 @@ export const RechnerForm = ({
     ),
 
     // (6) Quelle · Stand
-    quelle && React.createElement('div', { 'data-teil': 'quelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: space.lg + 'px' } }, quelle)
+    quelle && React.createElement('div', { 'data-teil': 'quelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: space.lg + 'px' } },
+      // Fassung 9: eine Quellenzeile als Text wird zu aufklappbaren Belegen (Belege.jsx).
+      typeof quelle === 'string' ? React.createElement(Belege, { palette, t, zeile: quelle, style: { fontSize: 'inherit' } }) : quelle)
   );
 };
 

@@ -7,7 +7,6 @@ import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt
 import { getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
-import { renderSource } from './utils/renderSource.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
 import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
@@ -15,6 +14,7 @@ import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { linkStil } from './components/PrimaryButton.jsx';
+import { Belege } from './components/Belege.jsx';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -212,7 +212,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       React.createElement(ExternerLink, { t, href: info.url, style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.semi } },
         info.state === 'has' ? t('mietzins.linkCanton') : t('mietzins.linkOverview'))),
     quelle: React.createElement(React.Fragment, null,
-      React.createElement('div', null, renderSource(t('mietzinsView.source'), null, t)),
+      React.createElement(Belege, { palette, t, zeile: t('mietzinsView.source'), style: { fontSize: 'inherit' } }),
       React.createElement('div', { style: { marginTop: space.xs + 'px' } }, hinweisZeichen(), t('trust.localOnly'))),
   },
     canton && onNavigate && React.createElement('div', { style: { paddingTop: space.sm + 'px' } },
