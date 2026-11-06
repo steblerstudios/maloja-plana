@@ -35,7 +35,17 @@ uns zuerst ein Seiten- und Logik-Organigramm anschauen und dann können wir die 
 → **Prämien (1b) zurückgestellt**, bis das Organigramm steht. Frage 2 wird Teil des Organigramms.
 Bild [Organigramm](seiten-architektur-organigramm.html): heute (7 Kapitel, 4 Äste ohne Kapitel) → Vorschlag
 (Kapitel Gesundheit mit den Ästen Gesundheit + Notfall; 7 Kapitel, 11 Äste) mit allen Seiten, dazu sieben offene
-Stellen ①–⑦ (Krankenkasse, Verfügungen, Steuern, Bestattung/Organspende, ALV/EO, Löhne, Lehre/Lebenslauf). Offen.
+Stellen ①–⑦ (Krankenkasse, Verfügungen, Steuern, Bestattung/Organspende, ALV/EO, Löhne, Lehre/Lebenslauf).
+✅ **06.11.: Gerüst angenommen** (Stebler Studios: «Ja, weiter mit ①») — **Kapitel Gesundheit mit den Ästen Gesundheit
+und Notfall** (ersetzt das Kapitel «Notfall»), 7 Kapitel, 11 Äste, je Kapitel ein oder zwei Äste. Schlüssel `notfall`
+und Daten bleiben. Die offenen Stellen ①–⑦ werden einzeln entschieden.
+
+### ① Krankenkasse
+
+Bild [Krankenkasse](seiten-architektur-2-krankenkasse.html): A teilen (Vertrag = Versicherungen, Abzeichen orange ·
+Leistungen/Belege/Unfall = Gesundheit, Abzeichen Mini-Schild) · B alles Versicherungen · C alles Gesundheit.
+Empfehlung A. Befund: «Zusatz wechseln» ist seit 27.10. Teil von «KK wechseln» (`#/zusatzwechsel` leitet um) —
+im Organigramm darum keine eigene Seite. Offen.
 
 ## Befunde
 
