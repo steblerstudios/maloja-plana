@@ -13,9 +13,11 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 
 | # | Thema | Bild | Empfehlung | Entscheid |
 |---|---|---|---|---|
-| 1 | Glocken: Kuhglocke + Benachrichtigungs-Glocke → eine | [Teil 1](icon-besprechung-1-glocken-haeuser.html) · [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: die Glocke aus Teil 1 (A, breite Fassung), B «läutet» als Zustand.** Die schweizerischeren Varianten aus 1b gefielen weniger («da hat mir die vorherige Glocke besser gefallen») |
+| 1 | Glocken: eine Glocke | [1](icon-besprechung-1-glocken-haeuser.html) · [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | Teil-1-Glocke + «läutet» als Richtung ✅ — **06.11.: «macht mich noch nicht ganz glücklich, aber wir sind auf dem richtigen Weg»** → Feinform G1–G4 offen |
 | 2a | Häuser: Basis | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: das echte Chalet, wie es heute ist, überall als Basis — dazu ein Mini-Zeichen** («wieso nicht immer überall das Chalet als Basis und dann ein Mini-Icon dazu»). Keine Strich-Nachzeichnung (1a/1b verworfen) |
-| 2b | Häuser: wie sitzt das Mini-Zeichen? | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | V1 (volles Chalet, Zeichen unten rechts freigeschnitten) | offen: V1 / V2 |
+| 2b | Häuser: wie sitzt das Mini-Zeichen? | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: V1** — volles Chalet, Zeichen unten rechts freigeschnitten |
+| 2c | Dunkelmodus der Leitformen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | Details ausstanzen statt weiss malen | **06.11.: «der Dunkelmodus muss besser werden»** → Vorschlag ausgestanzt, Abnahme offen |
+| 2d | Farbe | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | Familie = Farbe des Lebensbereichs (lebensbereiche.js), Funktionen in Textfarbe | **06.11.: «das ist ja dann auch alles grün oder?»** → ja für Wohnen; Regel offen |
 | 3 | Haken: `check` · `success` | — | | offen |
 | 4 | Blätter und Dokumente: `document` · `documents` · `rechner` · `dokumentTresor` · `ordner` | — | | offen |
 | 5 | Geld: Fünfliber · `money` · `budget` · Portemonnaie · Quittung · Sparschwein | — | | offen |
@@ -30,7 +32,7 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 
 ## Grundsatz (06.11.2026)
 
-**Jede Familie hat eine Leitform — das bestehende reiche Bild (Chalet, Edelweiss-Schild …) —, ein Mini-Zeichen sagt, was passiert**. Vorbild in der App: Mietzinsverbilligung und Prämienverbilligung. — wie bei den Häusern,
+**Jede Familie hat eine Leitform — das bestehende reiche Bild (Chalet, Edelweiss-Schild …) —, ein Mini-Zeichen sagt, was passiert**. Vorbild in der App: Mietzinsverbilligung und Prämienverbilligung. ✅ **06.11.: bestätigt am Beispiel Versicherung («genau 3 richtig so»).** — wie bei den Häusern,
 für alle Kategorien (Stebler Studios: «das müssen wir ja dann für alle Kategorien usw»).
 Vorgeschlagene Familien in [Teil 1b](icon-besprechung-1b-glocke-chalet.html), Abschnitt 3:
 Chalet · Blatt · Schild · Herz · Person · Münze · Helvetia/Ausweis · Koffer · Glocke/Kalender/Uhr ·
