@@ -13,7 +13,8 @@ import FruchtMitIcon from '../FruchtMitIcon.jsx';
 // (= handeln), Familie und Notfall liegen nahe am Rot (= vorbei), Versicherungen ist genau das Frist-Blau.
 // Das Thema zeigt der **Frucht-Stempel** unten rechts (Stebler Studios 06.11.2026, «ja super», nach
 // Skizzen F–J und Probe): die Frucht des Lebensbereichs mit dem Themensymbol als Aussparung
-// (FruchtMitIcon, Obstgarten-Motiv), ohne runde Unterlage («die schwarze dicke Umrandung verlieren»).
+// (FruchtMitIcon, Obstgarten-Motiv), ohne runde Unterlage («die schwarze dicke Umrandung verlieren»);
+// die Aussparung in `surface` gefüllt, damit die Linie des Blatts nicht durchscheint (06.11.2026).
 // Immer `aria-hidden`: Das Datum steht vorlesbar im Satz daneben, das Thema sagt die Seite.
 
 export const BAND_ALPHA = '55';
@@ -47,7 +48,7 @@ export const themenStempel = (palette, thema, klein) => {
   return React.createElement('span', {
     'data-teil': 'themenfrucht', 'data-bereich': thema.bereich,
     style: { position: 'absolute', right: klein ? '-16px' : '-22px', bottom: klein ? '-12px' : '-16px', display: 'inline-flex', pointerEvents: 'none' },
-  }, React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: thema.icon, color: bereichColor(thema.bereich, dunkel), size: klein ? 36 : 44 }));
+  }, React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: thema.icon, color: bereichColor(thema.bereich, dunkel), size: klein ? 36 : 44, innen: palette.surface }));
 };
 
 // `klein`: für Listen (Kalender), ohne Jahr. Ohne gültiges Datum kein Blatt.

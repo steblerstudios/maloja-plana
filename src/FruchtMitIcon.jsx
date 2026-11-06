@@ -22,7 +22,7 @@ const SIZE_FACTOR = {
 
 let _uid = 0;
 
-export default function FruchtMitIcon({ fruit, iconName, color, size = 44, ripeness = 1, title }) {
+export default function FruchtMitIcon({ fruit, iconName, color, size = 44, ripeness = 1, title, innen = null }) {
   const maskId = React.useMemo(() => 'frucht-cut-' + (_uid++), []);
   const draw = FRUITS[fruit];
   const iconFactory = Icons[iconName];
@@ -56,6 +56,11 @@ export default function FruchtMitIcon({ fruit, iconName, color, size = 44, ripen
         ) : null
       )
     ),
+    // `innen` (nur Frucht-Stempel am Kalenderblatt, F9-A14, Stebler Studios 06.11.2026): die Aussparung
+    // gefüllt statt durchsichtig, damit keine Linie des Blatts durch das Symbol scheint. Die Symbolform
+    // liegt in dieser Farbe unter der Frucht; sonst bleibt das Negativ wie im Obstgarten echt durchsichtig.
+    innen && iconFactory ? React.createElement('g', { 'data-teil': 'innen', style: { color: innen } },
+      React.cloneElement(iconFactory(), { x: dx, y: dy, width: iconU, height: iconU })) : null,
     React.createElement('g', { mask: 'url(#' + maskId + ')' },
       // Cluster-Früchte: solider Körper hinter dem Cluster, sonst greift die Aussparung ins Leere.
       isCluster ? React.createElement('circle', { cx: bodyCx, cy: bodyCy, r: 7, fill: 'currentColor' }) : null,

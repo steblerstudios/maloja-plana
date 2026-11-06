@@ -69,6 +69,13 @@ describe('Kalenderblatt', () => {
     expect(blatt({ iso: '2027-03-31', thema: { bereich: 'gibtsnicht', icon: 'money' } })).not.toContain('themenfrucht');
   });
 
+  it('die Aussparung im Stempel ist gefüllt (surface), damit die Linie des Blatts nicht durchscheint', () => {
+    for (const p of [LIGHT_PALETTE, DARK_PALETTE]) {
+      const html = renderToStaticMarkup(React.createElement(Kalenderblatt, { palette: p, iso: '2027-03-31', thema: { bereich: 'finanzen', icon: 'money' } }));
+      expect(html).toContain('<g data-teil="innen" style="color:' + p.surface + '"');
+    }
+  });
+
   it('das Blatt bleibt blau, auch mit Stempel eines Bereichs in anderer Farbe', () => {
     const html = blatt({ iso: '2027-03-31', thema: { bereich: 'familie', icon: 'family' } });
     expect(html).toMatch(new RegExp('data-teil="blatt" style="[^"]*border:1px solid ' + LIGHT_PALETTE.sky));
