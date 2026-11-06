@@ -59,6 +59,15 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
     Kapitel Behörden, nicht in der Kalender-Liste (dort zeigt die Themen-Kachel das Thema schon).
     Verworfen: F (Blatt ganz in Themenfarbe: Gold neben dem goldenen Knopf, Familie sieht aus wie
     verpasst), G (Themenfarbe nur als Kante, «gefällt mir irgendwie nicht»).
+  - **Umfang in zwei Schritten** (06.11.2026, «Ja, zwei Schritte»). Zwei Sitzungen haben am
+    selben Tag je eine Liste erhoben: hier oben «drei Orte», in `A14-DATUMSSTELLEN.md` 64 Stellen,
+    davon 50 Fristen mit Handlung. Beides stimmt, sie zählen verschieden.
+    **Schritt 1 = #722:** Baustein, Frist-Karte der Abläufe (deckt den grössten Teil der 50),
+    Kapitel Behörden, Kalender-Liste.
+    **Schritt 2 = eigenes PR**, Bauliste `A14-DATUMSSTELLEN.md`: Tresor-Ablaufdatum (entschieden:
+    Frist mit Blatt), Zahlungsfristen, Brief-Hinweise am Bildschirm, «abgelaufen» statt «vorbei»
+    (entschieden). Übersicht (Startbündel, 64.86/65 kB) und Jahreskreis (ist selbst ein
+    Kalenderbild) vorerst ohne Blatt; vor dem Bau als Skizze zeigen.
 
 ## Gesamturteil in fünf Sätzen
 
