@@ -64,6 +64,15 @@ export const ABLAEUFE = [
   { view: 'todesfall', bereich: 'familie', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
+// «Ankommen in der Schweiz» (Seitenlandkarte G1, 05.11.2026): die Abläufe, die eine Person nach dem
+// Zuzug nacheinander braucht, aus drei Lebensbereichen. Reihenfolge = Reihenfolge in der Übersicht.
+// Nur Verweise auf ABLAEUFE — Titel, Untertitel und Zeichen kommen von dort (Wächter: gruppeAnkommen.test.js).
+export const ANKOMMEN = ['zuzug', 'kkerst', 'bewilligung', 'quellensteuer', 'einbuergerung'];
+
+// «Mit 18» (Seitenlandkarte G2, 06.11.2026): 18 werden, dann Lehre, Dienst und die erste Stelle — die Reihe,
+// die «18 werden» selbst schon verlinkt (ablaufVerwandte.js). Nur Verweise auf ABLAEUFE (Wächter: gruppeMit18.test.js).
+export const MIT18 = ['volljaehrig', 'lehre', 'dienst', 'neuerjob'];
+
 // Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
 // sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
 export const SEARCH_VIEWS = [
@@ -129,7 +138,7 @@ export const SCHLUSS_ZIELE = {
   sync: { kapitel: 'finanzen' },
   direktlinks: { ziel: 'situationen' },
   export: { ziel: 'tresor' },
-  notifications: { ziel: 'calendar' },
+  // notifications: seit 05.11.2026 Abschnitt der Einstellungen (Umleitung), kein eigener Schluss mehr.
   flyer: {},
   installApp: {},
 };

@@ -42,6 +42,20 @@ const ALLE = [...SEITEN, ...SONDERSEITEN];
 // Deutsch liegt weiter unter /<pfad>/, die übrigen unter /<sprache>/<pfad>/.
 // Welche Sprache öffentlich zählt, steht in seiten-sprachen.mjs und NUR dort.
 const url = (pfad, sprache) => `${BASIS}/${sprache.praefix}${pfad}/`;
+
+// Wohin «Beispiel ansehen» auf einer Seite führt: direkt zum passenden Werkzeug der App statt auf «/».
+// Das Beta-Tor lässt die Adresse durch — nach «Ohne Code ausprobieren» steht man dort, mit Code ebenso.
+// Seitenlandkarte E1, 05.11.2026 (Wächter: src/__tests__/erklaerseiteZumWerkzeug.test.js).
+// Ohne Eintrag bleibt der Knopf auf «/». Ziele sind App-Ansichten aus VALID_VIEWS, keine Umleitungen.
+const WERKZEUG_IN_DER_APP = {
+  'was-steht-mir-zu': 'situationen',
+  praemienverbilligung: 'premium',
+  sozialhilfe: 'sozialhilfe',
+  steuern: 'tax',
+  krankenkasse: 'praemien',
+  'kantone-im-vergleich': 'praemien',
+};
+const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/#/${WERKZEUG_IN_DER_APP[pfad]}` : '/');
 const pfadIntern = (pfad, sprache) => `/${sprache.praefix}${pfad}/`;
 
 // Der hreflang-Ring. Er nennt ausschliesslich freigegebene Sprachen: auf eine
@@ -241,7 +255,7 @@ ${istErklaerseite ? `      <div class="karte">
         <p><strong>${esc(R.karteTitel)}</strong></p>
         <p>${esc(R.karteText)}</p>
         <p>${R.karteBeta}</p>
-        <p><a class="knopf" href="/">${esc(R.karteKnopf)}</a></p>
+        <p><a class="knopf" href="${beispielZiel(seite.pfad)}">${esc(R.karteKnopf)}</a></p>
       </div>
 
       <h2>${esc(R.quellenTitel)}</h2>
@@ -617,7 +631,7 @@ ${abschnitte}
         <p><strong>${esc(R.karteTitel)}</strong></p>
         <p>${esc(R.karteText)}</p>
         <p>${R.karteBeta}</p>
-        <p><a class="knopf" href="/">${esc(R.karteKnopf)}</a></p>
+        <p><a class="knopf" href="${beispielZiel(seite.pfad)}">${esc(R.karteKnopf)}</a></p>
       </div>
 
       <h2 id="quellen">Quellen</h2>

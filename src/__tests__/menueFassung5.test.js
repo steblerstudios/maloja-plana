@@ -163,6 +163,7 @@ describe('Icons · Was ansteht / Ablage / Merkliste', () => {
     expect(main).toMatch(/const day = String\(tagInZuerich\(\)\)/);
     expect(main).not.toMatch(/new Date\(\)\.getDate\(\)/);
     expect(lies('IconKern.jsx')).not.toMatch(/new Date\(\)\.getDate\(\)/);
-    expect(lies('Dashboard.jsx')).toMatch(/view: 'tresor', icon: 'ordner'/);
+    // Die Werkzeuggruppen der Übersicht liegen seit 06.11.2026 (Seitenlandkarte G2) in components/WerkzeugGruppen.jsx.
+    expect(lies('components/WerkzeugGruppen.jsx')).toMatch(/view: 'tresor', icon: 'ordner'/);
   });
 });
