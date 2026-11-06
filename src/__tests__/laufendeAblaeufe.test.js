@@ -249,7 +249,8 @@ describe('Kalender: Band über der Tagesleiste', () => {
     expect(block).toContain('Bei der neuen Gemeinde anmelden · aus dem Ablauf Umzug');
   });
 
-  it('«Als Nächstes» verpasst: ruhig «verpasst» und «Was jetzt?», keine Tageszahl, nie rot (Entwurf G)', async () => {
+  // Wort seit F9-A14/B6 (06.11.2026, «abgelaufen / überfällig»): «abgelaufen» bei Fristen, nicht mehr «verpasst».
+  it('«Als Nächstes» abgelaufen: ruhig «abgelaufen» und «Was jetzt?», keine Tageszahl, nie rot (Entwurf G)', async () => {
     localStorage.setItem('or5_reminders', JSON.stringify([
       { id: 'v', title: 'Bei der neuen Gemeinde anmelden', dueDate: inDays(-2), category: 'admin', recurrence: 'once', ablauf: 'umzug', done: false },
       { id: 's', title: 'Später', dueDate: inDays(9), category: 'personal', recurrence: 'once', done: false },
@@ -258,7 +259,7 @@ describe('Kalender: Band über der Tagesleiste', () => {
     const i = html.indexOf('data-als-naechstes="verpasst"');
     expect(i).toBeGreaterThan(-1);
     const block = html.slice(i, html.indexOf('</button>', i) + 9);
-    expect(block).toContain('>verpasst<');
+    expect(block).toContain('>abgelaufen<');
     expect(block).toContain('Bei der neuen Gemeinde anmelden · aus dem Ablauf Umzug');
     expect(block).toContain('Was jetzt? ›');
     expect(block).not.toMatch(/überfällig|roseDeep/);

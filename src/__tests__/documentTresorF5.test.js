@@ -101,8 +101,9 @@ describe('Ablage · mit Inhalt', () => {
     expect(html).toContain('Ausweis/Pass');                       // Typ als Beschriftung, nicht «id»
     expect(html).toContain('pass.pdf');
     expect(html).toContain('Hochgeladen: 01.10.2026 · 12.0 KB');
-    expect(html).toContain('gültig · Ablauf: 30.09.2031');
-    expect(html).toContain('31d · Ablauf: 22.11.2026');
+    // «Frist» statt «Ablauf» seit F9-A14 Schritt 2 (06.11.2026, «Ja, als Frist»; «Ablauf» bleibt den Abläufen).
+    expect(html).toContain('gültig · Frist: 30.09.2031');
+    expect(html).toContain('31d · Frist: 22.11.2026');
     expect(html).not.toContain('alt.pdf');                        // abgelaufen liegt im Archiv
   });
 
