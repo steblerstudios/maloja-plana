@@ -116,6 +116,12 @@ Bild [Person](icon-besprechung-person.html): Hauptbild Ausweiskarte mit einer Pe
 Stebler Studios zu Volljährig: «ich weiss nicht ob ich die voll jährigkeit mit einem schlüssel möchte». Zum Hauptbild: «ich dachte wir hatten da mal über einen apfel und will helm was gebaut habe ich das falsch im kopf?» → nachgeschaut: Apfel war meine Empfehlung als reichere Leitform der Basis (Bild Leitformen), entschieden wurde **Basis = A, Ausweiskarte quer**; der Apfel war auch Tell-Idee für die Einbürgerung (entschieden Karte mit Plus); der **Helm ist die Arbeit** (Kopfbedeckung). «Leitformen reicher» steht als letzter Punkt noch offen, dort kann der Apfel wiederkommen. Bild [Volljährig](icon-besprechung-volljaehrig.html), alle leer: E Zahl 18 · F Bäumchen (aus dem Setzling ein Baum) · G Stimmzettel in Urne (klein nah am Schloss der Digitalen Ordnung).
 ✅ **06.11.: Volljährig = E, Zahl 18, leer** («E, Zahl 18 (Empfehlung)») · Digitale Ordnung Schloss, leer · **Hauptbild Person: Ausweiskarte bleibt vorerst**, entschieden wird bei «Leitformen reicher» («ja lass mal das entscheiden wenn wir nochmals zu den leitbildern kommen»), dort Apfel neben Karte zeigen.
 
+**📍 Stand 06.11., ca. 23:15 — was noch offen ist:**
+- Punkt 4, Rest: Versicherungen (Prämien, IPV) · Vorsorge (Pensionierung) · Bildung (Hauptbild, Lehre) · Arbeit (Hauptbild, Neuer Job, Stelle verloren, Aussteuerung, Selbständigkeit, Lebenslauf, Stundenlohn).
+- Punkt 5, Funktionen: Haken · Blätter · Kalender/Uhr · Telefon (gilt dann auch für den Notfallpass) · Sackmesser · Glocke · Fehlendes.
+- Punkt 6, am Schluss: «leer» auch für die übrigen gleichfarbigen Seiten (Behörden grau auf grau, IV/Pflege, Familie) · Militär/Zivildienst · Lenkrad mit drei Speichen · **Leitformen reicher, mit Apfel neben der Ausweiskarte (Person)**.
+- Vor dem Bauen: Rechts-Prüfer Kreuz (Arztkoffer).
+
 ## 📍 Stand 06.11.2026, ca. 22:15 — Sitzung beendet (Kontext voll)
 
 **Heute entschieden:** Familie (Kind/Adoption Plus · Heirat Ringe · Trennung gebrochenes Herz mit Riss · Todesfall Kerze) · Behörden (Bewilligung Blatt grau · Führerausweis Lenkrad · Asyl Schirm · Zuzug Plus / Wegzug Minus Wohnen-Grün · Einbürgerung Karte mit Plus grün) · Steuern Prozent grau · Quellensteuer Prozent haselnuss · Schulden/Betreibung bleiben · Sozialhilfe Schirm grün · Mindestlohn Waage haselnuss · Notfall-Hauptbild Arztkoffer + rotes Herz mit Puls.
