@@ -86,10 +86,10 @@
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -97,7 +97,9 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -134,6 +136,8 @@
        nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
     .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
     /* ─── Hintergrundseite · Maloja-Stil ───────────────────────────────────
        Überschriften in Hanken Grotesk (Markenhandbuch §3), Lesetext Lexend.
@@ -171,7 +175,9 @@
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
     /* Tabellen */
-    .tabelle{ overflow-x:auto; margin:12px 0 18px }
+    /* position:relative hält auch absolut gesetzte Vorlese-Texte im Schiebebereich (sonst dehnen sie die Seite). */
+    .tabelle{ overflow-x:auto; margin:12px 0 18px; position:relative }
+    .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
     caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
@@ -181,6 +187,19 @@
     /* Zahlenansicht: Balken in der Tabelle, Fläche in Heidelbeere, ab null. */
     .zahlen td.balken{ width:42%; padding-right:12px; vertical-align:middle }
     .zahlen td.balken span{ display:block; height:10px; border-radius:3px; background:var(--heidel) }
+    /* Zweite Reihe (z. B. «nach Verbilligung»): gleiche Farbe, als Umriss — Form statt Farbe. */
+    .zahlen td.balken span.b1{ margin-top:3px; background:transparent; border:1.5px solid var(--heidel-text); height:8px }
+    .zahlen tr.ch th, .zahlen tr.ch td, .breit tr.ch th, .breit tr.ch td{ font-weight:600; border-top:1.5px solid var(--leise) }
+    .legende span{ display:inline-block; width:18px; height:9px; border-radius:2px; vertical-align:middle; margin-right:4px }
+    .legende span.b0{ background:var(--heidel) } .legende span.b1{ border:1.5px solid var(--heidel-text) }
+    .tabelle.breit table{ min-width:760px; font-size:14px } .tabelle.breit th[scope="col"]{ vertical-align:bottom }
+    .tabelle.zahlen:focus-visible, .tabelle.breit:focus-visible, .tabelle[role="region"]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+    /* Breite Tabelle: die Kantonsspalte bleibt beim Verschieben stehen. */
+    .tabelle.breit th[scope="row"], .tabelle.breit tr > th:first-child{ position:sticky; left:0; background:var(--bg); z-index:1 }
+    @media (max-width:600px){ .zahlen th[scope="row"]{ white-space:normal } }
+    /* Kontrastmodus und Druck: Balken nicht nur als Hintergrund. */
+    @media (forced-colors:active){ .zahlen td.balken span.b0, .legende span.b0{ background:CanvasText; forced-color-adjust:none } }
+    .zahlen td.balken span, .legende span{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
     .zahlen th[scope="row"]{ white-space:nowrap }
     @media (max-width:600px){ .zahlen td.balken{ width:30% } }
 
@@ -247,9 +266,14 @@
     /* Belege: hochgestellte Nummer, Sprung zur Quelle und zurück. */
     /* Trefferfläche grösser als die Ziffer (a11y-Prüfung 04.11.2026), ohne die Zeile zu sprengen. */
     sup.beleg{ font-size:.75em; line-height:0; vertical-align:super; margin-left:1px }
+    /* Unterstrichen schon im Ruhezustand (WCAG 1.4.1): --heidel-text hat gegen den
+       Fliesstext nur 2.68:1 (hell) bzw. 1.94:1 (dunkel), unter den 3:1, die eine reine
+       Farbunterscheidung bräuchte. Dünn und mit Abstand, damit die Ziffer ruhig bleibt;
+       beim Überfahren verdickt sie sich wie bei allen Links. */
     sup.beleg a{ display:inline-block; min-width:24px; padding:10px 4px; margin:-10px -6px; text-align:center;
-      text-decoration:none; color:var(--heidel-text); font-weight:600 }
-    sup.beleg a:hover{ text-decoration:underline }
+      text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+      color:var(--heidel-text); font-weight:600 }
+    sup.beleg a:hover{ text-decoration-thickness:2px }
     sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
     :target{ scroll-margin-top:24px }
     ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
@@ -262,7 +286,9 @@
     .q-belegt{ margin:4px 0 0; font-size:14px }
     .q-zurueck{ margin:4px 0 0; font-size:13px; color:var(--leise) }
     .q-zurueck a{ display:inline-block; min-width:24px; padding:8px 4px; margin:-8px 0; text-align:center;
-      color:var(--heidel-text); text-decoration:none } .q-zurueck a:hover{ text-decoration:underline }
+      color:var(--heidel-text); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Gleicher Grund wie bei sup.beleg: gegen den leisen Text davor nur 1.10:1 / 1.01:1. */
+    .q-zurueck a:hover{ text-decoration-thickness:2px }
     .q-art{ display:inline-block; font-size:12px; border:1px solid var(--rand); border-radius:6px; padding:0 6px; margin-left:6px; color:var(--leise) }
     .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
     .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
@@ -286,7 +312,7 @@
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung. Die Zahlen sind Durchschnitte; die eigene Prämie zeigt der Prämienrechner des Bundes.</p>
       <nav class="inhalt" aria-label="Inhalt dieser Seite">
         <p>Acht Fragen</p>
-        <ol>
+        <ol role="list">
           <li><a href="#topf">Warum ein gemeinsamer Topf?</a></li>
           <li><a href="#querfinanzierung">Wer zahlt für wen? Die Querfinanzierung</a></li>
           <li><a href="#franchise">Warum gibt es Franchise und Selbstbehalt?</a></li>
@@ -312,7 +338,7 @@
           <p class="bewegt"><a href="/krankenkasse/bewegt/dorf/">Bewegte Fassung zum Ausprobieren: Ein Dorf mit 100 Menschen</a>
           <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
         </figure>
-<div class="tabelle"><table>
+<div class="tabelle" role="region" aria-label="Über die Grundversicherung abgerechnet 2024, auf 100 Menschen gerundet" tabindex="0"><table>
           <caption>Über die Grundversicherung abgerechnet 2024, auf 100 Menschen gerundet</caption>
           <tr><th scope="col">Kosten im Jahr</th><th scope="col" class="n">Menschen</th></tr>
           <tr><td>nichts abgerechnet</td><td class="n">16</td></tr>
@@ -360,7 +386,7 @@
           <figcaption><strong>Abb. 3.</strong> Ein Pfosten je 500 Franken Jahreskosten, so hoch wie der eigene Anteil, bei einer Franchise von 1'000 Franken. Erwachsene, Grundregel: Franchise, danach 10 % Selbstbehalt bis höchstens 700 Franken. Ohne Spitalbeitrag und ohne den höheren Selbstbehalt bei gewissen Medikamenten.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-5" aria-label="Quelle 2">2</a></sup></figcaption>
           <p class="bewegt"><a href="/krankenkasse/bewegt/kostenteil/">Bewegte Fassung zum Ausprobieren: Der eigene Anteil</a>
           <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
-          <div class="tabelle"><table>
+          <div class="tabelle" role="region" aria-label="Höchstens selbst bezahlt im Jahr, Erwachsene" tabindex="0"><table>
             <caption>Höchstens selbst bezahlt im Jahr, Erwachsene</caption>
             <tr><th scope="col" class="n">Franchise, Fr.</th><th scope="col" class="n">Franchise und Selbstbehalt zusammen höchstens, Fr.</th></tr>
               <tr><td class="n">300</td><td class="n">1'000</td></tr>
@@ -377,7 +403,7 @@
 
       <h2 id="preise" tabindex="-1"><span class="nr">4</span> Woher kommen die Preise?</h2>
         <p>Im Laden sieht man den Preis und entscheidet. Beim Arzt nicht. Man kennt den Preis nicht, kann schlecht vergleichen, und oft entscheidet jemand anderes, was nötig ist. Darum gibt es keinen freien Markt. Preise werden ausgehandelt oder vom Staat festgelegt.<sup class="beleg"><a href="#quelle-leistungen2025" id="beleg-leistungen2025-1" aria-label="Quelle 7">7</a></sup></p>
-        <div class="tabelle"><table>
+        <div class="tabelle" role="region" aria-label="Was die Grundversicherung 2025 je Person und Monat bezahlte" tabindex="0"><table>
           <caption>Was die Grundversicherung 2025 je Person und Monat bezahlte</caption>
           <tr><th scope="col">Bereich</th><th scope="col" class="n">Fr./Mt.</th><th scope="col">So entsteht der Preis</th></tr>
           <tr><td>Arzt ambulant</td><td class="n">93</td><td>Eine Preisliste für Arbeitsschritte (TARDOC, seit 2026) und Pauschalen. Jede Leistung hat Punkte, die Punkte mal Taxpunktwert ergeben den Preis.</td></tr>
@@ -392,7 +418,7 @@
 
       <h2 id="praemie" tabindex="-1"><span class="nr">5</span> Wie wird daraus die Prämie?</h2>
         <p>So setzt sich die Prämie zusammen. Jede Kasse rechnet für jede Region und Altersgruppe wie mit einem Rezept. Hier mit den echten Zahlen von 2025, pro Person und Monat:<sup class="beleg"><a href="#quelle-leistungen2025" id="beleg-leistungen2025-3" aria-label="Quelle 7">7</a></sup></p>
-        <div class="tabelle"><table>
+        <div class="tabelle" role="region" aria-label="Das Rezept der Prämie, 2025, je Person und Monat" tabindex="0"><table>
           <caption>Das Rezept der Prämie, 2025, je Person und Monat</caption>
           <tr><th scope="row">Was die Grundversicherung für Behandlungen bezahlte (ohne Kantonsanteil am Spital)</th><td class="n">411 Fr.</td></tr>
           <tr><th scope="row">minus was die Versicherten selbst zahlten</th><td class="n">− 54 Fr.</td></tr>
@@ -415,7 +441,7 @@
           <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
         </figure>
         <p class="merke"><strong>Kurz gesagt:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien.<sup class="beleg"><a href="#quelle-kennzahlen" id="beleg-kennzahlen-1" aria-label="Quelle 9">9</a></sup> Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
-<div class="tabelle"><table>
+<div class="tabelle" role="region" aria-label="Mittlere Monatsprämie 2027, ganze Schweiz" tabindex="0"><table>
           <caption>Mittlere Monatsprämie 2027, ganze Schweiz</caption>
           <tr><th scope="col">Altersgruppe</th><th scope="col" class="n">Franken</th></tr>
           <tr><td>Erwachsene ab 26</td><td class="n">487.60</td></tr>
@@ -438,7 +464,7 @@
           <figcaption><strong>Abb. 5.</strong> Ein Pfosten je Prämienregion, so hoch wie die mittlere Prämie für Erwachsene ab 26, alle Kassen zusammen. 15 Kantone haben eine Region, 11 haben zwei oder drei; deren Pfosten stehen nebeneinander. Die Pfosten beginnen bei null, das Verhältnis stimmt. Daten: Prämiendaten des Bundes (priminfo.admin.ch), Stand 22. Oktober 2026, in Maloja Plana geführt.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-2" aria-label="Quelle 11">11</a></sup></figcaption>
           <p class="bewegt"><a href="/krankenkasse/bewegt/kantone/">Bewegte Fassung zum Ausprobieren: Prämien 2027 je Region</a>
           <span class="leise">eigene Seite, mit Maus, Finger oder Tastatur</span></p>
-          <div class="tabelle zahlen"><table>
+          <div class="tabelle zahlen" role="region" aria-label="Zahlenansicht: mittlere Monatsprämie Erwachsene 2027 je Kanton, in Franken. Ganze Schweiz: 487.60." tabindex="0"><table>
             <caption>Zahlenansicht: mittlere Monatsprämie Erwachsene 2027 je Kanton, in Franken. Ganze Schweiz: 487.60.</caption>
             <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Prämie</th><th scope="col" class="n">zum Vorjahr</th></tr>
               <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span style="width:53.2%"></span></td><td class="n">324.90</td><td class="n">+4,4 %</td></tr>
@@ -471,7 +497,7 @@
           <p class="leise">Kantonsmittel und Veränderung laut BAG-Tabelle der kantonalen Prämien vom 29. September 2026, wie im Kantonsatlas geführt. Die Veränderung bezieht sich auf den angepassten Vorjahreswert des BAG; die 2026 ursprünglich genehmigten Prämien weichen davon um wenige Franken ab.</p>
           <details>
             <summary>Werte je Prämienregion (11 Kantone)</summary>
-            <div class="tabelle"><table>
+            <div class="tabelle" role="region" aria-label="Mittlere Monatsprämie Erwachsene 2027 je Prämienregion" tabindex="0"><table>
               <caption>Mittlere Monatsprämie Erwachsene 2027 je Prämienregion</caption>
               <tr><th scope="col">Kanton</th><th scope="col" class="n">Franken im Monat</th></tr>
               <tr><td>Graubünden</td><td class="n">Region 1: 441.90<br>Region 2: 410.90<br>Region 3: 395.50</td></tr>
@@ -488,7 +514,7 @@
             </table></div>
           </details>
         </figure>
-<div class="tabelle"><table>
+<div class="tabelle" role="region" aria-label="Prämie und Kosten in sechs Kantonen" tabindex="0"><table>
           <caption>Prämie und Kosten in sechs Kantonen</caption>
           <tr><th scope="col">Kanton</th><th scope="col" class="n">Prämie Erwachsene 2027, Fr./Mt.</th><th scope="col" class="n">Kosten je Person 2024, Fr./Jahr</th></tr>
           <tr><td>Zug</td><td class="n">324.90</td><td class="n">3'869</td></tr>
@@ -502,7 +528,7 @@
         <p>Warum die Kosten verschieden sind, ist nicht abschliessend geklärt. Ältere Studien deuten darauf hin, dass die Menge der Behandlungen mehr erklärt als deren Preis, und dass in Kantonen mit mehr Ärztinnen und Ärzten mehr Leistungen bezogen werden. Beim Alter ist das Bild nicht einheitlich: Eine Studie konnte den Einfluss nicht belegen, andere fanden ihn. Auch Armut, Arbeitslosigkeit und Invalidität spielen eine Rolle.<sup class="beleg"><a href="#quelle-zhaw" id="beleg-zhaw-1" aria-label="Quelle 12">12</a></sup><sup class="beleg"><a href="#quelle-obsan" id="beleg-obsan-1" aria-label="Quelle 13">13</a></sup></p>
         <h3>Die Prämienregion</h3>
         <p>Auch innerhalb eines Kantons kann die Prämie verschieden sein, weil die Stadt oft mehr kostet als das Land. Darum sind Kantone mit grossen Kostenunterschieden in Prämienregionen aufgeteilt. Jede Gemeinde gehört fest zu einer Region. Meist ist Region 1 die teuerste. Die Kassen dürfen in den anderen Regionen tiefere Prämien verlangen, sie müssen aber nicht. Ausnahmen gibt es auch: 2027 verlangt eine Kasse in drei Kantonen in Region 2 mehr als in Region 1.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-3" aria-label="Quelle 11">11</a></sup></p>
-        <div class="tabelle"><table>
+        <div class="tabelle" role="region" aria-label="Kantone mit mehreren Prämienregionen" tabindex="0"><table>
           <caption>Kantone mit mehreren Prämienregionen</caption>
           <tr><th scope="col">Regionen</th><th scope="col">Kantone und grösster erlaubter Unterschied</th></tr>
           <tr><td>drei</td><td>Bern, Graubünden, Zürich: 15 % von Region 1 zu 2, 10 % von 2 zu 3. Luzern: 15 und 5 %. St. Gallen: 10 und 10 %.</td></tr>
@@ -552,7 +578,7 @@
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
-        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
+        <p><a class="knopf" href="/#/praemien">Beispiel ansehen — ohne Zugangscode</a></p>
       </div>
 
       <h2 id="quellen">Quellen</h2>
@@ -788,6 +814,7 @@
           <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
           <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/kantone-im-vergleich/">Kantone im Vergleich</a></li>
           <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
       </ul>
     </main>

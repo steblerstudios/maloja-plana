@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eyebrow, PageTitle } from './components/Heading.jsx';
+import { Eyebrow } from './components/Heading.jsx';
 import {
   getNotificationPermission,
   requestNotificationPermission,
@@ -14,6 +14,10 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 // Respectful, opt-in notification management.
 // No tracking, no analytics, no external services.
 // User controls everything.
+//
+// Seit 05.11.2026 (Seitenlandkarte Z2) ein Abschnitt der Einstellungen (SettingsView.jsx), keine eigene
+// Seite mehr. `#/notifications` → UMLEITUNGEN → Einstellungen, Sprungmarke BENACHRICHTIGUNGEN_ANKER.
+export const BENACHRICHTIGUNGEN_ANKER = 'mp-benachrichtigungen';
 
 export const NotificationSettings = ({ palette, t }) => {
   const [permission, setPermission] = useState(getNotificationPermission());
@@ -64,7 +68,7 @@ export const NotificationSettings = ({ palette, t }) => {
       }
     },
       React.createElement('div', { style: { flex: 1 } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '2px' } }, label),
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '2px', color: palette.text } }, label),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.4 } }, description)
       ),
       React.createElement('button', {
@@ -85,10 +89,15 @@ export const NotificationSettings = ({ palette, t }) => {
     );
   };
 
-  return React.createElement('div', {
-    style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border }
+  // Gleiche Karte wie die übrigen Abschnitte der Einstellungen; Überschrift eine Stufe unter dem Seitentitel.
+  return React.createElement('section', {
+    id: BENACHRICHTIGUNGEN_ANKER,
+    'aria-labelledby': BENACHRICHTIGUNGEN_ANKER + '-titel',
+    style: { background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: space.md + 'px', color: palette.text, scrollMarginTop: '80px' }
   },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'cowbell', size: 22 }), style: { marginBottom: space.md } }, t('notifications.title')),
+    React.createElement(Eyebrow, { palette, as: 'h3', id: BENACHRICHTIGUNGEN_ANKER + '-titel', style: { display: 'flex', alignItems: 'center', gap: '6px', margin: '0 0 ' + space.sm + 'px 0' } },
+      React.createElement(Icon, { name: 'cowbell', size: 16, color: palette.mid }),
+      t('notifications.title')),
 
     // Permission status
     React.createElement('div', {

@@ -331,15 +331,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
               style: { ...knopfStil(palette, 'neben'), padding: '10px', ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
+            }, !exporting && React.createElement(Icon, { name: 'sicherung', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
               style: { ...knopfStil(palette, 'neben'), padding: '10px', ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'CSV'),
+            }, !exporting && React.createElement(Icon, { name: 'csv', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'CSV'),
             React.createElement('button', {
               onClick: () => setVorschau('manifest'), disabled: exporting,
               style: { ...knopfStil(palette, 'neben'), padding: '10px', ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'Manifest')
+            }, !exporting && React.createElement(Icon, { name: 'document', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'Manifest')
           ),
           vorschauPanel('json', 'csv', 'manifest')
         ),
