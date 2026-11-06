@@ -4588,7 +4588,7 @@ export default {
     welcome: { title: 'Welcome to Maloja Plana', text: 'Your calm place for everything Swiss — papers, budget, insurance, deadlines. A short tour, skippable anytime.' },
     berge: { title: 'Your progress', text: 'The mountains quietly show how far your life organizer is set up — no pressure, no chasing percentages.' },
     anspruch: { title: 'What you\'re entitled to', text: 'Here Maloja surfaces what you might be entitled to — based on what you picked at the start.' },
-    privacy: { title: 'Everything stays with you', text: 'Your data stays on this device. No account, no cloud, no tracking.' },
+    privacy: { title: 'Everything stays with you', text: 'Your data stays on this device. No account, no cloud, no tracking. Maloja only counts the days per month on this device. You can refuse this in Settings.' },
     start: { title: 'Start here', text: 'There is always exactly one next step here. Everything else can wait.' },
     startAction: 'Start with "{name}"',
   },

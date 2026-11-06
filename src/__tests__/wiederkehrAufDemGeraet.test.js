@@ -262,3 +262,22 @@ describe('Zählung · robust gegen gesperrten oder vollen Speicher (sicherheits-
     expect(s.getItem(ABGELEHNT)).toBe('1');
   });
 });
+
+describe('Rundgang · «kein Tracking» steht nicht allein (rechts-pruefer Soll 2, Stebler Studios 06.11.2026)', () => {
+  it('nennt in allen Sprachen die Zählung auf dem Gerät und das Ablehnen in den Einstellungen', () => {
+    const muster = {
+      de: [/zählt nur auf diesem Gerät/, /Einstellungen/],
+      fr: [/compte seulement sur cet appareil/, /Paramètres/],
+      it: [/conta solo su questo dispositivo/, /Impostazioni/],
+      en: [/only counts the days per month on this device/, /Settings/],
+      rm: [/dumbra mo sin quest apparat/, /Configuraziuns/],
+    };
+    for (const [lang, texte] of Object.entries(SPRACHEN)) {
+      const v = texte.tour.privacy.text;
+      for (const s of typeof v === 'string' ? [v] : [v.sie, v.du]) {
+        for (const m of muster[lang]) expect(s, lang).toMatch(m);
+      }
+    }
+  });
+});
+

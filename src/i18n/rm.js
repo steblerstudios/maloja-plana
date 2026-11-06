@@ -4014,7 +4014,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
     anspruch: { title: 'Pussaivels dretgs', text: { sie: 'Qua mussa Maloja sin tge che Vus pudessas avair dretg — tenor quai che Vus avais tschernì al cumenzament.', du: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' } },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-    privacy: { title: 'Tut resta sin l\'apparat', text: { sie: 'Vossas datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.', du: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.' } },
+    privacy: { title: 'Tut resta sin l\'apparat', text: { sie: 'Vossas datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking. Maloja dumbra mo sin quest apparat ils dis per mais. Il dumbrar po vegnir refusà en las Configuraziuns.', du: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking. Maloja dumbra mo sin quest apparat ils dis per mais. Il dumbrar po vegnir refusà en las Configuraziuns.' } },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026; #321 hatte nur die Du-Form)
     start: { title: { sie: 'Cumenzai qua', du: 'Cumenza qua' }, text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
     startAction: 'Cumenzar cun «{name}»',
