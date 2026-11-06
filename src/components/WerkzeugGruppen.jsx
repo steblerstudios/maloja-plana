@@ -84,23 +84,25 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
   // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
   // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
   const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
-  let offen = [];
-  try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
+  // Im Zustand gehalten, damit der Aufklapp-Pfeil dem Öffnen folgt (Verbesserungen B1, 06.11.2026 —
+  // vorher stand er fest auf «zu»; Wächter: werkzeugGruppenPfeil.test.js).
+  const [offen, setOffen] = React.useState(() => {
+    try { const v = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); return Array.isArray(v) ? v : []; } catch { return []; }
+  });
   // Seit 05.11.2026 nach Titel (g.label), nicht nach Stelle: mit einer neuen Gruppe hätte die gemerkte
   // Stelle sonst eine andere Gruppe geöffnet. Ältere Einträge (Zahlen) und ein Sprachwechsel treffen nichts — dann starten alle zu.
-  const merkeGruppe = (name, istOffen) => {
-    try {
-      const rest = offen.filter((i) => i !== name);
-      offen = istOffen ? rest.concat(name) : rest;
-      sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
-    } catch { /* ohne Speicher: nichts merken */ }
-  };
+  const merkeGruppe = (name, istOffen) => setOffen((vorher) => {
+    if (vorher.includes(name) === istOffen) return vorher;
+    const neu = istOffen ? vorher.concat(name) : vorher.filter((i) => i !== name);
+    try { sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(neu)); } catch { /* ohne Speicher: nichts merken */ }
+    return neu;
+  });
   return React.createElement(React.Fragment, null,
     ...groups.map((g) => React.createElement('details', {
       // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
       // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
       key: 'tg-' + g.label,
-      open: Array.isArray(offen) && offen.includes(g.label),
+      open: offen.includes(g.label),
       onToggle: (e) => merkeGruppe(g.label, e.currentTarget.open),
       style: { borderTop: '1px solid ' + palette.border + '66' },
     },
@@ -108,7 +110,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
         style: { cursor: 'pointer', padding: space.sm + 'px 2px', minHeight: '44px', boxSizing: 'border-box', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
       },
         React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
-          React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),
+          React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(offen.includes(g.label))),
           g.label
         ),
         React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
