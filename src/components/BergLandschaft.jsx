@@ -183,7 +183,7 @@ const Kreis = ({ ui, anteil, mitte, d }) => {
     anteil > 0 && React.createElement('circle', {
       cx: d / 2, cy: d / 2, r, fill: 'none', stroke: ui.sageDeep, strokeWidth: sw, strokeLinecap: 'round',
       strokeDasharray: `${u * Math.min(1, anteil)} ${u}`, transform: `rotate(-90 ${d / 2} ${d / 2})`,
-      style: { transition: 'stroke-dasharray 900ms ease' },
+      style: { transition: 'stroke-dasharray ' + duration.cinematic + 'ms ' + ease },
     }),
     mitte != null && React.createElement('text', {
       x: '50%', y: '50%', textAnchor: 'middle', dominantBaseline: 'central',
@@ -258,8 +258,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     const el = abgeschlossenKachel.current;
     if (vorher === null || vorher > 0 || abgeschlossenJetzt === 0 || !el || !el.animate) return;
     if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    el.animate([{ transform: 'scale(0.4)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
-      { duration: 520, easing: 'cubic-bezier(.2,.8,.3,1.2)' });
+    // Der In-App-Schalter «Bewegung reduzieren» setzt <html data-reduce-motion="1">. Die CSS-Regel
+    // dafür erreicht Web-Animations nicht, deshalb hier eigens prüfen.
+    if (document.documentElement.getAttribute('data-reduce-motion') === '1') return;
+    el.animate([{ transform: 'scale(0.4)' }, { transform: 'scale(1.04)' }, { transform: 'scale(1)' }],
+      { duration: duration.slow, easing: ease });
   }, [abgeschlossenJetzt]);
   const [breite, setBreite] = useState(0);
   const schmal = breite > 0 && breite < SCHMAL_AB;
@@ -285,7 +288,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
   const spalte = ausgriff ? -ausgriff.links : 0;
   const imRahmen = (x, y) => ({ left: ((x - a.x) / a.w) * 100 + '%', top: ((y - a.y) / a.h) * 100 + '%' });
   // Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
-  const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity 1.5s ease' });
+  const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity ' + duration.cinematic + 'ms ' + ease });
 
   return React.createElement('div', {
     ref: huelle,
@@ -361,7 +364,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       BERG_BILDER && completion >= 85 && React.createElement('path', { key: 'schoggi',
         d: 'M 760 600 L 768 586 L 776 600 L 784 586 L 792 600 Z', fill: p.sand, style: s(85, 0.7, 10) }),
       BERG_BILDER && completion >= 95 && React.createElement('circle', { key: 'sonne',
-        cx: 250, cy: 130, r: 22, fill: p.sand, style: { opacity: 0.35, transition: 'opacity 1.5s ease' } }),
+        cx: 250, cy: 130, r: 22, fill: p.sand, style: { opacity: 0.35, transition: 'opacity ' + duration.cinematic + 'ms ' + ease } }),
       BERG_BILDER && completion >= 100 && React.createElement('g', { key: 'fahne' },
         React.createElement('line', { x1: 598, y1: 172, x2: 598, y2: 198, stroke: p.mid, strokeWidth: 1.6 }),
         React.createElement('rect', { x: 599, y: 172, width: 15, height: 10, rx: 0.8, fill: '#d42b2b' }),
@@ -532,7 +535,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             boxShadow: maturity === 'complete' ? `0 0 0 3px ${ui.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
           },
-          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
+          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.04)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         },
           // F7-S8 (Stebler Studios 27.10.2026): Tippfläche mindestens 44 px (Regel aus #620), ohne das Bild zu
@@ -555,7 +558,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
               strokeLinecap: pct >= 100 ? 'butt' : 'round',
               strokeDasharray: `${(ringU * Math.min(100, pct)) / 100} ${ringU}`,
               transform: `rotate(-90 ${sz / 2} ${sz / 2})`,
-              style: { transition: 'stroke-dasharray 900ms ease' },
+              style: { transition: 'stroke-dasharray ' + duration.cinematic + 'ms ' + ease },
             }),
           ),
           React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px', position: 'relative' } }, IconFn ? IconFn() : null)
@@ -608,7 +611,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
           },
-          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
+          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.04)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         }, React.createElement('div', { style: { width: '17px', height: '17px' } }, st.zeichen())),
         React.createElement('span', {

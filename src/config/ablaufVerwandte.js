@@ -9,7 +9,9 @@ export const VERWANDTE = {
   kkerst: ['kvgwechsel', 'zuzug', 'volljaehrig'],
   kvgwechsel: ['kkerst', 'umzug', 'unfallkrankheit'],
   neuerjob: ['stelleverloren', 'lehre', 'selbstaendigkeit', 'quellensteuer'],
-  stelleverloren: ['neuerjob', 'unfallkrankheit', 'ergaenzungsleistungen'],
+  // Fassung 9 (F9-D4, swiss-precision 06.11.2026): EL setzen einen AHV- oder IV-Fall voraus (ELG Art. 4),
+  // Stellenverlust allein begründet keinen Anspruch — statt EL die IV, der echte Weg dorthin bei Krankheit.
+  stelleverloren: ['neuerjob', 'unfallkrankheit', 'iv'],
   unfallkrankheit: ['iv', 'stelleverloren', 'pflege'],
   umzug: ['wohnunggekuendigt', 'zusammenziehen', 'zuzug', 'wegzug'],
   pensionierung: ['ergaenzungsleistungen', 'vorsorgeauftrag', 'pflege'],
@@ -28,6 +30,9 @@ export const VERWANDTE = {
   wohnunggekuendigt: ['umzug', 'mahnung'],
   quellensteuer: ['neuerjob', 'bewilligung', 'wegzug'],
   // Umleitung auf «Stelle verloren» (letzter Teil dort); der Eintrag zählt trotzdem als Ablauf im Register.
+  // EL bleibt: ab 60 können auf die Überbrückungsleistungen EL folgen (ÜLG Art. 3 Abs. 1, ELG Art. 4) —
+  // Bst. b nur, wenn EL im Referenzalter absehbar sind; der Text zieht die Grenze (swiss-precision und
+  // rechts-pruefer 06.11.2026).
   aussteuerung: ['stelleverloren', 'ergaenzungsleistungen'],
   zuzug: ['umzug', 'einbuergerung', 'kkerst', 'bewilligung'],
   einbuergerung: ['bewilligung', 'zuzug', 'ausweis'],
@@ -42,6 +47,6 @@ export const VERWANDTE = {
   lehre: ['volljaehrig', 'neuerjob', 'dienst'],
   volljaehrig: ['lehre', 'dienst', 'kkerst'],
   dienst: ['volljaehrig', 'lehre'],
-  todesfall: ['vorsorgeauftrag', 'pensionierung', 'digitaleordnung'],
+  todesfall: ['vorsorgeauftrag', 'pensionierung', 'ergaenzungsleistungen', 'digitaleordnung'],
   digitaleordnung: ['vorsorgeauftrag', 'betreibungsauszug'],
 };

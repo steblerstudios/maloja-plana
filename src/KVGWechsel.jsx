@@ -9,6 +9,7 @@ import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { ablaufStandKey } from './utils/ablaufStand.js';
 import { zusatzSchritte, zusatzFussNotizen } from './ZusatzWechsel.jsx';
 import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"), jetzt auf der wiederverwendbaren
 // Ablauf-Schale. Verkettet die vorhandenen Bausteine zu einem ruhigen Weg: Vergleich →
@@ -139,6 +140,8 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
           ? t('kvgWechsel.step1TextKnown', { insurer: currentInsurer })
           : t('kvgWechsel.step1Text')),
       onNavigate && React.createElement(AblaufLink, { key: 'b', palette, label: t('kvgWechsel.step1Link'), onClick: () => onNavigate('praemien') }),
+      // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+      onNavigate && React.createElement(AblaufLink, { key: 'b2', palette, label: t(ansichtName('premium')), onClick: () => onNavigate('premium') }),
       // Kurz innehalten — ein tieferer Preis allein ist noch kein Wechselgrund.
       React.createElement('p', { key: 'c', style: s.reassure }, t('kvgWechsel.checkIntro')),
       React.createElement('ul', { key: 'd', style: s.checkList },

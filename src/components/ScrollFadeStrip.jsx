@@ -1,4 +1,5 @@
 import React from 'react';
+import { duration, ease } from '../config/tokens.js';
 
 const { useRef, useState, useEffect, useCallback } = React;
 
@@ -51,7 +52,7 @@ export const ScrollFadeStrip = ({ palette, containerStyle, style, fadeColor, fad
     position: 'absolute', top: 0, bottom: 0, [side]: 0, width: w,
     pointerEvents: 'none', zIndex: 1,
     background: 'linear-gradient(to ' + (side === 'left' ? 'right' : 'left') + ', ' + col + ', ' + col + '00)',
-    opacity: fade[side] ? 1 : 0, transition: 'opacity 160ms ease',
+    opacity: fade[side] ? 1 : 0, transition: 'opacity ' + duration.fast + 'ms ' + ease,
   });
 
   return React.createElement('div', { style: { position: 'relative', ...containerStyle } },

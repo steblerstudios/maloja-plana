@@ -14,6 +14,14 @@ export const Ausweis = ({ palette, t, onNavigate }) => {
     title: t('ausweis.title'),
     intro: t('ausweis.intro'),
   },
+    // Fassung 9 (F9-D5): «Verloren oder gestohlen» zuerst — wer danach sucht, braucht es sofort.
+    React.createElement(AblaufStep, { palette, title: t('ausweis.step5Title') },
+      React.createElement('p', { style: s.stepText }, t('ausweis.step5Text')),
+      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('ausweis.step5Tipp')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.step5LinkTresor'), onClick: () => onNavigate('tresor') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.step5LinkFuehrerausweis'), onClick: () => onNavigate('fuehrerausweis') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.step5LinkWegzug'), onClick: () => onNavigate('wegzug') })
+    ),
     React.createElement(AblaufStep, { palette, title: t('ausweis.step1Title') },
       React.createElement('p', { style: s.stepText }, t('ausweis.step1Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.introLinkBewilligung'), onClick: () => onNavigate('bewilligung') }),
@@ -34,13 +42,6 @@ export const Ausweis = ({ palette, t, onNavigate }) => {
         art: 'frist', buttonKey: 'ausweis.step4Button', doneKey: 'ausweis.step4Done', calendarKey: 'ausweis.step4CalendarLink',
         reminderTitle: t('ausweis.reminderTitle'), category: 'admin',
       })
-    ),
-    React.createElement(AblaufStep, { palette, title: t('ausweis.step5Title') },
-      React.createElement('p', { style: s.stepText }, t('ausweis.step5Text')),
-      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('ausweis.step5Tipp')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.step5LinkTresor'), onClick: () => onNavigate('tresor') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.step5LinkFuehrerausweis'), onClick: () => onNavigate('fuehrerausweis') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('ausweis.step5LinkWegzug'), onClick: () => onNavigate('wegzug') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('ausweis.quelle'), notes: [t('ausweis.footerNote'), t('trust.localOnly')] })
   );

@@ -5,7 +5,7 @@ import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, 
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
+import { text, weight, radius, space, visuallyHiddenStyle, duration, ease } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -451,11 +451,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           style: { padding: '12px', background: statusColor + '22', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + statusColor, fontSize: text.sm, fontWeight: weight.medium, display: 'flex', alignItems: 'center', gap: '10px' }
         },
           backupStatus.type === 'success' && React.createElement('svg', {
-            viewBox: '0 0 20 20', style: { width: '20px', height: '20px', flexShrink: 0, animation: 'mp-lock-close 0.4s ease-out forwards' }
+            viewBox: '0 0 20 20', style: { width: '20px', height: '20px', flexShrink: 0, animation: 'mp-lock-close ' + duration.slow + 'ms ' + ease + ' forwards' }
           },
             React.createElement('rect', { x: '4', y: '9', width: '12', height: '10', rx: '2', fill: palette.sage }),
             React.createElement('path', { d: 'M 7 9 L 7 6 C 7 3.5 10 1.5 13 3.5 L 13 9', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' }),
-            React.createElement('polyline', { points: '8,14 10,16 13,12', fill: 'none', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', style: { animation: 'mp-check-pop 0.3s 0.3s ease-out both' } }),
+            React.createElement('polyline', { points: '8,14 10,16 13,12', fill: 'none', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', style: { animation: 'mp-check-pop ' + duration.normal + 'ms ' + duration.normal + 'ms ' + ease + ' both' } }),
           ),
           backupStatus.msg
         ),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, space, leading } from './config/tokens.js';
-import { renderSource } from './utils/renderSource.js';
 import { AblaufLink, FristButton, ablaufStyles, AblaufWarnung } from './AblaufSchale.jsx';
+import { Belege } from './components/Belege.jsx';
 
 // Zusatzversicherung (VVG) kündigen — gebaut als 2. geführter Ablauf auf der Ablauf-Schale.
 // Seit F7-A5 (Entscheid Stebler Studios 27.10.2026) EIN Ablauf mit «Krankenkasse wechseln»
@@ -51,7 +51,7 @@ export const zusatzSchritte = ({ palette, t, data, onNavigate }) => {
         React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint2')),
         React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint3'))
       ),
-      React.createElement('p', { key: 'd', style: s.source }, renderSource(t('zusatzWechsel.checkSource'), null, t)),
+      React.createElement(Belege, { key: 'd', palette, t, zeile: t('zusatzWechsel.checkSource'), style: s.source }),
     ] },
 
     // Schritt 2 — Wichtig: keine Aufnahmepflicht
