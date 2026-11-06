@@ -97,11 +97,11 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
             ? React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, padding: '20px 0' } }, t('taxImport.nothingFound'))
             : React.createElement('div', null,
                 preview.applied.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
-                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs } }, t('taxImport.willFill')),
+                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, t('taxImport.willFill')),
                   preview.applied.map(f => fieldRow(f, 'fill'))
                 ),
                 preview.kept.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
-                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs } }, t('taxImport.willKeep')),
+                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, t('taxImport.willKeep')),
                   preview.kept.map(f => fieldRow(f, 'keep'))
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },

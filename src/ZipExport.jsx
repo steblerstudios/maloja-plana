@@ -337,15 +337,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
               style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
+            }, !exporting && React.createElement(Icon, { name: 'sicherung', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
               style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'CSV'),
+            }, !exporting && React.createElement(Icon, { name: 'csv', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'CSV'),
             React.createElement('button', {
               onClick: () => setVorschau('manifest'), disabled: exporting,
               style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'Manifest')
+            }, !exporting && React.createElement(Icon, { name: 'document', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'Manifest')
           ),
           vorschauPanel('json', 'csv', 'manifest')
         ),

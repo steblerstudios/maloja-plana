@@ -43,7 +43,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
       borderRadius: radius.sm, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
     },
     gruppe: { marginTop: space.md + 'px' },
-    gruppeTitel: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },
+    gruppeTitel: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },
     liste: { listStyle: 'none', margin: 0, padding: 0, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface },
     zeile: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: '10px 14px' },
     zeileLinie: { borderTop: '1px solid ' + palette.border },

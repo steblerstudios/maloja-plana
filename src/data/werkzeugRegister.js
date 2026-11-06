@@ -89,7 +89,7 @@ export const WERKZEUGE = [
   { view: 'search', nav: 'nav.search', sub: 'nav.sub.search', icon: 'search', fach: AUSSENFACH, suche: false },
 
   // ── Unter Einstellungen (nicht im Rucksack) ──
-  { view: 'export', nav: 'nav.export', icon: 'download', fach: EINSTELLUNGEN, aliases: ['export', 'sicherung', 'backup', 'datensicherung'] },
+  { view: 'export', nav: 'nav.export', icon: 'sicherung', fach: EINSTELLUNGEN, aliases: ['export', 'sicherung', 'backup', 'datensicherung'] },
   { view: 'notifications', nav: 'nav.notifications', icon: 'cowbell', fach: EINSTELLUNGEN, aliases: ['benachrichtigungen', 'erinnerungen', 'notifications'] },
 ];
 
