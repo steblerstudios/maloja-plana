@@ -17,6 +17,7 @@ import { bereichColor, getBereich } from './data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
 import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
+import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -362,12 +363,26 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // «Frist «…» in den Kalender (Datum)») bleibt als zugänglicher Name des Knopfs — was in den Kalender geht.
 // a11y (Entwurf W): nach «In den Kalender» verschwindet der Knopf; der Fokus geht auf die Bestätigung
 // (Live-Region), statt verloren zu gehen.
-const kartenStil = (palette, vorbei) => ({
+// Fassung 9: Blau = Fristen, Rot = vorbei (Farbe nie allein — Datum bzw. «vorbei» steht dabei).
+// Seit F9-A14 Variante E (06.11.2026) trägt das Kalenderblatt die Farbe; der Kartenrand ist neutral,
+// sonst stünde Blau doppelt da. Vorher (05.11.) war der Rand selbst blau bzw. rot.
+const kartenStil = (palette) => ({
   marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
-  // Fassung 9: Blau = Fristen, Rot = vorbei (Farbe nie allein — Datum bzw. «vorbei» steht dabei).
-  border: '1px solid ' + (vorbei ? palette.rose : palette.sky),
+  border: '1px solid ' + palette.border,
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
+const blattOrt = (t) => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; };
+// Thema des offenen Ablaufs für den Frucht-Stempel am Blatt: Lebensbereich und Ablauf-Symbol aus dem Register.
+export const ablaufThema = (name) => {
+  const bereich = name && ablaufBereich(name);
+  if (!bereich) return null;
+  // Dasselbe Symbol wie im Kopf des Ablaufs: eine Quelle (ansichtIkon, seit fix/icons-ordnung).
+  return { bereich, icon: ansichtIkon(name, bereich) };
+};
+// Blatt und Text nebeneinander, links in der Karte.
+const mitBlatt = (palette, t, iso, vorbei, inhalt, name) => React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', minWidth: 0, flex: '1 1 14rem' } },
+  React.createElement(Kalenderblatt, { iso, palette, locale: blattOrt(t), vorbei, thema: ablaufThema(name) }),
+  inhalt);
 export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarLabel, reminder: reminderRoh, onNavigate, onSaved, kompakt = false }) => {
   const s = styles(palette);
   const vorlaeufig = useVorlaeufig();
@@ -389,10 +404,12 @@ export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarL
       style: { ...knopfStil(palette, 'neben'), flexShrink: 0 },
     }, zeichen, t('kvg.addToCalendar'));
   if (kompakt) return inhalt;
-  return React.createElement('div', { 'data-frist-karte': 'offen', style: kartenStil(palette, false) },
-    React.createElement('div', { style: { minWidth: 0 } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, reminder.title),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(reminder.dueDate) }))),
+  const textTeil = React.createElement('div', { style: { minWidth: 0 } },
+    React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, reminder.title),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(reminder.dueDate) })));
+  return React.createElement('div', { 'data-frist-karte': 'offen', style: kartenStil(palette) },
+    // Das Blatt nur bei einer rechtlichen Frist, nicht bei einer Erinnerung (F9-A14: Blatt = Frist).
+    art === 'frist' ? mitBlatt(palette, t, reminder.dueDate, false, textTeil, ablauf) : textTeil,
     inhalt);
 };
 
@@ -414,13 +431,16 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
   const ziel = frist(datum);
   const vorbei = istVorbei(ziel);
   const reminder = { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}), ...(ablauf ? { ablauf } : {}) };
-  const fristKarte = ziel ? React.createElement('div', { 'data-frist-karte': vorbei ? 'vorbei' : 'offen', style: kartenStil(palette, vorbei) },
+  // Blatt nur bei rechtlicher Frist (art 'frist') oder eigener Umzugs-Karte, nicht bei einer Erinnerung.
+  const ablaufOffen = useContext(AblaufNameContext);
+  const blatt = (inhalt) => (art === 'frist' || karte) ? mitBlatt(palette, t, ziel, vorbei, inhalt, ablaufOffen || ablauf) : inhalt;
+  const fristKarte = ziel ? React.createElement('div', { 'data-frist-karte': vorbei ? 'vorbei' : 'offen', style: kartenStil(palette) },
     vorbei
-      ? React.createElement('p', { style: { ...s.stepText, color: palette.text, margin: 0 } }, t(vorbeiKey, { date: formatDE(ziel) }))
+      ? blatt(React.createElement('p', { style: { ...s.stepText, color: palette.text, margin: 0 } }, t(vorbeiKey, { date: formatDE(ziel) })))
       : React.createElement(React.Fragment, null,
-        React.createElement('div', { style: { minWidth: 0 } },
+        blatt(React.createElement('div', { style: { minWidth: 0 } },
           React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, karte ? t(karte.titelKey) : reminderTitle),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(karte ? karte.bisKey : art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(ziel) }))),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(karte ? karte.bisKey : art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(ziel) })))),
         React.createElement(FristButton, {
           // Ein neues Datum ist ein neuer Termin — der Knopf beginnt wieder unbestätigt.
           key: ziel, palette, t, onNavigate, kompakt: true, reminder,
