@@ -367,7 +367,7 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // Seit F9-A14 Variante E (06.11.2026) trägt das Kalenderblatt die Farbe; der Kartenrand ist neutral,
 // sonst stünde Blau doppelt da. Vorher (05.11.) war der Rand selbst blau bzw. rot.
 const kartenStil = (palette) => ({
-  marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
+  marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.md,
   border: '1px solid ' + palette.border,
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
