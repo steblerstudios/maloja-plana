@@ -13,11 +13,14 @@ import { AblaufWarnung } from '../AblaufSchale.jsx';
 // Das Zeichen gehört der Komponente, nicht der Aufrufstelle (ICON_KONVENTION.md).
 
 const SRC = resolve(__dirname, '..');
-const warnZeichen = renderToStaticMarkup(React.createElement(Icons.warning));
+// Ohne Strichstärke verglichen: `Icon` darf sie an die Grösse anpassen (Icon-Plan, Schritt 4),
+// geprüft wird das Zeichen, nicht die Zahl.
+const ohneStrich = (html) => html.replace(/ stroke-width="[\d.]+"/g, '');
+const warnZeichen = ohneStrich(renderToStaticMarkup(React.createElement(Icons.warning)).replace(/^<svg[^>]*>/, ''));
 
 describe('AblaufWarnung', () => {
   it('zeigt das Warn-Zeichen vor dem Text', () => {
-    const html = renderToStaticMarkup(React.createElement(AblaufWarnung, { palette: LIGHT_PALETTE }, 'Achtung, Form'));
+    const html = ohneStrich(renderToStaticMarkup(React.createElement(AblaufWarnung, { palette: LIGHT_PALETTE }, 'Achtung, Form')));
     expect(html).toContain(warnZeichen);
     expect(html.indexOf(warnZeichen)).toBeLessThan(html.indexOf('Achtung, Form'));
   });
