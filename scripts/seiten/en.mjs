@@ -172,7 +172,7 @@ export const SEITEN = [
       {
         titel: 'The right nobody can lose',
         absaetze: [
-          'Independently of all of the above, <strong>Article 12 of the Federal Constitution</strong> lays down the right to assistance when in need: persons in distress and incapable of looking after themselves have the right to be helped and assisted, and to receive the means indispensable for leading a life in human dignity.',
+          'Independently of all of the above, <strong>Article 12 of the Federal Constitution</strong> lays down the right to assistance when in need: “Persons in need and unable to provide for themselves have the right to assistance and care, and to the financial means required for a decent standard of living.” (English translation on Fedlex, for information only. Only the German, French and Italian texts are legally binding.)',
           'This right belongs to everyone in Switzerland. It is not the same as social assistance and covers less — but it is the floor below which nobody may fall.',
         ],
       },
