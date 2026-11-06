@@ -53,6 +53,10 @@ Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild 
 
 [Gesamtbild](icon-besprechung-gesamtbild.html): alle entschiedenen Leitformen, 11 Ast-Farben, heute → neu, hell/dunkel/Graustufen, Abzeichen-Beispiele. Vorsorge-Variante: Bild [Vorsorge](icon-besprechung-vorsorge.html), ✅ **06.11.: A, drei Säulen** (AHV · Pensionskasse · Säule 3a) im violetten Schild. Offen laut Bild: Gesundheit-Kapitel-Umbau, Kreuz → Rechts-Prüfer, Mini-Zeichen je Seite, Funktionen + Glocke.
 
+## Mini-Zeichen-Wörterbuch (06.11.2026, abends)
+
+Bild [Mini-Zeichen](icon-besprechung-mini-zeichen.html): **Regel: jedes Zeichen genau eine Bedeutung**, Farbe des Abzeichens = mitspielender Ast. 31 Zeichen für 60 Seiten, heute → neu. Änderungen ggü. früher: Verbilligung = Münze mit Pfeil runter (wie heutige Miet-/Prämienverbilligung), Prozent nur Steuern · Volljährig = Schlüssel (Stern nur Dienst) · Unfall nur einmal (Gesundheit, Notfall-Rot) · Apfel = Tell-Platzhalter. Offen.
+
 ## ✅ Farben entschieden (06.11.2026, abends)
 
 **11 wie am Baum.** Jedes Icon trägt die Farbe seines Astes (`data/lebensbereiche.js`, eine Quelle): Familie kirschrot, Arbeit haselnuss, Vorsorge violett, Gesundheit hagebutte, Notfall rot … — die Leitform (Form) folgt dem Kapitel (7). Meine Empfehlung war 7 Farben; entschieden ist 11. Überholt damit: «Familie soll grün sein» und Ebene 1 «in der Farbe des Kapitels» weiter unten. Folge: Den Unterschied zwischen Ästen im selben Kapitel tragen Farbe **und** Zeichnung (Graustufen-Sicherheit bleibt über die gezeichnete Variante).
