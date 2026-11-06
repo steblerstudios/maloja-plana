@@ -316,6 +316,11 @@
     @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
     .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
+    .befund{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px; margin:18px 0 }
+    .befund h3{ margin:0 0 10px }
+    .befund dl{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; font-size:15px }
+    .befund dt{ color:var(--leise) } .befund dd{ margin:0 }
+    @media (max-width:600px){ .befund dl{ grid-template-columns:1fr } .befund dt{ margin-top:6px } }
     .atlas-werte summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
   </style>
 </head>
@@ -344,6 +349,7 @@
           <li><a href="#familie">Familie</a></li>
           <li><a href="#arbeit">Arbeit</a></li>
           <li><a href="#unterstuetzung">Unterstützung</a></li>
+          <li><a href="#befunde">Befunde</a></li>
         </ol>
       </nav>
 
@@ -788,6 +794,29 @@
         </figure>
         <p class="leise"><strong>Vorbehalt:</strong> Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte. Wer eine Leistung nicht beantragt, fehlt. Eine hohe Quote kann auf mehr Bedarf hindeuten, aber auch darauf, dass die Leistung bekannter ist oder leichter beantragt wird. Was Ihnen zustehen könnte, zeigt die Seite <a href="/was-steht-mir-zu/">Was steht mir zu?</a></p>
 
+      <h2 id="befunde" tabindex="-1"><span class="nr">8</span> Befunde</h2>
+        <p>Manchmal zeigen die Zahlen selbst eine Auffälligkeit: eine grosse Spanne oder eine Regel, die noch nicht umgesetzt ist. Hier stehen solche Befunde. Ein Befund ist eine Beobachtung, keine Forderung. Er nennt, was belegt ist, woher es kommt und wer dafür zuständig ist. Was jemand daraus macht, steht nicht auf dieser Seite.</p>
+        <article class="befund" aria-labelledby="befund-kita">
+          <h3 id="befund-kita">Abzug für Kinderbetreuung: grosse Spanne zwischen den Kantonen</h3>
+          <dl>
+            <dt>Art</dt><dd>grosse Spanne</dd>
+            <dt>Belegt</dt><dd>ja</dd>
+            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr 2026 bis zu 25'800 Franken je Kind abziehen.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 15">15</a></sup> 8 Kantone lassen höchstens 10'600 Franken zu: Schwyz 8'000, Nidwalden 8'400, Schaffhausen 9'400, Basel-Landschaft 10'000, Obwalden 10'000, Wallis 10'000, Thurgau 10'100, Jura 10'600. 8 Kantone liegen auf oder über dem Bund: Glarus 25'800, Solothurn 25'800, Uri 25'800, Basel-Stadt 26'000, Tessin 26'200, Genf 26'392, St. Gallen 26'800, Graubünden 27'300.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-2" aria-label="Quelle 10">10</a></sup></dd>
+            <dt>Zuständig</dt><dd>Für den Abzug bei den Kantons- und Gemeindesteuern die Kantone, über ihr Steuergesetz.</dd>
+            <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. Neuenburg ist nicht mitgezählt, weil dort nur der Wert 2025 ausgewiesen ist.</dd>
+          </dl>
+        </article>
+        <article class="befund" aria-labelledby="befund-ge">
+          <h3 id="befund-ge">Genf: Elternurlaub beschlossen, das Ausführungsgesetz fehlt noch</h3>
+          <dl>
+            <dt>Art</dt><dd>Umsetzung ausstehend</dd>
+            <dt>Belegt</dt><dd>ja</dd>
+            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil. Das Bundesparlament hat die Änderung am 22. September 2026 gewährleistet, ohne die Bestimmung zu Pflegefamilien.<sup class="beleg"><a href="#quelle-parlamentGe" id="beleg-parlamentGe-1" aria-label="Quelle 16">16</a></sup> Möglich wird das durch eine Änderung der Erwerbsersatzordnung vom 19. Dezember 2025, die laut Kanton am 1. Juli 2027 in Kraft tritt. Das kantonale Ausführungsgesetz ist noch nicht verabschiedet, ein Datum für den Start nennt der Kanton nicht.<sup class="beleg"><a href="#quelle-geElternurlaub" id="beleg-geElternurlaub-1" aria-label="Quelle 17">17</a></sup></dd>
+            <dt>Zuständig</dt><dd>Staatsrat und Grosser Rat des Kantons Genf.</dd>
+            <dt>Vorbehalt</dt><dd>Wer in Genf ein Kind erwartet, hat bis dahin Anspruch auf das, was heute gilt. Massgebend ist die Auskunft der Genfer Stellen.</dd>
+          </dl>
+        </article>
+
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
@@ -885,7 +914,7 @@
             <p class="q-titel"><a href="https://www.estv.admin.ch/de/kantonsblaetter" rel="noopener">Kantonsblätter</a></p>
             <p class="q-her">Eidgenössische Steuerverwaltung und Schweizerische Steuerkonferenz · Stand Februar 2026</p>
             <p class="q-belegt">Belegt: Abzug für Kinderbetreuung je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvKantonsblaetter-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvKantonsblaetter-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#beleg-estvKantonsblaetter-2" aria-label="Zurück zur Stelle 2 im Text">2</a></p>
           </div>
         </li>
         <li id="quelle-estvDrittbetreuung">
@@ -922,6 +951,33 @@
             <p class="q-her">Bundesamt für Sozialversicherungen · Dezember 2025, publiziert 26.05.2026</p>
             <p class="q-belegt">Belegt: EL-Quote zur AHV je Kanton</p>
             <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvEl-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-dbg">
+          <span class="q-nr">15</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/20260101/de" rel="noopener">Bundesgesetz über die direkte Bundessteuer (DBG), Art. 33 Abs. 3</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex), SR 642.11 · Fassung vom 1.1.2026; Betrag von 25'800 Fr. seit 1.1.2025 (AS 2024 479)</p>
+            <p class="q-belegt">Belegt: Höchstabzug für Kinderdrittbetreuung bei der direkten Bundessteuer und seine Bedingungen</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-dbg-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-parlamentGe">
+          <span class="q-nr">16</span>
+          <div>
+            <p class="q-titel"><a href="https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx" rel="noopener">Le Parlement donne son feu vert au congé parental genevois</a></p>
+            <p class="q-her">Parlamentsdienste, Bundesversammlung · 22.09.2026</p>
+            <p class="q-belegt">Belegt: Gewährleistung durch das Parlament am 22.09.2026, ohne die Bestimmung zu Pflegefamilien; Inhalt: 8 Wochen für den anderen Elternteil zu 16 Wochen Mutterschaft</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-parlamentGe-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-geElternurlaub">
+          <span class="q-nr">17</span>
+          <div>
+            <p class="q-titel"><a href="https://www.ge.ch/dossier/cohesion-sociale-geneve/domaines-developpement/conge-parental-etapes-mise-oeuvre" rel="noopener">Congé parental : les étapes de la mise en œuvre</a></p>
+            <p class="q-her">République et canton de Genève · ohne Datum, gelesen 06.11.2026</p>
+            <p class="q-belegt">Belegt: Abstimmung 18.06.2023, Änderung der Erwerbsersatzordnung vom 19.12.2025 mit Inkrafttreten 1.7.2027, fehlendes Ausführungsgesetz, kein Startdatum</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-geElternurlaub-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
           </div>
         </li>
       </ol>
