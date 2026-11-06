@@ -166,8 +166,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
         width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0,
         background: palette.gold, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
       },
-    }, h('svg', { viewBox: '0 0 24 24', width: 15, height: 15, fill: 'none', stroke: '#3a2c14', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
-      w.g.map((d, i) => h('path', { key: i, d })))),
+    }, Icons[w.icon] ? React.cloneElement(Icons[w.icon](), { width: 15, height: 15, stroke: '#3a2c14', strokeWidth: 1.7 }) : null),
     h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('gepaeck.w.' + w.key)),
   );
 

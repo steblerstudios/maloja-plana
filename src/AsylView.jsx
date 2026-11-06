@@ -52,7 +52,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
   // Schritte (Status, Verfahren, Rechte, Fristen, Hilfe, nächste Schritte), Inhalt unverändert. Einleitung mit
   // Vorlese-Knopf und Hinweis stehen oben, die Quelle im Fuss. Vorher eine eigene Karte ohne Schale.
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'asyl', icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'asyl', icon: 'ereignisAsyl',
     title: t('asyl.title'),
   },
     React.createElement('p', { style: s.intro }, t('asyl.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('asyl.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),

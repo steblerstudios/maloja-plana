@@ -1,5 +1,6 @@
 import React from 'react';
 import { zeichenErgaenzen } from './IconKern.jsx';
+import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 
 // ─── Maloja Plana SVG Pictogram System — das volle Register ─
 //
@@ -167,15 +168,15 @@ const _delete = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('path', { d: 'M10.3 11 V16.5 M13.7 11 V16.5' })
 );
 
-// Drei schlichte Outline-Präfixe (je EIN Element, Bundle-Budget) — ersetzen die rohen
-// Text-Glyphen ◰ □ ✕ vor Titeln/Knöpfen (docs/TODO.md §G3 P1, docs/ICON_KONVENTION.md).
-// Rechner/Aufstellung — Berechnungs-Abschnitte (SKOS, IPV, EL, Zahlungsplan).
-const _rechner = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('path', { d: 'M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM8.5 7.5h7M8.5 12h7M8.5 16.5h4' })
-);
 
+// Schlichte Outline-Präfixe (je EIN Element, Bundle-Budget) — ersetzten die rohen Text-Glyphen
+// ◰ □ ✕ vor Titeln/Knöpfen (docs/TODO.md §G3 P1, docs/ICON_KONVENTION.md).
 // «mappe» ist am 06.11.2026 in «ordner» aufgegangen (Icon-Plan, Entscheid E2): beide waren
 // derselbe Ordner. Dossiers tragen das Zeichen ihres Themas (Behörden = Waage, Notfall = Kreuz).
+// «rechner» (zeichnete ein Blatt) ist im selben Aufräumen in «document» aufgegangen; ein echter
+// Rechner wird erst gezeichnet (Icon-Plan, Schritt 8). «dashboard» (gefülltes Sackmesser) ist in
+// «sackmesser» aufgegangen, «emergency» (zweite Glocke) entfällt — Notfall ist das Kreuz,
+// Erinnerungen die Kuhglocke.
 
 // Drucker — Druckansicht (Finanz-Übersicht). Mappe + Drucker ersetzen dort die rohe
 // Glyphe ◇ (docs/TODO.md §G3 P1); je EIN Element, wie die drei Präfixe oben (Bundle-Budget).
@@ -183,14 +184,6 @@ const _drucker = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('path', { d: 'M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7Z' })
 );
 
-// Übersicht / Dashboard — Schweizer Sackmesser («alle Werkzeuge an einem Ort»)
-// Generisch (kein Victorinox-Kreuz, kein Export-Pfeil; Schutzrecht).
-const _dashboard = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '4', y: '9', width: '16', height: '6', rx: '3', fill: 'currentColor' }),
-  React.createElement('path', { d: 'M 16 9 L 21 3 L 21.5 3.8 L 17.5 9.5', fill: 'currentColor', opacity: '0.8' }),
-  React.createElement('path', { d: 'M 16 15 L 20 19.5 L 19.3 20 L 15.5 15.5', fill: 'currentColor', opacity: '0.6' }),
-  React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' })
-);
 
 // Sauberes Outline-Zahnrad (statt gefüllter Sternexplosion) — Kontur passt zum
 // Nav-Stil, und ein Zahnrad liest sich klar als Einstellungen (Stebler Studios, Icon-Audit).
@@ -254,12 +247,6 @@ const _timeline = () => React.createElement('svg', { viewBox: '0 0 24 24', fill:
   React.createElement('path', { d: 'M11 6 H19 M11 12 H17 M11 18 H18.5' })
 );
 
-const _emergency = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Alert bell
-  React.createElement('path', { d: 'M 12 2 Q 6 2 6 10 L 6 14 L 3 18 L 21 18 L 18 14 L 18 10 Q 18 2 12 2 Z' }),
-  React.createElement('path', { d: 'M 9 18 Q 9 22 12 22 Q 15 22 15 18', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
-  React.createElement('circle', { cx: '12', cy: '2', r: '1.5' })
-);
 
 const _mobility = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   // Bus/transit
@@ -377,9 +364,7 @@ zeichenErgaenzen({
   ergaenzungsleistungen: _ergaenzungsleistungen,
   barcode: _barcode,
   delete: _delete,
-  rechner: _rechner,
   drucker: _drucker,
-  dashboard: _dashboard,
   csv: _csv,
   debt: _debt,
   filter: _filter,
@@ -389,7 +374,6 @@ zeichenErgaenzen({
   dentist: _dentist,
   doctor: _doctor,
   timeline: _timeline,
-  emergency: _emergency,
   mobility: _mobility,
   work: _work,
   selfEmployment: _selfEmployment,
@@ -404,6 +388,12 @@ zeichenErgaenzen({
   paw: _paw,
   palette: _palette,
 });
+
+// Lebensereignisse (Gruppe E, Icon-Plan Schritt 7b): ein Zeichen je Ereignis, dasselbe im
+// Rucksack, in der Suche, in der Übersicht und im Seitentitel. Strich wie die Funktions-Icons.
+zeichenErgaenzen(Object.fromEntries(Object.entries(EREIGNIS_PFADE).map(([name, pfade]) => [name, () =>
+  React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+    ...pfade.map((d, i) => React.createElement('path', { key: i, d })))])));
 
 export { Icons, Icon, HinweisZeichen, erledigtZeichen, aufklappZeichen, zurueckZeichen, hinweisZeichen } from './IconKern.jsx';
 export { default } from './IconKern.jsx';

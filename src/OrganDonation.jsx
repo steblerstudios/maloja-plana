@@ -128,7 +128,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'organspende', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'ereignisOrgan', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       // Nach der Migration v5: eine frühere Angabe liess den Umfang offen (oder widersprach

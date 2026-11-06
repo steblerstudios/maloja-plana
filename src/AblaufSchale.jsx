@@ -10,7 +10,7 @@ import { renderSource } from './utils/renderSource.js';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
-import { ablaufBereich, ansichtName } from './config/ansichtenRegister.js';
+import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegister.js';
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
@@ -229,6 +229,9 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
 // (Satz unter «Alle N Schritte sind erledigt») sind freiwillig; `stand`/`setStand` nur, wenn der
 // Ablauf selbst springen muss (KVG-Wechsel: Wahl in Schritt 1 → zurück an den Anfang).
 export const AblaufContainer = ({ palette, t, onNavigate, ablauf, icon, title, intro, kopf, passNamen, abschlussText, stand: standVon, setStand: setStandVon, children }) => {
+  // Das Zeichen des Ereignisses aus dem Register — dasselbe wie im Rucksack und in der Suche
+  // (Icon-Plan, Schritt 7b). `icon` der Seite bleibt nur Rückfall für Seiten ohne Eintrag.
+  icon = ansichtIkon(ablauf, icon);
   const s = styles(palette);
   const name = ablaufName(ablauf);
   const kinder = flach(children);

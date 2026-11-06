@@ -260,7 +260,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   const summaryStil = { cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text };
   const statusLabel = (d) => d.status === 'paid' ? t('schulden.statusPaid') : istUeberfaellig(d) ? t('schulden.overdue') : t('schulden.statusOpen');
   const tabs = [
-    { key: 'overview', icon: 'dashboard', label: t('schulden.overview') },
+    { key: 'overview', icon: 'sackmesser', label: t('schulden.overview') },
     { key: 'debts', icon: 'debt', label: t('schulden.debts') },
     { key: 'plan', icon: 'timeline', label: t('schulden.planTab') },
     { key: 'betreibung', icon: 'behoerden', label: t('schulden.debtCollection') },
