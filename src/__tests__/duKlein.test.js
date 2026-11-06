@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const DE = fs.readFileSync(path.resolve(__dirname, '../i18n/de.js'), 'utf8');
 // Grosse Du-Form, vor der ein Wort, Komma oder Gedankenstrich steht (also mitten im Satz).
-const MITTEN = /(?<![.!?:"„«(\[{]\s)(?<=[\wäöüß,;)\-–—]\s)\b(Du|Dich|Dir|Dein|Deine|Deinen|Deinem|Deiner|Deines|Euch|Euer|Eure|Euren|Eurem|Eurer|Eures)\b/;
+const MITTEN = /(?<![.!?:"„«([{]\s)(?<=[\wäöüß,;)\-–—]\s)\b(Du|Dich|Dir|Dein|Deine|Deinen|Deinem|Deiner|Deines|Euch|Euer|Eure|Euren|Eurem|Eurer|Eures)\b/;
 
 const duTexte = (src) => [
   ...[...src.matchAll(/du: '((?:[^'\\]|\\.)*)'/g)].map((m) => m[1]),
