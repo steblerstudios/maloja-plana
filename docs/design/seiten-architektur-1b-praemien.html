@@ -1,0 +1,43 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Prämien und Gesundheit</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1100px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}p{color:var(--soft);margin:4px 0}
+.reihe{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:8px;margin:12px 0}@media(max-width:820px){.reihe{grid-template-columns:1fr 1fr}}
+.feld{background:var(--card);border-radius:12px;padding:10px 12px}.feld h3{margin:0 0 6px;font-size:13px;font-weight:600}.feld.emp{outline:2px solid #C4A870}
+.seite{border:1px solid #ddd;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:12px}
+.seite .t{display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:4px}
+.teil{border-left:4px solid;padding:2px 7px;margin:3px 0;border-radius:3px;background:rgba(127,127,127,.06)}
+.form{position:relative;width:34px;height:34px;border-radius:8px;flex:none;color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center}
+.abz{position:absolute;right:-5px;bottom:-5px;width:15px;height:15px;border-radius:50%;border:2px solid var(--card)}
+.warum{font-size:12.5px;color:var(--soft);margin-top:6px}
+.box{background:var(--card);border-left:4px solid #C67A4A;border-radius:8px;padding:10px 14px;margin:12px 0}
+</style>
+<h1>Frage 1b · Prämien: Versicherungen oder Gesundheit?</h1>
+<p>Dein Gefühl hat einen Grund im Code. Die Seite heisst seit 25.10. «Versicherungs-Übersicht» und zeigt oben <b>alle</b> Versicherungen pro Monat. Darunter liegen aber vier aufklappbare Teile, und die gehören alle zur <b>Krankenkasse</b>: Franchise, Kassenvergleich, Prämie in deiner Region, Reserve-Check. Die Krankenkasse ist in der Icon-Besprechung schon orange (Gesundheit spielt mit).</p>
+
+<div class=reihe>
+ <div class=feld><h3>Heute · eine Seite, zwei Inhalte</h3>
+  <div class=seite><div class=t><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#6E90B0"></span></span>Versicherungs-Übersicht</div>
+   <div class=teil style="border-color:#6E90B0">Alle Versicherungen pro Monat · Schutzschild</div>
+   <div class=teil style="border-color:#C67A4A">Franchise</div>
+   <div class=teil style="border-color:#C67A4A">Kassen vergleichen</div>
+   <div class=teil style="border-color:#C67A4A">Prämie in deiner Region</div>
+   <div class=teil style="border-color:#C67A4A">Reserve-Check</div></div>
+  <div class=warum>Blau = alle Versicherungen · Orange = nur Krankenkasse</div></div>
+
+ <div class=feld><h3>A · bleibt blau</h3>
+  <div class=seite><div class=t><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#6E90B0"></span></span>Versicherungs-Übersicht</div></div>
+  <div class=warum>Der Name sagt «alle Versicherungen». Aber dein Gefühl bleibt: der grösste Teil ist Krankenkasse.</div></div>
+
+ <div class="feld emp"><h3>B · Gesundheit spielt mit ✔ Empfehlung</h3>
+  <div class=seite><div class=t><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C67A4A"></span></span>Versicherungs-Übersicht</div></div>
+  <div class=warum>Kapitel bleibt Versicherungen (dort sucht man die Übersicht). Das Abzeichen wird <b>orange</b>, weil vier von fünf Teilen die Krankenkasse sind. Genau so wie bei KK-Erstanmeldung, KK wechseln, KK-Karte. Nichts umbauen, nur die Farbe.</div></div>
+
+ <div class=feld><h3>C · teilen</h3>
+  <div class=seite><div class=t><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#6E90B0"></span></span>Versicherungs-Übersicht</div><div class=teil style="border-color:#6E90B0">alle Versicherungen</div></div>
+  <div class=seite><div class=t><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C67A4A"></span></span>Krankenkasse: Prämie &amp; Franchise</div><div class=teil style="border-color:#C67A4A">Franchise · Kassen · Region · Reserve</div></div>
+  <div class=warum>Am saubersten, aber ein Umbau: eine neue Seite, neue Namen in 5 Sprachen. Lieber erst nach Frage 2 entscheiden, falls die Krankenkasse dort umzieht.</div></div>
+</div>
+
+<div class=box><b>Verbindung zu Frage 2:</b> Wird Gesundheit ein eigenes Kapitel, stellt sich die Frage, ob die Krankenkasse mitkommt. Dann ziehen IPV und dieser Krankenkassen-Teil mit. B gilt bis dahin und schliesst nichts aus.</div>
