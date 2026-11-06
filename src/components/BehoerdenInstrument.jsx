@@ -22,6 +22,7 @@ const SPRACHE = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH
 export { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt } from '../utils/behoerdenGaenge.js';
 import { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt } from '../utils/behoerdenGaenge.js';
 import { linkStil } from './PrimaryButton.jsx';
+import { Kalenderblatt } from './Kalenderblatt.jsx';
 
 const relativ = (tr, iso) => {
   const diffDays = Math.round((new Date(iso).getTime() - Date.now()) / 86400000);
@@ -60,12 +61,8 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
   const frist = datum && h('section', { 'data-teil': 'steuerfrist', 'aria-labelledby': 'mp-steuerfrist' },
     h('h4', { id: 'mp-steuerfrist', style: { ...kapH, marginTop: 0 } }, tr('behördenStatus.taxDeadline')),
     h('div', { style: { display: 'flex', gap: space.md + 'px', alignItems: 'center' } },
-      // Kalenderblatt: Monat · Tag · Jahr; das Datum steht im Satz daneben — fürs Vorlesen stumm.
-      h('div', { 'aria-hidden': 'true', 'data-teil': 'kalenderblatt', style: { flexShrink: 0, width: '64px', textAlign: 'center', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, overflow: 'hidden' } },
-        h('div', { style: { fontSize: '11px', fontWeight: weight.semi, letterSpacing: '0.5px', textTransform: 'uppercase', background: palette.up, color: palette.text, padding: '2px 0' } }, datum.toLocaleDateString(loc, { month: 'short' }).replace('.', '')),
-        h('div', { style: { fontSize: text.xl || '22px', fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, paddingTop: '2px' } }, String(datum.getDate())),
-        h('div', { style: { fontSize: '11px', color: palette.mid, paddingBottom: '3px' } }, String(datum.getFullYear()))
-      ),
+      // Kalenderblatt (F9-A14, Variante E): das Datum steht im Satz daneben — fürs Vorlesen stumm.
+      h(Kalenderblatt, { iso: String(iso).slice(0, 10), palette, locale: loc, vorbei: steuerfristVorbei(d, heute) }),
       h('div', { style: { minWidth: 0 } },
         h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('behoerdenInstrument.faellig', { datum: datum.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' }) })),
         h('div', { style: klein }, relativ(tr, iso) + (offeneErklaerungen(d) != null ? ' · ' + tr('behoerdenInstrument.offen', { n: offeneErklaerungen(d) }) : ''))
