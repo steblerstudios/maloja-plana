@@ -26,7 +26,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
-import { HINTERGRUND } from './seiten/krankenkasse.mjs';
+import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
 
@@ -525,7 +525,9 @@ const stilHintergrund = `
       text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
       color:var(--heidel-text); font-weight:600 }
     sup.beleg a:hover{ text-decoration-thickness:2px }
-    sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
+    /* Komma nur zwischen direkt aufeinanderfolgenden Belegen (Klasse «folge», gesetzt in
+       belegeSetzen). «sup + sup» griff auch über Text hinweg (Befund 05.11.2026). */
+    sup.beleg.folge::before{ content:","; color:var(--leise) }
     :target{ scroll-margin-top:24px }
     ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
     ol.quellen li{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-bottom:1px solid var(--rand) }
@@ -559,7 +561,8 @@ function belegeSetzen(html, quellen) {
   });
   const ohne = quellen.filter((q) => !nummer.has(q.key)).map((q) => q.key);
   if (ohne.length) throw new Error(`Quellen ohne Verweis im Text: ${ohne.join(', ')}`);
-  return { text, nummer, stellen };
+  // Direkt aufeinanderfolgende Belege («1,2») bekommen das Trennkomma, sonst keiner.
+  return { text: text.replace(/<\/sup><sup class="beleg">/g, '</sup><sup class="beleg folge">'), nummer, stellen };
 }
 
 function quellenListe(quellen, nummer, stellen) {
@@ -582,9 +585,15 @@ function quellenListe(quellen, nummer, stellen) {
 }
 
 function hintergrundBauen(seite) {
+  // Schalter für eine bewegte Fassung ohne Dateien dahinter: lieber abbrechen
+  // als einen toten Link ausliefern (scripts/seiten/politsystem.mjs).
+  if (seite.bewegtVerlinken) throw new Error(`${seite.pfad}: bewegtVerlinken ist gesetzt, aber es gibt keine bewegte Fassung im Repo`);
   const sprache = SPRACHEN.find((s) => s.code === 'de');
   const R = RAHMEN.de;
-  const werte = { ...zahlen(), ...vergleichZahlen() };
+  // Eigene Zahlen und Bilder je Seite (z. B. scripts/seiten/politsystem.mjs);
+  // ohne Angabe die der Krankenkasse und des Kantonsvergleichs.
+  const werte = seite.zahlen ? seite.zahlen() : { ...zahlen(), ...vergleichZahlen() };
+  const bloecke = seite.bloecke || BLOECKE;
   const z = (s) => einsetzen(s, werte);
   const seitenUrl = url(seite.pfad, sprache);
   const titel = z(seite.titel), beschreibung = z(seite.beschreibung);
@@ -628,7 +637,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
     // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
     // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
-    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, BLOECKE, ctx)}`;
+    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, bloecke, ctx)}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
@@ -637,11 +646,11 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
 
   return `${kopf({
     seite: { ...seite, titel, beschreibung }, sprache, seitenUrl, ld,
-    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: scripts/seiten-figuren.mjs`,
+    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: ${seite.bilderQuelle || 'scripts/seiten-figuren.mjs'}`,
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
-    extraStil: stilHintergrund,
+    extraStil: stilHintergrund + (seite.stilZusatz || ''),
     // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
     // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
     ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),

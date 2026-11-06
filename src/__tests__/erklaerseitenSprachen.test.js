@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { GEPRUEFT, inhaltFuer, QUELLEN, quelleFuer, BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from '../../scripts/seiten-sprachen.mjs';
-import { HINTERGRUND } from '../../scripts/seiten/krankenkasse.mjs';
+import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Die Erklärseiten in fünf Sprachen · seit 21.09.2026

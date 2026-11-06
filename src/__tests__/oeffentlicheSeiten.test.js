@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SEITEN, SONDERSEITEN, QUELLEN, BASIS, GEPRUEFT } from '../../scripts/seiten-inhalt.mjs';
 import { SPRACHEN } from '../../scripts/seiten-sprachen.mjs';
-import { HINTERGRUND } from '../../scripts/seiten/krankenkasse.mjs';
+import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Öffentliche Erklärseiten · Entscheid Stebler Studios 20.09.2026

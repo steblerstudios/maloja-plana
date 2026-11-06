@@ -289,8 +289,8 @@ export const SEITEN = [
       },
     ],
     quellen: ['bwoKantone', 'bsvEL', 'ahvMerkblatt'],
-    // Hintergrundseiten (scripts/seiten/krankenkasse.mjs), nur auf Deutsch verlinkt.
-    hintergrund: ['krankenkasse', 'kantone-im-vergleich'],
+    // Hintergrundseiten (scripts/seiten/hintergrund.mjs), nur auf Deutsch verlinkt.
+    hintergrund: ['krankenkasse', 'kantone-im-vergleich', 'politsystem'],
   },
 
   // ─── Prämienverbilligung ──────────────────────────────────────────────────
