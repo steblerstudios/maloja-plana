@@ -248,8 +248,13 @@ Wächter: `src/__tests__/kalenderblatt.test.js`, `src/__tests__/fristenBlau.test
   Deckkraft (Schrift `text`, im Browser gemessen 6.9:1 dunkel, 10:1 hell), oben eine volle Kante
   von 3 px, Rahmen in Sky. **Vorbei:** dasselbe in Rose. In Listen klein und ohne Jahr.
 - **Die Farbe trägt das Blatt.** Die Frist-Karte drumherum hat einen neutralen Rand.
-- **Nicht in der Farbe des Lebensbereichs:** Finanzen ist Gold (= handeln), Familie und Notfall
-  liegen nahe an Rose (= vorbei), Versicherungen ist Sky. Das Thema zeigt das Symbol daneben.
+- **Das Blatt nie in der Farbe des Lebensbereichs:** Finanzen ist Gold (= handeln), Familie und
+  Notfall liegen nahe an Rose (= vorbei), Versicherungen ist Sky.
+- **Das Thema zeigt der Frucht-Stempel** unten rechts auf der Ecke des Blatts: die Frucht des
+  Lebensbereichs in seiner Farbe, das Symbol als Aussparung (`FruchtMitIcon`, Obstgarten-Motiv),
+  **ohne runde Unterlage**. In den Abläufen (Bereich und Symbol aus dem Register) und im Kapitel
+  Behörden. In der Kalender-Liste nicht: Dort zeigt schon die Themen-Kachel daneben das Thema.
+  (Stebler Studios 06.11.2026, «ja super», nach Skizzen F–J und Probe in der App.)
 - **Fürs Vorlesen stumm** (`aria-hidden`): Das Datum steht immer im Satz daneben.
 
 Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E).
