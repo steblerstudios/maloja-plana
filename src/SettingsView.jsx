@@ -63,7 +63,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, onNo
         React.createElement('span', null, t('common.editPersonalData'))
       ),
       React.createElement('button', { onClick: onExport, style: actionBtn },
-        React.createElement(Icon, { name: 'download', size: 16, color: palette.mid }),
+        React.createElement(Icon, { name: 'sicherung', size: 16, color: palette.mid }),
         React.createElement('span', null, t('nav.export'))
       ),
       // Werkzeug-Vorschau 27.09.2026: Benachrichtigungen stehen nicht mehr im Menü,

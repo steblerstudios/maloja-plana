@@ -128,7 +128,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'health', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'organspende', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       // Nach der Migration v5: eine frühere Angabe liess den Umfang offen (oder widersprach
@@ -172,7 +172,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
       // «Nur bestimmte» ohne ein einziges Organ sagt niemandem, welche gemeint sind.
       status === 'partial' && organListe(t, organs).length === 0 && React.createElement('p', { style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '10px 12px', borderRadius: radius.sm, margin: '0 0 12px', lineHeight: leading.normal } }, hinweisZeichen(), t('organ.keineOrganeGewaehlt')),
 
-      React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
+      React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('check'), t('organ.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
       onNavigate && gespeichertAls === stand && React.createElement('button', { type: 'button', 'data-rueckweg': 'vorsorge', onClick: () => onNavigate('notfallvorsorge'), style: { ...zweitKnopf, width: '100%', marginBottom: '12px' } }, t('notfallKapitel.zurueckVorsorge')),
       React.createElement('button', { type: 'button', onClick: handleGenerateQR, style: { ...zweitKnopf, width: '100%' } }, hinweisZeichen(), t('organ.generateQr')),

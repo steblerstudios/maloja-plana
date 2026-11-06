@@ -478,7 +478,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
           borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
-      React.createElement(PrimaryButton, { palette, onClick: () => { if (selected && briefCanRender(selected)) setExportVorschau(true); } }, t('briefe.printLetter'))
+      React.createElement(PrimaryButton, { palette, onClick: () => { if (selected && briefCanRender(selected)) setExportVorschau(true); }, icon: React.createElement(Icon, { name: 'drucker', size: 16 }) }, t('briefe.printLetter'))
     ),
     selected && exportVorschau && React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement(ExportVorschau, {

@@ -73,7 +73,7 @@ export const SEARCH_VIEWS = [
   // Zwei Wege aus dem Gepäck, die kein geführter Ablauf sind — nur ihre Suchwörter
   // stehen hier; ihr Platz im Rucksack steht in data/gepaeck.js.
   { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ausbildung', aliases: ['stipendien', 'scholarship'] },
-  { view: 'organ', nav: 'nav.organDonation', icon: 'health', aliases: ['organspende', 'spende', 'organ', 'donation'] },
+  { view: 'organ', nav: 'nav.organDonation', icon: 'organspende', aliases: ['organspende', 'spende', 'organ', 'donation'] },
   { view: 'bestattung', nav: 'nav.bestattung', icon: 'document', aliases: ['bestattung', 'beerdigung', 'kremation', 'abdankung', 'obsèques', 'funerale', 'funeral'] },
   { view: 'mietzins', nav: 'nav.mietzins', sub: 'nav.sub.mietzins', icon: 'home', aliases: ['mietzins', 'mietzinsbeitrag', 'mietzinsrechner', 'miete', 'mietzuschuss', 'wohnbeihilfe', 'aide au loyer', 'aides au loyer', 'sussidio affitto', 'rent subsidy'] },
   // Seiten, die das Dashboard und die Kapitel ansteuern, die aber weder Werkzeug noch
@@ -83,7 +83,7 @@ export const SEARCH_VIEWS = [
   // Runde 5 / «ein Ort»: «Notfallkarte» trifft nur noch die Notfallkarte (Q), nicht mehr das Kapitel.
   { view: 'notfalleinstieg', nav: 'chapters.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card'] },
   { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
-  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'health', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
+  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'notfall', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
   // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt

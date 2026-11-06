@@ -129,7 +129,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'emergency', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'notfall', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('notfallDossier.subtitle')),
@@ -154,6 +154,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     hasSections && React.createElement(PrimaryButton, {
       palette, onClick: () => setVorschau(true),
       style: { width: '100%', padding: '12px', marginBottom: vorschau ? 0 : '20px' },
+      icon: React.createElement(Icon, { name: 'drucker', size: 16 }),
     }, t('notfallDossier.printAction')),
     hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement(ExportVorschau, {

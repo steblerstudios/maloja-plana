@@ -719,6 +719,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           ] },
           { label: t('dashboard.toolGroups.documents'), items: [
             { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },
+            // `icon` ist hier nur der Rückfall aus dem Kern; gezeichnet wird das Zeichen aus dem Register
+            // (Offizielle Links «globe», Flyer «qr», siehe renderTool → ansichtIkon).
             { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
             { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
           ] },

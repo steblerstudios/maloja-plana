@@ -11,7 +11,7 @@ import { useT } from './i18n/index.js';
 // Welches Icon steht für welches Werkzeug — dieselben Namen wie im IconSystem.
 const WERKZEUG_ICON = {
   tax: 'steuern', budget: 'budgetWallet', lohn: 'work',
-  ipv: 'praemienverbilligung', sozial: 'sozialhilfe', notfall: 'emergency',
+  ipv: 'praemienverbilligung', sozial: 'sozialhilfe', notfall: 'notfall',
 };
 
 // ─── Der Lebensbaum im Raum ─────────────────────────────────────────────────
