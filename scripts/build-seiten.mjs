@@ -103,10 +103,10 @@ const stil = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -114,7 +114,9 @@ const stil = `
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -406,6 +408,7 @@ const stilHintergrund = `
     /* Tabellen */
     /* position:relative hält auch absolut gesetzte Vorlese-Texte im Schiebebereich (sonst dehnen sie die Seite). */
     .tabelle{ overflow-x:auto; margin:12px 0 18px; position:relative }
+    .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
     caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
@@ -826,6 +829,26 @@ for (const h of HINTERGRUND) {
     name: `${h.pfad}/index.html`,
   });
 }
+
+// Scrollbare Tabellen per Tastatur erreichbar machen (WCAG 2.1.1): Jede
+// `<div class="tabelle …"><table><caption>…` wird eine benannte Region mit
+// tabindex="0", der Name kommt aus der caption. Zentral hier statt in jedem
+// Tabellen-Baustein, damit keine neue Tabelle es vergessen kann. Blöcke, die es
+// schon selbst tragen (role= gesetzt), bleiben unberührt. Der sichtbare Fokus
+// steht im Stil bei `.tabelle`. Name = caption ist bewusst so (gleiches Muster wie
+// die Sitztabelle in #693): Screenreader sagen ihn beim Betreten der Region und
+// dann als Tabellentitel; das ist doppelt, aber der Name stimmt immer mit dem
+// sichtbaren Titel überein.
+const TABELLE_MIT_CAPTION = /<div class="(tabelle(?: [^"]*)?)"><table>(\s*)<caption>([\s\S]*?)<\/caption>/g;
+function tabellenErreichbar(html) {
+  return html.replace(TABELLE_MIT_CAPTION, (_, klasse, ws, caption) => {
+    const name = caption.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+      .replace(/&/g, '&amp;').replace(/&amp;(#?\w+;)/g, '&$1').replace(/"/g, '&quot;');
+    if (!name) throw new Error(`Tabelle ohne lesbare caption: ${caption}`);
+    return `<div class="${klasse}" role="region" aria-label="${name}" tabindex="0"><table>${ws}<caption>${caption}</caption>`;
+  });
+}
+for (const a of seitenAusgaben) if (a.name.endsWith('.html')) a.inhalt = tabellenErreichbar(a.inhalt);
 
 const ausgaben = [
   ...seitenAusgaben,
