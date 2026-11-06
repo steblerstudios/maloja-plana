@@ -32,6 +32,12 @@ jobs:
 
       - run: npm test -- --run
 
+      # Lint (06.11.2026): Fehler brechen ab, Warnungen nicht. Anlass: `rucksack` in
+      # MobileNav.jsx war nach zwei gleichzeitigen Merges nirgends mehr definiert — die Tests
+      # führen die Menüsuche nicht aus und blieben grün, nur `eslint src` sah den Fehler.
+      # Als Vitest-Test zu langsam (über 120 s im Volllauf), deshalb als eigener Schritt.
+      - run: npm run lint
+
       # PII-Scan mit den generischen Mustern (private Mails, Home-Pfade mit echtem
       # Benutzernamen, Klient-Hashes) — die geben nie Fehlalarm. Namen/projekt-
       # spezifische Tokens prüft das Deploy-Gate (deploy.sh fährt denselben Scan
