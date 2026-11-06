@@ -170,7 +170,8 @@ describe('Icon-Namen · Kern-Namen im festen Teil', () => {
 
   it('der Kern hält seine Namen fest, bevor das Register ergänzt wird', () => {
     // `Icons` ist nach dem Import von IconSystem.jsx vollständig — KERN_NAMEN nicht.
-    expect(KERN_NAMEN).not.toContain('emergency');
-    expect('emergency' in Icons).toBe(true);
+    // (Bis 06.11.2026 stand hier «emergency»; die zweite Glocke ist im Aufräumen entfallen.)
+    expect(KERN_NAMEN).not.toContain('drucker');
+    expect('drucker' in Icons).toBe(true);
   });
 });

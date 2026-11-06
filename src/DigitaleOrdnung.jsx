@@ -26,7 +26,7 @@ export const DigitaleOrdnung = ({ palette, t, onNavigate }) => {
     ...kinder);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'digitaleordnung', icon: 'lock',
+    palette, t, onNavigate, ablauf: 'digitaleordnung', icon: 'ereignisDigitaleordnung',
     title: t('digitaleOrdnung.title'),
     intro: t('digitaleOrdnung.intro'),
   },

@@ -10,7 +10,7 @@ import { plusMonate, plusTage } from './utils/fristen.js';
 export const Wegzug = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'wegzug', icon: 'home',
+    palette, t, onNavigate, ablauf: 'wegzug', icon: 'ereignisWegzug',
     title: t('wegzug.title'),
     intro: t('wegzug.intro'),
   },
