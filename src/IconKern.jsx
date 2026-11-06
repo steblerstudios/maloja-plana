@@ -537,10 +537,13 @@ export const zeichenErgaenzen = (fabriken) => {
 // Strich nach Grösse (Icon-Plan November 2026, Schritt 4). ICON_KONVENTION.md: «Massstab ist die
 // optische Strichstärke am Renderpunkt, nicht dieselbe Zahl» — Ziel 1,1–1,4 px. Ein Strich-Icon
 // (Wurzel `fill: none` mit `stroke`) bekommt darum seine Strichstärke aus der Grösse: bei 14 px
-// 2,14, bei 22 px 1,36, bei 32 px 0,94 — optisch überall 1,25 px. Kinder mit eigener Stärke
+// 2,4, bei 22 px 1,52, bei 32 px 1,05 — optisch überall rund 1,4 px. Kinder mit eigener Stärke
 // behalten sie; Flächen-Icons bleiben, wie sie gezeichnet sind. Wächter: strichNachGroesse.test.js.
-const ZIEL_STRICH_PX = 1.25;
-export const strichFuer = (px) => Math.round((ZIEL_STRICH_PX * 24 / px) * 100) / 100;
+// 1,4 = obere Grenze der Konvention, gewählt von Stebler Studios am 06.11.2026 («Kräftiger (1,4)»)
+// statt 1,25 — die Seitentitel-Icons bei 22 px sollten nicht zu fein werden. Abgerundet, damit
+// die Grenze nie überschritten wird.
+const ZIEL_STRICH_PX = 1.4;
+export const strichFuer = (px) => Math.floor((ZIEL_STRICH_PX * 24 / px) * 100) / 100;
 const mitStrichNachGroesse = (el, px) => (
   typeof px === 'number' && px > 0 && el.props.fill === 'none' && el.props.stroke
     ? React.cloneElement(el, { strokeWidth: strichFuer(px) })
