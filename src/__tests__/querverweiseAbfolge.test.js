@@ -28,6 +28,10 @@ describe('Querverweise in beide Richtungen', () => {
       expect(ansichtName(ziel), `Name im Register für ${ziel}`).toBeTruthy();
     });
   }
+  it('«Stelle verloren» nennt keine EL mehr (ELG Art. 4: nur mit AHV-/IV-Fall), sondern die IV', () => {
+    expect(VERWANDTE.stelleverloren).not.toContain('ergaenzungsleistungen');
+    expect(VERWANDTE.stelleverloren).toContain('iv');
+  });
   it('Todesfall nennt die Ergänzungsleistungen unter «Verwandte»', () => {
     expect(VERWANDTE.todesfall).toContain('ergaenzungsleistungen');
   });
