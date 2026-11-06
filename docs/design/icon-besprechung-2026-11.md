@@ -38,7 +38,7 @@ Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ 
 ## Idee Zwei-Farben (06.11.2026, Stebler Studios)
 
 «ganz verrückt wäre natürlich, wenn z. B. bei der Betreibung erhalten der Fünfliber so wie jetzt und dann aber das Minus in Blau, und bei Betreibungsauszug eben die Helvetia und dann das Icon unten rechts in Gold, weil's ja zu Finanzen gehört».
-→ **Leitform = wer/was (Farbe ihres Bereichs), Abzeichen = Farbe des Bereichs, der mitspielt.** Spielt kein zweiter Bereich mit, hat das Abzeichen die Farbe der Leitform. Wird mit der Übersicht aller Bereiche gezeigt, noch nicht entschieden.
+→ **Leitform = wer/was (Farbe ihres Bereichs), Abzeichen = Farbe des Bereichs, der mitspielt.** Spielt kein zweiter Bereich mit, hat das Abzeichen die Farbe der Leitform. Gezeigt in der Übersicht [alle Bereiche](icon-besprechung-alle-bereiche.html) (06.11.): alle 11 Bereiche, Leitform + gefülltes Abzeichen, zweite Farbe dort, wo ein Bereich mitspielt. Noch nicht entschieden; die Mini-Zeichen der neuen Bereiche sind Vorschläge. Befunde: 7 Bereiche haben nur ein einfaches Flächen-Icon als Leitform; Gesundheit und Notfall = fast dasselbe Herz mit Kreuz.
 
 ## Grundsatz (06.11.2026)
 
