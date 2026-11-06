@@ -53,7 +53,7 @@ Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild 
 
 **11 wie am Baum.** Jedes Icon trägt die Farbe seines Astes (`data/lebensbereiche.js`, eine Quelle): Familie kirschrot, Arbeit haselnuss, Vorsorge violett, Gesundheit hagebutte, Notfall rot … — die Leitform (Form) folgt dem Kapitel (7). Meine Empfehlung war 7 Farben; entschieden ist 11. Überholt damit: «Familie soll grün sein» und Ebene 1 «in der Farbe des Kapitels» weiter unten. Folge: Den Unterschied zwischen Ästen im selben Kapitel tragen Farbe **und** Zeichnung (Graustufen-Sicherheit bleibt über die gezeichnete Variante).
 
-Leitformen Basis + Arbeit mit Ast-Varianten: Bild [Basis und Arbeit](icon-besprechung-basis-arbeit.html). Empfehlung: Basis A Ausweiskarte quer (1 Person / 2 Personen) · Ausbildung & Arbeit A Kopfbedeckung (Schulhut / Schutzhelm). Offen.
+Leitformen Basis + Arbeit mit Ast-Varianten: Bild [Basis und Arbeit](icon-besprechung-basis-arbeit.html). ✅ **06.11.: Basis = A, Ausweiskarte quer** (Person: eine Person · Familie: zwei Personen) · ✅ **Ausbildung & Arbeit = A, Kopfbedeckung** (Bildung: Schulhut · Arbeit: Schutzhelm).
 
 ## System in drei Ebenen (06.11.2026, abends, Stebler Studios)
 
