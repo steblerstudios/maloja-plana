@@ -241,6 +241,11 @@ Wächter: `src/__tests__/knopfarten.test.js`.
 - **Mindesthöhe** 44 px.
 - **Ausnahme:** der rot gefüllte Ernstfall-Knopf im Kapitel Notfall (Notruf).
 - Karten und Listenzeilen, die woanders hinführen, bleiben Karten (kein Gold als Fläche).
+- **Gold erst beim Festhalten** (E2, Stebler Studios 06.11.2026, «Ja, so übernehmen»): Ein Knopf,
+  der nur ein Formular oder einen Bereich öffnet («+ Erinnerung hinzufügen»), ist **Nebenknopf**.
+  Hauptknopf ist erst der Schritt, der wirklich speichert oder sendet. Knöpfe, die nur in einer
+  Ansicht springen («Heute» im Kalender), sind **Auswahl**. Wächter: `knopfarten.test.js`
+  («Öffner sind nie Hauptknopf»). Herleitung: `docs/design/gesamtbild-2026-11/GESAMTBILD.md` §3b.
 - Kleine × zum Löschen in Listen bleiben graue Symbole mit Ansage (`aria-label`).
 
 Entschieden von Stebler Studios am 05.11.2026 (Knopf-Inventur, 20 Entscheide, «setze alle

@@ -73,4 +73,21 @@ describe('Knopfarten: die Ansichten', () => {
     expect(gezaehlt).toBeGreaterThan(30);
     expect(verstoesse).toEqual([]);
   });
+
+  // E2 «Gold erst beim Festhalten» (Stebler Studios 06.11.2026, docs/design/gesamtbild-2026-11):
+  // ein Knopf, der nur etwas aufklappt (aria-expanded), hält nichts fest — nie Hauptknopf.
+  it('Öffner (aria-expanded) sind nie Hauptknopf — Gold gefüllt erst beim Festhalten', () => {
+    const verstoesse = [];
+    let oeffner = 0;
+    for (const d of dateien(SRC)) {
+      for (const { zeile, text } of knopfProps(fs.readFileSync(d, 'utf8'))) {
+        if (!/'aria-expanded'/.test(text)) continue;
+        oeffner++;
+        // knopfStil(palette) · knopfStil(palette, 'haupt' …) · knopfStil(palette, { … }) = Hauptknopf
+        if (/knopfStil\(palette\s*(?:\)|,\s*'haupt'|,\s*\{)/.test(text)) verstoesse.push(`${rel(d)}:${zeile}`);
+      }
+    }
+    expect(oeffner).toBeGreaterThan(5);
+    expect(verstoesse).toEqual([]);
+  });
 });
