@@ -168,7 +168,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm }
     },
       React.createElement('button', { onClick: () => onNavigate('sync'), style: wegKnopf },
-        React.createElement(Icon, { name: 'rechner', size: 16 }), t('finanzUebersicht.toBudget')),
+        React.createElement(Icon, { name: 'budgetWallet', size: 16 }), t('finanzUebersicht.toBudget')),
       React.createElement('button', { onClick: () => onNavigate('behoerdendossier'), style: wegKnopf },
         React.createElement(Icon, { name: 'mappe', size: 16 }), t('finanzUebersicht.toDossier')),
     ),

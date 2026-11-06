@@ -67,7 +67,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
         React.createElement('span', null, t('common.editPersonalData'))
       ),
       React.createElement('button', { onClick: onExport, style: actionBtn },
-        React.createElement(Icon, { name: 'download', size: 16, color: palette.mid }),
+        React.createElement(Icon, { name: 'sicherung', size: 16, color: palette.mid }),
         React.createElement('span', null, t('nav.export'))
       )
     ),
