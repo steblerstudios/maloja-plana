@@ -40,7 +40,7 @@ const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElemen
   role: 'note', id: 'brief-hinweis', tabIndex: -1,
   style: {
     padding: '16px 16px', background: palette.sky + '18', border: '1px solid ' + palette.sky,
-    borderRadius: radius.md, marginBottom: space.md,
+    borderRadius: radius.lg, marginBottom: space.md,
   },
 },
   React.createElement('div', {
@@ -120,7 +120,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
   const zeile = { display: 'flex', alignItems: 'center', gap: '12px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
   const sichtbar = felder.filter(f => feldSichtbar(f, a));
   return React.createElement('div', {
-    style: { padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.md },
+    style: { padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.lg, marginBottom: space.md },
   },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.text, marginBottom: space.xs } }, t('briefe.angaben.title')),
     React.createElement('div', { style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm } }, t('briefe.angaben.intro')),
@@ -348,7 +348,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     JOB_TEMPLATES.includes(selected) && jobOptions.length > 1 && React.createElement('div', {
       style: {
         padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, marginBottom: space.md,
+        borderRadius: radius.lg, marginBottom: space.md,
       }
     },
       React.createElement('div', {
@@ -389,7 +389,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     selected === 'kkReklamation' && React.createElement('div', {
       style: {
         padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, marginBottom: space.md,
+        borderRadius: radius.lg, marginBottom: space.md,
       }
     },
       React.createElement('div', {
@@ -421,7 +421,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     selected === 'kkReklamation' && React.createElement('div', {
       style: {
         padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, marginBottom: space.md,
+        borderRadius: radius.lg, marginBottom: space.md,
       }
     },
       React.createElement('div', {
@@ -491,7 +491,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     frist && React.createElement('div', {
       style: {
         padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, marginBottom: space.md,
+        borderRadius: radius.lg, marginBottom: space.md,
         display: 'flex', flexDirection: 'column', gap: space.sm,
       }
     },
@@ -522,7 +522,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     printed && React.createElement('div', {
       style: {
         padding: '16px 16px', background: palette.sage + '14',
-        border: '1px solid ' + palette.sage + '44', borderRadius: radius.md,
+        border: '1px solid ' + palette.sage + '44', borderRadius: radius.lg,
         marginBottom: space.md, display: 'flex', flexDirection: 'column', gap: space.sm,
       }
     },

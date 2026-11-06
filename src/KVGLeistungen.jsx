@@ -393,7 +393,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
   // die Belege je Jahr darunter.
   return form({
     ergebnis: hasInput && React.createElement('div', {
-      style: { padding: '16px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border }
+      style: { padding: '16px', background: palette.surface, borderRadius: radius.lg, border: '1px solid ' + palette.border }
     },
       statusMsg && React.createElement('div', {
         style: {
@@ -457,7 +457,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     ) || null,
     ohneErgebnis: t('kvg.franchiseExplain'),
     angaben: { erfasst: 0, gesamt: 0, inhalt: React.createElement('div', {
-      style: { padding: '16px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: { padding: '16px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
@@ -589,7 +589,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           onChange: (e) => setNewTp(e.target.value),
           placeholder: t('kvg.taxpunkte'),
           style: {
-            flex: '1 1 0', minWidth: 0, padding: '8px 8px', borderRadius: radius.sm,
+            flex: '1 1 0', minWidth: 0, padding: '8px 8px', borderRadius: radius.md,
             border: '1px solid ' + palette.border, background: palette.up,
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           }
@@ -633,7 +633,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           onChange: (e) => setNewNichtGedeckt(e.target.value),
           placeholder: 'CHF',
           style: {
-            width: '100%', padding: '8px 8px', borderRadius: radius.sm,
+            width: '100%', padding: '8px 8px', borderRadius: radius.md,
             border: '1px solid ' + palette.border, background: palette.up,
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box', marginBottom: '8px',
           }
@@ -661,7 +661,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       }, '+ ' + t('kvg.belegAdd'))
     ) },
     weiteres: React.createElement('div', {
-      style: { padding: '16px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: { padding: '16px', background: palette.surface, borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       availableYears.length > 1 && React.createElement('div', {
         style: { display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }
@@ -791,7 +791,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
   // Form X: der Betrag zuerst, die Eingabe als «Ihre Angaben», die Quellen je Kanton darunter.
   return form({
     ergebnis: result ? result && React.createElement('div', {
-      style: { padding: '16px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.sky }
+      style: { padding: '16px', background: palette.sky + '18', borderRadius: radius.lg, border: '1px solid ' + palette.sky }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
@@ -826,7 +826,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
       style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
     }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwOhneKanton'))),
     angaben: { erfasst: (tp ? 1 : 0) + (selCanton ? 1 : 0), gesamt: 2, inhalt: React.createElement('div', {
-      style: { padding: '16px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: { padding: '16px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }

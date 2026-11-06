@@ -33,7 +33,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
       style: {
         padding: '16px 16px',
         background: palette.up,
-        borderRadius: radius.md,
+        borderRadius: radius.lg,
         marginBottom: space.sm,
       }
     },
@@ -128,7 +128,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
     // ─── Document references ────────────────────────────
     hasSections && preview.docCount > 0 && React.createElement('div', {
       style: {
-        padding: '16px 16px', background: palette.up, borderRadius: radius.md,
+        padding: '16px 16px', background: palette.up, borderRadius: radius.lg,
         marginBottom: space.sm,
       }
     },

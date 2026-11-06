@@ -75,7 +75,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
       style: {
         padding: '16px 16px',
         background: palette.up,
-        borderRadius: radius.md,
+        borderRadius: radius.lg,
         marginBottom: space.sm,
       }
     },
