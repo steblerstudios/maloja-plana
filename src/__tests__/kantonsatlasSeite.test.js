@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { KANTONSATLAS, stufen, KITA_GRENZE_BEFUND } from '../../scripts/seiten/kantonsatlas.mjs';
+import { KANTONSATLAS, stufen } from '../../scripts/seiten/kantonsatlas.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 import { KANTONE, EBENEN, KITA_NICHT_VERGLICHEN } from '../../scripts/seiten-vergleich.mjs';
 import de from '../i18n/de.js';
@@ -90,27 +90,28 @@ describe('/kantonsatlas/', () => {
     it('jeder Befund nennt Art, Belegt und die zuständige Stelle — und ist belegt', () => {
       expect(befunde.length).toBe(2);
       for (const b of befunde) {
-        expect(b).toMatch(/<dt>Art<\/dt><dd>(grosse Spanne|Umsetzung ausstehend|Umsetzung unklar)<\/dd>/);
+        expect(b).toMatch(/<dt>Art<\/dt><dd>(grosse Spanne|Stand der Umsetzung|Umsetzung unklar)<\/dd>/);
         expect(b).toContain('<dt>Belegt</dt><dd>ja</dd>');
-        expect(b).toContain('<dt>Zuständig</dt>');
+        expect(b).toContain('<dt>Wer die Regel festlegt</dt>');
         expect(b).toMatch(/<sup class="beleg[^"]*"><a href="#quelle-/);
       }
     });
 
-    it('die Kantone im Kita-Befund kommen aus den Daten — alle und nur diese', () => {
+    it('der Kita-Befund rechnet seine Zahlen aus den Daten und listet keine Kantone nach Rang', () => {
+      // Rechtsprüfung 07.11.2026: eine selbst gewählte Schwelle mit sortierter Liste wirkte wie eine Rangliste.
       const b = befunde[0];
       const verglichen = KANTONE.filter((k) => !KITA_NICHT_VERGLICHEN.includes(k));
       const w = (k) => EBENEN.kita.wert(k);
-      const bund = Math.max(...KANTONE.map(w).filter((v) => v === 25800), 25800);
-      const unter = verglichen.filter((k) => w(k) <= KITA_GRENZE_BEFUND);
-      const ab = verglichen.filter((k) => w(k) >= bund);
-      expect(b).toContain(`${unter.length} Kantone lassen höchstens`);
-      expect(b).toContain(`${ab.length} Kantone liegen auf oder über dem Bund`);
-      for (const k of verglichen) {
-        const eintrag = `${de.cantons[k]} ${EBENEN.kita.fmt(w(k))}`;
-        if (unter.includes(k) || ab.includes(k)) expect(b, k).toContain(eintrag);
-        else expect(b, k).not.toContain(eintrag);
-      }
+      const bund = 25800;
+      const unter = verglichen.filter((k) => w(k) < bund).length;
+      const ab = verglichen.filter((k) => w(k) >= bund).length;
+      expect(b).toContain(`${unter} Kantone liegen unter dem Betrag des Bundes, ${ab} auf oder darüber`);
+      const vs = KANTONE.map(w);
+      const tief = KANTONE.find((k) => w(k) === Math.min(...vs));
+      const hoch = KANTONE.find((k) => w(k) === Math.max(...vs));
+      expect(b).toContain(`von ${EBENEN.kita.fmt(w(tief))} Franken im Kanton ${de.cantons[tief]} bis ${EBENEN.kita.fmt(w(hoch))} Franken im Kanton ${de.cantons[hoch]}`);
+      const genannt = KANTONE.filter((k) => b.includes(de.cantons[k]));
+      expect(genannt.sort()).toEqual([tief, hoch, ...KITA_NICHT_VERGLICHEN].sort());
     });
 
     it('fordert nichts und nennt keine ungeprüften Befunde', () => {

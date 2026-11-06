@@ -141,48 +141,31 @@ const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'es
 // den Seiten von Kanton und Parlament gelesen am 06.11.2026). B1 (Alimente VD)
 // erst nach der Antwort des BRAPA; K1 (Prämienlast) hielt der Nachrechnung vom
 // 04.11.2026 nicht stand. Bewusst ohne «mögliches Instrument»: Die Seite sagt,
-// was die Zahlen zeigen und wer zuständig ist, nicht, was man unternehmen soll.
-export const KITA_GRENZE_BEFUND = 10600;
-function befundZahlen() {
-  const ks = KANTONE.filter((k) => !KITA_NICHT_VERGLICHEN.includes(k));
-  const E = EBENEN.kita;
-  const reihe = (liste) => liste.sort((a, b) => E.wert(a) - E.wert(b) || de.cantons[a].localeCompare(de.cantons[b], 'de'))
-    .map((k) => `${de.cantons[k]} ${E.fmt(E.wert(k))}`).join(', ');
-  const unter = ks.filter((k) => E.wert(k) <= KITA_GRENZE_BEFUND);
-  const bund = vergleichZahlen()['v.kita.bund'].replace(/'/g, '');
-  const ab = ks.filter((k) => E.wert(k) >= Number(bund));
-  return {
-    'b.kita.grenze': E.fmt(KITA_GRENZE_BEFUND),
-    'b.kita.unterAnzahl': String(unter.length),
-    'b.kita.unterListe': reihe(unter),
-    'b.kita.abAnzahl': String(ab.length),
-    'b.kita.abListe': reihe(ab),
-  };
-}
-
+// was die Zahlen zeigen und wer die Regel festlegt, nicht, was man unternehmen soll.
+// Keine selbst gewählte Schwelle (Rechtsprüfung 07.11.2026: wirkte wie eine Rangliste).
 const BEFUNDE_ABSCHNITT = {
   id: 'befunde',
   titel: '8. Befunde',
   html: `
-        <p>Manchmal zeigen die Zahlen selbst eine Auffälligkeit: eine grosse Spanne oder eine Regel, die noch nicht umgesetzt ist. Hier stehen solche Befunde. Ein Befund ist eine Beobachtung, keine Forderung. Er nennt, was belegt ist, woher es kommt und wer dafür zuständig ist. Was jemand daraus macht, steht nicht auf dieser Seite.</p>
+        <p>Manchmal zeigen die Zahlen selbst einen Unterschied: eine grosse Spanne oder eine beschlossene Regel, die noch nicht in Kraft ist. Hier stehen solche Befunde. Ein Befund ist eine Beobachtung, keine Forderung. Er nennt, was belegt ist, woher es kommt und wer die Regel festlegt. Was jemand daraus macht, steht nicht auf dieser Seite.</p>
         <article class="befund" aria-labelledby="befund-kita">
           <h3 id="befund-kita">Abzug für Kinderbetreuung: grosse Spanne zwischen den Kantonen</h3>
           <dl>
             <dt>Art</dt><dd>grosse Spanne</dd>
             <dt>Belegt</dt><dd>ja</dd>
-            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr {{v.kita.bundJahr}} bis zu {{v.kita.bund}} Franken je Kind abziehen. [[q:dbg]] {{b.kita.unterAnzahl}} Kantone lassen höchstens {{b.kita.grenze}} Franken zu: {{b.kita.unterListe}}. {{b.kita.abAnzahl}} Kantone liegen auf oder über dem Bund: {{b.kita.abListe}}. [[q:estvKantonsblaetter]]</dd>
-            <dt>Zuständig</dt><dd>Für den Abzug bei den Kantons- und Gemeindesteuern die Kantone, über ihr Steuergesetz.</dd>
-            <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. {{v.kita.nichtVerglichenName}} ist nicht mitgezählt, weil dort nur der Wert 2025 ausgewiesen ist.</dd>
+            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr {{v.kita.bundJahr}} bis zu {{v.kita.bund}} Franken je Kind abziehen. [[q:dbg]] Bei den Kantons- und Gemeindesteuern reichen die Grenzen von {{v.kita.tief}} Franken {{v.kita.tiefName}} bis {{v.kita.hoch}} Franken {{v.kita.hochName}}. {{v.kita.unterBund}} Kantone liegen unter dem Betrag des Bundes, {{v.kita.abBund}} auf oder darüber. [[q:estvKantonsblaetter]] Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest. [[q:sthg]]</dd>
+            <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. {{v.kita.nichtVerglichenName}} ist nicht mitgezählt, weil für den Kanton nur der Wert für 2025 vorliegt.</dd>
           </dl>
         </article>
         <article class="befund" aria-labelledby="befund-ge">
-          <h3 id="befund-ge">Genf: Elternurlaub beschlossen, das Ausführungsgesetz fehlt noch</h3>
+          <h3 id="befund-ge">Genf: Elternurlaub in der Verfassung, Ausführungsgesetz in Arbeit</h3>
           <dl>
-            <dt>Art</dt><dd>Umsetzung ausstehend</dd>
+            <dt>Art</dt><dd>Stand der Umsetzung</dd>
             <dt>Belegt</dt><dd>ja</dd>
-            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil. Das Bundesparlament hat die Änderung am 22. September 2026 gewährleistet, ohne die Bestimmung zu Pflegefamilien. [[q:parlamentGe]] Möglich wird das durch eine Änderung der Erwerbsersatzordnung vom 19. Dezember 2025, die laut Kanton am 1. Juli 2027 in Kraft tritt. Das kantonale Ausführungsgesetz ist noch nicht verabschiedet, ein Datum für den Start nennt der Kanton nicht. [[q:geElternurlaub]]</dd>
-            <dt>Zuständig</dt><dd>Staatsrat und Grosser Rat des Kantons Genf.</dd>
-            <dt>Vorbehalt</dt><dd>Wer in Genf ein Kind erwartet, hat bis dahin Anspruch auf das, was heute gilt. Massgebend ist die Auskunft der Genfer Stellen.</dd>
+            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien. [[q:parlamentGe]] Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft. [[q:as2026433]] Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht. [[q:geElternurlaub]]</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Staatsrat und Grosser Rat des Kantons Genf. Laut Kanton wirken vorher auch das Bundesamt für Sozialversicherungen und allenfalls der Bundesrat mit.</dd>
+            <dt>Vorbehalt</dt><dd>Bis das Genfer Ausführungsgesetz in Kraft ist, gibt es den längeren Urlaub für den anderen Elternteil nicht; es gelten die bisherigen Regeln. Ob und wie viel Sie erhalten, hängt von Ihrer Situation ab. Massgebend ist die Auskunft der Ausgleichskasse.</dd>
           </dl>
         </article>`,
 };
@@ -266,7 +249,7 @@ export const KANTONSATLAS = {
     },
     BEFUNDE_ABSCHNITT,
   ],
-  zahlen: () => ({ ...zahlenKrankenkasse(), ...vergleichZahlen(), ...befundZahlen() }),
+  zahlen: () => ({ ...zahlenKrankenkasse(), ...vergleichZahlen(), }),
   bloecke: BLOECKE_ATLAS,
   quellen: [
     ...QUELLEN_AUS_VERGLEICH.map((key) => {
@@ -274,7 +257,9 @@ export const KANTONSATLAS = {
       if (!q) throw new Error(`Kantonsatlas: Quelle ${key} fehlt auf /kantone-im-vergleich/`);
       return q;
     }),
-    { key: 'parlamentGe', herausgeber: 'Parlamentsdienste, Bundesversammlung', titel: 'Le Parlement donne son feu vert au congé parental genevois', datum: '22.09.2026', url: 'https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx', belegt: 'Gewährleistung durch das Parlament am 22.09.2026, ohne die Bestimmung zu Pflegefamilien; Inhalt: 8 Wochen für den anderen Elternteil zu 16 Wochen Mutterschaft', amtlich: true },
+    { key: 'parlamentGe', herausgeber: 'Keystone-ATS, veröffentlicht auf parlament.ch', titel: 'Le Parlement donne son feu vert au congé parental genevois', datum: '22.09.2026', url: 'https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx', belegt: 'Gewährleistung durch das Parlament am 22.09.2026, ohne die Bestimmung zu Pflegefamilien; Inhalt: 8 Wochen für den anderen Elternteil zu 16 Wochen Mutterschaft', amtlich: false },
+    { key: 'as2026433', herausgeber: 'Bundeskanzlei (Fedlex), AS 2026 433', titel: 'Bundesgesetz über den Erwerbsersatz (Erwerbsersatzgesetz, EOG) (Angleichung der EO-Leistungen), Änderung vom 19. Dezember 2025', datum: 'in Kraft ab 1.7.2027', url: 'https://www.fedlex.admin.ch/eli/oc/2026/433/de', belegt: 'Art. 16m^bis EOG: Kantone dürfen die Entschädigung des anderen Elternteils verlängern; Inkrafttreten 1.7.2027', amtlich: true },
+    { key: 'sthg', herausgeber: 'Bundeskanzlei (Fedlex), SR 642.14', titel: 'Bundesgesetz über die Harmonisierung der direkten Steuern der Kantone und Gemeinden (StHG), Art. 9 Abs. 2 Bst. m', datum: 'Fassung vom 1.1.2025', url: 'https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de', belegt: 'Abzug für die Drittbetreuung von Kindern, Höhe nach kantonalem Recht', amtlich: true },
     { key: 'geElternurlaub', herausgeber: 'République et canton de Genève', titel: 'Congé parental : les étapes de la mise en œuvre', datum: 'ohne Datum, gelesen 06.11.2026', url: 'https://www.ge.ch/dossier/cohesion-sociale-geneve/domaines-developpement/conge-parental-etapes-mise-oeuvre', belegt: 'Abstimmung 18.06.2023, Änderung der Erwerbsersatzordnung vom 19.12.2025 mit Inkrafttreten 1.7.2027, fehlendes Ausführungsgesetz, kein Startdatum', amtlich: true },
     // Rechtsprüfung 06.11.2026: Die BFS-Geodaten stehen unter «OPEN-BY» (freie Nutzung,
     // Quellenangabe mit Autor, Titel und Link Pflicht). swiss-maps (BSD-3-Clause) hat sie
