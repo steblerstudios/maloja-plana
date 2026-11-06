@@ -166,7 +166,9 @@ describe('Mietzinsbeiträge in der Form X', () => {
     expect(teil.indexOf('data-ergebnis-art')).toBeGreaterThan(0);
   });
   it('ohne Kanton: der App-Satz an der Stelle des Ergebnisses', () => {
-    expect(ergebnisTeil(render(MietzinsOrientierung, leer))).toContain(de.mietzinsView.enterCanton.sie || de.mietzinsView.enterCanton);
+    // Seit dem Hausbegriff «Mietbeiträge» (F9) trägt das Wort die Glossar-Erklärung (Knopf mit ⓘ) — darum der Text ohne Markup und Zeichen.
+    const ohneMarkup = ergebnisTeil(render(MietzinsOrientierung, leer)).replace(/<[^>]+>/g, '').replace(/ⓘ/g, '');
+    expect(ohneMarkup).toContain(de.mietzinsView.enterCanton.sie || de.mietzinsView.enterCanton);
   });
 });
 
