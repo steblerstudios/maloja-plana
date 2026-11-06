@@ -136,7 +136,7 @@ Heirat und Zusammenziehen (Ehe ≠ Konkubinat, darin liegt der Inhalt).
 |---|---|---|
 | **G1** | **«Neu in der Schweiz»** als Gruppe in der Übersicht: Zuzug → Krankenkasse zum ersten Mal → Bewilligung → Quellensteuer → später Einbürgerung | 5 Abläufe aus drei Bereichen, die eine Person nacheinander braucht. Die Verweise gibt es teils schon (`ablaufVerwandte.js`) |
 | **G2** | **«Mit 18»**: 18 werden → Dienst → Lehre → Neuer Job → Krankenkasse | `volljaehrig` verweist schon auf Dienst und Lehre. Als sichtbare Reihe in der Übersicht |
-| **G3** | **«Wenn jemand stirbt / vorsorgen»**: Todesfall · Vorsorgeauftrag · Patientenverfügung · Bestattung · Organspende | liegt heute verteilt auf Familie, Vorsorge und Kapitel Notfall |
+| ~~**G3**~~ | ⟨**entfällt, 06.11.**⟩ ~~«Wenn jemand stirbt / vorsorgen»~~. Am Code geprüft: Das **Kapitel Notfall hat seit 27.10. den Block «Vorsorge»** (F7-S10, `components/NotfallImKapitel.jsx`, `VORSORGE`). Er führt Organspende, Patientenverfügung, Vorsorgeauftrag und Bestattungswünsche mit «x von 4 geregelt», und die drei Formulare führen mit «Zurück zur Vorsorge» dorthin zurück. Der Ablauf Vorsorgeauftrag verlinkt Patientenverfügung und Bestattung. Eine dritte Stelle in der Übersicht wäre ein Doppel. Den Todesfall (jemand anderes ist gestorben) bewusst nicht mit den **eigenen** Wünschen verbunden | entfällt |
 
 Ändert keine Seite, nur die Reihenfolge und Beschriftung in der Übersicht. Neue Texte in fünf Sprachen, Copy-Prüfung.
 
@@ -162,12 +162,12 @@ Heirat und Zusammenziehen (Ehe ≠ Konkubinat, darin liegt der Inhalt).
 
 1. ~~**Z1**~~ ⟨entfällt 06.11., schon gebaut als Entscheid O; der geführte Weg bleibt bewusst⟩
 2. **Z2** Benachrichtigungen in die Einstellungen? *(Empfehlung: ja)*
-3. **G1–G3** drei Gruppen in der Übersicht? *(Empfehlung: ja, G1 zuerst)*
+3. **G1–G3** drei Gruppen in der Übersicht? ⟨06.11.: G1 #702, G2 #706 gebaut; G3 entfällt, schon im Kapitel Notfall⟩
 4. **E1** Erklärseiten verlinken direkt ins Werkzeug? *(Empfehlung: ja)*
 5. ~~**E2** hreflang-Fix~~ ⟨entfällt, siehe K2⟩
 6. **E3** welche Erklärseite als nächste? *(Empfehlung: Ergänzungsleistungen. In der App ist der Bereich schon gross und geprüft (EL-Hinweis, Sozio-Prüfer 04.11.), öffentlich fehlt er ganz)*
 7. **V1/V2** klein, auf ein Ja hin in einem Zweig?
 
 **Reihenfolge-Vorschlag:** ~~E2 (blockiert die Freigabe) →~~ V1 → Z2 → E1 → G1 → ~~Z1 →~~ E3.
-⟨Stand 06.11.: V1 #697, Z2 #699, E1 #700, G1 #702 als Entwurfs-PRs; Z1 entfällt⟩
+⟨Stand 06.11.: V1 #697, Z2 #699, E1 #700, G1 #702, V2 #705, G2 #706 (auf #702) als Entwurfs-PRs; Z1 und G3 entfallen. Offen nur noch E3⟩
 ⟨korrigiert 05.11.: E2 entfällt, siehe K2⟩
