@@ -176,7 +176,8 @@ function getSections(data, chapters, t) {
       rows: [
         { label: lbl('ausbildung', 'educationLevel'), value: sel('ausbildung', 'educationLevel') },
         { label: lbl('ausbildung', 'schoolName'), value: d('ausbildung', 'schoolName') },
-        { label: lbl('ausbildung', 'employer'), value: d('ausbildung', 'employer') },
+        // F8-P3: der Arbeitgeber steht schon unter Finanzen; hier nur, wenn er etwas anderes sagt.
+        { label: lbl('ausbildung', 'employer'), value: gleicherText(d('ausbildung', 'employer'), d('finanzen', 'employer')) ? '' : d('ausbildung', 'employer') },
         { label: lbl('ausbildung', 'jobTitle'), value: d('ausbildung', 'jobTitle') },
         { label: lbl('ausbildung', 'employmentStart'), value: dt('ausbildung', 'employmentStart') },
         // Wie im Kapitel (Abnahme F6, 25.10.2026): Schweizer Bürgerrecht → «nicht nötig», nicht die Option als Bewilligung.
@@ -210,10 +211,20 @@ function getSections(data, chapters, t) {
         { label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
         { label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
         { label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
+        // F8-P3 (Stebler Studios 05.11.2026): keine Gesundheitsdaten in der Mappe, nur der Verweis — sobald welche erfasst sind.
+        { label: t('lebensmappe.gesundheitLabel'), value: hatGesundheitsangaben(data.notfall) ? t('lebensmappe.gesundheitHinweis') : '' },
       ].filter(r => r.value),
     },
   ];
 }
+
+// F8-P3: gleicher Text ohne Rücksicht auf Gross-/Kleinschreibung und Leerzeichen.
+const gleicherText = (a, b) => !!a && !!b && String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+const hatGesundheitsangaben = (nf) => {
+  const n = nf || {};
+  const liste = (x) => Array.isArray(x) && x.length > 0;
+  return !!(n.bloodType || n.allergies || n.medications || n.chronicDiseases || liste(n.medicationsList) || liste(n.chronicDiseasesList));
+};
 
 // ─── Preview Data (for React rendering) ──────────────────
 
@@ -978,7 +989,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       }
     }
     // R4: die Annahmen hinter der Zahl (dieselben wie im Steuerrechner und in der Finanzübersicht).
-    const annahmen = annahmenTexte(t, tax.annahmen);
+    // F8-P1: auf dem Blatt fürs Amt ohne App-Anleitung («Angeben lässt sich das im Kapitel …»).
+    const annahmen = annahmenTexte(t, tax.annahmen)
+      .map((s) => (s === t('tax.annahmeOhneDreizehnten') ? t('tax.annahmeOhneDreizehntenBlatt') : s));
     if (annahmen.length) taxRows.push({ label: t('tax.annahmenLabel'), value: annahmen.join(' ') });
     sections.push({
       key: 'steuern',
