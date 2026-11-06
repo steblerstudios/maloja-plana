@@ -60,7 +60,16 @@ bestattungswuensche }`, Brotkrume «Übersicht › Notfall › Bestattungswünsc
 (Vorsorge · Gesundheit · ohne Ast). Bild [Verfügungen](seiten-architektur-3-verfuegungen.html): A alles im Ast
 Notfall (Kapitel Gesundheit) · B aufteilen · C alles Vorsorge. Empfehlung A (geändert gegenüber dem Organigramm,
 wo der Vorsorgeauftrag noch bei Vorsorge stand: ein Ablauf deckt beide Verfügungen, die Felder stehen zusammen).
-Offen.
+✅ **06.11.: A, beisammen** — Patientenverfügung · Vorsorgeauftrag & Patientenverfügung · Organspende ·
+Bestattungswünsche = Kapitel Gesundheit, Ast Notfall. Todesfall (für Angehörige) bleibt Familie.
+⚠️ Für die Icon-Sitzung: Vorsorgeauftrag und Patientenverfügung waren dort schon abgenommen; Leitform jetzt Koffer.
+
+### ③ ⑤ ⑥ ⑦ Steuern · ALV/EO · Löhne · Lehre/Lebenslauf
+
+Bild [Geld und Arbeit](seiten-architektur-4-geld-arbeit.html). Empfehlungen: ③ Steuern + Quellensteuer = Finanzen
+(Abzeichen Behörden) · ⑤ ALV = Arbeit, EO = Familie (beide Fünfliber gold, wie Stipendien und IV) · ⑥ Stundenlohn =
+Arbeit, Mindestlohn-Check bleibt in der Kapitelseite Finanzen (dort steht das Einkommen, kein Umbau) · ⑦ Lehre =
+Bildung (Abzeichen Arbeit), Lebenslauf = Arbeit. Offen.
 
 ## Befunde
 
