@@ -56,4 +56,16 @@ describe('Aussteuerung — Vorbezug und Überbrückungsleistungen', () => {
       }
     }
   });
+
+  it('sagt, dass das Gesetz das Ende mit 62 für die Übergangsgeneration nicht ausdrücklich regelt', () => {
+    // Rechts-Prüfer 06.11.2026 (Fedlex-Volltext): ÜLG Art. 3 Abs. 1 Bst. b nennt keinen AHVG-Artikel,
+    // AHVG Art. 40c erlaubt Frauen 1961–1969 den Vorbezug ab 62. Hintereinander gelesen klingt das wie
+    // «ÜL enden mit 62» — ausdrücklich steht das nirgends. Der Text muss das sagen und auf die EL-Stelle verweisen.
+    for (const [lang, t] of Object.entries(texte)) {
+      for (const s of fassungen(t.aussteuerung.step4Uel)) {
+        expect(s, lang).toMatch(/nicht ausdrücklich|pas expressément|non dice espressamente|not expressly/);
+        expect(s, lang).toMatch(/EL-Stelle|organe PC|organo PC|supplementary-benefits office/);
+      }
+    }
+  });
 });

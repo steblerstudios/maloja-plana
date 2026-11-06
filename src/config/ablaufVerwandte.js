@@ -30,8 +30,9 @@ export const VERWANDTE = {
   wohnunggekuendigt: ['umzug', 'mahnung'],
   quellensteuer: ['neuerjob', 'bewilligung', 'wegzug'],
   // Umleitung auf «Stelle verloren» (letzter Teil dort); der Eintrag zählt trotzdem als Ablauf im Register.
-  // EL bleibt: ab 60 folgen auf die Überbrückungsleistungen die EL (ÜLG Art. 3 Abs. 1 Bst. b), der Text
-  // zieht die Grenze (swiss-precision 06.11.2026).
+  // EL bleibt: ab 60 können auf die Überbrückungsleistungen EL folgen (ÜLG Art. 3 Abs. 1, ELG Art. 4) —
+  // Bst. b nur, wenn EL im Referenzalter absehbar sind; der Text zieht die Grenze (swiss-precision und
+  // rechts-pruefer 06.11.2026).
   aussteuerung: ['stelleverloren', 'ergaenzungsleistungen'],
   zuzug: ['umzug', 'einbuergerung', 'kkerst', 'bewilligung'],
   einbuergerung: ['bewilligung', 'zuzug', 'ausweis'],
