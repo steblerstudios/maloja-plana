@@ -117,3 +117,11 @@ weniger generisch, klarer, menschlicher.
    In der Du-Fassung stehen «du», «dein», «dir», «dich» klein, wie in der amtlichen
    Rechtschreibung, auch in der Schweiz. Gross nur am Satzanfang, auch nach einem Doppelpunkt,
    wenn ein ganzer Satz folgt. Wächter: `src/__tests__/duKlein.test.js`.
+8. **Hausbegriffe, ein Wort je Sache** (Fassung 9, Stebler Studios 06.11.2026 «Ja, so»).
+   Wächter: `src/__tests__/hausbegriffe.test.js` (mit Ausnahmeliste und Grund).
+   - **Notfallkarte** = Blatt der App · **Notfallpass** nur für die Telefon-Funktion · **Notfall-Dossier** = Druck
+   - **Unterlagen** = Ort · **Dokumente** = Dateien · **Dokumentenablage** = Ablage · **Tresor** nur für das verschlüsselte Schloss
+   - **Krankenkasse** = Anbieterin · **Grundversicherung** = Pflicht · kein «KK» im Text (Gesetzesnamen bleiben)
+   - **Prämienverbilligung (IPV)** · Knopf «Prämienverbilligung prüfen»
+   - **Rechner**, wenn eine Zahl herauskommt · **«… prüfen»** bei Ja/Nein-Auskunft · kein «Check»/«Orientierung» als Werkzeugname
+   - **Frist** (rechtlich) · **Termin** (Verabredung) · **Mietbeiträge** · **Sozialdienst** · **Selbstbehalt**
