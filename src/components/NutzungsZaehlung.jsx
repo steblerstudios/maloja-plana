@@ -13,9 +13,9 @@ export const NutzungsZaehlung = ({ palette, t, demoMode }) => {
 
   const umschalten = (e) => {
     const wert = e.target.checked;
-    zaehlenSetzen(wert);
-    setAn(wert);
+    const gespeichert = zaehlenSetzen(wert);
     if (!wert) { tageLoeschen(); setTage(0); }
+    if (gespeichert) setAn(wert);
   };
   const loeschen = () => { tageLoeschen(); setTage(0); };
 

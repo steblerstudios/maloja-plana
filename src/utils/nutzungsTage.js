@@ -16,12 +16,14 @@ const zweistellig = (n) => String(n).padStart(2, '0');
 export const monatVon = (d) => d.getFullYear() + '-' + zweistellig(d.getMonth() + 1);
 export const tagVon = (d) => monatVon(d) + '-' + zweistellig(d.getDate());
 
-export const lokal = () => (typeof localStorage === 'undefined' ? null : localStorage);
+// Gesperrter Speicher (alle Cookies blockiert) wirft schon beim Zugriff — dann eben ohne Zählung.
+export const lokal = () => { try { return typeof localStorage === 'undefined' ? null : localStorage; } catch { return null; } };
 
 export const stand = (speicher) => {
   try {
     const wert = JSON.parse(speicher.getItem(SCHLUESSEL));
-    return wert && Number.isInteger(wert.tage) && wert.tage > 0 ? wert : null;
+    // Ein Monat hat höchstens 31 Tage; alles darüber ist kein echter Stand.
+    return wert && Number.isInteger(wert.tage) && wert.tage > 0 && wert.tage <= 31 ? wert : null;
   } catch { return null; }
 };
 

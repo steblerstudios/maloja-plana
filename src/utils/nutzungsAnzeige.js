@@ -11,12 +11,15 @@ export function nutzungstageImMonat(speicher = lokal(), jetzt = new Date()) {
   return wert && wert.monat === monatVon(jetzt) ? wert.tage : 0;
 }
 
+// true, wenn die Wahl gespeichert ist. Beim Ablehnen zuerst die Zahl löschen: Scheitert danach das
+// Schreiben (Speicher voll), ist wenigstens die Zahl weg, und der Schalter bleibt, wie er war.
 export function zaehlenSetzen(an, speicher = lokal()) {
-  if (!speicher) return;
+  if (!speicher) return false;
   try {
     if (an) speicher.removeItem(ABGELEHNT);
-    else { speicher.setItem(ABGELEHNT, '1'); speicher.removeItem(SCHLUESSEL); }
-  } catch { /* ohne Speicher keine Wahl */ }
+    else { speicher.removeItem(SCHLUESSEL); speicher.setItem(ABGELEHNT, '1'); }
+    return true;
+  } catch { return false; }
 }
 
 // Merker: Datum der letzten Antwort, oder `weg:` + Datum, wenn es weggeklickt wurde. Beides

@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createT } from '../i18n/index.js';
 import { betaFeedbackText } from '../utils/betaFeedbackMail.js';
-import { SCHLUESSEL, ABGELEHNT, tagMerken, tageLoeschen, zaehlenErlaubt } from '../utils/nutzungsTage.js';
+import { SCHLUESSEL, ABGELEHNT, tagMerken, tageLoeschen, zaehlenErlaubt, lokal, stand } from '../utils/nutzungsTage.js';
 import { nutzungstageImMonat, zaehlenSetzen, FEEDBACK, feedbackRuht, feedbackMerken } from '../utils/nutzungsAnzeige.js';
 import { BEHALTEN } from '../utils/datenLoeschen.js';
 // 🛑 Nicht `import it from '../i18n/it.js'` — das überschreibt vitests `it`.
@@ -225,5 +225,40 @@ describe('Texte in allen Sprachen', () => {
     const legal = lesen('LegalView.jsx');
     expect(legal).toContain("t('legal.privacy.zaehlungTitle')");
     expect(legal).toContain("t('legal.privacy.zaehlung1')");
+  });
+});
+
+describe('Zählung · robust gegen gesperrten oder vollen Speicher (sicherheits-pruefer 06.11.2026)', () => {
+  it('gesperrter localStorage wirft nicht, es wird einfach nicht gezählt', () => {
+    const vorher = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+    Object.defineProperty(globalThis, 'localStorage', { configurable: true, get() { throw new Error('SecurityError'); } });
+    try {
+      expect(lokal()).toBeNull();
+      expect(() => nutzungstageImMonat()).not.toThrow();
+      expect(nutzungstageImMonat()).toBe(0);
+      expect(() => feedbackRuht()).not.toThrow();
+      expect(zaehlenErlaubt()).toBe(false);
+    } finally {
+      if (vorher) Object.defineProperty(globalThis, 'localStorage', vorher);
+      else delete globalThis.localStorage;
+    }
+  });
+
+  it('mehr als 31 Tage im Monat gilt nicht als Stand', () => {
+    const s = speicher();
+    s.setItem(SCHLUESSEL, JSON.stringify({ monat: '2026-11', letzter: '2026-11-06', tage: 99999 }));
+    expect(stand(s)).toBeNull();
+    s.setItem(SCHLUESSEL, JSON.stringify({ monat: '2026-11', letzter: '2026-11-06', tage: 31 }));
+    expect(stand(s)).not.toBeNull();
+  });
+
+  it('Ablehnen bei vollem Speicher: Zahl ist weg, die Wahl meldet «nicht gespeichert»', () => {
+    const s = speicher();
+    s.setItem(SCHLUESSEL, JSON.stringify({ monat: '2026-11', letzter: '2026-11-06', tage: 3 }));
+    const voll = { ...s, setItem: () => { throw new Error('QuotaExceededError'); } };
+    expect(zaehlenSetzen(false, voll)).toBe(false);
+    expect(s.roh()).toBeUndefined();
+    expect(zaehlenSetzen(false, s)).toBe(true);
+    expect(s.getItem(ABGELEHNT)).toBe('1');
   });
 });
