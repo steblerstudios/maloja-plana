@@ -25,7 +25,39 @@ Arbeit → Ausbildung, Familie → Basis) · `config/ansichtenRegister.js` (Feld
 | 1 | IPV, Prämien, Sozialhilfe | [1](seiten-architektur-1-ipv-praemien-sozialhilfe.html) | Regel «Kapitel = die Sache, um die es geht, Geld spielt mit (gold)». IPV → Versicherungen (folgt der Krankenkasse) · Prämien → Versicherungen · Sozialhilfe → Finanzen, Behörden spielt mit | ✅ **06.11.: IPV = A, Sozialhilfe = A** (Stebler Studios: «a anfang und am ende») — IPV: Kapitel Versicherungen, Fünfliber gold im Abzeichen, folgt der Krankenkasse · Sozialhilfe: Kapitel Finanzen, Abzeichen Behörden. Regel «Kapitel = die Sache, um die es geht» damit angenommen. 🔄 **Prämien offen:** «bei der Prämie denke ich halt noch an die Gesundheit» → Bild [1b](seiten-architektur-1b-praemien.html) |
 | 2 | Gesundheit als Kapitel, Notfall darin | [Organigramm](seiten-architektur-organigramm.html) | ja | ✅ Kapitel Gesundheit mit Ästen Gesundheit + Notfall |
 | 3 | Alle Seiten durchgehen | [Organigramm](seiten-architektur-organigramm.html) · [①](seiten-architektur-2-krankenkasse.html) · [②④](seiten-architektur-3-verfuegungen.html) · [③⑤⑥⑦](seiten-architektur-4-geld-arbeit.html) | je A | ✅ alle A, Zuordnung steht (Tabelle unten) |
-| 4 | Dashboard: was und in welcher Ordnung | [Dashboard](seiten-architektur-5-dashboard.html) | A — Kapitel führen, Äste als Zwischentitel; «Alle Seiten nach Kapitel» ersetzt die 7 Werkzeug-Gruppen; Ankommen + Mit 18 als Türen, Klammer eine Zeile | ✅ **06.11.: A, Kapitel führen** (Stebler Studios). 4b Stufen-Namen: Bild [4b](seiten-architektur-5b-stufen.html), offen |
+| 4 | Dashboard: was und in welcher Ordnung | [Dashboard](seiten-architektur-5-dashboard.html) | A — Kapitel führen, Äste als Zwischentitel; «Alle Seiten nach Kapitel» ersetzt die 7 Werkzeug-Gruppen; Ankommen + Mit 18 als Türen, Klammer eine Zeile | ✅ **06.11.: A, Kapitel führen** (Stebler Studios). 4b Stufen-Namen: Bild [4b](seiten-architektur-5b-stufen.html) — ✅ **06.11.: A, bleibt** (Dein Alltag: Basis · Wohnen · Finanzen · Deine Absicherung: Versicherungen & Vorsorge · Ausbildung & Arbeit · Dein Schutz: Behörden · Gesundheit). Reihenfolge und Berg-Stationen unverändert |
+
+## ✅ Besprechung abgeschlossen (06.11.2026)
+
+Jede Seite hat Kapitel und Ast (Tabelle «Zuordnung steht» unten), die Dashboard-Ordnung ist entschieden.
+**Gebaut ist nichts.** Der Bau (Liste «Was beim Bau nachzieht» unten, dazu Dashboard: «Alle Seiten nach Kapitel»
+statt der 7 Werkzeug-Gruppen, Ankommen + Mit 18 als Türen, Klammer als Zeile; Stufe «Dein Schutz» mit Gesundheit)
+kommt erst auf Ja von Stebler Studios, am besten nach der Icon-Sitzung in einem Zug.
+
+## Übergabe an die Icon-Sitzung (Zweig `docs/icon-plan`, PR #708)
+
+Regel aus Frage 1, gilt für alle Seiten: **Kapitel = die Sache, um die es geht → Leitform. Geld, das dazu fliesst →
+Fünfliber gold im Abzeichen. Ein anderer Ast spielt mit → dessen Farbe im Abzeichen.**
+
+| Seite | Kapitel → Leitform | Abzeichen |
+|---|---|---|
+| **IPV** (Prämienverbilligung) | Versicherungen & Vorsorge → Edelweiss-Schild | Mini-Fünfliber **gold** (Geld). Folgt der Krankenkasse |
+| **Prämien** («Versicherungs-Übersicht») | Versicherungen & Vorsorge → Edelweiss-Schild | **orange** (Gesundheit spielt mit: 4 von 5 Teilen sind Krankenkasse) |
+| **Sozialhilfe** | Finanzen → Fünfliber | **Behörden** (Sozialdienst spielt mit) |
+| KK-Erstanmeldung · KK wechseln | Versicherungen & Vorsorge → Schild | orange |
+| KVG-Leistungen · KK-Belege · Unfall/Krankheit | **Gesundheit → Arztkoffer** | Mini-Schild mit Edelweiss |
+| **Gesundheit / Notfall** | **Ein Kapitel «Gesundheit»** (ersetzt «Notfall», Schlüssel `notfall` bleibt), Äste Gesundheit (Hagebutte) + Notfall (Vogelbeere) | — |
+| Arztkoffer · IV · Pflege | Gesundheit → Arztkoffer | Ast Gesundheit |
+| Notfall-Einstieg · Notfallkarte · Notfallpass | Gesundheit → Arztkoffer | rot (Ast Notfall) — das rote Herz mit Puls bleibt Zeichen des Notfalls |
+| Patientenverfügung · Vorsorgeauftrag & PV · Organspende · Bestattungswünsche | Gesundheit → Arztkoffer | rot (Ast Notfall). ⚠️ VA + PV waren schon abgenommen (mit Schild) → **neu prüfen** |
+| Steuern · Quellensteuer | Finanzen → Fünfliber | Behörden |
+| ALV-Taggeld · Stundenlohn | Ausbildung & Arbeit → Helm | Fünfliber gold (beide) |
+| EO | Basis → Ausweiskarte (Familie) | Fünfliber gold |
+| Lehre | Ausbildung & Arbeit → Schulhut | Arbeit (haselnuss) |
+| Lebenslauf | Ausbildung & Arbeit → Helm | — |
+| Betreibungsauszug | Behörden → Helvetia | (wie dort entschieden) |
+
+Alle übrigen Seiten: Kapitel und Ast wie im [Organigramm](seiten-architektur-organigramm.html).
 
 ## Zuerst das Organigramm (06.11.2026, Stebler Studios)
 
