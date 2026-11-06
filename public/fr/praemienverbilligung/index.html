@@ -96,7 +96,7 @@
             "name": "Dois-je déposer une demande ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Dans certains cantons, les ayants droit sont contactés d’office ; dans d’autres, la demande doit être déposée soi-même. Comme cela relève du droit cantonal et peut changer, il vaut la peine de se renseigner auprès de l’organe cantonal — même si l’on a déjà reçu quelque chose une année antérieure."
+              "text": "Dans certains cantons, les ayants droit sont contactés d’office ; dans d’autres, il faut déposer soi-même la demande. Comme cela relève du droit cantonal et peut changer, il vaut la peine de se renseigner auprès de l’organe cantonal — même si l’on a déjà reçu quelque chose une année antérieure."
             }
           },
           {
@@ -127,10 +127,10 @@
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -138,7 +138,9 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -175,6 +177,8 @@
        nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
     .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
   </style>
 </head>
@@ -190,21 +194,21 @@
     <main>
       <p class="entwurf" role="note">Cette traduction n’a pas encore été relue par une personne. Le texte allemand fait foi.</p>
       <h1>Réduction des primes : qui y a droit</h1>
-      <p class="vorspann">La réduction individuelle des primes — souvent abrégée RIP — est une contribution des pouvoirs publics à la prime d’assurance-maladie. Elle est prévue par la loi sur l’assurance-maladie (LAMal), mais la Confédération ne l’exécute pas : ce sont les cantons qui le font, chacun selon ses propres règles, dans le cadre du droit fédéral.</p>
+      <p class="vorspann">La réduction individuelle des primes — souvent abrégée RIP — est une contribution des pouvoirs publics à la prime d’assurance-maladie. Elle est prévue par la loi fédérale sur l’assurance-maladie (LAMal), mais la Confédération ne l’exécute pas : ce sont les cantons qui le font, chacun selon ses propres règles, dans le cadre du droit fédéral.</p>
       <p class="hinweis">Une orientation, et non un conseil juridique ou financier — seul l’organe compétent fait foi. Cette page ne mentionne volontairement ni montants ni délais.</p>
 
         <h2>Ce que prescrit la Confédération et ce que décide le canton</h2>
-        <p>La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et à quelle hauteur.</p>
+        <p>La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et pour quel montant.</p>
         <p>Concrètement, ce qui diffère d’un canton à l’autre : les limites de revenu et de fortune, la manière même dont le revenu déterminant est calculé, le fait de devoir déposer une demande ou d’être contacté, et les délais.</p>
         <p>Est en revanche partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.</p>
         <p>C’est pourquoi la phrase « chez nous, on y a droit à partir d’un revenu de X » mène rarement loin. Elle vaut au mieux pour un canton, et là encore pour une seule année.</p>
 
         <h2>Quels chiffres comptent</h2>
-        <p>Les cantons se fondent en règle générale sur les données fiscales — et souvent non pas sur celles de l’année en cours, mais sur une taxation antérieure déjà entrée en force. Cela a une conséquence qui surprend : une personne qui gagne nettement moins cette année ne le voit pas apparaître d’elle-même dans de nombreux cantons — d’autres en tiennent compte seulement lors du décompte définitif ultérieur.</p>
+        <p>Les cantons se fondent en règle générale sur les données fiscales — et souvent non pas sur celles de l’année en cours, mais sur une taxation antérieure déjà entrée en force. Cela a une conséquence qui surprend : une personne qui gagne nettement moins cette année ne voit pas cette baisse prise en compte d’office dans de nombreux cantons — d’autres en tiennent compte seulement lors du décompte définitif ultérieur.</p>
         <p>La LAMal exige toutefois que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle les détails, par exemple les conditions, les justificatifs, les délais et la date d’effet. Un droit à la réduction n’en découle pas automatiquement. L’organe compétent vous renseigne — le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, mais dans certains cantons l’administration fiscale ou la commune de domicile.</p>
 
         <h2>L’erreur la plus fréquente</h2>
-        <p>Beaucoup partent du principe qu’avec un revenu d’activité lucrative on n’a en principe droit à rien. C’est inexact : la réduction des primes n’est pas une prestation réservée aux personnes sans emploi. Les familles avec enfants, les personnes en formation et les ménages à revenu moyen y entrent dans de nombreux cantons.</p>
+        <p>Beaucoup partent du principe qu’avec un revenu d’activité lucrative on n’a en principe droit à rien. C’est inexact : la réduction des primes n’est pas une prestation réservée aux personnes sans emploi. Les familles avec enfants, les personnes en formation et les ménages à revenu moyen peuvent y avoir droit dans de nombreux cantons.</p>
         <p>La deuxième erreur fréquente est de croire qu’une demande refusée une fois vaut pour toujours. Elle vaut pour son année. Si le revenu, le ménage ou le canton de domicile changent, c’est une nouvelle question.</p>
 
       <h2>Questions fréquentes</h2>
@@ -212,7 +216,7 @@
         <p>Cela dépend du canton de domicile, du revenu et de la fortune déterminants et de la taille du ménage — les trois étant pondérés différemment selon le canton. Il n’existe pas de limite valable partout. Seul l’organe compétent décide de manière contraignante : le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, dans certains cantons l’administration fiscale ou la commune de domicile.</p>
 
         <h3>Dois-je déposer une demande ?</h3>
-        <p>Dans certains cantons, les ayants droit sont contactés d’office ; dans d’autres, la demande doit être déposée soi-même. Comme cela relève du droit cantonal et peut changer, il vaut la peine de se renseigner auprès de l’organe cantonal — même si l’on a déjà reçu quelque chose une année antérieure.</p>
+        <p>Dans certains cantons, les ayants droit sont contactés d’office ; dans d’autres, il faut déposer soi-même la demande. Comme cela relève du droit cantonal et peut changer, il vaut la peine de se renseigner auprès de l’organe cantonal — même si l’on a déjà reçu quelque chose une année antérieure.</p>
 
         <h3>Quel revenu est pris en compte ?</h3>
         <p>En règle générale un revenu dérivé de la taxation fiscale, souvent d’une année antérieure, et souvent avec des ajouts et des déductions cantonaux. Le revenu brut du mois en cours n’est presque jamais le chiffre déterminant.</p>

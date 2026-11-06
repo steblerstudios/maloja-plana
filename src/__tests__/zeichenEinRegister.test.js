@@ -42,7 +42,10 @@ describe('ein Ding, ein Zeichen', () => {
   it('«Was steht mir zu?» trägt in Leiste, Menü und Register dasselbe Geschenk', () => {
     expect(WERKZEUGE.find((w) => w.view === 'situationen').icon).toBe('geschenk');
     expect(lesen('main.jsx')).toMatch(/key: 'situationen'[^\n]*icon: 'geschenk'/);
-    expect(lesen('components/WerkzeugGruppen.jsx')).toMatch(/view: 'situationen', icon: 'geschenk'/);
+    // In den Werkzeuggruppen steht «Was steht mir zu?» seit A1 (06.11.2026, #719) nicht mehr — die Seite
+    // steht fest in der Leiste unten. Steht sie dort je wieder, dann mit dem Geschenk.
+    const gruppen = lesen('components/WerkzeugGruppen.jsx');
+    if (/view: 'situationen'/.test(gruppen)) expect(gruppen).toMatch(/view: 'situationen', icon: 'geschenk'/);
   });
   it('der Weg zur Sicherung trägt das Sicherungs-Zeichen, nicht das Schloss', () => {
     expect(lesen('components/UnterlagenWege.jsx')).toMatch(/icon: 'sicherung', onClick: \(\) => onNavigate\('export'\)/);

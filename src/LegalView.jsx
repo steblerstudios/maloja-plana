@@ -124,10 +124,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
     // Title
     React.createElement(PageTitle, {
       palette,
-      style: {
-        marginBottom: space.md,
-        letterSpacing: '0.2px',
-      }
+      style: { marginBottom: space.md },
     }, t('legal.title')),
 
     // Tabs

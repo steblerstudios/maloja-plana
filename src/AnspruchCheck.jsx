@@ -8,6 +8,7 @@ import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 import { zurueckZeichen } from './IconSystem.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 
 // Anspruch-Check, geführt (#4.4.2 „Brücke"): webt die zwei bestehenden Checks zu
 // EINEM Fluss — Schritt 1 = Zahlen (Schnellcheck), Schritt 2 = Lebenslage
@@ -183,7 +184,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
 
     step === 1 && React.createElement(Schnellcheck, { palette, t, data, onNavigate, onProbeChange: setProbe }),
     step === 2 && React.createElement('div', null,
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruchCheck.stepSituation')),
+      React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruchCheck.stepSituation')),
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: leading.relaxed } }, t('lebenszustaende.sectionIntro')),
       React.createElement(LebenslagenAuswahl, { palette, t, data, onNavigate })),
     step === 3 && renderResult(),

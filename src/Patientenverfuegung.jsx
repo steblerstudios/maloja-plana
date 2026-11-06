@@ -5,6 +5,7 @@ import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
 import { FRAGEN, dokument, dokumentHtml } from './data/patientenverfuegung.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 
 // Patientenverfügung in Fragen — eine Frage pro Seite, am Schluss Vorschau und Druck.
 // Ablauf: components/FragenAblauf.jsx · Dokument und Regeln: data/patientenverfuegung.js ·
@@ -30,7 +31,7 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNa
   const vorschau = ({ zumAnfang, knopf }) => {
     const doc = dokument(antworten, data, t);
     return React.createElement('div', null,
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('pv.ui.vorschauTitel')),
+      React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('pv.ui.vorschauTitel')),
       doc.leer
         ? React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, hinweisZeichen(), t('pv.ui.leer'))
         : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },

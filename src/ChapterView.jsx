@@ -1212,7 +1212,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const handleSaveCard = () => {
     const sections = notfallkarteAbschnitte();
     const sectionHtml = sections.map(s =>
-      '<div style="margin-bottom:16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
+      '<div style="margin-bottom:16px"><div style="font-size:11px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
     ).join('');
     const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + tr('notfallSummary.cardTitle') + '</title>' +
       '<style>@media print{body{margin:0;padding:20mm}@page{size:A4;margin:20mm}}body{font-family:-apple-system,system-ui,sans-serif;max-width:600px;margin:40px auto;padding:0 24px;color:#222;line-height:1.5}' +
@@ -1288,7 +1288,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               }
             },
               React.createElement('div', {
-                style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep || palette.mid, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: space.xs + 'px' }
+                style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep || palette.mid, marginBottom: space.xs + 'px' }
               }, t('nav.crosslink.relatedTitle')),
               items.map(([key, view, textKey]) => React.createElement('button', {
                 key: 'crosslink-' + key,
@@ -2250,7 +2250,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ),
         // Titel wie Entwurf G (30 px Display, Stebler Studios 27.10.2026: «die Kapitel-Köpfe genauso angleichen»);
         // gleich wie der Kopf von «Was ansteht» (CalendarReminders), Wächter: kopfTitelGleich.test.js.
-        React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0, fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-0.015em' } }, chapter.title)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, chapter.title)
       ),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed, maxWidth: '560px' } }, introText)
@@ -2545,8 +2545,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           style: {
             width: '100%',
             padding: '10px',
-            background: uploadFile && uploadType && uploadExpiry ? palette.sageBtn : palette.mid,
-            color: '#fff',
+            background: uploadFile && uploadType && uploadExpiry ? palette.sand : palette.mid,
+            color: uploadFile && uploadType && uploadExpiry ? palette.onSand : '#fff',
             border: 'none',
             borderRadius: radius.sm,
             cursor: uploadFile && uploadType && uploadExpiry ? 'pointer' : 'not-allowed',

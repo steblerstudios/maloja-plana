@@ -101,10 +101,10 @@
           },
           {
             "@type": "Question",
-            "name": "Devo presentare ovunque una domanda io stesso?",
+            "name": "Devo sempre presentare personalmente una domanda?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi si annunciano spontaneamente, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta."
+              "text": "Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta."
             }
           },
           {
@@ -127,10 +127,10 @@
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -138,7 +138,9 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -175,6 +177,8 @@
        nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
     .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
   </style>
 </head>
@@ -218,8 +222,8 @@
         <h3>Perché è diverso a seconda del Cantone?</h3>
         <p>Perché per molte prestazioni la Confederazione fissa deliberatamente soltanto il quadro e i Cantoni lo riempiono. Essi stabiliscono limiti di reddito, procedure e termini propri. Un trasloco oltre il confine cantonale può quindi modificare il diritto, anche se nient’altro è cambiato.</p>
 
-        <h3>Devo presentare ovunque una domanda io stesso?</h3>
-        <p>Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi si annunciano spontaneamente, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta.</p>
+        <h3>Devo sempre presentare personalmente una domanda?</h3>
+        <p>Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta.</p>
 
         <h3>Quanto costa Maloja Plana?</h3>
         <p>Nulla. Maloja Plana è gratuito e open source. Non c’è alcun account, alcuna pubblicità e alcun tracciamento; tutti i dati restano sul proprio dispositivo.</p>
@@ -234,7 +238,7 @@
 
       <h2>Fonti e calcolatori</h2>
       <ul>
-          <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Aiuti cantonali, panoramica dell’Ufficio federale delle abitazioni</a> <span class="leise">(disponibile solo in tedesco)</span></li>
+          <li><a href="https://www.bwo.admin.ch/it/aiuti-cantonali" rel="noopener">Aiuti cantonali, panoramica dell’Ufficio federale delle abitazioni</a></li>
           <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Prestazioni complementari, Ufficio federale delle assicurazioni sociali</a> <span class="leise">(disponibile solo in tedesco)</span></li>
           <li><a href="https://www.ahv-iv.ch/p/3.01.i" rel="noopener">Promemoria 3.01 «Rendite di vecchiaia e assegni per grandi invalidi dell’AVS»</a></li>
       </ul>
@@ -247,7 +251,7 @@
           <li><a href="/it/praemienverbilligung/">Riduzione dei premi</a></li>
           <li><a href="/it/sozialhilfe/">Aiuto sociale</a></li>
           <li><a href="/it/steuern/">Imposte</a></li>
-          <li><a href="/it/rechtliches/">Colofone, protezione dei dati ed esclusione di responsabilità</a></li>
+          <li><a href="/it/rechtliches/">Impressum, protezione dei dati ed esclusione di responsabilità</a></li>
       </ul>
     </main>
 
@@ -257,7 +261,7 @@
       <p>Open source con licenza
       <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Codice sorgente su GitHub</a></p>
-      <p><a href="/it/rechtliches/">Colofone, protezione dei dati ed esclusione di responsabilità</a> —
+      <p><a href="/it/rechtliches/">Impressum, protezione dei dati ed esclusione di responsabilità</a> —
       consultabile senza codice d’accesso.</p>
       <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
            mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht

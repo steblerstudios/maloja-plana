@@ -123,7 +123,7 @@ const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
         icon && React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: balken + '2E', boxShadow: 'inset 0 0 0 1px ' + balken + '4D', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: icon, size: 26 })),
-        React.createElement(PageTitle, { palette, style: { fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-.015em', minWidth: 0 } }, title)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, title)
       )
     )
   );
