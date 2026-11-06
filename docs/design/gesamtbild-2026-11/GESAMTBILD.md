@@ -201,6 +201,22 @@ fassen, die die App selbst prüft — das kann ein Mockup nicht:
 
 ### 3d. Die vier Entscheide, die als Nächstes anstehen
 
+> ✅ **Entschieden 06.11.2026 abends** (Stebler Studios: «Ja, so übernehmen», auf die vier
+> Empfehlungen unten): **E1 = B** Knöpfe 10 px · **E2 = C** Gold erst beim Festhalten ·
+> **E3** Merge-Reihenfolge wie in 3a · **E4 = C** #726 jetzt, #729 danach neu erzeugen.
+> E3 gibt die **Reihenfolge** frei, nicht das Mergen selbst — Mergen und Deployen bleiben
+> Stebler Studios’ Hand.
+>
+> **Was daraus zu bauen ist (noch nicht gebaut):**
+> - E1 → im Neubau von #729: `KNOPF_RADIUS` = `radius.md` (10), Brand Book §Knopfarten
+>   («alle Knöpfe und Auswahlen 6 px» → 10 px), Wächter `knopfarten.test.js` mitziehen.
+> - E2 → Knopfarten-Regel ergänzen: ein Öffner (z. B. «+ Erinnerung hinzufügen») ist Nebenknopf,
+>   Hauptknopf ist nur der Schritt, der speichert oder sendet; «Heute» im Kalender ist eine
+>   Auswahl. Betrifft `CalendarReminders.jsx` und das Brand Book; danach im ganzen Bestand
+>   nach weiteren Öffnern als Hauptknopf suchen.
+> - E4 → #726 zum Mergen bereit (vorher einmal im Browser ansehen); #729 danach auf frischem
+>   `main` mit den Skripten neu erzeugen, mit Vorher-nachher-Bildern.
+
 Skizzen A/B/C dazu im Bild: [`gesamtbild.html`](gesamtbild.html) (veröffentlicht als privates
 Artifact «Gesamtbild nach Stardust», https://claude.ai/artifact/V9PL74gCetTGzS7njk8Xd9).
 
