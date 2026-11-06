@@ -1952,13 +1952,9 @@ export default {
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
     bereich: { versicherungen: 'Insurance', arbeit: 'Work', gesundheit: 'Health', wohnen: 'Housing', vorsorge: 'Planning ahead', finanzen: 'Money', familie: 'Family', behoerden: 'Authorities', person: 'Personal matters', bildung: 'Education', notfall: 'Emergency' },
     toolGroups: {
-      lebensereignisse: 'Life events',
       ankommen: 'Arriving in Switzerland',
       mit18: 'At 18',
-      money: 'Money & taxes',
-      insurance: 'Insurance & health',
-      documents: 'Documents & authorities',
-      organize: 'Organize & profile',
+      klammer: 'Calendar, to-do list & documents',
     },
     anspruchTitle: 'What am I entitled to?',
     anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',

@@ -2094,15 +2094,12 @@ export default {
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
     bereich: { versicherungen: 'Assicuranzas', arbeit: 'Lavur', gesundheit: 'Sanadad', wohnen: 'Abitar', vorsorge: 'Prevenziun', finanzen: 'Daners', familie: 'Famiglia', behoerden: 'Autoritads', person: 'Vita persunala', bildung: 'Furmaziun', notfall: 'Urgenza' },
     toolGroups: {
-      lebensereignisse: 'Eveniments da vita',
       // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)
       ankommen: 'Arrivada en Svizra',
       // TODO(rm): provisorisch — Gegenlese (G2 Mit 18, 06.11.2026)
       mit18: 'Cun 18 onns',
-      money: 'Daners & taglias',
-      insurance: 'Assicuranza & sanadad',
-      documents: 'Documents & autoritads',
-      organize: 'Organisar & profil',
+      // TODO(rm): provisorisch — Gegenlese (Seiten-Architektur, 06.11.2026)
+      klammer: 'Chalender, glista & documents',
     },
     anspruchTitle: 'A tge hai jau dretg?',
     anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
@@ -2562,6 +2559,7 @@ export default {
       },
     },
     notfall: {
+      // TODO(rm): provisorisch — Gegenlese (Kapitel Gesundheit, Seiten-Architektur 06.11.2026)
       title: 'Sanadad',
       short: 'Sanadad',
       description: 'Sanadad, urgenza e disposiziuns',

@@ -1962,13 +1962,9 @@ export default {
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
     bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches', bildung: 'Bildung', notfall: 'Notfall' },
     toolGroups: {
-      lebensereignisse: 'Lebensereignisse',
       ankommen: 'Ankommen in der Schweiz',
       mit18: 'Mit 18',
-      money: 'Geld & Steuern',
-      insurance: 'Versicherung & Gesundheit',
-      documents: 'Dokumente & Behörden',
-      organize: 'Organisieren & Profil',
+      klammer: 'Kalender, Merkliste & Unterlagen',
     },
     anspruchTitle: 'Was steht mir zu?',
     anspruchIntro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier ein ruhiger Überblick — unverbindlich, ohne Bewertung.',
