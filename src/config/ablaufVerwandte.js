@@ -41,6 +41,6 @@ export const VERWANDTE = {
   lehre: ['volljaehrig', 'neuerjob', 'dienst'],
   volljaehrig: ['lehre', 'dienst', 'kkerst'],
   dienst: ['volljaehrig', 'lehre'],
-  todesfall: ['vorsorgeauftrag', 'pensionierung'],
+  todesfall: ['vorsorgeauftrag', 'pensionierung', 'ergaenzungsleistungen'],
   digitaleordnung: ['vorsorgeauftrag', 'betreibungsauszug'],
 };

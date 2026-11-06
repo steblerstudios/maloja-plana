@@ -10,6 +10,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
 import { linkStil } from './components/PrimaryButton.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -50,7 +51,12 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('mietzins'),
       style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' }
-    }, t('nav.mietzins'))
+    }, t('nav.mietzins')),
+    // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('stelleverloren'),
+      style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' }
+    }, t(ansichtName('stelleverloren')))
   );
   const rechner = (extra) => React.createElement(SozialhilfeRechner, { palette, t, data, onNavigate, titel: t('sozialhilfe.title'), satz, stelle, mitPegel: true, ...extra });
 

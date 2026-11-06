@@ -6,6 +6,7 @@ import { FragenAblauf } from './components/FragenAblauf.jsx';
 import { FRAGEN_BW, bestattungDokument, bestattungHtml } from './data/bestattung.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { PanelTitle } from './components/Heading.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // Bestattungswünsche — eine Frage pro Seite, Vorschau, Druck (Skizze Stebler Studios 27.09.2026, F–I).
 // Regeln: data/bestattung.js · Grundlage: docs/design/vorsorge-dokumente-2026-09-27.md.
@@ -41,7 +42,9 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(bestattungHtml(antworten, data, t, lang)) },
           React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('bw.ui.aendern')),
-        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge'))
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
+        // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('vorsorgeauftrag') }, t(ansichtName('vorsorgeauftrag')))
       )
     );
   };
