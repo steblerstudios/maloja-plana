@@ -46,7 +46,7 @@ export const themenStempel = (palette, thema, klein) => {
   if (!b || !b.fruit || dunkel == null) return null;
   return React.createElement('span', {
     'data-teil': 'themenfrucht', 'data-bereich': thema.bereich,
-    style: { position: 'absolute', right: klein ? '-12px' : '-16px', bottom: klein ? '-10px' : '-13px', display: 'inline-flex', pointerEvents: 'none' },
+    style: { position: 'absolute', right: klein ? '-16px' : '-22px', bottom: klein ? '-12px' : '-16px', display: 'inline-flex', pointerEvents: 'none' },
   }, React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: thema.icon, color: bereichColor(thema.bereich, dunkel), size: klein ? 36 : 44 }));
 };
 
@@ -60,7 +60,7 @@ export const Kalenderblatt = ({ iso, palette, locale = 'de-CH', vorbei = false, 
   const h = React.createElement;
   return h('div', {
     'aria-hidden': 'true', 'data-teil': 'kalenderblatt', 'data-zustand': vorbei ? 'vorbei' : 'offen',
-    style: { position: 'relative', flexShrink: 0, width: (klein ? 48 : 64) + 'px', marginRight: stempel ? (klein ? '8px' : '10px') : 0 },
+    style: { position: 'relative', flexShrink: 0, width: (klein ? 48 : 64) + 'px', marginRight: stempel ? (klein ? '12px' : '16px') : 0 },
   },
     h('div', { 'data-teil': 'blatt', style: { textAlign: 'center', borderRadius: radius.sm, border: '1px solid ' + farbe, background: palette.surface, overflow: 'hidden' } },
       h('div', { 'data-teil': 'kante', style: { height: '3px', background: farbe } }),
