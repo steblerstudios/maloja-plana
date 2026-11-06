@@ -1959,6 +1959,8 @@ export default {
     tierProtective: { sie: 'Ihr Schutz', du: 'Dein Schutz' },
     toolsAndFeatures: 'Werkzeuge',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches' },
     toolGroups: {
       lebensereignisse: 'Lebensereignisse',
       ankommen: 'Ankommen in der Schweiz',

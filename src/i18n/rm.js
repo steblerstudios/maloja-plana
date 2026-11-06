@@ -2090,6 +2090,9 @@ export default {
     toolsAndFeatures: 'Utensils',
     detailProgress: 'Progress detaglià per chapitel',
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
+    // TODO(rm): provisorisch — Gegenlese (A2 Lebensbereiche, 06.11.2026)
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Assicuranzas', arbeit: 'Lavur', gesundheit: 'Sanadad', wohnen: 'Abitar', vorsorge: 'Prevenziun', finanzen: 'Daners', familie: 'Famiglia', behoerden: 'Autoritads', person: 'Vita persunala' },
     toolGroups: {
       lebensereignisse: 'Eveniments da vita',
       // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)

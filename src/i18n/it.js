@@ -1949,6 +1949,8 @@ export default {
     tierProtective: { sie: 'La Sua protezione', du: 'La tua protezione' },
     toolsAndFeatures: 'Strumenti',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale' },
     toolGroups: {
       lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',

@@ -41,7 +41,10 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
   const alsEintrag = (a) => ({ label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon });
   const groups = [
     // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
-    { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map(alsEintrag) },
+    // A2 (06.11.2026): die 36 Abläufe nach Lebensbereich gegliedert, Reihenfolge der Bereiche wie im Register
+    // (erstes Vorkommen in ABLAEUFE). Zwischentitel dashboard.bereich.* (Wächter: lebensereignisseNachBereich.test.js).
+    { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map(alsEintrag),
+      teile: [...new Set(ABLAEUFE.map((a) => a.bereich))].map((b) => ({ key: b, titel: t('dashboard.bereich.' + b), items: ABLAEUFE.filter((a) => a.bereich === b).map(alsEintrag) })) },
     // G1 (05.11.2026): die Abläufe nach dem Zuzug als Reihe; sie bleiben auch oben stehen.
     { label: t('dashboard.toolGroups.ankommen'), items: ANKOMMEN.map((v) => ABLAEUFE.find((a) => a.view === v)).filter(Boolean).map(alsEintrag) },
     // G2 (06.11.2026): der Weg ins Erwachsenenleben als Reihe; die Abläufe bleiben auch oben stehen.
@@ -92,6 +95,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
     try { sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(neu)); } catch { /* ohne Speicher: nichts merken */ }
     return neu;
   });
+  const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' };
   return React.createElement(React.Fragment, null,
     ...groups.map((g) => React.createElement('details', {
       // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
@@ -110,9 +114,14 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
         ),
         React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
       ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
-        g.items.map(renderTool)
-      )
+      g.teile
+        ? React.createElement('div', { style: { padding: '0 0 ' + space.md + 'px 0' } },
+          ...g.teile.map((teil) => React.createElement(React.Fragment, { key: teil.key },
+            React.createElement('h4', { style: { margin: space.sm + 'px 2px ' + space.xs + 'px', fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.3px', color: palette.soft } }, teil.titel),
+            React.createElement('div', { style: raster }, teil.items.map(renderTool)))))
+        : React.createElement('div', { style: { ...raster, padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
+          g.items.map(renderTool)
+        )
     ))
   );
 };
