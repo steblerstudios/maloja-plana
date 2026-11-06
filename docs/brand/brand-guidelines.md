@@ -211,17 +211,24 @@ Namen bereits in `main.jsx` erfasst, Aktivierung erst mit verifizierter Überset
 Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Spiegel von
 `tokens.css`). React nutzt Inline-Styles, daher importieren Komponenten diese Konstanten.
 
-- **Spacing** (4px-Grid): `2xs 2 · xs 4 · sm 8 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`
-- **Radius:** `hair 2 · xs 4 · sm 6 · md 10 · lg 16 · xl 24 · full 9999` — `hair` für feine
-  Balken und Markierungen, `xs` für kleine Marken und Knöpfe in dichten Tabellen, `sm` ist der
-  Normalfall (auch Knöpfe), `full` für Pillen und Kreise. *(hair/xs nachgetragen 06.11.2026 — standen
-  im Code, fehlten hier.)*
+- **Spacing** (4px-Grid): `2xs 2 · xs 4 · sm 8 · ms 12 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`
+  *(`ms 12` seit 06.11.2026 — war der häufigste Festwert und fehlte in der Skala.)*
+- **Radius:** `hair 2 · xs 4 · sm 6 · md 10 · lg 16 · xl 24 · full 9999`, **nach Rolle** (Regel C
+  unten): `hair` feine Balken · `xs` Knöpfe in dichten Tabellen · `sm` kleine Elemente ohne
+  Bedienhöhe · `md` Felder, Knöpfe (`KNOPF_RADIUS`), Symbolkacheln · `lg` Karten · `xl` Blätter · `full` Marken,
+  Pillen, Kreise. *(Bis 06.11.2026 war `sm` der Normalfall für alles — überholt.)*
 - **Shadow** (subtil): `sm` bis `xl` mit `rgba(0,0,0,0.06…0.12)`
 - **Motion:** Easing `cubic-bezier(0.4,0,0.2,1)` · Dauer `fast 150 · normal 250 · slow 400 ·
   cinematic 600` (ms)
 - **Font-Stack:** Body `'Lexend', sans-serif` · Display `'Hanken Grotesk', sans-serif`
 
-### Knöpfe (seit Fassung 9, 05.11.2026)
+### 7a. Verhältnisse — woher die Werte kommen
+
+Die Werte oben sind nicht Geschmack und nicht von anderen Produkten abgeschaut, sondern folgen
+sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *(06.11.2026)*
+
+| | Regel | Für Maloja heisst das |
+|### Knöpfe (seit Fassung 9, 05.11.2026)
 
 Eine Quelle: [`src/components/PrimaryButton.jsx`](../../src/components/PrimaryButton.jsx)
 (`knopfStil`, `linkStil`, `auswahlStil`, `PrimaryButton`, `SecondaryButton`, `DangerButton`).
