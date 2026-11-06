@@ -139,7 +139,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         'aria-current': on ? 'step' : undefined,
         style: {
           display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '8px 12px', borderRadius: radius.sm,
+          padding: '8px 12px', borderRadius: radius.md,
           border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
           background: on ? palette.sage + '18' : 'transparent',
           color: on ? (palette.sageDeep || palette.text) : palette.mid,

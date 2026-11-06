@@ -227,7 +227,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     return h('div', {
       key: g.key,
       style: {
-        background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, overflow: 'hidden',
+        background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, overflow: 'hidden',
         opacity: packed ? 0 : 1, transform: packed ? 'translateY(-18px) scale(.95)' : 'none',
         transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : i * 60) + 'ms, transform 480ms ' + ease + ' ' + (packed ? 0 : i * 60) + 'ms',
       },

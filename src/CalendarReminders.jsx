@@ -270,7 +270,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontSize: '20px', fontWeight: weight.bold, lineHeight: 1 } }, d ? d.getDate() : ''),
         React.createElement('div', { style: { fontSize: '11px', color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
       ),
-      React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.sm, display: 'grid', placeItems: 'center', flexShrink: 0, background: farbe + '2E', boxShadow: 'inset 0 0 0 1px ' + farbe + '4D', color: farbe } },
+      React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: farbe + '2E', boxShadow: 'inset 0 0 0 1px ' + farbe + '4D', color: farbe } },
         React.createElement(Icon, { name: icon, size: 16 })),
       React.createElement('div', { style: { flex: 1, minWidth: 0 } },
         isJustDone && React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '2px', animation: 'mp-check-pop ' + duration.slow + 'ms ' + ease + ' forwards' } }, hinweisZeichen('check'), t('calendar.nicelyDone')),
@@ -516,7 +516,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       const start = fensterStart(calYear, calMonth, today);
       const fenster = fensterTage(start);
 
-      const navBtn = { width: '44px', height: '44px', background: 'none', border: 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit', fontSize: '22px', lineHeight: 1 };
+      const navBtn = { width: '44px', height: '44px', background: 'none', border: 'none', borderRadius: radius.md, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit', fontSize: '22px', lineHeight: 1 };
       const pille = (aktiv) => ({ flex: '0 0 auto', minHeight: '44px', padding: '0 12px', borderRadius: radius.full, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: aktiv ? palette.bg : palette.mid, background: aktiv ? palette.text : 'none', border: '1px solid ' + (aktiv ? palette.text : palette.border), display: 'inline-flex', alignItems: 'center', gap: '4px' });
       // minHeight 44 statt nur aspectRatio 1 (a11y-Prüfung 26.10.2026: bei 375 px 34 px hoch).
       const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', minHeight: '44px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.md, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, fontVariantNumeric: 'tabular-nums', background: iso === selDate ? palette.sand + '2E' : 'none', border: 'none', boxShadow: isToday ? 'inset 0 0 0 1.5px ' + palette.text : 'none' });
@@ -852,7 +852,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         )
       ),
       ...ohneTag.map(m => React.createElement('div', { key: m.id, style: { display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 0', borderBottom: '1px solid ' + palette.border } },
-        (() => { const f = bereichZeichenFarbe(merkpunktBereich(m.link), palette); return React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.sm, display: 'grid', placeItems: 'center', flexShrink: 0, background: f + '2E', boxShadow: 'inset 0 0 0 1px ' + f + '4D', color: f } }, React.createElement(Icon, { name: merkpunktZeichen(m.link), size: 16 })); })(),
+        (() => { const f = bereichZeichenFarbe(merkpunktBereich(m.link), palette); return React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: f + '2E', boxShadow: 'inset 0 0 0 1px ' + f + '4D', color: f } }, React.createElement(Icon, { name: merkpunktZeichen(m.link), size: 16 })); })(),
         React.createElement('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, color: palette.text } }, m.text),
         React.createElement('button', {
           type: 'button', 'aria-pressed': verteilen === m.id, style: { ...knopfRuhig, borderColor: verteilen === m.id ? palette.sage : palette.border },

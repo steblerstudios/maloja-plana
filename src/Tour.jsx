@@ -114,7 +114,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
             position: 'fixed',
             top: rect.top - pad, left: rect.left - pad,
             width: rect.width + pad * 2, height: rect.height + pad * 2,
-            borderRadius: radius.sm, pointerEvents: 'none',
+            borderRadius: radius.md, pointerEvents: 'none',
             boxShadow: '0 0 0 9999px rgba(20,24,28,0.55), 0 0 0 2px ' + palette.sage,
             transition: `top ${duration.normal}ms ${ease}, left ${duration.normal}ms ${ease}, width ${duration.normal}ms ${ease}, height ${duration.normal}ms ${ease}`,
             zIndex: 10001,

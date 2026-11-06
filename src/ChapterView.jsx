@@ -2195,7 +2195,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe,
         style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
       },
-        React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.sm, display: 'grid', placeItems: 'center', flexShrink: 0, background: bereichsfarbe ? bereichsfarbe.grund : palette.up, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : palette.sageDeep } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
+        React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: bereichsfarbe ? bereichsfarbe.grund : palette.up, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : palette.sageDeep } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
         React.createElement('span', { style: { flex: 1, minWidth: 0 } },
           React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
           z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)

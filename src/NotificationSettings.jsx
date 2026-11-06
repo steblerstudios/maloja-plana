@@ -42,7 +42,7 @@ export const NotificationSettings = ({ palette, t }) => {
   };
 
   const toggleStyle = (enabled) => ({
-    width: '44px', height: '24px', borderRadius: radius.sm,
+    width: '44px', height: '24px', borderRadius: radius.md,
     background: enabled ? palette.sage : palette.up,
     border: '1px solid ' + (enabled ? palette.sage : palette.border),
     cursor: 'pointer', position: 'relative',
