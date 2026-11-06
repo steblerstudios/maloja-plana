@@ -148,3 +148,20 @@ describe('Ablage · Verdrahtung', () => {
     expect(src).toMatch(/onOpenChapter: \(key\) => \{ const i = chapters\.findIndex/);
   });
 });
+
+// F9-A14 Schritt 2 (Entscheid 06.11.2026, «Ja, als Frist»): Das Ablaufdatum ist eine Frist mit
+// Kalenderblatt; der Frucht-Stempel zeigt das Kapitel. Ohne Datum bleibt das Kapitel-Symbol.
+describe('Ablage · Ablaufdatum als Kalenderblatt', () => {
+  it('gültiges Dokument: blaues Blatt mit Stempel des Kapitels (Basis → Person)', async () => {
+    const { LIGHT_PALETTE } = await import('../config/constants.js');
+    const html = renderToStaticMarkup(React.createElement(DocumentTresor, {
+      palette: LIGHT_PALETTE, t, documents: [GUELTIG], chapters, onDownload: () => {}, onDelete: () => {}, onUpdateExpiry: () => {},
+    }));
+    expect(html).toContain('data-teil="kalenderblatt" data-zustand="offen"');
+    expect(html).toContain('data-bereich="person"');
+  });
+
+  it('ohne Ablaufdatum kein Blatt', () => {
+    expect(render([dok('ohne', '')])).not.toContain('data-teil="kalenderblatt"');
+  });
+});
