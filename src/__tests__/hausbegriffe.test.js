@@ -29,7 +29,7 @@ const VERWORFEN = [
   // Ablage heisst «Dokumentenablage» (LANGUAGE_SYSTEM_NOTE: «Tresor» klingt nach Bank/Hochsicherheit);
   // «Tresor» nur für das verschlüsselte Schloss («Ihr Tresor ist gesperrt»).
   ['Dokumententresor', /Dokumententresor/],
-  ['im Tresor ablegen', /\b(im|in den|in deinen|in Ihren) Tresor\b/],
+  ['im Tresor ablegen', /\b(im|in den|in deinen|in ihren) Tresor\b/i],
   ['Mietzinsbeitrag/-beiträge', /Mietzinsbeitr/],
   ['Mietzins-Beiträge', /Mietzins-Beitr/],
   ['Deadline', /Deadline/i],
