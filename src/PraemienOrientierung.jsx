@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
@@ -660,6 +661,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       zeileKnopf({ key: 'zusatz', titel: t('zusatzWechsel.title'), sub: t('vu.zusatzSub'), gehe: () => onNavigate('zusatzwechsel') }),
       zeileKnopf({ key: 'scanner', titel: t('vu.scanner'), sub: t('nav.kkScanner'), gehe: () => onNavigate('kk') })),
 
+    // D1 (06.11.2026): zur öffentlichen Erklärseite «Warum die Krankenkasse so viel kostet».
+    h(ErklaerseiteLink, { palette, t, view: 'praemien' }),
     h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),
     h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } }, renderSource(t('po.source', { jahr: wechselzeit ? laufendesJahr + ' / ' + vergleichsJahr : vergleichsJahr }), null, t))
