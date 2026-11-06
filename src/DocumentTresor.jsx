@@ -212,7 +212,7 @@ export const DocumentTresor = ({
               }),
               React.createElement('button', {
                 type: 'button', onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
-                style: { minHeight: '44px', padding: '0 14px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
+                style: { minHeight: '44px', padding: '0 14px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
               }, 'OK'),
               React.createElement('button', {
                 type: 'button', onClick: () => setEditingDocId(null),

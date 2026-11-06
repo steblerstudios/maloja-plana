@@ -105,7 +105,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
 
     React.createElement(PageTitle, {
       palette,
-      style: { marginBottom: space.sm + 'px', letterSpacing: '0.2px' },
+      style: { marginBottom: space.sm + 'px' },
     }, t('install.title')),
 
     React.createElement('p', {

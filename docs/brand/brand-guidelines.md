@@ -42,11 +42,19 @@ ein Sage-Wert — das war der **Text** im Hellmodus bzw. nur der Hellmodus.*
 | Hintergrund | `#F2F2F0` | `#22211F` | Seite (warmer Stein / Anthrazit) |
 | Surface | `#FAFAF8` | `#2B2A26` | Cards, erhöhte Flächen |
 | Text | `#24262A` | `#E6E3DC` | Fliesstext (dunkel: Warmweiss) |
-| **Sage** | `#5A7868` | `#7E9F8C` | **Primärfarbe** — Buttons, Links, Erfolg, «weiter/sicher» |
+| **Gold / Sand** | `#C4A06A` | `#C4A06A` | **Handeln** — Hauptknopf (gefüllt, Schrift `onSand`), Nebenknopf und Links (Rand/Schrift `sandDeep`), gewählte Option, Fokusring; Berg in der Bildmarke |
+| **Sage** | `#5A7868` | `#7E9F8C` | **Gut, erledigt** — gespeichert, im Rahmen, Anspruch möglich, «sicher» |
 | Salbei der Marke | — | `#8FB0A0` | Bildmarke (Weg/Haus), im Code `sageDeep` |
-| **Gold / Sand** | `#C4A870` | `#C4A870` | **Akzent** — Berg in der Bildmarke, Highlights, Fokusring (dunkel) |
-| Rose | `#B87070` | `#B87070` | Warnung, Fehler (Text: `roseDeep`) |
-| Sky | `#6E90B0` | `#6E90B0` | Info, sekundäre Links (Text: `skyDeep`) |
+| Sky | `#6E90B0` | `#6E90B0` | **Informieren** — Hinweise und Fristen (Text: `skyDeep`) |
+| Rose | `#B87070` | `#B87070` | **Warnen** — überfällig, Fehler, Gefahr-Knopf mit rotem Rand (Text: `roseDeep`) |
+
+> **Farbrollen seit Fassung 9** (Stebler Studios, 05.11.2026, Variante B «Ja, so», nach
+> Vergleich in Hell und Dunkel). Bis dahin stand hier Sage als Farbe für Buttons und Links,
+> Gold als Akzent; der Code folgte dem nie ganz (`PrimaryButton` war seit 07.07. Sand).
+> Gemessen: Sand hebt sich im Dunkeln stark ab (5.9:1 zur Fläche), im Hellen schwach
+> (2.2:1), die Schrift darauf trägt 6.15:1. Knopfarten: Hauptknopf gefüllt (einer je Seite),
+> Nebenknopf leer mit Rand, Gefahr mit rotem Rand, Link unterstrichen.
+> In Diagrammen bleibt Gold «die finanziell engere Seite» (`farb-und-daten-system.md`).
 
 Die Lese-Varianten für Text (`…Deep`) und die Farbenblind-Palette stehen mit Kontrastwerten
 in `constants.js` — dort ist die Quelle, hier nur die Übersicht.

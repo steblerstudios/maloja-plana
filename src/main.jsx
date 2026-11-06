@@ -414,7 +414,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
             // er bleibt sichtbar, der Fokus bleibt auf ihm, eine Fokus-Falle wäre hier
             // falsch. Was ihm fehlte, ist der Rückweg ohne Maus — Escape schliesst.
             onKeyDown: (e) => { if (e.key === 'Escape' && fanOpen) { e.preventDefault(); setFanOpen(false); } },
-            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sageBtn, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sand, color: palette.onSand, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
           },
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
@@ -1500,9 +1500,9 @@ const AppInner = ({ demo }) => {
           React.createElement('button', {
             type: 'button', onClick: () => applySandbox(true),
             style: {
-              padding: '6px 14px', minHeight: '44px', background: palette.sageBtn, border: 'none',
+              padding: '6px 14px', minHeight: '44px', background: palette.sand, border: 'none',
               borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
-              color: '#fff', fontFamily: 'inherit',
+              color: palette.onSand, fontFamily: 'inherit',
             }
           }, t('sandbox.replaceConfirm'))
         )
@@ -1519,9 +1519,9 @@ const AppInner = ({ demo }) => {
         React.createElement('button', {
           ref: uebernehmenKnopf, onClick: () => applySandbox(false),
           style: {
-            padding: '6px 14px', minHeight: '44px', background: palette.sageBtn, border: 'none',
+            padding: '6px 14px', minHeight: '44px', background: palette.sand, border: 'none',
             borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
-            color: '#fff', fontFamily: 'inherit',
+            color: palette.onSand, fontFamily: 'inherit',
           }
         }, t('sandbox.apply'))
       )

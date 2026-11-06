@@ -65,7 +65,7 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey, ohneRahmen
     }
   },
     !ohneRahmen && React.createElement('div', {
-      style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 'px' }
+      style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.sm + 'px' }
     }, t('dl.mirrorTitle')),
 
     links.map((link, i) =>
