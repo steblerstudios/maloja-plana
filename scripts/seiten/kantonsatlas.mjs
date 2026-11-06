@@ -39,8 +39,8 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 // ─── Stufen: vier gleich grosse Gruppen von Kantonen ────────────────────────
 // Nach dem Wert sortiert, in Viertel geteilt. Gleiche Werte bleiben in
-// derselben Stufe (Kinderzulage: viele Kantone zahlen das Minimum), darum
-// kann eine Stufe auch leer bleiben. Keine Platzziffer, nur die Spanne.
+// derselben Stufe, darum sind die Stufen nicht immer gleich gross und eine
+// kann auch leer bleiben. Keine Platzziffer, nur die Spanne.
 export function stufen(key) {
   const reihe = KANTONE.map((k) => ({ k, v: EBENEN[key].wert(k) })).sort((a, b) => a.v - b.v);
   const stufe = {};
@@ -72,7 +72,9 @@ function karte(ctx, key, { legende, nachher = '' }) {
   const seen = GEO.lakes.map((_, i) => `<use href="#ka-see-${i}" class="see"/>`).join('');
   const spanne = (s) => s.min === s.max ? E.fmt(s.min) : `${E.fmt(s.min)} bis ${E.fmt(s.max)}`;
   const titel = `Karte: ${E.titel}`;
-  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von hell (tiefere Zahl) bis dunkel (höhere Zahl). Die Werte jedes Kantons stehen in der Tabelle unter der Karte.`;
+  const tiefK = KANTONE.find((k) => E.wert(k) === spannen[0].min);
+  const hochK = KANTONE.find((k) => E.wert(k) === spannen[spannen.length - 1].max);
+  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von hell (tiefere Zahl) bis dunkel (höhere Zahl). Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
   const svg = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
@@ -83,7 +85,7 @@ function karte(ctx, key, { legende, nachher = '' }) {
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
-            <p class="atlas-legende">${spannen.map((s) => `<span><i class="k${s.s}" aria-hidden="true"></i>${spanne(s)}</span>`).join('')}</p>
+            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', hell' : i === spannen.length - 1 ? ', dunkel' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
             ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
           <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
@@ -102,7 +104,7 @@ const BLOECKE_ATLAS = {
     legende: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
     nachher: werteTabelle('vpraemie', 'Prämie je Kanton als Tabelle') }),
   'FIG:lastnachipv': (ctx) => karte(ctx, 'lastNachIpv', {
-    legende: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+    legende: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
     nachher: werteTabelle('vlast', 'Prämienlast vor und nach Verbilligung als Tabelle') }),
   'FIG:steuer': (ctx) => karte(ctx, 'steuer', {
     legende: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
@@ -114,10 +116,10 @@ const BLOECKE_ATLAS = {
     legende: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
     nachher: werteTabelle('vleer', 'Leerwohnungsziffer je Kanton als Tabelle') }),
   'FIG:kinderzulage': (ctx) => karte(ctx, 'kinderzulage', {
-    legende: 'Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen das gesetzliche Minimum, darum sind nicht alle Stufen gleich gross. [[q:bsvFamz]]',
+    legende: 'Kinderzulage 2026 je Kind und Monat, erster Ansatz für Arbeitnehmende. Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr; das zeigt die Karte nicht. Kantone mit gleichem Betrag stehen in derselben Stufe, darum sind die Stufen nicht gleich gross. [[q:bsvFamz]]',
     nachher: werteTabelle('vfamilie', 'Kinderzulage je Kanton als Tabelle') }),
   'FIG:kita': (ctx) => karte(ctx, 'kita', {
-    legende: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen. [[q:estvKantonsblaetter]]`,
+    legende: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
     nachher: werteTabelle('vkita', 'Kita-Abzug je Kanton als Tabelle') }),
   'FIG:alq': (ctx) => karte(ctx, 'alq', {
     legende: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
@@ -125,11 +127,11 @@ const BLOECKE_ATLAS = {
   'FIG:sozialhilfe': (ctx) => karte(ctx, 'sozialhilfe', {
     legende: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]' }),
   'FIG:el': (ctx) => karte(ctx, 'el', {
-    legende: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen bezogen, gezählt nach zuständiger EL-Stelle. [[q:bsvEl]]',
+    legende: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
     nachher: werteTabelle('vunterstuetzung', 'Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle') }),
 };
 
-const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'estvSteuerrechner', 'bfsMiete', 'bfsLeer', 'bsvFamz', 'estvKantonsblaetter', 'seco', 'bfsSozialhilfe', 'bsvEl'];
+const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'estvSteuerrechner', 'bfsMiete', 'bfsLeer', 'bsvFamz', 'estvKantonsblaetter', 'seco', 'bfsSozialhilfe', 'bsvEl', 'estvDrittbetreuung'];
 
 export const KANTONSATLAS = {
   pfad: 'kantonsatlas',
@@ -143,18 +145,18 @@ export const KANTONSATLAS = {
   // Gleiche Zahlen wie /kantone-im-vergleich/, also dasselbe Prüfdatum.
   pruefenBis: KANTONE_IM_VERGLEICH.pruefenBis,
   hinweis:
-    'Orientierung, keine Rechts- oder Finanzberatung. Eine Karte zeigt Kantonsdurchschnitte; für einen einzelnen Haushalt kann es ganz anders aussehen.',
+    'Orientierung, keine Rechts- oder Finanzberatung. Eine Karte zeigt einen Wert je Kanton; für einen einzelnen Haushalt kann es ganz anders aussehen.',
   vorbehalt:
     'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind die zuständigen Stellen.',
   vorspann:
-    'Wie hoch ist die Prämie, wie viel kostet eine Wohnung, wie viele Menschen sind auf Unterstützung angewiesen? Das hängt in der Schweiz oft vom Kanton ab. Dieser Atlas zeigt die Zahlen als Karten, damit sichtbar wird, wo sich etwas ähnelt und wo nicht. Die genauen Werte stehen unter jeder Karte.',
+    'Wie hoch ist die Prämie, wie viel kostet eine Wohnung, wie viele Menschen beziehen Unterstützung? Das hängt in der Schweiz oft vom Kanton ab. Dieser Atlas zeigt die Zahlen als Karten, damit sichtbar wird, wo sich etwas ähnelt und wo nicht. Die genauen Werte stehen zu jeder Karte in einer aufklappbaren Tabelle.',
   inhaltsverzeichnis: true,
   abschnitte: [
     {
       id: 'lesen',
       titel: '1. Wie die Karten zu lesen sind',
       html: `
-        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren. Unter der Karte steht, welche Spanne jede Stufe umfasst, und eine Tabelle mit dem Wert jedes Kantons.</p>
+        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren. Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Dunkel heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>`,
     },
@@ -162,7 +164,7 @@ export const KANTONSATLAS = {
       id: 'krankenkasse',
       titel: '2. Krankenkasse',
       html: `
-        <p>Die mittlere Prämie für Erwachsene liegt {{jahr}} zwischen {{v.praemie.tief}} Franken {{v.praemie.tiefName}} und {{v.praemie.hoch}} Franken {{v.praemie.hochName}}. Warum sie so verschieden ist, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
+        <p>Die mittlere Prämie für Erwachsene liegt {{jahr}} zwischen {{v.praemie.tief}} Franken {{v.praemie.tiefName}} und {{v.praemie.hoch}} Franken {{v.praemie.hochName}}. Wie die Prämie zustande kommt, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
 <!--FIG:praemie-->
         <p>Wie schwer die Prämie wiegt, hängt auch vom Einkommen und von der Prämienverbilligung ab. Ob Sie Anspruch auf Verbilligung haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
 <!--FIG:lastnachipv-->`,
@@ -171,14 +173,14 @@ export const KANTONSATLAS = {
       id: 'steuern',
       titel: '3. Steuern',
       html: `
-        <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder im Kantonshauptort zwischen {{v.steuer.tief}} {{v.steuer.tiefName}} und {{v.steuer.hoch}} {{v.steuer.hochName}}. Auch die Gemeinde zählt; die Tabelle unter der Karte zeigt die Spanne innerhalb jedes Kantons.</p>
+        <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder im Kantonshauptort an Bund, Kanton und Gemeinde zwischen {{v.steuer.tief}} des Lohns {{v.steuer.tiefName}} und {{v.steuer.hoch}} {{v.steuer.hochName}}. Auch innerhalb eines Kantons zählt die Gemeinde; die Tabelle unter der Karte zeigt die Spanne innerhalb jedes Kantons.</p>
 <!--FIG:steuer-->`,
     },
     {
       id: 'wohnen',
       titel: '4. Wohnen',
       html: `
-        <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen {{v.miete.tief}} Franken im Monat {{v.miete.tiefName}} und {{v.miete.hoch}} Franken {{v.miete.hochName}}. Wie leicht man eine Wohnung findet, zeigt die zweite Karte.</p>
+        <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen {{v.miete.tief}} Franken im Monat {{v.miete.tiefName}} und {{v.miete.hoch}} Franken {{v.miete.hochName}}. Wie leicht man eine Wohnung findet, zeigt die Karte zur Leerwohnungsziffer.</p>
 <!--FIG:miete-->
 <!--FIG:leer-->`,
     },
@@ -186,10 +188,10 @@ export const KANTONSATLAS = {
       id: 'familie',
       titel: '5. Familie',
       html: `
-        <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens {{v.kinderzulage.tief}} Franken im Monat. Bei den Steuern lassen sich die Kosten für Kita, Tagesfamilie oder Hort bis zu einer Grenze abziehen, die jeder Kanton selbst festlegt.</p>
+        <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens {{v.kinderzulage.tief}} Franken im Monat. Bei den Steuern lassen sich die Kosten für Kita, Tagesfamilie oder Hort bis zu einer Grenze abziehen, die fast jeder Kanton selbst festlegt.</p>
 <!--FIG:kinderzulage-->
 <!--FIG:kita-->
-        <p class="leise">Ein tiefer Abzug ist nicht automatisch eine Lücke: Wie viel Betreuung kostet, hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen.</p>`,
+        <p class="leise">Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen.</p>`,
     },
     {
       id: 'arbeit',
@@ -219,7 +221,7 @@ export const KANTONSATLAS = {
     { key: 'karte', herausgeber: 'Interactive Things, swiss-maps 4.5.0', titel: 'Kantonsgrenzen und Seen der Schweiz', datum: 'Daten BFS und swisstopo, Stand 2021, für diese Karten vereinfacht', url: 'https://github.com/interactivethings/swiss-maps', belegt: 'Umriss der Kantone und der grossen Seen auf den Karten', amtlich: false },
   ],
   quellenHinweis:
-    'Maloja Plana steht mit diesen Stellen in keiner Verbindung; die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Die Zahlen stammen aus dem Maloja-Kantonsatlas, der sie aus diesen Quellen sammelt.',
+    'Maloja Plana steht mit diesen Stellen in keiner Verbindung; die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Die Zahlen sind dieselben wie auf der Seite «Kantone im Vergleich» und stammen aus diesen Quellen.',
   eigeneRechnungen: [
     'Stufen: Die 26 Kantone sind nach ihrer Zahl sortiert und in vier etwa gleich grosse Gruppen geteilt. Kantone mit gleichem Wert stehen in derselben Stufe. Die Stufen sind für jede Karte neu gerechnet und lassen sich zwischen den Karten nicht vergleichen.',
     ...KANTONE_IM_VERGLEICH.eigeneRechnungen.slice(0, 1),
@@ -228,29 +230,30 @@ export const KANTONSATLAS = {
   // Kartengrundlage: die gehört zu allen Karten und steht im ersten Abschnitt.
   stilZusatz: `
     /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
-    :root{ --k1:#E3EAF1; --k2:#B3C4D6; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
+    :root{ --k1:#D3DEE9; --k2:#B3C4D6; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
     @media (prefers-color-scheme: dark){
       :root{ --k1:#2E3742; --k2:#4A6380; --k3:#86A6C2; --k4:#C6D6E5; --k-see:#22211F }
     }
     .atlas .abb-bild svg{ max-height:420px }
-    .atlas svg use{ stroke:var(--flaeche); stroke-width:1 }
+    .atlas svg use{ stroke:var(--leise); stroke-width:.6 }
     .atlas svg .k1, .atlas-legende i.k1{ fill:var(--k1); background:var(--k1) }
     .atlas svg .k2, .atlas-legende i.k2{ fill:var(--k2); background:var(--k2) }
     .atlas svg .k3, .atlas-legende i.k3{ fill:var(--k3); background:var(--k3) }
     .atlas svg .k4, .atlas-legende i.k4{ fill:var(--k4); background:var(--k4) }
     .atlas svg .see{ fill:var(--k-see); stroke:none }
     .atlas-einheit{ margin:6px 0 0; font-size:13px; color:var(--leise) }
-    .atlas-legende{ display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 4px; font-size:13px; color:var(--leise); font-variant-numeric:tabular-nums }
-    .atlas-legende span{ display:inline-flex; align-items:center; gap:6px }
+    .atlas-legende{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 4px; font-size:13px; color:var(--leise); font-variant-numeric:tabular-nums }
+    .atlas-legende li{ display:inline-flex; align-items:center; gap:6px }
     .atlas-legende i{ display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid var(--rand);
       -webkit-print-color-adjust:exact; print-color-adjust:exact }
-    @media (forced-colors:active){ .atlas-legende i{ forced-color-adjust:none } }
+    /* Karte und Legende behalten zusammen ihre Stufen, sonst zeigte die Legende vier Farben und die Karte eine. */
+    @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
-    .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:6px 0 }
+    .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
     .atlas-werte summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }`,
 };
 
 // Die Kartengrundlage wird im ersten Abschnitt belegt, damit sie in der
 // Quellenliste eine Rückverweis-Stelle hat.
 KANTONSATLAS.abschnitte[0].html += `
-        <p class="leise">Kartengrundlage: Kantonsgrenzen und Seen, vereinfacht. [[q:karte]]</p>`;
+        <p class="leise">Kartengrundlage: Kantonsgrenzen und Seen, vereinfacht, Stand 2021. Spätere Gebietswechsel zwischen Kantonen sind nicht eingezeichnet. [[q:karte]]</p>`;

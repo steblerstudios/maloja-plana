@@ -58,7 +58,7 @@ describe('/kantonsatlas/', () => {
       const f = karte(key);
       for (const s of spannen) {
         const t = s.min === s.max ? EBENEN[key].fmt(s.min) : `${EBENEN[key].fmt(s.min)} bis ${EBENEN[key].fmt(s.max)}`;
-        expect(f, key).toContain(`<i class="k${s.s}" aria-hidden="true"></i>${t}</span>`);
+        expect(f, key).toMatch(new RegExp(`<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe \\d von \\d[^<]*</span>${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</li>`));
       }
     }
   });

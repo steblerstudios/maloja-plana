@@ -2,6 +2,10 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
+// Die allgemeinen Riegel gelten für ALLE Hintergrundseiten (Liste aus hintergrund.mjs),
+// nicht nur für die zwei aus krankenkasse.mjs. Bis 06.11.2026 liefen /politsystem/ und
+// /kantonsatlas/ hier nicht mit — aufgefallen bei der Mutationsprobe zum Kantonsatlas.
+import { HINTERGRUND as ALLE_HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 import { KANTONE_IM_VERGLEICH } from '../../scripts/seiten/kantone-im-vergleich.mjs';
 import { KANTONE, EBENEN, PAARE, korrelation, rangkorrelation, staerke, KITA_NICHT_VERGLICHEN, KITA_BUND_2027 } from '../../scripts/seiten-vergleich.mjs';
 import de from '../i18n/de.js';
@@ -41,7 +45,7 @@ describe('Hintergrundseiten', () => {
     expect(HINTERGRUND.map((h) => h.pfad)).toContain('krankenkasse');
   });
 
-  describe.each(HINTERGRUND.map((h) => [h.pfad, h]))('/%s/', (pfad, seite) => {
+  describe.each(ALLE_HINTERGRUND.map((h) => [h.pfad, h]))('/%s/', (pfad, seite) => {
     const html = lies(pfad);
     const text = sichtbar(html);
 
@@ -57,7 +61,8 @@ describe('Hintergrundseiten', () => {
 
     it('zeigt sichtbar, welchen Stand die Zahlen haben', () => {
       expect(text).toContain('Stand der Zahlen:');
-      expect(text).toContain(`Prämien ${PRAEMIENJAHR}`);
+      // Nur Seiten mit Prämien-Zahlen nennen das Prämienjahr (/politsystem/ hat keine).
+      if (/Prämie/.test(seite.stand)) expect(text).toContain(`Prämien ${PRAEMIENJAHR}`);
     });
 
     it('lässt keinen Platzhalter und keinen Figur-Block stehen', () => {
@@ -67,7 +72,10 @@ describe('Hintergrundseiten', () => {
 
     it('sagt nicht «nennt bewusst keine Beträge» — das gilt hier nicht', () => {
       expect(text).not.toMatch(/nennt bewusst keine Beträge/);
-      expect(text).toContain('keine Rechts-, Versicherungs- oder Finanzberatung');
+      // Jede Seite sagt, dass sie keine Beratung ist; wo Prämien vorkommen, auch keine
+      // Versicherungs- oder Finanzberatung (/politsystem/: «keine Rechtsberatung»).
+      expect(text).toMatch(/keine Rechts(-, Versicherungs- oder Finanz)?beratung/);
+      if (/Prämie/.test(seite.stand)) expect(text).toContain('keine Rechts-, Versicherungs- oder Finanzberatung');
     });
 
     it('nennt im Quellen-Hinweis keine Stelle, die gar nicht verlinkt ist', () => {
@@ -81,6 +89,10 @@ describe('Hintergrundseiten', () => {
       expect(html).toContain('<meta name="robots" content="index, follow">');
       expect(html).toContain(`<link rel="canonical" href="${BASIS}/${pfad}/">`);
       expect((html.match(/<h1[\s>]/g) || []).length).toBe(1);
+    });
+
+    it('zeigt kein «undefined» und kein «NaN» (Fachprüfung Kantonsatlas 06.11.2026)', () => {
+      expect(text).not.toMatch(/\bundefined\b|\bNaN\b/);
     });
 
     it('kommt ohne JavaScript aus', () => {
