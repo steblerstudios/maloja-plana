@@ -238,8 +238,9 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
     // Eine Suche für Lupe und Menü (config/suche.js, F9-D1): dieselbe Liste, dieselbe Regel.
     suchTreffer(q, t).werkzeuge.forEach((v) => {
       const key = eintragKey(v);
-      const icon = v.view === 'gepaeck' ? rucksack : v.icon;
-      results.push(navItem(key, t(v.nav), icon, () => { oeffneTreffer(v, chapters, onNavigate); onClose(); }, activeView === v.view));
+      // Zeichen aus der Suchliste (config/suche.js, gepaeck → 'rucksack'). Hier stand bis 06.11.2026
+      // die Konstante `rucksack`, die mit #713 wegfiel: Treffer «Rucksack» warf einen ReferenceError.
+      results.push(navItem(key, t(v.nav), v.icon, () => { oeffneTreffer(v, chapters, onNavigate); onClose(); }, activeView === v.view));
     });
     if (results.length === 0) {
       results.push(React.createElement('div', {
