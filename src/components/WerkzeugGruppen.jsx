@@ -53,7 +53,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
     // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
     // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
     { label: t('dashboard.toolGroups.support'), items: [
-      { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
+      { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'geschenk' },
     ] },
     { label: t('dashboard.toolGroups.money'), items: [
       { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
