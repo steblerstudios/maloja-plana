@@ -3,6 +3,7 @@ import { calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdIn
 import { rueckerstattungsFreibetrag } from './data/sozialhilfeRechner.js';
 import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -10,6 +11,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
 import { linkStil } from './components/PrimaryButton.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -41,6 +43,8 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const satz = React.createElement(React.Fragment, null, t('sozialhilfe.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('sozialhilfe.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') }));
   const stelle = React.createElement(OfficialLinkBox, { palette, t, data, ids: 'sozialhilfe', cantonalKey: 'sozialdienst', alsZeilen: true });
   const wege = React.createElement(React.Fragment, null,
+    // D1 (06.11.2026): zur öffentlichen Erklärseite «Sozialhilfe in der Schweiz».
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'sozialhilfe' }),
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
       style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.medium, marginTop: space.md }
@@ -50,7 +54,12 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('mietzins'),
       style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' }
-    }, t('nav.mietzins'))
+    }, t('nav.mietzins')),
+    // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('stelleverloren'),
+      style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' }
+    }, t(ansichtName('stelleverloren')))
   );
   const rechner = (extra) => React.createElement(SozialhilfeRechner, { palette, t, data, onNavigate, titel: t('sozialhilfe.title'), satz, stelle, mitPegel: true, ...extra });
 
@@ -102,7 +111,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
         // Leichter Orientierungs-Rechner — Was-wäre-wenn bei Vermögensanfall.
         React.createElement('div', { style: { paddingTop: space.md, borderTop: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, praefix('rechner', 16), t('sozialhilfe.repaymentRechnerTitle')),
+          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, praefix('document', 16), t('sozialhilfe.repaymentRechnerTitle')),
           React.createElement('div', { style: { color: palette.mid, marginBottom: space.sm } }, t('sozialhilfe.repaymentRechnerIntro')),
           React.createElement('label', { htmlFor: 'sh-erbschaft', style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('sozialhilfe.repaymentAnfallLabel')),
           React.createElement('input', {
@@ -148,7 +157,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // SKOS table
     React.createElement('details', { style: { marginBottom: space.md } },
-      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, praefix('rechner', 16), t('sozialhilfe.skosTable')),
+      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, praefix('document', 16), t('sozialhilfe.skosTable')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: space.sm, marginTop: space.sm } },
         Object.entries(SKOS_GRUNDBEDARF).map(([size, amount]) =>
           React.createElement('div', {

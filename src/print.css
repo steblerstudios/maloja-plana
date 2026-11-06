@@ -58,6 +58,14 @@
     display: block !important;
   }
 
+  /* Belege (Fassung 9): im Druck immer offen, das Aufklappen entfällt auf Papier. */
+  .mp-belege-liste[hidden] {
+    display: block !important;
+  }
+  [aria-controls][aria-expanded] > span[aria-hidden="true"] {
+    display: none !important;
+  }
+
   /* Links: show URL */
   a[href]:after {
     content: " (" attr(href) ")";

@@ -10,7 +10,7 @@ import { plusTage } from './utils/fristen.js';
 export const Volljaehrig = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'volljaehrig', icon: 'heart',
+    palette, t, onNavigate, ablauf: 'volljaehrig', icon: 'ereignisVolljaehrig',
     title: t('volljaehrig.title'),
     intro: t('volljaehrig.intro'),
   },
@@ -24,7 +24,9 @@ export const Volljaehrig = ({ palette, t, onNavigate }) => {
         reminderTitle: t('volljaehrig.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('volljaehrig.step1Link'), onClick: () => onNavigate('budget') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('volljaehrig.step1LinkSchulden'), onClick: () => onNavigate('schulden') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('volljaehrig.step1LinkSchulden'), onClick: () => onNavigate('schulden') }),
+      // Seitenlandkarte V2 (06.11.2026): die erste eigene Karte — Kosten und Vorteile aus den eigenen Angaben, keine Empfehlung.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('nav.crosslink.kreditkarteHint'), onClick: () => onNavigate('kreditkarte') })
     ),
     React.createElement(AblaufStep, { palette, title: t('volljaehrig.step2Title') },
       React.createElement('p', { style: s.stepText }, t('volljaehrig.step2Text')),

@@ -18,6 +18,7 @@ import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -496,6 +497,11 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         onClick: () => onNavigate('praemien'),
         style: { ...linkStil(palette), display: 'block', width: '100%', textAlign: 'start', padding: '2px 0 4px 0', fontSize: text.sm, fontWeight: weight.medium }
       }, t('kvg.franchiseOptimizerLink')),
+      // Fassung 9 (F9-D3): dieselbe Frist wie beim Wechsel der Kasse — dorthin weiter.
+      onNavigate && React.createElement('button', {
+        onClick: () => onNavigate('kvgwechsel'),
+        style: { ...linkStil(palette), display: 'block', width: '100%', textAlign: 'start', padding: '2px 0 4px 0', fontSize: text.sm, fontWeight: weight.medium }
+      }, t(ansichtName('kvgwechsel'))),
 
       React.createElement('div', {
         style: { height: '1px', background: palette.border, margin: '14px 0' }

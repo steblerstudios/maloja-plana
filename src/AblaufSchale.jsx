@@ -6,11 +6,11 @@ import landschaft from './assets/berge/landschaft.webp?url';
 import { erinnerungSichern, loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { renderSource } from './utils/renderSource.js';
+import { Belege } from './components/Belege.jsx';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
-import { ablaufBereich, ansichtName, ABLAEUFE } from './config/ansichtenRegister.js';
+import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegister.js';
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
@@ -231,6 +231,9 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
 // (Satz unter «Alle N Schritte sind erledigt») sind freiwillig; `stand`/`setStand` nur, wenn der
 // Ablauf selbst springen muss (KVG-Wechsel: Wahl in Schritt 1 → zurück an den Anfang).
 export const AblaufContainer = ({ palette, t, onNavigate, ablauf, icon, title, intro, kopf, passNamen, abschlussText, stand: standVon, setStand: setStandVon, children }) => {
+  // Das Zeichen des Ereignisses aus dem Register — dasselbe wie im Rucksack und in der Suche
+  // (Icon-Plan, Schritt 7b). `icon` der Seite bleibt nur Rückfall für Seiten ohne Eintrag.
+  icon = ansichtIkon(ablauf, icon);
   const s = styles(palette);
   const name = ablaufName(ablauf);
   const kinder = flach(children);
@@ -315,6 +318,14 @@ export const AblaufLink = ({ palette, label, onClick }) => {
     React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
 };
 
+// Warnsatz in einem Ablauf — das Warn-Zeichen gehört der Komponente, nicht der Aufrufstelle
+// (Icon-Plan November 2026, Schritt 1). Wächter: __tests__/ablaufWarnung.test.js.
+// Ein `div`, kein `p`: im KVG-Wechsel steht die Warnung in einer Wegkarte, die ein Knopf ist.
+export const AblaufWarnung = ({ palette, children }) => {
+  const s = styles(palette);
+  return React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), children);
+};
+
 // Nach dem Speichern einer Frist aus einem Ablauf (`reminder.ablauf`, z. B. 'umzug'): die gespeicherte
 // Erinnerung — offen, gleicher Titel und gleiches Datum, wie addReminder sie findet — trägt danach
 // `ablauf`. Der Kalender lässt das grüne Band des Ablaufs an ihr enden (utils/laufendeAblaeufe.js).
@@ -365,8 +376,8 @@ const blattOrt = (t) => { const l = t('calendar.locale'); return typeof l === 's
 export const ablaufThema = (name) => {
   const bereich = name && ablaufBereich(name);
   if (!bereich) return null;
-  const eintrag = ABLAEUFE.find((x) => x.view === name);
-  return { bereich, icon: (eintrag && eintrag.icon) || bereich };
+  // Dasselbe Symbol wie im Kopf des Ablaufs: eine Quelle (ansichtIkon, seit fix/icons-ordnung).
+  return { bereich, icon: ansichtIkon(name, bereich) };
 };
 // Blatt und Text nebeneinander, links in der Karte.
 const mitBlatt = (palette, t, iso, vorbei, inhalt, name) => React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', minWidth: 0, flex: '1 1 14rem' } },
@@ -512,7 +523,7 @@ export const AblaufPass = ({ palette, name, total, aktuell, fertig, namen }) => 
 export const AblaufFooter = ({ palette, notes, quelle, t }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },
-    quelle ? React.createElement('div', { key: 'quelle', style: { marginBottom: '6px' } }, renderSource(quelle, null, t)) : null,
+    quelle ? React.createElement(Belege, { key: 'quelle', palette, t, zeile: quelle, style: { marginBottom: '6px', fontSize: 'inherit' } }) : null,
     (notes || []).flatMap((n, i) => [
       i > 0 ? React.createElement('br', { key: 'br' + i }) : null,
       hinweisZeichen(undefined, undefined, 'z' + i), n,

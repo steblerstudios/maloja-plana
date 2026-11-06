@@ -11,6 +11,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { ipvErinnerung, erinnerungLiegtSchon } from './data/ipvErinnerung.js';
@@ -22,7 +23,7 @@ import { text, weight, radius , space } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag, zahl } from './utils/geld.js';
 import { geburtsjahr } from './config/kantonsModell.js';
-import { ansichtIkon } from './config/ansichtenRegister.js';
+import { ansichtIkon, ansichtName } from './config/ansichtenRegister.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
@@ -611,6 +612,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       )),
     aufklappZeile(t('dl.mirrorTitle'),
       React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv', ohneRahmen: true })),
+    // D1 (06.11.2026): zur öffentlichen Erklärseite «Prämienverbilligung: wer Anspruch hat».
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'premium' }),
 
     // ── Ihr IPV-Weg ───────────────────────────────────────────────────────
     renderLebenslinie(),
@@ -692,7 +695,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       type: 'button',
       onClick: () => onNavigate('direktlinks'),
       style: { ...linkStil(palette), display: 'block', minHeight: '44px', fontSize: text.sm, fontWeight: weight.medium }
-    }, t('nav.direktlinks'))
+    }, t('nav.direktlinks')),
+    // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+    onNavigate && React.createElement('button', {
+      type: 'button',
+      onClick: () => onNavigate('kvgwechsel'),
+      style: { ...linkStil(palette), display: 'block', minHeight: '44px', fontSize: text.sm, fontWeight: weight.medium }
+    }, t(ansichtName('kvgwechsel')))
   );
 };
 

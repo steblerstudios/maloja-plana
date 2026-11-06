@@ -10,6 +10,7 @@ import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { kindAlter } from './utils/sozialhilfeVorbefuellung.js';
 import { linkStil } from './components/PrimaryButton.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 function currentAge(dateStr) {
   if (!dateStr) return null;
@@ -130,7 +131,12 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
         canton && onNavigate && React.createElement('button', {
           type: 'button', className: 'mp-link', onClick: () => onNavigate('direktlinks'),
           style: { ...linkStil(palette), display: 'flex', alignItems: 'center', width: '100%', minHeight: '44px', marginTop: space.xs + 'px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
-        }, t('alv.cantonLink', { canton }))
+        }, t('alv.cantonLink', { canton })),
+        // Fassung 9 (F9-D3): zurück zum Ablauf «Stelle verloren», Name aus dem Register.
+        onNavigate && React.createElement('button', {
+          type: 'button', className: 'mp-link', onClick: () => onNavigate('stelleverloren'),
+          style: { ...linkStil(palette), display: 'flex', alignItems: 'center', width: '100%', minHeight: '44px', marginTop: space.xs + 'px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
+        }, t(ansichtName('stelleverloren')))
       ),
     },
     stelle: React.createElement(OfficialLinkBox, { palette, t, data, ids: ['arbeitslosigkeit', 'ueberbrueckungsleistungen'], alsZeilen: true }),

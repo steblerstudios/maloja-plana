@@ -1,5 +1,6 @@
 import React from 'react';
 import { zeichenErgaenzen } from './IconKern.jsx';
+import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 
 // ─── Maloja Plana SVG Pictogram System — das volle Register ─
 //
@@ -156,35 +157,26 @@ const _ergaenzungsleistungen = () => React.createElement('svg', { viewBox: '0 0 
   React.createElement('polyline', { points: '10,9.8 12,7.6 14,9.8', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round', strokeLinejoin: 'round' }),
 );
 
-const _barcode = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '3', y: '4', width: '2', height: '14' }),
-  React.createElement('rect', { x: '7', y: '4', width: '1', height: '14' }),
-  React.createElement('rect', { x: '10', y: '4', width: '2', height: '14' }),
-  React.createElement('rect', { x: '14', y: '4', width: '1', height: '14' }),
-  React.createElement('rect', { x: '17', y: '4', width: '2', height: '14' }),
-  React.createElement('rect', { x: '21', y: '4', width: '1', height: '14' }),
-  React.createElement('line', { x1: '3', y1: '21', x2: '22', y2: '21', stroke: 'currentColor', strokeWidth: '1.5' })
+const _barcode = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M5 5.5 V18.5 M8.5 5.5 V18.5 M11 5.5 V18.5 M14.5 5.5 V18.5 M17 5.5 V18.5 M19.5 5.5 V18.5' })
 );
 
-const _delete = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 5 7 L 7 7 L 7 20 Q 7 21 8 21 L 16 21 Q 17 21 17 20 L 17 7 L 19 7' }),
-  React.createElement('rect', { x: '3', y: '5', width: '18', height: '2', rx: '1' }),
-  React.createElement('path', { d: 'M 9 5 L 9 3 Q 9 2 10 2 L 14 2 Q 15 2 15 3 L 15 5' }),
-  React.createElement('line', { x1: '10', y1: '10', x2: '10', y2: '17', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '14', y1: '10', x2: '14', y2: '17', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' })
+const _delete = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M4.5 7 H19.5' }),
+  React.createElement('path', { d: 'M9.5 7 V5 a1 1 0 0 1 1 -1 h3 a1 1 0 0 1 1 1 V7' }),
+  React.createElement('path', { d: 'M6.5 7 L7.4 19.2 a1.5 1.5 0 0 0 1.5 1.3 h6.2 a1.5 1.5 0 0 0 1.5 -1.3 L17.5 7' }),
+  React.createElement('path', { d: 'M10.3 11 V16.5 M13.7 11 V16.5' })
 );
 
-// Drei schlichte Outline-Präfixe (je EIN Element, Bundle-Budget) — ersetzen die rohen
-// Text-Glyphen ◰ □ ✕ vor Titeln/Knöpfen (docs/TODO.md §G3 P1, docs/ICON_KONVENTION.md).
-// Rechner/Aufstellung — Berechnungs-Abschnitte (SKOS, IPV, EL, Zahlungsplan).
-const _rechner = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('path', { d: 'M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM8.5 7.5h7M8.5 12h7M8.5 16.5h4' })
-);
 
-// Mappe — ein Dossier / eine Unterlagen-Sammlung (Finanz-Übersicht → Behördendossier).
-const _mappe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('path', { d: 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z' })
-);
+// Schlichte Outline-Präfixe (je EIN Element, Bundle-Budget) — ersetzten die rohen Text-Glyphen
+// ◰ □ ✕ vor Titeln/Knöpfen (docs/TODO.md §G3 P1, docs/ICON_KONVENTION.md).
+// «mappe» ist am 06.11.2026 in «ordner» aufgegangen (Icon-Plan, Entscheid E2): beide waren
+// derselbe Ordner. Dossiers tragen das Zeichen ihres Themas (Behörden = Waage, Notfall = Kreuz).
+// «rechner» (zeichnete ein Blatt) ist im selben Aufräumen in «document» aufgegangen; ein echter
+// Rechner wird erst gezeichnet (Icon-Plan, Schritt 8). «dashboard» (gefülltes Sackmesser) ist in
+// «sackmesser» aufgegangen, «emergency» (zweite Glocke) entfällt — Notfall ist das Kreuz,
+// Erinnerungen die Kuhglocke.
 
 // Drucker — Druckansicht (Finanz-Übersicht). Mappe + Drucker ersetzen dort die rohe
 // Glyphe ◇ (docs/TODO.md §G3 P1); je EIN Element, wie die drei Präfixe oben (Bundle-Budget).
@@ -192,58 +184,42 @@ const _drucker = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('path', { d: 'M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7Z' })
 );
 
-// Übersicht / Dashboard — Schweizer Sackmesser («alle Werkzeuge an einem Ort»)
-// Generisch (kein Victorinox-Kreuz, kein Export-Pfeil; Schutzrecht).
-const _dashboard = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '4', y: '9', width: '16', height: '6', rx: '3', fill: 'currentColor' }),
-  React.createElement('path', { d: 'M 16 9 L 21 3 L 21.5 3.8 L 17.5 9.5', fill: 'currentColor', opacity: '0.8' }),
-  React.createElement('path', { d: 'M 16 15 L 20 19.5 L 19.3 20 L 15.5 15.5', fill: 'currentColor', opacity: '0.6' }),
-  React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' })
-);
 
 // Sauberes Outline-Zahnrad (statt gefüllter Sternexplosion) — Kontur passt zum
 // Nav-Stil, und ein Zahnrad liest sich klar als Einstellungen (Stebler Studios, Icon-Audit).
-const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '3' }),
-  React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+
+const _csv = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M6 3 H14 L19 8 V20 a1 1 0 0 1 -1 1 H6 a1 1 0 0 1 -1 -1 V4 a1 1 0 0 1 1 -1 Z' }),
+  React.createElement('path', { d: 'M14 3 V8 H19' }),
+  React.createElement('path', { d: 'M8 12.5 H16 M8 16 H16 M11.5 11 V18.5' })
 );
 
-const _csv = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 6 2 L 6 22 L 18 22 L 18 8 L 12 2 Z' }),
-  React.createElement('path', { d: 'M 12 2 L 12 8 L 18 8', fill: 'none', stroke: 'white', strokeWidth: '1' }),
-  React.createElement('text', { x: '12', y: '17', textAnchor: 'middle', fontSize: '7', fill: 'white', fontWeight: '600' }, 'CSV')
+const _debt = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
+  React.createElement('path', { d: 'M8 12 H16' })
 );
 
-const _debt = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
-  React.createElement('line', { x1: '8', y1: '12', x2: '16', y2: '12', stroke: 'white', strokeWidth: '2.5', strokeLinecap: 'round' })
+const _filter = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M4 5 H20 L14 12.5 V18.5 L10 20.5 V12.5 Z' })
 );
 
-const _filter = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 3 4 L 21 4 L 14 12 L 14 19 L 10 21 L 10 12 Z' })
+const _success = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
+  React.createElement('path', { d: 'M8.2 12.4 L11 15.2 L16 9.6' })
 );
 
-const _success = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
-  React.createElement('polyline', { points: '8,12 11,15 16,9', stroke: 'white', strokeWidth: '2', fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' })
+const _error = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
+  React.createElement('path', { d: 'M9.2 9.2 L14.8 14.8 M14.8 9.2 L9.2 14.8' })
 );
 
-const _error = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
-  React.createElement('line', { x1: '8', y1: '8', x2: '16', y2: '16', stroke: 'white', strokeWidth: '2', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '16', y1: '8', x2: '8', y2: '16', stroke: 'white', strokeWidth: '2', strokeLinecap: 'round' })
-);
-
-const _qr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '2', y: '2', width: '8', height: '8', rx: '1' }),
-  React.createElement('rect', { x: '4', y: '4', width: '4', height: '4', fill: 'none', stroke: 'white', strokeWidth: '1' }),
-  React.createElement('rect', { x: '14', y: '2', width: '8', height: '8', rx: '1' }),
-  React.createElement('rect', { x: '16', y: '4', width: '4', height: '4', fill: 'none', stroke: 'white', strokeWidth: '1' }),
-  React.createElement('rect', { x: '2', y: '14', width: '8', height: '8', rx: '1' }),
-  React.createElement('rect', { x: '4', y: '16', width: '4', height: '4', fill: 'none', stroke: 'white', strokeWidth: '1' }),
-  React.createElement('rect', { x: '14', y: '14', width: '3', height: '3', rx: '0.5' }),
-  React.createElement('rect', { x: '19', y: '14', width: '3', height: '3', rx: '0.5' }),
-  React.createElement('rect', { x: '14', y: '19', width: '3', height: '3', rx: '0.5' })
+const _qr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '3.5', y: '3.5', width: '6', height: '6', rx: '1' }),
+  React.createElement('rect', { x: '14.5', y: '3.5', width: '6', height: '6', rx: '1' }),
+  React.createElement('rect', { x: '3.5', y: '14.5', width: '6', height: '6', rx: '1' }),
+  React.createElement('rect', { x: '14.5', y: '14.5', width: '2.5', height: '2.5', rx: '0.6' }),
+  React.createElement('rect', { x: '18', y: '14.5', width: '2.5', height: '2.5', rx: '0.6' }),
+  React.createElement('rect', { x: '16.25', y: '18', width: '2.5', height: '2.5', rx: '0.6' })
 );
 
 // ═══════════════════════════════════════════════════════════════
@@ -263,23 +239,14 @@ const _doctor = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('circle', { cx: '18', cy: '12', r: '1', fill: 'white' })
 );
 
-const _timeline = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Vertical line with dots
-  React.createElement('line', { x1: '8', y1: '4', x2: '8', y2: '20', stroke: 'currentColor', strokeWidth: '1.8' }),
-  React.createElement('circle', { cx: '8', cy: '6', r: '2.5' }),
-  React.createElement('circle', { cx: '8', cy: '12', r: '2.5' }),
-  React.createElement('circle', { cx: '8', cy: '18', r: '2.5' }),
-  React.createElement('line', { x1: '12', y1: '6', x2: '20', y2: '6', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '12', y1: '12', x2: '18', y2: '12', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '12', y1: '18', x2: '20', y2: '18', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' })
+const _timeline = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '6', cy: '6', r: '1.8' }),
+  React.createElement('circle', { cx: '6', cy: '12', r: '1.8' }),
+  React.createElement('circle', { cx: '6', cy: '18', r: '1.8' }),
+  React.createElement('path', { d: 'M6 7.8 V10.2 M6 13.8 V16.2' }),
+  React.createElement('path', { d: 'M11 6 H19 M11 12 H17 M11 18 H18.5' })
 );
 
-const _emergency = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Alert bell
-  React.createElement('path', { d: 'M 12 2 Q 6 2 6 10 L 6 14 L 3 18 L 21 18 L 18 14 L 18 10 Q 18 2 12 2 Z' }),
-  React.createElement('path', { d: 'M 9 18 Q 9 22 12 22 Q 15 22 15 18', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
-  React.createElement('circle', { cx: '12', cy: '2', r: '1.5' })
-);
 
 const _mobility = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   // Bus/transit
@@ -334,8 +301,8 @@ const _handy = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('path', { d: 'M11 18.5h2' })
 );
 
-const _phone = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 5 2 L 9 2 L 11 7 L 8 9 Q 10 14 14 16 L 16 13 L 21 15 L 21 19 Q 21 22 17 22 Q 5 20 2 8 Q 2 4 5 2 Z' })
+const _phone = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M7.2 3.5 h2.6 l1.4 3.8 -1.9 1.5 a11 11 0 0 0 5.9 5.9 l1.5 -1.9 3.8 1.4 v2.6 a2 2 0 0 1 -2.2 2 A16.5 16.5 0 0 1 5.2 5.7 a2 2 0 0 1 2 -2.2 Z' })
 );
 
 const _recurring = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -351,11 +318,6 @@ const _lock = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'no
 );
 
 // Globus — Digital & Privatsphäre (Kreis + Äquator + Meridian).
-const _globe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '8.5' }),
-  React.createElement('path', { d: 'M 3.5 12 H 20.5', strokeWidth: '1.4' }),
-  React.createElement('path', { d: 'M 12 3.5 C 15.2 6.2 15.2 17.8 12 20.5 C 8.8 17.8 8.8 6.2 12 3.5 Z', strokeWidth: '1.4' }),
-);
 
 // Tag — Konsum & Medien (Preisschild mit Loch).
 const _tag = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
@@ -402,11 +364,7 @@ zeichenErgaenzen({
   ergaenzungsleistungen: _ergaenzungsleistungen,
   barcode: _barcode,
   delete: _delete,
-  rechner: _rechner,
-  mappe: _mappe,
   drucker: _drucker,
-  dashboard: _dashboard,
-  settings: _settings,
   csv: _csv,
   debt: _debt,
   filter: _filter,
@@ -416,7 +374,6 @@ zeichenErgaenzen({
   dentist: _dentist,
   doctor: _doctor,
   timeline: _timeline,
-  emergency: _emergency,
   mobility: _mobility,
   work: _work,
   selfEmployment: _selfEmployment,
@@ -427,11 +384,16 @@ zeichenErgaenzen({
   handy: _handy,
   recurring: _recurring,
   lock: _lock,
-  globe: _globe,
   tag: _tag,
   paw: _paw,
   palette: _palette,
 });
+
+// Lebensereignisse (Gruppe E, Icon-Plan Schritt 7b): ein Zeichen je Ereignis, dasselbe im
+// Rucksack, in der Suche, in der Übersicht und im Seitentitel. Strich wie die Funktions-Icons.
+zeichenErgaenzen(Object.fromEntries(Object.entries(EREIGNIS_PFADE).map(([name, pfade]) => [name, () =>
+  React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+    ...pfade.map((d, i) => React.createElement('path', { key: i, d })))])));
 
 export { Icons, Icon, HinweisZeichen, erledigtZeichen, aufklappZeichen, zurueckZeichen, hinweisZeichen } from './IconKern.jsx';
 export { default } from './IconKern.jsx';

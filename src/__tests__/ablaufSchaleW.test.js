@@ -66,7 +66,9 @@ describe('Schritt für Schritt aus der Schale', () => {
     const html = heirat({ schritt: 2, fertig: false });
     expect(html).toContain('data-ablauf-marken');
     expect(html).toContain('aria-label="Erledigte Schritte"');
-    expect((html.match(/<li /g) || []).length).toBe(2);
+    // Nur die Marken zählen (seit Fassung 9 steht im Fuss die Belegliste, auch mit <li>).
+    const marken = html.slice(html.indexOf('data-ablauf-marken'), html.indexOf('</ul>', html.indexOf('data-ablauf-marken')));
+    expect((marken.match(/<li /g) || []).length).toBe(2);
   });
 
   it('Abschluss: «Alle 4 Schritte sind erledigt», «Zur Übersicht», «Ablauf nochmals ansehen»', () => {

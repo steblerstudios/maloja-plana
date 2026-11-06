@@ -205,7 +205,7 @@ export function standbildSvg(datei, id, titel, beschreibung) {
     `<title id="${id}-t">${svgEsc(titel)}</title><desc id="${id}-d">${svgEsc(beschreibung)}</desc>${innen}</svg>`;
 }
 
-function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, legende, nachher = '' }) {
+export function abbildung(ctx, { id, datei, stil, kurz, titel, beschreibung, wert, legende, nachher = '' }) {
   ctx.abb += 1;
   // Die bewegte Fassung ist eine eigene Seite und lädt erst, wenn man sie öffnet.
   const name = id.replace(/^abb-/, '');

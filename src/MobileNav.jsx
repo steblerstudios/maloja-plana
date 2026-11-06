@@ -3,7 +3,8 @@ import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay } from './config/tokens.js';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
-import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
+import { MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
+import { suchTreffer, oeffneTreffer, eintragKey } from './config/suche.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
@@ -121,20 +122,13 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   };
 
   const renderIcon = (iconKey, size) => {
-    // Ein Zeichen, das nicht im Icon-System steht (Rucksack, Sackmesser, Geschenk), kommt als Funktion.
     const IconFn = typeof iconKey === 'function' ? iconKey : Icons[iconKey];
     if (!IconFn) return null;
     return React.createElement('div', { style: { width: size || '16px', height: size || '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, IconFn());
   };
 
-  // Die Zeichen der drei Anker, die nicht im Icon-System stehen — dieselben Linien wie
-  // im Boden-Anker (main.jsx `bottomIcon`), hier von Hand, weil main.jsx nicht
-  // importierbar ist. «Was ansteht» nimmt das Kalenderblatt aus dem Icon-System.
-  const linie = (...pfade) => () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', width: '100%', height: '100%' },
-    ...pfade.map((d, i) => React.createElement('path', { key: i, d })));
-  const sackmesser = linie('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5');
-  const rucksack = linie('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z', 'M9 8a3 3 0 0 1 6 0', 'M9 14h6');
-  const geschenk = linie('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8');
+  // Die Zeichen der Anker stehen seit dem Icon-Plan (Schritt 3, 06.11.2026) im Register —
+  // vorher hier und im Boden-Anker je von Hand gezeichnet.
 
   const oeffne = (w) => {
     if (w.view === 'chapter') {
@@ -156,19 +150,17 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
     go: () => oeffne(w),
   });
   const menueWerkzeuge = MENUE_WERKZEUGE.map(alsEintrag).filter((w) => w.view !== 'calendar' && w.view !== 'situationen');
-  const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), icon: rucksack, aliases: [], go: geh('gepaeck') };
-  const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), icon: 'settings', aliases: [], go: geh('settings') };
-  // Die Suche im Menü findet weiterhin ALLE Werkzeuge (auch die im Gepäck).
-  const allTools = [...WERKZEUGE.map(alsEintrag), gepaeckEintrag, settingsEintrag];
+  const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), go: geh('gepaeck') };
+  const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), go: geh('settings') };
 
   // Die vier Anker. Namen aus der App; die Sätze sind neu (Copy-Prüfer, nav.ankerSatz.*).
   // Ein Name je Seite (23.10.2026): Menü, Leiste, Seitentitel und «Zurück zu …» lesen
   // denselben Schlüssel — nav.wasAnsteht, nav.rucksack, dashboard.anspruchTitle.
   const ANKER = [
-    { key: 'dashboard', view: 'dashboard', label: t('nav.dashboard'), satz: t('nav.ankerSatz.dashboard'), icon: sackmesser },
+    { key: 'dashboard', view: 'dashboard', label: t('nav.dashboard'), satz: t('nav.ankerSatz.dashboard'), icon: 'sackmesser' },
     { key: 'calendar', view: 'calendar', label: t('nav.wasAnsteht'), satz: t('nav.ankerSatz.wasAnsteht'), icon: 'calendar' },
-    { key: 'gepaeck', view: 'gepaeck', label: t('nav.rucksack'), satz: t('nav.ankerSatz.rucksack'), icon: rucksack },
-    { key: 'situationen', view: 'situationen', label: t('dashboard.anspruchTitle'), satz: t('nav.ankerSatz.anspruch'), icon: geschenk },
+    { key: 'gepaeck', view: 'gepaeck', label: t('nav.rucksack'), satz: t('nav.ankerSatz.rucksack'), icon: 'rucksack' },
+    { key: 'situationen', view: 'situationen', label: t('dashboard.anspruchTitle'), satz: t('nav.ankerSatz.anspruch'), icon: 'geschenk' },
   ];
 
   // Bereichsfarbe für das Zeichen eines Kapitels — dieselbe Quelle wie Baum und Reiter.
@@ -233,7 +225,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   const suchErgebnisse = (q) => {
     const results = [];
     if (t('nav.dashboard').toLowerCase().includes(q)) {
-      results.push(navItem('dashboard', t('nav.dashboard'), sackmesser, geh('dashboard'), activeView === 'dashboard'));
+      results.push(navItem('dashboard', t('nav.dashboard'), 'sackmesser', geh('dashboard'), activeView === 'dashboard'));
     }
     (chapters || []).forEach((ch, idx) => {
       const match = ch.title.toLowerCase().includes(q) || (ch.description || '').toLowerCase().includes(q) || ch.key.toLowerCase().includes(q);
@@ -243,10 +235,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           activeView === 'chapter' && activeChapter === idx));
       }
     });
-    allTools.forEach((tool) => {
-      if (tool.label.toLowerCase().includes(q) || tool.key.toLowerCase().includes(q) || tool.aliases.some((a) => a.includes(q))) {
-        results.push(navItem(tool.key, tool.label, tool.icon, tool.go, activeView === tool.view));
-      }
+    // Eine Suche für Lupe und Menü (config/suche.js, F9-D1): dieselbe Liste, dieselbe Regel.
+    suchTreffer(q, t).werkzeuge.forEach((v) => {
+      const key = eintragKey(v);
+      const icon = v.view === 'gepaeck' ? rucksack : v.icon;
+      results.push(navItem(key, t(v.nav), icon, () => { oeffneTreffer(v, chapters, onNavigate); onClose(); }, activeView === v.view));
     });
     if (results.length === 0) {
       results.push(React.createElement('div', {
@@ -290,8 +283,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         React.createElement('button', {
           type: 'button', onClick: onClose, 'aria-label': t('common.close'),
           style: { width: '44px', height: '44px', borderRadius: '50%', border: '1px solid ' + palette.border, background: 'none', color: palette.text, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
-        }, React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', 'aria-hidden': 'true' },
-          React.createElement('path', { d: 'M6 6l12 12M18 6 6 18' })))
+        }, renderIcon('kreuz', '18px'))
       ),
 
       // Stand + «Auf den Startbildschirm legen» (Entscheid 25.09.2026: immer hier zu finden;

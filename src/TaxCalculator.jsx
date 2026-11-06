@@ -10,6 +10,7 @@ import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, ta
 import { SAEULE3A_MAX, saeule3aMaximum } from './data/saeule3a.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
@@ -449,7 +450,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
       React.createElement('div', { 'data-testid': 'tarifvergleich-ohne-zahl', style: { fontSize: text.sm, color: palette.mid } }, t(VERGLEICH_OHNE_ZAHL_TEXT[ohneVergleich] || 'tax.saeulen.nurGeschaetzt'))
     ),
 
-    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
+    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('check'), t('tax.saveData')),
     React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig }),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
@@ -459,6 +460,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, hinweisZeichen(), t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
     canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(kantonsdatenAbgerufen(canton)) })),
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
+    // D1 (06.11.2026): zur öffentlichen Erklärseite «Steuern in der Schweiz».
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'tax' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('trust.localOnly')),
 

@@ -79,6 +79,13 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, '**/.claude/**'],
     // Feste Test-Uhr (22.10.2026), sonst wird die Suite am 1.1.2027 rot.
     setupFiles: ['./src/__tests__/festeUhr.setup.js'],
+    // Zeitgrenze 30 s statt 5 s (Verbesserungen B2, 06.11.2026). Gemessen: unter normaler Last braucht kein
+    // Test über 2 s (langsamster 1,8 s); mit drei gleichzeitigen Läufen auf demselben Mac liefen 8–10 Tests
+    // in die 5 s, jedes Mal andere — vor allem die, die grosse Module erst im Test laden (fünf Sprachdateien,
+    // ganze Ansichten). Vorher bekamen einzelne Tests je einzeln 20 000 / 30 000 ms nachgerüstet (22 Stellen);
+    // die bleiben, diese Grenze macht den Rest der Suite gleich robust. Ein echter Hänger fällt weiter auf, nur später.
+    testTimeout: 30_000,
+    hookTimeout: 30_000,
   },
   build: {
     outDir: 'dist',
