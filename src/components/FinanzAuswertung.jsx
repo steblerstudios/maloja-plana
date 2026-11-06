@@ -65,7 +65,7 @@ export const StatusCard = ({ palette, icon, title, status, statusColor, detail, 
     }
   },
     React.createElement('div', {
-      style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: '6px' }
+      style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: '8px' }
     },
       React.createElement(Icon, { name: icon, size: 16 }),
       React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } }, title),
@@ -316,7 +316,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
     // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.
     unterArmutsgrenze && !ohneBefund && React.createElement('div', {
-      style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
+      style: { marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px solid ' + palette.border }
     },
       React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
         t('finanzUebersicht.belowPoverty')),
@@ -327,7 +327,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a) keine AHV/ALV/PK-Abzüge — dann kein Brutto-Hinweis.
-      !nurBefund && !beitragsfrei && !['keinLohn', 'quellensteuer'].includes(lohnVergleichSperre(data, rentenalter)) && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+      !nurBefund && !beitragsfrei && !['keinLohn', 'quellensteuer'].includes(lohnVergleichSperre(data, rentenalter)) && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '4px' } },
         // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
         t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
           brutto: formatCHF(nettoZuBruttoRichtwert(income, bvgAlter, rentenalter)),
@@ -355,8 +355,8 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
         // Wie das Barometer (LohnEinordnung): sonst färbten die Chips gegen ein Brutto ohne PK-Anteil.
         alter: bvgAlter, rentenalter, beitragsfrei,
       }).incomeVergleich || income;
-      return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
-        React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
+      return React.createElement('div', { style: { marginTop: '12px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { fontSize: text.xs, marginBottom: '8px' } },
           t('finanzUebersicht.branchenvergleich')
         ),
         (() => {
@@ -374,7 +374,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
               style: {
                 // padding vertikal 6px: 10px-Text (~12px Zeile) + 12px → ~24px hoch,
                 // damit das Tipp-Ziel WCAG 2.5.8 (24×24) trifft, nicht nur ~16px.
-                fontSize: '10px', padding: '6px 8px', borderRadius: radius.hair,
+                fontSize: '10px', padding: '8px 8px', borderRadius: radius.hair,
                 cursor: 'pointer',
                 // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
                 // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'
@@ -393,7 +393,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
             React.createElement('div', { style: { marginTop: '4px' } }, reihe(andere)));
           return eigeneBranche
             ? React.createElement(React.Fragment, null,
-                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
+                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
                   React.createElement('span', { style: { fontSize: text.xs, color: palette.text } }, t('finanzUebersicht.eigeneBranche')),
                   chip(eigeneBranche)),
                 // Branchenwert und Median stammen teils aus verschiedenen Jahren (data/branchenLohn.js): sagen, nicht verstecken (F8-A2).
@@ -403,7 +403,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
                 zuklapp(t('finanzUebersicht.brancheVergleichen', { n: andere.length })),
                 React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '4px' } }, t('finanzUebersicht.brancheAngeben')));
         })(),
-        React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '6px' } },
+        React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '8px' } },
           t('finanzUebersicht.branchenQuelle')
         )
       );
@@ -625,7 +625,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   const p = { palette, t, data, onNavigate, w };
   if (teil === 'unten') {
     if (!w.hasData) return null;
-    return React.createElement('div', { 'data-teil': 'auswertung-unten', style: { marginTop: space.xl + 'px' } },
+    return React.createElement('div', { 'data-teil': 'auswertung-unten', style: { marginTop: space['2xl'] + 'px' } },
       React.createElement(UebersichtDrucken, { palette, t, data, w }),
       auswertungsHinweis({ palette, t })
     );
@@ -634,13 +634,13 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   // Offen, sobald ein Anspruch möglich ist — dieselben Signale wie die Karten selbst.
   const anspruch = (!w.sozialhilfe.einkommenFehlt && !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.sozialhilfe.anspruchOffen)) || !!w.el.elPruefen;
   const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
-  return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
+  return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space['2xl'] + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).
     onEnterSandbox && React.createElement('button', {
       type: 'button', 'data-weg': 'probieren', onClick: onEnterSandbox,
       style: {
-        display: 'inline-flex', alignItems: 'center', gap: '6px',
-        margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px', minHeight: '32px',
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
+        margin: '0 0 ' + space.md + 'px 0', padding: '8px 12px', minHeight: '32px',
         background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
         borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
         // sageDeep statt sage: sage trägt als 13px-Text nur 4.34:1 auf bg (wie main.jsx).

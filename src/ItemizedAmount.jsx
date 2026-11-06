@@ -27,7 +27,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
   const sum = rows.reduce((a, r) => a + (Number(r.amount) || 0), 0);
 
   const inputBase = {
-    padding: '8px 10px', borderRadius: radius.md, border: '1px solid ' + palette.border,
+    padding: '8px 12px', borderRadius: radius.md, border: '1px solid ' + palette.border,
     background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body,
     boxSizing: 'border-box',
   };

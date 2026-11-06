@@ -58,7 +58,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
   },
     React.createElement('div', {
       style: {
-        display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0,
+        display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0,
       }
     },
       React.createElement(Icon, { name: 'cowbell', size: 18, color: overdue.length > 0 ? palette.rose : palette.gold }),

@@ -76,11 +76,11 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
     ...ablaufStyles(palette),
     pathWrap: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
     reassure: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.xs + 'px' },
-    chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep, marginTop: '6px' },
+    chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep, marginTop: '8px' },
     inputLabel: { display: 'block', fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
-    input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+    input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
     // „Kurz innehalten"-Prüfliste (Anti-Dark-Pattern: nicht pushen, sondern prüfen).
-    checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
+    checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '8px' },
     checkItem: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
   };
 
@@ -124,7 +124,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
     }, erledigtZeichen(an, label));
   };
   const weiche = [
-    React.createElement('p', { key: 'frage', id: 'mp-kvg-weiche', style: { ...s.stepText, marginBottom: '6px' } }, t('kvgWechsel.weicheFrage')),
+    React.createElement('p', { key: 'frage', id: 'mp-kvg-weiche', style: { ...s.stepText, marginBottom: '8px' } }, t('kvgWechsel.weicheFrage')),
     React.createElement('div', { key: 'wahl', role: 'group', 'aria-labelledby': 'mp-kvg-weiche', style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm + 'px', margin: space.sm + 'px 0 ' + space.md + 'px' } },
       wahlKnopf('grund', t('kvgWechsel.weicheGrund')),
       // Sprungmarke: `#/zusatzwechsel` wählt diesen Knopf (springeZuAnker, data-anker-wahl).

@@ -14,6 +14,7 @@ export const space = {
   '2xs': 2,
   xs:    4,
   sm:    8,
+  ms:    12, // Zwischenstufe (06.11.2026): Skala 4·8·12·16·24·32·48·64, Verhältnis ~1.5
   md:    16,
   lg:    24,
   xl:    32,

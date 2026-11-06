@@ -121,13 +121,13 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
     'data-alpha-banner': true,
     style: {
-      padding: '12px 16px', marginBottom: '20px', borderRadius: radius.md,
+      padding: '12px 16px', marginBottom: '24px', borderRadius: radius.md,
       background: palette.up, border: '1px solid ' + palette.border + '88',
       boxShadow: shadow.sm,
     }
   },
     React.createElement('div', {
-      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '10px' }
+      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' }
     },
       React.createElement('div', { role: 'status', style: { flex: 1 } },
         React.createElement('div', {
@@ -194,14 +194,14 @@ const BetaFeedback = ({ palette, t }) => {
 
   if (phase === 'frueher') {
     return React.createElement('div', {
-      style: { textAlign: 'center', margin: space.xl + 'px 0', fontSize: text.sm, color: palette.mid },
+      style: { textAlign: 'center', margin: space['2xl'] + 'px 0', fontSize: text.sm, color: palette.mid },
     }, t('beta.feedback.thanksLater'));
   }
 
   if (phase === 'offen') {
     return React.createElement('div', {
       style: {
-        textAlign: 'center', padding: space.lg + 'px', margin: space.xl + 'px 0',
+        textAlign: 'center', padding: space.lg + 'px', margin: space['2xl'] + 'px 0',
         background: palette.sageMist || palette.up, borderRadius: radius.lg,
       }
     },
@@ -218,7 +218,7 @@ const BetaFeedback = ({ palette, t }) => {
   }
 
   if (!expanded) {
-    return React.createElement('div', { style: { textAlign: 'center', margin: space.xl + 'px 0' } },
+    return React.createElement('div', { style: { textAlign: 'center', margin: space['2xl'] + 'px 0' } },
       React.createElement('button', {
         onClick: () => setExpanded(true),
         style: {
@@ -248,7 +248,7 @@ const BetaFeedback = ({ palette, t }) => {
 
   return React.createElement('div', {
     style: {
-      margin: space.xl + 'px 0', padding: space.lg + 'px', borderRadius: radius.lg,
+      margin: space['2xl'] + 'px 0', padding: space.lg + 'px', borderRadius: radius.lg,
       background: palette.sageMist || palette.up, border: '1px solid ' + palette.border + '44',
     }
   },
@@ -456,7 +456,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         // am 25.09.2026 parallel umgebaut (Berg-Hero), ein Import dort hätte kollidiert.
         const ctaFlaeche = {
           display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', flexShrink: 0,
-          padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
+          padding: '12px 16px', minHeight: '44px', boxSizing: 'border-box',
           background: palette.sand, color: palette.onSand, borderRadius: radius.md + 'px',
           fontSize: text.sm, fontWeight: weight.semi, whiteSpace: 'nowrap',
         };
@@ -776,7 +776,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
           // nichts, dann auch keine leere Linie.
           rest.length > 0 && React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
           }, rest.map(renderItem))
         );
       })(),

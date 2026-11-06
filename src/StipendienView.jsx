@@ -45,7 +45,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const intro = { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed };
   const linkStyle = { color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px', fontSize: text.sm, wordBreak: 'break-all' };
   const stelleLink = { ...linkStyle, display: 'inline-flex', alignItems: 'center', minHeight: '44px' };
-  const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '6px' };
+  const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '8px' };
   const bullet = { color: palette.sage, flexShrink: 0 };
 
   const li = (txt, key) => React.createElement('div', { key, style: item },
@@ -54,7 +54,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   );
 
   const costStyle = (cost) => ({
-    fontSize: text.xs, fontWeight: weight.medium, padding: '1px 7px', borderRadius: radius.lg,
+    fontSize: text.xs, fontWeight: weight.medium, padding: '1px 8px', borderRadius: radius.lg,
     marginLeft: space.xs + 'px', whiteSpace: 'nowrap',
     background: cost === 'paid' ? palette.gold + '22' : cost === 'freemium' ? palette.sky + '18' : palette.sage + '18',
     // Deep-Varianten für lesbaren Badge-Text (roh: gold 2.19 / sky 3.20 / sage 4.34 = AA-Fail).

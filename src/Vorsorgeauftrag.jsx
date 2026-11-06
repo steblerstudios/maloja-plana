@@ -32,10 +32,10 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
       const abweichend = abweichendeVertretung(antworten, data?.notfall?.pvAntworten);
       return React.createElement('div', null,
         React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('va.ui.vorschauTitel')),
-        abweichend && React.createElement('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal } },
+        abweichend && React.createElement('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: '12px 12px', margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('va.ui.abweichend')),
         // C — Warnsatz, abgesetzt und als «nicht abschreiben» markiert
-        React.createElement('div', { style: { border: '2px dashed ' + (palette.goldDeep || palette.sandDeep), borderRadius: radius.md, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+        React.createElement('div', { style: { border: '2px dashed ' + (palette.goldDeep || palette.sandDeep), borderRadius: radius.md, padding: '12px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
           React.createElement('strong', { style: { color: palette.text } }, t('va.vorlage.nichtAbschreiben')), ' ', t('va.vorlage.warnung')),
         // D — der Text zum Abschreiben
         React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } },
@@ -43,7 +43,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
           v.saetze.map((z, i) => React.createElement('p', { key: i, style: { margin: '0 0 ' + space.sm + 'px' } }, z))),
         React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.md + 'px' } },
           React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(vorlageHtml(antworten, data, t, lang)) },
-            React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('va.ui.drucken')),
+            React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '8px' } }), t('va.ui.drucken')),
           React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('va.ui.aendern')),
           React.createElement('button', { type: 'button', style: knopf(false), onClick: () => setVorlageOffen(false) }, t('va.ui.zurueckZumWegweiser'))
         )

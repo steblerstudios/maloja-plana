@@ -55,7 +55,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
 
   const knopf = (extra) => ({
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-    padding: '9px 14px', borderRadius: radius.md, cursor: 'pointer',
+    padding: '8px 16px', borderRadius: radius.md, cursor: 'pointer',
     fontSize: text.sm, fontFamily: 'inherit', background: 'transparent',
     color: palette.text, border: '1px solid ' + palette.border, ...extra,
   });
@@ -78,7 +78,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     if (schritt === 1) {
       return React.createElement(React.Fragment, null,
         p(t('datenLoeschen.intro')),
-        React.createElement('ul', { style: { margin: '0 0 ' + space.sm + 'px 0', paddingInlineStart: '20px', fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
+        React.createElement('ul', { style: { margin: '0 0 ' + space.sm + 'px 0', paddingInlineStart: '24px', fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
           React.createElement('li', null, t('datenLoeschen.wasAngaben')),
           React.createElement('li', null, t('datenLoeschen.wasDokumente')),
           React.createElement('li', null, t('datenLoeschen.wasEinstellungen'))
@@ -102,7 +102,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
       p(t('datenLoeschen.andereFenster')),
       // Die ganze Zeile ist Tippfläche, mind. 44 px hoch — vor dem unumkehrbaren Schritt (Predeploy 16.09.).
       React.createElement('label', { style: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', fontSize: text.sm, color: palette.text, cursor: 'pointer', marginTop: space.sm + 'px', minHeight: '44px', padding: '8px 0', boxSizing: 'border-box' } },
-        React.createElement('input', { type: 'checkbox', checked: verstanden, onChange: (e) => setVerstanden(e.target.checked), style: { marginTop: '3px', width: '18px', height: '18px', flexShrink: 0 } }),
+        React.createElement('input', { type: 'checkbox', checked: verstanden, onChange: (e) => setVerstanden(e.target.checked), style: { marginTop: '4px', width: '18px', height: '18px', flexShrink: 0 } }),
         t('datenLoeschen.verstanden')
       ),
       React.createElement('div', { style: zeile },

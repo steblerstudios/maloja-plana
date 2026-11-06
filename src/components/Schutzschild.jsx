@@ -46,7 +46,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
 
   const row = (p) => h('div', {
     key: p.key, role: 'listitem',
-    style: { position: 'relative', display: 'flex', alignItems: 'center', gap: (klein ? 6 : space.sm) + 'px', fontSize: klein ? text.xs : text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
+    style: { position: 'relative', display: 'flex', alignItems: 'center', gap: (klein ? 6 : space.sm) + 'px', fontSize: klein ? text.xs : text.sm, color: p.covered ? palette.text : palette.mid, padding: '4px 0' },
   },
     h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(p.covered ? 'check' : 'kaestchen', 12)),
     h('span', { style: { minWidth: 0 } }, t('schutzschild.' + p.key)),

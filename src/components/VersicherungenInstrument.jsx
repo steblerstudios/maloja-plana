@@ -53,7 +53,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
 
   const h = React.createElement;
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '3px 0', fontSize: text.sm, color: palette.text };
+  const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '4px 0', fontSize: text.sm, color: palette.text };
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const geld = (n) => betrag(n, Number.isInteger(Math.round(n * 100) / 100) ? {} : { stellen: 2 });
 
@@ -158,7 +158,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const eingetragen = ausserhalb.filter((x) => !x.abgeleitet).length;
   const ausserhalbListe = () => ausserhalb.length > 0 && h('details', { 'data-teil': 'versicherungen-ausserhalb', style: { marginTop: space.xs + 'px', borderTop: '1px solid ' + palette.border + '88' } },
     // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
-    h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '10px' } },
+    h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '12px' } },
       h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t(!hatGeld ? 'versInstrument.ausserhalbOhneSumme' : p.otherInsurance > 0 ? 'versInstrument.ausserhalb' : 'versInstrument.ausserhalbGanz')),
       eingetragen > 0 && h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: eingetragen }))),
     // «Weitere Versicherungen» ist der einzige Eintragungsort für Rechtsschutz, Reise, Cyber …: dort Eingetragenes zählt in der Summe (Fachprüfung 01.11.2026).

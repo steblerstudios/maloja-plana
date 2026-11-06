@@ -79,7 +79,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     React.createElement('div', {
       key: section.key,
       style: {
-        padding: '14px 16px',
+        padding: '16px 16px',
         background: palette.up,
         borderRadius: radius.md,
         marginBottom: space.sm,
@@ -96,7 +96,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
           key: i,
           style: {
             display: 'flex', justifyContent: 'space-between',
-            padding: '3px 0', fontSize: text.sm,
+            padding: '4px 0', fontSize: text.sm,
             borderBottom: i < section.rows.length - 1 ? '1px solid ' + palette.border : 'none',
           }
         },
@@ -109,7 +109,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   const renderEmpty = () =>
     React.createElement('div', {
       style: {
-        padding: '32px 20px', textAlign: 'center',
+        padding: '32px 24px', textAlign: 'center',
         background: palette.up, borderRadius: radius.lg,
         border: '1px solid ' + palette.border,
       }
@@ -125,13 +125,13 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.lg,
-        border: '1px solid ' + palette.border, marginBottom: '20px',
+        background: palette.surface, padding: '24px 24px', borderRadius: radius.lg,
+        border: '1px solid ' + palette.border, marginBottom: '24px',
       }
     },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'notfall', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
       React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '16px' }
       }, t('notfallDossier.subtitle')),
 
       hasSections && React.createElement('div', {
@@ -145,7 +145,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     React.createElement('div', {
       style: {
-        padding: '10px 14px', marginBottom: space.md,
+        padding: '12px 16px', marginBottom: space.md,
         background: palette.up, borderRadius: radius.md,
         fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
       }
@@ -156,7 +156,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: { width: '100%', padding: '12px', marginBottom: vorschau ? 0 : '20px' },
       icon: React.createElement(Icon, { name: 'drucker', size: 16 }),
     }, t('notfallDossier.printAction')),
-    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
+    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '24px' } },
       React.createElement(ExportVorschau, {
         palette, t, art: 'dossier',
         quelle: { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.filter(r => !r.platzhalter).map(r => r.label) })) },
@@ -168,7 +168,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     hasSections && React.createElement('div', {
       style: {
         background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.lg,
-        padding: '16px', marginBottom: '20px', textAlign: 'center',
+        padding: '16px', marginBottom: '24px', textAlign: 'center',
       }
     },
       React.createElement('div', {
@@ -197,7 +197,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         ref: qrRef,
         style: {
           display: qrStatus === 'fehler' ? 'none' : 'inline-block',
-          padding: '10px', background: '#ffffff', borderRadius: radius.md,
+          padding: '12px', background: '#ffffff', borderRadius: radius.md,
         },
       }),
       // Fehler entsteht erst nach dem ersten Render → Live-Region. Die Kürzung steht schon beim
@@ -207,7 +207,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '0' }
       }, t('notfallDossier.qrFehler')),
       qrSichtbar && qrStatus !== 'fehler' && qrGekuerzt && React.createElement('p', {
-        style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '10px 0 0' }
+        style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '12px 0 0' }
       }, t('notfallDossier.qrGekuerzt')),
       // Zweiter Ausgang derselben Angaben: der Notfallpass auf dem Telefon (Entscheid 22.09.2026).
       React.createElement('button', {

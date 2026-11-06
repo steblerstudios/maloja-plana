@@ -56,14 +56,14 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         },
         onClick: (e) => e.stopPropagation(),
       },
-        React.createElement('div', { style: { padding: '20px 20px 16px 20px', borderBottom: '1px solid ' + palette.border, display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+        React.createElement('div', { style: { padding: '24px 24px 16px 24px', borderBottom: '1px solid ' + palette.border, display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
           React.createElement('div', { style: { fontSize: text.body + 1, fontWeight: weight.semi, letterSpacing: '0.3px' } }, settingsLabel || t('nav.settings')),
-          React.createElement('button', { onClick: onClose, 'aria-label': t('common.close'), style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 6px', minWidth: '44px', minHeight: '44px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } }, '×')
+          React.createElement('button', { onClick: onClose, 'aria-label': t('common.close'), style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 8px', minWidth: '44px', minHeight: '44px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } }, '×')
         ),
         // Beschriftete, gruppierte Zeilen (Anzeige & Sprache / Barrierefreiheit) statt
         // flacher Icon-Reihe — dieselbe Hierarchie wie die ganze Einstellungs-Seite.
         ...groupSettingsControls(settingsControls).map(g => React.createElement('div', {
-          key: g.key, style: { padding: '14px 20px', borderBottom: '1px solid ' + palette.border },
+          key: g.key, style: { padding: '16px 24px', borderBottom: '1px solid ' + palette.border },
         },
           React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.soft, marginBottom: space.xs } }, t(g.labelKey)),
           ...g.controls.map((ctrl, i) => React.createElement('div', {
@@ -76,13 +76,13 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         )),
         onStartTour ? React.createElement('button', {
           type: 'button', onClick: () => { onClose(); onStartTour(); },
-          style: { display: 'flex', alignItems: 'center', gap: space.sm, width: '100%', textAlign: 'left', padding: '14px 20px', background: 'transparent', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: 'inherit' },
+          style: { display: 'flex', alignItems: 'center', gap: space.sm, width: '100%', textAlign: 'left', padding: '16px 24px', background: 'transparent', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: 'inherit' },
         },
           React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIconEarly('info', '16px')),
           t('tour.reopen')
         ) : null,
         // Konto & Daten — ehrlich: lokal, kein Login; „Konto" = Datenhoheit (Backup/Export).
-        React.createElement('div', { style: { padding: '16px 20px', borderBottom: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { padding: '16px 24px', borderBottom: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, marginBottom: space.xs, letterSpacing: '0.3px' } }, t('settingsDrawer.accountTitle')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } }, t('settingsDrawer.accountNote')),
           onNavigate ? React.createElement('button', {
@@ -94,7 +94,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           ) : null
         ),
         React.createElement('div', { style: { flex: 1 } }),
-        React.createElement('div', { style: { padding: '16px 20px', borderTop: '1px solid ' + palette.border, fontSize: text.xs, color: palette.soft } }, t('nav.privacyNote'))
+        React.createElement('div', { style: { padding: '16px 24px', borderTop: '1px solid ' + palette.border, fontSize: text.xs, color: palette.soft } }, t('nav.privacyNote'))
       )
     );
   }
@@ -184,7 +184,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   const karte = ({ key, label, satz, icon, onClick, aktiv, farbe }) => React.createElement('button', {
     key, type: 'button', onClick, 'aria-current': aktiv ? 'page' : undefined,
     style: {
-      display: 'flex', gap: '14px', alignItems: 'center', width: '100%', minHeight: '72px',
+      display: 'flex', gap: '16px', alignItems: 'center', width: '100%', minHeight: '72px',
       padding: '12px', borderRadius: radius.lg, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
       background: palette.surface, color: palette.text,
       border: '1px solid ' + (aktiv ? palette.sand : palette.border),
@@ -248,7 +248,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
     if (results.length === 0) {
       results.push(React.createElement('div', {
         key: 'no-results', role: 'status', 'aria-live': 'polite',
-        style: { padding: '20px', textAlign: 'center', fontSize: text.sm, color: palette.mid },
+        style: { padding: '24px', textAlign: 'center', fontSize: text.sm, color: palette.mid },
       }, t('common.noResults')));
     }
     return React.createElement('div', { key: 'treffer', style: { display: 'flex', flexDirection: 'column', gap: '2px' } }, ...results);
@@ -274,7 +274,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       ref: schublade, role: 'navigation', 'aria-label': t('nav.menu'),
       style: {
         maxWidth: '880px', margin: '0 auto', boxSizing: 'border-box',
-        padding: '14px 16px calc(24px + env(safe-area-inset-bottom))',
+        padding: '16px 16px calc(24px + env(safe-area-inset-bottom))',
       },
     },
       // Kopf: Name + Schliessen. Die Überschrift nimmt beim Öffnen den Fokus
@@ -293,11 +293,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
 
       // Stand + «Auf den Startbildschirm legen» (Entscheid 25.09.2026: immer hier zu finden;
       // läuft die Seite schon als App, fehlt der Knopf).
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm, flexWrap: 'wrap', marginBottom: space.md - 4 + 'px' } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm, flexWrap: 'wrap', marginBottom: space.ms + 'px' } },
         React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, t('nav.completion', { value: completion })),
         !laeuftAlsApp() ? React.createElement('button', {
           type: 'button', onClick: () => { onClose(); onNavigate('installApp'); },
-          style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, minHeight: '44px', padding: '8px 14px', borderRadius: radius.full, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs },
+          style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, minHeight: '44px', padding: '8px 16px', borderRadius: radius.full, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs },
         },
           React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, width: '16px', height: '16px', display: 'inline-flex' } }, renderIcon('handy', '16px')),
           t('install.navSub')

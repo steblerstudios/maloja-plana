@@ -203,7 +203,7 @@ export const DocumentTresor = ({
         React.createElement('span', { style: { ...klein, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, doc.fileName),
         React.createElement('span', { style: klein }, t('tresor.uploadedInfo', { date: doc.uploadDate, size: doc.fileSize })),
         isEditing
-          ? React.createElement('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' } },
+          ? React.createElement('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '8px' } },
               React.createElement('input', {
                 type: 'date', value: editingExpiry,
                 onChange: (e) => setEditingExpiry(e.target.value),
@@ -212,18 +212,18 @@ export const DocumentTresor = ({
               }),
               React.createElement('button', {
                 type: 'button', onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
-                style: { minHeight: '44px', padding: '0 14px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
+                style: { minHeight: '44px', padding: '0 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
               }, 'OK'),
               React.createElement('button', {
                 type: 'button', onClick: () => setEditingDocId(null),
-                style: { minHeight: '44px', padding: '0 14px', background: 'none', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs },
+                style: { minHeight: '44px', padding: '0 16px', background: 'none', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs },
               }, t('common.cancel')),
             )
           : React.createElement('span', {
               style: { ...klein, color: status.color, fontWeight: weight.medium },
             }, status.label + ' · ' + t('tresor.expiryDate', { date: ablaufAnzeige(doc.expiryDate) })),
       ),
-      React.createElement('div', { style: { display: 'flex', flexShrink: 0, marginRight: '-10px' } },
+      React.createElement('div', { style: { display: 'flex', flexShrink: 0, marginRight: '-12px' } },
         zeileKnopf(t('common.download'), 'download', () => onDownload(doc)),
         zeileKnopf(t('common.edit'), 'edit', () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); }),
         zeileKnopf(t('common.delete'), 'kreuz', () => onDelete(doc.id)),
@@ -254,7 +254,7 @@ export const DocumentTresor = ({
           onOpenChapter && React.createElement('span', { key: 'p', 'aria-hidden': 'true', style: { marginLeft: 'auto', color: palette.sandDeep || palette.mid, fontSize: '20px' } }, '+'),
         ];
         const flaeche = {
-          display: 'flex', gap: '12px', alignItems: 'center', padding: '12px 14px', width: '100%',
+          display: 'flex', gap: '12px', alignItems: 'center', padding: '12px 16px', width: '100%',
           borderRadius: radius.lg, border: '1px solid ' + palette.border, background: palette.surface,
           color: palette.text, textAlign: 'left', minHeight: '60px', boxSizing: 'border-box', font: 'inherit', fontSize: text.sm,
         };
@@ -285,7 +285,7 @@ export const DocumentTresor = ({
     : t('tresor.activeEmpty');
 
   return React.createElement('div', {
-    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
+    style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('tresor.title')),
     satz && React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 0 ' + space.lg + 'px' } }, satz),
@@ -294,12 +294,12 @@ export const DocumentTresor = ({
       // Leer: ruhiges Bild, Titel und Satz der App.
       ? React.createElement('div', { style: { textAlign: 'center', padding: '8px 8px 0' } },
           React.createElement(LeerBild, { accent: bereichAccent('basis') || palette.sage, sand: palette.sand }),
-          React.createElement('h3', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 6px' } }, t('tresor.noDocuments')),
+          React.createElement('h3', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 8px' } }, t('tresor.noDocuments')),
           React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 auto', maxWidth: '34ch' } }, t('tresor.noDocumentsHint')),
         )
       : React.createElement(React.Fragment, null,
           // Übersichtszeile
-          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } },
+          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } },
             React.createElement(OrdnerIcon, { palette, fillLevel: documents.length }),
             React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium } }, t('tresor.docCount', { count: documents.length })),
           ),
@@ -314,7 +314,7 @@ export const DocumentTresor = ({
           ),
           // Kapitel-Filter (leise, nur wenn er etwas zu wählen hat)
           zeigeKapitelFilter && React.createElement('div', {
-            style: { display: 'flex', gap: '6px', overflowX: 'auto', marginBottom: space.sm + 'px' },
+            style: { display: 'flex', gap: '8px', overflowX: 'auto', marginBottom: space.sm + 'px' },
           },
             [{ key: 'all', title: t('tresor.allChapters'), n: imAktuellenFach.length }, ...chaptersWithDocs.map(c => ({ key: c.key, title: c.title, n: chapterCounts[c.key] || 0 }))].map(c => {
               const aktiv = activeTab === c.key;
@@ -323,7 +323,7 @@ export const DocumentTresor = ({
                 key: c.key, type: 'button', 'aria-pressed': aktiv, 'aria-label': c.title + ' (' + c.n + ')',
                 onClick: () => setActiveTab(c.key),
                 style: {
-                  display: 'inline-flex', alignItems: 'center', gap: '5px', minHeight: '44px', padding: '0 12px',
+                  display: 'inline-flex', alignItems: 'center', gap: '4px', minHeight: '44px', padding: '0 12px',
                   borderRadius: radius.full, border: '1px solid ' + (aktiv ? palette.text : palette.border),
                   background: aktiv ? palette.up : 'none', color: aktiv ? palette.text : palette.mid,
                   cursor: 'pointer', fontSize: text.xs, whiteSpace: 'nowrap', font: 'inherit',
@@ -340,10 +340,10 @@ export const DocumentTresor = ({
           React.createElement('input', {
             type: 'search', placeholder: t('common.search'), value: searchTerm,
             onChange: (e) => setSearchTerm(e.target.value), 'aria-label': t('common.search'),
-            style: { ...feld, padding: '0 14px', marginBottom: space.sm + 'px' },
+            style: { ...feld, padding: '0 16px', marginBottom: space.sm + 'px' },
           }),
           React.createElement('label', {
-            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' },
+            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' },
           },
             React.createElement('span', null, t('tresor.sortBy')),
             React.createElement('select', {
@@ -357,7 +357,7 @@ export const DocumentTresor = ({
           ),
           // Liste
           sortedDocs.length === 0
-            ? React.createElement('p', { role: 'status', style: { color: palette.mid, fontSize: text.sm, padding: '14px 0', margin: 0 } }, leerImFach)
+            ? React.createElement('p', { role: 'status', style: { color: palette.mid, fontSize: text.sm, padding: '16px 0', margin: 0 } }, leerImFach)
             : React.createElement('ul', { style: { margin: 0, padding: 0 } }, sortedDocs.map(renderDocRow)),
         ),
 
@@ -368,7 +368,7 @@ export const DocumentTresor = ({
 
     // Nur auf diesem Gerät
     React.createElement('div', {
-      style: { display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center', fontSize: text.xs, color: palette.mid, marginTop: '22px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border },
+      style: { display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center', fontSize: text.xs, color: palette.mid, marginTop: '24px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border },
     }, hinweisZeichen(), t('trust.localOnly')),
   );
 };

@@ -106,7 +106,7 @@ export class ErrorBoundary extends React.Component {
         width: '100%', minHeight: '100dvh', background: bg, color: textColor,
         fontFamily: fontFamily,
         display: 'flex', overflowY: 'auto',
-        padding: '20px', boxSizing: 'border-box'
+        padding: '24px', boxSizing: 'border-box'
       }
     },
       React.createElement('div', {
@@ -134,7 +134,7 @@ export class ErrorBoundary extends React.Component {
             onClick: this.handleReset,
             style: {
               // mind. 44 hoch wie der Melde-Link darunter (WCAG 2.2, 2.5.8: mind. 24).
-              minHeight: '44px', padding: '10px 20px', background: sand, color: '#000',
+              minHeight: '44px', padding: '12px 24px', background: sand, color: '#000',
               border: 'none', borderRadius: radius.md, cursor: 'pointer',
               fontWeight: weight.semi, fontSize: text.sm
             }
@@ -143,7 +143,7 @@ export class ErrorBoundary extends React.Component {
             type: 'button',
             onClick: this.handleHardReset,
             style: {
-              minHeight: '44px', padding: '10px 20px', background: 'transparent', color: textColor,
+              minHeight: '44px', padding: '12px 24px', background: 'transparent', color: textColor,
               border: '1px solid ' + border, borderRadius: radius.md,
               cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
             }

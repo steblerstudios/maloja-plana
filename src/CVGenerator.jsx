@@ -18,7 +18,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
   // weniger als der Druck (Geburtsdatum, Nationalität, Zivilstand): darum auch vor dem Drucken.
   const [vorschau, setVorschau] = useState(null);
   const [alsDatei, setAlsDatei] = useState(false);
-  const zweitKnopf = { minHeight: '44px', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.mid, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
+  const zweitKnopf = { minHeight: '44px', padding: '12px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.mid, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   const cv = generateCVTemplate(data, t);
   const inhalt = lebenslaufInhalt(t, data.ausbildung, data);
@@ -43,7 +43,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
     style: { ...zweitKnopf, display: 'block', marginTop: space.sm + 'px' },
   }, t('cv.ergaenzen') + ' ›');
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('cv'), size: 22 }), style: { marginBottom: space.md } }, t('cv.title')),
 
     !inhalt && React.createElement('div', { 'data-teil': 'lebenslauf-leer' },

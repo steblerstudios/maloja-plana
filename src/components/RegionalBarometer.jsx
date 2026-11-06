@@ -135,7 +135,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // Dünner Halo (1.5px), kein hartes Weiss.
       hasUser && React.createElement('div', {
         style: {
-          position: 'absolute', top: '-1px', left: regionalPct + '%', marginLeft: '-6px',
+          position: 'absolute', top: '-1px', left: regionalPct + '%', marginLeft: '-8px',
           width: '12px', height: '12px', borderRadius: '50%', background: dotColor,
           border: '1.5px solid ' + palette.surface,
         },

@@ -245,7 +245,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         autoComplete: 'off',
         onChange: (e) => setEingaben((x) => ({ ...x, [f.k]: e.target.value })),
         onKeyDown: (e) => { if (e.key === 'Enter') speichern(f); },
-        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '10px 12px', minHeight: '44px', borderRadius: radius.md, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '12px 12px', minHeight: '44px', borderRadius: radius.md, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
       }),
       demoMode
         ? h('p', { style: { ...klein, margin: 0 } }, t('demo.readOnlyHint'))
@@ -291,7 +291,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px ' + (aus ? 'dashed ' : 'solid ') + palette.border, borderRadius: radius.md, background: aus ? 'none' : palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
   },
     h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: notfallRot } }, h(Icon, { name: ikon, size: 20 })),
-    h('span', { style: { display: 'block', marginTop: '6px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'manual', WebkitHyphens: 'manual' } }, titel),
+    h('span', { style: { display: 'block', marginTop: '8px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'manual', WebkitHyphens: 'manual' } }, titel),
     h('small', { style: { display: 'block', ...klein } }, sub));
   const unterlagen = h('section', { 'data-teil': 'notfall-unterlagen', 'aria-labelledby': 'mp-notfall-unterlagen' },
     h('h3', { id: 'mp-notfall-unterlagen', style: kapH }, t('notfallKapitel.unterlagenTitel')),

@@ -91,7 +91,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
   }
 
   const btnGhost = {
-    padding: '11px 14px', background: 'transparent', color: palette.mid,
+    padding: '12px 16px', background: 'transparent', color: palette.mid,
     border: 'none', borderRadius: radius.md, cursor: 'pointer',
     fontSize: text.sm, fontFamily,
   };
@@ -144,14 +144,14 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
       }, t('tour.' + step.key + '.text')),
 
       // Fortschritts-Punkte
-      React.createElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'center', marginBottom: space.md } },
+      React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'center', marginBottom: space.md } },
         steps.map((s, idx) => React.createElement(React.Fragment, { key: s.key }, dot(idx === i)))
       ),
 
       // Am Schluss mit Ziel: der Schritt-Knopf bekommt die volle Breite (der Feldname
       // ist länger als «Weiter» und brach sonst dreizeilig um).
       (isLast && abschluss) && React.createElement(PrimaryButton, {
-        palette, onClick: losgehen, style: { width: '100%', padding: '11px 18px', marginBottom: space.xs + 'px' },
+        palette, onClick: losgehen, style: { width: '100%', padding: '12px 16px', marginBottom: space.xs + 'px' },
       }, abschluss.label),
 
       // Steuerung
@@ -159,7 +159,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
         React.createElement('button', { type: 'button', onClick: finish, style: btnGhost }, t('tour.skip')),
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
           i > 0 && React.createElement('button', { type: 'button', onClick: back, style: btnGhost }, t('tour.back')),
-          !(isLast && abschluss) && React.createElement(PrimaryButton, { palette, onClick: next, style: { padding: '11px 18px' } },
+          !(isLast && abschluss) && React.createElement(PrimaryButton, { palette, onClick: next, style: { padding: '12px 16px' } },
             isLast ? t('tour.done') : t('tour.next'))
         )
       )

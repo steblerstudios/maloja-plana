@@ -31,7 +31,7 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const titelStil = { fontWeight: weight.semi, color: palette.text, margin: space.md + 'px 0 ' + space.sm + 'px' };
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const hinweisStil = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
+  const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
   const knopfStil = { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium };
 
   const feld = (i, key, label, hinweis, extra = {}) => {
@@ -100,7 +100,7 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
           React.createElement('span', null, t('kreditkarteView.posten_' + p.key)),
           React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, (p.plus ? '+ ' : '− ') + betrag(p.wert, Number.isInteger(p.wert) ? {} : { stellen: 2 }))
         ),
-        React.createElement('div', { 'aria-hidden': true, style: { height: '6px', borderRadius: radius.hair + 'px', marginTop: '3px', width: Math.max(2, Math.round((p.wert / max) * 100)) + '%', background: p.plus ? palette.sage : palette.soft } })
+        React.createElement('div', { 'aria-hidden': true, style: { height: '6px', borderRadius: radius.hair + 'px', marginTop: '4px', width: Math.max(2, Math.round((p.wert / max) * 100)) + '%', background: p.plus ? palette.sage : palette.soft } })
       ))
     );
   };

@@ -22,8 +22,8 @@ export const EOrechner = ({ palette, t, data, onNavigate }) => {
 
   const s = {
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, color: palette.text, marginTop: space.sm + 'px' },
-    th: { textAlign: 'left', padding: '6px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
-    td: { padding: '6px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border + '66', color: palette.text },
+    th: { textAlign: 'left', padding: '8px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
+    td: { padding: '8px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border + '66', color: palette.text },
     tag: { display: 'inline-block', padding: '2px 8px', borderRadius: radius.xs, fontSize: text.xs, background: palette.sage + '22', color: palette.sageDeep, marginLeft: space.xs + 'px' },
     fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.sm + 'px 0 0' },
   };

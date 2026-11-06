@@ -67,10 +67,10 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
   return React.createElement('div', { style: { maxWidth: '760px' } },
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px 0' } }, t('taxImport.intro')),
 
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px' } },
       // Upload
       React.createElement('div', { style: card },
-        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { style: { display: 'block', padding: '24px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { ref: dateiRef, type: 'file', accept: '.csv,.txt,.tsv,.xml,.tax', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('taxImport.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('taxImport.fileTypes'))
@@ -80,7 +80,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
         importError && React.createElement('div', { role: 'alert', style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.md, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, hinweisZeichen('kreuz'), importError),
 
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.md, marginTop: space.sm } },
-          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('taxImport.formatExample') + ':'),
+          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px' } }, t('taxImport.formatExample') + ':'),
           React.createElement('code', { style: { display: 'block', fontSize: text.xs, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
             "Bruttolohn; 60'000\nWertschriften; 12'000\nSparkonto; 18'500\nSteuerbetrag; 4'800")
         )
@@ -94,7 +94,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
           React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm } }, preview.fileName),
 
           preview.matched.length === 0
-            ? React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, padding: '20px 0' } }, t('taxImport.nothingFound'))
+            ? React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, padding: '24px 0' } }, t('taxImport.nothingFound'))
             : React.createElement('div', null,
                 preview.applied.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
                   React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, t('taxImport.willFill')),
@@ -106,10 +106,10 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },
                   preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
-                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { flex: 1, minHeight: '44px', padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
+                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { flex: 1, minHeight: '44px', padding: '12px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
                 )
               )
-        ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
+        ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 24px' } },
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('taxImport.noFile')),
           React.createElement('div', { style: { fontSize: text.sm, marginTop: space.sm } }, t('taxImport.noFileHint'))
         )

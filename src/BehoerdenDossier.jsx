@@ -72,7 +72,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
     React.createElement('div', {
       key: section.key,
       style: {
-        padding: '14px 16px',
+        padding: '16px 16px',
         background: palette.up,
         borderRadius: radius.md,
         marginBottom: space.sm,
@@ -102,7 +102,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
           key: i,
           style: {
             display: 'flex', justifyContent: 'space-between',
-            padding: '3px 0', fontSize: text.sm,
+            padding: '4px 0', fontSize: text.sm,
             borderBottom: i < section.rows.length - 1 ? '1px solid ' + palette.border : 'none',
           }
         },
@@ -125,7 +125,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
   const renderEmpty = () =>
     React.createElement('div', {
       style: {
-        padding: '32px 20px', textAlign: 'center',
+        padding: '32px 24px', textAlign: 'center',
         background: palette.up, borderRadius: radius.lg,
         border: '1px solid ' + palette.border,
       }
@@ -139,8 +139,8 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
 
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.lg,
-        border: '1px solid ' + palette.border, marginBottom: '20px',
+        background: palette.surface, padding: '24px 24px', borderRadius: radius.lg,
+        border: '1px solid ' + palette.border, marginBottom: '24px',
       }
     },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'legal', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('behoerdenDossier.title')),
@@ -171,7 +171,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
         }
       }, t('behoerdenDossier.exportJSON'))
     ),
-    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
+    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '24px' } },
       React.createElement(ExportVorschau, {
         palette, t,
         art: vorschau === 'json' ? 'dossierJson' : 'dossier',

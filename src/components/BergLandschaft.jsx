@@ -436,7 +436,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       const schatten = '0 1px 5px rgba(0,0,0,0.22)';
       const pilleStil = {
         display: 'flex', alignItems: 'center', gap: '8px', background: ui.surface, borderRadius: '999px',
-        padding: '4px 14px 4px 4px', boxShadow: schatten, lineHeight: 1.1,
+        padding: '4px 16px 4px 4px', boxShadow: schatten, lineHeight: 1.1,
       };
       // Pille: die Zahl steht im Kreis (Rückmeldung 25.09.2026), das Wort daneben.
       const pille = (key, testid, anteil, wert, wort, ref) => React.createElement('div', { key, ref, 'data-testid': testid, style: pilleStil },
@@ -446,7 +446,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         key, ref, 'data-testid': testid, style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' },
       },
         wort && React.createElement('span', {
-          style: { fontSize: '10px', lineHeight: 1.15, color: ETIKETT_SCHRIFT, background: etikettGrund(ui.sageDeep), padding: '2px 6px', borderRadius: radius.sm, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' },
+          style: { fontSize: '10px', lineHeight: 1.15, color: ETIKETT_SCHRIFT, background: etikettGrund(ui.sageDeep), padding: '2px 8px', borderRadius: radius.sm, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' },
         }, wort),
         React.createElement('div', { style: { borderRadius: '50%', boxShadow: schatten } },
           React.createElement(Kreis, { ui, anteil, mitte: wert, d: 38 })));
@@ -622,7 +622,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             position: 'absolute', [seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
             whiteSpace: 'nowrap', pointerEvents: 'none', display: 'block',
             fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
-            background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.full,
+            background: etikettGrund(farbe), padding: '2px 8px', borderRadius: radius.full,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
           },
         }, st.label)

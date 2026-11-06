@@ -174,31 +174,31 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
 
   // Ein Hauptknopf (PrimaryButton: Speichern, Übernehmen), alles andere ruhig im Umriss
   // (Seitenrundgang 27.09.2026 — vorher Sand, Salbei und Grau gefüllt nebeneinander).
-  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
+  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', minHeight: '44px', boxSizing: 'border-box', padding: '12px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
   const [ablageProps, ablageAktiv] = useDateiAblage(handleFileUpload);
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
-   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
+   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' } },
     // Left: Scanner
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'barcode', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.title')),
 
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {
           onClick: () => setScanMode('upload'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { flex: 1, padding: '12px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.photoScan')),
         React.createElement('button', {
           onClick: () => setScanMode('manual'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { flex: 1, padding: '12px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.manualEntry'))
       ),
 
       scanMode === 'upload' && React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kkScanner.scanRequiresInternet'))),
-        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '24px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),
@@ -237,7 +237,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
       ),
 
       scanResult && !conflicts && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, marginBottom: '12px', fontSize: text.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px', color: palette.sageDeep } }, hinweisZeichen('check'), t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px', color: palette.sageDeep } }, hinweisZeichen('check'), t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
       ),
 
       conflicts && React.createElement('div', { style: { padding: space.md, background: palette.gold + '15', border: '1px solid ' + palette.gold, borderRadius: radius.lg, marginBottom: '12px' } },
@@ -274,7 +274,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
       // Felder zugeklappt, dort wäre eine Markierung am Feld unsichtbar.
       fehler.length > 0 && React.createElement('ul', {
         id: 'kk-fehler', role: 'alert',
-        style: { margin: '0 0 12px', padding: '10px 12px 10px 28px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.md, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
+        style: { margin: '0 0 12px', padding: '12px 12px 12px 32px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.md, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
       }, fehler.map(f => React.createElement('li', { key: f }, f))),
       React.createElement(PrimaryButton, { palette, onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, icon: React.createElement(Icon, { name: 'check', size: 14 }), style: { width: '100%', minHeight: '44px' } }, t('common.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),
@@ -282,7 +282,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
     ),
 
     // Right: Preview & QR
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.dataPreview')),
 
       React.createElement('div', { style: { display: 'grid', gap: space.sm, marginBottom: space.md } },
@@ -293,7 +293,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
           [t('kkScanner.ahvNumber'), kkData.ahv],
           [t('kkScanner.franchise'), kkData.franchise ? betrag(kkData.franchise, { hoechstens: 2 }) : ''],
           [t('kkScanner.model'), kkData.model]
-        ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '10px', background: palette.up, borderRadius: radius.md } },
+        ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '12px', background: palette.up, borderRadius: radius.md } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, label),
           React.createElement('div', { style: { fontWeight: weight.semi } }, val || '—')
         ))
@@ -333,13 +333,13 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
           style: { display: qrFehler ? 'none' : 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: space.md, justifyItems: 'center' }
         },
           React.createElement('div', null,
-            React.createElement('div', { id: 'kk-qr-lesbar', style: { display: 'flex', justifyContent: 'center', marginBottom: '6px' } }),
+            React.createElement('div', { id: 'kk-qr-lesbar', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px' } }),
             React.createElement('div', {
               style: { fontSize: text.sm, color: palette.text, fontWeight: weight.semi, textAlign: 'center' }
             }, t('kkScanner.qrNotfallLesbar'))
           ),
           React.createElement('div', null,
-            React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '6px' } }),
+            React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px' } }),
             React.createElement('div', {
               style: { fontSize: text.sm, color: palette.mid, textAlign: 'center' }
             }, t('kkScanner.qrUebernahme'))

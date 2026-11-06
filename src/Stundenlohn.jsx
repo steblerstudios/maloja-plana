@@ -35,7 +35,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const titelStil = { fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px' };
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const hinweisStil = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
+  const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
   const absatz = { margin: space.sm + 'px 0 0', color: palette.text, lineHeight: leading.normal };
   const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0 ' + space.md + 'px' };
 
@@ -84,7 +84,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
       { k: 'feiertag', wert: l.feiertag },
       { k: 'dreizehnter', wert: l.dreizehnter },
     ].filter((z) => z.k === 'grund' || z.wert > 0);
-    const zeile = (label, wert, stark) => React.createElement('div', { key: label, style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', padding: '3px 0', borderTop: stark ? '1px solid ' + palette.border : 'none', fontWeight: stark ? weight.semi : weight.normal, color: palette.text } },
+    const zeile = (label, wert, stark) => React.createElement('div', { key: label, style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', padding: '4px 0', borderTop: stark ? '1px solid ' + palette.border : 'none', fontWeight: stark ? weight.semi : weight.normal, color: palette.text } },
       React.createElement('span', null, label),
       React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, zahlText(wert)));
     return React.createElement('div', { key, style: { marginBottom: space.md + 'px' } },
@@ -211,7 +211,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
       titel: t('stundenlohnView.fragenTitel'),
       inhalt: React.createElement(React.Fragment, null,
         React.createElement('p', { style: { ...hinweisStil, marginTop: 0 } }, t('stundenlohnView.fragenIntro')),
-        React.createElement('ul', { style: { margin: space.sm + 'px 0 0', paddingLeft: '20px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+        React.createElement('ul', { style: { margin: space.sm + 'px 0 0', paddingLeft: '24px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
           r.fragen.map((f) => React.createElement('li', { key: f, style: { marginBottom: space.xs + 'px' } }, t('stundenlohnView.frage_' + f))))
       ),
     } : null,

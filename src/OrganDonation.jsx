@@ -115,28 +115,28 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
 
   // Zweitknopf neben dem einen PrimaryButton (Speichern) — Seitenrundgang 27.09.2026:
   // der QR-Knopf stand in Salbei gefüllt genauso laut darunter.
-  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
+  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', minHeight: '44px', boxSizing: 'border-box', padding: '12px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   const statusButtonStyle = {
     // color explizit: Buttons erben color nicht (UA-Reset auf schwarz) → sonst war
     // der inaktive „Nicht registriert"-Status im Dark Mode schwarz auf palette.up.
-    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, color: palette.text
+    padding: '12px 16px', border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, color: palette.text
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'organ', onNavigate }),
-   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
+   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' } },
     // Left: Settings
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'organspende', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       // Nach der Migration v5: eine frühere Angabe liess den Umfang offen (oder widersprach
       // sich) — die Person wählt neu, statt dass Maloja für sie «alle Organe» einsetzt.
-      data._organspendeVorV5?.bitteBestaetigen && !status && React.createElement('p', { style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '10px 12px', borderRadius: radius.md, margin: '0 0 12px', lineHeight: leading.normal } }, hinweisZeichen(), t(data._organspendeVorV5.grund === 'widerspruch' ? 'organ.bitteBestaetigenWiderspruch' : 'organ.bitteBestaetigen')),
+      data._organspendeVorV5?.bitteBestaetigen && !status && React.createElement('p', { style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '12px 12px', borderRadius: radius.md, margin: '0 0 12px', lineHeight: leading.normal } }, hinweisZeichen(), t(data._organspendeVorV5.grund === 'widerspruch' ? 'organ.bitteBestaetigenWiderspruch' : 'organ.bitteBestaetigen')),
       // Ein Knopf je Möglichkeit, die das BAG nennt; der gewählte trägt Farbe, Häkchen UND aria-pressed.
       // Alle gleich ruhig gefärbt — eine Ablehnung ist kein Fehler.
-      React.createElement('div', { role: 'group', 'aria-label': t('organ.status'), style: { display: 'grid', gap: space.sm, marginBottom: '20px' } },
+      React.createElement('div', { role: 'group', 'aria-label': t('organ.status'), style: { display: 'grid', gap: space.sm, marginBottom: '24px' } },
         ORGAN_ENTSCHEIDE.map(wert => React.createElement('button', {
           key: wert, type: 'button', 'aria-pressed': status === wert,
           onClick: () => setStatus(wert),
@@ -146,7 +146,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
 
       status === 'partial' && React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.organsAndTissue')),
       status === 'partial' && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: space.sm, marginBottom: space.md } },
-        organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: space.sm, padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: radius.md, cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: text.sm } },
+        organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: space.sm, padding: '12px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: radius.md, cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: text.sm } },
           React.createElement('input', { type: 'checkbox', checked: organs[org.key], onChange: () => handleOrganToggle(org.key), style: { cursor: 'pointer' } }),
           org.label
         ))
@@ -170,7 +170,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
       // Daten einer Drittperson in einem Ausweis, der gezeigt und fotografiert wird: vorher absprechen.
       status === 'delegated' && React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 12px', lineHeight: leading.normal } }, t('organ.vertrauenspersonHinweis')),
       // «Nur bestimmte» ohne ein einziges Organ sagt niemandem, welche gemeint sind.
-      status === 'partial' && organListe(t, organs).length === 0 && React.createElement('p', { style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '10px 12px', borderRadius: radius.md, margin: '0 0 12px', lineHeight: leading.normal } }, hinweisZeichen(), t('organ.keineOrganeGewaehlt')),
+      status === 'partial' && organListe(t, organs).length === 0 && React.createElement('p', { style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '12px 12px', borderRadius: radius.md, margin: '0 0 12px', lineHeight: leading.normal } }, hinweisZeichen(), t('organ.keineOrganeGewaehlt')),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('check'), t('organ.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
@@ -182,7 +182,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
     ),
 
     // Right: Info & QR
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'info', size: 22 }), style: { marginBottom: space.md } }, t('organ.info')),
 
       React.createElement('div', { style: { background: palette.up, padding: '12px', borderRadius: radius.md, marginBottom: space.md, fontSize: text.sm } },
@@ -209,7 +209,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
         React.createElement('p', { style: { margin: '0 0 12px' } }, t('organ.wirkung')),
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('strong', { style: { color: palette.text } }, t('organ.swissOrganDonation')),
-          React.createElement('div', { style: { marginTop: '6px' } },
+          React.createElement('div', { style: { marginTop: '8px' } },
             React.createElement(ExternerLink, { t, href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', style: { color: palette.sandDeep, textDecoration: 'none', fontWeight: weight.semi } }, 'swisstransplant.org')
           )
         )

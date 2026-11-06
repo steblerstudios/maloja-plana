@@ -16,18 +16,18 @@ export const Brotkrume = ({ palette, t, view, onNavigate }) => {
   if (!liste) return null;
   const knopf = {
     background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-    fontSize: text.sm, color: palette.mid, padding: '6px 0', minHeight: '44px', // App-Massstab: 44, wo es geht (tippflaechenGate)
+    fontSize: text.sm, color: palette.mid, padding: '8px 0', minHeight: '44px', // App-Massstab: 44, wo es geht (tippflaechenGate)
     textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: palette.border,
   };
   return React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { margin: '0 0 ' + space.md + 'px' } },
     React.createElement('ol', {
-      style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: '6px', rowGap: 0 },
+      style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', alignItems: 'center', columnGap: '8px', rowGap: 0 },
     },
-      liste.map((s, i) => React.createElement('li', { key: s.titel, style: { display: 'flex', alignItems: 'center', gap: '6px' } },
+      liste.map((s, i) => React.createElement('li', { key: s.titel, style: { display: 'flex', alignItems: 'center', gap: '8px' } },
         i > 0 && React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid, fontSize: text.sm } }, '›'),
         s.ziel
           ? React.createElement('button', { type: 'button', onClick: () => onNavigate(s.ziel), style: knopf }, t(s.titel))
-          : React.createElement('span', { 'aria-current': 'page', style: { fontSize: text.sm, color: palette.text, fontWeight: weight.medium, padding: '6px 0' } }, t(s.titel))
+          : React.createElement('span', { 'aria-current': 'page', style: { fontSize: text.sm, color: palette.text, fontWeight: weight.medium, padding: '8px 0' } }, t(s.titel))
       ))
     )
   );

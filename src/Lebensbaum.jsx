@@ -76,7 +76,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
     }
   },
     React.createElement('div', {
-      style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', margin: '0 0 6px 0' },
+      style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', margin: '0 0 8px 0' },
     },
       // PanelTitle statt div: kommt von main (#245, richtige Überschriften-
       // Semantik). Der Abstand sitzt jetzt an der Zeile, darum hier margin 0.
@@ -92,7 +92,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
           fontSize: text.xs, fontFamily: 'inherit', cursor: 'pointer',
           color: palette.mid, background: 'none',
           border: '1px solid ' + palette.sage + '40', borderRadius: radius.full,
-          padding: '3px 12px', minHeight: '44px',
+          padding: '4px 12px', minHeight: '44px',
         },
       }, zeigeRaeumlich ? t('datenWirken.ansichtFlach') : t('datenWirken.ansichtRaeumlich')),
     ),
@@ -238,7 +238,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
               style: {
                 position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
                 transform: 'translate(-50%, ' + (isMobile ? 60 : 72) + 'px)',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
               },
             },
               ...areaTools.map((tool) => {
@@ -253,7 +253,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
                     // Transparente, vergrösserte Tap-Fläche (~30px) — die sichtbare Pille
                     // bleibt klein (innerer span), damit der Baum ruhig bleibt.
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                    background: 'none', border: 'none', padding: '7px 6px',
+                    background: 'none', border: 'none', padding: '8px 8px',
                     cursor: go ? 'pointer' : 'default', fontFamily: 'inherit',
                   },
                 },
@@ -261,7 +261,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
                     style: {
                       display: 'inline-flex', alignItems: 'center', gap: '4px',
                       background: b.color + '14', border: '1px solid ' + b.color + '33',
-                      borderRadius: radius.full, padding: '1px 7px 1px 3px',
+                      borderRadius: radius.full, padding: '1px 8px 1px 4px',
                       whiteSpace: 'nowrap',
                     },
                   },

@@ -77,12 +77,12 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
             style: {
               fontSize: '10px', color: palette.mid, fontWeight: weight.medium,
               border: '1px solid ' + palette.border, borderRadius: radius.sm,
-              padding: '1px 6px',
+              padding: '1px 8px',
             },
           }, t('arztkoffer.inVorbereitung')),
         ),
         React.createElement('span', {
-          style: { display: 'block', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginTop: '3px' },
+          style: { display: 'block', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginTop: '4px' },
         }, t('arztkoffer.faecher.' + f.key + '.desc')),
       ),
     );
@@ -92,7 +92,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
 
     // Kopf — Hagebutte-Identität
     React.createElement('div', {
-      style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.md + 'px' },
+      style: { textAlign: 'center', marginBottom: space['2xl'] + 'px', paddingTop: space.md + 'px' },
     },
       React.createElement('div', {
         style: { display: 'inline-flex', color: accent, marginBottom: space.sm + 'px' },
@@ -108,7 +108,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
 
     // Nutzbare Fächer zuerst
     React.createElement('div', {
-      style: { display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: space.lg + 'px' },
+      style: { display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: space.lg + 'px' },
     }, ready.map(renderFach)),
 
     // Fächer in Vorbereitung
@@ -120,7 +120,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         },
       }, t('arztkoffer.inVorbereitungHint')),
       React.createElement('div', {
-        style: { display: 'flex', flexDirection: 'column', gap: '10px' },
+        style: { display: 'flex', flexDirection: 'column', gap: '12px' },
       }, kommend.map(renderFach)),
     ),
 
@@ -139,7 +139,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
           onClick: () => onNavigate(w.view),
           style: {
             background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
-            cursor: 'pointer', padding: '8px 14px', minHeight: '44px', boxSizing: 'border-box',
+            cursor: 'pointer', padding: '8px 16px', minHeight: '44px', boxSizing: 'border-box',
             display: 'inline-flex', alignItems: 'center', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
           },
         }, t('arztkoffer.wege.' + w.key))),

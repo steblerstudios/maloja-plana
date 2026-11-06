@@ -77,8 +77,8 @@ export const DirektLinks = ({ palette, t, data }) => {
     shelfWrap: { overflowX: 'auto', paddingBottom: space.xs + 'px', WebkitOverflowScrolling: 'touch' },
     shelf: { display: 'inline-flex', gap: space.sm + 'px', alignItems: 'flex-end', minWidth: '100%', padding: '0 2px', borderBottom: '3px solid ' + palette.top },
     spine: (ton, active) => ({
-      position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px',
-      flex: '0 0 auto', width: '48px', minHeight: '76px', paddingTop: '11px', paddingBottom: space.sm + 'px',
+      position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
+      flex: '0 0 auto', width: '48px', minHeight: '76px', paddingTop: '12px', paddingBottom: space.sm + 'px',
       background: palette.up, border: '1px solid ' + (active ? palette[ton] : palette.border), borderBottom: 'none',
       borderTopLeftRadius: '3px', borderTopRightRadius: '3px', cursor: 'pointer', fontFamily: 'inherit',
       color: palette.text, // Dark-Mode: Icon erbt fill:currentColor — Button erbt color nicht zuverlässig
@@ -95,7 +95,7 @@ export const DirektLinks = ({ palette, t, data }) => {
     entryCard: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', margin: '0 0 ' + space.sm + 'px' },
     entryName: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
     entryNameLink: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'none' },
-    entryDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' },
+    entryDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '4px' },
     entryMeta: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' },
     entryMetaLink: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' },
     aff: { color: palette.soft, fontSize: text.xs, fontWeight: weight.normal },

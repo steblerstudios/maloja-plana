@@ -26,7 +26,7 @@ const ERKLAERSEITEN = [
 ];
 // Gemeinsame Form der zwei ruhigen Knöpfe unter «Öffnen» (Demo · Einfache Ansicht).
 const ruhigerKnopf = {
-  marginTop: space.md, width: '100%', padding: '10px', borderRadius: radius.md,
+  marginTop: space.md, width: '100%', padding: '12px', borderRadius: radius.md,
   cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
 };
 
@@ -158,7 +158,7 @@ export const BetaGate = ({ children }) => {
       // Das Versprechen als Hauptsache, nicht als graues Kästchen.
       React.createElement('div', {
         style: {
-          display: 'flex', alignItems: 'center', gap: space.sm + 4 + 'px',
+          display: 'flex', alignItems: 'center', gap: space.ms + 'px',
           padding: space.md + 'px 0', margin: '0 0 ' + space.md + 'px',
           borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border,
         }
@@ -183,7 +183,7 @@ export const BetaGate = ({ children }) => {
         'aria-invalid': error ? 'true' : undefined,
         'aria-describedby': error ? 'beta-error' : undefined,
         style: {
-          width: '100%', padding: '10px 14px', fontSize: text.body,
+          width: '100%', padding: '12px 16px', fontSize: text.body,
           border: '1px solid ' + (error ? palette.rose : palette.border),
           borderRadius: radius.md, background: palette.up, color: palette.text,
           outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
@@ -196,7 +196,7 @@ export const BetaGate = ({ children }) => {
       }, t('beta.codeWrong')),
       React.createElement(PrimaryButton, {
         palette, type: 'submit',
-        style: { marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body },
+        style: { marginTop: space.md, width: '100%', padding: '12px', fontSize: text.body },
       }, t('beta.enter')),
       // K7 · der ruhige zweite Weg: Beispiel ansehen, ohne Code (nichts wird gespeichert).
       React.createElement('button', {

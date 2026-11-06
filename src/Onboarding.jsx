@@ -91,7 +91,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   // (Auto-Ränder werden nie negativ), `100%` statt `100vw` (kein Querscrollen).
   const schale = {
     width: '100%', minHeight: '100dvh', background: palette.bg, display: 'flex',
-    padding: '20px', boxSizing: 'border-box',
+    padding: '24px', boxSizing: 'border-box',
   };
 
   const cardStyle = {
@@ -102,7 +102,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   };
 
   const btnPrimary = {
-    width: '100%', padding: '14px', background: palette.sand,
+    width: '100%', padding: '16px', background: palette.sand,
     color: palette.onSand, border: 'none', borderRadius: radius.md,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: fontFamily, marginTop: space.md,
@@ -130,7 +130,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     style: {
       display: 'inline-flex', alignItems: 'center', background: 'none', border: 'none',
       cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: fontFamily,
-      padding: '4px 6px 4px 0', marginBottom: space.sm,
+      padding: '4px 8px 4px 0', marginBottom: space.sm,
     },
   }, zurueckZeichen(), t('common.back'));
 
@@ -139,7 +139,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const TOTAL_STEPS = 4;
   const stepIndicator = (current) => React.createElement('div', {
     role: 'group', 'aria-label': t('onboarding.stepOf', { current: current + 1, total: TOTAL_STEPS }),
-    style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', marginBottom: space.md },
+    style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginBottom: space.md },
   },
     React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', alignItems: 'center' } },
       Array.from({ length: TOTAL_STEPS }).map((_, i) => {
@@ -157,7 +157,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         return React.createElement(React.Fragment, { key: 'f' + i },
           React.createElement('span', {
             style: {
-              width: '20px', height: '2px', margin: '0 3px',
+              width: '20px', height: '2px', margin: '0 4px',
               background: i <= current ? palette.sageDeep : palette.border,
               transition: `background ${duration.normal}ms ${ease}`,
             },
@@ -269,7 +269,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.md, border: '1px solid ' + palette.sage + '18' } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.md, border: '1px solid ' + palette.sage + '18' } },
           React.createElement(TrustLockIcon, { size: 13, color: palette.sage, style: { flexShrink: 0 } }),
           React.createElement('span', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: 1.4 } },
             t('onboarding.privacyNote')
@@ -278,7 +278,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: space.md } },
           React.createElement('div', null,
-            React.createElement('label', { htmlFor: 'onb-firstname', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
+            React.createElement('label', { htmlFor: 'onb-firstname', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '8px' } }, t('onboarding.firstName')),
             React.createElement('input', {
               id: 'onb-firstname',
               type: 'text', value: firstName,
@@ -288,7 +288,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             })
           ),
           React.createElement('div', null,
-            React.createElement('label', { htmlFor: 'onb-lastname', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.lastName')),
+            React.createElement('label', { htmlFor: 'onb-lastname', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '8px' } }, t('onboarding.lastName')),
             React.createElement('input', {
               id: 'onb-lastname',
               type: 'text', value: lastName,
@@ -300,7 +300,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         ),
 
         React.createElement('div', { style: { marginBottom: space.sm } },
-          React.createElement('label', { htmlFor: 'onb-canton', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
+          React.createElement('label', { htmlFor: 'onb-canton', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '8px' } }, t('onboarding.yourCanton')),
           React.createElement('select', {
             id: 'onb-canton',
             value: canton, onChange: (e) => setCanton(e.target.value),
@@ -349,7 +349,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               onClick: () => toggleSituation(z.key),
               'aria-pressed': on,
               style: {
-                padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
+                padding: '12px 16px', minHeight: '44px', boxSizing: 'border-box',
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 borderRadius: radius.md,
                 border: '1px solid ' + (on ? palette.sage + '88' : palette.border),
@@ -390,7 +390,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         background: palette.up, border: '1px solid ' + palette.sage,
         color: palette.sageDeep,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        margin: '0 auto 20px auto',
+        margin: '0 auto 24px auto',
       } }, React.createElement(Icon, { name: 'check', size: 32 })),
 
       React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, firstName.trim()

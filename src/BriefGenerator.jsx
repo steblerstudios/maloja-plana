@@ -39,7 +39,7 @@ export function briefUebersetzer({ lang, anrede, selected, t, geladen }) {
 const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElement('div', {
   role: 'note', id: 'brief-hinweis', tabIndex: -1,
   style: {
-    padding: '14px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
+    padding: '16px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
     borderRadius: radius.md, marginBottom: space.md,
   },
 },
@@ -113,14 +113,14 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
   const base = (f) => `briefe.${selected}.felder.${f.key}`;
   const labelStil = { display: 'block', fontSize: textTokens.sm, color: palette.text, fontWeight: weight.medium, marginBottom: space.xs };
   const inputStil = {
-    width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: radius.md,
+    width: '100%', boxSizing: 'border-box', padding: '12px 12px', borderRadius: radius.md,
     border: '1px solid ' + palette.border, background: palette.surface, color: palette.text,
     fontSize: textTokens.sm, fontFamily: 'inherit',
   };
-  const zeile = { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
+  const zeile = { display: 'flex', alignItems: 'center', gap: '12px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
   const sichtbar = felder.filter(f => feldSichtbar(f, a));
   return React.createElement('div', {
-    style: { padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.md },
+    style: { padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.md },
   },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.text, marginBottom: space.xs } }, t('briefe.angaben.title')),
     React.createElement('div', { style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm } }, t('briefe.angaben.intro')),
@@ -132,7 +132,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
         if (f.type === 'wahl') {
           return React.createElement('fieldset', { key: f.key, style: { border: 'none', padding: 0, margin: 0 } },
             React.createElement('legend', { style: { ...labelStil, padding: 0 } }, t(base(f) + '.label')),
-            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px' } },
+            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '8px' } },
               f.optionen.map(o => React.createElement('label', { key: o, style: zeile },
                 React.createElement('input', { type: 'radio', name: id, checked: a[f.key] === o, onChange: () => set(f.key, o), style: { flexShrink: 0 } }),
                 React.createElement('span', { style: { color: palette.text } }, t(base(f) + '.' + o))
@@ -144,7 +144,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
         }
         if (f.type === 'ja') {
           return React.createElement('label', { key: f.key, style: { ...zeile, alignItems: 'flex-start' } },
-            React.createElement('input', { type: 'checkbox', checked: a[f.key], onChange: (e) => set(f.key, e.target.checked), style: { marginTop: '3px', flexShrink: 0 } }),
+            React.createElement('input', { type: 'checkbox', checked: a[f.key], onChange: (e) => set(f.key, e.target.checked), style: { marginTop: '4px', flexShrink: 0 } }),
             React.createElement('span', { style: { color: palette.text } }, t(base(f) + '.label'))
           );
         }
@@ -301,18 +301,18 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('briefe.title')),
 
     React.createElement('p', {
-      style: { fontSize: textTokens.sm, color: palette.mid, marginBottom: '20px', lineHeight: '1.6' }
+      style: { fontSize: textTokens.sm, color: palette.mid, marginBottom: '24px', lineHeight: '1.6' }
     }, t('briefe.intro')),
 
     // Template cards
     React.createElement('div', {
-      style: { display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }
+      style: { display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
         onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); },
         style: {
-          padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
+          padding: '16px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
           borderRadius: radius.md, cursor: 'pointer', textAlign: 'left',
           // Buttons erben color NICHT (UA-Reset auf schwarz) → im Dark Mode war der
@@ -346,7 +346,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Empfänger UND Zahlen, damit ein Brief über den Nebenjob nie den Hauptlohn nennt.
     JOB_TEMPLATES.includes(selected) && jobOptions.length > 1 && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
         borderRadius: radius.md, marginBottom: space.md,
       }
     },
@@ -361,7 +361,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       },
         jobOptions.map(o => React.createElement('label', {
           key: o.key,
-          style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) }
+          style: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) }
         },
           React.createElement('input', {
             type: 'radio',
@@ -387,7 +387,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // werden im Brief als klare Beanstandung ausformuliert (statt Platzhalter).
     selected === 'kkReklamation' && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
         borderRadius: radius.md, marginBottom: space.md,
       }
     },
@@ -402,13 +402,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       },
         REKLAMATION_GRUENDE.map(g => React.createElement('label', {
           key: g,
-          style: { display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px', alignItems: 'center' } : {}) }
+          style: { display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px', alignItems: 'center' } : {}) }
         },
           React.createElement('input', {
             type: 'checkbox',
             checked: reasons.includes(g),
             onChange: () => setReasons(rs => rs.includes(g) ? rs.filter(x => x !== g) : [...rs, g]),
-            style: { marginTop: '3px', flexShrink: 0 },
+            style: { marginTop: '4px', flexShrink: 0 },
           }),
           React.createElement('span', null, t('briefe.kkReklamation.reasons.' + g))
         ))
@@ -419,7 +419,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Belege, Datum + Betrag fliessen in den Brief (Fallback: leeres Gerüst).
     selected === 'kkReklamation' && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
         borderRadius: radius.md, marginBottom: space.md,
       }
     },
@@ -438,7 +438,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
           },
             kkBelege.map(b => React.createElement('label', {
               key: b.id,
-              style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) }
+              style: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: textTokens.sm, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) }
             },
               React.createElement('input', {
                 type: 'checkbox',
@@ -458,7 +458,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // hier, wo er hingehört: bei der Person, die den Brief verantwortet.
     selected && React.createElement('div', {
       style: {
-        padding: '10px 14px', background: palette.up, borderRadius: radius.md,
+        padding: '12px 16px', background: palette.up, borderRadius: radius.md,
         fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
         marginBottom: space.md,
       }
@@ -474,7 +474,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       React.createElement('button', {
         onClick: () => setPreview(!preview),
         style: {
-          padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border,
+          padding: '12px 16px', background: palette.up, border: '1px solid ' + palette.border,
           borderRadius: radius.md, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
@@ -492,13 +492,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Frist → Kalender: den berechneten Rückmelde-Termin ruhig in den Kalender legen.
     frist && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        padding: '16px 16px', background: palette.up, border: '1px solid ' + palette.border,
         borderRadius: radius.md, marginBottom: space.md,
         display: 'flex', flexDirection: 'column', gap: space.sm,
       }
     },
       React.createElement('div', {
-        style: { display: 'flex', alignItems: 'flex-start', gap: '10px' }
+        style: { display: 'flex', alignItems: 'flex-start', gap: '12px' }
       },
         React.createElement(Icon, { name: 'calendar', size: 18, color: palette.mid }),
         React.createElement('div', null,
@@ -512,12 +512,12 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       ),
       reminderAdded
         ? React.createElement('div', {
-            style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sageDeep, display: 'flex', alignItems: 'center', gap: '6px' }
+            style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sageDeep, display: 'flex', alignItems: 'center', gap: '8px' }
           }, hinweisZeichen('check'), t(reminderAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'briefe.wageReminder.added'))
         : React.createElement('button', {
             onClick: handleAddReminder,
             style: {
-              alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
+              alignSelf: 'flex-start', padding: '8px 16px', background: palette.surface,
               border: '1px solid ' + palette.border, borderRadius: radius.md,
               cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
               color: palette.text,
@@ -528,13 +528,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     printed && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.sage + '14',
+        padding: '16px 16px', background: palette.sage + '14',
         border: '1px solid ' + palette.sage + '44', borderRadius: radius.md,
         marginBottom: space.md, display: 'flex', flexDirection: 'column', gap: space.sm,
       }
     },
       React.createElement('div', {
-        style: { display: 'flex', alignItems: 'flex-start', gap: '10px' }
+        style: { display: 'flex', alignItems: 'flex-start', gap: '12px' }
       },
         React.createElement(Icon, { name: 'document', size: 18, color: palette.sage }),
         React.createElement('div', null,
@@ -549,7 +549,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       React.createElement('button', {
         onClick: () => onNavigate('tresor', undefined, selectedTmpl?.chapter || 'all'),
         style: {
-          alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
+          alignSelf: 'flex-start', padding: '8px 16px', background: palette.surface,
           border: '1px solid ' + palette.sage + '66', borderRadius: radius.md,
           cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
           color: palette.text,

@@ -80,7 +80,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       key, type: 'button', onClick,
       style: {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
-        padding: '10px 12px', marginBottom: space.xs + 'px',
+        padding: '12px 12px', marginBottom: space.xs + 'px',
         background: palette.surface, color: palette.text,
         border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
         cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
@@ -139,7 +139,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         'aria-current': on ? 'step' : undefined,
         style: {
           display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '6px 12px', borderRadius: radius.sm,
+          padding: '8px 12px', borderRadius: radius.sm,
           border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
           background: on ? palette.sage + '18' : 'transparent',
           color: on ? (palette.sageDeep || palette.text) : palette.mid,
@@ -170,7 +170,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     type: 'button', onClick,
     style: {
       display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px',
-      padding: '10px 16px', borderRadius: radius.md + 'px', cursor: 'pointer', fontFamily: 'inherit',
+      padding: '12px 16px', borderRadius: radius.md + 'px', cursor: 'pointer', fontFamily: 'inherit',
       fontSize: text.sm, fontWeight: weight.medium,
       border: '1px solid ' + palette.border + '66', background: 'transparent', color: palette.mid,
       transition: `border-color ${duration.normal}ms ${ease}`,
@@ -192,7 +192,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', {
       style: {
         display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap', alignItems: 'center',
-        marginTop: space.xl + 'px', paddingTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '33',
+        marginTop: space['2xl'] + 'px', paddingTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '33',
       }
     },
       step === 1 && React.createElement(PrimaryButton, { palette, onClick: () => setStep(2) }, t('anspruchCheck.weiter')),
