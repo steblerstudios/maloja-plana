@@ -3007,7 +3007,7 @@ export default {
     noDocuments: { sie: 'Ihr Ordner ist bereit', du: 'Dein Ordner ist bereit' },
     noDocumentsHint: { sie: 'Sobald Sie ein Dokument in einem Kapitel hochladen, erscheint es hier — sicher und nur auf Ihrem Gerät.', du: 'Sobald Du ein Dokument in einem Kapitel hochlädst, erscheint es hier — sicher und nur auf Deinem Gerät.' },
     expired: 'Abgelaufen',
-    expiryDate: 'Ablauf: {date}',
+    expiryDate: 'Frist: {date}',
     uploadedInfo: 'Hochgeladen: {date} · {size}',
     docCount: '{count} Dokumente',
     ordnerEmpty: { sie: 'Ihr Ordner ist bereit.', du: 'Dein Ordner ist bereit.' },
