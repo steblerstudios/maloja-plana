@@ -1950,6 +1950,8 @@ export default {
     toolsAndFeatures: 'Outils',
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: { sie: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.', du: 'Calculateurs et outils — utilisables indépendamment de tes chapitres.' },
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle' },
     toolGroups: {
       lebensereignisse: 'Événements de vie',
       ankommen: 'Arrivée en Suisse',
