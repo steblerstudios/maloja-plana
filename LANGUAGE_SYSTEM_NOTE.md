@@ -113,3 +113,7 @@ weniger generisch, klarer, menschlicher.
 4. **Markentexte dürfen poetisch sein.** Aber sparsam einsetzen.
 5. **Code-interne Begriffe** (mirror, tresor als Key) bleiben stabil — nur die sichtbaren Labels ändern sich.
 6. **Klarheits-Check vor neuer Copy.** Nie die erste, durchschnittliche Floskel stehen lassen (siehe oben).
+7. **«du» klein** (Fassung 9, Stebler Studios 05.11.2026: «so wie es orthographisch stimmt»).
+   In der Du-Fassung stehen «du», «dein», «dir», «dich» klein, wie in der amtlichen
+   Rechtschreibung, auch in der Schweiz. Gross nur am Satzanfang, auch nach einem Doppelpunkt,
+   wenn ein ganzer Satz folgt. Wächter: `src/__tests__/duKlein.test.js`.

@@ -178,7 +178,7 @@ describe('nennbareKontrollstelle / lohnStelleSatz — eine Regel', () => {
     const p = { kanton: 'JU', mindestStunde: '21.40', lohnStunde: '18.00', jahr: 2026, ausnahmen: '' };
     const de_ = createT({ de }, 'de', 'du');
     const txtDe = de_('lohnCheck.unterMindestlohn', { ...p, stelleSatz: lohnStelleSatz('JU', de_, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral') });
-    expect(txtDe.endsWith('kannst Du Dich an die zuständige Stelle wenden: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.')).toBe(true);
+    expect(txtDe.endsWith('kannst du dich an die zuständige Stelle wenden: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.')).toBe(true);
     const fr_ = createT({ fr }, 'fr', 'sie');
     const txtFr = fr_('lohnCheck.unterMindestlohn', { ...p, stelleSatz: lohnStelleSatz('ZH', fr_, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral') });
     expect(txtFr.endsWith('vous pouvez vous adresser à l’autorité cantonale compétente.')).toBe(true);
