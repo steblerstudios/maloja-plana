@@ -123,6 +123,7 @@ Stebler Studios zu Volljährig: «ich weiss nicht ob ich die voll jährigkeit mi
 - Vor dem Bauen: Rechts-Prüfer Kreuz (Arztkoffer).
 
 **Versicherungen & Vorsorge (06.11., spät):** Bild [Versicherungen und Vorsorge](icon-besprechung-versicherungen-vorsorge.html), ein Kapitel, ganzes Menü. Stand = Seiten-Architektur: Prämien Balken orange · IPV Mini-Fünfliber gold · Pensionierung Berg violett · EL Mini-Fünfliber gold. Befund: IPV und EL sehen im selben Menü gleich aus. A heute · B EL violett (1. Säule) · C IPV orange (Krankenkasse).
+✅ **06.11.: Prämien Balken orange · Pensionierung Berg violett** («Ja, beide»). Zu IPV/EL fragte Stebler Studios: «aber gibts el nicht auch anders wie siehts mit der ahv aus? und der 3ten säule und der pk?» → nachgeschaut: EL setzen laut App-Text (`ergaenzungsleistungen.step1Text`, Quelle BSV) eine Leistung der **AHV oder IV** voraus, nicht der PK oder 3. Säule. AHV, PK und 3a haben **keine eigenen Seiten**, sie stehen zusammen auf der Seite Vorsorge (Hauptbild drei Säulen; Suchwörter ahv, bvg, pension, 3a im `werkzeugRegister.js`).
 
 ## 📍 Stand 06.11.2026, ca. 22:15 — Sitzung beendet (Kontext voll)
 
