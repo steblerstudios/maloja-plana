@@ -51,7 +51,7 @@ Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild 
 
 ## 🖼️ Gesamtbild (06.11.2026, abends)
 
-[Gesamtbild](icon-besprechung-gesamtbild.html): alle entschiedenen Leitformen, 11 Ast-Farben, heute → neu, hell/dunkel/Graustufen, Abzeichen-Beispiele. Offen laut Bild: Vorsorge-Variante (in Graustufen = Versicherungen), Gesundheit-Kapitel-Umbau, Kreuz → Rechts-Prüfer, Mini-Zeichen je Seite, Funktionen + Glocke.
+[Gesamtbild](icon-besprechung-gesamtbild.html): alle entschiedenen Leitformen, 11 Ast-Farben, heute → neu, hell/dunkel/Graustufen, Abzeichen-Beispiele. Vorsorge-Variante: Bild [Vorsorge](icon-besprechung-vorsorge.html), A drei Säulen (Empfehlung) · B Edelweiss klein + Säulen · C Sonne. Offen laut Bild: Vorsorge-Variante (in Graustufen = Versicherungen), Gesundheit-Kapitel-Umbau, Kreuz → Rechts-Prüfer, Mini-Zeichen je Seite, Funktionen + Glocke.
 
 ## ✅ Farben entschieden (06.11.2026, abends)
 
