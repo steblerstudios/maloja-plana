@@ -23,7 +23,7 @@ export const GrundordnungFelder = ({ palette, fields, onSelectChapter }) =>
     onClick: () => onSelectChapter(f.chapterIdx),
     style: {
       display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
-      padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.md,
+      padding: '4px 8px', background: 'none', border: 'none', borderRadius: radius.md,
       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
       textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
     },
@@ -53,8 +53,8 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
       onClick: () => onSelectChapter(idx),
       'aria-label': ch.title + ' — ' + pct + '%' + (zusammenfassung ? '. ' + zusammenfassung : ''),
       style: {
-        display: 'flex', alignItems: 'center', gap: space.sm + 2, flex: '1 1 0', minWidth: 0,
-        padding: '10px 8px', background: istOffen ? palette.up : 'transparent', border: 'none',
+        display: 'flex', alignItems: 'center', gap: space.ms, flex: '1 1 0', minWidth: 0,
+        padding: '12px 8px', background: istOffen ? palette.up : 'transparent', border: 'none',
         borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
         color: palette.text, textAlign: 'left',
         transition: `background ${duration.fast}ms ${ease}`,
@@ -74,7 +74,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
         React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, ch.title),
         // span statt div: im Knopf ist nur Phrasing-Inhalt gültig.
         React.createElement('span', {
-          style: { display: 'block', height: '6px', background: palette.border + '80', borderRadius: radius.hair, overflow: 'hidden', margin: '5px 0 3px' }
+          style: { display: 'block', height: '6px', background: palette.border + '80', borderRadius: radius.hair, overflow: 'hidden', margin: '4px 0 4px' }
         },
           React.createElement('span', {
             style: {
@@ -108,7 +108,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
     instrument,
     istOffen && React.createElement('div', {
       id: panelId,
-      style: { display: 'flex', flexDirection: 'column', gap: '3px', padding: '4px 0 ' + space.sm + 'px 32px' }
+      style: { display: 'flex', flexDirection: 'column', gap: '4px', padding: '4px 0 ' + space.sm + 'px 32px' }
     },
       React.createElement(GrundordnungFelder, { palette, fields: kapitelFelder, onSelectChapter }),
       React.createElement('button', {
@@ -144,9 +144,9 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
   const felder = mvo.fields || [];
   return React.createElement('div', {
     style: {
-      marginBottom: space.xl, background: palette.surface,
+      marginBottom: space['2xl'], background: palette.surface,
       borderRadius: radius.lg, border: '1px solid ' + palette.border + '88',
-      boxShadow: shadow.sm, padding: '20px',
+      boxShadow: shadow.sm, padding: '24px',
     }
   },
     React.createElement('div', {

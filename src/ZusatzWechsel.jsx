@@ -28,7 +28,7 @@ export const zusatzSchritte = ({ palette, t, data, onNavigate }) => {
   const s = {
     ...ablaufStyles(palette),
     reassure: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px' },
-    checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
+    checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '8px' },
     checkItem: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
     source: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: space.xs + 'px' },
   };

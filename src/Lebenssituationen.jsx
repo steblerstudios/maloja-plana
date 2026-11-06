@@ -80,7 +80,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
       key, t, href: url,
       style: {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
-        padding: '10px 12px', marginBottom: space.xs + 'px',
+        padding: '12px 12px', marginBottom: space.xs + 'px',
         background: palette.surface, color: palette.text, textDecoration: 'none',
         border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
         cursor: 'pointer', fontFamily: 'inherit',
@@ -132,7 +132,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           'aria-pressed': on,
           style: {
             ...auswahlStil(palette, on),
-            padding: '12px 14px',
+            padding: '12px 16px',
             fontSize: text.sm, fontWeight: on ? weight.medium : weight.normal,
             textAlign: 'left',
             transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
@@ -152,7 +152,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
         // Sprungziel: hält beim scrollIntoView Abstand zur klebenden Kopfzeile (tokens.css).
         className: 'mp-sprungziel',
         style: {
-          marginTop: space.sm, padding: '16px 18px',
+          marginTop: space.sm, padding: '16px 16px',
           background: palette.up, borderRadius: radius.lg,
           // Eine Quelle für den Sprungabstand (tokens.css), vorher 72 px inline.
           scrollMarginTop: 'var(--mp-sprungabstand)',
@@ -180,7 +180,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           const baseKey = 'lebenszustaende.' + z.key + '.berechtigungen.' + b.key;
           const cardStyle = {
             display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
-            padding: '10px 12px', marginBottom: space.xs + 'px',
+            padding: '12px 12px', marginBottom: space.xs + 'px',
             background: palette.surface, color: palette.text, textDecoration: 'none',
             border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
             cursor: 'pointer', fontFamily: 'inherit',
@@ -279,11 +279,11 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
   const uebergabe = uebergabeAusProbe(e.geschaetzt ? { ...probe, finanzen: { ...probe.finanzen, monthlyIncome: 0 } } : probe);
 
   const s = {
-    h2: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: space.xl + 'px 0 ' + space.sm + 'px 0' },
-    marke: { display: 'inline-block', padding: '4px 10px', borderRadius: radius.full + 'px', background: palette.up, border: '1px solid ' + palette.border, color: palette.text, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' },
-    summary: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px', color: palette.text, fontSize: text.sm, fontWeight: weight.medium, listStyle: 'none' },
+    h2: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: space['2xl'] + 'px 0 ' + space.sm + 'px 0' },
+    marke: { display: 'inline-block', padding: '4px 12px', borderRadius: radius.full + 'px', background: palette.up, border: '1px solid ' + palette.border, color: palette.text, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' },
+    summary: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: '8px', color: palette.text, fontSize: text.sm, fontWeight: weight.medium, listStyle: 'none' },
     label: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs + 'px' },
-    input: { width: '100%', padding: '10px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
+    input: { width: '100%', padding: '12px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
     satz: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
     fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
     link: { ...linkStil(palette), display: 'flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm, fontWeight: weight.medium, textAlign: 'left' },
@@ -339,7 +339,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
 
     // (1) Mit Ihren Angaben
     h('h2', { id: MIT_ANGABEN_ANKER, className: 'mp-sprungziel', style: { ...s.h2, marginTop: space.lg + 'px' } }, t('wasStehtMirZu.mitAngaben')),
-    marken.length > 0 && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: space.xs + 'px' } },
+    marken.length > 0 && h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: space.xs + 'px' } },
       marken.map((m) => h('span', { key: m, style: s.marke }, m))),
     h('details', { open: anpassenOffen || undefined, onToggle: (ev) => { const auf = ev.currentTarget.open; if (auf !== anpassenOffen) setAnpassenOffen(auf); } },
       h('summary', { className: 'mp-summary', style: s.summary }, aufklappZeichen(anpassenOffen), t('wasStehtMirZu.anpassen')),
@@ -372,9 +372,9 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     h(LebenslagenAuswahl, { palette, t, data, onNavigate }),
 
     // (3) Weitere Wege — zugeklappt, die Landkarte ohne das, was oben als Pegel steht.
-    h('details', { open: wegeOffen || undefined, onToggle: (ev) => { const auf = ev.currentTarget.open; if (auf !== wegeOffen) setWegeOffen(auf); }, style: { marginTop: space.xl + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+    h('details', { open: wegeOffen || undefined, onToggle: (ev) => { const auf = ev.currentTarget.open; if (auf !== wegeOffen) setWegeOffen(auf); }, style: { marginTop: space['2xl'] + 'px', borderTop: '1px solid ' + palette.border + '88' } },
       h('summary', { className: 'mp-summary', style: { ...s.summary, justifyContent: 'space-between', paddingTop: space.xs + 'px' } },
-        h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '6px', color: palette.text, fontWeight: weight.semi } }, aufklappZeichen(wegeOffen), t('schnellcheck.moreWays')),
+        h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '8px', color: palette.text, fontWeight: weight.semi } }, aufklappZeichen(wegeOffen), t('schnellcheck.moreWays')),
         h('span', { style: { fontSize: text.xs, color: palette.mid } }, String(zaehlbar))),
       h('div', { style: { paddingTop: space.sm + 'px' } },
         h(LandkarteGruppen, { palette, t, onNavigate, ohne: ['ipv', 'sozialhilfe'], mitFuss: false }))),

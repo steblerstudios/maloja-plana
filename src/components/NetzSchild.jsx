@@ -103,11 +103,11 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   const zahlen = (b) => betragText(b, t);
   const versZeile = (salbei) => (x) => h('div', { key: x.key, role: 'listitem', style: { fontSize: text.xs, padding: '1px 0 1px 4px', color: x.ok ? palette.text : palette.mid } },
-    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: '6px' } },
+    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: '8px' } },
       h('span', { 'aria-hidden': true, style: { color: x.ok ? salbei : palette.mid, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(x.ok ? 'check' : 'kaestchen', 12)),
       h('span', { style: { minWidth: 0 } }, t('netzSchild.vers.' + x.key), ' ', h('span', { style: { color: palette.mid } }, '· ' + artText(x))),
       h('span', { style: { marginLeft: 'auto', color: x.ok ? salbei : palette.mid, whiteSpace: 'nowrap' } }, t(!x.ok ? 'netzSchild.nichtEingetragen' : x.abgeleitet ? 'netzSchild.lautAngaben' : 'netzSchild.eingetragen'))),
-    zahlen(x.betrag) && h('div', { 'data-betrag': x.key, style: { color: palette.mid, paddingLeft: '20px', fontVariantNumeric: 'tabular-nums' } }, zahlen(x.betrag)));
+    zahlen(x.betrag) && h('div', { 'data-betrag': x.key, style: { color: palette.mid, paddingLeft: '24px', fontVariantNumeric: 'tabular-nums' } }, zahlen(x.betrag)));
   const hinweis = (teil, key) => h('p', { 'data-teil': teil, style: { ...klein, margin: '2px 0 0 24px' } }, hinweisZeichen(), t(key));
   const teilBlock = (p) => h('div', { key: p.key, 'data-gruppe': p.key, style: { marginBottom: space.xs + 'px' } },
     h('div', { style: { display: 'flex', alignItems: 'baseline', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
@@ -121,7 +121,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
       hinweis('hausrat-pruefen', 'netzSchild.hausratPruefen'));
 
   // Die Marke erklärt die Schraffur im Bild; das Wort steht im Satz daneben.
-  const offenMarke = offen.length > 0 && h('svg', { 'aria-hidden': true, 'data-teil': 'netz-schild-offen-marke', viewBox: '0 0 44 44', width: 14, height: 14, style: { verticalAlign: '-2px', marginRight: '6px' } },
+  const offenMarke = offen.length > 0 && h('svg', { 'aria-hidden': true, 'data-teil': 'netz-schild-offen-marke', viewBox: '0 0 44 44', width: 14, height: 14, style: { verticalAlign: '-2px', marginRight: '8px' } },
     h('rect', { width: 44, height: 44, fill: palette.sand, fillOpacity: 0.5 }), h('rect', { width: 44, height: 44, fill: 'url(#ns-offen)' }));
   const satz = [
     offen.length && t('netzSchild.nochOffen', { liste: offen.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
@@ -135,7 +135,7 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
     // F7-K3-4 (Stebler Studios 01.11.2026): Das Schild ist die Antwort, die lange Liste liegt eingeklappt darunter.
     h('details', { 'data-teil': 'netz-schild-liste', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
       // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
-      h('summary', { style: { cursor: 'pointer', minHeight: '44px', paddingTop: '10px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('netzSchild.listeTitel')),
+      h('summary', { style: { cursor: 'pointer', minHeight: '44px', paddingTop: '12px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('netzSchild.listeTitel')),
       h('div', { style: { maxWidth: '380px', margin: '0 auto' } }, teile.map(teilBlock))),
     st.bvgUnklar && h('p', { style: { ...klein, margin: space.sm + 'px 0 0' } },
       hinweisZeichen(), t(st.bvgUnklarGrund === 'dreizehnter' ? 'schutzschild.bvgUnklar13' : 'schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) })),

@@ -192,7 +192,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       h('span', {
         'aria-hidden': 'true',
         style: {
-          width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0, boxSizing: 'border-box', padding: '5px',
+          width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0, boxSizing: 'border-box', padding: '4px',
           background: palette.up, border: '1px solid ' + palette.border, color: palette.mid,
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         },
@@ -210,7 +210,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // Reife-Pünktchen: ein Punkt je geprüftem Feld, gefüllt = erfasst (echte Daten).
   const dots = (r) => r.total === 0 ? null : h('span', {
     role: 'img', 'aria-label': t('gepaeck.packed', { done: r.done, total: r.total }),
-    style: { display: 'inline-flex', gap: '3px', marginTop: '5px' },
+    style: { display: 'inline-flex', gap: '4px', marginTop: '4px' },
   }, Array.from({ length: r.total }, (_, k) => h('span', {
     key: k, 'aria-hidden': 'true',
     style: { width: '6px', height: '6px', borderRadius: '50%', background: k < r.done ? palette.gold : palette.border },

@@ -64,7 +64,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
       h('div', { 'aria-hidden': 'true', 'data-teil': 'kalenderblatt', style: { flexShrink: 0, width: '64px', textAlign: 'center', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, overflow: 'hidden' } },
         h('div', { style: { fontSize: '11px', fontWeight: weight.semi, letterSpacing: '0.5px', textTransform: 'uppercase', background: palette.up, color: palette.text, padding: '2px 0' } }, datum.toLocaleDateString(loc, { month: 'short' }).replace('.', '')),
         h('div', { style: { fontSize: text.xl || '22px', fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, paddingTop: '2px' } }, String(datum.getDate())),
-        h('div', { style: { fontSize: '11px', color: palette.mid, paddingBottom: '3px' } }, String(datum.getFullYear()))
+        h('div', { style: { fontSize: '11px', color: palette.mid, paddingBottom: '4px' } }, String(datum.getFullYear()))
       ),
       h('div', { style: { minWidth: 0 } },
         h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('behoerdenInstrument.faellig', { datum: datum.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' }) })),

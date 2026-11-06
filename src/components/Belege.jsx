@@ -36,7 +36,7 @@ export const Belege = ({ palette, t, zeile, style }) => {
   return React.createElement('div', { 'data-belege': 'liste', style: grund },
     React.createElement('button', {
       type: 'button', 'aria-expanded': offen, 'aria-controls': id, onClick: () => setOffen(!offen),
-      style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, minHeight: '44px', padding: 0, gap: '6px', justifyContent: 'flex-start' },
+      style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, minHeight: '44px', padding: 0, gap: '8px', justifyContent: 'flex-start' },
     },
       // Gezeichneter Pfeil statt Zeichen ▸/▾ (Höchststand Piktogramme, glyphenImText.test.js).
       React.createElement('span', { 'aria-hidden': 'true', style: {
@@ -47,7 +47,7 @@ export const Belege = ({ palette, t, zeile, style }) => {
     b.datum && React.createElement('span', { style: { color: palette.mid } }, ' · ' + b.datum),
     React.createElement('ol', {
       id, className: 'mp-belege-liste', hidden: !offen,
-      style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '20px', color: palette.text, fontWeight: weight.normal },
+      style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '24px', color: palette.text, fontWeight: weight.normal },
     }, b.links.map((l, i) => React.createElement('li', { key: i, style: { margin: '2px 0' } },
       React.createElement(ExternerLink, { t, href: l.href, style: { color: palette.sandDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, l.label)))),
   );

@@ -321,9 +321,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
-    th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
-    td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
-    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
+    th: { textAlign: 'left', padding: '8px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
+    td: { padding: '8px 8px', borderBottom: '1px solid ' + palette.border },
+    tdActive: { padding: '8px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) },
     intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.md + 'px', padding: space.sm + 'px ' + space.md + 'px' },
@@ -523,7 +523,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         field(t('vr.betreuungsjahre'), betreuungsjahre, setBetreuungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.betreuungsjahreHint') }),
         React.createElement(Einzelwahl, {
           palette, id: 'vr-verheiratet',
-          label: React.createElement(React.Fragment, null, t('vr.verheiratet'), verheiratet && React.createElement('span', { style: { marginLeft: '6px', verticalAlign: '-2px', display: 'inline-block' } }, React.createElement(TwoRingsIcon, { size: 15, color: palette.sage }))),
+          label: React.createElement(React.Fragment, null, t('vr.verheiratet'), verheiratet && React.createElement('span', { style: { marginLeft: '8px', verticalAlign: '-2px', display: 'inline-block' } }, React.createElement(TwoRingsIcon, { size: 15, color: palette.sage }))),
           optionen: [{ wert: false, label: t('common.no') }, { wert: true, label: t('common.yes') }],
           wert: verheiratet, onWahl: setVerheiratet,
         }),
@@ -595,7 +595,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         };
         const xticks = []; for (let a = Math.ceil(START / 10) * 10; a <= AXIS_END; a += 10) xticks.push(a);
         const yticks = [0, 0.5, 1].map((f) => maxY * f);
-        const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
+        const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: text.xs, color: palette.mid } },
           React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: radius.hair, background: col, display: 'inline-block' } }), label);
         // Monatliche Rente ab Rücktritt — macht alle vier Säulen VERGLEICHBAR:
         // AHV/BVG sind lebenslange Renten; 3a/3b sind Kapital, hier transparent auf
@@ -620,7 +620,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             const seg = (col, v, label) => v > 0 ? React.createElement('div', {
               key: label, style: { width: pctOf(v).toFixed(1) + '%', background: col, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
               pctOf(v) >= 16 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, label) : null) : null;
-            const legendDot = (col, label, amount) => amount > 0 ? React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
+            const legendDot = (col, label, amount) => amount > 0 ? React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: text.xs, color: palette.mid } },
               React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: radius.hair, background: col, display: 'inline-block' } }),
               label + ' CHF ' + fmt(amount) + ' / ' + t('vr.monat')) : null;
             const kapitalRente = s3aMonat > 0 || s3bMonat > 0;
@@ -735,7 +735,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
             const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
             const referenzalter = fmtAlterMonate(refAlterMonate);
-            const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' } }, txt);
+            const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '4px' } }, txt);
             const rows = [];
             if (delta < 0) {
               rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer, referenzalter }), 'a'));

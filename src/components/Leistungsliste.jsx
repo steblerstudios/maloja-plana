@@ -162,7 +162,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         return React.createElement('div', { style: { flexShrink: 0, width: '116px', textAlign: 'right' } },
           React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
             t('pegel.bedarf') + ' ≈ ' + betrag(Math.round(sozPegel.bedarf))),
-          React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '5px', borderRadius: radius.full + 'px', background: palette.up } },
+          React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '4px', borderRadius: radius.full + 'px', background: palette.up } },
             React.createElement('div', { style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: radius.full + 'px' } }),
             React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
       })(),
@@ -174,7 +174,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     );
   };
 
-  return React.createElement('div', { style: { marginTop: space.xl + 'px' } },
+  return React.createElement('div', { style: { marginTop: space['2xl'] + 'px' } },
     // Kopf: Titel links, rechts der Leistungs-Kompass (bis 25.09.2026 ein Instrument).
     // Seine Nadel zählt, was die Liste darunter findet, und führt zum vollen Schnellcheck.
     React.createElement('div', {

@@ -126,7 +126,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     intro: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 ' + space.lg + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.lg + 'px' },
     label: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs + 'px' },
-    input: { width: '100%', padding: '9px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
+    input: { width: '100%', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
     field: { flex: '1 1 150px', minWidth: '130px' },
     context: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: leading.relaxed },
     disclaimer: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', lineHeight: leading.relaxed },
@@ -185,7 +185,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     onClick: () => onNavigate && (b.uebergabe ? onNavigate(b.view, undefined, b.uebergabe) : onNavigate(b.view)),
     style: {
       display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left',
-      padding: '12px 14px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
+      padding: '12px 16px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
       // Fassung 9: die Zeilen sind neutral (keine Bedeutung über die Farbe); der Punkt bleibt
       // als Legende zum Balken oben, dort sind die Farben Diagramm (farb-und-daten-system.md).
       background: 'transparent', color: palette.text,

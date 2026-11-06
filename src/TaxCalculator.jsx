@@ -166,7 +166,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     return React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'aus-3a-tracker',
       onClick: () => { handleInputChange('pension3a', wert); document.querySelector('[data-abzug="pension3a"]')?.focus(); }, // Der Knopf verschwindet danach: Fokus ins Feld.
-      style: { ...knopfStil(palette, 'neben'), padding: '6px 12px', fontSize: text.xs, textAlign: 'left' },
+      style: { ...knopfStil(palette, 'neben'), padding: '8px 12px', fontSize: text.xs, textAlign: 'left' },
     }, t('tax.aus3aUebernehmen', { betrag: betrag(wert, { hoechstens: 2 }) }));
   };
 
@@ -213,12 +213,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
 
   const buttonStyle = knopfStil(palette, 'haupt');
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'money', size: 22 }), style: { marginBottom: space.sm } }, t('tax.title')),
 
     React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border } }, t('tax.intro')),
 
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: space.md, marginBottom: '20px' } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: space.md, marginBottom: '24px' } },
       // Left side: Input
       React.createElement('div', null,
         // F7-L8 (31.10.2026): der Steuer-Import als ruhige Zeile. `springeZuAnker` klappt sie für den alten Link

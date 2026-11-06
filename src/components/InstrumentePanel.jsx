@@ -205,7 +205,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       : { margin: '0 0 ' + space.xs + 'px 0' },
   }, t('instrumente.title'));
 
-  return h('div', { style: nur ? { padding: '4px 0 ' + space.sm + 'px' } : eingebettet ? { marginTop: space.lg + 'px' } : { marginBottom: space.xl + 'px' } },
+  return h('div', { style: nur ? { padding: '4px 0 ' + space.sm + 'px' } : eingebettet ? { marginTop: space.lg + 'px' } : { marginBottom: space['2xl'] + 'px' } },
     // Eingebettet: Titel ohne Einleitung — die Finanz-Übersicht steht als Karte direkt darüber.
     nur ? null : eingebettet ? h('div', { style: { marginBottom: space.sm + 'px' } }, titel) : titel,
     !eingebettet && !nur && h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
@@ -218,7 +218,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
           ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
           border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
           cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center',

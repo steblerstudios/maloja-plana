@@ -68,7 +68,7 @@ export const EinkommenFeld = ({ palette, t, e, stil = {} }) => {
     key: wert, type: 'button', 'aria-pressed': e.art === wert,
     onClick: () => e.setArt(wert),
     style: {
-      ...auswahlStil(palette, e.art === wert), padding: '4px 10px', minHeight: '28px', fontSize: text.xs,
+      ...auswahlStil(palette, e.art === wert), padding: '4px 12px', minHeight: '28px', fontSize: text.xs,
       fontWeight: e.art === wert ? weight.semi : weight.medium,
     },
   }, t('einkommensfeld.' + wert));
@@ -82,7 +82,7 @@ export const EinkommenFeld = ({ palette, t, e, stil = {} }) => {
       placeholder: t('dashboard.quickCheckPlaceholder'),
       value: e.betrag, onChange: (ev) => e.setBetrag(ev.target.value),
       style: {
-        width: '100%', padding: '10px 12px', fontSize: text.body, boxSizing: 'border-box',
+        width: '100%', padding: '12px 12px', fontSize: text.body, boxSizing: 'border-box',
         border: '1px solid ' + palette.border, borderRadius: radius.md + 'px',
         background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none',
       },

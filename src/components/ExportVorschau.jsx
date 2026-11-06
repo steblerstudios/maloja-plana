@@ -85,7 +85,7 @@ export const ExportVorschau = ({ palette, t, art, quelle, onWeiter, onZurueck })
 
     kategorien.length > 0
       ? React.createElement('ul', {
-          style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
+          style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '8px' },
         },
           kategorien.map((k, i) => React.createElement('li', {
             key: k.id + (k.chapter || '') + i,

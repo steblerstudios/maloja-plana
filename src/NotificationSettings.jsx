@@ -64,7 +64,7 @@ export const NotificationSettings = ({ palette, t }) => {
       key: key,
       style: {
         display: 'flex', alignItems: 'start', gap: '12px',
-        padding: '14px 0', borderBottom: '1px solid ' + palette.border,
+        padding: '16px 0', borderBottom: '1px solid ' + palette.border,
       }
     },
       React.createElement('div', { style: { flex: 1 } },
@@ -95,7 +95,7 @@ export const NotificationSettings = ({ palette, t }) => {
     'aria-labelledby': BENACHRICHTIGUNGEN_ANKER + '-titel',
     style: { background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: space.md + 'px', color: palette.text, scrollMarginTop: '80px' }
   },
-    React.createElement(Eyebrow, { palette, as: 'h3', id: BENACHRICHTIGUNGEN_ANKER + '-titel', style: { display: 'flex', alignItems: 'center', gap: '6px', margin: '0 0 ' + space.sm + 'px 0' } },
+    React.createElement(Eyebrow, { palette, as: 'h3', id: BENACHRICHTIGUNGEN_ANKER + '-titel', style: { display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 ' + space.sm + 'px 0' } },
       React.createElement(Icon, { name: 'cowbell', size: 16, color: palette.mid }),
       t('notifications.title')),
 
@@ -107,7 +107,7 @@ export const NotificationSettings = ({ palette, t }) => {
         border: '1px solid ' + (isGranted ? palette.sage + '33' : palette.border),
       }
     },
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: space.sm } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '12px', marginBottom: space.sm } },
         React.createElement('div', {
           style: {
             width: '10px', height: '10px', borderRadius: '50%',

@@ -158,16 +158,16 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
     input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '6px 12px', minHeight: '44px', fontSize: text.sm }),
+    gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '8px 12px', minHeight: '44px', fontSize: text.sm }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },
     // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
     // Die Namensspalte bricht um, die Betragsspalten bleiben schmal, «CHF» steht einmal im Kopf.
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, tableLayout: 'fixed' },
-    th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium, verticalAlign: 'bottom' },
+    th: { textAlign: 'left', padding: '8px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium, verticalAlign: 'bottom' },
     einheit: { display: 'block', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid },
-    td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
-    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
+    td: { padding: '8px 8px', borderBottom: '1px solid ' + palette.border },
+    tdActive: { padding: '8px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left', overflowWrap: 'anywhere' },
   };
   // Betragsspalte: Kopf mit «CHF» darunter, damit die Zellen nur die Zahl tragen.
@@ -283,7 +283,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.relaxed } }, t('vu.satz')),
 
     marken.length > 0 && h('div', { 'data-teil': 'vu-marken', style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px', marginBottom: space.md + 'px' } },
-      marken.map((m) => h('span', { key: m, style: { fontSize: text.xs, color: palette.text, padding: '4px 10px', borderRadius: radius.full + 'px', border: '1px solid ' + palette.border, background: palette.up } }, m))),
+      marken.map((m) => h('span', { key: m, style: { fontSize: text.xs, color: palette.text, padding: '4px 12px', borderRadius: radius.full + 'px', border: '1px solid ' + palette.border, background: palette.up } }, m))),
 
     // Daten älter als das Kalenderjahr (z. B. 2028 ohne Import): detailJahr nimmt still das letzte vorhandene Jahr —
     // das sagt die Seite hier offen, statt alte Prämien als aktuelle zu zeigen (Übergabe 26.10.2026, Punkt 5).
@@ -342,7 +342,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           h('dt', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } }, t('vu.risiko.' + r.key)),
           r.zeilen.map((z) => h('dd', { key: z.key, 'data-art': z.art, style: { margin: '2px 0 0', fontSize: text.sm, lineHeight: leading.normal, color: z.art === 'hinweis' ? palette.mid : palette.text } },
             z.art === 'erfasst' && erledigtZeichen(true, ''),
-            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.skyDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '6px' } }, t('vu.risiko.marke.' + z.art)),
+            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.skyDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '8px' } }, t('vu.risiko.marke.' + z.art)),
             t('vu.risiko.' + z.key, z.p)))))),
         h('p', { key: 'satz', style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal } }, t('vu.risiko.satz')),
       ]),
@@ -527,7 +527,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                         style: {
                           background: isActive ? palette.sand + '30' : 'none',
                           minHeight: '44px', border: '1px solid ' + (isActive ? palette.sand : 'transparent'),
-                          borderRadius: KNOPF_RADIUS, padding: '5px 6px', width: '100%', textAlign: 'right',
+                          borderRadius: KNOPF_RADIUS, padding: '4px 8px', width: '100%', textAlign: 'right',
                           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                           color: isActive ? palette.text : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
@@ -539,7 +539,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                 React.createElement('td', { style: { ...cell, padding: 0 } },
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
-                    style: { ...s.nameBtn, padding: '5px 8px', minHeight: '44px', color: franchiseActive ? palette.sandDeep : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
+                    style: { ...s.nameBtn, padding: '4px 8px', minHeight: '44px', color: franchiseActive ? palette.sandDeep : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
                   }, zahl(f.franchise, { hoechstens: 2 }))
                 ),
                 hasOhne ? variantCell('mit', f.premium)
@@ -596,7 +596,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                     style: {
                       background: chosenVariant === variant ? palette.sand + '30' : 'none',
                       border: '1px solid ' + (chosenVariant === variant ? palette.sand : 'transparent'),
-                      borderRadius: KNOPF_RADIUS, padding: '5px 6px', width: '100%', textAlign: 'right',
+                      borderRadius: KNOPF_RADIUS, padding: '4px 8px', width: '100%', textAlign: 'right',
                       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                       color: chosenVariant === variant ? palette.text : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,

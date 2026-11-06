@@ -60,7 +60,7 @@ export const MedicationManager = ({ palette, t, lang, medications, onChange }) =
   };
 
   const inputStyle = {
-    width: '100%', padding: (space.sm + 2) + 'px ' + space.sm + 'px',
+    width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
     borderRadius: radius.sm, border: '1px solid ' + palette.border,
     background: palette.up, color: palette.text, boxSizing: 'border-box',
     fontSize: text.sm, fontFamily, cursor: 'text'
@@ -172,7 +172,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
         'aria-label': t('common.delete'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px',
+          color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minHeight: '24px',
         }
       }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     ),
@@ -274,7 +274,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
     // Frequency pills
     React.createElement('div', { style: { marginBottom: space.sm } },
       React.createElement('div', { style: labelStyle }, t('medications.frequency')),
-      React.createElement('div', { role: 'group', 'aria-label': t('medications.frequency'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+      React.createElement('div', { role: 'group', 'aria-label': t('medications.frequency'), style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },
         FREQ_OPTIONS.map(freq => {
           const active = (med.frequency || []).includes(freq);
           return React.createElement('button', {

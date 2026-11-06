@@ -891,7 +891,7 @@ export default function Baum3D({
         style: {
           position: 'absolute', left: m.x + '%', top: m.y + '%',
           transform: 'translate(-50%, -50%)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
           // Hinten liegende Äste treten zurück, statt vorne mitzudrängeln — aber
           // über eine geprüfte Farbe, nicht über Deckkraft. Hier stand
           // `opacity: m.vorne ? 1 : 0.34`; das multiplizierte jede sorgfältig
@@ -918,15 +918,15 @@ export default function Baum3D({
             : (b.name || m.key) + ' — ' + b.pct + '%',
           style: {
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            minHeight: '44px', minWidth: '44px', padding: '0 6px',
+            minHeight: '44px', minWidth: '44px', padding: '0 8px',
             background: 'none', border: 'none',
             cursor: anklickbar ? 'pointer' : 'default',
           },
         },
           React.createElement('span', {
             style: {
-              display: 'inline-flex', alignItems: 'center', gap: '5px',
-              padding: '3px 9px 3px 5px', borderRadius: radius.full,
+              display: 'inline-flex', alignItems: 'center', gap: '4px',
+              padding: '4px 8px 4px 4px', borderRadius: radius.full,
               fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
               // Hier entsteht die Tiefe: vorne der volle Text-Ton, hinten der
               // Sekundär-Ton. Beide sind in constants.js gegen `surface` geprüft
@@ -973,14 +973,14 @@ export default function Baum3D({
           'aria-label': w.label || w.short,
           style: {
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            minHeight: '44px', minWidth: '44px', padding: '0 3px',
+            minHeight: '44px', minWidth: '44px', padding: '0 4px',
             background: 'none', border: 'none',
             cursor: onWerkzeugWaehlen ? 'pointer' : 'default',
           },
         },
           React.createElement('span', {
             style: {
-              display: 'inline-flex', alignItems: 'center', gap: '3px',
+              display: 'inline-flex', alignItems: 'center', gap: '4px',
               padding: '2px 8px 2px 4px', borderRadius: radius.full,
               fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.25, whiteSpace: 'nowrap',
               // Deckender Grund statt 8 % Farbschleier: dahinter liegt die

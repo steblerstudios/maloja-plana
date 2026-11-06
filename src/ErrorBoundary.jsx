@@ -109,7 +109,7 @@ export class ErrorBoundary extends React.Component {
         width: '100%', minHeight: '100dvh', background: bg, color: textColor,
         fontFamily: fontFamily,
         display: 'flex', overflowY: 'auto',
-        padding: '20px', boxSizing: 'border-box'
+        padding: '24px', boxSizing: 'border-box'
       }
     },
       React.createElement('div', {

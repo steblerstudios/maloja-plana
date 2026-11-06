@@ -185,7 +185,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     'aria-pressed': opts.pressed || undefined,
     // S3 (05.11.2026): «Online Antrag» ist der eine Hauptknopf der Seite — hier alles Nebenknöpfe,
     // Gefahr nur, wo ein eingetragener Betrag verloren geht.
-    style: { ...knopfStil(palette, opts.gefahr ? 'gefahr' : 'neben'), padding: '8px 14px' },
+    style: { ...knopfStil(palette, opts.gefahr ? 'gefahr' : 'neben'), padding: '8px 16px' },
   }, label);
 
   // Jahr wählen beim Eintragen der Verfügung — klein, zwei Möglichkeiten.
@@ -196,7 +196,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     React.createElement('select', {
       value: verfJahr,
       onChange: (e) => setVerfJahr(e.target.value),
-      style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+      style: { padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
     },
       React.createElement('option', { value: String(laufendesJahr) }, String(laufendesJahr)),
       React.createElement('option', { value: String(laufendesJahr + 1) }, String(laufendesJahr + 1))
@@ -278,7 +278,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
             type: 'number', inputMode: 'numeric', min: '0', value: verfBetrag,
             onChange: (e) => setVerfBetrag(e.target.value),
             onBlur: () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, datum: ipvStatus.datum, kanton: ipvStatus.kanton, jahr: ipvStatus.jahr }),
-            style: { width: '120px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+            style: { width: '120px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
           })
         ),
         erinnernZeile([lineBtn(t('ipvStatus.reset'), () => { setVerfBetrag(''); setIpvStatus(IPV_STATUS.GESCHAETZT); }, { gefahr: true })]),
@@ -304,7 +304,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     return weg([
       head(),
       lead(t(ohneBetrag ? 'ipvStatus.orientierungLead' : 'ipvStatus.geschaetztLead')),
-      h('ul', { style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '18px', fontSize: text.sm, color: palette.mid, lineHeight: '1.55' } },
+      h('ul', { style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '16px', fontSize: text.sm, color: palette.mid, lineHeight: '1.55' } },
         h('li', { style: { marginBottom: space.xs } }, t('ipvStatus.wayAuto')),
         h('li', null, t('ipvStatus.wayApply'))
       ),
@@ -341,7 +341,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     const feld = felder.find(Boolean);
     if (!feld) return null;
     return React.createElement('div', { style: { marginTop: space.sm } },
-      React.createElement('label', { htmlFor: feld.id, style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '6px' } }, feld.label),
+      React.createElement('label', { htmlFor: feld.id, style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '8px' } }, feld.label),
       // Unkontrolliert, übernommen beim Verlassen, mit Enter oder «Speichern». Bei jedem Tastendruck
       // zu schreiben machte schon die erste Ziffer zur Angabe: im Browser verschwand das Prämienfeld
       // nach «4» mitten im Tippen, der Fokus war weg (24.09.). `key` setzt es bei neuem Wert zurück.
@@ -355,12 +355,12 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         'aria-describedby': feld.id + '-hinweis',
         onBlur: (e) => uebernehmen(feld, e.target.value),
         onKeyDown: (e) => { if (e.key === 'Enter') uebernehmen(feld, e.target.value); },
-        style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
+        style: { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
       }),
       React.createElement('button', {
         type: 'button',
         onClick: () => { const el = document.getElementById(feld.id); if (el) uebernehmen(feld, el.value); },
-        style: { ...knopfStil(palette, 'haupt'), padding: '8px 14px' },
+        style: { ...knopfStil(palette, 'haupt'), padding: '8px 16px' },
       }, t('common.save'))
       ),
       React.createElement('p', { id: feld.id + '-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } }, t('premium.feldImProfil'))
@@ -368,12 +368,12 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   };
 
   // Hinweise je nach Lage (Fassung 5, Texte wie bisher; seit Fassung 9 blau: Hinweise informieren).
-  const lageHinweisStil = { padding: '10px 12px', borderRadius: radius.md, background: palette.sky + '18', border: '1px solid ' + palette.sky, fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: space.md };
+  const lageHinweisStil = { padding: '12px 12px', borderRadius: radius.md, background: palette.sky + '18', border: '1px solid ' + palette.sky, fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: space.md };
 
   // Only block when the canton is genuinely missing. If the canton is set but the
   // income isn't yet, we still show the canton-specific info and prompt for income.
   if (!canton) {
-    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       kopf(),
       // «Ihre Lage» mit dem Hinweis «Kanton fehlt»: Codex-Audit 24.09. — die Kachel verspricht
       // «Kanton und Einkommen hier eingeben», die Wahl steht deshalb direkt hier. Sie schreibt
@@ -383,13 +383,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         React.createElement('div', { style: { ...lageHinweisStil, marginBottom: 0 } },
           onUpdateData
             ? React.createElement(React.Fragment, null,
-                React.createElement('label', { htmlFor: 'ipv-kanton', style: { display: 'block', color: palette.text, fontWeight: weight.semi, marginBottom: '6px' } }, t('premium.cantonChoose')),
+                React.createElement('label', { htmlFor: 'ipv-kanton', style: { display: 'block', color: palette.text, fontWeight: weight.semi, marginBottom: '8px' } }, t('premium.cantonChoose')),
                 React.createElement('select', {
                   id: 'ipv-kanton',
                   value: '',
                   onChange: (e) => { if (e.target.value) onUpdateData('basis', 'canton', e.target.value); },
                   'aria-describedby': 'ipv-kanton-hinweis',
-                  style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
+                  style: { padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
                 },
                   React.createElement('option', { value: '' }, t('common.select')),
                   CANTON_CODES.map((c) => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
@@ -430,7 +430,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // B-1/E22 + Regler: sichtbar sagen, womit gerechnet wird. Ins Profil geht nichts ohne den Klick.
   const uebernahmeBlock = () => offeneZahlen.length > 0 ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
     schnellcheckListe.length > 0 && React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('premium.schnellcheckGerechnet')),
-    schnellcheckListe.length > 0 && React.createElement('ul', { style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '18px', color: palette.text } },
+    schnellcheckListe.length > 0 && React.createElement('ul', { style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '16px', color: palette.text } },
       schnellcheckListe.map(([, feld, wert]) => React.createElement('li', { key: feld },
         t(feld === 'monthlyIncome' ? 'schnellcheck.income' : feld === 'rentAmount' ? 'schnellcheck.rent' : 'schnellcheck.kk') + ': ' + fmtCHF(wert)))
     ),
@@ -438,7 +438,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     onUpdateData && React.createElement('button', {
       type: 'button',
       onClick: () => { offeneZahlen.forEach(([kapitel, feld, wert]) => onUpdateData(kapitel, feld, wert)); setUebernommen(true); },
-      style: { ...knopfStil(palette, 'neben'), padding: '8px 14px' },
+      style: { ...knopfStil(palette, 'neben'), padding: '8px 16px' },
     }, t('premium.schnellcheckUebernehmen'))
   ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, hinweisZeichen('check'), t('premium.schnellcheckUebernommen'));
 
@@ -462,7 +462,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           onChange: (e) => onUpdateData('finanzen', 'monthlyIncome', e.target.value),
           'aria-label': t('premium.enterIncome'),
           placeholder: '0',
-          style: { width: '140px', padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
+          style: { width: '140px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
         }),
         React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + t('common.perMonth'))
       )
@@ -561,7 +561,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { ...linkStil(palette), display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi } }, t('ipv.zurStelle'))
   );
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     kopf(),
 
     // ── Ihre Lage ─────────────────────────────────────────────────────────
@@ -605,7 +605,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     // ── Aufklapp-Zeilen wie die App-Überschriften ─────────────────────────
     anspruchZeile(),
     aufklappZeile(t('premium.requiredDocs'),
-      React.createElement('ul', { style: { ...fliesstext, paddingLeft: '20px' } },
+      React.createElement('ul', { style: { ...fliesstext, paddingLeft: '24px' } },
         [t('premium.doc1'), t('premium.doc2'), t('premium.doc3'), t('premium.doc4')].map((doc, idx) =>
           React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc)
         )

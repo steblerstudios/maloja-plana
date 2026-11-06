@@ -24,7 +24,7 @@ export const ThemeToggle = ({ palette, t, isDarkMode, onToggle }) => {
     // Ruhige Ghost-Fläche wie die übrigen Kopfzeilen-Schalter (a11y/Menü): der
     // Erscheinungsbild-Umschalter soll nicht das lauteste Element im Header sein.
     // Gold bleibt den echten Primär-Aktionen vorbehalten.
-    style: { display: 'inline-flex', alignItems: 'center', gap: '5px', padding: space.sm - 2 + 'px ' + (space.sm + 2) + 'px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi, whiteSpace: 'nowrap' }
+    style: { display: 'inline-flex', alignItems: 'center', gap: '4px', padding: space.sm + 'px ' + (space.ms) + 'px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi, whiteSpace: 'nowrap' }
   },
     isDarkMode ? React.createElement(SunIcon, { key: 'icon' }) : React.createElement(MoonIcon, { key: 'icon' }),
     React.createElement('span', { key: 'label' }, isDarkMode ? (t ? t('theme.light') : 'Light') : (t ? t('theme.dark') : 'Dark'))

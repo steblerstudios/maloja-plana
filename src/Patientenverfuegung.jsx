@@ -48,7 +48,7 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNa
       React.createElement('p', { style: { fontSize: text.sm, color: palette.text, fontWeight: weight.medium, margin: space.md + 'px 0 ' + space.sm + 'px' } }, hinweisZeichen(), t('pv.ui.ungueltigOhne')),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(dokumentHtml(antworten, data, t, lang)) },
-          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('pv.ui.drucken')),
+          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '8px' } }), t('pv.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('pv.ui.aendern')),
         onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
         // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).

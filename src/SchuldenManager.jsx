@@ -216,7 +216,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
 
   const inputStyle = {
     width: '100%',
-    padding: space.sm + 'px ' + (space.sm + 2) + 'px',
+    padding: space.sm + 'px ' + (space.ms) + 'px',
     marginBottom: space.sm,
     borderRadius: radius.md,
     border: '1px solid ' + palette.border,
@@ -268,11 +268,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           ) : null,
     debts: schulden.length === 0 ? null : React.createElement('div', null,
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
-          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
+          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '8px' } },
             React.createElement('strong', null, forderungName(debt, t)),
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
-          React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
+          React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '8px' } },
             (debt.dueDate ? formatDE(debt.dueDate) + ' · ' : '') + statusLabel(debt)
           ),
           // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
@@ -508,7 +508,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
           ),
           React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },
-            prioritized.filter(d => d.tier === tier).map((d, idx) => React.createElement('li', { key: d.id || idx, style: { padding: '3px 0' } },
+            prioritized.filter(d => d.tier === tier).map((d, idx) => React.createElement('li', { key: d.id || idx, style: { padding: '4px 0' } },
               React.createElement('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm } },
                 React.createElement('span', null, forderungName(d, t)),
                 React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, betrag(Number(d.amount || 0), { stellen: 2 })))

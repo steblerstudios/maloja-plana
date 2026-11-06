@@ -88,7 +88,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
           React.createElement('span', { style: { display: 'block', height: '100%', borderRadius: radius.full, background: g.farbe, width: (g.wert / basis) * 100 + '%', opacity: ton(g), transition: 'opacity ' + duration.fast + 'ms ' + ease } }))
       ),
       auf && React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: '2px 0 ' + space.xs + 'px ' + space.md + 'px', fontSize: text.xs } },
-        g.posten.map((p) => React.createElement('li', { key: p.key, style: { ...raster, padding: '3px 0' } },
+        g.posten.map((p) => React.createElement('li', { key: p.key, style: { ...raster, padding: '4px 0' } },
           React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, p.label),
           React.createElement('span', { style: { ...zahlen, color: palette.mid } }, chf(p.value)),
           React.createElement('span', { style: { ...zahlen, color: palette.mid } }, anteil(p.value, basis)),

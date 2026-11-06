@@ -47,7 +47,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
   const sectionHeading = (labelKey) => React.createElement(Eyebrow, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t(labelKey));
 
   return React.createElement('div', { style: { maxWidth: '640px', margin: '0 auto' } },
-    React.createElement(PageTitle, { palette, style: { margin: '0 0 6px 0' } }, t('common.settingsTitle')),
+    React.createElement(PageTitle, { palette, style: { margin: '0 0 8px 0' } }, t('common.settingsTitle')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: 1.5 } }, t('common.settingsIntro')),
 
     // ── Anzeige & Sprache / Barrierefreiheit (geteilte Gruppierung) ──

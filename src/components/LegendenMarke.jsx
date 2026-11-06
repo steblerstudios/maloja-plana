@@ -26,7 +26,7 @@ export const LegendenMarke = ({ form, color, palette, style }) => {
   return React.createElement('svg', {
     width: W, height: H, viewBox: '0 0 ' + W + ' ' + H,
     'aria-hidden': 'true', focusable: 'false',
-    style: { display: 'inline-block', verticalAlign: '-1px', marginRight: '5px', flexShrink: 0, ...style },
+    style: { display: 'inline-block', verticalAlign: '-1px', marginRight: '4px', flexShrink: 0, ...style },
   }, shape(color, palette || {}));
 };
 

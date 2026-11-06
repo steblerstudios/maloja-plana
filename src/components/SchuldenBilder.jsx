@@ -96,7 +96,7 @@ export const zeitraum = (r) => {
 export const AbbauZeitachse = ({ palette, t, plan }) => {
   if (!plan || !plan.machbar) return null;
   const n = plan.monate;
-  const zeile = { display: 'grid', gridTemplateColumns: 'minmax(0, 7.5rem) minmax(0, 1fr) auto', alignItems: 'center', gap: space.sm + 'px', padding: '5px 0', fontSize: text.sm };
+  const zeile = { display: 'grid', gridTemplateColumns: 'minmax(0, 7.5rem) minmax(0, 1fr) auto', alignItems: 'center', gap: space.sm + 'px', padding: '4px 0', fontSize: text.sm };
   return React.createElement('div', { style: { margin: space.md + 'px 0 ' + space.sm + 'px' } },
     React.createElement('div', { 'aria-hidden': 'true', style: { ...zeile, paddingTop: 0 } },
       React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.bild.achse')),
@@ -141,7 +141,7 @@ export const MahnstufenUebersicht = ({ palette, t, prioritized, onNavigate }) =>
         const lesart = forderungName(d, t) + ': ' + (i >= 0 ? t('schulden.stufe.' + stufe) : t('schulden.bild.stufeOffen'));
         // Vorlesen: EIN Textknoten mit Name und Stufe; das Sichtbare daneben ist aria-hidden
         // (a11y-Prüfer 27.09.: aria-label auf li wird im Lesemodus nicht zuverlässig gelesen).
-        return React.createElement('li', { key: d.id, style: { padding: '6px 0', borderTop: '1px solid ' + palette.border + '55' } },
+        return React.createElement('li', { key: d.id, style: { padding: '8px 0', borderTop: '1px solid ' + palette.border + '55' } },
           React.createElement('span', { style: visuallyHiddenStyle }, lesart),
           React.createElement('div', { 'aria-hidden': 'true', style: { display: 'grid', gridTemplateColumns: spalten, gap: space.sm + 'px', alignItems: 'center', fontSize: text.sm } },
             React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, forderungName(d, t)),

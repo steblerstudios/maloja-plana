@@ -52,7 +52,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
   const removeDeposit = (idx) => onChange(list.filter((_, i) => i !== idx));
 
   const inputStyle = {
-    padding: (space.sm + 2) + 'px ' + space.sm + 'px',
+    padding: (space.ms) + 'px ' + space.sm + 'px',
     borderRadius: radius.sm, border: '1px solid ' + palette.border,
     background: palette.up, color: palette.text, boxSizing: 'border-box',
     fontSize: text.sm, fontFamily, cursor: 'text',
@@ -115,7 +115,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
           React.createElement('button', {
             onClick: () => removeDeposit(idx),
             'aria-label': t('common.delete'),
-            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px' }
+            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minHeight: '24px' }
           }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         )
       )

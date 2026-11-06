@@ -20,14 +20,14 @@ export const KNOPF_RADIUS = radius.sm + 'px';
 // Kompakt geschrieben: der Baustein liegt im Startbündel (Limit 65 kB).
 export const knopfStil = (p, art = 'haupt', { disabled: d = false, gefuellt: g = false } = {}) => {
   const s = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: space.xs + 'px',
-    padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box', borderRadius: KNOPF_RADIUS,
+    padding: '12px 16px', minHeight: '44px', boxSizing: 'border-box', borderRadius: KNOPF_RADIUS,
     fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, cursor: d ? 'not-allowed' : 'pointer' };
   if (art === 'haupt' || (art === 'gefahr' && g)) {
     return { ...s, border: 'none', background: d ? p.mid : g ? p.roseBtn : p.sand, color: d || g ? '#fff' : p.onSand };
   }
   const c = d ? p.mid : art === 'gefahr' ? p.roseDeep : p.sandDeep;
   return art === 'leise'
-    ? { ...s, padding: '6px 0', background: 'none', border: 'none', color: c }
+    ? { ...s, padding: '8px 0', background: 'none', border: 'none', color: c }
     : { ...s, background: 'transparent', color: c, border: '1px solid ' + (d ? p.border : c) };
 };
 

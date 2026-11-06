@@ -26,8 +26,8 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const frageStil = { ...labelStil, fontSize: text.body, marginBottom: space.sm + 'px' };
   const hilfeStil = { margin: space.xs + 'px 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
-  const zeileStil = { display: 'flex', alignItems: 'center', gap: '10px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
+  const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
+  const zeileStil = { display: 'flex', alignItems: 'center', gap: '12px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
   // Fassung 9: Haupt- und Nebenknopf aus dem Baustein (auch für die Vorschau der Fragen-Abläufe).
   const knopf = (hervor) => knopfStil(palette, hervor ? 'haupt' : 'neben');
 
@@ -98,7 +98,7 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   };
 
   const f = fragen[schritt];
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: icon, size: 22 }), style: { marginBottom: space.sm + 'px' } }, titel),
     // E — Hinweis oben
     hinweis && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.normal } }, hinweis),
@@ -107,7 +107,7 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
       // A — Fortschritt
       !imVorschau && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t(ns + '.ui.fortschritt', { n: schritt + 1, total })),
-        React.createElement('div', { role: 'progressbar', 'aria-valuemin': 1, 'aria-valuemax': total, 'aria-valuenow': schritt + 1, 'aria-label': t(ns + '.ui.fortschritt', { n: schritt + 1, total }), style: { height: '4px', background: palette.border, borderRadius: radius.hair + 'px', marginTop: '6px' } },
+        React.createElement('div', { role: 'progressbar', 'aria-valuemin': 1, 'aria-valuemax': total, 'aria-valuenow': schritt + 1, 'aria-label': t(ns + '.ui.fortschritt', { n: schritt + 1, total }), style: { height: '4px', background: palette.border, borderRadius: radius.hair + 'px', marginTop: '8px' } },
           React.createElement('div', { style: { height: '100%', width: Math.round(((schritt + 1) / total) * 100) + '%', background: palette.sage, borderRadius: radius.hair + 'px' } }))
       ),
       // B — Frage · C — Warum

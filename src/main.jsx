@@ -214,7 +214,7 @@ const LanguageSwitcher = ({ palette }) => {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',
         border: '1px solid ' + palette.border, borderRadius: radius.sm,
-        paddingBlock: '5px', paddingInlineStart: '30px', paddingInlineEnd: '26px',
+        paddingBlock: '4px', paddingInlineStart: '32px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
         width: '72px',
@@ -244,7 +244,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
     onClick: vorlesen.toggle,
     title: t('vorlesen.toggle'),
     style: {
-      padding: '6px 8px', minHeight: '44px', minWidth: '44px',
+      padding: '8px 8px', minHeight: '44px', minWidth: '44px',
       background: vorlesen.enabled ? palette.sand + '30' : 'transparent',
       color: vorlesen.enabled ? palette.text : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
@@ -322,8 +322,8 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     style: {
       // alignSelf stretch + flex-start: die Zeichen stehen auf einer Linie, auch wenn ein
       // Name zweizeilig umbricht («Was steht mir zu?», 23.10.2026).
-      flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
-      padding: '9px 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+      flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+      padding: '8px 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
       color: it.active ? palette.text : palette.mid,
     },
   },
@@ -352,7 +352,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         opacity: fanOpen ? 1 : 0, pointerEvents: fanOpen ? 'auto' : 'none',
         transition: `opacity ${duration.normal}ms ${ease}, transform ${duration.normal}ms ${ease}`,
         transitionDelay: fanOpen ? (i * 0.03) + 's' : '0s',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
         background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', zIndex: 42,
       },
     },
@@ -385,7 +385,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
             // er bleibt sichtbar, der Fokus bleibt auf ihm, eine Fokus-Falle wäre hier
             // falsch. Was ihm fehlte, ist der Rückweg ohne Maus — Escape schliesst.
             onKeyDown: (e) => { if (e.key === 'Escape' && fanOpen) { e.preventDefault(); setFanOpen(false); } },
-            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sand, color: palette.onSand, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sand, color: palette.onSand, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-16px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
           },
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
@@ -1051,7 +1051,7 @@ const AppInner = ({ demo }) => {
   // schwersten zu treffen). Ausgerichtet zentriert, Icon/Text mittig im 44px-Feld.
   // Fassung 9 (M8): eingeschaltet = gold getönt wie alle Auswahlen, Rand Sand.
   const ctrlBtn = (active, opts = {}) => ({
-    padding: '6px 9px', minHeight: '44px', minWidth: '44px',
+    padding: '8px 8px', minHeight: '44px', minWidth: '44px',
     background: active ? palette.sand + '30' : 'transparent',
     // Aktiv trägt der Text den Kontrast, die Tönung liegt in Fläche und Rand.
     color: active ? palette.text : palette.mid,
@@ -1064,7 +1064,7 @@ const AppInner = ({ demo }) => {
   // «‹ Übersicht» und «‹ Zurück zu …» führen nur zurück: Link (M2), 44px-Zeile.
   // Fusszeilen-Links: gold und unterstrichen (M2), klein.
   const fussLink = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px', letterSpacing: '0.3px' };
-  const zurueckLink = { ...linkStil(palette), padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px' };
+  const zurueckLink = { ...linkStil(palette), padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px', display: 'flex', alignItems: 'center', gap: '8px' };
   const settingsControls = [
     React.createElement(VorlesenToggle, { key: 'voice', palette, t, vorlesen }),
     React.createElement('button', {
@@ -1086,7 +1086,7 @@ const AppInner = ({ demo }) => {
         'aria-label': t('common.anredeLabel', { form: current }),
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        style: { padding: '8px 8px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
       }, current);
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
@@ -1176,7 +1176,7 @@ const AppInner = ({ demo }) => {
       fontSize: text.xs, color: palette.mid, letterSpacing: '0.3px',
       // Zeilenabstand 0: jeder Link trägt selbst 44 px Höhe (Tippfläche, Messung 23.10.2026).
       display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.sm + 'px', alignItems: 'center',
-      padding: '16px 20px', width: '100%', maxWidth: contentMax,
+      padding: '16px 24px', width: '100%', maxWidth: contentMax,
       marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box',
     }
   },
@@ -1283,7 +1283,7 @@ const AppInner = ({ demo }) => {
         onLater: () => setTourOpen(false),
       })
     ),
-    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
+    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '16px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       // Das h1 bleibt eine ECHTE Überschrift. Vorher trug es `role="link"` — eine
       // ARIA-Rolle ersetzt die native Semantik, damit hatte die Seite für
       // Screenreader gar kein h1 mehr (WCAG 1.3.1). Das Anklickbare ist jetzt ein
@@ -1322,7 +1322,7 @@ const AppInner = ({ demo }) => {
           title: isMobile ? undefined : t('nav.search'),
           'aria-current': view === 'search' ? 'page' : undefined,
           onClick: () => handleNavigate('search'),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 12px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           zeichen('search', 18, 1.5)
         ),
@@ -1333,7 +1333,7 @@ const AppInner = ({ demo }) => {
           title: isMobile ? undefined : t('common.settingsTitle') + ' · ' + t('common.settingsAccessibility'),
           'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
           onClick: () => setSettingsOpen(true),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 12px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           zeichen('settings', 18, 1.5)
         ),
@@ -1341,7 +1341,7 @@ const AppInner = ({ demo }) => {
           key: 'menu',
           'aria-label': t('nav.menu'),
           onClick: () => setMobileNavOpen(!mobileNavOpen),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 12px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           zeichen('menue', 16, 1.5)
         )
@@ -1351,8 +1351,8 @@ const AppInner = ({ demo }) => {
       style: {
         background: palette.sage + '0A',
         borderBottom: '1px solid ' + palette.sage + '15',
-        padding: '6px 16px',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+        padding: '8px 16px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
       }
     },
       React.createElement(TrustLockIcon, { size: 12, color: palette.sage }),
@@ -1365,7 +1365,7 @@ const AppInner = ({ demo }) => {
     ),
     dbBlocked && React.createElement('div', {
       style: {
-        padding: '10px 16px',
+        padding: '12px 16px',
         background: palette.rose + '18',
         borderBottom: '1px solid ' + palette.rose,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
@@ -1380,7 +1380,7 @@ const AppInner = ({ demo }) => {
     ),
     demoMode && React.createElement('div', {
       style: {
-        padding: '10px 16px',
+        padding: '12px 16px',
         background: palette.sky + '18',
         borderBottom: '1px solid ' + palette.sky,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
@@ -1400,7 +1400,7 @@ const AppInner = ({ demo }) => {
     ),
     sandboxActive && React.createElement('div', {
       style: {
-        padding: '10px 16px',
+        padding: '12px 16px',
         background: palette.sage + '18',
         borderBottom: '1px solid ' + palette.sage + '30',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',

@@ -41,7 +41,7 @@ const styles = (palette) => ({
   done: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px', outline: 'none' },
   warn: { fontSize: text.sm, color: palette.goldDeep, marginTop: space.xs + 'px' },
   note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
-  footer: { fontSize: text.xs, color: palette.soft, marginTop: space.xl + 'px', lineHeight: leading.normal },
+  footer: { fontSize: text.xs, color: palette.soft, marginTop: space['2xl'] + 'px', lineHeight: leading.normal },
 });
 
 // Welcher Ablauf offen ist: ausdrücklich (`ablauf`, z. B. 'umzug') oder aus der Adresse, aber
@@ -107,7 +107,7 @@ const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.soft } }, '›');
   const balken = farbe ? farbe.balken : palette.sage;
   return React.createElement(React.Fragment, null,
-    React.createElement('div', { 'aria-hidden': 'true', 'data-ablauf-band': '', style: { position: 'relative', height: BAND_HOEHE + 'px', overflow: 'hidden', margin: '-24px -20px 0' } },
+    React.createElement('div', { 'aria-hidden': 'true', 'data-ablauf-band': '', style: { position: 'relative', height: BAND_HOEHE + 'px', overflow: 'hidden', margin: '-24px -24px 0' } },
       React.createElement('div', { style: { position: 'absolute', inset: 0, background: 'url(' + landschaft + ') center 72% / cover', opacity: 0.5 } }),
       React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + balken + '38 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
     ),
@@ -121,7 +121,7 @@ const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
           React.createElement('span', { 'aria-current': 'page', style: { fontSize: text.xs, color: palette.text } }, title)
         )
       ),
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginBottom: space.sm + 'px' } },
         icon && React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: balken + '2E', boxShadow: 'inset 0 0 0 1px ' + balken + '4D', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: icon, size: 26 })),
         React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, title)
@@ -162,7 +162,7 @@ export const useAblaufStand = (name, total) => {
 
 // Ruhige Marke für einen erledigten Schritt (Entwurf W): Haken + Kurzname.
 const Marke = ({ palette, farbe, children }) => React.createElement('li', {
-  style: { fontSize: text.xs, color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.full + 'px', padding: '4px 10px 4px 8px', display: 'inline-flex', gap: '5px', alignItems: 'center' },
+  style: { fontSize: text.xs, color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.full + 'px', padding: '4px 12px 4px 8px', display: 'inline-flex', gap: '4px', alignItems: 'center' },
 }, React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: farbe } }, React.createElement(Icon, { name: 'check', size: 12 })), children);
 
 // Der Schritt-für-Schritt-Teil. Alle Schritte bleiben im DOM (die übrigen `hidden`), damit Eingaben
@@ -215,7 +215,7 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
           React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineEnd: '4px' } }, '‹'), t('common.back'))
       ),
       // Erledigte Schritte als Marken (Entwurf W), nur unterwegs — beim Abschluss sagt es der Satz.
-      !stand.fertig && nr > 0 && React.createElement('ul', { 'aria-label': t('ablauf.erledigt'), 'data-ablauf-marken': '', style: { display: 'flex', flexWrap: 'wrap', gap: '6px', listStyle: 'none', padding: 0, margin: space.md + 'px 0 0' } },
+      !stand.fertig && nr > 0 && React.createElement('ul', { 'aria-label': t('ablauf.erledigt'), 'data-ablauf-marken': '', style: { display: 'flex', flexWrap: 'wrap', gap: '8px', listStyle: 'none', padding: 0, margin: space.md + 'px 0 0' } },
         schritte.slice(0, nr).map((schritt, i) => React.createElement(Marke, { key: i, palette, farbe: markenFarbe }, ohneNummer(schritt.props.title))))
     )
   );
@@ -306,7 +306,7 @@ export const AblaufStep = ({ palette, title, icon, titelStyle, children }) => {
 };
 
 // «Verwandte Ereignisse» (Entwurf W): keine Station, steht immer unten über dem Fuss.
-export const AblaufVerwandt = ({ palette, title, children }) => React.createElement('div', { 'data-ablauf-verwandt': '', style: { marginTop: space.xl + 'px', borderTop: '1px solid ' + palette.border, paddingTop: space.md + 'px' } },
+export const AblaufVerwandt = ({ palette, title, children }) => React.createElement('div', { 'data-ablauf-verwandt': '', style: { marginTop: space['2xl'] + 'px', borderTop: '1px solid ' + palette.border, paddingTop: space.md + 'px' } },
   React.createElement(PanelTitle, { palette, style: { fontSize: text.body, margin: '0 0 ' + space.xs + 'px' } }, title),
   children);
 
@@ -436,7 +436,7 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
     !ohneFeld && React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
     !ohneFeld && React.createElement('input', {
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
-      style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+      style: { padding: '12px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
     !karte && ziel && !vorbei && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } }, t(hinweisKey, { date: formatDE(ziel) })),
     fristKarte
@@ -503,7 +503,7 @@ export const AblaufPass = ({ palette, name, total, aktuell, fertig, namen }) => 
 export const AblaufFooter = ({ palette, notes, quelle, t }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },
-    quelle ? React.createElement(Belege, { key: 'quelle', palette, t, zeile: quelle, style: { marginBottom: '6px', fontSize: 'inherit' } }) : null,
+    quelle ? React.createElement(Belege, { key: 'quelle', palette, t, zeile: quelle, style: { marginBottom: '8px', fontSize: 'inherit' } }) : null,
     (notes || []).flatMap((n, i) => [
       i > 0 ? React.createElement('br', { key: 'br' + i }) : null,
       hinweisZeichen(undefined, undefined, 'z' + i), n,

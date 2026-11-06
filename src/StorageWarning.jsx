@@ -43,7 +43,7 @@ export const StorageWarning = ({ palette, t }) => {
       border: '1px solid ' + (isCritical ? palette.rose + '40' : palette.sky),
       display: 'flex',
       alignItems: 'start',
-      gap: space.sm + 2,
+      gap: space.ms,
       fontSize: text.sm - 1,
       lineHeight: leading.normal,
     }

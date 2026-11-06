@@ -78,7 +78,7 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
   const hv = hoverC != null ? st.gesamtBei(hoverC) : null;
 
   const swatch = (color, label, form) => h('span', {
-    key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid },
+    key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: text.xs, color: palette.mid },
   },
     h('span', { 'aria-hidden': true, style: { width: '10px', height: '10px', borderRadius: (form === 'kreis' ? radius.full : radius.hair) + 'px', background: color, flexShrink: 0, transform: form === 'raute' ? 'rotate(45deg) scale(0.85)' : undefined } }),
     label);

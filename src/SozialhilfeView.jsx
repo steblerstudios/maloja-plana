@@ -35,7 +35,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
   // Inline-Präfix-Icon vor Fliesstext-Titeln (statt roher Glyphe ◰/□): sitzt in der
   // Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon`.
-  const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '6px' } });
+  const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '8px' } });
 
   // Rechner-Form X (F7-A2, 27.10.2026): die Seite IST der Rechner. Kopf, Ergebnis und Angaben kommen aus
   // SozialhilfeRechner (RechnerForm); die Rückerstattung und die Hinweise stehen darunter (`weiteres`),
@@ -74,7 +74,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
   return rechner({
     // Der EL-Schritt hängt nicht am Sozialhilfe-Ergebnis: Rentnerinnen und Rentner brauchen ihn auch bei einem Nein.
-    tun: (ergebnis, sozialdienst) => (sozialdienst || el.elPruefen) ? ({ titel: t('sozialhilfe.nextSteps'), inhalt: React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
+    tun: (ergebnis, sozialdienst) => (sozialdienst || el.elPruefen) ? ({ titel: t('sozialhilfe.nextSteps'), inhalt: React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '24px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
         sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step1')),
         sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step2')),
         sozialdienst && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step3')),
@@ -92,7 +92,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     // in der Notlage auch der Aufenthaltsort. Beim Wochenaufenthalt zusätzlich die Steuern (mit Vorbehalt) und
     // die Miete — sie gehört womöglich zum Zimmer am Wochenaufenthaltsort. Beim Nebenwohnsitz kein Steuersatz:
     // oft eine eigene Ferienwohnung, die dort besteuert wird, wo sie liegt (StHG Art. 4 Abs. 1).
-    residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: { padding: '10px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm } },
+    residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'sozialhilfe.weeklyResidence' : 'sozialhilfe.nebenResidence')),
       React.createElement('div', null, t('sozialhilfe.weeklyNote')),
       residenceKey === 'wochenaufenthalt' && React.createElement('div', null, t('sozialhilfe.weeklyMiete')),
@@ -119,7 +119,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
             type: 'number', inputMode: 'numeric', min: '0', value: erbschaft,
             onChange: (e) => setErbschaft(e.target.value),
             placeholder: '0',
-            style: { width: '160px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
+            style: { width: '160px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
           }),
           (Number(erbschaft) || 0) > 0 && React.createElement('div', {
             style: { marginTop: space.sm, padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, lineHeight: leading.relaxed },
