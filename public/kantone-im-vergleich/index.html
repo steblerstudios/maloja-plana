@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten/kantone-im-vergleich.mjs · Zahlen und Bilder: scripts/seiten-figuren.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine. -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>Kantone im Vergleich: was der Wohnort ausmacht — Maloja Plana</title>
+  <meta name="description" content="Prämie, Steuern, Miete, Unterstützung, Familie, Arbeit: die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.">
+  <link rel="canonical" href="https://malojaplana.ch/kantone-im-vergleich/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kantone im Vergleich: was der Wohnort ausmacht">
+  <meta property="og:description" content="Prämie, Steuern, Miete, Unterstützung, Familie, Arbeit: die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.">
+  <meta property="og:url" content="https://malojaplana.ch/kantone-im-vergleich/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kantone im Vergleich: was der Wohnort ausmacht">
+  <meta name="twitter:description" content="Prämie, Steuern, Miete, Unterstützung, Familie, Arbeit: die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/kantone-im-vergleich/#webpage",
+        "url": "https://malojaplana.ch/kantone-im-vergleich/",
+        "name": "Kantone im Vergleich: was der Wohnort ausmacht",
+        "description": "Prämie, Steuern, Miete, Unterstützung, Familie, Arbeit: die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/kantone-im-vergleich/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Kantone im Vergleich",
+            "item": "https://malojaplana.ch/kantone-im-vergleich/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
+           --rand:#E0DDD8; --gold:#C4A870 }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --gold:#C4A870 }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
+    header{ padding:28px 0 0 }
+    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    main{ padding:8px 0 16px }
+    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
+    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
+    p{ margin-bottom:14px }
+    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
+      padding:20px 22px; margin:28px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:10px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
+    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
+      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
+    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:14px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    footer p{ margin-bottom:6px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:14px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
+    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
+      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    /* ─── Hintergrundseite · Maloja-Stil ───────────────────────────────────
+       Überschriften in Hanken Grotesk (Markenhandbuch §3), Lesetext Lexend.
+       Bereichsfarbe Heidelbeere (Versicherungen, data/lebensbereiche.js):
+       --heidel für Grafik, --heidel-text (= skyDeep) für Text, beide AA. */
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2');
+      font-weight:700; font-display:swap }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3;
+           --hl-plate:#FBFBFA; --hl-hi:#4A6A88; --hl-edge:#8A877F; --hl-mid:#C6C2BA; --hl-lo:#E2DFD9 }
+    @media (prefers-color-scheme: dark){
+      :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038;
+             --hl-plate:#2A2927; --hl-hi:#8CAAC6; --hl-edge:#7A766F; --hl-mid:#4D4A45; --hl-lo:#3A3936 }
+    }
+    h1,h2,h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,sans-serif }
+    h1{ font-weight:700; font-size:36px; line-height:1.15; letter-spacing:-0.015em }
+    h2{ font-size:24px; font-weight:600; margin:56px 0 12px; line-height:1.25 }
+    h2 .nr{ display:inline-block; min-width:1.6em; color:var(--heidel-text) }
+    h3{ font-size:18px; font-weight:600; margin:28px 0 6px }
+    /* Kicker in Normalschrift wie in der App (Fassung 9, F9-A4, Stebler Studios 05.11.2026). */
+    .kicker{ font-size:13px; font-weight:600; color:var(--heidel-text); margin:18px 0 0 }
+    .stand{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    h2[tabindex]:focus{ outline:none }
+    a:focus-visible, .knopf:focus-visible, summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+
+    /* Inhaltsverzeichnis: acht Fragen als ruhige, nummerierte Karte. */
+    nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
+    nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
+    nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
+    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
+    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+
+    .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
+
+    /* Tabellen */
+    /* position:relative hält auch absolut gesetzte Vorlese-Texte im Schiebebereich (sonst dehnen sie die Seite). */
+    .tabelle{ overflow-x:auto; margin:12px 0 18px; position:relative }
+    .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+    table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
+    caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
+    th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
+    th{ font-weight:600 } th[scope="row"]{ font-weight:400 }
+    td.n,th.n{ text-align:right; white-space:nowrap }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    /* Zahlenansicht: Balken in der Tabelle, Fläche in Heidelbeere, ab null. */
+    .zahlen td.balken{ width:42%; padding-right:12px; vertical-align:middle }
+    .zahlen td.balken span{ display:block; height:10px; border-radius:3px; background:var(--heidel) }
+    /* Zweite Reihe (z. B. «nach Verbilligung»): gleiche Farbe, als Umriss — Form statt Farbe. */
+    .zahlen td.balken span.b1{ margin-top:3px; background:transparent; border:1.5px solid var(--heidel-text); height:8px }
+    .zahlen tr.ch th, .zahlen tr.ch td, .breit tr.ch th, .breit tr.ch td{ font-weight:600; border-top:1.5px solid var(--leise) }
+    .legende span{ display:inline-block; width:18px; height:9px; border-radius:2px; vertical-align:middle; margin-right:4px }
+    .legende span.b0{ background:var(--heidel) } .legende span.b1{ border:1.5px solid var(--heidel-text) }
+    .tabelle.breit table{ min-width:760px; font-size:14px } .tabelle.breit th[scope="col"]{ vertical-align:bottom }
+    .tabelle.zahlen:focus-visible, .tabelle.breit:focus-visible, .tabelle[role="region"]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+    /* Breite Tabelle: die Kantonsspalte bleibt beim Verschieben stehen. */
+    .tabelle.breit th[scope="row"], .tabelle.breit tr > th:first-child{ position:sticky; left:0; background:var(--bg); z-index:1 }
+    @media (max-width:600px){ .zahlen th[scope="row"]{ white-space:normal } }
+    /* Kontrastmodus und Druck: Balken nicht nur als Hintergrund. */
+    @media (forced-colors:active){ .zahlen td.balken span.b0, .legende span.b0{ background:CanvasText; forced-color-adjust:none } }
+    .zahlen td.balken span, .legende span{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    .zahlen th[scope="row"]{ white-space:nowrap }
+    @media (max-width:600px){ .zahlen td.balken{ width:30% } }
+
+    /* Abbildungen: Karte wie in der App — «Abb. n» oben links, Kurztitel oben
+       rechts, der Wert unten rechts; im Bild selbst steht kein Text. */
+    .abb{ margin:22px 0 26px }
+    .abb-karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:12px 16px 10px }
+    .abb-kopf,.abb-fuss{ display:flex; justify-content:space-between; gap:12px; margin:0; font-size:13px; color:var(--leise) }
+    .abb-fuss{ justify-content:flex-end }
+    .abb-wert{ color:var(--text); font-variant-numeric:tabular-nums }
+    .abb-bild svg{ display:block; width:100%; height:auto; max-height:460px; margin:4px auto }
+    .abb figcaption{ font-size:14px; color:var(--leise); margin-top:8px }
+    .abb figcaption strong{ color:var(--text); font-weight:600 }
+    .abb details{ margin-top:10px; font-size:15px } .abb summary{ cursor:pointer; color:var(--heidel-text) }
+    .abb{ container-type:inline-size }
+    details.bewegt{ margin-top:6px }
+    details.bewegt summary{ padding:12px 0; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.bewegt iframe{ display:block; width:100%; border:0; border-radius:16px; height:calc(100cqi * 0.8 + 96px) }
+    details.bewegt.iso iframe{ height:calc(100cqi * 0.78 + 44px) }
+    p.bewegt{ margin:10px 0 0; font-size:15px }
+    p.bewegt a{ display:inline-block; padding:10px 0; color:var(--heidel-text); font-weight:600; text-underline-offset:3px }
+    p.bewegt .leise{ margin-left:8px; font-size:13px }
+
+    /* Strichfiguren (Hairline): eine Linie, Flächen in der Kartenfarbe, das
+       hervorgehobene Teil in Heidelbeere. Regeln nach dem Hairline-Kernel (MIT). */
+    .hl svg :where(path,polygon,ellipse,line){ fill:var(--hl-plate); stroke:var(--hl-mid); stroke-width:.9;
+      vector-effect:non-scaling-stroke; stroke-linejoin:round; stroke-linecap:round }
+    .hl svg .nf{ fill:none } .hl svg .fo{ stroke:none }
+    .hl svg .sil{ stroke:var(--hl-edge) } .hl svg .hi{ stroke:var(--hl-hi); stroke-width:1.3 } .hl svg .lo{ stroke:var(--hl-lo) }
+    .hl svg .dash{ stroke-dasharray:1 3 } .hl svg .dot{ stroke:none; fill:var(--hl-hi) }
+    .hl svg .dot.m{ fill:var(--hl-edge) } .hl svg .dot.off{ fill:var(--hl-lo) } .hl svg .ghost path{ fill:none; stroke:var(--hl-mid) }
+
+    /* Isometrische Figur (Anatomy): vier Töne, Granit statt Grau. Regeln nach iso.css (MIT). */
+    .iso{ --anatomy-paper:#FBFBFA; --anatomy-face:#FFFFFF; --anatomy-top:#FFFFFF;
+      --anatomy-shade-0:#DCD9D3; --anatomy-shade-1:#E5E2DC; --anatomy-shade-2:#EDEBE6; --anatomy-shade-3:#F4F3EF;
+      --anatomy-lit-top:#FFFFFF; --anatomy-lit-shade:#E9EEF3;
+      --anatomy-hi:#24262A; --anatomy-mid:#8A877F; --anatomy-lo:#B5B1A9; --anatomy-faint:#D6D3CC; --anatomy-lit:#4A6A88;
+      --anatomy-halo:#8A877F; --anatomy-halo-opacity:.28; --anatomy-dot:#3A3936; --anatomy-weight:.6px }
+    @media (prefers-color-scheme: dark){
+      .iso{ --anatomy-paper:#2A2927; --anatomy-face:#33322F; --anatomy-top:#34332F;
+        --anatomy-shade-0:#262523; --anatomy-shade-1:#292826; --anatomy-shade-2:#2D2C29; --anatomy-shade-3:#31302C;
+        --anatomy-lit-top:#3A4048; --anatomy-lit-shade:#323840;
+        --anatomy-hi:#E6E3DC; --anatomy-mid:#8E8A82; --anatomy-lo:#5E5B55; --anatomy-faint:#45433F; --anatomy-lit:#8CAAC6;
+        --anatomy-halo:#000000; --anatomy-halo-opacity:.5; --anatomy-dot:#E6E3DC }
+    }
+    .iso svg .iso-fill{ fill:var(--anatomy-paper); stroke:none }
+    .iso svg .iso-solid[data-lit]>.iso-fill{ fill:var(--anatomy-face) }
+    .iso svg .iso-shade,.iso svg .iso-top{ stroke:none }
+    .iso svg .iso-shade[data-shade="0"]{ fill:var(--anatomy-shade-0) } .iso svg .iso-shade[data-shade="1"]{ fill:var(--anatomy-shade-1) }
+    .iso svg .iso-shade[data-shade="2"]{ fill:var(--anatomy-shade-2) } .iso svg .iso-shade[data-shade="3"]{ fill:var(--anatomy-shade-3) }
+    .iso svg .iso-top{ fill:var(--anatomy-top) }
+    .iso svg .iso-solid[data-lit]>.iso-top{ fill:var(--anatomy-lit-top) } .iso svg .iso-solid[data-lit]>.iso-shade{ fill:var(--anatomy-lit-shade) }
+    .iso svg .iso-solid[data-lit]>.iso-edge{ stroke:var(--anatomy-lit) }
+    .iso svg .iso-halo{ fill:var(--anatomy-halo); stroke:none; filter:blur(9px); opacity:var(--anatomy-halo-opacity); transform:translateY(3px) }
+    .iso svg .iso-line{ fill:none; stroke:var(--anatomy-lo); stroke-width:var(--anatomy-weight); stroke-linecap:round; stroke-linejoin:round }
+    .iso svg .iso-line[data-tone="hi"]{ stroke:var(--anatomy-hi) } .iso svg .iso-line[data-tone="mid"]{ stroke:var(--anatomy-mid) }
+    .iso svg .iso-line[data-tone="lo"]{ stroke:var(--anatomy-lo) } .iso svg .iso-line[data-tone="faint"]{ stroke:var(--anatomy-faint) }
+    .iso svg .iso-line[data-tone="lit"]{ stroke:var(--anatomy-lit) }
+    .iso svg .iso-line[data-dotted]{ stroke-dasharray:.01 3.5; stroke-width:1 } .iso svg .iso-line[data-dashed]{ stroke-dasharray:3 3 }
+    .iso svg .iso-dots circle{ fill:var(--anatomy-dot); stroke:none; opacity:.32 }
+    .iso svg .iso-dots[data-tone="hi"] circle{ opacity:.85 } .iso svg .iso-dots[data-tone="mid"] circle{ opacity:.45 }
+    .iso svg .iso-dots[data-tone="lo"] circle{ opacity:.22 } .iso svg .iso-dots[data-tone="faint"] circle{ opacity:.12 }
+
+    /* Belege: hochgestellte Nummer, Sprung zur Quelle und zurück. */
+    /* Trefferfläche grösser als die Ziffer (a11y-Prüfung 04.11.2026), ohne die Zeile zu sprengen. */
+    sup.beleg{ font-size:.75em; line-height:0; vertical-align:super; margin-left:1px }
+    /* Unterstrichen schon im Ruhezustand (WCAG 1.4.1): --heidel-text hat gegen den
+       Fliesstext nur 2.68:1 (hell) bzw. 1.94:1 (dunkel), unter den 3:1, die eine reine
+       Farbunterscheidung bräuchte. Dünn und mit Abstand, damit die Ziffer ruhig bleibt;
+       beim Überfahren verdickt sie sich wie bei allen Links. */
+    sup.beleg a{ display:inline-block; min-width:24px; padding:10px 4px; margin:-10px -6px; text-align:center;
+      text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+      color:var(--heidel-text); font-weight:600 }
+    sup.beleg a:hover{ text-decoration-thickness:2px }
+    sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
+    :target{ scroll-margin-top:24px }
+    ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
+    ol.quellen li{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-bottom:1px solid var(--rand) }
+    ol.quellen li:target{ background:var(--heidel-hauch); border-radius:10px }
+    ol.quellen li:target .q-her, ol.quellen li:target .q-zurueck, ol.quellen li:target .q-art{ color:var(--text) }
+    .q-nr{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-weight:600; color:var(--heidel-text); text-align:right; padding-top:1px }
+    .q-titel{ margin:0; font-weight:600 } .q-titel a{ text-underline-offset:3px }
+    .q-her{ margin:2px 0 0; font-size:14px; color:var(--leise) }
+    .q-belegt{ margin:4px 0 0; font-size:14px }
+    .q-zurueck{ margin:4px 0 0; font-size:13px; color:var(--leise) }
+    .q-zurueck a{ display:inline-block; min-width:24px; padding:8px 4px; margin:-8px 0; text-align:center;
+      color:var(--heidel-text); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Gleicher Grund wie bei sup.beleg: gegen den leisen Text davor nur 1.10:1 / 1.01:1. */
+    .q-zurueck a:hover{ text-decoration-thickness:2px }
+    .q-art{ display:inline-block; font-size:12px; border:1px solid var(--rand); border-radius:6px; padding:0 6px; margin-left:6px; color:var(--leise) }
+    .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
+    .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
+    @media (max-width:600px){ h1{ font-size:28px } h2{ font-size:21px } .abb-karte{ padding:10px 10px 8px } }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › Kantone im Vergleich
+      </nav>
+    </header>
+
+    <main>
+      <p class="kicker">Kantone im Vergleich</p>
+      <h1>Kantone im Vergleich: was der Wohnort ausmacht</h1>
+      <p class="vorspann">Wer in der Schweiz umzieht, wechselt oft mehr als die Wohnung. Prämie, Steuern, Miete und die Hilfe, die es gibt, hängen vom Kanton ab. Diese Seite stellt die Zahlen der 26 Kantone nebeneinander, damit sichtbar wird, wie gross die Unterschiede sind. Sie bewertet die Kantone nicht.</p>
+      <p class="stand"><strong>Stand der Zahlen:</strong> Prämien 2027 (BAG, September 2026); Prämienlast mit Prämie 2026, Einkommen 2022 (ESTV) und Verbilligung 2025 (BAG); Steuern 2026; Mieten und Löhne 2024; Sozialhilfe 2024; EL Dezember 2025; Leerwohnungen Juni 2026; Arbeitslosigkeit September 2026; Familienzulagen 2026; Kita-Abzug Steuerjahr 2026.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung. Kantonsdurchschnitte sagen wenig über einen einzelnen Haushalt; jede Zahl hat ihre eigene Grundlage und ihren eigenen Stand.</p>
+      <nav class="inhalt" aria-label="Inhalt dieser Seite">
+        <p>Inhalt</p>
+        <ol role="list">
+          <li><a href="#praemie-einkommen">Wie schwer wiegt die Prämie?</a></li>
+          <li><a href="#steuern">Wie viel bleibt nach den Steuern?</a></li>
+          <li><a href="#wohnen">Was kostet das Wohnen?</a></li>
+          <li><a href="#unterstuetzung">Wie viele beziehen Unterstützung?</a></li>
+          <li><a href="#familie">Was bekommen Familien?</a></li>
+          <li><a href="#arbeit">Wie viele sind als arbeitslos gemeldet?</a></li>
+          <li><a href="#nebeneinander">Alle Zahlen nebeneinander</a></li>
+          <li><a href="#zusammenhaenge">Was zusammenhängt</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="praemie-einkommen" tabindex="-1"><span class="nr">1</span> Wie schwer wiegt die Prämie?</h2>
+        <p>Die mittlere Prämie für Erwachsene liegt 2027 zwischen 324.90 Franken im Kanton Zug und 610.60 Franken im Kanton Genf, in der ganzen Schweiz bei 487.60 Franken.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-1" aria-label="Quelle 1">1</a></sup> Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Warum das so ist, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Mittlere Monatsprämie Erwachsene 2027, in Franken"><table>
+          <caption>Mittlere Monatsprämie Erwachsene 2027, in Franken, sortiert nach Prämie Erwachsene</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Prämie<br><span class="leise">Fr. im Monat</span></th></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:53.2%"></span></td><td class="n">324.90</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:55.8%"></span></td><td class="n">340.50</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:61.9%"></span></td><td class="n">377.70</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:63.3%"></span></td><td class="n">386.70</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.1%"></span></td><td class="n">397.20</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.1%"></span></td><td class="n">415.60</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.5%"></span></td><td class="n">418.50</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.1%"></span></td><td class="n">422.20</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.2%"></span></td><td class="n">422.30</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.8%"></span></td><td class="n">426.50</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:70.0%"></span></td><td class="n">427.40</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:70.9%"></span></td><td class="n">433.20</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:75.5%"></span></td><td class="n">460.90</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:76.1%"></span></td><td class="n">464.70</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:76.2%"></span></td><td class="n">465.50</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:77.1%"></span></td><td class="n">470.60</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:78.1%"></span></td><td class="n">477.00</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:80.8%"></span></td><td class="n">493.50</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:81.0%"></span></td><td class="n">494.40</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:89.0%"></span></td><td class="n">543.50</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:89.2%"></span></td><td class="n">544.50</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:90.2%"></span></td><td class="n">551.00</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:91.5%"></span></td><td class="n">558.80</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:93.4%"></span></td><td class="n">570.60</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:98.9%"></span></td><td class="n">603.60</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">610.60</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">487.60</td></tr>
+        </table></div>
+        <p>Ob eine Prämie schwer wiegt, hängt auch vom Einkommen ab. Die Prämienlast setzt die Jahresprämie 2026 ins Verhältnis zum Median-Reineinkommen 2022 aus der Steuerstatistik. Für eine unverheiratete Person mit diesem Einkommen liegt sie zwischen 7,5 % im Kanton Zug und 23,1 % im Kanton Genf.<sup class="beleg"><a href="#quelle-estvStatistik" id="beleg-estvStatistik-1" aria-label="Quelle 2">2</a></sup></p>
+        <p>Rechnet man die Prämienverbilligung, die ein Kanton insgesamt auszahlt, auf alle Versicherten um, sinkt dieser Rechenwert auf 6,3 % im Kanton Zug bis 17,3 % im Kanton Tessin, fast gleich hoch im Kanton Genf (17,2 %).<sup class="beleg"><a href="#quelle-bagOkp" id="beleg-bagOkp-1" aria-label="Quelle 3">3</a></sup> Das ist nicht die Last einer bestimmten Person: Die Verbilligung geht vor allem an Haushalte mit tiefem Einkommen und an Kinder, eine Person mit Medianeinkommen erhält je nach Kanton keine oder wenig.</p>
+<p class="leise legende" aria-hidden="true"><span class="b0"></span> Prämienlast vor Verbilligung · <span class="b1"></span> Prämienlast nach Verbilligung</p>
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Prämienlast einer unverheirateten Person, vor und nach der durchschnittlichen Verbilligung im Kanton"><table>
+          <caption>Prämienlast einer unverheirateten Person, vor und nach der durchschnittlichen Verbilligung im Kanton, sortiert nach Prämienlast nach Verbilligung</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Prämienlast vor Verbilligung<br><span class="leise">% des Median-Reineinkommens</span></th><th scope="col" class="n">Prämienlast nach Verbilligung<br><span class="leise">% des Median-Reineinkommens, Rechenwert</span></th></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:32.5%"></span><span class="b1" style="width:27.3%"></span></td><td class="n">7,5 %</td><td class="n">6,3 %</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:38.5%"></span><span class="b1" style="width:32.5%"></span></td><td class="n">8,9 %</td><td class="n">7,5 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:42.0%"></span><span class="b1" style="width:36.8%"></span></td><td class="n">9,7 %</td><td class="n">8,5 %</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:45.0%"></span><span class="b1" style="width:38.1%"></span></td><td class="n">10,4 %</td><td class="n">8,8 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:44.6%"></span><span class="b1" style="width:38.1%"></span></td><td class="n">10,3 %</td><td class="n">8,8 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:45.0%"></span><span class="b1" style="width:39.0%"></span></td><td class="n">10,4 %</td><td class="n">9,0 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:49.4%"></span><span class="b1" style="width:39.4%"></span></td><td class="n">11,4 %</td><td class="n">9,1 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:48.5%"></span><span class="b1" style="width:41.1%"></span></td><td class="n">11,2 %</td><td class="n">9,5 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.2%"></span><span class="b1" style="width:43.3%"></span></td><td class="n">11,6 %</td><td class="n">10,0 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:51.9%"></span><span class="b1" style="width:43.3%"></span></td><td class="n">12,0 %</td><td class="n">10,0 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:52.8%"></span><span class="b1" style="width:44.2%"></span></td><td class="n">12,2 %</td><td class="n">10,2 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:51.9%"></span><span class="b1" style="width:44.2%"></span></td><td class="n">12,0 %</td><td class="n">10,2 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:52.4%"></span><span class="b1" style="width:44.6%"></span></td><td class="n">12,1 %</td><td class="n">10,3 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:52.8%"></span><span class="b1" style="width:45.0%"></span></td><td class="n">12,2 %</td><td class="n">10,4 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:55.8%"></span><span class="b1" style="width:45.0%"></span></td><td class="n">12,9 %</td><td class="n">10,4 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:55.8%"></span><span class="b1" style="width:46.8%"></span></td><td class="n">12,9 %</td><td class="n">10,8 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:57.6%"></span><span class="b1" style="width:48.5%"></span></td><td class="n">13,3 %</td><td class="n">11,2 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:59.7%"></span><span class="b1" style="width:51.5%"></span></td><td class="n">13,8 %</td><td class="n">11,9 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:61.0%"></span><span class="b1" style="width:52.8%"></span></td><td class="n">14,1 %</td><td class="n">12,2 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:71.4%"></span><span class="b1" style="width:54.5%"></span></td><td class="n">16,5 %</td><td class="n">12,6 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.0%"></span><span class="b1" style="width:55.0%"></span></td><td class="n">15,7 %</td><td class="n">12,7 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:67.5%"></span><span class="b1" style="width:56.7%"></span></td><td class="n">15,6 %</td><td class="n">13,1 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:79.7%"></span><span class="b1" style="width:65.8%"></span></td><td class="n">18,4 %</td><td class="n">15,2 %</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:81.8%"></span><span class="b1" style="width:68.8%"></span></td><td class="n">18,9 %</td><td class="n">15,9 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span><span class="b1" style="width:74.5%"></span></td><td class="n">23,1 %</td><td class="n">17,2 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:95.2%"></span><span class="b1" style="width:74.9%"></span></td><td class="n">22,0 %</td><td class="n">17,3 %</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">13,5 %</td><td class="n">11,1 %</td></tr>
+        </table></div>
+        <p class="leise"><strong>Vorbehalte:</strong> Prämie, Einkommen und Verbilligung stammen aus drei verschiedenen Jahren; quellenbesteuerte Personen fehlen, und die Lohnentwicklung seit 2022 ist nicht drin. Die Verbilligung umfasst alle 2025 ausbezahlten Beiträge, auch Nachzahlungen für Vorjahre. Solche Nachzahlungen fallen in einigen Kantonen stärker ins Gewicht, vor allem in Zürich, Appenzell Innerrhoden und Graubünden; dort liegt der Rechenwert tiefer, als er für das Jahr 2025 allein wäre. Im Kanton Aargau ist es umgekehrt: Die Beiträge für Vorjahre ergeben dort unter dem Strich weniger als null, der Rechenwert liegt deshalb etwas höher. Im Kanton Zürich wird die Verbilligung zuerst provisorisch ausbezahlt und später abgerechnet.<sup class="beleg"><a href="#quelle-zhIpv" id="beleg-zhIpv-1" aria-label="Quelle 4">4</a></sup> Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Ob Sie Anspruch auf Verbilligung haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
+
+      <h2 id="steuern" tabindex="-1"><span class="nr">2</span> Wie viel bleibt nach den Steuern?</h2>
+        <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder und ohne Konfession im Kantonshauptort zwischen 4,2 % des Lohns im Kanton Zug und 16,1 % im Kanton Neuenburg an Bund, Kanton und Gemeinde.<sup class="beleg"><a href="#quelle-estvSteuerrechner" id="beleg-estvSteuerrechner-1" aria-label="Quelle 5">5</a></sup> Auch innerhalb eines Kantons zählt die Gemeinde; die Spalte «Gemeinden im Kanton» zeigt die Spanne von der tiefsten zur höchsten Belastung.</p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Steuern im Kantonshauptort bei 80'000 Franken Bruttolohn, ledig, ohne Kinder, ohne Konfession, Steuerjahr 2026"><table>
+          <caption>Steuern im Kantonshauptort bei 80'000 Franken Bruttolohn, ledig, ohne Kinder, ohne Konfession, Steuerjahr 2026, sortiert nach Steuern bei 80'000 Fr. Lohn</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Steuern bei 80'000 Fr.<br><span class="leise">% des Bruttolohns</span></th><th scope="col" class="n">Gemeinden im Kanton<br><span class="leise">tiefste bis höchste Belastung</span></th></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:26.1%"></span></td><td class="n">4,2 %</td><td class="n leise">4,1 % bis 4,3 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:41.6%"></span></td><td class="n">6,7 %</td><td class="n leise">4,5 % bis 7,1 %</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:55.9%"></span></td><td class="n">9,0 %</td><td class="n leise">9,0 % bis 11,1 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:60.2%"></span></td><td class="n">9,7 %</td><td class="n leise">8,4 % bis 11,5 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:61.5%"></span></td><td class="n">9,9 %</td><td class="n leise">8,0 % bis 10,3 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:62.1%"></span></td><td class="n">10,0 %</td><td class="n leise">8,0 % bis 10,3 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.0%"></span></td><td class="n">10,3 %</td><td class="n leise">8,6 % bis 13,3 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.0%"></span></td><td class="n">10,3 %</td><td class="n leise">10,1 % bis 11,4 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.6%"></span></td><td class="n">10,4 %</td><td class="n leise">8,2 % bis 11,9 %</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.6%"></span></td><td class="n">10,4 %</td><td class="n leise">10,4 % bis 12,2 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">10,5 %</td><td class="n leise">7,5 % bis 12,2 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:71.4%"></span></td><td class="n">11,5 %</td><td class="n leise">11,5 % bis 11,7 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:71.4%"></span></td><td class="n">11,5 %</td><td class="n leise">9,5 % bis 12,9 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:73.3%"></span></td><td class="n">11,8 %</td><td class="n leise">9,8 % bis 12,2 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:73.9%"></span></td><td class="n">11,9 %</td><td class="n leise">11,4 % bis 14,9 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:78.3%"></span></td><td class="n">12,6 %</td><td class="n leise">10,3 % bis 13,2 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:78.9%"></span></td><td class="n">12,7 %</td><td class="n leise">11,2 % bis 12,7 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:80.7%"></span></td><td class="n">13,0 %</td><td class="n leise">9,2 % bis 13,8 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:81.4%"></span></td><td class="n">13,1 %</td><td class="n leise">11,7 % bis 13,4 %</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:82.0%"></span></td><td class="n">13,2 %</td><td class="n leise">11,7 % bis 14,4 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:87.6%"></span></td><td class="n">14,1 %</td><td class="n leise">12,6 % bis 14,7 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:88.8%"></span></td><td class="n">14,3 %</td><td class="n leise">10,7 % bis 15,8 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:88.8%"></span></td><td class="n">14,3 %</td><td class="n leise">11,5 % bis 16,3 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:90.7%"></span></td><td class="n">14,6 %</td><td class="n leise">12,6 % bis 16,5 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:91.9%"></span></td><td class="n">14,8 %</td><td class="n leise">12,8 % bis 15,1 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">16,1 %</td><td class="n leise">15,9 % bis 17,2 %</td></tr>
+        </table></div>
+        <p class="leise">Ein Beispiel für eine einzige Lebenslage. Mit Kindern, Partnerin oder Partner, Vermögen oder anderem Lohn sieht die Rechnung anders aus; wie die Steuern aufgebaut sind, steht auf der Seite <a href="/steuern/">Steuern</a>.</p>
+
+      <h2 id="wohnen" tabindex="-1"><span class="nr">3</span> Was kostet das Wohnen?</h2>
+        <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen 926 Franken im Monat im Kanton Jura und 1'875 Franken im Kanton Zug, in der ganzen Schweiz 1'446 Franken.<sup class="beleg"><a href="#quelle-bfsMiete" id="beleg-bfsMiete-1" aria-label="Quelle 6">6</a></sup> Gemessen am Medianlohn der Region sind das zwischen 13,3 % und 26,4 %.<sup class="beleg"><a href="#quelle-bfsLse" id="beleg-bfsLse-1" aria-label="Quelle 7">7</a></sup></p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, in Franken im Monat"><table>
+          <caption>Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, in Franken im Monat, sortiert nach Miete 3 Zimmer</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Miete 3 Zimmer<br><span class="leise">Fr. im Monat</span></th></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:49.4%"></span></td><td class="n">926</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:54.6%"></span></td><td class="n">1'024</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.2%"></span></td><td class="n">1'203</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.6%"></span></td><td class="n">1'211</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.5%"></span></td><td class="n">1'228</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.6%"></span></td><td class="n">1'230</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:66.2%"></span></td><td class="n">1'242</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:66.6%"></span></td><td class="n">1'249</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:67.2%"></span></td><td class="n">1'260</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:67.5%"></span></td><td class="n">1'266</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.7%"></span></td><td class="n">1'288</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.3%"></span></td><td class="n">1'299</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.8%"></span></td><td class="n">1'308</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:70.0%"></span></td><td class="n">1'312</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:73.7%"></span></td><td class="n">1'382</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:75.0%"></span></td><td class="n">1'406</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:76.8%"></span></td><td class="n">1'440</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:77.1%"></span></td><td class="n">1'445</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:77.2%"></span></td><td class="n">1'448</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:78.3%"></span></td><td class="n">1'469</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:78.8%"></span></td><td class="n">1'477</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:79.1%"></span></td><td class="n">1'483</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:82.5%"></span></td><td class="n">1'547</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:88.3%"></span></td><td class="n">1'655</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:92.4%"></span></td><td class="n">1'732</td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">1'875</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">1'446</td></tr>
+        </table></div>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Miete 3 Zimmer im Kanton in Prozent des Medianlohns der Grossregion, 2024"><table>
+          <caption>Miete 3 Zimmer im Kanton in Prozent des Medianlohns der Grossregion, 2024, sortiert nach Miete 3 Zimmer am Medianlohn</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Miete am Medianlohn<br><span class="leise">% des Medianlohns (Vollzeit, brutto)</span></th></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:50.4%"></span></td><td class="n">13,3 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:55.7%"></span></td><td class="n">14,7 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:64.4%"></span></td><td class="n">17,0 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:66.7%"></span></td><td class="n">17,6 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.2%"></span></td><td class="n">18,0 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.3%"></span></td><td class="n">18,3 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:70.1%"></span></td><td class="n">18,5 %</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:70.5%"></span></td><td class="n">18,6 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:70.8%"></span></td><td class="n">18,7 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:71.2%"></span></td><td class="n">18,8 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:72.3%"></span></td><td class="n">19,1 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:74.6%"></span></td><td class="n">19,7 %</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:75.0%"></span></td><td class="n">19,8 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:75.0%"></span></td><td class="n">19,8 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:76.1%"></span></td><td class="n">20,1 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:76.5%"></span></td><td class="n">20,2 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:77.3%"></span></td><td class="n">20,4 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:77.7%"></span></td><td class="n">20,5 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:79.2%"></span></td><td class="n">20,9 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:79.9%"></span></td><td class="n">21,1 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:80.3%"></span></td><td class="n">21,2 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:82.6%"></span></td><td class="n">21,8 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:83.0%"></span></td><td class="n">21,9 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:87.5%"></span></td><td class="n">23,1 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:88.3%"></span></td><td class="n">23,3 %</td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">26,4 %</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">20,6 %</td></tr>
+        </table></div>
+        <p>Wie leicht man eine Wohnung findet, zeigt die Leerwohnungsziffer: der Anteil der Wohnungen und Einfamilienhäuser, die an einem Stichtag leer stehen und zur Miete oder zum Kauf angeboten sind. Sie reichte am 1. Juni 2026 von 0,20 % im Kanton Zug bis 3,35 % im Kanton Jura.<sup class="beleg"><a href="#quelle-bfsLeer" id="beleg-bfsLeer-1" aria-label="Quelle 8">8</a></sup></p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Leerwohnungsziffer am 1. Juni 2026"><table>
+          <caption>Leerwohnungsziffer am 1. Juni 2026, sortiert nach Leerwohnungsziffer</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Leerwohnungen<br><span class="leise">% der Wohnungen</span></th></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:6.0%"></span></td><td class="n">0,20 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:9.3%"></span></td><td class="n">0,31 %</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:11.3%"></span></td><td class="n">0,38 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:12.5%"></span></td><td class="n">0,42 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:14.9%"></span></td><td class="n">0,50 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:15.2%"></span></td><td class="n">0,51 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:15.2%"></span></td><td class="n">0,51 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:15.5%"></span></td><td class="n">0,52 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:18.5%"></span></td><td class="n">0,62 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:19.1%"></span></td><td class="n">0,64 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:20.9%"></span></td><td class="n">0,70 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:23.3%"></span></td><td class="n">0,78 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:25.1%"></span></td><td class="n">0,84 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:26.0%"></span></td><td class="n">0,87 %</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:28.7%"></span></td><td class="n">0,96 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:31.0%"></span></td><td class="n">1,04 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:31.0%"></span></td><td class="n">1,04 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:31.3%"></span></td><td class="n">1,05 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:32.8%"></span></td><td class="n">1,10 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:33.4%"></span></td><td class="n">1,12 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:34.6%"></span></td><td class="n">1,16 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:37.6%"></span></td><td class="n">1,26 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:49.0%"></span></td><td class="n">1,64 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:53.1%"></span></td><td class="n">1,78 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:57.0%"></span></td><td class="n">1,91 %</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">3,35 %</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">0,93 %</td></tr>
+        </table></div>
+        <p class="leise"><strong>Vorbehalte:</strong> Die Mieten sind Durchschnitte aller vermieteten Wohnungen, auch langjähriger Verträge, nicht die Preise neuer Inserate; in kleinen Kantonen sind sie unsicherer geschätzt. Der Medianlohn ist ein Bruttolohn, auf eine Vollzeitstelle umgerechnet, und gilt für eine der sieben Grossregionen, nicht für den einzelnen Kanton. Wer Teilzeit arbeitet oder mit dem Nettolohn rechnet, kommt auf einen höheren Anteil.</p>
+
+      <h2 id="unterstuetzung" tabindex="-1"><span class="nr">4</span> Wie viele beziehen Unterstützung?</h2>
+        <p>Die Sozialhilfequote zeigt, wie viele Menschen im Jahr wirtschaftliche Sozialhilfe bezogen haben. Sie lag 2024 zwischen 0,8 % im Kanton Obwalden und 6,7 % im Kanton Genf, in der ganzen Schweiz bei 2,9 %.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 9">9</a></sup></p>
+        <p>Ergänzungsleistungen (EL) helfen, wenn AHV- oder IV-Rente und eigenes Einkommen die Lebenskosten nicht decken. Im Dezember 2025 bezogen sie zwischen 5,5 % der Menschen mit Altersrente im Kanton Appenzell Innerrhoden und 21,3 % im Kanton Basel-Stadt.<sup class="beleg"><a href="#quelle-bsvEl" id="beleg-bsvEl-1" aria-label="Quelle 10">10</a></sup></p>
+<p class="leise legende" aria-hidden="true"><span class="b0"></span> Sozialhilfequote · <span class="b1"></span> Ergänzungsleistungen zur AHV</p>
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Sozialhilfequote 2024 und EL-Quote zur AHV, Dezember 2025"><table>
+          <caption>Sozialhilfequote 2024 und EL-Quote zur AHV, Dezember 2025, sortiert nach Sozialhilfequote</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Sozialhilfequote<br><span class="leise">% der Bevölkerung</span></th><th scope="col" class="n">Ergänzungsleistungen (EL)<br><span class="leise">% der Menschen mit Altersrente</span></th></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:3.8%"></span><span class="b1" style="width:39.0%"></span></td><td class="n">0,8 %</td><td class="n">8,3 %</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:4.2%"></span><span class="b1" style="width:25.8%"></span></td><td class="n">0,9 %</td><td class="n">5,5 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:4.7%"></span><span class="b1" style="width:37.1%"></span></td><td class="n">1,0 %</td><td class="n">7,9 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:4.7%"></span><span class="b1" style="width:32.9%"></span></td><td class="n">1,0 %</td><td class="n">7,0 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:5.2%"></span><span class="b1" style="width:45.1%"></span></td><td class="n">1,1 %</td><td class="n">9,6 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:5.2%"></span><span class="b1" style="width:42.3%"></span></td><td class="n">1,1 %</td><td class="n">9,0 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:6.1%"></span><span class="b1" style="width:38.0%"></span></td><td class="n">1,3 %</td><td class="n">8,1 %</td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:6.1%"></span><span class="b1" style="width:32.4%"></span></td><td class="n">1,3 %</td><td class="n">6,9 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:7.0%"></span><span class="b1" style="width:54.5%"></span></td><td class="n">1,5 %</td><td class="n">11,6 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:7.5%"></span><span class="b1" style="width:42.7%"></span></td><td class="n">1,6 %</td><td class="n">9,1 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:8.5%"></span><span class="b1" style="width:58.7%"></span></td><td class="n">1,8 %</td><td class="n">12,5 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:8.9%"></span><span class="b1" style="width:44.1%"></span></td><td class="n">1,9 %</td><td class="n">9,4 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:8.9%"></span><span class="b1" style="width:37.6%"></span></td><td class="n">1,9 %</td><td class="n">8,0 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:9.4%"></span><span class="b1" style="width:66.2%"></span></td><td class="n">2,0 %</td><td class="n">14,1 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:9.9%"></span><span class="b1" style="width:63.4%"></span></td><td class="n">2,1 %</td><td class="n">13,5 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:11.3%"></span><span class="b1" style="width:44.6%"></span></td><td class="n">2,4 %</td><td class="n">9,5 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:11.7%"></span><span class="b1" style="width:51.2%"></span></td><td class="n">2,5 %</td><td class="n">10,9 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:13.1%"></span><span class="b1" style="width:48.8%"></span></td><td class="n">2,8 %</td><td class="n">10,4 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:13.1%"></span><span class="b1" style="width:77.0%"></span></td><td class="n">2,8 %</td><td class="n">16,4 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:16.0%"></span><span class="b1" style="width:56.8%"></span></td><td class="n">3,4 %</td><td class="n">12,1 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:16.9%"></span><span class="b1" style="width:62.0%"></span></td><td class="n">3,6 %</td><td class="n">13,2 %</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:18.3%"></span><span class="b1" style="width:85.9%"></span></td><td class="n">3,9 %</td><td class="n">18,3 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:19.7%"></span><span class="b1" style="width:71.4%"></span></td><td class="n">4,2 %</td><td class="n">15,2 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:22.1%"></span><span class="b1" style="width:100.0%"></span></td><td class="n">4,7 %</td><td class="n">21,3 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:26.8%"></span><span class="b1" style="width:85.9%"></span></td><td class="n">5,7 %</td><td class="n">18,3 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:31.5%"></span><span class="b1" style="width:77.0%"></span></td><td class="n">6,7 %</td><td class="n">16,4 %</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">2,9 %</td><td class="n">12,3 %</td></tr>
+        </table></div>
+        <p class="leise"><strong>Vorbehalt:</strong> Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte. Wer eine Leistung nicht beantragt, fehlt in der Statistik. Die Regeln, das Vermögen, die Mieten und die Finanzierung von Heimaufenthalten unterscheiden sich von Kanton zu Kanton. Eine hohe Quote kann auf mehr Bedarf hindeuten, aber auch darauf, dass die Leistung bekannter ist oder leichter beantragt wird.</p>
+
+      <h2 id="familie" tabindex="-1"><span class="nr">5</span> Was bekommen Familien?</h2>
+        <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens 215 Franken im Monat, das gesetzliche Minimum nach dem Familienzulagengesetz. Den höchsten ersten Ansatz gibt es im Kanton Zug: 330 Franken.<sup class="beleg"><a href="#quelle-bsvFamz" id="beleg-bsvFamz-1" aria-label="Quelle 11">11</a></sup> Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr, und in der Landwirtschaft gelten eigene Ansätze; die Tabelle zeigt den ersten Ansatz.</p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Kinderzulage 2026 je Kind und Monat (erster Ansatz), in Franken"><table>
+          <caption>Kinderzulage 2026 je Kind und Monat (erster Ansatz), in Franken, sortiert nach Kinderzulage</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Kinderzulage<br><span class="leise">Fr. im Monat je Kind</span></th></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.2%"></span></td><td class="n">215</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:66.7%"></span></td><td class="n">220</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:68.2%"></span></td><td class="n">225</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.7%"></span></td><td class="n">230</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.7%"></span></td><td class="n">230</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:69.7%"></span></td><td class="n">230</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:72.7%"></span></td><td class="n">240</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:72.7%"></span></td><td class="n">240</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:72.7%"></span></td><td class="n">240</td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:74.2%"></span></td><td class="n">245</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:74.2%"></span></td><td class="n">245</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:75.8%"></span></td><td class="n">250</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:78.2%"></span></td><td class="n">258</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:80.3%"></span></td><td class="n">265</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:83.3%"></span></td><td class="n">275</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:83.3%"></span></td><td class="n">275</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:94.2%"></span></td><td class="n">311</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:97.6%"></span></td><td class="n">322</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:99.1%"></span></td><td class="n">327</td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">330</td></tr>
+        </table></div>
+        <p>Für die Betreuung durch Kita, Tagesfamilie oder Hort lassen sich bei den Steuern die belegten Kosten abziehen, bis zu einer Grenze. Das gilt für Kinder unter 14, die im gleichen Haushalt leben wie die Person, die für ihren Unterhalt sorgt, wenn die Betreuung wegen Arbeit, Ausbildung oder Erwerbsunfähigkeit nötig ist. Bei der direkten Bundessteuer liegt die Grenze im Steuerjahr 2026 bei 25'800 Franken je Kind.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 12">12</a></sup> Ab 2027 sind es 25'900 Franken.<sup class="beleg"><a href="#quelle-as2026486" id="beleg-as2026486-1" aria-label="Quelle 13">13</a></sup> Die Kantone setzen eigene Grenzen: 17 Kantone liegen im Steuerjahr 2026 darunter, 8 auf oder über dem Bund.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-1" aria-label="Quelle 14">14</a></sup> Neuenburg ist nicht mitgezählt, siehe den Vorbehalt.</p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Höchster Abzug für Kinderbetreuung durch Dritte, Steuerjahr 2026, in Franken je Kind"><table>
+          <caption>Höchster Abzug für Kinderbetreuung durch Dritte, Steuerjahr 2026, in Franken je Kind, sortiert nach Abzug für Kinderbetreuung</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Kita-Abzug<br><span class="leise">Fr. im Jahr je Kind</span></th><th scope="col" class="n">Hinweis</th></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:29.3%"></span></td><td class="n">8'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:30.8%"></span></td><td class="n">8'400</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:34.4%"></span></td><td class="n">9'400</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:36.6%"></span></td><td class="n">10'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:36.6%"></span></td><td class="n">10'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:36.6%"></span></td><td class="n">10'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:37.0%"></span></td><td class="n">10'100</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:38.8%"></span></td><td class="n">10'600</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:44.0%"></span></td><td class="n">12'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:55.7%"></span></td><td class="n">15'200</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:58.6%"></span></td><td class="n">16'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:65.9%"></span></td><td class="n">18'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:74.0%"></span></td><td class="n">20'200</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:74.7%"></span></td><td class="n">20'400</td><td class="n leise">Wert 2025, auf Elternbeiträge begrenzt</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:91.6%"></span></td><td class="n">25'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:91.6%"></span></td><td class="n">25'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:92.7%"></span></td><td class="n">25'300</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:93.0%"></span></td><td class="n">25'400</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:94.5%"></span></td><td class="n">25'800</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:94.5%"></span></td><td class="n">25'800</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:94.5%"></span></td><td class="n">25'800</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:95.2%"></span></td><td class="n">26'000</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:96.0%"></span></td><td class="n">26'200</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:96.7%"></span></td><td class="n">26'392</td><td class="n leise"></td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:98.2%"></span></td><td class="n">26'800</td><td class="n leise"></td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">27'300</td><td class="n leise"></td></tr>
+        </table></div>
+        <p class="leise"><strong>Vorbehalt:</strong> Ein tiefer Abzug ist nicht automatisch eine Lücke. Wie viel Betreuung kostet, hängt auch davon ab, wie stark Kanton und Gemeinde Kita-Plätze verbilligen und wie hoch der Steuertarif ist. Abzüge für die Betreuung durch die Eltern selbst, die einzelne Kantone kennen, sind nicht verglichen. Für Neuenburg ist nur der Wert für 2025 ausgewiesen; der Abzug ist dort zudem auf die Elternbeiträge an die familienergänzende Betreuung nach dem kantonalen Gesetz begrenzt.<sup class="beleg"><a href="#quelle-estvDrittbetreuung" id="beleg-estvDrittbetreuung-1" aria-label="Quelle 15">15</a></sup> Neuenburg zählt deshalb beim Vergleich mit dem Bund nicht mit.</p>
+
+      <h2 id="arbeit" tabindex="-1"><span class="nr">6</span> Wie viele sind als arbeitslos gemeldet?</h2>
+        <p>Im September 2026 waren zwischen 0,8 % der Erwerbspersonen im Kanton Appenzell Innerrhoden und 5,3 % im Kanton Genf als arbeitslos gemeldet, in der ganzen Schweiz 3,0 %.<sup class="beleg"><a href="#quelle-seco" id="beleg-seco-1" aria-label="Quelle 16">16</a></sup></p>
+
+        <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Arbeitslosenquote September 2026"><table>
+          <caption>Arbeitslosenquote September 2026, sortiert nach Arbeitslosenquote</caption>
+          <tr><th scope="col">Kanton</th><th scope="col"><span class="sr-only">Balken</span></th><th scope="col" class="n">Arbeitslosenquote<br><span class="leise">% der Erwerbspersonen</span></th></tr>
+              <tr><th scope="row">Appenzell Innerrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:15.1%"></span></td><td class="n">0,8 %</td></tr>
+              <tr><th scope="row">Obwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:18.9%"></span></td><td class="n">1,0 %</td></tr>
+              <tr><th scope="row">Uri</th><td class="balken" aria-hidden="true"><span class="b0" style="width:18.9%"></span></td><td class="n">1,0 %</td></tr>
+              <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:20.8%"></span></td><td class="n">1,1 %</td></tr>
+              <tr><th scope="row">Schwyz</th><td class="balken" aria-hidden="true"><span class="b0" style="width:20.8%"></span></td><td class="n">1,1 %</td></tr>
+              <tr><th scope="row">Nidwalden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:22.6%"></span></td><td class="n">1,2 %</td></tr>
+              <tr><th scope="row">Appenzell Ausserrhoden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:28.3%"></span></td><td class="n">1,5 %</td></tr>
+              <tr><th scope="row">Glarus</th><td class="balken" aria-hidden="true"><span class="b0" style="width:32.1%"></span></td><td class="n">1,7 %</td></tr>
+              <tr><th scope="row">Luzern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:37.7%"></span></td><td class="n">2,0 %</td></tr>
+              <tr><th scope="row">St. Gallen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:37.7%"></span></td><td class="n">2,0 %</td></tr>
+              <tr><th scope="row">Bern</th><td class="balken" aria-hidden="true"><span class="b0" style="width:41.5%"></span></td><td class="n">2,2 %</td></tr>
+              <tr><th scope="row">Thurgau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:41.5%"></span></td><td class="n">2,2 %</td></tr>
+              <tr><th scope="row">Freiburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:47.2%"></span></td><td class="n">2,5 %</td></tr>
+              <tr><th scope="row">Zug</th><td class="balken" aria-hidden="true"><span class="b0" style="width:52.8%"></span></td><td class="n">2,8 %</td></tr>
+              <tr><th scope="row">Tessin</th><td class="balken" aria-hidden="true"><span class="b0" style="width:54.7%"></span></td><td class="n">2,9 %</td></tr>
+              <tr><th scope="row">Zürich</th><td class="balken" aria-hidden="true"><span class="b0" style="width:54.7%"></span></td><td class="n">2,9 %</td></tr>
+              <tr><th scope="row">Solothurn</th><td class="balken" aria-hidden="true"><span class="b0" style="width:56.6%"></span></td><td class="n">3,0 %</td></tr>
+              <tr><th scope="row">Basel-Landschaft</th><td class="balken" aria-hidden="true"><span class="b0" style="width:58.5%"></span></td><td class="n">3,1 %</td></tr>
+              <tr><th scope="row">Schaffhausen</th><td class="balken" aria-hidden="true"><span class="b0" style="width:58.5%"></span></td><td class="n">3,1 %</td></tr>
+              <tr><th scope="row">Wallis</th><td class="balken" aria-hidden="true"><span class="b0" style="width:58.5%"></span></td><td class="n">3,1 %</td></tr>
+              <tr><th scope="row">Aargau</th><td class="balken" aria-hidden="true"><span class="b0" style="width:60.4%"></span></td><td class="n">3,2 %</td></tr>
+              <tr><th scope="row">Jura</th><td class="balken" aria-hidden="true"><span class="b0" style="width:79.2%"></span></td><td class="n">4,2 %</td></tr>
+              <tr><th scope="row">Basel-Stadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:83.0%"></span></td><td class="n">4,4 %</td></tr>
+              <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:83.0%"></span></td><td class="n">4,4 %</td></tr>
+              <tr><th scope="row">Waadt</th><td class="balken" aria-hidden="true"><span class="b0" style="width:92.5%"></span></td><td class="n">4,9 %</td></tr>
+              <tr><th scope="row">Genf</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">5,3 %</td></tr>
+              <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">3,0 %</td></tr>
+        </table></div>
+        <p class="leise"><strong>Vorbehalt:</strong> Die Quote zählt Menschen, die beim RAV als arbeitslos gemeldet sind. Wer keine Stelle hat, aber nicht gemeldet ist, fehlt. Es ist ein Monatswert, der saisonal schwankt.</p>
+
+      <h2 id="nebeneinander" tabindex="-1"><span class="nr">7</span> Alle Zahlen nebeneinander</h2>
+        <p>Eine Auswahl der Zahlen aller Kantone in einer Tabelle, alphabetisch. Auf dem Handy lässt sie sich waagrecht verschieben; die Spalte mit dem Kanton bleibt stehen.</p>
+
+        <div class="tabelle breit" tabindex="0" role="region" aria-label="Alle Kantone nebeneinander, waagrecht verschiebbar"><table>
+          <caption>Alle Kantone nebeneinander, alphabetisch. Quellen und Stand wie in den Abschnitten oben.</caption>
+          <tr><th scope="col">Kanton</th><th scope="col" class="n">Prämie<br><span class="leise">Fr. im Monat</span></th><th scope="col" class="n">Prämienlast nach Verbilligung<br><span class="leise">% des Median-Reineinkommens, Rechenwert</span></th><th scope="col" class="n">Steuern bei 80'000 Fr.<br><span class="leise">% des Bruttolohns</span></th><th scope="col" class="n">Miete 3 Zimmer<br><span class="leise">Fr. im Monat</span></th><th scope="col" class="n">Leerwohnungen<br><span class="leise">% der Wohnungen</span></th><th scope="col" class="n">Sozialhilfequote<br><span class="leise">% der Bevölkerung</span></th><th scope="col" class="n">Ergänzungsleistungen (EL)<br><span class="leise">% der Menschen mit Altersrente</span></th><th scope="col" class="n">Arbeitslosenquote<br><span class="leise">% der Erwerbspersonen</span></th><th scope="col" class="n">Kinderzulage<br><span class="leise">Fr. im Monat je Kind</span></th></tr>
+            <tr><th scope="row">Aargau</th><td class="n">464.70</td><td class="n">10,0 %</td><td class="n">10,4 %</td><td class="n">1'440</td><td class="n">1,05 %</td><td class="n">1,6 %</td><td class="n">9,1 %</td><td class="n">3,2 %</td><td class="n">225</td></tr>
+            <tr><th scope="row">Appenzell Ausserrhoden</th><td class="n">422.30</td><td class="n">10,0 %</td><td class="n">12,6 %</td><td class="n">1'266</td><td class="n">1,12 %</td><td class="n">1,9 %</td><td class="n">9,4 %</td><td class="n">1,5 %</td><td class="n">230</td></tr>
+            <tr><th scope="row">Appenzell Innerrhoden</th><td class="n">340.50</td><td class="n">7,5 %</td><td class="n">9,0 %</td><td class="n">1'230</td><td class="n">0,96 %</td><td class="n">0,9 %</td><td class="n">5,5 %</td><td class="n">0,8 %</td><td class="n">245</td></tr>
+            <tr><th scope="row">Basel-Landschaft</th><td class="n">544.50</td><td class="n">12,2 %</td><td class="n">14,1 %</td><td class="n">1'469</td><td class="n">0,64 %</td><td class="n">2,4 %</td><td class="n">9,5 %</td><td class="n">3,1 %</td><td class="n">215</td></tr>
+            <tr><th scope="row">Basel-Stadt</th><td class="n">570.60</td><td class="n">12,7 %</td><td class="n">12,7 %</td><td class="n">1'445</td><td class="n">0,78 %</td><td class="n">4,7 %</td><td class="n">21,3 %</td><td class="n">4,4 %</td><td class="n">275</td></tr>
+            <tr><th scope="row">Bern</th><td class="n">494.40</td><td class="n">11,9 %</td><td class="n">14,6 %</td><td class="n">1'288</td><td class="n">1,04 %</td><td class="n">3,6 %</td><td class="n">13,2 %</td><td class="n">2,2 %</td><td class="n">250</td></tr>
+            <tr><th scope="row">Freiburg</th><td class="n">465.50</td><td class="n">11,2 %</td><td class="n">14,3 %</td><td class="n">1'299</td><td class="n">1,26 %</td><td class="n">2,0 %</td><td class="n">14,1 %</td><td class="n">2,5 %</td><td class="n">265</td></tr>
+            <tr><th scope="row">Genf</th><td class="n">610.60</td><td class="n">17,2 %</td><td class="n">13,1 %</td><td class="n">1'483</td><td class="n">0,31 %</td><td class="n">6,7 %</td><td class="n">16,4 %</td><td class="n">5,3 %</td><td class="n">311</td></tr>
+            <tr><th scope="row">Glarus</th><td class="n">426.50</td><td class="n">10,4 %</td><td class="n">11,5 %</td><td class="n">1'242</td><td class="n">0,51 %</td><td class="n">1,5 %</td><td class="n">11,6 %</td><td class="n">1,7 %</td><td class="n">215</td></tr>
+            <tr><th scope="row">Graubünden</th><td class="n">415.60</td><td class="n">10,2 %</td><td class="n">10,5 %</td><td class="n">1'382</td><td class="n">0,51 %</td><td class="n">1,0 %</td><td class="n">7,9 %</td><td class="n">1,1 %</td><td class="n">240</td></tr>
+            <tr><th scope="row">Jura</th><td class="n">551.00</td><td class="n">15,9 %</td><td class="n">13,2 %</td><td class="n">926</td><td class="n">3,35 %</td><td class="n">3,9 %</td><td class="n">18,3 %</td><td class="n">4,2 %</td><td class="n">275</td></tr>
+            <tr><th scope="row">Luzern</th><td class="n">422.20</td><td class="n">9,5 %</td><td class="n">10,3 %</td><td class="n">1'448</td><td class="n">0,70 %</td><td class="n">2,1 %</td><td class="n">13,5 %</td><td class="n">2,0 %</td><td class="n">215</td></tr>
+            <tr><th scope="row">Neuenburg</th><td class="n">558.80</td><td class="n">15,2 %</td><td class="n">16,1 %</td><td class="n">1'024</td><td class="n">1,64 %</td><td class="n">5,7 %</td><td class="n">18,3 %</td><td class="n">4,4 %</td><td class="n">240</td></tr>
+            <tr><th scope="row">Nidwalden</th><td class="n">397.20</td><td class="n">8,5 %</td><td class="n">10,0 %</td><td class="n">1'547</td><td class="n">0,62 %</td><td class="n">1,0 %</td><td class="n">7,0 %</td><td class="n">1,2 %</td><td class="n">258</td></tr>
+            <tr><th scope="row">Obwalden</th><td class="n">386.70</td><td class="n">8,8 %</td><td class="n">10,4 %</td><td class="n">1'406</td><td class="n">0,38 %</td><td class="n">0,8 %</td><td class="n">8,3 %</td><td class="n">1,0 %</td><td class="n">220</td></tr>
+            <tr><th scope="row">Schaffhausen</th><td class="n">470.60</td><td class="n">10,4 %</td><td class="n">9,7 %</td><td class="n">1'211</td><td class="n">0,84 %</td><td class="n">2,8 %</td><td class="n">10,4 %</td><td class="n">3,1 %</td><td class="n">230</td></tr>
+            <tr><th scope="row">Schwyz</th><td class="n">418.50</td><td class="n">8,8 %</td><td class="n">6,7 %</td><td class="n">1'655</td><td class="n">0,50 %</td><td class="n">1,3 %</td><td class="n">8,1 %</td><td class="n">1,1 %</td><td class="n">230</td></tr>
+            <tr><th scope="row">Solothurn</th><td class="n">493.50</td><td class="n">10,8 %</td><td class="n">14,3 %</td><td class="n">1'228</td><td class="n">1,91 %</td><td class="n">3,4 %</td><td class="n">12,1 %</td><td class="n">3,0 %</td><td class="n">215</td></tr>
+            <tr><th scope="row">St. Gallen</th><td class="n">427.40</td><td class="n">10,2 %</td><td class="n">13,0 %</td><td class="n">1'312</td><td class="n">1,16 %</td><td class="n">1,8 %</td><td class="n">12,5 %</td><td class="n">2,0 %</td><td class="n">245</td></tr>
+            <tr><th scope="row">Tessin</th><td class="n">603.60</td><td class="n">17,3 %</td><td class="n">11,8 %</td><td class="n">1'249</td><td class="n">1,78 %</td><td class="n">2,8 %</td><td class="n">16,4 %</td><td class="n">2,9 %</td><td class="n">215</td></tr>
+            <tr><th scope="row">Thurgau</th><td class="n">433.20</td><td class="n">10,3 %</td><td class="n">11,5 %</td><td class="n">1'308</td><td class="n">1,10 %</td><td class="n">1,1 %</td><td class="n">9,6 %</td><td class="n">2,2 %</td><td class="n">215</td></tr>
+            <tr><th scope="row">Uri</th><td class="n">377.70</td><td class="n">9,0 %</td><td class="n">10,3 %</td><td class="n">1'203</td><td class="n">0,42 %</td><td class="n">1,1 %</td><td class="n">9,0 %</td><td class="n">1,0 %</td><td class="n">240</td></tr>
+            <tr><th scope="row">Waadt</th><td class="n">543.50</td><td class="n">12,6 %</td><td class="n">14,8 %</td><td class="n">1'477</td><td class="n">0,87 %</td><td class="n">4,2 %</td><td class="n">15,2 %</td><td class="n">4,9 %</td><td class="n">322</td></tr>
+            <tr><th scope="row">Wallis</th><td class="n">460.90</td><td class="n">13,1 %</td><td class="n">11,9 %</td><td class="n">1'260</td><td class="n">1,04 %</td><td class="n">1,9 %</td><td class="n">8,0 %</td><td class="n">3,1 %</td><td class="n">327</td></tr>
+            <tr><th scope="row">Zug</th><td class="n">324.90</td><td class="n">6,3 %</td><td class="n">4,2 %</td><td class="n">1'875</td><td class="n">0,20 %</td><td class="n">1,3 %</td><td class="n">6,9 %</td><td class="n">2,8 %</td><td class="n">330</td></tr>
+            <tr><th scope="row">Zürich</th><td class="n">477.00</td><td class="n">9,1 %</td><td class="n">9,9 %</td><td class="n">1'732</td><td class="n">0,52 %</td><td class="n">2,5 %</td><td class="n">10,9 %</td><td class="n">2,9 %</td><td class="n">215</td></tr>
+            <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="n">487.60</td><td class="n">11,1 %</td><td class="n"><span aria-hidden="true">–</span><span class="sr-only">kein Wert</span></td><td class="n">1'446</td><td class="n">0,93 %</td><td class="n">2,9 %</td><td class="n">12,3 %</td><td class="n">3,0 %</td><td class="n"><span aria-hidden="true">–</span><span class="sr-only">kein Wert</span></td></tr>
+        </table></div>
+
+      <h2 id="zusammenhaenge" tabindex="-1"><span class="nr">8</span> Was zusammenhängt</h2>
+        <p>Legt man die Zahlen nebeneinander, fällt auf, dass manche zusammen steigen und fallen. Die Tabelle zeigt das als Korrelation über die 26 Kantone. Als Kontrolle ist auch die Rangfolge gerechnet; sagen beide Rechnungen Verschiedenes, steht die schwächere Stufe.</p>
+
+        <div class="tabelle" tabindex="0" role="region" aria-label="Zusammenhänge über die 26 Kantone"><table>
+          <caption>Zusammenhang über die 26 Kantone. r reicht von −1 (genau gegenläufig) über 0 (kein linearer Zusammenhang) bis +1 (genau gleichläufig).</caption>
+          <tr><th scope="col">Zahlen</th><th scope="col">Stärke</th><th scope="col" class="n">r</th><th scope="col">Was das heisst</th></tr>
+          <tr><th scope="row">Arbeitslosenquote und Sozialhilfequote</th><td>deutlich, gleichläufig</td><td class="n">0,87</td><td>In Kantonen mit höherer Arbeitslosenquote ist meist auch die Sozialhilfequote höher.</td></tr>
+          <tr><th scope="row">Prämie und Sozialhilfequote</th><td>deutlich, gleichläufig</td><td class="n">0,84</td><td>In Kantonen mit höherer Prämie ist meist auch die Sozialhilfequote höher.</td></tr>
+          <tr><th scope="row">Ergänzungsleistungen und Sozialhilfequote</th><td>deutlich, gleichläufig</td><td class="n">0,82</td><td>In Kantonen, in denen mehr Menschen mit Altersrente Ergänzungsleistungen beziehen, ist meist auch die Sozialhilfequote höher.</td></tr>
+          <tr><th scope="row">Miete und Leerwohnungen</th><td>teilweise, gegenläufig <span class="leise">(nach Rangfolge −0,58)</span></td><td class="n">−0,70</td><td>In Kantonen mit höheren Mieten stehen meist weniger Wohnungen leer.</td></tr>
+          <tr><th scope="row">Steuern und Prämie</th><td>deutlich, gleichläufig</td><td class="n">0,68</td><td>In Kantonen mit höheren Steuern ist meist auch die Prämie höher.</td></tr>
+        </table></div>
+        <p class="merke"><strong>Kurz gesagt:</strong> Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen. Dass Kantone mit höherer Prämie meist auch mehr Sozialhilfe haben, heisst nicht, dass Menschen mit hoher Prämie eher Sozialhilfe beziehen. Oft haben dieselben Kantone bei mehreren Zahlen hohe Werte, und dahinter können ganz andere Gründe liegen: Sprachregion, Alter der Bevölkerung, Wohnungsmarkt, Arbeitsplätze, Regeln. Jeder Kanton zählt einmal, egal wie viele Menschen dort leben. Was die Zahlen zeigen, ist ein Anlass zum Fragen, nicht die Antwort.</p>
+
+      <div class="karte">
+        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/#/praemien">Beispiel ansehen — ohne Zugangscode</a></p>
+      </div>
+
+      <h2 id="quellen">Quellen</h2>
+      <p class="leise">Die hochgestellten Nummern im Text führen hierher, «Zurück zum Text» wieder an die Stelle.</p>
+      <ol class="quellen">
+        <li id="quelle-praemienKantone">
+          <span class="q-nr">1</span>
+          <div>
+            <p class="q-titel"><a href="https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/09/29/f21880a8-516b-414a-8044-15f6e1c84c18.pdf" rel="noopener">Kantonale Prämien 2026/2027</a></p>
+            <p class="q-her">Bundesamt für Gesundheit · 29.09.2026</p>
+            <p class="q-belegt">Belegt: mittlere Prämie je Kanton und für die ganze Schweiz</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-praemienKantone-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-estvStatistik">
+          <span class="q-nr">2</span>
+          <div>
+            <p class="q-titel"><a href="https://www.estv.admin.ch/de/statistiken-zur-direkten-bundessteuer" rel="noopener">Statistiken zur direkten Bundessteuer</a></p>
+            <p class="q-her">Eidgenössische Steuerverwaltung · Steuerjahr 2022</p>
+            <p class="q-belegt">Belegt: Median-Reineinkommen je Kanton, Grundlage der Prämienlast</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvStatistik-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bagOkp">
+          <span class="q-nr">3</span>
+          <div>
+            <p class="q-titel"><a href="https://www.bag.admin.ch/de/statistik-der-obligatorischen-krankenversicherung" rel="noopener">Statistik der obligatorischen Krankenversicherung 2025</a></p>
+            <p class="q-her">Bundesamt für Gesundheit · Tabellen T 4.02 und T 4.08, Datenstand 15.07.2026</p>
+            <p class="q-belegt">Belegt: Bezugsquote und durchschnittlicher Beitrag der Prämienverbilligung je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bagOkp-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-zhIpv">
+          <span class="q-nr">4</span>
+          <div>
+            <p class="q-titel"><a href="https://www.zh.ch/de/news-uebersicht/medienmitteilungen/2024/09/kanton-legt-praemienverbilligungen-2025-fest.html" rel="noopener">Kanton legt Prämienverbilligungen 2025 fest</a></p>
+            <p class="q-her">Kanton Zürich · 26.09.2024</p>
+            <p class="q-belegt">Belegt: provisorische Auszahlung und spätere Abrechnung in Zürich</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-zhIpv-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-estvSteuerrechner">
+          <span class="q-nr">5</span>
+          <div>
+            <p class="q-titel"><a href="https://swisstaxcalculator.estv.admin.ch/#/taxburden/income-wealth-tax" rel="noopener">Steuerbelastung in den Kantonen und Gemeinden</a></p>
+            <p class="q-her">Eidgenössische Steuerverwaltung · Steuerjahr 2026, abgerufen 24.10.2026</p>
+            <p class="q-belegt">Belegt: Steuerbelastung im Kantonshauptort und in den Gemeinden</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvSteuerrechner-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bfsMiete">
+          <span class="q-nr">6</span>
+          <div>
+            <p class="q-titel"><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36398431/master" rel="noopener">Strukturerhebung: durchschnittlicher Mietpreis nach Kanton und Zimmerzahl</a></p>
+            <p class="q-her">Bundesamt für Statistik · 2024, Tabelle T 09.03.03.01</p>
+            <p class="q-belegt">Belegt: durchschnittliche Nettomiete je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsMiete-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bfsLse">
+          <span class="q-nr">7</span>
+          <div>
+            <p class="q-titel"><a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur/grossregionen.html" rel="noopener">Lohnstrukturerhebung nach Grossregion</a></p>
+            <p class="q-her">Bundesamt für Statistik · 2024</p>
+            <p class="q-belegt">Belegt: Medianlohn der Grossregion</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsLse-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bfsLeer">
+          <span class="q-nr">8</span>
+          <div>
+            <p class="q-titel"><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36836216/master" rel="noopener">Leerwohnungszählung 2026</a></p>
+            <p class="q-her">Bundesamt für Statistik · Stichtag 1.6.2026, publiziert 10.9.2026</p>
+            <p class="q-belegt">Belegt: Leerwohnungsziffer je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsLeer-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bfsSozialhilfe">
+          <span class="q-nr">9</span>
+          <div>
+            <p class="q-titel"><a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/soziale-sicherheit/sozialhilfe/sozialhilfebeziehende/wirtschaftliche-sozialhilfe.html" rel="noopener">Sozialhilfestatistik: wirtschaftliche Sozialhilfe</a></p>
+            <p class="q-her">Bundesamt für Statistik · 2024, publiziert 15.12.2025</p>
+            <p class="q-belegt">Belegt: Sozialhilfequote je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsSozialhilfe-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bsvEl">
+          <span class="q-nr">10</span>
+          <div>
+            <p class="q-titel"><a href="https://www.bsv.admin.ch/de/statistik-el" rel="noopener">Statistik der Ergänzungsleistungen 2025</a></p>
+            <p class="q-her">Bundesamt für Sozialversicherungen · Dezember 2025, publiziert 26.05.2026</p>
+            <p class="q-belegt">Belegt: EL-Quote zur AHV je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvEl-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-bsvFamz">
+          <span class="q-nr">11</span>
+          <div>
+            <p class="q-titel"><a href="https://www.bsv.admin.ch/dam/de/sd-web/acU7RgJgeisY/Arten%20und%20Ans%C3%A4tze%20der%20Familienzulagen_2026.pdf" rel="noopener">Arten und Ansätze der Familienzulagen 2026</a></p>
+            <p class="q-her">Bundesamt für Sozialversicherungen · Stand 1.1.2026</p>
+            <p class="q-belegt">Belegt: Kinderzulage je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvFamz-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-dbg">
+          <span class="q-nr">12</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/20260101/de" rel="noopener">Bundesgesetz über die direkte Bundessteuer (DBG), Art. 33 Abs. 3</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex), SR 642.11 · Fassung vom 1.1.2026; Betrag von 25'800 Fr. seit 1.1.2025 (AS 2024 479)</p>
+            <p class="q-belegt">Belegt: Höchstabzug für Kinderdrittbetreuung bei der direkten Bundessteuer und seine Bedingungen</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-dbg-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-as2026486">
+          <span class="q-nr">13</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/oc/2026/486/de" rel="noopener">Verordnung des EFD über den Ausgleich der Folgen der kalten Progression für die natürlichen Personen bei der direkten Bundessteuer (Verordnung über die kalte Progression, VKP), Art. 5 Abs. 2</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex) · vom 11.09.2026, in Kraft ab 1.1.2027 (AS 2026 486)</p>
+            <p class="q-belegt">Belegt: Höchstabzug für Kinderdrittbetreuung ab 2027</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-as2026486-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-estvKantonsblaetter">
+          <span class="q-nr">14</span>
+          <div>
+            <p class="q-titel"><a href="https://www.estv.admin.ch/de/kantonsblaetter" rel="noopener">Kantonsblätter</a></p>
+            <p class="q-her">Eidgenössische Steuerverwaltung und Schweizerische Steuerkonferenz · Stand Februar 2026</p>
+            <p class="q-belegt">Belegt: Abzug für Kinderbetreuung je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvKantonsblaetter-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-estvDrittbetreuung">
+          <span class="q-nr">15</span>
+          <div>
+            <p class="q-titel"><a href="https://www.estv2.admin.ch/stp/sm/drittbetreuungskosten-de-fr.pdf" rel="noopener">Steuermäppchen: Abzug der Kosten für die Drittbetreuung der Kinder</a></p>
+            <p class="q-her">Eidgenössische Steuerverwaltung · Steuerperiode 2025</p>
+            <p class="q-belegt">Belegt: Höchstabzug und Begrenzung im Kanton Neuenburg</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvDrittbetreuung-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-seco">
+          <span class="q-nr">16</span>
+          <div>
+            <p class="q-titel"><a href="https://www.seco.admin.ch/de/newnsb/Cdju9-o8WGML" rel="noopener">Die Lage auf dem Arbeitsmarkt, September 2026</a></p>
+            <p class="q-her">Staatssekretariat für Wirtschaft · publiziert 6.10.2026</p>
+            <p class="q-belegt">Belegt: Arbeitslosenquote je Kanton</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-seco-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+      </ol>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung; die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Die Zahlen stammen aus dem Maloja-Kantonsatlas, der sie aus diesen Quellen sammelt.</p>
+
+      <div class="anhang">
+        <h3>Gesetzesstellen</h3>
+        <p>DBG Art. 33 Abs. 3 (Kinderdrittbetreuung), Fassung 1.1.2026 am Volltext gelesen; Betrag ab 1.1.2027 aus dem Erlasstext AS 2026 486 (gelesen 05.11.2026).</p>
+        <h3>Eigene Rechnungen</h3>
+        <p>Prämienlast: Jahresprämie 2026 der Erwachsenen geteilt durch das Median-Reineinkommen 2022 der Unverheirateten (ESTV). Nach Verbilligung: Prämienlast mal (1 − Bezugsquote × durchschnittlicher Beitrag in Prozent der mittleren Prämie), aus der BAG-Statistik 2025; die Entlastung ist ein Anteil an der mittleren Prämie aller Versicherten, hier auf die Erwachsenenprämie angewendet.</p>
+        <p>Miete am Medianlohn: Miete 3 Zimmer im Kanton geteilt durch den Medianlohn der Grossregion, beide 2024; für die ganze Schweiz mit dem Schweizer Medianlohn.</p>
+        <p>Zusammenhänge: Korrelationskoeffizient nach Pearson über die 26 Kantone, ungewichtet, zur Kontrolle auch nach Rangfolge (Spearman). «Deutlich» ab einem Betrag von 0,6, «teilweise» ab 0,3, darunter «kaum»; weichen die beiden Rechnungen in der Stufe ab, gilt die schwächere. Bei 26 Kantonen ist jede Stufe unsicher: Ein gemessenes r von 0,7 liegt mit 95 % Wahrscheinlichkeit etwa zwischen 0,43 und 0,86.</p>
+      </div>
+
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Sie vergleicht Durchschnitte, die verschieden erhoben werden und verschieden alt sind. Sie bewertet die Kantone nicht. Die Tabellen sind nach der Zahl sortiert, nicht nach Güte: Eine tiefe Zahl ist nicht besser und eine hohe nicht schlechter, hinter jeder stehen eigene Kosten, Löhne und Entscheide. Massgebend sind die zuständigen Stellen.</p>
+
+      <h2>Weiterlesen</h2>
+      <ul>
+          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+          <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+          <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/krankenkasse/">Krankenkasse erklärt</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> <span class="leise">(diese Seite gibt es bisher nur auf Deutsch)</span></p>
+    </footer>
+  </div>
+</body>
+</html>

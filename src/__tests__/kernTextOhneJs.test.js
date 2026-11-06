@@ -109,7 +109,8 @@ describe('Kern-Text ohne JavaScript — was ein JS-loser Crawler liest', () => {
 // sieht nach dem Rendern die Code-Wand.
 describe('Startseite verlinkt die öffentlichen Erklärseiten', () => {
   const betaGate = fs.readFileSync(path.resolve(process.cwd(), 'src/BetaGate.jsx'), 'utf8');
-  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'sozialhilfe', 'steuern'];
+  // Krankenkasse seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber auf keinem der beiden Wege.
+  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse', 'sozialhilfe', 'steuern'];
 
   it.each(seiten)('/%s/ existiert, steht im noscript-Block und auf der Code-Wand', (seite) => {
     expect(fs.existsSync(path.resolve(process.cwd(), 'public', seite, 'index.html'))).toBe(true);

@@ -40,7 +40,7 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.sm + 'px', lineHeight: leading.normal } }, hinweisZeichen(), t('bw.begleit.wo')),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(bestattungHtml(antworten, data, t, lang)) },
-          React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
+          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('bw.ui.aendern')),
         onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
         // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).

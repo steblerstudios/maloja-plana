@@ -155,7 +155,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
         onClick: () => setVorschau('druck'),
         // Fassung 9 (S1): Drucken ist der Hauptknopf, die Dossier-Datei der Nebenknopf.
         style: { ...knopfStil(palette, 'haupt'), flex: 1, padding: '12px' },
-      }, t('behoerdenDossier.printAction')),
+      }, hinweisZeichen('drucker', 16), t('behoerdenDossier.printAction')),
       React.createElement('button', {
         onClick: () => setVorschau('json'),
         style: { ...knopfStil(palette, 'neben'), flex: 1, padding: '12px' },

@@ -14,7 +14,7 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'todesfall', icon: 'document',
+    palette, t, onNavigate, ablauf: 'todesfall', icon: 'ereignisTodesfall',
     title: t('todesfall.title'),
     intro: t('todesfall.intro'),
   },

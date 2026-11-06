@@ -245,3 +245,33 @@ Edelweiss-Wiese · **Gipfel-Motiv** (Maloja — Empty States, ruhiger Fortschrit
 
 → Nächster Schritt: bestehende Icons auf diese Tabelle ausrichten + Granit-Farben, dann
 überall konsistent einsetzen.
+
+---
+
+## ⟨Nachtrag 06.11.2026⟩ Stand nach dem Icon-Plan November 2026
+
+Die «Finale Zuordnung» oben wird jetzt umgesetzt (Plan `docs/ICON-PLAN-2026-11.md`, Schritte als
+Entwurfs-PRs). Was sich an den Status dieser Liste ändert:
+
+- **Schicht B ist Strich** (E1): Info, Hinweis, Fehler, Erfolg, Löschen, Filter, Telefon, Scannen
+  (QR/Barcode), CSV, Verlauf, Dokument neu als Linie — sanft, ohne weisse Innenzeichen.
+  «Hinweis/Fehler: Ton prüfen» → **sanft, als Strich** ✓
+- **Notfall** = Rettungskreuz überall; die Glocke (`emergency`) steht nicht mehr für Notfall ✓
+- **Organspende** trägt ihr eigenes Herz, nicht mehr das Gesundheits-Kreuz ✓ (Kollision mit Notfall
+  bleibt beim Zeichnen zu klären)
+- **Dokumente/Ablage = Ordner**; `mappe` aufgelöst (E2) ✓ · **Plus** im Register (E3) ✓
+- **Übersicht = Sackmesser**, **Rucksack**, **Geschenk** («Was steht mir zu?») stehen jetzt im
+  Register statt von Hand in Leiste und Menü ✓
+- Noch offen aus dieser Liste: Uhr = Frist, Couvert = Import/Export, Setzling = Vorsorge,
+  Sparschwein, Quittung als Ausgaben-Bild, Gesundheit-/Dokumente-Cluster, `check` vs `success`.
+
+### ⟨Nachtrag 06.11.2026, Schritt 7⟩ Behörden = Helvetia · Gruppe E
+
+- **Behörden / Staat = Helvetia.** So ist es gezeichnet (Münze mit Krone, Speer, Schild,
+  `src/IconMuenzen.jsx`) und so gilt es (Stebler Studios, 06.11.2026: «sind Behörden nicht
+  Helvetia»). Die Zeilen oben mit «Bundeshaus, war Helvetia» sind damit überholt — stehen
+  gelassen als Verlauf.
+- **Lebensereignisse haben je ein eigenes Zeichen** (Gruppe E, 39 Stück, aus dem Rucksack) —
+  überall dasselbe. Die Liste aller Icons mit Gruppe und Bedeutung: `src/config/iconInventar.js`.
+- **Wilhelm Tell:** erarbeitet (Braindump 29: Persönliche Basis/Apfel, geparkt; IDEEN.md:
+  Auszeichnungen, geparkt; hier: Bürgerrecht), nie gezeichnet. Entscheid beim Zeichnen.

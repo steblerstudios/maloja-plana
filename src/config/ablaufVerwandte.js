@@ -35,7 +35,8 @@ export const VERWANDTE = {
   aussteuerung: ['stelleverloren', 'ergaenzungsleistungen'],
   zuzug: ['umzug', 'einbuergerung', 'kkerst', 'bewilligung'],
   einbuergerung: ['bewilligung', 'zuzug', 'ausweis'],
-  vorsorgeauftrag: ['pensionierung', 'todesfall', 'pflege'],
+  // digitaleordnung (Seitenlandkarte V2, 06.11.2026): Zugänge und Konten gehören zur Vorsorge und zum Nachlass.
+  vorsorgeauftrag: ['pensionierung', 'todesfall', 'pflege', 'digitaleordnung'],
   ergaenzungsleistungen: ['pensionierung', 'iv', 'pflege'],
   zusammenziehen: ['heirat', 'umzug'],
   adoption: ['kind', 'heirat'],
@@ -45,6 +46,6 @@ export const VERWANDTE = {
   lehre: ['volljaehrig', 'neuerjob', 'dienst'],
   volljaehrig: ['lehre', 'dienst', 'kkerst'],
   dienst: ['volljaehrig', 'lehre'],
-  todesfall: ['vorsorgeauftrag', 'pensionierung', 'ergaenzungsleistungen'],
+  todesfall: ['vorsorgeauftrag', 'pensionierung', 'ergaenzungsleistungen', 'digitaleordnung'],
   digitaleordnung: ['vorsorgeauftrag', 'betreibungsauszug'],
 };

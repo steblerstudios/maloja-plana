@@ -29,7 +29,7 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
   const coverVorbei = istVorbei(coverEnd);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'stelleverloren', icon: 'lebenslauf',
+    palette, t, onNavigate, ablauf: 'stelleverloren', icon: 'ereignisStelleweg',
     title: t('stelleVerloren.title'),
     intro: t('stelleVerloren.intro'),
   },

@@ -70,6 +70,19 @@ describe('Erklärseiten in fünf Sprachen', () => {
   describe('die Freigabe-Sperre', () => {
     const xml = fs.readFileSync(path.resolve(WURZEL, 'public', 'sitemap.xml'), 'utf8');
 
+    // Rechtsprüfung 05.11.2026: Bevor fr/it/en freigegeben werden können, muss
+    // der Rahmen bereitstehen — sonst fällt beim Freigeben der Satz «Deutsch
+    // gilt» weg, oder die Seite behauptet eine Inhaltsprüfung der Übersetzung.
+    for (const code of ['fr', 'it', 'en']) {
+      it(`${code}: Rahmen für die Freigabe ist vorbereitet`, () => {
+        const R = RAHMEN[code];
+        expect(R.verbindlich, 'Satz «bei Abweichungen gilt Deutsch» fehlt').toBeTruthy();
+        expect(R.originalGeprueft, 'Herkunft der Inhaltsprüfung fehlt').toBeTruthy();
+        expect(R.geprueftLabel, 'Prüfdatum darf bei Übersetzungen keine Inhaltsprüfung behaupten')
+          .not.toMatch(/contenu|contenuto|content/i);
+      });
+    }
+
     for (const sprache of SPRACHEN) {
       const { seiten, sonderseiten } = inhaltFuer(sprache.code);
 
@@ -101,8 +114,13 @@ describe('Erklärseiten in fünf Sprachen', () => {
       it(`${sprache.code}: Entwurfs-Hinweis genau dann, wenn nicht freigegeben`, () => {
         const html = lies(seiten[0].pfad, sprache);
         if (sprache.freigegeben) {
-          expect(RAHMEN[sprache.code].entwurfBanner).toBeNull();
           expect(html).not.toContain('class="entwurf"');
+          // Übersetzung freigegeben: der Entwurfs-Hinweis fällt weg, aber die
+          // Angabe, dass Deutsch verbindlich ist, muss bleiben.
+          if (sprache.code !== 'de') {
+            expect(html, 'freigegebene Übersetzung ohne Hinweis «Deutsch gilt»')
+              .toContain('class="verbindlich"');
+          }
         } else {
           expect(RAHMEN[sprache.code].entwurfBanner, 'Entwurfs-Hinweis fehlt').toBeTruthy();
           expect(html, 'nicht freigegeben, aber ohne sichtbaren Hinweis').toContain('class="entwurf"');

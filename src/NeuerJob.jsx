@@ -19,7 +19,7 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
   const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'neuerjob', icon: 'lebenslauf',
+    palette, t, onNavigate, ablauf: 'neuerjob', icon: 'ereignisJob',
     title: t('neuerJob.title'),
     intro: t('neuerJob.intro'),
   },
@@ -27,7 +27,9 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('neuerJob.step1Title') },
       React.createElement('p', { style: s.stepText }, t('neuerJob.step1Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('neuerJob.step1LinkChapter'), onClick: () => onNavigate('chapter', chapterIdx('finanzen')) }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('neuerJob.step1LinkAblage'), onClick: () => onNavigate('tresor', undefined, 'finanzen') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('neuerJob.step1LinkAblage'), onClick: () => onNavigate('tresor', undefined, 'finanzen') }),
+      // Seitenlandkarte V2 (06.11.2026): wer im Stundenlohn anfängt, prüft hier Grundlohn, Ferien und Zuschläge.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('nav.stundenlohn'), onClick: () => onNavigate('stundenlohn') })
     ),
 
     // Schritt 2 — Pensionskasse (BVG). Die Eintrittsschwelle aus der Jahrestabelle, damit der Text
