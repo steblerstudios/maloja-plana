@@ -1956,13 +1956,11 @@ export default {
     toolsAndFeatures: 'Werkzeuge',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
     toolGroups: {
-      gesundheit: 'Gesundheit',
       lebensereignisse: 'Lebensereignisse',
       ankommen: 'Ankommen in der Schweiz',
       mit18: 'Mit 18',
       money: 'Geld & Steuern',
       insurance: 'Versicherung & Gesundheit',
-      support: 'Unterstützung & Anspruch',
       documents: 'Dokumente & Behörden',
       organize: 'Organisieren & Profil',
     },

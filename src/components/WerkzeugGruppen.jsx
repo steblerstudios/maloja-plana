@@ -46,15 +46,9 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
     { label: t('dashboard.toolGroups.ankommen'), items: ANKOMMEN.map((v) => ABLAEUFE.find((a) => a.view === v)).filter(Boolean).map(alsEintrag) },
     // G2 (06.11.2026): der Weg ins Erwachsenenleben als Reihe; die Abläufe bleiben auch oben stehen.
     { label: t('dashboard.toolGroups.mit18'), items: MIT18.map((v) => ABLAEUFE.find((a) => a.view === v)).filter(Boolean).map(alsEintrag) },
-    { label: t('dashboard.toolGroups.gesundheit'), items: [
-      { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
-    ] },
-    // «Asyl & Migration» stand hier ein zweites Mal — dasselbe Ziel wie in
-    // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
-    // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
-    { label: t('dashboard.toolGroups.support'), items: [
-      { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
-    ] },
+    // A1 (06.11.2026): keine Gruppen mit nur einem Eintrag. «Gesundheit» (nur Arztkoffer) ist in «Versicherung &
+    // Gesundheit» aufgegangen; «Unterstützung & Anspruch» (nur «Was steht mir zu?») ist weg — die Seite steht fest
+    // in der Leiste unten (Wächter: gruppenStraffen.test.js).
     { label: t('dashboard.toolGroups.money'), items: [
       { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
       { label: t('budgetSync.title'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
@@ -66,6 +60,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
       { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
       { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
       { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
+      { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
     ] },
     { label: t('dashboard.toolGroups.documents'), items: [
       { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },

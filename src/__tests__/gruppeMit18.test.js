@@ -27,11 +27,11 @@ describe('Gruppe «Mit 18» in der Übersicht', () => {
     expect([de, fr, it_, en, rm].map((l) => l.dashboard.toolGroups.mit18)).toEqual(['Mit 18', 'À 18 ans', 'A 18 anni', 'At 18', 'Cun 18 onns']);
   });
 
-  it('die Gruppe steht nach «Ankommen in der Schweiz» und vor «Gesundheit»', () => {
+  it('die Gruppe steht nach «Ankommen in der Schweiz» und vor «Geld & Steuern»', () => {
     const g = quelle('components/WerkzeugGruppen.jsx');
     const a = g.indexOf("t('dashboard.toolGroups.ankommen')");
     const b = g.indexOf("t('dashboard.toolGroups.mit18')");
-    const c = g.indexOf("t('dashboard.toolGroups.gesundheit')");
+    const c = g.indexOf("t('dashboard.toolGroups.money')");
     expect(a).toBeGreaterThan(-1);
     expect(b).toBeGreaterThan(a);
     expect(c).toBeGreaterThan(b);

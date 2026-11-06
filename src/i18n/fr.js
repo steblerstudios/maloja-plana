@@ -1947,13 +1947,11 @@ export default {
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: { sie: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.', du: 'Calculateurs et outils — utilisables indépendamment de tes chapitres.' },
     toolGroups: {
-      gesundheit: 'Santé',
       lebensereignisse: 'Événements de vie',
       ankommen: 'Arrivée en Suisse',
       mit18: 'À 18 ans',
       money: 'Argent & impôts',
       insurance: 'Assurance & santé',
-      support: 'Soutien & droits',
       documents: 'Documents & autorités',
       organize: 'Organiser & profil',
     },
