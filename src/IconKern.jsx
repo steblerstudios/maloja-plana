@@ -534,6 +534,19 @@ export const zeichenErgaenzen = (fabriken) => {
 // Wraps any icon key with proper sizing, color inheritance,
 // and aria-hidden for accessibility (all icons are decorative).
 
+// Strich nach Grösse (Icon-Plan November 2026, Schritt 4). ICON_KONVENTION.md: «Massstab ist die
+// optische Strichstärke am Renderpunkt, nicht dieselbe Zahl» — Ziel 1,1–1,4 px. Ein Strich-Icon
+// (Wurzel `fill: none` mit `stroke`) bekommt darum seine Strichstärke aus der Grösse: bei 14 px
+// 2,14, bei 22 px 1,36, bei 32 px 0,94 — optisch überall 1,25 px. Kinder mit eigener Stärke
+// behalten sie; Flächen-Icons bleiben, wie sie gezeichnet sind. Wächter: strichNachGroesse.test.js.
+const ZIEL_STRICH_PX = 1.25;
+export const strichFuer = (px) => Math.round((ZIEL_STRICH_PX * 24 / px) * 100) / 100;
+const mitStrichNachGroesse = (el, px) => (
+  typeof px === 'number' && px > 0 && el.props.fill === 'none' && el.props.stroke
+    ? React.cloneElement(el, { strokeWidth: strichFuer(px) })
+    : el
+);
+
 export const Icon = ({ name, size = 16, color, style = {} }) => {
   const IconFn = Icons[name];
   if (!IconFn) return null;
@@ -551,7 +564,7 @@ export const Icon = ({ name, size = 16, color, style = {} }) => {
       color: color || 'inherit',
       ...style,
     }
-  }, IconFn());
+  }, mitStrichNachGroesse(IconFn(), size));
 };
 
 // ═══════════════════════════════════════════════════════════════
