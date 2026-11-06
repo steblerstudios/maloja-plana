@@ -49,6 +49,15 @@ Befund im Code (`AblaufSchale.jsx`, `KAPITEL_OHNE_EIGENES`, Entscheid 23.10.): 1
 ✅ **06.11.: Gesundheit zum Edelweiss-Schild** (wie im Kapitel), in Hagebutten-Orange. Notfall behält das Herz mit Kreuz allein → die zwei sind nicht mehr zu verwechseln.
 Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild [Leitformen](icon-besprechung-leitformen.html), je A/B/C neben heute. Empfehlung: Apfel · Arbeitskoffer · Herz mit Kreuz (reicher). Offen.
 
+## System in drei Ebenen (06.11.2026, abends, Stebler Studios)
+
+Wörtlich: «wir wollen alles nach den 7 Leitformen gestalten … Gesundheit auch zu Notfall zählt, aber dann unten rechts das Versicherungs-Icon … bei Familie soll Familie grün sein und vielleicht dann zwei Personen in der Karte» · Ausbildung & Arbeit: «auch hier wieder eine gute Kombi, wir wollen hier sauber ein System ausarbeiten» · Notfall: «alles drei, je nach Gebiet und was wir noch füllen müssen und für Kombis».
+Verstanden als:
+1. **Leitform = Kapitel (7)**, in der Farbe des Kapitels (Familie grün wie die Persönliche Basis).
+2. **Varianten der Leitform** unterscheiden die Gebiete im Kapitel — gezeichnet, nicht nur gefärbt (Karte mit einer Person = Person, mit zwei = Familie; Koffer / Schulhut; Herz / Erste-Hilfe-Koffer / Rettungsring).
+3. **Abzeichen unten rechts** = was passiert **oder** ein Mini-Bild eines anderen Kapitels, das mitspielt (Gesundheit = Herz + Mini-Schild).
+⚠️ Damit überholt: «Gesundheit zum Schild» (→ Herz + Schild-Abzeichen) und ev. «Farbe je Lebensbereich (11)». Noch zu bestätigen.
+
 ## Grundsatz (06.11.2026)
 
 **Jede Familie hat eine Leitform — das bestehende reiche Bild (Chalet, Edelweiss-Schild …) —, ein Mini-Zeichen sagt, was passiert**. Vorbild in der App: Mietzinsverbilligung und Prämienverbilligung. ✅ **06.11.: bestätigt am Beispiel Versicherung («genau 3 richtig so»).** — wie bei den Häusern,
