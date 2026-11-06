@@ -94,3 +94,22 @@ describe('Jahreskreis: Fristen als Zeitfenster', () => {
     expect(zeichne({})).toMatch(/^<div style="background/);
   });
 });
+
+// F9-A14 Schritt 2, Skizze D («d gefällt mir sehr», 06.11.2026): in der Liste unter dem Kreis tragen
+// Fristen ein Kalenderblatt (abgelaufen rot), Termine behalten Zeichen und Datum.
+describe('Jahreskreis-Liste · Kalenderblatt für Fristen', () => {
+  const eintraege = [
+    { key: 'f1', iso: '2026-11-30', art: 'frist', farbe: '#6E90B0', titel: 'Krankenkasse kündigen' },
+    { key: 'f0', iso: '2026-03-31', art: 'frist', farbe: '#6E90B0', titel: 'Steuererklärung' },
+    { key: 't1', iso: '2026-12-09', art: 'termin', farbe: '#7E9F8C', titel: 'Velo-Service' },
+  ];
+  it('Frist bekommt ein Blatt, abgelaufene rot; der Termin nicht', async () => {
+    const { LIGHT_PALETTE } = await import('../config/constants.js');
+    const html = zeichne({ eintraege, palette: LIGHT_PALETTE });
+    expect((html.match(/data-teil="kalenderblatt"/g) || []).length).toBe(2);
+    expect(html).toContain('data-zustand="offen"');
+    expect(html).toContain('data-zustand="vorbei"');
+    expect(html).toContain('Velo-Service');
+    expect(html).toContain('9. Dez.');
+  });
+});
