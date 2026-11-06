@@ -26,6 +26,10 @@ const sichtbareTexte = (src) => {
 // Verworfene Formen — dürfen in keinem sichtbaren Text mehr stehen.
 const VERWORFEN = [
   ['Dokumenten-Tresor', /Dokumenten-Tresor/],
+  // Ablage heisst «Dokumentenablage» (LANGUAGE_SYSTEM_NOTE: «Tresor» klingt nach Bank/Hochsicherheit);
+  // «Tresor» nur für das verschlüsselte Schloss («Ihr Tresor ist gesperrt»).
+  ['Dokumententresor', /Dokumententresor/],
+  ['im Tresor ablegen', /\b(im|in den|in deinen|in Ihren) Tresor\b/],
   ['Mietzinsbeitrag/-beiträge', /Mietzinsbeitr/],
   ['Mietzins-Beiträge', /Mietzins-Beitr/],
   ['Deadline', /Deadline/i],
