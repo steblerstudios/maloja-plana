@@ -107,7 +107,7 @@ Sie zeigt aber, welche Seiten **fast nur über Suche oder Menü** gefunden werde
 - **schwach angebunden (≤ 2):** Benachrichtigungen (0), Obstgarten (1, nur Übersicht), Einstellungen (1), Digitale Ordnung (2),
   Unterlagen drucken (2), Flyer (2), Rucksack (2), Kreditkarte (2), Stundenlohn (2)
 - **«Nach Einkommen» (`anspruchcheck`)** steht in **keinem** Register (nicht im Menü, nicht in der Suche). Erreichbar nur über
-  drei Seiten: Was steht mir zu, Ergänzungsleistungen, Anspruchs-Landkarte
+  drei Seiten: Was steht mir zu, Ergänzungsleistungen, Anspruchs-Landkarte. ⟨06.11.: gewollt, siehe Z1⟩
 - **stark angebunden (≥ 20):** Prämienverbilligung (30), Vorsorge-Rechner (30), Ablage (25), Steuern (24), Sozialhilfe (20)
 
 ---
@@ -121,7 +121,7 @@ Texte in fünf Sprachen, Fachprüfung wo Fachtext wandert, Entwurfs-PR, kein Mer
 
 | | Vorschlag | Warum | Empfehlung |
 |---|---|---|---|
-| **Z1** | **«Nach Einkommen» in «Was steht mir zu?»** als Teil «Mit Ihren Angaben» (die Sprungmarke gibt es schon, `schnellcheck`/`ansprueche` zeigen dorthin) | Gruppe A aus `seiten-buendeln.md`, am 24.10. zurückgestellt. Heute bleiben zwei Seiten für eine Frage, und die zweite steht in keinem Register (§2) | **ja, mit Fassung 9**. Grösster Gewinn: ein Ort für Ansprüche |
+| ~~**Z1**~~ | ⟨**entfällt, 06.11.**⟩ ~~«Nach Einkommen» in «Was steht mir zu?»~~. Am Code geprüft: «Was steht mir zu?» **ist seit 27.10. schon die eine Seite** (F7-A3, Entscheid O): Mit Ihren Angaben (Pegel), Nach Ihrer Lebenslage, Weitere Wege. «Nach Einkommen» (`anspruchcheck`) ist der **geführte Weg Schritt für Schritt** durch dieselben Teile. Er ist bewusst eine eigene Seite und **bewusst nur von dort erreichbar** («Lieber Schritt für Schritt?», Code-Kommentar in `Lebenssituationen.jsx` und `AnspruchCheck.jsx`). Dass er in keinem Register steht, ist also gewollt und keine Lücke | — | entfällt. Offen wäre nur, ob der geführte Weg ganz wegfällt. Empfehlung: **nein**, er ist die ruhige Form für Menschen, die sich nicht durch eine lange Seite arbeiten wollen |
 | **Z2** | **Benachrichtigungen als Teil der Einstellungen** | 0 Verweise. Steht schon im Fach «Einstellungen». Eine eigene Seite für einen Schalterblock | ja, klein |
 | **Z3** | **Notfallpass als aufklappbarer Teil im Kapitel Notfall** | in `seiten-buendeln.md` §8 als «eigener Schritt» offen gelassen. Der Pass steht im Kapitel schon oben als Weg | eher nein. Der Pass ist ein Ausgabe-Werkzeug (Felder fürs Telefon), so begründet am 24.10. Nur auf Wunsch |
 | **Z4** | **Obstgarten + Rucksack** als ein Ort «Mein Weg» | beide zeigen den eigenen Fortschritt bzw. das Mitgenommene, beide nur über die Übersicht erreichbar | **offen, nicht entscheiden ohne Gamification-Blatt** (01.11.). Hier nur notiert |
@@ -160,7 +160,7 @@ Heirat und Zusammenziehen (Ehe ≠ Konkubinat, darin liegt der Inhalt).
 
 ## 4 · Offene Entscheide (für Stebler Studios)
 
-1. **Z1** «Nach Einkommen» in «Was steht mir zu?»: ja, mit Fassung 9? *(Empfehlung: ja)*
+1. ~~**Z1**~~ ⟨entfällt 06.11., schon gebaut als Entscheid O; der geführte Weg bleibt bewusst⟩
 2. **Z2** Benachrichtigungen in die Einstellungen? *(Empfehlung: ja)*
 3. **G1–G3** drei Gruppen in der Übersicht? *(Empfehlung: ja, G1 zuerst)*
 4. **E1** Erklärseiten verlinken direkt ins Werkzeug? *(Empfehlung: ja)*
@@ -168,5 +168,6 @@ Heirat und Zusammenziehen (Ehe ≠ Konkubinat, darin liegt der Inhalt).
 6. **E3** welche Erklärseite als nächste? *(Empfehlung: Ergänzungsleistungen. In der App ist der Bereich schon gross und geprüft (EL-Hinweis, Sozio-Prüfer 04.11.), öffentlich fehlt er ganz)*
 7. **V1/V2** klein, auf ein Ja hin in einem Zweig?
 
-**Reihenfolge-Vorschlag:** ~~E2 (blockiert die Freigabe) →~~ V1 → Z2 → E1 → G1 → Z1 → E3.
+**Reihenfolge-Vorschlag:** ~~E2 (blockiert die Freigabe) →~~ V1 → Z2 → E1 → G1 → ~~Z1 →~~ E3.
+⟨Stand 06.11.: V1 #697, Z2 #699, E1 #700, G1 #702 als Entwurfs-PRs; Z1 entfällt⟩
 ⟨korrigiert 05.11.: E2 entfällt, siehe K2⟩
