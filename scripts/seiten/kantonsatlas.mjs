@@ -141,17 +141,17 @@ const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'es
 // Spenden-Werte der Atlas-Vorschau fehlen bewusst — die Seite verspricht nichts,
 // was es (noch) nicht gibt.
 export const BRILLEN = [
-  { id: 'person', name: 'Person', frage: 'Wo stehe ich?',
-    text: 'Was ein Kanton bei Prämie, Steuern und Familie bedeutet. Für Ihre eigene Lage rechnet die App mit Ihren Angaben, auf Ihrem Gerät.',
+  { id: 'person', name: 'Person', frage: 'Was bedeutet der Wohnkanton für mich?',
+    text: 'Prämie, Steuern und was Familien erhalten oder abziehen können. Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage; die rechnet Maloja mit Ihren Angaben.',
     karten: ['praemie', 'lastNachIpv', 'steuer', 'kinderzulage', 'kita'] },
-  { id: 'firma', name: 'Firma', frage: 'Was bleibt den Mitarbeitenden am Standort?',
-    text: 'Miete, Wohnungsmarkt, Arbeitsmarkt und was Familien am Standort erhalten.',
+  { id: 'firma', name: 'Firma', frage: 'Wie sieht es für die Mitarbeitenden am Standort aus?',
+    text: 'Miete, Wohnungsmarkt, Arbeitslosenquote sowie Kinderzulage und Kita-Abzug. Es sind Durchschnitte je Kanton; einen Standortentscheid ersetzen sie nicht.',
     karten: ['miete', 'leer', 'alq', 'kinderzulage', 'kita'] },
-  { id: 'kanton', name: 'Kanton', frage: 'Wie wirken Verbilligung und Unterstützung?',
-    text: 'Prämienlast nach der Verbilligung und wie viele Menschen Unterstützung beziehen.',
+  { id: 'kanton', name: 'Kanton oder Gemeinde', frage: 'Wie schwer wiegt die Prämie, wie häufig ist Unterstützung?',
+    text: 'Prämienlast nach der Verbilligung, Sozialhilfe, Ergänzungsleistungen (EL), Arbeitslosigkeit und Leerwohnungen im Kanton.',
     karten: ['lastNachIpv', 'sozialhilfe', 'el', 'alq', 'leer'] },
-  { id: 'stiftung', name: 'Stiftung', frage: 'Wo bewirkt Unterstützung am meisten?',
-    text: 'Wo viele Menschen Unterstützung beziehen und wo die Prämie nach der Verbilligung schwer wiegt.',
+  { id: 'stiftung', name: 'Stiftung oder Verein', frage: 'Wo beziehen viele Menschen Unterstützung?',
+    text: 'Sozialhilfe, Ergänzungsleistungen, Arbeitslosenquote und Prämienlast nach der Verbilligung. Ein hoher Anteil zeigt, wo mehr Menschen Unterstützung beziehen, nicht, wo sie mehr nützt.',
     karten: ['sozialhilfe', 'el', 'alq', 'lastNachIpv'] },
 ];
 
@@ -159,7 +159,7 @@ const BRILLEN_ABSCHNITT = {
   id: 'brillen',
   titel: '2. Vier Brillen: wer welche Karten braucht',
   html: `
-        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person will wissen, was der Wohnort für sie bedeutet, eine Firma, was den Mitarbeitenden bleibt. Die Karten sind für alle dieselben und frei zugänglich; die Brillen zeigen nur, wo man anfängt.</p>
+        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person fragt, was der Wohnort für sie bedeutet. Eine Firma schaut auf den Standort ihrer Mitarbeitenden. Die Karten selbst sind für alle dieselben und frei zugänglich. Wir ordnen sie hier aus vier Blickwinkeln, als «Brillen»: Jede stellt eine Frage und nennt die Karten, mit denen Sie beginnen können.</p>
         <div class="brillen">
 ${BRILLEN.map((b) => `          <section class="brille" aria-labelledby="brille-${b.id}">
             <h3 id="brille-${b.id}">${b.name}: ${b.frage}</h3>
