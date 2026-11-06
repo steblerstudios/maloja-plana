@@ -18,10 +18,10 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 | 2b | Häuser: wie sitzt das Mini-Zeichen? | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: V1** — volles Chalet, Zeichen unten rechts freigeschnitten |
 | 2c | Dunkelmodus der Leitformen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: ausgestanzt** (weisse Details als Maske, Hintergrund scheint durch) — «Chalet und Versicherung super» |
 | 2d | Farbe | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: Familie = Farbe des Lebensbereichs** (lebensbereiche.js), Funktionen in Textfarbe — mit Teil 1d angenommen |
-| 3 | Haken: `check` · `success` | [3](icon-besprechung-3-haken.html) | C — ein Haken für «geschafft», `success` weg (unbenutzt), Merkliste eigenes Zeichen | offen |
+| 3 | Haken: `check` · `success` | [3](icon-besprechung-3-haken.html) | C — ein Haken für «geschafft», `success` weg (unbenutzt), Merkliste eigenes Zeichen | ⏸️ **06.11. zurückgestellt:** «bevor wir Haken machen, wollen wir zuerst alle Varianten der Bereiche machen» |
 | 4 | Blätter und Dokumente: `document` · `documents` · `rechner` · `dokumentTresor` · `ordner` | — | | offen |
 | 5 | Geld: Fünfliber · `money` · `budget` · Portemonnaie · Quittung · Sparschwein | — | | offen |
-| 6 | Versicherung: Edelweiss-Schild + Mini-Zeichen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) · [6a](icon-besprechung-6a-edelweiss-schild.html) | — | ✅ **06.11.: Familie wie gezeigt** (Wechsel, Erstanmeldung, Prämienverbilligung, Unfall). Offen: Edelweiss im Schild in Blau kaum sichtbar; Rolle von `insurance`. **06.11. Nachtrag: «das Schild bei der Versicherung sollte doch ein Edelweiss drin haben» — das Edelweiss muss klar im Schild stehen, ausgestanzt, in Blau hell wie dunkel** (Wörterbuch: Versicherungen = Edelweiss-Schild). Gezeigt in Bild 6a. ✅ **06.11.: Variante C — Edelweiss-Stern** (acht spitze Blätter, drei Punkte in der Mitte, ausgestanzt; «c ist eigentlich sehr cool … die Variante finde ich eigentlich am besten»), **Blätter etwas breiter** («vielleicht die Blätter noch ein müh breiter») → Mass C+ im Bild. Befund dazu: in 1d lag die Blüte ausserhalb des Schilds; in der App landen die schrägen Blätter auf den geraden (falscher Drehpunkt) → heute ein Kreuz statt Stern. Offen: Rolle von `insurance` |
+| 6 | Versicherung: Edelweiss-Schild + Mini-Zeichen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) · [6a](icon-besprechung-6a-edelweiss-schild.html) | — | ✅ **06.11.: Familie wie gezeigt** (Wechsel, Erstanmeldung, Prämienverbilligung, Unfall). Offen: Edelweiss im Schild in Blau kaum sichtbar; Rolle von `insurance`. **06.11. Nachtrag: «das Schild bei der Versicherung sollte doch ein Edelweiss drin haben» — das Edelweiss muss klar im Schild stehen, ausgestanzt, in Blau hell wie dunkel** (Wörterbuch: Versicherungen = Edelweiss-Schild). Gezeigt in Bild 6a. ✅ **06.11.: Variante C — Edelweiss-Stern** (acht spitze Blätter, drei Punkte in der Mitte, ausgestanzt; «c ist eigentlich sehr cool … die Variante finde ich eigentlich am besten»), **Blätter etwas breiter** («vielleicht die Blätter noch ein müh breiter») → Mass C+ im Bild. ✅ **06.11. nachgefragt «welches ist am nächsten am echten Edelweiss?» → C+**: echte Hochblätter sind spitz, filzig und gross, 5–15 Stück (8 liegt drin); in der Mitte mehrere kleine Körbchen (= die Punkte). Quellen: naturadb.de, gartenjournal.net, hoehenrausch.de. Befund dazu: in 1d lag die Blüte ausserhalb des Schilds; in der App landen die schrägen Blätter auf den geraden (falscher Drehpunkt) → heute ein Kreuz statt Stern. Offen: Rolle von `insurance` |
 | 7 | Kreuz-Familie: Notfall · Gesundheit · Organspende · Ärztin/Arzt | — | | offen |
 | 8 | Kalender und Uhr | — | | offen |
 | 9 | Telefon: Hörer · Handy | — | | offen |
@@ -29,6 +29,11 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 | 11 | Sackmesser: Übersicht · gefülltes Sackmesser | — | | offen |
 | 12 | Gruppen-Regeln (A/A2/B/N/Z/E/C) — was kommt wohin und warum | — | | offen |
 | 13 | Fehlendes zeichnen: Tell, Uhr, Couvert, Setzling, Rechner, Sparschwein … | — | | offen |
+
+## Neue Reihenfolge (06.11.2026, nachmittags)
+
+**Zuerst alle Lebensbereiche, dann die Funktionen** («bevor wir Haken machen wollen wir zu erst alle Varianten der Bereiche machen»). Je Bereich: Leitform heute + Familie mit Mini-Zeichen + Farbe, hell und dunkel — wie bei Chalet (Wohnen) und Edelweiss-Schild (Versicherungen).
+Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ · Finanzen · Person · Gesundheit · Arbeit · Familie · Vorsorge · Bildung · Notfall · Behörden. Danach Funktionen (3 Haken, 4 Blätter, 8 Kalender, 9 Telefon …).
 
 ## Grundsatz (06.11.2026)
 
