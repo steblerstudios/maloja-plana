@@ -122,6 +122,8 @@ Stebler Studios zu Volljährig: «ich weiss nicht ob ich die voll jährigkeit mi
 - Punkt 6, am Schluss: «leer» auch für die übrigen gleichfarbigen Seiten (Behörden grau auf grau, IV/Pflege, Familie) · Militär/Zivildienst · Lenkrad mit drei Speichen · **Leitformen reicher, mit Apfel neben der Ausweiskarte (Person)**.
 - Vor dem Bauen: Rechts-Prüfer Kreuz (Arztkoffer).
 
+**Versicherungen & Vorsorge (06.11., spät):** Bild [Versicherungen und Vorsorge](icon-besprechung-versicherungen-vorsorge.html), ein Kapitel, ganzes Menü. Stand = Seiten-Architektur: Prämien Balken orange · IPV Mini-Fünfliber gold · Pensionierung Berg violett · EL Mini-Fünfliber gold. Befund: IPV und EL sehen im selben Menü gleich aus. A heute · B EL violett (1. Säule) · C IPV orange (Krankenkasse).
+
 ## 📍 Stand 06.11.2026, ca. 22:15 — Sitzung beendet (Kontext voll)
 
 **Heute entschieden:** Familie (Kind/Adoption Plus · Heirat Ringe · Trennung gebrochenes Herz mit Riss · Todesfall Kerze) · Behörden (Bewilligung Blatt grau · Führerausweis Lenkrad · Asyl Schirm · Zuzug Plus / Wegzug Minus Wohnen-Grün · Einbürgerung Karte mit Plus grün) · Steuern Prozent grau · Quellensteuer Prozent haselnuss · Schulden/Betreibung bleiben · Sozialhilfe Schirm grün · Mindestlohn Waage haselnuss · Notfall-Hauptbild Arztkoffer + rotes Herz mit Puls.
