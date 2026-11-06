@@ -35,6 +35,11 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 **Zuerst alle Lebensbereiche, dann die Funktionen** («bevor wir Haken machen wollen wir zu erst alle Varianten der Bereiche machen»). Je Bereich: Leitform heute + Familie mit Mini-Zeichen + Farbe, hell und dunkel — wie bei Chalet (Wohnen) und Edelweiss-Schild (Versicherungen).
 Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ · Behörden (vorgezogen 06.11., Bild [Behörden](icon-besprechung-behoerden.html): Abzeichen A/B/C) — ✅ **06.11.: C, gefülltes Abzeichen, für alle Familien** (Lage bleibt V1 unten rechts; volle Scheibe in Familienfarbe, Zeichen ausgestanzt). ✅ **Betreibung geteilt** (Stebler Studios: «der Auszug darf Behörden sein und das Betreibung erhalten Finanzen»): Betreibungsauszug = Helvetia + Blatt (beim Amt bestellt), Betreibung erhalten = Fünfliber + Minus (Geldsache). Die Mini-Zeichen je Behörden-Seite (Person, Stempel, Lenkrad, Dach, Pfeile, Apfel, Stern) sind gezeigt, aber noch nicht einzeln abgenommen · Finanzen (Ansatz gut, nochmals) · Person · Gesundheit · Arbeit · Familie · Vorsorge · Bildung · Notfall. Danach Funktionen (3 Haken, 4 Blätter, 8 Kalender, 9 Telefon …).
 
+## Idee Zwei-Farben (06.11.2026, Stebler Studios)
+
+«ganz verrückt wäre natürlich, wenn z. B. bei der Betreibung erhalten der Fünfliber so wie jetzt und dann aber das Minus in Blau, und bei Betreibungsauszug eben die Helvetia und dann das Icon unten rechts in Gold, weil's ja zu Finanzen gehört».
+→ **Leitform = wer/was (Farbe ihres Bereichs), Abzeichen = Farbe des Bereichs, der mitspielt.** Spielt kein zweiter Bereich mit, hat das Abzeichen die Farbe der Leitform. Wird mit der Übersicht aller Bereiche gezeigt, noch nicht entschieden.
+
 ## Grundsatz (06.11.2026)
 
 **Jede Familie hat eine Leitform — das bestehende reiche Bild (Chalet, Edelweiss-Schild …) —, ein Mini-Zeichen sagt, was passiert**. Vorbild in der App: Mietzinsverbilligung und Prämienverbilligung. ✅ **06.11.: bestätigt am Beispiel Versicherung («genau 3 richtig so»).** — wie bei den Häusern,
