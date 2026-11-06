@@ -31,9 +31,9 @@ const knopfProps = (src) => {
 
 describe('Knopfarten: der Baustein', () => {
   for (const [name, p] of [['hell', LIGHT_PALETTE], ['dunkel', DARK_PALETTE]]) {
-    it(`${name}: Hauptknopf Sand, Neben und Link sandDeep, Gefahr roseDeep, alles 6 px`, () => {
-      expect(KNOPF_RADIUS).toBe('6px');
-      for (const art of ['haupt', 'neben', 'gefahr', 'leise']) expect(knopfStil(p, art).borderRadius).toBe('6px');
+    it(`${name}: Hauptknopf Sand, Neben und Link sandDeep, Gefahr roseDeep, alles 10 px`, () => {
+      expect(KNOPF_RADIUS).toBe('10px');
+      for (const art of ['haupt', 'neben', 'gefahr', 'leise']) expect(knopfStil(p, art).borderRadius).toBe('10px');
       expect(knopfStil(p, 'haupt')).toMatchObject({ background: p.sand, color: p.onSand });
       expect(knopfStil(p, 'neben')).toMatchObject({ background: 'transparent', color: p.sandDeep, border: '1px solid ' + p.sandDeep });
       expect(knopfStil(p, 'gefahr')).toMatchObject({ color: p.roseDeep, border: '1px solid ' + p.roseDeep });
@@ -52,12 +52,12 @@ describe('Knopfarten: die Ansichten', () => {
   });
 
   // Erlaubte Rundungen an <button>: die Knopf-Rundung, Reiter oben rund, Kreise für Symbolknöpfe.
-  const ERLAUBT = /^(KNOPF_RADIUS|radius\.sm|radius\.sm \+ 'px'|KNOPF_RADIUS \+ ' ' \+ KNOPF_RADIUS \+ ' 0 0'|'50%')$/;
+  const ERLAUBT = /^(KNOPF_RADIUS|radius\.md|radius\.md \+ 'px'|KNOPF_RADIUS \+ ' ' \+ KNOPF_RADIUS \+ ' 0 0'|'50%')$/;
   // Karten und Listenzeilen, die als <button> woanders hinführen (Entscheid M3: bleiben Karten).
   // components/WerkzeugGruppen.jsx: die Werkzeugkarten der Übersicht, am 06.11.2026 (#719) aus Dashboard.jsx ausgelagert.
   const KARTEN = new Set(['Dashboard.jsx', 'MobileNav.jsx', 'components/Leistungsliste.jsx', 'components/WerkzeugGruppen.jsx']);
 
-  it('Textknöpfe sind 6 px rund — keine Pillen, keine anderen Rundungen', () => {
+  it('Textknöpfe sind 10 px rund — keine Pillen, keine anderen Rundungen', () => {
     const verstoesse = [];
     let gezaehlt = 0;
     for (const d of dateien(SRC)) {

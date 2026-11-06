@@ -236,7 +236,7 @@ Wächter: `src/__tests__/knopfarten.test.js`.
 | **Link** | goldener Text, immer unterstrichen | führt woanders hin, löst nichts aus |
 | **Auswahl** | gewählt Sand gefüllt, sonst Rand `border` | Reiter, Segmente, Chips, Schalter |
 
-- **Rundung:** alle Knöpfe und Auswahlen **6 px** (`KNOPF_RADIUS` = `radius.sm`). Kreise nur für
+- **Rundung:** alle Knöpfe und Auswahlen **10 px** (`KNOPF_RADIUS` = `radius.md`, Regel C in §7a; überholt 6 px am 06.11.2026). Kreise nur für
   reine Symbolknöpfe ohne Text (Plus in der Leiste, runde Icon-Knöpfe). Keine Pillen an Textknöpfen.
 - **Mindesthöhe** 44 px.
 - **Ausnahme:** der rot gefüllte Ernstfall-Knopf im Kapitel Notfall (Notruf).

@@ -14,8 +14,9 @@ import { text, weight, radius, space } from '../config/tokens.js';
 //   leise  · Aufklapper («Mehr zeigen ›»): goldener Text ohne Rand.
 //   link   · führt woanders hin: goldener Text, immer unterstrichen.
 //   auswahl· Reiter, Chips, Schalter: gewählt = Sand gefüllt.
-// Rundung: alle Knöpfe und Auswahlen KNOPF_RADIUS (6 px). Kreise nur für reine Symbolknöpfe.
-export const KNOPF_RADIUS = radius.sm + 'px';
+// Rundung: alle Knöpfe und Auswahlen KNOPF_RADIUS (10 px, Entscheid 06.11.2026, überholt 6 px).
+// Regel C: Ecke ≈ ¼ der Höhe — 44 px hoch → 10 px. Kreise nur für reine Symbolknöpfe.
+export const KNOPF_RADIUS = radius.md + 'px';
 
 // Kompakt geschrieben: der Baustein liegt im Startbündel (Limit 65 kB).
 export const knopfStil = (p, art = 'haupt', { disabled: d = false, gefuellt: g = false } = {}) => {
