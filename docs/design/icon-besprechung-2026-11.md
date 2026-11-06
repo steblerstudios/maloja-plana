@@ -90,6 +90,12 @@ Detailfragen, die im Menü sichtbar wurden (offen, nächster Schritt):
 - Gleiches Zeichen auf zwei Seiten: Steuern / Quellensteuer (Prozent grau) · KVG-Leistungen / Unfall-Krankheit / IV (Mini-Schild blau, dreimal) · Schulden (Minus gold) / Betreibung erhalten (Minus grau).
 - Klein fast gleich: Notfall (Herz mit Puls) / Organspende (Herz), beide rot · Notfallpass (Blatt) / Patientenverfügung (Blatt mit Herz), beide rot.
 - Noch ohne ✓ im Finanzen-Menü: Finanzübersicht, Budget abgleichen, Kreditkarte, Mindestlohn, Mahnung, Jemand schuldet mir Geld, Sozialhilfe (Hand grau; Wörterbuch 2 schlug Münze vor).
+
+**Gleiche Zeichen (06.11., spät):** Bild [Gleiche Zeichen](icon-besprechung-gleiche-zeichen.html). Stebler Studios: «1 B · 2 A, aber Sozialhilfe darf grün und mit Schirm sein, oder? · und Mindestlohn braun wegen Arbeit, und das Icon, da bin ich mir noch unsicher · bei 3 bin ich noch unschlüssig, aber super Anfang».
+✅ **06.11.: Quellensteuer = Fünfliber + Prozent haselnuss** (B, Arbeit spielt mit: geht direkt vom Lohn weg; meine Empfehlung war A grau) · Steuern bleibt Prozent grau.
+✅ **Schulden (Minus gold) und Betreibung erhalten (Minus grau) bleiben so** (A).
+✅ **Mindestlohn: Abzeichen haselnuss** (Arbeit spielt mit). Zeichen offen («unsicher»).
+Offen: Sozialhilfe grün mit Schirm (Vorschlag Stebler Studios, im Bild zu zeigen) · KVG-Leistungen / Unfall-Krankheit / IV («unschlüssig»).
 ~~Offen: Adoption («ob das nicht auch einfach ein plus sein soll») · Trennung/Scheidung~~ Damals offen: Trennung/Scheidung («überlegen»; eine Seite `trennung`, deckt Scheidung ab) · Zuzug/Wegzug («noch gedanken irgendwie oder?») · Bewilligung und Führerausweis (nicht genannt).
 **Nächste Sitzung:** ~~1) Farben-Zuordnung klären~~ ✅ · 2) neue Leitformen so reich zeichnen wie Chalet/Helvetia · 3) Zeichen auf einfache Grundformen zurückführen.
 
