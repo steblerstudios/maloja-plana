@@ -153,7 +153,26 @@ const stil = `
        nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
     .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }`;
+
+// Der Hinweis über dem Titel hängt an der FREIGABE, nicht daran, ob ein Text
+// in RAHMEN steht (Befund Rechtsprüfung 05.11.2026):
+//   · nicht freigegeben → Entwurfs-Hinweis («noch nicht gelesen, Deutsch gilt»)
+//   · freigegeben, Übersetzung → nur noch «bei Abweichungen gilt Deutsch».
+// Ohne die zweite Zeile verschwände mit dem Entwurfs-Hinweis auch die einzige
+// Stelle, die sagt, welche Fassung verbindlich ist.
+function hinweisOben(sprache) {
+  const R = RAHMEN[sprache.code];
+  if (!sprache.freigegeben && R.entwurfBanner) {
+    return `      <p class="entwurf" role="note">${esc(R.entwurfBanner)}</p>\n`;
+  }
+  if (sprache.freigegeben && R.verbindlich) {
+    return `      <p class="verbindlich" role="note">${esc(R.verbindlich)}</p>\n`;
+  }
+  return '';
+}
 
 function seiteBauen(seite, sprache) {
   const R = RAHMEN[sprache.code];
@@ -243,7 +262,7 @@ function seiteBauen(seite, sprache) {
   })}
 
     <main>
-${R.entwurfBanner ? `      <p class="entwurf" role="note">${esc(R.entwurfBanner)}</p>\n` : ''}      <h1>${esc(seite.titel)}</h1>
+${hinweisOben(sprache)}      <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
 ${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}</p>` : ''}
 
@@ -267,7 +286,7 @@ ${quellen}
       <p class="leise">${esc(R.quellenLeise)}</p>` : ''}
 
 ${istErklaerseite ? `      <p class="vorbehalt">${R.vorbehalt}${sprache.geprueft
-        ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>` : ''}</p>` : ''}
+        ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>${R.originalGeprueft ? ` ${esc(R.originalGeprueft)}` : ''}` : ''}</p>` : ''}
 
       <h2>${esc(R.weiterlesenTitel)}</h2>
       <ul>
