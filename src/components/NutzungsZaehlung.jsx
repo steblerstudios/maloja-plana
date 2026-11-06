@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { text, space } from '../config/tokens.js';
+import { knopfStil } from './PrimaryButton.jsx';
 import { tageLoeschen, zaehlenErlaubt } from '../utils/nutzungsTage.js';
 import { nutzungstageImMonat, zaehlenSetzen } from '../utils/nutzungsAnzeige.js';
 
@@ -29,7 +30,8 @@ export const NutzungsZaehlung = ({ palette, t, demoMode }) => {
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('beta.feedback.nutzungStand', { n: tage })),
     tage > 0 && React.createElement('button', {
       type: 'button', onClick: loeschen,
-      style: { background: 'none', border: 'none', padding: space.xs + 'px 0', minHeight: '44px', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: 'inherit', textDecoration: 'underline' },
+      // Knopfart Gefahr: es geht etwas verloren (Fassung 9), wie im Beta-Feedback.
+      style: { ...knopfStil(palette, 'gefahr'), marginTop: space.xs + 'px' },
     }, t('beta.feedback.nutzungLoeschen'))
   );
 };
