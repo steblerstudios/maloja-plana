@@ -10,5 +10,6 @@
 import { KRANKENKASSE } from './krankenkasse.mjs';
 import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
 import { POLITSYSTEM } from './politsystem.mjs';
+import { KANTONSATLAS } from './kantonsatlas.mjs';
 
-export const HINTERGRUND = [KRANKENKASSE, KANTONE_IM_VERGLEICH, POLITSYSTEM];
+export const HINTERGRUND = [KRANKENKASSE, KANTONE_IM_VERGLEICH, POLITSYSTEM, KANTONSATLAS];
