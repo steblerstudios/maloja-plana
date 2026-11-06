@@ -115,6 +115,29 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
   Offen vor dem Bau: welche der rund 17 Stellen echte Fristen sind (Liste je Stelle), dann die
   Skizze.
 
+  ⟨korrigiert 06.11.2026, der Satz oben bleibt als Beleg⟩ **«rund 17 Stellen» war zu klein
+  gezählt.** Die 17 waren **Dateien**, die selbst `toLocaleDateString` aufrufen. Fristen zeigt die
+  App aber vor allem über gemeinsame Bausteine an. **Liste der Stellen**, erhoben auf
+  `origin/main` `a67a0568` (06.11.2026 12:13); die Farben gelten nach #696
+  (`feat/f9-knopfarten`, Entwurf, nicht gemergt):
+
+  | Stelle | Was dort steht | Blatt? |
+  |---|---|---|
+  | `BehoerdenInstrument.jsx:63` | Steuerfrist, Kapitel Behörden | **ja**, ist das Vorbild |
+  | `AblaufSchale.jsx` `EreignisFrist` + `FristButton` | Frist-Karte «Titel · bis Datum» in **17 Abläufen** (Adoption, Aussteuerung, Ausweis, Betreibung, Bewilligung, Dienst, EL, KK-Erstanmeldung, Kind, Neuer Job, Quellensteuer, Todesfall, Umzug, Volljährig, Wegzug, Wohnung gekündigt, Zuzug) und in «Stelle verloren» | **ja**: eine Änderung, 18 Abläufe. Rand auf #696 schon blau, vorbei rot |
+  | `CalendarReminders.jsx:270` Zeile | Tag gross, Monat klein, **ohne Rahmen**: ein Blatt in Vorform | **ja, angleichen**. Überfällig auf #696 `roseDeep`, auf main noch «nie rot (Entwurf G)» |
+  | `Dashboard.jsx:532` + `:552` | Kassenfrist-Zeile, «Nächste Frist · Datum» | **nein**: Textzeile, und das Dashboard ist Startbündel |
+  | `Jahreskreis.jsx:182` | Punkte am Kreis, Datum in Tabellenziffern | **nein**: Liste neben dem Kreis, der Kreis ist das Bild |
+  | `MerklisteView.jsx:62` | Merkpunkte mit Datum | **nein**: Erinnerung, keine Frist |
+  | `briefGenerator.js` | Fristen im Brieftext | **nein**: Papier, Fliesstext |
+  | `ChapterView.jsx:1162`, `MedicationManager.jsx:38`, `Dashboard.jsx:357`, `DatenLoeschen.jsx:52`, Export/Import (`zipExport`, `ZipExport`, `cvGenerator`, `FinanzAuswertung`, `budgetSync`, `premiumCalc`, `csvImport`, `ChapterView.jsx:2523`) | Geburtsdatum, SL-Stand, zuletzt gesichert, Export-/Upload-Datum | **nein**: kein Handeln |
+
+  **Ergebnis:** drei Orte. Behörden gibt es schon, die Frist-Karte der Abläufe kommt neu dazu (die
+  grösste Wirkung), die Kalender-Zeile wird angeglichen. Der Baustein gehört zu
+  `AblaufSchale.jsx`. Er baut auf #696 auf (blau/rot), also erst nach dessen Merge oder darauf
+  gestapelt. Ob `AblaufSchale` im Startbündel liegt, ist **nicht gemessen**: vor dem Bau
+  `size-limit`.
+
 ## B · Sprache (ein Wort je Sache)
 
 - **F9-B1** (Muss, Entscheid): Die Du-Schreibung ist gemischt, nicht nur einzeln, sondern Block
