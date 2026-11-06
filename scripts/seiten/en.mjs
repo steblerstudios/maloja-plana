@@ -58,7 +58,7 @@ export const SEITEN = [
       {
         frage: 'How do I find out what I am entitled to?',
         antwort:
-          'The most reliable route is through the office that actually decides — that is, your own canton or your own municipality. Calculators and overviews such as those linked here give a first indication of whether an application is worthwhile. Only the ruling of the competent office is binding.',
+          'The most reliable route is through the office that actually decides — that is, your own canton or your own municipality. Calculators and overviews such as those linked here give a first indication of whether an application is worthwhile. Only the ruling (Verfügung) of the competent office is binding.',
       },
       {
         frage: 'Why is it different depending on the canton?',
@@ -101,15 +101,15 @@ export const SEITEN = [
       {
         titel: 'Which figures count',
         absaetze: [
-          'As a rule the cantons rely on tax data — and often not on that of the current year but on an earlier assessment that has already become legally binding. This has a consequence that surprises people: someone earning considerably less this year will not see that reflected automatically in many cantons — others only take it into account with the later final settlement.',
-          'However, the KVG requires the cantons, when reviewing eligibility, to take the most recent income and family circumstances into account, in particular upon request (Art. 65 para. 3 KVG). Your canton sets the details, for example conditions, evidence, deadlines and when it takes effect. This does not automatically give you a right to a reduction. The competent office can tell you — usually the cantonal social insurance institution (SVA) or the compensation office, but in some cantons the tax administration or the municipality of residence.',
+          'As a rule the cantons rely on tax data — and often not on that of the current year but on an earlier tax assessment (Veranlagung) that has already become legally binding. This has a consequence that surprises people: someone earning considerably less this year will not see that reflected automatically in many cantons — others only take it into account with the later final settlement.',
+          'However, the KVG requires the cantons, when reviewing eligibility, to take the most recent income and family circumstances into account, in particular upon request (Art. 65 para. 3 KVG). Your canton sets the details, for example conditions, evidence, deadlines and when it takes effect. This does not automatically give you a right to a reduction. The competent office can tell you — usually the cantonal social insurance institution (Sozialversicherungsanstalt, SVA) or the compensation office (Ausgleichskasse), but in some cantons the tax administration or the municipality of residence.',
         ],
       },
       {
         titel: 'The most common misconception',
         absaetze: [
-          'Many people assume that with an earned income you are not entitled to anything. That is not the case: premium reduction is not a benefit only for people without work. Families with children, people in education and middle-income households qualify in many cantons.',
-          'The second common misconception is that an application refused once applies forever. It applies to its year. If income, household or canton of residence change, it is a new question.',
+          'Many people assume that with an earned income you are not entitled to anything. That is not the case: premium reduction is not a benefit only for people without work. Families with children, people in education and middle-income households can qualify in many cantons.',
+          'The second common misconception is that a refusal, once given, applies forever. It applies only to its year. If income, household or canton of residence change, it is a new question.',
         ],
       },
     ],
@@ -122,12 +122,12 @@ export const SEITEN = [
       {
         frage: 'Do I have to apply?',
         antwort:
-          'In some cantons those entitled are contacted automatically; in others the application has to be submitted yourself. Because this is governed cantonally and can change, it is worth asking your own cantonal office — even if you already received something in an earlier year.',
+          'In some cantons those entitled are contacted automatically; in others you have to submit the application yourself. Because this is governed cantonally and can change, it is worth asking your own cantonal office — even if you already received something in an earlier year.',
       },
       {
         frage: 'Which income is counted?',
         antwort:
-          'As a rule an income derived from the tax assessment, often from an earlier year, and often with cantonal additions and deductions. The gross income of the current month is almost never the relevant figure.',
+          'As a rule an income derived from the tax assessment, often from an earlier year, and often with cantonal adjustments (additions and subtractions). The gross income of the current month is almost never the relevant figure.',
       },
       {
         frage: 'What if my income has fallen sharply?',
@@ -151,7 +151,7 @@ export const SEITEN = [
       {
         titel: 'Subsidiary means: everything else first',
         absaetze: [
-          'Social assistance is <strong>subsidiary</strong>. Before it comes into question, other entitlements are examined: wages, unemployment benefits, pensions, supplementary benefits, premium reduction, maintenance payments, scholarships. Your own assets are also taken into account, although the cantons allow an exempt amount whose level differs.',
+          'Social assistance is <strong>subsidiary</strong>. Before it comes into question, other entitlements are examined: wages, unemployment benefits, pensions, supplementary benefits (Ergänzungsleistungen, EL), premium reduction, maintenance payments, education grants (Stipendien). Your own assets are also taken into account, although the cantons allow an exempt amount whose level differs.',
           'That is why an application often begins with many questions about quite different benefits. It is not about mistrust, but about the order laid down by law.',
         ],
       },
@@ -159,20 +159,20 @@ export const SEITEN = [
         titel: 'The SKOS guidelines are recommendations, not law',
         absaetze: [
           'This is the most overlooked point. The guidelines of the Swiss Conference for Social Welfare (SKOS) are <strong>recommendations</strong>. They become binding only in so far as a canton adopts them into its own law — and the cantons do so to varying degrees.',
-          'In practice this means: a SKOS calculator gives a good first indication, but it is not a promise. What applies in your case is set out in the cantonal social assistance act and in the ruling of the competent office.',
+          'In practice this means: a SKOS calculator gives a good first indication, but it is not a promise. What applies in your case is set out in the cantonal social assistance act and in the ruling (Verfügung) of the competent office.',
         ],
       },
       {
         titel: 'What the support typically consists of',
         absaetze: [
-          'In most cantons there are three components: a <strong>basic amount</strong> for living costs, <strong>housing costs</strong> within what is locally customary, and <strong>basic medical care</strong>. Situation-related benefits may be added.',
+          'In most cantons there are three components: a <strong>basic needs allowance</strong> (Grundbedarf) for living costs, <strong>housing costs</strong> within what is locally customary, and <strong>basic medical care</strong>. Situation-related benefits may be added.',
           'We deliberately do not give the amounts here: they differ by canton and household size and are adjusted regularly. A figure on a page like this one would be wrong before long.',
         ],
       },
       {
         titel: 'The right nobody can lose',
         absaetze: [
-          'Independently of all of the above, <strong>Article 12 of the Federal Constitution</strong> lays down the right to assistance when in need: persons in distress and incapable of looking after themselves have the right to be helped and assisted, and to receive the means indispensable for leading a life in human dignity.',
+          'Independently of all of the above, <strong>Article 12 of the Federal Constitution</strong> lays down the right to assistance when in need: “Persons in need and unable to provide for themselves have the right to assistance and care, and to the financial means required for a decent standard of living.” (English translation on Fedlex, for information only. Only the German, French and Italian texts are legally binding.)',
           'This right belongs to everyone in Switzerland. It is not the same as social assistance and covers less — but it is the floor below which nobody may fall.',
         ],
       },
@@ -196,7 +196,7 @@ export const SEITEN = [
       {
         frage: 'What is the difference from supplementary benefits?',
         antwort:
-          'Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when an old-age or disability insurance benefit does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance.',
+          'Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when a benefit from old-age or disability insurance (AHV/IV) does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -216,14 +216,14 @@ export const SEITEN = [
         titel: 'Direct federal tax is the same everywhere',
         absaetze: [
           'Direct federal tax is governed by the Federal Act on Direct Federal Taxation (DBG) and applies the same rate schedule throughout Switzerland. It distinguishes by marital status and household, but not by place of residence.',
-          'It is nevertheless levied by the canton — the tax return is the same.',
+          'It is nevertheless levied by the canton — you file one tax return for both.',
         ],
       },
       {
         titel: 'Canton and municipality: rate schedule times multiplier',
         absaetze: [
-          'At cantonal and municipal level two quantities come together. The <strong>rate schedule</strong> determines how much tax a given taxable income triggers — this gives what is known as the basic tax. The <strong>tax multiplier</strong> is a factor applied to it, usually expressed as a percentage, which the canton and the municipality each set for themselves and can adjust annually.',
-          'Depending on canton and denomination, the bill contains further items, for example church tax or a personal tax. They are usually small, but they explain why the total does not exactly match what a plain income calculator produces.',
+          'At cantonal and municipal level two quantities come together. The <strong>rate schedule</strong> determines how much tax a given taxable income triggers — this gives what is known as the basic tax (einfache Steuer). The <strong>tax multiplier</strong> (Steuerfuss) is a factor applied to it, usually expressed as a percentage, which the canton and the municipality each set for themselves and can adjust annually.',
+          'Depending on canton and denomination, the bill contains further items, for example church tax or a personal tax (Personalsteuer). They are usually small, but they explain why the total does not exactly match what a plain income calculator produces.',
           'Two municipalities in the same canton therefore have the same rate schedule but each their own multiplier — which can differ. Two cantons differ in both. That is the real lever behind the well-known cantonal comparisons. Some cantons also have particularities, for example municipalities without a municipal tax of their own.',
         ],
       },
@@ -252,9 +252,9 @@ export const SEITEN = [
           'That depends on your situation and on the canton — common ones are work-related expenses, contributions to pillar 3a, illness and accident costs above a threshold, and deductions for children and childcare. Amounts and conditions differ between the federal government and the canton; the guidance notes of your own canton are what is binding.',
       },
       {
-        frage: 'Where can I calculate bindingly?',
+        frage: 'Where can I get a binding calculation?',
         antwort:
-          'In the end it is the assessment by the cantonal tax administration that is binding. For a dependable advance calculation, the Federal Tax Administration provides a calculator that takes the federal government, the canton and the municipality into account.',
+          'In the end it is the tax assessment (Veranlagung) by the cantonal tax administration that is binding. For a dependable advance calculation, the Federal Tax Administration provides a calculator that takes the federal government, the canton and the municipality into account.',
       },
     ],
     quellen: ['estvRechner'],
@@ -269,7 +269,7 @@ export const SONDERSEITEN = [
       'Who is behind Maloja Plana, what data arises when these pages are accessed, and what the calculators expressly do not answer for.',
     brotkrume: 'Legal notice',
     vorspann:
-      'This page applies to malojaplana.ch and the public explanatory pages. For the application itself, the detailed data protection statement additionally applies, which is in the app under “Data protection and legal” — also without an access code. The published versions are the binding ones: this page for malojaplana.ch and the explanatory pages, the text in the app for the application. The working copies in the public source code (docs/legal) are drafts and a record of provenance, not the binding version.',
+      'This page applies to malojaplana.ch and the public explanatory pages. For the application itself, the detailed data protection statement additionally applies, which is in the app under “Privacy & Legal” — also without an access code. The published versions are the binding ones: this page for malojaplana.ch and the explanatory pages, the text in the app for the application. The working copies in the public source code (docs/legal) are drafts and a record of provenance, not the binding version. Where language versions differ, only the German version is binding.',
     abschnitte: [
       {
         titel: 'Provider',
@@ -282,7 +282,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Disclaimer',
         absaetze: [
-          'Maloja Plana is an <strong>orientation tool</strong>. The calculators and overviews are based on publicly accessible legal sources and serve personal information only.',
+          'Maloja Plana is an <strong>orientation tool</strong>. The calculators and overviews are based on publicly accessible legal sources and are intended solely for personal information.',
           '<strong>Maloja Plana does not replace legal, tax, insurance or financial advice.</strong>',
           'The provider accepts no warranty for the accuracy, completeness or currency of the calculations, for the suitability of the results for individual decisions, or for damage arising from their use. Only the applicable laws and the competent authorities are decisive.',
         ],
@@ -291,7 +291,7 @@ export const SONDERSEITEN = [
         titel: 'Data protection on these pages',
         absaetze: [
           'The explanatory pages are static HTML. They load <strong>no scripts, no cookies and no third-party resources</strong>; the fonts are on the same server. There is no tracking, no analytics and no advertising.',
-          'When the pages are accessed, technical data nevertheless arises at the host — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Geneva, with data centres in Switzerland: IP address in the server logs, browser type, operating system and time of access. This is technically necessary for delivery and operational security. Infomaniak acts as a processor in doing so (Art. 9 nDSG). According to the provider, access and error logs are kept for at least 7 days (Infomaniak support FAQ 1926, retrieved on 23 September 2026).',
+          'When the pages are accessed, technical data nevertheless arises at the host — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Geneva, with data centres in Switzerland: IP address in the server logs, browser type, operating system and time of access. This is technically necessary for delivery and operational security. Infomaniak acts as a processor in doing so (Art. 9 nDSG). According to Infomaniak’s own information, access and error logs are kept for at least 7 days (Infomaniak support FAQ 1926, retrieved on 23 September 2026).',
           'There are no further recipients: no analytics services, no social media embeds, no passing on and no sale of data.',
         ],
       },
@@ -306,7 +306,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'What you enter in Maloja Plana stays <strong>on your device</strong> (localStorage and IndexedDB in the browser). There is no account, no login and no transmission to the provider or to third parties. Anyone wanting to delete the data deletes it on the device — there is no second copy anywhere else.',
           'Particularly sensitive information (health, social assistance, beliefs) is likewise stored only locally by the app. The automatic backup copies in the browser are not encrypted.',
-          'Because nothing is transmitted, the provider also cannot give information about your entries: it has never seen them. The detailed version with all rights under the Swiss Data Protection Act is in the app under “Data protection and legal”.',
+          'Because nothing is transmitted, the provider also cannot give information about your entries: it has never seen them. The detailed version with all rights under the Swiss Data Protection Act is in the app under “Privacy & Legal”.',
         ],
       },
       {

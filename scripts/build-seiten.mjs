@@ -26,8 +26,12 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BASIS, SEITEN, SONDERSEITEN, GEPRUEFT, inhaltFuer, quelleFuer } from './seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
-import { HINTERGRUND } from './seiten/krankenkasse.mjs';
-import { zahlen, einsetzen, BLOECKE, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
+import { HINTERGRUND } from './seiten/hintergrund.mjs';
+import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
+import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
+
+// Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
+const BLOECKE = { ...BLOECKE_FIGUREN, ...BLOECKE_VERGLEICH };
 
 // Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
 // Quellen, Querverweisen), SONDERSEITEN die Rechtliches-Seite — sie hat nichts
@@ -38,6 +42,20 @@ const ALLE = [...SEITEN, ...SONDERSEITEN];
 // Deutsch liegt weiter unter /<pfad>/, die übrigen unter /<sprache>/<pfad>/.
 // Welche Sprache öffentlich zählt, steht in seiten-sprachen.mjs und NUR dort.
 const url = (pfad, sprache) => `${BASIS}/${sprache.praefix}${pfad}/`;
+
+// Wohin «Beispiel ansehen» auf einer Seite führt: direkt zum passenden Werkzeug der App statt auf «/».
+// Das Beta-Tor lässt die Adresse durch — nach «Ohne Code ausprobieren» steht man dort, mit Code ebenso.
+// Seitenlandkarte E1, 05.11.2026 (Wächter: src/__tests__/erklaerseiteZumWerkzeug.test.js).
+// Ohne Eintrag bleibt der Knopf auf «/». Ziele sind App-Ansichten aus VALID_VIEWS, keine Umleitungen.
+const WERKZEUG_IN_DER_APP = {
+  'was-steht-mir-zu': 'situationen',
+  praemienverbilligung: 'premium',
+  sozialhilfe: 'sozialhilfe',
+  steuern: 'tax',
+  krankenkasse: 'praemien',
+  'kantone-im-vergleich': 'praemien',
+};
+const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/#/${WERKZEUG_IN_DER_APP[pfad]}` : '/');
 const pfadIntern = (pfad, sprache) => `/${sprache.praefix}${pfad}/`;
 
 // Der hreflang-Ring. Er nennt ausschliesslich freigegebene Sprachen: auf eine
@@ -85,10 +103,10 @@ const stil = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -96,7 +114,9 @@ const stil = `
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -133,7 +153,26 @@ const stil = `
        nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
     .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }`;
+
+// Der Hinweis über dem Titel hängt an der FREIGABE, nicht daran, ob ein Text
+// in RAHMEN steht (Befund Rechtsprüfung 05.11.2026):
+//   · nicht freigegeben → Entwurfs-Hinweis («noch nicht gelesen, Deutsch gilt»)
+//   · freigegeben, Übersetzung → nur noch «bei Abweichungen gilt Deutsch».
+// Ohne die zweite Zeile verschwände mit dem Entwurfs-Hinweis auch die einzige
+// Stelle, die sagt, welche Fassung verbindlich ist.
+function hinweisOben(sprache) {
+  const R = RAHMEN[sprache.code];
+  if (!sprache.freigegeben && R.entwurfBanner) {
+    return `      <p class="entwurf" role="note">${esc(R.entwurfBanner)}</p>\n`;
+  }
+  if (sprache.freigegeben && R.verbindlich) {
+    return `      <p class="verbindlich" role="note">${esc(R.verbindlich)}</p>\n`;
+  }
+  return '';
+}
 
 function seiteBauen(seite, sprache) {
   const R = RAHMEN[sprache.code];
@@ -223,7 +262,7 @@ function seiteBauen(seite, sprache) {
   })}
 
     <main>
-${R.entwurfBanner ? `      <p class="entwurf" role="note">${esc(R.entwurfBanner)}</p>\n` : ''}      <h1>${esc(seite.titel)}</h1>
+${hinweisOben(sprache)}      <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
 ${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}</p>` : ''}
 
@@ -237,7 +276,7 @@ ${istErklaerseite ? `      <div class="karte">
         <p><strong>${esc(R.karteTitel)}</strong></p>
         <p>${esc(R.karteText)}</p>
         <p>${R.karteBeta}</p>
-        <p><a class="knopf" href="/">${esc(R.karteKnopf)}</a></p>
+        <p><a class="knopf" href="${beispielZiel(seite.pfad)}">${esc(R.karteKnopf)}</a></p>
       </div>
 
       <h2>${esc(R.quellenTitel)}</h2>
@@ -247,7 +286,7 @@ ${quellen}
       <p class="leise">${esc(R.quellenLeise)}</p>` : ''}
 
 ${istErklaerseite ? `      <p class="vorbehalt">${R.vorbehalt}${sprache.geprueft
-        ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>` : ''}</p>` : ''}
+        ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>${R.originalGeprueft ? ` ${esc(R.originalGeprueft)}` : ''}` : ''}</p>` : ''}
 
       <h2>${esc(R.weiterlesenTitel)}</h2>
       <ul>
@@ -387,7 +426,9 @@ const stilHintergrund = `
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
     /* Tabellen */
-    .tabelle{ overflow-x:auto; margin:12px 0 18px }
+    /* position:relative hält auch absolut gesetzte Vorlese-Texte im Schiebebereich (sonst dehnen sie die Seite). */
+    .tabelle{ overflow-x:auto; margin:12px 0 18px; position:relative }
+    .tabelle[tabindex]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     table{ border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums }
     caption{ text-align:left; font-size:14px; color:var(--leise); padding-bottom:6px }
     th,td{ text-align:left; vertical-align:top; padding:8px 10px 8px 0; border-bottom:1px solid var(--rand) }
@@ -397,6 +438,19 @@ const stilHintergrund = `
     /* Zahlenansicht: Balken in der Tabelle, Fläche in Heidelbeere, ab null. */
     .zahlen td.balken{ width:42%; padding-right:12px; vertical-align:middle }
     .zahlen td.balken span{ display:block; height:10px; border-radius:3px; background:var(--heidel) }
+    /* Zweite Reihe (z. B. «nach Verbilligung»): gleiche Farbe, als Umriss — Form statt Farbe. */
+    .zahlen td.balken span.b1{ margin-top:3px; background:transparent; border:1.5px solid var(--heidel-text); height:8px }
+    .zahlen tr.ch th, .zahlen tr.ch td, .breit tr.ch th, .breit tr.ch td{ font-weight:600; border-top:1.5px solid var(--leise) }
+    .legende span{ display:inline-block; width:18px; height:9px; border-radius:2px; vertical-align:middle; margin-right:4px }
+    .legende span.b0{ background:var(--heidel) } .legende span.b1{ border:1.5px solid var(--heidel-text) }
+    .tabelle.breit table{ min-width:760px; font-size:14px } .tabelle.breit th[scope="col"]{ vertical-align:bottom }
+    .tabelle.zahlen:focus-visible, .tabelle.breit:focus-visible, .tabelle[role="region"]:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+    /* Breite Tabelle: die Kantonsspalte bleibt beim Verschieben stehen. */
+    .tabelle.breit th[scope="row"], .tabelle.breit tr > th:first-child{ position:sticky; left:0; background:var(--bg); z-index:1 }
+    @media (max-width:600px){ .zahlen th[scope="row"]{ white-space:normal } }
+    /* Kontrastmodus und Druck: Balken nicht nur als Hintergrund. */
+    @media (forced-colors:active){ .zahlen td.balken span.b0, .legende span.b0{ background:CanvasText; forced-color-adjust:none } }
+    .zahlen td.balken span, .legende span{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
     .zahlen th[scope="row"]{ white-space:nowrap }
     @media (max-width:600px){ .zahlen td.balken{ width:30% } }
 
@@ -463,10 +517,17 @@ const stilHintergrund = `
     /* Belege: hochgestellte Nummer, Sprung zur Quelle und zurück. */
     /* Trefferfläche grösser als die Ziffer (a11y-Prüfung 04.11.2026), ohne die Zeile zu sprengen. */
     sup.beleg{ font-size:.75em; line-height:0; vertical-align:super; margin-left:1px }
+    /* Unterstrichen schon im Ruhezustand (WCAG 1.4.1): --heidel-text hat gegen den
+       Fliesstext nur 2.68:1 (hell) bzw. 1.94:1 (dunkel), unter den 3:1, die eine reine
+       Farbunterscheidung bräuchte. Dünn und mit Abstand, damit die Ziffer ruhig bleibt;
+       beim Überfahren verdickt sie sich wie bei allen Links. */
     sup.beleg a{ display:inline-block; min-width:24px; padding:10px 4px; margin:-10px -6px; text-align:center;
-      text-decoration:none; color:var(--heidel-text); font-weight:600 }
-    sup.beleg a:hover{ text-decoration:underline }
-    sup.beleg + sup.beleg::before{ content:","; color:var(--leise) }
+      text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px;
+      color:var(--heidel-text); font-weight:600 }
+    sup.beleg a:hover{ text-decoration-thickness:2px }
+    /* Komma nur zwischen direkt aufeinanderfolgenden Belegen (Klasse «folge», gesetzt in
+       belegeSetzen). «sup + sup» griff auch über Text hinweg (Befund 05.11.2026). */
+    sup.beleg.folge::before{ content:","; color:var(--leise) }
     :target{ scroll-margin-top:24px }
     ol.quellen{ list-style:none; margin:8px 0 18px; padding:0 }
     ol.quellen li{ display:grid; grid-template-columns:2.2em 1fr; gap:0 10px; padding:12px 0; border-bottom:1px solid var(--rand) }
@@ -478,7 +539,9 @@ const stilHintergrund = `
     .q-belegt{ margin:4px 0 0; font-size:14px }
     .q-zurueck{ margin:4px 0 0; font-size:13px; color:var(--leise) }
     .q-zurueck a{ display:inline-block; min-width:24px; padding:8px 4px; margin:-8px 0; text-align:center;
-      color:var(--heidel-text); text-decoration:none } .q-zurueck a:hover{ text-decoration:underline }
+      color:var(--heidel-text); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    /* Gleicher Grund wie bei sup.beleg: gegen den leisen Text davor nur 1.10:1 / 1.01:1. */
+    .q-zurueck a:hover{ text-decoration-thickness:2px }
     .q-art{ display:inline-block; font-size:12px; border:1px solid var(--rand); border-radius:6px; padding:0 6px; margin-left:6px; color:var(--leise) }
     .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
     .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
@@ -498,7 +561,8 @@ function belegeSetzen(html, quellen) {
   });
   const ohne = quellen.filter((q) => !nummer.has(q.key)).map((q) => q.key);
   if (ohne.length) throw new Error(`Quellen ohne Verweis im Text: ${ohne.join(', ')}`);
-  return { text, nummer, stellen };
+  // Direkt aufeinanderfolgende Belege («1,2») bekommen das Trennkomma, sonst keiner.
+  return { text: text.replace(/<\/sup><sup class="beleg">/g, '</sup><sup class="beleg folge">'), nummer, stellen };
 }
 
 function quellenListe(quellen, nummer, stellen) {
@@ -521,9 +585,15 @@ function quellenListe(quellen, nummer, stellen) {
 }
 
 function hintergrundBauen(seite) {
+  // Schalter für eine bewegte Fassung ohne Dateien dahinter: lieber abbrechen
+  // als einen toten Link ausliefern (scripts/seiten/politsystem.mjs).
+  if (seite.bewegtVerlinken) throw new Error(`${seite.pfad}: bewegtVerlinken ist gesetzt, aber es gibt keine bewegte Fassung im Repo`);
   const sprache = SPRACHEN.find((s) => s.code === 'de');
   const R = RAHMEN.de;
-  const werte = zahlen();
+  // Eigene Zahlen und Bilder je Seite (z. B. scripts/seiten/politsystem.mjs);
+  // ohne Angabe die der Krankenkasse und des Kantonsvergleichs.
+  const werte = seite.zahlen ? seite.zahlen() : { ...zahlen(), ...vergleichZahlen() };
+  const bloecke = seite.bloecke || BLOECKE;
   const z = (s) => einsetzen(s, werte);
   const seitenUrl = url(seite.pfad, sprache);
   const titel = z(seite.titel), beschreibung = z(seite.beschreibung);
@@ -554,8 +624,8 @@ function hintergrundBauen(seite) {
   };
 
   const inhaltsverzeichnis = seite.inhaltsverzeichnis ? `      <nav class="inhalt" aria-label="Inhalt dieser Seite">
-        <p>Acht Fragen</p>
-        <ol>
+        <p>${esc(seite.inhaltTitel || 'Inhalt')}</p>
+        <ol role="list">
 ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.replace(/^\d+\.\s*/, ''))}</a></li>`).join('\n')}
         </ol>
       </nav>` : '';
@@ -567,27 +637,27 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
     // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
     // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
-    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, BLOECKE, ctx)}`;
+    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, bloecke, ctx)}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
-  const weiter = [...inhaltFuer('de').seiten].map((s) =>
+  const weiter = [...inhaltFuer('de').seiten, ...HINTERGRUND.filter((h) => h.pfad !== seite.pfad)].map((s) =>
     `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a></li>`).join('\n');
 
   return `${kopf({
     seite: { ...seite, titel, beschreibung }, sprache, seitenUrl, ld,
-    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: scripts/seiten-figuren.mjs`,
+    quelle: `scripts/seiten/${seite.pfad}.mjs · Zahlen und Bilder: ${seite.bilderQuelle || 'scripts/seiten-figuren.mjs'}`,
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
-    extraStil: stilHintergrund,
+    extraStil: stilHintergrund + (seite.stilZusatz || ''),
     // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
     // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
     ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),
   })}
 
     <main>
-      <p class="kicker">Krankenkasse erklärt</p>
+      <p class="kicker">${esc(seite.kicker || seite.brotkrume)}</p>
       <h1>${esc(titel)}</h1>
       <p class="vorspann">${z(seite.vorspann)}</p>
       <p class="stand"><strong>Stand der Zahlen:</strong> ${esc(z(seite.stand))}</p>
@@ -600,7 +670,7 @@ ${abschnitte}
         <p><strong>${esc(R.karteTitel)}</strong></p>
         <p>${esc(R.karteText)}</p>
         <p>${R.karteBeta}</p>
-        <p><a class="knopf" href="/">${esc(R.karteKnopf)}</a></p>
+        <p><a class="knopf" href="${beispielZiel(seite.pfad)}">${esc(R.karteKnopf)}</a></p>
       </div>
 
       <h2 id="quellen">Quellen</h2>
@@ -795,6 +865,26 @@ for (const h of HINTERGRUND) {
     name: `${h.pfad}/index.html`,
   });
 }
+
+// Scrollbare Tabellen per Tastatur erreichbar machen (WCAG 2.1.1): Jede
+// `<div class="tabelle …"><table><caption>…` wird eine benannte Region mit
+// tabindex="0", der Name kommt aus der caption. Zentral hier statt in jedem
+// Tabellen-Baustein, damit keine neue Tabelle es vergessen kann. Blöcke, die es
+// schon selbst tragen (role= gesetzt), bleiben unberührt. Der sichtbare Fokus
+// steht im Stil bei `.tabelle`. Name = caption ist bewusst so (gleiches Muster wie
+// die Sitztabelle in #693): Screenreader sagen ihn beim Betreten der Region und
+// dann als Tabellentitel; das ist doppelt, aber der Name stimmt immer mit dem
+// sichtbaren Titel überein.
+const TABELLE_MIT_CAPTION = /<div class="(tabelle(?: [^"]*)?)"><table>(\s*)<caption>([\s\S]*?)<\/caption>/g;
+function tabellenErreichbar(html) {
+  return html.replace(TABELLE_MIT_CAPTION, (_, klasse, ws, caption) => {
+    const name = caption.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+      .replace(/&/g, '&amp;').replace(/&amp;(#?\w+;)/g, '&$1').replace(/"/g, '&quot;');
+    if (!name) throw new Error(`Tabelle ohne lesbare caption: ${caption}`);
+    return `<div class="${klasse}" role="region" aria-label="${name}" tabindex="0"><table>${ws}<caption>${caption}</caption>`;
+  });
+}
+for (const a of seitenAusgaben) if (a.name.endsWith('.html')) a.inhalt = tabellenErreichbar(a.inhalt);
 
 const ausgaben = [
   ...seitenAusgaben,

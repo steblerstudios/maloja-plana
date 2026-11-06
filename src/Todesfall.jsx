@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusMonate } from './utils/fristen.js';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // Todesfall im Umfeld — geführter Ablauf, würdevoll und ohne Druck. Die ersten Tage,
 // Bestattung, Renten & Versicherungen melden, eigener Aufstockung-Schritt
@@ -13,7 +14,7 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'todesfall', icon: 'document',
+    palette, t, onNavigate, ablauf: 'todesfall', icon: 'ereignisTodesfall',
     title: t('todesfall.title'),
     intro: t('todesfall.intro'),
   },
@@ -34,7 +35,9 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('todesfall.stepElTitle'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('todesfall.stepElText')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step3Link'), onClick: () => onNavigate('vorsorge') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step3LinkSituation'), onClick: () => onNavigate('situationen') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step3LinkSituation'), onClick: () => onNavigate('situationen') }),
+      // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+      onNavigate && React.createElement(AblaufLink, { palette, label: t(ansichtName('ergaenzungsleistungen')), onClick: () => onNavigate('ergaenzungsleistungen') })
     ),
     React.createElement(AblaufStep, { palette, title: t('todesfall.step4Title') },
       React.createElement('p', { style: s.stepText }, t('todesfall.step4Text')),

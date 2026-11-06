@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { text, weight, space, radius, fontFamily, duration, ease } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import {
   SAEULE3A_HOECHSTABZUG, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR, saeule3aMaximum,
@@ -73,7 +73,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
       ),
       // calm progress bar — nur, wenn es ein belegtes Maximum gibt, gegen das sie misst
       ceiling && React.createElement('div', { style: { height: '6px', background: palette.border, borderRadius: radius.hair, overflow: 'hidden' } },
-        React.createElement('div', { style: { height: '100%', width: pct + '%', background: pct >= 100 ? palette.sage : palette.sky, transition: 'width 300ms ease' } })
+        React.createElement('div', { style: { height: '100%', width: pct + '%', background: pct >= 100 ? palette.sage : palette.sky, transition: 'width ' + duration.normal + 'ms ' + ease } })
       ),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
         // Kein belegtes Maximum für dieses Jahr ⇒ lieber sagen, dass es fehlt, als das

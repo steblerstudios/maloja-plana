@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addTodo } from './utils/merkliste.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles, useAblaufStand } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles, useAblaufStand, ablaufTextFarbe, AblaufWarnung } from './AblaufSchale.jsx';
 import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { ablaufStandKey } from './utils/ablaufStand.js';
 import { zusatzSchritte, zusatzFussNotizen } from './ZusatzWechsel.jsx';
 import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"), jetzt auf der wiederverwendbaren
 // Ablauf-Schale. Verkettet die vorhandenen Bausteine zu einem ruhigen Weg: Vergleich →
@@ -139,6 +140,8 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
           ? t('kvgWechsel.step1TextKnown', { insurer: currentInsurer })
           : t('kvgWechsel.step1Text')),
       onNavigate && React.createElement(AblaufLink, { key: 'b', palette, label: t('kvgWechsel.step1Link'), onClick: () => onNavigate('praemien') }),
+      // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+      onNavigate && React.createElement(AblaufLink, { key: 'b2', palette, label: t(ansichtName('premium')), onClick: () => onNavigate('premium') }),
       // Kurz innehalten — ein tieferer Preis allein ist noch kein Wechselgrund.
       React.createElement('p', { key: 'c', style: s.reassure }, t('kvgWechsel.checkIntro')),
       React.createElement('ul', { key: 'd', style: s.checkList },
@@ -164,11 +167,11 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
       ),
       React.createElement('div', { key: 'c', style: s.pathWrap },
         pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
-          React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('kvgWechsel.path3aWarn'))),
+          React.createElement(AblaufWarnung, { palette }, t('kvgWechsel.path3aWarn'))),
         pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
           React.createElement(React.Fragment, null,
             React.createElement('div', { style: s.reassure }, hinweisZeichen('check'), t('kvgWechsel.path3bReassure')),
-            React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('kvgWechsel.path3bCaveat'))
+            React.createElement(AblaufWarnung, { palette }, t('kvgWechsel.path3bCaveat'))
           ))
       ),
       React.createElement('div', { key: 'd', style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvgWechsel.uptakeReassure'))),
@@ -211,7 +214,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
   const schritte = weg === 'zusatz' ? zusatzSchritte({ palette, t, data, onNavigate }) : grund;
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'kvgwechsel', icon: 'insurance', stand, setStand,
+    palette, t, onNavigate, ablauf: 'kvgwechsel', icon: 'ereignisKkwechsel', stand, setStand,
     title: t('kvgWechsel.title'),
     intro: t(weg === 'zusatz' ? 'zusatzWechsel.intro' : 'kvgWechsel.intro'),
   },

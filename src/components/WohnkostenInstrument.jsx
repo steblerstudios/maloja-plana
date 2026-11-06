@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, radius, space, leading } from '../config/tokens.js';
+import { text, weight, radius, space, leading, duration, ease } from '../config/tokens.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
@@ -122,7 +122,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         React.createElement('span', null, t('wohnenInstrument.ausprobieren')),
         React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } },
           t('wohnenInstrument.wohnungssuche'),
-          React.createElement('span', { 'aria-hidden': 'true', 'data-teil': 'ausprobieren-zeichen', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: offen ? 'rotate(90deg)' : 'none', transition: 'transform 150ms ease' } }, '›')
+          React.createElement('span', { 'aria-hidden': 'true', 'data-teil': 'ausprobieren-zeichen', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: offen ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, '›')
         )
       ),
       React.createElement('div', { style: { paddingTop: space.xs + 'px' } },

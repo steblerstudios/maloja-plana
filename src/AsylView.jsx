@@ -54,11 +54,25 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
   // Schritte (Status, Verfahren, Rechte, Fristen, Hilfe, nächste Schritte), Inhalt unverändert. Einleitung mit
   // Vorlese-Knopf und Hinweis stehen oben, die Quelle im Fuss. Vorher eine eigene Karte ohne Schale.
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'asyl', icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'asyl', icon: 'ereignisAsyl',
     title: t('asyl.title'),
   },
     React.createElement('p', { style: s.intro }, t('asyl.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('asyl.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
     React.createElement('div', { style: s.disclaimer }, t('asyl.disclaimer')),
+
+    // ── Wichtig: kurze Fristen ── (Fassung 9, F9-D5: zuerst, Fristen laufen ab dem Entscheid)
+    // Beschwerdefristen sind fallabhängig (Datum aus dem Entscheid), darum kein
+    // vorbefüllter Frist-Knopf, sondern ein ruhiger Weg, die eigene Frist zu notieren.
+    React.createElement(AblaufStep, { palette, title: t('asyl.fristenTitle') },
+      React.createElement('div', { style: s.fristen },
+        React.createElement('div', { style: s.fristenBody }, hinweisZeichen('warning'), t('asyl.fristenBody')),
+        onNavigate && React.createElement('button', {
+          type: 'button',
+          style: { ...s.crosslink, marginTop: space.sm + 'px' },
+          onClick: () => onNavigate('calendar'),
+        }, t('asyl.fristenKalender'))
+      )
+    ),
 
     // ── Status-/Ausweistypen ──
     React.createElement(AblaufStep, { palette, title: t('asyl.statusTitle') },
@@ -112,20 +126,6 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
             React.createElement('span', null, t('asyl.rights.' + r))
           )
         )
-      )
-    ),
-
-    // ── Wichtig: kurze Fristen ──
-    // Beschwerdefristen sind fallabhängig (Datum aus dem Entscheid), darum kein
-    // vorbefüllter Frist-Knopf, sondern ein ruhiger Weg, die eigene Frist zu notieren.
-    React.createElement(AblaufStep, { palette, title: t('asyl.fristenTitle') },
-      React.createElement('div', { style: s.fristen },
-        React.createElement('div', { style: s.fristenBody }, hinweisZeichen('warning'), t('asyl.fristenBody')),
-        onNavigate && React.createElement('button', {
-          type: 'button',
-          style: { ...s.crosslink, marginTop: space.sm + 'px' },
-          onClick: () => onNavigate('calendar'),
-        }, t('asyl.fristenKalender'))
       )
     ),
 

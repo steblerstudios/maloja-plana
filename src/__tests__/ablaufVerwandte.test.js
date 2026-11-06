@@ -61,7 +61,8 @@ describe('unten im Ablauf: Verwandte und der Weg ins Kapitel', () => {
     expect(html).toContain('Verwandte Ereignisse');
     for (const z of VERWANDTE.heirat) expect(html.slice(v)).toContain(esc(t(ansichtName(z))));
     expect(html).toContain(esc('Zum Kapitel ' + t('chapters.basis.title')));
-    expect(html.indexOf(esc(t('heirat.quelle').slice(0, 8)))).toBeGreaterThan(v);
+    // Der Fuss mit den Belegen (seit Fassung 9 aufklappbar, data-belege) steht nach den Verwandten.
+    expect(html.indexOf('data-belege')).toBeGreaterThan(v);
   });
   it('auch ein Ablauf, der vorher keine hatte (Trennung)', () => {
     const html = renderToStaticMarkup(React.createElement(Trennung, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));

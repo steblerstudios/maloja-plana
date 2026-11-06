@@ -1,6 +1,7 @@
 import { UMLEITUNGEN } from '../utils/hashRouter.js';
 import { describe, it, expect } from 'vitest';
 import { GEGENSTAENDE, alleWege, wegeCount, gegenstandReadiness } from '../data/gepaeck.js';
+import { EREIGNIS_PFADE } from '../data/ereignisZeichen.js';
 import { ABLAEUFE } from '../config/ansichtenRegister.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { VALID_VIEWS } from '../utils/hashRouter.js';
@@ -22,9 +23,12 @@ describe('Gepäck-Registry', () => {
     expect(new Set(wegKeys).size).toBe(wegKeys.length);
   });
 
-  it('jeder Weg hat mindestens einen Glyph-Pfad', () => {
+  // Seit dem Icon-Plan (Schritt 7b, 06.11.2026) nennt jeder Weg ein Register-Zeichen statt eigener
+  // Pfade; die Pfade stehen in data/ereignisZeichen.js. Gruppe und Einheit prüft zeichenOrdnung.test.js.
+  it('jeder Weg hat ein Zeichen mit mindestens einem Pfad', () => {
     for (const w of alleWege()) {
-      expect(Array.isArray(w.g) && w.g.length > 0, `Weg "${w.key}" ohne Glyph`).toBe(true);
+      const pfade = EREIGNIS_PFADE[w.icon];
+      expect(Array.isArray(pfade) && pfade.length > 0, `Weg "${w.key}" ohne Zeichen`).toBe(true);
     }
   });
 

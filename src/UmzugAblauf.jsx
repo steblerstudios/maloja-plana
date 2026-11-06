@@ -188,7 +188,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
   ];
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'umzug', icon: 'home',
+    palette, t, onNavigate, ablauf: 'umzug', icon: 'ereignisUmzug',
     title: t('umzug.title'),
     intro: t('umzug.intro'),
     // Stationsnamen auf der Strasse wie im Mockup Fassung 5.

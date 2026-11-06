@@ -24,45 +24,54 @@ import { SUCHBARE_WERKZEUGE } from '../data/werkzeugRegister.js';
 // `bereich`: der Lebensbereich (data/lebensbereiche.js), in dessen Farbe der Ablauf steht —
 // Balken oben und Zeichen im Kopf (Entscheid Stebler Studios 27.09.2026, Probe).
 export const ABLAEUFE = [
-  { view: 'kkerst', bereich: 'versicherungen', nav: 'nav.kkerst', sub: 'nav.sub.kkerst', icon: 'insurance', aliases: ['krankenkasse', 'grundversicherung', 'neu in der schweiz', 'caisse maladie', 'cassa malati', 'health insurance'] },
+  { view: 'kkerst', bereich: 'versicherungen', nav: 'nav.kkerst', sub: 'nav.sub.kkerst', icon: 'ereignisKkerst', aliases: ['krankenkasse', 'grundversicherung', 'neu in der schweiz', 'caisse maladie', 'cassa malati', 'health insurance'] },
   // F7-A5 (27.10.2026): ein Ablauf für Grund- und Zusatzversicherung; `#/zusatzwechsel` ist eine Umleitung hierher.
-  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'insurance', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa', 'zusatzversicherung', 'vvg', 'complémentaire', 'complementare'] },
-  { view: 'neuerjob', bereich: 'arbeit', nav: 'nav.neuerjob', sub: 'nav.sub.neuerjob', icon: 'lebenslauf', aliases: ['job', 'stelle', 'arbeitsvertrag', 'erste stelle', 'emploi', 'lavoro'] },
-  { view: 'stelleverloren', bereich: 'arbeit', nav: 'nav.stelleverloren', sub: 'nav.sub.stelleverloren', icon: 'lebenslauf', aliases: ['kündigung', 'arbeitslos', 'rav', 'chômage', 'disoccupazione', 'unemployed'] },
-  { view: 'unfallkrankheit', bereich: 'gesundheit', nav: 'nav.unfallkrankheit', sub: 'nav.sub.unfallkrankheit', icon: 'notfall', aliases: ['unfall', 'krank', 'uvg', 'taggeld', 'arbeitsunfähig', 'accident', 'infortunio'] },
-  { view: 'umzug', bereich: 'wohnen', nav: 'nav.umzug', sub: 'nav.sub.umzug', icon: 'home', aliases: ['umzug', 'zügeln', 'adresse', 'anmelden', 'déménagement', 'trasloco', 'moving'] },
-  { view: 'pensionierung', bereich: 'vorsorge', nav: 'nav.pensionierung', sub: 'nav.sub.pensionierung', icon: 'vorsorge', aliases: ['pension', 'rente', 'ruhestand', 'ahv', 'retraite', 'pensione', 'retirement'] },
-  { view: 'mahnung', bereich: 'finanzen', nav: 'nav.mahnung', sub: 'nav.sub.mahnung', icon: 'money', aliases: ['mahnung', 'zahlungserinnerung', 'rechnung', 'offene rechnung', 'inkasso', 'verzugszins', 'ratenzahlung', 'rappel', 'sommation', 'sollecito', 'diffida', 'reminder', 'overdue'] },
+  { view: 'kvgwechsel', bereich: 'versicherungen', nav: 'kvgWechsel.title', sub: 'nav.sub.kvgwechsel', icon: 'ereignisKkwechsel', aliases: ['krankenkasse', 'wechsel', 'kündigung', 'grundversicherung', 'changer de caisse', 'cambiare cassa', 'zusatzversicherung', 'vvg', 'complémentaire', 'complementare'] },
+  { view: 'neuerjob', bereich: 'arbeit', nav: 'nav.neuerjob', sub: 'nav.sub.neuerjob', icon: 'ereignisJob', aliases: ['job', 'stelle', 'arbeitsvertrag', 'erste stelle', 'emploi', 'lavoro'] },
+  { view: 'stelleverloren', bereich: 'arbeit', nav: 'nav.stelleverloren', sub: 'nav.sub.stelleverloren', icon: 'ereignisStelleweg', aliases: ['kündigung', 'arbeitslos', 'rav', 'chômage', 'disoccupazione', 'unemployed'] },
+  { view: 'unfallkrankheit', bereich: 'gesundheit', nav: 'nav.unfallkrankheit', sub: 'nav.sub.unfallkrankheit', icon: 'ereignisUnfall', aliases: ['unfall', 'krank', 'uvg', 'taggeld', 'arbeitsunfähig', 'accident', 'infortunio'] },
+  { view: 'umzug', bereich: 'wohnen', nav: 'nav.umzug', sub: 'nav.sub.umzug', icon: 'ereignisUmzug', aliases: ['umzug', 'zügeln', 'adresse', 'anmelden', 'déménagement', 'trasloco', 'moving'] },
+  { view: 'pensionierung', bereich: 'vorsorge', nav: 'nav.pensionierung', sub: 'nav.sub.pensionierung', icon: 'ereignisPension', aliases: ['pension', 'rente', 'ruhestand', 'ahv', 'retraite', 'pensione', 'retirement'] },
+  { view: 'mahnung', bereich: 'finanzen', nav: 'nav.mahnung', sub: 'nav.sub.mahnung', icon: 'ereignisMahnung', aliases: ['mahnung', 'zahlungserinnerung', 'rechnung', 'offene rechnung', 'inkasso', 'verzugszins', 'ratenzahlung', 'rappel', 'sommation', 'sollecito', 'diffida', 'reminder', 'overdue'] },
   // F7-A10 (27.10.2026): vorher Schritt 6 von «Mahnung erhalten».
-  { view: 'selbstmahnen', bereich: 'finanzen', nav: 'selbstMahnen.title', sub: 'nav.sub.selbstmahnen', icon: 'money', aliases: ['mahnen', 'schuldet mir', 'geld zurück', 'verzugszins', 'in verzug setzen', 'schuldner', 'mettre en demeure', 'débiteur', 'costituire in mora', 'debitore', 'owes me money', 'debtor'] },
-  { view: 'betreibung', bereich: 'finanzen', nav: 'nav.betreibung', sub: 'nav.sub.betreibung', icon: 'behoerden', aliases: ['betreibung', 'zahlungsbefehl', 'rechtsvorschlag', 'poursuite', 'esecuzione'] },
-  { view: 'selbstaendigkeit', bereich: 'arbeit', nav: 'nav.selbstaendigkeit', sub: 'nav.sub.selbstaendigkeit', icon: 'lebenslauf', aliases: ['selbständig', 'selbstständig', 'firma', 'gründen', 'indépendant', 'indipendente', 'self-employed'] },
-  { view: 'heirat', bereich: 'familie', nav: 'nav.heirat', sub: 'nav.sub.heirat', icon: 'heart', aliases: ['heirat', 'hochzeit', 'ehe', 'partnerschaft', 'mariage', 'matrimonio', 'marriage'] },
-  { view: 'kind', bereich: 'familie', nav: 'nav.kind', sub: 'nav.sub.kind', icon: 'family', aliases: ['kind', 'geburt', 'baby', 'kinderzulage', 'naissance', 'nascita', 'birth'] },
-  { view: 'trennung', bereich: 'familie', nav: 'nav.trennung', sub: 'nav.sub.trennung', icon: 'family', aliases: ['trennung', 'scheidung', 'séparation', 'divorce', 'separazione', 'divorzio'] },
-  { view: 'bewilligung', bereich: 'behoerden', nav: 'nav.bewilligung', sub: 'nav.sub.bewilligung', icon: 'behoerden', aliases: ['bewilligung', 'ausweis b', 'ausweis c', 'aufenthalt', 'permis', 'permesso', 'permit'] },
-  { view: 'fuehrerausweis', bereich: 'behoerden', nav: 'nav.fuehrerausweis', sub: 'nav.sub.fuehrerausweis', icon: 'behoerden', aliases: ['führerschein', 'fahrausweis', 'umtausch', 'permis de conduire', 'licenza di condurre', 'driving licence'] },
-  { view: 'asyl', bereich: 'behoerden', nav: 'nav.asyl', sub: 'nav.sub.asyl', icon: 'behoerden', aliases: ['asyl', 'asylum', 'flucht', 'migration'] },
-  { view: 'iv', bereich: 'gesundheit', nav: 'nav.iv', sub: 'nav.sub.iv', icon: 'health', aliases: ['iv', 'invalidität', 'krankheit', 'ai', 'invalidité', 'invalidità'] },
-  { view: 'pflege', bereich: 'gesundheit', nav: 'nav.pflege', sub: 'nav.sub.pflege', icon: 'heart', aliases: ['pflege', 'angehörige', 'betreuung', 'betreuungsgutschrift', 'proches aidants', 'familiari curanti'] },
-  { view: 'wohnunggekuendigt', bereich: 'wohnen', nav: 'nav.wohnunggekuendigt', sub: 'nav.sub.wohnunggekuendigt', icon: 'home', aliases: ['kündigung', 'wohnung', 'miete', 'vermieter', 'anfechten', 'erstreckung', 'schlichtung', 'résiliation', 'bail', 'disdetta', 'eviction'] },
-  { view: 'quellensteuer', bereich: 'finanzen', nav: 'nav.quellensteuer', sub: 'nav.sub.quellensteuer', icon: 'money', aliases: ['quellensteuer', 'tarifcode', 'lohnabzug', 'nov', 'nachträgliche veranlagung', 'impôt à la source', 'imposta alla fonte', 'withholding tax'] },
+  { view: 'selbstmahnen', bereich: 'finanzen', nav: 'selbstMahnen.title', sub: 'nav.sub.selbstmahnen', icon: 'ereignisSelbstmahnen', aliases: ['mahnen', 'schuldet mir', 'geld zurück', 'verzugszins', 'in verzug setzen', 'schuldner', 'mettre en demeure', 'débiteur', 'costituire in mora', 'debitore', 'owes me money', 'debtor'] },
+  { view: 'betreibung', bereich: 'finanzen', nav: 'nav.betreibung', sub: 'nav.sub.betreibung', icon: 'ereignisBetreibung', aliases: ['betreibung', 'zahlungsbefehl', 'rechtsvorschlag', 'poursuite', 'esecuzione'] },
+  { view: 'selbstaendigkeit', bereich: 'arbeit', nav: 'nav.selbstaendigkeit', sub: 'nav.sub.selbstaendigkeit', icon: 'ereignisSelbst', aliases: ['selbständig', 'selbstständig', 'firma', 'gründen', 'indépendant', 'indipendente', 'self-employed'] },
+  { view: 'heirat', bereich: 'familie', nav: 'nav.heirat', sub: 'nav.sub.heirat', icon: 'ereignisHeirat', aliases: ['heirat', 'hochzeit', 'ehe', 'partnerschaft', 'mariage', 'matrimonio', 'marriage'] },
+  { view: 'kind', bereich: 'familie', nav: 'nav.kind', sub: 'nav.sub.kind', icon: 'ereignisGeburt', aliases: ['kind', 'geburt', 'baby', 'kinderzulage', 'naissance', 'nascita', 'birth'] },
+  { view: 'trennung', bereich: 'familie', nav: 'nav.trennung', sub: 'nav.sub.trennung', icon: 'ereignisTrennung', aliases: ['trennung', 'scheidung', 'séparation', 'divorce', 'separazione', 'divorzio'] },
+  { view: 'bewilligung', bereich: 'behoerden', nav: 'nav.bewilligung', sub: 'nav.sub.bewilligung', icon: 'ereignisBewilligung', aliases: ['bewilligung', 'ausweis b', 'ausweis c', 'aufenthalt', 'permis', 'permesso', 'permit'] },
+  { view: 'fuehrerausweis', bereich: 'behoerden', nav: 'nav.fuehrerausweis', sub: 'nav.sub.fuehrerausweis', icon: 'ereignisFuehrerausweis', aliases: ['führerschein', 'fahrausweis', 'umtausch', 'permis de conduire', 'licenza di condurre', 'driving licence'] },
+  { view: 'asyl', bereich: 'behoerden', nav: 'nav.asyl', sub: 'nav.sub.asyl', icon: 'ereignisAsyl', aliases: ['asyl', 'asylum', 'flucht', 'migration'] },
+  { view: 'iv', bereich: 'gesundheit', nav: 'nav.iv', sub: 'nav.sub.iv', icon: 'ereignisIv', aliases: ['iv', 'invalidität', 'krankheit', 'ai', 'invalidité', 'invalidità'] },
+  { view: 'pflege', bereich: 'gesundheit', nav: 'nav.pflege', sub: 'nav.sub.pflege', icon: 'ereignisPflege', aliases: ['pflege', 'angehörige', 'betreuung', 'betreuungsgutschrift', 'proches aidants', 'familiari curanti'] },
+  { view: 'wohnunggekuendigt', bereich: 'wohnen', nav: 'nav.wohnunggekuendigt', sub: 'nav.sub.wohnunggekuendigt', icon: 'ereignisWohnunggekuendigt', aliases: ['kündigung', 'wohnung', 'miete', 'vermieter', 'anfechten', 'erstreckung', 'schlichtung', 'résiliation', 'bail', 'disdetta', 'eviction'] },
+  { view: 'quellensteuer', bereich: 'finanzen', nav: 'nav.quellensteuer', sub: 'nav.sub.quellensteuer', icon: 'ereignisQuellensteuer', aliases: ['quellensteuer', 'tarifcode', 'lohnabzug', 'nov', 'nachträgliche veranlagung', 'impôt à la source', 'imposta alla fonte', 'withholding tax'] },
   { view: 'aussteuerung', bereich: 'arbeit', nav: 'nav.aussteuerung', sub: 'nav.sub.aussteuerung', icon: 'lebenslauf', aliases: ['ausgesteuert', 'aussteuerung', 'arbeitslos', 'taggeld', 'überbrückungsleistung', 'fin de droits', 'esaurimento', 'benefits exhausted'] },
-  { view: 'zuzug', bereich: 'behoerden', nav: 'nav.zuzug', sub: 'nav.sub.zuzug', icon: 'behoerden', aliases: ['zuzug', 'einreise', 'ausland', 'neu in der schweiz', 'anmeldung', 'expat', 'arrivée', 'arrivo', 'moving to switzerland'] },
-  { view: 'einbuergerung', bereich: 'behoerden', nav: 'nav.einbuergerung', sub: 'nav.sub.einbuergerung', icon: 'behoerden', aliases: ['einbürgerung', 'einbuergerung', 'schweizer pass', 'bürgerrecht', 'naturalisation', 'naturalizzazione', 'citizenship'] },
-  { view: 'vorsorgeauftrag', bereich: 'vorsorge', nav: 'nav.vorsorgeauftrag', sub: 'nav.sub.vorsorgeauftrag', icon: 'document', aliases: ['vorsorgeauftrag', 'patientenverfügung', 'urteilsunfähigkeit', 'kesb', 'mandat pour cause d’inaptitude', 'directives anticipées', 'mandato precauzionale', 'direttive del paziente', 'patient decree', 'advance care directive', 'advance directive', 'living will', 'lasting power of attorney', 'power of attorney', 'testament', 'erbe'] },
-  { view: 'ergaenzungsleistungen', bereich: 'vorsorge', nav: 'nav.ergaenzungsleistungen', sub: 'nav.sub.ergaenzungsleistungen', icon: 'vorsorge', aliases: ['ergänzungsleistungen', 'el', 'el anmelden', 'prestations complémentaires', 'pc avs ai', 'prestazioni complementari', 'supplementary benefits', 'heimeintritt', 'vermögensschwelle'] },
-  { view: 'zusammenziehen', bereich: 'wohnen', nav: 'nav.zusammenziehen', sub: 'nav.sub.zusammenziehen', icon: 'home', aliases: ['zusammenziehen', 'konkubinat', 'ohne trauschein', 'konkubinatsvertrag', 'concubinage', 'vivre ensemble', 'concubinato', 'convivenza', 'cohabitation', 'moving in together'] },
-  { view: 'adoption', bereich: 'familie', nav: 'nav.adoption', sub: 'nav.sub.adoption', icon: 'family', aliases: ['adoption', 'adoptieren', 'stiefkindadoption', 'adoptionsurlaub', 'adopter', 'congé d’adoption', 'adozione', 'congedo di adozione', 'adopt'] },
-  { view: 'wegzug', bereich: 'behoerden', nav: 'nav.wegzug', sub: 'nav.sub.wegzug', icon: 'home', aliases: ['wegzug', 'auswandern', 'ausland', 'abmelden', 'freizügigkeit', 'barauszahlung', 'départ à l’étranger', 'partenza all’estero', 'moving abroad', 'emigrate'] },
-  { view: 'ausweis', bereich: 'behoerden', nav: 'nav.ausweis', sub: 'nav.sub.ausweis', icon: 'behoerden', aliases: ['pass', 'identitätskarte', 'ausweis', 'ausweis verloren', 'passeport', 'carte d’identité', 'passaporto', 'carta d’identità', 'passport', 'identity card'] },
-  { view: 'betreibungsauszug', bereich: 'finanzen', nav: 'nav.betreibungsauszug', sub: 'nav.sub.betreibungsauszug', icon: 'behoerden', aliases: ['betreibungsauszug', 'betreibungsregister', 'auszug', 'wohnungssuche', 'extrait des poursuites', 'estratto esecuzioni', 'debt enforcement extract', 'debt collection extract'] },
-  { view: 'lehre', bereich: 'arbeit', nav: 'nav.lehre', sub: 'nav.sub.lehre', icon: 'lebenslauf', aliases: ['lehre', 'lehrvertrag', 'lernende', 'erste stelle', 'apprentissage', 'contrat d’apprentissage', 'tirocinio', 'apprendistato', 'apprenticeship'] },
-  { view: 'volljaehrig', bereich: 'person', nav: 'nav.volljaehrig', sub: 'nav.sub.volljaehrig', icon: 'heart', aliases: ['18 werden', 'volljährig', 'volljaehrig', 'volljährigkeit', 'majorité', '18 ans', 'maggiore età', '18 anni', 'turning 18', 'coming of age'] },
-  { view: 'dienst', bereich: 'behoerden', nav: 'nav.dienst', sub: 'nav.sub.dienst', icon: 'behoerden', aliases: ['militär', 'zivildienst', 'rekrutierung', 'wehrpflichtersatz', 'service militaire', 'service civil', 'servizio militare', 'servizio civile', 'military service', 'civilian service'] },
-  { view: 'digitaleordnung', bereich: 'person', nav: 'nav.digitaleordnung', sub: 'nav.sub.digitaleordnung', icon: 'lock', aliases: ['digitale ordnung', 'passwort', 'passwörter', 'passwortmanager', 'zwei-faktor', 'phishing', 'betrug', 'gehackt', 'datenschutz', 'auskunft', 'robinsonliste', 'mot de passe', 'password', 'privacy'] },
-  { view: 'todesfall', bereich: 'familie', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
+  { view: 'zuzug', bereich: 'behoerden', nav: 'nav.zuzug', sub: 'nav.sub.zuzug', icon: 'ereignisNeuch', aliases: ['zuzug', 'einreise', 'ausland', 'neu in der schweiz', 'anmeldung', 'expat', 'arrivée', 'arrivo', 'moving to switzerland'] },
+  { view: 'einbuergerung', bereich: 'behoerden', nav: 'nav.einbuergerung', sub: 'nav.sub.einbuergerung', icon: 'ereignisEinbuergerung', aliases: ['einbürgerung', 'einbuergerung', 'schweizer pass', 'bürgerrecht', 'naturalisation', 'naturalizzazione', 'citizenship'] },
+  { view: 'vorsorgeauftrag', bereich: 'vorsorge', nav: 'nav.vorsorgeauftrag', sub: 'nav.sub.vorsorgeauftrag', icon: 'ereignisVorsorgeauftrag', aliases: ['vorsorgeauftrag', 'patientenverfügung', 'urteilsunfähigkeit', 'kesb', 'mandat pour cause d’inaptitude', 'directives anticipées', 'mandato precauzionale', 'direttive del paziente', 'patient decree', 'advance care directive', 'advance directive', 'living will', 'lasting power of attorney', 'power of attorney', 'testament', 'erbe'] },
+  { view: 'ergaenzungsleistungen', bereich: 'vorsorge', nav: 'nav.ergaenzungsleistungen', sub: 'nav.sub.ergaenzungsleistungen', icon: 'ereignisErgaenzungsleistungen', aliases: ['ergänzungsleistungen', 'el', 'el anmelden', 'prestations complémentaires', 'pc avs ai', 'prestazioni complementari', 'supplementary benefits', 'heimeintritt', 'vermögensschwelle'] },
+  { view: 'zusammenziehen', bereich: 'wohnen', nav: 'nav.zusammenziehen', sub: 'nav.sub.zusammenziehen', icon: 'ereignisZusammenziehen', aliases: ['zusammenziehen', 'konkubinat', 'ohne trauschein', 'konkubinatsvertrag', 'concubinage', 'vivre ensemble', 'concubinato', 'convivenza', 'cohabitation', 'moving in together'] },
+  { view: 'adoption', bereich: 'familie', nav: 'nav.adoption', sub: 'nav.sub.adoption', icon: 'ereignisAdoption', aliases: ['adoption', 'adoptieren', 'stiefkindadoption', 'adoptionsurlaub', 'adopter', 'congé d’adoption', 'adozione', 'congedo di adozione', 'adopt'] },
+  { view: 'wegzug', bereich: 'behoerden', nav: 'nav.wegzug', sub: 'nav.sub.wegzug', icon: 'ereignisWegzug', aliases: ['wegzug', 'auswandern', 'ausland', 'abmelden', 'freizügigkeit', 'barauszahlung', 'départ à l’étranger', 'partenza all’estero', 'moving abroad', 'emigrate'] },
+  { view: 'ausweis', bereich: 'behoerden', nav: 'nav.ausweis', sub: 'nav.sub.ausweis', icon: 'ereignisAusweis', aliases: ['pass', 'identitätskarte', 'ausweis', 'ausweis verloren', 'passeport', 'carte d’identité', 'passaporto', 'carta d’identità', 'passport', 'identity card'] },
+  { view: 'betreibungsauszug', bereich: 'finanzen', nav: 'nav.betreibungsauszug', sub: 'nav.sub.betreibungsauszug', icon: 'ereignisBetreibungsauszug', aliases: ['betreibungsauszug', 'betreibungsregister', 'auszug', 'wohnungssuche', 'extrait des poursuites', 'estratto esecuzioni', 'debt enforcement extract', 'debt collection extract'] },
+  { view: 'lehre', bereich: 'arbeit', nav: 'nav.lehre', sub: 'nav.sub.lehre', icon: 'ereignisLehre', aliases: ['lehre', 'lehrvertrag', 'lernende', 'erste stelle', 'apprentissage', 'contrat d’apprentissage', 'tirocinio', 'apprendistato', 'apprenticeship'] },
+  { view: 'volljaehrig', bereich: 'person', nav: 'nav.volljaehrig', sub: 'nav.sub.volljaehrig', icon: 'ereignisVolljaehrig', aliases: ['18 werden', 'volljährig', 'volljaehrig', 'volljährigkeit', 'majorité', '18 ans', 'maggiore età', '18 anni', 'turning 18', 'coming of age'] },
+  { view: 'dienst', bereich: 'behoerden', nav: 'nav.dienst', sub: 'nav.sub.dienst', icon: 'ereignisDienst', aliases: ['militär', 'zivildienst', 'rekrutierung', 'wehrpflichtersatz', 'service militaire', 'service civil', 'servizio militare', 'servizio civile', 'military service', 'civilian service'] },
+  { view: 'digitaleordnung', bereich: 'person', nav: 'nav.digitaleordnung', sub: 'nav.sub.digitaleordnung', icon: 'ereignisDigitaleordnung', aliases: ['digitale ordnung', 'passwort', 'passwörter', 'passwortmanager', 'zwei-faktor', 'phishing', 'betrug', 'gehackt', 'datenschutz', 'auskunft', 'robinsonliste', 'mot de passe', 'password', 'privacy'] },
+  { view: 'todesfall', bereich: 'familie', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'ereignisTodesfall', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
+
+// «Ankommen in der Schweiz» (Seitenlandkarte G1, 05.11.2026): die Abläufe, die eine Person nach dem
+// Zuzug nacheinander braucht, aus drei Lebensbereichen. Reihenfolge = Reihenfolge in der Übersicht.
+// Nur Verweise auf ABLAEUFE — Titel, Untertitel und Zeichen kommen von dort (Wächter: gruppeAnkommen.test.js).
+export const ANKOMMEN = ['zuzug', 'kkerst', 'bewilligung', 'quellensteuer', 'einbuergerung'];
+
+// «Mit 18» (Seitenlandkarte G2, 06.11.2026): 18 werden, dann Lehre, Dienst und die erste Stelle — die Reihe,
+// die «18 werden» selbst schon verlinkt (ablaufVerwandte.js). Nur Verweise auf ABLAEUFE (Wächter: gruppeMit18.test.js).
+export const MIT18 = ['volljaehrig', 'lehre', 'dienst', 'neuerjob'];
 
 // Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
 // sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
@@ -72,10 +81,10 @@ export const SEARCH_VIEWS = [
   ...SUCHBARE_WERKZEUGE,
   // Zwei Wege aus dem Gepäck, die kein geführter Ablauf sind — nur ihre Suchwörter
   // stehen hier; ihr Platz im Rucksack steht in data/gepaeck.js.
-  { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ausbildung', aliases: ['stipendien', 'scholarship'] },
-  { view: 'organ', nav: 'nav.organDonation', icon: 'health', aliases: ['organspende', 'spende', 'organ', 'donation'] },
-  { view: 'bestattung', nav: 'nav.bestattung', icon: 'document', aliases: ['bestattung', 'beerdigung', 'kremation', 'abdankung', 'obsèques', 'funerale', 'funeral'] },
-  { view: 'mietzins', nav: 'nav.mietzins', sub: 'nav.sub.mietzins', icon: 'home', aliases: ['mietzins', 'mietzinsbeitrag', 'mietzinsrechner', 'miete', 'mietzuschuss', 'wohnbeihilfe', 'aide au loyer', 'aides au loyer', 'sussidio affitto', 'rent subsidy'] },
+  { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ereignisStipendien', aliases: ['stipendien', 'scholarship'] },
+  { view: 'organ', nav: 'nav.organDonation', icon: 'ereignisOrgan', aliases: ['organspende', 'spende', 'organ', 'donation'] },
+  { view: 'bestattung', nav: 'nav.bestattung', icon: 'ereignisBestattung', aliases: ['bestattung', 'beerdigung', 'kremation', 'abdankung', 'obsèques', 'funerale', 'funeral'] },
+  { view: 'mietzins', nav: 'nav.mietzins', sub: 'nav.sub.mietzins', icon: 'ereignisMietzins', aliases: ['mietzins', 'mietzinsbeitrag', 'mietzinsrechner', 'miete', 'mietzuschuss', 'wohnbeihilfe', 'aide au loyer', 'aides au loyer', 'sussidio affitto', 'rent subsidy'] },
   // Seiten, die das Dashboard und die Kapitel ansteuern, die aber weder Werkzeug noch
   // Ablauf sind. Befund 23.10.2026: wer «Notfallkarte» eintippte, bekam nichts — die
   // Karte auf dem Dashboard führt in `notfalleinstieg`, und keine dieser Seiten stand hier.
@@ -83,7 +92,7 @@ export const SEARCH_VIEWS = [
   // Runde 5 / «ein Ort»: «Notfallkarte» trifft nur noch die Notfallkarte (Q), nicht mehr das Kapitel.
   { view: 'notfalleinstieg', nav: 'chapters.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card'] },
   { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
-  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'health', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
+  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'notfall', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
   // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
@@ -129,7 +138,7 @@ export const SCHLUSS_ZIELE = {
   sync: { kapitel: 'finanzen' },
   direktlinks: { ziel: 'situationen' },
   export: { ziel: 'tresor' },
-  notifications: { ziel: 'calendar' },
+  // notifications: seit 05.11.2026 Abschnitt der Einstellungen (Umleitung), kein eigener Schluss mehr.
   flyer: {},
   installApp: {},
 };

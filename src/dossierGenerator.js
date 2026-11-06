@@ -176,7 +176,8 @@ function getSections(data, chapters, t) {
       rows: [
         { label: lbl('ausbildung', 'educationLevel'), value: sel('ausbildung', 'educationLevel') },
         { label: lbl('ausbildung', 'schoolName'), value: d('ausbildung', 'schoolName') },
-        { label: lbl('ausbildung', 'employer'), value: d('ausbildung', 'employer') },
+        // F8-P3: der Arbeitgeber steht schon unter Finanzen; hier nur, wenn er etwas anderes sagt.
+        { label: lbl('ausbildung', 'employer'), value: gleicherText(d('ausbildung', 'employer'), d('finanzen', 'employer')) ? '' : d('ausbildung', 'employer') },
         { label: lbl('ausbildung', 'jobTitle'), value: d('ausbildung', 'jobTitle') },
         { label: lbl('ausbildung', 'employmentStart'), value: dt('ausbildung', 'employmentStart') },
         // Wie im Kapitel (Abnahme F6, 25.10.2026): Schweizer Bürgerrecht → «nicht nötig», nicht die Option als Bewilligung.
@@ -210,10 +211,20 @@ function getSections(data, chapters, t) {
         { label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
         { label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
         { label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
+        // F8-P3 (Stebler Studios 05.11.2026): keine Gesundheitsdaten in der Mappe, nur der Verweis — sobald welche erfasst sind.
+        { label: t('lebensmappe.gesundheitLabel'), value: hatGesundheitsangaben(data.notfall) ? t('lebensmappe.gesundheitHinweis') : '' },
       ].filter(r => r.value),
     },
   ];
 }
+
+// F8-P3: gleicher Text ohne Rücksicht auf Gross-/Kleinschreibung und Leerzeichen.
+const gleicherText = (a, b) => !!a && !!b && String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+const hatGesundheitsangaben = (nf) => {
+  const n = nf || {};
+  const liste = (x) => Array.isArray(x) && x.length > 0;
+  return !!(n.bloodType || n.allergies || n.medications || n.chronicDiseases || liste(n.medicationsList) || liste(n.chronicDiseasesList));
+};
 
 // ─── Preview Data (for React rendering) ──────────────────
 
@@ -404,7 +415,13 @@ export function generateLebensmappe(data, chapters, t, documents) {
       }
       .lm-print-btn { display: none; }
       .lm-section { break-inside: avoid; }
-      @page { margin: 2cm; size: A4; }
+      /* F8-P4 (Druckprobe 05.11.2026): Seitenrand 0, damit der Browser keine eigene Kopf- und
+         Fusszeile (Datum, «about:blank») druckt (developer.chrome.com/blog/print-margins).
+         Den Rand von 2 cm setzt der Behälter selbst, auf jeder Seite (box-decoration-break). */
+      @page { margin: 0; size: A4; }
+      .lm-container { padding: 2cm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      /* Die Schlusszeile bleibt beim letzten Abschnitt, statt allein eine Seite zu füllen. */
+      .lm-footer { break-before: avoid; page-break-before: avoid; margin-top: 16px; }
     }
   </style>
 </head>
@@ -773,7 +790,13 @@ export function generateNotfallDossier(data, chapters, t) {
       }
       .nd-print-btn { display: none; }
       .nd-section { break-inside: avoid; }
-      @page { margin: 2cm; size: A4; }
+      /* F8-P4 (Druckprobe 05.11.2026): Seitenrand 0, damit der Browser keine eigene Kopf- und
+         Fusszeile (Datum, «about:blank») druckt (developer.chrome.com/blog/print-margins).
+         Den Rand von 2 cm setzt der Behälter selbst, auf jeder Seite (box-decoration-break). */
+      @page { margin: 0; size: A4; }
+      .nd-container { padding: 2cm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      /* Die Schlusszeile bleibt beim letzten Abschnitt, statt allein eine Seite zu füllen. */
+      .nd-footer { break-before: avoid; page-break-before: avoid; margin-top: 16px; }
     }
   </style>
 </head>
@@ -978,7 +1001,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       }
     }
     // R4: die Annahmen hinter der Zahl (dieselben wie im Steuerrechner und in der Finanzübersicht).
-    const annahmen = annahmenTexte(t, tax.annahmen);
+    // F8-P1: auf dem Blatt fürs Amt ohne App-Anleitung («Angeben lässt sich das im Kapitel …»).
+    const annahmen = annahmenTexte(t, tax.annahmen)
+      .map((s) => (s === t('tax.annahmeOhneDreizehnten') ? t('tax.annahmeOhneDreizehntenBlatt') : s));
     if (annahmen.length) taxRows.push({ label: t('tax.annahmenLabel'), value: annahmen.join(' ') });
     sections.push({
       key: 'steuern',
@@ -1203,6 +1228,10 @@ export function getBehoerdenDossierPreview(data, chapters, t, calculations) {
   };
 }
 
+// F8-P4 (Druckprobe 05.11.2026): Lange Werte (Hinweise, Annahmen) standen rechtsbündig als
+// Textblock neben dem Feldnamen. Ab dieser Länge stehen sie linksbündig unter dem Feldnamen.
+export const BD_LANGER_WERT = 60;
+
 export function generateBehoerdenDossier(data, chapters, t, calculations) {
   const sections = getBehoerdenSections(data, chapters, t, calculations);
   const name = getFullName(data.basis) || t('lebensmappe.untitled');
@@ -1220,7 +1249,11 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
         <h2>${esc(s.title)}</h2>
         ${s.status ? `<div class="bd-status" style="color:${s.statusColor || DRUCK.grau}">${esc(s.status)}</div>` : ''}
         ${s.rows.length > 0 ? `<table>
-          ${s.rows.map(r => `
+          ${s.rows.map(r => String(r.value ?? '').length > BD_LANGER_WERT ? `
+            <tr class="bd-lang">
+              <td colspan="2"><div class="bd-label">${esc(r.label)}</div><div class="bd-value-lang${r.bold ? ' bd-bold' : ''}">${esc(r.value)}</div></td>
+            </tr>
+          ` : `
             <tr>
               <td class="bd-label">${esc(r.label)}</td>
               <td class="bd-value${r.bold ? ' bd-bold' : ''}">${esc(r.value)}</td>
@@ -1306,6 +1339,8 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     .bd-label { width: 55%; font-size: 12px; color: ${DRUCK.grau}; }
     .bd-value { font-size: 12px; font-weight: 500; text-align: right; }
     .bd-bold { font-weight: 700; }
+    .bd-lang .bd-label { width: auto; }
+    .bd-value-lang { font-size: 12px; font-weight: 500; text-align: left; margin-top: 2px; line-height: 1.5; }
     .bd-disclaimer {
       background: ${DRUCK.papier};
       border-radius: 6px;
@@ -1343,7 +1378,13 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       .bd-container { border: none; border-radius: 0; padding: 0; max-width: none; }
       .bd-print-btn { display: none; }
       .bd-section { break-inside: avoid; }
-      @page { margin: 2cm; size: A4; }
+      /* F8-P4 (Druckprobe 05.11.2026): Seitenrand 0, damit der Browser keine eigene Kopf- und
+         Fusszeile (Datum, «about:blank») druckt (developer.chrome.com/blog/print-margins).
+         Den Rand von 2 cm setzt der Behälter selbst, auf jeder Seite (box-decoration-break). */
+      @page { margin: 0; size: A4; }
+      .bd-container { padding: 2cm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      /* Die Schlusszeile bleibt beim letzten Abschnitt, statt allein eine Seite zu füllen. */
+      .bd-footer { break-before: avoid; page-break-before: avoid; margin-top: 16px; }
     }
   </style>
 </head>
