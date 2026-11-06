@@ -97,7 +97,8 @@ Detailfragen, die im Menü sichtbar wurden (offen, nächster Schritt):
 ✅ **Mindestlohn: Abzeichen haselnuss** (Arbeit spielt mit). Zeichen offen («unsicher»).
 Offen: Sozialhilfe grün mit Schirm (Vorschlag Stebler Studios, im Bild zu zeigen) · KVG-Leistungen / Unfall-Krankheit / IV («unschlüssig»).
 Bild [Sozialhilfe, Mindestlohn](icon-besprechung-sozialhilfe-mindestlohn.html). Stebler Studios: «Sozialhilfe ja · Mindestlohn hmm, noch nicht ideal».
-✅ **06.11.: Sozialhilfe = Fünfliber + Schirm grün (Persönliche Basis)** — Schutz wie beim Asyl (dort grau bei Behörden). Mindestlohn: A Pfeil vom Boden · B Mini-Helm · C ≥ gefallen noch nicht.
+✅ **06.11.: Sozialhilfe = Fünfliber + Schirm grün (Persönliche Basis)** — Schutz wie beim Asyl (dort grau bei Behörden). Mindestlohn: A Pfeil vom Boden · B Mini-Helm · C ≥ gefallen noch nicht. Richtung (Lohn oder Grenze) offen («weiss ich nicht») → Bild [Mindestlohn](icon-besprechung-mindestlohn.html): A Hand mit Münze · B Waage · C Messlatte · D Pfeil hält an Linie.
+✅ **06.11.: Mindestlohn = Fünfliber + Waage haselnuss** («B, Waage»). Waage = Recht (wie im Wörterbuch 2 beim Rechtsschutz): gleiche Bedeutung, andere Form, wie der Schirm bei Asyl/Sozialhilfe.
 ~~Offen: Adoption («ob das nicht auch einfach ein plus sein soll») · Trennung/Scheidung~~ Damals offen: Trennung/Scheidung («überlegen»; eine Seite `trennung`, deckt Scheidung ab) · Zuzug/Wegzug («noch gedanken irgendwie oder?») · Bewilligung und Führerausweis (nicht genannt).
 **Nächste Sitzung:** ~~1) Farben-Zuordnung klären~~ ✅ · 2) neue Leitformen so reich zeichnen wie Chalet/Helvetia · 3) Zeichen auf einfache Grundformen zurückführen.
 
