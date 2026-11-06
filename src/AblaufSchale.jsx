@@ -6,7 +6,7 @@ import landschaft from './assets/berge/landschaft.webp?url';
 import { erinnerungSichern, loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { renderSource } from './utils/renderSource.js';
+import { Belege } from './components/Belege.jsx';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
@@ -503,7 +503,7 @@ export const AblaufPass = ({ palette, name, total, aktuell, fertig, namen }) => 
 export const AblaufFooter = ({ palette, notes, quelle, t }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },
-    quelle ? React.createElement('div', { key: 'quelle', style: { marginBottom: '6px' } }, renderSource(quelle, null, t)) : null,
+    quelle ? React.createElement(Belege, { key: 'quelle', palette, t, zeile: quelle, style: { marginBottom: '6px', fontSize: 'inherit' } }) : null,
     (notes || []).flatMap((n, i) => [
       i > 0 ? React.createElement('br', { key: 'br' + i }) : null,
       hinweisZeichen(undefined, undefined, 'z' + i), n,
