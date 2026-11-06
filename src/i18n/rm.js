@@ -2090,6 +2090,8 @@ export default {
       lebensereignisse: 'Eveniments da vita',
       // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)
       ankommen: 'Arrivada en Svizra',
+      // TODO(rm): provisorisch — Gegenlese (G2 Mit 18, 06.11.2026)
+      mit18: 'Cun 18 onns',
       money: 'Daners & taglias',
       insurance: 'Assicuranza & sanadad',
       support: 'Sustegn & dretgs',

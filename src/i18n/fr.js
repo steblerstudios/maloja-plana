@@ -1950,6 +1950,7 @@ export default {
       gesundheit: 'Santé',
       lebensereignisse: 'Événements de vie',
       ankommen: 'Arrivée en Suisse',
+      mit18: 'À 18 ans',
       money: 'Argent & impôts',
       insurance: 'Assurance & santé',
       support: 'Soutien & droits',

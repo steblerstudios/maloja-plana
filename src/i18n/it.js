@@ -1949,6 +1949,7 @@ export default {
       gesundheit: 'Salute',
       lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',
+      mit18: 'A 18 anni',
       money: 'Denaro & imposte',
       insurance: 'Assicurazione & salute',
       support: 'Sostegno & diritti',

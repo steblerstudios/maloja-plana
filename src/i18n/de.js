@@ -1959,6 +1959,7 @@ export default {
       gesundheit: 'Gesundheit',
       lebensereignisse: 'Lebensereignisse',
       ankommen: 'Ankommen in der Schweiz',
+      mit18: 'Mit 18',
       money: 'Geld & Steuern',
       insurance: 'Versicherung & Gesundheit',
       support: 'Unterstützung & Anspruch',
