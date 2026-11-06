@@ -741,7 +741,7 @@ const AppInner = ({ demo }) => {
       // ausser es gibt eine gemerkte Stelle (die gilt dann, siehe unten).
       // Die Adresse zeigt danach das Ziel, nicht den alten Namen — auch wenn das Kapitel schon offen
       // war und sich darum kein Zustand ändert, der sie sonst nachführt.
-      if (parsed.anker) replaceHash(parsed.view, parsed.chapterIndex);
+      if (parsed.anker || parsed.ersetzen) replaceHash(parsed.view, parsed.chapterIndex);
       if (parsed.anker && parsed.stelle === null) springeZuAnker(parsed.anker);
       // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
       // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
