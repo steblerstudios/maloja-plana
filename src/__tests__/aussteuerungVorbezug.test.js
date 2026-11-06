@@ -39,6 +39,15 @@ describe('Aussteuerung — Vorbezug und Überbrückungsleistungen', () => {
     }
   });
 
+  it('sagt, dass die Stelle von Amtes wegen prüft und die ÜL bis zur Klärung weiterlaufen (ÜLV Art. 1)', () => {
+    for (const [lang, t] of Object.entries(texte)) {
+      for (const s of fassungen(t.aussteuerung.step4Uel)) {
+        expect(s, lang).toMatch(/(ÜLV|OPtra|OPTD) (Art\.|art\.) 1/);
+      }
+      expect(t.aussteuerung.quelle, lang).toContain('2021/376/');
+    }
+  });
+
   it('die Quellenliste verlinkt die neuen Artikel', () => {
     for (const [lang, t] of Object.entries(texte)) {
       const q = t.aussteuerung.quelle;
