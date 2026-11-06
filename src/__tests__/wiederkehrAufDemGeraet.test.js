@@ -190,7 +190,9 @@ describe('Startbündel', () => {
   it('main.jsx lädt nur das Zählen, nicht die Anzeige', () => {
     expect(lesen('main.jsx')).not.toContain('nutzungsAnzeige');
     const dashboard = lesen('Dashboard.jsx');
-    expect(dashboard).toContain("React.lazy(() => import('./components/BetaFeedback.jsx')");
+    // Nachgeladen, egal ob per React.lazy oder lazyMitTexten (seit Fassung 9 lädt main Texte mit).
+    expect(dashboard).toMatch(/(React\.lazy|lazyMitTexten)\(\(\) => import\('\.\/components\/BetaFeedback\.jsx'\)/);
+    expect(dashboard).not.toMatch(/from '\.\/components\/BetaFeedback\.jsx'/);
     expect(dashboard).not.toContain('nutzungsAnzeige');
   });
 });
