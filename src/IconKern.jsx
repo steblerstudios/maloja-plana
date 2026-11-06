@@ -38,7 +38,10 @@ import { tagInZuerich } from './utils/zuerichTag.js';
 // Adding new icons:
 //   1. Add factory function to the appropriate section — hier nur, wenn der fest
 //      geladene Teil es zeigt; sonst in `IconSystem.jsx` (siehe oben)
-//   2. Use "currentColor" for fills/strokes, "white" only for inner details
+//   2. Use "currentColor" for fills/strokes. Funktions-Icons (Schicht B) sind Strich und tragen
+//      NIE "white" — im Dunkelmodus ist currentColor hell und ein weisses Innenzeichen
+//      verschwindet (Icon-Plan, Schritt 5, 06.11.2026; Wächter schichtBStrich.test.js).
+//      Lebensbereich-Bilder (Schicht A) haben noch weisse Details — offener Punkt im Plan.
 //   3. Keep paths simple — aim for < 3 elements per icon
 //   4. Test in both light and dark palette
 
@@ -297,9 +300,10 @@ const _sicherung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
   React.createElement('polyline', { points: '8,15.5 10.5,18 13,15.5' })
 );
 
-const _document = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 6 2 L 6 22 L 18 22 L 18 8 L 12 2 Z' }),
-  React.createElement('path', { d: 'M 12 2 L 12 8 L 18 8', fill: 'none', stroke: 'white', strokeWidth: '1' })
+const _document = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M6 3 H14 L19 8 V20 a1 1 0 0 1 -1 1 H6 a1 1 0 0 1 -1 -1 V4 a1 1 0 0 1 1 -1 Z' }),
+  React.createElement('path', { d: 'M14 3 V8 H19' }),
+  React.createElement('path', { d: 'M8.5 13 H15.5 M8.5 16.5 H13.5' })
 );
 
 const _download = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -322,10 +326,10 @@ const _kreuz = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('path', { d: 'M6 6l12 12M18 6L6 18' })
 );
 
-const _warning = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 12 2 L 22 20 L 2 20 Z' }),
-  React.createElement('line', { x1: '12', y1: '9', x2: '12', y2: '14', stroke: 'white', strokeWidth: '2', strokeLinecap: 'round' }),
-  React.createElement('circle', { cx: '12', cy: '17', r: '1', fill: 'white' })
+const _warning = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M10.3 5 a2 2 0 0 1 3.4 0 l7 12 a2 2 0 0 1 -1.7 3 H5 a2 2 0 0 1 -1.7 -3 Z' }),
+  React.createElement('path', { d: 'M12 10 V13.5' }),
+  React.createElement('circle', { cx: '12', cy: '16.6', r: '1.1', fill: 'currentColor', stroke: 'none' })
 );
 
 const _money = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
@@ -405,10 +409,10 @@ const _family = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('path', { d: 'M 13 20 Q 13 16 17 16 Q 21 16 21 20' })
 );
 
-const _info = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
-  React.createElement('circle', { cx: '12', cy: '8', r: '1.2', fill: 'white' }),
-  React.createElement('rect', { x: '10.5', y: '11', width: '3', height: '6', rx: '0.5', fill: 'white' })
+const _info = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
+  React.createElement('path', { d: 'M12 11 V16.5' }),
+  React.createElement('circle', { cx: '12', cy: '7.8', r: '1.1', fill: 'currentColor', stroke: 'none' })
 );
 
 const _chevron = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2.2', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -444,6 +448,61 @@ const _leaf = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'cu
 // Herz — ruhige Kontur für Lebensereignisse wie Heirat (Granit-Linienstil wie die Kapitel-Icons).
 const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none' },
   React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
+);
+
+// Die Zeichen des Boden-Ankers und des Menüs (Icon-Plan November 2026, Schritt 3). Bis
+// dahin zeichneten main.jsx (`bottomIcon`) und MobileNav (`linie`) sie je selbst. Dieselben
+// Linien, jetzt hier, in der Strichstärke der übrigen Zeichen.
+const _linie = (...pfade) => () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  ...pfade.map((d, i) => React.createElement('path', { key: i, d })));
+// Übersicht = Schweizer Sackmesser, generisch, ohne Kreuz (icon-dictionary.md). Ruhende Form;
+// die Leiste klappt die Werkzeuge mit `SackmesserIcon` in main.jsx aus.
+const _sackmesser = _linie('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5');
+const _rucksack = _linie('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z', 'M9 8a3 3 0 0 1 6 0', 'M9 14h6');
+// «Was steht mir zu?» — in Leiste, Menü und Register dasselbe Geschenk.
+const _geschenk = _linie('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8');
+const _plus = _linie('M12 5 V19 M5 12 H19');
+const _quittung = _linie('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15');
+const _menue = _linie('M4 7 H20 M4 12 H20 M4 17 H20');
+
+// Kopfzeile und Barrierefreiheits-Leiste (Schritt 3): bis 06.11.2026 von Hand in main.jsx.
+const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '3' }),
+  React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+);
+const _globe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '8.5' }),
+  React.createElement('path', { d: 'M 3.5 12 H 20.5', strokeWidth: '1.4' }),
+  React.createElement('path', { d: 'M 12 3.5 C 15.2 6.2 15.2 17.8 12 20.5 C 8.8 17.8 8.8 6.2 12 3.5 Z', strokeWidth: '1.4' }),
+);
+const _lautsprecher = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M4 9 h3 l5 -4 v14 l-5 -4 h-3 Z' }),
+  React.createElement('path', { d: 'M16 9 a5 5 0 0 1 0 6' })
+);
+const _raster = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
+  React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
+  React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
+  React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
+);
+const _kontrast = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }),
+  React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
+);
+const _farbsicher = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6' },
+  React.createElement('circle', { cx: '8.5', cy: '9', r: '5', fill: 'currentColor', stroke: 'none' }),
+  React.createElement('rect', { x: '10.5', y: '11', width: '9', height: '9', rx: '1.5' })
+);
+const _bewegung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' },
+  React.createElement('circle', { cx: '7', cy: '12', r: '2.2', fill: 'currentColor', stroke: 'none' }),
+  React.createElement('path', { d: 'M12 8.5a5 5 0 0 1 0 7' }),
+  React.createElement('path', { d: 'M15 6a9 9 0 0 1 0 12' })
+);
+const _hand = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M15 11V5.5a1.5 1.5 0 0 0-3 0V11' }),
+  React.createElement('path', { d: 'M12 10.5V4a1.5 1.5 0 0 0-3 0v7' }),
+  React.createElement('path', { d: 'M9 11V6.5a1.5 1.5 0 0 0-3 0V14' }),
+  React.createElement('path', { d: 'M6 12.5l-1.6-1.6a1.4 1.4 0 0 0-2 2L6 18a5 5 0 0 0 4.5 3H13a5 5 0 0 0 5-5v-4a1.5 1.5 0 0 0-3 0' })
 );
 
 // ═══════════════════════════════════════════════════════════════
@@ -497,6 +556,24 @@ const _iconFactories = {
   chevron: _chevron,
   cowbell: _cowbell,
   leaf: _leaf,
+
+  // Boden-Anker und Menü (Schritt 3)
+  sackmesser: _sackmesser,
+  rucksack: _rucksack,
+  geschenk: _geschenk,
+  plus: _plus,
+  quittung: _quittung,
+  menue: _menue,
+
+  // Kopfzeile und Barrierefreiheit (Schritt 3)
+  settings: _settings,
+  globe: _globe,
+  lautsprecher: _lautsprecher,
+  raster: _raster,
+  kontrast: _kontrast,
+  farbsicher: _farbsicher,
+  bewegung: _bewegung,
+  hand: _hand,
 };
 
 
@@ -534,6 +611,22 @@ export const zeichenErgaenzen = (fabriken) => {
 // Wraps any icon key with proper sizing, color inheritance,
 // and aria-hidden for accessibility (all icons are decorative).
 
+// Strich nach Grösse (Icon-Plan November 2026, Schritt 4). ICON_KONVENTION.md: «Massstab ist die
+// optische Strichstärke am Renderpunkt, nicht dieselbe Zahl» — Ziel 1,1–1,4 px. Ein Strich-Icon
+// (Wurzel `fill: none` mit `stroke`) bekommt darum seine Strichstärke aus der Grösse: bei 14 px
+// 2,4, bei 22 px 1,52, bei 32 px 1,05 — optisch überall rund 1,4 px. Kinder mit eigener Stärke
+// behalten sie; Flächen-Icons bleiben, wie sie gezeichnet sind. Wächter: strichNachGroesse.test.js.
+// 1,4 = obere Grenze der Konvention, gewählt von Stebler Studios am 06.11.2026 («Kräftiger (1,4)»)
+// statt 1,25 — die Seitentitel-Icons bei 22 px sollten nicht zu fein werden. Abgerundet, damit
+// die Grenze nie überschritten wird.
+const ZIEL_STRICH_PX = 1.4;
+export const strichFuer = (px) => Math.floor((ZIEL_STRICH_PX * 24 / px) * 100) / 100;
+const mitStrichNachGroesse = (el, px) => (
+  typeof px === 'number' && px > 0 && el.props.fill === 'none' && el.props.stroke
+    ? React.cloneElement(el, { strokeWidth: strichFuer(px) })
+    : el
+);
+
 export const Icon = ({ name, size = 16, color, style = {} }) => {
   const IconFn = Icons[name];
   if (!IconFn) return null;
@@ -551,7 +644,7 @@ export const Icon = ({ name, size = 16, color, style = {} }) => {
       color: color || 'inherit',
       ...style,
     }
-  }, IconFn());
+  }, mitStrichNachGroesse(IconFn(), size));
 };
 
 // ═══════════════════════════════════════════════════════════════

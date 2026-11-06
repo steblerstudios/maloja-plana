@@ -64,6 +64,13 @@ jeder Kultur; der warme Unterton verhindert «kalte Behörde». Kein Farbton sch
 aus. Kontrast-Paare müssen WCAG AA erfüllen (Light **und** Dark). Herleitung + verworfene
 Paletten: [`brand-identity.md` §1](brand-identity.md).
 
+**Links im Text sind unterstrichen, nie nur farbig** (WCAG 1.4.1, 05.11.2026). Eine Linkfarbe
+bräuchte 3:1 gegen den umgebenden Text; `skyDeep` hat gegen Fliesstext nur 2.68:1 (hell) und
+1.94:1 (dunkel). Darum: dünne Unterstreichung (1px, Abstand 2px) im Ruhezustand, beim Überfahren
+2px, die Farbe wechselt nicht. Ohne Unterstreichung nur, wo die Form den Link trägt: Knopf,
+Wortmarke, Listen und Inhaltsverzeichnisse, in denen jeder Eintrag ein Link ist. Wächter:
+`src/__tests__/seitenStilA11y.test.js` (Erlaubnisliste).
+
 ---
 
 ## 3. Typografie

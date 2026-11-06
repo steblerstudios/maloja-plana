@@ -27,6 +27,8 @@
 // Fassung, also auch keinen Sprachumschalter auf diese Seite.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
+
 export const KRANKENKASSE = {
   pfad: 'krankenkasse',
   titel: 'Warum die Krankenkasse so viel kostet',
@@ -51,6 +53,8 @@ export const KRANKENKASSE = {
   vorspann:
     'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.',
   inhaltsverzeichnis: true,
+  kicker: 'Krankenkasse erklärt',
+  inhaltTitel: 'Acht Fragen',
   abschnitte: [
     {
       id: 'topf',
@@ -243,4 +247,5 @@ export const KRANKENKASSE = {
   ],
 };
 
-export const HINTERGRUND = [KRANKENKASSE];
+// Alle Hintergrundseiten. Weitere kommen in eigenen Dateien dazu.
+export const HINTERGRUND = [KRANKENKASSE, KANTONE_IM_VERGLEICH];

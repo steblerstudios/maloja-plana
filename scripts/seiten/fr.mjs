@@ -54,7 +54,7 @@ export const SEITEN = [
         titel: 'Pourquoi tant de choses restent en plan',
         absaetze: [
           'Un droit dont personne n’a connaissance n’est pas exercé. S’y ajoutent des obstacles qui n’ont rien à voir avec le droit lui-même : des formulaires dans une langue qu’il faut d’abord apprendre. Des délais qui ne figurent nulle part ensemble. La crainte de mal faire. Et l’idée répandue que le soutien est une affaire pour les autres.',
-          'Rien de tout cela ne change quoi que ce soit au droit. Mais tout cela fait qu’il n’est pas invoqué.',
+          'Rien de tout cela ne change quoi que ce soit au droit. Mais tout cela fait qu’on ne le fait pas valoir.',
         ],
       },
     ],
@@ -62,7 +62,7 @@ export const SEITEN = [
       {
         frage: 'Comment savoir à quoi j’ai droit ?',
         antwort:
-          'La voie la plus sûre passe par l’organe qui décide effectivement — donc par son propre canton, respectivement sa propre commune. Les calculateurs et aperçus comme ceux qui sont liés ici donnent une première orientation sur l’opportunité d’une demande. Seule la décision de l’organe compétent fait foi.',
+          'La voie la plus sûre passe par l’organe qui décide effectivement — donc par son propre canton, respectivement sa propre commune. Les calculateurs et aperçus comme ceux auxquels cette page renvoie donnent une première orientation sur l’opportunité d’une demande. Seule la décision de l’organe compétent fait foi.',
       },
       {
         frage: 'Pourquoi est-ce différent selon le canton ?',
@@ -72,7 +72,7 @@ export const SEITEN = [
       {
         frage: 'Dois-je faire une demande partout moi-même ?',
         antwort:
-          'Cela varie selon la prestation et le canton. Pour certaines prestations, les organes s’annoncent d’eux-mêmes ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée.',
+          'Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée.',
       },
       {
         frage: 'Combien coûte Maloja Plana ?',
@@ -91,12 +91,12 @@ export const SEITEN = [
       'La réduction individuelle des primes (RIP) est une contribution à la prime d’assurance-maladie. La Confédération fixe le cadre, les cantons décident — ce que cela signifie pour vous.',
     brotkrume: 'Réduction des primes',
     vorspann:
-      'La réduction individuelle des primes — souvent abrégée RIP — est une contribution des pouvoirs publics à la prime d’assurance-maladie. Elle est prévue par la loi sur l’assurance-maladie (LAMal), mais la Confédération ne l’exécute pas : ce sont les cantons qui le font, chacun selon ses propres règles, dans le cadre du droit fédéral.',
+      'La réduction individuelle des primes — souvent abrégée RIP — est une contribution des pouvoirs publics à la prime d’assurance-maladie. Elle est prévue par la loi fédérale sur l’assurance-maladie (LAMal), mais la Confédération ne l’exécute pas : ce sont les cantons qui le font, chacun selon ses propres règles, dans le cadre du droit fédéral.',
     abschnitte: [
       {
         titel: 'Ce que prescrit la Confédération et ce que décide le canton',
         absaetze: [
-          'La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et à quelle hauteur.',
+          'La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et pour quel montant.',
           'Concrètement, ce qui diffère d’un canton à l’autre : les limites de revenu et de fortune, la manière même dont le revenu déterminant est calculé, le fait de devoir déposer une demande ou d’être contacté, et les délais.',
           'Est en revanche partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.',
           'C’est pourquoi la phrase « chez nous, on y a droit à partir d’un revenu de X » mène rarement loin. Elle vaut au mieux pour un canton, et là encore pour une seule année.',
@@ -105,14 +105,14 @@ export const SEITEN = [
       {
         titel: 'Quels chiffres comptent',
         absaetze: [
-          'Les cantons se fondent en règle générale sur les données fiscales — et souvent non pas sur celles de l’année en cours, mais sur une taxation antérieure déjà entrée en force. Cela a une conséquence qui surprend : une personne qui gagne nettement moins cette année ne le voit pas apparaître d’elle-même dans de nombreux cantons — d’autres en tiennent compte seulement lors du décompte définitif ultérieur.',
+          'Les cantons se fondent en règle générale sur les données fiscales — et souvent non pas sur celles de l’année en cours, mais sur une taxation antérieure déjà entrée en force. Cela a une conséquence qui surprend : une personne qui gagne nettement moins cette année ne voit pas cette baisse prise en compte d’office dans de nombreux cantons — d’autres en tiennent compte seulement lors du décompte définitif ultérieur.',
           'La LAMal exige toutefois que, lors de l’examen des conditions d’octroi, les cantons prennent en considération les circonstances économiques et familiales les plus récentes, notamment à la demande de la personne assurée (art. 65, al. 3, LAMal). Votre canton règle les détails, par exemple les conditions, les justificatifs, les délais et la date d’effet. Un droit à la réduction n’en découle pas automatiquement. L’organe compétent vous renseigne — le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, mais dans certains cantons l’administration fiscale ou la commune de domicile.',
         ],
       },
       {
         titel: 'L’erreur la plus fréquente',
         absaetze: [
-          'Beaucoup partent du principe qu’avec un revenu d’activité lucrative on n’a en principe droit à rien. C’est inexact : la réduction des primes n’est pas une prestation réservée aux personnes sans emploi. Les familles avec enfants, les personnes en formation et les ménages à revenu moyen y entrent dans de nombreux cantons.',
+          'Beaucoup partent du principe qu’avec un revenu d’activité lucrative on n’a en principe droit à rien. C’est inexact : la réduction des primes n’est pas une prestation réservée aux personnes sans emploi. Les familles avec enfants, les personnes en formation et les ménages à revenu moyen peuvent y avoir droit dans de nombreux cantons.',
           'La deuxième erreur fréquente est de croire qu’une demande refusée une fois vaut pour toujours. Elle vaut pour son année. Si le revenu, le ménage ou le canton de domicile changent, c’est une nouvelle question.',
         ],
       },
@@ -126,7 +126,7 @@ export const SEITEN = [
       {
         frage: 'Dois-je déposer une demande ?',
         antwort:
-          'Dans certains cantons, les ayants droit sont contactés d’office ; dans d’autres, la demande doit être déposée soi-même. Comme cela relève du droit cantonal et peut changer, il vaut la peine de se renseigner auprès de l’organe cantonal — même si l’on a déjà reçu quelque chose une année antérieure.',
+          'Dans certains cantons, les ayants droit sont contactés d’office ; dans d’autres, il faut déposer soi-même la demande. Comme cela relève du droit cantonal et peut changer, il vaut la peine de se renseigner auprès de l’organe cantonal — même si l’on a déjà reçu quelque chose une année antérieure.',
       },
       {
         frage: 'Quel revenu est pris en compte ?',
@@ -177,7 +177,7 @@ export const SEITEN = [
         titel: 'Le droit que personne ne peut perdre',
         absaetze: [
           'Indépendamment de tout ce qui précède, la <strong>Constitution fédérale, article 12</strong>, consacre le droit d’obtenir de l’aide dans des situations de détresse : quiconque est dans une situation de détresse et n’est pas en mesure de subvenir à son entretien a le droit d’être aidé et assisté et de recevoir les moyens indispensables pour mener une existence conforme à la dignité humaine.',
-          'Ce droit appartient à toute personne en Suisse. Il n’est pas la même chose que l’aide sociale et couvre moins — mais il est la limite inférieure en deçà de laquelle on ne peut pas descendre.',
+          'Ce droit appartient à toute personne en Suisse. Il n’est pas la même chose que l’aide sociale et couvre moins — mais il est la limite inférieure en deçà de laquelle on ne doit pas descendre.',
         ],
       },
     ],
@@ -214,7 +214,7 @@ export const SEITEN = [
       'Pourquoi un même salaire est imposé très différemment selon le lieu de domicile — les trois niveaux, le coefficient d’impôt et ce que cela signifie en pratique.',
     brotkrume: 'Impôts',
     vorspann:
-      'Qui paie l’impôt sur le revenu en Suisse le paie en règle générale à trois endroits à la fois : à la Confédération, au canton et à la commune. Seul le premier est identique partout. Les deux autres sont la raison pour laquelle un même salaire conduit, à deux lieux de domicile, à des factures sensiblement différentes.',
+      'Qui paie l’impôt sur le revenu en Suisse le paie en règle générale à trois endroits à la fois : à la Confédération, au canton et à la commune. Seul le premier est identique partout. Les deux autres sont la raison pour laquelle un même salaire conduit, à deux lieux de domicile, à des bordereaux d’impôt sensiblement différents.',
     abschnitte: [
       {
         titel: 'L’impôt fédéral direct est partout le même',
@@ -235,7 +235,7 @@ export const SEITEN = [
         titel: 'Ce qui est déduit du revenu',
         absaetze: [
           'Ce n’est pas le salaire qui est imposé, mais le <strong>revenu imposable</strong> — donc ce qui reste après les déductions admises. En font partie, selon la situation, les frais professionnels, les cotisations au pilier 3a, les frais de maladie au-delà d’un seuil, les déductions pour enfants et pour leur garde, et d’autres encore.',
-          'Quelles déductions sont admises et à quelle hauteur diffère entre la Confédération et le canton, et entre les cantons. C’est précisément là que le plus se perd — non pas par de fausses indications, mais par des déductions que personne n’a inscrites.',
+          'Quelles déductions sont admises et dans quelle mesure, cela diffère entre la Confédération et le canton, et entre les cantons. C’est précisément là que le plus se perd — non pas par de fausses indications, mais par des déductions que personne n’a inscrites.',
         ],
       },
     ],
@@ -243,7 +243,7 @@ export const SEITEN = [
       {
         frage: 'Pourquoi est-ce que je paie autrement que quelqu’un du canton voisin ?',
         antwort:
-          'Parce que le canton fixe le barème et que le canton et la commune décident chacun de leur propre coefficient d’impôt. Seul l’impôt fédéral direct est identique partout. Un même salaire peut ainsi conduire à des factures nettement différentes selon le lieu de domicile.',
+          'Parce que le canton fixe le barème et que le canton et la commune décident chacun de leur propre coefficient d’impôt. Seul l’impôt fédéral direct est identique partout. Un même salaire peut ainsi conduire à des bordereaux d’impôt nettement différents selon le lieu de domicile.',
       },
       {
         frage: 'Qu’est-ce que le coefficient d’impôt ?',
@@ -256,7 +256,7 @@ export const SEITEN = [
           'Cela dépend de la situation et du canton — fréquents sont les frais professionnels, les cotisations au pilier 3a, les frais de maladie et d’accident au-delà d’un seuil ainsi que les déductions pour enfants et pour leur garde. Les montants et les conditions diffèrent entre la Confédération et le canton ; seules les instructions de son propre canton font foi.',
       },
       {
-        frage: 'Où puis-je calculer de manière contraignante ?',
+        frage: 'Où obtenir un calcul qui fait foi ?',
         antwort:
           'Seule la taxation de l’administration fiscale cantonale fait foi en fin de compte. Pour un calcul prévisionnel fiable, l’Administration fédérale des contributions met à disposition un calculateur qui tient compte de la Confédération, du canton et de la commune.',
       },
@@ -270,13 +270,13 @@ export const SONDERSEITEN = [
     pfad: 'rechtliches',
     titel: 'Mentions légales, protection des données et clause de non-responsabilité',
     beschreibung:
-      'Qui se trouve derrière Maloja Plana, quelles données sont collectées lors de la consultation de ces pages et ce dont les calculateurs ne répondent expressément pas.',
+      'Qui se trouve derrière Maloja Plana, quelles données sont collectées lors de la consultation de ces pages et ce que les calculateurs ne garantissent expressément pas.',
     brotkrume: 'Mentions légales',
     vorspann:
-      'Cette page vaut pour malojaplana.ch et les pages d’explication publiques. Pour l’application elle-même s’applique en outre la déclaration de protection des données détaillée, qui figure dans l’application sous « Protection des données et mentions légales » — elle aussi sans code d’accès. Font foi les versions publiées : cette page pour malojaplana.ch et les pages d’explication, le texte dans l’application pour l’application. Les versions de travail dans le code source public (docs/legal) sont des brouillons et une trace d’origine, non la version qui fait foi.',
+      'Cette page vaut pour malojaplana.ch et les pages d’explication publiques. Pour l’application elle-même s’applique en outre la déclaration de protection des données détaillée, qui figure dans l’application sous « Confidentialité & Mentions légales » — elle aussi sans code d’accès. Font foi les versions publiées : cette page pour malojaplana.ch et les pages d’explication, le texte dans l’application pour l’application. Les versions de travail dans le code source public (docs/legal) sont des brouillons et une trace d’origine, non la version qui fait foi. En cas de divergence entre les versions linguistiques, seule la version allemande fait foi.',
     abschnitte: [
       {
-        titel: 'Fournisseuse',
+        titel: 'Éditrice',
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Bâle, Suisse<br>Courriel : <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — classeur de vie suisse. Un projet open source sous AGPL-3.0. L’utilisation de l’application est gratuite ; pour le white-label et tout autre usage commercial, une licence séparée est disponible sur demande.',
@@ -287,8 +287,8 @@ export const SONDERSEITEN = [
         titel: 'Clause de non-responsabilité',
         absaetze: [
           'Maloja Plana est un <strong>outil d’orientation</strong>. Les calculateurs et les aperçus se fondent sur des bases légales accessibles au public et servent exclusivement à l’information personnelle.',
-          '<strong>Maloja Plana ne remplace ni un conseil juridique, ni fiscal, ni en assurances, ni financier.</strong>',
-          'La fournisseuse n’assume aucune garantie quant à l’exactitude, à l’exhaustivité ou à l’actualité des calculs, quant à l’adéquation des résultats à des décisions individuelles, ni pour les dommages résultant de leur utilisation. Seuls les lois en vigueur et les autorités compétentes font foi.',
+          '<strong>Maloja Plana ne remplace pas un conseil juridique, fiscal, financier ou en assurances.</strong>',
+          'L’éditrice n’assume aucune garantie quant à l’exactitude, à l’exhaustivité ou à l’actualité des calculs, quant à l’adéquation des résultats à des décisions individuelles, ni pour les dommages résultant de leur utilisation. Seuls les lois en vigueur et les autorités compétentes font foi.',
         ],
       },
       {
@@ -308,15 +308,15 @@ export const SONDERSEITEN = [
       {
         titel: 'Données dans l’application',
         absaetze: [
-          'Ce que vous saisissez dans Maloja Plana reste <strong>sur votre appareil</strong> (localStorage et IndexedDB dans le navigateur). Il n’y a pas de compte, pas de connexion et aucune transmission à la fournisseuse ou à des tiers. Qui veut effacer les données les efface sur l’appareil — il n’existe pas de seconde copie ailleurs.',
+          'Ce que vous saisissez dans Maloja Plana reste <strong>sur votre appareil</strong> (localStorage et IndexedDB dans le navigateur). Il n’y a pas de compte, pas de connexion et aucune transmission à l’éditrice ou à des tiers. Qui veut effacer les données les efface sur l’appareil — il n’existe pas de seconde copie ailleurs.',
           'Les données sensibles (santé, aide sociale, convictions) sont elles aussi enregistrées uniquement en local par l’application. Les copies de sauvegarde automatiques dans le navigateur ne sont pas chiffrées.',
-          'Comme rien n’est transmis, la fournisseuse ne peut pas non plus renseigner sur vos saisies : elle ne les a jamais vues. La version détaillée avec tous les droits selon la LPD figure dans l’application sous « Protection des données et mentions légales ».',
+          'Comme rien n’est transmis, l’éditrice ne peut pas non plus renseigner sur vos saisies : elle ne les a jamais vues. La version détaillée avec tous les droits selon la LPD figure dans l’application sous « Confidentialité & Mentions légales ».',
         ],
       },
       {
         titel: 'Propriété intellectuelle',
         absaetze: [
-          'Le code est sous <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a>, consultable sur <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">GitHub</a>. « Maloja Plana » est une désignation de projet de Sophie Stebler. Pour un usage commercial, un double licenciement est possible — demandes à l’adresse mentionnée ci-dessus.',
+          'Le code est sous <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a>, consultable sur <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">GitHub</a>. « Maloja Plana » est une désignation de projet de Sophie Stebler. Pour un usage commercial, une double licence est proposée — demandes à l’adresse mentionnée ci-dessus.',
         ],
       },
       {
