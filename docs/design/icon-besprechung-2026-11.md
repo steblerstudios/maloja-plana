@@ -117,13 +117,14 @@ Stebler Studios zu Volljährig: «ich weiss nicht ob ich die voll jährigkeit mi
 ✅ **06.11.: Volljährig = E, Zahl 18, leer** («E, Zahl 18 (Empfehlung)») · Digitale Ordnung Schloss, leer · **Hauptbild Person: Ausweiskarte bleibt vorerst**, entschieden wird bei «Leitformen reicher» («ja lass mal das entscheiden wenn wir nochmals zu den leitbildern kommen»), dort Apfel neben Karte zeigen.
 
 **📍 Stand 06.11., ca. 23:15 — was noch offen ist:**
-- Punkt 4, Rest: Versicherungen (Prämien, IPV) · Vorsorge (Pensionierung) · Bildung (Hauptbild, Lehre) · Arbeit (Hauptbild, Neuer Job, Stelle verloren, Aussteuerung, Selbständigkeit, Lebenslauf, Stundenlohn).
+- Punkt 4, Rest: ~~Versicherungen (Prämien, IPV) · Vorsorge (Pensionierung)~~ ✅ · Bildung (Hauptbild, Lehre) · Arbeit (Hauptbild, Neuer Job, Stelle verloren, Aussteuerung, Selbständigkeit, Lebenslauf, Stundenlohn).
 - Punkt 5, Funktionen: Haken · Blätter · Kalender/Uhr · Telefon (gilt dann auch für den Notfallpass) · Sackmesser · Glocke · Fehlendes.
 - Punkt 6, am Schluss: «leer» auch für die übrigen gleichfarbigen Seiten (Behörden grau auf grau, IV/Pflege, Familie) · Militär/Zivildienst · Lenkrad mit drei Speichen · **Leitformen reicher, mit Apfel neben der Ausweiskarte (Person)**.
 - Vor dem Bauen: Rechts-Prüfer Kreuz (Arztkoffer).
 
 **Versicherungen & Vorsorge (06.11., spät):** Bild [Versicherungen und Vorsorge](icon-besprechung-versicherungen-vorsorge.html), ein Kapitel, ganzes Menü. Stand = Seiten-Architektur: Prämien Balken orange · IPV Mini-Fünfliber gold · Pensionierung Berg violett · EL Mini-Fünfliber gold. Befund: IPV und EL sehen im selben Menü gleich aus. A heute · B EL violett (1. Säule) · C IPV orange (Krankenkasse).
 ✅ **06.11.: Prämien Balken orange · Pensionierung Berg violett** («Ja, beide»). Zu IPV/EL fragte Stebler Studios: «aber gibts el nicht auch anders wie siehts mit der ahv aus? und der 3ten säule und der pk?» → nachgeschaut: EL setzen laut App-Text (`ergaenzungsleistungen.step1Text`, Quelle BSV) eine Leistung der **AHV oder IV** voraus, nicht der PK oder 3. Säule. AHV, PK und 3a haben **keine eigenen Seiten**, sie stehen zusammen auf der Seite Vorsorge (Hauptbild drei Säulen; Suchwörter ahv, bvg, pension, 3a im `werkzeugRegister.js`).
+✅ **06.11.: B, EL violett** («B, EL violett (Empfehlung)»): Ergänzungsleistungen = Schild + Fünfliber im violetten Abzeichen (Geld aus der 1. Säule, Vorsorge spielt mit) · IPV bleibt Schild + Mini-Fünfliber gold (Zwilling der Mietzinsverbilligung). ⚠️ Überholt damit für die EL: «Mini-Fünfliber gold auf den Geld-Seiten» (gilt weiter für Stipendien, EO, ALV, Mietzinsverbilligung, IPV). ✅ **Versicherungen & Vorsorge damit fertig.**
 
 ## 📍 Stand 06.11.2026, ca. 22:15 — Sitzung beendet (Kontext voll)
 
