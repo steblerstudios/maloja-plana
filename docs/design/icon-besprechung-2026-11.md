@@ -83,6 +83,13 @@ Bilder [Bewilligung, Führerausweis](icon-besprechung-bewilligung-fuehrerausweis
 ✅ **06.11.: Bewilligung = Blatt, grau** («Bewilligung Blatt»; meine Empfehlung war Stempel — Blatt unterscheidet sich vom Betreibungsauszug nur durch die Farbe grau/gold). ✅ **Führerausweis = Lenkrad, grau** (Vorschlag Stebler Studios, von mir bestätigt; mit «Bewilligung Blatt» nur die Bewilligung geändert). Beim Bauen: Lenkrad mit drei deutlichen Speichen, damit es klein nicht wie ein Knopf wirkt.
 ⚠️ **Für den Schluss notiert:** Im Behörden-Menü lesen sich klein drei grüne Abzeichen ähnlich — Einbürgerung (Karte + Plus), Wegzug (Minus), Pass/ID (Karte mit Person): «grüner Kreis mit Strich». Ebenso die Bewilligungs-Karte (verworfen) wie ein Minus. Beim sauberen Zeichnen prüfen.
 ✅ **Runde Familie + Behörden damit abgeschlossen** (Militär/Zivildienst bleibt für den Schluss).
+
+**Neu prüfen ⟳ (06.11., spät):** Bild [Neu prüfen](icon-besprechung-neu-pruefen.html) — ganzes Kapitel-Menü Finanzen bzw. Gesundheit, heute → A/B, hell/dunkel. Stebler Studios: «grundsätzlich mal bei beiden A ja, aber sind auch noch Detailfragen dabei oder nicht?»
+✅ **06.11.: Steuern = Fünfliber + Prozent grau (A, Behörden spielt mit); Quellensteuer folgt** · ✅ **Notfall-Hauptbild = Arztkoffer orange + rotes Abzeichen Herz mit Puls (A)**, gleiche Regel wie Vorsorge/Familie. KK-Belege, Patientenverfügung, Vorsorgeauftrag: ⟳ erledigt durch die späteren Einzelentscheide (im Menü zur Kontrolle gezeigt).
+Detailfragen, die im Menü sichtbar wurden (offen, nächster Schritt):
+- Gleiches Zeichen auf zwei Seiten: Steuern / Quellensteuer (Prozent grau) · KVG-Leistungen / Unfall-Krankheit / IV (Mini-Schild blau, dreimal) · Schulden (Minus gold) / Betreibung erhalten (Minus grau).
+- Klein fast gleich: Notfall (Herz mit Puls) / Organspende (Herz), beide rot · Notfallpass (Blatt) / Patientenverfügung (Blatt mit Herz), beide rot.
+- Noch ohne ✓ im Finanzen-Menü: Finanzübersicht, Budget abgleichen, Kreditkarte, Mindestlohn, Mahnung, Jemand schuldet mir Geld, Sozialhilfe (Hand grau; Wörterbuch 2 schlug Münze vor).
 ~~Offen: Adoption («ob das nicht auch einfach ein plus sein soll») · Trennung/Scheidung~~ Damals offen: Trennung/Scheidung («überlegen»; eine Seite `trennung`, deckt Scheidung ab) · Zuzug/Wegzug («noch gedanken irgendwie oder?») · Bewilligung und Führerausweis (nicht genannt).
 **Nächste Sitzung:** ~~1) Farben-Zuordnung klären~~ ✅ · 2) neue Leitformen so reich zeichnen wie Chalet/Helvetia · 3) Zeichen auf einfache Grundformen zurückführen.
 
