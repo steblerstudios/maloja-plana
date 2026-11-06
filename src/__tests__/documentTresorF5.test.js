@@ -101,8 +101,9 @@ describe('Ablage · mit Inhalt', () => {
     expect(html).toContain('Ausweis/Pass');                       // Typ als Beschriftung, nicht «id»
     expect(html).toContain('pass.pdf');
     expect(html).toContain('Hochgeladen: 01.10.2026 · 12.0 KB');
-    expect(html).toContain('gültig · Ablauf: 30.09.2031');
-    expect(html).toContain('31d · Ablauf: 22.11.2026');
+    // «Frist» statt «Ablauf» seit F9-A14 Schritt 2 (06.11.2026, «Ja, als Frist»; «Ablauf» bleibt den Abläufen).
+    expect(html).toContain('gültig · Frist: 30.09.2031');
+    expect(html).toContain('31d · Frist: 22.11.2026');
     expect(html).not.toContain('alt.pdf');                        // abgelaufen liegt im Archiv
   });
 
@@ -145,5 +146,22 @@ describe('Ablage · Verdrahtung', () => {
     const fs = await import('node:fs');
     const src = fs.readFileSync(new URL('../main.jsx', import.meta.url), 'utf8');
     expect(src).toMatch(/onOpenChapter: \(key\) => \{ const i = chapters\.findIndex/);
+  });
+});
+
+// F9-A14 Schritt 2 (Entscheid 06.11.2026, «Ja, als Frist»): Das Ablaufdatum ist eine Frist mit
+// Kalenderblatt; der Frucht-Stempel zeigt das Kapitel. Ohne Datum bleibt das Kapitel-Symbol.
+describe('Ablage · Ablaufdatum als Kalenderblatt', () => {
+  it('gültiges Dokument: blaues Blatt mit Stempel des Kapitels (Basis → Person)', async () => {
+    const { LIGHT_PALETTE } = await import('../config/constants.js');
+    const html = renderToStaticMarkup(React.createElement(DocumentTresor, {
+      palette: LIGHT_PALETTE, t, documents: [GUELTIG], chapters, onDownload: () => {}, onDelete: () => {}, onUpdateExpiry: () => {},
+    }));
+    expect(html).toContain('data-teil="kalenderblatt" data-zustand="offen"');
+    expect(html).toContain('data-bereich="person"');
+  });
+
+  it('ohne Ablaufdatum kein Blatt', () => {
+    expect(render([dok('ohne', '')])).not.toContain('data-teil="kalenderblatt"');
   });
 });
