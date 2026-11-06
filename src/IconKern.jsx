@@ -446,6 +446,61 @@ const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
 );
 
+// Die Zeichen des Boden-Ankers und des Menüs (Icon-Plan November 2026, Schritt 3). Bis
+// dahin zeichneten main.jsx (`bottomIcon`) und MobileNav (`linie`) sie je selbst. Dieselben
+// Linien, jetzt hier, in der Strichstärke der übrigen Zeichen.
+const _linie = (...pfade) => () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  ...pfade.map((d, i) => React.createElement('path', { key: i, d })));
+// Übersicht = Schweizer Sackmesser, generisch, ohne Kreuz (icon-dictionary.md). Ruhende Form;
+// die Leiste klappt die Werkzeuge mit `SackmesserIcon` in main.jsx aus.
+const _sackmesser = _linie('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5');
+const _rucksack = _linie('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z', 'M9 8a3 3 0 0 1 6 0', 'M9 14h6');
+// «Was steht mir zu?» — in Leiste, Menü und Register dasselbe Geschenk.
+const _geschenk = _linie('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8');
+const _plus = _linie('M12 5 V19 M5 12 H19');
+const _quittung = _linie('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15');
+const _menue = _linie('M4 7 H20 M4 12 H20 M4 17 H20');
+
+// Kopfzeile und Barrierefreiheits-Leiste (Schritt 3): bis 06.11.2026 von Hand in main.jsx.
+const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '3' }),
+  React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+);
+const _globe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '8.5' }),
+  React.createElement('path', { d: 'M 3.5 12 H 20.5', strokeWidth: '1.4' }),
+  React.createElement('path', { d: 'M 12 3.5 C 15.2 6.2 15.2 17.8 12 20.5 C 8.8 17.8 8.8 6.2 12 3.5 Z', strokeWidth: '1.4' }),
+);
+const _lautsprecher = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M4 9 h3 l5 -4 v14 l-5 -4 h-3 Z' }),
+  React.createElement('path', { d: 'M16 9 a5 5 0 0 1 0 6' })
+);
+const _raster = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
+  React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
+  React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
+  React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
+);
+const _kontrast = () => React.createElement('svg', { viewBox: '0 0 24 24' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }),
+  React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
+);
+const _farbsicher = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6' },
+  React.createElement('circle', { cx: '8.5', cy: '9', r: '5', fill: 'currentColor', stroke: 'none' }),
+  React.createElement('rect', { x: '10.5', y: '11', width: '9', height: '9', rx: '1.5' })
+);
+const _bewegung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' },
+  React.createElement('circle', { cx: '7', cy: '12', r: '2.2', fill: 'currentColor', stroke: 'none' }),
+  React.createElement('path', { d: 'M12 8.5a5 5 0 0 1 0 7' }),
+  React.createElement('path', { d: 'M15 6a9 9 0 0 1 0 12' })
+);
+const _hand = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M15 11V5.5a1.5 1.5 0 0 0-3 0V11' }),
+  React.createElement('path', { d: 'M12 10.5V4a1.5 1.5 0 0 0-3 0v7' }),
+  React.createElement('path', { d: 'M9 11V6.5a1.5 1.5 0 0 0-3 0V14' }),
+  React.createElement('path', { d: 'M6 12.5l-1.6-1.6a1.4 1.4 0 0 0-2 2L6 18a5 5 0 0 0 4.5 3H13a5 5 0 0 0 5-5v-4a1.5 1.5 0 0 0-3 0' })
+);
+
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
 // ═══════════════════════════════════════════════════════════════
@@ -497,6 +552,24 @@ const _iconFactories = {
   chevron: _chevron,
   cowbell: _cowbell,
   leaf: _leaf,
+
+  // Boden-Anker und Menü (Schritt 3)
+  sackmesser: _sackmesser,
+  rucksack: _rucksack,
+  geschenk: _geschenk,
+  plus: _plus,
+  quittung: _quittung,
+  menue: _menue,
+
+  // Kopfzeile und Barrierefreiheit (Schritt 3)
+  settings: _settings,
+  globe: _globe,
+  lautsprecher: _lautsprecher,
+  raster: _raster,
+  kontrast: _kontrast,
+  farbsicher: _farbsicher,
+  bewegung: _bewegung,
+  hand: _hand,
 };
 
 

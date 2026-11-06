@@ -2180,8 +2180,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         // Entscheid «Steuern aufteilen» (24.10.2026): Geld hier, Behördengang im Kapitel Behörden — beide verweisen
         // aufeinander (Behörden: Zeile «Steuerbetrag und Belastung» beim Kalenderblatt).
         { key: 'steuerfrist', titel: P('steuerfrist'), sub: P('steuerfristSub'), gehe: () => onNavigate('chapter', 5), ikon: ansichtIkon('tax') },
-        // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
-        { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
+        // Die Waage wie auf der Dossier-Seite selbst; das Dossier steht nicht im Ansichten-Register.
+        { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'legal' },
       ];
     }
   };

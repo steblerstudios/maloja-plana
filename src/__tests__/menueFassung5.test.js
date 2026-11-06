@@ -159,8 +159,10 @@ describe('Icons · Was ansteht / Ablage / Merkliste', () => {
     expect(main).toMatch(/key: 'tresor', label: t\('nav\.capDokument'\), icon: 'ordner'/);
     expect(main).toMatch(/key: 'merkliste', label: t\('nav\.merkliste'\), icon: 'check'/);
     // Seit 23.10.2026 liegt der Kalender nur noch im Erfassen-Fächer, nicht mehr in der Leiste.
-    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'calendarToday'/);
-    expect(main).toMatch(/const day = String\(tagInZuerich\(\)\)/);
+    // Seit 06.11.2026 (Icon-Plan, Schritt 3) ist es das Kalenderblatt aus dem Register; der Tag
+    // kommt dort aus Zürich (`_calendar` in IconKern.jsx).
+    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'calendar'/);
+    expect(lies('IconKern.jsx')).toMatch(/const day = tagInZuerich\(\)/);
     expect(main).not.toMatch(/new Date\(\)\.getDate\(\)/);
     expect(lies('IconKern.jsx')).not.toMatch(/new Date\(\)\.getDate\(\)/);
     expect(lies('Dashboard.jsx')).toMatch(/view: 'tresor', icon: 'ordner'/);
