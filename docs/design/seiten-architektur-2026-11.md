@@ -27,7 +27,20 @@ Arbeit → Ausbildung, Familie → Basis) · `config/ansichtenRegister.js` (Feld
 | 3 | Alle Seiten durchgehen | — | | offen |
 | 4 | Dashboard: was und in welcher Ordnung | — | | offen |
 
+## Zuerst das Organigramm (06.11.2026, Stebler Studios)
+
+Wörtlich: «wollen wir nicht die Seitenlogiken ein wenig zuerst beantworten, bevor wir hier was teilen … Gesundheit
+ist eine Kategorie und der Notfall gehört zur Gesundheit wie die Vorsorge zur Versicherung … deshalb müssen wir
+uns zuerst ein Seiten- und Logik-Organigramm anschauen und dann können wir die Seiten und Zeichen richtig verbinden».
+→ **Prämien (1b) zurückgestellt**, bis das Organigramm steht. Frage 2 wird Teil des Organigramms.
+Bild [Organigramm](seiten-architektur-organigramm.html): heute (7 Kapitel, 4 Äste ohne Kapitel) → Vorschlag
+(Kapitel Gesundheit mit den Ästen Gesundheit + Notfall; 7 Kapitel, 11 Äste) mit allen Seiten, dazu sieben offene
+Stellen ①–⑦ (Krankenkasse, Verfügungen, Steuern, Bestattung/Organspende, ALV/EO, Löhne, Lehre/Lebenslauf). Offen.
+
 ## Befunde
+
+- **Betreibungsauszug:** Register `bereich: 'finanzen'`, in der Icon-Besprechung 06.11. aber Behörden entschieden
+  («der Auszug darf Behörden sein»). Im Organigramm bei Behörden; das Register zieht beim Bau nach.
 
 - **Sozialhilfe hängt heute an drei Orten:** Merkliste/Kalender Finanzen (`werkzeugRegister` Fach `geld`) ·
   Lebensbaum Behörden-Ast (`Lebensbaum.jsx`, `connections`, Kommentar «Sozialhilfe-Orientierung am

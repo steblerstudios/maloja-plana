@@ -1,0 +1,99 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Seiten-Organigramm</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1280px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17px;margin:26px 0 6px}p{color:var(--soft);margin:4px 0}
+.dach{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}@media(max-width:820px){.dach{grid-template-columns:1fr}}
+.dach div{background:var(--card);border-radius:10px;padding:8px 12px;font-size:12.5px}.dach b{display:block;font-size:13px}
+.baum{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}@media(max-width:1100px){.baum{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.baum{grid-template-columns:1fr}}
+.kap{background:var(--card);border-radius:12px;padding:8px;border-top:6px solid}.kap>b{font-size:13.5px;display:block;margin-bottom:2px}.kap>small{color:var(--soft);font-size:11px}
+.kap.neu{outline:2px dashed #C67A4A}
+.ast{margin:8px 0 2px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:5px}.ast i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.s{display:block;background:var(--chip);border-left:3px solid var(--line);border-radius:4px;padding:2px 6px;margin:3px 0;font-size:12px}
+.s.ok{border-left-color:#5A7868}.s.f{border-left-color:#C4A870;background:repeating-linear-gradient(135deg,var(--chip),var(--chip) 6px,rgba(196,168,112,.13) 6px,rgba(196,168,112,.13) 12px)}
+.s em{font-style:normal;color:var(--soft);font-size:10.5px}
+.heute{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-size:12px}@media(max-width:820px){.heute{grid-template-columns:repeat(2,1fr)}}
+.heute div{background:var(--card);border-radius:8px;padding:6px 8px;border-top:4px solid}
+.legende{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--soft);margin:8px 0}
+.box{background:var(--card);border-left:4px solid #C67A4A;border-radius:8px;padding:10px 14px;margin:14px 0}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;font-size:12.5px}td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:600}
+</style>
+<h1>Seiten-Organigramm · Kapitel → Äste → Seiten</h1>
+<p>Alle Seiten aus beiden Registern (36 Abläufe, 27 Werkzeuge, dazu Notfall-, Druck- und Spezialseiten), Stand <code>main</code>. Erst das Gerüst, dann verbinden wir Seiten und Zeichen.</p>
+
+<h2>Heute · 7 Kapitel, 11 Äste — vier Äste ohne eigenes Kapitel</h2>
+<div class=heute>
+ <div style="border-color:#5A7868"><b>Persönliche Basis</b><br>Person · <u>Familie</u></div>
+ <div style="border-color:#7E9A4E"><b>Wohnen</b><br>Wohnen</div>
+ <div style="border-color:#C4A870"><b>Finanzen</b><br>Finanzen</div>
+ <div style="border-color:#6E90B0"><b>Versicherungen &amp; Vorsorge</b><br>Versicherungen · <u>Vorsorge</u> · <u>Gesundheit</u></div>
+ <div style="border-color:#8A6D4B"><b>Ausbildung &amp; Arbeit</b><br>Bildung · <u>Arbeit</u></div>
+ <div style="border-color:#5A6472"><b>Behörden</b><br>Behörden</div>
+ <div style="border-color:#B0524C"><b>Notfall</b><br>Notfall <em>(13 Felder, 10 davon Gesundheit)</em></div>
+</div>
+<p>Unterstrichen = Ast ohne eigenes Kapitel (<code>KAPITEL_OHNE_EIGENES</code>). Gesundheit hängt heute bei den Versicherungen. Das Arztkoffer nennt sich aber schon «Zuhause für Gesundheit» und hat den Notfall als Fach.</p>
+
+<h2>Vorschlag · Gesundheit wird das Kapitel, der Notfall gehört dazu</h2>
+<p>So wie die Vorsorge zu den Versicherungen gehört. Es bleiben <b>7 Kapitel</b> und <b>11 Äste</b>. Jedes Kapitel hat ein oder zwei Äste.</p>
+<div class=legende><span>▌grün = Ort klar (Register, Baum und Merkliste sind sich einig, oder schon entschieden)</span><span>▌gold gestreift = <b>offen</b>, unten in der Liste</span></div>
+
+<div class=dach>
+ <div><b>Startseite</b>Kapitel, Berge, Was ansteht, Werkzeug-Gruppen → Frage 4</div>
+ <div><b>Die Klammer · ohne Kapitel</b>Kalender · Merkliste · Unterlagen (Tresor) · Lebensmappe · Drucken · Briefe · Offizielle Links · Teilen (Flyer) · Suche</div>
+ <div><b>Oben · ohne Kapitel</b>Was steht mir zu? · Schnellcheck</div>
+</div>
+
+<div class=baum>
+ <div class=kap style="border-color:#5A7868"><b>Persönliche Basis</b><small>Ausweiskarte</small>
+  <div class=ast><i style="background:#5A7868"></i>Person</div>
+  <span class="s ok">18 werden</span><span class="s ok">Digitale Ordnung</span>
+  <div class=ast><i style="background:#B96470"></i>Familie</div>
+  <span class="s ok">Heirat</span><span class="s ok">Kind</span><span class="s ok">Adoption</span><span class="s ok">Trennung</span><span class="s ok">Todesfall</span>
+  <span class="s f">Bestattung <em>④</em></span><span class="s f">EO Mutter/Vater <em>⑤</em></span>
+ </div>
+ <div class=kap style="border-color:#7E9A4E"><b>Wohnen</b><small>Chalet</small>
+  <div class=ast><i style="background:#7E9A4E"></i>Wohnen</div>
+  <span class="s ok">Umzug</span><span class="s ok">Wohnung gekündigt</span><span class="s ok">Zusammenziehen</span><span class="s ok">Mietzinsverbilligung</span>
+ </div>
+ <div class=kap style="border-color:#C4A870"><b>Finanzen</b><small>Fünfliber</small>
+  <div class=ast><i style="background:#C4A870"></i>Finanzen</div>
+  <span class="s ok">Budget</span><span class="s ok">Finanz-Übersicht</span><span class="s ok">Kreditkarte</span><span class="s ok">Schulden</span><span class="s ok">Mahnung erhalten</span><span class="s ok">Selbst mahnen</span><span class="s ok">Betreibung erhalten</span><span class="s ok">Quellensteuer</span><span class="s ok">Sozialhilfe ✅</span>
+  <span class="s f">Steuern <em>③</em></span><span class="s f">Stundenlohn <em>⑥</em></span><span class="s f">Mindestlohn <em>⑥</em></span><span class="s f">ALV-Taggeld <em>⑤</em></span>
+ </div>
+ <div class=kap style="border-color:#6E90B0"><b>Versicherungen &amp; Vorsorge</b><small>Edelweiss-Schild</small>
+  <div class=ast><i style="background:#6E90B0"></i>Versicherungen</div>
+  <span class="s ok">Versicherungs-Übersicht</span><span class="s ok">IPV ✅</span><span class="s f">KK-Erstanmeldung <em>①</em></span><span class="s f">KK wechseln <em>①</em></span><span class="s f">Zusatz wechseln <em>①</em></span>
+  <div class=ast><i style="background:#7E6E93"></i>Vorsorge</div>
+  <span class="s ok">Vorsorge-Rechner</span><span class="s ok">Pensionierung</span><span class="s ok">Ergänzungsleistungen</span><span class="s f">Vorsorgeauftrag <em>②</em></span>
+ </div>
+ <div class=kap style="border-color:#8A6D4B"><b>Ausbildung &amp; Arbeit</b><small>Kopfbedeckung</small>
+  <div class=ast><i style="background:#8A6D4B"></i>Bildung</div>
+  <span class="s ok">Stipendien</span><span class="s f">Lehre <em>⑦</em></span>
+  <div class=ast><i style="background:#A8895E"></i>Arbeit</div>
+  <span class="s ok">Neuer Job</span><span class="s ok">Stelle verloren</span><span class="s ok">Ausgesteuert</span><span class="s ok">Selbständig</span><span class="s f">Lebenslauf <em>⑦</em></span>
+ </div>
+ <div class=kap style="border-color:#5A6472"><b>Behörden</b><small>Helvetia</small>
+  <div class=ast><i style="background:#5A6472"></i>Behörden</div>
+  <span class="s ok">Zuzug</span><span class="s ok">Bewilligung</span><span class="s ok">Einbürgerung</span><span class="s ok">Asyl</span><span class="s ok">Wegzug</span><span class="s ok">Pass/ID</span><span class="s ok">Führerausweis</span><span class="s ok">Militär/Zivildienst</span><span class="s ok">Betreibungsauszug ✅</span>
+ </div>
+ <div class="kap neu" style="border-color:#C67A4A"><b>Gesundheit</b> <small>neu · statt «Notfall»</small><br><small>Arztkoffer</small>
+  <div class=ast><i style="background:#C67A4A"></i>Gesundheit</div>
+  <span class="s ok">Arztkoffer</span><span class="s ok">Unfall/Krankheit</span><span class="s ok">IV</span><span class="s ok">Pflege Angehöriger</span><span class="s f">KVG-Leistungen <em>①</em></span><span class="s f">KK-Belege <em>①</em></span>
+  <div class=ast><i style="background:#B0524C"></i>Notfall</div>
+  <span class="s ok">Notfall-Einstieg</span><span class="s ok">Notfallkarte</span><span class="s ok">Notfallpass</span><span class="s f">Organspende <em>④</em></span><span class="s f">Patienten­verfügung <em>②</em></span>
+ </div>
+</div>
+
+<div class=box><b>Was das Kapitel Gesundheit kostet</b> (erst nach Ja, eigener Bau): Kapitelname in 5 Sprachen. Gesundheit-Ast zeigt neu auf dieses Kapitel statt auf Versicherungen. Der Schlüssel <code>notfall</code> und alle Daten bleiben, keine Datenmigration (Entscheid 06.07.).</div>
+
+<h2>Die offenen Stellen · eine nach der anderen</h2>
+<table>
+<tr><th>#</th><th>Seiten</th><th>Warum offen (Befund im Code)</th><th>Mein Vorschlag</th></tr>
+<tr><td>①</td><td><b>Krankenkasse</b>: Erstanmeldung, Wechseln, Zusatz, KVG-Leistungen, Belege</td><td>Register: Versicherungen. Arztkoffer: alle fünf als Fächer «Zuhause für Gesundheit».</td><td>Teilen nach der Regel: <b>Vertrag</b> (anmelden, wechseln, Zusatz, Prämie, IPV) = Versicherungen, Abzeichen orange. <b>Was die Kasse zahlt</b> (Leistungen, Belege) = Gesundheit, Abzeichen Mini-Schild.</td></tr>
+<tr><td>②</td><td>Patientenverfügung · Vorsorgeauftrag</td><td>Felder stehen heute im Kapitel Notfall. Vorsorgeauftrag-Ablauf ist Ast Vorsorge, Patientenverfügung Fach Gesundheit.</td><td>Patientenverfügung = Gesundheit/Notfall (medizinisch). Vorsorgeauftrag = Vorsorge (Vermögen, Vertretung).</td></tr>
+<tr><td>③</td><td>Steuern</td><td>Werkzeug im Fach Geld (Finanzen). Steuer-Felder (Steuernummer, Frist) im Kapitel Behörden.</td><td>Finanzen. Die Erklärung geht ans Amt, aber die Sache ist dein Geld.</td></tr>
+<tr><td>④</td><td>Bestattung · Organspende</td><td>Kein Bereich im Register.</td><td>Bestattung = Familie (bei Todesfall). Organspende = Notfall.</td></tr>
+<tr><td>⑤</td><td>ALV-Taggeld · EO</td><td>Fach Geld (Finanzen). Die Abläufe dazu (Stelle verloren, Kind) liegen bei Arbeit und Familie.</td><td>Nach der Regel zur Sache: ALV = Arbeit, EO = Familie, beide mit Fünfliber gold.</td></tr>
+<tr><td>⑥</td><td>Stundenlohn · Mindestlohn</td><td>Fach Geld. Im Baum hängt der Lohn-Check am Ast Arbeit.</td><td>Arbeit (es geht um den Lohn aus der Stelle), Fünfliber gold.</td></tr>
+<tr><td>⑦</td><td>Lehre · Lebenslauf</td><td>Lehre: Ast Arbeit. Lebenslauf: Aussenfach.</td><td>Lehre = Bildung (Ausbildung). Lebenslauf = Arbeit.</td></tr>
+</table>
