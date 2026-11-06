@@ -3,6 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { GEGENSTAENDE, GRUPPEN, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
 import { werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 import Icons from './IconSystem.jsx';
+import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
 // Mein Gepäck — die Rucksack-Ansicht der Lebensereignisse. Ein Rucksack packt sich
@@ -143,8 +144,9 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     onClick: () => setPacked((p) => !p),
     style: {
       fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer',
-      color: palette.text, background: palette.gold + '22', border: '1px solid ' + palette.gold + '55',
-      borderRadius: radius.full, padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
+      // Schalter (Fassung 9, M8): gold getönt wie alle Auswahlen, Rundung KNOPF_RADIUS statt Pille.
+      color: palette.text, background: palette.sand + '30', border: '1px solid ' + palette.sand,
+      borderRadius: KNOPF_RADIUS, padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
     },
   }, packed ? t('gepaeck.unpack') : t('gepaeck.pack'));
 

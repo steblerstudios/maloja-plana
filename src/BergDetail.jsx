@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icons, { aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ───────────────────
 //
@@ -114,12 +115,8 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
         type: 'button',
         onClick: () => onSelectChapter(idx),
         'aria-label': ch.title + ': ' + t('dashboard.openChapter'),
-        style: {
-          alignSelf: 'flex-start', marginTop: '4px', minHeight: '32px',
-          padding: '6px 12px', background: 'transparent', border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.xs, fontWeight: weight.medium, color: palette.text,
-        }
+        // Führt nur ins Kapitel: Link (Fassung 9, M2).
+        style: { ...linkStil(palette), alignSelf: 'flex-start', marginTop: '4px', minHeight: '32px', fontSize: text.xs }
       }, t('dashboard.openChapter'))
     )
   );

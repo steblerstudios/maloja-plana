@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, space, radius } from './config/tokens.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 import { anzeigeWert, hatWert } from './utils/vollstaendigkeit.js';
 import { Icon } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
@@ -60,7 +61,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
     },
       React.createElement('button', {
         type: 'button', onClick: add,
-        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, padding: '2px 0' },
+        style: knopfStil(palette, 'neben'),
       }, '+ ' + t('itemized.add')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid },

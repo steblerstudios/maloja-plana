@@ -28,6 +28,7 @@ import { ReserveTank } from './ReserveTank.jsx';
 import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
+import { knopfStil, linkStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -318,7 +319,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     unterArmutsgrenze && !ohneBefund && React.createElement('div', {
       style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
     },
-      React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
+      React.createElement('div', { style: { fontWeight: weight.medium, color: palette.skyDeep, marginBottom: '2px' } },
         t('finanzUebersicht.belowPoverty')),
       React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
         // Link führt zur BFS-Methodik (Erhebung Armutsstatistik), nicht zu einer
@@ -340,7 +341,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       t('lohnEinordnung.' + lohnSatz.key, { netto: formatCHF(lohnSatz.netto), brutto: formatCHF(lohnSatz.brutto) })),
     nurBefund && onNavigate && React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'lohn-weg', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
-      style: { background: 'none', border: 0, padding: 0, minHeight: '44px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
+      style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm, textAlign: 'left' },
     }, t('lohnEinordnung.title') + ' · ' + t('chapters.ausbildung.title') + ' ›'),
     !nurBefund && React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche || eigeneBranche, onNavigate, aktuellesKapitel }),
     !nurBefund && (() => {
@@ -374,14 +375,14 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
               style: {
                 // padding vertikal 6px: 10px-Text (~12px Zeile) + 12px → ~24px hoch,
                 // damit das Tipp-Ziel WCAG 2.5.8 (24×24) trifft, nicht nur ~16px.
-                fontSize: '10px', padding: '6px 8px', borderRadius: radius.hair,
+                fontSize: '10px', padding: '6px 8px', borderRadius: KNOPF_RADIUS,
                 cursor: 'pointer',
                 // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
                 // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'
-                // lag es dort mit 4.49:1 knapp darunter). Ausgewählt: gold gerahmt.
-                background: sel ? (palette.gold + '55') : reached ? (palette.sage + '30') : (palette.border + '40'),
-                color: (sel || reached) ? palette.text : palette.mid,
-                border: '1px solid ' + (sel ? palette.goldDeep : 'transparent'),
+                // lag es dort mit 4.49:1 knapp darunter). Ausgewählt: Sand gefüllt wie jede Auswahl.
+                background: sel ? palette.sand : reached ? (palette.sage + '30') : (palette.border + '40'),
+                color: sel ? palette.onSand : reached ? palette.text : palette.mid,
+                border: '1px solid ' + (sel ? palette.sand : 'transparent'),
                 whiteSpace: 'nowrap',
               }
             }, t('branche.' + b.key) + ' ’' + String(b.jahr).slice(2));
@@ -509,7 +510,7 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
         + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
       // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText) + (sozialhilfe.hinweise?.includes('pegel.vermoegen') ? ' ' + t('pegel.vermoegen') : '') : t('sozialhilfe.notEntitled'),
-    statusColor: sozialhilfe.einkommenFehlt ? palette.mid : sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
+    statusColor: sozialhilfe.einkommenFehlt ? palette.mid : sozialhilfe.eligible ? palette.skyDeep : (palette.sageDeep || palette.sage),
     detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
       + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
@@ -534,7 +535,7 @@ export const elKarte = ({ palette, t, onNavigate, w }) => {
     // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
     // Seit 03.11.2026 nur noch zwei Zustände: Rentenbezug → prüfen lassen, sonst nur mit Rente (F8-Prüfer).
     status: el.elPruefen ? t('sozialhilfe.elPruefen') : t('sozialhilfe.elOnlyAhvIv'),
-    statusColor: el.elPruefen ? (palette.goldDeep || palette.gold) : palette.mid,
+    statusColor: el.elPruefen ? palette.skyDeep : palette.mid,
     onClick: () => onNavigate('ergaenzungsleistungen'),
   });
 };
@@ -574,12 +575,7 @@ export const UebersichtDrucken = ({ palette, t, data, w, style }) => {
   return React.createElement(React.Fragment, null,
     React.createElement('button', {
       onClick: () => setDruckVorschau(true),
-      style: {
-        display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
-        padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
-        fontFamily: 'inherit', textAlign: 'left', ...style,
-      }
+      style: { ...knopfStil(palette, 'neben'), display: 'flex', justifyContent: 'flex-start', width: '100%', textAlign: 'left', ...style }
     }, React.createElement(Icon, { name: 'drucker', size: 16 }), t('finanzUebersicht.printAction')),
 
     // Export-Vorschau (K20) direkt unter dem Knopf, der sie geöffnet hat.
@@ -638,14 +634,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).
     onEnterSandbox && React.createElement('button', {
       type: 'button', 'data-weg': 'probieren', onClick: onEnterSandbox,
-      style: {
-        display: 'inline-flex', alignItems: 'center', gap: '6px',
-        margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px', minHeight: '32px',
-        background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
-        borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-        // sageDeep statt sage: sage trägt als 13px-Text nur 4.34:1 auf bg (wie main.jsx).
-        color: palette.sageDeep, fontFamily: 'inherit',
-      },
+      style: { ...knopfStil(palette, 'neben'), margin: '0 0 ' + space.md + 'px 0' },
     }, t('sandbox.footerLink')),
     fruechte.length > 0 && React.createElement('div', { 'data-teil': 'lebensbaum' },
       React.createElement(Lebensbaum, {

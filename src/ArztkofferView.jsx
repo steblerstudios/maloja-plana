@@ -4,6 +4,7 @@ import { getBereich } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PageTitle } from './components/Heading.jsx';
 import { zurueckZeichen } from './IconSystem.jsx';
+import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────
 //
@@ -137,22 +138,15 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         WEGE.map((w) => React.createElement('button', {
           key: w.key,
           onClick: () => onNavigate(w.view),
-          style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            cursor: 'pointer', padding: '8px 14px', minHeight: '44px', boxSizing: 'border-box',
-            display: 'inline-flex', alignItems: 'center', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
-          },
+          // Fassung 9 (M2): führen nur in die Abläufe → Link.
+          style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm },
         }, t('arztkoffer.wege.' + w.key))),
       ),
     ),
 
     React.createElement('button', {
       onClick: () => onNavigate('dashboard'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        fontSize: text.sm, color: palette.mid, fontFamily: 'inherit',
-        padding: space.sm + 'px 0', marginTop: space.md + 'px', minHeight: '44px',
-      },
+      style: { ...knopfStil(palette, 'neben'), marginTop: space.md + 'px', minHeight: '44px' },
     }, zurueckZeichen(), t('arztkoffer.back')),
   );
 };

@@ -6,6 +6,7 @@ import {
   einzahlungenImJahr, jahreMitEinzahlungen,
 } from './data/saeule3a.js';
 import { zahl } from './utils/geld.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 const fmt = (v) => zahl(v);
 const chf = (v) => 'CHF ' + fmt(v);
@@ -122,13 +123,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
 
     React.createElement('button', {
       onClick: addDeposit,
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
-        cursor: 'pointer', fontSize: text.sm, fontFamily,
-        fontWeight: weight.medium, alignSelf: 'flex-start',
-      }
+      style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }
     }, '+ ' + t('saeule3a.add')),
 
     // 🛑 Die beiden Beträge und das Jahr kommen aus der Jahrestabelle, nicht aus dem Satz.

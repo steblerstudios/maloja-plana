@@ -22,6 +22,7 @@ import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, ABLAEUFE_MIT_STAND } from './utils/laufendeAblaeufe.js';
 import landschaft from './assets/berge/landschaft.webp?url';
 import { MerklisteView } from './MerklisteView.jsx';
+import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -255,7 +256,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const leiseKnopf = { minWidth: '44px', minHeight: '44px', display: 'grid', placeItems: 'center', background: 'none', border: 'none', borderRadius: radius.full, cursor: 'pointer', padding: 0, flexShrink: 0, fontFamily: 'inherit' };
   const zeile = ({ key, iso, art, bereich, icon, titel, herkunft, wann, done, isJustDone, onToggle, toggleLabel, extra }) => {
     const farbe = bereichZeichenFarbe(bereich, palette);
-    const dueColor = !done && iso && iso < today ? (palette.sandDeep || palette.sand) : palette.soft; // nie rot (Entwurf G); sandDeep hält 4.5:1 auch hell
+    // Überfällig = Rot (Farbrollen Fassung 9, 05.11.2026; vorher bewusst nie rot, Entwurf G). Das Wort «überfällig» steht daneben.
+    const dueColor = !done && iso && iso < today ? palette.roseDeep : palette.soft;
     const d = iso ? datumVon(iso) : null;
     const artName = art === 'aufgabe' ? t('calendar.aufgabe') : t('calendar.legende.' + art);
     return React.createElement('div', {
@@ -388,7 +390,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const gWoche = gruppe(d => d > today && daysBetween(today, d) <= 7);
   const gSpaeter = gruppe(d => d > today && daysBetween(today, d) > 7);
 
-  const knopfRuhig = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', minHeight: '44px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' };
+  // Nebenknopf in dichten Zeilen (Fassung 9): Form und Farbe aus dem Baustein, nur kleiner gepolstert.
+  const knopfRuhig = { ...knopfStil(palette, 'neben'), padding: '5px 12px', minHeight: '44px' };
   // Reiter wie im Entwurf G: Text mit Strich darunter statt Kasten.
   const reiter = (aktiv) => ({ flex: 1, padding: '0 12px', minHeight: '44px', background: 'none', color: aktiv ? palette.text : palette.mid, border: 'none', borderBottom: '2px solid ' + (aktiv ? bereichZeichenFarbe('finanzen', palette) : 'transparent'), cursor: 'pointer', font: 'inherit', fontSize: '14px', fontWeight: aktiv ? weight.medium : weight.normal });
   const gruppenKopf = (titel) => React.createElement('h3', { style: { fontFamily: fontFamilyDisplay, fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '20px 0 2px' } }, titel);
@@ -415,7 +418,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 10px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 6px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
             type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
-            style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
+            style: { ...linkStil(palette), fontSize: text.sm, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
           }, t('nav.backToDashboard'))),
           React.createElement('li', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'),
           React.createElement('li', { 'aria-current': 'page', style: { color: palette.text, fontWeight: weight.medium } }, t('nav.wasAnsteht'))
@@ -452,7 +455,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       React.createElement('p', { style: { fontSize: '14px', color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, naechst.titel + (naechst.herkunft ? ' · ' + naechst.herkunft : '')),
       naechst.datum < today && React.createElement('button', {
         type: 'button', className: 'mp-link', 'aria-label': t('calendar.wasJetzt') + ' ' + naechst.titel,
-        style: { ...knopfRuhig, borderRadius: radius.full, marginTop: space.sm + 'px', padding: '8px 16px', fontSize: text.sm, color: palette.text },
+        style: { ...linkStil(palette), marginTop: space.sm + 'px', minHeight: '44px', fontSize: text.sm },
         onClick: () => {
           const ablauf = ABLAEUFE_MIT_STAND.find(a => a.name === naechst.ablauf);
           if (ablauf && ablauf.view && onNavigate) { onNavigate(ablauf.view); return; }
@@ -517,7 +520,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       const fenster = fensterTage(start);
 
       const navBtn = { width: '44px', height: '44px', background: 'none', border: 'none', borderRadius: radius.md, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit', fontSize: '22px', lineHeight: 1 };
-      const pille = (aktiv) => ({ flex: '0 0 auto', minHeight: '44px', padding: '0 12px', borderRadius: radius.full, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: aktiv ? palette.bg : palette.mid, background: aktiv ? palette.text : 'none', border: '1px solid ' + (aktiv ? palette.text : palette.border), display: 'inline-flex', alignItems: 'center', gap: '5px' });
+      const pille = (aktiv) => ({ flex: '0 0 auto', minHeight: '44px', padding: '0 12px', borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: aktiv ? palette.bg : palette.mid, background: aktiv ? palette.text : 'none', border: '1px solid ' + (aktiv ? palette.text : palette.border), display: 'inline-flex', alignItems: 'center', gap: '5px' });
       // minHeight 44 statt nur aspectRatio 1 (a11y-Prüfung 26.10.2026: bei 375 px 34 px hoch).
       const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', minHeight: '44px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.md, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, fontVariantNumeric: 'tabular-nums', background: iso === selDate ? palette.sand + '2E' : 'none', border: 'none', boxShadow: isToday ? 'inset 0 0 0 1.5px ' + palette.text : 'none' });
       const tagKnopf = { flex: '0 0 46px', minHeight: '88px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '6px 0 0', border: 0, background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: palette.mid };
@@ -556,7 +559,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement('button', { type: 'button', 'aria-label': monatJahr(vorher[0], vorher[1]), style: navBtn, onClick: () => springe(vorher[0], vorher[1]) }, '‹'),
           React.createElement('span', { 'aria-live': 'polite', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, minWidth: '120px', textAlign: 'center' } }, monatJahr(calYear, calMonth)),
           React.createElement('button', { type: 'button', 'aria-label': monatJahr(nachher[0], nachher[1]), style: navBtn, onClick: () => springe(nachher[0], nachher[1]) }, '›'),
-          React.createElement('button', { type: 'button', style: { ...knopfRuhig, marginLeft: 'auto', borderRadius: radius.full, padding: '8px 14px', fontSize: text.sm }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
+          React.createElement('button', { type: 'button', style: { ...knopfRuhig, marginLeft: 'auto' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
         React.createElement('div', { 'data-monatsknoepfe': 'true', ref: monateRef, style: { display: 'flex', gap: '6px', overflowX: 'auto', scrollbarWidth: 'none', margin: '4px -20px 2px', padding: '4px 20px' } },
           ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
@@ -649,7 +652,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
               )),
             ]
             : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm + 'px' } }, t('calendar.noRemindersTitle')),
-          React.createElement('button', { type: 'button', style: { ...knopfRuhig, borderRadius: radius.full, marginTop: space.xs + 'px' }, onClick: () => { setNewDate(selDate); setView('add'); } }, '+ ' + t('calendar.addReminder'))
+          React.createElement('button', { type: 'button', style: { ...knopfRuhig, marginTop: space.xs + 'px' }, onClick: () => { setNewDate(selDate); setView('add'); } }, '+ ' + t('calendar.addReminder'))
         )
       );
     })(),
@@ -665,7 +668,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     upcoming.length + completed.length > 0 && React.createElement('p', { 'data-loesch-hinweis': 'true', style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal } }, t('calendar.loeschHinweis')),
     React.createElement('button', {
       type: 'button', 'aria-expanded': view === 'add',
-      style: { padding: '10px 16px', minHeight: '44px', marginTop: '12px', marginBottom: space.sm, background: view === 'add' ? palette.sand : 'none', color: view === 'add' ? palette.onSand : palette.text, border: '1px solid ' + (view === 'add' ? palette.sand : palette.border), borderRadius: radius.full, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: weight.semi },
+      // Der Hauptknopf von «Was ansteht» (Fassung 9, S6).
+      style: { ...knopfStil(palette), marginTop: '12px', marginBottom: space.sm },
       onClick: () => setView(view === 'add' ? 'upcoming' : 'add'),
     }, '+ ' + t('calendar.addReminder')),
 
@@ -716,13 +720,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
               type: 'button',
               'aria-pressed': newCoverage === opt,
               onClick: () => setNewCoverage(newCoverage === opt ? '' : opt),
-              style: {
-                padding: '6px 12px', borderRadius: radius.xs, cursor: 'pointer',
-                fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400',
-                background: newCoverage === opt ? palette.sand : palette.surface,
-                color: newCoverage === opt ? palette.onSand : palette.text,
-                border: '1px solid ' + (newCoverage === opt ? palette.sand : palette.border)
-              }
+              style: { ...auswahlStil(palette, newCoverage === opt), padding: '6px 12px', fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400' }
             }, t('calendar.coverageThisYear.' + opt))
           )
         )
@@ -736,13 +734,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
               key: freq,
               'aria-pressed': newRecurrence === freq,
               onClick: () => { setNewRecurrence(freq); if (newLastVisit) setNewDate(nextDueFrom(newLastVisit, freq)); },
-              style: {
-                padding: '6px 12px', borderRadius: radius.xs, cursor: 'pointer',
-                fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400',
-                background: newRecurrence === freq ? palette.sand : palette.surface,
-                color: newRecurrence === freq ? palette.onSand : palette.text,
-                border: '1px solid ' + (newRecurrence === freq ? palette.sand : palette.border)
-              }
+              style: { ...auswahlStil(palette, newRecurrence === freq), padding: '6px 12px', fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400' }
             }, freq === 'once' ? t('calendar.oneTime') : t('calendar.' + freq))
           )
         )
@@ -758,12 +750,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       React.createElement('button', {
         onClick: addReminder,
         disabled: !newTitle.trim() || !newDate,
-        style: {
-          width: '100%', padding: '10px', borderRadius: radius.sm,
-          background: newTitle.trim() && newDate ? palette.sand : palette.mid,
-          color: newTitle.trim() && newDate ? palette.onSand : '#fff', border: 'none', cursor: newTitle.trim() && newDate ? 'pointer' : 'not-allowed',
-          fontWeight: weight.semi, fontSize: text.sm
-        }
+        style: { ...knopfStil(palette, 'haupt', { disabled: !newTitle.trim() || !newDate }), width: '100%' }
       }, '+ ' + t('calendar.addReminder')),
 
       // Templates
@@ -771,7 +758,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         React.createElement('button', {
           'aria-expanded': showTemplates,
           onClick: () => setShowTemplates(!showTemplates),
-          style: { width: '100%', padding: space.sm, background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
+          style: { ...knopfStil(palette, 'leise'), width: '100%' }
         }, aufklappZeichen(showTemplates), t('calendar.templates.title')),
 
         showTemplates && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '6px', marginTop: space.sm } },
@@ -779,13 +766,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             React.createElement('button', {
               key: idx,
               onClick: () => addFromTemplate(tmpl),
-              style: {
-                padding: '8px 12px', background: palette.surface, border: '1px solid ' + palette.border,
-                borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, textAlign: 'left',
-                color: palette.text, transition: `border-color ${duration.normal}ms ${ease}`
-              },
-              onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
-              onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; }
+              style: { ...knopfStil(palette, 'neben'), display: 'block', padding: '8px 12px', textAlign: 'left', fontWeight: weight.normal },
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } }, React.createElement(Icon, { name: CATEGORY_ICON_KEYS[tmpl.category] || 'basis', size: 14 }), tmpl.title),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, hinweisZeichen('recurring', 12), t('calendar.' + tmpl.recurrence)),
@@ -855,7 +836,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         (() => { const f = bereichZeichenFarbe(merkpunktBereich(m.link), palette); return React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: f + '2E', boxShadow: 'inset 0 0 0 1px ' + f + '4D', color: f } }, React.createElement(Icon, { name: merkpunktZeichen(m.link), size: 16 })); })(),
         React.createElement('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, color: palette.text } }, m.text),
         React.createElement('button', {
-          type: 'button', 'aria-pressed': verteilen === m.id, style: { ...knopfRuhig, borderColor: verteilen === m.id ? palette.sage : palette.border },
+          type: 'button', 'aria-pressed': verteilen === m.id, style: { ...knopfRuhig, background: verteilen === m.id ? palette.sand + '30' : 'transparent' },
           onClick: () => {
             const an = verteilen === m.id ? null : m.id;
             setVerteilen(an);
@@ -870,11 +851,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       React.createElement('button', {
         type: 'button',
         onClick: () => setIcsVorschau(true),
-        style: {
-          background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          padding: space.xs + 'px ' + space.md + 'px', fontSize: text.xs, color: palette.mid,
-          cursor: 'pointer', fontFamily: 'inherit',
-        }
+        style: knopfStil(palette, 'neben')
       }, React.createElement(ZielHinweis, { t, art: 'download' }), t('calendar.exportIcs')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, t('calendar.exportIcsHint')),
 

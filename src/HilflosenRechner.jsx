@@ -4,6 +4,7 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { zahl } from './utils/geld.js';
 import { berechneHilflosenentschaedigung, heErgebnis, GRADE } from './data/hilflosenentschaedigung.js';
+import { auswahlStil, linkStil } from './components/PrimaryButton.jsx';
 
 // Hilflosenentschädigung — kleiner Rechner, eingebettet in die Abläufe «Angehörige pflegen» und
 // «Krankheit & IV» (keine eigene Seite, Entscheid «Seiten bündeln» 24.10.2026).
@@ -29,13 +30,13 @@ export const HilflosenRechner = ({ palette, t }) => {
     wrap: { marginTop: space.sm + 'px' },
     frage: { fontSize: text.sm, color: palette.text, fontWeight: weight.medium, margin: space.sm + 'px 0 ' + space.xs + 'px' },
     row: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px' },
-    toggle: (active) => ({ padding: '8px 14px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sageDeep : palette.text, cursor: 'pointer', fontFamily: 'inherit', minHeight: '44px' }),
+    toggle: (active) => ({ ...auswahlStil(palette, active), padding: '8px 14px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, minHeight: '44px' }),
     result: { marginTop: space.md + 'px', padding: space.md + 'px', background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm + 'px' },
     resultLabel: { fontSize: text.xs, color: palette.mid, marginBottom: '2px' },
     big: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, fontVariantNumeric: 'tabular-nums' },
     sub: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed },
     note: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, marginTop: space.sm + 'px' },
-    extLink: { display: 'inline-block', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.medium, marginTop: space.sm + 'px', textDecoration: 'none' },
+    extLink: { ...linkStil(palette), display: 'inline-block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' },
   };
 
   const auswahl = (frage, optionen, wert, setzen) =>

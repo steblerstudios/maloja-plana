@@ -2,6 +2,8 @@
 // kann (Safari, Firefox — kein beforeinstallprompt), ist die Anleitung DER Weg und trägt den
 // Hauptknopf. Wo «Installieren» steht, bleibt sie der Zweitweg: nie zwei Hauptknöpfe im Kasten.
 // Geprüft wird das gerenderte Markup, nicht der Quelltext.
+// Fassung 9 (Stebler Studios 05.11.2026, S5): auf der Übersicht hat nur «Was ist jetzt dran?» einen
+// Hauptknopf — die Karte im Panorama trägt Nebenknöpfe (goldener Rand), keinen gefüllten.
 import { describe, it, expect, afterEach } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -19,22 +21,23 @@ const rendern = (props) => renderToStaticMarkup(React.createElement(InstallHinwe
 describe('InstallHinweis · «So geht es»', () => {
   afterEach(() => { delete globalThis.localStorage; });
 
-  it('ohne Installier-Möglichkeit: «So geht es» ist der Hauptknopf, bricht nicht um, ≥ 44 px hoch', () => {
+  it('ohne Installier-Möglichkeit: «So geht es» ist der Nebenknopf, bricht nicht um, ≥ 44 px hoch', () => {
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     const html = rendern({});
     const tag = html.match(/<button[^>]*data-testid="install-anleitung-cta"[^>]*>/);
-    expect(tag, 'Hauptknopf «So geht es»').not.toBeNull();
+    expect(tag, 'Nebenknopf «So geht es»').not.toBeNull();
     expect(tag[0]).toMatch(/white-space:\s*nowrap/);
     expect(Number(tag[0].match(/min-height:\s*(\d+)px/)[1])).toBeGreaterThanOrEqual(44);
-    expect(hauptknoepfe(html)).toHaveLength(1);
+    expect(tag[0]).toContain('border:1px solid ' + LIGHT_PALETTE.sandDeep);
+    expect(hauptknoepfe(html)).toHaveLength(0);
   });
 
-  it('mit «Installieren»: genau EIN Hauptknopf, «So geht es» ist der Zweitweg', () => {
+  it('mit «Installieren»: kein Hauptknopf in der Karte, «So geht es» ist der Zweitweg', () => {
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     const html = rendern({ installPrompt: { prompt: () => {}, userChoice: Promise.resolve() } });
     expect(html).not.toContain('install-anleitung-cta');
     expect(html).toContain('pwa.anleitung');
-    expect(hauptknoepfe(html)).toHaveLength(1);
+    expect(hauptknoepfe(html)).toHaveLength(0);
   });
 });
 
