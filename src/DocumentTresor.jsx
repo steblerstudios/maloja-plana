@@ -6,6 +6,7 @@ import { text, weight, space, radius, shadow } from './config/tokens.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { UnterlagenWege } from './components/UnterlagenWege.jsx';
 import { knopfStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
+import { Kalenderblatt, blattDatum } from './components/Kalenderblatt.jsx';
 
 // Fassung 5 (Entscheid 23.10.2026, VERGLEICH.md «Dokumentenablage · entschieden»):
 // leer = ruhiges Bild + «Was oft zuerst hineingehört»; mit Inhalt = «{n} Dokumente»,
@@ -36,8 +37,9 @@ export const ablageZaehler = (documents) => ({
 const getExpiryStatus = (expiryDate, palette, t) => {
   const days = getDaysUntilExpiry(expiryDate);
   // Lesbarer Text auf der Fläche (13px) — Deep-Varianten für AA. Fassung 5: «Bald fällig» als
-  // Hinweis (Fassung 9: Fristen blau, skyDeep), «Abgelaufen» ruhig in Grau statt in Rot (Notiz unter dem Mockup).
-  if (days < 0) return { status: 'expired', color: palette.mid, label: t('tresor.expired') };
+  // Hinweis (Fassung 9: Fristen blau, skyDeep). «Abgelaufen» seit F9-A14 Schritt 2 (06.11.2026, «Ja, als Frist»)
+  // in Rot wie jede abgelaufene Frist (F9-A2); vorher ruhig in Grau (Notiz unter dem Fassung-5-Mockup).
+  if (days < 0) return { status: 'expired', color: palette.roseDeep || palette.mid, label: t('tresor.expired') };
   if (days < 90) return { status: 'warning', color: palette.skyDeep, label: days + 'd' };
   return { status: 'ok', color: palette.sageDeep, label: t('tresor.gueltig') };
 };
@@ -182,6 +184,7 @@ export const DocumentTresor = ({
     },
   }, React.createElement(Icon, { name: icon, size: 18 }));
 
+  const blattOrt = (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })();
   const renderDocRow = (doc) => {
     const status = getExpiryStatus(doc.expiryDate, palette, t);
     const chapter = chapterList.find(c => c.key === doc.chapter);
@@ -196,9 +199,16 @@ export const DocumentTresor = ({
         borderBottom: '1px solid ' + palette.border, minHeight: '64px', listStyle: 'none',
       },
     },
-      React.createElement('span', {
-        title: chapter?.title, style: { color: accent || palette.mid, display: 'inline-flex', marginTop: '2px', flexShrink: 0 },
-      }, React.createElement(Icon, { name: chapter?.key || 'document', size: 20 })),
+      // F9-A14 Schritt 2 (Entscheid 06.11.2026 «Ja, als Frist»): Das Ablaufdatum ist eine Frist mit Blatt;
+      // der Frucht-Stempel zeigt das Kapitel. Ohne gültiges Datum bleibt das Kapitel-Symbol.
+      blattDatum(doc.expiryDate)
+        ? React.createElement(Kalenderblatt, {
+            iso: doc.expiryDate, palette, locale: blattOrt, klein: true, vorbei: status.status === 'expired',
+            thema: { bereich: getBereichForChapter(doc.chapter)?.key, icon: chapter?.key || 'document' },
+          })
+        : React.createElement('span', {
+            title: chapter?.title, style: { color: accent || palette.mid, display: 'inline-flex', marginTop: '2px', flexShrink: 0 },
+          }, React.createElement(Icon, { name: chapter?.key || 'document', size: 20 })),
       React.createElement('div', { style: { flex: 1, minWidth: 0, fontSize: text.sm, color: palette.text } },
         React.createElement('div', { style: { fontWeight: weight.medium, color: palette.text } }, typLabel(doc)),
         React.createElement('span', { style: { ...klein, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, doc.fileName),

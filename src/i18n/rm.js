@@ -7220,7 +7220,7 @@ export default {
     ausAblauf: 'ord il decurs {name}',
     legende: { frist: 'Termin', termin: 'Inscunter', erledigt: 'fatg', heute: 'oz' },
     // rm ungeprüft (27.10.2026)
-    verpasst: 'passà',
+    verpasst: 'scadì',
     wasJetzt: 'E ussa?',
     loeschHinweis: { sie: 'Per allontanar, tutgai il di survart.', du: 'Per allontanar, tutga il di survart.' },
     // rm ungeprüft F5

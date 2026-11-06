@@ -21,6 +21,7 @@ import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
 import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName, VerlustscheinZeitachse, verlustscheinName, BetreibungZeitleiste } from './components/SchuldenBilder.jsx';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
+import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -272,8 +273,16 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             React.createElement('strong', null, forderungName(debt, t)),
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
-          React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '8px' } },
-            (debt.dueDate ? formatDE(debt.dueDate) + ' · ' : '') + statusLabel(debt)
+          // F9-A14 Schritt 2: Zahlungsfrist mit Kalenderblatt (überfällig rot, Wort «überfällig»).
+          // Mit Blatt mehr Luft nach unten: der Frucht-Stempel ragt 12 px unter das Blatt.
+          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, color: palette.mid, fontSize: text.sm, marginBottom: debt.dueDate && debt.status !== 'paid' ? '18px' : '6px' } },
+            debt.dueDate && debt.status !== 'paid' && React.createElement(Kalenderblatt, {
+              iso: debt.dueDate, palette, klein: true, vorbei: istUeberfaellig(debt),
+              locale: (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })(),
+              thema: { bereich: 'finanzen', icon: 'money' },
+            }),
+            React.createElement('span', { style: { color: istUeberfaellig(debt) && debt.status !== 'paid' ? (palette.roseDeep || palette.mid) : palette.mid } },
+              (debt.dueDate ? formatDE(debt.dueDate) + ' · ' : '') + statusLabel(debt))
           ),
           // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),

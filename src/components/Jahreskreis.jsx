@@ -1,5 +1,6 @@
 import React from 'react';
-import { text, weight, space, radius } from '../config/tokens.js';
+import { text, weight, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { Kalenderblatt } from './Kalenderblatt.jsx';
 
 // Jahreskreis in «Was ansteht» (Stebler Studios 24.10.2026: «Bau zuerst den Jahreskreis mit den
 // hinterlegten Fristen»). Zwölf Monate als Ring, oben Januar, im Uhrzeigersinn. Darauf liegt
@@ -177,9 +178,18 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
         punkte.length === 0
           ? React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('calendar.jahreskreis.empty'))
           : React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: 0 } },
-            punkte.slice(0, MAX_LISTE).map((p) => React.createElement('li', { key: p.key, style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', fontSize: text.sm, color: palette.text, marginBottom: '4px' } },
-              React.createElement(ListenMarke, { art: p.art, farbe: p.farbe }),
-              React.createElement('span', { style: { color: p.iso < heuteIso ? palette.mid : palette.text, minWidth: '60px', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' } }, datumKurz(p.iso)),
+            // F9-A14 Schritt 2, Skizze D («d gefällt mir sehr», 06.11.2026): Fristen als Kalenderblatt
+            // (abgelaufen rot), Termine und Aufgaben behalten Zeichen und Datum. Feste linke Spalte,
+            // damit die Titel bündig stehen. Das Datum der Frist steht vorlesbar im versteckten Text.
+            punkte.slice(0, MAX_LISTE).map((p) => React.createElement('li', { key: p.key, style: { display: 'flex', alignItems: p.art === 'frist' ? 'center' : 'baseline', gap: space.sm + 'px', fontSize: text.sm, color: palette.text, marginBottom: p.art === 'frist' ? '8px' : '4px' } },
+              React.createElement('span', { style: { flexShrink: 0, width: '76px', display: 'inline-flex', alignItems: 'baseline', gap: space.sm + 'px' } },
+                p.art === 'frist'
+                  ? React.createElement(React.Fragment, null,
+                    React.createElement(Kalenderblatt, { iso: p.iso, palette, locale, klein: true, vorbei: p.iso < heuteIso }),
+                    React.createElement('span', { style: visuallyHiddenStyle }, datumKurz(p.iso)))
+                  : React.createElement(React.Fragment, null,
+                    React.createElement(ListenMarke, { art: p.art, farbe: p.farbe }),
+                    React.createElement('span', { style: { color: p.iso < heuteIso ? palette.mid : palette.text, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' } }, datumKurz(p.iso)))),
               React.createElement('span', { style: { minWidth: 0 } }, p.titel,
                 p.quelle && React.createElement('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, p.quelle))
             )),

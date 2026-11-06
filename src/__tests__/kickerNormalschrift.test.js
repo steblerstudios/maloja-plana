@@ -1,7 +1,8 @@
 // Kicker in Normalschrift (Fassung 9, F9-A4, Stebler Studios 05.11.2026: «Normalschrift»).
 // Grossbuchstaben-Kicker über Kästen wirken nach Software, nicht nach ruhigem Lebensort.
 // Keine Ansicht setzt mehr textTransform uppercase. Ausnahmen mit Grund:
-// - BehoerdenInstrument: Monatskürzel im Kalenderblatt-Symbol («NOV»), Bildzeichen, kein Text-Label
+// - Kalenderblatt: Monatskürzel im Kalenderblatt-Symbol («NOV»), Bildzeichen, kein Text-Label
+//   (bis 06.11.2026 stand das Blatt direkt in BehoerdenInstrument; seit F9-A14 ein eigener Baustein)
 // - LebenslaufVorschau: Vorschau des gedruckten Lebenslaufs, folgt der Lebenslauf-Vorlage (cvGenerator)
 // Die statischen Seiten (scripts/build-seiten.mjs) folgen derselben Regel. Die fremden bewegten
 // Figuren (scripts/seiten/figuren/bewegt/fremd/) bleiben unverändert, sie sind übernommen.
@@ -10,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const SRC = path.resolve(__dirname, '..');
-const AUSNAHMEN = new Set(['components/BehoerdenInstrument.jsx', 'components/LebenslaufVorschau.jsx']);
+const AUSNAHMEN = new Set(['components/Kalenderblatt.jsx', 'components/LebenslaufVorschau.jsx']);
 
 const dateien = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
   const p = path.join(dir, e.name);
