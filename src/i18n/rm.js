@@ -2064,6 +2064,11 @@ export default {
     short: { tax: 'Taglia', ipv: 'IPV', sozial: 'Agid social', lohn: 'Salari', notfall: 'Carta d’urgenza', budget: 'Budget' },
   },
 
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  // TODO(rm): provisorisch — Gegenlese (D1, 06.11.2026)
+  erklaerseite: {
+    link: 'Co che quai funcziuna, explitgà en detagl (en tudestg)',
+  },
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
     tagline: { sie: 'Voss organisatur svizzer persunala — memorisà localmain, offline-abel, gratuit.', du: 'Tes organisatur svizzer persunala — memorisà localmain, offline-abel, gratuit.' }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)

@@ -1935,6 +1935,10 @@ export default {
     notfall: 'Im Notfall ist alles Wichtige auffindbar.',
     next: 'Zurück zur Übersicht',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'So funktioniert das, ausführlich erklärt',
+  },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',
     tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — lokal gespeichert, offline-fähig, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — lokal gespeichert, offline-fähig, kostenlos.' },

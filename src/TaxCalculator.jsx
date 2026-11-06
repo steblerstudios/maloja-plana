@@ -10,6 +10,7 @@ import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, ta
 import { SAEULE3A_MAX, saeule3aMaximum } from './data/saeule3a.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
@@ -468,6 +469,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, hinweisZeichen(), t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
     canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(kantonsdatenAbgerufen(canton)) })),
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
+    // D1 (06.11.2026): zur öffentlichen Erklärseite «Steuern in der Schweiz».
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'tax' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('trust.localOnly')),
 

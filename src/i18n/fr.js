@@ -1925,6 +1925,10 @@ export default {
     notfall: 'En cas d\'urgence, tout l\'essentiel est trouvable.',
     next: 'Retour à l\'aperçu',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'Comment cela fonctionne, expliqué en détail (en allemand)',
+  },
   dashboard: {
     welcome: { sie: 'Comprendre vos droits. Organiser ce qui vous attend.', du: 'Comprendre tes droits. Organiser ce qui t’attend.' },
     tagline: { sie: 'Votre organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.' },

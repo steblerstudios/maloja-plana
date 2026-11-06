@@ -1925,6 +1925,10 @@ export default {
     notfall: 'In caso di emergenza, tutto l\'essenziale è reperibile.',
     next: 'Torna alla panoramica',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'Come funziona, spiegato nel dettaglio (in tedesco)',
+  },
   dashboard: {
     welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
     tagline: { sie: 'Il Suo organizzatore di vita svizzero — salvataggio locale, utilizzabile offline, gratuito.', du: 'Il tuo organizzatore di vita svizzero — salvataggio locale, utilizzabile offline, gratuito.' },
