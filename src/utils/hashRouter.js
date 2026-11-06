@@ -84,6 +84,10 @@ export const UMLEITUNGEN = {
   // F7-A5 (27.10.2026): «Zusatzversicherung wechseln» ist der Weg «Zusatz» in «Krankenkasse wechseln».
   // Die Sprungmarke ist der Wahlknopf der Weiche (KVGWechsel.jsx ZUSATZ_ANKER) — springeZuAnker wählt ihn.
   zusatzwechsel: { view: 'kvgwechsel', chapterIndex: null, anker: 'mp-kvg-zusatz' },
+  // Seitenlandkarte Z2 (05.11.2026): die Benachrichtigungen sind ein Abschnitt der Einstellungen.
+  // Sprungmarke = BENACHRICHTIGUNGEN_ANKER in NotificationSettings.jsx, hier als Literal, weil die
+  // Einstellungen erst bei Bedarf laden (Wächter: benachrichtigungenUmleitung.test.js).
+  notifications: { view: 'settings', chapterIndex: null, anker: 'mp-benachrichtigungen' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
