@@ -1269,7 +1269,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color ' + duration.normal + 'ms ' + ease, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent')),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start

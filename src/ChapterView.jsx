@@ -2275,7 +2275,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         background: palette.sageDew || palette.sage + '08',
         borderRadius: radius.md,
         border: '1px solid ' + palette.sage + '25',
-        animation: 'fadeIn 0.8s ease',
+        animation: 'fadeIn ' + duration.cinematic + 'ms ' + ease,
       }
     },
       React.createElement('div', {
@@ -2612,7 +2612,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           }
         }, ruheText),
         allPrimaryFilled && hasStille && React.createElement('div', {
-          style: { animation: 'fadeIn 1s ease' }
+          style: { animation: 'fadeIn ' + duration.cinematic + 'ms ' + ease }
         },
           React.createElement('p', {
             style: {
