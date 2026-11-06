@@ -45,7 +45,8 @@ Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ 
 
 «gehören Familie und persönliche Basis nicht zusammen, und Gesundheit und Notfall? Arbeit und Bildung?»
 Befund im Code (`AblaufSchale.jsx`, `KAPITEL_OHNE_EIGENES`, Entscheid 23.10.): 11 Lebensbereiche (Baum, Farbe + Frucht), aber 7 Kapitel. Familie → Persönliche Basis · Arbeit → Ausbildung & Arbeit · Gesundheit **und** Vorsorge → Versicherungen & Vorsorge. Zwei der drei Paare stimmen damit überein; Gesundheit hängt im Code bei den Versicherungen, nicht beim Notfall.
-Vorschlag: **Leitform je Kapitel (7), Farbe je Lebensbereich (11).** Offen, noch nicht entschieden.
+✅ **06.11.: Leitform je Kapitel (7), Farbe je Lebensbereich (11).** Familie = Person-Leitform (`basis`) in Kirschrot · Arbeit = Ausbildungs-Leitform in Haselnuss · Vorsorge = Edelweiss-Schild in Traube.
+✅ **06.11.: Gesundheit zum Edelweiss-Schild** (wie im Kapitel), in Hagebutten-Orange. Notfall behält das Herz mit Kreuz allein → die zwei sind nicht mehr zu verwechseln.
 
 ## Grundsatz (06.11.2026)
 
