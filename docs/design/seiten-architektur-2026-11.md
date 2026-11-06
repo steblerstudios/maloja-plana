@@ -23,9 +23,9 @@ Arbeit → Ausbildung, Familie → Basis) · `config/ansichtenRegister.js` (Feld
 | # | Frage | Bild | Empfehlung | Entscheid |
 |---|---|---|---|---|
 | 1 | IPV, Prämien, Sozialhilfe | [1](seiten-architektur-1-ipv-praemien-sozialhilfe.html) | Regel «Kapitel = die Sache, um die es geht, Geld spielt mit (gold)». IPV → Versicherungen (folgt der Krankenkasse) · Prämien → Versicherungen · Sozialhilfe → Finanzen, Behörden spielt mit | ✅ **06.11.: IPV = A, Sozialhilfe = A** (Stebler Studios: «a anfang und am ende») — IPV: Kapitel Versicherungen, Fünfliber gold im Abzeichen, folgt der Krankenkasse · Sozialhilfe: Kapitel Finanzen, Abzeichen Behörden. Regel «Kapitel = die Sache, um die es geht» damit angenommen. 🔄 **Prämien offen:** «bei der Prämie denke ich halt noch an die Gesundheit» → Bild [1b](seiten-architektur-1b-praemien.html) |
-| 2 | Gesundheit als Kapitel, Notfall darin | — | | offen |
-| 3 | Alle Seiten durchgehen | — | | offen |
-| 4 | Dashboard: was und in welcher Ordnung | — | | offen |
+| 2 | Gesundheit als Kapitel, Notfall darin | [Organigramm](seiten-architektur-organigramm.html) | ja | ✅ Kapitel Gesundheit mit Ästen Gesundheit + Notfall |
+| 3 | Alle Seiten durchgehen | [Organigramm](seiten-architektur-organigramm.html) · [①](seiten-architektur-2-krankenkasse.html) · [②④](seiten-architektur-3-verfuegungen.html) · [③⑤⑥⑦](seiten-architektur-4-geld-arbeit.html) | je A | ✅ alle A, Zuordnung steht (Tabelle unten) |
+| 4 | Dashboard: was und in welcher Ordnung | [Dashboard](seiten-architektur-5-dashboard.html) | A — Kapitel führen, Äste als Zwischentitel; «Alle Seiten nach Kapitel» ersetzt die 7 Werkzeug-Gruppen; Ankommen + Mit 18 als Türen, Klammer eine Zeile | offen |
 
 ## Zuerst das Organigramm (06.11.2026, Stebler Studios)
 
@@ -69,7 +69,38 @@ Bestattungswünsche = Kapitel Gesundheit, Ast Notfall. Todesfall (für Angehöri
 Bild [Geld und Arbeit](seiten-architektur-4-geld-arbeit.html). Empfehlungen: ③ Steuern + Quellensteuer = Finanzen
 (Abzeichen Behörden) · ⑤ ALV = Arbeit, EO = Familie (beide Fünfliber gold, wie Stipendien und IV) · ⑥ Stundenlohn =
 Arbeit, Mindestlohn-Check bleibt in der Kapitelseite Finanzen (dort steht das Einkommen, kein Umbau) · ⑦ Lehre =
-Bildung (Abzeichen Arbeit), Lebenslauf = Arbeit. Offen.
+Bildung (Abzeichen Arbeit), Lebenslauf = Arbeit. ✅ **06.11.: überall A** (Stebler Studios: «Überall A»).
+
+### ✅ Zuordnung steht (06.11.2026)
+
+Alle Seiten haben ein Kapitel und einen Ast. Endstand im [Organigramm](seiten-architektur-organigramm.html)
+(nachgeführt, keine offene Stelle mehr). Kurz:
+
+| Kapitel (Leitform) | Ast | Seiten |
+|---|---|---|
+| Persönliche Basis (Ausweiskarte) | Person | 18 werden · Digitale Ordnung |
+| | Familie | Heirat · Kind · Adoption · Trennung · Todesfall · EO |
+| Wohnen (Chalet) | Wohnen | Umzug · Wohnung gekündigt · Zusammenziehen · Mietzinsverbilligung |
+| Finanzen (Fünfliber) | Finanzen | Budget · Finanz-Übersicht · Kreditkarte · Schulden · Mahnung erhalten · Selbst mahnen · Betreibung erhalten · Steuern · Quellensteuer · Sozialhilfe · Mindestlohn-Check (Abschnitt der Kapitelseite) |
+| Versicherungen & Vorsorge (Schild) | Versicherungen | Versicherungs-Übersicht · KK-Erstanmeldung · KK wechseln (Grund + Zusatz) · IPV |
+| | Vorsorge | Vorsorge-Rechner · Pensionierung · Ergänzungsleistungen |
+| Ausbildung & Arbeit (Kopfbedeckung) | Bildung | Stipendien · Lehre |
+| | Arbeit | Neuer Job · Stelle verloren · Ausgesteuert · Selbständig · Lebenslauf · ALV-Taggeld · Stundenlohn |
+| Behörden (Helvetia) | Behörden | Zuzug · Bewilligung · Einbürgerung · Asyl · Wegzug · Pass/ID · Führerausweis · Militär/Zivildienst · Betreibungsauszug |
+| **Gesundheit** (Arztkoffer, neu, Schlüssel `notfall`) | Gesundheit | Arztkoffer · Unfall/Krankheit · IV · Pflege · KVG-Leistungen · KK-Belege |
+| | Notfall | Notfall-Einstieg · Notfallkarte · Notfallpass · Patientenverfügung · Vorsorgeauftrag & Patientenverfügung · Organspende · Bestattungswünsche |
+| *ohne Kapitel* | Klammer | Kalender · Merkliste · Unterlagen · Lebensmappe · Drucken · Briefe · Offizielle Links · Teilen · Suche |
+| *ohne Kapitel* | oben | Was steht mir zu? · Schnellcheck |
+
+**Abzeichen-Farben aus den Entscheiden** (für die Icon-Sitzung): KK-Seiten (Vertrag) und Versicherungs-Übersicht
+orange · IPV gold · Sozialhilfe Behörden · Steuern/Quellensteuer Behörden · KVG-Leistungen/Belege/Unfall Mini-Schild ·
+ALV, EO, Stundenlohn, Stipendien Fünfliber gold · Lehre Arbeit.
+
+**Was beim Bau nachzieht** (nur nach Ja, erst nach Frage 4): Register `bereich`/`fach` für KVG-Leistungen, Belege,
+Patientenverfügung, Vorsorgeauftrag, Organspende, Bestattung, ALV, EO, Stundenlohn, Lehre, Lebenslauf,
+Betreibungsauszug · `KAPITEL_OHNE_EIGENES` und `lebensbereiche.js` (Gesundheit → Kapitel `notfall`) · Kapitelname
+«Gesundheit» ×5 Sprachen · Lebensbaum-Frucht Sozialhilfe an Finanzen · Schnellcheck-Farbe Sozialhilfe ·
+`aufgabenBereiche.js` (Fach gesundheit → Kapitel Gesundheit statt Versicherungen) · Arztkoffer: «KK wechseln» nur als Weg.
 
 ## Befunde
 
