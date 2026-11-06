@@ -45,7 +45,22 @@ und Daten bleiben. Die offenen Stellen ①–⑦ werden einzeln entschieden.
 Bild [Krankenkasse](seiten-architektur-2-krankenkasse.html): A teilen (Vertrag = Versicherungen, Abzeichen orange ·
 Leistungen/Belege/Unfall = Gesundheit, Abzeichen Mini-Schild) · B alles Versicherungen · C alles Gesundheit.
 Empfehlung A. Befund: «Zusatz wechseln» ist seit 27.10. Teil von «KK wechseln» (`#/zusatzwechsel` leitet um) —
-im Organigramm darum keine eigene Seite. Offen.
+im Organigramm darum keine eigene Seite. ✅ **06.11.: A, teilen** (Stebler Studios: «A, teilen»).
+- **Versicherungen (Vertrag):** KK-Erstanmeldung · KK wechseln (Grund + Zusatz) · Versicherungs-Übersicht · IPV.
+  Abzeichen orange (Gesundheit spielt mit), IPV gold (Geld).
+- **Gesundheit (was die Kasse zahlt):** KVG-Leistungen · KK-Belege · Unfall/Krankheit. Abzeichen Mini-Schild.
+- Damit **1b erledigt:** Versicherungs-Übersicht = Kapitel Versicherungen, Abzeichen orange (= Variante B von 1b).
+- Arztkoffer behält «KK wechseln» als Weg (Querverweis), nicht als Fach. Felder bleiben im Kapitel Versicherungen.
+
+### ② + ④ Verfügungen und Wünsche
+
+Befund: Patientenverfügung, Vorsorgeauftrag, Organspende, Bestattungswünsche bilden heute schon **einen Block
+«Vorsorge» im Kapitel Notfall** (`i18n` `vorsorge: { organDonor, patientenverfuegung, vorsorgeauftrag,
+bestattungswuensche }`, Brotkrume «Übersicht › Notfall › Bestattungswünsche»). Das Register ist uneinig
+(Vorsorge · Gesundheit · ohne Ast). Bild [Verfügungen](seiten-architektur-3-verfuegungen.html): A alles im Ast
+Notfall (Kapitel Gesundheit) · B aufteilen · C alles Vorsorge. Empfehlung A (geändert gegenüber dem Organigramm,
+wo der Vorsorgeauftrag noch bei Vorsorge stand: ein Ablauf deckt beide Verfügungen, die Felder stehen zusammen).
+Offen.
 
 ## Befunde
 
