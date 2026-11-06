@@ -4,6 +4,7 @@
 und Logik aufbauen … was kommt wohin und warum … und am Schluss haben wir eine saubere Icon-Bibliothek.»
 
 **So gehen wir vor:** Punkt für Punkt, je mit Bild (heute + Varianten A/B/C + Empfehlung).
+🛑 **Immer vergleichen (Stebler Studios, 06.11.: «können wir immer alles mit dem aktuellen/alten Icon vergleichen, um zu sehen, was wie wo?»):** jedes neue Zeichen steht **neben dem heutigen**, links heute → rechts neu, mit dem heutigen Namen darunter. «Heute» = Stand `main` (aus den Registern gelesen, nicht abgetippt); live ist älter.
 Jeder Entscheid kommt **sofort** hierher. Gebaut wird erst, wenn alles entschieden ist — dann in
 einem Zug. Der Entwurf #718 (Aufräumen) wartet bis dahin und wird nach diesem Blatt neu gebaut.
 
@@ -38,7 +39,7 @@ Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ 
 ## Idee Zwei-Farben (06.11.2026, Stebler Studios)
 
 «ganz verrückt wäre natürlich, wenn z. B. bei der Betreibung erhalten der Fünfliber so wie jetzt und dann aber das Minus in Blau, und bei Betreibungsauszug eben die Helvetia und dann das Icon unten rechts in Gold, weil's ja zu Finanzen gehört».
-→ **Leitform = wer/was (Farbe ihres Bereichs), Abzeichen = Farbe des Bereichs, der mitspielt.** Spielt kein zweiter Bereich mit, hat das Abzeichen die Farbe der Leitform. Gezeigt in der Übersicht [alle Bereiche](icon-besprechung-alle-bereiche.html) (06.11.): alle 11 Bereiche, Leitform + gefülltes Abzeichen, zweite Farbe dort, wo ein Bereich mitspielt. Noch nicht entschieden; die Mini-Zeichen der neuen Bereiche sind Vorschläge. Befunde: 7 Bereiche haben nur ein einfaches Flächen-Icon als Leitform; Gesundheit und Notfall = fast dasselbe Herz mit Kreuz.
+→ **Leitform = wer/was (Farbe ihres Bereichs), Abzeichen = Farbe des Bereichs, der mitspielt.** Spielt kein zweiter Bereich mit, hat das Abzeichen die Farbe der Leitform. Gezeigt in der Übersicht [alle Bereiche](icon-besprechung-alle-bereiche.html) (06.11., seit 16:30 mit heute → neu je Seite): alle 11 Bereiche, Leitform + gefülltes Abzeichen, zweite Farbe dort, wo ein Bereich mitspielt. Noch nicht entschieden; die Mini-Zeichen der neuen Bereiche sind Vorschläge. Befunde: 7 Bereiche haben nur ein einfaches Flächen-Icon als Leitform; Gesundheit und Notfall = fast dasselbe Herz mit Kreuz.
 
 ## Grundsatz (06.11.2026)
 
