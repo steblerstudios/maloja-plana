@@ -3,6 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { GEGENSTAENDE, GRUPPEN, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
 import { werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 import Icons from './IconSystem.jsx';
+import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
 // Mein Gepäck — die Rucksack-Ansicht der Lebensereignisse. Ein Rucksack packt sich
@@ -143,8 +144,9 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     onClick: () => setPacked((p) => !p),
     style: {
       fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer',
-      color: palette.text, background: palette.gold + '22', border: '1px solid ' + palette.gold + '55',
-      borderRadius: radius.full, padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
+      // Schalter (Fassung 9, M8): gold getönt wie alle Auswahlen, Rundung KNOPF_RADIUS statt Pille.
+      color: palette.text, background: palette.sand + '30', border: '1px solid ' + palette.sand,
+      borderRadius: KNOPF_RADIUS, padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
     },
   }, packed ? t('gepaeck.unpack') : t('gepaeck.pack'));
 
@@ -166,8 +168,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
         width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0,
         background: palette.gold, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
       },
-    }, h('svg', { viewBox: '0 0 24 24', width: 15, height: 15, fill: 'none', stroke: '#3a2c14', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
-      w.g.map((d, i) => h('path', { key: i, d })))),
+    }, Icons[w.icon] ? React.cloneElement(Icons[w.icon](), { width: 15, height: 15, stroke: '#3a2c14', strokeWidth: 1.7 }) : null),
     h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('gepaeck.w.' + w.key)),
   );
 

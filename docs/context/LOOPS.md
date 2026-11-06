@@ -22,6 +22,7 @@ Dieses Dokument beschreibt die wiederkehrenden Abläufe („Loops"), mit denen a
 | `copy-pruefer` | Sprach-Agent | Gender-neutral, Sie/Du, ruhiger Ton (keine Emojis/Dringlichkeit), CH-Term, i18n-Ton-Parität |
 | `rechts-pruefer` | Rechts-Agent | Disclaimer, nDSG-Wahrheit, Impressum/UWG, Lizenz/Gerichtsstand, Quellen-Redlichkeit |
 | `link-checker` | (Daten/Recht) | Behörden-/externe Links, tote Ziele, Quellen-Redlichkeit |
+| `sozio-pruefer` | Sozioökonomie-Agent | Rechnung geht auf, empirische Aussagen mit Studienquelle und Geltungsbereich, Ursache ≠ Zusammenhang, Ist ≠ Soll, wer fehlt, Kennzahlen ohne Goodhart |
 
 Manuell aufrufbar über den Agent-/Task-Mechanismus, oder gebündelt via `/maloja-review`.
 

@@ -3,7 +3,7 @@ import { hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
-import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
+import { STIPENDIEN_OFFICIAL, STIPENDIEN_KANTONE_URL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
 import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -11,6 +11,7 @@ import { PanelTitle } from './components/Heading.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { StatusForm } from './components/StatusForm.jsx';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // Ergebnis-Marker des Berechtigungs-Checks: eigene FORM je Ton, damit sich
 // „Ja / Nein / Vielleicht" auch OHNE Farbe (Schwarzweiss-Modus) unterscheiden —
@@ -26,6 +27,7 @@ export const stipResultMarker = (tone) => tone === 'yes' ? 'voll' : tone === 'no
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const canton = data?.basis?.canton || '';
+  const stelleKanton = STIPENDIEN_KANTONE_URL[canton];
 
   // Kurz-Check Berechtigung (harmonisierte Mindestkriterien, Orientierung)
   const [status, setStatus] = useState('');
@@ -42,7 +44,8 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
 
   const panelMargin = { margin: space.lg + 'px 0 ' + space.xs + 'px 0' }; // Abstände der Abschnittstitel; Grösse/Gewicht kommt aus PanelTitle
   const intro = { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed };
-  const linkStyle = { color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px', fontSize: text.sm, wordBreak: 'break-all' };
+  const linkStyle = { ...linkStil(palette), fontSize: text.sm, wordBreak: 'break-all' };
+  const stelleLink = { ...linkStyle, display: 'inline-flex', alignItems: 'center', minHeight: '44px' };
   const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '6px' };
   const bullet = { color: palette.sage, flexShrink: 0 };
 
@@ -54,12 +57,13 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const costStyle = (cost) => ({
     fontSize: text.xs, fontWeight: weight.medium, padding: '1px 7px', borderRadius: radius.lg,
     marginLeft: space.xs + 'px', whiteSpace: 'nowrap',
-    background: cost === 'paid' ? palette.gold + '22' : cost === 'freemium' ? palette.sky + '18' : palette.sage + '18',
-    // Deep-Varianten für lesbaren Badge-Text (roh: gold 2.19 / sky 3.20 / sage 4.34 = AA-Fail).
-    color: cost === 'paid' ? palette.goldDeep : cost === 'freemium' ? palette.skyDeep : palette.sageDeep,
+    // Fassung 9 (Stebler Studios 05.11.2026): nur «gratis» trägt Farbe (Grün = gut); «Basis gratis»
+    // und «kostenpflichtig» sind neutral — das Wort sagt den Unterschied, Gold/Blau haben andere Rollen.
+    background: cost === 'free' ? palette.sage + '18' : palette.up,
+    color: cost === 'free' ? palette.sageDeep : palette.mid,
   });
 
-  const toneFarbe = resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold;
+  const toneFarbe = resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.sky;
   const ergebnis = resultKey && React.createElement('p', { style: { margin: 0, fontSize: text.lg, fontWeight: weight.semi, lineHeight: leading.normal, color: palette.text } },
     React.createElement(StatusForm, {
       form: stipResultMarker(resultTone), color: toneFarbe,
@@ -93,12 +97,14 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
       titel: t('stip.whereTitle'),
       inhalt: React.createElement(React.Fragment, null,
         React.createElement('p', { style: { ...intro, margin: 0 } }, t('stip.where')),
+        React.createElement('p', { style: { ...intro, margin: space.sm + 'px 0 0 0' } }, t('stip.whereAusnahmen')),
         canton && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } },
           t('stip.yourCanton', { canton: getCantonName(canton, t) }))
       ),
     },
-    stelle: React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border } },
-      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...linkStyle, fontWeight: weight.semi } }, t('stip.cantonalLink'))),
+    stelle: React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border, display: 'flex', flexDirection: 'column' } },
+      stelleKanton && React.createElement(ExternerLink, { t, href: stelleKanton, style: { ...stelleLink, fontWeight: weight.semi } }, t('stip.officeLink', { canton: getCantonName(canton, t) })),
+      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: { ...stelleLink, fontWeight: stelleKanton ? undefined : weight.semi } }, t('stip.cantonalLink'))),
     quelle: React.createElement(React.Fragment, null, hinweisZeichen(), renderSource(t('stip.source'), null, t)),
   },
     // Wer kann beantragen?
@@ -132,7 +138,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     onNavigate && React.createElement('button', {
       type: 'button',
       onClick: () => onNavigate('direktlinks'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: '44px', fontSize: text.sm, color: palette.sageDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+      style: { ...linkStil(palette), display: 'block', minHeight: '44px', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.md + 'px' }
     }, t('nav.direktlinks'))
   );
 };

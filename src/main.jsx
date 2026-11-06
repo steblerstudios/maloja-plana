@@ -10,7 +10,7 @@ import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './con
 // DEMO_DATA wird lazy geladen (nur im Beispiel-Modus gebraucht) — hält den ~3 KB
 // grossen Demo-Datensatz aus dem eager index-Chunk (Byte-Budget).
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/kantonPLZ.js';
-import { I18nProvider, useT } from './i18n/index.js';
+import { I18nProvider, useT, lazyMitTexten } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
@@ -27,120 +27,120 @@ import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStell
 import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
-const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
+const SettingsView = lazyMitTexten(() => import('./SettingsView.jsx'));
 import Dashboard from './Dashboard.jsx';
-const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
+const ChapterView = lazyMitTexten(() => import('./ChapterView.jsx'));
 // Nachgeladen (25.09.2026): das Hauptbundle hatte 20 B Luft, die Startbildschirm-Karte im Panorama
 // brauchte mehr. Der Hinweis erscheint nur bei fälligen Erinnerungen.
-const OverdueBanner = React.lazy(() => import('./OverdueBanner.jsx'));
+const OverdueBanner = lazyMitTexten(() => import('./OverdueBanner.jsx'));
 import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
-const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
-const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
+const Onboarding = lazyMitTexten(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
+const Tour = lazyMitTexten(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { istFremdeAenderung } from './utils/fremdeAenderung.js';
-const LegalView = React.lazy(() => import('./LegalView.jsx'));
-const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
-const InstallHinweis = React.lazy(() => import('./InstallHinweis.jsx'));
+const LegalView = lazyMitTexten(() => import('./LegalView.jsx'));
+const InstallGuide = lazyMitTexten(() => import('./InstallGuide.jsx'));
+const InstallHinweis = lazyMitTexten(() => import('./InstallHinweis.jsx'));
 // Nur das Tor im Startbündel; die Code-Wand (BetaGate.jsx) lädt es bei Bedarf nach.
 import BetaGateTor from './BetaGateTor.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
 // Luft unter dem 65-KB-Deckel. Damit das erste Antippen trotzdem nicht stockt, wird
 // das Stück nach dem ersten Bild im Leerlauf vorgeladen (siehe `vorladen` unten).
-const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
-import { Icon, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
-import { tagInZuerich } from './utils/zuerichTag.js';
+const MobileNav = lazyMitTexten(() => import('./MobileNav.jsx'));
+import { Icon, Icons, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
-const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
-const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
+const DocumentTresor = lazyMitTexten(() => import('./DocumentTresor.jsx'));
+const KKScanner = lazyMitTexten(() => import('./KKScanner.jsx'));
 // BudgetImport: seit 27.10.2026 keine eigene Seite — Teil «CSV importieren» im Monatsbudget (UMLEITUNGEN, BudgetSync.jsx).
-const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
-const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
-const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
-const BudgetSync = React.lazy(() => import('./BudgetSync.jsx'));
-const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
-const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
-const SeitenSchluss = React.lazy(() => import('./components/SeitenSchluss.jsx'));
+const SchuldenManager = lazyMitTexten(() => import('./SchuldenManager.jsx'));
+const TaxCalculator = lazyMitTexten(() => import('./TaxCalculator.jsx'));
+const OrganDonation = lazyMitTexten(() => import('./OrganDonation.jsx'));
+const BudgetSync = lazyMitTexten(() => import('./BudgetSync.jsx'));
+const PremiumSubsidy = lazyMitTexten(() => import('./PremiumSubsidy.jsx'));
+const CVGenerator = lazyMitTexten(() => import('./CVGenerator.jsx'));
+const SeitenSchluss = lazyMitTexten(() => import('./components/SeitenSchluss.jsx'));
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
-const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
+const ZipExport = lazyMitTexten(() => import('./ZipExport.jsx'));
 // MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
 // Lebensmappe, Notfall- und Behörden-Dossier: seit 27.10.2026 eine Seite mit drei Auswahlen (F7-S2, UMLEITUNGEN).
-const UnterlagenDrucken = React.lazy(() => import('./UnterlagenDrucken.jsx'));
-const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
-const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
-const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
-const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
+const UnterlagenDrucken = lazyMitTexten(() => import('./UnterlagenDrucken.jsx'));
+const BriefGenerator = lazyMitTexten(() => import('./BriefGenerator.jsx'));
+const SozialhilfeView = lazyMitTexten(() => import('./SozialhilfeView.jsx'));
+const CalendarReminders = lazyMitTexten(() => import('./CalendarReminders.jsx'));
+// NotificationSettings: seit 05.11.2026 keine eigene Seite — Abschnitt in SettingsView (UMLEITUNGEN, Seitenlandkarte Z2).
 // NotfallEinstieg: seit 24.10.2026 keine eigene Seite — im Kapitel Notfall (UMLEITUNGEN, components/NotfallImKapitel.jsx).
-const ArztkofferView = React.lazy(() => import('./ArztkofferView.jsx'));
-const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx'));
-const NotfallpassBlatt = React.lazy(() => import('./NotfallpassBlatt.jsx'));
-const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
-const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
-const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
-const Stundenlohn = React.lazy(() => import('./Stundenlohn.jsx'));
-const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
+const ArztkofferView = lazyMitTexten(() => import('./ArztkofferView.jsx'));
+const NotfallVorlesekarte = lazyMitTexten(() => import('./NotfallVorlesekarte.jsx'));
+const NotfallpassBlatt = lazyMitTexten(() => import('./NotfallpassBlatt.jsx'));
+const PraemienOrientierung = lazyMitTexten(() => import('./PraemienOrientierung.jsx'));
+const MietzinsOrientierung = lazyMitTexten(() => import('./MietzinsOrientierung.jsx'));
+const Kreditkarte = lazyMitTexten(() => import('./Kreditkarte.jsx'));
+const Stundenlohn = lazyMitTexten(() => import('./Stundenlohn.jsx'));
+const KVGWechsel = lazyMitTexten(() => import('./KVGWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
 // (ternär mit import.meta.env.DEV) → im Prod-Build wird der Import wegoptimiert,
 // Haupt-Bundle bleibt byte-neutral.
-const LockScreen = import.meta.env.DEV ? React.lazy(() => import('./LockScreen.jsx')) : null;
-const UmzugAblauf = React.lazy(() => import('./UmzugAblauf.jsx'));
-const UnfallKrankheit = React.lazy(() => import('./UnfallKrankheit.jsx'));
-const NeuerJob = React.lazy(() => import('./NeuerJob.jsx'));
-const StelleVerloren = React.lazy(() => import('./StelleVerloren.jsx'));
-const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
-const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
-const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
+const LockScreen = import.meta.env.DEV ? lazyMitTexten(() => import('./LockScreen.jsx')) : null;
+const UmzugAblauf = lazyMitTexten(() => import('./UmzugAblauf.jsx'));
+const UnfallKrankheit = lazyMitTexten(() => import('./UnfallKrankheit.jsx'));
+const NeuerJob = lazyMitTexten(() => import('./NeuerJob.jsx'));
+const StelleVerloren = lazyMitTexten(() => import('./StelleVerloren.jsx'));
+const Lebenssituationen = lazyMitTexten(() => import('./Lebenssituationen.jsx'));
+const KKErstAnmeldung = lazyMitTexten(() => import('./KKErstAnmeldung.jsx'));
+const Pensionierung = lazyMitTexten(() => import('./Pensionierung.jsx'));
 // Mahnung und Betreibung: seit 24.10.2026 eine Seite «Rechnung nicht bezahlt», die Adresse wählt die Stufe.
-const RechnungOffen = React.lazy(() => import('./RechnungOffen.jsx'));
-const SelbstMahnen = React.lazy(() => import('./SelbstMahnen.jsx'));
-const Dienst = React.lazy(() => import('./Dienst.jsx'));
-const DigitaleOrdnung = React.lazy(() => import('./DigitaleOrdnung.jsx'));
-const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
-const Lehre = React.lazy(() => import('./Lehre.jsx'));
-const BetreibungsAuszug = React.lazy(() => import('./BetreibungsAuszug.jsx'));
-const Ausweis = React.lazy(() => import('./Ausweis.jsx'));
-const Wegzug = React.lazy(() => import('./Wegzug.jsx'));
-const Adoption = React.lazy(() => import('./Adoption.jsx'));
-const Zusammenziehen = React.lazy(() => import('./Zusammenziehen.jsx'));
-const Ergaenzungsleistungen = React.lazy(() => import('./Ergaenzungsleistungen.jsx'));
-const Vorsorgeauftrag = React.lazy(() => import('./Vorsorgeauftrag.jsx'));
-const Patientenverfuegung = React.lazy(() => import('./Patientenverfuegung.jsx'));
-const Bestattung = React.lazy(() => import('./Bestattung.jsx'));
-const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
-const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
+const RechnungOffen = lazyMitTexten(() => import('./RechnungOffen.jsx'));
+const SelbstMahnen = lazyMitTexten(() => import('./SelbstMahnen.jsx'));
+const Dienst = lazyMitTexten(() => import('./Dienst.jsx'));
+const DigitaleOrdnung = lazyMitTexten(() => import('./DigitaleOrdnung.jsx'));
+const Volljaehrig = lazyMitTexten(() => import('./Volljaehrig.jsx'));
+const Lehre = lazyMitTexten(() => import('./Lehre.jsx'));
+const BetreibungsAuszug = lazyMitTexten(() => import('./BetreibungsAuszug.jsx'));
+const Ausweis = lazyMitTexten(() => import('./Ausweis.jsx'));
+const Wegzug = lazyMitTexten(() => import('./Wegzug.jsx'));
+const Adoption = lazyMitTexten(() => import('./Adoption.jsx'));
+const Zusammenziehen = lazyMitTexten(() => import('./Zusammenziehen.jsx'));
+const Ergaenzungsleistungen = lazyMitTexten(() => import('./Ergaenzungsleistungen.jsx'));
+const Vorsorgeauftrag = lazyMitTexten(() => import('./Vorsorgeauftrag.jsx'));
+const Patientenverfuegung = lazyMitTexten(() => import('./Patientenverfuegung.jsx'));
+const Bestattung = lazyMitTexten(() => import('./Bestattung.jsx'));
+const Einbuergerung = lazyMitTexten(() => import('./Einbuergerung.jsx'));
+const ZuzugAusland = lazyMitTexten(() => import('./ZuzugAusland.jsx'));
 // Aussteuerung: seit 24.10.2026 keine eigene Seite — letzter Teil von «Stelle verloren» (UMLEITUNGEN).
-const Quellensteuer = React.lazy(() => import('./Quellensteuer.jsx'));
-const WohnungGekuendigt = React.lazy(() => import('./WohnungGekuendigt.jsx'));
-const Selbstaendigkeit = React.lazy(() => import('./Selbstaendigkeit.jsx'));
-const Heirat = React.lazy(() => import('./Heirat.jsx'));
-const KindBekommen = React.lazy(() => import('./KindBekommen.jsx'));
-const Trennung = React.lazy(() => import('./Trennung.jsx'));
-const BewilligungFristen = React.lazy(() => import('./BewilligungFristen.jsx'));
-const Fuehrerausweis = React.lazy(() => import('./Fuehrerausweis.jsx'));
-const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
-const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
-const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
-const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
+const Quellensteuer = lazyMitTexten(() => import('./Quellensteuer.jsx'));
+const WohnungGekuendigt = lazyMitTexten(() => import('./WohnungGekuendigt.jsx'));
+const Selbstaendigkeit = lazyMitTexten(() => import('./Selbstaendigkeit.jsx'));
+const Heirat = lazyMitTexten(() => import('./Heirat.jsx'));
+const KindBekommen = lazyMitTexten(() => import('./KindBekommen.jsx'));
+const Trennung = lazyMitTexten(() => import('./Trennung.jsx'));
+const BewilligungFristen = lazyMitTexten(() => import('./BewilligungFristen.jsx'));
+const Fuehrerausweis = lazyMitTexten(() => import('./Fuehrerausweis.jsx'));
+const Todesfall = lazyMitTexten(() => import('./Todesfall.jsx'));
+const IvVerfahren = lazyMitTexten(() => import('./IvVerfahren.jsx'));
+const PflegeAblauf = lazyMitTexten(() => import('./PflegeAblauf.jsx'));
+const VorsorgeRechner = lazyMitTexten(() => import('./VorsorgeRechner.jsx'));
 // Schnellcheck: seit 27.10.2026 keine eigene Seite — #/schnellcheck und #/ansprueche führen auf «Was steht mir zu?»
 // (UMLEITUNGEN); er bleibt Schritt 1 des geführten Anspruch-Checks (AnspruchCheck.jsx).
-const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
-const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
-const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
-const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
-const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
-const AsylView = React.lazy(() => import('./AsylView.jsx'));
-const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
+const AnspruchCheck = lazyMitTexten(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
+const Obstgarten = lazyMitTexten(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
+const Gepaeck = lazyMitTexten(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
+const StipendienView = lazyMitTexten(() => import('./StipendienView.jsx'));
+const AlvRechner = lazyMitTexten(() => import('./AlvRechner.jsx'));
+const AsylView = lazyMitTexten(() => import('./AsylView.jsx'));
+const EOrechner = lazyMitTexten(() => import('./EOrechner.jsx'));
 // FinanzUebersicht: seit 24.10.2026 keine eigene Seite — #/finanzuebersicht führt ins Kapitel Finanzen (UMLEITUNGEN).
-const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
-const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
-const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
+const DirektLinks = lazyMitTexten(() => import('./DirektLinks.jsx'));
+const KVGLeistungen = lazyMitTexten(() => import('./KVGLeistungen.jsx'));
+const FlyerView = lazyMitTexten(() => import('./FlyerView.jsx'));
 // MerklisteView: seit 27.10.2026 keine eigene Seite — Reiter in «Was ansteht» (UMLEITUNGEN, CalendarReminders.jsx).
-const SearchView = React.lazy(() => import('./SearchView.jsx'));
+const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { knopfStil, linkStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
 // heuteIso (utils/fristen.js) zog die ganze Fristen-Datei ins Startbündel; inDays(0) liefert dasselbe (lokal,
@@ -170,7 +170,7 @@ class ViewErrorBoundary extends React.Component {
       ),
       React.createElement('button', {
         onClick: () => this.setState({ hasError: false }),
-        style: { padding: space.sm + 'px ' + space.md + 'px', background: palette?.sand || '#c8a96e', color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm + 'px' }
+        style: knopfStil(palette || LIGHT_PALETTE)
       }, t ? t('error.tryAgain') : 'Try again')
     );
   }
@@ -201,10 +201,7 @@ const LanguageSwitcher = ({ palette }) => {
       'aria-hidden': 'true',
       style: { position: 'absolute', insetInlineStart: '9px', pointerEvents: 'none', color: palette.mid, display: 'inline-flex' }
     },
-      React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-        React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
-        React.createElement('path', { d: 'M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18' })
-      )
+      zeichen('globe', 14, 2)
     ),
     // Eingeklappt zeigen wir nur das Kürzel (DE) über ein Overlay; die aufgeklappte
     // Auswahlliste zeigt die ausgeschriebenen Namen (Deutsch, English …). Dazu wird
@@ -250,10 +247,10 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
     style: {
       padding: '6px 8px', minHeight: '44px', minWidth: '44px',
       background: vorlesen.enabled ? palette.sand + '30' : 'transparent',
-      color: vorlesen.enabled ? palette.sand : palette.mid,
+      color: vorlesen.enabled ? palette.text : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
-      border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
-      borderRadius: radius.xs,
+      border: '1px solid ' + (vorlesen.enabled ? palette.sand : palette.border),
+      borderRadius: KNOPF_RADIUS,
       cursor: 'pointer',
       fontSize: '11px',
       lineHeight: 1,
@@ -264,10 +261,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       transition: `background ${duration.normal}ms ${ease}, color ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
     },
   },
-    React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-      React.createElement('path', { d: 'M4 9 h3 l5 -4 v14 l-5 -4 h-3 Z' }),
-      React.createElement('path', { d: 'M16 9 a5 5 0 0 1 0 6' })
-    ),
+    zeichen('lautsprecher', 14),
     React.createElement('span', {
       style: { display: 'none' },
       className: 'mp-vorlesen-label',
@@ -278,39 +272,16 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
 // Leiser Boden-Anker — nur auf dem Handy (isMobile). Additiv: die Kopfzeile mit
 // Hamburger bleibt, nichts wird entfernt. Ungerade 5 Slots (2 + Mitte + 2), damit der
 // zentrale Erfassen-Knopf wirklich mittig sitzt; er fächert ruhig in Schnell-Aktionen auf.
-const bottomIcon = (name, color, size) => {
-  const s = size || 20;
-  const common = { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' };
-  const P = (d) => React.createElement('path', { d });
-  if (name === 'home') return React.createElement('svg', common, P('M4 11 L12 4 L20 11 M6 10 V20 H18 V10'));
-  // Übersicht = Schweizer Sackmesser («alle Werkzeuge an einem Ort»); generisch, kein Kreuz.
-  // Linien-Variante passend zum Nav-Stil: Griff (Pille) + zwei ausgeklappte Werkzeuge.
-  if (name === 'sackmesser') return React.createElement('svg', common, P('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5'));
-  if (name === 'clock') return React.createElement('svg', common, React.createElement('circle', { cx: 12, cy: 12, r: 8 }), P('M12 8 V12 L15 14'));
-  if (name === 'gift') return React.createElement('svg', common, P('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8'));
-  if (name === 'plus') return React.createElement('svg', common, P('M12 5 V19 M5 12 H19'));
-  // Dokumentenablage = Ordner, Merkliste = Haken (Fassung 5, 23.10.2026) — dieselben Formen
-  // wie `ordner` und `check` im Icon-System, hier in der Strichstärke der Leiste.
-  if (name === 'ordner') return React.createElement('svg', common, P('M3 6.5 A1.5 1.5 0 0 1 4.5 5 H9.5 L11.5 7.5 H19.5 A1.5 1.5 0 0 1 21 9 V18.5 A1.5 1.5 0 0 1 19.5 20 H4.5 A1.5 1.5 0 0 1 3 18.5 Z'), React.createElement('path', { d: 'M3 10.5 H21', opacity: 0.45 }));
-  if (name === 'check') return React.createElement('svg', common, P('M4 12 L10 18 L20 6'));
-  if (name === 'receipt') return React.createElement('svg', common, P('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15'));
-  // Kalender mit heutiger Tageszahl (wie iOS): das Datum steht im Blatt statt einer generischen Uhr.
-  // Der Tag gilt in Europe/Zurich, nicht nach der Geräte-Uhr (Fassung 5, utils/zuerichTag.js).
-  if (name === 'calendarToday') {
-    const day = String(tagInZuerich());
-    return React.createElement('svg', common,
-      P('M4 6 H20 V20 H4 Z'), P('M4 10 H20'), P('M8 3 V7'), P('M16 3 V7'),
-      React.createElement('text', {
-        x: 12, y: 18, textAnchor: 'middle', fill: color, stroke: 'none',
-        fontFamily: 'inherit', fontWeight: 700, fontSize: day.length > 1 ? 7 : 8,
-      }, day)
-    );
-  }
-  // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?», hier im Startbündel
-  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B).
-  if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
-  return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
+// Ein Zeichen aus dem Register in fester Grösse — Kopfzeile, Barrierefreiheit, Boden-Anker.
+// Seit dem Icon-Plan (Schritt 3, 06.11.2026); vorher zeichnete main.jsx jedes Zeichen selbst.
+// `strich` hält die bisherige Strichstärke der Stelle, damit sich nichts sichtbar verschiebt.
+const zeichen = (name, px, strich, extra) => {
+  const IconFn = Icons[name];
+  if (!IconFn) return null;
+  return React.cloneElement(IconFn(), { width: px, height: px, ...(strich ? { strokeWidth: strich } : {}), ...extra });
 };
+
+const bottomIcon = (name, color, size) => zeichen(name, size || 20, 1.6, { stroke: color, style: { color } });
 
 // Sackmesser mit Zustand: die Werkzeuge fahren nur aus dem Griff, wenn man auf der
 // Übersicht ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
@@ -365,8 +336,8 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
   );
   const fan = [
     { key: 'tresor', label: t('nav.capDokument'), icon: 'ordner', left: 'calc(50% - 104px)', bottom: '84px' },
-    { key: 'kk', label: t('nav.capBeleg'), icon: 'receipt', left: 'calc(50% - 40px)', bottom: '126px' },
-    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendarToday', left: 'calc(50% + 40px)', bottom: '126px' },
+    { key: 'kk', label: t('nav.capBeleg'), icon: 'quittung', left: 'calc(50% - 40px)', bottom: '126px' },
+    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendar', left: 'calc(50% + 40px)', bottom: '126px' },
     { key: 'merkliste', label: t('nav.merkliste'), icon: 'check', left: 'calc(50% + 104px)', bottom: '84px' },
   ];
   return React.createElement(React.Fragment, null,
@@ -415,13 +386,13 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
             // er bleibt sichtbar, der Fokus bleibt auf ihm, eine Fokus-Falle wäre hier
             // falsch. Was ihm fehlte, ist der Rückweg ohne Maus — Escape schliesst.
             onKeyDown: (e) => { if (e.key === 'Escape' && fanOpen) { e.preventDefault(); setFanOpen(false); } },
-            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sageBtn, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sand, color: palette.onSand, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
           },
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
         );
-        const right1 = slot({ key: 'situationen', label: t('dashboard.anspruchTitle'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
-        const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
+        const right1 = slot({ key: 'situationen', label: t('dashboard.anspruchTitle'), icon: 'geschenk', active: view === 'situationen', onClick: () => onNavigate('situationen') });
+        const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menue', active: false, onClick: onMenu });
         return leftHand
           ? [right2, right1, center, left2, left1]
           : [left1, left2, center, right1, right2];
@@ -746,7 +717,7 @@ const AppInner = ({ demo }) => {
       // ausser es gibt eine gemerkte Stelle (die gilt dann, siehe unten).
       // Die Adresse zeigt danach das Ziel, nicht den alten Namen — auch wenn das Kapitel schon offen
       // war und sich darum kein Zustand ändert, der sie sonst nachführt.
-      if (parsed.anker) replaceHash(parsed.view, parsed.chapterIndex);
+      if (parsed.anker || parsed.ersetzen) replaceHash(parsed.view, parsed.chapterIndex);
       if (parsed.anker && parsed.stelle === null) springeZuAnker(parsed.anker);
       // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
       // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
@@ -1083,23 +1054,29 @@ const AppInner = ({ demo }) => {
   // Gemeinsamer Button-Stil: 44px Tap-Ziel (WCAG 2.5.8) + sichtbarer Ruhe-Rand
   // (`palette.border` statt transparent — die a11y-Schalter waren sonst selbst am
   // schwersten zu treffen). Ausgerichtet zentriert, Icon/Text mittig im 44px-Feld.
-  const ctrlBtn = (active, accent, opts = {}) => ({
+  // Fassung 9 (M8): eingeschaltet = gold getönt wie alle Auswahlen, Rand Sand.
+  const ctrlBtn = (active, opts = {}) => ({
     padding: '6px 9px', minHeight: '44px', minWidth: '44px',
-    background: active ? accent + (opts.bgAlpha || '22') : 'transparent',
-    color: active ? (opts.activeColor || accent) : palette.mid,
-    border: '1px solid ' + (active ? accent + '55' : palette.border),
-    borderRadius: radius.sm, cursor: 'pointer',
+    background: active ? palette.sand + '30' : 'transparent',
+    // Aktiv trägt der Text den Kontrast, die Tönung liegt in Fläche und Rand.
+    color: active ? palette.text : palette.mid,
+    border: '1px solid ' + (active ? palette.sand : palette.border),
+    borderRadius: KNOPF_RADIUS, cursor: 'pointer',
     lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
     display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',
     ...(opts.extra || {}),
   });
+  // «‹ Übersicht» und «‹ Zurück zu …» führen nur zurück: Link (M2), 44px-Zeile.
+  // Fusszeilen-Links: gold und unterstrichen (M2), klein.
+  const fussLink = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px', letterSpacing: '0.3px' };
+  const zurueckLink = { ...linkStil(palette), padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px' };
   const settingsControls = [
     React.createElement(VorlesenToggle, { key: 'voice', palette, t, vorlesen }),
     React.createElement('button', {
       key: 'readable',
       'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
       onClick: () => setReadable(r => !r),
-      style: ctrlBtn(readable, palette.sage, { lineHeight: 1, alignItems: 'baseline', extra: { gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" } })
+      style: ctrlBtn(readable, { lineHeight: 1, alignItems: 'baseline', extra: { gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" } })
     },
       React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
       React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
@@ -1114,7 +1091,7 @@ const AppInner = ({ demo }) => {
         'aria-label': t('common.anredeLabel', { form: current }),
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
       }, current);
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
@@ -1124,67 +1101,47 @@ const AppInner = ({ demo }) => {
       'aria-label': t('common.simpleView'), 'aria-pressed': simpleView, title: t('common.simpleView'),
       // Beim Einschalten automatisch Vorlesen aktivieren (Inkrement-1-Entscheid).
       onClick: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
-      style: ctrlBtn(simpleView, palette.sand, { bgAlpha: '30' })
+      style: ctrlBtn(simpleView)
     },
       // Icon: 2×2-Kachelraster = „grosse Symbole" (Outline, konsistent mit dem Icon-Set)
-      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-        React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
-        React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
-        React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
-        React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
-      )
+      zeichen('raster', 17)
     ),
     React.createElement('button', {
       key: 'grayscale',
       'aria-label': t('common.grayscale'), 'aria-pressed': grayscale, title: t('common.grayscale'),
       onClick: () => setGrayscale(g => !g),
-      style: ctrlBtn(grayscale, palette.mid, { activeColor: palette.text })
+      style: ctrlBtn(grayscale)
     },
       // Icon: halb gefüllter Kreis = Kontrast / Schwarzweiss
-      React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 24 24', 'aria-hidden': 'true' },
-        React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }),
-        React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
-      )
+      zeichen('kontrast', 16)
     ),
     React.createElement('button', {
       key: 'colorblind',
       'aria-label': t('common.colorBlind'), 'aria-pressed': colorBlind, title: t('common.colorBlind'),
       onClick: () => setColorBlind(c => !c),
-      style: ctrlBtn(colorBlind, palette.sky)
+      style: ctrlBtn(colorBlind)
     },
       // Icon: ein gefüllter Kreis + ein Umriss-Quadrat = unterscheidbar an Farbe UND Form
-      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', 'aria-hidden': 'true' },
-        React.createElement('circle', { cx: '8.5', cy: '9', r: '5', fill: 'currentColor', stroke: 'none' }),
-        React.createElement('rect', { x: '10.5', y: '11', width: '9', height: '9', rx: '1.5' })
-      )
+      zeichen('farbsicher', 17)
     ),
     React.createElement('button', {
       key: 'reducemotion',
       'aria-label': t('common.reduceMotion'), 'aria-pressed': reduceMotion, title: t('common.reduceMotion'),
       onClick: () => setReduceMotion(m => !m),
-      style: ctrlBtn(reduceMotion, palette.sage)
+      style: ctrlBtn(reduceMotion)
     },
       // Icon: Punkt mit radierenden Bewegungsbögen = „Bewegung" (aktiv = ruhiggestellt)
-      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', 'aria-hidden': 'true' },
-        React.createElement('circle', { cx: '7', cy: '12', r: '2.2', fill: 'currentColor', stroke: 'none' }),
-        React.createElement('path', { d: 'M12 8.5a5 5 0 0 1 0 7' }),
-        React.createElement('path', { d: 'M15 6a9 9 0 0 1 0 12' })
-      )
+      zeichen('bewegung', 17)
     ),
     // Linkshänder-Modus — nur am Handy sinnvoll (spiegelt Schubladen + Boden-Anker).
     isMobile && React.createElement('button', {
       key: 'lefthand',
       'aria-label': t('common.leftHand'), 'aria-pressed': leftHand, title: t('common.leftHand'),
       onClick: () => setLeftHand(v => !v),
-      style: ctrlBtn(leftHand, palette.sage)
+      style: ctrlBtn(leftHand)
     },
       // Icon: linke Hand (Daumen links) = Einhand-Bedienung links
-      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-        React.createElement('path', { d: 'M15 11V5.5a1.5 1.5 0 0 0-3 0V11' }),
-        React.createElement('path', { d: 'M12 10.5V4a1.5 1.5 0 0 0-3 0v7' }),
-        React.createElement('path', { d: 'M9 11V6.5a1.5 1.5 0 0 0-3 0V14' }),
-        React.createElement('path', { d: 'M6 12.5l-1.6-1.6a1.4 1.4 0 0 0-2 2L6 18a5 5 0 0 0 4.5 3H13a5 5 0 0 0 5-5v-4a1.5 1.5 0 0 0-3 0' })
-      )
+      zeichen('hand', 17)
     ),
   ].filter(Boolean);
 
@@ -1232,12 +1189,12 @@ const AppInner = ({ demo }) => {
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('a', {
       href: feedbackHref,
-      style: { display: 'inline-flex', alignItems: 'center', minHeight: '44px', color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: { ...fussLink, display: 'inline-flex', alignItems: 'center' }
     }, t('beta.feedbackMail')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
       onClick: () => handleNavigate('legal'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: fussLink
     }, t('legal.footerLink')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
@@ -1246,13 +1203,13 @@ const AppInner = ({ demo }) => {
         else if (demoMode) { beispielVerlassen(); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
         else beispielBetreten();
       },
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: fussLink
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
     !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
         onClick: enterSandbox,
-        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+        style: fussLink
       }, t('sandbox.footerLink'))
     ),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
@@ -1273,7 +1230,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color ' + duration.normal + 'ms ' + ease, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent')),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
@@ -1372,10 +1329,7 @@ const AppInner = ({ demo }) => {
           onClick: () => handleNavigate('search'),
           style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
-          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-            React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
-            React.createElement('path', { d: 'M15.5 15.5 L20 20' })
-          )
+          zeichen('search', 18, 1.5)
         ),
         ...(isMobile ? [] : settingsControls.filter(c => c.key === 'lang' || c.key === 'theme')),
         React.createElement('button', {
@@ -1386,11 +1340,7 @@ const AppInner = ({ demo }) => {
           onClick: () => setSettingsOpen(true),
           style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
-          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-            React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
-            // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
-            React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
-          )
+          zeichen('settings', 18, 1.5)
         ),
         !isMobile && React.createElement('button', {
           key: 'menu',
@@ -1398,11 +1348,7 @@ const AppInner = ({ demo }) => {
           onClick: () => setMobileNavOpen(!mobileNavOpen),
           style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
-          React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-            React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
-            React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
-            React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
-          )
+          zeichen('menue', 16, 1.5)
         )
       )
     ),
@@ -1425,8 +1371,8 @@ const AppInner = ({ demo }) => {
     dbBlocked && React.createElement('div', {
       style: {
         padding: '10px 16px',
-        background: palette.sand + '18',
-        borderBottom: '1px solid ' + palette.sand + '30',
+        background: palette.rose + '18',
+        borderBottom: '1px solid ' + palette.rose,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
         flexWrap: 'wrap',
       }
@@ -1434,18 +1380,14 @@ const AppInner = ({ demo }) => {
       React.createElement('div', { role: 'status', style: { flex: 1, minWidth: 0, fontSize: text.xs, color: palette.mid } }, t('trust.dbBlocked')),
       React.createElement('button', {
         onClick: () => setDbBlocked(false),
-        style: {
-          padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          color: palette.text, fontFamily: 'inherit', flexShrink: 0,
-        }
+        style: { ...knopfStil(palette, 'neben'), flexShrink: 0 }
       }, t('common.close'))
     ),
     demoMode && React.createElement('div', {
       style: {
         padding: '10px 16px',
-        background: palette.sand + '18',
-        borderBottom: '1px solid ' + palette.sand + '30',
+        background: palette.sky + '18',
+        borderBottom: '1px solid ' + palette.sky,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
         flexWrap: 'wrap',
       }
@@ -1457,11 +1399,8 @@ const AppInner = ({ demo }) => {
       React.createElement('button', {
         // Ohne das Klick-Ereignis weiterreichen (onLeave nimmt Orts-Objekte an, Fix 17.09.2026).
         onClick: demo ? () => demo.onLeave() : () => beispielVerlassen(),
-        style: {
-          padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          color: palette.text, fontFamily: 'inherit', flexShrink: 0, minHeight: '44px', // a11y-Prüfung 26.10.2026: vorher 31 px
-        }
+        // a11y-Prüfung 26.10.2026: vorher 31 px — der Baustein hält 44 px, hier sichtbar für tippziele44.
+        style: { ...knopfStil(palette, 'neben'), flexShrink: 0, minHeight: '44px' }
       }, t('demo.leave'))
     ),
     sandboxActive && React.createElement('div', {
@@ -1482,11 +1421,7 @@ const AppInner = ({ demo }) => {
         ),
         React.createElement('button', {
           onClick: blankSandbox,
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0 0 0', minHeight: '44px',
-            fontSize: text.xs, fontWeight: weight.medium, color: palette.sageDeep, fontFamily: 'inherit',
-            textDecoration: 'underline', textUnderlineOffset: '2px',
-          },
+          style: { ...knopfStil(palette, 'neben'), marginTop: '4px' },
         }, t('sandbox.startBlank'))
       ),
       // B5: Rückfrage an Stelle der zwei Knöpfe; der Fokus landet auf «Zurück».
@@ -1495,38 +1430,22 @@ const AppInner = ({ demo }) => {
         React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
           React.createElement('button', {
             type: 'button', autoFocus: true, onClick: rueckfrageZurueck,
-            style: {
-              padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
-              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-              color: palette.text, fontFamily: 'inherit',
-            }
+            style: knopfStil(palette, 'neben')
           }, t('sandbox.replaceBack')),
           React.createElement('button', {
             type: 'button', onClick: () => applySandbox(true),
-            style: {
-              padding: '6px 14px', minHeight: '44px', background: palette.sageBtn, border: 'none',
-              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
-              color: '#fff', fontFamily: 'inherit',
-            }
+            style: knopfStil(palette, 'gefahr')
           }, t('sandbox.replaceConfirm'))
         )
       ) :
       React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
         React.createElement('button', {
           onClick: discardSandbox,
-          style: {
-            padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
-            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-            color: palette.text, fontFamily: 'inherit',
-          }
+          style: knopfStil(palette, 'gefahr')
         }, t('sandbox.discard')),
         React.createElement('button', {
           ref: uebernehmenKnopf, onClick: () => applySandbox(false),
-          style: {
-            padding: '6px 14px', minHeight: '44px', background: palette.sageBtn, border: 'none',
-            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
-            color: '#fff', fontFamily: 'inherit',
-          }
+          style: knopfStil(palette)
         }, t('sandbox.apply'))
       )
     ),
@@ -1555,12 +1474,7 @@ const AppInner = ({ demo }) => {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
-          color: palette.mid, fontFamily: 'inherit',
-          display: 'flex', alignItems: 'center', gap: '6px',
-        },
+        style: zurueckLink,
       }, zurueckZeichen(), t('nav.backToDashboard')),
       // «Zurück zu …» — wenn man über einen Querverweis hierher kam (Entscheid 25.09.2026:
       // die Brotkrume zeigt die feste Ordnung, diese Zeile den eigenen Weg). Bis 27.09.2026
@@ -1575,24 +1489,12 @@ const AppInner = ({ demo }) => {
           type: 'button',
           className: 'mp-link',
           onClick: () => window.history.back(),
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer',
-            padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
-            color: palette.mid, fontFamily: 'inherit',
-            display: 'flex', alignItems: 'center', gap: '6px',
-          },
+          style: zurueckLink,
         }, zurueckZeichen(), t('nav.zurueckZu', { name }));
       })(),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
-        style: {
-          display: 'inline-flex', alignItems: 'center', gap: '6px',
-          margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px',
-          background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          // sageDeep statt sage: sage (#5A7868) trägt als 13px-Text nur 4.34:1 auf bg → AA-Fail.
-          color: palette.sageDeep, fontFamily: 'inherit',
-        },
+        style: { ...knopfStil(palette, 'neben'), marginBottom: space.md + 'px' },
       }, t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
@@ -1788,7 +1690,6 @@ const AppInner = ({ demo }) => {
         // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
         // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
         view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, beispiel: datenModus === 'beispiel', reiter: wahl, onReiter: waehle }),
-        view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
         }),
@@ -1798,7 +1699,6 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
-          onNotifications: () => handleNavigate('notifications'),
           demoMode,
         }),
       )),

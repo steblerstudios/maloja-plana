@@ -12,11 +12,11 @@ const SRC = path.join(__dirname, '..');
 const lies = (f) => fs.readFileSync(path.join(SRC, f), 'utf8');
 const main = lies('main.jsx');
 
-// view → Datei, aus main.jsx gelesen: «view === 'x' && React.createElement(Komp» + «const Komp = React.lazy(() => import('./Datei.jsx'))».
+// view → Datei, aus main.jsx gelesen: «view === 'x' && React.createElement(Komp» + «const Komp = lazyMitTexten(() => import('./Datei.jsx'))».
 const dateiVon = (view) => {
   const m = main.match(new RegExp("view === '" + view + "' && React\\.createElement\\((\\w+)"));
   if (!m) return null;
-  const imp = main.match(new RegExp('const ' + m[1] + " = React\\.lazy\\(\\(\\) => import\\('\\./([\\w/]+\\.jsx)'\\)"))
+  const imp = main.match(new RegExp('const ' + m[1] + " = lazyMitTexten\\(\\(\\) => import\\('\\./([\\w/]+\\.jsx)'\\)"))
     || main.match(new RegExp('import (?:\\{ )?' + m[1] + "(?: \\})? from '\\./([\\w/]+\\.jsx)'"));
   return imp ? imp[1] : null;
 };

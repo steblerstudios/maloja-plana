@@ -2,7 +2,8 @@ import React from 'react';
 import { AblaufContainer, ablaufStyles } from './AblaufSchale.jsx';
 import { MahnungTeil } from './MahnungErhalten.jsx';
 import { BetreibungTeil } from './BetreibungErhalten.jsx';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, weight, space } from './config/tokens.js';
+import { auswahlStil } from './components/PrimaryButton.jsx';
 
 // «Mahnung oder Zahlungsbefehl — was tun?» — seit 24.10.2026 EINE Seite für «Mahnung erhalten» und «Betreibung
 // erhalten» (docs/entscheide/seiten-buendeln.md, Gruppe E, Entscheid 5). Oben die Wahl, was
@@ -21,11 +22,9 @@ export const RechnungOffen = ({ palette, t, onNavigate, stufe = 'mahnung' }) => 
     key, type: 'button', 'aria-pressed': aktiv === key, 'data-stufe': key,
     onClick: () => { if (key !== aktiv && onNavigate) onNavigate(key); },
     style: {
-      flex: '1 1 0', minHeight: '44px', padding: '8px 12px', fontFamily: 'inherit', fontSize: text.sm,
-      cursor: key === aktiv ? 'default' : 'pointer', borderRadius: radius.sm,
-      border: '1px solid ' + (aktiv === key ? palette.text : palette.border),
-      background: aktiv === key ? palette.up : 'none',
-      color: aktiv === key ? palette.text : palette.mid,
+      ...auswahlStil(palette, aktiv === key),
+      flex: '1 1 0', minHeight: '44px', padding: '8px 12px', fontSize: text.sm,
+      cursor: key === aktiv ? 'default' : 'pointer',
       fontWeight: aktiv === key ? weight.semi : weight.normal,
     },
   }, t(key === 'betreibung' ? 'rechnungOffen.stufeBetreibung' : 'rechnungOffen.stufeMahnung'));

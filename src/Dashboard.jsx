@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import { SecondaryButton, knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { getCantonName } from './config/kantonPLZ.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
-import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
-import { useT } from './i18n/index.js';
+import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
+import { useT, lazyMitTexten } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
-import { aufklappZeichen } from './IconKern.jsx';
-import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
@@ -34,14 +32,15 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // Lazy: hält die Instrumente (Tacho/Kompass/Tank/Schutzschild + Daten) aus dem
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
-const BergDetail = React.lazy(() => import('./BergDetail.jsx'));
+const BergDetail = lazyMitTexten(() => import('./BergDetail.jsx'));
 // Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
 const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
-const BetaFeedback = React.lazy(() => import('./components/BetaFeedback.jsx').then(m => ({ default: m.BetaFeedback })));
-const QuickCheck = React.lazy(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
-const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
+const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
+const WerkzeugGruppen = lazyMitTexten(() => import('./components/WerkzeugGruppen.jsx'));
+const InstrumentePanel = lazyMitTexten(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
+const BetaFeedback = lazyMitTexten(() => import('./components/BetaFeedback.jsx').then(m => ({ default: m.BetaFeedback })));
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -202,6 +201,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const bergBuehne = React.useRef(null);
   React.useEffect(() => bergKleben(bergBuehne.current), []);
+  // Fristen nachladen: Das Dashboard liegt im Startbündel (Grenze 65 kB). Fehlt das Modul, bleibt die Zeile weg.
+  const [festeFristenModul, setFesteFristenModul] = useState(null);
+  React.useEffect(() => {
+    let aktiv = true;
+    import('./utils/festeFristen.js').then((m) => { if (aktiv) setFesteFristenModul(m); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
 
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
@@ -277,15 +283,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
-        // Gleiche Fläche wie PrimaryButton (Sand, onSand, 6 px) — so sieht der Knopf aus wie
-        // «So geht es» oben. Hier abgeschrieben statt importiert: der Kopf dieser Datei wird
-        // am 25.09.2026 parallel umgebaut (Berg-Hero), ein Import dort hätte kollidiert.
-        const ctaFlaeche = {
-          display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', flexShrink: 0,
-          padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
-          background: palette.sand, color: palette.onSand, borderRadius: radius.sm + 'px',
-          fontSize: text.sm, fontWeight: weight.semi, whiteSpace: 'nowrap',
-        };
+        // Der eine Hauptknopf der Übersicht (Fassung 9, S5): aus dem Baustein, nicht in der Bereichsfarbe.
+        const ctaFlaeche = { ...knopfStil(palette), flexShrink: 0, whiteSpace: 'nowrap' };
         const nextField = naechsterSchritt(chapters, data);
         if (nextField) {
           const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
@@ -297,7 +296,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
               padding: space.sm + 'px ' + space.xs + 'px', background: 'transparent',
               border: 'none', borderRadius: radius.sm, color: palette.text,
-              transition: 'background 160ms ease',
+              transition: 'background ' + duration.fast + 'ms ' + ease,
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
@@ -318,7 +317,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             // Schritt trägt einen gefüllten Knopf, wie «So geht es» oben. Nur Darstellung —
             // die ganze Zeile bleibt EIN Knopf (kein Knopf im Knopf).
             // Seit 25.09. abends in der Farbe des Bereichs (wie der Punkt), nicht mehr Sand.
-            React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
+            React.createElement('span', { 'aria-hidden': 'true', style: ctaFlaeche }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
         // F7-D3 (Stebler Studios 01.11.2026): statt fester Tipps schlägt dieser eine Wegweiser auch Dokumente und Budget vor,
@@ -337,13 +336,26 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           (schritt || weiterIdx >= 0) && React.createElement('button', {
             type: 'button',
             onClick: () => (schritt ? onNavigate(schritt.view) : onSelectChapter(weiterIdx)),
-            style: { ...ctaFlaeche, border: 'none', cursor: 'pointer', fontFamily: 'inherit' },
+            style: ctaFlaeche,
           }, schritt ? t(schritt.text) : t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
         );
       })(),
       mvo.fields.some((f) => !f.done) && React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
       }, t('dashboard.nextUpReassure')),
+      // Was die App schon weiss und drängt (F8-D1, D2): überfällige Arztrechnung, dann die Kassenfrist im Herbst.
+      (() => {
+        const heute = inDays(0);
+        const offen = festeFristenModul?.ueberfaelligeRechnungen(data, heute);
+        const kvg = festeFristenModul?.kvgFristImFenster(data, heute);
+        const zeile = (key, inhalt, view) => React.createElement('button', {
+          key, type: 'button', onClick: () => onNavigate(view),
+          style: { ...linkStil(palette), display: 'block', width: '100%', minHeight: '44px', textAlign: 'left', fontSize: text.sm, padding: space.xs + 'px 0' },
+        }, inhalt, React.createElement('span', { 'aria-hidden': 'true' }, ' ›'));
+        return (offen || kvg) && React.createElement('div', { 'data-teil': 'dringend', style: { marginTop: space.sm + 'px' } },
+          offen && zeile('rechnung', t(offen.anzahl === 1 ? 'dashboard.rechnungFristVorbei' : 'dashboard.rechnungenFristVorbei', { anzahl: offen.anzahl, betrag: betrag(offen.summe) }), 'schulden'),
+          kvg && zeile('kvg', t('dashboard.kvgFristZeile', { datum: kalenderdatum(kvg, lang, { day: 'numeric', month: 'long' }) }), 'kvgwechsel'));
+      })(),
       (() => {
         // Neben den Erinnerungen auch die Steuerfrist aus dem Kapitel Behörden — bis
         // 27.09.2026 stand hier «keine offene», während das Kapitel dieselbe Frist
@@ -352,6 +364,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const steuerfrist = data.behoerden && data.behoerden.taxFilingDeadline;
         const kandidaten = loadReminders().filter((r) => !r.done && r.dueDate);
         if (steuerfrist) kandidaten.push({ title: t('behördenStatus.taxDeadline'), dueDate: steuerfrist });
+        const kvgFrist = festeFristenModul?.kvgFristImFenster(data, today);
+        if (kvgFrist) kandidaten.push({ title: t('calendar.jahreskreis.kvgTitle'), dueDate: kvgFrist });
         const upcoming = kandidaten
           .filter((r) => r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
@@ -387,11 +401,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', marginTop: space.sm + 'px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' } },
             t('dashboard.exportReminder')),
-          React.createElement(PrimaryButton, {
+          React.createElement(SecondaryButton, {
             palette, onClick: () => onNavigate('export'),
-            style: { minHeight: '44px', alignSelf: 'flex-end' },
-            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand } }, Icons.sicherung()),
-          }, t('dashboard.exportReminderAction'), ' ›'));
+            style: { alignSelf: 'flex-end' },
+            icon: React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '16px', height: '16px', flexShrink: 0 } }, Icons.sicherung()),
+          }, t('dashboard.exportReminderAction'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')));
       })()
     ),
 
@@ -463,120 +477,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       // sind ein eigener, offener Entscheid) — der Weg zu ALLEN Werkzeugen führt ins Gepäck.
       React.createElement('button', {
         type: 'button', onClick: () => onNavigate('gepaeck'),
-        style: {
-          display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 2px', margin: '0 0 ' + space.sm + 'px',
-          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
-        },
-      }, t('gepaeck.menuAlle'), ' ›'),
-      (() => {
-        const renderTool = (tool) => {
-          // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
-          // Offizielle Links und Flyer trugen hier noch das Tresor-Zeichen); sonst das eigene.
-          const IconFn = Icons[tool.view ? ansichtIkon(tool.view, tool.icon) : tool.icon];
-          const iconPx = simpleView ? '40px' : '20px';
-          return React.createElement('button', {
-            key: tool.key || tool.view,
-            onClick: tool.action || (() => onNavigate(tool.view)),
-            style: {
-              padding: simpleView ? '18px 12px' : '14px 16px',
-              background: 'transparent', color: palette.text,
-              border: simpleView ? '1px solid ' + palette.border : 'none',
-              borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
-              display: 'flex', flexDirection: simpleView ? 'column' : 'row',
-              alignItems: 'center', justifyContent: simpleView ? 'flex-start' : undefined,
-              gap: simpleView ? '10px' : space.sm,
-              transition: `background ${duration.normal}ms ${ease}`,
-              textAlign: simpleView ? 'center' : 'left',
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
-          },
-            React.createElement('div', { style: { color: simpleView ? palette.sand : palette.mid, width: iconPx, height: iconPx, flexShrink: 0 } },
-              IconFn ? React.createElement('div', { style: { width: iconPx, height: iconPx } }, IconFn()) : null
-            ),
-            React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: simpleView ? weight.semi : weight.medium, fontSize: simpleView ? text.body : text.sm } }, tool.label),
-              (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
-            )
-          );
-        };
-        const groups = [
-          // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
-          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map((a) => (
-            { label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon }
-          )) },
-          { label: t('dashboard.toolGroups.gesundheit'), items: [
-            { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
-          ] },
-          // «Asyl & Migration» stand hier ein zweites Mal — dasselbe Ziel wie in
-          // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
-          // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
-          { label: t('dashboard.toolGroups.support'), items: [
-            { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
-          ] },
-          { label: t('dashboard.toolGroups.money'), items: [
-            { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
-            { label: t('budgetSync.title'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
-            { label: t('nav.mietzins'), sub: t('nav.sub.mietzins'), view: 'mietzins', icon: 'home' },
-            { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
-            { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
-          ] },
-          { label: t('dashboard.toolGroups.insurance'), items: [
-            { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
-            { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
-            { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
-          ] },
-          { label: t('dashboard.toolGroups.documents'), items: [
-            { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },
-            { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
-            { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
-          ] },
-          { label: t('dashboard.toolGroups.organize'), items: [
-            { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
-            { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
-            { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
-            { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
-          ] },
-        ];
-        // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus
-        // «Lebensereignisse» in einen Ablauf ging und «Übersicht» antippt, soll die
-        // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
-        // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
-        const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
-        let offen = [];
-        try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
-        const merkeGruppe = (gi, istOffen) => {
-          try {
-            const rest = offen.filter((i) => i !== gi);
-            offen = istOffen ? rest.concat(gi) : rest;
-            sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
-          } catch { /* ohne Speicher: nichts merken */ }
-        };
-        return React.createElement(React.Fragment, null,
-          ...groups.map((g, gi) => React.createElement('details', {
-            // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
-            // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
-            key: 'tg-' + gi,
-            open: Array.isArray(offen) && offen.includes(gi),
-            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
-            style: { borderTop: '1px solid ' + palette.border + '66' },
-          },
-            React.createElement('summary', {
-              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-            },
-              React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
-                React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),
-                g.label
-              ),
-              React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
-            ),
-            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
-              g.items.map(renderTool)
-            )
-          ))
-        );
-      })()
+        style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm },
+      }, t('gepaeck.menuAlle'), React.createElement('span', { 'aria-hidden': 'true' }, ' ›')),
+      // Werkzeuggruppen laden nach (components/WerkzeugGruppen.jsx, 06.11.2026) — Startbündel.
+      React.createElement(React.Suspense, { fallback: null },
+        React.createElement(WerkzeugGruppen, { palette, t, simpleView, onNavigate, onSelectChapter, chapters }))
     ),
 
     // ─── Was steht mir zu? — ein Block (seit 25.09.2026) ──
@@ -639,8 +544,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             style: {
               display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
               padding: item.primary ? '18px 20px' : '12px 14px',
-              background: item.primary ? palette.sand + '08' : 'transparent',
-              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
+              background: 'transparent',
+              border: '1px solid ' + palette.border + (item.primary ? '' : '44'),
               borderRadius: radius.md,
               cursor: 'pointer',
               fontFamily: 'inherit',
@@ -648,15 +553,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               color: palette.text,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = item.primary ? palette.sand + '66' : palette.border + '99'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
             // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
             // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Stebler Studios).
             React.createElement('div', {
               style: {
                 width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
-                background: item.primary ? palette.sand + '18' : palette.up,
+                background: palette.up,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0, color: item.primary ? palette.sand : palette.mid,
               }
@@ -682,11 +587,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           // Leistungs-Kompass auf dieselbe Seite).
           React.createElement('button', {
             onClick: () => onNavigate('situationen'),
-            style: {
-              // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
-              display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', marginTop: space.sm,
-              fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-            },
+            // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+            style: { ...linkStil(palette), display: 'block', padding: '8px 0', marginTop: space.sm, fontSize: text.sm },
           }, t('lebenszustaende.dashboardLink')),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
@@ -710,11 +612,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('button', {
               key: item.label,
               onClick: item.action,
-              style: {
-                background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
-                fontSize: text.sm, color: palette.sageDeep || palette.sage, textAlign: 'left', fontFamily: 'inherit',
-                display: 'flex', alignItems: 'center', gap: space.xs + 'px',
-              },
+              style: { ...linkStil(palette), padding: '2px 0', fontSize: text.sm, textAlign: 'left', display: 'flex', alignItems: 'center', gap: space.xs + 'px' },
               onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
               onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
             },

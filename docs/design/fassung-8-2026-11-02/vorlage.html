@@ -1,0 +1,199 @@
+<title>Fassung 8 Rundgang</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Lexend:wght@400;500&display=swap">
+<style>
+/* Layout: wie Fassung 7. Je Bereich Bild links, Befunde rechts, unten die Entscheide. */
+:root {
+  --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6;
+  --text: #24262A; --mid: #5E6167; --soft: #5A5D63;
+  --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #3D5A78; --rose: #8A3B3B;
+  --display: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #A4A7AC; --soft: #9CA0A6;
+  --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D89A92; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #A4A7AC; --soft: #9CA0A6;
+  --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D89A92; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 1120px; margin: 0 auto; padding-block: 32px 72px; display: grid; gap: 8px; }
+h1 { font-family: var(--display); font-size: 32px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 23px; margin: 36px 0 2px; text-wrap: balance; }
+h3 { font-family: var(--display); font-size: 17px; margin: 0; }
+p { color: var(--mid); max-width: 72ch; margin: 0; }
+code { font-size: 13px; background: var(--up); padding: 1px 5px; border-radius: 4px; }
+.lead { display: grid; gap: 10px; margin-bottom: 8px; }
+.meta { font-size: 13px; color: var(--soft); }
+.fragen { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.fragen span { border: 1px solid var(--border); border-radius: 999px; padding: 4px 11px; font-size: 13px; }
+
+/* Matrix: Thema × Ort */
+.matrix-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-top: 10px; }
+table.matrix { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13.5px; }
+.matrix th, .matrix td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: center; }
+.matrix th { font-weight: 500; color: var(--soft); font-size: 12.5px; }
+.matrix th:first-child, .matrix td:first-child { text-align: left; }
+.matrix td:first-child b { font-weight: 500; }
+.matrix td:first-child small { display: block; color: var(--mid); font-size: 12.5px; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--border); }
+.dot.ist { background: var(--soft); }
+.dot.soll { background: var(--sage); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 25%, transparent); }
+ol.plan { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 78ch; color: var(--mid); }
+ol.plan b { color: var(--text); font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--mid); margin-top: 8px; align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+
+/* Seite */
+section.seite { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 22px; padding-top: 18px; border-top: 1px solid var(--border); margin-top: 18px; }
+section.seite figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+section.seite img { width: 100%; border-radius: 8px; border: 1px solid var(--border); display: block; }
+section.seite figcaption { font-size: 12.5px; color: var(--soft); }
+.kopf { display: grid; gap: 4px; margin-bottom: 10px; }
+.befunde { display: grid; gap: 10px; }
+.bef { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.bef .zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.id { font-size: 12px; color: var(--soft); font-variant-numeric: tabular-nums; }
+.chip { font-size: 12px; border-radius: 999px; padding: 1px 9px; border: 1px solid currentColor; }
+.chip.fehler { color: var(--rose); } .chip.fusion { color: var(--sky); } .chip.aufbau { color: var(--gold); }
+.chip.zeigen { color: var(--sage); } .chip.flow { color: var(--sand); } .chip.gut { color: var(--sage); border-style: dashed; }
+.chip.sprache { color: var(--soft); } .chip.offen { color: var(--mid); border-style: dashed; }
+.emp { color: var(--soft); font-size: 13px; white-space: nowrap; }
+section.seite.ohnebild { grid-template-columns: minmax(0, 1fr); }
+#gut { list-style: disc; }
+.bef p.was { color: var(--text); }
+.bef p.vor { font-size: 14px; }
+.bef p.vor b { font-weight: 500; color: var(--text); }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.wahl button { font: inherit; font-size: 13px; color: var(--text); background: var(--up); border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px; cursor: pointer; min-height: 32px; }
+.wahl button:hover { border-color: var(--soft); }
+.wahl button:focus-visible { outline: 2px solid var(--sand); outline-offset: 2px; }
+.wahl button[aria-pressed="true"].ja { background: var(--sage); border-color: var(--sage); color: var(--bg); }
+.wahl button[aria-pressed="true"].nein { background: var(--soft); border-color: var(--soft); color: var(--bg); }
+.wahl button[aria-pressed="true"].reden { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+
+/* Entscheide-Leiste */
+.leiste { position: sticky; bottom: 0; margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.leiste .stand { font-size: 14px; font-variant-numeric: tabular-nums; }
+.leiste button { font: inherit; font-size: 14px; background: var(--sand); color: var(--bg); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; min-height: 40px; }
+.leiste button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+textarea#ausgabe { width: 100%; min-height: 120px; font: 13px/1.5 ui-monospace, Menlo, monospace; color: var(--text); background: var(--up); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+@media (max-width: 720px) { section.seite { grid-template-columns: minmax(0, 1fr); } h1 { font-size: 27px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main>
+  <div class="lead">
+    <span class="meta">Maloja Plana · Rundgang für Fassung 8 · Stand 02.11.2026 · live = <code>main 0f3c72f4</code></span>
+    <h1>Fassung 8 · Rundgang und offene Punkte</h1>
+    <p>Auf Produktion durchgegangen, über «Ohne Code ausprobieren» mit dem Beispiel Maria, Desktop und 375 px. Nichts davon ist gebaut. Bei jedem Punkt steht meine Empfehlung, Ihre Wahl wird hier gespeichert.</p>
+    <div class="fragen"><span>Umgesetzt?</span><span>Stimmt es?</span><span>Flow</span><span>Aufbau &amp; Logik</span><span>Fusionieren</span><span>Stärker zeigen</span></div>
+  </div>
+
+  <h2>Was der Rundgang abdeckt</h2>
+  <p>Alle 80 Seiten geöffnet. Zeile für Zeile gelesen: Dashboard, sieben Kapitel, Sozialhilfe, drei Dossiers und 18 weitere Seiten. Die übrigen, vor allem die Abläufe, nur auf Aufbau geprüft, zwei davon gelesen. Andere Profile als Maria, die vier Fremdsprachen und das PDF sind nicht geprüft. Fachaussagen gehen vor dem Bau an die Prüfer.</p>
+
+  <h2>Vorschlag: in dieser Reihenfolge bauen</h2>
+  <ol class="plan">
+    <li><b>Sozialhilfe und Dossier richtigstellen</b>: F8-S1 bis S7, F8-P1, F8-P2. Das sind sichtbare Widersprüche auf Seiten für Menschen in Not.</li>
+    <li><b>Fristen in den Wegweiser</b>: F8-D1 bis D3. F8-D1 nützt dieses Jahr nur, wenn es vor dem 30.11. live ist.</li>
+    <li><b>Eine Sprache für ein Ergebnis</b>: F8-F1 bis F5.</li>
+    <li><b>Zugänglichkeit als Paket</b>: F8-Q1, F8-O4.</li>
+    <li><b>Zuletzt das Fortschrittsbild</b>: F8-D4.</li>
+  </ol>
+  <h2>Gut so</h2>
+  <ul class="plan" id="gut"></ul>
+
+  <div id="seiten"></div>
+
+  <div class="leiste" aria-live="polite">
+    <span class="stand" id="stand">0 von 0 entschieden</span>
+    <button type="button" id="kopieren">Entscheide kopieren</button>
+  </div>
+  <textarea id="ausgabe" hidden readonly aria-label="Entscheide als Text"></textarea>
+</main>
+
+<script>
+const SEITEN = {{SEITEN}};
+const GUT = {{GUT}};
+
+const K = { fehler: 'Fehler', fusion: 'Fusion', aufbau: 'Aufbau', zeigen: 'Zeigen', flow: 'Flow', gut: 'gut so', sprache: 'Sprache', offen: 'gesammelt' };
+let wahl = {};
+try { wahl = JSON.parse(localStorage.getItem('f8-wahl') || '{}'); } catch (e) { wahl = {}; }
+
+function seiten() {
+  const c = document.getElementById('seiten');
+  c.innerHTML = SEITEN.map(s => `
+    <section class="seite${s.bild ? '' : ' ohnebild'}" id="${s.id}">
+      <figure>${s.bild ? `<img src="${s.bild}" alt="Rechner oben: CHF 2’898 pro Monat">` : ''}${s.bild2 ? `<img src="${s.bild2}" alt="Block unten: CHF 0 pro Monat, Kein Anspruch">` : ''}<figcaption>${s.bildtext || ''}</figcaption></figure>
+      <div>
+        <div class="kopf"><h2 style="margin:0">${s.titel}</h2><p>${s.intro}</p></div>
+        <div class="befunde">${s.befunde.map(b => `
+          <article class="bef" data-id="${b.id}">
+            <div class="zeile"><span class="id">${b.id}</span><span class="chip ${b.art}">${K[b.art]}</span></div>
+            <p class="was">${b.was}</p>
+            ${b.vor ? `<p class="vor"><b>Vorschlag:</b> ${b.vor} <span class="emp">Empfehlung: ${b.emp}</span></p>` : ''}
+            ${b.art === 'gut' ? '' : `<div class="wahl" role="group" aria-label="Entscheid zu ${b.id}">
+              <button type="button" class="ja" data-w="ja">Ja</button>
+              <button type="button" class="nein" data-w="nein">Nein</button>
+              <button type="button" class="reden" data-w="reden">Besprechen</button></div>`}
+          </article>`).join('')}
+        </div>
+      </div>
+    </section>`).join('');
+}
+
+let dbWahl = null;
+function merken() { try { localStorage.setItem('f8-wahl', JSON.stringify(wahl)); } catch (e) {} }
+
+function zeigen() {
+  document.querySelectorAll('.bef').forEach(el => {
+    const w = wahl[el.dataset.id];
+    el.querySelectorAll('.wahl button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.w === w)));
+  });
+  const alle = document.querySelectorAll('.wahl').length;
+  const n = Object.keys(wahl).filter(k => document.querySelector(`.bef[data-id="${k}"] .wahl`)).length;
+  document.getElementById('stand').textContent = `${n} von ${alle} entschieden`;
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('.wahl button');
+  if (!b) return;
+  const id = b.closest('.bef').dataset.id;
+  wahl[id] = wahl[id] === b.dataset.w ? undefined : b.dataset.w;
+  if (!wahl[id]) delete wahl[id];
+  merken();
+  if (dbWahl) { const d = dbWahl.doc(id); (wahl[id] ? d.set({ w: wahl[id] }) : d.delete()).catch(() => {}); }
+  zeigen();
+});
+
+document.getElementById('kopieren').addEventListener('click', async () => {
+  const W = { ja: 'Ja', nein: 'Nein', reden: 'Besprechen' };
+  const zeilen = SEITEN.flatMap(s => s.befunde.filter(b => wahl[b.id]).map(b => `${b.id}: ${W[wahl[b.id]]}`));
+  const text = 'Fassung 8, Entscheide:\n' + (zeilen.length ? zeilen.join('\n') : '(noch nichts gewählt)');
+  const ta = document.getElementById('ausgabe');
+  ta.value = text; ta.hidden = false;
+  const btn = document.getElementById('kopieren');
+  try { await navigator.clipboard.writeText(text); btn.textContent = 'Kopiert'; }
+  catch (e) { ta.focus(); ta.select(); btn.textContent = 'Text markiert, bitte kopieren'; }
+  setTimeout(() => { btn.textContent = 'Entscheide kopieren'; }, 2500);
+});
+
+document.getElementById('gut').innerHTML = GUT.map(g => `<li>${g}</li>`).join('');
+seiten(); zeigen();
+(async () => {
+  const db = window.claude ? await window.claude.use('db') : null;
+  if (!db) return;
+  dbWahl = db.collection('wahl');
+  dbWahl.onSnapshot(snap => {
+    const neu = {};
+    snap.docs.forEach(d => { const w = d.data().w; if (w) neu[d.id] = w; });
+    wahl = neu; merken(); zeigen();
+  });
+})();
+</script>

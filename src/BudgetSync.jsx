@@ -19,6 +19,7 @@ import { betrag } from './utils/geld.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { BudgetImport, BUDGET_IMPORT_ANKER } from './BudgetImport.jsx';
+import { knopfStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -141,6 +142,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   const skosShown = !!(budget.householdContext && budget.income > 0);
   // Faden 4 / Inkr. B — Sozialhilfe-Anspruch (ganzes Unterstützungsbudget, nicht nur Grundbedarf)
   const sozialhilfe = skosShown ? calculateSozialhilfe(data) : null;
+  // Nur wenn das erfasste Einkommen den Bedarf nicht deckt; sonst gilt der Vergleich, die Rente kann nur dazukommen.
+  const renteOderEinkommenOffen = !!sozialhilfe?.wegOhneBetrag;
   const allInfoKeys = [];
   groupData.forEach(g => {
     if (groupHasInfo(g)) allInfoKeys.push(g.key);
@@ -318,10 +321,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     },
       React.createElement('button', {
         type: 'button', onClick: toggleAllInfo, 'aria-expanded': anyInfoOpen,
-        style: {
-          background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer',
-          color: palette.soft, fontSize: text.xs, display: 'inline-flex', alignItems: 'center', gap: '5px'
-        }
+        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, gap: '5px' }
       },
         React.createElement('span', { 'aria-hidden': true }, aufklappZeichen(anyInfoOpen)),
         t('budgetSync.infoToggle')
@@ -418,21 +418,25 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         sozialhilfe && React.createElement('div', {
           style: {
             marginBottom: space.xs,
-            color: sozialhilfe.eligible ? palette.mid : palette.soft,
-            fontStyle: sozialhilfe.eligible ? 'normal' : 'italic',
+            // Grund ohne Ergebnis: neutral, damit die Form nichts aus dem leeren Feld verrät (Nachprüfung 0e9c094f).
+            color: sozialhilfe.eligible || renteOderEinkommenOffen ? palette.mid : palette.soft,
+            fontStyle: sozialhilfe.eligible || renteOderEinkommenOffen ? 'normal' : 'italic',
           }
-        }, sozialhilfe.eligible
+        // Einkommen oder Rente nicht erfasst: kein Vergleich mit dem Budget aus einem leeren Feld (Fachprüfung d18ef9f6).
+        }, renteOderEinkommenOffen ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
+          : sozialhilfe.eligible
           ? t('budgetSync.skosClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
             // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt).
             + (sozialhilfe.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
           // Freibetrag-Fall (Predeploy 25.09.2026): kein «voraussichtlich nicht relevant».
           : sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet')
+          : sozialhilfe.betragOffen ? t(sozialhilfe.offenText)
           : sozialhilfe.anspruchOffen ? t('budgetSync.skosOffen', { amount: formatCHF(sozialhilfe.totalBedarf) })
           : t('budgetSync.skosNoClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '', sozialhilfe?.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : '', sozialhilfe?.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '')
+        }, t('budgetSync.skosNote'), sozialhilfe?.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '', sozialhilfe?.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : '', sozialhilfe?.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '', (sozialhilfe?.hinweise || []).map((k) => ' ' + t(k)).join(''))
       )
     ),
 
@@ -473,19 +477,13 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       React.createElement('button', {
         onClick: () => setShowAnnual(!showAnnual),
         style: {
-          flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
-          color: showAnnual ? palette.onSand : palette.mid, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          ...auswahlStil(palette, showAnnual), flex: 1, padding: '9px', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
       }, hinweisZeichen(), showAnnual ? t('budgetSync.title') : t('budgetSync.annualView')),
       React.createElement('button', {
         onClick: () => setBerichtVorschau(true),
-        style: {
-          padding: '9px 14px', background: palette.up, color: palette.mid,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          cursor: 'pointer', fontSize: text.sm
-        }
+        style: knopfStil(palette, 'neben')
       }, t('nav.export'))
     ),
 

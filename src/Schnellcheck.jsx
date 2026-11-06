@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateSozialhilfe, getCantonName, getHouseholdInfo, ladeIPVModelle } from './config/cantonalData.js';
 import { wegeAusProbe } from './data/anspruchWege.js';
@@ -13,6 +14,7 @@ import { praemienBelegState } from './data/praemienBeleg.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
 // Angaben — auto vorbelegt aus dem Profil, hier frei anpassbar zum Ausprobieren —
@@ -60,6 +62,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // Ansicht) passiert nichts. Kanton bleibt profilgebunden (kein Feld hier).
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Absicht: bei Änderung der Roh-Eingaben feuern und das abgeleitete `probe` durchreichen. `probe` (jedes Render neu) / `onProbeChange` (Prop) als Dep würden bei jedem Render feuern.
   useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [numIncome, rent, kk, data]);
+  // Lohn oder Rente aus dem Profil: dieselbe Bedingung wie die Wege (utils/unterstuetzungseinheit.js).
+  const erfasst = einnahmenErfasst(probe.finanzen);
 
   // Gedeckte Leistungen sammeln — dieselben Gates wie auf «Was steht mir zu?» (data/anspruchWege.js).
   // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
@@ -73,16 +77,17 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       note: t(w.qualitative ? 'schnellcheck.ipvOhneBetragNote' : 'schnellcheck.ipvNote'),
     } : w.key === 'soz' ? {
       key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
-      label: t('nav.sozialhilfe'), monthly: w.monthly,
+      label: t('nav.sozialhilfe'), monthly: w.monthly, qualitative: w.qualitative,
       // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
-      note: t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
+      note: w.qualitative ? t(w.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
         // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
         + (w.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
         + (w.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
-        + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : ''),
+        + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
+        + (w.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
-      key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,
+      key: 'el', view: 'ergaenzungsleistungen', color: palette.mid, textColor: palette.mid,
       label: t('schnellcheck.el'), qualitative: true, note: t('schnellcheck.elNote'),
     }));
 
@@ -91,8 +96,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // ganze Ansicht sonst zum leeren Screen statt sanft zu „keine Angabe".
   let belegState = null, sozPegelState = null, knappSoz = false;
   try {
-    if (canton && numIncome > 0) belegState = praemienBelegState(probe);
-    if (canton && numIncome > 0 && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
+    if (canton && erfasst) belegState = praemienBelegState(probe);
+    if (canton && erfasst && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
     if (e.geschaetzt && numRent > 0) knappSoz = istKnapp(calculateSozialhilfe(probe), e.ohneAlter);
   } catch { /* Orientierung, nie blockierend */ }
 
@@ -181,11 +186,13 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     style: {
       display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left',
       padding: '12px 14px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
-      background: b.color + '10', color: palette.text,
-      border: '1px solid ' + b.color + '33', borderRadius: radius.sm + 'px',
+      // Fassung 9: die Zeilen sind neutral (keine Bedeutung über die Farbe); der Punkt bleibt
+      // als Legende zum Balken oben, dort sind die Farben Diagramm (farb-und-daten-system.md).
+      background: 'transparent', color: palette.text,
+      border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px',
     },
-    onMouseEnter: (e) => { e.currentTarget.style.background = b.color + '1e'; },
-    onMouseLeave: (e) => { e.currentTarget.style.background = b.color + '10'; },
+    onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+    onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
   },
     React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '50%', background: b.color, flexShrink: 0 }, 'aria-hidden': true }),
     React.createElement('div', { style: { minWidth: 0, flex: 1 } },
@@ -204,7 +211,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
 
   const wegeItem = (view, label) => React.createElement('button', {
     key: view, onClick: () => onNavigate && onNavigate(view),
-    style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.skyDeep, textAlign: 'left' },
+    style: { ...linkStil(palette), fontSize: text.sm, textAlign: 'left' },
   }, label);
 
   return React.createElement('div', { style: s.card },
@@ -220,19 +227,19 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       ),
       React.createElement('div', { style: s.context },
         canton
-          ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, size: hh.householdSize })
+          ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, personen: t(hh.householdSize === 1 ? 'common.person' : 'common.persons', { count: hh.householdSize }) })
           : t('schnellcheck.contextNoCanton'),
         ' ',
         React.createElement('button', {
           onClick: () => onNavigate && onNavigate('chapter', 0),
-          style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.skyDeep },
+          style: { ...linkStil(palette), fontSize: text.xs },
         }, t('schnellcheck.adjustProfile'))
       )
     ),
 
     // Leistungs-Kompass: Peilung über dem Ergebnis (Instrument über derselben Logik)
     React.createElement(LeistungsKompass, {
-      palette, t, benefitCount: benefits.length, topLabel, hasIncome: numIncome > 0,
+      palette, t, benefitCount: benefits.length, topLabel, hasIncome: erfasst,
     }),
 
     // IPV-Instrument: Prämien-Beleg (Papier) — bewusst anderes Material als der
@@ -249,10 +256,10 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       palette, t, state: sozPegelState,
     }),
     // Knapp: geschätztes Netto nahe am Bedarf — dieselbe Regel wie auf dem Dashboard.
-    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
 
     // Ergebnis
-    numIncome > 0
+    erfasst
       ? (benefits.length > 0
           ? React.createElement('div', null,
               React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, t('schnellcheck.resultTitle')),

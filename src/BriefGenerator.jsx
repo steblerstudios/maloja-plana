@@ -6,7 +6,7 @@ import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil, linkStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 import { erinnerungSichern } from './utils/reminders.js';
@@ -33,18 +33,18 @@ export function briefUebersetzer({ lang, anrede, selected, t, geladen }) {
 
 // ─── Lebensereignis-Briefe: Hinweise und Angaben (26.09.2026) ───
 // Die Hinweise stehen VOR dem Formular: bei Rechtsvorschlag und Todesfall ist die Frist
-// bzw. die Erbschafts-Falle wichtiger als der Brief selbst. Gold wie die Fristen in AsylView.
+// bzw. die Erbschafts-Falle wichtiger als der Brief selbst. Blau wie alle Fristen und Hinweise (Farbrollen Fassung 9, 05.11.2026).
 // Deploy-Gate 27.09.2026 (a11y): `id` + `tabIndex: -1` — Ziel des Fokus beim Sprung aus einem
 // Ablauf; die fett gesetzten Zeilen (Fristen) werden bei jeder Änderung höflich vorgelesen.
 const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElement('div', {
   role: 'note', id: 'brief-hinweis', tabIndex: -1,
   style: {
-    padding: '14px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
+    padding: '14px 16px', background: palette.sky + '18', border: '1px solid ' + palette.sky,
     borderRadius: radius.sm, marginBottom: space.md,
   },
 },
   React.createElement('div', {
-    style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.goldDeep, marginBottom: space.xs },
+    style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.skyDeep, marginBottom: space.xs },
   }, hinweisZeichen(icon), title),
   zeilen.filter(Boolean).map((z, i) => React.createElement('p', {
     key: i,
@@ -165,7 +165,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
           // beim Betreibungsamt auf (Fach-Prüfer 26.09.2026).
           f.type === 'betrag' && String(roh[f.key] == null ? '' : roh[f.key]).trim() !== '' && React.createElement('div', {
             'aria-live': 'polite',
-            style: { fontSize: textTokens.xs, color: a[f.key] > 0 ? palette.text : palette.goldDeep, lineHeight: leading.normal, marginTop: space.xs, fontWeight: weight.medium },
+            style: { fontSize: textTokens.xs, color: a[f.key] > 0 ? palette.text : palette.roseDeep, lineHeight: leading.normal, marginTop: space.xs, fontWeight: weight.medium },
           }, a[f.key] > 0 ? t('briefe.angaben.betragErkannt', { amount: zahl(a[f.key], { stellen: Number.isInteger(a[f.key]) ? 0 : 2 }) }) : t('briefe.angaben.betragUnklar'))
         );
       })
@@ -313,8 +313,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
-          border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
-          borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
+          // Fassung 9: gewählt in Sand (Auswahl), nicht mehr Salbei; Rundung KNOPF_RADIUS.
+          border: '1px solid ' + (selected === tmpl.key ? palette.sand : palette.border),
+          borderRadius: KNOPF_RADIUS, cursor: 'pointer', textAlign: 'left',
           // Buttons erben color NICHT (UA-Reset auf schwarz) → im Dark Mode war der
           // Vorlagen-Titel unlesbar schwarz. Explizit auf palette.text setzen.
           color: palette.text,
@@ -322,7 +323,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
           transition: `border-color ${duration.normal}ms ${ease}`,
         }
       },
-        React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.sage : palette.mid }),
+        React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.sandDeep : palette.mid }),
         React.createElement('div', null,
           React.createElement('div', {
             style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs }
@@ -473,12 +474,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     },
       React.createElement('button', {
         onClick: () => setPreview(!preview),
-        style: {
-          padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
-        }
+        style: knopfStil(palette, 'neben'),
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
-      React.createElement(PrimaryButton, { palette, onClick: () => { if (selected && briefCanRender(selected)) setExportVorschau(true); } }, t('briefe.printLetter'))
+      React.createElement(PrimaryButton, { palette, onClick: () => { if (selected && briefCanRender(selected)) setExportVorschau(true); }, icon: React.createElement(Icon, { name: 'drucker', size: 16 }) }, t('briefe.printLetter'))
     ),
     selected && exportVorschau && React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement(ExportVorschau, {
@@ -516,12 +514,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
           }, hinweisZeichen('check'), t(reminderAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'briefe.wageReminder.added'))
         : React.createElement('button', {
             onClick: handleAddReminder,
-            style: {
-              alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
-              border: '1px solid ' + palette.border, borderRadius: radius.sm,
-              cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
-              color: palette.text,
-            }
+            style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' },
           }, t('briefe.wageReminder.cta'))
     ),
 
@@ -548,12 +541,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       ),
       React.createElement('button', {
         onClick: () => onNavigate('tresor', undefined, selectedTmpl?.chapter || 'all'),
-        style: {
-          alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
-          border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm,
-          cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
-          color: palette.text,
-        }
+        // Fassung 9 (S10): führt nur zur Dokumentenablage → Link. Wortlaut bleibt.
+        style: { ...linkStil(palette), alignSelf: 'flex-start', minHeight: '44px', fontSize: textTokens.sm },
       }, t('briefe.afterPrint.toTresor'))
     ),
 

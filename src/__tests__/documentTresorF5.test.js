@@ -52,7 +52,7 @@ describe('Ablage · leer', () => {
   const html = render([]);
 
   it('ruhiges Bild mit Titel und Satz der App, ohne Zähler, Suche und Sortierung', () => {
-    expect(html).toContain('Ihr Ordner ist bereit');
+    expect(html).toContain('Hier ist Platz für Ihre Unterlagen');
     expect(html).toContain('Sobald Sie ein Dokument in einem Kapitel hochladen');
     expect(html).not.toContain('role="tablist"');
     expect(html).not.toContain('type="search"');
@@ -77,7 +77,7 @@ describe('Ablage · leer', () => {
     const du = renderToStaticMarkup(React.createElement(DocumentTresor, {
       palette, t: tDu, documents: [], chapters, onDownload() {}, onDelete() {}, onUpdateExpiry() {},
     }));
-    expect(du).toContain('Dein Ordner ist bereit');
+    expect(du).toContain('Hier ist Platz für deine Unterlagen');
   });
 });
 

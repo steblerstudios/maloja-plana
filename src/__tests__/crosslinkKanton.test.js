@@ -51,6 +51,7 @@ describe('K10 · Aussage 1: der Kanton aus dem Onboarding erreicht jede Rechen-E
   it('Haushalt und Einkommen kommen aus denselben Profilfeldern (getHouseholdInfo, monthlyIncome + sideIncome + Partner)', () => {
     const p = profil({ canton: 'BE', income: 2000, household: { adults: 2, children: [{ age: 4 }], partnerIncome: 1500 } });
     p.finanzen.sideIncome = 500;
+    p.basis.maritalStatus = 'married'; // Partnerlohn zählt ganz nur in der Unterstützungseinheit (SKOS-RL C.2 Erl. b)
     expect(getHouseholdInfo(p).householdSize).toBe(3);
     expect(calculateSozialhilfe(p).income).toBe(4000);
     expect(calculateSozialhilfe(p).householdSize).toBe(3);
@@ -78,7 +79,7 @@ describe('K10 · Aussage 1 in den Ansichten: kein Rechner fragt den Kanton nochm
     expect(render(SozialhilfeView, { data: p })).toContain('premium.canton(cantons.BE)');
     expect(render(StipendienView, { data: p })).toContain('stip.yourCanton(cantons.BE)');
     expect(render(MietzinsOrientierung, { data: p })).toContain('mietzinsView.cantonLabel(cantons.BE)');
-    expect(render(Schnellcheck, { data: p })).toContain('schnellcheck.contextCanton(cantons.BE|1)');
+    expect(render(Schnellcheck, { data: p })).toContain('schnellcheck.contextCanton(cantons.BE|common.person(1))');
   });
 });
 

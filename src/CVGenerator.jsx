@@ -4,12 +4,12 @@ import { generateCVTemplate, generateCVHTML, generateJSONResume, downloadCVAsHTM
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { LebenslaufBlatt, lebenslaufInhalt } from './components/LebenslaufVorschau.jsx';
-import { text, weight, radius , space } from './config/tokens.js';
+import { text, radius , space } from './config/tokens.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { ZielHinweis } from './components/ExternerLink.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { openPrintWindow } from './utils/helpers.js';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // Lebenslauf (F7-R5, 31.10.2026): das Blatt aus dem Kapitel Ausbildung, «Als PDF drucken» als Hauptweg, HTML und
 // JSON klein unter «Weitere Formate». Vorher eine Datenmaske mit drei gleich lauten Knöpfen.
@@ -18,7 +18,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
   // weniger als der Druck (Geburtsdatum, Nationalität, Zivilstand): darum auch vor dem Drucken.
   const [vorschau, setVorschau] = useState(null);
   const [alsDatei, setAlsDatei] = useState(false);
-  const zweitKnopf = { minHeight: '44px', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
+  const zweitKnopf = knopfStil(palette, 'neben');
 
   const cv = generateCVTemplate(data, t);
   const inhalt = lebenslaufInhalt(t, data.ausbildung, data);
@@ -40,7 +40,8 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
   };
   const ergaenzen = onNavigate && React.createElement('button', {
     type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
-    style: { ...zweitKnopf, display: 'block', marginTop: space.sm + 'px' },
+    // Fassung 9 (M2): führt nur ins Kapitel → Link.
+    style: { ...linkStil(palette), display: 'block', minHeight: '44px', marginTop: space.sm + 'px', fontSize: text.sm },
   }, t('cv.ergaenzen') + ' ›');
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
@@ -55,6 +56,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
       React.createElement(PrimaryButton, {
         palette, onClick: () => setVorschau('druck'),
         style: { width: '100%', minHeight: '44px', margin: space.md + 'px 0 ' + space.xs + 'px' },
+        icon: React.createElement(Icon, { name: 'drucker', size: 16 }),
       }, t('cv.pdfDrucken')),
       React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, t('cv.pdfHinweis')),
       vorschau === 'druck' && vorschauBox(),

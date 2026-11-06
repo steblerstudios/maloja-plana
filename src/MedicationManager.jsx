@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { Icon } from './IconSystem.jsx';
+import { knopfStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { preisFuer } from './utils/medikamentPreis.js';
 import { betrag } from './utils/geld.js';
 import { kalenderdatum } from './utils/datumAnzeige.js';
@@ -81,15 +82,10 @@ export const MedicationManager = ({ palette, t, lang, medications, onChange }) =
       })
     ),
 
+    // Fassung 9 (M10): «+ hinzufügen» als Nebenknopf mit durchgezogenem goldenem Rand.
     React.createElement('button', {
       onClick: addMed,
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
-        cursor: 'pointer', fontSize: text.sm, fontFamily,
-        fontWeight: weight.medium, alignSelf: 'flex-start',
-      }
+      style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' },
     }, '+ ' + t('medications.add'))
   );
 };
@@ -286,7 +282,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
             onClick: () => toggleFreq(freq),
             style: {
               padding: '4px 12px', fontSize: text.xs, fontFamily,
-              borderRadius: radius.full, cursor: 'pointer', fontWeight: weight.medium,
+              borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontWeight: weight.medium,
               border: active ? '1px solid ' + palette.sand : '1px solid ' + palette.border,
               background: active ? palette.sand + '22' : 'transparent',
               color: active ? palette.text : palette.mid,

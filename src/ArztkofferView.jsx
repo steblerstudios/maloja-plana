@@ -4,6 +4,7 @@ import { getBereich } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PageTitle } from './components/Heading.jsx';
 import { zurueckZeichen } from './IconSystem.jsx';
+import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────
 //
@@ -77,7 +78,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
             style: {
               fontSize: '10px', color: palette.mid, fontWeight: weight.medium,
               border: '1px solid ' + palette.border, borderRadius: radius.sm,
-              padding: '1px 6px', textTransform: 'uppercase', letterSpacing: '0.3px',
+              padding: '1px 6px',
             },
           }, t('arztkoffer.inVorbereitung')),
         ),
@@ -99,7 +100,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       }, React.createElement(FruchtSilhouette, { name: 'hagebutte', size: 40, title: t('arztkoffer.title') })),
       React.createElement(PageTitle, {
         palette,
-        style: { margin: '0 0 8px 0', letterSpacing: '-0.3px' },
+        style: { margin: '0 0 8px 0' },
       }, t('arztkoffer.title')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto' },
@@ -116,7 +117,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       React.createElement('div', {
         style: {
           fontSize: text.xs, fontWeight: weight.semi, color: palette.mid,
-          textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 ' + space.sm + 'px 2px',
+          margin: '0 0 ' + space.sm + 'px 2px',
         },
       }, t('arztkoffer.inVorbereitungHint')),
       React.createElement('div', {
@@ -137,22 +138,15 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         WEGE.map((w) => React.createElement('button', {
           key: w.key,
           onClick: () => onNavigate(w.view),
-          style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            cursor: 'pointer', padding: '8px 14px', minHeight: '44px', boxSizing: 'border-box',
-            display: 'inline-flex', alignItems: 'center', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
-          },
+          // Fassung 9 (M2): führen nur in die Abläufe → Link.
+          style: { ...linkStil(palette), display: 'inline-flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm },
         }, t('arztkoffer.wege.' + w.key))),
       ),
     ),
 
     React.createElement('button', {
       onClick: () => onNavigate('dashboard'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        fontSize: text.sm, color: palette.mid, fontFamily: 'inherit',
-        padding: space.sm + 'px 0', marginTop: space.md + 'px', minHeight: '44px',
-      },
+      style: { ...knopfStil(palette, 'neben'), marginTop: space.md + 'px', minHeight: '44px' },
     }, zurueckZeichen(), t('arztkoffer.back')),
   );
 };

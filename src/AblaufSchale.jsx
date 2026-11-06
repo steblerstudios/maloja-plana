@@ -6,17 +6,17 @@ import landschaft from './assets/berge/landschaft.webp?url';
 import { erinnerungSichern, loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { renderSource } from './utils/renderSource.js';
+import { Belege } from './components/Belege.jsx';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
-import { ablaufBereich, ansichtName } from './config/ansichtenRegister.js';
+import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegister.js';
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -36,7 +36,8 @@ const styles = (palette) => ({
   stepText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed },
   // Querverweis: 44 px Tippziel (Seitenrundgang 27.09.2026 — vorher padding 0, rund 20 px
   // hoch); der Abstand nach oben entfällt dafür, die Zeilenhöhe trägt ihn.
-  link: { display: 'flex', alignItems: 'center', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
+  // Fassung 9 (M2): Text-Links gold und immer unterstrichen (linkStil).
+  link: { ...linkStil(palette), display: 'flex', alignItems: 'center', minHeight: '44px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
   done: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px', outline: 'none' },
   warn: { fontSize: text.sm, color: palette.goldDeep, marginTop: space.xs + 'px' },
   note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
@@ -102,7 +103,7 @@ export const ablaufKapitel = (name) => {
 const BAND_HOEHE = 112;
 const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
   const { t, onNavigate, bereichTitel, zumBereich } = kopf;
-  const stufe = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.mid, padding: 0, minHeight: '44px' };
+  const stufe = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px' };
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.soft } }, '›');
   const balken = farbe ? farbe.balken : palette.sage;
   return React.createElement(React.Fragment, null,
@@ -123,7 +124,7 @@ const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
         icon && React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: balken + '2E', boxShadow: 'inset 0 0 0 1px ' + balken + '4D', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: icon, size: 26 })),
-        React.createElement(PageTitle, { palette, style: { fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-.015em', minWidth: 0 } }, title)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, title)
       )
     )
   );
@@ -181,14 +182,18 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
     if (gewechselt.current && flaeche.current) flaeche.current.focus();
   }, [stand.schritt, stand.fertig]);
   const geheZu = (next) => { gewechselt.current = true; setStand(next); };
-  const ruhigerKnopf = { minHeight: '44px', background: 'none', border: 'none', padding: '0 ' + space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid };
+  const ruhigerKnopf = knopfStil(palette, 'neben');
   const titelStil = { marginTop: space.xs + 'px', fontFamily: fontFamilyDisplay, fontSize: '22px', lineHeight: 1.2 };
   const info = istInfoSchritt(schritte[nr]);
 
   return React.createElement(React.Fragment, null,
     // Ein einziger Schritt (z. B. «Jemand schuldet Geld») braucht keine Strasse — nur eine leere Fläche mit einem Punkt.
     total > 1 && React.createElement(AblaufPass, { palette, name, total, aktuell: nr, fertig: stand.fertig, namen: passNamen }),
-    React.createElement('div', { ref: flaeche, tabIndex: -1, 'data-ablauf-flaeche': '', style: { outline: 'none' } },
+    // Der Fokus landet hier: Mit Rolle und Namen sagt der Screenreader den neuen Schritt an (F8-O4).
+    React.createElement('div', {
+      ref: flaeche, tabIndex: -1, 'data-ablauf-flaeche': '', role: 'group', style: { outline: 'none' },
+      'aria-label': stand.fertig ? t('ablauf.fertigTitel', { n: String(total) }) : t('onboarding.stepOf', { current: nr + 1, total }) + ': ' + (ohneNummer(schritte[nr]?.props?.title) || ''),
+    },
       stand.fertig && React.createElement('div', { 'data-ablauf-schritt': 'fertig' },
         React.createElement('span', { style: { display: 'inline-flex', color: markenFarbe } }, React.createElement(Icon, { name: 'check', size: 28 })),
         React.createElement(PanelTitle, { palette, style: { margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t('ablauf.fertigTitel', { n: String(total) })),
@@ -225,6 +230,9 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
 // (Satz unter «Alle N Schritte sind erledigt») sind freiwillig; `stand`/`setStand` nur, wenn der
 // Ablauf selbst springen muss (KVG-Wechsel: Wahl in Schritt 1 → zurück an den Anfang).
 export const AblaufContainer = ({ palette, t, onNavigate, ablauf, icon, title, intro, kopf, passNamen, abschlussText, stand: standVon, setStand: setStandVon, children }) => {
+  // Das Zeichen des Ereignisses aus dem Register — dasselbe wie im Rucksack und in der Suche
+  // (Icon-Plan, Schritt 7b). `icon` der Seite bleibt nur Rückfall für Seiten ohne Eintrag.
+  icon = ansichtIkon(ablauf, icon);
   const s = styles(palette);
   const name = ablaufName(ablauf);
   const kinder = flach(children);
@@ -309,6 +317,14 @@ export const AblaufLink = ({ palette, label, onClick }) => {
     React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
 };
 
+// Warnsatz in einem Ablauf — das Warn-Zeichen gehört der Komponente, nicht der Aufrufstelle
+// (Icon-Plan November 2026, Schritt 1). Wächter: __tests__/ablaufWarnung.test.js.
+// Ein `div`, kein `p`: im KVG-Wechsel steht die Warnung in einer Wegkarte, die ein Knopf ist.
+export const AblaufWarnung = ({ palette, children }) => {
+  const s = styles(palette);
+  return React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), children);
+};
+
 // Nach dem Speichern einer Frist aus einem Ablauf (`reminder.ablauf`, z. B. 'umzug'): die gespeicherte
 // Erinnerung — offen, gleicher Titel und gleiches Datum, wie addReminder sie findet — trägt danach
 // `ablauf`. Der Kalender lässt das grüne Band des Ablaufs an ihr enden (utils/laufendeAblaeufe.js).
@@ -348,7 +364,8 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // (Live-Region), statt verloren zu gehen.
 const kartenStil = (palette, vorbei) => ({
   marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
-  border: '1px solid ' + (vorbei ? palette.gold || palette.border : palette.border),
+  // Fassung 9: Blau = Fristen, Rot = vorbei (Farbe nie allein — Datum bzw. «vorbei» steht dabei).
+  border: '1px solid ' + (vorbei ? palette.rose : palette.sky),
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
 export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarLabel, reminder: reminderRoh, onNavigate, onSaved, kompakt = false }) => {
@@ -369,11 +386,7 @@ export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarL
         : null)
     : React.createElement('button', {
       type: 'button', onClick: handle, 'aria-label': buttonLabel || undefined,
-      style: {
-        display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
-        padding: '0 ' + space.md + 'px', background: 'none', border: '1.5px solid ' + palette.sand, borderRadius: radius.sm,
-        color: palette.sandDeep, fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit', cursor: 'pointer', flexShrink: 0,
-      },
+      style: { ...knopfStil(palette, 'neben'), flexShrink: 0 },
     }, zeichen, t('kvg.addToCalendar'));
   if (kompakt) return inhalt;
   return React.createElement('div', { 'data-frist-karte': 'offen', style: kartenStil(palette, false) },
@@ -490,7 +503,7 @@ export const AblaufPass = ({ palette, name, total, aktuell, fertig, namen }) => 
 export const AblaufFooter = ({ palette, notes, quelle, t }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },
-    quelle ? React.createElement('div', { key: 'quelle', style: { marginBottom: '6px' } }, renderSource(quelle, null, t)) : null,
+    quelle ? React.createElement(Belege, { key: 'quelle', palette, t, zeile: quelle, style: { marginBottom: '6px', fontSize: 'inherit' } }) : null,
     (notes || []).flatMap((n, i) => [
       i > 0 ? React.createElement('br', { key: 'br' + i }) : null,
       hinweisZeichen(undefined, undefined, 'z' + i), n,

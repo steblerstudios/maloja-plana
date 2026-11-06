@@ -2,6 +2,7 @@ import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { zurueckZeichen } from './IconSystem.jsx';
 
 const Section = ({ title, children, palette }) =>
@@ -32,8 +33,9 @@ const CONTRIBUTION_URL = '';
 // Datum abgeleitet (das wäre eine falsche Aktualitäts-Aussage). Wird in alle 5 Sprachen
 // via {date} eingesetzt (legal.lastUpdated), damit die Datumsangabe nicht driftet.
 // K39 (16.09.2026): Datenschutz-/Nutzungstexte an Verschlüsselung als Voreinstellung (E10)
-// und den Löschweg (E18) angeglichen → Stand September 2026. TODO(rm): Monatsname gegenlesen.
-// 02.11.2026: Abschnitt «Zählung auf diesem Gerät» → Stand November 2026.
+// und den Löschweg (E18) angeglichen → Stand September 2026. 03.11.2026: IV-Rente in der Liste der Gesundheitsdaten
+// (Fassung 8) → November 2026. 02.11.2026: Abschnitt «Zählung auf diesem Gerät» → Stand November 2026.
+// TODO(rm): Monatsname gegenlesen.
 const LEGAL_LAST_UPDATED = {
   de: 'November 2026', fr: 'novembre 2026', it: 'novembre 2026', en: 'November 2026', rm: 'november 2026',
 };
@@ -114,20 +116,13 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
     // Back
     React.createElement('button', {
       onClick: () => onNavigate('dashboard'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0', minHeight: '44px',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
-      }
+      style: { ...knopfStil(palette, 'neben'), minHeight: '44px', marginBottom: '16px' },
     }, zurueckZeichen(), t('common.back')),
 
     // Title
     React.createElement(PageTitle, {
       palette,
-      style: {
-        marginBottom: space.md,
-        letterSpacing: '0.2px',
-      }
+      style: { marginBottom: space.md },
     }, t('legal.title')),
 
     // Tabs
@@ -142,16 +137,14 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         React.createElement('button', {
           key: tab.key,
           onClick: () => onNavigate('legal', undefined, tab.key),
+          // Reiter (Fassung 9): Auswahl aus dem Baustein, oben runde Ecken mit KNOPF_RADIUS.
           style: {
+            ...auswahlStil(palette, activeSection === tab.key),
             padding: space.sm + 'px ' + space.md + 'px',
-            background: activeSection === tab.key ? palette.sand : 'transparent',
-            color: activeSection === tab.key ? '#000' : palette.text,
             border: 'none',
-            borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
-            cursor: 'pointer',
+            borderRadius: KNOPF_RADIUS + ' ' + KNOPF_RADIUS + ' 0 0',
             fontWeight: activeSection === tab.key ? weight.semi : weight.normal,
             fontSize: text.sm,
-            fontFamily: 'inherit',
           }
         }, tab.label)
       )
@@ -377,11 +370,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.resources.movedText') }),
         React.createElement('button', {
           onClick: () => onNavigate('direktlinks'),
-          style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
-            fontSize: text.sm, color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
-          },
+          style: { ...linkStil(palette), minHeight: '44px', marginTop: space.sm, fontSize: text.sm },
         }, t('legal.resources.movedCta')),
       ]}),
     ),
@@ -407,11 +396,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
           React.createElement('button', {
             type: 'button',
             onClick: () => onNavigate('installApp'),
-            style: {
-              background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-              padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
-              fontSize: text.sm, color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
-            },
+            style: { ...linkStil(palette), minHeight: '44px', marginTop: space.sm, fontSize: text.sm },
           }, t('install.title')),
         ],
       })

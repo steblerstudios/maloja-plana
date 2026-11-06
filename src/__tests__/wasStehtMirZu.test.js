@@ -80,12 +80,12 @@ describe('Beispiel Maria: dieselben Ergebnisse wie das Kapitel Finanzen', () => 
     expect(quelle('Lebenssituationen.jsx')).not.toMatch(/PraemienBeleg|LeistungsKompass/);
   });
 
-  it('Marken: Einkommen, Miete, KK, Kanton/Haushalt', () => {
+  it('Marken: Einkommen, Miete, Krankenkasse, Kanton/Haushalt', () => {
     const html = zeichne(DEMO_DATA);
     expect(html).toContain('Netto ' + betrag(6200) + ' / Mt.');
     expect(html).toContain('Miete ' + betrag(1650));
-    expect(html).toContain('KK ' + betrag(540.3));
-    expect(html).toContain('Zürich · 1 Person(en)');
+    expect(html).toContain('Krankenkasse ' + betrag(540.3));
+    expect(html).toContain('Zürich · 1 Person');
   });
 
   const profil = (canton, postalCode, monthlyIncome) => ({

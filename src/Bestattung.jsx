@@ -5,6 +5,8 @@ import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
 import { FRAGEN_BW, bestattungDokument, bestattungHtml } from './data/bestattung.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
+import { PanelTitle } from './components/Heading.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // Bestattungswünsche — eine Frage pro Seite, Vorschau, Druck (Skizze Stebler Studios 27.09.2026, F–I).
 // Regeln: data/bestattung.js · Grundlage: docs/design/vorsorge-dokumente-2026-09-27.md.
@@ -25,7 +27,7 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
   const vorschau = ({ zumAnfang, knopf }) => {
     const doc = bestattungDokument(antworten, data, t);
     return React.createElement('div', null,
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('bw.ui.vorschauTitel')),
+      React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('bw.ui.vorschauTitel')),
       doc.leer
         ? React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, hinweisZeichen(), t('bw.ui.leer'))
         : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
@@ -38,9 +40,11 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.sm + 'px', lineHeight: leading.normal } }, hinweisZeichen(), t('bw.begleit.wo')),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(bestattungHtml(antworten, data, t, lang)) },
-          React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
+          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('bw.ui.aendern')),
-        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge'))
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
+        // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('vorsorgeauftrag') }, t(ansichtName('vorsorgeauftrag')))
       )
     );
   };

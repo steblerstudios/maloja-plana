@@ -1,5 +1,6 @@
 import React from 'react';
-import { text, weight, radius, space } from '../config/tokens.js';
+import { text, weight, space } from '../config/tokens.js';
+import { knopfStil } from './PrimaryButton.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { ansichtName, SCHLUSS_ZIELE } from '../config/ansichtenRegister.js';
 
@@ -14,7 +15,8 @@ export const SeitenSchluss = ({ palette, t, view, onNavigate }) => {
     h('h3', { style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, fontWeight: weight.normal, fontFamily: 'inherit', color: palette.mid } }, t('chapterView.alsNaechstes')),
     h('button', {
       type: 'button', className: 'mp-link', onClick: gehe,
-      style: { minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.text },
+      // Wie das Kapitel-Ende: Nebenknopf (Fassung 9, M9).
+      style: knopfStil(palette, 'neben'),
     }, (name ? t('dashboard.nextUpWeiter', { name }) : t('chapterView.zurUebersicht')), ' ›'));
 };
 

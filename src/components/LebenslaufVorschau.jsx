@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
+import { linkStil } from './PrimaryButton.jsx';
 
 // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9, Entwurf AC, Entscheid Stebler Studios 24.10.2026
 // «Lohn-Barometer & Lebenslauf-Vorschau»; gebaut Abnahme 25.10.2026). Eine ruhige Papierkarte nur aus dem, was
@@ -56,7 +57,8 @@ export const LebenslaufVorschau = ({ palette, t, ausbildung, allData, onNavigate
     h(LebenslaufBlatt, { palette, inhalt }),
     onNavigate && h('button', {
       type: 'button', className: 'mp-link', onClick: () => onNavigate('cv'),
-      style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, fontWeight: weight.medium, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
+      // Fassung 9 (M2): echter Bedienknopf, führt nur zum Lebenslauf → Link. Das Blatt (Druckbild) bleibt.
+      style: { ...linkStil(palette), marginTop: space.sm + 'px', minHeight: '44px', fontSize: text.sm },
     }, t('lebenslaufVorschau.erstellen'), ' ›'),
     h('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, t('lebenslaufVorschau.woher'))
   );

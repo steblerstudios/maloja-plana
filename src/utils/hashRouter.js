@@ -84,6 +84,10 @@ export const UMLEITUNGEN = {
   // F7-A5 (27.10.2026): «Zusatzversicherung wechseln» ist der Weg «Zusatz» in «Krankenkasse wechseln».
   // Die Sprungmarke ist der Wahlknopf der Weiche (KVGWechsel.jsx ZUSATZ_ANKER) — springeZuAnker wählt ihn.
   zusatzwechsel: { view: 'kvgwechsel', chapterIndex: null, anker: 'mp-kvg-zusatz' },
+  // Seitenlandkarte Z2 (05.11.2026): die Benachrichtigungen sind ein Abschnitt der Einstellungen.
+  // Sprungmarke = BENACHRICHTIGUNGEN_ANKER in NotificationSettings.jsx, hier als Literal, weil die
+  // Einstellungen erst bei Bedarf laden (Wächter: benachrichtigungenUmleitung.test.js).
+  notifications: { view: 'settings', chapterIndex: null, anker: 'mp-benachrichtigungen' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
@@ -131,10 +135,14 @@ export function parseHash(hash = window.location.hash) {
 
   if (view === 'chapter' && parts[1] !== undefined) {
     const idx = parseInt(parts[1], 10);
-    if (!isNaN(idx) && idx >= 0 && idx <= 20) { // reasonable bounds
+    if (!isNaN(idx) && idx >= 0 && idx < CHAPTER_KEYS.length) {
       return { view: 'chapter', chapterIndex: idx };
     }
-    return null; // malformed chapter index
+    // Ein Kapitel, das es nicht gibt (#/chapter/7 bei Kapiteln 0–6, oder keine Zahl): zur Übersicht,
+    // und die Adresse wird nachgeführt (`ersetzen`). Vorher zeigte main.jsx still das letzte Kapitel
+    // und die falsche Adresse blieb stehen (Seitenlandkarte V1, 05.11.2026; Wächter:
+    // kapitelAdresseGrenze.test.js).
+    return { view: 'dashboard', chapterIndex: null, ersetzen: true };
   }
 
   return { view, chapterIndex: null };

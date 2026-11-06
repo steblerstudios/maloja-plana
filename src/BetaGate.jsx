@@ -3,7 +3,7 @@ import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 // Dieselbe Landschaft wie auf der Übersicht (BergLandschaft) — kein zweites Bild.
 import landschaft from './assets/berge/landschaft.webp?url';
@@ -19,6 +19,8 @@ const STORAGE_KEY = 'or5_beta_access';
 const ERKLAERSEITEN = [
   ['/was-steht-mir-zu/', 'Was steht mir zu?'],
   ['/praemienverbilligung/', 'Prämienverbilligung'],
+  // Seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber hier nicht.
+  ['/krankenkasse/', 'Krankenkasse'],
   ['/sozialhilfe/', 'Sozialhilfe'],
   ['/steuern/', 'Steuern'],
 ];
@@ -199,7 +201,8 @@ export const BetaGate = ({ children }) => {
       // K7 · der ruhige zweite Weg: Beispiel ansehen, ohne Code (nichts wird gespeichert).
       React.createElement('button', {
         type: 'button', onClick: startDemo, disabled: !!demo,
-        style: { ...ruhigerKnopf, background: 'transparent', color: palette.text, border: '1px solid ' + palette.border },
+        // Der zweite Weg: Nebenknopf (Fassung 9).
+        style: { ...knopfStil(palette, 'neben'), ...ruhigerKnopf },
       }, t('beta.demoEnter')),
       // „Einfache Ansicht"-Umschalter (Icon-Modus + Vorlesen) — direkt am Einstieg.
       React.createElement('button', {
@@ -242,11 +245,7 @@ export const BetaGate = ({ children }) => {
       React.createElement('button', {
         type: 'button',
         onClick: () => setLegalSection('privacy'),
-        style: {
-          marginTop: space.md, background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
-          textDecoration: 'underline', padding: '4px',
-        }
+        style: { ...linkStil(palette), marginTop: space.md, fontSize: text.xs, padding: '4px' }
       }, t('beta.legalLink')),
       // Melde-Weg VOR dem Gate. Bis 23.09.2026 führte von hier aus nur der
       // Rechtliches-Link zur Adresse im Impressum — wer ohne Code kam und einen Fehler

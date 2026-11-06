@@ -5,6 +5,8 @@ import { calculateIPV, ipvJahreseinkommen, preloadPLZ } from '../cantonalData.js
 import { rohesEinkommenJahr, einkommenJahr, SAEULE_3A } from '../kantonsModell.js';
 import { steuerEingabenAusDaten } from '../../data/kantonaleSteuerdaten.js';
 import { jahreslohnAusProfil } from '../../utils/jahreslohnAusProfil.js';
+import { nettoMonatAusProfil } from '../../utils/nettoAusProfil.js';
+import { hauptlohnMonate } from '../../utils/dreizehnter.js';
 import { pegelState } from '../../data/pegel.js';
 import { kantoneBelegtSimulieren, musterKanton } from './ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../../PremiumSubsidy.jsx';
@@ -57,7 +59,10 @@ describe('IPV-Jahreseinkommen mit und ohne 13. Monatslohn', () => {
       const data = { basis: {}, finanzen: f };
       const steuer = steuerEingabenAusDaten(data).nettolohnJahr;
       expect(rohesEinkommenJahr(f)).toBe(steuer);
-      expect(ipvJahreseinkommen(data)).toBe(steuer);
+      // Die IPV rechnet mit netto (seit 04.11.2026, ipvBruttoBasis.test.js): ein brutto erfasster Lohn wird
+      // dort erst umgerechnet. Die 13.-Regel ist dieselbe — verglichen mit demselben Betrag, als netto erfasst.
+      expect(ipvJahreseinkommen({ ...data, finanzen: { ...f, incomeType: 'netto' } })).toBe(steuer);
+      expect(ipvJahreseinkommen(data)).toBeCloseTo(nettoMonatAusProfil(4000, 'brutto', {}).netto * hauptlohnMonate(dreizehnter) + nettoMonatAusProfil(500, undefined, {}).netto * 12, 6);
       expect(Number(jahreslohnAusProfil(f))).toBe(steuer - 500 * 12);
     },
   );
@@ -110,9 +115,9 @@ describe('calculateIPV in den Kantonsmodulen', () => {
     const offen = calculateIPV(profil(canton, plz, city, 2160));
     const nein = calculateIPV(profil(canton, plz, city, 2160, NEIN));
     expect(offen.annual).toBe(nein.annual);
-    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false });
-    expect(nein.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
-    expect(calculateIPV(profil(canton, plz, city, 2160, JA)).annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
+    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false, ausBrutto: false });
+    expect(nein.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false, ausBrutto: false });
+    expect(calculateIPV(profil(canton, plz, city, 2160, JA)).annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false, ausBrutto: false });
   });
 
   it('der IPV-Rechner zeigt die Annahme nur bei offener Frage', () => {
@@ -143,7 +148,7 @@ describe('calculateIPV in einem Muster-Kanton (Beleg simuliert)', () => {
       expect(ipvJahreseinkommen(paar)).toBe(2160 * 13 + 1000 * 12);
       const r = calculateIPV(paar);
       expect(r.eligible).toBe(true);
-      expect(r.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: true });
+      expect(r.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: true, ausBrutto: false });
       expect(calculateIPV(mit13).annahmen.partnerOhneDreizehnten).toBe(false);
     } finally { zurueck(); }
   });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PanelTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
@@ -152,23 +153,12 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
     hasSections && React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: vorschau ? 0 : '20px' } },
       React.createElement('button', {
         onClick: () => setVorschau('druck'),
-        style: {
-          flex: 1, padding: '12px',
-          background: palette.sand, color: palette.onSand, border: 'none',
-          borderRadius: radius.sm, cursor: 'pointer',
-          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-          letterSpacing: '0.2px',
-        }
-      }, t('behoerdenDossier.printAction')),
+        // Fassung 9 (S1): Drucken ist der Hauptknopf, die Dossier-Datei der Nebenknopf.
+        style: { ...knopfStil(palette, 'haupt'), flex: 1, padding: '12px' },
+      }, hinweisZeichen('drucker', 16), t('behoerdenDossier.printAction')),
       React.createElement('button', {
         onClick: () => setVorschau('json'),
-        style: {
-          flex: 1, padding: '12px',
-          background: palette.sageBtn, color: '#fff', border: 'none',
-          borderRadius: radius.sm, cursor: 'pointer',
-          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-          letterSpacing: '0.2px',
-        }
+        style: { ...knopfStil(palette, 'neben'), flex: 1, padding: '12px' },
       }, t('behoerdenDossier.exportJSON'))
     ),
     hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },

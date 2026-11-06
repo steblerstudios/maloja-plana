@@ -4,6 +4,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 import { getNotfallDossierPreview } from './dossierGenerator.js';
 import { getFullName } from './config/constants.js';
 import { hinweisZeichen } from './IconSystem.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { Brotkrume } from './components/Brotkrume.jsx';
 
@@ -81,9 +82,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     readLabel: { color: palette.mid },
     readValue: { color: palette.text, fontWeight: weight.medium, textAlign: 'right' },
     locBtn: {
-      marginTop: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
-      background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-      padding: '6px 12px', fontSize: text.sm, color: palette.text,
+      ...knopfStil(palette, 'neben'), marginTop: space.sm + 'px', padding: '6px 12px',
       minHeight: '44px', // R9: Standort-Knopf vorher ~30 px
     },
     locResult: { marginTop: space.sm + 'px', padding: '10px 14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },

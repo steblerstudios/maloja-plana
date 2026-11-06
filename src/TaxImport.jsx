@@ -3,7 +3,7 @@ import { PanelTitle } from './components/Heading.jsx';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil } from './components/PrimaryButton.jsx';
 import { betrag } from './utils/geld.js';
 
 // Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung. Seit F7-L8 (31.10.2026) ein
@@ -76,7 +76,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('taxImport.fileTypes'))
         ),
 
-        importing && React.createElement('div', { role: 'status', style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('taxImport.importing')),
+        importing && React.createElement('div', { role: 'status', style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('taxImport.importing')),
         importError && React.createElement('div', { role: 'alert', style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, hinweisZeichen('kreuz'), importError),
 
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm, marginTop: space.sm } },
@@ -97,16 +97,16 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, vorlaeuf
             ? React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, padding: '20px 0' } }, t('taxImport.nothingFound'))
             : React.createElement('div', null,
                 preview.applied.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
-                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs } }, t('taxImport.willFill')),
+                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, t('taxImport.willFill')),
                   preview.applied.map(f => fieldRow(f, 'fill'))
                 ),
                 preview.kept.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
-                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs } }, t('taxImport.willKeep')),
+                  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, t('taxImport.willKeep')),
                   preview.kept.map(f => fieldRow(f, 'keep'))
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },
                   preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
-                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { flex: 1, minHeight: '44px', padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
+                  React.createElement('button', { type: 'button', onClick: () => { setPreview(null); dateiRef.current?.focus(); }, style: { ...knopfStil(palette, 'neben'), flex: 1 } }, t('common.cancel'))
                 )
               )
         ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },

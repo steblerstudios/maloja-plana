@@ -42,11 +42,19 @@ ein Sage-Wert — das war der **Text** im Hellmodus bzw. nur der Hellmodus.*
 | Hintergrund | `#F2F2F0` | `#22211F` | Seite (warmer Stein / Anthrazit) |
 | Surface | `#FAFAF8` | `#2B2A26` | Cards, erhöhte Flächen |
 | Text | `#24262A` | `#E6E3DC` | Fliesstext (dunkel: Warmweiss) |
-| **Sage** | `#5A7868` | `#7E9F8C` | **Primärfarbe** — Buttons, Links, Erfolg, «weiter/sicher» |
+| **Gold / Sand** | `#C4A06A` | `#C4A06A` | **Handeln** — Hauptknopf (gefüllt, Schrift `onSand`), Nebenknopf und Links (Rand/Schrift `sandDeep`), gewählte Option, Fokusring; Berg in der Bildmarke |
+| **Sage** | `#5A7868` | `#7E9F8C` | **Gut, erledigt** — gespeichert, im Rahmen, Anspruch möglich, «sicher» |
 | Salbei der Marke | — | `#8FB0A0` | Bildmarke (Weg/Haus), im Code `sageDeep` |
-| **Gold / Sand** | `#C4A870` | `#C4A870` | **Akzent** — Berg in der Bildmarke, Highlights, Fokusring (dunkel) |
-| Rose | `#B87070` | `#B87070` | Warnung, Fehler (Text: `roseDeep`) |
-| Sky | `#6E90B0` | `#6E90B0` | Info, sekundäre Links (Text: `skyDeep`) |
+| Sky | `#6E90B0` | `#6E90B0` | **Informieren** — Hinweise und Fristen (Text: `skyDeep`) |
+| Rose | `#B87070` | `#B87070` | **Warnen** — überfällig, Fehler, Gefahr-Knopf mit rotem Rand (Text: `roseDeep`) |
+
+> **Farbrollen seit Fassung 9** (Stebler Studios, 05.11.2026, Variante B «Ja, so», nach
+> Vergleich in Hell und Dunkel). Bis dahin stand hier Sage als Farbe für Buttons und Links,
+> Gold als Akzent; der Code folgte dem nie ganz (`PrimaryButton` war seit 07.07. Sand).
+> Gemessen: Sand hebt sich im Dunkeln stark ab (5.9:1 zur Fläche), im Hellen schwach
+> (2.2:1), die Schrift darauf trägt 6.15:1. Knopfarten: Hauptknopf gefüllt (einer je Seite),
+> Nebenknopf leer mit Rand, Gefahr mit rotem Rand, Link unterstrichen.
+> In Diagrammen bleibt Gold «die finanziell engere Seite» (`farb-und-daten-system.md`).
 
 Die Lese-Varianten für Text (`…Deep`) und die Farbenblind-Palette stehen mit Kontrastwerten
 in `constants.js` — dort ist die Quelle, hier nur die Übersicht.
@@ -55,6 +63,13 @@ in `constants.js` — dort ist die Quelle, hier nur die Übersicht.
 jeder Kultur; der warme Unterton verhindert «kalte Behörde». Kein Farbton schliesst eine Kultur
 aus. Kontrast-Paare müssen WCAG AA erfüllen (Light **und** Dark). Herleitung + verworfene
 Paletten: [`brand-identity.md` §1](brand-identity.md).
+
+**Links im Text sind unterstrichen, nie nur farbig** (WCAG 1.4.1, 05.11.2026). Eine Linkfarbe
+bräuchte 3:1 gegen den umgebenden Text; `skyDeep` hat gegen Fliesstext nur 2.68:1 (hell) und
+1.94:1 (dunkel). Darum: dünne Unterstreichung (1px, Abstand 2px) im Ruhezustand, beim Überfahren
+2px, die Farbe wechselt nicht. Ohne Unterstreichung nur, wo die Form den Link trägt: Knopf,
+Wortmarke, Listen und Inhaltsverzeichnisse, in denen jeder Eintrag ein Link ist. Wächter:
+`src/__tests__/seitenStilA11y.test.js` (Erlaubnisliste).
 
 ---
 
@@ -153,7 +168,7 @@ brauchen zwei Varianten (`{ sie, du }`) — Labels/Substantive/Buttons bleiben g
 
 | Sprache | Formell (Default) | Informell | Toggle aktiv |
 |---------|-------------------|-----------|:---:|
-| **DE** | Sie | Du | ✅ |
+| **DE** | Sie | du (klein, seit Fassung 9) | ✅ |
 | **IT** | Lei | tu | ✅ |
 | **RM** | Vus | ti | ✅ ⚠️ |
 | **FR** | vous | — | nur vous |
@@ -197,11 +212,44 @@ Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Sp
 `tokens.css`). React nutzt Inline-Styles, daher importieren Komponenten diese Konstanten.
 
 - **Spacing** (4px-Grid): `2xs 2 · xs 4 · sm 8 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`
-- **Radius:** `sm 6 · md 10 · lg 16 · xl 24 · full 9999`
+- **Radius:** `hair 2 · xs 4 · sm 6 · md 10 · lg 16 · xl 24 · full 9999` — `hair` für feine
+  Balken und Markierungen, `xs` für kleine Marken und Knöpfe in dichten Tabellen, `sm` ist der
+  Normalfall (auch Knöpfe), `full` für Pillen und Kreise. *(hair/xs nachgetragen 06.11.2026 — standen
+  im Code, fehlten hier.)*
 - **Shadow** (subtil): `sm` bis `xl` mit `rgba(0,0,0,0.06…0.12)`
 - **Motion:** Easing `cubic-bezier(0.4,0,0.2,1)` · Dauer `fast 150 · normal 250 · slow 400 ·
   cinematic 600` (ms)
 - **Font-Stack:** Body `'Lexend', sans-serif` · Display `'Hanken Grotesk', sans-serif`
+
+### Knöpfe (seit Fassung 9, 05.11.2026)
+
+Eine Quelle: [`src/components/PrimaryButton.jsx`](../../src/components/PrimaryButton.jsx)
+(`knopfStil`, `linkStil`, `auswahlStil`, `PrimaryButton`, `SecondaryButton`, `DangerButton`).
+Wächter: `src/__tests__/knopfarten.test.js`.
+
+| Art | Aussehen | Wann |
+|---|---|---|
+| **Hauptknopf** | gefüllt Sand, Schrift `onSand` | der eine nächste Schritt — **einer je Seite oder Dialog** |
+| **Nebenknopf** | leer, Rand + Schrift `sandDeep` | zurück, abbrechen, später, zweite Wahl |
+| **Gefahr** | leer, Rand + Schrift `roseDeep`; gefüllt nur im letzten Bestätigungsschritt | nur wenn etwas verloren geht |
+| **Leise** | goldener Text ohne Rand | Aufklapper («Mehr zeigen ›», «ändern ›») |
+| **Link** | goldener Text, immer unterstrichen | führt woanders hin, löst nichts aus |
+| **Auswahl** | gewählt Sand gefüllt, sonst Rand `border` | Reiter, Segmente, Chips, Schalter |
+
+- **Rundung:** alle Knöpfe und Auswahlen **6 px** (`KNOPF_RADIUS` = `radius.sm`). Kreise nur für
+  reine Symbolknöpfe ohne Text (Plus in der Leiste, runde Icon-Knöpfe). Keine Pillen an Textknöpfen.
+- **Mindesthöhe** 44 px.
+- **Ausnahme:** der rot gefüllte Ernstfall-Knopf im Kapitel Notfall (Notruf).
+- Karten und Listenzeilen, die woanders hinführen, bleiben Karten (kein Gold als Fläche).
+- **Gold erst beim Festhalten** (E2, Stebler Studios 06.11.2026, «Ja, so übernehmen»): Ein Knopf,
+  der nur ein Formular oder einen Bereich öffnet («+ Erinnerung hinzufügen»), ist **Nebenknopf**.
+  Hauptknopf ist erst der Schritt, der wirklich speichert oder sendet. Knöpfe, die nur in einer
+  Ansicht springen («Heute» im Kalender), sind **Auswahl**. Wächter: `knopfarten.test.js`
+  («Öffner sind nie Hauptknopf»). Herleitung: `docs/design/gesamtbild-2026-11/GESAMTBILD.md` §3b.
+- Kleine × zum Löschen in Listen bleiben graue Symbole mit Ansage (`aria-label`).
+
+Entschieden von Stebler Studios am 05.11.2026 (Knopf-Inventur, 20 Entscheide, «setze alle
+Empfehlungen um und beachte die Rundungen der Knöpfe»).
 
 ---
 
@@ -210,8 +258,13 @@ Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Sp
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;
   Inhalte werden eingeklappt, nicht entfernt.
 - **Ruhige Listen statt KPI-Kacheln** (Muster: ChapterView-Versicherungsübersicht).
-- **Zurückhaltende Bewegung:** Hover-Scale max. ~1.04 (kein `1.12`); keine Token-Ausreisser
-  (hartcodierte px/Farben vermeiden).
+- **Zurückhaltende Bewegung:** Vergrösserung max. ~1.04 — beim Darüberfahren **und** in
+  Rückmelde-Animationen (Haken, Stempel, Aufspringen); kein `1.12`. Zeiten und Kurve nur aus
+  `duration`/`ease`, keine festen `ms`/`s` (hartcodierte px/Farben ebenso vermeiden). Einzige
+  bewusste Ausnahme: das Atmen des Ladezeichens (`mp-breathe`, 2.6 s Schleife).
+- **Weniger Bewegung gilt für beide Schalter:** die Systemeinstellung *und* den App-Schalter
+  (`data-reduce-motion`). Animationen aus JavaScript (`el.animate`) erreicht die CSS-Regel nicht —
+  sie prüfen beides selbst. *(Nachgeführt 06.11.2026.)*
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).

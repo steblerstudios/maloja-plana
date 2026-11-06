@@ -1,4 +1,5 @@
 import React from 'react';
+import { einnahmenErfasst } from '../utils/unterstuetzungseinheit.js';
 import Icons from '../IconKern.jsx';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { text, weight, leading, space, radius, ease, duration } from '../config/tokens.js';
@@ -7,9 +8,9 @@ import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf, ladeIPVModelle } from '../config/cantonalData.js';
 import { zahl, betrag } from '../utils/geld.js';
-import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 import { gblStand } from '../data/skosGrundbedarf.js';
+import { linkStil } from './PrimaryButton.jsx';
 
 // Leistungsliste des Dashboard-Blocks «Was steht mir zu?» (seit 25.09.2026 eigene Datei,
 // lazy geladen — vorher in Dashboard.jsx). Name QuickCheck bleibt: Tests und Übergabe-Logik
@@ -27,9 +28,6 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // Brutto oder netto (EinkommenFeld); gerechnet wird mit netto.
   const e = useEinkommen(data);
   const income = e.nettoMonat;
-  // Mit dem 13. Monatslohn aus dem Profil — dieselbe Regel wie calculateIPV (utils/dreizehnter.js),
-  // denn `probe` trägt `dreizehnter` mit und die IPV rechnet damit.
-  const annual = income * hauptlohnMonate(data?.finanzen?.dreizehnter);
   const canton = data?.basis?.canton;
   const fmt = (v) => zahl(v, { hoechstens: 2 });
 
@@ -41,13 +39,14 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // calculateSozialhilfe), damit Liste und Rechner nie widersprechen.
   // incomeType 'netto': das Feld hat schon umgerechnet — calculateSozialhilfe soll nicht nochmals.
   const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income, incomeType: 'netto' } };
+  const erfasst = einnahmenErfasst(probe.finanzen); // Lohn oder Rente, wie die Wege
   const found = {};
   let sozPegel = null;
   let knappSoz = false;
   let ipvLage = null;
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
-    const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
+    const ipv = (erfasst && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
     // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
     if (ipv && ipv.anspruchMoeglich) found.ipv = {
@@ -67,18 +66,19 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     // Rechner eingeben», während das Kapitel Finanzen aus denselben Daten «Einkommen über Grenze (CHF …)»
     // zeigte. Jetzt dieselbe sachliche Lage wie im Kapitel (FinanzAuswertung ipvKarte), kein Urteil.
     // Ohne amtlich belegten Kanton (belegt === false) bleibt der allgemeine Untertitel.
-    else if (ipv && ipv.belegt !== false && ipv.canton) ipvLage = ipv.cantonData?.maxIncome != null
-      ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
-      : t(ipv.noteKey, ipv.noteParams);
+    else if (ipv && ipv.belegt !== false && ipv.canton) ipvLage = t(ipv.noteKey, ipv.noteParams);
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
     // sonst wäre ein „Anspruch möglich" unehrlich.
     const rentContext = Number(data?.wohnen?.rentAmount || 0) > 0;
-    if (annual > 0 && rentContext) {
+    if (erfasst && rentContext) {
       const sh = calculateSozialhilfe(probe);
       // Knapp: ist das Netto nur geschätzt und liegt es nahe am Bedarf, kann die Schätzung kippen.
       knappSoz = e.geschaetzt && istKnapp(sh, e.ohneAlter);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
+      // Rente oder Einkommen nicht erfasst: kein Betrag, nur der Grund (wie data/anspruchWege.js).
+      if (sh?.einkommenFehlt) {
+        if (sh.wegOhneBetrag) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
+      } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
         detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
@@ -86,6 +86,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
           + (sh.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')
           + (sh.ansatzTiefer ? ' · ' + t('pegel.ansatzTiefer') : '')
           + (sh.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
+          + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '')
           + (sh.vorBeitraegen ? ' · ' + t('pegel.vorBeitraegen') : ''),
       };
       // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem
@@ -94,26 +95,27 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       else if (sh) sozPegel = {
         bedarf: sh.totalBedarf, einkommen: sh.income,
         // Freibetrag-Fall: offen statt «keine Aufstockung nötig» (wie pegel.js, Predeploy 25.09.2026).
-        detail: (sh.eligible ? t('pegel.vermoegen') : sh.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sh.anspruchOffen ? t('pegel.coveredOffen') : t('pegel.covered')) + (sh.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '') + (sh.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '') + (sh.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : ''),
+        detail: (sh.eligible ? t('pegel.vermoegen') : sh.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sh.anspruchOffen ? t(sh.offenText) + (sh.hinweise?.includes('pegel.vermoegen') ? ' ' + t('pegel.vermoegen') : '') : t('pegel.covered')) + (sh.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '') + (sh.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '') + (sh.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : ''),
       };
     }
     // EL (Predeploy 25.09.2026): nur im AHV-/IV-Renten-Kontext, qualitativ ohne Betrag — wie im
     // vollen Schnellcheck. Bis dahin fehlte sie hier, und der Kompass zählte anders als der Schnellcheck.
     // Nicht, solange die Einkommensart offen ist (sonst zählte ein leeres Feld als 0 Einkommen).
-    if (!e.offen && checkELEligibility(probe)?.eligible) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
+    // Seit 03.11.2026 ohne errechneten Anspruch: der Rentenbezug genügt, wie in data/anspruchWege.js.
+    if (!e.offen && checkELEligibility(probe)?.elPruefen) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
   } catch { /* Orientierung, nie blockierend */ }
 
   // Wie der volle Schnellcheck (Schnellcheck.jsx): bei Sozialhilfe steckt die IPV schon
   // im Bedarf — sie zählt dann nicht zusätzlich. Bis 25.09.2026 zählte das Dashboard
   // beide zusammen und zeigte damit mehr Entlastung als der Schnellcheck selbst.
-  const ipvSubsumed = !!found.soz && !!found.ipv && found.ipv.monthly > 0;
+  const ipvSubsumed = !!found.soz && found.soz.monthly > 0 && !!found.ipv && found.ipv.monthly > 0;
   const counted = ['ipv', 'soz'].filter(k => found[k] && found[k].monthly > 0 && !(ipvSubsumed && k === 'ipv'));
   const totalMonthly = counted.reduce((sum, k) => sum + found[k].monthly, 0);
   const maxMonthly = Math.max(0, ...counted.map(k => found[k].monthly));
 
   // Kompass-Peilung aus derselben Liste: was hier gefunden wird, zählt.
   const anzahlGefunden = Object.keys(found).length;
-  const kompass = kompassBearing({ hasIncome: annual > 0, benefitCount: anzahlGefunden });
+  const kompass = kompassBearing({ hasIncome: erfasst, benefitCount: anzahlGefunden });
 
   const leistungen = [
     { key: 'ipv', label: t('dashboard.quickCheckIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
@@ -151,7 +153,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
           f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
             : (l.key === 'soz' && sozPegel) ? sozPegel.detail : (l.key === 'ipv' && ipvLage) ? ipvLage : l.sub,
-          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.sandDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
+          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.skyDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
       ),
       // Pegel: Balken = Einkommen, Strich = SKOS-Bedarf, gemeinsame Skala (das Grössere).
       // Neutral eingefärbt — es ist eine Lage, kein Betrag, der zusteht.
@@ -189,7 +191,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         },
       },
         React.createElement('span', { style: { minWidth: 0 } },
-          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('instrumente.kompass')),
+          React.createElement('span', { style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium } }, t('instrumente.kompass')),
           React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } },
             kompass.state === 'found'
               ? (anzahlGefunden === 1 ? t('instrumente.kompassFoundOne') : t('instrumente.kompassFound', { n: anzahlGefunden }))
@@ -215,10 +217,10 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('div', { style: { borderBottom: '1px solid ' + palette.border + '55' } }, leistungen.map(row)),
     React.createElement('div', {
       style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm, lineHeight: leading.relaxed }
-    }, annual > 0 ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome')),
+    }, erfasst ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome')),
     React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'kompass-weg', onClick: () => onNavigate('situationen'),
-      style: { minHeight: '44px', padding: 0, marginTop: space.xs + 'px', background: 'none', border: 'none', fontSize: text.sm, color: palette.sageDeep || palette.text, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' },
+      style: { ...linkStil(palette), minHeight: '44px', marginTop: space.xs + 'px', fontSize: text.sm, textAlign: 'left' },
     }, t('dashboard.anspruchTitle'), ' ›')
   );
 };

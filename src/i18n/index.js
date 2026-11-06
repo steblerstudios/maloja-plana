@@ -24,21 +24,43 @@ function applyHtmlLang(lang) {
   document.documentElement.dir = isRTL(lang) ? 'rtl' : 'ltr';
 }
 
+// Je Sprache der Kern: die Texte des Startbündels, vor dem ersten Bild. Der Rest kommt aus
+// rest.js nach. Siehe scripts/i18nKern.mjs.
 const loaders = {
-  en: () => import('./en.js'),
-  de: () => import('./de.js'),
-  fr: () => import('./fr.js'),
-  it: () => import('./it.js'),
-  rm: () => import('./rm.js'),
+  en: () => import('virtual:sprache/en-kern'),
+  de: () => import('virtual:sprache/de-kern'),
+  fr: () => import('virtual:sprache/fr-kern'),
+  it: () => import('virtual:sprache/it-kern'),
+  rm: () => import('virtual:sprache/rm-kern'),
 };
 
 const cache = {};
+const vollstaendig = new Set();
 
-async function loadTranslation(lang) {
+async function loadKern(lang) {
   if (cache[lang]) return cache[lang];
   const mod = await loaders[lang]();
-  cache[lang] = mod.default;
+  if (!cache[lang]) cache[lang] = mod.default;
   return cache[lang];
+}
+
+async function loadTranslation(lang) {
+  if (vollstaendig.has(lang)) return cache[lang];
+  const [kern, { mitRest }] = await Promise.all([loaders[lang](), import('./rest.js')]);
+  cache[lang] = await mitRest(kern.default, lang);
+  vollstaendig.add(lang);
+  return cache[lang];
+}
+
+// Eine Sprache samt Rückfall-Sprache vollständig.
+const mitRueckfall = (lang) => Promise.all([...new Set([lang, FALLBACK_LANG])].map(loadTranslation));
+
+export function texteBereit() {
+  return mitRueckfall(detectLanguage());
+}
+
+export function lazyMitTexten(lade) {
+  return React.lazy(() => Promise.all([lade(), texteBereit()]).then(([modul]) => modul));
 }
 
 // Reine, testbare Sprachauswahl: Vorrang URL → gespeichert → Browser → Default.
@@ -65,11 +87,13 @@ function resolve(obj, path) {
 }
 
 // Exportiert für Unit-Tests (reine Funktion: Translations-Objekt rein, t() raus).
-export function createT(translations, lang, anrede) {
+// `unvollstaendig`: der Rest der Sprache kommt noch. Ein Schlüssel, der dann fehlt, bleibt
+// kurz leer, statt roh zu erscheinen.
+export function createT(translations, lang, anrede, unvollstaendig = false) {
   return function t(key, params) {
     let val = resolve(translations[lang], key);
     if (val === undefined && lang !== FALLBACK_LANG) val = resolve(translations[FALLBACK_LANG], key);
-    if (val === undefined) return key;
+    if (val === undefined) return unvollstaendig ? '' : key;
 
     // Anrede-Varianten: { sie: '…', du: '…' } → passende Form wählen (Standard: Sie)
     if (val && typeof val === 'object' && typeof val.sie === 'string' && typeof val.du === 'string') {
@@ -285,12 +309,22 @@ export function I18nProvider({ children }) {
       setLangState(l);
       if (opts && opts.persist) persistLanguage(l);
     };
+    // Nach dem ersten Bild den Rest holen. Scheitert das, einmal neu laden wie beim Start (K60).
+    const restHolen = (l) => {
+      mitRueckfall(l).then(
+        () => { if (!gestoppt) setTranslations({ ...cache }); },
+        () => { if (!gestoppt) neuLadenEinmal({ storage: sessionStore(), reload: () => window.location.reload() }); },
+      );
+    };
+    let gestoppt = false;
     const request = createLanguageSwitch({
-      load: loadTranslation,
+      load: (l) => (langRef.current === null ? loadKern(l) : loadTranslation(l)),
       onReady: (l, opts) => {
-        if (langRef.current === null) neuLadenMarkeLoeschen(sessionStore());
+        const erstesBild = langRef.current === null;
+        if (erstesBild) neuLadenMarkeLoeschen(sessionStore());
         zeige(l, opts);
         anzeige.fertig(l);
+        if (erstesBild) restHolen(l);
       },
       onError: (l) => {
         // Später (K58): Rückfall auf Deutsch (nicht gespeichert — beim nächsten
@@ -313,7 +347,7 @@ export function I18nProvider({ children }) {
     });
     switchRef.current = request;
     request(langRef.current || detectLanguage());
-    return () => { request.stop(); anzeige.stop(); };
+    return () => { gestoppt = true; request.stop(); anzeige.stop(); };
   }, []);
 
   const setLanguage = useCallback((newLang) => {
@@ -343,7 +377,7 @@ export function I18nProvider({ children }) {
   }, [lang]);
 
   // lang ist hier immer geladen (onReady setzt beides zusammen).
-  const t = useMemo(() => createT(translations, lang, anrede), [lang, translations, anrede]);
+  const t = useMemo(() => createT(translations, lang, anrede, !vollstaendig.has(lang)), [lang, translations, anrede]);
 
   const value = { t, lang, setLanguage, anrede, setAnrede, supportedLanguages: SUPPORTED };
 

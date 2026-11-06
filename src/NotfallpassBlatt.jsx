@@ -5,6 +5,7 @@ import { getNotfallDossierPreview } from './dossierGenerator.js';
 import { notfallpassFelder, inZwischenablage } from './utils/notfallpass.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { hinweisZeichen } from './IconSystem.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Notfallpass vorbereiten — der zweite Ausgang der Notfall-Pflege (Entscheid 22.09.2026).
@@ -43,7 +44,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
       borderRadius: radius.sm, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
     },
     gruppe: { marginTop: space.md + 'px' },
-    gruppeTitel: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },
+    gruppeTitel: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },
     liste: { listStyle: 'none', margin: 0, padding: 0, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface },
     zeile: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: '10px 14px' },
     zeileLinie: { borderTop: '1px solid ' + palette.border },
@@ -51,11 +52,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     label: { fontSize: text.xs, color: palette.mid, marginBottom: '2px' },
     wert: { fontSize: text.body, color: palette.text, fontWeight: weight.medium, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', userSelect: 'text' },
     offen: { fontSize: text.sm, color: palette.mid, fontStyle: 'italic' },
-    knopf: {
-      flexShrink: 0, cursor: 'pointer', fontFamily: 'inherit', background: 'none',
-      border: '1px solid ' + palette.border, borderRadius: radius.sm, minHeight: '44px',
-      padding: '6px 12px', fontSize: text.sm, color: palette.text,
-    },
+    knopf: { ...knopfStil(palette, 'neben'), flexShrink: 0, minHeight: '44px', padding: '6px 12px' },
     knopfOk: { color: palette.sageDeep || palette.text },
     schritte: { margin: space.sm + 'px 0 0 0', paddingLeft: '20px' },
     schritt: { marginBottom: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed },

@@ -5,12 +5,14 @@
 import { zahltBeitraegeSelbst } from '../utils/monatsrechnung.js';
 import { hatAusweisFNS } from '../data/ausweis.js';
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
+import { unterstuetzungseinheit, wohnkostenAnteil, vermoegensFelder, vermoegenSumme, kinderEinnahmenOffen, verfuegbarUeberFreibetrag, bvgHerausloesen } from '../utils/unterstuetzungseinheit.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
+import { renteOhneBetrag, rentenMonat, frankenSumme } from '../utils/unterstuetzungseinheit.js';
 import { sozialhilfeBilanz, istErwerbstaetig, freibetragGilt, KNAPP_OBEN } from '../data/sozialhilfeKern.js';
-import { grundbedarf as skosGrundbedarf, gblStand } from '../data/skosGrundbedarf.js';
-import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
+import { grundbedarf as skosGrundbedarf, gblStand, grundbedarfNachWohnform } from '../data/skosGrundbedarf.js';
+import { nettoMonatAusProfil, alterUndRentenalter } from '../utils/nettoAusProfil.js';
 
 // PLZ → Kanton/Gemeinde, Kantonscodes und -namen liegen seit 28.09.2026 in kantonPLZ.js (klein, für
 // die Startdatei). Hier nur weitergereicht, damit bestehende Importe gültig bleiben.
@@ -294,12 +296,19 @@ export function getGrundbedarf(householdSize) {
 // Bedarf ↔ Einkommen rechnet data/sozialhilfeKern.js, derselbe Kern wie im ausführlichen Rechner
 // (dort stehen die Quellen). Die Schnellrechnung bringt nur mit, was das Profil hergibt:
 // - Erwerbseinkommen = Monatslohn + Nebenerwerb. Freibetrag (SKOS-RL D.2) nur bei Erwerbstätigkeit.
-//   Der Lohn der Partnerin oder des Partners zählt als andere Einkunft ohne Freibetrag, wie im Rechner.
+// - Andere Einkünfte ohne Freibetrag, wie im Rechner: Familienzulagen und Unterhaltsbeiträge (SKOS-RL
+//   D.1 Erl. a, Version 1.1.2026; bis 02.11.2026 fehlten sie hier) und der Partnerlohn bei Ehe oder
+//   eingetragener Partnerschaft. Einnahmen von Minderjährigen zählen laut D.1 Abs. 2 nur bis zu deren
+//   Anteil am Budget. Das kann die App nicht trennen: Sie rechnet alles an, die Lücke kann dann zu tief sein.
+// - Haushalt und Wohnkosten nach der Unterstützungseinheit (utils/unterstuetzungseinheit.js).
 // - Erwerbsunkosten (SKOS-RL C.6.3): das Profil hat dafür kein Feld, deshalb 0. Bei Erwerbstätigen
 //   ist der Bedarf also zu tief; `erwerbsunkostenOffen` sagt das der Anzeige, und im Rechner
 //   lassen sie sich eintragen.
 // - Eintritt vorsichtig ohne Freibetrag (ausser ZH/BS mit belegter Regel). `efbEntscheidet`: erst
 //   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
+
+export { renteOhneBetrag };
+
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
@@ -311,38 +320,65 @@ export function calculateSozialhilfe(data) {
   const selbst = zahltBeitraegeSelbst(data.finanzen);
   const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, selbst ? 'netto' : data.finanzen?.incomeType, data.basis);
   const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, data.finanzen?.sideIncomeType, data.basis);
-  const erwerbseinkommen = haupt.netto + neben.netto;
+  // Je Zeile auf Franken wie die anderen Einkünfte und der Rechner (Fachprüfung 65fa06d4: Lohn 2100.50 gab 905 gegen 904).
+  const erwerbseinkommen = frankenSumme([haupt.netto, neben.netto]);
   const einkommenGeschaetzt = haupt.geschaetzt || neben.geschaetzt;
   const erwerbstaetig = istErwerbstaetig(data.finanzen);
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
 
-  const grundbedarf = getGrundbedarf(householdSize);
-  // Die ganze erfasste Miete, ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
+  const einheit = unterstuetzungseinheit(data.basis);
+  const grundbedarf = grundbedarfNachWohnform(einheit.einheit, einheit.weiterePersonen, 'familienaehnlich');
+  // Die erfasste Miete (im geteilten Haushalt der Anteil), ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
   // (siehe oben). Die Anzeige sagt das, statt eine Zahl zu erfinden.
-  const effectiveRent = rent + utilities;
+  const effectiveRent = wohnkostenAnteil(rent + utilities, einheit);
   const effectiveKK = kkPremium;
 
   const ohneFreibetrag = erwerbstaetig && erwerbseinkommen > 0 && !freibetragGilt(data.finanzen);
+  // Renten aus dem Kapitel Finanzen zählen als Einnahme, nicht als Erwerb (utils/unterstuetzungseinheit.js).
+  // Je Zeile auf Franken, wie der Rechner (frankenSumme, utils/unterstuetzungseinheit.js).
+  const andereEinkuenfte = frankenSumme([data.finanzen?.familienzulagen, data.finanzen?.alimenteReceived, einheit.verheiratet ? hh.partnerIncome : 0]) + rentenMonat(data.finanzen);
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
-    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig: freibetragGilt(data.finanzen), freibetragUngewiss: ohneFreibetrag, kanton: canton,
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;
-  const deficit = bilanz.luecke;
+  const konkubinatBetragOffen = einheit.konkubinatMitLohn && (bilanz.luecke > 0 || bilanz.efbEntscheidet);
 
   // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
-  const vermoegen = Number(data.finanzen?.securitiesValue || 0) + Number(data.finanzen?.otherAssets || 0) + Number(data.finanzen?.savingsAccount || 0);
-  const minorChildren = hh.children.filter(c => (Number(c.age) || 0) < 18).length;
-  const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, hh.adults, minorChildren);
+  const vermoegenAngaben = vermoegensFelder(data.finanzen, data.basis);
+  // Eine Rundungsregel mit Blatt, JSON und Rechner (utils/unterstuetzungseinheit.js).
+  const vermoegen = vermoegenSumme(vermoegenAngaben.felder);
+  const minorChildren = einheit.kinder;
+  const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, einheit.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
+  // Über dem Freibetrag: weder Betrag noch Nein. SKOS-RL D.3.1 Abs. 2 und 3: Ausnahmen, Frist zur Verwertung, in der
+  // Zwischenzeit Unterstützung. Deckt das Einkommen den Bedarf ohnehin, ist das Vermögen nicht der Grund.
+  const knapp = erwerbstaetig && erwerbseinkommen > 0 && bilanz.luecke <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN;
+  const vermoegenZuerst = !konkubinatBetragOffen && vermoegenUeberFreibetrag > 0 && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
+  // 2. Säule ab AHV-Vorbezug oder ganzer IV-Rente: kein Betrag, solange unbekannt ist, was ausbezahlt wird (D.3.3 Abs. 3 und 5).
+  // Der Satz steht nur, wo er einen fehlenden Betrag erklärt, auch neben «Rente noch nicht erfasst». Deckt der Lohn den
+  // Bedarf, schweigt er: Auf dem Blatt ans Amt wäre er sonst eine Aussage über die Person ohne Anlass (Rechtsprüfung).
+  const bvgOffen = bvgHerausloesen(data.finanzen, data.versicherungen, data.basis);
+  const bvgZuerst = !konkubinatBetragOffen && bvgOffen && (bilanz.luecke > 0 || bilanz.efbEntscheidet || knapp);
+  const betragOffen = konkubinatBetragOffen || vermoegenZuerst || bvgZuerst;
+  const deficit = betragOffen ? 0 : bilanz.luecke;
+  // Kein Einkommen erfasst: Die Rechnung läuft weiter (Schnellcheck rechnet mit Proben), aber Karte und Dossier nennen keinen
+  // Betrag aus einem leeren Feld (F8-S4). Dieselbe Regel wie im Rechner: Andere Einkünfte reichen nur bei einer Lage ohne Erwerb.
+  const feldLeer = (v) => v == null || String(v).trim() === '';
+  // Eine Rente zählt zu den Einnahmen (SKOS-RL D.1 Abs. 1, Version vom 1.1.2026), ist ihre Höhe nicht eingetragen:
+  // Mit IV-Bezug oder im Ruhestand nennen Karte und Dossier darum keinen Betrag (Fachprüfung 03.11.2026).
+  const renteFehlt = renteOhneBetrag(data.finanzen, data.basis);
+  const einkommenFehlt = renteFehlt || (feldLeer(data.finanzen?.monthlyIncome) && !(Number(data.finanzen?.sideIncome) > 0)
+    && !(data.finanzen?.employmentType && !erwerbstaetig && andereEinkuenfte > 0));
 
   // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
   const gbl = gblStand();
+  const offenText = konkubinatBetragOffen ? 'pegel.konkubinatBetragOffen' : vermoegenZuerst && !knapp ? 'pegel.vermoegen' : bvgZuerst && !knapp ? 'sh.bvgHerausloesen' : 'pegel.coveredOffen';
   return {
     grundbedarf,
     // F, N, S (Stebler Studios 01.11.2026: Zahl mit Hinweis): Der Ansatz liegt unter dem für Einheimische und ist kantonal
@@ -358,15 +394,40 @@ export function calculateSozialhilfe(data) {
     income,
     efb: bilanz.efb,
     anrechenbaresEinkommen: bilanz.anrechenbaresEinkommen,
-    efbEntscheidet: bilanz.efbEntscheidet,
+    efbEntscheidet: bilanz.efbEntscheidet && !betragOffen,
     // Einkommen aus brutto geschätzt (Anzeige: «≈ … (geschätzt)»).
     einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     ohneFreibetrag,
+    // Was die Rechnung offen lässt, als i18n-Schlüssel (utils/unterstuetzungseinheit.js): die Anzeigen sagen es.
+    hinweise: [...(vermoegenAngaben.durchIv ? ['sh.ivGanz3a'] : []), ...(bvgZuerst && (einkommenFehlt || offenText !== 'sh.bvgHerausloesen') ? ['sh.bvgHerausloesen'] : []), ...einheit.hinweise.filter((k) => !(konkubinatBetragOffen && k === 'pegel.konkubinatOffen')), ((konkubinatBetragOffen && vermoegenUeberFreibetrag > 0) || (vermoegenZuerst && knapp)) && 'pegel.vermoegen', kinderEinnahmenOffen(data.finanzen, einheit) && 'pegel.kinderEinnahmen', (haupt.offen || neben.offen) && 'pegel.lohnartOffen'].filter(Boolean),
+    einheit: einheit.einheit,
+    haushalt: einheit.haushalt,
     // Nur knapp über dem Bedarf ist das «offen»: Erwerbsunkosten erklären keine grosse Lücke.
-    anspruchOffen: erwerbstaetig && erwerbseinkommen > 0 && deficit <= 0 && totalBedarf > 0 && income / totalBedarf <= KNAPP_OBEN,
+    anspruchOffen: betragOffen || knapp,
+    konkubinatBetragOffen,
+    vermoegenZuerst,
+    // Kein Betrag zu nennen, auch keine 0: offen wegen Konkubinat, Vermögen oder knapp über dem Bedarf.
+    betragOffen: betragOffen || knapp,
+    // Bankguthaben und Wertpapiere über dem Freibetrag sind kurzfristig verfügbar (D.3.1 Abs. 1, Erl. a), nur Abs. 2 liesse eine Ausnahme
+    // zu. Wertgegenstände (Erl. c) und der Knapp-Fall bleiben «möglich», dort ist das Vermögen nicht die ganze Antwort.
+    offenTitel: !konkubinatBetragOffen && betragOffen && !knapp && verfuegbarUeberFreibetrag(data.finanzen, vermoegensfreibetrag) ? 'sh.vermoegenZuerstTitel' : 'dashboard.anspruchMoeglich',
+    offenText,
+    bvgOffen,
     deficit,
+    einkommenFehlt,
+    renteFehlt,
+    // Deckt das erfasste Einkommen den Bedarf nicht (oder entscheidet der Freibetrag)? Unabhängig von offen/knapp: Mit
+    // fehlender Rente gibt es nur dann einen Weg, denn die Rente kann das Einkommen nur erhöhen (Nachprüfung 0e9c094f).
+    bedarfUngedeckt: bilanz.luecke > 0 || bilanz.efbEntscheidet,
+    // Weg ohne Betrag mit dem Grund «Einkommen/Rente nicht erfasst»: Bedarf ungedeckt, und kein anderer Grund geht vor
+    // (Konkubinat, Vermögen über dem Freibetrag). Eine Bedingung für alle Anzeigen (Schlussprüfung 5d34f259).
+    wegOhneBetrag: einkommenFehlt && (bilanz.luecke > 0 || bilanz.efbEntscheidet) && !konkubinatBetragOffen && vermoegenUeberFreibetrag === 0,
+    // Nur für die Seite, nicht fürs Dossier: Eine Vermutung zur IV gehört nicht auf ein Blatt ans Amt (Rechtsprüfung 02.11.2026).
+    ivUnklar3a: (Number(data.finanzen?.ivRente) > 0 || data.finanzen?.employmentType === 'retired') && !data.finanzen?.ivBezug
+      && !vermoegenAngaben.mit3a && vermoegenUeberFreibetrag === 0 && !feldLeer(data.finanzen?.monthlyIncome) && (bilanz.luecke > 0 || bilanz.efbEntscheidet)
+      && vermoegen + vermoegenSumme([data.finanzen?.pension3aBalance]) > vermoegensfreibetrag,
     eligible: deficit > 0,
     // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
     // Mietzins-Limite, siehe oben). Jeder Leser setzt dann `sozialhilfe.mitGanzerMiete` dazu.
@@ -391,9 +452,31 @@ export function calculateSozialhilfe(data) {
 // sonst stünde der Pegel neben einer anderen Grenze-Rechnung).
 // 13. Monatslohn: dieselbe Regel wie im Steuerrechner und in den Kantonsmodulen (utils/dreizehnter.js),
 // nur für den Hauptlohn. Das Partnereinkommen bleibt ×12 — nach seinem 13. fragt die App nicht.
+// Renten ×12 wie in kantonsModell.js rohesEinkommenJahr, damit Pegel und Kantonsmodelle dasselbe Einkommen sehen.
 export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
-  return Number(data?.finanzen?.monthlyIncome || 0) * hauptlohnMonate(data?.finanzen?.dreizehnter)
-    + (Number(data?.finanzen?.sideIncome || 0) + (hh.partnerIncome || 0)) * 12;
+  const f = ipvFinanzenNetto(data).data?.finanzen;
+  return Number(f?.monthlyIncome || 0) * hauptlohnMonate(f?.dreizehnter)
+    + (Number(f?.sideIncome || 0) + (hh.partnerIncome || 0) + rentenMonat(f)) * 12;
+}
+
+// Die IPV rechnet mit dem NETTOLOHN (kantonsModell.js: «Netto ist was auf Ihrem Konto ankommt»).
+// Bis 04.11.2026 las keiner der beiden Einkommenswege `incomeType`: ein brutto erfasster Lohn (z. B.
+// aus dem Steuerimport, taxImport.js) zählte als netto — massgebendes Einkommen rund 8–10 % zu hoch,
+// Verbilligung zu tief (Nachrechnung Beispielhaushalte K1). Jetzt dieselbe Regel wie die Sozialhilfe
+// (nettoMonatAusProfil): brutto → Netto-Richtwert, Selbständige wie eingetragen, der Nebenerwerb mit
+// seiner eigenen Art. Danach steht beides auf 'netto' — ein zweiter Aufruf rechnet nicht nochmals um.
+// Offen: das Partnereinkommen (getHouseholdInfo) hat keine Art und zählt weiter, wie erfasst.
+export function ipvFinanzenNetto(data) {
+  const f = data?.finanzen;
+  if (!f) return { data, geschaetzt: false };
+  const selbst = zahltBeitraegeSelbst(f);
+  const haupt = nettoMonatAusProfil(f.monthlyIncome, selbst ? 'netto' : f.incomeType, data.basis);
+  const neben = nettoMonatAusProfil(f.sideIncome, f.sideIncomeType, data.basis);
+  if (!haupt.geschaetzt && !neben.geschaetzt) return { data, geschaetzt: false };
+  const finanzen = { ...f };
+  if (haupt.geschaetzt) Object.assign(finanzen, { monthlyIncome: haupt.netto, incomeType: 'netto' });
+  if (neben.geschaetzt) Object.assign(finanzen, { sideIncome: neben.netto, sideIncomeType: 'netto' });
+  return { data: { ...data, finanzen }, geschaetzt: true };
 }
 
 // Kantonale IPV-Berechnung — einkommensabhängig
@@ -413,13 +496,17 @@ export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
 //                    Hauptlohn ist erfasst, die Frage nach dem 13. Monatslohn aber offen — gerechnet
 //                    ×12. Mit 13. läge das Einkommen 8,3 % höher (13/12) und die Verbilligung tiefer.
 //   annahmen.partnerOhneDreizehnten  Partnereinkommen erfasst — immer ×12 gerechnet (keine Frage dazu).
-export function calculateIPV(data) {
-  const r = ipvRechnen(data);
+//   einkommenGeschaetzt  Haupt- oder Nebenerwerb stand brutto im Profil — gerechnet mit dem
+//                    Netto-Richtwert (ipvFinanzenNetto), wie bei der Sozialhilfe.
+export function calculateIPV(roheDaten) {
+  const { data, geschaetzt } = ipvFinanzenNetto(roheDaten);
+  const r = { ...ipvRechnen(data), einkommenGeschaetzt: geschaetzt };
   if (!r.eligible) return r;
   const ohneDreizehnten = Number(data.finanzen?.monthlyIncome) > 0 && dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
   // Das Partnereinkommen zählt ×12 — nach dem 13. der zweiten Person fragt die App nicht.
   const partnerOhneDreizehnten = getHouseholdInfo(data).partnerIncome > 0;
-  return { ...r, annahmen: { ohneDreizehnten, partnerOhneDreizehnten } };
+  // ausBrutto: der Lohn stand brutto im Profil, gerechnet mit dem Netto-Richtwert — die Anzeige sagt es (wie beim 13.).
+  return { ...r, annahmen: { ohneDreizehnten, partnerOhneDreizehnten, ausBrutto: geschaetzt } };
 }
 
 function ipvRechnen(data) {
@@ -445,6 +532,9 @@ function ipvRechnen(data) {
     eligible: false, belegt: false, amount: null, noteKey: 'ipv.orientierungOffen',
     anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton, ...(offen && { offen }),
   });
+  // Rente nicht erfasst: Das Einkommen wäre zu tief, die Verbilligung zu hoch (Kanton AG, Rentnerin mit 500 erfasst:
+  // volle CHF 450/Mt.). Wie bei der Sozialhilfe kein Betrag, der Grund als Hinweis (Predeploy 1e6819ab).
+  if (renteOhneBetrag(data.finanzen, data.basis)) return { ...orientierung(), noteKey: 'ipv.renteNichtEnthalten', renteFehlt: true };
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
   // K31: ein Kanton mit Modul im Register IPV_MODULE rechnet nach seinem eigenen amtlichen Modell.
   // Solange PLZ-Daten (wo gebraucht) und Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie
@@ -491,24 +581,25 @@ function ipvRechnen(data) {
 
 // EL (Ergänzungsleistungen) Berechtigungsprüfung
 export function checkELEligibility(data) {
-  const hh = getHouseholdInfo(data);
-  const income = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome;
-  const rent = Number(data.wohnen?.rentAmount || 0);
-  const kkPremium = Number(data.versicherungen?.kkPremium || 0);
   const ahvRente = Number(data.finanzen?.ahvRente || 0);
   const ivRente = Number(data.finanzen?.ivRente || 0);
-  const bvgRente = Number(data.finanzen?.bvgRente || 0);
+  // `ahvRente` und `ivRente` sind seit 04.11.2026 Felder im Kapitel Finanzen. Ein Betrag zeigt den Bezug an, trägt aber
+  // keine Rechnung: Bis 03.11.2026 stand hier «Einnahmen < Ausgaben + 2000»,
+  // eine Marge ohne Quelle, ohne Lebensbedarf und Vermögen nach ELG Art. 9–11 (Audit D5, Oktober 2026).
+  // Ein Bezug heisst darum immer «prüfen lassen», nie «Möglicher Anspruch» (F8-Prüfer, 03.11.2026).
+  const rentenBetrag = ahvRente > 0 || ivRente > 0;
+  // ELG Art. 4 Abs. 1 Bst. c unterscheidet nicht zwischen ganzer und Teilrente. Bst. a setzt den Bezug einer
+  // Altersrente voraus; das erreichte Rentenalter steht hier dafür, wie bei Sozialhilfe und IPV (renteOhneBetrag), auch
+  // bei Erwerbstätigen (Nachprüfung 92d73e70; Wortlaut am 03.11.2026 nicht neu gelesen).
+  const elPruefen = rentenBetrag || ['ganz', 'teil'].includes(data.finanzen?.ivBezug)
+    || alterUndRentenalter(data.basis).rentenalter;
+  const isAHVIV = elPruefen;
 
-  const totalIncome = income + ahvRente + ivRente + bvgRente;
-  const totalExpenses = rent + kkPremium;
-  const isAHVIV = ahvRente > 0 || ivRente > 0;
-
+  // Kein `eligible` mehr: ohne Rechnung gibt es keinen «Möglichen Anspruch», an den eine Anzeige anknüpfen könnte.
   return {
-    eligible: isAHVIV && totalIncome < totalExpenses + 2000,
     isAHVIV,
-    totalIncome,
-    totalExpenses,
-    noteKey: isAHVIV ? 'elCalc.possible' : 'elCalc.onlyAhvIv',
+    elPruefen,
+    noteKey: isAHVIV ? 'sozialhilfe.elPruefen' : 'elCalc.onlyAhvIv',
     noteParams: {},
   };
 }

@@ -58,7 +58,9 @@ describe('K2 · Zusatzversicherung: «Vor dem Wechsel prüfen» mit VVG-Belegen'
     // GlossarText im Intro liest t aus dem Kontext — hier derselbe Übersetzer.
     const html = renderToStaticMarkup(React.createElement(I18nContext.Provider, { value: { t, lang: 'de', anrede: 'du' } },
       React.createElement(ZusatzWechsel, { palette, t, data: {} })));
-    expect((html.match(/<li /g) || []).length).toBe(3);
+    // Die drei Prüfpunkte; die Belegliste (Fassung 9, data-belege) zählt nicht mit.
+    const vorBelegen = html.slice(0, html.indexOf('data-belege'));
+    expect((vorBelegen.match(/<li /g) || []).length).toBe(3);
     expect((html.match(new RegExp('href="' + VVG.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&') + 'de#art_', 'g')) || []).length).toBe(3);
     expect((html.match(/rel="noopener noreferrer"/g) || []).length).toBe(3);
     expect(html).not.toContain('[[');

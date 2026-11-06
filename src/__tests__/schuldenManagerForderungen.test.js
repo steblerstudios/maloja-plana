@@ -67,10 +67,11 @@ describe('C 18/19 · KVG-Zweitknopf und Hinweis', () => {
     expect(kvg).toMatch(/AblaufLink, \{ palette, label: t\('kvg\.zumSchuldenmanager'\)/);
     expect(kvg).toMatch(/color: palette\.mid \}\s*\}, t\('kvg\.wirdGefuehrt'\)/);
   });
-  it('Zweitknopf in Tokens, wie im Schuldenmanager (text.xs, weight.semi)', () => {
+  // Fassung 9: Form, Farbe und Gewicht (weight.semi) kommen aus dem Baustein knopfStil.
+  it('Zweitknopf aus dem Baustein, wie im Schuldenmanager (neben, text.xs)', () => {
     const z = kvg.match(/const zweitKnopf = \{[^\n]*\};/)[0];
     expect(z).toMatch(/fontSize: text\.xs/);
-    expect(z).toMatch(/fontWeight: weight\.semi/);
+    expect(z).toMatch(/knopfStil\(palette, 'neben'\)/);
     expect(z).not.toMatch(/padding: '\d+px/);
     expect(kvg).toMatch(/\.\.\.zweitKnopf, marginTop: space\.xs \}/);
   });

@@ -20,6 +20,7 @@ import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/sc
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
 import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName, VerlustscheinZeitachse, verlustscheinName, BetreibungZeitleiste } from './components/SchuldenBilder.jsx';
+import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -225,28 +226,13 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     fontSize: text.body
   };
 
-  const buttonStyle = {
-    // inline-flex + gap: Präfix-Icons (Kreuz, Rechner, Haken) sitzen mittig neben dem Text.
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '4px',
-    padding: space.sm + 'px ' + space.sm + 'px ' + space.sm + 'px ' + (space.sm + 4) + 'px',
-    background: palette.sand,
-    color: palette.onSand,
-    border: 'none',
-    borderRadius: radius.sm,
-    cursor: 'pointer',
-    fontWeight: weight.semi,
-    fontSize: text.xs,
-    minHeight: '44px', boxSizing: 'border-box',
-  };
-  // Löschen ist kein Hauptknopf (Seitenrundgang 27.09.2026): vorher gefüllt
-  // in Rose, so laut wie «+ Schuld erfassen». Jetzt Umriss mit
-  // roséfarbenem Text als Hinweis, nicht als Alarm.
-  const zweitKnopf = { ...buttonStyle, background: 'transparent', color: palette.text, border: '1px solid ' + palette.border };
+  // Knopfarten aus dem Baustein (Fassung 9); die dichte Schrift der Karten bleibt.
+  const buttonStyle = { ...knopfStil(palette, 'haupt'), fontSize: text.xs };
+  // Löschen ist kein Hauptknopf (Seitenrundgang 27.09.2026): Umriss in Rot (Gefahr), nie gefüllt.
+  const zweitKnopf = { ...knopfStil(palette, 'neben'), fontSize: text.xs };
   // Sichtbare Beschriftung über einem Select (klein, ruhig) — die Auswahl steht nie ohne Namen da.
   const feldLabel = { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space['2xs'] };
-  const loeschKnopf = { ...zweitKnopf, color: palette.roseDeep || palette.rose };
+  const loeschKnopf = { ...knopfStil(palette, 'gefahr'), fontSize: text.xs };
 
   // Ruhiger Erklärkasten mit Titel, Text und Quellenzeile (Verlustscheine, Bussen — 27.09.2026).
   const erklaerKasten = (key, titel, textKey, quelleKey) => React.createElement('div', { key, style: { padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md } },
@@ -255,12 +241,12 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     quelleKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t(quelleKey), null, t))
   );
 
-  const linkKnopf = { display: 'inline', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit', fontSize: text.xs };
+  const linkKnopf = { ...linkStil(palette), display: 'inline', fontSize: text.xs };
   const detailsStil = { padding: space.sm + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.sm };
   const summaryStil = { cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text };
   const statusLabel = (d) => d.status === 'paid' ? t('schulden.statusPaid') : istUeberfaellig(d) ? t('schulden.overdue') : t('schulden.statusOpen');
   const tabs = [
-    { key: 'overview', icon: 'dashboard', label: t('schulden.overview') },
+    { key: 'overview', icon: 'sackmesser', label: t('schulden.overview') },
     { key: 'debts', icon: 'debt', label: t('schulden.debts') },
     { key: 'plan', icon: 'timeline', label: t('schulden.planTab') },
     { key: 'betreibung', icon: 'behoerden', label: t('schulden.debtCollection') },
@@ -438,7 +424,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           // aria-describedby wurden sie als Fliesstext vorgelesen).
           (budgetRate.grund === 'ok' ? leseBetrag(planRate) !== budgetRate.vorschlag : !!onNavigate) && React.createElement('div', { style: { marginTop: space.xs } },
             budgetRate.grund === 'ok'
-              ? React.createElement('button', { type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)), style: linkKnopf }, t('schulden.plan.zurueck'))
+              ? React.createElement('button', { type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)), style: zweitKnopf }, t('schulden.plan.zurueck'))
               : React.createElement('button', { type: 'button', onClick: () => onNavigate('budget'), style: linkKnopf }, t('schulden.plan.zumBudget'))
           )
     ),
@@ -478,7 +464,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
       betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
         hinweisZeichen(), t('schulden.registerHinweis'), ' ',
-        onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: { background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } }, t('schulden.registerHinweisLink'))
+        onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: linkStil(palette) }, t('schulden.registerHinweisLink'))
       ),
 
       // Mahnstufe «Zahlungsbefehl» auf einer Forderung und dieser Tab waren zwei Erfassungen ohne
@@ -518,7 +504,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           tier === 3 && React.createElement('div', { role: 'group', 'aria-label': t('schulden.planMethod'), style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', margin: space.xs + 'px 0' } },
             ['lawine', 'schneeball'].map(m => React.createElement('button', {
               key: m, type: 'button', onClick: () => setMethod(m), 'aria-pressed': method === m,
-              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
+              style: { ...auswahlStil(palette, method === m), padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start' }
             }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
           ),
           React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },
@@ -560,8 +546,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           
           React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
           React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
-            React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sageDeep, textDecoration: 'none' } }, '0800 708 708'),
-            React.createElement(ExternerLink, { t, href: 'https://schulden.ch', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
+            React.createElement('a', { href: 'tel:0800708708', style: linkStil(palette) }, '0800 708 708'),
+            React.createElement(ExternerLink, { t, href: 'https://schulden.ch', style: linkStil(palette) }, 'schulden.ch')
           ),
           onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
             React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') }),

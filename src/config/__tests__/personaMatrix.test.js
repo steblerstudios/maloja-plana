@@ -172,9 +172,8 @@ describe('Persona-Matrix: EL nur für AHV/IV-Beziehende', () => {
     const problems = [];
     for (const p of MATRIX) {
       const r = checkELEligibility(p.data);
-      if (![r.totalIncome, r.totalExpenses].every(finite)) { problems.push(`${p.id}: EL nicht-finit`); continue; }
       const isRetired = Boolean(p.household.isRetired);
-      if (!isRetired && r.eligible) problems.push(`${p.id}: Nicht-Rentner als EL-berechtigt markiert`);
+      if ('eligible' in r) problems.push(`${p.id}: EL errechnet wieder einen Anspruch`);
       if (!isRetired && r.isAHVIV) problems.push(`${p.id}: Nicht-Rentner als AHV/IV markiert`);
     }
     expect(problems).toEqual([]);

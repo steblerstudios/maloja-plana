@@ -1,11 +1,12 @@
 import React from 'react';
-import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { text, weight, space, radius, fontFamily, duration, ease } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import {
   SAEULE3A_HOECHSTABZUG, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR, saeule3aMaximum,
   einzahlungenImJahr, jahreMitEinzahlungen,
 } from './data/saeule3a.js';
 import { zahl } from './utils/geld.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 const fmt = (v) => zahl(v);
 const chf = (v) => 'CHF ' + fmt(v);
@@ -72,7 +73,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
       ),
       // calm progress bar — nur, wenn es ein belegtes Maximum gibt, gegen das sie misst
       ceiling && React.createElement('div', { style: { height: '6px', background: palette.border, borderRadius: radius.hair, overflow: 'hidden' } },
-        React.createElement('div', { style: { height: '100%', width: pct + '%', background: pct >= 100 ? palette.sage : palette.sky, transition: 'width 300ms ease' } })
+        React.createElement('div', { style: { height: '100%', width: pct + '%', background: pct >= 100 ? palette.sage : palette.sky, transition: 'width ' + duration.normal + 'ms ' + ease } })
       ),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
         // Kein belegtes Maximum für dieses Jahr ⇒ lieber sagen, dass es fehlt, als das
@@ -122,13 +123,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
 
     React.createElement('button', {
       onClick: addDeposit,
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
-        cursor: 'pointer', fontSize: text.sm, fontFamily,
-        fontWeight: weight.medium, alignSelf: 'flex-start',
-      }
+      style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }
     }, '+ ' + t('saeule3a.add')),
 
     // 🛑 Die beiden Beträge und das Jahr kommen aus der Jahrestabelle, nicht aus dem Satz.

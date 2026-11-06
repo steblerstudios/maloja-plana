@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { Schnellcheck } from './Schnellcheck.jsx';
 import { LebenslagenAuswahl } from './Lebenssituationen.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from './config/cantonalData.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 import { zurueckZeichen } from './IconSystem.jsx';
+import { PanelTitle } from './components/Heading.jsx';
 
 // Anspruch-Check, geführt (#4.4.2 „Brücke"): webt die zwei bestehenden Checks zu
 // EINEM Fluss — Schritt 1 = Zahlen (Schnellcheck), Schritt 2 = Lebenslage
@@ -44,22 +46,28 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     const incomeBenefits = [];
     try {
       const canton = probe?.basis?.canton || '';
-      const income = Number(probe?.finanzen?.monthlyIncome) || 0;
+      const erfasst = einnahmenErfasst(probe?.finanzen); // Lohn oder Rente, wie die Wege
       const rent = Number(probe?.wohnen?.rentAmount) || 0;
       // anspruchMoeglich: auch bei unbelegtem Kanton (E9) ein Weg — ohne Betrag.
-      if (income > 0 && canton && calculateIPV(probe)?.anspruchMoeglich) {
+      if (erfasst && canton && calculateIPV(probe)?.anspruchMoeglich) {
         // B-1/E22: die Zahlen aus Schritt 1 gehen an den IPV-Rechner mit (nicht ins Profil).
         incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium', uebergabe: uebergabeAusProbe(probe) });
       }
-      if (rent > 0) {
+      // Wie bei der IPV: Schritt 1 macht aus einem leeren Feld eine 0 (F8-S4), darum Lohn oder Rente über 0.
+      if (erfasst && rent > 0) {
         const sh = calculateSozialhilfe(probe);
-        if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
+        if (sh?.einkommenFehlt) {
+          // Rente oder Einkommen nicht erfasst: der Weg mit dem Grund, wie in data/anspruchWege.js.
+          if (sh.wegOhneBetrag) incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
+            label: t('anspruch.items.sozialhilfe.label') + ' · ' + t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') });
+        } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
           // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — der «Anspruch» sagt es.
           incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
-            label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') });
+            label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') + (sh.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : '') });
         }
       }
-      if (checkELEligibility(probe)?.eligible) {
+      // EL ohne Rechnung: ein Rentenbezug führt hin, ein «Möglicher Anspruch» wird nicht mehr errechnet (F8-Prüfer).
+      if (checkELEligibility(probe)?.elPruefen) {
         incomeBenefits.push({ key: 'el', label: t('anspruch.items.el.label'), view: 'finanzuebersicht' });
       }
     } catch { /* Orientierung, nie blockierend */ }
@@ -110,11 +118,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
 
       React.createElement('button', {
         type: 'button', onClick: () => onNavigate('situationen'),
-        style: {
-          display: 'block', marginTop: space.md + 'px', background: 'none', border: 'none', padding: 0,
-          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
-          color: palette.sageDeep || palette.sage,
-        }
+        style: { ...linkStil(palette), display: 'block', marginTop: space.md + 'px', fontSize: text.sm, fontWeight: weight.medium }
       }, t('anspruchCheck.resultToLandkarte'))
     );
   };
@@ -130,13 +134,10 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         onClick: () => setStep(s.n),
         'aria-current': on ? 'step' : undefined,
         style: {
+          ...auswahlStil(palette, on),
           display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '6px 12px', borderRadius: radius.md,
-          border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
-          background: on ? palette.sage + '18' : 'transparent',
-          color: on ? (palette.sageDeep || palette.text) : palette.mid,
+          padding: '6px 12px',
           fontSize: text.xs, fontWeight: on ? weight.semi : weight.normal,
-          fontFamily: 'inherit', cursor: 'pointer',
           transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
         },
       },
@@ -145,8 +146,8 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
           style: {
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: '18px', height: '18px', borderRadius: '50%',
-            background: on ? palette.sage : palette.border + '55',
-            color: on ? '#fff' : palette.mid, fontSize: '11px', fontWeight: weight.semi, flexShrink: 0,
+            background: on ? palette.onSand : palette.border + '55',
+            color: on ? palette.sand : palette.mid, fontSize: '11px', fontWeight: weight.semi, flexShrink: 0,
           }
         }, String(s.n)),
         t('anspruchCheck.stepWord') + ' ' + s.n + ' · ' + s.label
@@ -160,15 +161,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
   // nur den Pfeil und tat nichts.
   const secondaryBtn = (zeichen, label, onClick) => React.createElement('button', {
     type: 'button', onClick,
-    style: {
-      display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px',
-      padding: '10px 16px', borderRadius: radius.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
-      fontSize: text.sm, fontWeight: weight.medium,
-      border: '1px solid ' + palette.border + '66', background: 'transparent', color: palette.mid,
-      transition: `border-color ${duration.normal}ms ${ease}`,
-    },
-    onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sage + '55'; },
-    onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '66'; },
+    style: knopfStil(palette, 'neben'),
   }, zeichen, label);
 
   return React.createElement('div', { style: { maxWidth: '640px' } },
@@ -176,7 +169,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
 
     step === 1 && React.createElement(Schnellcheck, { palette, t, data, onNavigate, onProbeChange: setProbe }),
     step === 2 && React.createElement('div', null,
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruchCheck.stepSituation')),
+      React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruchCheck.stepSituation')),
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: leading.relaxed } }, t('lebenszustaende.sectionIntro')),
       React.createElement(LebenslagenAuswahl, { palette, t, data, onNavigate })),
     step === 3 && renderResult(),

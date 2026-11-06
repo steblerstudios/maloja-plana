@@ -10,12 +10,15 @@ import { plusMonate } from './utils/fristen.js';
 export const Ergaenzungsleistungen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'ergaenzungsleistungen', icon: 'vorsorge',
+    palette, t, onNavigate, ablauf: 'ergaenzungsleistungen', icon: 'ereignisErgaenzungsleistungen',
     title: t('ergaenzungsleistungen.title'),
     intro: t('ergaenzungsleistungen.intro'),
   },
     React.createElement(AblaufStep, { palette, title: t('ergaenzungsleistungen.step1Title') },
       React.createElement('p', { style: s.stepText }, t('ergaenzungsleistungen.step1Text')),
+      // Wissensschicht (04.11.2026): warum Berechtigte sich nicht anmelden — belegt mit BSV 2025 und
+      // BFH 2021 (Quellenzeile), bewusst ohne Quote, weil die einzige Zahl nur für Basel-Stadt gilt.
+      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('ergaenzungsleistungen.step1Nichtbezug')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('ergaenzungsleistungen.step1LinkAnspruch'), onClick: () => onNavigate('anspruchcheck') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('ergaenzungsleistungen.step1LinkSozialhilfe'), onClick: () => onNavigate('sozialhilfe') })
     ),

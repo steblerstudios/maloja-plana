@@ -2,6 +2,8 @@ import { defineConfig, configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { ersteBilder, kernPfade, teilen } from './scripts/i18nKern.mjs';
 
 // ─── PWA: Cache-Name an Bundle-Hash koppeln ────────────────────────────────
 // Ersetzt '__BUILD_HASH__' in der ausgelieferten sw.js (im Ausgabeordner, auch mit
@@ -38,9 +40,30 @@ function stampServiceWorkerCacheVersion() {
   };
 }
 
+// ─── Sprachen in Kern und Rest teilen ─────────────────────────────────────
+// `virtual:sprache/de-kern` und `-rest` entstehen aus src/i18n/de.js (scripts/i18nKern.mjs).
+// Die fünf Sprachdateien bleiben die eine Quelle, die Paritätstests lesen sie unverändert.
+function spracheTeilen() {
+  const PRAEFIX = 'virtual:sprache/';
+  const quelle = (sprache) => path.resolve(__dirname, 'src/i18n', `${sprache}.js`);
+  const lese = async (datei) => (await import(`${pathToFileURL(datei)}?v=${fs.statSync(datei).mtimeMs}`)).default;
+  return {
+    name: 'maloja-sprache-teilen',
+    resolveId: (id) => (id.startsWith(PRAEFIX) ? `\0${id}` : null),
+    async load(id) {
+      if (!id.startsWith(`\0${PRAEFIX}`)) return null;
+      const [sprache, teil] = id.slice(PRAEFIX.length + 1).split('-');
+      this.addWatchFile(quelle(sprache));
+      const pfade = kernPfade(ersteBilder(path.resolve(__dirname, 'src')), await lese(quelle('de')));
+      const geteilt = teilen(await lese(quelle(sprache)), pfade);
+      return `export default ${JSON.stringify(geteilt[teil])};`;
+    },
+  };
+}
+
 export default defineConfig({
   base: process.env.BASE_URL || '/',
-  plugins: [react(), stampServiceWorkerCacheVersion()],
+  plugins: [react(), stampServiceWorkerCacheVersion(), spracheTeilen()],
   server: {
     port: Number(process.env.PORT) || 5174,
     strictPort: true,
@@ -56,6 +79,13 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, '**/.claude/**'],
     // Feste Test-Uhr (22.10.2026), sonst wird die Suite am 1.1.2027 rot.
     setupFiles: ['./src/__tests__/festeUhr.setup.js'],
+    // Zeitgrenze 30 s statt 5 s (Verbesserungen B2, 06.11.2026). Gemessen: unter normaler Last braucht kein
+    // Test über 2 s (langsamster 1,8 s); mit drei gleichzeitigen Läufen auf demselben Mac liefen 8–10 Tests
+    // in die 5 s, jedes Mal andere — vor allem die, die grosse Module erst im Test laden (fünf Sprachdateien,
+    // ganze Ansichten). Vorher bekamen einzelne Tests je einzeln 20 000 / 30 000 ms nachgerüstet (22 Stellen);
+    // die bleiben, diese Grenze macht den Rest der Suite gleich robust. Ein echter Hänger fällt weiter auf, nur später.
+    testTimeout: 30_000,
+    hookTimeout: 30_000,
   },
   build: {
     outDir: 'dist',

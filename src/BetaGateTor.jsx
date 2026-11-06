@@ -10,6 +10,7 @@ import { LIGHT_PALETTE } from './config/constants.js';
 // zurück. Wächter: betaGateTor.test.js (gleicher Schlüssel wie in BetaGate.jsx).
 export const ZUGANG_KEY = 'or5_beta_access';
 
+// Die Wand ist für Neue das erste Bild: ihre Texte liegen im Sprach-Kern (vite.config.js), sie wartet nicht auf den Rest.
 const BetaGate = React.lazy(() => import('./BetaGate.jsx'));
 
 export const BetaGateTor = ({ children }) => {

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles, AblaufWarnung } from './AblaufSchale.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
-import { text, weight, radius, space, leading } from './config/tokens.js';
+import { text, radius, space, leading } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import { SecondaryButton } from './components/PrimaryButton.jsx';
 import { FRAGEN_VA, vorlage, vorlageHtml, abweichendeVertretung } from './data/vorsorgeauftrag.js';
+import { PanelTitle } from './components/Heading.jsx';
 
 // Vorsorgeauftrag und Patientenverfügung — geführter Ablauf, gebaut 25.09.2026 auf Wunsch von Stebler Studios.
 // Inhalt aus der Fachprüfung (swiss-precision) vom 25.09.2026, jede Aussage am Gesetzeswortlaut
@@ -30,11 +31,11 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
       const v = vorlage(antworten, data, t);
       const abweichend = abweichendeVertretung(antworten, data?.notfall?.pvAntworten);
       return React.createElement('div', null,
-        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('va.ui.vorschauTitel')),
+        React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('va.ui.vorschauTitel')),
         abweichend && React.createElement('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('va.ui.abweichend')),
         // C — Warnsatz, abgesetzt und als «nicht abschreiben» markiert
-        React.createElement('div', { style: { border: '2px dashed ' + (palette.goldDeep || palette.sandDeep), borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+        React.createElement('div', { style: { border: '2px dashed ' + palette.sky, borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
           React.createElement('strong', { style: { color: palette.text } }, t('va.vorlage.nichtAbschreiben')), ' ', t('va.vorlage.warnung')),
         // D — der Text zum Abschreiben
         React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } },
@@ -42,7 +43,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
           v.saetze.map((z, i) => React.createElement('p', { key: i, style: { margin: '0 0 ' + space.sm + 'px' } }, z))),
         React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.md + 'px' } },
           React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(vorlageHtml(antworten, data, t, lang)) },
-            React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('va.ui.drucken')),
+            React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('va.ui.drucken')),
           React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('va.ui.aendern')),
           React.createElement('button', { type: 'button', style: knopf(false), onClick: () => setVorlageOffen(false) }, t('va.ui.zurueckZumWegweiser'))
         )
@@ -54,7 +55,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
   const s = ablaufStyles(palette);
   const chapterIdx = (key) => (chapters ? chapters.findIndex((ch) => ch.key === key) : -1);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'vorsorgeauftrag', icon: 'document',
+    palette, t, onNavigate, ablauf: 'vorsorgeauftrag', icon: 'ereignisVorsorgeauftrag',
     title: t('vorsorgeauftrag.title'),
     intro: t('vorsorgeauftrag.intro'),
   },
@@ -63,7 +64,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step2Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step2Text')),
-      React.createElement('p', { style: s.warn }, t('vorsorgeauftrag.step2Warn')),
+      React.createElement(AblaufWarnung, { palette }, t('vorsorgeauftrag.step2Warn')),
       React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.vorlageLink'), onClick: () => setVorlageOffen(true) }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.step2Link'), onClick: () => onNavigate('tresor') })
     ),
@@ -74,7 +75,8 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step4Text')),
       // F7-A6 (Entscheid Stebler Studios 27.10.2026, nur der Ablauf-Teil): ein Knopf zum Formular
       // «Patientenverfügung erstellen» statt eines Querverweises — hier ist es der nächste Schritt.
-      onNavigate && React.createElement(PrimaryButton, { palette, 'data-pv-knopf': '', style: { minHeight: '44px', marginTop: space.sm + 'px' }, icon: React.createElement(Icon, { name: 'document', size: 16 }), onClick: () => onNavigate('patientenverfuegung') }, t('vorsorgeauftrag.step4LinkPv'))
+      // Fassung 9 (S2): der Hauptknopf des Schritts ist «Erledigt, weiter ›» — dieser ist Nebenknopf.
+      onNavigate && React.createElement(SecondaryButton, { palette, 'data-pv-knopf': '', style: { minHeight: '44px', marginTop: space.sm + 'px' }, icon: React.createElement(Icon, { name: 'document', size: 16 }), onClick: () => onNavigate('patientenverfuegung') }, t('vorsorgeauftrag.step4LinkPv'))
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step5Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step5Text')),
@@ -85,7 +87,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
     // Testament — nur Wegweiser, kein Generator (Rechtsprüfung 27.09.2026).
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step6Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step6Text')),
-      React.createElement('p', { style: s.warn }, t('vorsorgeauftrag.step6Warn')),
+      React.createElement(AblaufWarnung, { palette }, t('vorsorgeauftrag.step6Warn')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.step6LinkBw'), onClick: () => onNavigate('bestattung') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('vorsorgeauftrag.quelle'), notes: [t('vorsorgeauftrag.footerNote'), t('trust.localOnly')] })

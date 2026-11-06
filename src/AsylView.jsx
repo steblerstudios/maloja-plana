@@ -3,6 +3,7 @@ import { PanelTitle } from './components/Heading.jsx';
 import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
 import { hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { linkStil } from './components/PrimaryButton.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -16,7 +17,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
   const s = {
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.65, marginBottom: space.md + 'px', maxWidth: '600px' },
     disclaimer: { fontSize: text.sm, color: palette.sageDeep || palette.text, background: palette.sageMist || palette.up, borderInlineStart: '3px solid ' + palette.sage, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', lineHeight: 1.6, marginBottom: space.lg + 'px' },
-    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 'px', marginTop: space.lg + 'px' },
+    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.sm + 'px', marginTop: space.lg + 'px' },
     statusRow: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-start', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
     badge: { flexShrink: 0, width: '34px', height: '34px', borderRadius: radius.sm + 'px', background: palette.sage + '22', color: palette.sageDeep || palette.sage, fontWeight: weight.bold, fontSize: text.body, display: 'flex', alignItems: 'center', justifyContent: 'center' },
     statusLabel: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
@@ -28,10 +29,11 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     orgDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '2px' },
     orgPhone: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
     officialTag: { fontSize: text.xs, color: palette.sageDeep || palette.sage, background: palette.sage + '22', padding: '1px 6px', borderRadius: radius.sm + 'px', fontWeight: weight.medium },
-    crosslink: { display: 'block', width: '100%', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, cursor: 'pointer', textAlign: 'start', fontFamily: 'inherit', marginTop: space.md + 'px' },
+    // Fassung 9 (M2, S10): führt nur woanders hin → goldener, unterstrichener Link. Wortlaut bleibt.
+    crosslink: { ...linkStil(palette), display: 'block', minHeight: '44px', fontSize: text.sm, textAlign: 'start', marginTop: space.md + 'px' },
     rightItem: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', padding: '6px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55 },
     rightDot: { flexShrink: 0, color: palette.sage, marginTop: '1px' },
-    fristen: { background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
+    fristen: { background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
     fristenBody: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 },
     cantonBox: { background: palette.sageMist || palette.up, border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm + 'px', padding: space.md + 'px', marginTop: space.sm + 'px' },
     cantonOfficeLink: { display: 'block', textDecoration: 'none', color: palette.skyDeep, fontSize: text.sm, fontWeight: weight.semi },
@@ -52,11 +54,25 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
   // Schritte (Status, Verfahren, Rechte, Fristen, Hilfe, nächste Schritte), Inhalt unverändert. Einleitung mit
   // Vorlese-Knopf und Hinweis stehen oben, die Quelle im Fuss. Vorher eine eigene Karte ohne Schale.
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'asyl', icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'asyl', icon: 'ereignisAsyl',
     title: t('asyl.title'),
   },
     React.createElement('p', { style: s.intro }, t('asyl.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('asyl.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
     React.createElement('div', { style: s.disclaimer }, t('asyl.disclaimer')),
+
+    // ── Wichtig: kurze Fristen ── (Fassung 9, F9-D5: zuerst, Fristen laufen ab dem Entscheid)
+    // Beschwerdefristen sind fallabhängig (Datum aus dem Entscheid), darum kein
+    // vorbefüllter Frist-Knopf, sondern ein ruhiger Weg, die eigene Frist zu notieren.
+    React.createElement(AblaufStep, { palette, title: t('asyl.fristenTitle') },
+      React.createElement('div', { style: s.fristen },
+        React.createElement('div', { style: s.fristenBody }, hinweisZeichen('warning'), t('asyl.fristenBody')),
+        onNavigate && React.createElement('button', {
+          type: 'button',
+          style: { ...s.crosslink, marginTop: space.sm + 'px' },
+          onClick: () => onNavigate('calendar'),
+        }, t('asyl.fristenKalender'))
+      )
+    ),
 
     // ── Status-/Ausweistypen ──
     React.createElement(AblaufStep, { palette, title: t('asyl.statusTitle') },
@@ -110,20 +126,6 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
             React.createElement('span', null, t('asyl.rights.' + r))
           )
         )
-      )
-    ),
-
-    // ── Wichtig: kurze Fristen ──
-    // Beschwerdefristen sind fallabhängig (Datum aus dem Entscheid), darum kein
-    // vorbefüllter Frist-Knopf, sondern ein ruhiger Weg, die eigene Frist zu notieren.
-    React.createElement(AblaufStep, { palette, title: t('asyl.fristenTitle') },
-      React.createElement('div', { style: s.fristen },
-        React.createElement('div', { style: s.fristenBody }, hinweisZeichen('warning'), t('asyl.fristenBody')),
-        onNavigate && React.createElement('button', {
-          type: 'button',
-          style: { ...s.crosslink, marginTop: space.sm + 'px', background: 'transparent', color: palette.goldDeep, fontWeight: weight.medium, padding: space.xs + 'px 0' },
-          onClick: () => onNavigate('calendar'),
-        }, t('asyl.fristenKalender'))
       )
     ),
 

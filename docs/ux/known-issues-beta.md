@@ -1,28 +1,39 @@
-# Known Issues — Beta (Stand 2026-06-23, Update 2026-06-23)
+# Known Issues — Beta (Stand 2026-11-04, Version `0.1.49-beta`)
 
 > Diese Liste ist für Tester gedacht. Hier stehen Dinge, die wir kennen und bewusst noch nicht behoben haben.
 
 ---
 
-## Rechner-Einschränkungen
+## Rechner-Einschränkungen (geprüft gegen den Code, 04.11.2026, Version `0.1.49-beta`)
 
 | Thema | Was passiert | Auswirkung |
 |---|---|---|
-| **Sozialhilfe: Haushalt** | Berechnung nimmt `1 + Abhängige` statt differenzierte SKOS-Zusammensetzung (Erwachsene vs. Kinder) | Betrag kann bei Familien leicht abweichen |
-| **Steuerrechner** | Kantonale Schätzung basiert auf Hauptort-Multiplikatoren, nicht auf exaktem kantonalem Tarif | Betrag kann je nach Gemeinde abweichen |
-| **IPV** | Lineares Modell (Abbau bis maxIncome) statt exaktem kantonalem Stufentarif | Betrag ist Orientierung, nicht verbindlich |
-| **Mehrpersonen-Haushalte** | Partner-Einkommen fliesst in alle Rechner ein (Steuer, IPV, Sozialhilfe, EL). Feld erscheint bei 2+ Erwachsenen | Erledigt — Basisversion |
+| **Steuerrechner** | Kanton und Gemeinde sind eine grobe Schätzung für den **Hauptort** des Kantons, **ohne Kirchensteuer**, aus Messpunkten des ESTV-Steuerrechners | In anderen Gemeinden kann der Betrag abweichen |
+| **Steuerrechner: Quellensteuer** | Ohne Bewilligung C zeigt der Rechner **keine** Schätzung, weil Quellensteuer möglich ist (DBG Art. 83, 88) | Gewollt: lieber keine Zahl als eine falsche |
+| **Steuerrechner: anderer Zivilstand / andere Kinderzahl** | Das eingetragene steuerbare Einkommen gehört zum Profil. Für eine andere Situation rechnet der Rechner nicht | Gewollt, Hinweis steht beim Rechner |
+| **Prämienverbilligung (IPV)** | Jeder der 26 Kantone hat ein eigenes Modell nach der amtlichen Tabelle oder Formel (Jahr 2026) | Der Betrag ist eine Orientierung, verbindlich entscheidet die kantonale Stelle |
+| **Sozialhilfe: Konkubinat** | Im stabilen Konkubinat zählt ein Konkubinatsbeitrag als Einnahme (SKOS-RL D.4.4). Den kann die App nicht rechnen | Nur ein Hinweis, kein Betrag |
+| **Sozialhilfe: Haushaltsführung** | Wer für Mitbewohnende den Haushalt führt, dem wird eine Entschädigung angerechnet (SKOS-RL D.4.5). Sie hängt am Budget der anderen | Nur ein Hinweis, kein Betrag |
+| **Rappen-Beträge beim Vermögen** | Summen werden anders gerundet als die einzelnen Zeilen | Eine Summe kann um 1 Franken neben den Zeilen liegen. Korrektur ist gebaut (#674, Entwurf), noch nicht gemergt |
+| **Werte 2027** | Die Werte 2027 werden Kanton für Kanton nachgeführt. Wo der Beschluss eines Kantons noch nicht belegt ist, bleiben sie gesperrt (z.B. Aargau, `src/config/ipvAargau.js`) | Für 2027 noch nicht darauf verlassen. Nicht für jeden Kanton einzeln geprüft |
+
+> **Seit Runde 1 erledigt** (Einträge vom 23.06.2026, bleiben als Beleg):
+> ~~Sozialhilfe: Haushalt nimmt `1 + Abhängige`~~ → rechnet jetzt nach der Unterstützungseinheit
+> (SKOS-RL C.2, C.3.1, Fassung 1.1.2026; `src/utils/unterstuetzungseinheit.js`).
+> ~~IPV: lineares Modell statt kantonalem Stufentarif~~ → eigenes Modell je Kanton (`src/config/ipv*.js`).
+> ~~Mehrpersonen-Haushalte~~ → war schon im Juni erledigt.
 
 ## Funktionale Hinweise
 
 | Thema | Was passiert |
 |---|---|
-| **Daten nur lokal** | Alles liegt im Browser-Speicher. Browser-Cache löschen = Daten weg. Backup-Funktion nutzen! |
+| **Daten nur lokal** | Alles liegt im Speicher dieses Browsers. Browser-Daten löschen = Daten weg. Backup-Funktion nutzen! |
 | **Kein Account** | Kein Login, keine Cloud-Sync. Daten existieren nur auf diesem Gerät/Browser |
-| **Demo-Modus** | «Maria Muster ansehen» zeigt eine fiktive Person. Diese Daten werden nicht gespeichert |
-| **Sprachen** | FR/IT/EN sind maschinell übersetzt und nicht professionell lektoriert |
+| **Ohne Code ausprobieren** | Zeigt die Beispielperson Maria Muster. **Nichts wird gespeichert**, nach dem Neuladen ist alles wie am Anfang |
+| **Rumantsch** | Noch nicht von einem Menschen gegengelesen. Bekannt: Beim «Gepäck» steht die Einleitung auf Französisch (BUGS.md, B-6) |
+| **Französisch, Italienisch, Englisch** | Noch nicht professionell lektoriert (Stand Juni, nicht neu geprüft) |
 
-## Erledigte Verbesserungen
+## Erledigte Verbesserungen (Runde 1, bis 23.06.2026)
 
 | Thema | Status |
 |---|---|
@@ -53,19 +64,19 @@
 | **Print-Stylesheet** | Erledigt — Footer/Header ausgeblendet, sauberes A4-Layout |
 | **Unicode-Icons** | Erledigt — font-variant-emoji:text verhindert Emoji-Rendering |
 | **Button-Icons** | Bewusste Designentscheidung — typografische Zeichen (←, ○, ◇) als ruhiges Stilmittel |
-| **Amanda: IPV-Erklärung** | Erledigt — premium.subtitle erklärt IPV in allen 5 Sprachen |
-| **Amanda: Kind-Alter** | Erledigt — Alter wird automatisch aus Geburtsdatum berechnet, Feld wird readonly |
-| **Amanda: Adresse-Crosslink** | Erledigt — Crosslink von Basis → Wohnen (Kapitel 1) nach Kanton-Feld |
-| **Amanda: Nebenkosten-Hinweis** | Erledigt — Monats→Jahresschätzung + Genossenschafts-Hinweis bei NK > 0 |
-| **Amanda: QuickCheck auto-fill** | Erledigt — Dashboard-QuickCheck übernimmt gespeichertes Einkommen |
-| **Amanda: Crosslink-Audit** | Erledigt — Mindestlohn-Bug gefixt, 3 neue Crosslinks (Ausbildung→Tax, Behörden→Tax, Behörden→Schulden) |
+| **Rückmeldung: IPV-Erklärung** | Erledigt — premium.subtitle erklärt IPV in allen 5 Sprachen |
+| **Rückmeldung: Kind-Alter** | Erledigt — Alter wird automatisch aus Geburtsdatum berechnet, Feld wird readonly |
+| **Rückmeldung: Adresse-Crosslink** | Erledigt — Crosslink von Basis → Wohnen (Kapitel 1) nach Kanton-Feld |
+| **Rückmeldung: Nebenkosten-Hinweis** | Erledigt — Monats→Jahresschätzung + Genossenschafts-Hinweis bei NK > 0 |
+| **Rückmeldung: QuickCheck auto-fill** | Erledigt — Dashboard-QuickCheck übernimmt gespeichertes Einkommen |
+| **Rückmeldung: Crosslink-Audit** | Erledigt — Mindestlohn-Bug gefixt, 3 neue Crosslinks (Ausbildung→Tax, Behörden→Tax, Behörden→Schulden) |
 | **Benefits vor Formular** | Erledigt — "Was Du davon hast"-Block direkt nach Header, vor Tabs |
 | **Emotionale Differenzierung** | Erledigt — tax.intro, Betreibung gold statt rose, Schatten reduziert |
 | **Mobile Grid-Overflow** | Erledigt — minmax(min(320px,100%),1fr) verhindert Feldabschneidung auf Mobilgeräten |
 
 ## Nicht-Ziele dieser Beta
 
-- Keine Formulare für Behörden (kommt später)
+- Keine amtlichen Formulare (Musterbriefe gibt es, vor dem Versand selbst prüfen)
 - Kein Multi-Gerät-Sync (bewusste Designentscheidung: local-first)
 - Keine Tarmed/Compendium-Integration (zu komplex für MVP)
 
@@ -73,4 +84,4 @@
 
 ## Feedback geben
 
-Nutze das Feedback-Formular in der App (unten im Dashboard) oder schreib direkt an Stebler Studios.
+In der App unten: **«Feedback per E-Mail»** öffnet einen Mail-Entwurf, abgeschickt wird erst mit Senden. Oder direkt an info@malojaplana.ch.

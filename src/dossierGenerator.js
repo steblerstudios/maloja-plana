@@ -10,13 +10,32 @@
 //   generateBehoerdenDossier(data, chapters, t, calculations) → HTML string
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
+import { ipvUnterMindestbetrag } from './config/ipvMindestbetrag.js';
 import { getFullName } from './config/constants.js';
 import { feldNameOhneEinheit } from './utils/feldName.js';
 import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { vermoegensFelder, vermoegenSumme } from './utils/unterstuetzungseinheit.js';
+import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
+
+// Vermögen auf Blatt und im JSON aus denselben gerundeten Zeilen: Mit Rappen wich die Summe sonst um einen Franken
+// von den Zeilen ab (F8-G4), und das JSON rundete erst die Summe (F8-G5). Negativ zählt als 0.
+const vermoegenGerundet = (finanzen, basis) => vermoegenSumme(vermoegensFelder(finanzen, basis).felder);
+
+// Basis des Freibetrags, eine Fassung für Blatt und JSON (F8-G5).
+const freibetragBasisText = (canton, t) => (canton
+  ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + canton), datum: VFB_KANTON_GELESEN })
+  : t('sozialhilfe.assetLimitBasisSkos'));
+
+// 3a erfasst, Geburtsdatum fehlt: Ob sie zählt, weiss die App nicht (SKOS-RL D.3.3 Abs. 3). Der Satz steht, sobald der
+// Status von der Vermögensgrenze abhängen kann: Betrag, Freibetrag entscheidet, offen. Blatt und JSON dieselbe Regel.
+const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.finanzen, data.basis).mit3a
+  && !data.basis?.dateOfBirth && Number(data.finanzen?.pension3aBalance) > 0
+  && !!(sozialhilfe.eligible || sozialhilfe.efbEntscheidet || sozialhilfe.anspruchOffen);
 import { organListe } from './utils/organspende.js';
+import { rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
 
 
@@ -157,7 +176,8 @@ function getSections(data, chapters, t) {
       rows: [
         { label: lbl('ausbildung', 'educationLevel'), value: sel('ausbildung', 'educationLevel') },
         { label: lbl('ausbildung', 'schoolName'), value: d('ausbildung', 'schoolName') },
-        { label: lbl('ausbildung', 'employer'), value: d('ausbildung', 'employer') },
+        // F8-P3: der Arbeitgeber steht schon unter Finanzen; hier nur, wenn er etwas anderes sagt.
+        { label: lbl('ausbildung', 'employer'), value: gleicherText(d('ausbildung', 'employer'), d('finanzen', 'employer')) ? '' : d('ausbildung', 'employer') },
         { label: lbl('ausbildung', 'jobTitle'), value: d('ausbildung', 'jobTitle') },
         { label: lbl('ausbildung', 'employmentStart'), value: dt('ausbildung', 'employmentStart') },
         // Wie im Kapitel (Abnahme F6, 25.10.2026): Schweizer Bürgerrecht → «nicht nötig», nicht die Option als Bewilligung.
@@ -191,10 +211,20 @@ function getSections(data, chapters, t) {
         { label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
         { label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
         { label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
+        // F8-P3 (Stebler Studios 05.11.2026): keine Gesundheitsdaten in der Mappe, nur der Verweis — sobald welche erfasst sind.
+        { label: t('lebensmappe.gesundheitLabel'), value: hatGesundheitsangaben(data.notfall) ? t('lebensmappe.gesundheitHinweis') : '' },
       ].filter(r => r.value),
     },
   ];
 }
+
+// F8-P3: gleicher Text ohne Rücksicht auf Gross-/Kleinschreibung und Leerzeichen.
+const gleicherText = (a, b) => !!a && !!b && String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+const hatGesundheitsangaben = (nf) => {
+  const n = nf || {};
+  const liste = (x) => Array.isArray(x) && x.length > 0;
+  return !!(n.bloodType || n.allergies || n.medications || n.chronicDiseases || liste(n.medicationsList) || liste(n.chronicDiseasesList));
+};
 
 // ─── Preview Data (for React rendering) ──────────────────
 
@@ -385,7 +415,13 @@ export function generateLebensmappe(data, chapters, t, documents) {
       }
       .lm-print-btn { display: none; }
       .lm-section { break-inside: avoid; }
-      @page { margin: 2cm; size: A4; }
+      /* F8-P4 (Druckprobe 05.11.2026): Seitenrand 0, damit der Browser keine eigene Kopf- und
+         Fusszeile (Datum, «about:blank») druckt (developer.chrome.com/blog/print-margins).
+         Den Rand von 2 cm setzt der Behälter selbst, auf jeder Seite (box-decoration-break). */
+      @page { margin: 0; size: A4; }
+      .lm-container { padding: 2cm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      /* Die Schlusszeile bleibt beim letzten Abschnitt, statt allein eine Seite zu füllen. */
+      .lm-footer { break-before: avoid; page-break-before: avoid; margin-top: 16px; }
     }
   </style>
 </head>
@@ -754,7 +790,13 @@ export function generateNotfallDossier(data, chapters, t) {
       }
       .nd-print-btn { display: none; }
       .nd-section { break-inside: avoid; }
-      @page { margin: 2cm; size: A4; }
+      /* F8-P4 (Druckprobe 05.11.2026): Seitenrand 0, damit der Browser keine eigene Kopf- und
+         Fusszeile (Datum, «about:blank») druckt (developer.chrome.com/blog/print-margins).
+         Den Rand von 2 cm setzt der Behälter selbst, auf jeder Seite (box-decoration-break). */
+      @page { margin: 0; size: A4; }
+      .nd-container { padding: 2cm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      /* Die Schlusszeile bleibt beim letzten Abschnitt, statt allein eine Seite zu füllen. */
+      .nd-footer { break-before: avoid; page-break-before: avoid; margin-top: 16px; }
     }
   </style>
 </head>
@@ -818,6 +860,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionFinanzen'),
       rows: [
         { label: lbl('finanzen', 'monthlyIncome'), value: chf('finanzen', 'monthlyIncome') },
+        // Renten als eine Summe: Das Amt sieht, was in den Einnahmen steckt, ohne die Art (IV) einzeln (Fach und Recht 376149dc).
+        { label: t('behoerdenDossier.rentenSumme'), value: rentenMonat(data.finanzen) > 0 ? formatCHF(rentenMonat(data.finanzen)) : '' },
         { label: lbl('finanzen', 'employmentType'), value: sel('finanzen', 'employmentType') },
         { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
         { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },
@@ -825,7 +869,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
         { label: lbl('versicherungen', 'franchise'), value: formatCHF(String(d('versicherungen', 'franchise')).replace(/\D/g, '')) },
         { label: lbl('finanzen', 'securitiesValue'), value: chf('finanzen', 'securitiesValue') },
         { label: lbl('finanzen', 'otherAssets'), value: chf('finanzen', 'otherAssets') },
-        { label: lbl('finanzen', 'savingsAccount'), value: chf('finanzen', 'savingsAccount') },
+        // Ein negativer Saldo zählt im Vermögen als 0: Er stünde sonst neben einer Summe, die ihn nicht enthält (F8-G5).
+        { label: lbl('finanzen', 'savingsAccount'), value: Number(d('finanzen', 'savingsAccount')) > 0 ? chf('finanzen', 'savingsAccount') : '' },
       ].filter(r => r.value),
     },
   ];
@@ -834,40 +879,61 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     // formatCHF gibt bei 0 '' zurück; mit Vor- oder Nachsatz blieb dann «− » bzw. «/Mt.»
     // ohne Betrag stehen (Fassung 6, Fix 7). Ohne Betrag fällt die Zeile weg.
     const mit = (vor, wert, nach = '') => { const b = formatCHF(wert); return b ? vor + b + nach : ''; };
+    const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
+    const { mit3a } = vermoegensFelder(data.finanzen, data.basis);
+    const vermoegenBlatt = vermoegenGerundet(data.finanzen, data.basis);
+    const freibetragBasis = freibetragBasisText(d('basis', 'canton'), t);
+    const ohneGeburtsdatum3a = saeule3aOhneGeburtsdatum(data, sozialhilfe);
     const sRows = [
-      { label: t('sozialhilfe.basicNeeds'), value: formatCHF(sozialhilfe.grundbedarf) },
+      { label: t('sozialhilfe.basicNeeds') + (sozialhilfe.haushalt > sozialhilfe.einheit ? ' (' + t('sh.gblAnteil', { einheit: sozialhilfe.einheit, haushalt: sozialhilfe.haushalt }) + ')' : ''), value: formatCHF(sozialhilfe.grundbedarf) },
       { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
       { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
       { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
-      { label: t('sozialhilfe.deductIncome'), value: mit('− ', sozialhilfe.income) },
+      !sozialhilfe.einkommenFehlt && { label: t('sozialhilfe.deductIncome'), value: mit('− ', sozialhilfe.income) },
       // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
-      sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
-      { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
+      sozialhilfe.eligible && !sozialhilfe.einkommenFehlt && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
+      !sozialhilfe.einkommenFehlt && !sozialhilfe.betragOffen && { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
+      // Nur wenn das Vermögen der Grund für den offenen Status ist, wie auf der Seite: 3a und 3b stehen sonst nirgends.
+      ...(vermoegenGrund ? [
+        Number(d('finanzen', 'pension3bBalance')) > 0 && { label: lbl('finanzen', 'pension3bBalance'), value: chf('finanzen', 'pension3bBalance') },
+        mit3a && { label: lbl('finanzen', 'pension3aBalance'), value: chf('finanzen', 'pension3aBalance') },
+        { label: t('sozialhilfe.vermoegenGesamt'), value: formatCHF(vermoegenBlatt) },
+        { label: t('sozialhilfe.vermoegensfreibetrag') + ' (' + freibetragBasis + ')', value: formatCHF(sozialhilfe.vermoegensfreibetrag) },
+      ] : []),
     ].filter(r => r && r.value);
     // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
     const notes = [
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
+      sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || sozialhilfe.eligible) && t('sozialhilfe.assetLimitUnconfirmedShort'),
+      vermoegenGrund && !d('basis', 'canton') && t('sozialhilfe.assetLimitKeinKanton'),
+      ohneGeburtsdatum3a ? t('sozialhilfe.saeule3aOhneGeburtsdatum')
+        : vermoegenGrund && !mit3a && Number(d('finanzen', 'pension3aBalance')) > 0 && t('sozialhilfe.saeule3aNichtGezaehlt'),
       sozialhilfe.ansatzTiefer && t('pegel.ansatzTiefer'),
       sozialhilfe.vorBeitraegen && t('pegel.vorBeitraegen'),
       sozialhilfe.ohneFreibetrag && t('pegel.ohneFreibetrag'),
+      // Brutto im Profil: die Stelle sieht den Bruttolohn, abgezogen ist der Netto-Richtwert.
+      sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt && t('sozialhilfe.einkommenAusBrutto'),
+      ...(sozialhilfe.hinweise || []).map((k) => t(k)),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
       sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
       // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres — gehört aufs Blatt an die Behörde.
       sozialhilfe.gblBelegt === false && t('sh.gblNichtBelegt', { jahr: sozialhilfe.gblJahr, laufend: new Date().getFullYear() }),
     ].filter(Boolean);
-    const status = sozialhilfe.eligible
+    const status = sozialhilfe.einkommenFehlt ? t(sozialhilfe.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst')
+      : sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich')
-      : sozialhilfe.anspruchOffen ? t('pegel.coveredOffen')
+      : sozialhilfe.anspruchOffen ? t(sozialhilfe.offenText)
       : t('sozialhilfe.notEntitled');
     sections.push({
       key: 'sozialhilfe',
       title: t('behoerdenDossier.sectionSozialhilfe'),
       rows: sRows,
       status,
-      statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
-      statusOk: sozialhilfe.eligible,
+      // Ohne Einkommen kein Erfolg: Das Blatt nennt dann keinen Betrag und darf nicht grün sein (F8-S4).
+      statusColor: sozialhilfe.eligible && !sozialhilfe.einkommenFehlt ? DRUCK.gruen : DRUCK.grau,
+      statusOk: sozialhilfe.eligible && !sozialhilfe.einkommenFehlt,
       notes,
     });
   }
@@ -881,17 +947,22 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
       if (ipv.annahmen?.partnerOhneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten') });
     }
+    // Brutto im Profil: die Stelle sieht den Bruttolohn, gerechnet ist mit dem Netto-Richtwert — auch ohne Anspruch.
+    if (ipv.belegt !== false && ipv.einkommenGeschaetzt) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeAusBrutto') });
     // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
       ? t('premium.eligible')
       : ipv.belegt === false
         ? t('ipv.statusOffen')
-        : t('premium.notEligible');
+        : t(ipvUnterMindestbetrag(ipv) ? 'premium.keineAuszahlung' : 'behoerdenDossier.ipvNein');
     sections.push({
       key: 'ipv',
       title: t('behoerdenDossier.sectionIPV'),
       rows: iRows,
       status,
+      // Ein Nein steht auf dem Blatt ans Amt nie ohne Grund (Rechtsprüfung 02.11.2026).
+      // Rente nicht enthalten: der Grund steht auf dem Blatt, sonst läse das Amt nur «Beim Kanton prüfen» (Fachprüfung 8ac049b5).
+      notes: !ipv.eligible && (ipv.belegt !== false || ipv.renteFehlt) && ipv.noteKey ? [t(ipv.noteKey, ipv.noteParams)] : undefined,
       statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: ipv.eligible,
     });
@@ -902,9 +973,10 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       key: 'el',
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
-      status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
-      statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
-      statusOk: el.eligible,
+      status: el.elPruefen ? t('sozialhilfe.elPruefen') : t('behoerdenDossier.elNotApplicable'),
+      // Nie grün: «prüfen lassen» ist eine Bitte, kein Befund (F8-Prüfer, 03.11.2026).
+      statusColor: DRUCK.grau,
+      statusOk: false,
     });
   }
 
@@ -929,7 +1001,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       }
     }
     // R4: die Annahmen hinter der Zahl (dieselben wie im Steuerrechner und in der Finanzübersicht).
-    const annahmen = annahmenTexte(t, tax.annahmen);
+    // F8-P1: auf dem Blatt fürs Amt ohne App-Anleitung («Angeben lässt sich das im Kapitel …»).
+    const annahmen = annahmenTexte(t, tax.annahmen)
+      .map((s) => (s === t('tax.annahmeOhneDreizehnten') ? t('tax.annahmeOhneDreizehntenBlatt') : s));
     if (annahmen.length) taxRows.push({ label: t('tax.annahmenLabel'), value: annahmen.join(' ') });
     sections.push({
       key: 'steuern',
@@ -995,6 +1069,8 @@ export const STEUER_KENNUNG = Object.freeze({
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
   // IPV (25.09.2026): Partnereinkommen ×12, nach dessen 13. Monatslohn fragt die App nicht.
   annahmePartnerOhneDreizehnten: 'partner_ohne_13_monatslohn',
+  // IPV (04.11.2026): Lohn brutto im Profil, gerechnet mit dem Netto-Richtwert (ipvFinanzenNetto).
+  annahmeAusBrutto: 'lohn_brutto_netto_geschaetzt',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
   annahmeEinzeln: 'einzeln_konkubinat',
   // Gate 24.09.2026: Konkubinat mit Kindern, ganzer Kinderabzug bei der Person (KS 30, Ziff. 14.8.1).
@@ -1059,37 +1135,58 @@ export function generateBehoerdenJSON(data, calculations, t) {
   };
 
   if (sozialhilfe) {
+    const vermoegenGrund = sozialhilfe.betragOffen && sozialhilfe.vermoegenUeberFreibetrag > 0;
     dossier.calculations.sozialhilfe = {
-      eligible: !!sozialhilfe.eligible,
+      eligible: !!sozialhilfe.eligible && !sozialhilfe.einkommenFehlt,
+      einkommenFehlt: !!sozialhilfe.einkommenFehlt,
       grundbedarf: sozialhilfe.grundbedarf || 0,
       effectiveRent: sozialhilfe.effectiveRent || 0,
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
-      income: sozialhilfe.income || 0,
+      income: sozialhilfe.einkommenFehlt ? null : sozialhilfe.income || 0,
+      // Lohn brutto erfasst: `income` ist der Netto-Richtwert, nicht der erfasste Betrag.
+      einkommenGeschaetzt: !!sozialhilfe.einkommenGeschaetzt && !sozialhilfe.einkommenFehlt,
       efb: sozialhilfe.efb || 0,
       efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       anspruchOffen: !!sozialhilfe.anspruchOffen,
+      konkubinatBetragOffen: !!sozialhilfe.konkubinatBetragOffen,
+      vermoegenZuerst: !!sozialhilfe.vermoegenZuerst,
+      vermoegen: vermoegenGrund ? vermoegenGerundet(data.finanzen, data.basis) : undefined,
+      // Gerundet wie die Summe, damit die Teile sie ergeben.
+      saeule3b: vermoegenGrund && Number(data.finanzen?.pension3bBalance) > 0 ? Math.round(Number(data.finanzen.pension3bBalance)) : undefined,
+      saeule3a: vermoegenGrund && vermoegensFelder(data.finanzen, data.basis).mit3a ? Math.round(Number(data.finanzen.pension3aBalance)) : undefined,
+      vermoegensfreibetrag: vermoegenGrund ? sozialhilfe.vermoegensfreibetrag : undefined,
+      vermoegensfreibetragBasis: vermoegenGrund && t ? freibetragBasisText(data.basis?.canton, t) : undefined,
+      // Wie auf dem Blatt: 3a vorhanden, Geburtsdatum fehlt, darum nicht gezählt (F8-G5).
+      saeule3aOhneGeburtsdatum: saeule3aOhneGeburtsdatum(data, sozialhilfe),
+      // Nur, wo es das Blatt auch sagt: Sonst stünde die Angabe im JSON ohne Grund (F8-G5).
+      vermoegensfreibetragUnbestaetigt: !!sozialhilfe.vfbUnbestaetigt && (vermoegenGrund || !!sozialhilfe.eligible),
+      offenText: sozialhilfe.betragOffen && t ? t(sozialhilfe.offenText) : undefined,
+      hinweise: (sozialhilfe.hinweise || []).map((k) => (t ? t(k) : k)),
       ohneFreibetrag: !!sozialhilfe.ohneFreibetrag,
-      deficit: sozialhilfe.deficit || 0,
+      deficit: sozialhilfe.betragOffen || sozialhilfe.efbEntscheidet ? null : sozialhilfe.einkommenFehlt ? null : sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };
   }
   if (ipv) {
     // E9: ohne amtlich belegten Kanton gehen keine Beträge in die Datei.
     dossier.calculations.ipv = ipv.belegt === false
-      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' }
+      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen', ...(ipv.renteFehlt ? { grund: 'rente-nicht-enthalten' } : {}) }
       : {
           eligible: !!ipv.eligible,
+          // Ein Nein nie ohne Grund, auch nicht in der Datei (Rechtsprüfung 02.11.2026).
+          ...(!ipv.eligible && ipv.noteKey ? { grund: t ? t(ipv.noteKey, ipv.noteParams) : ipv.noteKey, unterMindestbetrag: ipvUnterMindestbetrag(ipv) } : {}),
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
-          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
-            ...(ipv.annahmen.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
-            ...(ipv.annahmen.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten || ipv.einkommenGeschaetzt ? { assumptions: [
+            ...(ipv.annahmen?.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
+            ...(ipv.annahmen?.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+            ...(ipv.einkommenGeschaetzt ? [erl('annahmeAusBrutto')] : []),
           ] } : {}),
         };
   }
   if (el) {
-    dossier.calculations.el = { eligible: !!el.eligible };
+    dossier.calculations.el = { pruefen: !!el.elPruefen };
   }
   if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {
@@ -1131,6 +1228,10 @@ export function getBehoerdenDossierPreview(data, chapters, t, calculations) {
   };
 }
 
+// F8-P4 (Druckprobe 05.11.2026): Lange Werte (Hinweise, Annahmen) standen rechtsbündig als
+// Textblock neben dem Feldnamen. Ab dieser Länge stehen sie linksbündig unter dem Feldnamen.
+export const BD_LANGER_WERT = 60;
+
 export function generateBehoerdenDossier(data, chapters, t, calculations) {
   const sections = getBehoerdenSections(data, chapters, t, calculations);
   const name = getFullName(data.basis) || t('lebensmappe.untitled');
@@ -1148,7 +1249,11 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
         <h2>${esc(s.title)}</h2>
         ${s.status ? `<div class="bd-status" style="color:${s.statusColor || DRUCK.grau}">${esc(s.status)}</div>` : ''}
         ${s.rows.length > 0 ? `<table>
-          ${s.rows.map(r => `
+          ${s.rows.map(r => String(r.value ?? '').length > BD_LANGER_WERT ? `
+            <tr class="bd-lang">
+              <td colspan="2"><div class="bd-label">${esc(r.label)}</div><div class="bd-value-lang${r.bold ? ' bd-bold' : ''}">${esc(r.value)}</div></td>
+            </tr>
+          ` : `
             <tr>
               <td class="bd-label">${esc(r.label)}</td>
               <td class="bd-value${r.bold ? ' bd-bold' : ''}">${esc(r.value)}</td>
@@ -1234,6 +1339,8 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     .bd-label { width: 55%; font-size: 12px; color: ${DRUCK.grau}; }
     .bd-value { font-size: 12px; font-weight: 500; text-align: right; }
     .bd-bold { font-weight: 700; }
+    .bd-lang .bd-label { width: auto; }
+    .bd-value-lang { font-size: 12px; font-weight: 500; text-align: left; margin-top: 2px; line-height: 1.5; }
     .bd-disclaimer {
       background: ${DRUCK.papier};
       border-radius: 6px;
@@ -1271,7 +1378,13 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       .bd-container { border: none; border-radius: 0; padding: 0; max-width: none; }
       .bd-print-btn { display: none; }
       .bd-section { break-inside: avoid; }
-      @page { margin: 2cm; size: A4; }
+      /* F8-P4 (Druckprobe 05.11.2026): Seitenrand 0, damit der Browser keine eigene Kopf- und
+         Fusszeile (Datum, «about:blank») druckt (developer.chrome.com/blog/print-margins).
+         Den Rand von 2 cm setzt der Behälter selbst, auf jeder Seite (box-decoration-break). */
+      @page { margin: 0; size: A4; }
+      .bd-container { padding: 2cm; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      /* Die Schlusszeile bleibt beim letzten Abschnitt, statt allein eine Seite zu füllen. */
+      .bd-footer { break-before: avoid; page-break-before: avoid; margin-top: 16px; }
     }
   </style>
 </head>

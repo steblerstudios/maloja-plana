@@ -51,3 +51,19 @@ if [ -n "$missing" ]; then
   exit 1
 fi
 echo "✓ Alle referenzierten Assets erreichbar."
+
+# Bewegte Figuren der Seite /krankenkasse/ (seit 04.11.2026): Klappt die Seite sie
+# als Rahmen auf, muss der Server-Header für /krankenkasse/bewegt/ das Einbetten
+# von der eigenen Adresse erlauben (frame-ancestors 'self'). Sonst bleiben die
+# Rahmen leer — der Link darunter funktioniert trotzdem.
+if curl -fsS --max-time 20 "$BASE/krankenkasse/" 2>/dev/null | grep -q '<iframe src="/krankenkasse/bewegt/'; then
+  csp="$(curl -sI --max-time 20 "$BASE/krankenkasse/bewegt/dorf/" | tr -d '\r' | grep -i '^content-security-policy:' || true)"
+  if printf '%s' "$csp" | grep -q "frame-ancestors 'self'"; then
+    echo "✓ /krankenkasse/bewegt/ darf eingebettet werden (frame-ancestors 'self')."
+  else
+    echo "✗ /krankenkasse/ bettet die bewegten Figuren ein, der Server verbietet es aber:"
+    echo "  ${csp:-kein CSP-Header}"
+    echo "  → Block «krankenkasse/bewegt» aus public/.htaccess in die Server-.htaccess übernehmen."
+    exit 1
+  fi
+fi

@@ -57,7 +57,26 @@ export function pegelState(data) {
 // wird als Aufstockung gefüllt. Reine Anzeige über calculateSozialhilfe.
 export function sozialhilfePegelState(data) {
   const sh = calculateSozialhilfe(data);
-  return { ...sozialhilfePegelRoh(data), ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, ohneFreibetrag: !!sh?.ohneFreibetrag };
+  const roh = sozialhilfePegelRoh(data);
+  // Keine Lücke und kein «gedeckt» aus nicht erfasstem Einkommen oder fehlender Rente (wie anspruchWege). Der offene
+  // Pegel ohne Betrag (Konkubinat) bleibt.
+  if (sh?.einkommenFehlt && roh?.mode !== 'offen') return null;
+  return { ...roh, ansatzTiefer: !!sh?.ansatzTiefer, vorBeitraegen: !!sh?.vorBeitraegen, offenText: sh?.offenText, ohneFreibetrag: !!sh?.ohneFreibetrag, hinweise: sh?.hinweise || [] };
+}
+
+// Derselbe Pegel aus dem Ergebnis des Rechners (F8-S2, 02.11.2026): die Seite hat eine Rechnung, die den
+// Eingaben folgt. Nur für «Lücke» und «gedeckt»; offene Fälle sagt der Ergebnisblock selbst.
+export function sozialhilfePegelAusRechner(result) {
+  if (!result || result.bedarf <= 0 || result.vermoegenZuerst || result.anspruchOffen || result.efbEntscheidet) return null;
+  const mode = result.hatAnspruch ? 'gap' : 'covered';
+  const income = mode === 'gap' ? result.anrechenbaresEinkommen : result.totalEinkommen;
+  return {
+    show: true, variant: 'aufstockung', mode,
+    fraction: Math.max(0, Math.min(PEGEL_SCALE, income / result.bedarf)),
+    income, bedarf: result.bedarf, amount: mode === 'gap' ? result.totalUnterstuetzung : 0,
+    // Betrag mit der ganzen Miete gerechnet: Der Zusatz gehört zu jeder Zahl (cantonalData.js).
+    mitGanzerMiete: mode === 'gap' && result.wohnkosten > 0,
+  };
 }
 
 function sozialhilfePegelRoh(data) {
@@ -70,6 +89,10 @@ function sozialhilfePegelRoh(data) {
   // SKOS-RL D.2) — nur so ergeben Wasser + Aufstockung genau den Bedarf.
   const income = Number(deficit > 0 ? sh?.anrechenbaresEinkommen : sh?.income) || 0;
   const vermoegenUeber = Number(sh?.vermoegenUeberFreibetrag) || 0;
+
+  if (sh?.konkubinatBetragOffen) return { show: true, variant: 'aufstockung', mode: 'offen', fraction: Math.max(0, Math.min(PEGEL_SCALE, income / bedarf)), income, bedarf, amount: 0, canton, vermoegenUeber };
+
+  if (sh?.vermoegenZuerst) return { show: true, variant: 'aufstockung', mode: 'vermoegen', fraction: Math.max(0, Math.min(PEGEL_SCALE, income / bedarf)), income, bedarf, amount: 0, canton, vermoegenUeber };
 
   // Ohne Kanton, Miet-Kontext oder Bedarf ist die Berechnung unvollständig.
   if (!canton || rent <= 0 || bedarf <= 0 || income <= 0) {

@@ -62,9 +62,9 @@ export const SEITEN = [
           'Perché per molte prestazioni la Confederazione fissa deliberatamente soltanto il quadro e i Cantoni lo riempiono. Essi stabiliscono limiti di reddito, procedure e termini propri. Un trasloco oltre il confine cantonale può quindi modificare il diritto, anche se nient’altro è cambiato.',
       },
       {
-        frage: 'Devo presentare ovunque una domanda io stesso?',
+        frage: 'Devo sempre presentare personalmente una domanda?',
         antwort:
-          'Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi si annunciano spontaneamente, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta.',
+          'Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta.',
       },
       {
         frage: 'Quanto costa Maloja Plana?',
@@ -97,7 +97,7 @@ export const SEITEN = [
       {
         titel: 'Quali cifre contano',
         absaetze: [
-          'Di regola i Cantoni si basano sui dati fiscali — e spesso non su quelli dell’anno in corso, bensì su una tassazione anteriore già cresciuta in giudicato. Ciò ha una conseguenza che sorprende: chi quest’anno guadagna nettamente meno non lo vede riflesso da sé in molti Cantoni — altri ne tengono conto soltanto con il conteggio definitivo successivo.',
+          'Di regola i Cantoni si basano sui dati fiscali — e spesso non su quelli dell’anno in corso, bensì su una tassazione anteriore già cresciuta in giudicato. Ciò ha una conseguenza che sorprende: chi quest’anno guadagna nettamente meno in molti Cantoni non se lo vede considerare automaticamente — altri ne tengono conto soltanto con il conteggio definitivo successivo.',
           'La LAMal prescrive tuttavia che, nell’esame delle condizioni d’ottenimento, i Cantoni considerino, su richiesta particolare della persona assicurata, le circostanze economiche e familiari più recenti (art. 65 cpv. 3 LAMal). Il suo Cantone disciplina i dettagli, ad esempio condizioni, documenti, termini e decorrenza. Un diritto alla riduzione non ne deriva automaticamente. Le informazioni sono fornite dal servizio competente — per lo più la cassa cantonale di compensazione o l’istituto cantonale delle assicurazioni sociali, in singoli Cantoni però l’amministrazione delle contribuzioni o il Comune di domicilio.',
         ],
       },
@@ -155,7 +155,7 @@ export const SEITEN = [
         titel: 'Le direttive COSAS sono raccomandazioni, non legge',
         absaetze: [
           'È il punto più spesso trascurato. Le direttive della Conferenza svizzera delle istituzioni dell’azione sociale (COSAS) sono <strong>raccomandazioni</strong>. Diventano vincolanti soltanto nella misura in cui un Cantone le recepisce nel proprio diritto — e i Cantoni lo fanno in misura diversa.',
-          'In pratica significa: un calcolatore COSAS dà un buon primo orientamento, ma non è una promessa. Ciò che vale nel suo caso figura nella legge cantonale sull’aiuto sociale e nella decisione del servizio competente.',
+          'In pratica significa: un calcolatore COSAS dà un buon primo orientamento, ma non è una promessa. Ciò che vale nel suo caso figura nella legislazione cantonale in materia di assistenza sociale e nella decisione del servizio competente.',
         ],
       },
       {
@@ -220,7 +220,7 @@ export const SEITEN = [
         absaetze: [
           'A livello cantonale e comunale si combinano due grandezze. La <strong>tariffa</strong> stabilisce quanta imposta un determinato reddito imponibile genera — ne risulta la cosiddetta imposta semplice. Il <strong>moltiplicatore d’imposta</strong> è un fattore applicato a quest’ultima, per lo più indicato in percentuale, che Cantone e Comune fissano ciascuno per sé e possono adeguare ogni anno.',
           'A seconda del Cantone e della confessione, sul conteggio figurano ulteriori voci, ad esempio l’imposta di culto o un’imposta personale. Sono per lo più modeste, ma spiegano perché la somma non corrisponde esattamente a quanto indica un semplice calcolatore del reddito.',
-          'Due Comuni dello stesso Cantone hanno quindi la stessa tariffa, ma ciascuno il proprio moltiplicatore — che può differire. Due Cantoni hanno entrambi diversi. È questa la vera leva dietro i noti confronti intercantonali. In singoli Cantoni vi sono inoltre particolarità, ad esempio Comuni senza imposta comunale propria.',
+          'Due Comuni dello stesso Cantone hanno quindi la stessa tariffa, ma ciascuno il proprio moltiplicatore — che può differire. Tra due Cantoni differiscono invece sia la tariffa sia il moltiplicatore. È questa la vera leva dietro i noti confronti intercantonali. In singoli Cantoni vi sono inoltre particolarità, ad esempio Comuni senza imposta comunale propria.',
         ],
       },
       {
@@ -260,19 +260,19 @@ export const SEITEN = [
 export const SONDERSEITEN = [
   {
     pfad: 'rechtliches',
-    titel: 'Colofone, protezione dei dati ed esclusione di responsabilità',
+    titel: 'Impressum, protezione dei dati ed esclusione di responsabilità',
     beschreibung:
-      'Chi sta dietro Maloja Plana, quali dati vengono raccolti alla consultazione di queste pagine e per che cosa i calcolatori espressamente non rispondono.',
+      'Chi sta dietro Maloja Plana, quali dati vengono raccolti alla consultazione di queste pagine e di che cosa i calcolatori espressamente non rispondono.',
     brotkrume: 'Note legali',
     vorspann:
-      'Questa pagina vale per malojaplana.ch e per le pagine esplicative pubbliche. Per l’applicazione stessa vale inoltre l’informativa dettagliata sulla protezione dei dati, che figura nell’applicazione sotto «Protezione dei dati e note legali» — anch’essa senza codice d’accesso. Fanno fede le versioni pubblicate: questa pagina per malojaplana.ch e le pagine esplicative, il testo nell’applicazione per l’applicazione. Le versioni di lavoro nel codice sorgente pubblico (docs/legal) sono bozze e documentazione d’origine, non la versione vincolante.',
+      'Questa pagina vale per malojaplana.ch e per le pagine esplicative pubbliche. Per l’applicazione stessa vale inoltre l’informativa dettagliata sulla protezione dei dati, che figura nell’applicazione sotto «Privacy & Note legali» — anch’essa senza codice d’accesso. Fanno fede le versioni pubblicate: questa pagina per malojaplana.ch e le pagine esplicative, il testo nell’applicazione per l’applicazione. Le versioni di lavoro nel codice sorgente pubblico (docs/legal) sono bozze e prova della provenienza, non la versione vincolante. In caso di divergenze tra le versioni linguistiche fa fede unicamente la versione tedesca.',
     abschnitte: [
       {
         titel: 'Fornitrice',
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Basilea, Svizzera<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — raccoglitore di vita svizzero. Un progetto open source sotto AGPL-3.0. L’utilizzo dell’applicazione è gratuito; per il white label e altri usi commerciali è disponibile su richiesta una licenza separata.',
-          'Sull’indirizzo di contatto: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3" rel="noopener">art. 3 cpv. 1 lett. s n. 1 LCSl</a> esige indicazioni sull’identità e sull’indirizzo di contatto «compreso quello della posta elettronica». Nome, luogo ed e-mail sono indicati; se sia dovuto in aggiunta un indirizzo postale è in fase di chiarimento. Tramite e-mail siamo raggiungibili per ogni richiesta, anche giuridica.',
+          'Sull’indirizzo di contatto: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3" rel="noopener">art. 3 cpv. 1 lett. s n. 1 LCSl</a> esige indicazioni sull’identità e sull’indirizzo di contatto «incluso il suo indirizzo di posta elettronica». Nome, luogo ed e-mail sono indicati; se sia dovuto in aggiunta un indirizzo postale è in fase di chiarimento. Tramite e-mail siamo raggiungibili per ogni richiesta, anche giuridica.',
         ],
       },
       {
@@ -287,7 +287,7 @@ export const SONDERSEITEN = [
         titel: 'Protezione dei dati su queste pagine',
         absaetze: [
           'Le pagine esplicative sono HTML statico. Non caricano <strong>alcuno script, alcun cookie e alcuna risorsa di terzi</strong>; i caratteri si trovano sullo stesso server. Non vi è alcun tracciamento, alcuna analisi e alcuna pubblicità.',
-          'Alla consultazione vengono comunque raccolti dati tecnici presso l’hoster — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Ginevra, con centri di calcolo in Svizzera: indirizzo IP nei registri del server, tipo di browser, sistema operativo e momento dell’accesso. Ciò è tecnicamente necessario per la fornitura e per la sicurezza dell’esercizio. Infomaniak agisce in tal senso quale responsabile del trattamento (art. 9 nLPD). Secondo le indicazioni del fornitore, i registri di accesso e di errore vengono conservati almeno 7 giorni (FAQ di supporto Infomaniak 1926, consultata il 23 settembre 2026).',
+          'Alla consultazione vengono comunque raccolti dati tecnici presso l’hoster — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Ginevra, con centri dati in Svizzera: indirizzo IP nei registri del server, tipo di browser, sistema operativo e momento dell’accesso. Ciò è tecnicamente necessario per la fornitura e per la sicurezza dell’esercizio. Infomaniak agisce in tal senso quale responsabile del trattamento (art. 9 nLPD). Secondo le indicazioni del fornitore, i registri di accesso e di errore vengono conservati almeno 7 giorni (FAQ di supporto Infomaniak 1926, consultata il 23 settembre 2026).',
           'Non vi sono altri destinatari: nessun servizio di analisi, nessuna integrazione di social media, nessuna trasmissione e nessuna vendita di dati.',
         ],
       },
@@ -302,7 +302,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Quanto lei registra in Maloja Plana resta <strong>sul suo dispositivo</strong> (localStorage e IndexedDB nel browser). Non vi è alcun account, alcuna registrazione e alcuna trasmissione alla fornitrice o a terzi. Chi vuole cancellare i dati li cancella sul dispositivo — non esiste una seconda copia altrove.',
           'Anche i dati degni di particolare protezione (salute, aiuto sociale, convinzioni) vengono memorizzati dall’applicazione solo localmente. Le copie di sicurezza automatiche nel browser non sono cifrate.',
-          'Poiché nulla viene trasmesso, la fornitrice non può nemmeno fornire informazioni sulle sue immissioni: non le ha mai viste. La versione dettagliata con tutti i diritti secondo la LPD figura nell’applicazione sotto «Protezione dei dati e note legali».',
+          'Poiché nulla viene trasmesso, la fornitrice non può nemmeno fornire informazioni sulle sue immissioni: non le ha mai viste. La versione dettagliata con tutti i diritti secondo la LPD figura nell’applicazione sotto «Privacy & Note legali».',
         ],
       },
       {

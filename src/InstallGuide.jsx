@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { Icon, aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { GERAETE, aktuellesGeraet, laeuftAlsApp } from './utils/geraetErkennung.js';
@@ -105,7 +105,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
 
     React.createElement(PageTitle, {
       palette,
-      style: { marginBottom: space.sm + 'px', letterSpacing: '0.2px' },
+      style: { marginBottom: space.sm + 'px' },
     }, t('install.title')),
 
     React.createElement('p', {
@@ -164,11 +164,8 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
         'aria-expanded': andereOffen,
         // aria-controls nur, solange das Ziel im DOM steht (eingeklappt wird es nicht gerendert).
         'aria-controls': andereOffen ? 'install-andere-geraete' : undefined,
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.sandDeep, fontSize: text.sm, fontFamily: 'inherit',
-          fontWeight: weight.medium, padding: '0 0 ' + space.sm + 'px 0', textAlign: 'left',
-        },
+        // Aufklapper: leiser goldener Text (Fassung 9, M7).
+        style: { ...knopfStil(palette, 'leise'), textAlign: 'left' },
       },
         React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(andereOffen)),
         andereOffen ? t('install.andereVerbergen') : t('install.andereZeigen')),
@@ -183,11 +180,8 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
       React.createElement('button', {
         type: 'button',
         onClick: () => onNavigate('export'),
-        style: {
-          background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px',
-          padding: space.xs + 'px ' + space.md + 'px', fontSize: text.sm,
-          color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
-        },
+        // Führt nur zur Sicherung: Link (Fassung 9, M2).
+        style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm },
       }, t('install.daten.cta'))
     ),
 

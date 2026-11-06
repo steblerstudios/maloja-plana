@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
-import { SEARCH_VIEWS } from './config/ansichtenRegister.js';
+import { suchTreffer, oeffneTreffer, eintragKey } from './config/suche.js';
 
 // In-App-Suche: findet Werkzeuge & Kapitel und springt direkt hin.
 // Matcht gegen die bereits übersetzten nav-Labels (kein Extra-i18n pro Eintrag)
@@ -18,18 +18,14 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
   const setQuery = (v) => { setQueryState(v); try { sessionStorage.setItem('mp_suche', v); } catch { /* ohne Speicher */ } };
   const q = query.trim().toLowerCase();
 
-  const hit = (parts) => !q || parts.some(p => (p || '').toLowerCase().includes(q));
-
-  const toolResults = SEARCH_VIEWS.filter(v => hit([t(v.nav), v.sub ? t(v.sub) : '', v.view, ...(v.aliases || [])]));
-  const chapterResults = chapters
-    .map((ch, idx) => ({ ch, idx }))
-    .filter(({ ch }) => hit([ch.title, ch.key]));
+  // Eine Suche für Lupe und Menü (config/suche.js, F9-D1).
+  const { werkzeuge: toolResults, kapitel: chapterResults } = suchTreffer(q, t, chapters);
 
   const s = {
     card: { maxWidth: '680px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     input: { width: '100%', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box', marginBottom: space.md + 'px' },
-    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', margin: space.md + 'px 0 ' + space.xs + 'px' },
+    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, margin: space.md + 'px 0 ' + space.xs + 'px' },
     row: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'start', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '66', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
     rowMain: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
     rowSub: { fontSize: text.xs, color: palette.mid, marginTop: '1px' },
@@ -65,7 +61,7 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
 
     toolResults.length > 0 && React.createElement('div', null,
       React.createElement('div', { style: s.sectionTitle }, t('search.toolsTitle')),
-      toolResults.map(v => resultRow(v.view, v.icon, t(v.nav), v.sub ? t(v.sub) : null, () => onNavigate && onNavigate(v.view)))
+      toolResults.map(v => resultRow(eintragKey(v), v.icon, t(v.nav), v.sub ? t(v.sub) : null, () => onNavigate && oeffneTreffer(v, chapters, onNavigate)))
     ),
 
     chapterResults.length > 0 && React.createElement('div', null,

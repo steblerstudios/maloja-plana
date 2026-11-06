@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SEITEN, SONDERSEITEN, QUELLEN, BASIS, GEPRUEFT } from '../../scripts/seiten-inhalt.mjs';
 import { SPRACHEN } from '../../scripts/seiten-sprachen.mjs';
+import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Öffentliche Erklärseiten · Entscheid Stebler Studios 20.09.2026
@@ -150,7 +151,7 @@ describe('Öffentliche Erklärseiten', () => {
 
     it('verlinkt intern nur auf Seiten, die es gibt', () => {
       const intern = [...html.matchAll(/href="\/([a-z0-9-]+)\/"/g)].map((m) => m[1]);
-      const pfade = [...SEITEN, ...SONDERSEITEN].map((s) => s.pfad);
+      const pfade = [...SEITEN, ...SONDERSEITEN, ...HINTERGRUND].map((s) => s.pfad);
       for (const ziel of intern) expect(pfade).toContain(ziel);
       // Jede Seite führt zurück in die App und weiter zu den anderen.
       expect(html).toContain('href="/"');
@@ -303,9 +304,11 @@ describe('Öffentliche Erklärseiten', () => {
       // freigegeben wird — und zwar aus dem falschen Grund. Dass nur
       // freigegebene Sprachen drinstehen dürfen, prüft
       // src/__tests__/erklaerseitenSprachen.test.js.
+      // Seit 04.11.2026 kommen die Hintergrundseiten dazu — nur Deutsch, also
+      // einmal (src/__tests__/hintergrundSeiten.test.js).
       const freie = SPRACHEN.filter((s) => s.freigegeben).length;
       expect((xml.match(/<loc>/g) || []).length)
-        .toBe((SEITEN.length + SONDERSEITEN.length) * freie + 1);
+        .toBe((SEITEN.length + SONDERSEITEN.length) * freie + HINTERGRUND.length + 1);
     });
   });
 

@@ -151,9 +151,10 @@ export const Obstgarten = ({ palette, t, data, onNavigate, isDarkMode }) => {
   return h('div', { style: { maxWidth: '860px' } },
     h(PageTitle, { palette, icon: h(Icon, { name: 'home', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('obstgarten.title')),
     h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.md + 'px 0' } }, t('obstgarten.intro')),
-    h('svg', {
+    // Auf dem Handy wären die Namen 4 bis 6 px klein: Das Bild behält eine Mindestbreite und lässt sich seitwärts schieben (F8-O4).
+    h('div', { style: { overflowX: 'auto' } }, h('svg', {
       viewBox: '0 0 840 496', width: '100%',
-      style: { display: 'block', borderRadius: radius.md, border: '1px solid ' + palette.border },
+      style: { display: 'block', minWidth: '640px', borderRadius: radius.md, border: '1px solid ' + palette.border },
       role: 'group', 'aria-label': t('obstgarten.title'),
     },
       h('rect', { x: 0, y: 0, width: 840, height: 496, fill: C.sky }),
@@ -163,7 +164,7 @@ export const Obstgarten = ({ palette, t, data, onNavigate, isDarkMode }) => {
       h('path', { d: 'M0 300 Q230 272 470 300 T840 304 L840 496 L0 496 Z', fill: C.mead2 }),
       h('path', { d: 'M410 496 Q450 400 390 320 Q356 280 402 236', stroke: C.path, strokeWidth: 26, fill: 'none', strokeLinecap: 'round' }),
       ...treeGroups
-    ),
+    )),
     h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, marginTop: space.md + 'px' } }, t('obstgarten.legend'))
   );
 };

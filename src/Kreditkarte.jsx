@@ -4,6 +4,7 @@ import { hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
 import { karteRechnen, VORTEILE, VERSICHERUNG_STATUS } from './utils/kreditkarte.js';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 // «Lohnt sich meine Karte?» — pro Kreditkarte Kosten gegen Vorteile, aufs Jahr gerechnet.
 // Wunsch und Skizze Stebler Studios 27.09.2026 (Flächen A–E):
@@ -32,7 +33,6 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const hinweisStil = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
-  const knopfStil = { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium };
 
   const feld = (i, key, label, hinweis, extra = {}) => {
     const id = 'kk-' + i + '-' + key;
@@ -160,12 +160,12 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
           VORTEILE.map((v) => vorteilZeile(i, v)),
           gespeichert.length > 0 && onUpdateData && React.createElement('button', {
             type: 'button', onClick: () => speichern(gespeichert.filter((_, j) => j !== i)),
-            style: { ...knopfStil, color: palette.mid, marginBottom: space.sm + 'px', minHeight: '44px' },
+            style: { ...knopfStil(palette, 'gefahr'), marginBottom: space.sm + 'px' },
           }, t('kreditkarteView.karteWeg'))
         )),
         onUpdateData && React.createElement('button', {
           type: 'button', onClick: () => speichern([...karten, {}]),
-          style: { ...knopfStil, minHeight: '44px' },
+          style: knopfStil(palette, 'neben'),
         }, t('kreditkarteView.karteDazu'))
       ),
     },

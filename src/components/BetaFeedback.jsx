@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { text, weight, leading, space, radius, ease, duration } from '../config/tokens.js';
+import { text, weight, leading, space, radius } from '../config/tokens.js';
 import { useT } from '../i18n/index.js';
 import { betaFeedbackText, betaFeedbackHref } from '../utils/betaFeedbackMail.js';
 import { tageLoeschen } from '../utils/nutzungsTage.js';
 import { nutzungstageImMonat, feedbackRuht, feedbackMerken } from '../utils/nutzungsAnzeige.js';
-import { inZwischenablage } from '../utils/zwischenablage.js';
+import { knopfStil, linkStil, auswahlStil } from './PrimaryButton.jsx';
 import { version as APP_VERSION } from '../../package.json';
 
 // Eigene Datei und per React.lazy geladen (02.11.2026): Dashboard.jsx liegt im Startbündel.
@@ -35,14 +35,16 @@ export const BetaFeedback = ({ palette, t }) => {
   const href = betaFeedbackHref(entwurf);
 
   const kopieren = async () => {
-    const ok = await inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf);
+    // Erst beim Klick geladen: hält das Startbündel unter dem size-limit (#655).
+    const ok = await import('../utils/zwischenablage.js')
+      .then((m) => m.inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf))
+      .catch(() => false);
     setKopie(ok ? 'ok' : 'fehler');
   };
 
-  const linkKnopf = {
-    background: 'none', border: 'none', padding: space.xs + 'px 0', minHeight: '44px', cursor: 'pointer',
-    color: palette.mid, fontSize: text.sm, fontFamily: 'inherit', textDecoration: 'underline',
-  };
+  // Knopfarten (Fassung 9): «Text kopieren» ist eine Handlung (Nebenknopf), «erneut öffnen» ein Link,
+  // «Diesmal nicht» leise (Zählen ja, drängen nein), «Zahl löschen» Gefahr (es geht etwas verloren).
+  const kopierKnopf = knopfStil(palette, 'neben');
   const kopieHinweis = kopie && React.createElement('div', {
     role: 'status', style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' },
   }, t(kopie === 'ok' ? 'beta.feedback.copied' : 'beta.feedback.copyFailed'));
@@ -66,9 +68,9 @@ export const BetaFeedback = ({ palette, t }) => {
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, t('beta.feedback.thanksDetail')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.md + 'px' } },
         t('beta.feedback.noMailApp') + ' ',
-        React.createElement('button', { type: 'button', onClick: kopieren, style: linkKnopf }, t('beta.feedback.copy')),
+        React.createElement('button', { type: 'button', onClick: kopieren, style: kopierKnopf }, t('beta.feedback.copy')),
         ' · ',
-        React.createElement('a', { href, style: { ...linkKnopf, display: 'inline-block' } }, t('beta.feedback.reopen'))
+        React.createElement('a', { href, style: linkStil(palette) }, t('beta.feedback.reopen'))
       ),
       kopieHinweis
     );
@@ -78,15 +80,11 @@ export const BetaFeedback = ({ palette, t }) => {
     return React.createElement('div', { style: { textAlign: 'center', margin: space.xl + 'px 0' } },
       React.createElement('button', {
         onClick: () => setExpanded(true),
-        style: {
-          background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
-          padding: space.sm + 'px ' + space.lg + 'px', cursor: 'pointer',
-          color: palette.mid, fontSize: text.sm, fontFamily: 'inherit',
-        }
+        style: knopfStil(palette, 'neben')
       }, t('beta.feedback.title')),
       React.createElement('div', null,
         React.createElement('button', {
-          type: 'button', style: linkKnopf,
+          type: 'button', style: knopfStil(palette, 'leise'),
           onClick: () => { feedbackMerken(true); setPhase('weg'); },
         }, t('beta.feedback.diesmalNicht'))
       )
@@ -94,11 +92,8 @@ export const BetaFeedback = ({ palette, t }) => {
   }
 
   const radioStyle = (selected) => ({
-    padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm, cursor: 'pointer',
-    border: '1px solid ' + (selected ? (palette.sage || palette.accent) : palette.border),
-    background: selected ? (palette.sageMist || palette.up) : 'transparent',
-    color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
-    fontWeight: selected ? weight.medium : weight.normal, transition: `background ${duration.fast}ms ${ease}, border-color ${duration.fast}ms ${ease}`,
+    ...auswahlStil(palette, selected), padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm,
+    fontWeight: selected ? weight.medium : weight.normal,
   });
 
   // Erst den Merker setzen, dann das Mailprogramm öffnen. Die Antworten werden nicht
@@ -158,7 +153,7 @@ export const BetaFeedback = ({ palette, t }) => {
       ),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('beta.feedback.nutzungHinweis')),
       React.createElement('button', {
-        type: 'button', style: linkKnopf,
+        type: 'button', style: { ...knopfStil(palette, 'gefahr'), marginTop: space.sm + 'px' },
         onClick: () => { tageLoeschen(); setTage(0); setNutzungMit(false); },
       }, t('beta.feedback.nutzungLoeschen'))
     ),
@@ -181,15 +176,9 @@ export const BetaFeedback = ({ palette, t }) => {
         type: 'button',
         onClick: handleSubmit,
         disabled: leer,
-        style: {
-          padding: space.sm + 'px ' + space.lg + 'px', minHeight: '44px', borderRadius: radius.sm,
-          border: 'none', cursor: leer ? 'default' : 'pointer',
-          background: leer ? palette.border : (palette.sage || palette.accent),
-          color: leer ? palette.mid : '#fff',
-          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        }
+        style: knopfStil(palette, 'haupt', { disabled: leer })
       }, t('beta.feedback.submit')),
-      !leer && React.createElement('button', { type: 'button', onClick: kopieren, style: linkKnopf }, t('beta.feedback.copy'))
+      !leer && React.createElement('button', { type: 'button', onClick: kopieren, style: kopierKnopf }, t('beta.feedback.copy'))
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' } }, t('beta.feedback.submitHint')),
     kopieHinweis

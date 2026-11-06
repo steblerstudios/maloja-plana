@@ -8,6 +8,8 @@ import { RECHNER_KAPITEL } from '../config/brotkrumePfade.js';
 import { ansichtIkon } from '../config/ansichtenRegister.js';
 import { chapterColor } from '../data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from '../utils/lebensbereichFruechte.js';
+import { linkStil, auswahlStil } from './PrimaryButton.jsx';
+import { Belege } from './Belege.jsx';
 
 // Rechner-Form X — die EINE Hülle für alle Rechner (Entscheid Stebler Studios 24.10.2026, «Entwurf X passt
 // für alle Rechner»; gebaut F7-A2, 27.10.2026). Wortlaut: docs/design/mockups-stardust-2026-10-23/VERGLEICH.md,
@@ -45,7 +47,7 @@ export const RechnerForm = ({
 }) => {
   const kapitel = RECHNER_KAPITEL[view] || null;
   const farbe = kapitel ? zeichenFarbe(palette, kapitel) : null;
-  const stufe = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.mid, padding: 0, minHeight: '44px', textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: palette.border };
+  const stufe = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px' };
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.mid, fontSize: text.xs } }, '›');
   const id = (teil) => 'rf-' + view + '-' + teil;
 
@@ -99,7 +101,7 @@ export const RechnerForm = ({
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '48px', height: '48px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: (farbe ? farbe.flaeche : palette.sage) + '2E', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: ansichtIkon(view), size: 24 })),
         // Lange Titel («Arbeitslosenentschädigung») brechen mit Silbentrennung (Heading.jsx `umbruch`).
-        React.createElement(PageTitle, { palette, style: { fontSize: 'clamp(22px, 6.4vw, 30px)', lineHeight: 1.1, minWidth: 0 } }, titel)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, titel)
       ),
       satz && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.md + 'px', maxWidth: '560px' } }, satz)
     ),
@@ -114,7 +116,9 @@ export const RechnerForm = ({
     ),
 
     // (6) Quelle · Stand
-    quelle && React.createElement('div', { 'data-teil': 'quelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: space.lg + 'px' } }, quelle)
+    quelle && React.createElement('div', { 'data-teil': 'quelle', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: space.lg + 'px' } },
+      // Fassung 9: eine Quellenzeile als Text wird zu aufklappbaren Belegen (Belege.jsx).
+      typeof quelle === 'string' ? React.createElement(Belege, { palette, t, zeile: quelle, style: { fontSize: 'inherit' } }) : quelle)
   );
 };
 
@@ -159,10 +163,8 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
           onClick: () => onWahl(o.wert),
           onKeyDown: (e) => taste(e, i),
           style: {
-            minHeight: '44px', ...auswahlRahmen(an, palette, 8, 16), fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.sm + 'px',
+            ...auswahlStil(palette, an), minHeight: '44px', padding: '8px 16px', fontSize: text.sm,
             fontWeight: an ? weight.semi : weight.normal,
-            background: an ? palette.sage + '22' : palette.surface,
-            color: an ? (palette.sageDeep || palette.text) : palette.text,
           },
         }, o.label);
       })
@@ -198,11 +200,8 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
           'aria-selected': an, 'aria-controls': id + '-panel', tabIndex: an ? 0 : -1,
           onClick: () => onWahl(r.key), onKeyDown: (e) => taste(e, i),
           style: {
-            flexShrink: 0, minHeight: '44px', ...auswahlRahmen(an, palette, 8, 14), fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
-            borderRadius: radius.full + 'px', whiteSpace: 'nowrap',
+            ...auswahlStil(palette, an), flexShrink: 0, minHeight: '44px', padding: '8px 14px', fontSize: text.sm, whiteSpace: 'nowrap',
             fontWeight: an ? weight.semi : weight.medium,
-            background: an ? palette.sage + '22' : 'transparent',
-            color: an ? (palette.sageDeep || palette.text) : palette.text,
           },
         }, r.label);
       })

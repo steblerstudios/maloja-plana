@@ -5,6 +5,8 @@
 import { werteFuerStichtag } from './jahrestabelle.js';
 
 export const REFERENZALTER = 65;
+// Frühester AHV-Vorbezug in Monaten vor dem Referenzalter (Quelle in data/ahvRechner.js).
+export const VORBEZUG_MAX_MONATE = 24;
 
 // === BVG-Grenzbeträge und Lohnabzüge je Kalenderjahr (Weg A, Entscheid Stebler Studios 21.10.2026) ===
 // Auswahl nach Stichtag über `lohnWerte(stichtag)`; die Konstanten weiter unten sind der Stand
@@ -81,6 +83,16 @@ export function referenzalterMonate({ geschlecht, geburtsjahr } = {}) {
     // ab JG 1964: 65 Jahre (Fallback unten)
   }
   return REFERENZALTER * 12;                       // 780 = 65 Jahre
+}
+
+/**
+ * Frühester AHV-Vorbezug als Alter in MONATEN. Frauen der Übergangsgeneration ab dem vollendeten 62. Altersjahr
+ * (AHVG Art. 40c, Fassung 1.1.2026; Merkblatt 3.04, Stand 1.1.2026: «Jahrgang 1961 bis 1969»), sonst zwei Jahre vor
+ * dem Referenzalter. Monatsgenau: Der Vorbezug beginnt erst im Monat nach dem Geburtstag, das ist hier nicht abgebildet.
+ */
+export function fruehesterVorbezugMonate({ geschlecht, geburtsjahr } = {}) {
+  if (geschlecht === 'female' && geburtsjahr >= 1961 && geburtsjahr <= 1969) return 62 * 12;
+  return referenzalterMonate({ geschlecht, geburtsjahr }) - VORBEZUG_MAX_MONATE;
 }
 
 /**

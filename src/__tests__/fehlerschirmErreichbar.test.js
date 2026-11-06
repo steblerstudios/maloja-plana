@@ -48,7 +48,10 @@ describe('Fehlerschirm — nichts rutscht unerreichbar nach oben', () => {
   it('zentriert über auto-Ränder statt über align-items — die werden nie negativ', () => {
     globalThis.localStorage = speicher({});
     const html = schirm();
-    expect(html).not.toMatch(/align-items:center/);
+    // Nur der äussere Kasten (role="alert") zählt: die Knöpfe zentrieren ihren eigenen Inhalt
+    // (knopfStil, Fassung 9), das schiebt nichts über die Kante.
+    const aussen = html.match(/<div role="alert" style="([^"]*)"/)[1];
+    expect(aussen).not.toMatch(/align-items:center/);
     expect(html).toMatch(/margin:auto/);
   });
 

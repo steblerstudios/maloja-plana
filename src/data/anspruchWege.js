@@ -6,18 +6,18 @@
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
 import { pegelState, sozialhilfePegelState } from './pegel.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from './ipvAbzug.js';
+import { einnahmenErfasst } from '../utils/unterstuetzungseinheit.js';
 
 // Die möglichen Wege aus einem Satz Angaben (`probe`: Profil mit den hier angepassten Zahlen).
 // Nur POSITIVE Hinweise, nie ein «Nein»-Verdikt. Wirft eine Rechnung, bleibt die Liste leer
 // (Orientierung, nie blockierend).
 export function wegeAusProbe(probe) {
   const canton = probe?.basis?.canton || '';
-  const income = Number(probe?.finanzen?.monthlyIncome) || 0;
   const rent = Number(probe?.wohnen?.rentAmount) || 0;
   const wege = [];
   try {
-    // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
-    const ipv = (income > 0 && canton) ? calculateIPV(probe) : null;
+    // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag. Lohn oder Rente (einnahmenErfasst).
+    const ipv = (einnahmenErfasst(probe?.finanzen) && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
     if (ipv && ipv.eligible) wege.push({ key: 'ipv', monthly: ipv.amount });
     else if (ipv && ipv.anspruchMoeglich) wege.push({ key: 'ipv', qualitative: true });
@@ -25,14 +25,19 @@ export function wegeAusProbe(probe) {
     // Bedarf + Vermögen unter Freibetrag — sonst wäre «Anspruch» unehrlich.
     if (rent > 0) {
       const sh = calculateSozialhilfe(probe);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({
+      // Einkommen oder Rente nicht erfasst: ein Weg ohne Betrag, wie Seite, Karte und Dossier (F8-S4). Bis 03.11.2026
+      // nannte er hier einen Betrag aus Einkommen 0, etwa CHF 2561 für eine Rentnerin ohne erfasste Rente.
+      if (sh?.einkommenFehlt) {
+        // Nur, wenn schon das erfasste Einkommen den Bedarf nicht deckt: eine fehlende Rente kann es nur erhöhen (Fachprüfung d18ef9f6).
+        if (sh.wegOhneBetrag) wege.push({ key: 'soz', qualitative: true, renteFehlt: !!sh.renteFehlt });
+      } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) wege.push({
         key: 'soz', monthly: sh.deficit, vfbUnbestaetigt: !!sh.vfbUnbestaetigt, mitGanzerMiete: !!sh.mitGanzerMiete,
-        ansatzTiefer: !!sh.ansatzTiefer, ohneFreibetrag: !!sh.ohneFreibetrag,
+        ansatzTiefer: !!sh.ansatzTiefer, ohneFreibetrag: !!sh.ohneFreibetrag, hinweise: sh.hinweise || [],
       });
     }
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
     const el = checkELEligibility(probe);
-    if (el?.eligible) wege.push({ key: 'el', qualitative: true });
+    if (el?.elPruefen) wege.push({ key: 'el', qualitative: true });
   } catch { /* Orientierung, nie blockierend */ }
   // IPV ist subsidiär: greift Sozialhilfe, wird die volle Prämie schon über den Sozialhilfe-
   // Bedarf mitgetragen — dann kein zusätzlicher Geldbetrag. Quelle: SKOS-Faktenblatt
@@ -56,8 +61,7 @@ export function wegeAusProbe(probe) {
 //   art 'ohneGlas'   → gleiche Aussage wie calculateIPV, ohne Wasserstand
 export function ipvAnzeige(probe) {
   const canton = probe?.basis?.canton || '';
-  const income = Number(probe?.finanzen?.monthlyIncome) || 0;
-  if (!canton || income <= 0) return { art: 'leer' };
+  if (!canton || !einnahmenErfasst(probe?.finanzen)) return { art: 'leer' };
   const ipv = calculateIPV(probe);
   const abzug = ipvAbzug(probe, ipv);
   if (abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT || abzug.grund === IPV_ABZUG_GRUND.VERFUEGUNG_UNZUGEORDNET) {
@@ -76,8 +80,7 @@ export function ipvAnzeige(probe) {
 // Sozialhilfe-Pegel: braucht Kanton, Einkommen und Miete, sonst wäre der Bedarf unvollständig.
 export function sozialhilfeAnzeige(probe) {
   const canton = probe?.basis?.canton || '';
-  const income = Number(probe?.finanzen?.monthlyIncome) || 0;
   const rent = Number(probe?.wohnen?.rentAmount) || 0;
-  if (!canton || income <= 0 || rent <= 0) return null;
+  if (!canton || !einnahmenErfasst(probe?.finanzen) || rent <= 0) return null;
   return sozialhilfePegelState(probe);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PanelTitle } from './Heading.jsx';
-import { text, weight, radius, space } from '../config/tokens.js';
+import { text, weight, radius, space, duration, ease } from '../config/tokens.js';
 import { hinweisZeichen } from '../IconSystem.jsx';
 import { GlossarText } from '../GlossarBegriff.jsx';
 import { betrag as chfBetrag } from '../utils/geld.js';
@@ -62,7 +62,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
       React.createElement('div', { 'aria-hidden': true, style: {
         width: '100%', maxWidth: '72px', height: barH(betrag) + 'px',
         background: aktiv ? palette.sand : palette.mid + '55',
-        borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0', transition: 'height .2s ease',
+        borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0', transition: 'height ' + duration.normal + 'ms ' + ease,
       } }),
       React.createElement('div', { style: { fontSize: text.xs, color: aktiv ? palette.sandDeep : palette.mid, fontWeight: aktiv ? weight.semi : weight.medium, textAlign: 'center', lineHeight: 1.3 } }, label)
     );

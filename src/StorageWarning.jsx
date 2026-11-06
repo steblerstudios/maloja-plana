@@ -39,8 +39,8 @@ export const StorageWarning = ({ palette, t }) => {
       borderRadius: radius.sm,
       background: isCritical
         ? palette.rose + '18'
-        : palette.gold + '18',
-      border: '1px solid ' + (isCritical ? palette.rose + '40' : palette.gold + '40'),
+        : palette.sky + '18',
+      border: '1px solid ' + (isCritical ? palette.rose + '40' : palette.sky),
       display: 'flex',
       alignItems: 'start',
       gap: space.sm + 2,
