@@ -174,10 +174,8 @@ const _rechner = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('path', { d: 'M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM8.5 7.5h7M8.5 12h7M8.5 16.5h4' })
 );
 
-// Mappe — ein Dossier / eine Unterlagen-Sammlung (Finanz-Übersicht → Behördendossier).
-const _mappe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('path', { d: 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z' })
-);
+// «mappe» ist am 06.11.2026 in «ordner» aufgegangen (Icon-Plan, Entscheid E2): beide waren
+// derselbe Ordner. Dossiers tragen das Zeichen ihres Themas (Behörden = Waage, Notfall = Kreuz).
 
 // Drucker — Druckansicht (Finanz-Übersicht). Mappe + Drucker ersetzen dort die rohe
 // Glyphe ◇ (docs/TODO.md §G3 P1); je EIN Element, wie die drei Präfixe oben (Bundle-Budget).
@@ -196,10 +194,6 @@ const _dashboard = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
 
 // Sauberes Outline-Zahnrad (statt gefüllter Sternexplosion) — Kontur passt zum
 // Nav-Stil, und ein Zahnrad liest sich klar als Einstellungen (Stebler Studios, Icon-Audit).
-const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '3' }),
-  React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
-);
 
 const _csv = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('path', { d: 'M6 3 H14 L19 8 V20 a1 1 0 0 1 -1 1 H6 a1 1 0 0 1 -1 -1 V4 a1 1 0 0 1 1 -1 Z' }),
@@ -337,11 +331,6 @@ const _lock = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'no
 );
 
 // Globus — Digital & Privatsphäre (Kreis + Äquator + Meridian).
-const _globe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '8.5' }),
-  React.createElement('path', { d: 'M 3.5 12 H 20.5', strokeWidth: '1.4' }),
-  React.createElement('path', { d: 'M 12 3.5 C 15.2 6.2 15.2 17.8 12 20.5 C 8.8 17.8 8.8 6.2 12 3.5 Z', strokeWidth: '1.4' }),
-);
 
 // Tag — Konsum & Medien (Preisschild mit Loch).
 const _tag = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
@@ -389,10 +378,8 @@ zeichenErgaenzen({
   barcode: _barcode,
   delete: _delete,
   rechner: _rechner,
-  mappe: _mappe,
   drucker: _drucker,
   dashboard: _dashboard,
-  settings: _settings,
   csv: _csv,
   debt: _debt,
   filter: _filter,
@@ -413,7 +400,6 @@ zeichenErgaenzen({
   handy: _handy,
   recurring: _recurring,
   lock: _lock,
-  globe: _globe,
   tag: _tag,
   paw: _paw,
   palette: _palette,
