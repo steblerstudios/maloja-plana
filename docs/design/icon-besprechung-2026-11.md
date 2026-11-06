@@ -57,6 +57,7 @@ Verstanden als:
 2. **Varianten der Leitform** unterscheiden die Gebiete im Kapitel — gezeichnet, nicht nur gefärbt (Karte mit einer Person = Person, mit zwei = Familie; Koffer / Schulhut; Herz / Erste-Hilfe-Koffer / Rettungsring).
 3. **Abzeichen unten rechts** = was passiert **oder** ein Mini-Bild eines anderen Kapitels, das mitspielt (Gesundheit = Herz + Mini-Schild).
 ⚠️ Damit überholt: «Gesundheit zum Schild» (→ Herz + Schild-Abzeichen) und ev. «Farbe je Lebensbereich (11)». Noch zu bestätigen.
+Klärungsbild [7 und 11](icon-besprechung-7-und-11.html): 7 Kapitel (Navigation) ⊃ 11 Äste (Baum, Farbe + Frucht). Offen: Farbe der Icons nach Kapitel (7, Empfehlung) oder Ast (11).
 
 ## Grundsatz (06.11.2026)
 
