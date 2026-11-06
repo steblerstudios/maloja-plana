@@ -73,5 +73,12 @@ Nach F9-A2 («überfällig rot», Wächter `fristenBlau.test.js`) fehlt es an de
 **51** Stellen mit Kalenderblatt. Folge: abgelaufen dort **rot** statt heute grau (F9-A2), und
 das Wort heisst «Frist», nicht «Ablauf» (B6; «Ablauf» bleibt für die Abläufe).
 
-**Noch zu entscheiden vor der Skizze:** «vorbei» auf ein Wort festlegen (Vorschlag:
-«abgelaufen» bei Fristen, «überfällig» bei Zahlungen).
+**Entschieden 06.11.2026** (Stebler Studios, «abgelaufen / überfällig»): Für «vorbei» gelten
+nur noch zwei Wörter. **«abgelaufen»** bei Fristen (Abläufe, Steuerfrist, Kalender,
+Jahreskreis, Merkliste, Tresor), **«überfällig»** bei Zahlungen (Zahlungsfristen, Forderungen,
+Arztrechnungen). «verpasst» und «vorbei seit» fallen weg (`calendar.verpasst`,
+`dashboard.glanceDeadlinePast`, `calendar.overdueDays` bei Fristen). In allen fünf Sprachen
+anzugleichen; fr/it/en/rm-Wörter vor dem Bau festlegen.
+
+Damit sind alle Entscheide vor der Skizze gefallen. **Nächster Schritt:** Skizze des Blatts
+(hell, dunkel, Handy; Band blau, abgelaufen rot) zeigen, erst dann bauen.
