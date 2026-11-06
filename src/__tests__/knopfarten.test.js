@@ -39,7 +39,7 @@ describe('Knopfarten: der Baustein', () => {
       expect(knopfStil(p, 'gefahr')).toMatchObject({ color: p.roseDeep, border: '1px solid ' + p.roseDeep });
       expect(knopfStil(p, 'gefahr', { gefuellt: true })).toMatchObject({ background: p.roseBtn, color: '#fff' });
       expect(linkStil(p)).toMatchObject({ color: p.sandDeep, textDecoration: 'underline' });
-      expect(auswahlStil(p, true)).toMatchObject({ background: p.sand, color: p.onSand, borderRadius: '6px' });
+      expect(auswahlStil(p, true)).toMatchObject({ background: p.sand, color: p.onSand, borderRadius: '10px' });
       expect(knopfStil(p, 'haupt').minHeight).toBe('44px');
     });
   }
