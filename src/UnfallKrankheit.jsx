@@ -31,7 +31,7 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
   };
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'unfallkrankheit', icon: 'notfall',
+    palette, t, onNavigate, ablauf: 'unfallkrankheit', icon: 'ereignisUnfall',
     title: t('unfallKrankheit.title'),
     intro: t('unfallKrankheit.intro'),
   },

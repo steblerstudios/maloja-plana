@@ -13,7 +13,7 @@ export const Heirat = ({ palette, t, onNavigate }) => {
   const deadline = inDays(30); // frühzeitig beim Zivilstandsamt anmelden (Orientierung)
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'heirat', icon: 'heart',
+    palette, t, onNavigate, ablauf: 'heirat', icon: 'ereignisHeirat',
     title: t('heirat.title'),
     intro: t('heirat.intro'),
   },

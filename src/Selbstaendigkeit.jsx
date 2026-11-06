@@ -15,7 +15,7 @@ export const Selbstaendigkeit = ({ palette, t, onNavigate }) => {
   const deadline = inDays(30);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'selbstaendigkeit', icon: 'lebenslauf',
+    palette, t, onNavigate, ablauf: 'selbstaendigkeit', icon: 'ereignisSelbst',
     title: t('selbstaendigkeit.title'),
     intro: t('selbstaendigkeit.intro'),
   },

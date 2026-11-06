@@ -12,7 +12,7 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'kind', icon: 'family',
+    palette, t, onNavigate, ablauf: 'kind', icon: 'ereignisGeburt',
     title: t('kind.title'),
     intro: t('kind.intro'),
   },

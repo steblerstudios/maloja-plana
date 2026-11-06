@@ -86,9 +86,12 @@ describe('Ein Thema, ein Zeichen', () => {
     expect(ansichtIkon('notfallpass')).toBe('notfall');
     expect(ansichtIkon('notfallkarte')).toBe('notfall');
   });
-  it('Organspende zeigt ihr eigenes Herz', () => {
-    expect(ansichtIkon('organ')).toBe('organspende');
-    expect(zeigt(lesen('OrganDonation.jsx'), 'organspende')).toBe(true);
+  // Seit Schritt 7b (06.11.2026) trägt Organspende als Lebensereignis überall das Zeichen aus dem
+  // Rucksack — nicht mehr das Gesundheits-Kreuz (vorher) und nicht zwei verschiedene Herzen.
+  it('Organspende zeigt ihr eigenes Herz — das Ereignis-Zeichen, wie im Rucksack', () => {
+    expect(ansichtIkon('organ')).toBe('ereignisOrgan');
+    expect(zeigt(lesen('OrganDonation.jsx'), 'ereignisOrgan')).toBe(true);
+    expect(lesen('OrganDonation.jsx')).not.toMatch(/name: 'health'/);
   });
   it('die Sicherung trägt das Sicherungs-Zeichen, nicht «herunterladen»', () => {
     expect(WERKZEUGE.find((w) => w.view === 'export').icon).toBe('sicherung');

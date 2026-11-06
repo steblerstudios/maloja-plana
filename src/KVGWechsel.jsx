@@ -211,7 +211,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
   const schritte = weg === 'zusatz' ? zusatzSchritte({ palette, t, data, onNavigate }) : grund;
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'kvgwechsel', icon: 'insurance', stand, setStand,
+    palette, t, onNavigate, ablauf: 'kvgwechsel', icon: 'ereignisKkwechsel', stand, setStand,
     title: t('kvgWechsel.title'),
     intro: t(weg === 'zusatz' ? 'zusatzWechsel.intro' : 'kvgWechsel.intro'),
   },
