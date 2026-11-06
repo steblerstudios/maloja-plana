@@ -112,7 +112,7 @@
             "name": "What is the difference from supplementary benefits?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when an old-age or disability insurance benefit does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance."
+              "text": "Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when a benefit from old-age or disability insurance (AHV/IV) does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance."
             }
           }
         ]
@@ -127,10 +127,10 @@
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -138,7 +138,9 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -175,6 +177,8 @@
        nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
     .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
   </style>
 </head>
@@ -194,15 +198,15 @@
       <p class="hinweis">Orientation, not legal or financial advice — the competent authority is what counts. This page deliberately gives no amounts and no deadlines.</p>
 
         <h2>Subsidiary means: everything else first</h2>
-        <p>Social assistance is <strong>subsidiary</strong>. Before it comes into question, other entitlements are examined: wages, unemployment benefits, pensions, supplementary benefits, premium reduction, maintenance payments, scholarships. Your own assets are also taken into account, although the cantons allow an exempt amount whose level differs.</p>
+        <p>Social assistance is <strong>subsidiary</strong>. Before it comes into question, other entitlements are examined: wages, unemployment benefits, pensions, supplementary benefits (Ergänzungsleistungen, EL), premium reduction, maintenance payments, education grants (Stipendien). Your own assets are also taken into account, although the cantons allow an exempt amount whose level differs.</p>
         <p>That is why an application often begins with many questions about quite different benefits. It is not about mistrust, but about the order laid down by law.</p>
 
         <h2>The SKOS guidelines are recommendations, not law</h2>
         <p>This is the most overlooked point. The guidelines of the Swiss Conference for Social Welfare (SKOS) are <strong>recommendations</strong>. They become binding only in so far as a canton adopts them into its own law — and the cantons do so to varying degrees.</p>
-        <p>In practice this means: a SKOS calculator gives a good first indication, but it is not a promise. What applies in your case is set out in the cantonal social assistance act and in the ruling of the competent office.</p>
+        <p>In practice this means: a SKOS calculator gives a good first indication, but it is not a promise. What applies in your case is set out in the cantonal social assistance act and in the ruling (Verfügung) of the competent office.</p>
 
         <h2>What the support typically consists of</h2>
-        <p>In most cantons there are three components: a <strong>basic amount</strong> for living costs, <strong>housing costs</strong> within what is locally customary, and <strong>basic medical care</strong>. Situation-related benefits may be added.</p>
+        <p>In most cantons there are three components: a <strong>basic needs allowance</strong> (Grundbedarf) for living costs, <strong>housing costs</strong> within what is locally customary, and <strong>basic medical care</strong>. Situation-related benefits may be added.</p>
         <p>We deliberately do not give the amounts here: they differ by canton and household size and are adjusted regularly. A figure on a page like this one would be wrong before long.</p>
 
         <h2>The right nobody can lose</h2>
@@ -220,14 +224,14 @@
         <p>Assets are taken into account, but not in full: the cantons allow an exempt amount that is not touched. How high it is differs by canton and household. The competent office calculates this in the individual case.</p>
 
         <h3>What is the difference from supplementary benefits?</h3>
-        <p>Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when an old-age or disability insurance benefit does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance.</p>
+        <p>Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when a benefit from old-age or disability insurance (AHV/IV) does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance.</p>
 
 
       <div class="karte">
         <p><strong>Maloja Plana works this out for your situation.</strong></p>
         <p>A Swiss life folder — taxes, premium reduction, social assistance, minimum wage, pension provision and emergency card in one place. Everything stays on your device: no account, nothing sent to a server, no tracking. Free and open source.</p>
         <p>The app is currently in a <strong>closed beta</strong> and needs an access code. <strong>An example can be viewed without a code</strong> — with invented data; nothing is saved.</p>
-        <p><a class="knopf" href="/">View the example — no access code</a></p>
+        <p><a class="knopf" href="/#/sozialhilfe">View the example — no access code</a></p>
       </div>
 
       <h2>Sources and calculators</h2>

@@ -70,7 +70,7 @@ export const GEPRUEFT = 'September 2026';
 //   ahvMerkblatt  de ✓ fr ✓ it ✓ en ✓   — Endung .d/.f/.i/.e
 //   skosRechner   de ✓ fr ✓             — der Umschalter bietet NUR DE und FR
 //   estvRechner   de ✓                  — kein Sprachumschalter auffindbar
-//   bwoKantone    de ✓                  — dito
+//   bwoKantone    de ✓ fr ✓ it ✓         — nachgemessen 05.11.2026, s. Eintrag
 //   bsvEL         de ✓                  — dito
 //   rm            keine einzige          — der Bund publiziert das nicht auf
 //                                          Rumantsch. Tatsache, kein Mangel.
@@ -173,7 +173,12 @@ export const QUELLEN = {
   bwoKantone: {
     url: 'https://www.bwo.admin.ch/de/kantonale-hilfen',
     text: 'Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen',
-    sprachen: {},
+    // 05.11.2026 per curl gemessen: fr/it 200 mit passendem Titel, Gegenprobe
+    // `/fr/xxyyzz-erfunden` 404. Eine en-Adresse ist nicht belegt.
+    sprachen: {
+      fr: 'https://www.bwo.admin.ch/fr/aides-cantonales',
+      it: 'https://www.bwo.admin.ch/it/aiuti-cantonali',
+    },
     texte: {
       fr: 'Aides cantonales, aperçu de l’Office fédéral du logement',
       it: 'Aiuti cantonali, panoramica dell’Ufficio federale delle abitazioni',
@@ -285,7 +290,7 @@ export const SEITEN = [
     ],
     quellen: ['bwoKantone', 'bsvEL', 'ahvMerkblatt'],
     // Hintergrundseiten (scripts/seiten/krankenkasse.mjs), nur auf Deutsch verlinkt.
-    hintergrund: ['krankenkasse'],
+    hintergrund: ['krankenkasse', 'kantone-im-vergleich'],
   },
 
   // ─── Prämienverbilligung ──────────────────────────────────────────────────
@@ -345,7 +350,7 @@ export const SEITEN = [
       },
     ],
     quellen: ['priminfo', 'fedlexKvgArt65'],
-    hintergrund: ['krankenkasse'],
+    hintergrund: ['krankenkasse', 'kantone-im-vergleich'],
   },
 
   // ─── Sozialhilfe ──────────────────────────────────────────────────────────

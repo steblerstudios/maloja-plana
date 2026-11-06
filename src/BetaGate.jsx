@@ -19,6 +19,8 @@ const STORAGE_KEY = 'or5_beta_access';
 const ERKLAERSEITEN = [
   ['/was-steht-mir-zu/', 'Was steht mir zu?'],
   ['/praemienverbilligung/', 'Prämienverbilligung'],
+  // Seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber hier nicht.
+  ['/krankenkasse/', 'Krankenkasse'],
   ['/sozialhilfe/', 'Sozialhilfe'],
   ['/steuern/', 'Steuern'],
 ];

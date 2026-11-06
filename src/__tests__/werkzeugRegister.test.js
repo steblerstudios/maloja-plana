@@ -154,9 +154,8 @@ describe('Nichts wird unerreichbar', () => {
     expect([...inEinstellungen()].sort()).toEqual(['export', 'notifications']);
     const quelle = readFileSync(new URL('../SettingsView.jsx', import.meta.url), 'utf8');
     expect(quelle).toContain("t('nav.export')");
-    expect(quelle).toContain("t('nav.notifications')");
-    const main = readFileSync(new URL('../main.jsx', import.meta.url), 'utf8');
-    expect(main).toMatch(/onNotifications: \(\) => handleNavigate\('notifications'\)/);
+    // Seit 05.11.2026 (Seitenlandkarte Z2) stehen die Benachrichtigungen als Abschnitt auf der Seite selbst.
+    expect(quelle).toContain('React.createElement(NotificationSettings, { palette, t })');
   });
 
   it('das Menü liest aus dem Register, nicht aus einer eigenen Liste', () => {

@@ -312,3 +312,54 @@ Icon-Felder in `data/`, `config/`, `utils/` gegen das Register — fand zwei Ste
 Bestätigt ohne Befund: 384 feste Icon-Namen und 97 Icon-Felder in den Daten treffen alle
 das Register; im Code sichtbar bleiben nur die bekannten `✓ ⓘ •`. **Grenze:** 116 Stellen
 bilden den Namen zur Laufzeit — geprüft sind ihre Datenquellen, nicht jeder Pfad einzeln.
+
+## ⟨Nachtrag 06.11.2026⟩ Icon-Plan November 2026 — die Regel wird durchgesetzt
+
+Plan und Befund: [`ICON-PLAN-2026-11.md`](ICON-PLAN-2026-11.md) (Zweig `docs/icon-plan`).
+Entscheide von Stebler Studios am 06.11.2026: **E1** Schicht B ganz Strich · **E2** `mappe`
+geht in `ordner` auf · **E3** `plus` ins Register · Strich-Ziel **1,4 px** (obere Grenze).
+
+| Schritt | was jetzt gilt | Wächter |
+|---|---|---|
+| 1 | Warnsätze in Abläufen tragen das Warn-Zeichen — über `AblaufWarnung`, nie von Hand | `ablaufWarnung.test.js` |
+| 2 | Gleiche Handlung, gleiches Zeichen: Drucken = `drucker`, Speichern = `check`, Sicherung = `sicherung`, Notfall = `notfall`, Organspende = `organspende` | `zeichenJeHandlung.test.js` |
+| 3 | Eine Quelle: Boden-Anker, Kopfzeile, Menü lesen aus dem Register (`zeichen()` in main.jsx) | `zeichenEinRegister.test.js` |
+| 4 | `Icon` setzt die Strichstärke aus der Grösse: optisch ≈ 1,4 px | `strichNachGroesse.test.js` |
+| 5 | Schicht B ist Strich, **nie `white`**, kein Text im Zeichen | `schichtBStrich.test.js` |
+
+**Schicht B (Strich)**, Stand Schritt 5: `info` · `warning` · `success` · `error` · `delete` ·
+`filter` · `phone` · `debt` · `csv` · `qr` · `barcode` · `timeline` · `document`, dazu die
+schon vorher gestrichenen (`check`, `kreuz`, `search`, `download`, `upload`, `edit`, `settings` …).
+Themen-Zeichen (`insurance`, `health`, `family`, `work`, `legal`, `doctor` …) gehören zu
+Schicht A und bleiben gefüllt (E1).
+
+🛑 **Offen:** Die Lebensbereich-Bilder (Schicht A) tragen noch über hundert weisse Details
+(`fill/stroke: 'white'`). Auf eigener Farbfläche unproblematisch, frei stehend im Dunkelmodus
+nicht. Eigene Abnahme, nicht Teil dieses Plans.
+
+### ⟨Nachtrag 06.11.2026, Schritt 7⟩ Ordnung: eine Liste, sieben Gruppen
+
+**Jedes Icon steht in [`src/config/iconInventar.js`](../src/config/iconInventar.js)** mit Gruppe
+und Bedeutung. Der Wächter `zeichenOrdnung.test.js` verlangt das in beide Richtungen — kein Icon
+ohne Eintrag, kein Eintrag ohne Icon — und prüft, dass Strich-Gruppen wirklich Strich sind.
+
+| Gruppe | was | Form |
+|---|---|---|
+| A · Lebensbereiche | Kapitel-Bilder: Chalet, Fünfliber, Helvetia, Edelweiss … | reich, gefüllt |
+| A2 · Themen | kleine Themenzeichen neben dem Lebensbereich | gefüllt |
+| B · Funktionen | Handlungen und Zustände | Strich |
+| N · Navigation | Leiste und Menü | Strich |
+| Z · Barrierefreiheit | Darstellungs-Einstellungen | Strich |
+| **E · Lebensereignisse** | **ein Zeichen je Ereignis** — Rucksack, Suche, Übersicht, Seitentitel | Strich |
+| C · Kultur-Schicht | Easter Eggs (Murmeli, Tell …) | noch leer |
+
+**Neu: Gruppe E.** Die 39 Zeichen, die bis dahin nur der Rucksack kannte (`g:` in
+`data/gepaeck.js`), stehen jetzt in `data/ereignisZeichen.js` und als Register-Icons
+`ereignis…`. Suche, Übersicht und die Titel der Abläufe zeigen dasselbe Zeichen wie der Rucksack;
+vorher 9× die Helvetia, 5× das Haus, 3× das Herz für verschiedene Ereignisse.
+`AblaufContainer` nimmt das Zeichen aus dem Register (`ansichtIkon(ablauf, icon)`).
+
+**Aufgelöst:** `emergency` (zweite Glocke; Notfall ist das Kreuz, Erinnerungen die Kuhglocke) ·
+`dashboard` → `sackmesser` · `rechner` → `document` (ein echter Rechner folgt beim Zeichnen) ·
+`mappe` → `ordner` (Schritt 3). **Bewusst geblieben** (Entscheid 24.09.: «nur auf Zuruf»):
+`kalenderUhr`, `mietzinsverbilligung`, `exportTool`, `delete`, `filter`.

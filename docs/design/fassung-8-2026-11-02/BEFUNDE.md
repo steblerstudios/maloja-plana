@@ -108,3 +108,15 @@ Aus der Einstiegsdatei, nicht neu erhoben.
 - **F8-F2:** Die Grenze bezieht sich auf das massgebende Einkommen pro Jahr (SVA Zürich, Einkommensgrenzen 2026), nicht auf brutto oder netto. Entwurf #666.
 - **F8-G6:** Die Annahme stimmte nicht: `finanzen.ivRente` hat keine Eingabe. Neues Feld `finanzen.ivBezug`. SKOS D.3.3 Abs. 3 am Original gelesen, Version vom 01.01.2021. Entwurf #667.
 - **Offen aus den Prüfern:** F8-G5-Rest (Stand-Jahr beim Freibetrag, 3a bei fehlendem Geburtsdatum), 2. Säule zählt nicht (`bvgBalance`), EL rechnet nur mit `ahvRente` und `ivRente`, die keine Eingabe haben, Obstgarten-Schrift am Handy, VorlesenButton 24 px, Doppelansage in AblaufSchale.
+
+## Besprechen-Punkte entschieden (Stebler Studios, 05.11.2026: «Alle so übernehmen»)
+
+- **F8-P1 ja:** Auf dem Blatt fürs Amt nur «Ohne 13. Monatslohn gerechnet — mit einem 13. Monatslohn liegt die Steuer höher.» (`tax.annahmeOhneDreizehntenBlatt`). Die App behält den Hinweis, wo man es angibt.
+- **F8-P2 erledigt, nichts gebaut:** Maria hat «nein» angegeben (`demoData.js:149`). Kapitel und Dossier zeigen beide «Noch nicht»; «nicht erfasst» erscheint nur bei leerem Feld, und leere Felder druckt das Dossier nicht.
+- **F8-P3 ja:** Arbeitgeber nur einmal (unter Ausbildung & Beruf nur, wenn er anders lautet). **Keine Gesundheitsdaten in der Lebensmappe**, nur der Verweis «Blutgruppe, Allergien und Medikamente stehen im Notfall-Dossier», sobald welche erfasst sind. Untertitel «die wichtigsten Angaben» statt «alle wichtigen Angaben».
+- **F8-D4, F8-N1:** später als beschriftete Skizze (A–C), eigener Schritt. N1-Richtung: ein Ort, die Vorsorge-Karte.
+- **F8-V1 ja:** Bei netto erfasstem Lohn schlägt der Vorsorge-Rechner das geschätzte Bruttojahr vor (Schätzung wie im ALV-Rechner, ×13 nur bei 13. Monatslohn «Ja»), mit Knopf «Schätzung übernehmen», nie automatisch. Kein Vorschlag bei Rente, Geschäftsgewinn, möglicher Quellensteuer oder offener Einkommensart.
+- **F8-R1 ja:** «Break-even» und «KVG-Tracker» ersetzt (5 Sprachen). «Referenz CHF …» (Prämienvergleich) heisst jetzt «Tarif der Kasse CHF …» — es ist der Tarif der eigenen Kasse. «Referenzen» im Lebenslauf bleibt.
+- **F8-O3:** nichts im Code, Rumantsch bleibt noindex; Anfrage an eine Fachperson nur als Entwurf, senden = Stebler Studios. Gemessen 05.11.: 1'371 `TODO(rm)`.
+- **F8-O5:** Stempel «September 2026» bleibt bis zur echten Gegenlese mit den Werten 2027 im Dezember.
+- **F8-G2:** nicht trennen, der Hinweis am Feld genügt, ausser die SKOS-Rechnung braucht es.

@@ -17,7 +17,7 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   const [einreise, setEinreise] = useState('');
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'zuzug', icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'zuzug', icon: 'ereignisNeuch',
     title: t('zuzug.title'),
     intro: t('zuzug.intro'),
   },
