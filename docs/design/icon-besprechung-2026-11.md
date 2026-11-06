@@ -49,6 +49,10 @@ Befund im Code (`AblaufSchale.jsx`, `KAPITEL_OHNE_EIGENES`, Entscheid 23.10.): 1
 ✅ **06.11.: Gesundheit zum Edelweiss-Schild** (wie im Kapitel), in Hagebutten-Orange. Notfall behält das Herz mit Kreuz allein → die zwei sind nicht mehr zu verwechseln.
 Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild [Leitformen](icon-besprechung-leitformen.html), je A/B/C neben heute. Empfehlung: Apfel · Arbeitskoffer · Herz mit Kreuz (reicher). Offen.
 
+## 🖼️ Gesamtbild (06.11.2026, abends)
+
+[Gesamtbild](icon-besprechung-gesamtbild.html): alle entschiedenen Leitformen, 11 Ast-Farben, heute → neu, hell/dunkel/Graustufen, Abzeichen-Beispiele. Offen laut Bild: Vorsorge-Variante (in Graustufen = Versicherungen), Gesundheit-Kapitel-Umbau, Kreuz → Rechts-Prüfer, Mini-Zeichen je Seite, Funktionen + Glocke.
+
 ## ✅ Farben entschieden (06.11.2026, abends)
 
 **11 wie am Baum.** Jedes Icon trägt die Farbe seines Astes (`data/lebensbereiche.js`, eine Quelle): Familie kirschrot, Arbeit haselnuss, Vorsorge violett, Gesundheit hagebutte, Notfall rot … — die Leitform (Form) folgt dem Kapitel (7). Meine Empfehlung war 7 Farben; entschieden ist 11. Überholt damit: «Familie soll grün sein» und Ebene 1 «in der Farbe des Kapitels» weiter unten. Folge: Den Unterschied zwischen Ästen im selben Kapitel tragen Farbe **und** Zeichnung (Graustufen-Sicherheit bleibt über die gezeichnete Variante).
