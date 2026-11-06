@@ -144,6 +144,20 @@ ist sie für jede andere Sitzung unsichtbar.
 
 ## 3. Vorschlag
 
+### Stand 06.11.2026, 19:15 — Reihe abgearbeitet bis auf das Kalenderblatt und #729
+
+| PR | gemergt | main danach | geprüft |
+|---|---|---|---|
+| #701 → #703 → #710 → #712 | 17:57–18:38 (andere Hand) | `9ef00b4e` | — |
+| #726 Bewegung | 18:32 (Zuruf) | `436811b4` | Baum lokal: 8’376 grün, Build, Seiten |
+| #730 Fedlex · #728 Entscheide | 19:04 (Zuruf) | `bb396f48` | Baum lokal: 8’395 grün, Build, Seiten 40/40 |
+| #693 Politsystem | 19:04 (andere Hand) | `ef938a3d` | mit #732 zusammen geprüft |
+| **#732 Gold erst beim Festhalten (E2)** | 19:14 (Zuruf) | **`871d1f8c`** | Baum lokal: 8’429 grün, 64.13/65 kB, Seiten 41/41 |
+
+Offen: **#722 → #731** (Sitzung «Steier-Frist Behörden-Design», #722 seit 19:13 auf main, ohne
+Konflikt) · **#729 neu** (Sitzung «Rundungen …»; Hover-Fix `bdc1275b` liegt nur auf dem alten Zweig
+von #726) · #652 · **Deploy** (Stebler Studios). Live weiter `4f37d580`.
+
 ### 3a. Fertigmachen — in dieser Reihenfolge (Mergen ist Stebler Studios’ Hand)
 
 1. **#730, #728** — klein, sauber, grün.
