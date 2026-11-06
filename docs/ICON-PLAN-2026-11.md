@@ -1,6 +1,7 @@
 # Icon-Plan November 2026 — ein Zeichensystem aus einem Guss
 
-**Stand:** 06.11.2026 · Entwurf, wartet auf den Entscheid von Stebler Studios
+**Stand:** 06.11.2026 · **E1, E2, E3 entschieden: ja, alle drei** (Stebler Studios, 06.11.2026,
+Auswahl «Ja, alle drei»). Umsetzung beginnt mit Schritt 1.
 **Grundlage:** Bestandsaufnahme vom 05./06.11. auf `main` `40e61e29` (live `4f37d580`).
 **Baut auf:** [`brand/icon-dictionary.md`](brand/icon-dictionary.md) (die «Finale Zuordnung»
 vom 23.06.2026) und [`ICON_KONVENTION.md`](ICON_KONVENTION.md). Dieser Plan erfindet
