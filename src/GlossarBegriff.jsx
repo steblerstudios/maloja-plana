@@ -147,7 +147,7 @@ export function GlossarBegriff({ term, defKey: vorgegeben, t, palette }) {
         style: {
           position: 'absolute', left: 0, top: '100%', marginTop: '6px', zIndex: 31,
           width: 'max-content', maxWidth: '260px', textAlign: 'left',
-          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md,
           boxShadow: shadow.md, padding: '10px 12px',
           fontSize: text.sm, fontWeight: weight.normal, color: palette.text, lineHeight: 1.5,
           whiteSpace: 'normal',

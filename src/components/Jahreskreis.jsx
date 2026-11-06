@@ -103,7 +103,7 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
   // Eingebettet (im Kalender, seit 24.10.2026 die Hauptansicht): ohne eigene Karte.
   const huelle = eingebettet
     ? { marginBottom: space.sm + 'px' }
-    : { background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md };
+    : { background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.lg, padding: space.md + 'px', marginBottom: space.md };
 
   // Zeitfenster: ein Bogen, der am Stichtag endet und nach vorne ohne harten Anfang ausläuft.
   // Bewusst kein Startdatum: bei der KVG-Kündigung beginnt das Recht mit dem Erhalt der

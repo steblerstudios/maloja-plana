@@ -306,7 +306,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 padding: '7px 14px', minHeight: '44px', fontSize: text.sm, fontFamily: 'inherit',
                 fontWeight: selected ? weight.semi : weight.normal,
                 border: '1px solid ' + (selected ? palette.sage : palette.border),
-                borderRadius: radius.sm + 'px',
+                borderRadius: radius.md + 'px',
                 background: selected ? palette.sage + '18' : palette.surface,
                 color: selected ? (palette.sageDeep || palette.sage) : palette.text,
                 cursor: 'pointer', transition: 'all ' + duration.fast + 'ms ' + ease,
@@ -324,7 +324,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
         // Ich selbst — feste, nicht entfernbare erste Person
         React.createElement('div', {
-          style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.sm, fontSize: text.sm, color: palette.text, fontWeight: weight.medium }
+          style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: space.sm, fontSize: text.sm, color: palette.text, fontWeight: weight.medium }
         }, tr('chapters.basis.fields.household.adultSelf') + (data.basis && data.basis.firstName ? ' · ' + data.basis.firstName : '')),
 
         // K62-Nachlauf E: Zivilstand verheiratet / eingetragene Partnerschaft / Konkubinat, erfasst ist
@@ -347,7 +347,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             const updateAdult = (patch) => setAdultsList(adultsList.map((a, i) => i === idx ? { ...a, ...patch } : a));
             return React.createElement('div', {
               key: idx,
-              style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+              style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border }
             },
               React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.sm } },
                 React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
@@ -383,7 +383,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           type: 'button',
           id: ERWACHSENE_HINZUFUEGEN_ID,
           onClick: () => setAdultsList([...adultsList, { name: '', relationship: '' }]),
-          style: { background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', color: palette.mid, fontSize: text.sm, padding: space.sm + 'px ' + space.md + 'px', fontFamily: fontFamily }
+          style: { background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.md, cursor: 'pointer', color: palette.mid, fontSize: text.sm, padding: space.sm + 'px ' + space.md + 'px', fontFamily: fontFamily }
         }, '+ ' + tr('chapters.basis.fields.household.addAdult'))
       ),
 
@@ -431,7 +431,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             const childInput = { ...hhSelect, cursor: 'text', width: '100%' };
             return React.createElement('div', {
               key: idx,
-              style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+              style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border }
             },
               React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.sm } },
                 React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
@@ -519,7 +519,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     style: {
       gridColumn: '1 / -1',
       background: palette.sageMist || palette.up,
-      borderRadius: radius.sm,
+      borderRadius: radius.md,
       borderLeft: '3px solid ' + palette.sage + '40',
       padding: space.sm + 'px ' + space.md + 'px',
       marginBottom: space.sm + 'px',
@@ -578,7 +578,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       key: field.k,
       style: {
         marginBottom: space.lg + 'px', padding: space.sm + 'px ' + space.md + 'px',
-        background: palette.up, borderRadius: radius.sm, border: '1px dashed ' + palette.border,
+        background: palette.up, borderRadius: radius.md, border: '1px dashed ' + palette.border,
         display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap',
       },
     },
@@ -705,7 +705,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
         ),
         oldDoctor && !docList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('doctors.migrated')),
           React.createElement('div', null, oldDoctor + (oldPhone ? ' · ' + oldPhone : ''))
@@ -927,7 +927,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(fieldId, field.label, field.hint),
         React.createElement('div', { style: { display: 'flex', gap: '6px' } },
-          React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: radius.sm, borderLeft: '1px solid ' + palette.border } }, 'CHF'),
+          React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: radius.md, borderLeft: '1px solid ' + palette.border } }, 'CHF'),
           React.createElement('input', {
             id: fieldId,
             type: 'number',
@@ -979,7 +979,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                     fontFamily: 'inherit',
                     fontWeight: selected ? weight.semi : weight.normal,
                     border: '1px solid ' + (selected ? palette.sage : palette.border),
-                    borderRadius: radius.sm + 'px',
+                    borderRadius: radius.md + 'px',
                     background: selected ? palette.sage + '18' : palette.surface,
                     // a11y: sage als Text verfehlt AA (≈4.2:1) — sageDeep trägt (wie sonst im Farbsystem für Text).
                     color: selected ? palette.sageDeep : palette.text,
@@ -1037,7 +1037,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
         ),
         oldText && !medList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('medications.migrated')),
           React.createElement('div', null, oldText)
@@ -1069,7 +1069,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           )
         ),
         oldText && !langList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('langSkill.migrated')),
           React.createElement('div', null, oldText)
@@ -1093,7 +1093,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
         ),
         oldText && !dList.length && React.createElement('div', {
-          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.md, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('diseases.migrated')),
           React.createElement('div', null, oldText)
@@ -1264,7 +1264,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 gridColumn: '1 / -1',
                 background: palette.sageMist || palette.up,
                 border: 'none',
-                borderRadius: radius.sm,
+                borderRadius: radius.md,
                 padding: space.sm + 'px ' + space.md + 'px',
                 fontSize: text.sm,
                 color: palette.sageDeep || palette.mid,
@@ -1282,7 +1282,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               style: {
                 gridColumn: '1 / -1',
                 background: palette.sageMist || palette.up,
-                borderRadius: radius.sm,
+                borderRadius: radius.md,
                 padding: space.sm + 'px ' + space.md + 'px',
                 marginBottom: space.sm + 'px',
               }
@@ -1341,7 +1341,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             elements.push(
               React.createElement('details', {
                 key: 'edu-paths',
-                style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.sm + 'px' }
+                style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.lg, padding: space.md + 'px', marginBottom: space.sm + 'px' }
               },
                 React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('edu.pathsTitle'))),
                 React.createElement('div', { style: { marginTop: space.md + 'px' } },
@@ -1363,7 +1363,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               elements.push(
                 React.createElement('div', {
                   key: 'hours-implausible',
-                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                 }, tr(wochenstundenZuTiefFuerMonatslohn(hrs) ? 'lohnEinordnung.hoursTooLowNote' : 'lohnEinordnung.hoursImplausibleNote', { hours: String(hrs) }))
               );
             } else if (hrs > 0) {
@@ -1381,7 +1381,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               elements.push(
                 React.createElement('div', {
                   key: 'hours-calc',
-                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                 },
                   React.createElement('div', null, tr('lohnCheck.hoursEquiv', { month: String(perMonth), year: String(perYear) })),
                   // ⚠️ NUR bei brutto-Basis (Predeploy-Runde 8, dritte Prüfung): Die Umsortierung
@@ -1398,7 +1398,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 elements.push(
                   React.createElement('div', {
                     key: 'hours-minwage-jahr-nicht-belegt',
-                    style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                    style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   }, tr('lohnCheck.jahrNichtBelegt', { jahr: check.jahr, laufend: check.laufendesJahr, kanton: check.kanton }))
                 );
               }
@@ -1406,7 +1406,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 elements.push(
                   React.createElement('div', {
                     key: 'hours-minwage-warn',
-                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.roseDeep, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.roseDeep, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   },
                     // FIX D: pro-Kanton-Jahr (check.jahr), nicht das globale LOHNCHECK_DATA_VERSION —
                     // sonst zeigte ein TI-Nutzer im Kapitel ein anderes Jahr als im Brief.
@@ -1436,7 +1436,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 elements.push(
                   React.createElement('div', {
                     key: 'hours-dreizehnter-unklar',
-                    style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                    style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   }, tr('lohnCheck.dreizehnterUnklar'))
                 );
               }
@@ -1468,7 +1468,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   style: {
                     gridColumn: '1 / -1',
                     background: palette.sageMist || palette.up,
-                    borderRadius: radius.sm,
+                    borderRadius: radius.md,
                     padding: space.sm + 'px ' + space.md + 'px',
                     fontSize: text.sm,
                     color: palette.sageDeep || palette.mid,
@@ -1497,7 +1497,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   style: {
                     gridColumn: '1 / -1',
                     background: palette.sageMist || palette.up,
-                    border: 'none', borderRadius: radius.sm,
+                    border: 'none', borderRadius: radius.md,
                     padding: space.sm + 'px ' + space.md + 'px',
                     fontSize: text.sm, color: palette.sageDeep || palette.mid,
                     cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
@@ -1528,7 +1528,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 style: {
                   gridColumn: '1 / -1',
                   background: notApplicable ? palette.up : (palette.sageMist || palette.up),
-                  borderRadius: radius.sm,
+                  borderRadius: radius.md,
                   padding: space.sm + 'px ' + space.md + 'px',
                   marginBottom: space.sm + 'px',
                   opacity: notApplicable ? 0.72 : 1,
@@ -1582,7 +1582,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         textAlign: 'left',
                         background: palette.sageMist || palette.up,
                         border: 'none',
-                        borderRadius: radius.sm,
+                        borderRadius: radius.md,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
                         color: palette.sageDeep || palette.mid,
@@ -1603,7 +1603,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                       style: {
                         gridColumn: '1 / -1',
                         background: palette.sageMist || palette.up,
-                        borderRadius: radius.sm,
+                        borderRadius: radius.md,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
                         color: palette.sageDeep || palette.mid,
@@ -1621,7 +1621,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                       style: {
                         gridColumn: '1 / -1',
                         background: palette.sageMist || palette.up,
-                        borderRadius: radius.sm,
+                        borderRadius: radius.md,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
                         color: palette.sageDeep || palette.mid,
@@ -1640,7 +1640,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                       style: {
                         gridColumn: '1 / -1',
                         background: palette.sageMist || palette.up,
-                        borderRadius: radius.sm,
+                        borderRadius: radius.md,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
                         color: palette.sageDeep || palette.mid,
@@ -1659,7 +1659,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         background: palette.rose + '15',
                         border: '1px solid ' + palette.rose + '40',
                         borderLeft: '3px solid ' + palette.rose,
-                        borderRadius: radius.sm,
+                        borderRadius: radius.md,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
                         color: palette.roseDeep,
@@ -1711,7 +1711,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 style: {
                   gridColumn: '1 / -1',
                   background: palette.sageMist || palette.up,
-                  borderRadius: radius.sm,
+                  borderRadius: radius.md,
                   padding: space.sm + 'px ' + space.md + 'px',
                   fontSize: text.sm,
                   color: palette.sageDeep || palette.mid,
@@ -1738,7 +1738,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   gridColumn: '1 / -1',
                   background: palette.sageMist || palette.up,
                   border: 'none',
-                  borderRadius: radius.sm,
+                  borderRadius: radius.md,
                   padding: space.sm + 'px ' + space.md + 'px',
                   fontSize: text.sm,
                   color: palette.sageDeep || palette.mid,
@@ -1775,7 +1775,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             elements.push(React.createElement('button', {
               key: 'crosslink-bw', type: 'button', className: 'mp-link',
               onClick: () => onNavigate('bestattung'),
-              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
+              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
             }, tr('nav.crosslink.bwHint') + ' ›'));
           }
           return elements;
@@ -2195,7 +2195,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe,
         style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
       },
-        React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: bereichsfarbe ? bereichsfarbe.grund : palette.up, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : palette.sageDeep } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
+        React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.sm, display: 'grid', placeItems: 'center', flexShrink: 0, background: bereichsfarbe ? bereichsfarbe.grund : palette.up, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : palette.sageDeep } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
         React.createElement('span', { style: { flex: 1, minWidth: 0 } },
           React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
           z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
@@ -2273,7 +2273,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         textAlign: 'center', padding: space.md + 'px ' + space.lg + 'px',
         marginBottom: space.md + 'px',
         background: palette.sageDew || palette.sage + '08',
-        borderRadius: radius.md,
+        borderRadius: radius.lg,
         border: '1px solid ' + palette.sage + '25',
         animation: 'fadeIn ' + duration.cinematic + 'ms ' + ease,
       }
@@ -2369,7 +2369,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement('div', {
         style: {
           marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
+          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.md,
           border: '1px solid ' + palette.sage + '25',
           borderLeft: '3px solid ' + palette.sage + '50',
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
@@ -2393,7 +2393,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           background: expandedSection === 'fields' ? palette.sand : 'transparent',
           color: expandedSection === 'fields' ? '#000' : palette.text,
           border: 'none',
-          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
+          borderRadius: radius.md + 'px ' + radius.sm + 'px 0 0',
           cursor: 'pointer',
           fontWeight: weight.semi,
           fontSize: text.sm
@@ -2407,7 +2407,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           background: expandedSection === 'documents' ? palette.sand : 'transparent',
           color: expandedSection === 'documents' ? '#000' : palette.text,
           border: 'none',
-          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
+          borderRadius: radius.md + 'px ' + radius.sm + 'px 0 0',
           cursor: 'pointer',
           fontWeight: weight.semi,
           fontSize: text.sm
@@ -2417,7 +2417,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Fields Tab — seit 27.09.2026 die Abschnittsliste (abschnittsliste oben).
     expandedSection === 'fields' && React.createElement('div', null,
-      filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
+      filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
         ),
@@ -2439,7 +2439,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, hinweisZeichen('upload'), tr('chapterView.upload')),
 
       // Upload Form
-      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '2px dashed ' + palette.border } },
+      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.lg, marginBottom: space.md, border: '2px dashed ' + palette.border } },
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' } },
           React.createElement('div', null,
             React.createElement('label', { htmlFor: 'doc-upload-type', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.docType') + ' *'),
@@ -2447,7 +2447,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               id: 'doc-upload-type',
               value: uploadType,
               onChange: (e) => setUploadType(e.target.value),
-              style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+              style: { width: '100%', padding: '10px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             },
               React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
               chapter.docs.map((doc, idx) => React.createElement('option', { key: idx, value: doc.k }, doc.label))
@@ -2460,13 +2460,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               type: 'date',
               value: uploadExpiry,
               onChange: (e) => setUploadExpiry(e.target.value),
-              style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+              style: { width: '100%', padding: '10px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             }),
             uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), getFileExpiryHint(uploadType, tr))
           )
         ),
 
-        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           // Nach der Wahl steht der Dateiname da, wo vorher «Datei auswählen» stand —
           // sonst sieht niemand (und hört kein Screenreader), welche Datei hochgeht.
           hinweisZeichen(uploadFile ? 'document' : 'kaestchen'), uploadFile ? uploadFile.name : tr('chapterView.selectFile'),
@@ -2482,7 +2482,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         // sonst die Dateiwahl. Wird die Kamera abgelehnt, bleibt «Datei auswählen» darüber.
         istFinanzen && React.createElement('label', {
           'data-weg': 'fotografieren',
-          style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', marginBottom: '12px', border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer', boxSizing: 'border-box' },
+          style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', marginBottom: '12px', border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer', boxSizing: 'border-box' },
         },
           tr('chapterView.fotografieren'),
           React.createElement('input', {
@@ -2492,12 +2492,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           })
         ),
 
-        uploadError && React.createElement('div', { role: 'alert', style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
+        uploadError && React.createElement('div', { role: 'alert', style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.md, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
         // Die Status-Region steht immer da und füllt sich erst — eine Region, die MIT
         // ihrem Text erscheint, wird von Screenreadern oft nicht angesagt.
         React.createElement('div', { role: 'status' },
-          uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess)),
+          uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.md, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess)),
 
         React.createElement('button', {
           onClick: () => {
@@ -2548,7 +2548,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             background: uploadFile && uploadType && uploadExpiry ? palette.sand : palette.mid,
             color: uploadFile && uploadType && uploadExpiry ? palette.onSand : '#fff',
             border: 'none',
-            borderRadius: radius.sm,
+            borderRadius: radius.md,
             cursor: uploadFile && uploadType && uploadExpiry ? 'pointer' : 'not-allowed',
             fontWeight: weight.semi,
             fontSize: text.sm
@@ -2557,7 +2557,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       ),
 
       // Required documents list
-      React.createElement('div', { style: { padding: space.sm + 4, background: palette.up, borderRadius: radius.sm } },
+      React.createElement('div', { style: { padding: space.sm + 4, background: palette.up, borderRadius: radius.md } },
         React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm + 2 } }, hinweisZeichen('kaestchen'), tr('chapterView.requiredDocs')),
         React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
           chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc.label))

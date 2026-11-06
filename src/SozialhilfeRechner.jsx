@@ -99,25 +99,25 @@ export const SozialhilfeRechner = ({ palette, t, data, onNavigate, titel, satz, 
   const tunSichtbar = konkubinatGesperrt || !!(zeige && (zeige.hatAnspruch || zeige.anspruchOffen || zeige.efbEntscheidet));
 
   const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
+    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
+    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
     hint: { color: palette.mid, fontSize: text.xs, marginBottom: space.xs + 'px' },
     inputRow: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
     inputGroup: { display: 'flex', flexDirection: 'column', minWidth: '140px', maxWidth: '240px' },
-    input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    select: { width: '100%', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', appearance: 'none', WebkitAppearance: 'none', paddingRight: '28px', cursor: 'pointer', boxSizing: 'border-box' },
+    input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    select: { width: '100%', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', appearance: 'none', WebkitAppearance: 'none', paddingRight: '28px', cursor: 'pointer', boxSizing: 'border-box' },
     selectWrap: { position: 'relative', display: 'inline-block', width: '80px' },
     selectChevron: { position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', fontSize: text.sm, cursor: 'pointer', marginBottom: space.xs + 'px', ...(isMobile ? { minHeight: '44px' } : {}) },
-    highlight: { padding: space.md + 'px', borderRadius: radius.sm + 'px', border: '1px solid ', marginBottom: space.md + 'px' },
+    highlight: { padding: space.md + 'px', borderRadius: radius.lg + 'px', border: '1px solid ', marginBottom: space.md + 'px' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
     th: { textAlign: 'left', padding: space.sm, borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: space.sm, borderBottom: '1px solid ' + palette.border },
     tdRight: { padding: space.sm, borderBottom: '1px solid ' + palette.border, textAlign: 'right', fontVariantNumeric: 'tabular-nums' },
     big: { fontSize: text.xl, fontWeight: weight.bold },
-    source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
+    source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
   };
 
   const fmt = (v) => v != null ? zahl(v) : '–';

@@ -68,7 +68,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const label = { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: '2px' };
   const hinweis = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '2px 0 0', maxWidth: '420px' };
-  const eingabe = { width: '180px', minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit' };
+  const eingabe = { width: '180px', minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit' };
   const fussText = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.sm + 'px 0 0' };
 
   const lohnHinweis = geschaetzt

@@ -53,7 +53,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         background: isReady ? palette.surface : palette.up,
         border: '1px solid ' + (isReady ? accent + '33' : palette.border + '77'),
         borderLeft: '3px solid ' + (isReady ? accent : palette.border),
-        borderRadius: radius.md,
+        borderRadius: radius.lg,
         cursor: isReady ? 'pointer' : 'default',
         // Kein card-weites opacity mehr — das dimmte Titel/Text unter WCAG-AA.
         // De-emphasis der „in Vorbereitung"-Karte läuft über grauen Rand, up-Hintergrund,
@@ -138,7 +138,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
           key: w.key,
           onClick: () => onNavigate(w.view),
           style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
             cursor: 'pointer', padding: '8px 14px', minHeight: '44px', boxSizing: 'border-box',
             display: 'inline-flex', alignItems: 'center', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
           },

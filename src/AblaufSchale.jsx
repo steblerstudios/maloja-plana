@@ -359,7 +359,7 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // a11y (Entwurf W): nach «In den Kalender» verschwindet der Knopf; der Fokus geht auf die Bestätigung
 // (Live-Region), statt verloren zu gehen.
 const kartenStil = (palette, vorbei) => ({
-  marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
+  marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.md,
   border: '1px solid ' + (vorbei ? palette.gold || palette.border : palette.border),
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
@@ -383,7 +383,7 @@ export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarL
       type: 'button', onClick: handle, 'aria-label': buttonLabel || undefined,
       style: {
         display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
-        padding: '0 ' + space.md + 'px', background: 'none', border: '1.5px solid ' + palette.sand, borderRadius: radius.sm,
+        padding: '0 ' + space.md + 'px', background: 'none', border: '1.5px solid ' + palette.sand, borderRadius: radius.md,
         color: palette.sandDeep, fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit', cursor: 'pointer', flexShrink: 0,
       },
     }, zeichen, t('kvg.addToCalendar'));
@@ -435,7 +435,7 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
     !ohneFeld && React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
     !ohneFeld && React.createElement('input', {
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
-      style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+      style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
     !karte && ziel && !vorbei && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } }, t(hinweisKey, { date: formatDE(ziel) })),
     fristKarte

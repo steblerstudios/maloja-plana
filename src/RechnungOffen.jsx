@@ -22,7 +22,7 @@ export const RechnungOffen = ({ palette, t, onNavigate, stufe = 'mahnung' }) => 
     onClick: () => { if (key !== aktiv && onNavigate) onNavigate(key); },
     style: {
       flex: '1 1 0', minHeight: '44px', padding: '8px 12px', fontFamily: 'inherit', fontSize: text.sm,
-      cursor: key === aktiv ? 'default' : 'pointer', borderRadius: radius.sm,
+      cursor: key === aktiv ? 'default' : 'pointer', borderRadius: radius.md,
       border: '1px solid ' + (aktiv === key ? palette.text : palette.border),
       background: aktiv === key ? palette.up : 'none',
       color: aktiv === key ? palette.text : palette.mid,

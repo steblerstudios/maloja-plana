@@ -181,7 +181,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const kapitelTitel = (kap) => (kapitelListe.find((c) => c.key === kap) || {}).title || kap;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
+  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.mid, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
   const notfallRot = palette.roseDeep || palette.rose;
 
   // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
@@ -245,7 +245,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         autoComplete: 'off',
         onChange: (e) => setEingaben((x) => ({ ...x, [f.k]: e.target.value })),
         onKeyDown: (e) => { if (e.key === 'Enter') speichern(f); },
-        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '10px 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '10px 12px', minHeight: '44px', borderRadius: radius.md, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
       }),
       demoMode
         ? h('p', { style: { ...klein, margin: 0 } }, t('demo.readOnlyHint'))
@@ -324,7 +324,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
           // Zeichen UND Wort — nicht nur Farbe (Haken / Kästchen).
           h('span', { key: 'w', style: { display: 'block', fontSize: text.xs, color: ok ? palette.text : palette.mid, overflowWrap: 'break-word' } }, hinweisZeichen(ok ? 'check' : 'kaestchen', 12), (v.k === 'organDonor' && ok && nf.organDonor !== 'declined' && nf.organDonor !== 'delegated' ? t('notfallKapitel.zustimmung') : vorsorgeWert(v.k))),
         ];
-        const stil = { display: 'block', textAlign: 'left', minHeight: '64px', padding: space.sm + 'px', borderRadius: radius.sm, border: '1px solid ' + (ok ? (palette.sage || palette.border) : palette.border), background: 'none', fontFamily: 'inherit', minWidth: 0 };
+        const stil = { display: 'block', textAlign: 'left', minHeight: '64px', padding: space.sm + 'px', borderRadius: radius.md, border: '1px solid ' + (ok ? (palette.sage || palette.border) : palette.border), background: 'none', fontFamily: 'inherit', minWidth: 0 };
         if (ok || !v.weg) {
           // Offen ohne eigenes Werkzeug (Organspende): zum Feld im Formular.
           if (!ok && zumFeld) {
@@ -343,7 +343,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       h('select', {
         id: 'mp-notfall-pv', 'aria-describedby': 'mp-notfall-pv-hinweis', value: nf.patientenverfuegung || '', disabled: !!demoMode,
         onChange: (e) => onUpdate && onUpdate('patientenverfuegung', e.target.value),
-        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '0 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '0 12px', minHeight: '44px', borderRadius: radius.md, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
       },
         h('option', { value: '' }, t('notfallKapitel.nichtErfasst')),
         (pvFeld?.options || []).map((o) => h('option', { key: o.value, value: o.value }, o.label))),

@@ -154,7 +154,7 @@ export const Obstgarten = ({ palette, t, data, onNavigate, isDarkMode }) => {
     // Auf dem Handy wären die Namen 4 bis 6 px klein: Das Bild behält eine Mindestbreite und lässt sich seitwärts schieben (F8-O4).
     h('div', { style: { overflowX: 'auto' } }, h('svg', {
       viewBox: '0 0 840 496', width: '100%',
-      style: { display: 'block', minWidth: '640px', borderRadius: radius.md, border: '1px solid ' + palette.border },
+      style: { display: 'block', minWidth: '640px', borderRadius: radius.sm, border: '1px solid ' + palette.border },
       role: 'group', 'aria-label': t('obstgarten.title'),
     },
       h('rect', { x: 0, y: 0, width: 840, height: 496, fill: C.sky }),

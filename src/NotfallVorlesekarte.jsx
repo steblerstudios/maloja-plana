@@ -65,7 +65,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     tel: {
       fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep,
       textDecoration: 'none', fontFamily: 'inherit',
-      padding: space.xs + 'px ' + space.sm + 'px', borderRadius: radius.sm,
+      padding: space.xs + 'px ' + space.sm + 'px', borderRadius: radius.md,
       border: '1px solid ' + palette.border, background: palette.up,
       // Tippziel ≥ 44 px — gerade im Ernstfall (Seitenrundgang 26.10.2026, R9; vorher ~30 px).
       minHeight: '44px', display: 'inline-flex', alignItems: 'center',
@@ -75,18 +75,18 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     sayValue: { fontWeight: weight.semi, color: palette.text },
     sayEmpty: { color: palette.mid },
     readWrap: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginTop: space.sm + 'px' },
-    readCard: { padding: '10px 14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
+    readCard: { padding: '10px 14px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border },
     readTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' },
     readRow: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', padding: '3px 0', fontSize: text.sm },
     readLabel: { color: palette.mid },
     readValue: { color: palette.text, fontWeight: weight.medium, textAlign: 'right' },
     locBtn: {
       marginTop: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
-      background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+      background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
       padding: '6px 12px', fontSize: text.sm, color: palette.text,
       minHeight: '44px', // R9: Standort-Knopf vorher ~30 px
     },
-    locResult: { marginTop: space.sm + 'px', padding: '10px 14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
+    locResult: { marginTop: space.sm + 'px', padding: '10px 14px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border },
     locCoords: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, letterSpacing: '0.3px' },
     locAcc: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
     // Eigenständiger Link im Notfall-Ablauf, kein Fliesstext: 44 px und unterstrichen, damit er nicht nur über

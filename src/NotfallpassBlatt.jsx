@@ -40,7 +40,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     ...ablaufStyles(palette),
     hinweis: {
       padding: '10px 14px', marginBottom: space.md + 'px', background: palette.up,
-      borderRadius: radius.sm, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
+      borderRadius: radius.md, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
     },
     gruppe: { marginTop: space.md + 'px' },
     gruppeTitel: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },
@@ -53,7 +53,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     offen: { fontSize: text.sm, color: palette.mid, fontStyle: 'italic' },
     knopf: {
       flexShrink: 0, cursor: 'pointer', fontFamily: 'inherit', background: 'none',
-      border: '1px solid ' + palette.border, borderRadius: radius.sm, minHeight: '44px',
+      border: '1px solid ' + palette.border, borderRadius: radius.md, minHeight: '44px',
       padding: '6px 12px', fontSize: text.sm, color: palette.text,
     },
     knopfOk: { color: palette.sageDeep || palette.text },

@@ -45,7 +45,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       margin: space.md + 'px 0',
       background: palette.up,
       border: '1px solid ' + (overdue.length > 0 ? palette.rose + '33' : palette.gold + '33'),
-      borderRadius: radius.sm,
+      borderRadius: radius.md,
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',

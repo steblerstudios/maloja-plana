@@ -220,7 +220,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
           ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
-          border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
+          border: '1px solid ' + palette.border + '44', borderRadius: radius.lg,
           cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center',
           transition: 'background ' + duration.normal + 'ms ' + ease + ', border-color ' + duration.normal + 'ms ' + ease,
         },

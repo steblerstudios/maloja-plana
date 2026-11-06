@@ -49,17 +49,17 @@ export const FlyerView = ({ palette, t, lang }) => {
   };
 
   const s = {
-    card: { maxWidth: '640px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
+    card: { maxWidth: '640px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.65, marginBottom: space.lg + 'px', maxWidth: '520px' },
-    preview: { textAlign: 'center', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', padding: space.lg + 'px' },
+    preview: { textAlign: 'center', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', padding: space.lg + 'px' },
     brand: { fontSize: text.lg, fontWeight: weight.bold, letterSpacing: '-0.3px', color: palette.text },
     claim: { fontSize: text.sm, color: palette.sageDeep || palette.mid, marginTop: space.xs + 'px' },
-    qrWrap: { display: 'inline-block', marginTop: space.md + 'px', background: '#fff', padding: space.sm + 'px', borderRadius: radius.sm + 'px' },
+    qrWrap: { display: 'inline-block', marginTop: space.md + 'px', background: '#fff', padding: space.sm + 'px', borderRadius: radius.md + 'px' },
     urlText: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' },
     actions: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.lg + 'px', alignItems: 'center' },
-    button: { background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
-    shareButton: { background: 'none', color: palette.sageDeep || palette.sage, border: '1px solid ' + palette.sage, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    button: { background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.md + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    shareButton: { background: 'none', color: palette.sageDeep || palette.sage, border: '1px solid ' + palette.sage, borderRadius: radius.md + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
     copied: { fontSize: text.xs, color: palette.sageDeep || palette.mid },
     hint: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.md + 'px', maxWidth: '520px' },
   };

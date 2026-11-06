@@ -103,7 +103,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sand,
-    color: palette.onSand, border: 'none', borderRadius: radius.sm,
+    color: palette.onSand, border: 'none', borderRadius: radius.md,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: fontFamily, marginTop: space.md,
   };
@@ -115,7 +115,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   };
 
   const inputStyle = {
-    width: '100%', padding: '12px 16px', borderRadius: radius.sm,
+    width: '100%', padding: '12px 16px', borderRadius: radius.md,
     border: '1px solid ' + palette.border, background: palette.up,
     color: palette.text, fontSize: text.body, boxSizing: 'border-box',
     fontFamily: fontFamily,
@@ -238,7 +238,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           role: 'group', 'aria-labelledby': 'app-leer-titel',
           style: {
             marginTop: space.lg, padding: space.md, background: palette.up,
-            border: '1px solid ' + palette.border, borderRadius: radius.md,
+            border: '1px solid ' + palette.border, borderRadius: radius.lg,
           },
         },
           // h2 unter dem Logo-h1: per Überschriften-Navigation auffindbar.
@@ -269,7 +269,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.md, border: '1px solid ' + palette.sage + '18' } },
           React.createElement(TrustLockIcon, { size: 13, color: palette.sage, style: { flexShrink: 0 } }),
           React.createElement('span', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: 1.4 } },
             t('onboarding.privacyNote')
@@ -403,7 +403,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
       // Ein Satz statt drei Tipps: die Einführung zeigt auf EINEN ersten Schritt,
       // den die Übersicht («Was ist jetzt dran?») und der Rundgang dann öffnen.
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, padding: space.md, background: palette.up, borderRadius: radius.sm, margin: '0 0 ' + space.md + 'px 0' } },
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, padding: space.md, background: palette.up, borderRadius: radius.lg, margin: '0 0 ' + space.md + 'px 0' } },
         t('onboarding.readyNext')
       ),
 

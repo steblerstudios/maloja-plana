@@ -34,7 +34,7 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNa
       React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('pv.ui.vorschauTitel')),
       doc.leer
         ? React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, hinweisZeichen(), t('pv.ui.leer'))
-        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
+        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
             React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.sm + 'px', color: palette.text } }, t('pv.doc.titel')),
             React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px' } }, t('pv.doc.gilt'), doc.situationen.length ? ' ' + t('pv.doc.giltInsbesondere') + ' ' + doc.situationen.join(' · ') : ''),
             doc.abschnitte.map((s) => React.createElement('div', { key: s.key, style: { marginBottom: space.sm + 'px' } },

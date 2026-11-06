@@ -207,7 +207,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   const cardStyle = {
     padding: space.md,
     background: palette.up,
-    borderRadius: radius.sm,
+    borderRadius: radius.lg,
     marginBottom: space.sm,
     fontSize: text.sm,
     cursor: 'pointer'
@@ -217,7 +217,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     width: '100%',
     padding: space.sm + 'px ' + (space.sm + 2) + 'px',
     marginBottom: space.sm,
-    borderRadius: radius.sm,
+    borderRadius: radius.md,
     border: '1px solid ' + palette.border,
     background: palette.surface,
     color: palette.text,
@@ -234,7 +234,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     background: palette.sand,
     color: palette.onSand,
     border: 'none',
-    borderRadius: radius.sm,
+    borderRadius: radius.md,
     cursor: 'pointer',
     fontWeight: weight.semi,
     fontSize: text.xs,
@@ -249,14 +249,14 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   const loeschKnopf = { ...zweitKnopf, color: palette.roseDeep || palette.rose };
 
   // Ruhiger Erklärkasten mit Titel, Text und Quellenzeile (Verlustscheine, Bussen — 27.09.2026).
-  const erklaerKasten = (key, titel, textKey, quelleKey) => React.createElement('div', { key, style: { padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md } },
+  const erklaerKasten = (key, titel, textKey, quelleKey) => React.createElement('div', { key, style: { padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.lg, marginBottom: space.md } },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, titel),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } }, t(textKey)),
     quelleKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t(quelleKey), null, t))
   );
 
   const linkKnopf = { display: 'inline', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit', fontSize: text.xs };
-  const detailsStil = { padding: space.sm + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.sm };
+  const detailsStil = { padding: space.sm + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.sm };
   const summaryStil = { cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text };
   const statusLabel = (d) => d.status === 'paid' ? t('schulden.statusPaid') : istUeberfaellig(d) ? t('schulden.overdue') : t('schulden.statusOpen');
   const tabs = [
@@ -443,7 +443,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           )
     ),
     debts: React.createElement(React.Fragment, null,
-      React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
+      React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.lg, marginBottom: space.md, border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
         React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: inputStyle }),
         vorschlag && newDebt.amount === vorschlag.amount && schulden.length === 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.ausProfilHint')),
@@ -476,14 +476,14 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     betreibung: React.createElement(React.Fragment, null,
       React.createElement('button', { type: 'button', 'data-vs-fokus': 'bt-neu', onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addBetreibung')),
       // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
-      betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
+      betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
         hinweisZeichen(), t('schulden.registerHinweis'), ' ',
         onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: { background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } }, t('schulden.registerHinweisLink'))
       ),
 
       // Mahnstufe «Zahlungsbefehl» auf einer Forderung und dieser Tab waren zwei Erfassungen ohne
       // Verbindung (Rundgang 27.09.). Hier nur der Hinweis — nichts wird automatisch angelegt.
-      mitZahlungsbefehl.length > 0 && React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
+      mitZahlungsbefehl.length > 0 && React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
         hinweisZeichen(), t('schulden.bild.ausForderungen', { namen: mitZahlungsbefehl.map(d => forderungName(d, t)).join(', ') })
       )
     ),
@@ -495,7 +495,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
       React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate }),
 
-      betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
+      betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: space.md } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm, color: palette.text } }, t('schulden.debtRegisterAnalysis')),
         // Neutral statt Wertung (27.09.2026): keine Schwellen ohne Quelle, ohne Einkommen keine Zahl.
         React.createElement('div', { style: { fontSize: text.sm, marginBottom: space.sm, color: palette.text } },
@@ -503,7 +503,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             ? t('schulden.betreibungSumme', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }), monate: zahl(betreibungImpact.monatseinkommen, { hoechstens: 1 }) })
             : t('schulden.betreibungOhneEinkommen', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }) })
         ),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, t('schulden.helpBody'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.md } }, t('schulden.helpBody'))
       )
     ),
     plan: React.createElement(React.Fragment, null,
@@ -518,7 +518,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           tier === 3 && React.createElement('div', { role: 'group', 'aria-label': t('schulden.planMethod'), style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', margin: space.xs + 'px 0' } },
             ['lawine', 'schneeball'].map(m => React.createElement('button', {
               key: m, type: 'button', onClick: () => setMethod(m), 'aria-pressed': method === m,
-              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
+              style: { padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.full, cursor: 'pointer' }
             }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
           ),
           React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },
@@ -556,7 +556,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       instrument: view === 'plan' && mitPlan ? React.createElement(AbbauZeitachse, { palette, t, plan }) : null,
       angaben: angabenJeReiter[view] ? { erfasst: 0, gesamt: 0, inhalt: React.createElement('div', { style: { paddingTop: space.xs } }, angabenJeReiter[view]) } : null,
       // Beratung — warm, ohne Wertung: was man tun kann, in jedem Reiter.
-      tun: { titel: t('schulden.helpTitle'), inhalt: React.createElement('div', { style: { padding: space.md + 'px', background: palette.sage + '14', border: '1px solid ' + palette.sage + '55', borderRadius: radius.sm, margin: space.md + 'px 0' } },
+      tun: { titel: t('schulden.helpTitle'), inhalt: React.createElement('div', { style: { padding: space.md + 'px', background: palette.sage + '14', border: '1px solid ' + palette.sage + '55', borderRadius: radius.lg, margin: space.md + 'px 0' } },
           
           React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
           React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },

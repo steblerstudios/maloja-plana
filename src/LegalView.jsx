@@ -144,7 +144,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
             background: activeSection === tab.key ? palette.sand : 'transparent',
             color: activeSection === tab.key ? '#000' : palette.text,
             border: 'none',
-            borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
+            borderRadius: radius.md + 'px ' + radius.sm + 'px 0 0',
             cursor: 'pointer',
             fontWeight: activeSection === tab.key ? weight.semi : weight.normal,
             fontSize: text.sm,
@@ -352,7 +352,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
               t, href: CONTRIBUTION_URL,
               style: {
                 display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
-                background: palette.sand, color: palette.onSand, borderRadius: radius.sm,
+                background: palette.sand, color: palette.onSand, borderRadius: radius.md,
                 textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
               }
             }, t('legal.support.contributeCta'))
@@ -372,7 +372,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         React.createElement('button', {
           onClick: () => onNavigate('direktlinks'),
           style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
             padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
             fontSize: text.sm, color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
           },
@@ -402,7 +402,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
             type: 'button',
             onClick: () => onNavigate('installApp'),
             style: {
-              background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+              background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
               padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
               fontSize: text.sm, color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
             },

@@ -281,7 +281,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
 
   return React.createElement('div', null, React.createElement('div', {
     style: {
-      background: palette.surface, padding: '20px', borderRadius: radius.sm,
+      background: palette.surface, padding: '20px', borderRadius: radius.lg,
       border: '1px solid ' + palette.border, maxWidth: '520px',
       boxShadow: shadow.sm
     }
@@ -309,7 +309,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     // === Empty state guidance (only when no income) ===
     budget.income <= 0 && React.createElement('div', {
       style: {
-        padding: '12px 14px', background: palette.up, borderRadius: radius.sm,
+        padding: '12px 14px', background: palette.up, borderRadius: radius.md,
         fontSize: text.sm, lineHeight: '1.6', color: palette.mid, marginBottom: '12px'
       }
     }, t('budgetSync.emptyStateGuide')),
@@ -390,7 +390,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     skosShown && React.createElement('div', {
       style: {
         marginTop: '12px', padding: '10px 14px', background: palette.up,
-        borderRadius: radius.sm, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
+        borderRadius: radius.md, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
       }
     },
       React.createElement('button', {
@@ -449,7 +449,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       budget.recommendations.map((rec, idx) => React.createElement('div', {
         key: idx,
         style: {
-          padding: '10px 12px', background: palette.up, borderRadius: radius.sm,
+          padding: '10px 12px', background: palette.up, borderRadius: radius.md,
           fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
           marginBottom: idx < budget.recommendations.length - 1 ? '6px' : 0
         }
@@ -481,7 +481,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         style: {
           flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
           color: showAnnual ? palette.onSand : palette.mid, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          borderRadius: radius.md, cursor: 'pointer', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
       }, hinweisZeichen(), showAnnual ? t('budgetSync.title') : t('budgetSync.annualView')),
@@ -489,7 +489,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         onClick: () => setBerichtVorschau(true),
         style: {
           padding: '9px 14px', background: palette.up, color: palette.mid,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          border: '1px solid ' + palette.border, borderRadius: radius.md,
           cursor: 'pointer', fontSize: text.sm
         }
       }, t('nav.export'))

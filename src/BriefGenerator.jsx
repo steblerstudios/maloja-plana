@@ -40,7 +40,7 @@ const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElemen
   role: 'note', id: 'brief-hinweis', tabIndex: -1,
   style: {
     padding: '14px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
-    borderRadius: radius.sm, marginBottom: space.md,
+    borderRadius: radius.md, marginBottom: space.md,
   },
 },
   React.createElement('div', {
@@ -113,14 +113,14 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
   const base = (f) => `briefe.${selected}.felder.${f.key}`;
   const labelStil = { display: 'block', fontSize: textTokens.sm, color: palette.text, fontWeight: weight.medium, marginBottom: space.xs };
   const inputStil = {
-    width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: radius.sm,
+    width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: radius.md,
     border: '1px solid ' + palette.border, background: palette.surface, color: palette.text,
     fontSize: textTokens.sm, fontFamily: 'inherit',
   };
   const zeile = { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
   const sichtbar = felder.filter(f => feldSichtbar(f, a));
   return React.createElement('div', {
-    style: { padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md },
+    style: { padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.md },
   },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.text, marginBottom: space.xs } }, t('briefe.angaben.title')),
     React.createElement('div', { style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm } }, t('briefe.angaben.intro')),
@@ -314,7 +314,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
-          borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
+          borderRadius: radius.md, cursor: 'pointer', textAlign: 'left',
           // Buttons erben color NICHT (UA-Reset auf schwarz) → im Dark Mode war der
           // Vorlagen-Titel unlesbar schwarz. Explizit auf palette.text setzen.
           color: palette.text,
@@ -347,7 +347,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     JOB_TEMPLATES.includes(selected) && jobOptions.length > 1 && React.createElement('div', {
       style: {
         padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.sm, marginBottom: space.md,
+        borderRadius: radius.md, marginBottom: space.md,
       }
     },
       React.createElement('div', {
@@ -388,7 +388,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     selected === 'kkReklamation' && React.createElement('div', {
       style: {
         padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.sm, marginBottom: space.md,
+        borderRadius: radius.md, marginBottom: space.md,
       }
     },
       React.createElement('div', {
@@ -420,7 +420,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     selected === 'kkReklamation' && React.createElement('div', {
       style: {
         padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.sm, marginBottom: space.md,
+        borderRadius: radius.md, marginBottom: space.md,
       }
     },
       React.createElement('div', {
@@ -458,7 +458,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // hier, wo er hingehört: bei der Person, die den Brief verantwortet.
     selected && React.createElement('div', {
       style: {
-        padding: '10px 14px', background: palette.up, borderRadius: radius.sm,
+        padding: '10px 14px', background: palette.up, borderRadius: radius.md,
         fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
         marginBottom: space.md,
       }
@@ -475,7 +475,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         onClick: () => setPreview(!preview),
         style: {
           padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
+          borderRadius: radius.md, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
       React.createElement(PrimaryButton, { palette, onClick: () => { if (selected && briefCanRender(selected)) setExportVorschau(true); }, icon: React.createElement(Icon, { name: 'drucker', size: 16 }) }, t('briefe.printLetter'))
@@ -493,7 +493,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     frist && React.createElement('div', {
       style: {
         padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.sm, marginBottom: space.md,
+        borderRadius: radius.md, marginBottom: space.md,
         display: 'flex', flexDirection: 'column', gap: space.sm,
       }
     },
@@ -518,7 +518,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
             onClick: handleAddReminder,
             style: {
               alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
-              border: '1px solid ' + palette.border, borderRadius: radius.sm,
+              border: '1px solid ' + palette.border, borderRadius: radius.md,
               cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
               color: palette.text,
             }
@@ -529,7 +529,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     printed && React.createElement('div', {
       style: {
         padding: '14px 16px', background: palette.sage + '14',
-        border: '1px solid ' + palette.sage + '44', borderRadius: radius.sm,
+        border: '1px solid ' + palette.sage + '44', borderRadius: radius.md,
         marginBottom: space.md, display: 'flex', flexDirection: 'column', gap: space.sm,
       }
     },
@@ -550,7 +550,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         onClick: () => onNavigate('tresor', undefined, selectedTmpl?.chapter || 'all'),
         style: {
           alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
-          border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm,
+          border: '1px solid ' + palette.sage + '66', borderRadius: radius.md,
           cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
           color: palette.text,
         }

@@ -92,7 +92,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
 
   const btnGhost = {
     padding: '11px 14px', background: 'transparent', color: palette.mid,
-    border: 'none', borderRadius: radius.sm, cursor: 'pointer',
+    border: 'none', borderRadius: radius.md, cursor: 'pointer',
     fontSize: text.sm, fontFamily,
   };
 
@@ -114,7 +114,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
             position: 'fixed',
             top: rect.top - pad, left: rect.left - pad,
             width: rect.width + pad * 2, height: rect.height + pad * 2,
-            borderRadius: radius.md, pointerEvents: 'none',
+            borderRadius: radius.sm, pointerEvents: 'none',
             boxShadow: '0 0 0 9999px rgba(20,24,28,0.55), 0 0 0 2px ' + palette.sage,
             transition: `top ${duration.normal}ms ${ease}, left ${duration.normal}ms ${ease}, width ${duration.normal}ms ${ease}, height ${duration.normal}ms ${ease}`,
             zIndex: 10001,
@@ -133,7 +133,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
         type: 'button', onClick: later, 'aria-label': t('tour.later'), title: t('tour.later'),
         style: { position: 'absolute', top: '2px', right: '2px', width: '44px', height: '44px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'transparent', border: 'none', borderRadius: radius.sm, cursor: 'pointer',
+          background: 'transparent', border: 'none', borderRadius: radius.md, cursor: 'pointer',
           color: palette.mid, fontSize: '18px', lineHeight: 1, fontFamily }
       }, '×'),
       React.createElement('h3', {

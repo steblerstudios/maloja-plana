@@ -120,12 +120,12 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   const topLabel = topBenefit ? topBenefit.label : null;
 
   const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border, boxShadow: shadow.sm },
+    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border, boxShadow: shadow.sm },
     h2: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    intro: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 ' + space.lg + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border },
-    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.lg + 'px' },
+    intro: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 ' + space.lg + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
+    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.lg + 'px' },
     label: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs + 'px' },
-    input: { width: '100%', padding: '9px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
+    input: { width: '100%', padding: '9px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
     field: { flex: '1 1 150px', minWidth: '130px' },
     context: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: leading.relaxed },
     disclaimer: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', lineHeight: leading.relaxed },
@@ -186,7 +186,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left',
       padding: '12px 14px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
       background: b.color + '10', color: palette.text,
-      border: '1px solid ' + b.color + '33', borderRadius: radius.sm + 'px',
+      border: '1px solid ' + b.color + '33', borderRadius: radius.md + 'px',
     },
     onMouseEnter: (e) => { e.currentTarget.style.background = b.color + '1e'; },
     onMouseLeave: (e) => { e.currentTarget.style.background = b.color + '10'; },

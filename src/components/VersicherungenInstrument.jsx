@@ -113,7 +113,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     ...posten.map((x) => h('div', { key: x.key, style: { flex: x.wert + ' 1 0', minWidth: '3px', background: fuelle(x) } })));
   const marke = (farbe) => h('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: radius.hair, flexShrink: 0, background: farbe } });
   // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
-  const kkLast = () => anteil != null && h('div', { 'data-teil': 'kk-last', style: { margin: space.xs + 'px 0 ' + space.sm + 'px 18px', padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm } },
+  const kkLast = () => anteil != null && h('div', { 'data-teil': 'kk-last', style: { margin: space.xs + 'px 0 ' + space.sm + 'px 18px', padding: space.sm + 'px', background: palette.up, borderRadius: radius.md } },
     // In der Übersicht steht die KK-Last direkt unter dem Seitentitel (h2) — darum h3 (A11y-Prüfung).
     h(uebersicht ? 'h3' : 'h4', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('kkLast.title')),
     h('div', { 'aria-hidden': 'true', 'data-teil': 'kk-last-balken', style: { position: 'relative', height: '8px', margin: space.sm + 'px 0', borderRadius: radius.full, background: palette.surface } },
@@ -179,7 +179,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     h(NetzSchild, { palette, t, versicherungen: v, finanzen: daten.finanzen, kanton: daten.basis?.canton, stunden: daten.ausbildung?.workHoursPerWeek, ...schildOptionen(daten) }));
 
   return h('section', { 'data-teil': 'versicherungen-instrument', style: { marginBottom: space.lg + 'px' } },
-    (hatGeld || ausserhalb.length > 0) && h('div', { 'data-teil': 'versicherungen-karte', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, marginBottom: space.md + 'px' } },
+    (hatGeld || ausserhalb.length > 0) && h('div', { 'data-teil': 'versicherungen-karte', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, marginBottom: space.md + 'px' } },
       hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
       hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(Math.round(summe))),
       hatGeld && stapel(),

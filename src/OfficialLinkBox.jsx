@@ -60,7 +60,7 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey, ohneRahmen
   return React.createElement('div', {
     style: ohneRahmen ? { marginTop: space.xs + 'px' } : {
       marginTop: space.md + 'px', padding: space.md + 'px',
-      background: palette.up, borderRadius: radius.sm + 'px',
+      background: palette.up, borderRadius: radius.lg + 'px',
       border: '1px solid ' + palette.border,
     }
   },

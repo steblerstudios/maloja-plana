@@ -58,7 +58,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
           left: 'calc(' + l + '% + ' + leftGap + 'px)',
           width: 'calc(' + w + '% - ' + (leftGap + rightGap) + 'px)',
           background: 'rgba(' + tintBase + ',' + (alphas[i] != null ? alphas[i] : 0.03) + ')',
-          borderRadius: radius.md, border: '0.5px solid ' + palette.border,
+          borderRadius: radius.sm, border: '0.5px solid ' + palette.border,
         },
       },
         fillW > 0 && React.createElement('div', {
@@ -133,7 +133,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
   const card = embedded
     ? { fontSize: text.sm }
-    : { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm };
+    : { padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm };
 
   if (!state.show) {
     return React.createElement('div', { style: card },
@@ -182,7 +182,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
             onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(zielKapitelKey)),
             style: {
               display: 'block', width: '100%', textAlign: 'left', fontFamily: 'inherit',
-              background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm,
+              background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.md,
               // minHeight: 44px-Touch-Ziel (WCAG 2.5.5) — das Token-Padding allein ergäbe ~38px.
               padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer', minHeight: '44px',
               color: palette.sageDeep || palette.mid, fontSize: text.sm, lineHeight: leading.normal,

@@ -113,7 +113,7 @@ export class ErrorBoundary extends React.Component {
         style: {
           maxWidth: '420px', width: '100%', padding: space.xl,
           margin: 'auto',
-          background: surface, borderRadius: radius.md,
+          background: surface, borderRadius: radius.lg,
           border: '1px solid ' + border, textAlign: 'center'
         }
       },
@@ -135,7 +135,7 @@ export class ErrorBoundary extends React.Component {
             style: {
               // mind. 44 hoch wie der Melde-Link darunter (WCAG 2.2, 2.5.8: mind. 24).
               minHeight: '44px', padding: '10px 20px', background: sand, color: '#000',
-              border: 'none', borderRadius: radius.sm, cursor: 'pointer',
+              border: 'none', borderRadius: radius.md, cursor: 'pointer',
               fontWeight: weight.semi, fontSize: text.sm
             }
           }, tx('error.tryAgain', 'Try again')),
@@ -144,7 +144,7 @@ export class ErrorBoundary extends React.Component {
             onClick: this.handleHardReset,
             style: {
               minHeight: '44px', padding: '10px 20px', background: 'transparent', color: textColor,
-              border: '1px solid ' + border, borderRadius: radius.sm,
+              border: '1px solid ' + border, borderRadius: radius.md,
               cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
             }
           }, tx('error.reload', 'Reload page'))

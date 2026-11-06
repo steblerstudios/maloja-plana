@@ -73,7 +73,7 @@ export const KKLastEinordnung = ({ palette, t, onNavigate, stand }) => {
       onClick: () => onNavigate('premium'),
       style: {
         marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none',
-        border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text,
+        border: '1px solid ' + palette.border, borderRadius: radius.md, fontSize: text.sm, color: palette.text,
         cursor: 'pointer', fontFamily: 'inherit',
       }
     }, t('kkLast.ipvLink'))
@@ -97,7 +97,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
 
   return React.createElement('div', {
     style: {
-      padding: space.md + 'px', background: palette.up, borderRadius: radius.sm,
+      padding: space.md + 'px', background: palette.up, borderRadius: radius.lg,
       border: '1px solid ' + palette.border, marginBottom: '16px',
     }
   },
@@ -129,7 +129,7 @@ export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
   const allein = summe <= Math.round(premium);
   return React.createElement('div', {
     'data-teil': 'kk-last-spiegel',
-    style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' },
+    style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: '16px' },
   },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text, marginBottom: space.xs } }, t('kkLast.spiegelTitel')),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },

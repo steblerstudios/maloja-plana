@@ -52,8 +52,8 @@ export const steuerkantonSpeichern = (data, canton, alsWohnkanton = false) => ({
 
 // Ruhige Rückfrage unter dem Kantonsfeld. Ohne Hooks, damit sie direkt prüfbar ist.
 export const WohnkantonFrage = ({ palette, t, canton, onJa, onNein }) => {
-  const knopf = { padding: '8px 12px', minHeight: '44px', borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium };
-  return React.createElement('div', { role: 'group', 'aria-live': 'polite', style: { marginBottom: space.md, padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+  const knopf = { padding: '8px 12px', minHeight: '44px', borderRadius: radius.md, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium };
+  return React.createElement('div', { role: 'group', 'aria-live': 'polite', style: { marginBottom: space.md, padding: space.sm + 'px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border } },
     React.createElement('p', { style: { margin: 0, marginBottom: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('tax.wohnkantonFrage', { canton: getCantonName(canton, t) })),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },
       React.createElement('button', { type: 'button', onClick: onJa, style: { ...knopf, background: palette.sand, color: palette.onSand, border: 'none' } }, t('tax.wohnkantonJa')),
@@ -188,7 +188,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     width: '100%',
     padding: space.sm,
     marginBottom: space.sm,
-    borderRadius: radius.sm,
+    borderRadius: radius.md,
     border: '1px solid ' + palette.border,
     background: palette.surface,
     color: palette.text,
@@ -216,16 +216,16 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     background: palette.sand,
     color: palette.onSand,
     border: 'none',
-    borderRadius: radius.sm,
+    borderRadius: radius.md,
     cursor: 'pointer',
     fontWeight: weight.semi,
     fontSize: text.sm
   };
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'money', size: 22 }), style: { marginBottom: space.sm } }, t('tax.title')),
 
-    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('tax.intro')),
+    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border } }, t('tax.intro')),
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: space.md, marginBottom: '20px' } },
       // Left side: Input
@@ -289,7 +289,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         ),
 
         React.createElement('div', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, betrag(income)),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.md, marginBottom: space.xs } }, betrag(income)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t(beitragsNotizKey(data.finanzen)))),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, hinweisZeichen(), t(eingaben.dreizehnter === 'ja' ? 'tax.netIncomeNote13' : 'tax.netIncomeNote')),
 
@@ -340,7 +340,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
       ),
 
       // Right side: Result
-      React.createElement('div', { style: { background: palette.up, padding: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+      React.createElement('div', { style: { background: palette.up, padding: space.md, borderRadius: radius.lg, border: '1px solid ' + palette.border } },
         React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, t('tax.calculation')),
         React.createElement('div', { 'data-testid': 'steuer-ansage', role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, ansage),
 
@@ -361,7 +361,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         steuern.quelle === 'estv' && React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
         // E39: das eine steuerbare Einkommen — für Bund und Kanton.
-        steuern.steuerbar != null && React.createElement('div', { 'data-testid': 'steuerbares-einkommen', style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        steuern.steuerbar != null && React.createElement('div', { 'data-testid': 'steuerbares-einkommen', style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, steuern.quelle === 'estv' ? t('tax.taxableIncomeEstimated') : t('tax.taxableIncome')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, betrag(taxableIncome)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
@@ -381,12 +381,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
         // Bruttolohn: dieselbe Begründung steht gleich darunter bei der Kantonssteuer — hier nur kurz.
-        !taxResult && React.createElement('div', { 'data-testid': 'bundessteuer-ohne-zahl', style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        !taxResult && React.createElement('div', { 'data-testid': 'bundessteuer-ohne-zahl', style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.federalTax')),
           React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, (canton && ERKLAERT_IN_ORIENTIERUNG.includes(steuern.grund)) ? t('tax.noTaxFigure') : bundOhneZahlText(t, steuern.grund))
         ),
 
-        taxResult && React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        taxResult && React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
             t('tax.federalTax'),
             // K86: kein Satz, wenn das steuerbare Einkommen der gemeinsame Wert ist (effektiverSatz null).
@@ -402,13 +402,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         ),
 
         (() => {
-          if (!canton) return React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px dashed ' + palette.border } },
+          if (!canton) return React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.md, border: '1px dashed ' + palette.border } },
             React.createElement('div', { style: { fontSize: text.sm, color: palette.soft, fontStyle: 'italic' } }, t('tax.selectCantonHint'))
           );
           // E38: wo die Tabelle nicht trägt, keine Zahl — ruhige Orientierung mit dem Weg zum amtlichen Rechner.
           if (!kantonal) return React.createElement(KantonssteuerOrientierung, { palette, t, canton, schaetzung, jahr: KANTONAL_DATA_VERSION });
           return React.createElement(React.Fragment, null,
-            React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+            React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border } },
               React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs, marginBottom: space.xs, flexWrap: 'wrap' } },
                 React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } },
                   t('tax.cantonalAndMunicipal') + ' (' + kantonal.hauptort + ')'
@@ -423,7 +423,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
                 t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
               )
             ),
-            React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '30' } },
+            React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.md, border: '1px solid ' + palette.sand + '30' } },
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.totalEstimate')),
               React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, '~ ' + betrag(kantonal.total, { hoechstens: 2 })),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
@@ -434,7 +434,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
         })(),
 
         // K86: eigener Nettolohn minus Steuer auf das gemeinsame Einkommen ergibt keine Aussage.
-        taxResult && !steuern.gemeinsamDirekt && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        taxResult && !steuern.gemeinsamDirekt && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.netIncome')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },
             betrag(income - (kantonal ? kantonal.total : estimatedTax))
@@ -454,7 +454,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     taxResult && vergleich && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.saeulen.abzuegeNote', { ledig: chf(vergleich.steuerBaresEinkommen), verheiratet: chf(vergleich.steuerBaresEinkommenVerheiratet) }))
     ),
-    taxResult && !vergleich && React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    taxResult && !vergleich && React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs } }, t('tax.saeulen.title')),
       React.createElement('div', { 'data-testid': 'tarifvergleich-ohne-zahl', style: { fontSize: text.sm, color: palette.mid } }, t(VERGLEICH_OHNE_ZAHL_TEXT[ohneVergleich] || 'tax.saeulen.nurGeschaetzt'))
     ),
@@ -462,7 +462,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('check'), t('tax.saveData')),
     React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig }),
 
-    React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
+    React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm, color: palette.mid } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.disclaimer'))
     ),
 

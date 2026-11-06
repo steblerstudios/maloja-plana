@@ -154,7 +154,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     // Ränder einzeln (nicht `border` + `borderLeft`): gemischt warnt React beim Farbwechsel.
     background: palette.surface, borderTop: '1px solid ' + palette.border, borderRight: '1px solid ' + palette.border,
     borderBottom: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sage,
-    borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
+    borderRadius: radius.md, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
     cursor: 'pointer', fontFamily: 'inherit', color: palette.text,
   };
   const chip = (w) => h('button', {
@@ -227,7 +227,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     return h('div', {
       key: g.key,
       style: {
-        background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, overflow: 'hidden',
+        background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, overflow: 'hidden',
         opacity: packed ? 0 : 1, transform: packed ? 'translateY(-18px) scale(.95)' : 'none',
         transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : i * 60) + 'ms, transform 480ms ' + ease + ' ' + (packed ? 0 : i * 60) + 'ms',
       },
@@ -287,7 +287,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   const aussenfach = h('section', {
     'aria-labelledby': 'gepaeck-aussenfach',
     style: {
-      marginTop: 0, marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
+      marginTop: 0, marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.lg,
       background: palette.up, border: '1px dashed ' + palette.border,
       opacity: packed ? 0 : 1, transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : GEGENSTAENDE.length * 60) + 'ms',
     },

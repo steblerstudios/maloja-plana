@@ -59,7 +59,7 @@ export const StatusCard = ({ palette, icon, title, status, statusColor, detail, 
     tabIndex: onClick ? 0 : undefined,
     onKeyDown: onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined,
     style: {
-      padding: '16px', background: palette.up, borderRadius: radius.sm,
+      padding: '16px', background: palette.up, borderRadius: radius.lg,
       border: '1px solid ' + palette.border, marginBottom: space.sm,
       cursor: onClick ? 'pointer' : 'default',
     }
@@ -311,7 +311,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
   }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
 
   return React.createElement('div', {
-    style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
+    style: { padding: '12px 16px', background: palette.up, borderRadius: radius.md, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
     // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
     // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.
@@ -577,7 +577,7 @@ export const UebersichtDrucken = ({ palette, t, data, w, style }) => {
       style: {
         display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
         padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
-        borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
+        borderRadius: radius.md, cursor: 'pointer', fontSize: text.sm, color: palette.text,
         fontFamily: 'inherit', textAlign: 'left', ...style,
       }
     }, React.createElement(Icon, { name: 'drucker', size: 16 }), t('finanzUebersicht.printAction')),
@@ -642,7 +642,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
         display: 'inline-flex', alignItems: 'center', gap: '6px',
         margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px', minHeight: '32px',
         background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
-        borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+        borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
         // sageDeep statt sage: sage trägt als 13px-Text nur 4.34:1 auf bg (wie main.jsx).
         color: palette.sageDeep, fontFamily: 'inherit',
       },

@@ -29,7 +29,7 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
       React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('bw.ui.vorschauTitel')),
       doc.leer
         ? React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, hinweisZeichen(), t('bw.ui.leer'))
-        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
+        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
             React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.sm + 'px', color: palette.text } }, t('bw.doc.titel')),
             doc.zeilen.map((z, i) => React.createElement('p', { key: i, style: { margin: '2px 0' } }, z)),
             doc.texte.map((x) => React.createElement('div', { key: x.key, style: { marginTop: space.sm + 'px' } },

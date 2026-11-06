@@ -159,7 +159,7 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
           onClick: () => onWahl(o.wert),
           onKeyDown: (e) => taste(e, i),
           style: {
-            minHeight: '44px', ...auswahlRahmen(an, palette, 8, 16), fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.sm + 'px',
+            minHeight: '44px', ...auswahlRahmen(an, palette, 8, 16), fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer', borderRadius: radius.md + 'px',
             fontWeight: an ? weight.semi : weight.normal,
             background: an ? palette.sage + '22' : palette.surface,
             color: an ? (palette.sageDeep || palette.text) : palette.text,

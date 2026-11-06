@@ -82,7 +82,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
         padding: '10px 12px', marginBottom: space.xs + 'px',
         background: palette.surface, color: palette.text,
-        border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+        border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
         cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
         transition: `border-color ${duration.normal}ms ${ease}`,
       },
@@ -139,7 +139,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         'aria-current': on ? 'step' : undefined,
         style: {
           display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '6px 12px', borderRadius: radius.md,
+          padding: '6px 12px', borderRadius: radius.sm,
           border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
           background: on ? palette.sage + '18' : 'transparent',
           color: on ? (palette.sageDeep || palette.text) : palette.mid,
@@ -170,7 +170,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     type: 'button', onClick,
     style: {
       display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px',
-      padding: '10px 16px', borderRadius: radius.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
+      padding: '10px 16px', borderRadius: radius.md + 'px', cursor: 'pointer', fontFamily: 'inherit',
       fontSize: text.sm, fontWeight: weight.medium,
       border: '1px solid ' + palette.border + '66', background: 'transparent', color: palette.mid,
       transition: `border-color ${duration.normal}ms ${ease}`,

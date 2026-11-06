@@ -25,9 +25,9 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const frageStil = { ...labelStil, fontSize: text.body, marginBottom: space.sm + 'px' };
   const hilfeStil = { margin: space.xs + 'px 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
+  const eingabeStil = { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
   const zeileStil = { display: 'flex', alignItems: 'center', gap: '10px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
-  const knopf = (hervor) => ({ padding: '10px 18px', minHeight: '44px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium, borderRadius: radius.sm, cursor: 'pointer',
+  const knopf = (hervor) => ({ padding: '10px 18px', minHeight: '44px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium, borderRadius: radius.md, cursor: 'pointer',
     border: '1px solid ' + (hervor ? palette.sandDeep : palette.border), background: hervor ? palette.sand : palette.surface, color: hervor ? (palette.onSand || palette.text) : palette.text });
 
   const feld = (id, label, wert, onWert, { mehrzeilig = false, typ = 'text', schmal = false } = {}) => React.createElement('div', { key: id, style: { marginBottom: space.sm + 'px' } },
@@ -90,19 +90,19 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
       hilfe,
       f.rollen.map((rolle) => {
         const p = antworten[rolle] || {};
-        return React.createElement('div', { key: rolle, style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.sm + 'px' } },
+        return React.createElement('div', { key: rolle, style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: space.sm + 'px' } },
           f.rollen.length > 1 && React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, fontSize: text.sm, margin: space.xs + 'px 0 ' + space.sm + 'px' } }, t(ns + '.doc.rolle_' + rolle)),
           felder.map((k) => feld(ns + '-' + rolle + '-' + k, t(ns + '.ui.' + k), p[k], (v) => setzen({ [rolle]: { ...p, [k]: v } }), { typ: k === 'geburt' ? 'date' : 'text', schmal: k === 'geburt' })));
       }));
   };
 
   const f = fragen[schritt];
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: icon, size: 22 }), style: { marginBottom: space.sm + 'px' } }, titel),
     // E — Hinweis oben
     hinweis && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.normal } }, hinweis),
     schritt === 0 && kopf,
-    React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm } },
+    React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg } },
       // A — Fortschritt
       !imVorschau && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t(ns + '.ui.fortschritt', { n: schritt + 1, total })),

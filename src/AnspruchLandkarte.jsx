@@ -24,7 +24,7 @@ export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [], mitFuss = 
       display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
       padding: '12px 14px', marginBottom: space.xs + 'px',
       background: palette.surface, color: palette.text, textDecoration: 'none',
-      border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+      border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
       cursor: 'pointer', fontFamily: 'inherit',
       transition: `border-color ${duration.normal}ms ${ease}`,
     };

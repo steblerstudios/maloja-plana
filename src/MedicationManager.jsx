@@ -86,7 +86,7 @@ export const MedicationManager = ({ palette, t, lang, medications, onChange }) =
       style: {
         padding: space.sm + 'px ' + space.md + 'px',
         background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
+        border: '1px dashed ' + palette.border, borderRadius: radius.md,
         cursor: 'pointer', fontSize: text.sm, fontFamily,
         fontWeight: weight.medium, alignSelf: 'flex-start',
       }
@@ -161,7 +161,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
   return React.createElement('div', {
     style: {
       padding: space.md + 'px', background: palette.up,
-      borderRadius: radius.sm, border: '1px solid ' + palette.border,
+      borderRadius: radius.lg, border: '1px solid ' + palette.border,
     }
   },
     // Header

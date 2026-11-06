@@ -169,7 +169,7 @@ class ViewErrorBoundary extends React.Component {
       ),
       React.createElement('button', {
         onClick: () => this.setState({ hasError: false }),
-        style: { padding: space.sm + 'px ' + space.md + 'px', background: palette?.sand || '#c8a96e', color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm + 'px' }
+        style: { padding: space.sm + 'px ' + space.md + 'px', background: palette?.sand || '#c8a96e', color: '#000', border: 'none', borderRadius: radius.md + 'px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm + 'px' }
       }, t ? t('error.tryAgain') : 'Try again')
     );
   }
@@ -1084,7 +1084,7 @@ const AppInner = ({ demo }) => {
     // Aktiv trägt der Text den Kontrast, die Akzentfarbe liegt in Fläche und Rand (4.5:1 in beiden Modi).
     color: active ? (opts.activeColor || palette.text) : palette.mid,
     border: '1px solid ' + (active ? palette.mid : palette.border),
-    borderRadius: radius.sm, cursor: 'pointer',
+    borderRadius: radius.md, cursor: 'pointer',
     lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
     display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',
     ...(opts.extra || {}),
@@ -1110,7 +1110,7 @@ const AppInner = ({ demo }) => {
         'aria-label': t('common.anredeLabel', { form: current }),
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
       }, current);
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
@@ -1366,7 +1366,7 @@ const AppInner = ({ demo }) => {
           title: isMobile ? undefined : t('nav.search'),
           'aria-current': view === 'search' ? 'page' : undefined,
           onClick: () => handleNavigate('search'),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
             React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
@@ -1380,7 +1380,7 @@ const AppInner = ({ demo }) => {
           title: isMobile ? undefined : t('common.settingsTitle') + ' · ' + t('common.settingsAccessibility'),
           'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
           onClick: () => setSettingsOpen(true),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
             React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
@@ -1392,7 +1392,7 @@ const AppInner = ({ demo }) => {
           key: 'menu',
           'aria-label': t('nav.menu'),
           onClick: () => setMobileNavOpen(!mobileNavOpen),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
             React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
@@ -1432,7 +1432,7 @@ const AppInner = ({ demo }) => {
         onClick: () => setDbBlocked(false),
         style: {
           padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+          borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
           color: palette.text, fontFamily: 'inherit', flexShrink: 0,
         }
       }, t('common.close'))
@@ -1455,7 +1455,7 @@ const AppInner = ({ demo }) => {
         onClick: demo ? () => demo.onLeave() : () => beispielVerlassen(),
         style: {
           padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+          borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
           color: palette.text, fontFamily: 'inherit', flexShrink: 0, minHeight: '44px', // a11y-Prüfung 26.10.2026: vorher 31 px
         }
       }, t('demo.leave'))
@@ -1493,7 +1493,7 @@ const AppInner = ({ demo }) => {
             type: 'button', autoFocus: true, onClick: rueckfrageZurueck,
             style: {
               padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
-              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+              borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
               color: palette.text, fontFamily: 'inherit',
             }
           }, t('sandbox.replaceBack')),
@@ -1501,7 +1501,7 @@ const AppInner = ({ demo }) => {
             type: 'button', onClick: () => applySandbox(true),
             style: {
               padding: '6px 14px', minHeight: '44px', background: palette.sand, border: 'none',
-              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
+              borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
               color: palette.onSand, fontFamily: 'inherit',
             }
           }, t('sandbox.replaceConfirm'))
@@ -1512,7 +1512,7 @@ const AppInner = ({ demo }) => {
           onClick: discardSandbox,
           style: {
             padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
-            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+            borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
             color: palette.text, fontFamily: 'inherit',
           }
         }, t('sandbox.discard')),
@@ -1520,7 +1520,7 @@ const AppInner = ({ demo }) => {
           ref: uebernehmenKnopf, onClick: () => applySandbox(false),
           style: {
             padding: '6px 14px', minHeight: '44px', background: palette.sand, border: 'none',
-            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
+            borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
             color: palette.onSand, fontFamily: 'inherit',
           }
         }, t('sandbox.apply'))
@@ -1585,7 +1585,7 @@ const AppInner = ({ demo }) => {
           display: 'inline-flex', alignItems: 'center', gap: '6px',
           margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px',
           background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+          borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
           // sageDeep statt sage: sage (#5A7868) trägt als 13px-Text nur 4.34:1 auf bg → AA-Fail.
           color: palette.sageDeep, fontFamily: 'inherit',
         },

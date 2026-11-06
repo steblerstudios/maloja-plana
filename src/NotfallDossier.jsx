@@ -81,7 +81,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         padding: '14px 16px',
         background: palette.up,
-        borderRadius: radius.sm,
+        borderRadius: radius.md,
         marginBottom: space.sm,
       }
     },
@@ -110,7 +110,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     React.createElement('div', {
       style: {
         padding: '32px 20px', textAlign: 'center',
-        background: palette.up, borderRadius: radius.sm,
+        background: palette.up, borderRadius: radius.lg,
         border: '1px solid ' + palette.border,
       }
     },
@@ -125,7 +125,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
+        background: palette.surface, padding: '24px 20px', borderRadius: radius.lg,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
@@ -146,7 +146,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     React.createElement('div', {
       style: {
         padding: '10px 14px', marginBottom: space.md,
-        background: palette.up, borderRadius: radius.sm,
+        background: palette.up, borderRadius: radius.md,
         fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
       }
     }, hinweisZeichen(), t('notfallDossier.privacyNote')),
@@ -167,7 +167,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     hasSections && React.createElement('div', {
       style: {
-        background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm,
+        background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.lg,
         padding: '16px', marginBottom: '20px', textAlign: 'center',
       }
     },
@@ -188,7 +188,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
           style: {
             minHeight: '44px', padding: '0 ' + space.md + 'px',
             background: palette.surface, color: palette.text, border: '1px solid ' + palette.mid,
-            borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
+            borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
           },
         }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(qrSichtbar)),
         t(qrSichtbar ? 'notfallDossier.qrAusblenden' : 'notfallDossier.qrAnzeigen'))
@@ -197,7 +197,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         ref: qrRef,
         style: {
           display: qrStatus === 'fehler' ? 'none' : 'inline-block',
-          padding: '10px', background: '#ffffff', borderRadius: radius.sm,
+          padding: '10px', background: '#ffffff', borderRadius: radius.md,
         },
       }),
       // Fehler entsteht erst nach dem ersten Render → Live-Region. Die Kürzung steht schon beim

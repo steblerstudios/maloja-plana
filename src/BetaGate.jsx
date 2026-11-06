@@ -26,7 +26,7 @@ const ERKLAERSEITEN = [
 ];
 // Gemeinsame Form der zwei ruhigen Knöpfe unter «Öffnen» (Demo · Einfache Ansicht).
 const ruhigerKnopf = {
-  marginTop: space.md, width: '100%', padding: '10px', borderRadius: radius.sm,
+  marginTop: space.md, width: '100%', padding: '10px', borderRadius: radius.md,
   cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
 };
 
@@ -185,7 +185,7 @@ export const BetaGate = ({ children }) => {
         style: {
           width: '100%', padding: '10px 14px', fontSize: text.body,
           border: '1px solid ' + (error ? palette.rose : palette.border),
-          borderRadius: radius.sm, background: palette.up, color: palette.text,
+          borderRadius: radius.md, background: palette.up, color: palette.text,
           outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
         }
       }),

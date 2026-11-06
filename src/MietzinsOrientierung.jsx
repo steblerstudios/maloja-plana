@@ -95,7 +95,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: '44px', textAlign: 'left', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
 
   const klein = { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal };
-  const auswahlStil = { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' };
+  const auswahlStil = { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' };
   const fragenLabel = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
 
   // Ergebnis: die Einschätzung gross, dann das Miet-Barometer. Ohne Kanton/Programm der App-Satz.

@@ -63,7 +63,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
       style: {
         padding: space.sm + 'px ' + space.md + 'px',
         background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
+        border: '1px dashed ' + palette.border, borderRadius: radius.md,
         cursor: 'pointer', fontSize: text.sm, fontFamily,
         fontWeight: weight.medium, alignSelf: 'flex-start',
       }

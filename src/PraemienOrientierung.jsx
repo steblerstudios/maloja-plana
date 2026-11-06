@@ -152,14 +152,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   }, [regionInfo, ageClass, compFranchise, vergleichsTag]);
 
   const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
+    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
+    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
-    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    gemeindeBtn: (active) => ({ padding: '6px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
-    highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
-    warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
+    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    gemeindeBtn: (active) => ({ padding: '6px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.md + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
+    highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
+    warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
     // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
     // Die Namensspalte bricht um, die Betragsspalten bleiben schmal, «CHF» steht einmal im Kopf.
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, tableLayout: 'fixed' },
@@ -168,7 +168,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left', overflowWrap: 'anywhere' },
-    targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
+    targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.full + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
   };
   // Betragsspalte: Kopf mit «CHF» darunter, damit die Zellen nur die Zahl tragen.
   const kopfBetrag = (key, label) => React.createElement('th', { key, style: { ...s.th, textAlign: 'right' } },
@@ -348,7 +348,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ]),
       franchiseOpt && teil('mp-vu-kreuz', t('po.franchiseOptTitle'), franchiseOpt.breakEven != null ? t('vu.breakEven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) }) : '', [
     franchiseOpt && React.createElement('div', {
-      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
+      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
     },
       // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
       React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate, eigeneFranchise: userFranchise }),
@@ -527,7 +527,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                         style: {
                           background: isActive ? palette.sage + '22' : 'none',
                           minHeight: '44px', border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
-                          borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
+                          borderRadius: radius.md + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
                           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                           color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
@@ -649,7 +649,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ),
       allInsurers.length > 5 && React.createElement('button', {
         type: 'button', onClick: () => setAlleKassen((x) => !x),
-        style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
+        style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
       }, t(alleKassen ? 'vu.wenigerKassen' : 'vu.alleKassen', { n: allInsurers.length })),
       targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.sm + 'px', fontWeight: weight.medium } },
         t('po.targetChosenHint', { insurer: targetInsurer }) + (ageClass !== 'kind' && data.versicherungen?.targetUvg ? ' (' + (data.versicherungen.targetUvg === 'ohne' ? t('po.ohneUnfall') : t('po.mitUnfall')) + ')' : ''))

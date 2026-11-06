@@ -149,7 +149,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         React.createElement('p', { style: { ...klein, margin: space.xs + 'px 0 ' + space.sm + 'px' } }, t('wohnenInstrument.durchspielen')),
         probe != null && React.createElement('button', {
           type: 'button', onClick: () => setProbe(null),
-          style: { minHeight: '44px', padding: '0 ' + space.md + 'px', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer' },
+          style: { minHeight: '44px', padding: '0 ' + space.md + 'px', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer' },
         }, t('wohnenInstrument.zurueck'))
       )
     )

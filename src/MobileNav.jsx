@@ -87,7 +87,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } }, t('settingsDrawer.accountNote')),
           onNavigate ? React.createElement('button', {
             onClick: () => { onClose(); onNavigate('export'); },
-            style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', padding: '8px 12px', fontSize: text.sm, color: palette.text, fontFamily: 'inherit' },
+            style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', padding: '8px 12px', fontSize: text.sm, color: palette.text, fontFamily: 'inherit' },
           },
             React.createElement('span', { style: { color: palette.sage, display: 'inline-flex' } }, renderIconEarly('download', '15px')),
             t('settingsDrawer.backup')
@@ -214,7 +214,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         width: '100%', minHeight: '44px', padding: '12px 16px',
         background: isActive ? palette.up : 'transparent', border: 'none',
         borderLeft: isActive ? '3px solid ' + palette.sand : '3px solid transparent',
-        borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
+        borderRadius: radius.md, cursor: 'pointer', textAlign: 'left',
         fontSize: text.sm, fontWeight: isActive ? weight.semi : weight.normal,
         color: palette.text, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '12px',
         transition: `background ${duration.fast}ms ${ease}`,

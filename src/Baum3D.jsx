@@ -869,7 +869,7 @@ export default function Baum3D({
       'aria-label': ariaLabel,
       'aria-describedby': hinweisId,
       style: {
-        width: '100%', height: hoehe + 'px', borderRadius: radius.md, overflow: 'hidden',
+        width: '100%', height: hoehe + 'px', borderRadius: radius.sm, overflow: 'hidden',
         // Himmel aus der Palette, nicht aus einem Fantasie-Blau: der Kasten soll
         // wie ein Teil der Seite wirken, nicht wie ein eingeklebtes Fenster.
         background: palette
