@@ -12,8 +12,14 @@
 // Nie Farbe allein. Test über den Schwarzweiss-Toggle (or5_grayscale).
 //
 // GUARDRAIL: reine Navigations-/Anzeige-Struktur. KEINE 7→11 Datenmigration —
-// die 7 heutigen Kapitel behalten ihre Felder; die übrigen vier Bereiche
-// (Gesundheit/Arbeit/Familie/Vorsorge) sind für spätere Nav-Stufen vorbereitet.
+// die 7 Kapitel behalten ihre Felder.
+//
+// Seiten-Architektur (Entscheid Stebler Studios 06.11.2026, docs/design/seiten-architektur-2026-11.md):
+// 7 Kapitel, 11 Äste, je Kapitel ein oder zwei Äste. Das Kapitel `notfall` heisst neu «Gesundheit» und trägt
+// die Äste Gesundheit (Kapitelfarbe, Hagebutte) und Notfall — so wie die Vorsorge zu den Versicherungen gehört.
+// Darum zeigen zwei Äste auf `notfall`; die Kapitelfarbe ist der ERSTE in dieser Liste (Gesundheit).
+// Familie, Vorsorge und Arbeit haben weiter kein `chapterKey` (Obstgarten zeigt sie als kommend) und finden
+// ihr Kapitel über KAPITEL_OHNE_EIGENES.
 
 // `lightDeep` — Frucht-Ton für bedeutungstragende FLÄCHEN im Hellmodus (Balken-Füllung).
 // Predeploy-Runde 8, Stebler-Studios-Entscheid. Gemessen, nicht geschätzt:
@@ -40,7 +46,7 @@ export const LEBENSBEREICHE = [
   // lightDeep seit dem Muster M8 (25.10.2026): die Krankenkasse im Kuchen und Balken des Kapitels Finanzen ist
   // eine Fläche auf palette.up — #6E90B0 hatte dort 2.8:1, #6787A5 hat 3.2:1 (WCAG 1.4.11).
   { key: 'versicherungen', chapterKey: 'versicherungen', fruit: 'heidelbeere',light: '#6E90B0', lightDeep: '#6787A5', dark: '#86A6C2' },
-  { key: 'gesundheit',     chapterKey: null,             fruit: 'hagebutte',  light: '#C67A4A', dark: '#D98F5C' },
+  { key: 'gesundheit',     chapterKey: 'notfall',             fruit: 'hagebutte',  light: '#C67A4A', dark: '#D98F5C' },
   { key: 'arbeit',         chapterKey: null,             fruit: 'haselnuss',  light: '#A8895E', lightDeep: '#947750', dark: '#C0A277' },
   { key: 'familie',        chapterKey: null,             fruit: 'kirsche',    light: '#B96470', dark: '#CE8088' },
   { key: 'vorsorge',       chapterKey: null,             fruit: 'traube',     light: '#7E6E93', dark: '#9788AC' },
@@ -52,10 +58,19 @@ export const LEBENSBEREICHE = [
 // Schnellzugriff über den Bereichs-Schlüssel.
 const BY_KEY = Object.fromEntries(LEBENSBEREICHE.map((b) => [b.key, b]));
 
-// Schnellzugriff über den heutigen Kapitel-Schlüssel (nur die 7 mit Kapitel).
-const BY_CHAPTER = Object.fromEntries(
-  LEBENSBEREICHE.filter((b) => b.chapterKey).map((b) => [b.chapterKey, b])
-);
+// Schnellzugriff über den Kapitel-Schlüssel (nur die 7 mit Kapitel). Zeigen zwei Äste auf dasselbe
+// Kapitel (Gesundheit + Notfall → `notfall`), gilt der erste der Liste als Kapitelfarbe.
+const BY_CHAPTER = {};
+for (const b of LEBENSBEREICHE) if (b.chapterKey && !BY_CHAPTER[b.chapterKey]) BY_CHAPTER[b.chapterKey] = b;
+
+// Äste ohne eigenes `chapterKey` und ihr Kapitel (Entscheid 23.10.2026, Seiten-Architektur 06.11.2026).
+export const KAPITEL_OHNE_EIGENES = { vorsorge: 'versicherungen', arbeit: 'ausbildung', familie: 'basis' };
+
+// Kapitel eines Astes — oder null (unbekannter Ast).
+export const astKapitel = (key) => {
+  const b = BY_KEY[key];
+  return (b && b.chapterKey) || KAPITEL_OHNE_EIGENES[key] || null;
+};
 
 export function getBereich(key) {
   return BY_KEY[key] || null;

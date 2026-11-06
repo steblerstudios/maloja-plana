@@ -3,26 +3,31 @@
 // (VERGLEICH.md Fassung 5, «Ja, Liste B»). Die erste Liste aus «Vor dem Bau festgelegt» ist überholt.
 //
 // Merkliste: die Zuordnung steht NICHT doppelt hier, sie kommt aus der App selbst —
-//   1. data/werkzeugRegister.js, Feld «fach» (geld · gesundheit · alter · Aussenfach),
+//   1. data/werkzeugRegister.js, Feld «bereich» (Ast; seit der Seiten-Architektur 06.11.2026),
 //   2. config/ansichtenRegister.js, Bereich des Ablaufs (Asyl → Behörden),
 //   3. data/gepaeck.js, Gegenstand des Wegs (Stipendien → Werkzeugrolle «arbeit»).
-// So hat «Steuern» in der Merkliste dieselbe Farbe wie im Kapitel. Ergebnis heute:
-//   IPV, Prämien-Orientierung, Vorsorge-Rechner → Versicherungen · Steuern, Sozialhilfe, ALV → Finanzen ·
-//   Stipendien → Ausbildung · Asyl → Behörden · Dokumentenablage, Kalender, Offizielle Links (Aussenfach)
-//   und ohne Verknüpfung → kein Bereich: eigenes Zeichen in neutralem Grau-Grün.
+// Der Ast wird über astKapitel (data/lebensbereiche.js) zum Kapitel — so trägt «Neuer Job» die Farbe von
+// Ausbildung & Arbeit (vorher: Ast «arbeit» ohne Kapitel → neutral). Ergebnis heute:
+//   IPV, Versicherungs-Übersicht, Vorsorge-Rechner → Versicherungen · Steuern, Sozialhilfe → Finanzen ·
+//   ALV, Stundenlohn, Lebenslauf, Stipendien → Ausbildung · KVG-Leistungen, KK-Belege, Arztkoffer,
+//   Patientenverfügung → Gesundheit (Kapitel `notfall`) · EO → Basis · Asyl → Behörden ·
+//   Dokumentenablage, Kalender, Offizielle Links (Aussenfach) und ohne Verknüpfung → kein Bereich:
+//   eigenes Zeichen in neutralem Grau-Grün.
 //
 // Kalender (Kategorie → Bereich), nicht aus einem Register ableitbar, darum hier:
-//   Gesundheit, Versicherung → Versicherungen · Finanzen → Finanzen · Verwaltung, Recht → Behörden ·
+//   Gesundheit → Gesundheit (Kapitel `notfall`, seit 06.11.2026) · Versicherung → Versicherungen ·
+//   Finanzen → Finanzen · Verwaltung, Recht → Behörden ·
 //   Arbeit, Ausbildung → Ausbildung · Wohnen → Wohnen · Familie → Basis · Persönlich → kein Bereich.
 //
 // Der Bereichs-Schlüssel ist zugleich Kapitel-Schlüssel und Icon-Name (wie Dashboard/MobileNav).
-import { getBereichForChapter } from './lebensbereiche.js';
+import { getBereichForChapter, astKapitel } from './lebensbereiche.js';
 import { WERKZEUGE } from './werkzeugRegister.js';
 import { alleWege } from './gepaeck.js';
 import { ablaufBereich, ansichtIkon } from '../config/ansichtenRegister.js';
 import { kontrast, lesbareFarbe, mischeHex } from '../utils/lebensbereichFruechte.js';
 
-// Gegenstand im Rucksack → Lebensbereich (Kapitel). Aussenfach hat keinen.
+// Gegenstand im Rucksack → Kapitel, nur noch für die Wege aus data/gepaeck.js (Stipendien).
+// Werkzeuge tragen ihren Ast selbst (Feld `bereich`). Aussenfach hat keinen.
 const FACH_BEREICH = {
   geld: 'finanzen',
   gesundheit: 'versicherungen',
@@ -31,7 +36,7 @@ const FACH_BEREICH = {
 };
 
 export const KATEGORIE_BEREICH = {
-  health: 'versicherungen',
+  health: 'notfall',
   insurance: 'versicherungen',
   finance: 'finanzen',
   admin: 'behoerden',
@@ -47,8 +52,8 @@ export const KATEGORIE_BEREICH = {
 export const merkpunktBereich = (link) => {
   if (!link) return null;
   const w = WERKZEUGE.find((x) => x.view === link);
-  if (w) return FACH_BEREICH[w.fach] || null;
-  const ablauf = ablaufBereich(link);
+  if (w) return astKapitel(w.bereich);
+  const ablauf = astKapitel(ablaufBereich(link));
   if (ablauf) return ablauf;
   const weg = alleWege().find((x) => x.view === link);
   return (weg && FACH_BEREICH[weg.gegenstand]) || null;

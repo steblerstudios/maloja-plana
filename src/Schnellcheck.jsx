@@ -76,7 +76,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       label: t('schnellcheck.ipv'), monthly: w.monthly, qualitative: w.qualitative,
       note: t(w.qualitative ? 'schnellcheck.ipvOhneBetragNote' : 'schnellcheck.ipvNote'),
     } : w.key === 'soz' ? {
-      key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
+      key: 'soz', view: 'sozialhilfe', color: palette.gold, textColor: palette.goldDeep, // Ast Finanzen (Seiten-Architektur 06.11.2026)
       label: t('nav.sozialhilfe'), monthly: w.monthly, qualitative: w.qualitative,
       // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
       note: w.qualitative ? t(w.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') : t('schnellcheck.sozNote') + (w.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')

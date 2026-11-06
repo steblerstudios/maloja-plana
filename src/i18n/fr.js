@@ -1951,7 +1951,7 @@ export default {
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: { sie: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.', du: 'Calculateurs et outils — utilisables indépendamment de tes chapitres.' },
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle' },
+    bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle', bildung: 'Formation', notfall: 'Urgence' },
     toolGroups: {
       lebensereignisse: 'Événements de vie',
       ankommen: 'Arrivée en Suisse',
@@ -2359,9 +2359,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Urgence',
-      short: 'Urgence',
-      description: 'Contacts d\'urgence, informations médicales',
+      title: 'Santé',
+      short: 'Santé',
+      description: 'Santé, urgence et directives',
       intro: { sie: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour vous et votre famille.', du: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour toi et ta famille.' },
       emptyState: { sie: 'Votre carte d\'urgence — prête en 2 minutes, là quand ça compte.', du: 'Ta carte d\'urgence — prête en 2 minutes, là quand ça compte.' },
       emptyStateHint: 'Un contact avec un numéro de téléphone suffit pour commencer.',

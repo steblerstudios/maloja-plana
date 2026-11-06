@@ -37,19 +37,19 @@ describe('das Ziel: Kapitel Notfall, Block Vorsorge', () => {
   });
 });
 
-describe('Brotkrume «Übersicht › Notfall › …»', () => {
+describe('Brotkrume «Übersicht › Gesundheit › …» (Kapitel heisst seit 06.11.2026 Gesundheit)', () => {
   it.each(Object.keys(FORMULARE))('%s', (v) => {
     expect(stufen(v).map((s) => s.ziel)).toEqual(['dashboard', 'notfallvorsorge', null]);
-    expect(t(ELTERN_TITEL.notfallvorsorge)).toBe('Notfall');
+    expect(t(ELTERN_TITEL.notfallvorsorge)).toBe('Gesundheit');
     expect(quelle(FORMULARE[v])).toContain(`createElement(Brotkrume, { palette, t, view: '${v}', onNavigate })`);
   });
 
-  it('gezeichnet: «Notfall» ist ein Knopf, der Formularname die aktuelle Seite', () => {
+  it('gezeichnet: «Gesundheit» ist ein Knopf, der Formularname die aktuelle Seite', () => {
     const ziele = [];
     for (const [Komp, titel] of [[Patientenverfuegung, 'pv.ui.title'], [Bestattung, 'bw.ui.title']]) {
       const html = renderToStaticMarkup(React.createElement(Komp, { palette: LIGHT_PALETTE, t, data: {}, onUpdateData: () => {}, lang: 'de', onNavigate: (z) => ziele.push(z) }));
       expect(html).toMatch(/^<nav aria-label="Pfad"/);
-      expect(html).toContain('>Notfall</button>');
+      expect(html).toContain('>Gesundheit</button>');
       expect(html).toMatch(new RegExp('aria-current="page"[^>]*>' + t(titel)));
     }
   });

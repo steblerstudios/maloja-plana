@@ -1960,7 +1960,7 @@ export default {
     toolsAndFeatures: 'Werkzeuge',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von deinen Kapiteldaten nutzbar.' },
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches' },
+    bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches', bildung: 'Bildung', notfall: 'Notfall' },
     toolGroups: {
       lebensereignisse: 'Lebensereignisse',
       ankommen: 'Ankommen in der Schweiz',
@@ -2368,9 +2368,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Notfall',
-      short: 'Notfall',
-      description: 'Notfallkontakte und medizinische Informationen',
+      title: 'Gesundheit',
+      short: 'Gesundheit',
+      description: 'Gesundheit, Notfall und Verfügungen',
       intro: { sie: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.', du: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für dich und deine Familie einen echten Unterschied machen.' },
       emptyState: { sie: 'Ihre Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.', du: 'Deine Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.' },
       emptyStateHint: 'Ein Kontakt mit Telefonnummer genügt als Anfang.',
