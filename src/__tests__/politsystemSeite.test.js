@@ -35,8 +35,8 @@ const html = lies('politsystem');
 const text = sichtbar(html);
 
 describe('/politsystem/', () => {
-  it('steht in der Liste der Hintergrundseiten, nach der Krankenkasse', () => {
-    expect(HINTERGRUND.map((h) => h.pfad)).toEqual(['krankenkasse', 'politsystem']);
+  it('steht in der Liste der Hintergrundseiten, nach Krankenkasse und Kantonsvergleich', () => {
+    expect(HINTERGRUND.map((h) => h.pfad)).toEqual(['krankenkasse', 'kantone-im-vergleich', 'politsystem']);
   });
 
   it('ist noch nicht über ihr Prüfdatum hinaus', () => {
@@ -204,7 +204,8 @@ describe('/politsystem/', () => {
     const kk = lies('krankenkasse');
     expect(kk).toContain('<p class="kicker">Krankenkasse erklärt</p>');
     expect(kk).toContain('<p>Acht Fragen</p>');
-    expect(KRANKENKASSE.kicker).toBeUndefined();
+    // Seit #683 setzt die Krankenkasse ihren Kicker selbst (vorher galt der Vorgabewert des Baus).
+    expect(KRANKENKASSE.kicker).toBe('Krankenkasse erklärt');
   });
 });
 
