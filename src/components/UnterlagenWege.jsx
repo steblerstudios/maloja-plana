@@ -47,7 +47,7 @@ export const UnterlagenWege = ({ palette, t, onNavigate }) => {
       status: [t('unterlagen.dossier.lebensmappe.title'), t('unterlagen.dossier.behoerden.title'), t('unterlagen.dossier.notfall.title')].join(' · ') }),
     React.createElement(Weg, { palette, icon: 'documents', onClick: () => onNavigate('briefe'),
       title: t('unterlagen.dossier.briefe.title'), description: t('unterlagen.dossier.briefe.description') }),
-    React.createElement(Weg, { palette, icon: 'lock', onClick: () => onNavigate('export'),
+    React.createElement(Weg, { palette, icon: 'sicherung', onClick: () => onNavigate('export'),
       title: t('unterlagen.backup.title'), description: t('unterlagen.backup.description'), status: t('unterlagen.backup.action') })
   );
 };
