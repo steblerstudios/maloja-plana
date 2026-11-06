@@ -6,6 +6,7 @@ import { FragenAblauf } from './components/FragenAblauf.jsx';
 import { FRAGEN, dokument, dokumentHtml } from './data/patientenverfuegung.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { PanelTitle } from './components/Heading.jsx';
+import { ansichtName } from './config/ansichtenRegister.js';
 
 // Patientenverfügung in Fragen — eine Frage pro Seite, am Schluss Vorschau und Druck.
 // Ablauf: components/FragenAblauf.jsx · Dokument und Regeln: data/patientenverfuegung.js ·
@@ -49,7 +50,9 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNa
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(dokumentHtml(antworten, data, t, lang)) },
           React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('pv.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('pv.ui.aendern')),
-        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge'))
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
+        // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).
+        onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('vorsorgeauftrag') }, t(ansichtName('vorsorgeauftrag')))
       )
     );
   };
