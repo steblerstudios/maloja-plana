@@ -274,7 +274,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
           // F9-A14 Schritt 2: Zahlungsfrist mit Kalenderblatt (überfällig rot, Wort «überfällig»).
-          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
+          // Mit Blatt mehr Luft nach unten: der Frucht-Stempel ragt 12 px unter das Blatt.
+          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, color: palette.mid, fontSize: text.sm, marginBottom: debt.dueDate && debt.status !== 'paid' ? '18px' : '6px' } },
             debt.dueDate && debt.status !== 'paid' && React.createElement(Kalenderblatt, {
               iso: debt.dueDate, palette, klein: true, vorbei: istUeberfaellig(debt),
               locale: (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })(),
