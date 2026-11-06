@@ -19,6 +19,7 @@ import { betrag } from './utils/geld.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { gblStand } from './data/skosGrundbedarf.js';
 import { BudgetImport, BUDGET_IMPORT_ANKER } from './BudgetImport.jsx';
+import { knopfStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -320,10 +321,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     },
       React.createElement('button', {
         type: 'button', onClick: toggleAllInfo, 'aria-expanded': anyInfoOpen,
-        style: {
-          background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer',
-          color: palette.soft, fontSize: text.xs, display: 'inline-flex', alignItems: 'center', gap: '5px'
-        }
+        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, gap: '5px' }
       },
         React.createElement('span', { 'aria-hidden': true }, aufklappZeichen(anyInfoOpen)),
         t('budgetSync.infoToggle')
@@ -479,19 +477,13 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       React.createElement('button', {
         onClick: () => setShowAnnual(!showAnnual),
         style: {
-          flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
-          color: showAnnual ? palette.onSand : palette.mid, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          ...auswahlStil(palette, showAnnual), flex: 1, padding: '9px', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
       }, hinweisZeichen(), showAnnual ? t('budgetSync.title') : t('budgetSync.annualView')),
       React.createElement('button', {
         onClick: () => setBerichtVorschau(true),
-        style: {
-          padding: '9px 14px', background: palette.up, color: palette.mid,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          cursor: 'pointer', fontSize: text.sm
-        }
+        style: knopfStil(palette, 'neben')
       }, t('nav.export'))
     ),
 

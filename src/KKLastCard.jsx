@@ -8,6 +8,7 @@ import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { zahl } from './utils/geld.js';
 import { einkommenIstKeinLohn, monatsAusgaben, versicherungenSumme } from './utils/monatsrechnung.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // Die 10 % sind nur noch eine offene Vergleichsmarke: kein Grenzwert, keine Empfehlung, keine Warnfarbe.
 // WHO 4845 führt 10 % oder 25 % für Zahlungen aus der eigenen Tasche und schliesst Prämien aus;
@@ -71,11 +72,7 @@ export const KKLastEinordnung = ({ palette, t, onNavigate, stand }) => {
     onNavigate && React.createElement('button', {
       type: 'button', className: 'mp-link',
       onClick: () => onNavigate('premium'),
-      style: {
-        marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none',
-        border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text,
-        cursor: 'pointer', fontFamily: 'inherit',
-      }
+      style: { ...linkStil(palette), marginTop: space.sm + 'px', minHeight: '44px', fontSize: text.sm }
     }, t('kkLast.ipvLink'))
   );
 };
@@ -138,7 +135,7 @@ export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
       zahl((premium / income) * 100, { hoechstens: 1 }) + ' %: ' + t(kkLastBasisKey(data))),
     onNavigate && React.createElement('button', {
       type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', 3),
-      style: { marginTop: space.sm + 'px', minHeight: '44px', padding: 0, background: 'none', border: 0, fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' },
+      style: { ...linkStil(palette), marginTop: space.sm + 'px', minHeight: '44px', fontSize: text.sm },
     }, t('kkLast.spiegelLink') + ' ›')
   );
 };

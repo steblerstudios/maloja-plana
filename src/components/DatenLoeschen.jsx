@@ -3,6 +3,7 @@ import { Eyebrow } from './Heading.jsx';
 import { text, weight, radius, space, shadow } from '../config/tokens.js';
 import { alleDatenLoeschen } from '../utils/datenLoeschen.js';
 import { useFocusTrap } from '../hooks/useFocusTrap.js';
+import { knopfStil } from './PrimaryButton.jsx';
 
 // ─── E18 · Löschweg «Alle Daten auf diesem Gerät löschen» ─────────────────────
 // Ruhig und auffindbar unter Einstellungen → Daten & Sicherung. Ablauf:
@@ -53,13 +54,8 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     }
   } catch { /* Speicher gesperrt — dann eben ohne Datum */ }
 
-  const knopf = (extra) => ({
-    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-    padding: '9px 14px', borderRadius: radius.sm, cursor: 'pointer',
-    fontSize: text.sm, fontFamily: 'inherit', background: 'transparent',
-    color: palette.text, border: '1px solid ' + palette.border, ...extra,
-  });
-  const ernst = palette.roseDeep || palette.rose;
+  // Knopfarten (Fassung 9): Neben = abbrechen/zurück, Haupt = zuerst sichern bzw. neu starten,
+  // Gefahr = jeder Schritt zum Löschen, gefüllt nur im letzten («Jetzt alles löschen», M5).
   const p = (inhalt, extra) => React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55, ...extra } }, inhalt);
   const zeile = { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap', justifyContent: 'flex-end', marginTop: space.lg + 'px' };
 
@@ -71,7 +67,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
       return React.createElement(React.Fragment, null,
         p(t('datenLoeschen.fehler'), { color: palette.text }),
         React.createElement('div', { style: zeile },
-          React.createElement('button', { type: 'button', onClick: neuStarten, style: knopf() }, t('datenLoeschen.neuStarten'))
+          React.createElement('button', { type: 'button', onClick: neuStarten, style: knopfStil(palette) }, t('datenLoeschen.neuStarten'))
         )
       );
     }
@@ -88,12 +84,12 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
           p(letzteSicherung ? t('datenLoeschen.letzteSicherung', { datum: letzteSicherung }) : t('datenLoeschen.keineSicherung'), { color: palette.text }),
           onExport && React.createElement('button', {
             type: 'button', onClick: () => { setOffen(false); onExport(); },
-            style: knopf({ borderColor: palette.sage, color: palette.text }),
+            style: knopfStil(palette),
           }, t('datenLoeschen.zuerstSichern'))
         ),
         React.createElement('div', { style: zeile },
-          React.createElement('button', { type: 'button', onClick: schliessen, style: knopf() }, t('datenLoeschen.abbrechen')),
-          React.createElement('button', { type: 'button', onClick: () => setSchritt(2), style: knopf({ color: ernst, borderColor: ernst }) }, t('datenLoeschen.weiter'))
+          React.createElement('button', { type: 'button', onClick: schliessen, style: knopfStil(palette, 'neben') }, t('datenLoeschen.abbrechen')),
+          React.createElement('button', { type: 'button', onClick: () => setSchritt(2), style: knopfStil(palette, 'gefahr') }, t('datenLoeschen.weiter'))
         )
       );
     }
@@ -106,11 +102,11 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
         t('datenLoeschen.verstanden')
       ),
       React.createElement('div', { style: zeile },
-        React.createElement('button', { type: 'button', onClick: () => { setSchritt(1); setVerstanden(false); }, style: knopf() }, t('datenLoeschen.zurueck')),
+        React.createElement('button', { type: 'button', onClick: () => { setSchritt(1); setVerstanden(false); }, style: knopfStil(palette, 'neben') }, t('datenLoeschen.zurueck')),
         React.createElement('button', {
           type: 'button', onClick: loeschen, disabled: !verstanden,
           // Weiss auf roseBtn: 6.65:1 (AA), modus-invariant (config/constants.js).
-          style: knopf({ background: verstanden ? (palette.roseBtn || ernst) : 'transparent', color: verstanden ? '#FFFFFF' : palette.soft, borderColor: verstanden ? (palette.roseBtn || ernst) : palette.border, fontWeight: weight.semi, cursor: verstanden ? 'pointer' : 'not-allowed' }),
+          style: knopfStil(palette, 'gefahr', { gefuellt: true, disabled: !verstanden }),
         }, t('datenLoeschen.jetztLoeschen'))
       )
     );
@@ -124,7 +120,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     React.createElement('button', {
       type: 'button', disabled: demoMode, onClick: () => setOffen(true),
       'aria-haspopup': 'dialog',
-      style: knopf({ color: demoMode ? palette.soft : ernst, cursor: demoMode ? 'not-allowed' : 'pointer' }),
+      style: knopfStil(palette, 'gefahr', { disabled: demoMode }),
     }, t('datenLoeschen.titel')),
 
     offen && React.createElement('div', {

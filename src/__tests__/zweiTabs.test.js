@@ -36,7 +36,8 @@ describe('istFremdeAenderung — was das eigene Auto-Save überschriebe', () => 
 });
 
 describe('AutoSaveStatus meldet die fremde Änderung', () => {
-  const palette = { text: '#111', surface: '#fff', border: '#ccc', mid: '#666', sage: '#6a6' };
+  // sandDeep: seit Fassung 9 (05.11.2026) ist «Seite neu laden» ein Nebenknopf aus knopfStil (Schrift sandDeep).
+  const palette = { text: '#111', surface: '#fff', border: '#ccc', mid: '#666', sage: '#6a6', sandDeep: '#7a5c1e' };
   const t = (k) => k.split('.').reduce((o, s) => o?.[s], de);
 
   it('zeigt den Satz und den einen Handgriff «Seite neu laden»', () => {
@@ -49,7 +50,7 @@ describe('AutoSaveStatus meldet die fremde Änderung', () => {
 
   it('der Knopf setzt seine Farbe selbst (Dunkelmodus)', () => {
     const html = renderToStaticMarkup(React.createElement(AutoSaveStatus, { palette, t, fremdGeaendert: true }));
-    expect(html.match(/<button[^>]*style="([^"]*)"/)[1]).toMatch(/color:#111/);
+    expect(html.match(/<button[^>]*style="([^"]*)"/)[1]).toMatch(/(^|;)color:#7a5c1e/);
   });
 
   it('ohne fremde Änderung: keine Meldung', () => {

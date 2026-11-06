@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { springeZuAnker } from '../utils/hashRouter.js';
 import { ExternerLink } from './ExternerLink.jsx';
+import { knopfStil, linkStil } from './PrimaryButton.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
 import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
@@ -181,7 +182,10 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const kapitelTitel = (kap) => (kapitelListe.find((c) => c.key === kap) || {}).title || kap;
   const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
+  // Fassung 9: «Speichern» in den Fehlt-Kästen ist Nebenknopf (M6, die Kästen stehen mehrfach untereinander);
+  // Wege in ein anderes Kapitel sind Links (M2).
+  const ruhigKnopf = knopfStil(palette, 'neben');
+  const wegLink = { ...linkStil(palette), minHeight: '44px', fontSize: text.sm };
   const notfallRot = palette.roseDeep || palette.rose;
 
   // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
@@ -224,7 +228,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     const rahmen = { border: '1px dashed ' + notfallRot, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', marginBottom: space.sm + 'px' };
     const wegZeile = (key, onClick, beschriftung) => h('div', { key, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
       titel,
-      h('button', { type: 'button', className: 'mp-link', onClick, style: { ...ruhigKnopf, background: 'none' } }, beschriftung));
+      h('button', { type: 'button', className: 'mp-link', onClick, style: wegLink }, beschriftung));
     // Aus einem anderen Kapitel: der Weg dorthin.
     if (f.chapter !== 'notfall') {
       return wegZeile(f.chapter + '.' + f.k, () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), kapitelTitel(f.chapter) + ' ›');
@@ -251,7 +255,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         ? h('p', { style: { ...klein, margin: 0 } }, t('demo.readOnlyHint'))
         : h('div', { style: { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap' } },
             h('button', { type: 'button', onClick: () => speichern(f), style: ruhigKnopf }, t('notfallKapitel.speichern')),
-            f.k === 'medications' && h('button', { type: 'button', onClick: keineMedikamente, style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.keineMedikamente'))));
+            f.k === 'medications' && h('button', { type: 'button', onClick: keineMedikamente, style: ruhigKnopf }, t('notfallKapitel.keineMedikamente'))));
   };
   const szenarienZeile = SCENARIOS.flatMap((s, i) => {
     const n = s.fields.filter((f) => angabeBereit(alle, f)).length;
@@ -350,7 +354,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       h('p', { id: 'mp-notfall-pv-hinweis', style: { ...klein, margin: 0 } }, t('chapters.notfall.hints.patientenverfuegung')),
       pvFeld?.orientation && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, pvFeld.orientation),
       pvFeld?.link && h(ExternerLink, { t, href: pvFeld.link.url, style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, pvFeld.link.label),
-      nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none', marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
+      nf.patientenverfuegung === 'yes' && h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...wegLink, marginTop: space.xs + 'px' } }, t('nav.crosslink.pvHint') + ' ›'))
   );
 
   return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, bereit, unterlagen, vorsorge);

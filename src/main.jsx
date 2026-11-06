@@ -140,6 +140,7 @@ const FlyerView = lazyMitTexten(() => import('./FlyerView.jsx'));
 const SearchView = lazyMitTexten(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { knopfStil, linkStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
 // heuteIso (utils/fristen.js) zog die ganze Fristen-Datei ins Startbündel; inDays(0) liefert dasselbe (lokal,
@@ -168,7 +169,7 @@ class ViewErrorBoundary extends React.Component {
       ),
       React.createElement('button', {
         onClick: () => this.setState({ hasError: false }),
-        style: { padding: space.sm + 'px ' + space.md + 'px', background: palette?.sand || '#c8a96e', color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm + 'px' }
+        style: knopfStil(palette || LIGHT_PALETTE)
       }, t ? t('error.tryAgain') : 'Try again')
     );
   }
@@ -247,8 +248,8 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       background: vorlesen.enabled ? palette.sand + '30' : 'transparent',
       color: vorlesen.enabled ? palette.text : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
-      border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
-      borderRadius: radius.xs,
+      border: '1px solid ' + (vorlesen.enabled ? palette.sand : palette.border),
+      borderRadius: KNOPF_RADIUS,
       cursor: 'pointer',
       fontSize: '11px',
       lineHeight: 1,
@@ -1048,24 +1049,29 @@ const AppInner = ({ demo }) => {
   // Gemeinsamer Button-Stil: 44px Tap-Ziel (WCAG 2.5.8) + sichtbarer Ruhe-Rand
   // (`palette.border` statt transparent — die a11y-Schalter waren sonst selbst am
   // schwersten zu treffen). Ausgerichtet zentriert, Icon/Text mittig im 44px-Feld.
-  const ctrlBtn = (active, accent, opts = {}) => ({
+  // Fassung 9 (M8): eingeschaltet = gold getönt wie alle Auswahlen, Rand Sand.
+  const ctrlBtn = (active, opts = {}) => ({
     padding: '6px 9px', minHeight: '44px', minWidth: '44px',
-    background: active ? accent + (opts.bgAlpha || '22') : 'transparent',
-    // Aktiv trägt der Text den Kontrast, die Akzentfarbe liegt in Fläche und Rand (4.5:1 in beiden Modi).
-    color: active ? (opts.activeColor || palette.text) : palette.mid,
-    border: '1px solid ' + (active ? palette.mid : palette.border),
-    borderRadius: radius.sm, cursor: 'pointer',
+    background: active ? palette.sand + '30' : 'transparent',
+    // Aktiv trägt der Text den Kontrast, die Tönung liegt in Fläche und Rand.
+    color: active ? palette.text : palette.mid,
+    border: '1px solid ' + (active ? palette.sand : palette.border),
+    borderRadius: KNOPF_RADIUS, cursor: 'pointer',
     lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
     display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',
     ...(opts.extra || {}),
   });
+  // «‹ Übersicht» und «‹ Zurück zu …» führen nur zurück: Link (M2), 44px-Zeile.
+  // Fusszeilen-Links: gold und unterstrichen (M2), klein.
+  const fussLink = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px', letterSpacing: '0.3px' };
+  const zurueckLink = { ...linkStil(palette), padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px' };
   const settingsControls = [
     React.createElement(VorlesenToggle, { key: 'voice', palette, t, vorlesen }),
     React.createElement('button', {
       key: 'readable',
       'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
       onClick: () => setReadable(r => !r),
-      style: ctrlBtn(readable, palette.sage, { lineHeight: 1, alignItems: 'baseline', extra: { gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" } })
+      style: ctrlBtn(readable, { lineHeight: 1, alignItems: 'baseline', extra: { gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" } })
     },
       React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
       React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
@@ -1080,7 +1086,7 @@ const AppInner = ({ demo }) => {
         'aria-label': t('common.anredeLabel', { form: current }),
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
       }, current);
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
@@ -1090,7 +1096,7 @@ const AppInner = ({ demo }) => {
       'aria-label': t('common.simpleView'), 'aria-pressed': simpleView, title: t('common.simpleView'),
       // Beim Einschalten automatisch Vorlesen aktivieren (Inkrement-1-Entscheid).
       onClick: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
-      style: ctrlBtn(simpleView, palette.sand, { bgAlpha: '30' })
+      style: ctrlBtn(simpleView)
     },
       // Icon: 2×2-Kachelraster = „grosse Symbole" (Outline, konsistent mit dem Icon-Set)
       zeichen('raster', 17)
@@ -1099,7 +1105,7 @@ const AppInner = ({ demo }) => {
       key: 'grayscale',
       'aria-label': t('common.grayscale'), 'aria-pressed': grayscale, title: t('common.grayscale'),
       onClick: () => setGrayscale(g => !g),
-      style: ctrlBtn(grayscale, palette.mid, { activeColor: palette.text })
+      style: ctrlBtn(grayscale)
     },
       // Icon: halb gefüllter Kreis = Kontrast / Schwarzweiss
       zeichen('kontrast', 16)
@@ -1108,7 +1114,7 @@ const AppInner = ({ demo }) => {
       key: 'colorblind',
       'aria-label': t('common.colorBlind'), 'aria-pressed': colorBlind, title: t('common.colorBlind'),
       onClick: () => setColorBlind(c => !c),
-      style: ctrlBtn(colorBlind, palette.sky)
+      style: ctrlBtn(colorBlind)
     },
       // Icon: ein gefüllter Kreis + ein Umriss-Quadrat = unterscheidbar an Farbe UND Form
       zeichen('farbsicher', 17)
@@ -1117,7 +1123,7 @@ const AppInner = ({ demo }) => {
       key: 'reducemotion',
       'aria-label': t('common.reduceMotion'), 'aria-pressed': reduceMotion, title: t('common.reduceMotion'),
       onClick: () => setReduceMotion(m => !m),
-      style: ctrlBtn(reduceMotion, palette.sage)
+      style: ctrlBtn(reduceMotion)
     },
       // Icon: Punkt mit radierenden Bewegungsbögen = „Bewegung" (aktiv = ruhiggestellt)
       zeichen('bewegung', 17)
@@ -1127,7 +1133,7 @@ const AppInner = ({ demo }) => {
       key: 'lefthand',
       'aria-label': t('common.leftHand'), 'aria-pressed': leftHand, title: t('common.leftHand'),
       onClick: () => setLeftHand(v => !v),
-      style: ctrlBtn(leftHand, palette.sage)
+      style: ctrlBtn(leftHand)
     },
       // Icon: linke Hand (Daumen links) = Einhand-Bedienung links
       zeichen('hand', 17)
@@ -1178,12 +1184,12 @@ const AppInner = ({ demo }) => {
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('a', {
       href: feedbackHref,
-      style: { display: 'inline-flex', alignItems: 'center', minHeight: '44px', color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: { ...fussLink, display: 'inline-flex', alignItems: 'center' }
     }, t('beta.feedbackMail')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
       onClick: () => handleNavigate('legal'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: fussLink
     }, t('legal.footerLink')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
@@ -1192,13 +1198,13 @@ const AppInner = ({ demo }) => {
         else if (demoMode) { beispielVerlassen(); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
         else beispielBetreten();
       },
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: fussLink
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
     !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
         onClick: enterSandbox,
-        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+        style: fussLink
       }, t('sandbox.footerLink'))
     ),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
@@ -1360,8 +1366,8 @@ const AppInner = ({ demo }) => {
     dbBlocked && React.createElement('div', {
       style: {
         padding: '10px 16px',
-        background: palette.sand + '18',
-        borderBottom: '1px solid ' + palette.sand + '30',
+        background: palette.rose + '18',
+        borderBottom: '1px solid ' + palette.rose,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
         flexWrap: 'wrap',
       }
@@ -1369,18 +1375,14 @@ const AppInner = ({ demo }) => {
       React.createElement('div', { role: 'status', style: { flex: 1, minWidth: 0, fontSize: text.xs, color: palette.mid } }, t('trust.dbBlocked')),
       React.createElement('button', {
         onClick: () => setDbBlocked(false),
-        style: {
-          padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          color: palette.text, fontFamily: 'inherit', flexShrink: 0,
-        }
+        style: { ...knopfStil(palette, 'neben'), flexShrink: 0 }
       }, t('common.close'))
     ),
     demoMode && React.createElement('div', {
       style: {
         padding: '10px 16px',
-        background: palette.sand + '18',
-        borderBottom: '1px solid ' + palette.sand + '30',
+        background: palette.sky + '18',
+        borderBottom: '1px solid ' + palette.sky,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
         flexWrap: 'wrap',
       }
@@ -1392,11 +1394,8 @@ const AppInner = ({ demo }) => {
       React.createElement('button', {
         // Ohne das Klick-Ereignis weiterreichen (onLeave nimmt Orts-Objekte an, Fix 17.09.2026).
         onClick: demo ? () => demo.onLeave() : () => beispielVerlassen(),
-        style: {
-          padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          color: palette.text, fontFamily: 'inherit', flexShrink: 0, minHeight: '44px', // a11y-Prüfung 26.10.2026: vorher 31 px
-        }
+        // a11y-Prüfung 26.10.2026: vorher 31 px — der Baustein hält 44 px, hier sichtbar für tippziele44.
+        style: { ...knopfStil(palette, 'neben'), flexShrink: 0, minHeight: '44px' }
       }, t('demo.leave'))
     ),
     sandboxActive && React.createElement('div', {
@@ -1417,11 +1416,7 @@ const AppInner = ({ demo }) => {
         ),
         React.createElement('button', {
           onClick: blankSandbox,
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0 0 0', minHeight: '44px',
-            fontSize: text.xs, fontWeight: weight.medium, color: palette.sageDeep, fontFamily: 'inherit',
-            textDecoration: 'underline', textUnderlineOffset: '2px',
-          },
+          style: { ...knopfStil(palette, 'neben'), marginTop: '4px' },
         }, t('sandbox.startBlank'))
       ),
       // B5: Rückfrage an Stelle der zwei Knöpfe; der Fokus landet auf «Zurück».
@@ -1430,38 +1425,22 @@ const AppInner = ({ demo }) => {
         React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
           React.createElement('button', {
             type: 'button', autoFocus: true, onClick: rueckfrageZurueck,
-            style: {
-              padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
-              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-              color: palette.text, fontFamily: 'inherit',
-            }
+            style: knopfStil(palette, 'neben')
           }, t('sandbox.replaceBack')),
           React.createElement('button', {
             type: 'button', onClick: () => applySandbox(true),
-            style: {
-              padding: '6px 14px', minHeight: '44px', background: palette.sand, border: 'none',
-              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
-              color: palette.onSand, fontFamily: 'inherit',
-            }
+            style: knopfStil(palette, 'gefahr')
           }, t('sandbox.replaceConfirm'))
         )
       ) :
       React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
         React.createElement('button', {
           onClick: discardSandbox,
-          style: {
-            padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
-            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-            color: palette.text, fontFamily: 'inherit',
-          }
+          style: knopfStil(palette, 'gefahr')
         }, t('sandbox.discard')),
         React.createElement('button', {
           ref: uebernehmenKnopf, onClick: () => applySandbox(false),
-          style: {
-            padding: '6px 14px', minHeight: '44px', background: palette.sand, border: 'none',
-            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
-            color: palette.onSand, fontFamily: 'inherit',
-          }
+          style: knopfStil(palette)
         }, t('sandbox.apply'))
       )
     ),
@@ -1490,12 +1469,7 @@ const AppInner = ({ demo }) => {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
-          color: palette.mid, fontFamily: 'inherit',
-          display: 'flex', alignItems: 'center', gap: '6px',
-        },
+        style: zurueckLink,
       }, zurueckZeichen(), t('nav.backToDashboard')),
       // «Zurück zu …» — wenn man über einen Querverweis hierher kam (Entscheid 25.09.2026:
       // die Brotkrume zeigt die feste Ordnung, diese Zeile den eigenen Weg). Bis 27.09.2026
@@ -1510,24 +1484,12 @@ const AppInner = ({ demo }) => {
           type: 'button',
           className: 'mp-link',
           onClick: () => window.history.back(),
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer',
-            padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
-            color: palette.mid, fontFamily: 'inherit',
-            display: 'flex', alignItems: 'center', gap: '6px',
-          },
+          style: zurueckLink,
         }, zurueckZeichen(), t('nav.zurueckZu', { name }));
       })(),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
-        style: {
-          display: 'inline-flex', alignItems: 'center', gap: '6px',
-          margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px',
-          background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          // sageDeep statt sage: sage (#5A7868) trägt als 13px-Text nur 4.34:1 auf bg → AA-Fail.
-          color: palette.sageDeep, fontFamily: 'inherit',
-        },
+        style: { ...knopfStil(palette, 'neben'), marginBottom: space.md + 'px' },
       }, t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),

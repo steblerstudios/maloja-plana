@@ -14,6 +14,7 @@ import FruchtStufe from './FruchtStufe.jsx';
 import { PanelTitle } from './components/Heading.jsx';
 import { anspruchSignale } from './data/anspruchSignale.js';
 import { baumAnsichtLesen, baumAnsichtSchreiben } from './utils/baumAnsicht.js';
+import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 const Baum3D = React.lazy(() => import('./Baum3D.jsx'));
 
@@ -91,7 +92,8 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
         style: {
           fontSize: text.xs, fontFamily: 'inherit', cursor: 'pointer',
           color: palette.mid, background: 'none',
-          border: '1px solid ' + palette.sage + '40', borderRadius: radius.full,
+          // Textknopf: KNOPF_RADIUS statt Pille, neutraler Rand (Fassung 9).
+          border: '1px solid ' + palette.border, borderRadius: KNOPF_RADIUS,
           padding: '3px 12px', minHeight: '44px',
         },
       }, zeigeRaeumlich ? t('datenWirken.ansichtFlach') : t('datenWirken.ansichtRaeumlich')),

@@ -21,6 +21,7 @@ const SPRACHE = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH
 // Liste der Gänge und ihre Erledigt-Regel stehen in utils/behoerdenGaenge.js (auch fürs Dashboard).
 export { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt } from '../utils/behoerdenGaenge.js';
 import { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt } from '../utils/behoerdenGaenge.js';
+import { linkStil } from './PrimaryButton.jsx';
 
 const relativ = (tr, iso) => {
   const diffDays = Math.round((new Date(iso).getTime() - Date.now()) / 86400000);
@@ -96,7 +97,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
             vorschlag && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, tr('behoerdenInstrument.vorschlag')))),
         g.weg && onNavigate && h('button', {
           type: 'button', className: 'mp-link', onClick: () => onNavigate(g.weg),
-          style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep || palette.mid, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' },
+          style: { ...linkStil(palette), fontSize: text.xs, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' },
         }, tr(g.wegKey), ' ›'));
     })
   );

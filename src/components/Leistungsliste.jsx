@@ -10,6 +10,7 @@ import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkom
 import { zahl, betrag } from '../utils/geld.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 import { gblStand } from '../data/skosGrundbedarf.js';
+import { linkStil } from './PrimaryButton.jsx';
 
 // Leistungsliste des Dashboard-Blocks «Was steht mir zu?» (seit 25.09.2026 eigene Datei,
 // lazy geladen — vorher in Dashboard.jsx). Name QuickCheck bleibt: Tests und Übergabe-Logik
@@ -152,7 +153,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
           f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
             : (l.key === 'soz' && sozPegel) ? sozPegel.detail : (l.key === 'ipv' && ipvLage) ? ipvLage : l.sub,
-          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.sandDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
+          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.skyDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
       ),
       // Pegel: Balken = Einkommen, Strich = SKOS-Bedarf, gemeinsame Skala (das Grössere).
       // Neutral eingefärbt — es ist eine Lage, kein Betrag, der zusteht.
@@ -190,7 +191,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         },
       },
         React.createElement('span', { style: { minWidth: 0 } },
-          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('instrumente.kompass')),
+          React.createElement('span', { style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium } }, t('instrumente.kompass')),
           React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } },
             kompass.state === 'found'
               ? (anzahlGefunden === 1 ? t('instrumente.kompassFoundOne') : t('instrumente.kompassFound', { n: anzahlGefunden }))
@@ -219,7 +220,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     }, erfasst ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome')),
     React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'kompass-weg', onClick: () => onNavigate('situationen'),
-      style: { minHeight: '44px', padding: 0, marginTop: space.xs + 'px', background: 'none', border: 'none', fontSize: text.sm, color: palette.sageDeep || palette.text, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' },
+      style: { ...linkStil(palette), minHeight: '44px', marginTop: space.xs + 'px', fontSize: text.sm, textAlign: 'left' },
     }, t('dashboard.anspruchTitle'), ' ›')
   );
 };

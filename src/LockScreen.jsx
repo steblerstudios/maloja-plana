@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, linkStil } from './components/PrimaryButton.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 
 // ─── Tresor-LockScreen (At-Rest-Entsperrwand) ───────────────────────────────
@@ -152,10 +152,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
       ),
       onLegal && React.createElement('button', {
         type: 'button', onClick: onLegal,
-        style: {
-          marginTop: space.md, background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', textDecoration: 'underline', padding: '4px',
-        },
+        style: { ...linkStil(palette), marginTop: space.md, fontSize: text.xs, padding: '4px' },
       }, t('beta.legalLink'))
     )
   );

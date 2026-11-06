@@ -24,6 +24,7 @@ import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { zurueckZeichen, Icon } from './IconSystem.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
+import { knopfStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 // ─── Leere App nach dem Installieren (23.10.2026) ─────────────────────────────
 // Safari gibt der installierten App (iPhone-Startbildschirm, Mac-Dock) einen eigenen
@@ -101,18 +102,10 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     border: '1px solid ' + palette.border,
   };
 
-  const btnPrimary = {
-    width: '100%', padding: '14px', background: palette.sand,
-    color: palette.onSand, border: 'none', borderRadius: radius.sm,
-    cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
-    fontFamily: fontFamily, marginTop: space.md,
-  };
-
-  const btnSecondary = {
-    ...btnPrimary,
-    background: 'transparent', color: palette.mid,
-    border: '1px solid ' + palette.border,
-  };
+  // Knopfarten aus dem Baustein (Fassung 9); hier breit und mit grösserer Schrift.
+  const breit = { width: '100%', padding: '14px', fontSize: text.body, marginTop: space.md };
+  const btnPrimary = { ...knopfStil(palette), ...breit };
+  const btnSecondary = { ...knopfStil(palette, 'neben'), ...breit };
 
   const inputStyle = {
     width: '100%', padding: '12px 16px', borderRadius: radius.sm,
@@ -127,11 +120,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     key: 'back',
     onClick: () => setStep(s => s - 1),
     'aria-label': t('common.back'),
-    style: {
-      display: 'inline-flex', alignItems: 'center', background: 'none', border: 'none',
-      cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: fontFamily,
-      padding: '4px 6px 4px 0', marginBottom: space.sm,
-    },
+    style: { ...knopfStil(palette, 'neben'), marginBottom: space.sm },
   }, zurueckZeichen(), t('common.back'));
 
   // Fortschritt (Mischung: Punkte-Marker A + füllende Spur C + Textzeile B) — ruhig,
@@ -195,10 +184,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               key: lang,
               onClick: () => { setLanguage(lang); setStep(1); },
               style: {
-                padding: '16px 12px', borderRadius: radius.md, cursor: 'pointer',
-                border: '1px solid ' + palette.border, background: palette.up,
-                color: palette.text, fontSize: text.sm, fontWeight: weight.semi,
-                fontFamily: fontFamily,
+                ...auswahlStil(palette, false), padding: '16px 12px', fontSize: text.sm, fontWeight: weight.semi,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: space.sm,
                 transition: `border-color ${duration.normal}ms ${ease}`,
               },
@@ -221,7 +207,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             background: simpleView ? palette.sand + '30' : 'transparent',
             color: simpleView ? palette.text : palette.mid,
             border: '1px solid ' + (simpleView ? palette.sand : palette.border),
-            borderRadius: radius.md, cursor: 'pointer', fontFamily: fontFamily,
+            borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontFamily: fontFamily,
             fontSize: text.sm, fontWeight: weight.medium,
           }
         },
@@ -249,7 +235,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('button', {
             type: 'button',
             onClick: () => zurSicherungWechseln(localStorage, onSicherungEinspielen),
-            style: { ...btnSecondary, marginTop: space.sm, minHeight: '44px', color: palette.text },
+            style: { ...btnSecondary, marginTop: space.sm },
           }, t('onboarding.appLeer.knopf'))
         )
       )
@@ -351,12 +337,8 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               style: {
                 padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                borderRadius: radius.md,
-                border: '1px solid ' + (on ? palette.sage + '88' : palette.border),
-                background: on ? palette.sage + '18' : 'transparent',
-                color: on ? (palette.sageDeep || palette.text) : palette.mid,
+                ...auswahlStil(palette, on),
                 fontSize: text.sm, fontWeight: on ? weight.medium : weight.normal,
-                fontFamily: fontFamily, cursor: 'pointer',
                 transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
               },
             }, t('lebenszustaende.' + z.key + '.label'));

@@ -14,6 +14,7 @@ import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { CHAPTER_KEYS } from './config/constants.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -92,7 +93,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   // O3: die Art des Ergebnisses, abgeleitet aus der Einschätzung oben (data/mietzinsbeitraege.js).
   const art = mietzinsErgebnis({ info, assessmentKey: assessment && assessment.key, annualIncome });
 
-  const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: '44px', textAlign: 'left', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
+  const linkBtn = { ...linkStil(palette), display: 'block', minHeight: '44px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' };
 
   const klein = { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal };
   const auswahlStil = { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' };
@@ -208,7 +209,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ),
     } : null,
     stelle: canton && info.url && React.createElement('div', { style: { padding: space.sm + 'px 0', minHeight: '44px', boxSizing: 'border-box', borderBottom: '1px solid ' + palette.border } },
-      React.createElement(ExternerLink, { t, href: info.url, style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } },
+      React.createElement(ExternerLink, { t, href: info.url, style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.semi } },
         info.state === 'has' ? t('mietzins.linkCanton') : t('mietzins.linkOverview'))),
     quelle: React.createElement(React.Fragment, null,
       React.createElement('div', null, renderSource(t('mietzinsView.source'), null, t)),

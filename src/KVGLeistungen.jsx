@@ -16,6 +16,7 @@ import { betrag } from './utils/geld.js';
 import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
+import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -86,7 +87,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
         }, t('kvg.' + item.key + 'Note')),
         item.intervalKey && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sandDeep, marginTop: '4px', fontWeight: weight.medium }
+          style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '4px', fontWeight: weight.medium }
         }, hinweisZeichen(), t('kvg.' + item.intervalKey)),
         // Faden 3-II: einklappbarer Detail-Block — entweder die WHO/EU-Empfehlung
         // (Screenings) oder „Was genau gedeckt ist" (z. B. Schwangerschaft, Impfungen).
@@ -97,11 +98,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
             type: 'button',
             onClick: () => setOpen(!open),
             'aria-expanded': open,
-            style: {
-              background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
-              fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
-              textAlign: 'left',
-            }
+            style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, fontWeight: weight.medium, textAlign: 'left' }
           }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(open)), (emp
             ? (open ? t('kvg.empfehlungHide') : t('kvg.empfehlungShow', { sources }))
             : (open ? t('kvg.detailHide') : t('kvg.detailShow')))),
@@ -168,11 +165,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                     : React.createElement('button', {
                         type: 'button',
                         onClick: () => setReminderSaved(erinnerungSichern({ title: t('kvg.' + item.key), dueDate: inDays(0), category: 'health' }, vorlaeufig)),
-                        style: {
-                          marginTop: '4px', background: 'none', border: '1px solid ' + palette.border,
-                          borderRadius: radius.sm, padding: '4px 10px', fontSize: text.xs,
-                          color: palette.text, cursor: 'pointer', fontFamily: 'inherit',
-                        }
+                        style: { ...knopfStil(palette, 'neben'), marginTop: '4px', padding: '4px 10px', fontSize: text.xs }
                       }, t('kvg.addToCalendar'))
                   )
                 );
@@ -199,7 +192,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                 t('kvg.mammoGeoCheck') + ' ',
                 React.createElement(ExternerLink, {
                   t, href: MAMMO_GEO_URL,
-                  style: { color: palette.sandDeep, textDecoration: 'underline' }
+                  style: linkStil(palette)
                 }, t('kvg.mammoGeoLinkLabel'))
               )
             )
@@ -245,11 +238,7 @@ const KatalogTab = ({ palette, t, filterCat, canton }) => {
         type: 'button',
         onClick: () => setEvidenceOpen(!evidenceOpen),
         'aria-expanded': evidenceOpen,
-        style: {
-          background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
-          fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
-          textAlign: 'left',
-        }
+        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, fontWeight: weight.medium, textAlign: 'left' }
       }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(evidenceOpen)), t('kvg.evidenceToggle')),
       evidenceOpen && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.normal }
@@ -369,7 +358,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
   };
   const fmtDatum = (d) => d ? d.split('-').reverse().join('.') : t('kvg.belegNoDate');
   // ③ Zweitknopf (Umriss, wie überall): nur mit onUebernehmen — im Beispiel gibt main.jsx keine mit.
-  const zweitKnopf = { background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.xs, minHeight: '44px', boxSizing: 'border-box', padding: space.sm + 'px ' + space.md + 'px' };
+  const zweitKnopf = { ...knopfStil(palette, 'neben'), fontSize: text.xs };
   const heute = heuteIso();
 
   const result = berechneFranchise(franchise, kosten);
@@ -380,8 +369,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     : result.selbstbehaltAusgeschoepft
       ? { text: t('kvg.selbstbehaltDone'), color: palette.sageDeep || '#4A6657', icon: 'check' }
     : result.franchiseOffen > 0
-      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'info' }
-      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'info' };
+      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.skyDeep, icon: 'info' }
+      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.skyDeep, icon: 'info' };
 
   const barStyle = (_value, _max, _color) => ({
     height: '8px',
@@ -453,7 +442,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.goldDeep || '#c47a20' }
+          style: { fontWeight: weight.semi, color: palette.skyDeep }
         }, betrag(result.eigenanteil))
       ),
       React.createElement('div', {
@@ -504,11 +493,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       // belegte Ersparnis-/Break-even-Rechnung für die eigene Kasse. Keine Waisen.
       onNavigate && React.createElement('button', {
         onClick: () => onNavigate('praemien'),
-        style: {
-          display: 'block', width: '100%', textAlign: 'start', background: 'none',
-          border: 'none', padding: '2px 0 4px 0', cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.medium,
-        }
+        style: { ...linkStil(palette), display: 'block', width: '100%', textAlign: 'start', padding: '2px 0 4px 0', fontSize: text.sm, fontWeight: weight.medium }
       }, t('kvg.franchiseOptimizerLink')),
 
       React.createElement('div', {
@@ -557,11 +542,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
             key: s,
             onClick: () => setNewStatus(s),
             style: {
-              flex: '1 1 0', padding: '8px', borderRadius: radius.sm, fontFamily: 'inherit',
-              fontSize: text.sm, cursor: 'pointer',
-              border: '1px solid ' + (newStatus === s ? palette.sand : palette.border),
-              background: newStatus === s ? palette.sand + '20' : 'transparent',
-              color: newStatus === s ? palette.sandDeep : palette.mid,
+              ...auswahlStil(palette, newStatus === s), flex: '1 1 0', padding: '8px', fontSize: text.sm,
               fontWeight: newStatus === s ? weight.semi : weight.normal,
             }
           }, t(s === 'bezahlt' ? 'kvg.belegPaid' : 'kvg.belegOpen'))
@@ -584,11 +565,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       React.createElement('button', {
         onClick: () => setTpOpen(!tpOpen),
         'aria-expanded': tpOpen,
-        style: {
-          background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
-          fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
-          marginBottom: tpOpen ? '8px' : '10px', fontWeight: weight.medium,
-        }
+        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, marginBottom: tpOpen ? '8px' : '10px', fontWeight: weight.medium }
       }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(tpOpen)), t('kvg.belegFromTp')),
 
       tpOpen && React.createElement('div', {
@@ -617,13 +594,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         React.createElement('button', {
           onClick: () => { if (tpBetrag > 0) { setNewBetrag(String(tpBetrag)); setTpOpen(false); } },
           disabled: !(tpBetrag > 0),
-          style: {
-            padding: '6px 12px', borderRadius: radius.sm, border: 'none',
-            background: tpBetrag > 0 ? palette.sand : palette.border,
-            color: tpBetrag > 0 ? '#000' : palette.soft,
-            fontSize: text.xs, fontWeight: weight.semi, fontFamily: 'inherit',
-            cursor: tpBetrag > 0 ? 'pointer' : 'default', whiteSpace: 'nowrap',
-          }
+          style: { ...knopfStil(palette, 'neben', { disabled: !(tpBetrag > 0) }), padding: '6px 12px', fontSize: text.xs, whiteSpace: 'nowrap' }
         }, t('kvg.belegTpApply'))
       ),
       // Deploy-Gate 0.1.37 (1+2): Versicherergruppe bzw. «Stand 2025» sichtbar, bevor der Betrag
@@ -639,11 +610,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       React.createElement('button', {
         onClick: () => setNgOpen(!ngOpen),
         'aria-expanded': ngOpen,
-        style: {
-          background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
-          fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
-          marginBottom: ngOpen ? '8px' : '10px', fontWeight: weight.medium,
-        }
+        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, marginBottom: ngOpen ? '8px' : '10px', fontWeight: weight.medium }
       }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(ngOpen)), t('kvg.belegNichtGedeckt')),
 
       ngOpen && React.createElement('div', {
@@ -684,13 +651,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       React.createElement('button', {
         onClick: addBeleg,
         disabled: !(Number(newBetrag) > 0),
-        style: {
-          width: '100%', padding: space.sm, borderRadius: radius.sm, border: 'none',
-          background: Number(newBetrag) > 0 ? palette.sand : palette.border,
-          color: Number(newBetrag) > 0 ? '#000' : palette.soft,
-          fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit',
-          cursor: Number(newBetrag) > 0 ? 'pointer' : 'default',
-        }
+        style: { ...knopfStil(palette, 'haupt', { disabled: !(Number(newBetrag) > 0) }), width: '100%' }
       }, '+ ' + t('kvg.belegAdd'))
     ) },
     weiteres: React.createElement('div', {
@@ -705,10 +666,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
             onClick: () => setSelectedYear(y),
             'aria-pressed': y === selectedYear ? 'true' : 'false',
             style: {
-              padding: '4px 10px', borderRadius: radius.full, fontFamily: 'inherit', fontSize: text.xs, cursor: 'pointer',
-              border: '1px solid ' + (y === selectedYear ? palette.sand + '40' : palette.border),
-              background: y === selectedYear ? palette.sand + '25' : 'transparent',
-              color: y === selectedYear ? palette.sandDeep : palette.soft,
+              ...auswahlStil(palette, y === selectedYear), padding: '4px 10px', fontSize: text.xs,
               fontWeight: y === selectedYear ? weight.medium : weight.normal,
             }
           }, String(y))
@@ -726,7 +684,6 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         : React.createElement('div', null,
             yearBelege.map(b => {
               const offen = b.status === 'offen';
-              const gold = palette.gold || '#c47a20';
               return React.createElement('div', {
                 key: b.id,
                 style: { padding: '8px 0', borderBottom: '1px solid ' + palette.border }
@@ -738,8 +695,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                     React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, fmtDatum(b.datum)),
                     offen && React.createElement('span', {
                       style: {
-                        fontSize: text.xs, fontWeight: weight.medium, color: gold,
-                        background: gold + '18', padding: '1px 7px', borderRadius: radius.full,
+                        fontSize: text.xs, fontWeight: weight.medium, color: palette.skyDeep,
+                        background: palette.sky + '18', padding: '1px 7px', borderRadius: radius.full,
                       }
                     }, t('kvg.belegOpen'))
                   ),
@@ -751,7 +708,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                           onClick: () => removeBeleg(b.id),
                           'aria-label': t('kvg.belegRemove'),
                           style: {
-                            background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
+                            background: 'none', border: 'none', color: palette.mid, cursor: 'pointer',
                             fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
                           }
                         }, '×')
@@ -770,10 +727,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                     onClick: () => remindBeleg(b),
                     disabled: remindedIds.has(b.id),
                     style: {
-                      background: 'none', border: 'none', fontFamily: 'inherit',
-                      fontSize: text.xs, fontWeight: weight.medium, padding: '2px 0',
-                      color: remindedIds.has(b.id) ? (palette.sageDeep || '#4A6657') : palette.sandDeep,
-                      cursor: remindedIds.has(b.id) ? 'default' : 'pointer',
+                      ...knopfStil(palette, 'neben'), padding: '4px 10px', fontSize: text.xs, fontWeight: weight.medium,
+                      ...(remindedIds.has(b.id) ? { color: palette.sageDeep || '#4A6657', border: '1px solid ' + palette.sage, cursor: 'default' } : null),
                     }
                   }, erledigtZeichen(remindedIds.has(b.id), remindedIds.has(b.id) ? t(remindedIds.get(b.id) === 'vorlaeufig' ? 'common.savedTemporary' : 'kvg.belegReminded') : t('kvg.belegRemind')))
                 ),
@@ -830,7 +785,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
   // Form X: der Betrag zuerst, die Eingabe als «Ihre Angaben», die Quellen je Kanton darunter.
   return form({
     ergebnis: result ? result && React.createElement('div', {
-      style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
+      style: { padding: '14px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.sky }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
@@ -851,7 +806,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.body }
       },
         React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.berechneterBetrag')),
-        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, betrag(result.betrag, { stellen: 2 }))
+        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.skyDeep } }, betrag(result.betrag, { stellen: 2 }))
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
