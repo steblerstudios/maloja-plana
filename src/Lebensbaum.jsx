@@ -72,7 +72,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
       margin: space.md + 'px 0',
       padding: space.md + 'px',
       background: palette.sage + '08',
-      borderRadius: radius.md,
+      borderRadius: radius.lg,
       border: '1px solid ' + palette.sage + '15',
     }
   },

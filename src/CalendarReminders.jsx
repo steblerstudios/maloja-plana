@@ -243,7 +243,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const categories = Object.keys(CATEGORY_ICON_KEYS);
 
   const inputStyle = {
-    width: '100%', padding: '10px 12px', borderRadius: radius.sm,
+    width: '100%', padding: '10px 12px', borderRadius: radius.md,
     border: '1px solid ' + palette.border, background: palette.up,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
     fontFamily: fontFamily, marginBottom: '12px'
@@ -474,7 +474,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       const list = onNavigate ? anspruchSignaleListe(data) : [];
       if (!list.length) return null;
       return React.createElement('div', {
-        style: { background: palette.sage + '10', border: '1px solid ' + palette.sage + '2e', borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md },
+        style: { background: palette.sage + '10', border: '1px solid ' + palette.sage + '2e', borderRadius: radius.lg, padding: space.md + 'px', marginBottom: space.md },
       },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' } }, t('calendar.anspruchTitle')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed } }, t('calendar.anspruchIntro')),
@@ -483,7 +483,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           style: {
             display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', boxSizing: 'border-box',
             padding: '9px 11px', marginBottom: space.xs + 'px',
-            background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md,
             cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
           },
         },
@@ -676,7 +676,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     }, '+ ' + t('calendar.addReminder')),
 
     // Add view
-    view === 'add' && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.sand } },
+    view === 'add' && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.lg, marginBottom: space.md, border: '1px solid ' + palette.sand } },
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('calendar.addReminder')),
 
       React.createElement('input', {
@@ -867,7 +867,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     ),
 
     // Disclaimer
-    React.createElement('div', { style: { marginTop: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid } },
+    React.createElement('div', { style: { marginTop: space.md, padding: '10px', background: palette.up, borderRadius: radius.md, fontSize: text.xs, color: palette.mid } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('calendar.disclaimer'))
     )
       )

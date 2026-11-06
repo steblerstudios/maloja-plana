@@ -622,7 +622,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             position: 'absolute', [seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
             whiteSpace: 'nowrap', pointerEvents: 'none', display: 'block',
             fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
-            background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.sm,
+            background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.full,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
           },
         }, st.label)

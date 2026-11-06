@@ -41,7 +41,7 @@ export const UnterlagenDrucken = ({ palette, t, data, chapters, documents, onNav
         display: 'flex', alignItems: 'center', gap: '12px', minHeight: '44px', boxSizing: 'border-box',
         ...auswahlRahmen(an, palette, 10, 14), marginBottom: space.sm + 'px', cursor: 'pointer',
         background: an ? palette.sage + '22' : palette.up, color: palette.text,
-        borderRadius: radius.sm,
+        borderRadius: radius.md,
       },
     },
       React.createElement('input', {

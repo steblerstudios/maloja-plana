@@ -83,7 +83,7 @@ export const EinkommenFeld = ({ palette, t, e, stil = {} }) => {
       value: e.betrag, onChange: (ev) => e.setBetrag(ev.target.value),
       style: {
         width: '100%', padding: '10px 12px', fontSize: text.body, boxSizing: 'border-box',
-        border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px',
+        border: '1px solid ' + palette.border, borderRadius: radius.md + 'px',
         background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none',
       },
     }),

@@ -75,7 +75,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
       style: {
         padding: '14px 16px',
         background: palette.up,
-        borderRadius: radius.sm,
+        borderRadius: radius.md,
         marginBottom: space.sm,
       }
     },
@@ -127,7 +127,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
     React.createElement('div', {
       style: {
         padding: '32px 20px', textAlign: 'center',
-        background: palette.up, borderRadius: radius.sm,
+        background: palette.up, borderRadius: radius.lg,
         border: '1px solid ' + palette.border,
       }
     },
@@ -140,7 +140,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
 
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
+        background: palette.surface, padding: '24px 20px', borderRadius: radius.lg,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },

@@ -52,7 +52,7 @@ export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr
   const kantonsLink = canton ? (getCantonalLinks(canton) || {}).steuererklaerung : null;
   const estvLink = getLinkById('steuern');
   const linkStyle = { fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px', fontWeight: weight.medium };
-  return React.createElement('div', { 'data-testid': 'kantonssteuer-orientierung', style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, ...style } },
+  return React.createElement('div', { 'data-testid': 'kantonssteuer-orientierung', style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, ...style } },
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
       t('tax.cantonalAndMunicipal') + ' · ' + getCantonName(canton, t)
     ),

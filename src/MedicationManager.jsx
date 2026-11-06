@@ -157,7 +157,7 @@ const MedCard = ({ palette, t, lang, med, idx, inputStyle, labelStyle, onUpdate,
   return React.createElement('div', {
     style: {
       padding: space.md + 'px', background: palette.up,
-      borderRadius: radius.sm, border: '1px solid ' + palette.border,
+      borderRadius: radius.lg, border: '1px solid ' + palette.border,
     }
   },
     // Header

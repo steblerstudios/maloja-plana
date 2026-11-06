@@ -102,8 +102,8 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     card: { maxWidth: '680px', paddingTop: space.md + 'px' },
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.6, marginBottom: space.lg + 'px', maxWidth: '520px' },
     addRow: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', alignItems: 'center', marginBottom: space.lg + 'px' },
-    input: { flex: '1 1 320px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
-    select: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', cursor: 'pointer' },
+    input: { flex: '1 1 320px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
+    select: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', cursor: 'pointer' },
     addBtn: knopfStil(palette, 'haupt'),
     sectionTitle: { fontFamily: 'inherit', fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, margin: space.md + 'px 0 ' + space.sm + 'px' },
     row: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
@@ -118,10 +118,10 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     unter: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.normal },
     tagZeile: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', marginBottom: '4px' },
     tagKnopf: { ...knopfStil(palette, 'neben'), padding: '4px 10px', minHeight: '44px', fontSize: text.xs },
-    tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
+    tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.border, borderRadius: radius.full + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     erledigtAm: { fontSize: text.xs, color: palette.mid },
     del: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, minWidth: '44px', minHeight: '44px', background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
-    meldung: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', fontSize: text.sm, color: palette.text },
+    meldung: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', fontSize: text.sm, color: palette.text },
     rueckBtn: knopfStil(palette, 'neben'),
   };
 

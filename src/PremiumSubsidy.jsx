@@ -196,7 +196,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     React.createElement('select', {
       value: verfJahr,
       onChange: (e) => setVerfJahr(e.target.value),
-      style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+      style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
     },
       React.createElement('option', { value: String(laufendesJahr) }, String(laufendesJahr)),
       React.createElement('option', { value: String(laufendesJahr + 1) }, String(laufendesJahr + 1))
@@ -278,7 +278,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
             type: 'number', inputMode: 'numeric', min: '0', value: verfBetrag,
             onChange: (e) => setVerfBetrag(e.target.value),
             onBlur: () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, datum: ipvStatus.datum, kanton: ipvStatus.kanton, jahr: ipvStatus.jahr }),
-            style: { width: '120px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+            style: { width: '120px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
           })
         ),
         erinnernZeile([lineBtn(t('ipvStatus.reset'), () => { setVerfBetrag(''); setIpvStatus(IPV_STATUS.GESCHAETZT); }, { gefahr: true })]),
@@ -355,7 +355,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         'aria-describedby': feld.id + '-hinweis',
         onBlur: (e) => uebernehmen(feld, e.target.value),
         onKeyDown: (e) => { if (e.key === 'Enter') uebernehmen(feld, e.target.value); },
-        style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
+        style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
       }),
       React.createElement('button', {
         type: 'button',
@@ -373,7 +373,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // Only block when the canton is genuinely missing. If the canton is set but the
   // income isn't yet, we still show the canton-specific info and prompt for income.
   if (!canton) {
-    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       kopf(),
       // «Ihre Lage» mit dem Hinweis «Kanton fehlt»: Codex-Audit 24.09. — die Kachel verspricht
       // «Kanton und Einkommen hier eingeben», die Wahl steht deshalb direkt hier. Sie schreibt
@@ -389,7 +389,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
                   value: '',
                   onChange: (e) => { if (e.target.value) onUpdateData('basis', 'canton', e.target.value); },
                   'aria-describedby': 'ipv-kanton-hinweis',
-                  style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
+                  style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
                 },
                   React.createElement('option', { value: '' }, t('common.select')),
                   CANTON_CODES.map((c) => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
@@ -428,7 +428,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   );
 
   // B-1/E22 + Regler: sichtbar sagen, womit gerechnet wird. Ins Profil geht nichts ohne den Klick.
-  const uebernahmeBlock = () => offeneZahlen.length > 0 ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
+  const uebernahmeBlock = () => offeneZahlen.length > 0 ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
     schnellcheckListe.length > 0 && React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('premium.schnellcheckGerechnet')),
     schnellcheckListe.length > 0 && React.createElement('ul', { style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '18px', color: palette.text } },
       schnellcheckListe.map(([, feld, wert]) => React.createElement('li', { key: feld },
@@ -449,7 +449,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const urteil = (label, farbe, zeichen) => React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: farbe, lineHeight: '1.2', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, hinweisZeichen(zeichen), label);
   const ergebnis = () => {
     // Eligibility Status — only once income is present; otherwise prompt for income
-    if (!hasIncome) return React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.sm, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
+    if (!hasIncome) return React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.md, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: onUpdateData ? space.sm : 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterIncome'))),
       // Inline income field — entering it here triggers the calculation immediately
       // (writes to data.finanzen.monthlyIncome, the same field used everywhere else).
@@ -462,7 +462,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           onChange: (e) => onUpdateData('finanzen', 'monthlyIncome', e.target.value),
           'aria-label': t('premium.enterIncome'),
           placeholder: '0',
-          style: { width: '140px', padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
+          style: { width: '140px', padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
         }),
         React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + t('common.perMonth'))
       )
@@ -561,7 +561,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { ...linkStil(palette), display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi } }, t('ipv.zurStelle'))
   );
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     kopf(),
 
     // ── Ihre Lage ─────────────────────────────────────────────────────────

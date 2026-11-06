@@ -124,7 +124,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
               React.createElement('span', {
                 style: {
                   fontSize: text.xs, color: palette.sageDeep,
-                  border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '1px 6px',
+                  border: '1px solid ' + palette.border, borderRadius: radius.full, padding: '1px 6px',
                 }
               }, t('kvg.evidenceBased'))
             ),
@@ -149,7 +149,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                 onChange: (e) => { const v = e.target.value; setLastVisit(v); saveVorsorgeDate(item.key, v); setReminderSaved(false); },
                 style: {
                   fontSize: text.xs, padding: '4px 6px', border: '1px solid ' + palette.border,
-                  borderRadius: radius.sm, fontFamily: 'inherit', color: palette.text,
+                  borderRadius: radius.full, fontFamily: 'inherit', color: palette.text,
                   background: 'transparent',
                 }
               }),
@@ -393,12 +393,12 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
   // die Belege je Jahr darunter.
   return form({
     ergebnis: hasInput && React.createElement('div', {
-      style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+      style: { padding: '14px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border }
     },
       statusMsg && React.createElement('div', {
         style: {
           padding: '10px 12px', background: statusMsg.color + '15',
-          borderRadius: radius.sm, border: '1px solid ' + statusMsg.color + '30',
+          borderRadius: radius.md, border: '1px solid ' + statusMsg.color + '30',
           fontSize: text.sm, color: statusMsg.color, marginBottom: '14px',
           lineHeight: leading.normal,
         }
@@ -457,7 +457,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     ) || null,
     ohneErgebnis: t('kvg.franchiseExplain'),
     angaben: { erfasst: 0, gesamt: 0, inhalt: React.createElement('div', {
-      style: { padding: '14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: { padding: '14px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
@@ -473,7 +473,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           value: franchise,
           onChange: (e) => setFranchise(Number(e.target.value)),
           style: {
-            width: '100%', padding: space.sm, borderRadius: radius.sm,
+            width: '100%', padding: space.sm, borderRadius: radius.md,
             border: '1px solid ' + palette.border, background: palette.surface,
             color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
             appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px',
@@ -522,7 +522,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           value: newDatum,
           onChange: (e) => setNewDatum(e.target.value),
           style: {
-            flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.sm,
+            flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.md,
             border: '1px solid ' + palette.border, background: palette.surface,
             color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box',
           }
@@ -535,7 +535,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           onChange: (e) => setNewBetrag(e.target.value),
           placeholder: t('kvg.belegBetrag'),
           style: {
-            flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.sm,
+            flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.md,
             border: '1px solid ' + palette.border, background: palette.surface,
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           }
@@ -561,7 +561,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         value: newFrist,
         onChange: (e) => setNewFrist(e.target.value),
         style: {
-          width: '100%', padding: space.sm, borderRadius: radius.sm,
+          width: '100%', padding: space.sm, borderRadius: radius.md,
           border: '1px solid ' + palette.border, background: palette.surface,
           color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
           boxSizing: 'border-box', marginBottom: '8px',
@@ -577,7 +577,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       tpOpen && React.createElement('div', {
         style: {
           display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px',
-          padding: '8px 10px', background: palette.surface, borderRadius: radius.sm,
+          padding: '8px 10px', background: palette.surface, borderRadius: radius.md,
           border: '1px solid ' + palette.border,
         }
       },
@@ -622,7 +622,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       ngOpen && React.createElement('div', {
         style: {
           marginBottom: '10px', padding: '8px 10px', background: palette.surface,
-          borderRadius: radius.sm, border: '1px solid ' + palette.border,
+          borderRadius: radius.md, border: '1px solid ' + palette.border,
         }
       },
         React.createElement('input', {
@@ -661,7 +661,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       }, '+ ' + t('kvg.belegAdd'))
     ) },
     weiteres: React.createElement('div', {
-      style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: { padding: '14px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       availableYears.length > 1 && React.createElement('div', {
         style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }
@@ -791,7 +791,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
   // Form X: der Betrag zuerst, die Eingabe als «Ihre Angaben», die Quellen je Kanton darunter.
   return form({
     ergebnis: result ? result && React.createElement('div', {
-      style: { padding: '14px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.sky }
+      style: { padding: '14px', background: palette.sky + '18', borderRadius: radius.md, border: '1px solid ' + palette.sky }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
@@ -826,7 +826,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
       style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
     }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwOhneKanton'))),
     angaben: { erfasst: (tp ? 1 : 0) + (selCanton ? 1 : 0), gesamt: 2, inhalt: React.createElement('div', {
-      style: { padding: '14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: { padding: '14px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
@@ -844,7 +844,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
         onChange: (e) => setTp(e.target.value),
         placeholder: '0',
         style: {
-          width: '100%', padding: space.sm, borderRadius: radius.sm,
+          width: '100%', padding: space.sm, borderRadius: radius.md,
           border: '1px solid ' + palette.border, background: palette.surface,
           color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           marginBottom: '12px',
@@ -861,7 +861,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
           value: selCanton,
           onChange: (e) => setSelCanton(e.target.value),
           style: {
-            width: '100%', padding: space.sm, borderRadius: radius.sm,
+            width: '100%', padding: space.sm, borderRadius: radius.md,
             border: '1px solid ' + palette.border, background: palette.surface,
             color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
             appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px',

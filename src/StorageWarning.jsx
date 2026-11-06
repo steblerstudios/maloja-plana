@@ -36,7 +36,7 @@ export const StorageWarning = ({ palette, t }) => {
     style: {
       padding: space.sm + 'px ' + space.md + 'px',
       margin: space.md + 'px 0',
-      borderRadius: radius.sm,
+      borderRadius: radius.md,
       background: isCritical
         ? palette.rose + '18'
         : palette.sky + '18',

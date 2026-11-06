@@ -42,7 +42,7 @@ export const PflegeEntloehnung = ({ palette, t }) => {
     hours: { fontSize: text.body, color: palette.text, fontWeight: weight.semi, fontVariantNumeric: 'tabular-nums' },
     slider: { width: '100%', accentColor: palette.gold, cursor: 'pointer', margin: space.xs + 'px 0' },
     scale: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.soft },
-    result: { marginTop: space.md + 'px', padding: space.md + 'px', background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm + 'px' },
+    result: { marginTop: space.md + 'px', padding: space.md + 'px', background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.lg + 'px' },
     resultLabel: { fontSize: text.xs, color: palette.mid, marginBottom: '2px' },
     big: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, fontVariantNumeric: 'tabular-nums' },
     sub: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },

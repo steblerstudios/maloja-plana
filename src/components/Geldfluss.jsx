@@ -82,7 +82,7 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
     fontSize: 12, fill: palette.text,
   }, knoten.label);
 
-  return React.createElement('div', { ref: rahmen, style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
+  return React.createElement('div', { ref: rahmen, style: { padding: space.md, background: palette.up, borderRadius: radius.lg, marginBottom: space.md } },
     React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: '0 0 6px 0' } }, titel),
     React.createElement('svg', {
       viewBox: `0 0 ${s.breite} ${hoehe}`, role: 'img', 'aria-label': beschreibung,

@@ -17,7 +17,7 @@ const Weg = ({ palette, title, description, status, icon, onClick }) =>
     type: 'button', onClick,
     style: {
       display: 'flex', alignItems: 'flex-start', gap: '12px', width: '100%', textAlign: 'left',
-      padding: '16px', background: palette.up, borderRadius: radius.sm, fontFamily: 'inherit',
+      padding: '16px', background: palette.up, borderRadius: radius.md, fontFamily: 'inherit',
       border: '1px solid ' + palette.border, marginBottom: '10px', cursor: 'pointer',
       transition: `border-color ${duration.fast}ms ${ease}`,
     },

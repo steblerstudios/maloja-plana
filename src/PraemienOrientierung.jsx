@@ -153,14 +153,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   }, [regionInfo, ageClass, compFranchise, vergleichsTag]);
 
   const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
+    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
+    section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
-    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '6px 12px', minHeight: '44px', fontSize: text.sm }),
-    highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
-    warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },
+    highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
+    warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },
     // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
     // Die Namensspalte bricht um, die Betragsspalten bleiben schmal, «CHF» steht einmal im Kopf.
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, tableLayout: 'fixed' },
@@ -348,7 +348,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ]),
       franchiseOpt && teil('mp-vu-kreuz', t('po.franchiseOptTitle'), franchiseOpt.breakEven != null ? t('vu.breakEven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) }) : '', [
     franchiseOpt && React.createElement('div', {
-      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
+      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
     },
       // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
       React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate, eigeneFranchise: userFranchise }),

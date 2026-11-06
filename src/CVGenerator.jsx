@@ -44,7 +44,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
     style: { ...linkStil(palette), display: 'block', minHeight: '44px', marginTop: space.sm + 'px', fontSize: text.sm },
   }, t('cv.ergaenzen') + ' ›');
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('cv'), size: 22 }), style: { marginBottom: space.md } }, t('cv.title')),
 
     !inhalt && React.createElement('div', { 'data-teil': 'lebenslauf-leer' },

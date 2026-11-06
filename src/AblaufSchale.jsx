@@ -363,7 +363,7 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
 // a11y (Entwurf W): nach «In den Kalender» verschwindet der Knopf; der Fokus geht auf die Bestätigung
 // (Live-Region), statt verloren zu gehen.
 const kartenStil = (palette, vorbei) => ({
-  marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
+  marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.md,
   // Fassung 9: Blau = Fristen, Rot = vorbei (Farbe nie allein — Datum bzw. «vorbei» steht dabei).
   border: '1px solid ' + (vorbei ? palette.rose : palette.sky),
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
@@ -436,7 +436,7 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
     !ohneFeld && React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
     !ohneFeld && React.createElement('input', {
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
-      style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+      style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
     !karte && ziel && !vorbei && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } }, t(hinweisKey, { date: formatDE(ziel) })),
     fristKarte

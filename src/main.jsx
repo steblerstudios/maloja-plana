@@ -1322,7 +1322,7 @@ const AppInner = ({ demo }) => {
           title: isMobile ? undefined : t('nav.search'),
           'aria-current': view === 'search' ? 'page' : undefined,
           onClick: () => handleNavigate('search'),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           zeichen('search', 18, 1.5)
         ),
@@ -1333,7 +1333,7 @@ const AppInner = ({ demo }) => {
           title: isMobile ? undefined : t('common.settingsTitle') + ' · ' + t('common.settingsAccessibility'),
           'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
           onClick: () => setSettingsOpen(true),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           zeichen('settings', 18, 1.5)
         ),
@@ -1341,7 +1341,7 @@ const AppInner = ({ demo }) => {
           key: 'menu',
           'aria-label': t('nav.menu'),
           onClick: () => setMobileNavOpen(!mobileNavOpen),
-          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           zeichen('menue', 16, 1.5)
         )

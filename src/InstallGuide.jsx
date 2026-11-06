@@ -60,7 +60,7 @@ const Geraetblock = ({ kennung, t, palette, hervorgehoben }) => {
       ...(hervorgehoben
         ? {
           background: palette.sageMist,
-          borderRadius: radius.md + 'px',
+          borderRadius: radius.lg + 'px',
           padding: space.md + 'px ' + space.md + 'px ' + space.sm + 'px',
         }
         : {}),
@@ -119,7 +119,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
     istInstalliert && React.createElement('div', {
       style: {
         display: 'flex', gap: space.sm + 'px', alignItems: 'start',
-        background: palette.sageMist, borderRadius: radius.md + 'px',
+        background: palette.sageMist, borderRadius: radius.lg + 'px',
         padding: space.md + 'px', marginBottom: space.lg + 'px',
         fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed,
       },

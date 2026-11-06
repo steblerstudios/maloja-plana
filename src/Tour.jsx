@@ -130,7 +130,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
         type: 'button', onClick: later, 'aria-label': t('tour.later'), title: t('tour.later'),
         style: { position: 'absolute', top: '2px', right: '2px', width: '44px', height: '44px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'transparent', border: 'none', borderRadius: radius.sm, cursor: 'pointer',
+          background: 'transparent', border: 'none', borderRadius: radius.md, cursor: 'pointer',
           color: palette.mid, fontSize: '18px', lineHeight: 1, fontFamily }
       }, '×'),
       React.createElement('h3', {

@@ -60,7 +60,7 @@ export const StatusCard = ({ palette, icon, title, status, statusColor, detail, 
     tabIndex: onClick ? 0 : undefined,
     onKeyDown: onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined,
     style: {
-      padding: '16px', background: palette.up, borderRadius: radius.sm,
+      padding: '16px', background: palette.up, borderRadius: radius.lg,
       border: '1px solid ' + palette.border, marginBottom: space.sm,
       cursor: onClick ? 'pointer' : 'default',
     }
@@ -312,7 +312,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
   }), data, { alter: bvgAlter, rentenalter, beitragsfrei });
 
   return React.createElement('div', {
-    style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
+    style: { padding: '12px 16px', background: palette.up, borderRadius: radius.md, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
   },
     // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
     // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.

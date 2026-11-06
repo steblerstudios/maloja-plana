@@ -82,7 +82,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
         padding: '10px 12px', marginBottom: space.xs + 'px',
         background: palette.surface, color: palette.text, textDecoration: 'none',
-        border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+        border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
         cursor: 'pointer', fontFamily: 'inherit',
         transition: `border-color ${duration.normal}ms ${ease}`,
       },
@@ -153,7 +153,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
         className: 'mp-sprungziel',
         style: {
           marginTop: space.sm, padding: '16px 18px',
-          background: palette.up, borderRadius: radius.md,
+          background: palette.up, borderRadius: radius.lg,
           // Eine Quelle für den Sprungabstand (tokens.css), vorher 72 px inline.
           scrollMarginTop: 'var(--mp-sprungabstand)',
         }
@@ -182,7 +182,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
             display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
             padding: '10px 12px', marginBottom: space.xs + 'px',
             background: palette.surface, color: palette.text, textDecoration: 'none',
-            border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+            border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
             cursor: 'pointer', fontFamily: 'inherit',
             transition: `border-color ${duration.normal}ms ${ease}`,
           };
@@ -283,7 +283,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     marke: { display: 'inline-block', padding: '4px 10px', borderRadius: radius.full + 'px', background: palette.up, border: '1px solid ' + palette.border, color: palette.text, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' },
     summary: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: '6px', color: palette.text, fontSize: text.sm, fontWeight: weight.medium, listStyle: 'none' },
     label: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs + 'px' },
-    input: { width: '100%', padding: '10px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
+    input: { width: '100%', padding: '10px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
     satz: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
     fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
     link: { ...linkStil(palette), display: 'flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm, fontWeight: weight.medium, textAlign: 'left' },
@@ -304,7 +304,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
   // Eine Ablesung ohne Glas — gleiche Form wie der Pegel (Kasten), für die Fälle, in denen ein
   // Wasserstand nicht ehrlich wäre (data/anspruchWege.js ipvAnzeige).
   const ablesung = (titel, zeilen) => h('div', {
-    style: { padding: space.md + 'px', marginTop: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border },
+    style: { padding: space.md + 'px', marginTop: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
   },
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginBottom: '4px' } }, titel),
     ...zeilen.filter(Boolean).map((z, i) => h('div', { key: i, style: { fontSize: i === 0 ? text.sm : text.xs, color: i === 0 ? palette.text : palette.soft, lineHeight: leading.normal, marginTop: i ? '4px' : 0 } }, z)));

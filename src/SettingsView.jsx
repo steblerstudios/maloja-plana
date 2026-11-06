@@ -15,13 +15,13 @@ import { NotificationSettings } from './NotificationSettings.jsx';
 // der Einstellungs-Schublade.
 
 export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demoMode }) => {
-  const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px' };
+  const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, padding: space.lg + 'px' };
   const list = (controls || []).filter(Boolean);
   const actionBtn = {
     display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px',
     padding: space.sm + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
     background: 'transparent', color: palette.text, textAlign: 'start',
-    border: '1px solid ' + palette.border, borderRadius: radius.sm,
+    border: '1px solid ' + palette.border, borderRadius: radius.md,
     cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
   };
 

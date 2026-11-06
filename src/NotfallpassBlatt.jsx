@@ -41,7 +41,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     ...ablaufStyles(palette),
     hinweis: {
       padding: '10px 14px', marginBottom: space.md + 'px', background: palette.up,
-      borderRadius: radius.sm, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
+      borderRadius: radius.md, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
     },
     gruppe: { marginTop: space.md + 'px' },
     gruppeTitel: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },

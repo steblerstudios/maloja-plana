@@ -15,7 +15,7 @@ export const EmptyState = ({ palette, title, description, icon, action, style, .
       display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
       gap: space.xs + 'px', padding: space.xl + 'px ' + space.lg + 'px',
       background: palette.up, border: '1px dashed ' + palette.border,
-      borderRadius: radius.md + 'px',
+      borderRadius: radius.lg + 'px',
       ...style,
     }, ...rest,
   },

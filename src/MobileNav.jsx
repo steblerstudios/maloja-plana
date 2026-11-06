@@ -209,7 +209,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         width: '100%', minHeight: '44px', padding: '12px 16px',
         background: isActive ? palette.up : 'transparent', border: 'none',
         borderLeft: isActive ? '3px solid ' + palette.sand : '3px solid transparent',
-        borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
+        borderRadius: radius.md, cursor: 'pointer', textAlign: 'left',
         fontSize: text.sm, fontWeight: isActive ? weight.semi : weight.normal,
         color: palette.text, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '12px',
         transition: `background ${duration.fast}ms ${ease}`,

@@ -80,7 +80,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
           React.createElement('li', null, t('datenLoeschen.wasEinstellungen'))
         ),
         p(t('datenLoeschen.bleibt')),
-        React.createElement('div', { style: { marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm } },
+        React.createElement('div', { style: { marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.md } },
           p(letzteSicherung ? t('datenLoeschen.letzteSicherung', { datum: letzteSicherung }) : t('datenLoeschen.keineSicherung'), { color: palette.text }),
           onExport && React.createElement('button', {
             type: 'button', onClick: () => { setOffen(false); onExport(); },
@@ -113,7 +113,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   };
 
   return React.createElement('section', {
-    style: { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px', marginTop: space.md + 'px' },
+    style: { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, padding: space.lg + 'px', marginTop: space.md + 'px' },
   },
     React.createElement(Eyebrow, { palette, style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('datenLoeschen.bereich')),
     p(t(demoMode ? 'datenLoeschen.beispielAus' : 'datenLoeschen.kurz')),
@@ -131,7 +131,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
         ref: karte, role: 'dialog', 'aria-modal': 'true',
         'aria-labelledby': 'daten-loeschen-titel',
         onClick: (e) => e.stopPropagation(),
-        style: { background: palette.surface, color: palette.text, borderRadius: radius.md, boxShadow: shadow.lg, padding: space.lg + 'px', width: '100%', maxWidth: '480px', maxHeight: '90vh', overflowY: 'auto', boxSizing: 'border-box' },
+        style: { background: palette.surface, color: palette.text, borderRadius: radius.lg, boxShadow: shadow.lg, padding: space.lg + 'px', width: '100%', maxWidth: '480px', maxHeight: '90vh', overflowY: 'auto', boxSizing: 'border-box' },
       },
         React.createElement('h2', {
           id: 'daten-loeschen-titel', tabIndex: -1, 'data-dialog-titel': '',

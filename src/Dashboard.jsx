@@ -121,7 +121,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
     'data-alpha-banner': true,
     style: {
-      padding: '12px 16px', marginBottom: '20px', borderRadius: radius.sm,
+      padding: '12px 16px', marginBottom: '20px', borderRadius: radius.md,
       background: palette.up, border: '1px solid ' + palette.border + '88',
       boxShadow: shadow.sm,
     }
@@ -200,7 +200,7 @@ const BetaFeedback = ({ palette, t }) => {
     return React.createElement('div', {
       style: {
         textAlign: 'center', padding: space.lg + 'px', margin: space.xl + 'px 0',
-        background: palette.sageMist || palette.up, borderRadius: radius.md,
+        background: palette.sageMist || palette.up, borderRadius: radius.lg,
       }
     },
       React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.medium, color: palette.text } }, t('beta.feedback.thanks')),
@@ -239,7 +239,7 @@ const BetaFeedback = ({ palette, t }) => {
 
   return React.createElement('div', {
     style: {
-      margin: space.xl + 'px 0', padding: space.lg + 'px', borderRadius: radius.md,
+      margin: space.xl + 'px 0', padding: space.lg + 'px', borderRadius: radius.lg,
       background: palette.sageMist || palette.up, border: '1px solid ' + palette.border + '44',
     }
   },
@@ -272,7 +272,7 @@ const BetaFeedback = ({ palette, t }) => {
         rows: 3,
         style: {
           width: '100%', padding: space.sm + 'px', fontSize: text.sm, fontFamily: 'inherit',
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          border: '1px solid ' + palette.border, borderRadius: radius.md,
           background: palette.surface, color: palette.text, resize: 'vertical',
           boxSizing: 'border-box',
         }
@@ -286,7 +286,7 @@ const BetaFeedback = ({ palette, t }) => {
         style: {
           margin: 0, padding: space.sm + 'px ' + space.md + 'px', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
           fontFamily: 'inherit', fontSize: text.sm, lineHeight: leading.relaxed,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          border: '1px solid ' + palette.border, borderRadius: radius.md,
           background: palette.surface, color: palette.text,
         }
       }, t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf)
@@ -428,7 +428,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       style: {
         marginBottom: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
         background: palette.surface, border: '1px solid ' + palette.border,
-        borderRadius: radius.md,
+        borderRadius: radius.lg,
       },
     },
       React.createElement(PanelTitle, {
@@ -448,7 +448,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
               width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
               padding: space.sm + 'px ' + space.xs + 'px', background: 'transparent',
-              border: 'none', borderRadius: radius.sm, color: palette.text,
+              border: 'none', borderRadius: radius.md, color: palette.text,
               transition: 'background ' + duration.fast + 'ms ' + ease,
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },

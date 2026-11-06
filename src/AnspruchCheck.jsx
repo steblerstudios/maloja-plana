@@ -82,7 +82,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
         padding: '10px 12px', marginBottom: space.xs + 'px',
         background: palette.surface, color: palette.text,
-        border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+        border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
         cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
         transition: `border-color ${duration.normal}ms ${ease}`,
       },

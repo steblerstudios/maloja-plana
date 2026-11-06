@@ -133,7 +133,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
   const card = embedded
     ? { fontSize: text.sm }
-    : { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm };
+    : { padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm };
 
   if (!state.show) {
     return React.createElement('div', { style: card },
@@ -182,7 +182,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
             onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(zielKapitelKey)),
             style: {
               display: 'block', width: '100%', textAlign: 'left', fontFamily: 'inherit',
-              background: palette.up, border: 'none', borderRadius: radius.sm,
+              background: palette.up, border: 'none', borderRadius: radius.md,
               // minHeight: 44px-Touch-Ziel (WCAG 2.5.5) — das Token-Padding allein ergäbe ~38px.
               padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer', minHeight: '44px',
               color: palette.text, fontSize: text.sm, lineHeight: leading.normal,

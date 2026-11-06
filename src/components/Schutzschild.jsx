@@ -76,7 +76,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
     'data-schild': klein ? 'klein' : 'gross',
     style: klein
       ? { marginBottom: space.sm + 'px' }
-      : { marginBottom: space.lg + 'px', padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border + '66', borderRadius: radius.md },
+      : { marginBottom: space.lg + 'px', padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border + '66', borderRadius: radius.lg },
   },
     h('p', { style: klein
       ? { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.normal }

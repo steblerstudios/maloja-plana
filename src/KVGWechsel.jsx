@@ -79,7 +79,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
     reassure: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.xs + 'px' },
     chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep, marginTop: '6px' },
     inputLabel: { display: 'block', fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
-    input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+    input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
     // „Kurz innehalten"-Prüfliste (Anti-Dark-Pattern: nicht pushen, sondern prüfen).
     checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
     checkItem: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
@@ -97,7 +97,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
         flex: '1 1 240px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
         padding: space.md + 'px',
         background: isChosen ? palette.surface : palette.up,
-        borderRadius: radius.sm,
+        borderRadius: radius.md,
         border: '1.5px solid ' + (isChosen ? palette.sand : palette.border),
         opacity: isDimmed ? 0.55 : 1,
         transition: 'opacity 120ms, border-color 120ms',

@@ -25,7 +25,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
     list.length > 0 && list.map((job, idx) =>
       React.createElement('div', {
         key: idx,
-        style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+        style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border }
       },
         React.createElement('div', {
           style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.sm }

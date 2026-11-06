@@ -23,7 +23,7 @@ export const GrundordnungFelder = ({ palette, fields, onSelectChapter }) =>
     onClick: () => onSelectChapter(f.chapterIdx),
     style: {
       display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
-      padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.sm,
+      padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.md,
       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
       textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
     },
@@ -55,7 +55,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
       style: {
         display: 'flex', alignItems: 'center', gap: space.sm + 2, flex: '1 1 0', minWidth: 0,
         padding: '10px 8px', background: istOffen ? palette.up : 'transparent', border: 'none',
-        borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
+        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
         color: palette.text, textAlign: 'left',
         transition: `background ${duration.fast}ms ${ease}`,
       },
@@ -101,7 +101,7 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
       // aria-controls nur, solange das Ziel im DOM steht (zugeklappt wird es nicht gerendert).
       'aria-controls': istOffen ? panelId : undefined,
       'aria-label': t('mvo.title') + ': ' + ch.title,
-      style: { width: '44px', minHeight: '44px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit' },
+      style: { width: '44px', minHeight: '44px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', borderRadius: radius.md, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit' },
     },
       React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex' } }, aufklappZeichen(istOffen)))
     ),
@@ -145,7 +145,7 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
   return React.createElement('div', {
     style: {
       marginBottom: space.xl, background: palette.surface,
-      borderRadius: radius.md, border: '1px solid ' + palette.border + '88',
+      borderRadius: radius.lg, border: '1px solid ' + palette.border + '88',
       boxShadow: shadow.sm, padding: '20px',
     }
   },

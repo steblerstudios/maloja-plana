@@ -107,7 +107,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
   const fall = h('section', { 'data-teil': 'fall-der-faelle', 'aria-labelledby': 'mp-fall-der-faelle' },
     h('h4', { id: 'mp-fall-der-faelle', style: kapH }, tr('behoerdenInstrument.fallTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, tr('behoerdenInstrument.fallSatz')),
-    h('div', { style: { padding: space.sm + 'px', borderRadius: radius.sm, background: palette.up } },
+    h('div', { style: { padding: space.sm + 'px', borderRadius: radius.md, background: palette.up } },
       h('div', { style: { fontSize: text.xs, color: palette.mid } }, tr('behördenStatus.will')),
       h('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, overflowWrap: 'break-word' } }, testament)),
     onNavigate && h('div', { style: { marginTop: space.sm + 'px' } },

@@ -46,7 +46,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       background: palette.up,
       // Farbrollen (Fassung 9): Rot = warnen (verpasst), Blau = Fristen (heute) — Gold bleibt dem Handeln.
       border: '1px solid ' + (overdue.length > 0 ? palette.rose + '33' : palette.sky + '33'),
-      borderRadius: radius.sm,
+      borderRadius: radius.md,
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',

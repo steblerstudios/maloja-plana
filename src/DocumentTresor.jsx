@@ -286,7 +286,7 @@ export const DocumentTresor = ({
     : t('tresor.activeEmpty');
 
   return React.createElement('div', {
-    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
+    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.lg, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('tresor.title')),
     satz && React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 0 ' + space.lg + 'px' } }, satz),

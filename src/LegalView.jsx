@@ -347,7 +347,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
               t, href: CONTRIBUTION_URL,
               style: {
                 display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
-                background: palette.sand, color: palette.onSand, borderRadius: radius.sm,
+                background: palette.sand, color: palette.onSand, borderRadius: radius.md,
                 textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
               }
             }, t('legal.support.contributeCta'))

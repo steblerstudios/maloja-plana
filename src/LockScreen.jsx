@@ -60,7 +60,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
     React.createElement('form', {
       onSubmit: handleSubmit,
       style: {
-        background: palette.surface, padding: '40px', borderRadius: radius.md,
+        background: palette.surface, padding: '40px', borderRadius: radius.lg,
         border: '1px solid ' + palette.border, maxWidth: '360px', width: '100%', textAlign: 'center',
       },
     },
@@ -98,7 +98,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
           style: {
             width: '100%', padding: '10px 44px 10px 14px', fontSize: text.body,
             border: '1px solid ' + (isError ? palette.rose : palette.border),
-            borderRadius: radius.sm, background: palette.up, color: palette.text,
+            borderRadius: radius.md, background: palette.up, color: palette.text,
             outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
           },
         }),
@@ -138,7 +138,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
           background: simpleView ? palette.sand + '30' : 'transparent',
           color: simpleView ? palette.text : palette.mid,
           border: '1px solid ' + (simpleView ? palette.sand : palette.border),
-          borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
+          borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
           fontSize: text.sm, fontWeight: weight.medium,
         },
       },

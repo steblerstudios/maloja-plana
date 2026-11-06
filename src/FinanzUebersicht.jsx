@@ -33,7 +33,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   const wegKnopf = {
     display: 'flex', alignItems: 'center', gap: '8px',
     padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
-    borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
+    borderRadius: radius.md, cursor: 'pointer', fontSize: text.sm, color: palette.text,
     fontFamily: 'inherit', textAlign: 'left',
   };
 
@@ -49,7 +49,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
 
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
+        background: palette.surface, padding: '24px 20px', borderRadius: radius.lg,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
@@ -62,7 +62,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
     !hasData && React.createElement('div', {
       style: {
         padding: '24px 20px', textAlign: 'center', background: palette.up,
-        borderRadius: radius.sm, border: '1px solid ' + palette.border,
+        borderRadius: radius.lg, border: '1px solid ' + palette.border,
       }
     },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm } },
@@ -75,7 +75,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
 
     hasData && React.createElement('div', {
       style: {
-        padding: '16px', background: palette.sand + '10', borderRadius: radius.sm,
+        padding: '16px', background: palette.sand + '10', borderRadius: radius.lg,
         border: '1px solid ' + palette.sand + '25', marginBottom: '16px',
       }
     },
@@ -113,7 +113,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       style: {
         // Brutto: kein Saldo, also auch keine Saldo-Farbe.
         padding: '16px', background: bruttoDabei ? palette.up : freeAmount >= 0 ? palette.sage + '12' : palette.rose + '12',
-        borderRadius: radius.sm, border: '1px solid ' + (bruttoDabei ? palette.border : freeAmount >= 0 ? palette.sage + '30' : palette.rose + '30'),
+        borderRadius: radius.lg, border: '1px solid ' + (bruttoDabei ? palette.border : freeAmount >= 0 ? palette.sage + '30' : palette.rose + '30'),
         marginBottom: '16px',
       }
     },

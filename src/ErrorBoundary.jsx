@@ -116,7 +116,7 @@ export class ErrorBoundary extends React.Component {
         style: {
           maxWidth: '420px', width: '100%', padding: space.xl,
           margin: 'auto',
-          background: surface, borderRadius: radius.md,
+          background: surface, borderRadius: radius.lg,
           border: '1px solid ' + border, textAlign: 'center'
         }
       },
