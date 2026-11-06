@@ -120,3 +120,56 @@ braucht, dann die Wächter, dann der Umbau.
 | 4 Strichstärke | klein | nein |
 | 5 Schicht B Strich | gross (Zeichnen + Abnahme) | E1 |
 | 6 Doku | klein | nein |
+
+---
+
+## Schritt 7 · Aufräumen — Ordnung vor neuen Zeichnungen
+
+**Auftrag Stebler Studios, 06.11.2026:** «lass uns zu erst aufräumen». Grundlage:
+[`design/icon-inventar-2026-11-06.html`](design/icon-inventar-2026-11-06.html).
+
+### Zwei Klärungen vorweg (06.11.2026)
+
+- **Behörden = Helvetia.** Gezeichnet ist sie längst (Münze mit Krone, Speer, Schild,
+  `IconMuenzen.jsx`). Das Wörterbuch sagt «Bundeshaus, war Helvetia» — es widerspricht dem
+  Bestand. Stebler Studios: «sind Behörden nicht Helvetia» → das Wörterbuch wird nachgeführt.
+  Das Inventar führte «Bundeshaus» fälschlich als fehlend; korrigiert.
+- **Wilhelm Tell** ist erarbeitet, aber nie gezeichnet. Gesucht in allen 391 Zweigen samt
+  Verlauf, im Gedächtnis und in den Projektordnern. Er steht an drei Stellen, mit zwei
+  verschiedenen Rollen:
+  - Braindump 29 (Juli): als Bild für «Persönliche Basis» (Apfel). Damals geparkt, die
+    Empfehlung war: beim Apfel bleiben, das Bild vom Schuss auf den Apfel über dem Kind meiden.
+  - `docs/IDEEN.md`: «Wilhelm-Tell-Apfel» bei den Auszeichnungen, ebenfalls geparkt.
+  - Icon-Wörterbuch: Bürgerrecht und Einbürgerung = Tell (generisch, ohne Armbrust-Marke).
+  → Wird in Schritt 8 (Zeichnen) entschieden, nicht hier.
+
+### Was Aufräumen heisst
+
+| | was | braucht Zuruf? |
+|---|---|---|
+| 7a | **Eine Liste als Quelle**: jedes Icon mit Gruppe (A · A2 · B · N · Z · E · C) und Bedeutung, im Code. Ein Test verlangt für jedes Icon einen Eintrag — keines ohne Platz | nein |
+| 7b | **Lebensereignisse ins Register**: die 39 Strich-Zeichen aus dem Rucksack (`data/gepaeck.js`) werden Register-Icons (Gruppe E). Suche, Übersicht und Seitentitel zeigen dann dasselbe Zeichen wie der Rucksack — nicht mehr 9× Helvetia, 5× Haus, 3× Herz | nein — die Zeichen gibt es schon in der App |
+| 7c | **`emergency` (zweite Glocke) entfernen.** Seit #711 nirgends benutzt; die Kuhglocke bleibt «Erinnerungen» | Zuruf mit dieser Antwort |
+| 7d | **Wörterbuch nachführen**: Behörden = Helvetia; Schichten wie im Inventar | nein |
+
+### Doppelte — Empfehlung, Entscheid bei Stebler Studios
+
+| Gruppe | Empfehlung |
+|---|---|
+| Sackmesser `sackmesser` · `dashboard` · `exportTool` | `dashboard` → `sackmesser` (eine Übersicht). `exportTool` bleibt (Entscheid 24.09.: «behalten, nur auf Zuruf») |
+| Haken `check` · `success` | beide, mit Rolle: `check` = erledigt, `success` = Rückmeldung «hat geklappt» (Kreis) |
+| Haus `wohnen` · `home` | `wohnen` (Chalet) = Lebensbereich, `home` = nur Navigation «Startseite». Umzug, Mietzins & Co. bekommen ihre Rucksack-Zeichen (7b) |
+| Blätter `document` · `documents` · `rechner` · `dokumentTresor` | `rechner` → `document` (zeichnet ohnehin ein Blatt); ein echter Rechner erst in Schritt 8 |
+| Geld `finanzen` · `money` · `budget` · `budgetWallet` | Wörterbuch G: Fünfliber = Finanzen, Portemonnaie = Budget. `money`/`budget` in Schritt 8 zusammen mit Quittung und Sparschwein |
+| Versicherung `versicherungen` · `insurance` | `versicherungen` = Lebensbereich (reich), `insurance` = kleines Themenzeichen — bleibt, Rolle festhalten |
+| Kreuz-Familie `notfall` · `health` · `organspende` · `doctor` | Rollen festhalten; Organspende klar von Notfall trennen erst beim Zeichnen |
+| Kalender `calendar` · `kalenderUhr` | bleibt (Uhr = Frist, «behalten» 24.09.); generisch zeichnen in Schritt 8 (kein SBB-Zeiger) |
+| Telefon `phone` · `handy` | beide bewusst: Hörer = anrufen (Notfallnummern), Handy = App aufs Telefon |
+| Schulden `schulden` · `debt` | `debt` → `schulden`? Offen — `debt` ist Strich (Werkzeug), `schulden` Fläche (Kapitel) |
+
+### Reihenfolge
+
+Das Aufräumen berührt dieselben Dateien wie die fünf offenen Code-PRs (#709 #711 #713 #714
+#715). Sauberster Weg: diese zuerst mergen (sie sind zusammen getestet: konfliktfrei, 8192
+Tests grün), dann baut Schritt 7 auf dem neuen `main`. Bis dahin entsteht er auf einem Zweig
+über den fünf und wird nach deren Merge neu aufgesetzt.
