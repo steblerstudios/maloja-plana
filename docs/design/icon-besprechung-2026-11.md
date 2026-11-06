@@ -21,7 +21,7 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 | 3 | Haken: `check` · `success` | — | | offen |
 | 4 | Blätter und Dokumente: `document` · `documents` · `rechner` · `dokumentTresor` · `ordner` | — | | offen |
 | 5 | Geld: Fünfliber · `money` · `budget` · Portemonnaie · Quittung · Sparschwein | — | | offen |
-| 6 | Versicherung: Edelweiss-Schild + Mini-Zeichen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: Familie wie gezeigt** (Wechsel, Erstanmeldung, Prämienverbilligung, Unfall). Offen: Edelweiss im Schild in Blau kaum sichtbar; Rolle von `insurance` |
+| 6 | Versicherung: Edelweiss-Schild + Mini-Zeichen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) · [6a](icon-besprechung-6a-edelweiss-schild.html) | — | ✅ **06.11.: Familie wie gezeigt** (Wechsel, Erstanmeldung, Prämienverbilligung, Unfall). Offen: Edelweiss im Schild in Blau kaum sichtbar; Rolle von `insurance`. **06.11. Nachtrag: «das Schild bei der Versicherung sollte doch ein Edelweiss drin haben» — das Edelweiss muss klar im Schild stehen, ausgestanzt, in Blau hell wie dunkel** (Wörterbuch: Versicherungen = Edelweiss-Schild). Wird als Erstes gezeigt (Bild 6a) |
 | 7 | Kreuz-Familie: Notfall · Gesundheit · Organspende · Ärztin/Arzt | — | | offen |
 | 8 | Kalender und Uhr | — | | offen |
 | 9 | Telefon: Hörer · Handy | — | | offen |
