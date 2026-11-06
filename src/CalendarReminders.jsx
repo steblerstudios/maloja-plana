@@ -559,7 +559,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement('button', { type: 'button', 'aria-label': monatJahr(vorher[0], vorher[1]), style: navBtn, onClick: () => springe(vorher[0], vorher[1]) }, '‹'),
           React.createElement('span', { 'aria-live': 'polite', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, minWidth: '120px', textAlign: 'center' } }, monatJahr(calYear, calMonth)),
           React.createElement('button', { type: 'button', 'aria-label': monatJahr(nachher[0], nachher[1]), style: navBtn, onClick: () => springe(nachher[0], nachher[1]) }, '›'),
-          React.createElement('button', { type: 'button', style: { ...knopfRuhig, marginLeft: 'auto' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
+          // «Heute» springt nur im Monat: Auswahl wie die Monatsknöpfe, kein Gold (E2, 06.11.2026).
+          React.createElement('button', { type: 'button', style: { ...auswahlStil(palette, false), minHeight: '44px', padding: '0 12px', fontSize: text.sm, marginLeft: 'auto' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
         React.createElement('div', { 'data-monatsknoepfe': 'true', ref: monateRef, style: { display: 'flex', gap: '6px', overflowX: 'auto', scrollbarWidth: 'none', margin: '4px -20px 2px', padding: '4px 20px' } },
           ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
@@ -668,8 +669,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     upcoming.length + completed.length > 0 && React.createElement('p', { 'data-loesch-hinweis': 'true', style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal } }, t('calendar.loeschHinweis')),
     React.createElement('button', {
       type: 'button', 'aria-expanded': view === 'add',
-      // Der Hauptknopf von «Was ansteht» (Fassung 9, S6).
-      style: { ...knopfStil(palette), marginTop: '12px', marginBottom: space.sm },
+      // Öffnet nur das Formular, hält noch nichts fest → Nebenknopf. Gold gefüllt ist erst
+      // «Erinnerung hinzufügen» im Formular (E2 «Gold erst beim Festhalten», Stebler Studios 06.11.2026).
+      style: { ...knopfStil(palette, 'neben'), marginTop: '12px', marginBottom: space.sm },
       onClick: () => setView(view === 'add' ? 'upcoming' : 'add'),
     }, '+ ' + t('calendar.addReminder')),
 
