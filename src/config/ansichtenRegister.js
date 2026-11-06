@@ -69,6 +69,10 @@ export const ABLAEUFE = [
 // Nur Verweise auf ABLAEUFE — Titel, Untertitel und Zeichen kommen von dort (Wächter: gruppeAnkommen.test.js).
 export const ANKOMMEN = ['zuzug', 'kkerst', 'bewilligung', 'quellensteuer', 'einbuergerung'];
 
+// «Mit 18» (Seitenlandkarte G2, 06.11.2026): 18 werden, dann Lehre, Dienst und die erste Stelle — die Reihe,
+// die «18 werden» selbst schon verlinkt (ablaufVerwandte.js). Nur Verweise auf ABLAEUFE (Wächter: gruppeMit18.test.js).
+export const MIT18 = ['volljaehrig', 'lehre', 'dienst', 'neuerjob'];
+
 // Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
 // sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
 export const SEARCH_VIEWS = [

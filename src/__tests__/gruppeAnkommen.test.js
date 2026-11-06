@@ -30,7 +30,7 @@ describe('Gruppe «Ankommen in der Schweiz» in der Übersicht', () => {
   });
 
   it('die Übersicht zeigt die Gruppe direkt nach den Lebensereignissen', () => {
-    const d = quelle('Dashboard.jsx');
+    const d = quelle('components/WerkzeugGruppen.jsx');
     const a = d.indexOf("t('dashboard.toolGroups.lebensereignisse')");
     const b = d.indexOf("t('dashboard.toolGroups.ankommen')");
     const c = d.indexOf("t('dashboard.toolGroups.gesundheit')");
@@ -40,7 +40,7 @@ describe('Gruppe «Ankommen in der Schweiz» in der Übersicht', () => {
   });
 
   it('offene Gruppen merken sich ihren Titel, nicht ihre Stelle — sonst öffnete eine neue Gruppe die falsche', () => {
-    const d = quelle('Dashboard.jsx');
+    const d = quelle('components/WerkzeugGruppen.jsx');
     expect(d).toMatch(/offen\.includes\(g\.label\)/);
     expect(d).toMatch(/merkeGruppe\(g\.label,/);
   });
