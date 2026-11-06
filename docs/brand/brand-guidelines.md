@@ -212,7 +212,10 @@ Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Sp
 `tokens.css`). React nutzt Inline-Styles, daher importieren Komponenten diese Konstanten.
 
 - **Spacing** (4px-Grid): `2xs 2 · xs 4 · sm 8 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`
-- **Radius:** `sm 6 · md 10 · lg 16 · xl 24 · full 9999`
+- **Radius:** `hair 2 · xs 4 · sm 6 · md 10 · lg 16 · xl 24 · full 9999` — `hair` für feine
+  Balken und Markierungen, `xs` für kleine Marken und Knöpfe in dichten Tabellen, `sm` ist der
+  Normalfall (auch Knöpfe), `full` für Pillen und Kreise. *(hair/xs nachgetragen 06.11.2026 — standen
+  im Code, fehlten hier.)*
 - **Shadow** (subtil): `sm` bis `xl` mit `rgba(0,0,0,0.06…0.12)`
 - **Motion:** Easing `cubic-bezier(0.4,0,0.2,1)` · Dauer `fast 150 · normal 250 · slow 400 ·
   cinematic 600` (ms)
@@ -250,8 +253,13 @@ Empfehlungen um und beachte die Rundungen der Knöpfe»).
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;
   Inhalte werden eingeklappt, nicht entfernt.
 - **Ruhige Listen statt KPI-Kacheln** (Muster: ChapterView-Versicherungsübersicht).
-- **Zurückhaltende Bewegung:** Hover-Scale max. ~1.04 (kein `1.12`); keine Token-Ausreisser
-  (hartcodierte px/Farben vermeiden).
+- **Zurückhaltende Bewegung:** Vergrösserung max. ~1.04 — beim Darüberfahren **und** in
+  Rückmelde-Animationen (Haken, Stempel, Aufspringen); kein `1.12`. Zeiten und Kurve nur aus
+  `duration`/`ease`, keine festen `ms`/`s` (hartcodierte px/Farben ebenso vermeiden). Einzige
+  bewusste Ausnahme: das Atmen des Ladezeichens (`mp-breathe`, 2.6 s Schleife).
+- **Weniger Bewegung gilt für beide Schalter:** die Systemeinstellung *und* den App-Schalter
+  (`data-reduce-motion`). Animationen aus JavaScript (`el.animate`) erreicht die CSS-Regel nicht —
+  sie prüfen beides selbst. *(Nachgeführt 06.11.2026.)*
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).

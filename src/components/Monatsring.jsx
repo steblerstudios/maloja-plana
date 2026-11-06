@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, space, radius } from '../config/tokens.js';
+import { text, weight, space, radius, duration, ease } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
 import { bereichsTon } from '../utils/lebensbereichFruechte.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
@@ -61,7 +61,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   }));
   const bogen = (key, laenge, anfang, stroke, opacity) => React.createElement('circle', {
     key, cx: 100, cy: 100, r: 90, fill: 'none', stroke, strokeWidth: 14, pathLength: 100,
-    strokeDasharray: laenge + ' ' + (100 - laenge), strokeDashoffset: -anfang, opacity, style: { transition: 'opacity 150ms ease' },
+    strokeDasharray: laenge + ' ' + (100 - laenge), strokeDashoffset: -anfang, opacity, style: { transition: 'opacity ' + duration.fast + 'ms ' + ease },
   });
   const umschalter = (wert, name) => React.createElement('button', {
     type: 'button', 'aria-pressed': faktor === wert, onClick: () => setFaktor(wert),
@@ -81,11 +81,11 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
           React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, t(g.key === 'steuern' ? 'budgetSync.group.taxProvision' : 'chapters.finanzen.monat.teil.' + g.key)),
           React.createElement('span', { style: zahlen }, chf(g.wert)),
           React.createElement('span', { style: { ...zahlen, fontSize: text.xs, color: palette.mid } }, anteil(g.wert, basis)),
-          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid, textAlign: 'center', transform: auf ? 'rotate(90deg)' : 'none', transition: 'transform 150ms ease' } }, knopf ? '›' : '')
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid, textAlign: 'center', transform: auf ? 'rotate(90deg)' : 'none', transition: 'transform ' + duration.fast + 'ms ' + ease } }, knopf ? '›' : '')
         ),
         // Die Spur ist das ganze Einkommen, wie der Ring.
         React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', height: '6px', marginTop: '4px', borderRadius: radius.full, background: palette.up, overflow: 'hidden' } },
-          React.createElement('span', { style: { display: 'block', height: '100%', borderRadius: radius.full, background: g.farbe, width: (g.wert / basis) * 100 + '%', opacity: ton(g), transition: 'opacity 150ms ease' } }))
+          React.createElement('span', { style: { display: 'block', height: '100%', borderRadius: radius.full, background: g.farbe, width: (g.wert / basis) * 100 + '%', opacity: ton(g), transition: 'opacity ' + duration.fast + 'ms ' + ease } }))
       ),
       auf && React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: '2px 0 ' + space.xs + 'px ' + space.md + 'px', fontSize: text.xs } },
         g.posten.map((p) => React.createElement('li', { key: p.key, style: { ...raster, padding: '3px 0' } },
