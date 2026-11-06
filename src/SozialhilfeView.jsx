@@ -10,6 +10,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -45,13 +46,13 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     React.createElement(ErklaerseiteLink, { palette, t, view: 'sozialhilfe' }),
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { ...linkStil(palette), fontSize: text.sm, fontWeight: weight.medium, marginTop: space.md }
     }, t('nav.finanzUebersicht')),
 
     // Mietzinsbeiträge können ein Anspruch VOR/neben der Sozialhilfe sein — ruhig dorthin verweisen.
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('mietzins'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' }
+      style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' }
     }, t('nav.mietzins'))
   );
   const rechner = (extra) => React.createElement(SozialhilfeRechner, { palette, t, data, onNavigate, titel: t('sozialhilfe.title'), satz, stelle, mitPegel: true, ...extra });
@@ -85,8 +86,8 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     // in der Notlage auch der Aufenthaltsort. Beim Wochenaufenthalt zusätzlich die Steuern (mit Vorbehalt) und
     // die Miete — sie gehört womöglich zum Zimmer am Wochenaufenthaltsort. Beim Nebenwohnsitz kein Steuersatz:
     // oft eine eigene Ferienwohnung, die dort besteuert wird, wo sie liegt (StHG Art. 4 Abs. 1).
-    residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'sozialhilfe.weeklyResidence' : 'sozialhilfe.nebenResidence')),
+    residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: { padding: '10px', background: palette.sky + '18', borderRadius: radius.sm, border: '1px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'sozialhilfe.weeklyResidence' : 'sozialhilfe.nebenResidence')),
       React.createElement('div', null, t('sozialhilfe.weeklyNote')),
       residenceKey === 'wochenaufenthalt' && React.createElement('div', null, t('sozialhilfe.weeklyMiete')),
       residenceKey === 'wochenaufenthalt' && React.createElement('div', null, t('residence.taxNote'))
@@ -104,7 +105,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
         // Leichter Orientierungs-Rechner — Was-wäre-wenn bei Vermögensanfall.
         React.createElement('div', { style: { paddingTop: space.md, borderTop: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, praefix('rechner', 16), t('sozialhilfe.repaymentRechnerTitle')),
+          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, praefix('document', 16), t('sozialhilfe.repaymentRechnerTitle')),
           React.createElement('div', { style: { color: palette.mid, marginBottom: space.sm } }, t('sozialhilfe.repaymentRechnerIntro')),
           React.createElement('label', { htmlFor: 'sh-erbschaft', style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('sozialhilfe.repaymentAnfallLabel')),
           React.createElement('input', {
@@ -115,7 +116,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
             style: { width: '160px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
           }),
           (Number(erbschaft) || 0) > 0 && React.createElement('div', {
-            style: { marginTop: space.sm, padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sand, lineHeight: leading.relaxed },
+            style: { marginTop: space.sm, padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, lineHeight: leading.relaxed },
           },
             Math.max(0, (Number(erbschaft) || 0) - rueckFreibetrag) > 0
               ? t('sozialhilfe.repaymentRechnerOver', { ueber: formatCHF(Math.max(0, (Number(erbschaft) || 0) - rueckFreibetrag)), freibetrag: formatCHF(rueckFreibetrag) })
@@ -137,7 +138,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         React.createElement('span', { style: { color: palette.sandDeep, whiteSpace: 'nowrap' } }, t('dashboard.anspruchTitle') + ' ›')))),
 
     // Orientation note — visually distinct so users don't overlook it
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.md, padding: space.md + 'px', background: palette.gold + '15', borderRadius: radius.sm + 'px', borderLeft: '3px solid ' + palette.gold } },
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.md, padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.sm + 'px', borderLeft: '3px solid ' + palette.sky } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('sozialhilfe.orientationNote'))
     ),
 
@@ -150,7 +151,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // SKOS table
     React.createElement('details', { style: { marginBottom: space.md } },
-      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, praefix('rechner', 16), t('sozialhilfe.skosTable')),
+      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, praefix('document', 16), t('sozialhilfe.skosTable')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: space.sm, marginTop: space.sm } },
         Object.entries(SKOS_GRUNDBEDARF).map(([size, amount]) =>
           React.createElement('div', {

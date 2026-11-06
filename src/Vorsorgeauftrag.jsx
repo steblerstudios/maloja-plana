@@ -4,7 +4,7 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, radius, space, leading } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { FragenAblauf } from './components/FragenAblauf.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
+import { SecondaryButton } from './components/PrimaryButton.jsx';
 import { FRAGEN_VA, vorlage, vorlageHtml, abweichendeVertretung } from './data/vorsorgeauftrag.js';
 import { PanelTitle } from './components/Heading.jsx';
 
@@ -35,7 +35,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
         abweichend && React.createElement('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('va.ui.abweichend')),
         // C — Warnsatz, abgesetzt und als «nicht abschreiben» markiert
-        React.createElement('div', { style: { border: '2px dashed ' + (palette.goldDeep || palette.sandDeep), borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+        React.createElement('div', { style: { border: '2px dashed ' + palette.sky, borderRadius: radius.sm, padding: '10px 12px', margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
           React.createElement('strong', { style: { color: palette.text } }, t('va.vorlage.nichtAbschreiben')), ' ', t('va.vorlage.warnung')),
         // D — der Text zum Abschreiben
         React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } },
@@ -55,7 +55,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
   const s = ablaufStyles(palette);
   const chapterIdx = (key) => (chapters ? chapters.findIndex((ch) => ch.key === key) : -1);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'vorsorgeauftrag', icon: 'document',
+    palette, t, onNavigate, ablauf: 'vorsorgeauftrag', icon: 'ereignisVorsorgeauftrag',
     title: t('vorsorgeauftrag.title'),
     intro: t('vorsorgeauftrag.intro'),
   },
@@ -75,7 +75,8 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step4Text')),
       // F7-A6 (Entscheid Stebler Studios 27.10.2026, nur der Ablauf-Teil): ein Knopf zum Formular
       // «Patientenverfügung erstellen» statt eines Querverweises — hier ist es der nächste Schritt.
-      onNavigate && React.createElement(PrimaryButton, { palette, 'data-pv-knopf': '', style: { minHeight: '44px', marginTop: space.sm + 'px' }, icon: React.createElement(Icon, { name: 'document', size: 16 }), onClick: () => onNavigate('patientenverfuegung') }, t('vorsorgeauftrag.step4LinkPv'))
+      // Fassung 9 (S2): der Hauptknopf des Schritts ist «Erledigt, weiter ›» — dieser ist Nebenknopf.
+      onNavigate && React.createElement(SecondaryButton, { palette, 'data-pv-knopf': '', style: { minHeight: '44px', marginTop: space.sm + 'px' }, icon: React.createElement(Icon, { name: 'document', size: 16 }), onClick: () => onNavigate('patientenverfuegung') }, t('vorsorgeauftrag.step4LinkPv'))
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step5Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step5Text')),

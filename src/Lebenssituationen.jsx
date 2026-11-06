@@ -17,6 +17,7 @@ import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 
 // ─── Lebenslagen (Auswahl) ─────────────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
@@ -130,13 +131,10 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           onClick: () => toggle(z.key),
           'aria-pressed': on,
           style: {
-            padding: '12px 14px', borderRadius: radius.md,
-            border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
-            background: on ? palette.sage + '18' : 'transparent',
-            color: on ? (palette.sageDeep || palette.text) : palette.mid,
+            ...auswahlStil(palette, on),
+            padding: '12px 14px',
             fontSize: text.sm, fontWeight: on ? weight.medium : weight.normal,
             textAlign: 'left',
-            fontFamily: 'inherit', cursor: 'pointer',
             transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
           },
         }, t('lebenszustaende.' + z.key + '.label'));
@@ -288,7 +286,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     input: { width: '100%', padding: '10px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' },
     satz: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
     fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: space.sm + 'px 0 0' },
-    link: { display: 'flex', alignItems: 'center', minHeight: '44px', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.skyDeep, textAlign: 'left' },
+    link: { ...linkStil(palette), display: 'flex', alignItems: 'center', minHeight: '44px', fontSize: text.sm, fontWeight: weight.medium, textAlign: 'left' },
   };
 
   const feld = (labelText, value, setter, placeholder) => h('label', { style: { flex: '1 1 150px', minWidth: '130px' } },
@@ -353,13 +351,13 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
         h('div', { style: s.fuss },
           canton ? t('schnellcheck.contextCanton', { canton: getCantonName(canton, t) || canton, personen: t(hh.householdSize === 1 ? 'common.person' : 'common.persons', { count: hh.householdSize }) }) : t('schnellcheck.contextNoCanton'),
           ' ',
-          h('button', { type: 'button', onClick: () => onNavigate && onNavigate('chapter', 0), style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.skyDeep } }, t('schnellcheck.adjustProfile'))))),
+          h('button', { type: 'button', onClick: () => onNavigate && onNavigate('chapter', 0), style: { ...linkStil(palette), fontSize: text.xs } }, t('schnellcheck.adjustProfile'))))),
 
     // Ergebnis als Live-Region (a11y-Befund M3): beide Pegel und der Satz.
     h('div', { role: 'status', 'aria-live': 'polite', 'data-ergebnis': 'anspruch' },
       ipvTeil,
       sozPegel && h(Pegel, { palette, t, state: sozPegel }),
-      knappSoz && h('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+      knappSoz && h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
       h('p', { style: s.satz }, satz),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
@@ -386,7 +384,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('anspruchcheck'),
       style: { display: 'block', width: '100%', minHeight: '56px', marginTop: space.md + 'px', padding: space.sm + 'px 0', background: 'none', border: 'none', borderTop: '1px solid ' + palette.border + '88', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' },
     },
-      h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text } }, t('wasStehtMirZu.schrittTitel') + ' ›'),
+      h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('wasStehtMirZu.schrittTitel') + ' ›'),
       h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('wasStehtMirZu.schrittSub'))),
 
     // Hinweise unten (Fassung 5): bewertet nichts · grobe Orientierung · bleibt auf dem Gerät.

@@ -14,6 +14,7 @@ import { praemienBelegState } from './data/praemienBeleg.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
 // Angaben — auto vorbelegt aus dem Profil, hier frei anpassbar zum Ausprobieren —
@@ -86,7 +87,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         + (w.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
-      key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,
+      key: 'el', view: 'ergaenzungsleistungen', color: palette.mid, textColor: palette.mid,
       label: t('schnellcheck.el'), qualitative: true, note: t('schnellcheck.elNote'),
     }));
 
@@ -185,11 +186,13 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     style: {
       display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left',
       padding: '12px 14px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
-      background: b.color + '10', color: palette.text,
-      border: '1px solid ' + b.color + '33', borderRadius: radius.sm + 'px',
+      // Fassung 9: die Zeilen sind neutral (keine Bedeutung über die Farbe); der Punkt bleibt
+      // als Legende zum Balken oben, dort sind die Farben Diagramm (farb-und-daten-system.md).
+      background: 'transparent', color: palette.text,
+      border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px',
     },
-    onMouseEnter: (e) => { e.currentTarget.style.background = b.color + '1e'; },
-    onMouseLeave: (e) => { e.currentTarget.style.background = b.color + '10'; },
+    onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+    onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
   },
     React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '50%', background: b.color, flexShrink: 0 }, 'aria-hidden': true }),
     React.createElement('div', { style: { minWidth: 0, flex: 1 } },
@@ -208,7 +211,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
 
   const wegeItem = (view, label) => React.createElement('button', {
     key: view, onClick: () => onNavigate && onNavigate(view),
-    style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.skyDeep, textAlign: 'left' },
+    style: { ...linkStil(palette), fontSize: text.sm, textAlign: 'left' },
   }, label);
 
   return React.createElement('div', { style: s.card },
@@ -229,7 +232,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         ' ',
         React.createElement('button', {
           onClick: () => onNavigate && onNavigate('chapter', 0),
-          style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.skyDeep },
+          style: { ...linkStil(palette), fontSize: text.xs },
         }, t('schnellcheck.adjustProfile'))
       )
     ),
@@ -253,7 +256,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       palette, t, state: sozPegelState,
     }),
     // Knapp: geschätztes Netto nahe am Bedarf — dieselbe Regel wie auf dem Dashboard.
-    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
+    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
 
     // Ergebnis
     erfasst

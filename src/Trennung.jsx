@@ -12,7 +12,7 @@ export const Trennung = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'trennung', icon: 'family',
+    palette, t, onNavigate, ablauf: 'trennung', icon: 'ereignisTrennung',
     title: t('trennung.title'),
     intro: t('trennung.intro'),
   },

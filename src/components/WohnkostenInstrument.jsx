@@ -9,6 +9,7 @@ import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
+import { knopfStil } from './PrimaryButton.jsx';
 
 // Kapitel Wohnen · das Instrument oben (Fassung 6, Runde 9, Entwurf Z, Entscheid Stebler Studios 24.10.2026).
 // Ersetzt den Kasten «Wohnkosten / Einkommen / Anteil» und im Kapitel den MietVergleich:
@@ -149,7 +150,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         React.createElement('p', { style: { ...klein, margin: space.xs + 'px 0 ' + space.sm + 'px' } }, t('wohnenInstrument.durchspielen')),
         probe != null && React.createElement('button', {
           type: 'button', onClick: () => setProbe(null),
-          style: { minHeight: '44px', padding: '0 ' + space.md + 'px', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer' },
+          style: knopfStil(palette, 'neben'),
         }, t('wohnenInstrument.zurueck'))
       )
     )

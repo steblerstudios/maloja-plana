@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 
 const SPECIALTIES = [
   'hausarzt', 'zahnarzt', 'gynaekologe', 'kinderarzt', 'psychiater', 'other'
@@ -44,15 +45,10 @@ export const DoctorManager = ({ palette, t, doctors, onChange }) => {
       })
     ),
 
+    // Fassung 9 (M10): «+ hinzufügen» als Nebenknopf mit durchgezogenem goldenem Rand.
     React.createElement('button', {
       onClick: addDoc,
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'transparent', color: palette.mid,
-        border: '1px dashed ' + palette.border, borderRadius: radius.sm,
-        cursor: 'pointer', fontSize: text.sm, fontFamily,
-        fontWeight: weight.medium, alignSelf: 'flex-start',
-      }
+      style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' },
     }, '+ ' + t('doctors.add'))
   );
 };

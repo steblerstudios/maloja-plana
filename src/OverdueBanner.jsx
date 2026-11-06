@@ -44,7 +44,8 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       // Oben Abstand zur Kopfzeile: die Übersicht beginnt ohne Rand (seit 25.09.2026).
       margin: space.md + 'px 0',
       background: palette.up,
-      border: '1px solid ' + (overdue.length > 0 ? palette.rose + '33' : palette.gold + '33'),
+      // Farbrollen (Fassung 9): Rot = warnen (verpasst), Blau = Fristen (heute) — Gold bleibt dem Handeln.
+      border: '1px solid ' + (overdue.length > 0 ? palette.rose + '33' : palette.sky + '33'),
       borderRadius: radius.sm,
       cursor: 'pointer',
       display: 'flex',
@@ -61,7 +62,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
         display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0,
       }
     },
-      React.createElement(Icon, { name: 'cowbell', size: 18, color: overdue.length > 0 ? palette.rose : palette.gold }),
+      React.createElement(Icon, { name: 'cowbell', size: 18, color: overdue.length > 0 ? palette.rose : palette.sky }),
       React.createElement('span', {
         style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text }
       }, total)

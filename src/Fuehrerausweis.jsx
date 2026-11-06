@@ -17,7 +17,7 @@ export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
   const kontrolle = inDays(730); // ~2 Jahre — Orientierungs-Rhythmus der 75+-Untersuchung (verschiebbar)
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'fuehrerausweis', icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'fuehrerausweis', icon: 'ereignisFuehrerausweis',
     title: t('fuehrerausweis.title'),
     intro: t('fuehrerausweis.intro'),
   },

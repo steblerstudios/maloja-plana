@@ -5,6 +5,7 @@ import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { UnterlagenWege } from './components/UnterlagenWege.jsx';
+import { knopfStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 // Fassung 5 (Entscheid 23.10.2026, VERGLEICH.md «Dokumentenablage · entschieden»):
 // leer = ruhiges Bild + «Was oft zuerst hineingehört»; mit Inhalt = «{n} Dokumente»,
@@ -34,10 +35,10 @@ export const ablageZaehler = (documents) => ({
 
 const getExpiryStatus = (expiryDate, palette, t) => {
   const days = getDaysUntilExpiry(expiryDate);
-  // Lesbarer Text auf der Fläche (13px) — Deep-Varianten für AA. Fassung 5: «Bald fällig» in
-  // Gold als Hinweis, «Abgelaufen» ruhig in Grau statt in Rot (Notiz unter dem Mockup).
+  // Lesbarer Text auf der Fläche (13px) — Deep-Varianten für AA. Fassung 5: «Bald fällig» als
+  // Hinweis (Fassung 9: Fristen blau, skyDeep), «Abgelaufen» ruhig in Grau statt in Rot (Notiz unter dem Mockup).
   if (days < 0) return { status: 'expired', color: palette.mid, label: t('tresor.expired') };
-  if (days < 90) return { status: 'warning', color: palette.goldDeep, label: days + 'd' };
+  if (days < 90) return { status: 'warning', color: palette.skyDeep, label: days + 'd' };
   return { status: 'ok', color: palette.sageDeep, label: t('tresor.gueltig') };
 };
 
@@ -177,7 +178,7 @@ export const DocumentTresor = ({
     type: 'button', 'aria-label': label, title: label, onClick,
     style: {
       background: 'none', border: 0, color: palette.mid, width: '40px', height: '44px',
-      borderRadius: radius.md, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0,
+      borderRadius: KNOPF_RADIUS, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0,
     },
   }, React.createElement(Icon, { name: icon, size: 18 }));
 
@@ -212,11 +213,11 @@ export const DocumentTresor = ({
               }),
               React.createElement('button', {
                 type: 'button', onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
-                style: { minHeight: '44px', padding: '0 14px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
+                style: { ...knopfStil(palette, 'haupt'), padding: '0 14px', fontSize: text.xs },
               }, 'OK'),
               React.createElement('button', {
                 type: 'button', onClick: () => setEditingDocId(null),
-                style: { minHeight: '44px', padding: '0 14px', background: 'none', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.xs },
+                style: { ...knopfStil(palette, 'neben'), padding: '0 14px', fontSize: text.xs },
               }, t('common.cancel')),
             )
           : React.createElement('span', {
@@ -323,15 +324,15 @@ export const DocumentTresor = ({
                 key: c.key, type: 'button', 'aria-pressed': aktiv, 'aria-label': c.title + ' (' + c.n + ')',
                 onClick: () => setActiveTab(c.key),
                 style: {
+                  // Fassung 9: Auswahl-Chip über den Baustein (gewählt = Sand gefüllt, KNOPF_RADIUS statt Pille).
+                  ...auswahlStil(palette, aktiv), color: aktiv ? palette.onSand : palette.mid,
                   display: 'inline-flex', alignItems: 'center', gap: '5px', minHeight: '44px', padding: '0 12px',
-                  borderRadius: radius.full, border: '1px solid ' + (aktiv ? palette.text : palette.border),
-                  background: aktiv ? palette.up : 'none', color: aktiv ? palette.text : palette.mid,
-                  cursor: 'pointer', fontSize: text.xs, whiteSpace: 'nowrap', font: 'inherit',
+                  fontSize: text.xs, whiteSpace: 'nowrap', font: 'inherit',
                 },
               },
                 c.key === 'all'
                   ? c.title
-                  : React.createElement('span', { style: { color: accent || palette.mid, display: 'inline-flex' } }, React.createElement(Icon, { name: c.key, size: 14 })),
+                  : React.createElement('span', { style: { color: aktiv ? 'inherit' : accent || palette.mid, display: 'inline-flex' } }, React.createElement(Icon, { name: c.key, size: 14 })),
                 React.createElement('span', null, c.key === 'all' ? ' (' + c.n + ')' : c.n),
               );
             }),

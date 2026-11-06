@@ -14,7 +14,7 @@ export const BewilligungFristen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'bewilligung', icon: 'behoerden',
+    palette, t, onNavigate, ablauf: 'bewilligung', icon: 'ereignisBewilligung',
     title: t('bewilligung.title'),
     intro: t('bewilligung.intro'),
   },

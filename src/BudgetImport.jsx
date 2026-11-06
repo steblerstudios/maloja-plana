@@ -3,7 +3,7 @@ import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PanelTitle } from './components/Heading.jsx';
 import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
 import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
@@ -76,7 +76,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
       ),
 
-      importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
+      importing && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
 
       importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, praefix('kreuz', 14), importError),
 
@@ -114,7 +114,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         preview.count === 0 && React.createElement('p', { role: 'status', style: { margin: '0 0 12px', fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('budgetImport.keineErkannt')),
         React.createElement('div', { style: { display: 'flex', gap: space.sm } },
           preview.count > 0 && React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
-          React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
+          React.createElement('button', { onClick: () => setPreview(null), style: { ...knopfStil(palette, 'neben'), flex: 1 } }, t('common.cancel'))
         )
       ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
         React.createElement('div', { style: { marginBottom: space.sm } }, React.createElement(Icon, { name: 'kaestchen', size: 24 })),

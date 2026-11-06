@@ -3,7 +3,7 @@ import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { PrimaryButton, knopfStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -115,12 +115,13 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
 
   // Zweitknopf neben dem einen PrimaryButton (Speichern) — Seitenrundgang 27.09.2026:
   // der QR-Knopf stand in Salbei gefüllt genauso laut darunter.
-  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
+  // Fassung 9: Nebenknopf aus dem Baustein (goldener Rand).
+  const zweitKnopf = knopfStil(palette, 'neben');
 
   const statusButtonStyle = {
-    // color explizit: Buttons erben color nicht (UA-Reset auf schwarz) → sonst war
-    // der inaktive „Nicht registriert"-Status im Dark Mode schwarz auf palette.up.
-    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, color: palette.text
+    // Farbe, Rand und Rundung aus auswahlStil (setzt color ausdrücklich — Dark-Mode-Falle:
+    // der inaktive „Nicht registriert"-Status war sonst schwarz auf palette.up).
+    padding: '10px 16px', fontWeight: weight.semi, fontSize: text.sm,
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
@@ -128,7 +129,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'organspende', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'ereignisOrgan', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       // Nach der Migration v5: eine frühere Angabe liess den Umfang offen (oder widersprach
@@ -140,13 +141,13 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
         ORGAN_ENTSCHEIDE.map(wert => React.createElement('button', {
           key: wert, type: 'button', 'aria-pressed': status === wert,
           onClick: () => setStatus(wert),
-          style: { ...statusButtonStyle, textAlign: 'left', background: status === wert ? palette.sand : palette.up, color: status === wert ? palette.onSand : palette.text }
+          style: { ...auswahlStil(palette, status === wert), ...statusButtonStyle, textAlign: 'left' }
         }, status === wert ? hinweisZeichen('check') : null, organEntscheidText(t, wert)))
       ),
 
       status === 'partial' && React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.organsAndTissue')),
       status === 'partial' && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: space.sm, marginBottom: space.md } },
-        organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: space.sm, padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: radius.sm, cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: text.sm } },
+        organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: space.sm, padding: '10px', background: organs[org.key] ? palette.sand + '30' : palette.up, borderRadius: KNOPF_RADIUS, cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sand : palette.border), fontSize: text.sm } },
           React.createElement('input', { type: 'checkbox', checked: organs[org.key], onChange: () => handleOrganToggle(org.key), style: { cursor: 'pointer' } }),
           org.label
         ))

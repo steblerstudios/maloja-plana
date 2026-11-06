@@ -9,6 +9,7 @@ import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { kindAlter } from './utils/sozialhilfeVorbefuellung.js';
+import { linkStil } from './components/PrimaryButton.jsx';
 
 function currentAge(dateStr) {
   if (!dateStr) return null;
@@ -78,7 +79,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const zahlFeld = (id, labelText, value, onChange, hint, opts = {}) => React.createElement('div', { style: { marginBottom: space.md + 'px' } },
     React.createElement('label', { htmlFor: id, style: label }, labelText,
-      opts.marke && React.createElement('span', { 'data-geschaetzt': '', style: { marginLeft: space.xs + 'px', padding: '1px 8px', borderRadius: radius.full + 'px', fontSize: text.xs, fontWeight: weight.medium, background: palette.gold + '22', color: palette.goldDeep || palette.text } }, opts.marke)),
+      opts.marke && React.createElement('span', { 'data-geschaetzt': '', style: { marginLeft: space.xs + 'px', padding: '1px 8px', borderRadius: radius.full + 'px', fontSize: text.xs, fontWeight: weight.medium, background: palette.sky + '18', color: palette.skyDeep || palette.text } }, opts.marke)),
     React.createElement('input', {
       id, type: 'number', inputMode: 'decimal', value, onChange: (e) => onChange(e.target.value),
       placeholder: opts.placeholder, min: opts.min, max: opts.max, 'aria-describedby': id + '-hinweis',
@@ -128,7 +129,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
         React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: 0 } }, t('alv.ravBody')),
         canton && onNavigate && React.createElement('button', {
           type: 'button', className: 'mp-link', onClick: () => onNavigate('direktlinks'),
-          style: { display: 'flex', alignItems: 'center', width: '100%', minHeight: '44px', marginTop: space.xs + 'px', background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.text },
+          style: { ...linkStil(palette), display: 'flex', alignItems: 'center', width: '100%', minHeight: '44px', marginTop: space.xs + 'px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
         }, t('alv.cantonLink', { canton }))
       ),
     },

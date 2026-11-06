@@ -21,6 +21,7 @@ import { franchiseVorschlag } from './data/franchiseTacho.js';
 import { calculateIPV, getCantonName, ladeIPVModelle } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { nextNov30, fristKnopfDatum } from './KVGWechsel.jsx';
+import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const storedPLZ = data.wohnen?.postalCode || '';
@@ -157,9 +158,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
     input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    gemeindeBtn: (active) => ({ padding: '6px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
+    gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '6px 12px', minHeight: '44px', fontSize: text.sm }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
-    warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
+    warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },
     // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
     // Die Namensspalte bricht um, die Betragsspalten bleiben schmal, «CHF» steht einmal im Kopf.
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, tableLayout: 'fixed' },
@@ -168,7 +169,6 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left', overflowWrap: 'anywhere' },
-    targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
   };
   // Betragsspalte: Kopf mit «CHF» darunter, damit die Zellen nur die Zahl tragen.
   const kopfBetrag = (key, label) => React.createElement('th', { key, style: { ...s.th, textAlign: 'right' } },
@@ -342,7 +342,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           h('dt', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' } }, t('vu.risiko.' + r.key)),
           r.zeilen.map((z) => h('dd', { key: z.key, 'data-art': z.art, style: { margin: '2px 0 0', fontSize: text.sm, lineHeight: leading.normal, color: z.art === 'hinweis' ? palette.mid : palette.text } },
             z.art === 'erfasst' && erledigtZeichen(true, ''),
-            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.goldDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '6px' } }, t('vu.risiko.marke.' + z.art)),
+            (z.art === 'offen' || z.art === 'zusatz') && h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: z.art === 'offen' ? (palette.skyDeep || palette.text) : (palette.sageDeep || palette.text), marginRight: '6px' } }, t('vu.risiko.marke.' + z.art)),
             t('vu.risiko.' + z.key, z.p)))))),
         h('p', { key: 'satz', style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.normal } }, t('vu.risiko.satz')),
       ]),
@@ -358,11 +358,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         t('po.franchiseOptReserve', { reserve: zahl(franchiseOpt.reserve, { hoechstens: 2 }), sb: franchiseOpt.sbMax })),
       franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
         t('po.franchiseOptBreakeven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) })),
-      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
+      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, blau = ruhiger Hinweis)
       reserveCheck && React.createElement('div', {
         style: {
           fontSize: text.sm,
-          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.goldDeep || palette.gold)),
+          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.skyDeep || palette.sky)),
           lineHeight: leading.normal, marginBottom: space.xs + 'px',
         },
       },
@@ -373,7 +373,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         }),
         // Bei dünner/fehlender Reserve ruhig in die Finanzübersicht verweisen.
         onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
-          style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
+          style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium, marginTop: '4px' },
           onClick: () => onNavigate('finanzuebersicht'),
         }, t('po.reserveCheckLink'))
       ),
@@ -441,14 +441,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       regionInfo && teil('mp-vu-vergleich', t('vu.vergleich'), referenceData && referenceData.specificPremium ? t('vu.referenz', { betrag: zahl(referenceData.specificPremium, { hoechstens: 2 }) }) + refJahr : '', [
         h(UvgHinweis, { key: 'uvg', palette, t, data }),
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs + 'px' } },
         hinweisZeichen(), t('po.noInsurer')
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.noInsurerHint'))
     ),
 
     regionInfo && insurer && !insurerNr && React.createElement('div', { style: s.warn },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.xs + 'px' } },
         hinweisZeichen(), t('po.insurerNotFound', { name: insurer })
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.insurerNotFoundHint'))
@@ -525,11 +525,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                         type: 'button', 'aria-pressed': isActive,
                         onClick: () => { setPickedFranchise(f.franchise); setWithUnfall(variant === 'mit'); },
                         style: {
-                          background: isActive ? palette.sage + '22' : 'none',
-                          minHeight: '44px', border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
-                          borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
+                          background: isActive ? palette.sand + '30' : 'none',
+                          minHeight: '44px', border: '1px solid ' + (isActive ? palette.sand : 'transparent'),
+                          borderRadius: KNOPF_RADIUS, padding: '5px 6px', width: '100%', textAlign: 'right',
                           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
-                          color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
+                          color: isActive ? palette.text : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
                         },
                       }, erledigtZeichen(isActive, zahlBetrag(amount)))
@@ -539,7 +539,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                 React.createElement('td', { style: { ...cell, padding: 0 } },
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
-                    style: { ...s.nameBtn, padding: '5px 8px', minHeight: '44px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
+                    style: { ...s.nameBtn, padding: '5px 8px', minHeight: '44px', color: franchiseActive ? palette.sandDeep : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
                   }, zahl(f.franchise, { hoechstens: 2 }))
                 ),
                 hasOhne ? variantCell('mit', f.premium)
@@ -594,11 +594,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                       onUpdateData('versicherungen', 'targetUvg', sel ? '' : variant);
                     },
                     style: {
-                      background: chosenVariant === variant ? palette.sage + '22' : 'none',
-                      border: '1px solid ' + (chosenVariant === variant ? palette.sage : 'transparent'),
-                      borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
+                      background: chosenVariant === variant ? palette.sand + '30' : 'none',
+                      border: '1px solid ' + (chosenVariant === variant ? palette.sand : 'transparent'),
+                      borderRadius: KNOPF_RADIUS, padding: '5px 6px', width: '100%', textAlign: 'right',
                       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
-                      color: chosenVariant === variant ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
+                      color: chosenVariant === variant ? palette.text : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
                     },
                   }, erledigtZeichen(chosenVariant === variant, zahlBetrag(amount)))
@@ -649,7 +649,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ),
       allInsurers.length > 5 && React.createElement('button', {
         type: 'button', onClick: () => setAlleKassen((x) => !x),
-        style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
+        style: { ...knopfStil(palette, 'leise'), marginTop: space.sm + 'px' },
       }, t(alleKassen ? 'vu.wenigerKassen' : 'vu.alleKassen', { n: allInsurers.length })),
       targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.sm + 'px', fontWeight: weight.medium } },
         t('po.targetChosenHint', { insurer: targetInsurer }) + (ageClass !== 'kind' && data.versicherungen?.targetUvg ? ' (' + (data.versicherungen.targetUvg === 'ohne' ? t('po.ohneUnfall') : t('po.mitUnfall')) + ')' : ''))

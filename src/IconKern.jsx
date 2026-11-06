@@ -485,7 +485,7 @@ const _raster = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
   React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
 );
-const _kontrast = () => React.createElement('svg', { viewBox: '0 0 24 24' },
+const _kontrast = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
   React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }),
   React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
 );

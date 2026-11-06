@@ -218,6 +218,31 @@ Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Sp
   cinematic 600` (ms)
 - **Font-Stack:** Body `'Lexend', sans-serif` · Display `'Hanken Grotesk', sans-serif`
 
+### Knöpfe (seit Fassung 9, 05.11.2026)
+
+Eine Quelle: [`src/components/PrimaryButton.jsx`](../../src/components/PrimaryButton.jsx)
+(`knopfStil`, `linkStil`, `auswahlStil`, `PrimaryButton`, `SecondaryButton`, `DangerButton`).
+Wächter: `src/__tests__/knopfarten.test.js`.
+
+| Art | Aussehen | Wann |
+|---|---|---|
+| **Hauptknopf** | gefüllt Sand, Schrift `onSand` | der eine nächste Schritt — **einer je Seite oder Dialog** |
+| **Nebenknopf** | leer, Rand + Schrift `sandDeep` | zurück, abbrechen, später, zweite Wahl |
+| **Gefahr** | leer, Rand + Schrift `roseDeep`; gefüllt nur im letzten Bestätigungsschritt | nur wenn etwas verloren geht |
+| **Leise** | goldener Text ohne Rand | Aufklapper («Mehr zeigen ›», «ändern ›») |
+| **Link** | goldener Text, immer unterstrichen | führt woanders hin, löst nichts aus |
+| **Auswahl** | gewählt Sand gefüllt, sonst Rand `border` | Reiter, Segmente, Chips, Schalter |
+
+- **Rundung:** alle Knöpfe und Auswahlen **6 px** (`KNOPF_RADIUS` = `radius.sm`). Kreise nur für
+  reine Symbolknöpfe ohne Text (Plus in der Leiste, runde Icon-Knöpfe). Keine Pillen an Textknöpfen.
+- **Mindesthöhe** 44 px.
+- **Ausnahme:** der rot gefüllte Ernstfall-Knopf im Kapitel Notfall (Notruf).
+- Karten und Listenzeilen, die woanders hinführen, bleiben Karten (kein Gold als Fläche).
+- Kleine × zum Löschen in Listen bleiben graue Symbole mit Ansage (`aria-label`).
+
+Entschieden von Stebler Studios am 05.11.2026 (Knopf-Inventur, 20 Entscheide, «setze alle
+Empfehlungen um und beachte die Rundungen der Knöpfe»).
+
 ---
 
 ## 8. Calm-UX-Prinzipien

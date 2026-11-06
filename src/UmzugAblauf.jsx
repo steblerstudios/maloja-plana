@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles, ablaufTextFarbe, ohneNummer } from './AblaufSchale.jsx';
 import { plusTage, heuteIso, istVorbei } from './utils/fristen.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
@@ -7,6 +7,7 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
+import { knopfStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
 // Orientierung statt Rechner: An-/Abmeldung bei der Gemeinde (CH: innert 14 Tagen),
@@ -50,7 +51,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
     return gem && gem.length ? gem[0].kanton : null;
   })();
   // Fassung 5: zwei Spalten, die dritte Wahl über die ganze Breite; die gewählte in der
-  // Bereichsfarbe umrandet und leicht getönt, die anderen bleiben gleich hell.
+  // Bereichsfarbe umrandet und leicht getönt, die anderen bleiben gleich hell. Rundung KNOPF_RADIUS (Fassung 9).
   const typeCard = (id, label, voll) => {
     const isChosen = umzugType === id;
     return React.createElement('button', {
@@ -58,7 +59,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
       style: {
         gridColumn: voll ? '1 / -1' : undefined, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
         padding: '12px', minHeight: '48px', fontSize: text.sm, color: palette.text,
-        background: isChosen ? textFarbe + '24' : palette.surface, borderRadius: radius.lg + 'px',
+        background: isChosen ? textFarbe + '24' : palette.surface, borderRadius: KNOPF_RADIUS,
         border: '1px solid ' + (isChosen ? textFarbe : palette.border),
         transition: 'border-color 120ms, background 120ms',
       },
@@ -161,10 +162,8 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
               disabled: isAdded,
               'aria-pressed': isAdded,
               style: {
-                flexShrink: 0, cursor: isAdded ? 'default' : 'pointer', fontFamily: 'inherit',
-                background: 'none', border: '1px solid ' + (isAdded ? palette.sage : palette.border),
-                borderRadius: radius.sm, padding: '2px 12px', minHeight: '44px', fontSize: text.xs,
-                color: isAdded ? (palette.sageDeep || palette.sage) : palette.mid,
+                ...knopfStil(palette, 'neben', { disabled: isAdded }), cursor: isAdded ? 'default' : 'pointer',
+                flexShrink: 0, padding: '2px 12px', minHeight: '44px', fontSize: text.xs,
               },
             }, erledigtZeichen(isAdded, isAdded ? t('umzug.step3Added') : t('umzug.step3Add')))
           );
@@ -175,7 +174,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
       React.createElement('button', {
         key: 'alle',
         onClick: addAll,
-        style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', minHeight: '44px', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi },
+        style: knopfStil(palette, 'neben'),
       }, '+ ' + t('umzug.step3AddAll')),
       // Für jede Stelle der Liste den gleichen Adressänderungs-Brief (ein Dokument, wiederverwendbar).
       onNavigate && React.createElement(AblaufLink, { key: 'brief', palette, label: t('umzug.linkAddressChange'), onClick: () => onNavigate('briefe') }),
@@ -189,7 +188,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
   ];
 
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'umzug', icon: 'home',
+    palette, t, onNavigate, ablauf: 'umzug', icon: 'ereignisUmzug',
     title: t('umzug.title'),
     intro: t('umzug.intro'),
     // Stationsnamen auf der Strasse wie im Mockup Fassung 5.

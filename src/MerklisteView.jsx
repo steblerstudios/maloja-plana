@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
+import { knopfStil } from './components/PrimaryButton.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { loadTodos, saveTodos, merkpunktBauen, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
@@ -103,7 +104,7 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     addRow: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', alignItems: 'center', marginBottom: space.lg + 'px' },
     input: { flex: '1 1 320px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     select: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', cursor: 'pointer' },
-    addBtn: { background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    addBtn: knopfStil(palette, 'haupt'),
     sectionTitle: { fontFamily: 'inherit', fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, margin: space.md + 'px 0 ' + space.sm + 'px' },
     row: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
     cbZiel: { flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '44px', minHeight: '44px', margin: '0 -12px', cursor: 'pointer' },
@@ -116,12 +117,12 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     txt: (d) => ({ display: 'block', fontSize: text.sm, color: d ? palette.mid : palette.text, textDecoration: d ? 'line-through' : 'none', lineHeight: 1.4 }),
     unter: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.normal },
     tagZeile: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', marginBottom: '4px' },
-    tagKnopf: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', padding: '4px 10px', minHeight: '44px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
+    tagKnopf: { ...knopfStil(palette, 'neben'), padding: '4px 10px', minHeight: '44px', fontSize: text.xs },
     tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     erledigtAm: { fontSize: text.xs, color: palette.mid },
     del: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, minWidth: '44px', minHeight: '44px', background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
     meldung: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', fontSize: text.sm, color: palette.text },
-    rueckBtn: { background: 'none', border: 'none', color: palette.sageDeep || palette.text, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, minHeight: '44px', padding: '0 ' + space.sm + 'px' },
+    rueckBtn: knopfStil(palette, 'neben'),
   };
 
   const tagSteuerung = (i) => {

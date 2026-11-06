@@ -43,8 +43,9 @@ export const NotificationSettings = ({ palette, t }) => {
 
   const toggleStyle = (enabled) => ({
     width: '44px', height: '24px', borderRadius: radius.md,
-    background: enabled ? palette.sage : palette.up,
-    border: '1px solid ' + (enabled ? palette.sage : palette.border),
+    // Eingeschaltet gold wie alle Auswahlen (Fassung 9, M8).
+    background: enabled ? palette.sand : palette.up,
+    border: '1px solid ' + (enabled ? palette.sand : palette.border),
     cursor: 'pointer', position: 'relative',
     transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`, flexShrink: 0,
   });
@@ -110,7 +111,7 @@ export const NotificationSettings = ({ palette, t }) => {
         React.createElement('div', {
           style: {
             width: '10px', height: '10px', borderRadius: '50%',
-            background: isGranted ? palette.sage : isDenied ? palette.rose : palette.gold,
+            background: isGranted ? palette.sage : isDenied ? palette.rose : palette.sky,
           }
         }),
         React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } },

@@ -12,18 +12,18 @@ export const GEGENSTAENDE = [
   {
     key: 'wohnen', ill: 'key',
     wege: [
-      { key: 'digitaleordnung', view: 'digitaleordnung', g: ['M7 11V8a5 5 0 0 1 10 0v3', 'M5 11h14v10H5z', 'M12 15v2'] },
-      { key: 'betreibungsauszug', view: 'betreibungsauszug', g: ['M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z', 'M14 3v4h4', 'M9 11h6M9 14h6M9 17h4'] },
-      { key: 'ausweis', view: 'ausweis', g: ['M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z', 'M9 12.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M6 16c.5-1.3 1.6-2 3-2s2.5.7 3 2', 'M14.5 10h3.5M14.5 13h2.5'] },
-      { key: 'wegzug', view: 'wegzug', g: ['M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z', 'M9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2', 'M9 12v4M15 12v4'] },
-      { key: 'einbuergerung', view: 'einbuergerung', g: ['M5 4h14v16H5z', 'M12 8l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z'] },
-      { key: 'wohnunggekuendigt', view: 'wohnunggekuendigt', g: ['M3 11l9-7 9 7', 'M5 10v10h14V10', 'M9 14l6 6', 'M15 14l-6 6'] },
-      { key: 'umzug', view: 'umzug', g: ['M3 12l9-8 9 8', 'M5 10v10h14V10', 'M10 20v-6h4v6'] },
-      { key: 'neuch', view: 'zuzug', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M3 12h18', 'M12 3c3 3 3 15 0 18', 'M12 3c-3 3-3 15 0 18'] },
-      { key: 'bewilligung', view: 'bewilligung', g: ['M3 5h18v14H3z', 'M8 11a2 2 0 1 0 0-.01', 'M13 9h5', 'M13 13h5'] },
-      { key: 'mietzins', view: 'mietzins', g: ['M4 10l8-6 8 6', 'M6 9v10h12V9', 'M12 12.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4'] },
-      { key: 'fuehrerausweis', view: 'fuehrerausweis', g: ['M3 6h18v12H3z', 'M7 10a1.8 1.8 0 1 0 0 .01', 'M5 15c.6-1.4 3.4-1.4 4 0', 'M12 10h6', 'M12 13h4'] },
-      { key: 'asyl', view: 'asyl', g: ['M12 3l8 3.5v5c0 4.5-3.4 8-8 9.5-4.6-1.5-8-5-8-9.5v-5z', 'M8.5 12.5c1.2 1.6 5.8 1.6 7 0'] },
+      { key: 'digitaleordnung', view: 'digitaleordnung', icon: 'ereignisDigitaleordnung' },
+      { key: 'betreibungsauszug', view: 'betreibungsauszug', icon: 'ereignisBetreibungsauszug' },
+      { key: 'ausweis', view: 'ausweis', icon: 'ereignisAusweis' },
+      { key: 'wegzug', view: 'wegzug', icon: 'ereignisWegzug' },
+      { key: 'einbuergerung', view: 'einbuergerung', icon: 'ereignisEinbuergerung' },
+      { key: 'wohnunggekuendigt', view: 'wohnunggekuendigt', icon: 'ereignisWohnunggekuendigt' },
+      { key: 'umzug', view: 'umzug', icon: 'ereignisUmzug' },
+      { key: 'neuch', view: 'zuzug', icon: 'ereignisNeuch' },
+      { key: 'bewilligung', view: 'bewilligung', icon: 'ereignisBewilligung' },
+      { key: 'mietzins', view: 'mietzins', icon: 'ereignisMietzins' },
+      { key: 'fuehrerausweis', view: 'fuehrerausweis', icon: 'ereignisFuehrerausweis' },
+      { key: 'asyl', view: 'asyl', icon: 'ereignisAsyl' },
     ],
   },
   {
@@ -32,62 +32,62 @@ export const GEGENSTAENDE = [
       // Gruppe «Erwachsen werden» (F7-A9, Entscheid Stebler Studios 27.10.2026): 18 werden, Militär- oder
       // Zivildienst, Lehre — zusammen und zuoberst in der Werkzeugrolle. «18 werden» lag vorher in der
       // Erinnerungskiste; hier steht es bei den zwei Wegen, die meist im selben Alter kommen.
-      { gruppe: 'erwachsen', key: 'volljaehrig', view: 'volljaehrig', g: ['M7.5 16.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z', 'M11 13h9', 'M17 13v3', 'M20 13v2'] },
-      { gruppe: 'erwachsen', key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
-      { gruppe: 'erwachsen', key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
+      { gruppe: 'erwachsen', key: 'volljaehrig', view: 'volljaehrig', icon: 'ereignisVolljaehrig' },
+      { gruppe: 'erwachsen', key: 'dienst', view: 'dienst', icon: 'ereignisDienst' },
+      { gruppe: 'erwachsen', key: 'lehre', view: 'lehre', icon: 'ereignisLehre' },
       // F7-L11: «Ausgesteuert» ist seit Gruppe F ein Teil von «Stelle verloren» (Umleitung) — kein eigener Weg mehr.
-      { key: 'quellensteuer', view: 'quellensteuer', g: ['M5 3h14v18H5z', 'M8 7h8', 'M8 11h8', 'M8 15h4', 'M15.5 15.5l2 2'] },
-      { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
-      { key: 'stelleweg', view: 'stelleverloren', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M12 7v5l3 2'] },
-      { key: 'selbst', view: 'selbstaendigkeit', g: ['M13 3L4 14h6l-1 7 9-11h-6z'] },
-      { key: 'stipendien', view: 'stipendien', g: ['M3 8l9-4 9 4-9 4z', 'M7 11v4c0 1.2 2.2 2 5 2s5-.8 5-2v-4', 'M21 8v4.5'] },
+      { key: 'quellensteuer', view: 'quellensteuer', icon: 'ereignisQuellensteuer' },
+      { key: 'job', view: 'neuerjob', icon: 'ereignisJob' },
+      { key: 'stelleweg', view: 'stelleverloren', icon: 'ereignisStelleweg' },
+      { key: 'selbst', view: 'selbstaendigkeit', icon: 'ereignisSelbst' },
+      { key: 'stipendien', view: 'stipendien', icon: 'ereignisStipendien' },
     ],
   },
   {
     key: 'familie', ill: 'box',
     wege: [
-      { key: 'adoption', view: 'adoption', g: ['M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z', 'M3.5 20v-4.5a4.5 4.5 0 0 1 9 0V20', 'M17 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M14 20v-2.5a3 3 0 0 1 6 0V20'] },
-      { key: 'zusammenziehen', view: 'zusammenziehen', g: ['M4 11l8-7 8 7', 'M6 10v10h12V10', 'M12 17.5l-2.3-2.2a1.4 1.4 0 0 1 2.3-1.8 1.4 1.4 0 0 1 2.3 1.8z'] },
-      { key: 'heirat', view: 'heirat', g: ['M7 15a5 5 0 1 0 10 0 5 5 0 0 0-10 0', 'M9.5 8.5l2.5-3 2.5 3-2.5 2.5z'] },
-      { key: 'geburt', view: 'kind', g: ['M12 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10', 'M12 13v7', 'M9.5 20h5'] },
-      { key: 'trennung', view: 'trennung', g: ['M12 3v7', 'M8 21l4-11 4 11', 'M5 21h6', 'M13 21h6'] },
+      { key: 'adoption', view: 'adoption', icon: 'ereignisAdoption' },
+      { key: 'zusammenziehen', view: 'zusammenziehen', icon: 'ereignisZusammenziehen' },
+      { key: 'heirat', view: 'heirat', icon: 'ereignisHeirat' },
+      { key: 'geburt', view: 'kind', icon: 'ereignisGeburt' },
+      { key: 'trennung', view: 'trennung', icon: 'ereignisTrennung' },
     ],
   },
   {
     key: 'gesundheit', ill: 'doctorbag',
     wege: [
-      { key: 'unfall', view: 'unfallkrankheit', g: ['M12 5v14', 'M5 12h14'] },
-      { key: 'kkwechsel', view: 'kvgwechsel', g: ['M4 12a8 8 0 0 1 13-6l3 3', 'M20 12a8 8 0 0 1-13 6l-3-3', 'M20 3v6h-6', 'M4 21v-6h6'] },
-      { key: 'kkerst', view: 'kkerst', g: ['M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z', 'M12 8.5v5', 'M9.5 11h5'] },
+      { key: 'unfall', view: 'unfallkrankheit', icon: 'ereignisUnfall' },
+      { key: 'kkwechsel', view: 'kvgwechsel', icon: 'ereignisKkwechsel' },
+      { key: 'kkerst', view: 'kkerst', icon: 'ereignisKkerst' },
       // «Zusatzversicherung wechseln» ist seit F7-A5 (27.10.2026) der Weg «Zusatz» in «Krankenkasse wechseln».
-      { key: 'iv', view: 'iv', g: ['M12 4.5a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8', 'M12 8v5h4.5', 'M8 11l4 1.2', 'M10 13a3.8 3.8 0 1 0 5.4 3.4'] },
+      { key: 'iv', view: 'iv', icon: 'ereignisIv' },
     ],
   },
   {
     key: 'alter', ill: 'flask',
     wege: [
-      { key: 'ergaenzungsleistungen', view: 'ergaenzungsleistungen', g: ['M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M3 15h3l3 2h5a1.5 1.5 0 0 0 0-3h-3', 'M14 17l5-3a1.5 1.5 0 0 1 2 2l-6 4H6', 'M3 13v8'] },
-      { key: 'vorsorgeauftrag', view: 'vorsorgeauftrag', g: ['M7 3h7l4 4v14H7z', 'M14 3v4h4', 'M10 12h5', 'M10 16l1.5 1.5L15 14'] },
-      { key: 'pension', view: 'pensionierung', g: ['M3 20l6-14 4 8 3-5 5 11z'] },
-      { key: 'pflege', view: 'pflege', g: ['M12 19c3-2 6-5 6-8a3 3 0 0 0-6-1 3 3 0 0 0-6 1c0 3 3 6 6 8z', 'M12 19v2'] },
+      { key: 'ergaenzungsleistungen', view: 'ergaenzungsleistungen', icon: 'ereignisErgaenzungsleistungen' },
+      { key: 'vorsorgeauftrag', view: 'vorsorgeauftrag', icon: 'ereignisVorsorgeauftrag' },
+      { key: 'pension', view: 'pensionierung', icon: 'ereignisPension' },
+      { key: 'pflege', view: 'pflege', icon: 'ereignisPflege' },
     ],
   },
   {
     key: 'abschied', ill: 'letter',
     wege: [
-      { key: 'todesfall', view: 'todesfall', g: ['M3 6h18v12H3z', 'M3 7l9 6 9-6'] },
-      { key: 'bestattung', view: 'bestattung', g: ['M12 21v-8', 'M12 13c-3 0-5-2-5-5 3 0 5 2 5 5z', 'M12 13c3 0 5-2 5-5-3 0-5 2-5 5z', 'M8 21h8'] },
-      { key: 'organ', view: 'organ', g: ['M12 20c4-2.6 7-6 7-9.5A3.7 3.7 0 0 0 12 8a3.7 3.7 0 0 0-7 2.5C5 14 8 17.4 12 20z', 'M12 11v4', 'M10 13h4'] },
+      { key: 'todesfall', view: 'todesfall', icon: 'ereignisTodesfall' },
+      { key: 'bestattung', view: 'bestattung', icon: 'ereignisBestattung' },
+      { key: 'organ', view: 'organ', icon: 'ereignisOrgan' },
     ],
   },
   // Portemonnaie (Entscheid 25.09.2026): trägt die Geld-Werkzeuge aus
   // data/werkzeugRegister.js (`fach: 'geld'`) und — Entscheid 27.09.2026 — die Wege
   // «Mahnung erhalten» und «Betreibung erhalten» (vorher Werkzeugrolle).
   { key: 'geld', ill: 'wallet', wege: [
-      { key: 'mahnung', view: 'mahnung', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M12 16.5v.01'] },
-      { key: 'betreibung', view: 'betreibung', g: ['M5 3h10l4 4v14H5z', 'M15 3v4h4', 'M8 12h8', 'M8 16h5'] },
+      { key: 'mahnung', view: 'mahnung', icon: 'ereignisMahnung' },
+      { key: 'betreibung', view: 'betreibung', icon: 'ereignisBetreibung' },
       // F7-A10 (27.10.2026): eigener Weg, vorher Schritt 6 von «Mahnung erhalten».
-      { key: 'selbstmahnen', view: 'selbstmahnen', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M17 17l3-3-3-3'] },
+      { key: 'selbstmahnen', view: 'selbstmahnen', icon: 'ereignisSelbstmahnen' },
     ],
   },
 ];
