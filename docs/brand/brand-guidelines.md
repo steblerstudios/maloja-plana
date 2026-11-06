@@ -228,7 +228,18 @@ Die Werte oben sind nicht Geschmack und nicht von anderen Produkten abgeschaut, 
 sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *(06.11.2026)*
 
 | | Regel | Für Maloja heisst das |
-|### Knöpfe (seit Fassung 9, 05.11.2026)
+|---|---|---|
+| **A** | **Nähe** — was zusammengehört, steht enger; innen immer weniger Luft als aussen | Beschriftung → Feld `sm 8` · Zeile → Zeile `ms 12` · Baustein → Baustein `md 16` · Karte → Karte `md 16` · Abschnitt → Abschnitt `2xl 48` |
+| **B** | **Skala mit festem Verhältnis** (~1.5) — nur so unterscheidet das Auge die Stufen | `4 · 8 · 12 · 16 · 24 · 32 · 48 · 64`. 10, 14, 20 liegen zu nah an einer Nachbarstufe und fallen weg |
+| **C** | **Ecke wächst mit der Grösse** — bei Bedienelementen etwa ¼ der Höhe | Marke rund · Knopf/Feld (44 hoch) `md 10` (= `KNOPF_RADIUS`) · Symbolkachel (36) `md 10` · Karte `lg 16` · Blatt `xl 24` |
+| **D** | **Verschachtelte Ecken** — liegt etwas eng in einer Fläche: aussen = innen + Abstand | Bild mit 8 Rand in einer Karte: Karte 16, Bild 8. Nie gleiche Ecke innen und aussen bei engem Rand |
+| **E** | **Bewegung nach Weg** — kurzer Weg, kurze Zeit; Erscheinen bremst ab, Verschwinden geht schneller (~⅔) | Druck/Haken `fast 150` · Aufklappen `normal 250` · Erscheinen `slow 400` · nur Berglandschaft `cinematic 600` |
+| **F** | **Takt aus der Schrift** — Grundschrift × Zeilenhöhe ergibt den Grundtakt | 16 × 1.5 = **24** = `lg`. Fliesstext höchstens etwa 65 Zeichen breit |
+
+Dazu unverändert: Tippflächen mindestens 44 × 44 px (WCAG 2.5.5).
+
+
+### Knöpfe (seit Fassung 9, 05.11.2026)
 
 Eine Quelle: [`src/components/PrimaryButton.jsx`](../../src/components/PrimaryButton.jsx)
 (`knopfStil`, `linkStil`, `auswahlStil`, `PrimaryButton`, `SecondaryButton`, `DangerButton`).
