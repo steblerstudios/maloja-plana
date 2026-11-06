@@ -316,6 +316,14 @@
     @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
     .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
+    .brillen{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:14px 0 }
+    .brille{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px; display:grid; gap:8px; align-content:start }
+    .brille h3{ margin:0; font-size:17px }
+    .brille p{ font-size:15px; color:var(--leise) }
+    .brille ul{ list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:6px }
+    .brille li a{ display:inline-block; padding:4px 10px; border:1px solid var(--rand); border-radius:999px; font-size:14px; color:var(--heidel-text); text-underline-offset:3px }
+    .brille li a:hover{ border-color:var(--heidel-text) }
+    .brille li a:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     .atlas-werte summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
   </style>
 </head>
@@ -338,6 +346,7 @@
         <p>Inhalt</p>
         <ol role="list">
           <li><a href="#lesen">Wie die Karten zu lesen sind</a></li>
+          <li><a href="#brillen">Vier Brillen: wer welche Karten braucht</a></li>
           <li><a href="#krankenkasse">Krankenkasse</a></li>
           <li><a href="#steuern">Steuern</a></li>
           <li><a href="#wohnen">Wohnen</a></li>
@@ -353,7 +362,32 @@
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>
         <p class="leise">Kartengrundlage: Kantonsgrenzen und Seen des BFS, Stand 2021, aufbereitet mit swiss-maps und vereinfacht. Spätere Gebietswechsel zwischen Kantonen sind nicht eingezeichnet.<sup class="beleg"><a href="#quelle-karte" id="beleg-karte-1" aria-label="Quelle 1">1</a></sup><sup class="beleg folge"><a href="#quelle-swissmaps" id="beleg-swissmaps-1" aria-label="Quelle 2">2</a></sup></p>
 
-      <h2 id="krankenkasse" tabindex="-1"><span class="nr">2</span> Krankenkasse</h2>
+      <h2 id="brillen" tabindex="-1"><span class="nr">2</span> Vier Brillen: wer welche Karten braucht</h2>
+        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person will wissen, was der Wohnort für sie bedeutet, eine Firma, was den Mitarbeitenden bleibt. Die Karten sind für alle dieselben und frei zugänglich; die Brillen zeigen nur, wo man anfängt.</p>
+        <div class="brillen">
+          <section class="brille" aria-labelledby="brille-person">
+            <h3 id="brille-person">Person: Wo stehe ich?</h3>
+            <p>Was ein Kanton bei Prämie, Steuern und Familie bedeutet. Für Ihre eigene Lage rechnet die App mit Ihren Angaben, auf Ihrem Gerät.</p>
+            <ul role="list"><li><a href="#karte-praemie">Prämie Erwachsene</a></li><li><a href="#karte-lastnachipv">Prämienlast nach Verbilligung</a></li><li><a href="#karte-steuer">Steuern bei 80'000 Fr. Lohn</a></li><li><a href="#karte-kinderzulage">Kinderzulage</a></li><li><a href="#karte-kita">Abzug für Kinderbetreuung</a></li></ul>
+          </section>
+          <section class="brille" aria-labelledby="brille-firma">
+            <h3 id="brille-firma">Firma: Was bleibt den Mitarbeitenden am Standort?</h3>
+            <p>Miete, Wohnungsmarkt, Arbeitsmarkt und was Familien am Standort erhalten.</p>
+            <ul role="list"><li><a href="#karte-miete">Miete 3 Zimmer</a></li><li><a href="#karte-leer">Leerwohnungsziffer</a></li><li><a href="#karte-alq">Arbeitslosenquote</a></li><li><a href="#karte-kinderzulage">Kinderzulage</a></li><li><a href="#karte-kita">Abzug für Kinderbetreuung</a></li></ul>
+          </section>
+          <section class="brille" aria-labelledby="brille-kanton">
+            <h3 id="brille-kanton">Kanton: Wie wirken Verbilligung und Unterstützung?</h3>
+            <p>Prämienlast nach der Verbilligung und wie viele Menschen Unterstützung beziehen.</p>
+            <ul role="list"><li><a href="#karte-lastnachipv">Prämienlast nach Verbilligung</a></li><li><a href="#karte-sozialhilfe">Sozialhilfequote</a></li><li><a href="#karte-el">Ergänzungsleistungen zur AHV</a></li><li><a href="#karte-alq">Arbeitslosenquote</a></li><li><a href="#karte-leer">Leerwohnungsziffer</a></li></ul>
+          </section>
+          <section class="brille" aria-labelledby="brille-stiftung">
+            <h3 id="brille-stiftung">Stiftung: Wo bewirkt Unterstützung am meisten?</h3>
+            <p>Wo viele Menschen Unterstützung beziehen und wo die Prämie nach der Verbilligung schwer wiegt.</p>
+            <ul role="list"><li><a href="#karte-sozialhilfe">Sozialhilfequote</a></li><li><a href="#karte-el">Ergänzungsleistungen zur AHV</a></li><li><a href="#karte-alq">Arbeitslosenquote</a></li><li><a href="#karte-lastnachipv">Prämienlast nach Verbilligung</a></li></ul>
+          </section>
+        </div>
+
+      <h2 id="krankenkasse" tabindex="-1"><span class="nr">3</span> Krankenkasse</h2>
         <p>Die mittlere Prämie für Erwachsene liegt 2027 zwischen 324.90 Franken im Kanton Zug und 610.60 Franken im Kanton Genf. Wie die Prämie zustande kommt, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
 
         <figure class="abb atlas" id="karte-praemie">
@@ -447,7 +481,7 @@
         </details>
         </figure>
 
-      <h2 id="steuern" tabindex="-1"><span class="nr">3</span> Steuern</h2>
+      <h2 id="steuern" tabindex="-1"><span class="nr">4</span> Steuern</h2>
         <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder im Kantonshauptort an Bund, Kanton und Gemeinde zwischen 4,2 % des Lohns im Kanton Zug und 16,1 % im Kanton Neuenburg. Auch innerhalb eines Kantons zählt die Gemeinde; die Tabelle unter der Karte zeigt die Spanne innerhalb jedes Kantons.</p>
 
         <figure class="abb atlas" id="karte-steuer">
@@ -494,7 +528,7 @@
         </details>
         </figure>
 
-      <h2 id="wohnen" tabindex="-1"><span class="nr">4</span> Wohnen</h2>
+      <h2 id="wohnen" tabindex="-1"><span class="nr">5</span> Wohnen</h2>
         <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen 926 Franken im Monat im Kanton Jura und 1'875 Franken im Kanton Zug. Wie leicht man eine Wohnung findet, zeigt die Karte zur Leerwohnungsziffer.</p>
 
         <figure class="abb atlas" id="karte-miete">
@@ -587,7 +621,7 @@
         </details>
         </figure>
 
-      <h2 id="familie" tabindex="-1"><span class="nr">5</span> Familie</h2>
+      <h2 id="familie" tabindex="-1"><span class="nr">6</span> Familie</h2>
         <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens 215 Franken im Monat. Bei den Steuern lassen sich die Kosten für Kita, Tagesfamilie oder Hort bis zu einer Grenze abziehen, die fast jeder Kanton selbst festlegt.</p>
 
         <figure class="abb atlas" id="karte-kinderzulage">
@@ -679,7 +713,7 @@
         </figure>
         <p class="leise">Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen.</p>
 
-      <h2 id="arbeit" tabindex="-1"><span class="nr">6</span> Arbeit</h2>
+      <h2 id="arbeit" tabindex="-1"><span class="nr">7</span> Arbeit</h2>
         <p>Im September 2026 waren zwischen 0,8 % der Erwerbspersonen im Kanton Appenzell Innerrhoden und 5,3 % im Kanton Genf als arbeitslos gemeldet.</p>
 
         <figure class="abb atlas" id="karte-alq">
@@ -728,7 +762,7 @@
         </figure>
         <p class="leise">Wer keine Stelle hat, aber nicht beim RAV gemeldet ist, fehlt in dieser Zahl. Es ist ein Monatswert, der saisonal schwankt.</p>
 
-      <h2 id="unterstuetzung" tabindex="-1"><span class="nr">7</span> Unterstützung</h2>
+      <h2 id="unterstuetzung" tabindex="-1"><span class="nr">8</span> Unterstützung</h2>
         <p>Sozialhilfe und Ergänzungsleistungen helfen, wenn das eigene Geld nicht reicht. Die Karten zeigen, wie viele Menschen sie beziehen.</p>
 
         <figure class="abb atlas" id="karte-sozialhilfe">

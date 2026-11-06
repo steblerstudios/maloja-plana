@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { KANTONSATLAS, stufen } from '../../scripts/seiten/kantonsatlas.mjs';
+import { KANTONSATLAS, stufen, BRILLEN } from '../../scripts/seiten/kantonsatlas.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 import { KANTONE, EBENEN } from '../../scripts/seiten-vergleich.mjs';
 
@@ -80,5 +80,27 @@ describe('/kantonsatlas/', () => {
 
   it('ist von «Kantone im Vergleich» aus verlinkt', () => {
     expect(lies('kantone-im-vergleich')).toContain('<a href="/kantonsatlas/">Kantonsatlas</a>');
+  });
+
+  describe('Brillen (Entscheid 24.10.2026, «Brillen zurück» 07.11.2026)', () => {
+    it('zeigt die vier Brillen Person, Firma, Kanton und Stiftung', () => {
+      expect(BRILLEN.map((b) => b.id)).toEqual(['person', 'firma', 'kanton', 'stiftung']);
+      for (const b of BRILLEN) expect(html).toContain(`<h3 id="brille-${b.id}">${b.name}: ${b.frage}</h3>`);
+    });
+
+    it('jede Brille führt nur zu Karten, die es auf der Seite gibt', () => {
+      const ids = new Set([...html.matchAll(/<figure class="abb atlas" id="(karte-[a-z]+)">/g)].map((m) => m[1]));
+      for (const b of BRILLEN) {
+        const block = html.match(new RegExp(`<section class="brille" aria-labelledby="brille-${b.id}">[\\s\\S]*?</section>`))[0];
+        const ziele = [...block.matchAll(/href="#(karte-[a-z]+)"/g)].map((m) => m[1]);
+        expect(ziele.length, b.id).toBe(b.karten.length);
+        for (const z of ziele) expect(ids, `${b.id} → ${z}`).toContain(z);
+      }
+    });
+
+    it('über die Brillen ist jede Karte erreichbar', () => {
+      const erreicht = new Set(BRILLEN.flatMap((b) => b.karten));
+      for (const key of KARTEN) expect(erreicht, key).toContain(key);
+    });
   });
 });
