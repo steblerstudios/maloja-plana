@@ -54,7 +54,8 @@ describe('Knopfarten: die Ansichten', () => {
   // Erlaubte Rundungen an <button>: die Knopf-Rundung, Reiter oben rund, Kreise für Symbolknöpfe.
   const ERLAUBT = /^(KNOPF_RADIUS|radius\.sm|radius\.sm \+ 'px'|KNOPF_RADIUS \+ ' ' \+ KNOPF_RADIUS \+ ' 0 0'|'50%')$/;
   // Karten und Listenzeilen, die als <button> woanders hinführen (Entscheid M3: bleiben Karten).
-  const KARTEN = new Set(['Dashboard.jsx', 'MobileNav.jsx', 'components/Leistungsliste.jsx']);
+  // components/WerkzeugGruppen.jsx: die Werkzeugkarten der Übersicht, am 06.11.2026 (#719) aus Dashboard.jsx ausgelagert.
+  const KARTEN = new Set(['Dashboard.jsx', 'MobileNav.jsx', 'components/Leistungsliste.jsx', 'components/WerkzeugGruppen.jsx']);
 
   it('Textknöpfe sind 6 px rund — keine Pillen, keine anderen Rundungen', () => {
     const verstoesse = [];
