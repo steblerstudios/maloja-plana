@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles, AblaufWarnung } from './AblaufSchale.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -63,7 +63,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step2Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step2Text')),
-      React.createElement('p', { style: s.warn }, t('vorsorgeauftrag.step2Warn')),
+      React.createElement(AblaufWarnung, { palette }, t('vorsorgeauftrag.step2Warn')),
       React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.vorlageLink'), onClick: () => setVorlageOffen(true) }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.step2Link'), onClick: () => onNavigate('tresor') })
     ),
@@ -85,7 +85,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
     // Testament — nur Wegweiser, kein Generator (Rechtsprüfung 27.09.2026).
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step6Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step6Text')),
-      React.createElement('p', { style: s.warn }, t('vorsorgeauftrag.step6Warn')),
+      React.createElement(AblaufWarnung, { palette }, t('vorsorgeauftrag.step6Warn')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.step6LinkBw'), onClick: () => onNavigate('bestattung') })
     ),
     React.createElement(AblaufFooter, { palette, t, quelle: t('vorsorgeauftrag.quelle'), notes: [t('vorsorgeauftrag.footerNote'), t('trust.localOnly')] })
