@@ -35,12 +35,8 @@ const MUSTER = [
 // Erlaubnisliste, nicht Verbotsliste: jede Ausnahme steht hier mit Datei UND
 // Namen. Ein neuer unbekannter Name fällt auf, auch in einer bekannten Datei.
 const AUSNAHMEN = new Set([
-  // Boden-Anker am Handy: zeichnet seine Icons selbst (`bottomIcon`), bewusst
-  // als Referenz-Set der Outline-Icons (docs/ICON_KONVENTION.md).
-  // Fassung 5 (23.10.2026): Ablage und Merkliste zeichnen `ordner` und `check` — Register-Namen,
-  // darum keine Ausnahme mehr für die früheren `file` und `pencil`.
-  ...['receipt', 'calendarToday', 'sackmesser', 'gift', 'menu', 'rucksack']
-    .map((n) => `main.jsx:${n}`),
+  // Bis 06.11.2026 stand hier der Boden-Anker (main.jsx `bottomIcon`), der seine Zeichen selbst
+  // zeichnete. Seit dem Icon-Plan, Schritt 3, liest er aus dem Register — keine Ausnahme mehr.
   // Browser-Benachrichtigung: ein Bildpfad, kein Icon-Name.
   'notifications.js:/icon-192.png',
 ]);
