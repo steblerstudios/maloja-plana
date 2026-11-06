@@ -68,6 +68,10 @@ Nach F9-A2 («überfällig rot», Wächter `fristenBlau.test.js`) fehlt es an de
 4. **Bündel:** Der Baustein soll nicht ins Startbündel (64.97/65 kB). Ob `AblaufSchale`
    nachgeladen wird, ist **nicht geprüft** — vor dem Bau nachsehen. Nach dem Commit `size-limit`.
 
-**Zu entscheiden vor der Skizze:** Ablaufdatum im Tresor (Ausweis erneuern) — Frist mit Blatt
-oder Info-Datum? Und: «vorbei» auf ein Wort festlegen (Vorschlag: «abgelaufen» bei Fristen,
-«überfällig» bei Zahlungen).
+**Entschieden 06.11.2026** (Stebler Studios, «Ja, als Frist»): Das **Ablaufdatum im Tresor**
+(z. B. Ausweis erneuern, `DocumentTresor.jsx:225`) ist eine **Frist mit Blatt**. Damit sind es
+**51** Stellen mit Kalenderblatt. Folge: abgelaufen dort **rot** statt heute grau (F9-A2), und
+das Wort heisst «Frist», nicht «Ablauf» (B6; «Ablauf» bleibt für die Abläufe).
+
+**Noch zu entscheiden vor der Skizze:** «vorbei» auf ein Wort festlegen (Vorschlag:
+«abgelaufen» bei Fristen, «überfällig» bei Zahlungen).
