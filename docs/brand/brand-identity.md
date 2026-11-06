@@ -19,10 +19,13 @@ oft gestresst, aus verschiedensten Kulturen. Farbe soll beruhigen + Vertrauen sc
 | Light BG | `#F2F2F0` | Hintergrund hell (warmer Stein, statt früher Cream `#F5F2EE`) |
 | Surface | `#FAFAF8` | Cards, erhöhte Flächen |
 | Dark | `#24262A` | Hintergrund dunkel (Schiefer, statt früher `#1A1816`) |
-| Sage | `#5A7868` | **Primärfarbe** — Buttons, Links, Erfolg, «weiter/sicher» |
-| Gold | `#C4A870` | **Akzent** — Wortmarke, Highlights, Premium-Momente |
-| Rose | `#B87070` | Warnung, Fehler |
-| Sky | `#6E90B0` | Info, sekundäre Links |
+| Gold | `#C4A870` | **Handeln** — Knöpfe und Links (seit Fassung 9, 05.11.2026); Wortmarke, Berg |
+| Sage | `#5A7868` | **Gut, erledigt** — Erfolg, «sicher», im Rahmen |
+| Rose | `#B87070` | Warnung, Fehler, Gefahr |
+| Sky | `#6E90B0` | Info und Fristen |
+
+*Farbrollen verbindlich in `brand-guidelines.md` §2 (Fassung 9). Bis 05.11.2026 stand hier Sage
+für Buttons und Links.*
 
 **Warum Granit gewann (vs. Cream/Cool White/Sage/Slate/Warm Stone):**
 - Kulturell am neutralsten — kein Farbton schliesst eine Kultur aus

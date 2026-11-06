@@ -2,6 +2,9 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
+import { KANTONE_IM_VERGLEICH } from '../../scripts/seiten/kantone-im-vergleich.mjs';
+import { KANTONE, EBENEN, PAARE, korrelation, rangkorrelation, staerke, KITA_NICHT_VERGLICHEN, KITA_BUND_2027 } from '../../scripts/seiten-vergleich.mjs';
+import de from '../i18n/de.js';
 import { kantonsPraemien, einsetzen, zahlen, PRAEMIENJAHR, BEWEGT, ATLAS_PRAEMIEN } from '../../scripts/seiten-figuren.mjs';
 import { BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { PRAEMIEN, GEMEINDEN } from '../data/praemienRegionenDaten.js';
@@ -96,7 +99,7 @@ describe('Hintergrundseiten', () => {
 
     it('jede Figur ist ein beschriftetes Bild mit Titel und Beschreibung', () => {
       const svgs = [...html.matchAll(/<svg [^>]*>([\s\S]*?)<\/svg>/g)];
-      expect(svgs.length).toBe(5);
+      if (pfad === 'krankenkasse') expect(svgs.length).toBe(5);
       for (const [ganz, innen] of svgs) {
         expect(ganz).toMatch(/role="img"/);
         expect(ganz).toMatch(/aria-labelledby="[^"]+-t [^"]+-d"/);
@@ -132,7 +135,7 @@ describe('Hintergrundseiten', () => {
     const text = sichtbar(html);
     // Die Zahlenansicht unter dem Kantonsbild trägt die Kantonsmittel, aufklappbar
     // darunter die Werte je Region; das Bild zeigt nur die Verhältnisse.
-    const zahlenansicht = html.match(/<div class="tabelle zahlen">[\s\S]*?<\/details>/)[0];
+    const zahlenansicht = html.match(/<div class="tabelle zahlen"[^>]*>[\s\S]*?<\/details>/)[0];
 
     it('die Kantonsatlas-Kopie passt 2027 zur Prämienregionen-Datei', () => {
       // Eine Quelle, zwei Dateien: bei einer Region gleich, sonst dazwischen.
@@ -203,6 +206,92 @@ describe('Hintergrundseiten', () => {
       for (const n of ['Winterthur', 'Uster', 'Dietikon']) expect(region(n)).toBe(2);
       for (const n of ['Bülach', 'Andelfingen']) expect(region(n)).toBe(3);
       expect(text).toContain('Winterthur, Uster und Dietikon sind in Region 2, Bülach und Andelfingen in Region 3');
+    });
+  });
+
+  // ─── Kantone im Vergleich: Zahlen aus dem Kantonsatlas, ohne Rangliste ────
+  describe('/kantone-im-vergleich/', () => {
+    const html = lies('kantone-im-vergleich');
+    const text = sichtbar(html);
+
+    it('ordnet die Kantone nicht: keine Platzziffer, kein Rang, keine Wertungsfarben', () => {
+      // «Rangfolge» (die Kontrollrechnung) ist erlaubt, eine Platzierung nicht.
+      expect(text).not.toMatch(/\b(Rang \d|\d+\. Rang|Rang(liste)?:|Platz \d|\d+\. Platz|bester Kanton|schlechtester|Spitzenreiter|Schlusslicht)/i);
+      expect(html).not.toMatch(/class="[^"]*(gut|schlecht|rot|gruen)[^"]*"/);
+    });
+
+    it('jede Ebene stammt aus dem Kantonsatlas — für jeden Kanton', () => {
+      const nebeneinander = html.match(/<div class="tabelle breit"[\s\S]*?<\/table>/)[0];
+      for (const k of KANTONE) {
+        const zeile = nebeneinander.match(new RegExp(`<tr><th scope="row">${de.cantons[k]}</th>(.*?)</tr>`))[1];
+        for (const key of ['praemie', 'lastNachIpv', 'steuer', 'miete', 'leer', 'sozialhilfe', 'el', 'alq', 'kinderzulage']) {
+          expect(zeile, `${k} ${key}`).toContain(`>${EBENEN[key].fmt(EBENEN[key].wert(k))}<`);
+        }
+      }
+      expect((nebeneinander.match(/<tr><th scope="row">/g) || []).length).toBe(26);
+    });
+
+    it('die Zusammenhänge sind aus den Daten gerechnet, nicht abgetippt', () => {
+      for (const [, a, b, t] of PAARE) {
+        const r = korrelation(a, b).toFixed(2).replace('.', ',').replace('-', '−');
+        expect(html).toContain(`<th scope="row">${t.paar}</th>`);
+        expect(html).toContain(`<td class="n">${r}</td>`);
+      }
+      expect(text).toContain('Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen');
+      // Der Beispielsatz im Merkkasten muss von den Daten getragen sein.
+      expect(staerke('praemie', 'sozialhilfe')).toBe('deutlich');
+      expect(korrelation('praemie', 'sozialhilfe')).toBeGreaterThan(0);
+    });
+
+    it('nimmt die schwächere Stufe, wenn Pearson und Rangfolge auseinandergehen', () => {
+      // Miete–Leerwohnungen: Pearson −0,70, Rangfolge −0,58 → «teilweise», nicht «deutlich».
+      expect(Math.abs(korrelation('miete', 'leer'))).toBeGreaterThanOrEqual(0.6);
+      expect(Math.abs(rangkorrelation('miete', 'leer'))).toBeLessThan(0.6);
+      expect(staerke('miete', 'leer')).toBe('teilweise');
+    });
+
+    it('nennt den Kita-Abzug des Bundes mit seinem Steuerjahr, nicht dem Prämienjahr', () => {
+      expect(text).toMatch(/Bei der direkten Bundessteuer liegt die Grenze im Steuerjahr 2026 bei 25'800 Franken je Kind/);
+      expect(text).toMatch(/Ab 2027 sind es 25'900 Franken/);
+      expect(html).toContain('/eli/cc/1991/1184_1184_1184/20260101/de');
+    });
+
+    it('nennt für den Kita-Abzug des Bundes die richtige Fundstelle (Rechtsprüfung 05.11.2026)', () => {
+      // 25'800 Fr. gelten seit 1.1.2025 (AS 2024 479, Fussnote zu DBG Art. 33 Abs. 3);
+      // AS 2025 579 ändert Art. 33 Abs. 3 nicht. 25'900 Fr. ab 2027 nur im Erlass AS 2026 486.
+      expect(html).toContain('AS 2024 479');
+      expect(html).not.toContain('AS 2025 579');
+      expect(html).toContain('https://www.fedlex.admin.ch/eli/oc/2026/486/de');
+      expect(KITA_BUND_2027).toBe(25900);
+      expect(text).not.toMatch(/1\.1\.2027 am Volltext gelesen/);
+      // Bedingungen des Gesetzes: belegte Kosten, gleicher Haushalt, Person, die für das Kind sorgt.
+      expect(text).toContain('die belegten Kosten abziehen');
+      expect(text).toContain('im gleichen Haushalt leben wie die Person, die für ihren Unterhalt sorgt');
+    });
+
+    it('zählt Kantone ohne festen Kita-Höchstbetrag nicht beim Vergleich mit dem Bund mit', () => {
+      expect(KITA_NICHT_VERGLICHEN).toEqual(['NE']);
+      const mitGrenze = KANTONE.filter((k) => !KITA_NICHT_VERGLICHEN.includes(k));
+      const unter = mitGrenze.filter((k) => EBENEN.kita.wert(k) < 25800).length;
+      expect(mitGrenze.length).toBe(25);
+      expect(text).toContain(`${unter} Kantone liegen im Steuerjahr 2026 darunter, ${25 - unter} auf oder über dem Bund.`);
+      expect(text).toContain('Neuenburg ist nicht mitgezählt');
+      expect(text).not.toContain('keinen festen Höchstbetrag');
+      expect(html).toContain('Wert 2025, auf Elternbeiträge begrenzt');
+      expect(html).toContain('drittbetreuungskosten-de-fr.pdf');
+    });
+
+    it('nennt bei jeder Ebene, woher die Zahl kommt, und die Vorbehalte des Atlas', () => {
+      for (const key of Object.keys(EBENEN)) {
+        expect(KANTONE_IM_VERGLEICH.quellen.map((q) => q.key), key).toContain(EBENEN[key].quelle);
+      }
+      expect(text).toContain('Median-Reineinkommen 2022');
+      expect(text).toContain('Grossregionen');
+      expect(text).toContain('nicht, wer Anspruch hätte');
+    });
+
+    it('ist aus «Was steht mir zu?», «Prämienverbilligung» und der Krankenkassen-Seite verlinkt', () => {
+      for (const p of ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse']) expect(lies(p)).toContain('href="/kantone-im-vergleich/"');
     });
   });
 

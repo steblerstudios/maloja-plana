@@ -244,7 +244,7 @@ export const POLITSYSTEM = {
   zahlen: zahlenPolitsystem,
   bloecke: BLOECKE_POLITSYSTEM,
   bilderQuelle: 'scripts/seiten/politsystem.mjs',
-  inhaltsTitel: 'Sieben Fragen',
+  inhaltTitel: 'Sieben Fragen',
   // Farbe (Entscheid Stebler Studios 05.11.2026, «A bis E»): Bereichsfarbe
   // Zwetschge = «behoerden» aus src/data/lebensbereiche.js statt Heidelbeere
   // (Versicherungen). Die Variablen heissen im gemeinsamen Stil weiter

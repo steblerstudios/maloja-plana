@@ -16,7 +16,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
   const s = {
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.65, marginBottom: space.md + 'px', maxWidth: '600px' },
     disclaimer: { fontSize: text.sm, color: palette.sageDeep || palette.text, background: palette.sageMist || palette.up, borderInlineStart: '3px solid ' + palette.sage, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', lineHeight: 1.6, marginBottom: space.lg + 'px' },
-    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 'px', marginTop: space.lg + 'px' },
+    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.sm + 'px', marginTop: space.lg + 'px' },
     statusRow: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-start', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
     badge: { flexShrink: 0, width: '34px', height: '34px', borderRadius: radius.sm + 'px', background: palette.sage + '22', color: palette.sageDeep || palette.sage, fontWeight: weight.bold, fontSize: text.body, display: 'flex', alignItems: 'center', justifyContent: 'center' },
     statusLabel: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },

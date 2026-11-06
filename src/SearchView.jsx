@@ -29,7 +29,7 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
     card: { maxWidth: '680px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     input: { width: '100%', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box', marginBottom: space.md + 'px' },
-    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', margin: space.md + 'px 0 ' + space.xs + 'px' },
+    sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, margin: space.md + 'px 0 ' + space.xs + 'px' },
     row: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'start', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '66', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
     rowMain: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
     rowSub: { fontSize: text.xs, color: palette.mid, marginTop: '1px' },
