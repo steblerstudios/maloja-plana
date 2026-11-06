@@ -77,7 +77,9 @@ Rückmeldung 06.11.: Pflege C (Pflegebett) «aber rot?» · Militär «noch nich
 **Im Zusammenhang (06.11., abends):** Bild [Zusammenhang](icon-besprechung-zusammenhang.html) — Seitenkopf 32 px · Menü 20 px · Merkliste 16 px, hell/dunkel, heute → neu; Einbürgerung zusätzlich D Schwurhand. Befund: unter 32 px sind die Zeichen im Abzeichen nicht mehr zu unterscheiden, nur Form und Abzeichen-Farbe (heute ähnlich: gleiche Bilder auf mehreren Seiten). Frage dazu offen.
 Rückmeldung Stebler Studios: «kind neu gut … heirat gut … todes fall gut · asyl gut einbürgerung gut».
 ✅ **06.11.: Kind = Plus · Heirat = Ringe · Todesfall = Kerze (bestätigt) · Asyl = Schirm · Einbürgerung = Ausweiskarte mit Plus, grün (A).**
-Offen: Adoption («ob das nicht auch einfach ein plus sein soll») · Trennung/Scheidung («überlegen»; eine Seite `trennung`, deckt Scheidung ab) · Zuzug/Wegzug («noch gedanken irgendwie oder?») · Bewilligung und Führerausweis (nicht genannt).
+Bild [Adoption, Trennung, Umzug](icon-besprechung-adoption-trennung-umzug.html). Rückmeldung Stebler Studios: «adoption ja gut so · trennung finde ich noch nicht gut · bei zu zug und weg zug ist zwar empfehlung gut aber in grün».
+✅ **06.11.: Adoption = Plus** (gleich wie Kind: ein Kind kommt dazu) · **Zuzug = Plus, Wegzug = Minus, im Wohnen-Grün** (Helvetia + grünes Abzeichen; Grund nach Farbregel: Ast Wohnen spielt mit). Trennung: A–D (Pfeile, ×, getrennte Ringe, Minus) gefallen noch nicht.
+~~Offen: Adoption («ob das nicht auch einfach ein plus sein soll») · Trennung/Scheidung~~ Damals offen: Trennung/Scheidung («überlegen»; eine Seite `trennung`, deckt Scheidung ab) · Zuzug/Wegzug («noch gedanken irgendwie oder?») · Bewilligung und Führerausweis (nicht genannt).
 **Nächste Sitzung:** ~~1) Farben-Zuordnung klären~~ ✅ · 2) neue Leitformen so reich zeichnen wie Chalet/Helvetia · 3) Zeichen auf einfache Grundformen zurückführen.
 
 ## Wörterbuch Fassung 2 · mit Grammatik (06.11.2026, spät)
