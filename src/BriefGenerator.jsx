@@ -7,6 +7,7 @@ import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton, knopfStil, linkStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
+import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 import { erinnerungSichern } from './utils/reminders.js';
@@ -498,7 +499,12 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       React.createElement('div', {
         style: { display: 'flex', alignItems: 'flex-start', gap: '10px' }
       },
-        React.createElement(Icon, { name: 'calendar', size: 18, color: palette.mid }),
+        // F9-A14 Schritt 2: die Rückmelde-Frist als Kalenderblatt statt Kalender-Symbol.
+        React.createElement(Kalenderblatt, {
+          iso: frist.iso, palette, klein: true, vorbei: istVorbei(frist.iso),
+          locale: (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })(),
+          thema: { bereich: 'arbeit', icon: 'lebenslauf' },
+        }),
         React.createElement('div', null,
           React.createElement('div', {
             style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs, color: palette.text }

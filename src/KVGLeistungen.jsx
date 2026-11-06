@@ -17,6 +17,7 @@ import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
+import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -721,7 +722,13 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                 offen && b.frist && React.createElement('div', {
                   style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginTop: '6px' }
                 },
-                  React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } },
+                  // F9-A14 Schritt 2: Zahlungsfrist des Belegs mit Kalenderblatt; überfällig rot.
+                  React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: text.xs, color: b.frist < heuteIso() ? (palette.roseDeep || palette.soft) : palette.soft } },
+                    React.createElement(Kalenderblatt, {
+                      iso: b.frist, palette, klein: true, vorbei: b.frist < heuteIso(),
+                      locale: (() => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; })(),
+                      thema: { bereich: 'versicherungen', icon: 'insurance' },
+                    }),
                     t('kvg.belegFrist') + ': ' + fmtDatum(b.frist)),
                   React.createElement('button', {
                     onClick: () => remindBeleg(b),
