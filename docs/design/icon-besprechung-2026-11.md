@@ -53,6 +53,11 @@ Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild 
 
 [Gesamtbild](icon-besprechung-gesamtbild.html): alle entschiedenen Leitformen, 11 Ast-Farben, heute → neu, hell/dunkel/Graustufen, Abzeichen-Beispiele. Vorsorge-Variante: Bild [Vorsorge](icon-besprechung-vorsorge.html), ✅ **06.11.: A, drei Säulen** (AHV · Pensionskasse · Säule 3a) im violetten Schild. Offen laut Bild: Gesundheit-Kapitel-Umbau, Kreuz → Rechts-Prüfer, Mini-Zeichen je Seite, Funktionen + Glocke.
 
+## Regel geschärft (06.11.2026, abends, Stebler Studios)
+
+Wörtlich: «Vorsorge gehört zu den Versicherungen, und da das Edelweiss-Schild gross und unten im Kreis klein die drei Säulen … Krankenkasse wechseln ist der Pfeil orange, oder bei der KK-Erstanmeldung oder der Karte … wir haben ja noch weitere Versicherungen … wir haben einen super Anfang, aber das geht noch besser».
+→ **Form = Kapitel · Zeichen im Abzeichen = was passiert · Farbe des Abzeichens = betroffener Lebensbereich.** Bild [Regel geschärft](icon-besprechung-versicherungen-regel.html): Krankenkasse orange (Gesundheit), Vorsorge violett (Hauptbild = Schild + drei Säulen im Abzeichen; Seiten = Schild + eigenes Zeichen violett), weitere Versicherungen nach Lebensbereich (Hausrat grün, Rechtsschutz grau, Auto/Reise ohne Ast → neutral). Folge-Frage: überall so? (Form in Kapitelfarbe, 11 Ast-Farben im Abzeichen) → würde «Vorsorge = drei Säulen im Schild» und «11 Farben in der Form» ersetzen. Offen.
+
 ## Mini-Zeichen-Wörterbuch (06.11.2026, abends)
 
 Bild [Mini-Zeichen](icon-besprechung-mini-zeichen.html): **Regel: jedes Zeichen genau eine Bedeutung**, Farbe des Abzeichens = mitspielender Ast. 31 Zeichen für 60 Seiten, heute → neu. Änderungen ggü. früher: Verbilligung = Münze mit Pfeil runter (wie heutige Miet-/Prämienverbilligung), Prozent nur Steuern · Volljährig = Schlüssel (Stern nur Dienst) · Unfall nur einmal (Gesundheit, Notfall-Rot) · Apfel = Tell-Platzhalter. Offen.
