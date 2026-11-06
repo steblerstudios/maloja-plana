@@ -96,6 +96,8 @@ Detailfragen, die im Menü sichtbar wurden (offen, nächster Schritt):
 ✅ **Schulden (Minus gold) und Betreibung erhalten (Minus grau) bleiben so** (A).
 ✅ **Mindestlohn: Abzeichen haselnuss** (Arbeit spielt mit). Zeichen offen («unsicher»).
 Offen: Sozialhilfe grün mit Schirm (Vorschlag Stebler Studios, im Bild zu zeigen) · KVG-Leistungen / Unfall-Krankheit / IV («unschlüssig»).
+Bild [Sozialhilfe, Mindestlohn](icon-besprechung-sozialhilfe-mindestlohn.html). Stebler Studios: «Sozialhilfe ja · Mindestlohn hmm, noch nicht ideal».
+✅ **06.11.: Sozialhilfe = Fünfliber + Schirm grün (Persönliche Basis)** — Schutz wie beim Asyl (dort grau bei Behörden). Mindestlohn: A Pfeil vom Boden · B Mini-Helm · C ≥ gefallen noch nicht.
 ~~Offen: Adoption («ob das nicht auch einfach ein plus sein soll») · Trennung/Scheidung~~ Damals offen: Trennung/Scheidung («überlegen»; eine Seite `trennung`, deckt Scheidung ab) · Zuzug/Wegzug («noch gedanken irgendwie oder?») · Bewilligung und Führerausweis (nicht genannt).
 **Nächste Sitzung:** ~~1) Farben-Zuordnung klären~~ ✅ · 2) neue Leitformen so reich zeichnen wie Chalet/Helvetia · 3) Zeichen auf einfache Grundformen zurückführen.
 
