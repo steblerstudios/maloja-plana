@@ -38,7 +38,7 @@ export default {
       frage: 'Reicht das Einkommen oft nicht bis Ende Monat?',
       intro: 'Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung.',
       berechtigungen: {
-        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Der Kanton hilft bei den Krankenkassen-Prämien für tiefe und mittlere Einkommen. Viele Berechtigte stellen nie einen Antrag.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Der Kanton hilft bei den Krankenkassenprämien für tiefe und mittlere Einkommen. Viele Berechtigte stellen nie einen Antrag.' },
         mietzins: { titel: 'Mietbeitrag', text: 'Einzelne Kantone und Gemeinden beteiligen sich an der Miete, wenn sie bei tiefem Einkommen zu schwer wiegt.' },
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht deckt, kann die Sozialhilfe aufstocken. Das ist ein Recht, kein Entgegenkommen.' },
         stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: 'Für Ausbildung und Studium bei tiefem Einkommen gibt es Stipendien — rückzahlbar oder nicht.' },
@@ -56,7 +56,7 @@ export default {
       intro: 'Alleinerziehende tragen mehr — und genau für diese Situation gibt es mehrere Formen der Unterstützung.',
       berechtigungen: {
         alimente: { titel: 'Alimentenbevorschussung & Inkassohilfe', text: 'Kommen die Unterhaltszahlungen nicht, kann die Gemeinde sie bevorschussen und beim Inkasso helfen — damit das Kind nicht leer ausgeht.' },
-        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Einelternhaushalte haben oft Anspruch auf Hilfe bei den Krankenkassen-Prämien — für den Elternteil und die Kinder.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Einelternhaushalte haben oft Anspruch auf Hilfe bei den Krankenkassenprämien — für den Elternteil und die Kinder.' },
         familienzulagen: { titel: 'Familienzulagen', text: 'Kinder- und Ausbildungszulagen pro Kind — rückwirkend nachforderbar, wenn verpasst. Sie folgen dem arbeitenden Elternteil.' },
         betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: { sie: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig. Fragen Sie bei Ihrer Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.', du: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' } },
         familienEL: { titel: 'Ergänzungsleistungen für Familien', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
@@ -1703,7 +1703,7 @@ export default {
     markeKK: 'Krankenkasse {betrag}',
     markeHaushalt: '{canton} · {personen}',
     schrittTitel: 'Lieber Schritt für Schritt?',
-    schrittSub: { sie: 'Ansprüche geführt prüfen — Einkommen, Lebenslage, Ihr Überblick', du: 'Ansprüche geführt prüfen — Einkommen, Lebenslage, dein Überblick' },
+    schrittSub: { sie: 'Schritt für Schritt prüfen — Einkommen, Lebenslage, Ihr Überblick', du: 'Schritt für Schritt prüfen — Einkommen, Lebenslage, dein Überblick' },
   },
 
   anspruchCheck: {
@@ -1749,7 +1749,7 @@ export default {
     bvg: 'BVG — berufliche Vorsorge (Pensionskasse): die zweite Säule, die zusammen mit der AHV die Rente im Alter bildet.',
     uvg: 'UVG — Unfallversicherung: deckt die Kosten bei Berufs- und Freizeitunfällen.',
     franchise: 'Franchise — der Anteil der Gesundheitskosten pro Jahr, der selbst getragen wird, bevor die Krankenkasse zahlt.',
-    selbstbehalt: 'Selbstbehalt — der selbst getragene Anteil (meist 10 %) an den Kosten über der Franchise, bis zu einem jährlichen Höchstbetrag.',
+    selbstbehalt: 'Selbstbehalt — der Anteil (meist 10 %) an den Kosten über der Franchise, den Versicherte selbst zahlen, bis zu einem jährlichen Höchstbetrag.',
     beistandschaft: 'Beistandschaft — eine von der Kindes- und Erwachsenenschutzbehörde (KESB) angeordnete Unterstützung, wenn jemand bestimmte Angelegenheiten nicht mehr selbst regeln kann. So wenig wie nötig, abgestuft. Grundlage: ZGB Art. 390 ff.',
   },
   settingsDrawer: {
@@ -2004,7 +2004,7 @@ export default {
     quickCheckResult: 'Bei CHF {income}/Jahr: mögliche Verbilligung ca. CHF {amount}/Jahr.',
     quickCheckDurchspielen: "Anderes Einkommen durchspielen",
     quickCheckHint: 'Grobe Orientierung — der genaue Betrag hängt vom Kanton ab.',
-    quickCheckMore: 'Prämienverbilligung prüfen',
+    quickCheckMore: 'Prämienverbilligung genau prüfen',
     quickCheckPlaceholder: 'z.B. 4500',
     demoTitle: 'Beispiel ansehen: So sieht ein ausgefüllter Lebensordner aus',
     demoText: '7 Kapitel, Steuerrechner, Notfallkarte — alles mit Beispieldaten gefüllt. Nichts wird gespeichert.',
@@ -2640,7 +2640,7 @@ export default {
     anspruchAria: 'möglicher Anspruch',
     tax: 'Steuerrechner personalisiert',
     ipv: 'Prämienverbilligung prüfen: aktiv',
-    sozial: 'Sozialhilfe-Rechner aktiv',
+    sozial: 'Sozialhilfe-Rechner: aktiv',
     lohn: 'Mindestlohn prüfen: aktiv',
     notfall: 'Notfallkarte bereit',
     budget: 'Budget-Übersicht aktiv',
@@ -3004,13 +3004,13 @@ export default {
     sortByExpiry: 'Nach Ablauf',
     sortByUpload: 'Nach Datum',
     sortByName: 'Name (A-Z)',
-    noDocuments: { sie: 'Der Platz für Ihre Unterlagen ist bereit', du: 'Der Platz für deine Unterlagen ist bereit' },
+    noDocuments: { sie: 'Hier ist Platz für Ihre Unterlagen', du: 'Hier ist Platz für deine Unterlagen' },
     noDocumentsHint: { sie: 'Sobald Sie ein Dokument in einem Kapitel hochladen, erscheint es hier — sicher und nur auf Ihrem Gerät.', du: 'Sobald du ein Dokument in einem Kapitel hochlädst, erscheint es hier — sicher und nur auf deinem Gerät.' },
     expired: 'Abgelaufen',
     expiryDate: 'Ablauf: {date}',
     uploadedInfo: 'Hochgeladen: {date} · {size}',
     docCount: '{count} Dokumente',
-    ordnerEmpty: { sie: 'Der Platz für Ihre Unterlagen ist bereit.', du: 'Der Platz für deine Unterlagen ist bereit.' },
+    ordnerEmpty: { sie: 'Hier ist Platz für Ihre Unterlagen.', du: 'Hier ist Platz für deine Unterlagen.' },
     ordnerStarting: 'Ein guter Anfang.',
     ordnerGrowing: { sie: 'Ihre Unterlagen kommen zusammen.', du: 'Deine Unterlagen kommen zusammen.' },
     ordnerFull: 'Alles an seinem Platz.',
@@ -4661,7 +4661,7 @@ export default {
   },
 
   kkLast: {
-    title: { sie: 'Ihre Krankenkassen-Last', du: 'Deine Krankenkassen-Last' },
+    title: { sie: 'Ihre Krankenkassenkosten', du: 'Deine Krankenkassenkosten' },
     basisNetto: { sie: 'Prämie der Grundversicherung, gemessen an Ihrem Monatslohn netto, vor Prämienverbilligung', du: 'Prämie der Grundversicherung, gemessen an deinem Monatslohn netto, vor Prämienverbilligung' },
     basisBrutto: { sie: 'Prämie der Grundversicherung, gemessen an Ihrem Monatslohn brutto, vor Prämienverbilligung', du: 'Prämie der Grundversicherung, gemessen an deinem Monatslohn brutto, vor Prämienverbilligung' },
     basisEinkommen: { sie: 'Prämie der Grundversicherung, gemessen an Ihrem monatlichen Einkommen, vor Prämienverbilligung', du: 'Prämie der Grundversicherung, gemessen an deinem monatlichen Einkommen, vor Prämienverbilligung' },
@@ -5220,7 +5220,9 @@ export default {
     wfg_nein: 'Nein',
     wfg_weissNicht: 'Weiss nicht',
     wfgHinweis: 'Das weiss die Verwaltung oder die Vermieterschaft. Die Antwort bleibt im Kapitel Wohnen gespeichert.',
-    result_wfgNein: 'Mietbeiträge gibt es in Zug nur für Wohnungen nach dem Wohnraumförderungsgesetz — für diese Wohnung also nicht. Andere Hilfen wie die Prämienverbilligung hängen nicht davon ab.',
+    // Kanton Zug: Wortlaut wie vor Fassung 9 gelassen — ob «Mietzinsbeiträge» dort der amtliche
+    // Name ist, ist nicht belegt (Sprachprüfung 06.11.2026). Erlaubnisliste in hausbegriffe.test.js.
+    result_wfgNein: 'Mietzinsbeiträge gibt es in Zug nur für Wohnungen nach dem Wohnraumförderungsgesetz — für diese Wohnung also nicht. Andere Hilfen wie die Prämienverbilligung hängen nicht davon ab.',
     result_municipalLimit: 'Hier gibt es keine feste Einkommensgrenze: Sie wird je Haushalt berechnet (Lebensbedarf, Krankenkassenprämie, Miete, Kinderbetreuung) und von der Wohngemeinde festgelegt. Ob ein Anspruch besteht, klärt die Gemeinde.',
     steuerbarTiefer: 'Der Kanton vergleicht das steuerbare Einkommen aus der letzten Veranlagung — es liegt nach den Abzügen meist tiefer als der Nettolohn. Knapp über der Grenze lohnt sich die Prüfung trotzdem.',
     massgebendTiefer: 'Der Kanton rechnet mit dem massgeblichen Einkommen nach Abzügen (dazu 10 % des Vermögens über dem Freibetrag) — es liegt meist tiefer als der Lohn. Knapp über der Grenze lohnt sich die Prüfung trotzdem.',

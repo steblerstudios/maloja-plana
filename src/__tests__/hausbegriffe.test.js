@@ -42,6 +42,13 @@ const VERWORFEN = [
   ['KK als Wort oder Wortanfang', /(?<![\wÄÖÜäöü])KK(?![A-Za-zÄÖÜäöü])/],
 ];
 
+// Verworfene Form, die an einer Stelle bewusst bleibt (Schlüssel und Grund).
+const VERWORFEN_AUSNAHMEN = {
+  'Mietzinsbeitrag/-beiträge': [
+    { schluessel: 'result_wfgNein', grund: 'Kanton Zug: möglicher amtlicher Name, nicht belegt — Wortlaut gelassen' },
+  ],
+};
+
 // Bewusst stehen gelassen — Schlüssel, Wort, Grund.
 const ERLAUBT = {
   Sozialamt: [
@@ -64,7 +71,8 @@ describe('Hausbegriffe im deutschen Text', () => {
 
   for (const [name, re] of VERWORFEN) {
     it(`keine verworfene Form: «${name}»`, () => {
-      const treffer = texte.filter((t) => re.test(t.text)).map((t) => `${t.schluessel}: ${t.text.slice(0, 80)}`);
+      const ausnahmen = new Set((VERWORFEN_AUSNAHMEN[name] || []).map((e) => e.schluessel));
+      const treffer = texte.filter((t) => re.test(t.text) && !ausnahmen.has(t.schluessel)).map((t) => `${t.schluessel}: ${t.text.slice(0, 80)}`);
       expect(treffer).toEqual([]);
     });
   }
