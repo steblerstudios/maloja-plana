@@ -15,7 +15,7 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 |---|---|---|---|---|
 | 1 | Glocken: eine Glocke | [1](icon-besprechung-1-glocken-haeuser.html) · [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | Teil-1-Glocke + «läutet» als Richtung ✅ · Feinform **zurückgestellt** (06.11.: «zur Glocke kommen wir sonst später») — G1–G4 gefielen noch nicht |
 | 2a | Häuser: Basis | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: das echte Chalet, wie es heute ist, überall als Basis — dazu ein Mini-Zeichen** («wieso nicht immer überall das Chalet als Basis und dann ein Mini-Icon dazu»). Keine Strich-Nachzeichnung (1a/1b verworfen) |
-| 2b | Häuser: wie sitzt das Mini-Zeichen? | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: V1** — volles Chalet, Zeichen unten rechts freigeschnitten |
+| 2b | Häuser: wie sitzt das Mini-Zeichen? | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: V1** — volles Chalet, Zeichen unten rechts freigeschnitten. **Ergänzt 06.11. (Behörden-Bild): das Zeichen sitzt als gefülltes Abzeichen (C)** |
 | 2c | Dunkelmodus der Leitformen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: ausgestanzt** (weisse Details als Maske, Hintergrund scheint durch) — «Chalet und Versicherung super» |
 | 2d | Farbe | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: Familie = Farbe des Lebensbereichs** (lebensbereiche.js), Funktionen in Textfarbe — mit Teil 1d angenommen |
 | 3 | Haken: `check` · `success` | [3](icon-besprechung-3-haken.html) | C — ein Haken für «geschafft», `success` weg (unbenutzt), Merkliste eigenes Zeichen | ⏸️ **06.11. zurückgestellt:** «bevor wir Haken machen, wollen wir zuerst alle Varianten der Bereiche machen» |
@@ -33,7 +33,7 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 ## Neue Reihenfolge (06.11.2026, nachmittags)
 
 **Zuerst alle Lebensbereiche, dann die Funktionen** («bevor wir Haken machen wollen wir zu erst alle Varianten der Bereiche machen»). Je Bereich: Leitform heute + Familie mit Mini-Zeichen + Farbe, hell und dunkel — wie bei Chalet (Wohnen) und Edelweiss-Schild (Versicherungen).
-Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ · Behörden (vorgezogen 06.11., Bild [Behörden](icon-besprechung-behoerden.html): Abzeichen A/B/C, Empfehlung C gefülltes Abzeichen für alle Familien; Betreibung → Fünfliber) · Finanzen (Ansatz gut, nochmals) · Person · Gesundheit · Arbeit · Familie · Vorsorge · Bildung · Notfall. Danach Funktionen (3 Haken, 4 Blätter, 8 Kalender, 9 Telefon …).
+Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ · Behörden (vorgezogen 06.11., Bild [Behörden](icon-besprechung-behoerden.html): Abzeichen A/B/C) — ✅ **06.11.: C, gefülltes Abzeichen, für alle Familien** (Lage bleibt V1 unten rechts; volle Scheibe in Familienfarbe, Zeichen ausgestanzt). ✅ **Betreibung geteilt** (Sophie: «der Auszug darf Behörden sein und das Betreibung erhalten Finanzen»): Betreibungsauszug = Helvetia + Blatt (beim Amt bestellt), Betreibung erhalten = Fünfliber + Minus (Geldsache). Die Mini-Zeichen je Behörden-Seite (Person, Stempel, Lenkrad, Dach, Pfeile, Apfel, Stern) sind gezeigt, aber noch nicht einzeln abgenommen · Finanzen (Ansatz gut, nochmals) · Person · Gesundheit · Arbeit · Familie · Vorsorge · Bildung · Notfall. Danach Funktionen (3 Haken, 4 Blätter, 8 Kalender, 9 Telefon …).
 
 ## Grundsatz (06.11.2026)
 
