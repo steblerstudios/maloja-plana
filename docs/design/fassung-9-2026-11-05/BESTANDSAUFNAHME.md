@@ -50,6 +50,15 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
     Begründung gegen C (voll blau mit weisser Schrift): Weiss auf `sky` etwa 3,3:1 (unter AA für
     11 px), eine volle Fläche heisst bei Maloja «handeln», und viele Blätter untereinander würden
     laut.
+  - **Thema als Frucht-Stempel** (06.11.2026 nachmittags). Wortlaut: «ok aber jetzt der
+    rechtsvorschlag zb immernoch blau un nicht die farbe der finanzen», dann nach den Skizzen F–J
+    «ouuu und die kombi von beiden?», «aber in h ist die frucht unten recht da wollte ich es» und
+    «ja super anfang jetzt darf aber die frucht doch die schwarze dicke umrandung verlieen».
+    Das Blatt bleibt blau/rot. Unten rechts auf der Ecke sitzt die Frucht des Lebensbereichs mit
+    dem Themensymbol als Aussparung (`FruchtMitIcon`), ohne runde Unterlage. In Abläufen und im
+    Kapitel Behörden, nicht in der Kalender-Liste (dort zeigt die Themen-Kachel das Thema schon).
+    Verworfen: F (Blatt ganz in Themenfarbe: Gold neben dem goldenen Knopf, Familie sieht aus wie
+    verpasst), G (Themenfarbe nur als Kante, «gefällt mir irgendwie nicht»).
 
 ## Gesamturteil in fünf Sätzen
 
