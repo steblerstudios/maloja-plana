@@ -47,6 +47,7 @@ Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ 
 Befund im Code (`AblaufSchale.jsx`, `KAPITEL_OHNE_EIGENES`, Entscheid 23.10.): 11 Lebensbereiche (Baum, Farbe + Frucht), aber 7 Kapitel. Familie → Persönliche Basis · Arbeit → Ausbildung & Arbeit · Gesundheit **und** Vorsorge → Versicherungen & Vorsorge. Zwei der drei Paare stimmen damit überein; Gesundheit hängt im Code bei den Versicherungen, nicht beim Notfall.
 ✅ **06.11.: Leitform je Kapitel (7), Farbe je Lebensbereich (11).** Familie = Person-Leitform (`basis`) in Kirschrot · Arbeit = Ausbildungs-Leitform in Haselnuss · Vorsorge = Edelweiss-Schild in Traube.
 ✅ **06.11.: Gesundheit zum Edelweiss-Schild** (wie im Kapitel), in Hagebutten-Orange. Notfall behält das Herz mit Kreuz allein → die zwei sind nicht mehr zu verwechseln.
+Reichere Leitformen für Persönliche Basis, Ausbildung & Arbeit, Notfall: Bild [Leitformen](icon-besprechung-leitformen.html), je A/B/C neben heute. Empfehlung: Apfel · Arbeitskoffer · Herz mit Kreuz (reicher). Offen.
 
 ## Grundsatz (06.11.2026)
 
