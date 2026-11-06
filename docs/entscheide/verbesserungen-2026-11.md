@@ -126,3 +126,23 @@ Sprache). Die `hreflang`-Treffer im HTML sind die Sprachwahl-Links. **Beta-Tor a
 
 **Nicht geprüft für dieses Blatt:** Bedienung jedes Formulars und Rechners, Lesbarkeit mit Vorlesen,
 Nutzungszahlen (es gibt keine, local-first), wie Testende von aussen die Wege erleben.
+
+**C2 · Fedlex-Abgleich (06.11. ~17:05):** Der Volltext kommt über den SPARQL-Endpunkt von Fedlex, die Seite selbst lädt nur
+per Skript. Alle drei Zitate wichen ab: fr Art. 3 Abs. 1 Bst. s Ziff. 1 UWG (« celle du » statt « pour le courrier électronique »),
+it dieselbe Stelle («compreso quello della» statt «incluso il suo indirizzo di posta elettronica»), en Art. 12 BV frei umschrieben
+statt nach der amtlichen Übersetzung. Korrigiert in **Entwurfs-PR #730** (`fix/seiten-fedlex-zitate`), noch nicht gemergt.
+**Danach fehlt für die Freigabe nur noch die menschliche Lektüre je Sprache.**
+
+**D3 · Skizze der öffentlichen Startseite (06.11., nichts gebaut):** Handybreite, fünf Flächen von oben nach unten.
+
+| | Fläche | Inhalt |
+|---|---|---|
+| **A** | Kopf | Name und ein Satz, was Maloja ist («Dein Lebensordner für die Schweiz. Bleibt auf deinem Gerät.») |
+| **B** | Hauptknopf | «Ohne Code ausprobieren» führt ins Beispiel. Das Code-Feld steht nur noch klein darunter |
+| **C** | Erklärseiten | sechs Kacheln (Was steht mir zu?, Krankenkasse, Prämienverbilligung, Sozialhilfe, Steuern, Kantone im Vergleich). Das ist der Teil, den Google findet |
+| **D** | Daten | ein Satz: keine Anmeldung, keine Cloud, kein Tracking |
+| **E** | Fuss | Rechtliches, Sprachen, Kontakt, wie auf den Erklärseiten |
+
+Offen vor dem Bau: der Wortlaut von A und D. Der Satz zu den Daten muss zur Datenschutzerklärung passen, darum vorher der
+`rechts-pruefer`. Ausserdem: ob `/` die Startseite wird und das Tor nach `/beta/` zieht, oder ob das Tor bleibt und die
+Startseite nur verlinkt wird. Die Stufenregel vom 04.11. gilt weiter: Beta heisst Testende von aussen.
