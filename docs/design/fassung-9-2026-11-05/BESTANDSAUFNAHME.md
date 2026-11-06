@@ -303,6 +303,9 @@ Danach in dieser Reihenfolge, je ein PR mit Test:
 - Kalenderblatt für Fristen (A14, zusammen mit B6), erst Liste der Stellen, dann Skizze
   ⟨Stand 06.11.⟩ Liste und Skizze erledigt, **Variante E entschieden** (siehe «Entscheide»).
   Bau als eigenes PR, gestapelt auf #696 oder nach dessen Merge.
+  ⟨Stand 06.11. nachmittags⟩ **Gebaut:** Entwurf #722 (`feat/f9-kalenderblatt`, Spitze `d95661b9`,
+  gestapelt auf #696). 8061 Tests grün, Bündel 64.8 kB, im Browser hell/dunkel/Handy geprüft.
+  Nicht gemergt, nicht live.
 
 Tönungen und Abstände (A5, A6) kommen als eigenes Aufräum-PR ohne sichtbare Änderung.
 
