@@ -2088,6 +2088,8 @@ export default {
     toolGroups: {
       gesundheit: 'Sanadad',
       lebensereignisse: 'Eveniments da vita',
+      // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)
+      ankommen: 'Arrivada en Svizra',
       money: 'Daners & taglias',
       insurance: 'Assicuranza & sanadad',
       support: 'Sustegn & dretgs',
