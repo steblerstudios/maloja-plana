@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles, AblaufWarnung } from './AblaufSchale.jsx';
 import { plusTage } from './utils/fristen.js';
 
 // Wohnung gekündigt (durch die Vermieterschaft) — geführter Ablauf, gebaut 24.09.2026
@@ -15,7 +15,7 @@ import { plusTage } from './utils/fristen.js';
 export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'wohnunggekuendigt', icon: 'home',
+    palette, t, onNavigate, ablauf: 'wohnunggekuendigt', icon: 'ereignisWohnunggekuendigt',
     title: t('wohnungGekuendigt.title'),
     intro: t('wohnungGekuendigt.intro'),
   },
@@ -35,7 +35,7 @@ export const WohnungGekuendigt = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('wohnungGekuendigt.step3Title') },
       React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step3Text')),
-      React.createElement('p', { style: s.warn }, t('wohnungGekuendigt.step3Warn'))
+      React.createElement(AblaufWarnung, { palette }, t('wohnungGekuendigt.step3Warn'))
     ),
     React.createElement(AblaufStep, { palette, title: t('wohnungGekuendigt.step4Title') },
       React.createElement('p', { style: s.stepText }, t('wohnungGekuendigt.step4Text'))

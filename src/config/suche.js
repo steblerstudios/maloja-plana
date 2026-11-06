@@ -17,7 +17,7 @@ export const SUCHLISTE = (() => {
   return [
     ...SEARCH_VIEWS,
     ...WERKZEUGE.filter((w) => w.view === 'chapter'),
-    { view: 'gepaeck', nav: 'gepaeck.menuAlle', icon: 'mappe', aliases: ['rucksack', 'gepäck', 'werkzeuge'] },
+    { view: 'gepaeck', nav: 'gepaeck.menuAlle', icon: 'rucksack', aliases: ['rucksack', 'gepäck', 'werkzeuge'] },
     { view: 'settings', nav: 'common.settingsTitle', icon: 'settings', aliases: ['einstellungen', 'settings'] },
   ].filter((v) => { const k = eintragKey(v); if (gesehen.has(k)) return false; gesehen.add(k); return true; });
 })();

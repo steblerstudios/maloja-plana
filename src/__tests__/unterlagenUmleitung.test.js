@@ -83,5 +83,7 @@ describe('main.jsx und Dashboard: keine eigene Seite mehr', () => {
 
   it('die Werkzeug-Gruppe im Dashboard nennt dieselbe Seite nicht zweimal', () => {
     expect(quelle('Dashboard.jsx')).not.toContain("view: 'unterlagen'");
+    // Die Werkzeuggruppen liegen seit 06.11.2026 in einer eigenen Datei (Seitenlandkarte G2).
+    expect(quelle('components/WerkzeugGruppen.jsx')).not.toContain("view: 'unterlagen'");
   });
 });

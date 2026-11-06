@@ -9,7 +9,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 export const SelbstMahnen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   return React.createElement(AblaufContainer, {
-    palette, t, onNavigate, ablauf: 'selbstmahnen', icon: 'money',
+    palette, t, onNavigate, ablauf: 'selbstmahnen', icon: 'ereignisSelbstmahnen',
     title: t('selbstMahnen.title'),
   },
     // Schritt 1 — Selbst mahnen (OR 102 Abs. 1, 104 Abs. 1)

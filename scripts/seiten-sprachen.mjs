@@ -35,7 +35,15 @@
 //
 // Eine Sprache geht frei, indem hier `freigegeben: true` gesetzt und `geprueft`
 // auf den Monat gestellt wird, in dem ein Mensch sie gelesen hat. Nichts
-// anderes ist zu tun — kein zweiter Ort, keine zweite Liste.
+// anderes ist zu tun — kein zweiter Ort, keine zweite Liste. Der Entwurfs-
+// Hinweis verschwindet dann von selbst; an seine Stelle tritt `verbindlich`
+// («bei Abweichungen gilt Deutsch»), und das Prüfdatum heisst bei
+// Übersetzungen «gelesen», nicht «inhaltlich geprüft» (build-seiten.mjs).
+//
+// 05.11.2026: fr/it/en von Prüf-Agenten gegen das Deutsche gelesen
+// (Fachtreue + Recht), Befunde eingearbeitet. Das ersetzt die menschliche
+// Lektüre NICHT — es macht sie nur kürzer. `geprueft` bleibt null, bis sie
+// stattgefunden hat.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const SPRACHEN = [
@@ -147,7 +155,7 @@ export const RAHMEN = {
     fussQuellcode: 'Quellcode auf GitHub',
     fussOhneCode: 'ohne Zugangscode lesbar.',
     spracheLabel: 'Sprache',
-    // Nur sichtbar, solange die Sprache nicht freigegeben ist.
+    // Deutsch ist das Original: kein Entwurfs-, kein Verbindlichkeits-Hinweis.
     entwurfBanner: null,
   },
 
@@ -180,7 +188,10 @@ export const RAHMEN = {
       'conseil juridique ni conseil financier</strong>. Elle ne mentionne volontairement ni montants, ' +
       'ni délais, ni limites de revenu : ceux-ci varient d’un canton à l’autre et changent ' +
       'régulièrement. Seuls le renseignement ou la décision de l’organe compétent font foi.',
-    geprueftLabel: 'Contenu vérifié',
+    // Übersetzung: «geprüft» heisst hier «von einem Menschen gelesen», NICHT
+    // Fach- und Rechtsprüfung — die galt dem deutschen Text (Rechtsprüfung 05.11.).
+    geprueftLabel: 'Traduction relue',
+    originalGeprueft: 'Le contenu suit la version allemande, vérifiée sur le fond et sur le plan juridique.',
     rechtlichesLink: 'Mentions légales, protection des données et clause de non-responsabilité',
     meldenLink: 'Signaler un problème',
     fussProjekt: 'Maloja Plana est un projet de Stebler Studios, Bâle',
@@ -190,6 +201,8 @@ export const RAHMEN = {
     spracheLabel: 'Langue',
     entwurfBanner:
       'Cette traduction n’a pas encore été relue par une personne. Le texte allemand fait foi.',
+    // Ersetzt den Entwurfs-Hinweis, sobald die Sprache freigegeben ist.
+    verbindlich: 'Traduction de l’allemand. En cas de divergence, seule la version allemande fait foi.',
   },
 
   it: {
@@ -221,8 +234,9 @@ export const RAHMEN = {
       'una consulenza giuridica né finanziaria</strong>. Non indica deliberatamente importi, termini ' +
       'o limiti di reddito: variano da cantone a cantone e cambiano regolarmente. Fanno fede sempre ' +
       'l’informazione o la decisione del servizio competente.',
-    geprueftLabel: 'Contenuto verificato',
-    rechtlichesLink: 'Colofone, protezione dei dati ed esclusione di responsabilità',
+    geprueftLabel: 'Traduzione riletta',
+    originalGeprueft: 'Il contenuto segue la versione tedesca, verificata nel merito e sul piano giuridico.',
+    rechtlichesLink: 'Impressum, protezione dei dati ed esclusione di responsabilità',
     meldenLink: 'Segnalare un problema',
     fussProjekt: 'Maloja Plana è un progetto di Stebler Studios, Basilea',
     fussQuelloffen: 'Open source con licenza',
@@ -231,6 +245,7 @@ export const RAHMEN = {
     spracheLabel: 'Lingua',
     entwurfBanner:
       'Questa traduzione non è ancora stata riletta da una persona. Fa fede il testo tedesco.',
+    verbindlich: 'Traduzione dal tedesco. In caso di divergenze fa fede unicamente la versione tedesca.',
   },
 
   en: {
@@ -261,7 +276,8 @@ export const RAHMEN = {
       'advice</strong>. It deliberately gives no amounts, deadlines or income limits: these differ ' +
       'from canton to canton and change regularly. What counts is always the information or the ' +
       'ruling of the competent authority.',
-    geprueftLabel: 'Content reviewed',
+    geprueftLabel: 'Translation proofread',
+    originalGeprueft: 'The content follows the German version, which has been reviewed for substance and legal accuracy.',
     rechtlichesLink: 'Legal notice, data protection and disclaimer',
     meldenLink: 'Report a problem',
     fussProjekt: 'Maloja Plana is a project by Stebler Studios, Basel',
@@ -271,6 +287,7 @@ export const RAHMEN = {
     spracheLabel: 'Language',
     entwurfBanner:
       'This translation has not yet been read by a person. The German text is authoritative.',
+    verbindlich: 'Translated from German. Where versions differ, only the German version is binding.',
   },
 
   rm: {

@@ -10,7 +10,7 @@ import { Belege } from './components/Belege.jsx';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
-import { ablaufBereich, ansichtName } from './config/ansichtenRegister.js';
+import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegister.js';
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
@@ -230,6 +230,9 @@ const Schritte = ({ palette, t, onNavigate, name, schritte, stand, setStand, pas
 // (Satz unter «Alle N Schritte sind erledigt») sind freiwillig; `stand`/`setStand` nur, wenn der
 // Ablauf selbst springen muss (KVG-Wechsel: Wahl in Schritt 1 → zurück an den Anfang).
 export const AblaufContainer = ({ palette, t, onNavigate, ablauf, icon, title, intro, kopf, passNamen, abschlussText, stand: standVon, setStand: setStandVon, children }) => {
+  // Das Zeichen des Ereignisses aus dem Register — dasselbe wie im Rucksack und in der Suche
+  // (Icon-Plan, Schritt 7b). `icon` der Seite bleibt nur Rückfall für Seiten ohne Eintrag.
+  icon = ansichtIkon(ablauf, icon);
   const s = styles(palette);
   const name = ablaufName(ablauf);
   const kinder = flach(children);
@@ -312,6 +315,14 @@ export const AblaufLink = ({ palette, label, onClick }) => {
   const s = styles(palette);
   return React.createElement('button', { type: 'button', className: 'mp-link', style: s.link, onClick }, label,
     React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
+};
+
+// Warnsatz in einem Ablauf — das Warn-Zeichen gehört der Komponente, nicht der Aufrufstelle
+// (Icon-Plan November 2026, Schritt 1). Wächter: __tests__/ablaufWarnung.test.js.
+// Ein `div`, kein `p`: im KVG-Wechsel steht die Warnung in einer Wegkarte, die ein Knopf ist.
+export const AblaufWarnung = ({ palette, children }) => {
+  const s = styles(palette);
+  return React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), children);
 };
 
 // Nach dem Speichern einer Frist aus einem Ablauf (`reminder.ablauf`, z. B. 'umzug'): die gespeicherte

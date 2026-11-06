@@ -66,7 +66,8 @@ export const registerServiceWorker = async () => {
 
 // ─── Permission Management ─────────────────────────────────
 export const getNotificationPermission = () => {
-  if (!('Notification' in window)) return 'unsupported';
+  // Ohne Fenster (Vorabdarstellung, Test) gibt es keine Benachrichtigungen — nicht abstürzen.
+  if (typeof window === 'undefined' || !('Notification' in window)) return 'unsupported';
   return Notification.permission; // 'default', 'granted', 'denied'
 };
 
