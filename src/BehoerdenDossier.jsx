@@ -159,7 +159,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters }) => {
           fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
           letterSpacing: '0.2px',
         }
-      }, t('behoerdenDossier.printAction')),
+      }, hinweisZeichen('drucker', 16), t('behoerdenDossier.printAction')),
       React.createElement('button', {
         onClick: () => setVorschau('json'),
         style: {

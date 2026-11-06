@@ -42,7 +42,7 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
           v.saetze.map((z, i) => React.createElement('p', { key: i, style: { margin: '0 0 ' + space.sm + 'px' } }, z))),
         React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.md + 'px' } },
           React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(vorlageHtml(antworten, data, t, lang)) },
-            React.createElement(Icon, { name: 'document', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('va.ui.drucken')),
+            React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('va.ui.drucken')),
           React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('va.ui.aendern')),
           React.createElement('button', { type: 'button', style: knopf(false), onClick: () => setVorlageOffen(false) }, t('va.ui.zurueckZumWegweiser'))
         )

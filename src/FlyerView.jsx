@@ -76,7 +76,7 @@ export const FlyerView = ({ palette, t, lang }) => {
     ),
 
     React.createElement('div', { style: s.actions },
-      React.createElement('button', { style: s.button, onClick: handlePrint }, t('flyer.print')),
+      React.createElement('button', { style: s.button, onClick: handlePrint }, hinweisZeichen('drucker', 16), t('flyer.print')),
       React.createElement('button', { style: s.shareButton, onClick: handleShare }, t('flyer.share')),
       shared && React.createElement('span', { style: s.copied, role: 'status' }, hinweisZeichen('check'), t('flyer.copied'))
     ),

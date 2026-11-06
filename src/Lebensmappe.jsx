@@ -104,6 +104,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
     hasSections && React.createElement(PrimaryButton, {
       palette, onClick: () => setVorschau(true),
       style: { width: '100%', padding: '12px', marginBottom: vorschau ? 0 : '20px' },
+      icon: React.createElement(Icon, { name: 'drucker', size: 16 }),
     }, t('lebensmappe.printAction')),
     hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement(ExportVorschau, {

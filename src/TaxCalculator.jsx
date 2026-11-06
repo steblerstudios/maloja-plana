@@ -459,7 +459,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
       React.createElement('div', { 'data-testid': 'tarifvergleich-ohne-zahl', style: { fontSize: text.sm, color: palette.mid } }, t(VERGLEICH_OHNE_ZAHL_TEXT[ohneVergleich] || 'tax.saeulen.nurGeschaetzt'))
     ),
 
-    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
+    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('check'), t('tax.saveData')),
     React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig }),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
