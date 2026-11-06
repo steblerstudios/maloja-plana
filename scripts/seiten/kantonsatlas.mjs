@@ -75,14 +75,16 @@ function karte(ctx, key, { legende, nachher = '' }) {
   const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von hell (tiefere Zahl) bis dunkel (höhere Zahl). Die Werte jedes Kantons stehen in der Tabelle unter der Karte.`;
   const svg = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
-  const schweiz = E.ch != null ? `Ganze Schweiz: ${E.fmt(E.ch)}` : E.einheit;
+  // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
+  const schweiz = E.ch != null ? `Ganze Schweiz: ${E.fmt(E.ch)}` : '';
   return `
         <figure class="abb atlas" id="${id}">
           <div class="abb-karte">
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
+            <p class="atlas-einheit">${esc(E.einheit)}</p>
             <p class="atlas-legende">${spannen.map((s) => `<span><i class="k${s.s}" aria-hidden="true"></i>${spanne(s)}</span>`).join('')}</p>
-            <p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>
+            ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
           <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
         </figure>`;
@@ -237,6 +239,7 @@ export const KANTONSATLAS = {
     .atlas svg .k3, .atlas-legende i.k3{ fill:var(--k3); background:var(--k3) }
     .atlas svg .k4, .atlas-legende i.k4{ fill:var(--k4); background:var(--k4) }
     .atlas svg .see{ fill:var(--k-see); stroke:none }
+    .atlas-einheit{ margin:6px 0 0; font-size:13px; color:var(--leise) }
     .atlas-legende{ display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 4px; font-size:13px; color:var(--leise); font-variant-numeric:tabular-nums }
     .atlas-legende span{ display:inline-flex; align-items:center; gap:6px }
     .atlas-legende i{ display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid var(--rand);
