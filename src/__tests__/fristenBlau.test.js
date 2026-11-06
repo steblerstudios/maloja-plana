@@ -19,7 +19,12 @@ const ereignis = (palette, wert) => renderToStaticMarkup(React.createElement(Ere
   reminderTitle: 'Rechtsvorschlag', frist: (d) => d, wert, onWert: () => {},
 }));
 const kartenTag = (html, zustand) => html.match(new RegExp('<div data-frist-karte="' + zustand + '" style="[^"]*"'));
-const blattTag = (html) => html.match(/<div aria-hidden="true" data-teil="kalenderblatt" data-zustand="(offen|vorbei)" style="[^"]*"/);
+// Zustand am äusseren Blatt (mit Stempel), Rahmen am inneren `blatt`.
+const blattTag = (html) => {
+  const z = html.match(/<div aria-hidden="true" data-teil="kalenderblatt" data-zustand="(offen|vorbei)"/);
+  const b = html.match(/<div data-teil="blatt" style="[^"]*"/);
+  return z && b ? [b[0], z[1]] : null;
+};
 
 describe('Fristkarte', () => {
   for (const [name, p] of [['hell', LIGHT_PALETTE], ['dunkel', DARK_PALETTE]]) {

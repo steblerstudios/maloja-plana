@@ -10,7 +10,7 @@ import { renderSource } from './utils/renderSource.js';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { parseHash } from './utils/hashRouter.js';
-import { ablaufBereich, ansichtName } from './config/ansichtenRegister.js';
+import { ablaufBereich, ansichtName, ABLAEUFE } from './config/ansichtenRegister.js';
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, getBereich } from './data/lebensbereiche.js';
@@ -361,9 +361,16 @@ const kartenStil = (palette) => ({
   background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
 });
 const blattOrt = (t) => { const l = t('calendar.locale'); return typeof l === 'string' ? l : 'de-CH'; };
+// Thema des offenen Ablaufs für den Frucht-Stempel am Blatt: Lebensbereich und Ablauf-Symbol aus dem Register.
+export const ablaufThema = (name) => {
+  const bereich = name && ablaufBereich(name);
+  if (!bereich) return null;
+  const eintrag = ABLAEUFE.find((x) => x.view === name);
+  return { bereich, icon: (eintrag && eintrag.icon) || bereich };
+};
 // Blatt und Text nebeneinander, links in der Karte.
-const mitBlatt = (palette, t, iso, vorbei, inhalt) => React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', minWidth: 0, flex: '1 1 14rem' } },
-  React.createElement(Kalenderblatt, { iso, palette, locale: blattOrt(t), vorbei }),
+const mitBlatt = (palette, t, iso, vorbei, inhalt, name) => React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', minWidth: 0, flex: '1 1 14rem' } },
+  React.createElement(Kalenderblatt, { iso, palette, locale: blattOrt(t), vorbei, thema: ablaufThema(name) }),
   inhalt);
 export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarLabel, reminder: reminderRoh, onNavigate, onSaved, kompakt = false }) => {
   const s = styles(palette);
@@ -391,7 +398,7 @@ export const FristButton = ({ palette, t, art, buttonLabel, doneLabel, calendarL
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(art === 'frist' ? 'ablauf.fristBis' : 'ablauf.fristErinnerung', { date: formatDE(reminder.dueDate) })));
   return React.createElement('div', { 'data-frist-karte': 'offen', style: kartenStil(palette) },
     // Das Blatt nur bei einer rechtlichen Frist, nicht bei einer Erinnerung (F9-A14: Blatt = Frist).
-    art === 'frist' ? mitBlatt(palette, t, reminder.dueDate, false, textTeil) : textTeil,
+    art === 'frist' ? mitBlatt(palette, t, reminder.dueDate, false, textTeil, ablauf) : textTeil,
     inhalt);
 };
 
@@ -414,7 +421,8 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
   const vorbei = istVorbei(ziel);
   const reminder = { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}), ...(ablauf ? { ablauf } : {}) };
   // Blatt nur bei rechtlicher Frist (art 'frist') oder eigener Umzugs-Karte, nicht bei einer Erinnerung.
-  const blatt = (inhalt) => (art === 'frist' || karte) ? mitBlatt(palette, t, ziel, vorbei, inhalt) : inhalt;
+  const ablaufOffen = useContext(AblaufNameContext);
+  const blatt = (inhalt) => (art === 'frist' || karte) ? mitBlatt(palette, t, ziel, vorbei, inhalt, ablaufOffen || ablauf) : inhalt;
   const fristKarte = ziel ? React.createElement('div', { 'data-frist-karte': vorbei ? 'vorbei' : 'offen', style: kartenStil(palette) },
     vorbei
       ? blatt(React.createElement('p', { style: { ...s.stepText, color: palette.text, margin: 0 } }, t(vorbeiKey, { date: formatDE(ziel) })))

@@ -57,11 +57,29 @@ describe('Kalenderblatt', () => {
     });
   }
 
+  it('Frucht-Stempel: Frucht des Bereichs in seiner Farbe, ohne runde Unterlage; ohne Thema kein Stempel', () => {
+    const mit = blatt({ iso: '2027-03-31', thema: { bereich: 'finanzen', icon: 'money' } });
+    expect(mit).toContain('data-teil="themenfrucht" data-bereich="finanzen"');
+    expect(mit).toContain('#C4A870'); // Finanzen hell (lebensbereiche.js)
+    const stempel = mit.match(/<span data-teil="themenfrucht"[^>]*style="([^"]*)"/)[1];
+    expect(stempel).not.toMatch(/background|border-radius/); // «die schwarze dicke Umrandung verlieren»
+    const dunkel = renderToStaticMarkup(React.createElement(Kalenderblatt, { palette: DARK_PALETTE, iso: '2027-03-31', thema: { bereich: 'finanzen', icon: 'money' } }));
+    expect(dunkel).toContain('#D2B77E'); // Finanzen dunkel
+    expect(blatt({ iso: '2027-03-31' })).not.toContain('themenfrucht');
+    expect(blatt({ iso: '2027-03-31', thema: { bereich: 'gibtsnicht', icon: 'money' } })).not.toContain('themenfrucht');
+  });
+
+  it('das Blatt bleibt blau, auch mit Stempel eines Bereichs in anderer Farbe', () => {
+    const html = blatt({ iso: '2027-03-31', thema: { bereich: 'familie', icon: 'family' } });
+    expect(html).toMatch(new RegExp('data-teil="blatt" style="[^"]*border:1px solid ' + LIGHT_PALETTE.sky));
+  });
+
   it('Kapitel Behörden zeigt die Steuerfrist als blaues Blatt', () => {
     const html = renderToStaticMarkup(React.createElement(BehoerdenInstrument, {
       palette: LIGHT_PALETTE, t: (k) => k, behoerden: { taxFilingDeadline: '2099-03-31' }, lang: 'de',
     }));
     expect(html).toContain('data-teil="kalenderblatt" data-zustand="offen"');
     expect(html).toContain('border:1px solid ' + LIGHT_PALETTE.sky);
+    expect(html).toContain('data-bereich="behoerden"');
   });
 });

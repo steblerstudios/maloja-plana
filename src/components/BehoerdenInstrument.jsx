@@ -62,7 +62,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, che
     h('h4', { id: 'mp-steuerfrist', style: { ...kapH, marginTop: 0 } }, tr('behördenStatus.taxDeadline')),
     h('div', { style: { display: 'flex', gap: space.md + 'px', alignItems: 'center' } },
       // Kalenderblatt (F9-A14, Variante E): das Datum steht im Satz daneben — fürs Vorlesen stumm.
-      h(Kalenderblatt, { iso: String(iso).slice(0, 10), palette, locale: loc, vorbei: steuerfristVorbei(d, heute) }),
+      h(Kalenderblatt, { iso: String(iso).slice(0, 10), palette, locale: loc, vorbei: steuerfristVorbei(d, heute), thema: { bereich: 'behoerden', icon: 'behoerden' } }),
       h('div', { style: { minWidth: 0 } },
         h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('behoerdenInstrument.faellig', { datum: datum.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' }) })),
         h('div', { style: klein }, relativ(tr, iso) + (offeneErklaerungen(d) != null ? ' · ' + tr('behoerdenInstrument.offen', { n: offeneErklaerungen(d) }) : ''))
