@@ -99,7 +99,7 @@ export const RechnerForm = ({
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '48px', height: '48px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: (farbe ? farbe.flaeche : palette.sage) + '2E', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: ansichtIkon(view), size: 24 })),
         // Lange Titel («Arbeitslosenentschädigung») brechen mit Silbentrennung (Heading.jsx `umbruch`).
-        React.createElement(PageTitle, { palette, style: { fontSize: 'clamp(22px, 6.4vw, 30px)', lineHeight: 1.1, minWidth: 0 } }, titel)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, titel)
       ),
       satz && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.md + 'px', maxWidth: '560px' } }, satz)
     ),

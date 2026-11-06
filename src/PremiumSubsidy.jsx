@@ -11,6 +11,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { ipvErinnerung, erinnerungLiegtSchon } from './data/ipvErinnerung.js';
@@ -620,6 +621,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       )),
     aufklappZeile(t('dl.mirrorTitle'),
       React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv', ohneRahmen: true })),
+    // D1 (06.11.2026): zur öffentlichen Erklärseite «Prämienverbilligung: wer Anspruch hat».
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'premium' }),
 
     // ── Ihr IPV-Weg ───────────────────────────────────────────────────────
     renderLebenslinie(),

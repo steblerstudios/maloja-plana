@@ -58,7 +58,7 @@ export const FlyerView = ({ palette, t, lang }) => {
     qrWrap: { display: 'inline-block', marginTop: space.md + 'px', background: '#fff', padding: space.sm + 'px', borderRadius: radius.sm + 'px' },
     urlText: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' },
     actions: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.lg + 'px', alignItems: 'center' },
-    button: { background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    button: { background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
     shareButton: { background: 'none', color: palette.sageDeep || palette.sage, border: '1px solid ' + palette.sage, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
     copied: { fontSize: text.xs, color: palette.sageDeep || palette.mid },
     hint: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.md + 'px', maxWidth: '520px' },
@@ -76,7 +76,7 @@ export const FlyerView = ({ palette, t, lang }) => {
     ),
 
     React.createElement('div', { style: s.actions },
-      React.createElement('button', { style: s.button, onClick: handlePrint }, t('flyer.print')),
+      React.createElement('button', { style: s.button, onClick: handlePrint }, hinweisZeichen('drucker', 16), t('flyer.print')),
       React.createElement('button', { style: s.shareButton, onClick: handleShare }, t('flyer.share')),
       shared && React.createElement('span', { style: s.copied, role: 'status' }, hinweisZeichen('check'), t('flyer.copied'))
     ),

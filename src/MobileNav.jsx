@@ -65,7 +65,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         ...groupSettingsControls(settingsControls).map(g => React.createElement('div', {
           key: g.key, style: { padding: '14px 20px', borderBottom: '1px solid ' + palette.border },
         },
-          React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.soft, marginBottom: space.xs, letterSpacing: '0.5px', textTransform: 'uppercase' } }, t(g.labelKey)),
+          React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.soft, marginBottom: space.xs } }, t(g.labelKey)),
           ...g.controls.map((ctrl, i) => React.createElement('div', {
             key: ctrl.key || i,
             style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md, padding: space.xs + 'px 0' },

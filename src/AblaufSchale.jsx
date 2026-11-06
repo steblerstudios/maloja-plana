@@ -123,7 +123,7 @@ const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
         icon && React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: balken + '2E', boxShadow: 'inset 0 0 0 1px ' + balken + '4D', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: icon, size: 26 })),
-        React.createElement(PageTitle, { palette, style: { fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-.015em', minWidth: 0 } }, title)
+        React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, title)
       )
     )
   );
@@ -311,6 +311,14 @@ export const AblaufLink = ({ palette, label, onClick }) => {
   const s = styles(palette);
   return React.createElement('button', { type: 'button', className: 'mp-link', style: s.link, onClick }, label,
     React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
+};
+
+// Warnsatz in einem Ablauf — das Warn-Zeichen gehört der Komponente, nicht der Aufrufstelle
+// (Icon-Plan November 2026, Schritt 1). Wächter: __tests__/ablaufWarnung.test.js.
+// Ein `div`, kein `p`: im KVG-Wechsel steht die Warnung in einer Wegkarte, die ein Knopf ist.
+export const AblaufWarnung = ({ palette, children }) => {
+  const s = styles(palette);
+  return React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), children);
 };
 
 // Nach dem Speichern einer Frist aus einem Ablauf (`reminder.ablauf`, z. B. 'umzug'): die gespeicherte

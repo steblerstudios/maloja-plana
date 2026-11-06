@@ -1925,6 +1925,10 @@ export default {
     notfall: 'In caso di emergenza, tutto l\'essenziale è reperibile.',
     next: 'Torna alla panoramica',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'Come funziona, spiegato nel dettaglio (in tedesco)',
+  },
   dashboard: {
     welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
     tagline: { sie: 'Il Suo organizzatore di vita svizzero — salvataggio locale, utilizzabile offline, gratuito.', du: 'Il tuo organizzatore di vita svizzero — salvataggio locale, utilizzabile offline, gratuito.' },
@@ -1945,14 +1949,14 @@ export default {
     tierProtective: { sie: 'La Sua protezione', du: 'La tua protezione' },
     toolsAndFeatures: 'Strumenti',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale' },
     toolGroups: {
-      gesundheit: 'Salute',
       lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',
       mit18: 'A 18 anni',
       money: 'Denaro & imposte',
       insurance: 'Assicurazione & salute',
-      support: 'Sostegno & diritti',
       documents: 'Documenti & autorità',
       organize: 'Organizzare & profilo',
     },
