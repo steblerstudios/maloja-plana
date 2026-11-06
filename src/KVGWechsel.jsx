@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addTodo } from './utils/merkliste.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles, useAblaufStand, ablaufTextFarbe } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles, useAblaufStand, ablaufTextFarbe, AblaufWarnung } from './AblaufSchale.jsx';
 import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
@@ -164,11 +164,11 @@ export const KVGWechsel = ({ palette, t, data, onNavigate, startWeg = null }) =>
       ),
       React.createElement('div', { key: 'c', style: s.pathWrap },
         pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
-          React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('kvgWechsel.path3aWarn'))),
+          React.createElement(AblaufWarnung, { palette }, t('kvgWechsel.path3aWarn'))),
         pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
           React.createElement(React.Fragment, null,
             React.createElement('div', { style: s.reassure }, hinweisZeichen('check'), t('kvgWechsel.path3bReassure')),
-            React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('kvgWechsel.path3bCaveat'))
+            React.createElement(AblaufWarnung, { palette }, t('kvgWechsel.path3bCaveat'))
           ))
       ),
       React.createElement('div', { key: 'd', style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvgWechsel.uptakeReassure'))),
