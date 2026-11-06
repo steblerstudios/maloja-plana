@@ -13,15 +13,15 @@ Grundlage: [`icon-inventar-2026-11-06.html`](icon-inventar-2026-11-06.html)
 
 | # | Thema | Bild | Empfehlung | Entscheid |
 |---|---|---|---|---|
-| 1 | Glocken: eine Glocke | [1](icon-besprechung-1-glocken-haeuser.html) · [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | Teil-1-Glocke + «läutet» als Richtung ✅ — **06.11.: «macht mich noch nicht ganz glücklich, aber wir sind auf dem richtigen Weg»** → Feinform G1–G4 offen |
+| 1 | Glocken: eine Glocke | [1](icon-besprechung-1-glocken-haeuser.html) · [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | Teil-1-Glocke + «läutet» als Richtung ✅ · Feinform **zurückgestellt** (06.11.: «zur Glocke kommen wir sonst später») — G1–G4 gefielen noch nicht |
 | 2a | Häuser: Basis | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: das echte Chalet, wie es heute ist, überall als Basis — dazu ein Mini-Zeichen** («wieso nicht immer überall das Chalet als Basis und dann ein Mini-Icon dazu»). Keine Strich-Nachzeichnung (1a/1b verworfen) |
 | 2b | Häuser: wie sitzt das Mini-Zeichen? | [1c](icon-besprechung-1c-chalet-mini-zeichen.html) | — | ✅ **06.11.: V1** — volles Chalet, Zeichen unten rechts freigeschnitten |
-| 2c | Dunkelmodus der Leitformen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | Details ausstanzen statt weiss malen | **06.11.: «der Dunkelmodus muss besser werden»** → Vorschlag ausgestanzt, Abnahme offen |
-| 2d | Farbe | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | Familie = Farbe des Lebensbereichs (lebensbereiche.js), Funktionen in Textfarbe | **06.11.: «das ist ja dann auch alles grün oder?»** → ja für Wohnen; Regel offen |
+| 2c | Dunkelmodus der Leitformen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: ausgestanzt** (weisse Details als Maske, Hintergrund scheint durch) — «Chalet und Versicherung super» |
+| 2d | Farbe | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: Familie = Farbe des Lebensbereichs** (lebensbereiche.js), Funktionen in Textfarbe — mit Teil 1d angenommen |
 | 3 | Haken: `check` · `success` | — | | offen |
 | 4 | Blätter und Dokumente: `document` · `documents` · `rechner` · `dokumentTresor` · `ordner` | — | | offen |
 | 5 | Geld: Fünfliber · `money` · `budget` · Portemonnaie · Quittung · Sparschwein | — | | offen |
-| 6 | Versicherung: Edelweiss-Schild · `insurance` | — | | offen |
+| 6 | Versicherung: Edelweiss-Schild + Mini-Zeichen | [1d](icon-besprechung-1d-dunkel-farbe-glocke.html) | — | ✅ **06.11.: Familie wie gezeigt** (Wechsel, Erstanmeldung, Prämienverbilligung, Unfall). Offen: Edelweiss im Schild in Blau kaum sichtbar; Rolle von `insurance` |
 | 7 | Kreuz-Familie: Notfall · Gesundheit · Organspende · Ärztin/Arzt | — | | offen |
 | 8 | Kalender und Uhr | — | | offen |
 | 9 | Telefon: Hörer · Handy | — | | offen |
