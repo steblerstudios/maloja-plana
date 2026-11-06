@@ -4,6 +4,7 @@ import { text, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { DatenLoeschen } from './components/DatenLoeschen.jsx';
+import { NotificationSettings } from './NotificationSettings.jsx';
 
 // Zentraler Einstellungen-Bereich: bündelt die App-Bedienelemente mit
 // beschrifteten Zeilen (zugänglicher als die reinen Icon-Knöpfe in der
@@ -13,7 +14,7 @@ import { DatenLoeschen } from './components/DatenLoeschen.jsx';
 // (Anzeige & Sprache / Barrierefreiheit) via settingsGroups.js, geteilt mit
 // der Einstellungs-Schublade.
 
-export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, onNotifications, demoMode }) => {
+export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demoMode }) => {
   const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px' };
   const list = (controls || []).filter(Boolean);
   const actionBtn = {
@@ -55,6 +56,9 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, onNo
       ...g.controls.map((ctrl, i) => renderRow(ctrl, i, g.controls))
     )),
 
+    // ── Benachrichtigungen (seit 05.11.2026 hier statt eigener Seite, Seitenlandkarte Z2) ──
+    React.createElement(NotificationSettings, { palette, t }),
+
     // ── Daten & Sicherung ──
     React.createElement('section', { style: card },
       React.createElement(Eyebrow, { palette, style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('common.settingsData')),
@@ -65,13 +69,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, onNo
       React.createElement('button', { onClick: onExport, style: actionBtn },
         React.createElement(Icon, { name: 'download', size: 16, color: palette.mid }),
         React.createElement('span', null, t('nav.export'))
-      ),
-      // Werkzeug-Vorschau 27.09.2026: Benachrichtigungen stehen nicht mehr im Menü,
-      // sondern hier bei den Einstellungen (neben Export).
-      onNotifications ? React.createElement('button', { onClick: onNotifications, style: actionBtn },
-        React.createElement(Icon, { name: 'cowbell', size: 16, color: palette.mid }),
-        React.createElement('span', null, t('nav.notifications'))
-      ) : null
+      )
     ),
 
     // ── E18 · Alle Daten auf diesem Gerät löschen (eigene Karte, ruhig am Ende) ──

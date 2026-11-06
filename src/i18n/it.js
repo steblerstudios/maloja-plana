@@ -1948,6 +1948,7 @@ export default {
     toolGroups: {
       gesundheit: 'Salute',
       lebensereignisse: 'Eventi della vita',
+      ankommen: 'Arrivo in Svizzera',
       money: 'Denaro & imposte',
       insurance: 'Assicurazione & salute',
       support: 'Sostegno & diritti',

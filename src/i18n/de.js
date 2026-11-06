@@ -1958,6 +1958,7 @@ export default {
     toolGroups: {
       gesundheit: 'Gesundheit',
       lebensereignisse: 'Lebensereignisse',
+      ankommen: 'Ankommen in der Schweiz',
       money: 'Geld & Steuern',
       insurance: 'Versicherung & Gesundheit',
       support: 'Unterstützung & Anspruch',

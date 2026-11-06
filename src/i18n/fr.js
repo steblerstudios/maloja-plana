@@ -1949,6 +1949,7 @@ export default {
     toolGroups: {
       gesundheit: 'Santé',
       lebensereignisse: 'Événements de vie',
+      ankommen: 'Arrivée en Suisse',
       money: 'Argent & impôts',
       insurance: 'Assurance & santé',
       support: 'Soutien & droits',
