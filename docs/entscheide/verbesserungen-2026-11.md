@@ -16,7 +16,7 @@ Vor jedem Vorschlag wurde geprüft, ob es die Sache schon gibt oder ob sie bewus
 | | Befund | Vorschlag | Empfehlung · Aufwand |
 |---|---|---|---|
 | **A1** | Zwei Gruppen der Übersicht haben je **einen** Eintrag: «Gesundheit» (nur Arztkoffer) und «Unterstützung & Anspruch» (nur «Was steht mir zu?»). Dazu heisst eine dritte Gruppe «Versicherung & Gesundheit» (`components/WerkzeugGruppen.jsx`) | Arztkoffer in «Versicherung & Gesundheit». «Unterstützung & Anspruch» streichen: «Was steht mir zu?» steht schon fest in der Leiste unten | **ja** · klein. Übersicht von 9 auf 7 Gruppen, keine neuen Texte |
-| **A2** | «Lebensereignisse» zeigt **36 Abläufe als flache Liste**. Jeder Ablauf trägt schon seinen Lebensbereich (`bereich` in `ABLAEUFE`: Behörden 8, Finanzen 5, Familie 5, Arbeit 5, Wohnen 3, Vorsorge 3, Gesundheit 3, Versicherungen 2, Person 2) | Innerhalb der Gruppe nach Lebensbereich gliedern, mit den Namen der Lebensbereiche als Zwischentitel | **ja** · mittel. Die Namen gibt es schon (`data/lebensbereiche.js`) |
+| **A2** | «Lebensereignisse» zeigt **36 Abläufe als flache Liste**. Jeder Ablauf trägt schon seinen Lebensbereich (`bereich` in `ABLAEUFE`: Behörden 8, Finanzen 5, Familie 5, Arbeit 5, Wohnen 3, Vorsorge 3, Gesundheit 3, Versicherungen 2, Person 2) | Innerhalb der Gruppe nach Lebensbereich gliedern, mit den Namen der Lebensbereiche als Zwischentitel | **ja** · mittel. ~~Die Namen gibt es schon (`data/lebensbereiche.js`)~~ ⟨korrigiert 06.11.: die Datei hat nur Schlüssel und Farben, die neun Namen sind neu (5 Sprachen)⟩ |
 | **A3** | Werkzeuge und Abläufe stehen in **vier Verzeichnissen**: Werkzeuggruppen der Übersicht, Rucksack (Abläufe nach Lebensbereich als Ausrüstungsstücke, `data/gepaeck.js`), Menü (5 feste Anker, `imMenue`) und Suche. Die Übersicht verlinkt selbst «Alle Werkzeuge im Rucksack» | Die Rolle je Verzeichnis festschreiben und als Test sichern: **Suche** = alles · **Menü** = die 5 Anker · **Rucksack** = alle Lebensereignisse · **Übersicht** = Einstieg nach Lage (Gruppen wie «Ankommen», «Mit 18») | **zuerst entscheiden** · mittel. Hängt am Gamification-Blatt (Rucksack, Obstgarten) |
 
 ## B · Verbessern (Kanten und Fehler)
@@ -55,6 +55,7 @@ Vor jedem Vorschlag wurde geprüft, ob es die Sache schon gibt oder ob sie bewus
 | Zusammenbringen | D1, D2, D3 | D1, D2 |
 
 **Reihenfolge-Vorschlag** (klein und sicher zuerst): B1 → B2 → A1 → D2 → D1 → A2 → B3 → C1.
+⟨Stand 06.11. ~15:30: B1 #716, B2 #717, A1 #719, D2 #720, D1 #721 gemergt (nicht live); A2 als Entwurf #723. D1 und A2 nicht im Browser geprüft, weil der Ordner durch Dev-Server anderer Sitzungen belegt war.⟩
 A3, C3 und D3 brauchen zuerst einen Entscheid.
 
 **Nicht geprüft für dieses Blatt:** Bedienung jedes Formulars und Rechners, Lesbarkeit mit Vorlesen,
