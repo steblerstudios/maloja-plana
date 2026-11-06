@@ -147,7 +147,7 @@ export const KANTONSATLAS = {
   hinweis:
     'Orientierung, keine Rechts- oder Finanzberatung. Eine Karte zeigt einen Wert je Kanton; für einen einzelnen Haushalt kann es ganz anders aussehen.',
   vorbehalt:
-    'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind die zuständigen Stellen.',
+    'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Statistiken und Geodaten — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Die Karten zeigen Durchschnitte, die verschieden erhoben werden und verschieden alt sind. Sie bewerten die Kantone nicht: Eine dunkle Fläche heisst nur, dass die Zahl höher ist. Massgebend sind die zuständigen Stellen.',
   vorspann:
     'Wie hoch ist die Prämie, wie viel kostet eine Wohnung, wie viele Menschen beziehen Unterstützung? Das hängt in der Schweiz oft vom Kanton ab. Dieser Atlas zeigt die Zahlen als Karten, damit sichtbar wird, wo sich etwas ähnelt und wo nicht. Die genauen Werte stehen zu jeder Karte in einer aufklappbaren Tabelle.',
   inhaltsverzeichnis: true,
@@ -218,7 +218,11 @@ export const KANTONSATLAS = {
       if (!q) throw new Error(`Kantonsatlas: Quelle ${key} fehlt auf /kantone-im-vergleich/`);
       return q;
     }),
-    { key: 'karte', herausgeber: 'Interactive Things, swiss-maps 4.5.0', titel: 'Kantonsgrenzen und Seen der Schweiz', datum: 'Daten BFS und swisstopo, Stand 2021, für diese Karten vereinfacht', url: 'https://github.com/interactivethings/swiss-maps', belegt: 'Umriss der Kantone und der grossen Seen auf den Karten', amtlich: false },
+    // Rechtsprüfung 06.11.2026: Die BFS-Geodaten stehen unter «OPEN-BY» (freie Nutzung,
+    // Quellenangabe mit Autor, Titel und Link Pflicht). swiss-maps (BSD-3-Clause) hat sie
+    // aufbereitet. swisstopo nicht nennen: als Rechteinhaber nicht belegt.
+    { key: 'karte', herausgeber: 'Bundesamt für Statistik (BFS), GEOSTAT', titel: 'Generalisierte Gemeindegrenzen: Geodaten', datum: 'Stand 2021; freie Nutzung, Quellenangabe Pflicht (OPEN-BY)', url: 'https://statistik.admin.ch/de/asset/15724821', belegt: 'Grenzen der Kantone und der grossen Seen, Grundlage der Karten', amtlich: true },
+    { key: 'swissmaps', herausgeber: 'Interactive Things, swiss-maps 4.5.0', titel: 'swiss-maps: Geodaten der Schweiz als TopoJSON', datum: 'Version 4.5.0, BSD-3-Clause', url: 'https://github.com/interactivethings/swiss-maps', belegt: 'Aufbereitung der BFS-Grenzen, für diese Karten zusätzlich vereinfacht', amtlich: false },
   ],
   quellenHinweis:
     'Maloja Plana steht mit diesen Stellen in keiner Verbindung; die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Die Zahlen sind dieselben wie auf der Seite «Kantone im Vergleich» und stammen aus diesen Quellen.',
@@ -256,4 +260,4 @@ export const KANTONSATLAS = {
 // Die Kartengrundlage wird im ersten Abschnitt belegt, damit sie in der
 // Quellenliste eine Rückverweis-Stelle hat.
 KANTONSATLAS.abschnitte[0].html += `
-        <p class="leise">Kartengrundlage: Kantonsgrenzen und Seen, vereinfacht, Stand 2021. Spätere Gebietswechsel zwischen Kantonen sind nicht eingezeichnet. [[q:karte]]</p>`;
+        <p class="leise">Kartengrundlage: Kantonsgrenzen und Seen des BFS, Stand 2021, aufbereitet mit swiss-maps und vereinfacht. Spätere Gebietswechsel zwischen Kantonen sind nicht eingezeichnet. [[q:karte]] [[q:swissmaps]]</p>`;

@@ -23,6 +23,12 @@ Contact: info@malojaplana.ch
 
 Third-party components shipped with the web application:
 
+- Kantonsgrenzen und Seen (scripts/daten/kantonsatlas/paths.json, Karten auf /kantonsatlas/):
+  Bundesamt für Statistik (BFS), GEOSTAT, «Generalisierte Gemeindegrenzen: Geodaten», Stand 2021,
+  https://statistik.admin.ch/de/asset/15724821 — freie Nutzung, Quellenangabe Pflicht (OPEN-BY).
+  Aufbereitet mit swiss-maps 4.5.0 (BSD-3-Clause, © Interactive Things GmbH),
+  https://github.com/interactivethings/swiss-maps, danach vereinfacht. Kein Werk von Stebler Studios.
+
 - jsQR (Apache License 2.0), https://github.com/cozmo/jsQR
   License text: public/licenses/jsQR-LICENSE.txt (served as /licenses/jsQR-LICENSE.txt)
 - QRCode.js 1.0.0 (MIT License), https://github.com/davidshimjs/qrcodejs

@@ -2,7 +2,7 @@
 
 Kopie aus dem **Maloja-Kantonsatlas** (Unterprojekt von Maloja Plana, liegt neben diesem Repo,
 eigene Karte mit 15 Ebenen). Hier liegt nur, was die öffentlichen Seiten brauchen. Gelesen beim
-Bauen von `scripts/seiten-figuren.mjs` und `scripts/seiten-vergleich.mjs`, nicht im App-Bündel.
+Bauen von `scripts/seiten-figuren.mjs`, `scripts/seiten-vergleich.mjs` und `scripts/seiten/kantonsatlas.mjs`, nicht im App-Bündel.
 
 | Datei | Inhalt | Quelle |
 |---|---|---|
@@ -16,6 +16,7 @@ Bauen von `scripts/seiten-figuren.mjs` und `scripts/seiten-vergleich.mjs`, nicht
 | `arbeitslosenquote.json` | Arbeitslosenquote September 2026, Vorjahr, Schnitt 2025 | SECO, Lage auf dem Arbeitsmarkt |
 | `familienzulagen.json` | Kinder-, Ausbildungs- und Geburtszulagen 2026 | BSV, Arten und Ansätze der Familienzulagen 2026 |
 | `kita_abzug.json` | Höchstabzug Kinderdrittbetreuung je Kanton und Bund (`CH_BUND`), Steuerjahr 2026, mit Link je Kanton | ESTV/SSK Kantonsblätter (Februar 2026), DBG Art. 33 Abs. 3 |
+| `paths.json` | SVG-Pfade der 26 Kantone und der grossen Seen (800 × 520), für die Karten auf `/kantonsatlas/` | BFS GEOSTAT «Generalisierte Gemeindegrenzen», Stand 2021, OPEN-BY; aufbereitet mit swiss-maps 4.5.0 (BSD-3-Clause), vereinfacht mit `kantonsatlas/werkzeuge/topaths.js`. **Nicht belegt:** welche Ausgabe 2021 genau (vermutlich 1.1.2021, Bestellnummer ag-b-00.03-875-gg21); der Pfad der Quelldatei ist nirgends festgehalten (Rechtsprüfung 06.11.2026) |
 | `alimente.json` | Alimentenbevorschussung je Kanton (Höchstbetrag, Grenze, Rechtsgrundlage) — noch auf keiner Seite verwendet | kantonale Erlasse, abgerufen 24.10.2026 |
 
 **Gleich halten:** `node scripts/kantonsatlas-abgleich.mjs` vergleicht mit dem Atlas,
