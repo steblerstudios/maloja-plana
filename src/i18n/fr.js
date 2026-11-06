@@ -1925,6 +1925,10 @@ export default {
     notfall: 'En cas d\'urgence, tout l\'essentiel est trouvable.',
     next: 'Retour à l\'aperçu',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'Comment cela fonctionne, expliqué en détail (en allemand)',
+  },
   dashboard: {
     welcome: { sie: 'Comprendre vos droits. Organiser ce qui vous attend.', du: 'Comprendre tes droits. Organiser ce qui t’attend.' },
     tagline: { sie: 'Votre organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.' },
@@ -1946,12 +1950,14 @@ export default {
     toolsAndFeatures: 'Outils',
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: { sie: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.', du: 'Calculateurs et outils — utilisables indépendamment de tes chapitres.' },
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle' },
     toolGroups: {
-      gesundheit: 'Santé',
       lebensereignisse: 'Événements de vie',
+      ankommen: 'Arrivée en Suisse',
+      mit18: 'À 18 ans',
       money: 'Argent & impôts',
       insurance: 'Assurance & santé',
-      support: 'Soutien & droits',
       documents: 'Documents & autorités',
       organize: 'Organiser & profil',
     },

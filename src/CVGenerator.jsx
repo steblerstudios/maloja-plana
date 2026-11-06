@@ -56,6 +56,7 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
       React.createElement(PrimaryButton, {
         palette, onClick: () => setVorschau('druck'),
         style: { width: '100%', minHeight: '44px', margin: space.md + 'px 0 ' + space.xs + 'px' },
+        icon: React.createElement(Icon, { name: 'drucker', size: 16 }),
       }, t('cv.pdfDrucken')),
       React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, t('cv.pdfHinweis')),
       vorschau === 'druck' && vorschauBox(),

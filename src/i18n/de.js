@@ -1935,6 +1935,10 @@ export default {
     notfall: 'Im Notfall ist alles Wichtige auffindbar.',
     next: 'Zurück zur Übersicht',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'So funktioniert das, ausführlich erklärt',
+  },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',
     tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — lokal gespeichert, offline-fähig, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — lokal gespeichert, offline-fähig, kostenlos.' },
@@ -1955,12 +1959,14 @@ export default {
     tierProtective: { sie: 'Ihr Schutz', du: 'Dein Schutz' },
     toolsAndFeatures: 'Werkzeuge',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches' },
     toolGroups: {
-      gesundheit: 'Gesundheit',
       lebensereignisse: 'Lebensereignisse',
+      ankommen: 'Ankommen in der Schweiz',
+      mit18: 'Mit 18',
       money: 'Geld & Steuern',
       insurance: 'Versicherung & Gesundheit',
-      support: 'Unterstützung & Anspruch',
       documents: 'Dokumente & Behörden',
       organize: 'Organisieren & Profil',
     },

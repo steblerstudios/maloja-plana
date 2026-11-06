@@ -2064,6 +2064,11 @@ export default {
     short: { tax: 'Taglia', ipv: 'IPV', sozial: 'Agid social', lohn: 'Salari', notfall: 'Carta d’urgenza', budget: 'Budget' },
   },
 
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  // TODO(rm): provisorisch — Gegenlese (D1, 06.11.2026)
+  erklaerseite: {
+    link: 'Co che quai funcziuna, explitgà en detagl (en tudestg)',
+  },
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
     tagline: { sie: 'Voss organisatur svizzer persunala — memorisà localmain, offline-abel, gratuit.', du: 'Tes organisatur svizzer persunala — memorisà localmain, offline-abel, gratuit.' }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
@@ -2085,12 +2090,17 @@ export default {
     toolsAndFeatures: 'Utensils',
     detailProgress: 'Progress detaglià per chapitel',
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
+    // TODO(rm): provisorisch — Gegenlese (A2 Lebensbereiche, 06.11.2026)
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Assicuranzas', arbeit: 'Lavur', gesundheit: 'Sanadad', wohnen: 'Abitar', vorsorge: 'Prevenziun', finanzen: 'Daners', familie: 'Famiglia', behoerden: 'Autoritads', person: 'Vita persunala' },
     toolGroups: {
-      gesundheit: 'Sanadad',
       lebensereignisse: 'Eveniments da vita',
+      // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)
+      ankommen: 'Arrivada en Svizra',
+      // TODO(rm): provisorisch — Gegenlese (G2 Mit 18, 06.11.2026)
+      mit18: 'Cun 18 onns',
       money: 'Daners & taglias',
       insurance: 'Assicuranza & sanadad',
-      support: 'Sustegn & dretgs',
       documents: 'Documents & autoritads',
       organize: 'Organisar & profil',
     },

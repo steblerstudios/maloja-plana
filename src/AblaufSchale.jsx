@@ -314,6 +314,14 @@ export const AblaufLink = ({ palette, label, onClick }) => {
     React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
 };
 
+// Warnsatz in einem Ablauf — das Warn-Zeichen gehört der Komponente, nicht der Aufrufstelle
+// (Icon-Plan November 2026, Schritt 1). Wächter: __tests__/ablaufWarnung.test.js.
+// Ein `div`, kein `p`: im KVG-Wechsel steht die Warnung in einer Wegkarte, die ein Knopf ist.
+export const AblaufWarnung = ({ palette, children }) => {
+  const s = styles(palette);
+  return React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), children);
+};
+
 // Nach dem Speichern einer Frist aus einem Ablauf (`reminder.ablauf`, z. B. 'umzug'): die gespeicherte
 // Erinnerung — offen, gleicher Titel und gleiches Datum, wie addReminder sie findet — trägt danach
 // `ablauf`. Der Kalender lässt das grüne Band des Ablaufs an ihr enden (utils/laufendeAblaeufe.js).

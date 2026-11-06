@@ -1,5 +1,5 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles, AblaufWarnung } from './AblaufSchale.jsx';
 import { plusMonate, plusTage } from './utils/fristen.js';
 
 // Wegzug ins Ausland — geführter Ablauf, gebaut 25.09.2026 auf Wunsch von Stebler Studios.
@@ -24,7 +24,7 @@ export const Wegzug = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('wegzug.step2Title') },
       React.createElement('p', { style: s.stepText }, t('wegzug.step2Text')),
-      React.createElement('p', { style: s.warn }, t('wegzug.step2Warn')),
+      React.createElement(AblaufWarnung, { palette }, t('wegzug.step2Warn')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wegzug.step2LinkKk'), onClick: () => onNavigate('kk') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wegzug.step2LinkZusatz'), onClick: () => onNavigate('zusatzwechsel') })
     ),

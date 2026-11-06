@@ -29,7 +29,7 @@ describe('Ein Name je Seite', () => {
   });
 
   it('die alten Zweitnamen sind weg', () => {
-    for (const f of ['main.jsx', 'Dashboard.jsx', 'MobileNav.jsx', 'MerklisteView.jsx', 'Gepaeck.jsx',
+    for (const f of ['main.jsx', 'Dashboard.jsx', 'components/WerkzeugGruppen.jsx', 'MobileNav.jsx', 'MerklisteView.jsx', 'Gepaeck.jsx',
       'CalendarReminders.jsx', 'Lebenssituationen.jsx', 'config/ansichtenRegister.js', 'data/werkzeugRegister.js']) {
       const s = lies(f);
       for (const alt of ["'nav.anspruch'", "'nav.calendar'", "'calendar.title'", "'gepaeck.title'", "'lebenszustaende.pageTitle'"]) {

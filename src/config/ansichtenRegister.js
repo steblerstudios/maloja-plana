@@ -64,6 +64,15 @@ export const ABLAEUFE = [
   { view: 'todesfall', bereich: 'familie', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
+// «Ankommen in der Schweiz» (Seitenlandkarte G1, 05.11.2026): die Abläufe, die eine Person nach dem
+// Zuzug nacheinander braucht, aus drei Lebensbereichen. Reihenfolge = Reihenfolge in der Übersicht.
+// Nur Verweise auf ABLAEUFE — Titel, Untertitel und Zeichen kommen von dort (Wächter: gruppeAnkommen.test.js).
+export const ANKOMMEN = ['zuzug', 'kkerst', 'bewilligung', 'quellensteuer', 'einbuergerung'];
+
+// «Mit 18» (Seitenlandkarte G2, 06.11.2026): 18 werden, dann Lehre, Dienst und die erste Stelle — die Reihe,
+// die «18 werden» selbst schon verlinkt (ablaufVerwandte.js). Nur Verweise auf ABLAEUFE (Wächter: gruppeMit18.test.js).
+export const MIT18 = ['volljaehrig', 'lehre', 'dienst', 'neuerjob'];
+
 // Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
 // sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
 export const SEARCH_VIEWS = [
@@ -73,7 +82,7 @@ export const SEARCH_VIEWS = [
   // Zwei Wege aus dem Gepäck, die kein geführter Ablauf sind — nur ihre Suchwörter
   // stehen hier; ihr Platz im Rucksack steht in data/gepaeck.js.
   { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ausbildung', aliases: ['stipendien', 'scholarship'] },
-  { view: 'organ', nav: 'nav.organDonation', icon: 'health', aliases: ['organspende', 'spende', 'organ', 'donation'] },
+  { view: 'organ', nav: 'nav.organDonation', icon: 'organspende', aliases: ['organspende', 'spende', 'organ', 'donation'] },
   { view: 'bestattung', nav: 'nav.bestattung', icon: 'document', aliases: ['bestattung', 'beerdigung', 'kremation', 'abdankung', 'obsèques', 'funerale', 'funeral'] },
   { view: 'mietzins', nav: 'nav.mietzins', sub: 'nav.sub.mietzins', icon: 'home', aliases: ['mietzins', 'mietzinsbeitrag', 'mietzinsrechner', 'miete', 'mietzuschuss', 'wohnbeihilfe', 'aide au loyer', 'aides au loyer', 'sussidio affitto', 'rent subsidy'] },
   // Seiten, die das Dashboard und die Kapitel ansteuern, die aber weder Werkzeug noch
@@ -83,7 +92,7 @@ export const SEARCH_VIEWS = [
   // Runde 5 / «ein Ort»: «Notfallkarte» trifft nur noch die Notfallkarte (Q), nicht mehr das Kapitel.
   { view: 'notfalleinstieg', nav: 'chapters.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card'] },
   { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
-  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'health', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
+  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'notfall', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
   // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
@@ -129,7 +138,7 @@ export const SCHLUSS_ZIELE = {
   sync: { kapitel: 'finanzen' },
   direktlinks: { ziel: 'situationen' },
   export: { ziel: 'tresor' },
-  notifications: { ziel: 'calendar' },
+  // notifications: seit 05.11.2026 Abschnitt der Einstellungen (Umleitung), kein eigener Schluss mehr.
   flyer: {},
   installApp: {},
 };

@@ -127,10 +127,10 @@
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
       font-weight:600; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+           --rand:#E0DDD8; --gold:#C4A870 }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+             --rand:#3A3936; --gold:#C4A870 }
       html{ color-scheme:dark }
     }
     body{ background:var(--bg); color:var(--text); line-height:1.65;
@@ -138,7 +138,9 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
     a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei) }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
     .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
@@ -224,7 +226,7 @@
         <p><strong>Maloja Plana esegue il calcolo per la sua situazione.</strong></p>
         <p>Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.</p>
         <p>L’applicazione è attualmente in <strong>beta chiusa</strong> e richiede un codice d’accesso. <strong>Senza codice è possibile consultare un esempio</strong> — con dati fittizi, non viene salvato nulla.</p>
-        <p><a class="knopf" href="/">Guardare l’esempio — senza codice d’accesso</a></p>
+        <p><a class="knopf" href="/#/tax">Guardare l’esempio — senza codice d’accesso</a></p>
       </div>
 
       <h2>Fonti e calcolatori</h2>

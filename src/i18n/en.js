@@ -1925,6 +1925,10 @@ export default {
     notfall: 'In an emergency, everything important is findable.',
     next: 'Back to overview',
   },
+  // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
+  erklaerseite: {
+    link: 'How this works, explained in full (in German)',
+  },
   dashboard: {
     welcome: 'Understand what you’re entitled to. Organize what lies ahead.',
     tagline: 'Your personal Swiss life organizer — stored locally, works offline, free.',
@@ -1945,12 +1949,14 @@ export default {
     tierProtective: 'Your safety net',
     toolsAndFeatures: 'Tools',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
+    // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
+    bereich: { versicherungen: 'Insurance', arbeit: 'Work', gesundheit: 'Health', wohnen: 'Housing', vorsorge: 'Planning ahead', finanzen: 'Money', familie: 'Family', behoerden: 'Authorities', person: 'Personal matters' },
     toolGroups: {
-      gesundheit: 'Health',
       lebensereignisse: 'Life events',
+      ankommen: 'Arriving in Switzerland',
+      mit18: 'At 18',
       money: 'Money & taxes',
       insurance: 'Insurance & health',
-      support: 'Support & entitlements',
       documents: 'Documents & authorities',
       organize: 'Organize & profile',
     },
