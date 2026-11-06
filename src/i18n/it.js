@@ -1946,13 +1946,11 @@ export default {
     toolsAndFeatures: 'Strumenti',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
     toolGroups: {
-      gesundheit: 'Salute',
       lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',
       mit18: 'A 18 anni',
       money: 'Denaro & imposte',
       insurance: 'Assicurazione & salute',
-      support: 'Sostegno & diritti',
       documents: 'Documenti & autorità',
       organize: 'Organizzare & profilo',
     },

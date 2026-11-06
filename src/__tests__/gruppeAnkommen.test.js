@@ -33,7 +33,7 @@ describe('Gruppe «Ankommen in der Schweiz» in der Übersicht', () => {
     const d = quelle('components/WerkzeugGruppen.jsx');
     const a = d.indexOf("t('dashboard.toolGroups.lebensereignisse')");
     const b = d.indexOf("t('dashboard.toolGroups.ankommen')");
-    const c = d.indexOf("t('dashboard.toolGroups.gesundheit')");
+    const c = d.indexOf("t('dashboard.toolGroups.money')");
     expect(a).toBeGreaterThan(-1);
     expect(b).toBeGreaterThan(a);
     expect(c).toBeGreaterThan(b);

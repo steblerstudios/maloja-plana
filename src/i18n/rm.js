@@ -2086,7 +2086,6 @@ export default {
     detailProgress: 'Progress detaglià per chapitel',
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
     toolGroups: {
-      gesundheit: 'Sanadad',
       lebensereignisse: 'Eveniments da vita',
       // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)
       ankommen: 'Arrivada en Svizra',
@@ -2094,7 +2093,6 @@ export default {
       mit18: 'Cun 18 onns',
       money: 'Daners & taglias',
       insurance: 'Assicuranza & sanadad',
-      support: 'Sustegn & dretgs',
       documents: 'Documents & autoritads',
       organize: 'Organisar & profil',
     },

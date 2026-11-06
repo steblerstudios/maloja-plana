@@ -1946,13 +1946,11 @@ export default {
     toolsAndFeatures: 'Tools',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
     toolGroups: {
-      gesundheit: 'Health',
       lebensereignisse: 'Life events',
       ankommen: 'Arriving in Switzerland',
       mit18: 'At 18',
       money: 'Money & taxes',
       insurance: 'Insurance & health',
-      support: 'Support & entitlements',
       documents: 'Documents & authorities',
       organize: 'Organize & profile',
     },
