@@ -14,8 +14,9 @@
 // Anders als die Atlas-Vorschau:
 //   • kein Skript (Riegel in hintergrundSeiten.test.js): Jede Karte ist beim
 //     Bauen gezeichnet, die Werte stehen in einer Tabelle darunter;
-//   • Ebenen nach Thema statt nach «Brille» (Person, Firma, Kanton, Stiftung):
-//     Maloja spricht zu Menschen, die Themen folgen den Kapiteln;
+//   • Abschnitte nach Thema (wie die Kapitel), dazu die vier Brillen aus dem
+//     Entscheid vom 24.10.2026 als Wegweiser (Stebler Studios 07.11.2026:
+//     «Brillen zurück»);
 //   • keine Ebenen und Texte zu Datenspenden: Die gibt es in Maloja nicht,
 //     also verspricht die Seite sie auch nicht;
 //   • Befunde (E3) als eigener Abschnitt, nur belegte (siehe BEFUNDE_ABSCHNITT).
@@ -145,7 +146,7 @@ const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'es
 // Keine selbst gewählte Schwelle (Rechtsprüfung 07.11.2026: wirkte wie eine Rangliste).
 const BEFUNDE_ABSCHNITT = {
   id: 'befunde',
-  titel: '8. Befunde',
+  titel: '9. Befunde',
   html: `
         <p>Manchmal zeigen die Zahlen selbst einen Unterschied: eine grosse Spanne oder eine beschlossene Regel, die noch nicht in Kraft ist. Hier stehen solche Befunde. Ein Befund ist eine Beobachtung, keine Forderung. Er nennt, was belegt ist, woher es kommt und wer die Regel festlegt. Was jemand daraus macht, steht nicht auf dieser Seite.</p>
         <article class="befund" aria-labelledby="befund-kita">
@@ -168,6 +169,41 @@ const BEFUNDE_ABSCHNITT = {
             <dt>Vorbehalt</dt><dd>Bis das Genfer Ausführungsgesetz in Kraft ist, gibt es den längeren Urlaub für den anderen Elternteil nicht; es gelten die bisherigen Regeln. Ob und wie viel Sie erhalten, hängt von Ihrer Situation ab. Massgebend ist die Auskunft der Ausgleichskasse.</dd>
           </dl>
         </article>`,
+};
+
+// ─── Brillen (Entscheid Stebler Studios 24.10.2026, bestätigt 06.11.2026) ────
+// Gleiche Karten, anderer Blick: Jede Brille nennt ihre Frage und führt zu den
+// Karten, die sie beantworten. Ohne Skript, als Sprungmarken. Ebenen ohne
+// eigene Karte auf dieser Seite (Mindestlohn, Feiertage, Alimente) und die
+// Spenden-Werte der Atlas-Vorschau fehlen bewusst — die Seite verspricht nichts,
+// was es (noch) nicht gibt.
+export const BRILLEN = [
+  { id: 'person', name: 'Person', frage: 'Wo stehe ich?',
+    text: 'Was ein Kanton bei Prämie, Steuern und Familie bedeutet. Für Ihre eigene Lage rechnet die App mit Ihren Angaben, auf Ihrem Gerät.',
+    karten: ['praemie', 'lastNachIpv', 'steuer', 'kinderzulage', 'kita'] },
+  { id: 'firma', name: 'Firma', frage: 'Was bleibt den Mitarbeitenden am Standort?',
+    text: 'Miete, Wohnungsmarkt, Arbeitsmarkt und was Familien am Standort erhalten.',
+    karten: ['miete', 'leer', 'alq', 'kinderzulage', 'kita'] },
+  { id: 'kanton', name: 'Kanton', frage: 'Wie wirken Verbilligung und Unterstützung?',
+    text: 'Prämienlast nach der Verbilligung und wie viele Menschen Unterstützung beziehen. Dazu die <a href="#befunde">Befunde</a>.',
+    karten: ['lastNachIpv', 'sozialhilfe', 'el', 'alq', 'leer'] },
+  { id: 'stiftung', name: 'Stiftung', frage: 'Wo bewirkt Unterstützung am meisten?',
+    text: 'Wo viele Menschen Unterstützung beziehen und wo die Prämie nach der Verbilligung schwer wiegt.',
+    karten: ['sozialhilfe', 'el', 'alq', 'lastNachIpv'] },
+];
+
+const BRILLEN_ABSCHNITT = {
+  id: 'brillen',
+  titel: '2. Vier Brillen: wer welche Karten braucht',
+  html: `
+        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person will wissen, was der Wohnort für sie bedeutet, eine Firma, was den Mitarbeitenden bleibt. Die Karten sind für alle dieselben und frei zugänglich; die Brillen zeigen nur, wo man anfängt.</p>
+        <div class="brillen">
+${BRILLEN.map((b) => `          <section class="brille" aria-labelledby="brille-${b.id}">
+            <h3 id="brille-${b.id}">${b.name}: ${b.frage}</h3>
+            <p>${b.text}</p>
+            <ul role="list">${b.karten.map((k) => `<li><a href="#karte-${k.toLowerCase()}">${EBENEN[k].titel}</a></li>`).join('')}</ul>
+          </section>`).join('\n')}
+        </div>`,
 };
 
 export const KANTONSATLAS = {
@@ -197,9 +233,10 @@ export const KANTONSATLAS = {
         <p class="merke"><strong>Kurz gesagt:</strong> Dunkel heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>`,
     },
+    BRILLEN_ABSCHNITT,
     {
       id: 'krankenkasse',
-      titel: '2. Krankenkasse',
+      titel: '3. Krankenkasse',
       html: `
         <p>Die mittlere Prämie für Erwachsene liegt {{jahr}} zwischen {{v.praemie.tief}} Franken {{v.praemie.tiefName}} und {{v.praemie.hoch}} Franken {{v.praemie.hochName}}. Wie die Prämie zustande kommt, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
 <!--FIG:praemie-->
@@ -208,14 +245,14 @@ export const KANTONSATLAS = {
     },
     {
       id: 'steuern',
-      titel: '3. Steuern',
+      titel: '4. Steuern',
       html: `
         <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder im Kantonshauptort an Bund, Kanton und Gemeinde zwischen {{v.steuer.tief}} des Lohns {{v.steuer.tiefName}} und {{v.steuer.hoch}} {{v.steuer.hochName}}. Auch innerhalb eines Kantons zählt die Gemeinde; die Tabelle unter der Karte zeigt die Spanne innerhalb jedes Kantons.</p>
 <!--FIG:steuer-->`,
     },
     {
       id: 'wohnen',
-      titel: '4. Wohnen',
+      titel: '5. Wohnen',
       html: `
         <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen {{v.miete.tief}} Franken im Monat {{v.miete.tiefName}} und {{v.miete.hoch}} Franken {{v.miete.hochName}}. Wie leicht man eine Wohnung findet, zeigt die Karte zur Leerwohnungsziffer.</p>
 <!--FIG:miete-->
@@ -223,7 +260,7 @@ export const KANTONSATLAS = {
     },
     {
       id: 'familie',
-      titel: '5. Familie',
+      titel: '6. Familie',
       html: `
         <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens {{v.kinderzulage.tief}} Franken im Monat. Bei den Steuern lassen sich die Kosten für Kita, Tagesfamilie oder Hort bis zu einer Grenze abziehen, die fast jeder Kanton selbst festlegt.</p>
 <!--FIG:kinderzulage-->
@@ -232,7 +269,7 @@ export const KANTONSATLAS = {
     },
     {
       id: 'arbeit',
-      titel: '6. Arbeit',
+      titel: '7. Arbeit',
       html: `
         <p>Im September 2026 waren zwischen {{v.alq.tief}} der Erwerbspersonen {{v.alq.tiefName}} und {{v.alq.hoch}} {{v.alq.hochName}} als arbeitslos gemeldet.</p>
 <!--FIG:alq-->
@@ -240,7 +277,7 @@ export const KANTONSATLAS = {
     },
     {
       id: 'unterstuetzung',
-      titel: '7. Unterstützung',
+      titel: '8. Unterstützung',
       html: `
         <p>Sozialhilfe und Ergänzungsleistungen helfen, wenn das eigene Geld nicht reicht. Die Karten zeigen, wie viele Menschen sie beziehen.</p>
 <!--FIG:sozialhilfe-->
@@ -302,6 +339,14 @@ export const KANTONSATLAS = {
     .befund dl{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; font-size:15px }
     .befund dt{ color:var(--leise) } .befund dd{ margin:0 }
     @media (max-width:600px){ .befund dl{ grid-template-columns:1fr } .befund dt{ margin-top:6px } }
+    .brillen{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:14px 0 }
+    .brille{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px; display:grid; gap:8px; align-content:start }
+    .brille h3{ margin:0; font-size:17px }
+    .brille p{ font-size:15px; color:var(--leise) }
+    .brille ul{ list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:6px }
+    .brille li a{ display:inline-block; padding:4px 10px; border:1px solid var(--rand); border-radius:999px; font-size:14px; color:var(--heidel-text); text-underline-offset:3px }
+    .brille li a:hover{ border-color:var(--heidel-text) }
+    .brille li a:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
     .atlas-werte summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }`,
 };
 
