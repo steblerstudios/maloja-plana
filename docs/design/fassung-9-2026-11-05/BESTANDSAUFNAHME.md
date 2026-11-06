@@ -34,6 +34,23 @@ Atkinson-Modus sind nicht beurteilt. Zählungen sind Textsuchen und damit Näher
   Grün = gut/erledigt, Blau = informieren und Fristen, Rot = warnen/Gefahr. Markenhandbuch
   nachgeführt in #691. Offen als eigene Pakete: Fristen von Gold auf Blau, Links auf Gold.
 
+**06.11.2026, Stebler Studios, im Gespräch:**
+
+- **F9-A14 Kalenderblatt: Variante E, entschieden.** Wortlaut: «Ja, E so» (06.11.2026, nach den
+  Skizzen A–D und der Frage «warum b und nicht c?», dann «mache das bitte und dann eine geschickte
+  kombo von b c und d»). Das Blatt:
+  - **Band** mit dem Monat: `sky` mit etwa einem Drittel Deckkraft (Alpha `55`) auf `surface`,
+    Monat in `text`. Gerechnet, nicht im Browser gemessen: etwa 10:1 hell, 7:1 dunkel.
+  - **Kante oben:** 3 px volles `sky`, ohne Schrift. **Rahmen** ums Blatt: `sky`.
+  - **Vorbei:** dasselbe in `rose` statt `sky`.
+  - **Frist-Karte:** Der Rand der Karte ist **neutral** (`border`), die Farbe trägt nur das Blatt.
+    🛑 Das weicht von #696 ab, wo `kartenStil` den Rand blau bzw. rot macht. Beim Bau anpassen,
+    und `fristenBlau.test.js` auf «Blatt blau/rot, Karte neutral» umstellen, nicht löschen.
+  - **Orte:** Kapitel Behörden, Frist-Karte in `AblaufSchale.jsx` (18 Abläufe), Kalender-Liste.
+    Begründung gegen C (voll blau mit weisser Schrift): Weiss auf `sky` etwa 3,3:1 (unter AA für
+    11 px), eine volle Fläche heisst bei Maloja «handeln», und viele Blätter untereinander würden
+    laut.
+
 ## Gesamturteil in fünf Sätzen
 
 1. Das Fundament steht: Tokens tragen die App (Schriftgrössen 1 623 über Token gegen 94 roh,
@@ -284,6 +301,8 @@ Danach in dieser Reihenfolge, je ein PR mit Test:
 - Hausbegriffe als Test (B1–B8)
 - Querverweise und Abfolge (D3–D6)
 - Kalenderblatt für Fristen (A14, zusammen mit B6), erst Liste der Stellen, dann Skizze
+  ⟨Stand 06.11.⟩ Liste und Skizze erledigt, **Variante E entschieden** (siehe «Entscheide»).
+  Bau als eigenes PR, gestapelt auf #696 oder nach dessen Merge.
 
 Tönungen und Abstände (A5, A6) kommen als eigenes Aufräum-PR ohne sichtbare Änderung.
 
