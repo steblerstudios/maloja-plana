@@ -3,7 +3,8 @@ import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration, fontFamilyDisplay } from './config/tokens.js';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
-import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
+import { MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
+import { suchTreffer, oeffneTreffer, eintragKey } from './config/suche.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
@@ -149,10 +150,8 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
     go: () => oeffne(w),
   });
   const menueWerkzeuge = MENUE_WERKZEUGE.map(alsEintrag).filter((w) => w.view !== 'calendar' && w.view !== 'situationen');
-  const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), icon: 'rucksack', aliases: [], go: geh('gepaeck') };
-  const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), icon: 'settings', aliases: [], go: geh('settings') };
-  // Die Suche im Menü findet weiterhin ALLE Werkzeuge (auch die im Gepäck).
-  const allTools = [...WERKZEUGE.map(alsEintrag), gepaeckEintrag, settingsEintrag];
+  const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), go: geh('gepaeck') };
+  const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), go: geh('settings') };
 
   // Die vier Anker. Namen aus der App; die Sätze sind neu (Copy-Prüfer, nav.ankerSatz.*).
   // Ein Name je Seite (23.10.2026): Menü, Leiste, Seitentitel und «Zurück zu …» lesen
@@ -236,10 +235,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           activeView === 'chapter' && activeChapter === idx));
       }
     });
-    allTools.forEach((tool) => {
-      if (tool.label.toLowerCase().includes(q) || tool.key.toLowerCase().includes(q) || tool.aliases.some((a) => a.includes(q))) {
-        results.push(navItem(tool.key, tool.label, tool.icon, tool.go, activeView === tool.view));
-      }
+    // Eine Suche für Lupe und Menü (config/suche.js, F9-D1): dieselbe Liste, dieselbe Regel.
+    suchTreffer(q, t).werkzeuge.forEach((v) => {
+      const key = eintragKey(v);
+      const icon = v.view === 'gepaeck' ? rucksack : v.icon;
+      results.push(navItem(key, t(v.nav), icon, () => { oeffneTreffer(v, chapters, onNavigate); onClose(); }, activeView === v.view));
     });
     if (results.length === 0) {
       results.push(React.createElement('div', {
