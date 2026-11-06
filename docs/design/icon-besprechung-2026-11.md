@@ -41,6 +41,12 @@ Bereiche aus `data/lebensbereiche.js`: ~~Wohnen~~ ✅ · ~~Versicherungen~~ ✅ 
 «ganz verrückt wäre natürlich, wenn z. B. bei der Betreibung erhalten der Fünfliber so wie jetzt und dann aber das Minus in Blau, und bei Betreibungsauszug eben die Helvetia und dann das Icon unten rechts in Gold, weil's ja zu Finanzen gehört».
 → **Leitform = wer/was (Farbe ihres Bereichs), Abzeichen = Farbe des Bereichs, der mitspielt.** Spielt kein zweiter Bereich mit, hat das Abzeichen die Farbe der Leitform. Gezeigt in der Übersicht [alle Bereiche](icon-besprechung-alle-bereiche.html) (06.11., seit 16:30 mit heute → neu je Seite): alle 11 Bereiche, Leitform + gefülltes Abzeichen, zweite Farbe dort, wo ein Bereich mitspielt. Noch nicht entschieden; die Mini-Zeichen der neuen Bereiche sind Vorschläge. Befunde: 7 Bereiche haben nur ein einfaches Flächen-Icon als Leitform; Gesundheit und Notfall = fast dasselbe Herz mit Kreuz.
 
+## Frage Paare (06.11.2026, Stebler Studios)
+
+«gehören Familie und persönliche Basis nicht zusammen, und Gesundheit und Notfall? Arbeit und Bildung?»
+Befund im Code (`AblaufSchale.jsx`, `KAPITEL_OHNE_EIGENES`, Entscheid 23.10.): 11 Lebensbereiche (Baum, Farbe + Frucht), aber 7 Kapitel. Familie → Persönliche Basis · Arbeit → Ausbildung & Arbeit · Gesundheit **und** Vorsorge → Versicherungen & Vorsorge. Zwei der drei Paare stimmen damit überein; Gesundheit hängt im Code bei den Versicherungen, nicht beim Notfall.
+Vorschlag: **Leitform je Kapitel (7), Farbe je Lebensbereich (11).** Offen, noch nicht entschieden.
+
 ## Grundsatz (06.11.2026)
 
 **Jede Familie hat eine Leitform — das bestehende reiche Bild (Chalet, Edelweiss-Schild …) —, ein Mini-Zeichen sagt, was passiert**. Vorbild in der App: Mietzinsverbilligung und Prämienverbilligung. ✅ **06.11.: bestätigt am Beispiel Versicherung («genau 3 richtig so»).** — wie bei den Häusern,
