@@ -23,6 +23,7 @@ import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, 
 import landschaft from './assets/berge/landschaft.webp?url';
 import { MerklisteView } from './MerklisteView.jsx';
 import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
+import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -268,10 +269,14 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         transition: `background ${duration.slow}ms ${ease}`,
       },
     },
-      React.createElement('div', { 'aria-hidden': 'true', style: { width: '44px', flexShrink: 0, textAlign: 'center', color: palette.text, fontVariantNumeric: 'tabular-nums' } },
-        React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontSize: '20px', fontWeight: weight.bold, lineHeight: 1 } }, d ? d.getDate() : ''),
-        React.createElement('div', { style: { fontSize: '11px', color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
-      ),
+      // Eine Frist bekommt das Kalenderblatt (F9-A14, Variante E), alles andere bleibt beim ruhigen Datum.
+      art === 'frist' && d
+        ? React.createElement('div', { style: { width: '48px', flexShrink: 0, display: 'flex', justifyContent: 'center' } },
+          React.createElement(Kalenderblatt, { iso, palette, locale: LOCALE, vorbei: !done && iso < today, klein: true }))
+        : React.createElement('div', { 'aria-hidden': 'true', style: { width: '48px', flexShrink: 0, textAlign: 'center', color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+          React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontSize: '20px', fontWeight: weight.bold, lineHeight: 1 } }, d ? d.getDate() : ''),
+          React.createElement('div', { style: { fontSize: '11px', color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
+        ),
       React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: farbe + '2E', boxShadow: 'inset 0 0 0 1px ' + farbe + '4D', color: farbe } },
         React.createElement(Icon, { name: icon, size: 16 })),
       React.createElement('div', { style: { flex: 1, minWidth: 0 } },
