@@ -2978,7 +2978,7 @@ export default {
     wasAngaben: { sie: 'Vossas indicaziuns en tut ils chapitels, las promemorias, ils contacts e la glista da notizias', du: 'Tias indicaziuns en tut ils chapitels, las promemorias, ils contacts e la glista da notizias' },
     wasDokumente: 'tut ils documents deponids cun lur datotecas e las copias da segirezza automaticas en il navigatur',
     wasEinstellungen: 'parameters sco lingua e preschentaziun, er in tresor installà',
-    bleibt: { sie: "Betg pertutgadas èn las datotecas da segirezza che Vus avais telechargià , l'access beta ed ina refusa dal quint. Sin auters apparats na sa mida nagut.", du: "Betg pertutgadas èn las datotecas da segirezza che Ti has telechargià , l'access beta ed ina refusa dal quint. Sin auters apparats na sa mida nagut." },
+    bleibt: { sie: "Betg pertutgadas èn las datotecas da segirezza che Vus avais telechargià, l'access beta ed ina refusa dal quint. Sin auters apparats na sa mida nagut.", du: "Betg pertutgadas èn las datotecas da segirezza che Ti has telechargià, l'access beta ed ina refusa dal quint. Sin auters apparats na sa mida nagut." },
     letzteSicherung: 'Ultima copia da segirezza telechargiada: {datum}',
     keineSicherung: "Sin quest apparat n'è anc registrada nagina copia da segirezza telechargiada.",
     zuerstSichern: "L'emprim far ina copia da segirezza",

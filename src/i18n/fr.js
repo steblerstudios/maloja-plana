@@ -1857,7 +1857,7 @@ export default {
     wasAngaben: { sie: 'vos indications dans tous les chapitres, les rappels, les contacts et la liste de notes', du: 'tes indications dans tous les chapitres, les rappels, les contacts et la liste de notes' },
     wasDokumente: 'tous les documents déposés avec leurs fichiers, ainsi que les sauvegardes automatiques du navigateur',
     wasEinstellungen: 'les réglages comme la langue et l\'affichage, y compris un coffre-fort configuré',
-    bleibt: { sie: 'Les fichiers de sauvegarde que vous avez téléchargés , l\'accès bêta et un refus du décompte ne sont pas touchés. Rien ne change sur d\'autres appareils.', du: 'Les fichiers de sauvegarde que tu as téléchargés , l\'accès bêta et un refus du décompte ne sont pas touchés. Rien ne change sur d\'autres appareils.' },
+    bleibt: { sie: 'Les fichiers de sauvegarde que vous avez téléchargés, l\'accès bêta et un refus du décompte ne sont pas touchés. Rien ne change sur d\'autres appareils.', du: 'Les fichiers de sauvegarde que tu as téléchargés, l\'accès bêta et un refus du décompte ne sont pas touchés. Rien ne change sur d\'autres appareils.' },
     letzteSicherung: 'Dernière sauvegarde téléchargée : {datum}',
     keineSicherung: 'Aucune sauvegarde téléchargée n\'est encore enregistrée sur cet appareil.',
     zuerstSichern: 'Créer d\'abord une sauvegarde',

@@ -1857,7 +1857,7 @@ export default {
     wasAngaben: { sie: 'le Sue indicazioni in tutti i capitoli, i promemoria, i contatti e la lista di appunti', du: 'le tue indicazioni in tutti i capitoli, i promemoria, i contatti e la lista di appunti' },
     wasDokumente: 'tutti i documenti archiviati con i relativi file e i backup automatici nel browser',
     wasEinstellungen: 'le impostazioni come lingua e visualizzazione, compresa una cassaforte configurata',
-    bleibt: { sie: 'Non sono toccati i file di backup che ha scaricato , l\'accesso beta e un rifiuto del conteggio. Sugli altri dispositivi non cambia nulla.', du: 'Non sono toccati i file di backup che hai scaricato , l\'accesso beta e un rifiuto del conteggio. Sugli altri dispositivi non cambia nulla.' },
+    bleibt: { sie: 'Non sono toccati i file di backup che ha scaricato, l\'accesso beta e un rifiuto del conteggio. Sugli altri dispositivi non cambia nulla.', du: 'Non sono toccati i file di backup che hai scaricato, l\'accesso beta e un rifiuto del conteggio. Sugli altri dispositivi non cambia nulla.' },
     letzteSicherung: 'Ultimo backup scaricato: {datum}',
     keineSicherung: 'Su questo dispositivo non risulta ancora nessun backup scaricato.',
     zuerstSichern: 'Creare prima un backup',
