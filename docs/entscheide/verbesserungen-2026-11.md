@@ -27,6 +27,33 @@ Vor jedem Vorschlag wurde geprüft, ob es die Sache schon gibt oder ob sie bewus
 | **B2** | **Vier verschiedene Tests** waren in zwei Tagen unter Last rot, jedes Mal Zeitüberschreitung nach 5 s, einzeln grün: `erinnerungImBeispiel`, `vorsorgeVorbezugNeuberechnung`, `ipvBernAnzeige`, `demoLeise` | Diesen Dateien eine längere Zeitgrenze geben oder die Testreihe mit weniger gleichzeitigen Prozessen laufen lassen. Gefahr sonst: Rot wird normal und echte Fehler gehen unter | **ja** · klein |
 | **B3** | Startbündel **64 107 / 65 000 Bytes**, also 0,9 kB Luft. G1 hätte die Grenze allein gesprengt (65 050) | Regel: neue Teile der Übersicht laden nach. Als Nächstes die grössten fest geladenen Teile der Übersicht messen und den nächsten Kandidaten benennen | **ja** · mittel. Messen vor dem Umbau |
 
+### B3 · gemessen (06.11.2026, main `11b077fd`)
+
+Startbündel **64 293 / 65 000 Bytes** (seit Mittag +170 Bytes durch weitere Merges). Gemessen mit einem Build mit Quellkarten:
+jedes Byte der Startdatei der Quelldatei zugeordnet, die es erzeugt. Grösste Anteile (gzip, je Datei für sich gepackt,
+die Summe ist darum grösser als das Bündel):
+
+| Datei | gzip | Befund |
+|---|---|---|
+| `main.jsx` | 15,6 kB | Verteiler für ~90 Ansichten, gehört zum Start |
+| `Dashboard.jsx` | 6,6 kB | erste Seite, gehört zum Start |
+| `components/BergLandschaft.jsx` | 5,8 kB | das Bild oben auf der Übersicht, im ersten Blick sichtbar, **nicht** nachladen |
+| `IconKern.jsx` | 4,2 kB | Zeichen der ersten Seite |
+| `config/ansichtenRegister.js` | 3,8 kB | **davon Suchwörter**: roh 6 kB von 18,8 kB; ohne sie gepackt rund **2,4 kB kleiner** |
+| `config/constants.js` | 3,3 kB | Farben, Kapitel |
+| `GlossarBegriff.jsx` | 1,5 kB | zweiter Kandidat, prüfen, ob er auf der ersten Seite gebraucht wird |
+| `data/werkzeugRegister.js` | 1,4 kB | davon Suchwörter roh 1,5 kB, rund 0,5 kB gepackt |
+
+**Nächster Kandidat: die Suchwörter** (`aliases` in `ABLAEUFE`, `SEARCH_VIEWS`, `WERKZEUGE`) in eine eigene, nachgeladene
+Datei. Gelesen werden sie nur von der Suche (`SearchView.jsx`, lädt schon nach) und von der Suche im Menü (`MobileNav.jsx`).
+Gewinn etwa 2–3 kB, also mehr als alles, was die heutigen Schritte gekostet haben.
+
+**Warum nicht sofort:** Der offene PR #698 «Fassung 9: eine Suche für Lupe und Menü» (andere Sitzung) baut genau diese
+Menü-Suche um. Erst nach seinem Merge auslagern, sonst kollidieren zwei Umbauten in denselben Dateien.
+
+**Regel ab jetzt:** Neue Teile der Übersicht laden nach (wie `WerkzeugGruppen.jsx`). Vor jedem Merge, der die Startdatei
+berührt, `npx size-limit --json` messen, nie die Grenze anheben.
+
 ## C · Ausführlicher (ergänzen)
 
 | | Befund | Vorschlag | Empfehlung · Aufwand |
@@ -55,7 +82,7 @@ Vor jedem Vorschlag wurde geprüft, ob es die Sache schon gibt oder ob sie bewus
 | Zusammenbringen | D1, D2, D3 | D1, D2 |
 
 **Reihenfolge-Vorschlag** (klein und sicher zuerst): B1 → B2 → A1 → D2 → D1 → A2 → B3 → C1.
-⟨Stand 06.11. ~15:30: B1 #716, B2 #717, A1 #719, D2 #720, D1 #721 gemergt (nicht live); A2 als Entwurf #723. D1 und A2 nicht im Browser geprüft, weil der Ordner durch Dev-Server anderer Sitzungen belegt war.⟩
+⟨Stand 06.11. ~16:00: B1 #716, B2 #717, A1 #719, D2 #720, D1 #721, A2 #723 gemergt (nicht live). B3 gemessen, siehe oben; Umbau nach #698. Zwischendurch main repariert (#724: «Kantone im Vergleich» nach #691 nicht neu erzeugt). D1 und A2 nicht im Browser geprüft (Ordner durch fremde Dev-Server belegt).⟩
 A3, C3 und D3 brauchen zuerst einen Entscheid.
 
 **Nicht geprüft für dieses Blatt:** Bedienung jedes Formulars und Rechners, Lesbarkeit mit Vorlesen,
