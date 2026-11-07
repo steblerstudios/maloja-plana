@@ -111,7 +111,8 @@ describe('Startseite verlinkt die öffentlichen Erklärseiten', () => {
   const betaGate = fs.readFileSync(path.resolve(process.cwd(), 'src/BetaGate.jsx'), 'utf8');
   // Krankenkasse seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber auf keinem der beiden Wege.
   // Politsystem + Kantone im Vergleich seit 07.11.2026 als Zeile «Die Schweiz verstehen» (Seiten-Architektur).
-  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse', 'sozialhilfe', 'steuern', 'politsystem', 'kantone-im-vergleich'];
+  // Kantonsatlas seit 07.11.2026, nachdem er auf main kam (#741).
+  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse', 'sozialhilfe', 'steuern', 'politsystem', 'kantone-im-vergleich', 'kantonsatlas'];
 
   it.each(seiten)('/%s/ existiert, steht im noscript-Block und auf der Code-Wand', (seite) => {
     expect(fs.existsSync(path.resolve(process.cwd(), 'public', seite, 'index.html'))).toBe(true);
