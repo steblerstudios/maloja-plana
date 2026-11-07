@@ -53,6 +53,21 @@ describe('Versicherungen: Erklärsätze nach Prüfung', () => {
     }
   });
 
+  // UVG-Satz am Fedlex-Wortlaut (07.11.2026): Selbständige «können sich freiwillig versichern» (UVG Art. 4 Abs. 1),
+  // die acht Stunden gelten «bei einem Arbeitgeber» (UVV Art. 13 Abs. 1). Vorher stand «müssen … freiwillig».
+  it('UVG: Selbständige können (nicht müssen), acht Stunden je Stelle', () => {
+    for (const s of [de.orientation.uvg.sie, de.orientation.uvg.du]) {
+      expect(s).toMatch(/Selbständige können sich freiwillig versichern/);
+      expect(s).not.toMatch(/müssen/);
+      expect(s).toMatch(/bei einer Stelle mindestens 8 Stunden/);
+    }
+    for (const s of [fr.orientation.uvg.sie, fr.orientation.uvg.du]) expect(s).toMatch(/pour un même employeur[\s\S]*peuvent s'assurer volontairement/);
+    for (const s of [it_.orientation.uvg.sie, it_.orientation.uvg.du]) expect(s).toMatch(/stesso datore di lavoro[\s\S]*possono assicurarsi/);
+    expect(en.orientation.uvg).toMatch(/same employer[\s\S]*can insure/);
+    for (const l of [fr, it_]) for (const s of [l.orientation.uvg.sie, l.orientation.uvg.du]) expect(s).not.toMatch(/doivent|devono/);
+    expect(en.orientation.uvg).not.toMatch(/must/);
+  });
+
   it('alle vier Sätze in fünf Sprachen, Sie und Du wo die Sprache sie kennt', () => {
     for (const l of [de, fr, it_, rm]) for (const k of ['haftpflicht', 'hausrat', 'rechtsschutz', 'ktg']) {
       expect(typeof l.orientation[k].sie, k).toBe('string');

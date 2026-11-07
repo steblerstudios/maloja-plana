@@ -2948,7 +2948,9 @@ export default {
     bvg: 'Your pension fund is financed jointly by you and your employer. It ensures you receive more than just the basic AHV pension in retirement.',
     kvg: 'In Switzerland, basic health insurance is mandatory. You choose your insurer and your model yourself.',
     franchise: 'The franchise is the amount you pay yourself each year before your health insurer covers costs. Higher franchise = lower premium.',
-    uvg: 'Your employer insures you against work accidents (mandatory). From 8h/week, you\'re also covered for non-work accidents. Self-employed must insure voluntarily.',
+    // UVG Art. 1a, Art. 4 Abs. 1 («können sich freiwillig versichern»), UVV Art. 13 Abs. 1 (acht Stunden «bei einem
+    // Arbeitgeber»), Fedlex-Wortlaut 07.11.2026. Vorher «Selbstständige müssen sich freiwillig versichern».
+    uvg: "Employees are compulsorily insured against work accidents. If you work at least 8 hours a week for the same employer, you are also covered for non-work accidents. Self-employed people can insure themselves voluntarily.",
     haftpflicht: "Private liability insurance pays, depending on the policy, for damage to other people or their property that you are liable for. It is not generally compulsory. Your tenancy agreement states whether it is required.",
     hausrat: "Household contents insurance replaces your own belongings, depending on the policy — for example after fire, water damage or theft. In some cantons, insuring household contents against fire and natural hazards is compulsory. Ask in your canton of residence.",
     rechtsschutz: "Legal protection insurance covers lawyer and court costs, depending on the policy. It is optional. If you cannot afford the costs of proceedings, free legal aid may be available under certain conditions — it must be repaid later once your finances allow.",
