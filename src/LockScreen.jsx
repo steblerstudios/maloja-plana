@@ -60,7 +60,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
     React.createElement('form', {
       onSubmit: handleSubmit,
       style: {
-        background: palette.surface, padding: '40px', borderRadius: radius.md,
+        background: palette.surface, padding: '40px', borderRadius: radius.lg,
         border: '1px solid ' + palette.border, maxWidth: '360px', width: '100%', textAlign: 'center',
       },
     },
@@ -96,9 +96,9 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
           'aria-invalid': isError ? 'true' : undefined,
           'aria-describedby': isError ? 'tresor-error' : undefined,
           style: {
-            width: '100%', padding: '10px 44px 10px 14px', fontSize: text.body,
+            width: '100%', padding: '12px 44px 12px 16px', fontSize: text.body,
             border: '1px solid ' + (isError ? palette.rose : palette.border),
-            borderRadius: radius.sm, background: palette.up, color: palette.text,
+            borderRadius: radius.md, background: palette.up, color: palette.text,
             outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
           },
         }),
@@ -108,7 +108,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
           'aria-label': show ? t('tresorLock.hidePassphrase') : t('tresorLock.showPassphrase'),
           style: {
             position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)',
-            background: 'none', border: 'none', cursor: 'pointer', padding: '6px',
+            background: 'none', border: 'none', cursor: 'pointer', padding: '8px',
             color: palette.mid, fontFamily: 'inherit', fontSize: text.xs, lineHeight: 1,
           },
         }, show ? t('tresorLock.hidePassphrase') : t('tresorLock.showPassphrase'))
@@ -121,7 +121,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
 
       React.createElement(PrimaryButton, {
         palette, type: 'submit', disabled: busy || !input,
-        style: { marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body },
+        style: { marginTop: space.md, width: '100%', padding: '12px', fontSize: text.body },
       }, busy ? t('tresorLock.unlocking') : t('tresorLock.unlock')),
 
       // Ehrlich & ruhig: keine Passwort-Zurücksetzung (Spec §3, kein Angst-UX).
@@ -133,12 +133,12 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
       React.createElement('button', {
         type: 'button', onClick: toggleSimpleView, 'aria-pressed': simpleView, title: t('common.simpleView'),
         style: {
-          marginTop: space.md, width: '100%', padding: '10px',
+          marginTop: space.md, width: '100%', padding: '12px',
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
           background: simpleView ? palette.sand + '30' : 'transparent',
           color: simpleView ? palette.text : palette.mid,
           border: '1px solid ' + (simpleView ? palette.sand : palette.border),
-          borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
+          borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
           fontSize: text.sm, fontWeight: weight.medium,
         },
       },

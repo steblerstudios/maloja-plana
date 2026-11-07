@@ -48,7 +48,7 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
 
   if (!rentComparison && rentSharePct == null) return null;
 
-  return React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm } },
+  return React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm } },
     showTitle && React.createElement('div', {
       style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' },
     }, t('mietzinsView.compareTitle')),

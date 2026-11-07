@@ -22,8 +22,8 @@ export const EOrechner = ({ palette, t, data, onNavigate }) => {
 
   const s = {
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, color: palette.text, marginTop: space.sm + 'px' },
-    th: { textAlign: 'left', padding: '6px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
-    td: { padding: '6px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border + '66', color: palette.text },
+    th: { textAlign: 'left', padding: '8px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
+    td: { padding: '8px ' + space.xs + 'px 6px 0', borderBottom: '1px solid ' + palette.border + '66', color: palette.text },
     tag: { display: 'inline-block', padding: '2px 8px', borderRadius: radius.xs, fontSize: text.xs, background: palette.sage + '22', color: palette.sageDeep, marginLeft: space.xs + 'px' },
     fuss: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.sm + 'px 0 0' },
   };
@@ -93,7 +93,7 @@ export const EOrechner = ({ palette, t, data, onNavigate }) => {
         React.createElement('input', {
           id: 'eo-einkommen', type: 'number', inputMode: 'decimal', value: einkommen,
           onChange: (e) => setEinkommen(e.target.value), placeholder: '80000', 'aria-label': t('eo.einkommen'), 'aria-describedby': 'eo-einkommen-hinweis',
-          style: { width: '180px', minHeight: '44px', boxSizing: 'border-box', marginTop: '4px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+          style: { width: '180px', minHeight: '44px', boxSizing: 'border-box', marginTop: '4px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit' },
         }),
         React.createElement('p', { id: 'eo-einkommen-hinweis', style: { ...s.fuss, marginTop: '2px' } }, nettoHinterlegt ? t('eo.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('eo.einkommenHint'))
       ),

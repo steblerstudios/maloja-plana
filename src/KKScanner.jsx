@@ -168,7 +168,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
   };
 
   const inputStyle = {
-    width: '100%', padding: space.sm, marginBottom: '12px', borderRadius: radius.sm,
+    width: '100%', padding: space.sm, marginBottom: '12px', borderRadius: radius.md,
     border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
@@ -180,25 +180,25 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
   const [ablageProps, ablageAktiv] = useDateiAblage(handleFileUpload);
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
-   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
+   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' } },
     // Left: Scanner
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'barcode', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.title')),
 
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {
           onClick: () => setScanMode('upload'),
-          style: { ...auswahlStil(palette, scanMode === 'upload'), flex: 1, padding: '10px', fontWeight: weight.semi, fontSize: text.sm }
+          style: { ...auswahlStil(palette, scanMode === 'upload'), flex: 1, padding: '12px', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.photoScan')),
         React.createElement('button', {
           onClick: () => setScanMode('manual'),
-          style: { ...auswahlStil(palette, scanMode === 'manual'), flex: 1, padding: '10px', fontWeight: weight.semi, fontSize: text.sm }
+          style: { ...auswahlStil(palette, scanMode === 'manual'), flex: 1, padding: '12px', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.manualEntry'))
       ),
 
       scanMode === 'upload' && React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kkScanner.scanRequiresInternet'))),
-        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '24px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),
@@ -206,9 +206,9 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
         ),
         nichtsGelesen && !scanning && React.createElement('p', {
           role: 'status',
-          style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '12px', borderRadius: radius.sm, margin: '0 0 12px' },
+          style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '12px', borderRadius: radius.md, margin: '0 0 12px' },
         }, t('kkScanner.nichtsGelesen')),
-        scanning && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('kkScanner.scanning'))
+        scanning && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.md, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('kkScanner.scanning'))
       ),
 
       scanMode === 'manual' && React.createElement('div', null,
@@ -236,11 +236,11 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
           ))
       ),
 
-      scanResult && !conflicts && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px', fontSize: text.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px', color: palette.sageDeep } }, hinweisZeichen('check'), t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
+      scanResult && !conflicts && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, marginBottom: '12px', fontSize: text.sm } },
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px', color: palette.sageDeep } }, hinweisZeichen('check'), t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
       ),
 
-      conflicts && React.createElement('div', { style: { padding: space.md, background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.sm, marginBottom: '12px' } },
+      conflicts && React.createElement('div', { style: { padding: space.md, background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.lg, marginBottom: '12px' } },
         React.createElement('div', { style: { fontWeight: weight.semi, color: palette.skyDeep, marginBottom: space.sm, fontSize: text.sm } }, hinweisZeichen(), t('kkScanner.conflictTitle')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('kkScanner.conflictHint')),
         React.createElement('div', { style: { display: 'grid', gap: space.xs, marginBottom: space.md } },
@@ -274,7 +274,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
       // Felder zugeklappt, dort wäre eine Markierung am Feld unsichtbar.
       fehler.length > 0 && React.createElement('ul', {
         id: 'kk-fehler', role: 'alert',
-        style: { margin: '0 0 12px', padding: '10px 12px 10px 28px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
+        style: { margin: '0 0 12px', padding: '12px 12px 12px 32px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.md, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
       }, fehler.map(f => React.createElement('li', { key: f }, f))),
       React.createElement(PrimaryButton, { palette, onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, icon: React.createElement(Icon, { name: 'check', size: 14 }), style: { width: '100%', minHeight: '44px' } }, t('common.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),
@@ -282,7 +282,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
     ),
 
     // Right: Preview & QR
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.dataPreview')),
 
       React.createElement('div', { style: { display: 'grid', gap: space.sm, marginBottom: space.md } },
@@ -293,7 +293,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
           [t('kkScanner.ahvNumber'), kkData.ahv],
           [t('kkScanner.franchise'), kkData.franchise ? betrag(kkData.franchise, { hoechstens: 2 }) : ''],
           [t('kkScanner.model'), kkData.model]
-        ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '10px', background: palette.up, borderRadius: radius.sm } },
+        ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '12px', background: palette.up, borderRadius: radius.md } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, label),
           React.createElement('div', { style: { fontWeight: weight.semi } }, val || '—')
         ))
@@ -320,7 +320,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
       React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, qrAnsage),
 
-      qrCode && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center' } },
+      qrCode && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.lg, textAlign: 'center' } },
         // K101: derselbe ehrliche Hinweis wie am Notfall-QR (nicht verschlüsselt, für alle lesbar).
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
@@ -333,13 +333,13 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
           style: { display: qrFehler ? 'none' : 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: space.md, justifyItems: 'center' }
         },
           React.createElement('div', null,
-            React.createElement('div', { id: 'kk-qr-lesbar', style: { display: 'flex', justifyContent: 'center', marginBottom: '6px' } }),
+            React.createElement('div', { id: 'kk-qr-lesbar', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px' } }),
             React.createElement('div', {
               style: { fontSize: text.sm, color: palette.text, fontWeight: weight.semi, textAlign: 'center' }
             }, t('kkScanner.qrNotfallLesbar'))
           ),
           React.createElement('div', null,
-            React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '6px' } }),
+            React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px' } }),
             React.createElement('div', {
               style: { fontSize: text.sm, color: palette.mid, textAlign: 'center' }
             }, t('kkScanner.qrUebernahme'))

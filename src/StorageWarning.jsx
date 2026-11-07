@@ -36,14 +36,14 @@ export const StorageWarning = ({ palette, t }) => {
     style: {
       padding: space.sm + 'px ' + space.md + 'px',
       margin: space.md + 'px 0',
-      borderRadius: radius.sm,
+      borderRadius: radius.md,
       background: isCritical
         ? palette.rose + '18'
         : palette.sky + '18',
       border: '1px solid ' + (isCritical ? palette.rose + '40' : palette.sky),
       display: 'flex',
       alignItems: 'start',
-      gap: space.sm + 2,
+      gap: space.ms,
       fontSize: text.sm - 1,
       lineHeight: leading.normal,
     }

@@ -120,7 +120,7 @@ export function GlossarBegriff({ term, defKey: vorgegeben, t, palette }) {
       style: {
         // Tippfläche ≥ 24 px ohne die Zeile zu verschieben: 3 px Polster oben/unten, gleich
         // viel negativer Rand (Messung 23.10.2026: «IPV ⓘ» war 23 px hoch).
-        background: 'none', border: 'none', padding: '3px 0', margin: '-3px 0', cursor: 'pointer', font: 'inherit', color: 'inherit',
+        background: 'none', border: 'none', padding: '4px 0', margin: '-4px 0', cursor: 'pointer', font: 'inherit', color: 'inherit',
         borderBottom: open ? '1px solid var(--mp-accent)' : '1px dotted ' + palette.mid,
         lineHeight: 'inherit', whiteSpace: 'nowrap',
       },
@@ -145,10 +145,10 @@ export function GlossarBegriff({ term, defKey: vorgegeben, t, palette }) {
       React.createElement('span', {
         role: 'tooltip',
         style: {
-          position: 'absolute', left: 0, top: '100%', marginTop: '6px', zIndex: 31,
+          position: 'absolute', left: 0, top: '100%', marginTop: '8px', zIndex: 31,
           width: 'max-content', maxWidth: '260px', textAlign: 'left',
-          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          boxShadow: shadow.md, padding: '10px 12px',
+          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md,
+          boxShadow: shadow.md, padding: '12px 12px',
           fontSize: text.sm, fontWeight: weight.normal, color: palette.text, lineHeight: 1.5,
           whiteSpace: 'normal',
         },

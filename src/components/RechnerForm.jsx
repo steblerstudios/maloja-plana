@@ -97,7 +97,7 @@ export const RechnerForm = ({
           React.createElement('span', { 'aria-current': 'page', style: { fontSize: text.xs, color: palette.text } }, titel)
         )
       ),
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginBottom: space.sm + 'px' } },
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '48px', height: '48px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: (farbe ? farbe.flaeche : palette.sage) + '2E', color: farbe ? farbe.zeichen : palette.text } },
           React.createElement(Icon, { name: ansichtIkon(view), size: 24 })),
         // Lange Titel («Arbeitslosenentschädigung») brechen mit Silbentrennung (Heading.jsx `umbruch`).
@@ -132,7 +132,7 @@ export const ErgebnisZahl = ({ palette, label, wert }) => React.createElement('d
 
 // Eine der wenigen Zeilen unter der grossen Zahl.
 export const ErgebnisZeile = ({ palette, label, wert }) => React.createElement('div', {
-  style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '66', fontSize: text.sm },
+  style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '8px 0', borderBottom: '1px solid ' + palette.border + '66', fontSize: text.sm },
 },
   React.createElement('span', { style: { color: palette.mid } }, label),
   React.createElement('span', { style: { color: palette.text, textAlign: 'right', fontVariantNumeric: 'tabular-nums' } }, wert)
@@ -154,7 +154,7 @@ export const Einzelwahl = ({ palette, id, label, hinweis, optionen, wert, onWahl
   return React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
     React.createElement('div', { id: id + '-label', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: '2px' } }, label),
     hinweis && React.createElement('div', { id: id + '-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '4px' } }, hinweis),
-    React.createElement('div', { role: 'radiogroup', 'aria-labelledby': id + '-label', 'aria-describedby': hinweis ? id + '-hinweis' : undefined, style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+    React.createElement('div', { role: 'radiogroup', 'aria-labelledby': id + '-label', 'aria-describedby': hinweis ? id + '-hinweis' : undefined, style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },
       optionen.map((o, i) => {
         const an = o.wert === wert;
         return React.createElement('button', {
@@ -192,7 +192,7 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
     if (el) el.focus();
   };
   return React.createElement(React.Fragment, null,
-    React.createElement('div', { role: 'tablist', 'aria-label': label, style: { display: 'flex', gap: '6px', overflowX: 'auto', padding: '4px 4px ' + space.sm + 'px', margin: '0 -4px ' + space.xs + 'px' } },
+    React.createElement('div', { role: 'tablist', 'aria-label': label, style: { display: 'flex', gap: '8px', overflowX: 'auto', padding: '4px 4px ' + space.sm + 'px', margin: '0 -4px ' + space.xs + 'px' } },
       liste.map((r, i) => {
         const an = r.key === aktiv;
         return React.createElement('button', {
@@ -200,7 +200,7 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
           'aria-selected': an, 'aria-controls': id + '-panel', tabIndex: an ? 0 : -1,
           onClick: () => onWahl(r.key), onKeyDown: (e) => taste(e, i),
           style: {
-            ...auswahlStil(palette, an), flexShrink: 0, minHeight: '44px', padding: '8px 14px', fontSize: text.sm, whiteSpace: 'nowrap',
+            ...auswahlStil(palette, an), flexShrink: 0, minHeight: '44px', padding: '8px 16px', fontSize: text.sm, whiteSpace: 'nowrap',
             fontWeight: an ? weight.semi : weight.medium,
           },
         }, r.label);

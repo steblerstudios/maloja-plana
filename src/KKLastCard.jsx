@@ -94,7 +94,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
 
   return React.createElement('div', {
     style: {
-      padding: space.md + 'px', background: palette.up, borderRadius: radius.sm,
+      padding: space.md + 'px', background: palette.up, borderRadius: radius.lg,
       border: '1px solid ' + palette.border, marginBottom: '16px',
     }
   },
@@ -126,7 +126,7 @@ export const KKLastSpiegel = ({ palette, t, data, onNavigate }) => {
   const allein = summe <= Math.round(premium);
   return React.createElement('div', {
     'data-teil': 'kk-last-spiegel',
-    style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' },
+    style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: '16px' },
   },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text, marginBottom: space.xs } }, t('kkLast.spiegelTitel')),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },

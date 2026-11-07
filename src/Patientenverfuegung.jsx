@@ -35,7 +35,7 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNa
       React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('pv.ui.vorschauTitel')),
       doc.leer
         ? React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, hinweisZeichen(), t('pv.ui.leer'))
-        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
+        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
             React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.sm + 'px', color: palette.text } }, t('pv.doc.titel')),
             React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px' } }, t('pv.doc.gilt'), doc.situationen.length ? ' ' + t('pv.doc.giltInsbesondere') + ' ' + doc.situationen.join(' · ') : ''),
             doc.abschnitte.map((s) => React.createElement('div', { key: s.key, style: { marginBottom: space.sm + 'px' } },
@@ -48,7 +48,7 @@ export const Patientenverfuegung = ({ palette, t, data, onUpdateData, lang, onNa
       React.createElement('p', { style: { fontSize: text.sm, color: palette.text, fontWeight: weight.medium, margin: space.md + 'px 0 ' + space.sm + 'px' } }, hinweisZeichen(), t('pv.ui.ungueltigOhne')),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(dokumentHtml(antworten, data, t, lang)) },
-          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('pv.ui.drucken')),
+          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '8px' } }), t('pv.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('pv.ui.aendern')),
         onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
         // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).

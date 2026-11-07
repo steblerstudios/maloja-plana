@@ -103,7 +103,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
     // Schritt 2 — An-/Abmelden bei der Gemeinde (14-Tage-Frist), je nach Umzugs-Typ
     { titel: 'umzug.step2Title', inhalt: () => [
       // Typ-Wähler: was sich ändert, hängt davon ab, wie weit der Umzug geht.
-      React.createElement('p', { key: 'typ', style: { ...s.stepText, marginBottom: '6px' } }, t('umzug.typeLabel')),
+      React.createElement('p', { key: 'typ', style: { ...s.stepText, marginBottom: '8px' } }, t('umzug.typeLabel')),
       React.createElement('div', { key: 'wahl', role: 'group', 'aria-label': t('umzug.typeLabel'), style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm + 'px', margin: space.sm + 'px 0' } },
         typeCard('gemeinde', t('umzug.typeGemeinde')),
         typeCard('kanton', t('umzug.typeKanton')),
@@ -152,7 +152,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
     { titel: 'umzug.step3Title', inhalt: () => [
       React.createElement('p', { key: 'text', style: s.stepText }, t('umzug.step3Text')),
       // Jede Stelle als Zeile mit „merken"-Knopf → landet als offener Punkt in der Merkliste.
-      React.createElement('div', { key: 'liste', style: { display: 'flex', flexDirection: 'column', gap: '6px', margin: space.sm + 'px 0' } },
+      React.createElement('div', { key: 'liste', style: { display: 'flex', flexDirection: 'column', gap: '8px', margin: space.sm + 'px 0' } },
         CHECKLIST.map((k) => {
           const isAdded = !!added[k];
           return React.createElement('div', {

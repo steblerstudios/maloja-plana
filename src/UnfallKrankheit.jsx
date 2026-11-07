@@ -23,10 +23,10 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
   const s = {
     ...ablaufStyles(palette),
     cardWrap: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
-    card: { flex: '1 1 240px', padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
+    card: { flex: '1 1 240px', padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border },
     cardTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' },
     cardText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
-    telList: { display: 'flex', flexDirection: 'column', gap: '6px', marginTop: space.sm + 'px' },
+    telList: { display: 'flex', flexDirection: 'column', gap: '8px', marginTop: space.sm + 'px' },
     tel: { fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi, textDecoration: 'none', fontFamily: 'inherit' },
   };
 

@@ -17,8 +17,8 @@ const Weg = ({ palette, title, description, status, icon, onClick }) =>
     type: 'button', onClick,
     style: {
       display: 'flex', alignItems: 'flex-start', gap: '12px', width: '100%', textAlign: 'left',
-      padding: '16px', background: palette.up, borderRadius: radius.sm, fontFamily: 'inherit',
-      border: '1px solid ' + palette.border, marginBottom: '10px', cursor: 'pointer',
+      padding: '16px', background: palette.up, borderRadius: radius.md, fontFamily: 'inherit',
+      border: '1px solid ' + palette.border, marginBottom: '12px', cursor: 'pointer',
       transition: `border-color ${duration.fast}ms ${ease}`,
     },
   },
@@ -35,7 +35,7 @@ export const UnterlagenWege = ({ palette, t, onNavigate }) => {
   if (!onNavigate) return null;
   return React.createElement('section', {
     id: UNTERLAGEN_ANKER, 'aria-labelledby': 'mp-unterlagen-titel',
-    style: { marginTop: space.xl + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border, scrollMarginTop: 'var(--mp-sprungabstand)' },
+    style: { marginTop: space['2xl'] + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border, scrollMarginTop: 'var(--mp-sprungabstand)' },
   },
     React.createElement(PanelTitle, { palette, id: 'mp-unterlagen-titel', style: { margin: '0 0 4px 0' } }, t('unterlagen.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal } }, t('unterlagen.subtitle')),

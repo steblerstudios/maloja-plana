@@ -156,7 +156,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     // Ränder einzeln (nicht `border` + `borderLeft`): gemischt warnt React beim Farbwechsel.
     background: palette.surface, borderTop: '1px solid ' + palette.border, borderRight: '1px solid ' + palette.border,
     borderBottom: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sage,
-    borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
+    borderRadius: radius.md, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
     cursor: 'pointer', fontFamily: 'inherit', color: palette.text,
   };
   const chip = (w) => h('button', {
@@ -192,7 +192,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       h('span', {
         'aria-hidden': 'true',
         style: {
-          width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0, boxSizing: 'border-box', padding: '5px',
+          width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0, boxSizing: 'border-box', padding: '4px',
           background: palette.up, border: '1px solid ' + palette.border, color: palette.mid,
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         },
@@ -210,7 +210,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // Reife-Pünktchen: ein Punkt je geprüftem Feld, gefüllt = erfasst (echte Daten).
   const dots = (r) => r.total === 0 ? null : h('span', {
     role: 'img', 'aria-label': t('gepaeck.packed', { done: r.done, total: r.total }),
-    style: { display: 'inline-flex', gap: '3px', marginTop: '5px' },
+    style: { display: 'inline-flex', gap: '4px', marginTop: '4px' },
   }, Array.from({ length: r.total }, (_, k) => h('span', {
     key: k, 'aria-hidden': 'true',
     style: { width: '6px', height: '6px', borderRadius: '50%', background: k < r.done ? palette.gold : palette.border },
@@ -288,7 +288,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   const aussenfach = h('section', {
     'aria-labelledby': 'gepaeck-aussenfach',
     style: {
-      marginTop: 0, marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
+      marginTop: 0, marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.lg,
       background: palette.up, border: '1px dashed ' + palette.border,
       opacity: packed ? 0 : 1, transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : GEGENSTAENDE.length * 60) + 'ms',
     },

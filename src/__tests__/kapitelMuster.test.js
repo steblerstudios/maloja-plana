@@ -129,7 +129,7 @@ describe('M6 · «Als Nächstes» ruhig', () => {
     const ende = html.slice(html.indexOf('data-teil="als-naechstes"'));
     expect(ende).toMatch(/^[^>]*text-align:center/);
     // Fassung 9 (05.11.2026, M9): Nebenknopf aus dem Baustein — leer, Rand, KNOPF_RADIUS statt Pille.
-    expect(ende).toMatch(/<button[^>]*border-radius:6px[^>]*background:transparent[^>]*border:1px solid/);
+    expect(ende).toMatch(/<button[^>]*border-radius:10px[^>]*background:transparent[^>]*border:1px solid/);
     expect(ende).not.toMatch(/<button[^>]*border-radius:9999px/);
     expect(ende).not.toMatch(/text-transform:uppercase/);
   });

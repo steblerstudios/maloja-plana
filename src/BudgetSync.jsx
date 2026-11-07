@@ -73,11 +73,11 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   // Shared styles
   const lineStyle = {
     display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-    padding: '5px 0', fontSize: text.sm, lineHeight: leading.normal
+    padding: '4px 0', fontSize: text.sm, lineHeight: leading.normal
   };
   const itemLineStyle = {
     // shorthand-only padding (avoid mixing padding + paddingLeft → React rerender warning)
-    ...lineStyle, padding: '5px 0 5px 16px', color: palette.mid, fontSize: text.sm
+    ...lineStyle, padding: '4px 0 4px 16px', color: palette.mid, fontSize: text.sm
   };
   const emptyValueStyle = { color: palette.soft, fontStyle: 'italic', fontSize: text.sm };
   const separatorStyle = {
@@ -85,7 +85,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   };
   const groupHeaderStyle = {
     // shorthand-only padding (top 10 / bottom 5) — no padding + paddingTop mix
-    ...lineStyle, fontWeight: weight.semi, padding: '10px 0 5px'
+    ...lineStyle, fontWeight: weight.semi, padding: '12px 0 4px'
   };
 
   // Compute group totals
@@ -160,7 +160,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     type: 'button', onClick: () => toggleInfo(key), 'aria-expanded': openInfo.has(key),
     style: {
       background: 'none', border: 'none', padding: 0, font: 'inherit', color: 'inherit',
-      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'baseline', gap: '5px'
+      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'baseline', gap: '4px'
     }
   },
     React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
@@ -173,7 +173,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   const renderBenchmarkLine = (avg, key, groupLevel) => React.createElement('div', {
     key: 'bm-' + key,
     style: {
-      paddingLeft: groupLevel ? '0' : '16px', paddingBottom: '6px',
+      paddingLeft: groupLevel ? '0' : '16px', paddingBottom: '8px',
       fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
     }
   }, t('budgetSync.benchmark', { amount: formatCHF(avg * mult) }));
@@ -185,7 +185,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   const renderTrendLine = (index, key, groupLevel) => React.createElement('div', {
     key: 'tr-' + key,
     style: {
-      paddingLeft: groupLevel ? '0' : '16px', paddingBottom: '6px',
+      paddingLeft: groupLevel ? '0' : '16px', paddingBottom: '8px',
       fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
     }
   }, t('budgetSync.priceTrend', { pct: fmtTrend(index - 100), general: generalTrend }));
@@ -209,7 +209,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       open && trend && renderTrendLine(trend, item.key),
       // Regional-KK-Barometer (BAG-Prämie) — nur im KK-Feld, klar getrennt vom BFS-Ausgaben-Richtwert
       open && item.key === 'healthInsurance' && kkComparison && React.createElement('div',
-        { key: 'kk-baro', style: { paddingLeft: '16px', paddingBottom: '6px' } },
+        { key: 'kk-baro', style: { paddingLeft: '16px', paddingBottom: '8px' } },
         React.createElement(RegionalBarometer, { palette, t, comparison: kkComparison, userValue: budget.expenses.healthInsurance || null, kind: 'premium' })
       ),
       // Regional-Miete-Barometer (BFS, size-matched) — nur im Miet-Feld.
@@ -222,7 +222,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       // im Versicherungs-Instrument. Und ohne `thresholdValue` fehlte das Drittel-„!",
       // das die beiden anderen Orte zeigen.
       open && rentBaro && React.createElement('div',
-        { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '6px' } },
+        { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '8px' } },
         React.createElement(RegionalBarometer, {
           palette, t, comparison: rentComparison,
           userValue: budget.expenses.rent || null, kind: 'rent',
@@ -282,7 +282,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
 
   return React.createElement('div', null, React.createElement('div', {
     style: {
-      background: palette.surface, padding: '20px', borderRadius: radius.sm,
+      background: palette.surface, padding: '24px', borderRadius: radius.lg,
       border: '1px solid ' + palette.border, maxWidth: '520px',
       boxShadow: shadow.sm
     }
@@ -310,7 +310,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     // === Empty state guidance (only when no income) ===
     budget.income <= 0 && React.createElement('div', {
       style: {
-        padding: '12px 14px', background: palette.up, borderRadius: radius.sm,
+        padding: '12px 16px', background: palette.up, borderRadius: radius.md,
         fontSize: text.sm, lineHeight: '1.6', color: palette.mid, marginBottom: '12px'
       }
     }, t('budgetSync.emptyStateGuide')),
@@ -321,7 +321,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     },
       React.createElement('button', {
         type: 'button', onClick: toggleAllInfo, 'aria-expanded': anyInfoOpen,
-        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, gap: '5px' }
+        style: { ...knopfStil(palette, 'leise'), fontSize: text.xs, gap: '4px' }
       },
         React.createElement('span', { 'aria-hidden': true }, aufklappZeichen(anyInfoOpen)),
         t('budgetSync.infoToggle')
@@ -367,7 +367,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     // === Available line ===
     React.createElement('div', {
       style: {
-        ...lineStyle, fontWeight: weight.semi, fontSize: text.sm, padding: '8px 0 5px'
+        ...lineStyle, fontWeight: weight.semi, fontSize: text.sm, padding: '8px 0 4px'
       }
     },
       React.createElement('span', null,
@@ -381,14 +381,14 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         }, formatCHF(budget.remaining * mult))
     ),
     budget.bruttoDabei && React.createElement('div', {
-      style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, paddingBottom: '5px' }
+      style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, paddingBottom: '4px' }
     }, t('budgetSync.availableNeedsNetto')),
 
     // === SKOS household orientation (collapsible, default closed) ===
     skosShown && React.createElement('div', {
       style: {
-        marginTop: '12px', padding: '10px 14px', background: palette.up,
-        borderRadius: radius.sm, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
+        marginTop: '12px', padding: '12px 16px', background: palette.up,
+        borderRadius: radius.md, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
       }
     },
       React.createElement('button', {
@@ -396,7 +396,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         style: {
           background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: palette.mid,
           fontSize: text.sm, font: 'inherit', display: 'inline-flex', alignItems: 'baseline',
-          gap: '5px', textAlign: 'left'
+          gap: '4px', textAlign: 'left'
         }
       },
         React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
@@ -447,7 +447,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       budget.recommendations.map((rec, idx) => React.createElement('div', {
         key: idx,
         style: {
-          padding: '10px 12px', background: palette.up, borderRadius: radius.sm,
+          padding: '12px 12px', background: palette.up, borderRadius: radius.md,
           fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
           marginBottom: idx < budget.recommendations.length - 1 ? '6px' : 0
         }
@@ -461,7 +461,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     // === Empty fields note ===
     emptyCount > 0 && React.createElement('div', {
       style: {
-        marginTop: '14px', fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
+        marginTop: '16px', fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
       }
     }, emptyCount === 1
       ? t('budgetSync.emptyNoteSingle')
@@ -477,7 +477,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       React.createElement('button', {
         onClick: () => setShowAnnual(!showAnnual),
         style: {
-          ...auswahlStil(palette, showAnnual), flex: 1, padding: '9px', fontSize: text.sm,
+          ...auswahlStil(palette, showAnnual), flex: 1, padding: '8px', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
       }, hinweisZeichen(), showAnnual ? t('budgetSync.title') : t('budgetSync.annualView')),
@@ -498,7 +498,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     // === Auto-update note ===
     React.createElement('div', {
       style: {
-        marginTop: '10px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4'
+        marginTop: '12px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4'
       }
     }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.autoUpdateNote'))),
 
@@ -513,7 +513,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
     // === Teil «CSV importieren» (F7-L7) — Sprungmarke für #/budget ===
     onImport && React.createElement('section', {
       id: BUDGET_IMPORT_ANKER, 'aria-labelledby': BUDGET_IMPORT_ANKER + '-titel',
-      style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' },
+      style: { marginTop: space['2xl'] + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' },
     }, React.createElement(BudgetImport, { palette, t, currentBudget: data.finanzen || {}, onImport }))
   );
 };

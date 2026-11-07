@@ -27,7 +27,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
 
   // Empty-State: ohne steuerbares Einkommen gibt es nichts zu vergleichen.
   if (!vergleich || !Number.isFinite(basis) || basis <= 0) {
-    return React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    return React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs } }, t('tax.saeulen.title')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, fontStyle: 'italic' } }, t('tax.saeulen.empty'))
     );
@@ -55,7 +55,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
         gap: space.xs, padding: space.sm, cursor: 'pointer', fontFamily: 'inherit',
         background: aktiv ? palette.sand + '14' : 'transparent',
         border: '1px solid ' + (aktiv ? palette.sand : palette.border),
-        borderRadius: radius.sm,
+        borderRadius: radius.md,
       },
     },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, chfBetrag(betrag)),
@@ -72,7 +72,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
   const pendingSaeule = React.createElement('div', {
     style: {
       flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center',
-      gap: space.xs, padding: space.sm, border: '1px dashed ' + palette.border, borderRadius: radius.sm,
+      gap: space.xs, padding: space.sm, border: '1px dashed ' + palette.border, borderRadius: radius.md,
     },
   },
     React.createElement('div', { style: { fontSize: text.sm, color: palette.soft, fontWeight: weight.medium } }, '–'),
@@ -90,7 +90,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
   else if (diff > 0) lesart = t('tax.saeulen.cheaper', { value: Math.abs(diff) });
   else lesart = t('tax.saeulen.dearer', { value: Math.abs(diff) });
 
-  return React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border } },
     React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs } }, t('tax.saeulen.title')),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md } }, t('tax.saeulen.hint')),
 

@@ -14,20 +14,21 @@ import { text, weight, radius, space } from '../config/tokens.js';
 //   leise  · Aufklapper («Mehr zeigen ›»): goldener Text ohne Rand.
 //   link   · führt woanders hin: goldener Text, immer unterstrichen.
 //   auswahl· Reiter, Chips, Schalter: gewählt = Sand gefüllt.
-// Rundung: alle Knöpfe und Auswahlen KNOPF_RADIUS (6 px). Kreise nur für reine Symbolknöpfe.
-export const KNOPF_RADIUS = radius.sm + 'px';
+// Rundung: alle Knöpfe und Auswahlen KNOPF_RADIUS (10 px, Entscheid 06.11.2026, überholt 6 px).
+// Regel C: Ecke ≈ ¼ der Höhe — 44 px hoch → 10 px. Kreise nur für reine Symbolknöpfe.
+export const KNOPF_RADIUS = radius.md + 'px';
 
 // Kompakt geschrieben: der Baustein liegt im Startbündel (Limit 65 kB).
 export const knopfStil = (p, art = 'haupt', { disabled: d = false, gefuellt: g = false } = {}) => {
   const s = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: space.xs + 'px',
-    padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box', borderRadius: KNOPF_RADIUS,
+    padding: '12px 16px', minHeight: '44px', boxSizing: 'border-box', borderRadius: KNOPF_RADIUS,
     fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, cursor: d ? 'not-allowed' : 'pointer' };
   if (art === 'haupt' || (art === 'gefahr' && g)) {
     return { ...s, border: 'none', background: d ? p.mid : g ? p.roseBtn : p.sand, color: d || g ? '#fff' : p.onSand };
   }
   const c = d ? p.mid : art === 'gefahr' ? p.roseDeep : p.sandDeep;
   return art === 'leise'
-    ? { ...s, padding: '6px 0', background: 'none', border: 'none', color: c }
+    ? { ...s, padding: '8px 0', background: 'none', border: 'none', color: c }
     : { ...s, background: 'transparent', color: c, border: '1px solid ' + (d ? p.border : c) };
 };
 

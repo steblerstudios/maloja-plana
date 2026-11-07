@@ -112,7 +112,7 @@ export const Pegel = ({ palette, t, state }) => {
     style: {
       display: 'flex', alignItems: 'center', gap: space.md + 'px',
       padding: space.md + 'px', marginTop: space.md + 'px', marginBottom: space.md + 'px',
-      background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border,
+      background: palette.up, borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border,
     },
   }, svg, readout);
 };

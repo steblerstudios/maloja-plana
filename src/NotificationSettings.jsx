@@ -64,7 +64,7 @@ export const NotificationSettings = ({ palette, t }) => {
       key: key,
       style: {
         display: 'flex', alignItems: 'start', gap: '12px',
-        padding: '14px 0', borderBottom: '1px solid ' + palette.border,
+        padding: '16px 0', borderBottom: '1px solid ' + palette.border,
       }
     },
       React.createElement('div', { style: { flex: 1 } },
@@ -93,21 +93,21 @@ export const NotificationSettings = ({ palette, t }) => {
   return React.createElement('section', {
     id: BENACHRICHTIGUNGEN_ANKER,
     'aria-labelledby': BENACHRICHTIGUNGEN_ANKER + '-titel',
-    style: { background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: space.md + 'px', color: palette.text, scrollMarginTop: '80px' }
+    style: { background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg, border: '1px solid ' + palette.border, marginBottom: space.md + 'px', color: palette.text, scrollMarginTop: '80px' }
   },
-    React.createElement(Eyebrow, { palette, as: 'h3', id: BENACHRICHTIGUNGEN_ANKER + '-titel', style: { display: 'flex', alignItems: 'center', gap: '6px', margin: '0 0 ' + space.sm + 'px 0' } },
+    React.createElement(Eyebrow, { palette, as: 'h3', id: BENACHRICHTIGUNGEN_ANKER + '-titel', style: { display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 ' + space.sm + 'px 0' } },
       React.createElement(Icon, { name: 'cowbell', size: 16, color: palette.mid }),
       t('notifications.title')),
 
     // Permission status
     React.createElement('div', {
       style: {
-        padding: space.md, borderRadius: radius.sm, marginBottom: space.md,
+        padding: space.md, borderRadius: radius.lg, marginBottom: space.md,
         background: isGranted ? palette.sage + '11' : palette.up,
         border: '1px solid ' + (isGranted ? palette.sage + '33' : palette.border),
       }
     },
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: space.sm } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '12px', marginBottom: space.sm } },
         React.createElement('div', {
           style: {
             width: '10px', height: '10px', borderRadius: '50%',
@@ -155,13 +155,13 @@ export const NotificationSettings = ({ palette, t }) => {
 
     // Privacy note
     React.createElement('div', {
-      style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid }
+      style: { padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm, color: palette.mid }
     },
       hinweisZeichen(), t('notifications.privacyNote')
     ),
 
     saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sageDeep, textAlign: 'center' }
+      style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.md, fontSize: text.sm, color: palette.sageDeep, textAlign: 'center' }
     }, hinweisZeichen('check'), t('common.saved'))
   );
 };

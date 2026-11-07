@@ -71,7 +71,7 @@ export const ExportVorschau = ({ palette, t, art, quelle, onWeiter, onZurueck })
     'aria-labelledby': titelId,
     style: {
       marginTop: space.md, padding: '16px', background: palette.surface,
-      border: '1px solid ' + palette.border, borderRadius: radius.sm, color: palette.text,
+      border: '1px solid ' + palette.border, borderRadius: radius.lg, color: palette.text,
     },
   },
     React.createElement('h3', {
@@ -85,7 +85,7 @@ export const ExportVorschau = ({ palette, t, art, quelle, onWeiter, onZurueck })
 
     kategorien.length > 0
       ? React.createElement('ul', {
-          style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
+          style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '8px' },
         },
           kategorien.map((k, i) => React.createElement('li', {
             key: k.id + (k.chapter || '') + i,
@@ -102,7 +102,7 @@ export const ExportVorschau = ({ palette, t, art, quelle, onWeiter, onZurueck })
     React.createElement('p', {
       style: {
         fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
-        margin: '0 0 ' + space.md + 'px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm,
+        margin: '0 0 ' + space.md + 'px', padding: '8px 12px', background: palette.up, borderRadius: radius.md,
       },
     }, hinweisVerschluesselung),
 

@@ -7,7 +7,7 @@ import { zurueckZeichen } from './IconSystem.jsx';
 
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
-    style: { marginBottom: '28px' }
+    style: { marginBottom: space['2xl'] + 'px' }
   },
     React.createElement(PanelTitle, {
       palette,
@@ -94,8 +94,8 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
   // jedem Punkt «Pfeil nach rechts» vorzulesen. Der Marker kommt aus der
   // Liste selbst — das Zeichen im Text war nur ein Ersatz dafür (20.09.2026).
   const Punkte = ({ items }) =>
-    React.createElement('ul', { style: { margin: '0 0 8px 0', paddingInlineStart: '18px' } },
-      items.map((x, i) => React.createElement('li', { key: i, style: { margin: '0 0 6px 0' } }, autoLink(x, t))));
+    React.createElement('ul', { style: { margin: '0 0 8px 0', paddingInlineStart: '16px' } },
+      items.map((x, i) => React.createElement('li', { key: i, style: { margin: '0 0 8px 0' } }, autoLink(x, t))));
   const activeSection = section || 'privacy';
 
   const tabs = [
@@ -346,8 +346,8 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
           ? React.createElement(ExternerLink, {
               t, href: CONTRIBUTION_URL,
               style: {
-                display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
-                background: palette.sand, color: palette.onSand, borderRadius: radius.sm,
+                display: 'inline-block', marginBottom: '12px', padding: '12px 16px',
+                background: palette.sand, color: palette.onSand, borderRadius: radius.md,
                 textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
               }
             }, t('legal.support.contributeCta'))
@@ -401,7 +401,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
     // Footer
     React.createElement('div', {
       style: {
-        marginTop: '32px', paddingTop: '16px',
+        marginTop: space['2xl'] + 'px', paddingTop: '16px',
         borderTop: '1px solid ' + palette.border,
         fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed,
       }

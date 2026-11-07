@@ -68,7 +68,7 @@ export const Kalenderblatt = ({ iso, palette, locale = 'de-CH', vorbei = false, 
       h('div', { 'data-teil': 'band', style: { fontSize: '11px', fontWeight: weight.semi, letterSpacing: '0.5px', textTransform: 'uppercase', background: farbe + BAND_ALPHA, color: palette.text, padding: '2px 0' } },
         d.toLocaleDateString(loc, { month: 'short' }).replace('.', '')),
       h('div', { style: { fontSize: klein ? '18px' : (text.xl || '22px'), fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, padding: (klein ? 1 : 2) + 'px 0 ' + (klein ? 3 : 0) + 'px', fontVariantNumeric: 'tabular-nums' } }, String(d.getDate())),
-      !klein && h('div', { style: { fontSize: '11px', color: palette.mid, paddingBottom: '3px' } }, String(d.getFullYear()))),
+      !klein && h('div', { style: { fontSize: '11px', color: palette.mid, paddingBottom: '4px' } }, String(d.getFullYear()))),
     stempel);
 };
 

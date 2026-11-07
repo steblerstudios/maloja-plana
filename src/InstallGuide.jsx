@@ -23,7 +23,7 @@ import { installAusloesen } from './InstallHinweis.jsx';
 // von Produkt-Onboarding, sondern von Anleitung.
 
 const Abschnitt = ({ title, children, palette }) =>
-  React.createElement('div', { style: { marginBottom: space.xl + 'px' } },
+  React.createElement('div', { style: { marginBottom: space['2xl'] + 'px' } },
     React.createElement(PanelTitle, {
       palette,
       style: {
@@ -41,7 +41,7 @@ const Abschnitt = ({ title, children, palette }) =>
 // Produkt-Onboarding-Sprache).
 const Schritte = ({ items, palette }) =>
   React.createElement('ol', {
-    style: { margin: '0 0 ' + space.sm + 'px 0', paddingInlineStart: '22px' },
+    style: { margin: '0 0 ' + space.sm + 'px 0', paddingInlineStart: '24px' },
   }, (items || []).map((zeile, i) =>
     React.createElement('li', {
       key: i,
@@ -60,7 +60,7 @@ const Geraetblock = ({ kennung, t, palette, hervorgehoben }) => {
       ...(hervorgehoben
         ? {
           background: palette.sageMist,
-          borderRadius: radius.md + 'px',
+          borderRadius: radius.lg + 'px',
           padding: space.md + 'px ' + space.md + 'px ' + space.sm + 'px',
         }
         : {}),
@@ -119,7 +119,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
     istInstalliert && React.createElement('div', {
       style: {
         display: 'flex', gap: space.sm + 'px', alignItems: 'start',
-        background: palette.sageMist, borderRadius: radius.md + 'px',
+        background: palette.sageMist, borderRadius: radius.lg + 'px',
         padding: space.md + 'px', marginBottom: space.lg + 'px',
         fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed,
       },
@@ -157,7 +157,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
     ),
 
     // ── Die anderen Geräte, eingeklappt ────────────────────────────────────
-    kennt && React.createElement('div', { style: { marginBottom: space.xl + 'px' } },
+    kennt && React.createElement('div', { style: { marginBottom: space['2xl'] + 'px' } },
       React.createElement('button', {
         type: 'button',
         onClick: () => setAndereOffen(!andereOffen),
@@ -187,7 +187,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
 
     // ── Was sich danach ändert — und was nicht ─────────────────────────────
     React.createElement(Abschnitt, { title: t('install.danach.title'), palette },
-      React.createElement('ul', { style: { margin: 0, paddingInlineStart: '18px' } },
+      React.createElement('ul', { style: { margin: 0, paddingInlineStart: '16px' } },
         (t('install.danach.items') || []).map((zeile, i) =>
           React.createElement('li', { key: i, style: { margin: '0 0 ' + space.sm + 'px 0' } }, zeile))
       )

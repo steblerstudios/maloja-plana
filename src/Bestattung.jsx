@@ -30,7 +30,7 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
       React.createElement(PanelTitle, { palette, as: 'h2', style: { margin: '0 0 ' + space.sm + 'px' } }, t('bw.ui.vorschauTitel')),
       doc.leer
         ? React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, hinweisZeichen(), t('bw.ui.leer'))
-        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
+        : React.createElement('div', { style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
             React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.sm + 'px', color: palette.text } }, t('bw.doc.titel')),
             doc.zeilen.map((z, i) => React.createElement('p', { key: i, style: { margin: '2px 0' } }, z)),
             doc.texte.map((x) => React.createElement('div', { key: x.key, style: { marginTop: space.sm + 'px' } },
@@ -40,7 +40,7 @@ export const Bestattung = ({ palette, t, data, onUpdateData, lang, onNavigate })
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.sm + 'px', lineHeight: leading.normal } }, hinweisZeichen(), t('bw.begleit.wo')),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px' } },
         !doc.leer && React.createElement('button', { type: 'button', style: knopf(true), onClick: () => openPrintWindow(bestattungHtml(antworten, data, t, lang)) },
-          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('bw.ui.drucken')),
+          React.createElement(Icon, { name: 'drucker', size: 16, style: { verticalAlign: '-3px', marginRight: '8px' } }), t('bw.ui.drucken')),
         React.createElement('button', { type: 'button', style: knopf(false), onClick: zumAnfang }, t('bw.ui.aendern')),
         onNavigate && React.createElement('button', { type: 'button', style: knopf(false), onClick: () => onNavigate('notfallvorsorge') }, t('notfallKapitel.zurueckVorsorge')),
         // Fassung 9 (F9-D3): Querverweis in beide Richtungen, Name aus dem Register (alle Sprachen).

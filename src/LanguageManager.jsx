@@ -13,7 +13,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
   const removeLang = (idx) => onChange(list.filter((_, i) => i !== idx));
 
   const inputStyle = {
-    width: '100%', padding: (space.sm + 2) + 'px ' + space.sm + 'px',
+    width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
     borderRadius: radius.sm, border: '1px solid ' + palette.border,
     background: palette.up, color: palette.text, boxSizing: 'border-box',
     fontSize: text.sm, fontFamily, cursor: 'text',
@@ -56,7 +56,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
           onClick: () => removeLang(idx),
           'aria-label': t('common.delete'),
           // M4: kleines × bleibt Symbol, grau; 44 × 44 Tippfläche.
-          style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 6px', minWidth: '44px', minHeight: '44px' }
+          style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minWidth: '44px', minHeight: '44px' }
         }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
       )
     ),

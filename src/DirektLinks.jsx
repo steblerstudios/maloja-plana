@@ -69,7 +69,7 @@ export const DirektLinks = ({ palette, t, data }) => {
   };
 
   const s = {
-    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
+    card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.border },
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.lg + 'px' },
     etage: { marginBottom: space.lg + 'px' },
     shelfLabel: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, letterSpacing: '0.3px', margin: '0 0 ' + space.xs + 'px 2px' },
@@ -77,8 +77,8 @@ export const DirektLinks = ({ palette, t, data }) => {
     shelfWrap: { overflowX: 'auto', paddingBottom: space.xs + 'px', WebkitOverflowScrolling: 'touch' },
     shelf: { display: 'inline-flex', gap: space.sm + 'px', alignItems: 'flex-end', minWidth: '100%', padding: '0 2px', borderBottom: '3px solid ' + palette.top },
     spine: (ton, active) => ({
-      position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px',
-      flex: '0 0 auto', width: '48px', minHeight: '76px', paddingTop: '11px', paddingBottom: space.sm + 'px',
+      position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
+      flex: '0 0 auto', width: '48px', minHeight: '76px', paddingTop: '12px', paddingBottom: space.sm + 'px',
       background: palette.up, border: '1px solid ' + (active ? palette[ton] : palette.border), borderBottom: 'none',
       borderTopLeftRadius: '3px', borderTopRightRadius: '3px', cursor: 'pointer', fontFamily: 'inherit',
       color: palette.text, // Dark-Mode: Icon erbt fill:currentColor — Button erbt color nicht zuverlässig
@@ -92,15 +92,15 @@ export const DirektLinks = ({ palette, t, data }) => {
     bookIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px', fontStyle: 'italic' },
     groupHeading: { fontWeight: weight.semi, fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.xs + 'px' },
     // Einheitliche Eintrags-Karte für ALLE Bücher.
-    entryCard: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', margin: '0 0 ' + space.sm + 'px' },
+    entryCard: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg + 'px', margin: '0 0 ' + space.sm + 'px' },
     entryName: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
     entryNameLink: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'none' },
-    entryDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' },
+    entryDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '4px' },
     entryMeta: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' },
     entryMetaLink: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' },
     aff: { color: palette.soft, fontSize: text.xs, fontWeight: weight.normal },
     empty: { fontSize: text.sm, color: palette.mid, textAlign: 'center', padding: space.lg + 'px' },
-    canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', margin: space.sm + 'px 0 ' + space.md + 'px', border: '1px solid ' + palette.sage + '33' },
+    canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.lg + 'px', margin: space.sm + 'px 0 ' + space.md + 'px', border: '1px solid ' + palette.sage + '33' },
     cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sageDeep },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
   };

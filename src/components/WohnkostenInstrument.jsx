@@ -83,7 +83,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
   const vergleich = canton && r.netto > 0 ? getRentComparison(canton, { rooms: wohnen?.rooms, householdSize: hh.householdSize || 1 }) : null;
 
   const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '6px 0', fontSize: text.sm, color: palette.text };
+  const zeile = { display: 'flex', justifyContent: 'space-between', gap: space.md + 'px', padding: '8px 0', fontSize: text.sm, color: palette.text };
   const kapH = { margin: space.lg + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
 
   return React.createElement('section', { 'data-teil': 'wohnkosten', style: { marginBottom: space.lg + 'px' } },

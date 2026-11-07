@@ -23,7 +23,7 @@ export const DoctorManager = ({ palette, t, doctors, onChange }) => {
   };
 
   const inputStyle = {
-    width: '100%', padding: (space.sm + 2) + 'px ' + space.sm + 'px',
+    width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
     borderRadius: radius.sm, border: '1px solid ' + palette.border,
     background: palette.up, color: palette.text, boxSizing: 'border-box',
     fontSize: text.sm, fontFamily, cursor: 'text'
@@ -59,7 +59,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
   return React.createElement('div', {
     style: {
       padding: space.md + 'px', background: palette.up,
-      borderRadius: radius.sm, border: '1px solid ' + palette.border,
+      borderRadius: radius.lg, border: '1px solid ' + palette.border,
     }
   },
     // Header
@@ -74,7 +74,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
         'aria-label': t('common.delete'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px',
+          color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minHeight: '24px',
         }
       }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     ),

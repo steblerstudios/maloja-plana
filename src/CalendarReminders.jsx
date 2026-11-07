@@ -244,7 +244,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const categories = Object.keys(CATEGORY_ICON_KEYS);
 
   const inputStyle = {
-    width: '100%', padding: '10px 12px', borderRadius: radius.sm,
+    width: '100%', padding: '12px 12px', borderRadius: radius.md,
     border: '1px solid ' + palette.border, background: palette.up,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
     fontFamily: fontFamily, marginBottom: '12px'
@@ -396,10 +396,10 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   const gSpaeter = gruppe(d => d > today && daysBetween(today, d) > 7);
 
   // Nebenknopf in dichten Zeilen (Fassung 9): Form und Farbe aus dem Baustein, nur kleiner gepolstert.
-  const knopfRuhig = { ...knopfStil(palette, 'neben'), padding: '5px 12px', minHeight: '44px' };
+  const knopfRuhig = { ...knopfStil(palette, 'neben'), padding: '4px 12px', minHeight: '44px' };
   // Reiter wie im Entwurf G: Text mit Strich darunter statt Kasten.
   const reiter = (aktiv) => ({ flex: 1, padding: '0 12px', minHeight: '44px', background: 'none', color: aktiv ? palette.text : palette.mid, border: 'none', borderBottom: '2px solid ' + (aktiv ? bereichZeichenFarbe('finanzen', palette) : 'transparent'), cursor: 'pointer', font: 'inherit', fontSize: '14px', fontWeight: aktiv ? weight.medium : weight.normal });
-  const gruppenKopf = (titel) => React.createElement('h3', { style: { fontFamily: fontFamilyDisplay, fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '20px 0 2px' } }, titel);
+  const gruppenKopf = (titel) => React.createElement('h3', { style: { fontFamily: fontFamilyDisplay, fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '24px 0 2px' } }, titel);
 
   // «Als Nächstes» (Entwurf G): der früheste offene Eintrag, gross. Überfällig zählt mit.
   const naechst = offenAlle[0];
@@ -415,12 +415,12 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // darunter Kachel, Titel und Untertitel. Keine Karte mehr um die Seite (Entwurf G).
   return React.createElement('div', { 'data-seite': 'was-ansteht', style: { maxWidth: '720px' } },
     React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '112px', margin: '0 -20px', overflow: 'hidden' } },
+      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '112px', margin: '0 -24px', overflow: 'hidden' } },
         React.createElement('div', { style: { position: 'absolute', inset: 0, backgroundImage: 'url(' + landschaft + ')', backgroundSize: 'cover', backgroundPosition: 'center 72%', opacity: 0.5 } }),
         React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + palette.sage + '38 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
       ),
       React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
-        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 10px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 6px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
+        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 12px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
             type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
             style: { ...linkStil(palette), fontSize: text.sm, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
@@ -429,7 +429,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement('li', { 'aria-current': 'page', style: { color: palette.text, fontWeight: weight.medium } }, t('nav.wasAnsteht'))
         )
       ),
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginBottom: space.sm + 'px' } },
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg, display: 'grid', placeItems: 'center', flexShrink: 0, background: palette.sage + '2E', boxShadow: 'inset 0 0 0 1px ' + palette.sage + '4D', color: palette.sageDeep || palette.sage } },
           React.createElement(Icon, { name: ansichtIkon('calendar'), size: 26 })),
         React.createElement(PageTitle, { palette, style: { minWidth: 0 } }, t('nav.wasAnsteht'))
@@ -454,9 +454,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     // Gross wie im Entwurf (44 px). Verpasst steht ruhig als «verpasst», darunter «Was jetzt?» als Weg
     // (Entwurf G: «verpasst — was jetzt?», nie rot; Stebler Studios 27.10.2026). Der Weg führt in den
     // Ablauf, aus dem die Frist kommt (dort steht, was nach der Frist gilt), sonst zum Tag im Kalender.
-    naechst && React.createElement('div', { 'data-als-naechstes': naechst.datum < today ? 'verpasst' : 'true', style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, padding: '18px 0 22px', marginBottom: '18px' } },
+    naechst && React.createElement('div', { 'data-als-naechstes': naechst.datum < today ? 'verpasst' : 'true', style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, padding: '16px 0 24px', marginBottom: '16px' } },
       React.createElement('h3', { style: { margin: 0, fontSize: text.xs, fontWeight: weight.normal, fontFamily: 'inherit', color: palette.soft } }, t('calendar.alsNaechstes')),
-      React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontWeight: weight.bold, fontSize: '44px', lineHeight: 1, letterSpacing: '-0.025em', margin: '8px 0 6px', color: palette.text, fontVariantNumeric: 'tabular-nums' } }, naechstWann(naechst.datum)),
+      React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontWeight: weight.bold, fontSize: '44px', lineHeight: 1, letterSpacing: '-0.025em', margin: '8px 0 8px', color: palette.text, fontVariantNumeric: 'tabular-nums' } }, naechstWann(naechst.datum)),
       React.createElement('p', { style: { fontSize: '14px', color: palette.mid, margin: 0, lineHeight: leading.relaxed } }, naechst.titel + (naechst.herkunft ? ' · ' + naechst.herkunft : '')),
       naechst.datum < today && React.createElement('button', {
         type: 'button', className: 'mp-link', 'aria-label': t('calendar.wasJetzt') + ' ' + naechst.titel,
@@ -479,7 +479,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       const list = onNavigate ? anspruchSignaleListe(data) : [];
       if (!list.length) return null;
       return React.createElement('div', {
-        style: { background: palette.sage + '10', border: '1px solid ' + palette.sage + '2e', borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md },
+        style: { background: palette.sage + '10', border: '1px solid ' + palette.sage + '2e', borderRadius: radius.lg, padding: space.md + 'px', marginBottom: space.md },
       },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' } }, t('calendar.anspruchTitle')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed } }, t('calendar.anspruchIntro')),
@@ -487,8 +487,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           key: sig.key, type: 'button', onClick: () => onNavigate(sig.view),
           style: {
             display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', boxSizing: 'border-box',
-            padding: '9px 11px', marginBottom: space.xs + 'px',
-            background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            padding: '8px 12px', marginBottom: space.xs + 'px',
+            background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md,
             cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
           },
         },
@@ -525,13 +525,13 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       const fenster = fensterTage(start);
 
       const navBtn = { width: '44px', height: '44px', background: 'none', border: 'none', borderRadius: radius.md, cursor: 'pointer', color: palette.mid, fontFamily: 'inherit', fontSize: '22px', lineHeight: 1 };
-      const pille = (aktiv) => ({ flex: '0 0 auto', minHeight: '44px', padding: '0 12px', borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: aktiv ? palette.bg : palette.mid, background: aktiv ? palette.text : 'none', border: '1px solid ' + (aktiv ? palette.text : palette.border), display: 'inline-flex', alignItems: 'center', gap: '5px' });
+      const pille = (aktiv) => ({ flex: '0 0 auto', minHeight: '44px', padding: '0 12px', borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: aktiv ? palette.bg : palette.mid, background: aktiv ? palette.text : 'none', border: '1px solid ' + (aktiv ? palette.text : palette.border), display: 'inline-flex', alignItems: 'center', gap: '4px' });
       // minHeight 44 statt nur aspectRatio 1 (a11y-Prüfung 26.10.2026: bei 375 px 34 px hoch).
       const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', minHeight: '44px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.md, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, fontVariantNumeric: 'tabular-nums', background: iso === selDate ? palette.sand + '2E' : 'none', border: 'none', boxShadow: isToday ? 'inset 0 0 0 1.5px ' + palette.text : 'none' });
-      const tagKnopf = { flex: '0 0 46px', minHeight: '88px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '6px 0 0', border: 0, background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: palette.mid };
+      const tagKnopf = { flex: '0 0 46px', minHeight: '88px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '8px 0 0', border: 0, background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: palette.mid };
       // Heute: Zahl im gefüllten Kreis; angetippt: Sand-Ring um die Zahl.
       const tagZahl = (d, isToday, gewaehlt) => React.createElement('span', { style: { width: '32px', height: '32px', borderRadius: radius.full, display: 'grid', placeItems: 'center', fontSize: text.sm, fontVariantNumeric: 'tabular-nums', fontWeight: isToday ? weight.semi : weight.normal, color: isToday ? palette.bg : palette.text, background: isToday ? palette.text : 'none', boxShadow: gewaehlt ? '0 0 0 2px ' + (palette.sandDeep || palette.sand) : 'none' } }, d);
-      const markenReihe = (iso) => React.createElement('span', { style: { display: 'flex', gap: '3px', alignItems: 'center', height: '10px' } }, ...markenZeile(iso));
+      const markenReihe = (iso) => React.createElement('span', { style: { display: 'flex', gap: '4px', alignItems: 'center', height: '10px' } }, ...markenZeile(iso));
       const aufklapp = { cursor: 'pointer', listStyle: 'none', fontSize: '14px', color: palette.sandDeep || palette.sand, minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' };
 
       // Band je laufendem Ablauf: Pille in der Bereichsfarbe, Schrift in der Grundfarbe (Entwurf G).
@@ -546,7 +546,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             style: {
               position: 'absolute', top: 0, height: '26px', left: (lage.von * 46) + 'px', width: ((lage.bis - lage.von + 1) * 46) + 'px', boxSizing: 'border-box',
               borderRadius: [r(!lage.weiterLinks), r(!lage.weiterRechts), r(!lage.weiterRechts), r(!lage.weiterLinks)].join(' '),
-              display: 'flex', alignItems: 'center', padding: '0 10px', fontSize: '12px', fontWeight: weight.medium, whiteSpace: 'nowrap', overflow: 'hidden',
+              display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: '12px', fontWeight: weight.medium, whiteSpace: 'nowrap', overflow: 'hidden',
               // Bandfarbe so gesetzt, dass die Schrift in der Grundfarbe 4.5:1 hält (utils/laufendeAblaeufe.js).
               color: palette.bg, background: bandFarbe(a.bereich, palette),
             },
@@ -567,7 +567,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           // «Heute» springt nur im Monat: Auswahl wie die Monatsknöpfe, kein Gold (E2, 06.11.2026).
           React.createElement('button', { type: 'button', style: { ...auswahlStil(palette, false), minHeight: '44px', padding: '0 12px', fontSize: text.sm, marginLeft: 'auto' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
-        React.createElement('div', { 'data-monatsknoepfe': 'true', ref: monateRef, style: { display: 'flex', gap: '6px', overflowX: 'auto', scrollbarWidth: 'none', margin: '4px -20px 2px', padding: '4px 20px' } },
+        React.createElement('div', { 'data-monatsknoepfe': 'true', ref: monateRef, style: { display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none', margin: '4px -24px 2px', padding: '4px 24px' } },
           ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
             key: m, type: 'button', 'aria-pressed': m === calMonth, 'aria-label': monatJahr(calYear, m) + (proMonat[m] ? ' · ' + proMonat[m] : ''),
             style: pille(m === calMonth), onClick: () => { setCalMonth(m); setSelDate(null); },
@@ -576,7 +576,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         // Tagesleiste und Bänder im selben Wisch-Bereich, bis an den Rand (Entwurf: margin 0 -20px).
         React.createElement('div', {
           ref: leisteRef, role: 'group', 'aria-label': monatJahr(calYear, calMonth),
-          style: { overflowX: 'auto', scrollbarWidth: 'none', margin: '0 -20px 2px', padding: '4px 20px', outline: verteilen ? '1px dashed ' + palette.sand : 'none', outlineOffset: '-2px' },
+          style: { overflowX: 'auto', scrollbarWidth: 'none', margin: '0 -24px 2px', padding: '4px 24px', outline: verteilen ? '1px dashed ' + palette.sand : 'none', outlineOffset: '-2px' },
         },
           React.createElement('div', { style: { display: 'flex', width: (fenster.length * 46) + 'px' } },
             ...fenster.map(iso => {
@@ -594,14 +594,14 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             })),
           ...baender
         ),
-        React.createElement('div', { 'data-legende': 'true', style: { display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: '12px', color: palette.soft, margin: '8px 0 0', alignItems: 'center' } },
+        React.createElement('div', { 'data-legende': 'true', style: { display: 'flex', flexWrap: 'wrap', gap: '4px 16px', fontSize: '12px', color: palette.soft, margin: '8px 0 0', alignItems: 'center' } },
           ...legende.map(([art, bereich]) => React.createElement('span', { key: art, style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } },
             React.createElement(ArtMarke, { art, farbe: bereichZeichenFarbe(bereich, palette), palette }), art === 'aufgabe' ? t('calendar.aufgabe') : t('calendar.legende.' + art))),
           React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, React.createElement(ArtMarke, { art: 'frist', erledigt: true, farbe: palette.soft, palette }), t('calendar.legende.erledigt')),
           React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: radius.full, background: palette.text } }), t('calendar.legende.heute'))
         ),
         // Ganzer Monat — das Monatsraster, aufklappbar
-        React.createElement('details', { style: { marginTop: '10px' }, open: verteilen ? true : undefined, onToggle: aufklappSchalter('monat') },
+        React.createElement('details', { style: { marginTop: '12px' }, open: verteilen ? true : undefined, onToggle: aufklappSchalter('monat') },
           React.createElement('summary', { className: 'mp-summary', style: aufklapp }, t('calendar.ganzerMonat'), React.createElement('span', { 'aria-hidden': 'true' }, offenIn.monat || verteilen ? '−' : '+')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px', textAlign: 'center' } },
             ...wdNames.map((w, i) => React.createElement('div', { key: 'w' + i, style: { fontSize: '11px', color: palette.soft, padding: '4px 0' } }, w)),
@@ -681,7 +681,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     }, '+ ' + t('calendar.addReminder')),
 
     // Add view
-    view === 'add' && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.sand } },
+    view === 'add' && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.lg, marginBottom: space.md, border: '1px solid ' + palette.sand } },
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('calendar.addReminder')),
 
       React.createElement('input', {
@@ -720,14 +720,14 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       // Optional, nur bei Gesundheit: Deckung dieses Jahr (gedeckt/selbst/unsicher; erneut klicken = leer)
       newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.coverageThisYear.label')),
-        React.createElement('div', { role: 'group', 'aria-label': t('calendar.coverageThisYear.label'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        React.createElement('div', { role: 'group', 'aria-label': t('calendar.coverageThisYear.label'), style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },
           ['covered', 'selfpay', 'unsure'].map(opt =>
             React.createElement('button', {
               key: opt,
               type: 'button',
               'aria-pressed': newCoverage === opt,
               onClick: () => setNewCoverage(newCoverage === opt ? '' : opt),
-              style: { ...auswahlStil(palette, newCoverage === opt), padding: '6px 12px', fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400' }
+              style: { ...auswahlStil(palette, newCoverage === opt), padding: '8px 12px', fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400' }
             }, t('calendar.coverageThisYear.' + opt))
           )
         )
@@ -735,13 +735,13 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
 
       React.createElement('div', { style: { marginBottom: '12px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.recurring')),
-        React.createElement('div', { role: 'group', 'aria-label': t('calendar.recurring'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        React.createElement('div', { role: 'group', 'aria-label': t('calendar.recurring'), style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },
           ['once', 'daily', 'weekly', 'monthly', 'quarterly', 'halfYearly', 'yearly'].map(freq =>
             React.createElement('button', {
               key: freq,
               'aria-pressed': newRecurrence === freq,
               onClick: () => { setNewRecurrence(freq); if (newLastVisit) setNewDate(nextDueFrom(newLastVisit, freq)); },
-              style: { ...auswahlStil(palette, newRecurrence === freq), padding: '6px 12px', fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400' }
+              style: { ...auswahlStil(palette, newRecurrence === freq), padding: '8px 12px', fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400' }
             }, freq === 'once' ? t('calendar.oneTime') : t('calendar.' + freq))
           )
         )
@@ -768,14 +768,14 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           style: { ...knopfStil(palette, 'leise'), width: '100%' }
         }, aufklappZeichen(showTemplates), t('calendar.templates.title')),
 
-        showTemplates && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '6px', marginTop: space.sm } },
+        showTemplates && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginTop: space.sm } },
           TEMPLATES(t).map((tmpl, idx) =>
             React.createElement('button', {
               key: idx,
               onClick: () => addFromTemplate(tmpl),
               style: { ...knopfStil(palette, 'neben'), display: 'block', padding: '8px 12px', textAlign: 'left', fontWeight: weight.normal },
             },
-              React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } }, React.createElement(Icon, { name: CATEGORY_ICON_KEYS[tmpl.category] || 'basis', size: 14 }), tmpl.title),
+              React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: CATEGORY_ICON_KEYS[tmpl.category] || 'basis', size: 14 }), tmpl.title),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, hinweisZeichen('recurring', 12), t('calendar.' + tmpl.recurrence)),
               // Ruhige Deckungs-Orientierung (KVG-faktisch, keine medizinische Empfehlung)
               tmpl.coverage && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', lineHeight: leading.normal, fontStyle: 'italic' } }, hinweisZeichen(), tmpl.coverage)
@@ -824,7 +824,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     // Completed view
     view === 'completed' && React.createElement('div', null,
       erledigtAlle.length === 0
-        ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid, fontSize: text.sm } }, t('common.none'))
+        ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 24px', color: palette.mid, fontSize: text.sm } }, t('common.none'))
         : erledigtAlle.map(e => e.el())
     ),
 
@@ -839,7 +839,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement('button', { type: 'button', style: knopfRuhig, onClick: () => setVerteilen(null) }, t('common.cancel'))
         )
       ),
-      ...ohneTag.map(m => React.createElement('div', { key: m.id, style: { display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderBottom: '1px solid ' + palette.border } },
+      ...ohneTag.map(m => React.createElement('div', { key: m.id, style: { display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 0', borderBottom: '1px solid ' + palette.border } },
         (() => { const f = bereichZeichenFarbe(merkpunktBereich(m.link), palette); return React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: f + '2E', boxShadow: 'inset 0 0 0 1px ' + f + '4D', color: f } }, React.createElement(Icon, { name: merkpunktZeichen(m.link), size: 16 })); })(),
         React.createElement('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, color: palette.text } }, m.text),
         React.createElement('button', {
@@ -872,7 +872,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     ),
 
     // Disclaimer
-    React.createElement('div', { style: { marginTop: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid } },
+    React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.xs, color: palette.mid } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('calendar.disclaimer'))
     )
       )

@@ -46,7 +46,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const intro = { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed };
   const linkStyle = { ...linkStil(palette), fontSize: text.sm, wordBreak: 'break-all' };
   const stelleLink = { ...linkStyle, display: 'inline-flex', alignItems: 'center', minHeight: '44px' };
-  const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '6px' };
+  const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '8px' };
   const bullet = { color: palette.sage, flexShrink: 0 };
 
   const li = (txt, key) => React.createElement('div', { key, style: item },
@@ -55,7 +55,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   );
 
   const costStyle = (cost) => ({
-    fontSize: text.xs, fontWeight: weight.medium, padding: '1px 7px', borderRadius: radius.lg,
+    fontSize: text.xs, fontWeight: weight.medium, padding: '1px 8px', borderRadius: radius.lg,
     marginLeft: space.xs + 'px', whiteSpace: 'nowrap',
     // Fassung 9 (Stebler Studios 05.11.2026): nur «gratis» trägt Farbe (Grün = gut); «Basis gratis»
     // und «kostenpflichtig» sind neutral — das Wort sagt den Unterschied, Gold/Blau haben andere Rollen.

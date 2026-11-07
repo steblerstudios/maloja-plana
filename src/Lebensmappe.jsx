@@ -31,9 +31,9 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
     React.createElement('div', {
       key: section.key,
       style: {
-        padding: '14px 16px',
+        padding: '16px 16px',
         background: palette.up,
-        borderRadius: radius.sm,
+        borderRadius: radius.lg,
         marginBottom: space.sm,
       }
     },
@@ -48,7 +48,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
           key: i,
           style: {
             display: 'flex', justifyContent: 'space-between',
-            padding: '3px 0', fontSize: text.sm,
+            padding: '4px 0', fontSize: text.sm,
             borderBottom: i < section.rows.length - 1 ? '1px solid ' + palette.border : 'none',
           }
         },
@@ -62,8 +62,8 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
   const renderEmpty = () =>
     React.createElement('div', {
       style: {
-        padding: '32px 20px', textAlign: 'center',
-        background: palette.up, borderRadius: radius.sm,
+        padding: '32px 24px', textAlign: 'center',
+        background: palette.up, borderRadius: radius.lg,
         border: '1px solid ' + palette.border,
       }
     },
@@ -79,13 +79,13 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
     // ─── Header ─────────────────────────────────────────
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
-        border: '1px solid ' + palette.border, marginBottom: '20px',
+        background: palette.surface, padding: '24px 24px', borderRadius: radius.lg,
+        border: '1px solid ' + palette.border, marginBottom: '24px',
       }
     },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('lebensmappe.title')),
       React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '16px' }
       }, t('lebensmappe.subtitle')),
 
       // Status summary
@@ -106,7 +106,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
       style: { width: '100%', padding: '12px', marginBottom: vorschau ? 0 : '20px' },
       icon: React.createElement(Icon, { name: 'drucker', size: 16 }),
     }, t('lebensmappe.printAction')),
-    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
+    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '24px' } },
       React.createElement(ExportVorschau, {
         palette, t, art: 'dossier',
         quelle: { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.map(r => r.label) })), dokumente: preview.docCount },
@@ -128,7 +128,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
     // ─── Document references ────────────────────────────
     hasSections && preview.docCount > 0 && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.up, borderRadius: radius.sm,
+        padding: '16px 16px', background: palette.up, borderRadius: radius.lg,
         marginBottom: space.sm,
       }
     },

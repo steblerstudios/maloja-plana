@@ -11,7 +11,7 @@ export const UvgHinweis = ({ palette, t, data }) => {
 
   return React.createElement('div', {
     style: {
-      padding: space.md + 'px', background: palette.up, borderRadius: radius.sm,
+      padding: space.md + 'px', background: palette.up, borderRadius: radius.lg,
       border: '1px solid ' + palette.border, marginBottom: '16px',
     },
   },

@@ -672,7 +672,7 @@ export const Icon = ({ name, size = 16, color, style = {} }) => {
 //     React.createElement('p', { … }, hinweisZeichen(), t('trust.localOnly'))
 //
 export const HinweisZeichen = ({ name = 'info', size = 14 }) =>
-  React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '5px' } });
+  React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '4px' } });
 
 // Text mit Haken davor, wenn etwas erledigt ist — sonst nur der Text. Bündelt
 // ein Muster, das an sechs Stellen als `(erledigt ? '✓ ' : '') + text` stand.
@@ -692,14 +692,14 @@ export const erledigtZeichen = (erledigt, text, offenIkon) => React.createElemen
 // genau die Richtung, in die es weitergeht.
 export const aufklappZeichen = (offen, size = 12) => React.createElement(Icon, {
   name: 'chevron', size,
-  style: { verticalAlign: '-1px', marginRight: '5px', transform: offen ? 'rotate(90deg)' : 'none' },
+  style: { verticalAlign: '-1px', marginRight: '4px', transform: offen ? 'rotate(90deg)' : 'none' },
 });
 
 // Zurück-Zeichen: derselbe Pfeil, gespiegelt. Ein zweites Icon wäre ~50 Byte für
 // dieselbe Form in die andere Richtung — `scaleX(-1)` kostet nichts und hält die
 // beiden Richtungen sichtbar als EIN Zeichen zusammen.
 export const zurueckZeichen = (size = 14) => React.createElement(Icon, {
-  name: 'pfeil', size, style: { verticalAlign: '-3px', marginRight: '5px', transform: 'scaleX(-1)' },
+  name: 'pfeil', size, style: { verticalAlign: '-3px', marginRight: '4px', transform: 'scaleX(-1)' },
 });
 
 // Kurzform für die Aufrufstellen — spart an 100+ Stellen je ein `React.createElement`.

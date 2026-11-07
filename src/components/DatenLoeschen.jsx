@@ -74,13 +74,13 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     if (schritt === 1) {
       return React.createElement(React.Fragment, null,
         p(t('datenLoeschen.intro')),
-        React.createElement('ul', { style: { margin: '0 0 ' + space.sm + 'px 0', paddingInlineStart: '20px', fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
+        React.createElement('ul', { style: { margin: '0 0 ' + space.sm + 'px 0', paddingInlineStart: '24px', fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
           React.createElement('li', null, t('datenLoeschen.wasAngaben')),
           React.createElement('li', null, t('datenLoeschen.wasDokumente')),
           React.createElement('li', null, t('datenLoeschen.wasEinstellungen'))
         ),
         p(t('datenLoeschen.bleibt')),
-        React.createElement('div', { style: { marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm } },
+        React.createElement('div', { style: { marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.md } },
           p(letzteSicherung ? t('datenLoeschen.letzteSicherung', { datum: letzteSicherung }) : t('datenLoeschen.keineSicherung'), { color: palette.text }),
           onExport && React.createElement('button', {
             type: 'button', onClick: () => { setOffen(false); onExport(); },
@@ -98,7 +98,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
       p(t('datenLoeschen.andereFenster')),
       // Die ganze Zeile ist Tippfläche, mind. 44 px hoch — vor dem unumkehrbaren Schritt (Predeploy 16.09.).
       React.createElement('label', { style: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', fontSize: text.sm, color: palette.text, cursor: 'pointer', marginTop: space.sm + 'px', minHeight: '44px', padding: '8px 0', boxSizing: 'border-box' } },
-        React.createElement('input', { type: 'checkbox', checked: verstanden, onChange: (e) => setVerstanden(e.target.checked), style: { marginTop: '3px', width: '18px', height: '18px', flexShrink: 0 } }),
+        React.createElement('input', { type: 'checkbox', checked: verstanden, onChange: (e) => setVerstanden(e.target.checked), style: { marginTop: '4px', width: '18px', height: '18px', flexShrink: 0 } }),
         t('datenLoeschen.verstanden')
       ),
       React.createElement('div', { style: zeile },
@@ -113,7 +113,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   };
 
   return React.createElement('section', {
-    style: { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px', marginTop: space.md + 'px' },
+    style: { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, padding: space.lg + 'px', marginTop: space.md + 'px' },
   },
     React.createElement(Eyebrow, { palette, style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('datenLoeschen.bereich')),
     p(t(demoMode ? 'datenLoeschen.beispielAus' : 'datenLoeschen.kurz')),
@@ -131,7 +131,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
         ref: karte, role: 'dialog', 'aria-modal': 'true',
         'aria-labelledby': 'daten-loeschen-titel',
         onClick: (e) => e.stopPropagation(),
-        style: { background: palette.surface, color: palette.text, borderRadius: radius.md, boxShadow: shadow.lg, padding: space.lg + 'px', width: '100%', maxWidth: '480px', maxHeight: '90vh', overflowY: 'auto', boxSizing: 'border-box' },
+        style: { background: palette.surface, color: palette.text, borderRadius: radius.lg, boxShadow: shadow.lg, padding: space.lg + 'px', width: '100%', maxWidth: '480px', maxHeight: '90vh', overflowY: 'auto', boxSizing: 'border-box' },
       },
         React.createElement('h2', {
           id: 'daten-loeschen-titel', tabIndex: -1, 'data-dialog-titel': '',

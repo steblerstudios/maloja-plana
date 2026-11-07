@@ -37,7 +37,7 @@ export const lebenslaufInhalt = (t, ausbildung, allData) => {
 // `ebene`: Überschriftenstufe des Namens, die Abschnitte eine darunter (je nach Umgebung des Blatts).
 export const LebenslaufBlatt = ({ palette, inhalt, ebene = 5 }) => {
   const h = React.createElement;
-  return h('div', { 'data-teil': 'lebenslauf-blatt', style: { background: palette.paper || '#FBF8F2', color: '#2B2A27', borderRadius: radius.sm, padding: space.md + 'px', border: '1px solid ' + palette.border, lineHeight: leading.normal } },
+  return h('div', { 'data-teil': 'lebenslauf-blatt', style: { background: palette.paper || '#FBF8F2', color: '#2B2A27', borderRadius: radius.lg, padding: space.md + 'px', border: '1px solid ' + palette.border, lineHeight: leading.normal } },
     h('h' + ebene, { style: { margin: 0, fontSize: text.body, fontWeight: weight.semi, fontFamily: 'inherit', color: 'inherit' } }, inhalt.name),
     inhalt.kopfZeile && h('div', { style: { fontSize: text.xs, color: '#5C5850', marginBottom: space.sm + 'px', overflowWrap: 'break-word' } }, inhalt.kopfZeile),
     ...inhalt.abschnitte.map((x) => h('div', { key: x.key, style: { marginTop: space.xs + 'px' } },

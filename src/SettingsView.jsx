@@ -15,13 +15,13 @@ import { NotificationSettings } from './NotificationSettings.jsx';
 // der Einstellungs-Schublade.
 
 export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demoMode }) => {
-  const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px' };
+  const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg, padding: space.lg + 'px' };
   const list = (controls || []).filter(Boolean);
   const actionBtn = {
     display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px',
     padding: space.sm + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
     background: 'transparent', color: palette.text, textAlign: 'start',
-    border: '1px solid ' + palette.border, borderRadius: radius.sm,
+    border: '1px solid ' + palette.border, borderRadius: radius.md,
     cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
   };
 
@@ -47,7 +47,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
   const sectionHeading = (labelKey) => React.createElement(Eyebrow, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t(labelKey));
 
   return React.createElement('div', { style: { maxWidth: '640px', margin: '0 auto' } },
-    React.createElement(PageTitle, { palette, style: { margin: '0 0 6px 0' } }, t('common.settingsTitle')),
+    React.createElement(PageTitle, { palette, style: { margin: '0 0 8px 0' } }, t('common.settingsTitle')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: 1.5 } }, t('common.settingsIntro')),
 
     // ── Anzeige & Sprache / Barrierefreiheit (geteilte Gruppierung) ──

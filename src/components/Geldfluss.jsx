@@ -55,7 +55,7 @@ const band = (x0, y0, x1, y1, h) => {
 
 const Legende = ({ ueberschrift, knoten, palette }) => React.createElement('div', { style: { flex: '1 1 140px' } },
   React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, ueberschrift),
-  knoten.map((x) => React.createElement('div', { key: x.label, style: { display: 'flex', gap: '6px', alignItems: 'center', fontSize: text.xs, color: palette.text, marginBottom: '2px' } },
+  knoten.map((x) => React.createElement('div', { key: x.label, style: { display: 'flex', gap: '8px', alignItems: 'center', fontSize: text.xs, color: palette.text, marginBottom: '2px' } },
     React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', background: x.color, borderRadius: radius.hair, flexShrink: 0 } }),
     x.label
   ))
@@ -82,8 +82,8 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
     fontSize: 12, fill: palette.text,
   }, knoten.label);
 
-  return React.createElement('div', { ref: rahmen, style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
-    React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: '0 0 6px 0' } }, titel),
+  return React.createElement('div', { ref: rahmen, style: { padding: space.md, background: palette.up, borderRadius: radius.lg, marginBottom: space.md } },
+    React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: '0 0 8px 0' } }, titel),
     React.createElement('svg', {
       viewBox: `0 0 ${s.breite} ${hoehe}`, role: 'img', 'aria-label': beschreibung,
       // Schmal höchstens 340 px breit: bei knapp 480 px Spalte wurde das Bild sonst ~370 px hoch
@@ -103,7 +103,7 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
       React.createElement(Legende, { ueberschrift: woher, knoten: links, palette }),
       React.createElement(Legende, { ueberschrift: wohin, knoten: rechts, palette })
     ),
-    React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '6px 0 0 0' } }, beschreibung)
+    React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '8px 0 0 0' } }, beschreibung)
   );
 };
 

@@ -23,9 +23,9 @@ export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [], mitFuss = 
 
     const cardStyle = {
       display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
-      padding: '12px 14px', marginBottom: space.xs + 'px',
+      padding: '12px 16px', marginBottom: space.xs + 'px',
       background: palette.surface, color: palette.text, textDecoration: 'none',
-      border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+      border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
       cursor: 'pointer', fontFamily: 'inherit',
       transition: `border-color ${duration.normal}ms ${ease}`,
     };
@@ -60,7 +60,7 @@ export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [], mitFuss = 
 
   return React.createElement(React.Fragment, null,
     gruppen.map((gruppe) =>
-      React.createElement('div', { key: gruppe.key, style: { marginBottom: space.xl + 'px' } },
+      React.createElement('div', { key: gruppe.key, style: { marginBottom: space['2xl'] + 'px' } },
         React.createElement('h3', {
           style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, letterSpacing: '0.3px', margin: '0 0 2px 0' }
         }, t('anspruch.gruppen.' + gruppe.key + '.label')),

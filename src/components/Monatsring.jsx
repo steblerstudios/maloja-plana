@@ -88,7 +88,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
           React.createElement('span', { style: { display: 'block', height: '100%', borderRadius: radius.full, background: g.farbe, width: (g.wert / basis) * 100 + '%', opacity: ton(g), transition: 'opacity ' + duration.fast + 'ms ' + ease } }))
       ),
       auf && React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: '2px 0 ' + space.xs + 'px ' + space.md + 'px', fontSize: text.xs } },
-        g.posten.map((p) => React.createElement('li', { key: p.key, style: { ...raster, padding: '3px 0' } },
+        g.posten.map((p) => React.createElement('li', { key: p.key, style: { ...raster, padding: '4px 0' } },
           React.createElement('span', { style: { color: palette.text, minWidth: 0 } }, p.label),
           React.createElement('span', { style: { ...zahlen, color: palette.mid } }, chf(p.value)),
           React.createElement('span', { style: { ...zahlen, color: palette.mid } }, anteil(p.value, basis)),
@@ -97,7 +97,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
       )
     );
   };
-  return React.createElement('div', { 'data-teil': 'monatsring', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md } },
+  return React.createElement('div', { 'data-teil': 'monatsring', style: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.lg } },
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: space.xs + 'px ' + space.md + 'px', marginBottom: space.md + 'px' } },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, kopf && kopf(faktor)),
       React.createElement('div', { role: 'group', 'aria-label': t('chapters.finanzen.monat.ansicht'), style: { display: 'flex', padding: '2px', borderRadius: KNOPF_RADIUS, background: palette.up } },

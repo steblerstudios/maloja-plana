@@ -211,15 +211,33 @@ Namen bereits in `main.jsx` erfasst, Aktivierung erst mit verifizierter Überset
 Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Spiegel von
 `tokens.css`). React nutzt Inline-Styles, daher importieren Komponenten diese Konstanten.
 
-- **Spacing** (4px-Grid): `2xs 2 · xs 4 · sm 8 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`
-- **Radius:** `hair 2 · xs 4 · sm 6 · md 10 · lg 16 · xl 24 · full 9999` — `hair` für feine
-  Balken und Markierungen, `xs` für kleine Marken und Knöpfe in dichten Tabellen, `sm` ist der
-  Normalfall (auch Knöpfe), `full` für Pillen und Kreise. *(hair/xs nachgetragen 06.11.2026 — standen
-  im Code, fehlten hier.)*
+- **Spacing** (4px-Grid): `2xs 2 · xs 4 · sm 8 · ms 12 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64`
+  *(`ms 12` seit 06.11.2026 — war der häufigste Festwert und fehlte in der Skala.)*
+- **Radius:** `hair 2 · xs 4 · sm 6 · md 10 · lg 16 · xl 24 · full 9999`, **nach Rolle** (Regel C
+  unten): `hair` feine Balken · `xs` Knöpfe in dichten Tabellen · `sm` kleine Elemente ohne
+  Bedienhöhe · `md` Felder, Knöpfe (`KNOPF_RADIUS`), Symbolkacheln · `lg` Karten · `xl` Blätter · `full` Marken,
+  Pillen, Kreise. *(Bis 06.11.2026 war `sm` der Normalfall für alles — überholt.)*
 - **Shadow** (subtil): `sm` bis `xl` mit `rgba(0,0,0,0.06…0.12)`
 - **Motion:** Easing `cubic-bezier(0.4,0,0.2,1)` · Dauer `fast 150 · normal 250 · slow 400 ·
   cinematic 600` (ms)
 - **Font-Stack:** Body `'Lexend', sans-serif` · Display `'Hanken Grotesk', sans-serif`
+
+### 7a. Verhältnisse — woher die Werte kommen
+
+Die Werte oben sind nicht Geschmack und nicht von anderen Produkten abgeschaut, sondern folgen
+sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *(06.11.2026)*
+
+| | Regel | Für Maloja heisst das |
+|---|---|---|
+| **A** | **Nähe** — was zusammengehört, steht enger; innen immer weniger Luft als aussen | Beschriftung → Feld `sm 8` · Zeile → Zeile `ms 12` · Baustein → Baustein `md 16` · Karte → Karte `md 16` · Abschnitt → Abschnitt `2xl 48` |
+| **B** | **Skala mit festem Verhältnis** (~1.5) — nur so unterscheidet das Auge die Stufen | `4 · 8 · 12 · 16 · 24 · 32 · 48 · 64`. 10, 14, 20 liegen zu nah an einer Nachbarstufe und fallen weg |
+| **C** | **Ecke wächst mit der Grösse** — bei Bedienelementen etwa ¼ der Höhe | Marke rund · Knopf/Feld (44 hoch) `md 10` (= `KNOPF_RADIUS`) · Symbolkachel (36) `md 10` · Karte `lg 16` · Blatt `xl 24` |
+| **D** | **Verschachtelte Ecken** — liegt etwas eng in einer Fläche: aussen = innen + Abstand | Bild mit 8 Rand in einer Karte: Karte 16, Bild 8. Nie gleiche Ecke innen und aussen bei engem Rand |
+| **E** | **Bewegung nach Weg** — kurzer Weg, kurze Zeit; Erscheinen bremst ab, Verschwinden geht schneller (~⅔) | Druck/Haken `fast 150` · Aufklappen `normal 250` · Erscheinen `slow 400` · nur Berglandschaft `cinematic 600` |
+| **F** | **Takt aus der Schrift** — Grundschrift × Zeilenhöhe ergibt den Grundtakt | 16 × 1.5 = **24** = `lg`. Fliesstext höchstens etwa 65 Zeichen breit |
+
+Dazu unverändert: Tippflächen mindestens 44 × 44 px (WCAG 2.5.5).
+
 
 ### Knöpfe (seit Fassung 9, 05.11.2026)
 
@@ -236,7 +254,7 @@ Wächter: `src/__tests__/knopfarten.test.js`.
 | **Link** | goldener Text, immer unterstrichen | führt woanders hin, löst nichts aus |
 | **Auswahl** | gewählt Sand gefüllt, sonst Rand `border` | Reiter, Segmente, Chips, Schalter |
 
-- **Rundung:** alle Knöpfe und Auswahlen **6 px** (`KNOPF_RADIUS` = `radius.sm`). Kreise nur für
+- **Rundung:** alle Knöpfe und Auswahlen **10 px** (`KNOPF_RADIUS` = `radius.md`, Regel C in §7a; überholt 6 px am 06.11.2026). Kreise nur für
   reine Symbolknöpfe ohne Text (Plus in der Leiste, runde Icon-Knöpfe). Keine Pillen an Textknöpfen.
 - **Mindesthöhe** 44 px.
 - **Ausnahme:** der rot gefüllte Ernstfall-Knopf im Kapitel Notfall (Notruf).

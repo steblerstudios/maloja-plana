@@ -25,7 +25,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, frem
       position: 'fixed',
       bottom: '16px',
       right: '16px',
-      padding: '6px 12px',
+      padding: '8px 12px',
       borderRadius: radius.xs,
       fontSize: text.sm,
       fontWeight: weight.medium,
@@ -34,7 +34,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, frem
       maxWidth: '380px',
       display: 'flex',
       alignItems: 'center',
-      gap: '5px',
+      gap: '4px',
       zIndex: 100,
       opacity: visible ? 1 : 0,
       transition: `opacity ${duration.slow}ms ${ease}`,
@@ -49,7 +49,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, frem
       React.createElement('button', {
         type: 'button', onClick: () => location.reload(),
         // Eine Handlung, kein Weg: Nebenknopf (Fassung 9), in der Statuszeile knapp gepolstert.
-        style: { ...knopfStil(palette, 'neben'), padding: '4px 10px', minHeight: '32px' },
+        style: { ...knopfStil(palette, 'neben'), padding: '4px 12px', minHeight: '32px' },
       }, t('error.reload'))
     ) : React.createElement('span', null,
       saveError ? t('common.saveError') : (isSaving ? t('common.saving') : t('common.saved'))

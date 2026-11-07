@@ -100,7 +100,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
     try { sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(neu)); } catch { /* ohne Speicher: nichts merken */ }
     return neu;
   });
-  const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' };
+  const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' };
   return React.createElement(React.Fragment, null,
     ...groups.map((g) => React.createElement('details', {
       // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse

@@ -27,14 +27,14 @@ const ZinsRechner = ({ palette, t }) => {
   const [satz, setSatz] = useState(String(SATZ_GESETZ));
   const r = verzugszins({ betrag: leseBetrag(betrag), satz, seit });
   const status = zinsEingabeStatus({ betrag: leseBetrag(betrag), satz, seit });
-  const feld = { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box', width: '100%', maxWidth: '220px' };
+  const feld = { padding: '12px 12px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box', width: '100%', maxWidth: '220px' };
   const label = { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' };
   const hilfe = { fontSize: text.xs, color: palette.mid, margin: space.xs + 'px 0 0' };
   const eingabe = (id, lbl, value, set, type, extra) => [
     React.createElement('label', { key: id + 'l', htmlFor: id, style: label }, lbl),
     React.createElement('input', { key: id, id, type, value, onChange: (e) => set(e.target.value), style: feld, ...extra }),
   ];
-  return React.createElement('div', { style: { marginTop: space.md + 'px', padding: space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm } },
+  return React.createElement('div', { style: { marginTop: space.md + 'px', padding: space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.lg } },
     React.createElement('div', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.semi } }, t('mahnung.zins.title')),
     ...eingabe('mahnung-zins-betrag', t('mahnung.zins.betrag'), betrag, setBetrag, 'text', { inputMode: 'decimal', autoComplete: 'off' }),
     ...eingabe('mahnung-zins-seit', t('mahnung.zins.seit'), seit, setSeit, 'date'),

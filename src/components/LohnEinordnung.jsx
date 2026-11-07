@@ -74,7 +74,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
         return React.createElement('div', {
           key: 'm' + i,
           style: {
-            position: 'absolute', top: '-1px', left: leftPos, marginLeft: '-6px',
+            position: 'absolute', top: '-1px', left: leftPos, marginLeft: '-8px',
             width: '12px', height: '12px', borderRadius: '50%', background: m.color,
             border: '1.5px solid ' + palette.surface,
           },
@@ -133,7 +133,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
   const card = embedded
     ? { fontSize: text.sm }
-    : { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm };
+    : { padding: '12px', background: palette.up, borderRadius: radius.md, fontSize: text.sm };
 
   if (!state.show) {
     return React.createElement('div', { style: card },
@@ -182,7 +182,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
             onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(zielKapitelKey)),
             style: {
               display: 'block', width: '100%', textAlign: 'left', fontFamily: 'inherit',
-              background: palette.up, border: 'none', borderRadius: radius.sm,
+              background: palette.up, border: 'none', borderRadius: radius.md,
               // minHeight: 44px-Touch-Ziel (WCAG 2.5.5) — das Token-Padding allein ergäbe ~38px.
               padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer', minHeight: '44px',
               color: palette.text, fontSize: text.sm, lineHeight: leading.normal,
@@ -236,7 +236,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
     // Quantil-Grenzen über dem Balken (p10 / p90) als belegte Zahlen an ihren Bubble-Kanten.
     React.createElement('div', {
-      style: { position: 'relative', height: '15px', marginBottom: '3px', fontSize: '11px', color: palette.soft },
+      style: { position: 'relative', height: '15px', marginBottom: '4px', fontSize: '11px', color: palette.soft },
     },
       React.createElement('span', { style: { position: 'absolute', left: '25%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, 'CHF ' + fmt(LOHN_REFERENZ.p10)),
       React.createElement('span', { style: { position: 'absolute', left: '75%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, 'CHF ' + fmt(LOHN_REFERENZ.p90))
@@ -257,7 +257,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     // Zonen-Namen UNTER der jeweiligen Bubble (kategorial → gleich breit, kein Überlappen).
     // Rand-Zonen tragen zusätzlich das vertraute Klartext-Wort (Tieflohn / Spitzenlohn).
     React.createElement('div', {
-      style: { position: 'relative', height: '30px', marginTop: '5px', marginBottom: space.sm + 'px', fontSize: '10px' },
+      style: { position: 'relative', height: '30px', marginTop: '4px', marginBottom: space.sm + 'px', fontSize: '10px' },
     }, zones.map((z, i) => {
       const center = ((i + 0.5) / zones.length) * 100;
       const isActive = z.key === activeZone.key;

@@ -10,7 +10,7 @@ import { betrag } from './utils/geld.js';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
-const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '6px' } });
+const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '8px' } });
 
 // Seit 27.10.2026 (F7-L7, docs/entscheide/seiten-buendeln.md §2 I) keine eigene Seite mehr: ein Teil
 // «CSV importieren» unten im Monatsbudget (BudgetSync.jsx). #/budget leitet dorthin (UMLEITUNGEN).
@@ -49,16 +49,16 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
   };
 
   const inputStyle = {
-    width: '100%', padding: space.sm, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
+    width: '100%', padding: space.sm, borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
   // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
   const [ablageProps, ablageAktiv] = useDateiAblage(handleFileSelect);
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
-   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
+   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' } },
     // Upload
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, id: BUDGET_IMPORT_ANKER + '-titel', icon: React.createElement(Icon, { name: 'csv', size: 22 }), style: { marginBottom: space.md } }, t('budgetImport.teilTitel')),
 
       React.createElement(LabeledField, { palette, label: t('budgetImport.fileFormat'), style: { marginBottom: 0 } },
@@ -69,33 +69,33 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
           React.createElement('option', { value: 'text' }, t('budgetImport.tsv'))
         )),
 
-      React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+      React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '24px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.lg, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
         React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
         React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
         React.createElement('div', { style: { fontWeight: weight.semi } }, t('budgetImport.selectFile')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
       ),
 
-      importing && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.sm, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
+      importing && React.createElement('div', { style: { padding: '12px', background: palette.sky + '18', borderRadius: radius.md, textAlign: 'center', color: palette.skyDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
 
-      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, praefix('kreuz', 14), importError),
+      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.md, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, praefix('kreuz', 14), importError),
 
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, praefix('kaestchen', 14), t('budgetImport.formatExample') + ':'),
-        React.createElement('code', { style: { display: 'block', fontSize: text.xs, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginTop: '6px' } },
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.md } },
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px' } }, praefix('kaestchen', 14), t('budgetImport.formatExample') + ':'),
+        React.createElement('code', { style: { display: 'block', fontSize: text.xs, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginTop: '8px' } },
           'Date,Description,Amount,Category,Type\n' + t('budgetSync.csvBeispiel')
         )
       )
     ),
 
     // Preview
-    React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'search', size: 22 }), style: { marginBottom: space.md } }, t('budgetImport.preview')),
 
       preview ? React.createElement('div', null,
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px' } },
+        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.md, marginBottom: '12px' } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginTop: space.xs } }, preview.fileName),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, t(preview.count === 1 ? 'budgetImport.eintrag' : 'budgetImport.eintraege', { count: preview.count })),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '8px' } }, t(preview.count === 1 ? 'budgetImport.eintrag' : 'budgetImport.eintraege', { count: preview.count })),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': ' + betrag(preview.totalAmount, { stellen: 2 }))
         ),
 
@@ -116,7 +116,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
           preview.count > 0 && React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
           React.createElement('button', { onClick: () => setPreview(null), style: { ...knopfStil(palette, 'neben'), flex: 1 } }, t('common.cancel'))
         )
-      ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
+      ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 24px' } },
         React.createElement('div', { style: { marginBottom: space.sm } }, React.createElement(Icon, { name: 'kaestchen', size: 24 })),
         React.createElement('div', { style: { fontWeight: weight.semi } }, t('budgetImport.noFile')),
         React.createElement('div', { style: { fontSize: text.sm, marginTop: space.sm } }, t('budgetImport.selectCsvOrExcel'))
