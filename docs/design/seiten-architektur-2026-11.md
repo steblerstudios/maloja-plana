@@ -141,6 +141,14 @@ Kapitel.** Das entspricht den Erklärseiten-Links in den Werkzeugen (D1, `Erklae
 Blatt — an App und Seiten ist nichts gebaut. Offen zur Durchsicht des Kantonsatlas: «Kantone im Vergleich» und
 Kantonsatlas zeigen dieselben sechs Themen aus denselben Daten (`seiten-vergleich.mjs`), als Tabelle bzw. als Karten.
 
+### ✅ Organigramm fertig (07.11.2026)
+
+Auf «ich möchte gerne das organigramm fertig machen»: alle Seiten tragen ihren Namen aus der App
+(`de.js` auf #739, z. B. «Mietbeiträge» statt «Mietzinsverbilligung», «Neu in der Schweiz» statt «Zuzug»),
+abgeglichen gegen beide Register — jede Seite steht drin. Neu: Einstellungen (Benachrichtigungen, Sicherung,
+Als App installieren) in der Klammer · Startseite nach Frage 4 · geplante Erklärseiten gestrichelt
+(EL und AHV/Pensionierung bei Versicherungen, ALV bei Arbeit) · Hinweis, wo gebaut ist (#738, #739, #743).
+
 ### Umzüge von A nach B (07.11.2026)
 
 Bild [Umzüge](seiten-architektur-6-umzuege.html): jede Seite, die ihren Ort wechselt, mit heute (`main` `ea1e42e9`)
