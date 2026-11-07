@@ -231,9 +231,18 @@ Nachfrage «warum ist die münze nicht ok?» → nicht falsch, aber Zwilling von
 - **Bahnhofsuhr (generisch): unbedenklich mit Auflagen.** Design-Schutz max. 25 Jahre (DesG Art. 5), Urheberrecht schützt den individuellen Ausdruck (URG Art. 2), unser Zeichen übernimmt keines der prägenden Merkmale. Auflagen: nie rote Kelle/Sekundenzeiger · nie 60 Minutenstriche + 12 Balken, keine stumpfen Balkenzeiger · **Label und Alt-Text «Uhr», nie «Bahnhofsuhr»/«SBB-Uhr»** (UWG Art. 3 Abs. 1 lit. d, e). Offen, nicht belegt: Swissreg-Abfrage SBB.
 - **Heute auf main:** `insurance` = Schild mit Kreuz, Kommentar «Shield with Swiss cross» (Wappen-Form, WSchG Art. 2/8) → durch Entscheid Edelweiss-Schild gelöst, Kommentar beim Bau entfernen · `notfall` = Herz mit weissem Kreuz → durch Herz mit Puls gelöst.
 - ⚠️ **Neu: Fünfliber und Helvetia tragen einen kleinen Schild mit Kreuz** (`IconMuenzen.jsx`). Ausnahmen WSchG Art. 8 Abs. 4 nennen Apps nicht. Bild [Schild mit Kreuz](icon-besprechung-schild-kreuz.html): A wie heute · B Schild ohne Kreuz. Empfehlung B (oder vorher IGE fragen). Offen.
+⏸️ **07.11.: Fünfliber und Helvetia — erst IGE fragen** («Erst IGE fragen»; meine Empfehlung war B, Kreuz weg). Bis zur Antwort bleibt das Kreuz im Schild **entschieden offen**; beim Bau nicht anfassen, ohne Antwort nicht ausliefern. Die Anfrage sendet Stebler Studios selbst (nichts nach aussen ohne Ja). Entwurf:
+
+> **An:** Eidgenössisches Institut für Geistiges Eigentum (IGE), Auskunft Wappenschutz
+> **Betreff:** Wappenschutzgesetz — Schild mit Kreuz in App-Piktogrammen (Münze, Helvetia)
+>
+> Guten Tag. Wir entwickeln eine private, kostenlose Orientierungs-App für das Leben in der Schweiz (keine Behörde, kein amtlicher Auftrag). Zwei unserer Piktogramme zeigen einen kleinen Dreieckschild mit gleicharmigem Kreuz: (1) eine stilisierte Fünffranken-Münze (Rand, «5 FR.», Kranz, Schild mit Kreuz), einfarbig gold bzw. sandfarben, als Zeichen für das Kapitel Finanzen; (2) eine stilisierte Helvetia-Figur mit Speer und Schild mit Kreuz, einfarbig grau, als Zeichen für das Kapitel Behörden. Beide nie in Rot-Weiss, Grösse 16–64 px. Fragen: Fällt ein solcher Schild mit Kreuz in einer anderen Farbe als Rot-Weiss unter Art. 8 Abs. 1 WSchG (mit dem Schweizerwappen verwechselbares Zeichen)? Falls ja: Genügt es, das Kreuz wegzulassen und den leeren Schild zu zeigen? Bilder liegen bei. Freundliche Grüsse, Stebler Studios
+>
+> **Beilage:** Bild [Schild mit Kreuz](icon-besprechung-schild-kreuz.html) (A und B, gross und klein) als PNG.
+
 **Nebenbefund zum Bau:** `WerkzeugGruppen.jsx` färbt alle Zeichen neutral (`palette.mid`); Entscheid 2d (Familie in Ast-Farbe) braucht dort die Farbe aus `getBereich(bereich)`.
 
-**📍 Stand 07.11., nachmittags:** Abgleich entschieden · EL T · Leitformen mittel · Drucken Drucker · Gesamtmatrix neu · offen nur noch § Rechts-Prüfer (Kreuz, Bahnhofsuhr) und Wörterbuch beim Bau.
+**📍 Stand 07.11., nachmittags:** Abgleich entschieden · EL T · Leitformen mittel · Drucken Drucker · Gesamtmatrix neu · § Rechts-Prüfer erledigt (Kreuz, Bahnhofsuhr: mit Auflagen) · ⏸️ Schild mit Kreuz bei Fünfliber/Helvetia wartet auf IGE · Wörterbuch beim Bau.
 
 **📍 Stand 07.11., ca. 00:40 — nächster Schritt: Gesamtmatrix.** Seit 23:45 entschieden: Haken C · Merkliste Lesezeichen · Blätter (Blatt/Stapel/Ordner/Rechner/Kette/Teilen/Export) · Funktionen folgen dem System (D) · Kalender C · Bahnhofsuhr · Telefon (Hörer/Handy) · Sackmesser = Menü · Glocke A · Übersicht Feldstecher · «Was steht mir zu?» Wegweiser · `exportTool` weg. Offen: Gesamtmatrix bauen und durchgehen (dabei Fehlendes, ALV-Ort, Zeichen Ausbildung & Arbeit, Punkt 6) · Wörterbuch-Abweichungen (Frist, Export, Einbürgerung, Sackmesser) beim Bau nachführen · Rechts-Prüfer Kreuz + Bahnhofsuhr.
 
