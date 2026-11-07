@@ -1929,6 +1929,9 @@ export default {
   erklaerseite: {
     link: 'Comment cela fonctionne, expliqué en détail (en allemand)',
     karte: 'Et dans les autres cantons ? Voir la carte (en allemand)',
+    zumVerstehen: 'Pour comprendre (pages en allemand)',
+    aufDerKarte: 'Sur la carte (en allemand)',
+    mehrDazu: 'En savoir plus (en allemand) :',
   },
   dashboard: {
     welcome: { sie: 'Comprendre vos droits. Organiser ce qui vous attend.', du: 'Comprendre tes droits. Organiser ce qui t’attend.' },

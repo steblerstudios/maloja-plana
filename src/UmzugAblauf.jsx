@@ -3,6 +3,7 @@ import { text, weight, space } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles, ablaufTextFarbe, ohneNummer } from './AblaufSchale.jsx';
 import { plusTage, heuteIso, istVorbei } from './utils/fristen.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
+import { MehrDazu } from './components/ErklaerseiteLink.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
@@ -126,6 +127,8 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
       // Krankenkassen-Verweis ohne Unterzeile (Entscheid 23.10.2026), nur «Krankenkassen-Prämie prüfen ›».
       umzugType !== 'gemeinde' && onNavigate && React.createElement(AblaufLink, { key: 'praemie', palette, label: t('umzug.changesLinkPraemien'), onClick: () => onNavigate('praemien') }),
       umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { key: 'tax', palette, label: t('umzug.changesLinkTax'), onClick: () => onNavigate('tax') }),
+      // D-A (Wege durch Maloja, 07.11.2026): nur beim Wechsel in einen anderen Kanton, wie der Steuer-Verweis.
+      umzugType === 'extra' && React.createElement(MehrDazu, { key: 'kantone', palette, t, seite: 'kantone' }),
       // Neue Gemeinde/Kanton kann einen Mietzinsbeitrags-Anspruch bedeuten — Hinweis genau hier,
       // wo das Lebensereignis ihn auslöst (bestehende Komponente, kanton-bewusst).
       // Fassung 5: als Aufklapp-Zeile «Mietzinsbeiträge +», darin Hinweis und Schnellcheck.

@@ -1940,6 +1940,9 @@ export default {
     link: 'So funktioniert das, ausführlich erklärt',
     // Ergänzung A (07.11.2026): zur passenden Karte im Kantonsatlas.
     karte: 'Wie ist das in anderen Kantonen? Zur Karte',
+    zumVerstehen: 'Zum Verstehen',
+    aufDerKarte: 'Auf der Karte',
+    mehrDazu: 'Mehr dazu:',
   },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',

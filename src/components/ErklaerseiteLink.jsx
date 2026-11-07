@@ -43,4 +43,59 @@ export const ErklaerseiteLink = ({ palette, t, view }) => {
     karte && zeile(karte, 'erklaerseite.karte'));
 };
 
+// ─── C-A · «Zum Verstehen» und «Auf der Karte» am Ende der Kapitelseite (Entscheid 07.11.2026) ───────────
+// Dieselbe Zuordnung wie im Organigramm (docs/design/seiten-architektur-organigramm.html): Erklärseiten zu
+// einem Thema an ihrem Kapitel, die Karten des Kantonsatlas nach Thema. Behörden und Gesundheit haben weder
+// Erklärseite noch Karte — dort steht keine Zeile. Namen deutsch wie im Beta-Tor; die Kartennamen sind die
+// Titel über den Karten (Wächter appZurErklaerseite.test.js vergleicht sie mit der Seite).
+// Steht UNTER «Passend zu diesem Bereich», weil dort laut Regel nur Ziele in der App stehen, und nicht oben,
+// weil der Vorspann vor dem Inhalt am 27.09.2026 bewusst entfiel.
+const ATLAS = '/kantonsatlas/#karte-';
+export const ZUM_VERSTEHEN = {
+  basis: { seiten: [], karten: [[ATLAS + 'kinderzulage', 'Kinderzulage'], [ATLAS + 'kita', 'Abzug für Kinderbetreuung']] },
+  wohnen: { seiten: [], karten: [[ATLAS + 'miete', 'Miete 3 Zimmer'], [ATLAS + 'leer', 'Leerwohnungsziffer']] },
+  finanzen: {
+    seiten: [['/sozialhilfe/', 'Sozialhilfe'], ['/steuern/', 'Steuern']],
+    karten: [[ATLAS + 'steuer', "Steuern bei 80'000 Fr. Lohn"], [ATLAS + 'sozialhilfe', 'Sozialhilfequote']],
+  },
+  versicherungen: {
+    seiten: [['/krankenkasse/', 'Krankenkasse'], ['/praemienverbilligung/', 'Prämienverbilligung']],
+    karten: [[ATLAS + 'praemie', 'Prämie Erwachsene'], [ATLAS + 'lastnachipv', 'Prämienlast nach Verbilligung'], [ATLAS + 'el', 'Ergänzungsleistungen zur AHV']],
+  },
+  ausbildung: { seiten: [], karten: [[ATLAS + 'alq', 'Arbeitslosenquote']] },
+};
+
+const kleinerLink = (palette, t, href, name) => React.createElement(ExternerLink, {
+  key: href, t, href, hrefLang: 'de',
+  style: { ...linkStil(palette), display: 'inline-block', minHeight: '44px', lineHeight: '44px', marginRight: space.md + 'px' },
+}, name);
+
+export const ZumVerstehen = ({ palette, t, kapitel }) => {
+  const z = ZUM_VERSTEHEN[kapitel];
+  if (!z) return null;
+  const titel = (schluessel) => React.createElement('h4', { style: { margin: space.sm + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t(schluessel));
+  const zeile = (liste) => React.createElement('p', { lang: 'de', style: { margin: 0, fontSize: text.sm } }, liste.map(([href, name]) => kleinerLink(palette, t, href, name)));
+  return React.createElement('section', { 'data-teil': 'zum-verstehen', style: { marginTop: space.lg + 'px' } },
+    z.seiten.length > 0 && titel('erklaerseite.zumVerstehen'),
+    z.seiten.length > 0 && zeile(z.seiten),
+    z.karten.length > 0 && titel('erklaerseite.aufDerKarte'),
+    z.karten.length > 0 && zeile(z.karten));
+};
+
+// ─── D-A · «Mehr dazu: <Seite>» am passenden Schritt eines Ablaufs (Entscheid 07.11.2026) ───────────────
+// AblaufLink springt nur innerhalb der App; dies ist die äussere Form (neuer Tab, deutsche Seite).
+// Beschriftung = Name der Seite, kein Fachsatz.
+export const MEHR_DAZU = {
+  politsystem: ['/politsystem/', 'Wie die Schweiz entscheidet'],
+  kantone: ['/kantone-im-vergleich/', 'Kantone im Vergleich'],
+};
+
+export const MehrDazu = ({ palette, t, seite }) => {
+  const ziel = MEHR_DAZU[seite];
+  if (!ziel) return null;
+  return React.createElement('p', { style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.mid } },
+    t('erklaerseite.mehrDazu'), ' ',
+    React.createElement(ExternerLink, { t, href: ziel[0], hrefLang: 'de', lang: 'de', style: linkStil(palette) }, ziel[1]));
+};
+
 export default ErklaerseiteLink;
