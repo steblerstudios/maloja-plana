@@ -149,6 +149,16 @@ abgeglichen gegen beide Register — jede Seite steht drin. Neu: Einstellungen (
 Als App installieren) in der Klammer · Startseite nach Frage 4 · geplante Erklärseiten gestrichelt
 (EL und AHV/Pensionierung bei Versicherungen, ALV bei Arbeit) · Hinweis, wo gebaut ist (#738, #739, #743).
 
+### Wege durch Maloja · Ergänzungen A–E (07.11.2026, offen)
+
+Auf «jetzt wollen wir ergänzen … wie man auf was kommt, welche Abläufe und Logiken»: Bild
+[Wege](seiten-architektur-7-wege.html). Befund: von aussen nach innen gut ausgebaut (Erklärseiten verlinken sich,
+«Beispiel ansehen» 6/8, jeder Ablauf mit «Verwandte Ereignisse»); der Weg zurück ist schwach — die App führt nur aus
+4 Werkzeugen zu Erklärseiten, zum Kantonsatlas nirgends. Vorschläge: **A** Kantonsatlas-Karte aus 7 Werkzeugen ·
+**B** Sozialhilfe/Steuern → Kantonsseiten · **C** «Zum Verstehen» auf den Kapitelseiten · **D** Einbürgerung →
+Politsystem, Umzug/Neu in der Schweiz → Kantone · **E** «Beispiel ansehen» für den Kantonsatlas. Empfehlung A + B.
+Nichts gebaut. Hinweis zur Zählung: Aussteuerung wirkte unverbunden, ist aber seit 24.10. Teil von «Stelle verloren».
+
 ### Umzüge von A nach B (07.11.2026)
 
 Bild [Umzüge](seiten-architektur-6-umzuege.html): jede Seite, die ihren Ort wechselt, mit heute (`main` `ea1e42e9`)

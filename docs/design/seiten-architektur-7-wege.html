@@ -1,0 +1,61 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Wege durch Maloja</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6;--blau:#3F5C8A;--gold:#B08A3E;--gruen:#5A7868}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d;--blau:#8FA9D6;--gold:#D6B46A;--gruen:#8DB09B}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1150px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17px;margin:26px 0 6px}h3{font-size:14px;margin:0 0 4px}p{color:var(--soft);margin:4px 0}
+.fluss{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-items:stretch}@media(max-width:900px){.fluss{grid-template-columns:1fr 1fr}}@media(max-width:560px){.fluss{grid-template-columns:1fr}}
+.st{background:var(--card);border-radius:12px;padding:10px 12px;border-top:5px solid var(--line);position:relative}
+.st.a{border-color:var(--blau)}.st.b{border-color:var(--gold)}.st.c{border-color:var(--gruen)}.st.d{border-color:#8A6D4B}
+.st ul{margin:4px 0 0;padding-left:16px;font-size:12.5px}.st li{margin:2px 0}
+.pf{color:var(--soft);font-size:12px;margin-top:6px}
+.ok{color:var(--gruen)}.no{color:#B0524C}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;font-size:12.5px}td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:600}
+.vor{background:var(--card);border-radius:12px;padding:10px 14px;margin:8px 0;border-left:5px solid var(--line)}
+.vor.emp{border-left-color:var(--gold)}.vor b.k{display:inline-block;min-width:22px}
+.vor small{color:var(--soft)}
+.tag{display:inline-block;font-size:11px;border:1px solid var(--line);border-radius:10px;padding:0 7px;margin-left:6px;color:var(--soft)}
+</style>
+<h1>Wege durch Maloja · wie man wohin kommt, was fehlt</h1>
+<p>Stand 07.11.2026, gelesen aus dem Code (Zweig #739 und Kantonsatlas #742): <code>build-seiten.mjs</code> (WERKZEUG_IN_DER_APP), <code>BetaGate.jsx</code>, <code>ErklaerseiteLink.jsx</code>, <code>config/ablaufVerwandte.js</code>, Verweise zwischen den Seiten. Nur Bild, nichts gebaut.</p>
+
+<h2>1 · Die Wege heute, von aussen nach innen</h2>
+<div class=fluss>
+ <div class="st a"><h3>① Von aussen</h3>Suche im Netz → <b>Erklärseite</b>
+  <ul><li>8 Erklärseiten verlinken sich gegenseitig (Kasten «Weiterlesen»)</li><li>Knopf «Beispiel ansehen» führt ins passende Werkzeug: 6 von 8</li><li class=no>Politsystem und Kantonsatlas → nur Startseite</li></ul></div>
+ <div class="st b"><h3>② Das Tor</h3>Code-Wand vor der App
+  <ul><li>Erklärseiten: 5 Links</li><li>«Die Schweiz verstehen»: 2 Links (#743), Kantonsatlas nach #741</li><li>Beispiel ansehen ohne Code</li></ul></div>
+ <div class="st c"><h3>③ Startseite</h3>nach #739
+  <ul><li>7 Kapitel → Äste → Seiten</li><li>Türen «Ankommen in der Schweiz», «Mit 18»</li><li>Was ansteht · Schnellcheck · Was steht mir zu?</li><li>Suche und Menü</li></ul></div>
+ <div class="st d"><h3>④ In der App</h3>von Seite zu Seite
+  <ul><li class=ok>Jeder Ablauf zeigt unten «Verwandte Ereignisse» (Wächter-Test)</li><li>Werkzeuge verweisen aufeinander (z. B. Stelle verloren → ALV, darin Aussteuerung)</li><li>Lebensbaum-Früchte, Merkliste, Kalender</li><li class=no>Zurück zu den Erklärseiten: nur aus 4 Werkzeugen</li></ul></div>
+</div>
+<p class=pf>Die Richtung von aussen nach innen ist gut ausgebaut. Schwach ist der Weg zurück: Wer in der App ist, erfährt kaum, dass es Erklärseiten und den Kantonsatlas gibt.</p>
+
+<h2>2 · Wer heute zu wem führt</h2>
+<table>
+<tr><th>Von</th><th>nach Erklärseiten</th><th>nach Kantonsatlas</th><th>ins Werkzeug</th></tr>
+<tr><td>Was steht mir zu?</td><td>alle ausser Kantonsatlas</td><td class=no>–</td><td>Was steht mir zu? (in der App)</td></tr>
+<tr><td>Prämienverbilligung</td><td>5</td><td class=no>–</td><td>Prämienverbilligung (IPV)</td></tr>
+<tr><td>Krankenkasse</td><td>alle</td><td class=ok>✓</td><td>Versicherungs-Übersicht</td></tr>
+<tr><td>Sozialhilfe</td><td>3 (IPV, Steuern, Was steht mir zu)</td><td class=no>– obwohl es eine Karte Sozialhilfequote gibt</td><td>Sozialhilfe</td></tr>
+<tr><td>Steuern</td><td>3 (IPV, Sozialhilfe, Was steht mir zu)</td><td class=no>– obwohl es eine Karte Steuern gibt</td><td>Steuern</td></tr>
+<tr><td>Politsystem</td><td>alle</td><td class=ok>✓</td><td class=no>nur Startseite</td></tr>
+<tr><td>Kantone im Vergleich</td><td>alle</td><td class=ok>✓</td><td>Versicherungs-Übersicht</td></tr>
+<tr><td>Kantonsatlas</td><td>alle</td><td>–</td><td class=no>nur Startseite</td></tr>
+<tr><td><b>Die App</b></td><td>4 Werkzeuge: Sozialhilfe, Steuern, IPV, Versicherungs-Übersicht</td><td class=no>nirgends</td><td>–</td></tr>
+</table>
+
+<h2>3 · Was man ergänzen könnte</h2>
+<p>Jeder Vorschlag nutzt Bestehendes: Links und Anker, die es schon gibt, keine neuen Texte zu Fachfragen. Reihenfolge = meine Empfehlung.</p>
+
+<div class="vor emp"><b class=k>A</b><b>Kantonsatlas aus den Werkzeugen.</b> Unter dem Ergebnis ein ruhiger Link «Wie ist das in anderen Kantonen?» zur passenden Karte (die Anker <code>#karte-…</code> gibt es). 7 Werkzeuge ↔ 10 Karten: Versicherungs-Übersicht → Prämie · IPV → Prämienlast · Steuern → Steuern · Mietbeiträge → Miete · Arbeitslosenentschädigung → Arbeitslosenquote · Sozialhilfe → Sozialhilfequote · EL beantragen → EL. <span class=tag>wie D1, gleiche Bauform</span><br><small>Grund: Der Kantonsatlas ist sonst aus der App nicht erreichbar. Wer seine eigene Prämie sieht, fragt als Nächstes «ist das viel?» — genau das zeigt die Karte, ohne Rangliste.</small></div>
+
+<div class="vor emp"><b class=k>B</b><b>Erklärseiten untereinander schliessen.</b> Sozialhilfe → Karte Sozialhilfequote + Kantone im Vergleich · Steuern → Karte Steuern + Kantone im Vergleich · Was steht mir zu? und Prämienverbilligung → Kantonsatlas. <span class=tag>nur Generator</span><br><small>Grund: Sozialhilfe und Steuern sind die einzigen Erklärseiten ohne Weg zu den Kantonen, obwohl beide Themen im Atlas eine Karte haben.</small></div>
+
+<div class=vor><b class=k>C</b><b>«Zum Verstehen» auf den Kapitelseiten.</b> Was im Organigramm steht, auch in der App: Kapitel Versicherungen zeigt Krankenkasse + Prämienverbilligung, Kapitel Finanzen Sozialhilfe + Steuern, dazu die Karten des Kapitels. <span class=tag>neue Zeile, Startbündel prüfen</span><br><small>Grund: Heute hängen die Erklärseiten nur an einzelnen Werkzeugen. Auf der Kapitelseite sähe man sie, bevor man ein Werkzeug wählt.</small></div>
+
+<div class=vor><b class=k>D</b><b>Logische Brücken aus Abläufen zu den Seiten über die Schweiz.</b> Einbürgerung → «Wie die Schweiz entscheidet» (nach der Einbürgerung darf man abstimmen und wählen, BV Art. 136) · Umzug und Neu in der Schweiz → Kantone im Vergleich / Kantonsatlas (Wohnort wählen). <span class=tag>3 Abläufe</span><br><small>Grund: Politsystem und Kantonsseiten haben sonst keinen Ort in der App. Hier passen sie zum Moment, nicht nur zum Thema.</small></div>
+
+<div class=vor><b class=k>E</b><b>«Beispiel ansehen» für Kantonsatlas und Politsystem.</b> Kantonsatlas → Versicherungs-Übersicht (wie Kantone im Vergleich) · Politsystem bleibt Startseite (kein Werkzeug passt). <span class=tag>eine Zeile</span><br><small>Grund: Die Brille «Person» sagt «die rechnet Maloja mit Ihren Angaben» — der Knopf sollte dann auch zu einer Rechnung führen.</small></div>
+
+<p class=pf>Nicht vorgeschlagen: neue Erklärseiten (Plan C1 steht: EL → ALV → AHV) · neue Abläufe · Karten für Behörden und Gesundheit (dafür gibt es in den Daten keine Kantonszahl). Alles mit Kantonsatlas erst nach Merge von #741/#742.</p>
