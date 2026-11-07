@@ -47,7 +47,7 @@ describe('Tippflächen', () => {
   // ein eigener Knopf im Blatt. Die Zusage bleibt: dieser Weg ist mindestens 44 hoch.
   it('Notfallpass: der Weg zurück (Brotkrume) mindestens 44 hoch', () => {
     const html = renderToStaticMarkup(React.createElement(Brotkrume, { palette: LIGHT_PALETTE, t, view: 'notfallpass', onNavigate: () => {} }));
-    const m = html.match(/<button[^>]*>(?:(?!<\/button>).)*chapters\.notfall\.title/);
+    const m = html.match(/<button[^>]*>(?:(?!<\/button>).)*arztkoffer\.faecher\.notfall\.title/);
     expect(m).not.toBeNull();
     mindestens(m[0].match(/<button[^>]*>/)[0], 'min-height', 44);
     // und das Blatt selbst trägt keinen zweiten Zurück-Knopf mehr

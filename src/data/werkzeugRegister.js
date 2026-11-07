@@ -28,43 +28,46 @@ export const OBEN = 'oben';
 
 // Zeichen (Seitenrundgang 27.09.2026): ALV «work» statt «family» (war EO), Offizielle
 // Links «globe», Flyer «qr» statt dreimal «dokumentTresor». Wächter: zeichenEineQuelle.test.js.
+// `bereich` = Ast des Lebensbaums (data/lebensbereiche.js), entschieden in der Seiten-Architektur
+// (Stebler Studios 06.11.2026, docs/design/seiten-architektur-2026-11.md). Er gibt Merkliste und Kalender
+// Kapitel und Farbe. `fach` bleibt das Fach im Rucksack und ist davon unabhängig. Ohne `bereich`: Aussenfach.
 export const WERKZEUGE = [
   // ── Portemonnaie (Geld) — Entscheid 25.09.2026 ──
-  { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot', 'steuerimport', 'import', 'steuererklärung'] },
+  { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', bereich: 'finanzen', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot', 'steuerimport', 'import', 'steuererklärung'] },
   // Seit 27.10.2026 (F7-L7) ein Eintrag: der CSV-Import ist ein Teil des Monatsbudgets; `budget` ist ein
   // Alias (utils/hashRouter.js UMLEITUNGEN). Seine Suchwörter stehen jetzt hier. Name wie der Seitentitel
   // («Monatsbudget», budgetSync.title) — vorher hiess der Eintrag «Budget-Sync» (nav.budgetSync, entfernt).
-  { view: 'sync', nav: 'budgetSync.title', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben', 'haushalt', 'csv', 'import'] },
-  { view: 'schulden', nav: 'nav.debts', icon: 'debt', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
-  { view: 'kreditkarte', nav: 'nav.kreditkarte', sub: 'nav.sub.kreditkarte', icon: 'money', fach: 'geld', aliases: ['kreditkarte', 'cashback', 'jahresgebühr', 'credit card', 'carte de crédit', 'carta di credito'] },
+  { view: 'sync', nav: 'budgetSync.title', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', bereich: 'finanzen', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben', 'haushalt', 'csv', 'import'] },
+  { view: 'schulden', nav: 'nav.debts', icon: 'debt', bereich: 'finanzen', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
+  { view: 'kreditkarte', nav: 'nav.kreditkarte', sub: 'nav.sub.kreditkarte', icon: 'money', bereich: 'finanzen', fach: 'geld', aliases: ['kreditkarte', 'cashback', 'jahresgebühr', 'credit card', 'carte de crédit', 'carta di credito'] },
   // Seit 24.10.2026 keine eigene Seite: der View ist ein Alias (utils/hashRouter.js UMLEITUNGEN) und
   // führt ins Kapitel Finanzen zur Auswertung. «finanzen» als Suchwort fällt weg — das Kapitel
   // selbst steht schon in der Suche.
   // Seit 24.10.2026 (Stebler Studios, nach dem Rundgang Links/Abläufe) heisst der Eintrag wie seine
   // Zielseite «Finanzen & Geld» und steht nicht mehr im Menü — dort steht das Kapitel schon. Der
   // Untertitel unterscheidet ihn im Portemonnaie und in der Suche vom Kapitel-Treffer.
-  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', sub: 'nav.sub.finanzuebersicht', icon: 'budget', fach: 'geld', aliases: ['finanzübersicht', 'übersicht', 'overview', 'charts', 'diagramme', 'statistik', 'grafik'] },
-  { view: 'stundenlohn', nav: 'nav.stundenlohn', sub: 'nav.sub.stundenlohn', icon: 'money', fach: 'geld', aliases: ['stundenlohn', 'ferienzuschlag', 'arbeit auf abruf', 'aushilfe', 'temporär', 'salaire horaire', 'salario orario', 'hourly wage'] },
+  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', sub: 'nav.sub.finanzuebersicht', icon: 'budget', bereich: 'finanzen', fach: 'geld', aliases: ['finanzübersicht', 'übersicht', 'overview', 'charts', 'diagramme', 'statistik', 'grafik'] },
+  { view: 'stundenlohn', nav: 'nav.stundenlohn', sub: 'nav.sub.stundenlohn', icon: 'money', bereich: 'arbeit', fach: 'geld', aliases: ['stundenlohn', 'ferienzuschlag', 'arbeit auf abruf', 'aushilfe', 'temporär', 'salaire horaire', 'salario orario', 'hourly wage'] },
   // Kein eigener View: führt ins Kapitel Finanzen (wie bisher auf dem Dashboard).
-  { key: 'mindestlohn', view: 'chapter', kapitel: 'finanzen', nav: 'nav.mindestlohn', sub: 'nav.sub.mindestlohn', icon: 'money', fach: 'geld', suche: false },
-  { view: 'sozialhilfe', nav: 'nav.sozialhilfe', sub: 'nav.sub.sozialhilfe', icon: 'sozialhilfe', fach: 'geld', aliases: ['skos', 'sozialhilfe', 'aide sociale'] },
+  { key: 'mindestlohn', view: 'chapter', kapitel: 'finanzen', nav: 'nav.mindestlohn', sub: 'nav.sub.mindestlohn', icon: 'money', bereich: 'finanzen', fach: 'geld', suche: false },
+  { view: 'sozialhilfe', nav: 'nav.sozialhilfe', sub: 'nav.sub.sozialhilfe', icon: 'sozialhilfe', bereich: 'finanzen', fach: 'geld', aliases: ['skos', 'sozialhilfe', 'aide sociale'] },
 
   // ── Arztkoffer (Gesundheit) ──
-  { view: 'premium', nav: 'nav.kvgIpv', sub: 'nav.sub.kvgIpv', icon: 'praemienverbilligung', fach: 'gesundheit', aliases: ['ipv', 'pv'] },
+  { view: 'premium', nav: 'nav.kvgIpv', sub: 'nav.sub.kvgIpv', icon: 'praemienverbilligung', bereich: 'versicherungen', fach: 'gesundheit', aliases: ['ipv', 'pv'] },
   // Seit Runde 9 AB (25.10.2026) die Versicherungs-Übersicht; «prämien» bleibt als Suchwort.
-  { view: 'praemien', nav: 'nav.praemien', sub: 'nav.sub.praemien', icon: 'insurance', fach: 'gesundheit', aliases: ['praemien', 'prämien', 'kvg', 'versicherungen', 'assurances', 'assicurazioni', 'insurance'] },
-  { view: 'kvg', nav: 'nav.kvgLeistungen', sub: 'nav.sub.kvgLeistungen', icon: 'health', fach: 'gesundheit', aliases: ['kvg', 'leistungen'] },
-  { view: 'patientenverfuegung', nav: 'nav.patientenverfuegung', sub: 'nav.sub.patientenverfuegung', icon: 'document', fach: 'gesundheit', aliases: ['patientenverfügung', 'reanimation'] },
-  { view: 'kk', nav: 'nav.kkScanner', icon: 'barcode', fach: 'gesundheit', aliases: ['kk', 'krankenkasse', 'scanner', 'qr', 'prämie'] },
+  { view: 'praemien', nav: 'nav.praemien', sub: 'nav.sub.praemien', icon: 'insurance', bereich: 'versicherungen', fach: 'gesundheit', aliases: ['praemien', 'prämien', 'kvg', 'versicherungen', 'assurances', 'assicurazioni', 'insurance'] },
+  { view: 'kvg', nav: 'nav.kvgLeistungen', sub: 'nav.sub.kvgLeistungen', icon: 'health', bereich: 'gesundheit', fach: 'gesundheit', aliases: ['kvg', 'leistungen'] },
+  { view: 'patientenverfuegung', nav: 'nav.patientenverfuegung', sub: 'nav.sub.patientenverfuegung', icon: 'document', bereich: 'notfall', fach: 'gesundheit', aliases: ['patientenverfügung', 'reanimation'] },
+  { view: 'kk', nav: 'nav.kkScanner', icon: 'barcode', bereich: 'gesundheit', fach: 'gesundheit', aliases: ['kk', 'krankenkasse', 'scanner', 'qr', 'prämie'] },
 
   // ── Feldflasche (Alter) ──
-  { view: 'vorsorge', nav: 'nav.vorsorge', sub: 'nav.sub.vorsorge', icon: 'vorsorge', fach: 'alter', aliases: ['ahv', 'bvg', 'pension', '3a', 'avs'] },
+  { view: 'vorsorge', nav: 'nav.vorsorge', sub: 'nav.sub.vorsorge', icon: 'vorsorge', bereich: 'vorsorge', fach: 'alter', aliases: ['ahv', 'bvg', 'pension', '3a', 'avs'] },
 
   // ── Geldleistungen, bisher nur über die Suche erreichbar ──
   // Entscheid Stebler Studios 27.09.2026: ALV-Taggeld und EO ins Portemonnaie.
   // Ein Name für Titel, Menü und Suche: «Arbeitslosenentschädigung» (F7, 27.10.2026); «ALV-Taggeld» bleibt Suchwort.
-  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'work', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav', 'alv-taggeld', 'taggeld', 'arbeitslosenentschädigung'] },
-  { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', fach: 'geld', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
+  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'work', bereich: 'arbeit', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav', 'alv-taggeld', 'taggeld', 'arbeitslosenentschädigung'] },
+  { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', bereich: 'familie', fach: 'geld', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
 
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
   // Die drei für den Alltag stehen zusätzlich im Menü (gleicher Name, gleiches Zeichen);
@@ -79,14 +82,14 @@ export const WERKZEUGE = [
   { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'ordner', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor', 'unterlagen', 'dossier', 'lebensmappe'] },
   { view: 'calendar', nav: 'nav.wasAnsteht', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: 2, aliases: ['ical', 'ics', 'termine', 'kalender', 'calendrier', 'calendario', 'calendar', 'chalender'] },
   { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
-  { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', fach: AUSSENFACH, aliases: ['cv', 'lebenslauf', 'resume'] },
+  { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', bereich: 'arbeit', fach: AUSSENFACH, aliases: ['cv', 'lebenslauf', 'resume'] },
   { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'globe', fach: AUSSENFACH, aliases: ['links', 'behoerden', 'amt'] },
   { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'qr', fach: AUSSENFACH, aliases: ['qr', 'teilen', 'share', 'flyer'] },
   // Gewählt 27.09.2026: Lebenssituationen als «Was steht mir zu?» über den Gegenständen
   // (und im Menü); die Arztkoffer-Ansicht «Gesundheit» im Gegenstand Arztkoffer.
 // Seit Fassung 9 (F9-D1) beide auch in der Suche — vorher fand die Lupe sie nicht.
   { view: 'situationen', nav: 'dashboard.anspruchTitle', sub: 'lebenszustaende.pageSub', icon: 'geschenk', fach: OBEN, imMenue: 6, aliases: ['anspruch', 'ansprüche', 'was steht mir zu'] },
-  { view: 'gesundheit', nav: 'nav.arztkoffer', sub: 'nav.sub.arztkoffer', icon: 'health', fach: 'gesundheit', aliases: ['arztkoffer', 'gesundheit', 'medikamente', 'ärztin', 'arzt'] },
+  { view: 'gesundheit', nav: 'nav.arztkoffer', sub: 'nav.sub.arztkoffer', icon: 'health', bereich: 'gesundheit', fach: 'gesundheit', aliases: ['arztkoffer', 'gesundheit', 'medikamente', 'ärztin', 'arzt'] },
   { view: 'search', nav: 'nav.search', sub: 'nav.sub.search', icon: 'search', fach: AUSSENFACH, suche: false },
 
   // ── Unter Einstellungen (nicht im Rucksack) ──

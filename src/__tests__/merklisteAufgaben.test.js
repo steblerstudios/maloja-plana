@@ -78,10 +78,14 @@ describe('Abhaken und Tag', () => {
   });
 });
 
-describe('Bereichs-Zuordnung (festgelegt 23.10.2026, Liste B)', () => {
+// Liste B vom 23.10.2026, nachgeführt nach der Seiten-Architektur (06.11.2026, docs/design/seiten-architektur-2026-11.md):
+// ALV → Ausbildung & Arbeit, KVG-Leistungen und Gesundheit-Kalender → Kapitel Gesundheit (`notfall`).
+describe('Bereichs-Zuordnung (Liste B, Seiten-Architektur 06.11.2026)', () => {
   it.each([
     ['premium', 'versicherungen'], ['praemien', 'versicherungen'], ['vorsorge', 'versicherungen'],
-    ['tax', 'finanzen'], ['sozialhilfe', 'finanzen'], ['alv', 'finanzen'],
+    ['tax', 'finanzen'], ['sozialhilfe', 'finanzen'], ['alv', 'ausbildung'],
+    ['kvg', 'notfall'], ['kk', 'notfall'], ['patientenverfuegung', 'notfall'], ['eo', 'basis'], ['cv', 'ausbildung'],
+    ['neuerjob', 'ausbildung'], ['unfallkrankheit', 'notfall'], ['lehre', 'ausbildung'], ['vorsorgeauftrag', 'notfall'], ['betreibungsauszug', 'behoerden'],
     ['stipendien', 'ausbildung'], ['asyl', 'behoerden'],
     ['tresor', null], ['calendar', null], ['direktlinks', null], [null, null],
   ])('Merkpunkt %s → %s', (link, bereich) => expect(merkpunktBereich(link)).toBe(bereich));
@@ -91,7 +95,7 @@ describe('Bereichs-Zuordnung (festgelegt 23.10.2026, Liste B)', () => {
     expect(merkpunktZeichen('tax')).toBe('finanzen');
   });
   it.each([
-    ['health', 'versicherungen'], ['insurance', 'versicherungen'], ['finance', 'finanzen'],
+    ['health', 'notfall'], ['insurance', 'versicherungen'], ['finance', 'finanzen'],
     ['admin', 'behoerden'], ['legal', 'behoerden'], ['work', 'ausbildung'], ['education', 'ausbildung'],
     ['housing', 'wohnen'], ['family', 'basis'], ['personal', null],
   ])('Kategorie %s → %s', (k, bereich) => expect(kategorieBereich(k)).toBe(bereich));

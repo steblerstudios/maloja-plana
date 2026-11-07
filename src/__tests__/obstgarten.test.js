@@ -32,11 +32,11 @@ describe('gardenTrees: ein Bäumchen pro Lebensbereich', () => {
   const chapters = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'notfall', 'behoerden']
     .map(k => ({ key: k, title: 'T-' + k, fields: [{ k: 'f1' }, { k: 'f2' }] }));
 
-  it('liefert alle 11 Bereiche, davon 4 ohne Kapitel als Setzling/Zukunft', () => {
+  it('liefert alle 11 Bereiche, davon 3 ohne Kapitel als Setzling/Zukunft (Gesundheit hat seit 06.11.2026 das Kapitel `notfall`)', () => {
     const trees = gardenTrees({}, chapters);
     expect(trees).toHaveLength(11);
     const future = trees.filter(t => t.future);
-    expect(future.map(t => t.key).sort()).toEqual(['arbeit', 'familie', 'gesundheit', 'vorsorge']);
+    expect(future.map(t => t.key).sort()).toEqual(['arbeit', 'familie', 'vorsorge']);
     expect(future.every(t => t.stage === 1)).toBe(true);
   });
 

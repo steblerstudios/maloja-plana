@@ -13,7 +13,7 @@ import { parseHash } from './utils/hashRouter.js';
 import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegister.js';
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
-import { bereichColor, getBereich } from './data/lebensbereiche.js';
+import { bereichColor, astKapitel } from './data/lebensbereiche.js';
 import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
 import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
@@ -83,17 +83,9 @@ export const ablaufTextFarbe = (palette, name = ablaufAusAdresse()) => {
   return farbe ? lesbareFarbe(farbe, palette.bg, dunkel, 4.5) : null;
 };
 
-// Kapitel eines Ablaufs (Brotkrume und Link «Zum Kapitel …», F7-A4): der Bereich aus dem Register.
-// Bereiche ohne eigenes Kapitel wie bei Kalender und Merkliste festgelegt (Stebler Studios 23.10.2026,
-// data/aufgabenBereiche.js): Gesundheit und Vorsorge → Versicherungen & Vorsorge, Arbeit → Ausbildung
-// & Arbeit, Familie → Persönliche Basis.
-const KAPITEL_OHNE_EIGENES = { gesundheit: 'versicherungen', vorsorge: 'versicherungen', arbeit: 'ausbildung', familie: 'basis' };
-export const ablaufKapitel = (name) => {
-  const b = ablaufBereich(name);
-  if (!b) return null;
-  const l = getBereich(b);
-  return (l && l.chapterKey) || KAPITEL_OHNE_EIGENES[b] || null;
-};
+// Kapitel eines Ablaufs (Brotkrume und Link «Zum Kapitel …», F7-A4): der Bereich aus dem Register,
+// sein Kapitel aus data/lebensbereiche.js (astKapitel — eine Quelle, Seiten-Architektur 06.11.2026).
+export const ablaufKapitel = (name) => astKapitel(ablaufBereich(name));
 
 // Kopf wie im Mockup Fassung 5 (Entscheid Stebler Studios 23.10.2026, erster Nutzer: Umzug; seit
 // Entwurf W alle Abläufe): Landschaftsband oben (Malojapass, halb durchsichtig, getönt in der

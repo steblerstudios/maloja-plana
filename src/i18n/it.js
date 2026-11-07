@@ -1950,7 +1950,7 @@ export default {
     toolsAndFeatures: 'Strumenti',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale' },
+    bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale', bildung: 'Formazione', notfall: 'Emergenza' },
     toolGroups: {
       lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',
@@ -2359,9 +2359,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Emergenza',
-      short: 'Emergenza',
-      description: 'Contatti di emergenza, informazioni mediche',
+      title: 'Salute',
+      short: 'Salute',
+      description: 'Salute, emergenza e direttive',
       intro: { sie: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per Lei e la Sua famiglia.', du: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per te e la tua famiglia.' },
       emptyState: { sie: 'La Sua scheda di emergenza — pronta in 2 minuti, lì quando serve.', du: 'La tua scheda di emergenza — pronta in 2 minuti, lì quando serve.' },
       emptyStateHint: 'Un contatto con un numero di telefono basta per iniziare.',
