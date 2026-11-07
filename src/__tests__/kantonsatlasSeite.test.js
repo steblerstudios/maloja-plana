@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { KANTONSATLAS, stufen, BRILLEN } from '../../scripts/seiten/kantonsatlas.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
-import { KANTONE, EBENEN } from '../../scripts/seiten-vergleich.mjs';
-import de from '../../src/i18n/de.js';
+import { KANTONE, EBENEN, KITA_NICHT_VERGLICHEN } from '../../scripts/seiten-vergleich.mjs';
+import de from '../i18n/de.js';
 
 // ─────────────────────────────────────────────────────────────
 // /kantonsatlas/ · Der Kantonsatlas als Maloja-Erklärseite (Stebler Studios, 06.11.2026)
@@ -95,6 +95,45 @@ describe('/kantonsatlas/', () => {
 
   it('ist von «Kantone im Vergleich» aus verlinkt', () => {
     expect(lies('kantone-im-vergleich')).toContain('<a href="/kantonsatlas/">Kantonsatlas</a>');
+  });
+
+  describe('Befunde (E3)', () => {
+    const abschnitt = html.match(/<h2 id="befunde"[\s\S]*?(?=<h2 |<aside|<section class="cta|$)/)[0];
+    const befunde = [...abschnitt.matchAll(/<article class="befund"[\s\S]*?<\/article>/g)].map((m) => m[0]);
+
+    it('jeder Befund nennt Art, Belegt und die zuständige Stelle — und ist belegt', () => {
+      expect(befunde.length).toBe(2);
+      for (const b of befunde) {
+        expect(b).toMatch(/<dt>Art<\/dt><dd>(grosse Spanne|Stand der Umsetzung|Umsetzung unklar)<\/dd>/);
+        expect(b).toContain('<dt>Belegt</dt><dd>ja</dd>');
+        expect(b).toContain('<dt>Wer die Regel festlegt</dt>');
+        expect(b).toMatch(/<sup class="beleg[^"]*"><a href="#quelle-/);
+      }
+    });
+
+    it('der Kita-Befund rechnet seine Zahlen aus den Daten und listet keine Kantone nach Rang', () => {
+      // Rechtsprüfung 07.11.2026: eine selbst gewählte Schwelle mit sortierter Liste wirkte wie eine Rangliste.
+      const b = befunde[0];
+      const verglichen = KANTONE.filter((k) => !KITA_NICHT_VERGLICHEN.includes(k));
+      const w = (k) => EBENEN.kita.wert(k);
+      const bund = 25800;
+      const unter = verglichen.filter((k) => w(k) < bund).length;
+      const ab = verglichen.filter((k) => w(k) >= bund).length;
+      expect(b).toContain(`${unter} Kantone liegen unter dem Betrag des Bundes, ${ab} auf oder darüber`);
+      const vs = KANTONE.map(w);
+      const tief = KANTONE.find((k) => w(k) === Math.min(...vs));
+      const hoch = KANTONE.find((k) => w(k) === Math.max(...vs));
+      expect(b).toContain(`von ${EBENEN.kita.fmt(w(tief))} Franken im Kanton ${de.cantons[tief]} bis ${EBENEN.kita.fmt(w(hoch))} Franken im Kanton ${de.cantons[hoch]}`);
+      const genannt = KANTONE.filter((k) => b.includes(de.cantons[k]));
+      expect(genannt.sort()).toEqual([tief, hoch, ...KITA_NICHT_VERGLICHEN].sort());
+    });
+
+    it('fordert nichts und nennt keine ungeprüften Befunde', () => {
+      const t = abschnitt.replace(/<[^>]+>/g, ' ');
+      expect(t).not.toMatch(/Petition|unterschreiben|Unterschrift|fordern|Forderung:|Instrument/i);
+      // B1 (Alimente VD) erst nach der Antwort des BRAPA, K1 hielt der Nachrechnung nicht stand.
+      expect(t).not.toMatch(/Alimente|BRAPA|Prämienlast/);
+    });
   });
 
   describe('Brillen (Entscheid 24.10.2026, «Brillen zurück» 07.11.2026)', () => {

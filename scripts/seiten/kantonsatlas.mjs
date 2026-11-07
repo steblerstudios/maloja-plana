@@ -19,7 +19,7 @@
 //     «Brillen zurück»);
 //   • keine Ebenen und Texte zu Datenspenden: Die gibt es in Maloja nicht,
 //     also verspricht die Seite sie auch nicht;
-//   • noch keine Befund-Liste (E3): kommt erst nach diesem Schritt (E6).
+//   • Befunde (E3) als eigener Abschnitt, nur belegte (siehe BEFUNDE_ABSCHNITT).
 //
 // Regeln aus dem Atlas-Entscheid vom 24.10.2026: keine Rangliste, keine
 // Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler
@@ -32,6 +32,8 @@ import { fileURLToPath } from 'node:url';
 import de from '../../src/i18n/de.js';
 import { EBENEN, KANTONE, BLOECKE_VERGLEICH, KITA_NICHT_VERGLICHEN } from '../seiten-vergleich.mjs';
 import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
+import { zahlen as zahlenKrankenkasse } from '../seiten-figuren.mjs';
+import { vergleichZahlen } from '../seiten-vergleich.mjs';
 
 const GEO = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
 for (const k of KANTONE) if (!GEO.cantons[k]) throw new Error(`Kantonsatlas-Karte: ${k} fehlt in paths.json`);
@@ -135,7 +137,42 @@ const BLOECKE_ATLAS = {
     nachher: werteTabelle('vunterstuetzung', 'Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle') }),
 };
 
-const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'estvSteuerrechner', 'bfsMiete', 'bfsLeer', 'bsvFamz', 'estvKantonsblaetter', 'seco', 'bfsSozialhilfe', 'bsvEl', 'estvDrittbetreuung'];
+const QUELLEN_AUS_VERGLEICH = ['praemienKantone', 'estvStatistik', 'bagOkp', 'estvSteuerrechner', 'bfsMiete', 'bfsLeer', 'bsvFamz', 'estvKantonsblaetter', 'seco', 'bfsSozialhilfe', 'bsvEl', 'estvDrittbetreuung', 'dbg'];
+
+// ─── Befunde (E3, Entscheid Stebler Studios 06.11.2026) ─────────────────────
+// Ein Befund ist eine Beobachtung, keine Forderung. Nur belegte Befunde stehen
+// hier: B2 (Kita-Abzug, aus den Daten gerechnet) und B3 (Genfer Elternzeit, an
+// den Seiten von Kanton und Parlament gelesen am 06.11.2026). B1 (Alimente VD)
+// erst nach der Antwort des BRAPA; K1 (Prämienlast) hielt der Nachrechnung vom
+// 04.11.2026 nicht stand. Bewusst ohne «mögliches Instrument»: Die Seite sagt,
+// was die Zahlen zeigen und wer die Regel festlegt, nicht, was man unternehmen soll.
+// Keine selbst gewählte Schwelle (Rechtsprüfung 07.11.2026: wirkte wie eine Rangliste).
+const BEFUNDE_ABSCHNITT = {
+  id: 'befunde',
+  titel: '9. Befunde',
+  html: `
+        <p>Manchmal zeigen die Zahlen selbst einen Unterschied: eine grosse Spanne oder eine beschlossene Regel, die noch nicht in Kraft ist. Hier stehen solche Befunde. Ein Befund ist eine Beobachtung, keine Forderung. Er nennt, was belegt ist, woher es kommt und wer die Regel festlegt. Was jemand daraus macht, steht nicht auf dieser Seite.</p>
+        <article class="befund" aria-labelledby="befund-kita">
+          <h3 id="befund-kita">Abzug für Kinderbetreuung: grosse Spanne zwischen den Kantonen</h3>
+          <dl>
+            <dt>Art</dt><dd>grosse Spanne</dd>
+            <dt>Belegt</dt><dd>ja</dd>
+            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr {{v.kita.bundJahr}} bis zu {{v.kita.bund}} Franken je Kind abziehen. [[q:dbg]] Bei den Kantons- und Gemeindesteuern reichen die Grenzen von {{v.kita.tief}} Franken {{v.kita.tiefName}} bis {{v.kita.hoch}} Franken {{v.kita.hochName}}. {{v.kita.unterBund}} Kantone liegen unter dem Betrag des Bundes, {{v.kita.abBund}} auf oder darüber. [[q:estvKantonsblaetter]] Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest. [[q:sthg]]</dd>
+            <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. {{v.kita.nichtVerglichenName}} ist nicht mitgezählt, weil für den Kanton nur der Wert für 2025 vorliegt.</dd>
+          </dl>
+        </article>
+        <article class="befund" aria-labelledby="befund-ge">
+          <h3 id="befund-ge">Genf: Elternurlaub in der Verfassung, Ausführungsgesetz in Arbeit</h3>
+          <dl>
+            <dt>Art</dt><dd>Stand der Umsetzung</dd>
+            <dt>Belegt</dt><dd>ja</dd>
+            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien. [[q:parlamentGe]] Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft. [[q:as2026433]] Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht. [[q:geElternurlaub]]</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Staatsrat und Grosser Rat des Kantons Genf. Laut Kanton wirken vorher auch das Bundesamt für Sozialversicherungen und allenfalls der Bundesrat mit.</dd>
+            <dt>Vorbehalt</dt><dd>Bis das Genfer Ausführungsgesetz in Kraft ist, gibt es den längeren Urlaub für den anderen Elternteil nicht; es gelten die bisherigen Regeln. Ob und wie viel Sie erhalten, hängt von Ihrer Situation ab. Massgebend ist die Auskunft der Ausgleichskasse.</dd>
+          </dl>
+        </article>`,
+};
 
 // ─── Brillen (Entscheid Stebler Studios 24.10.2026, bestätigt 06.11.2026) ────
 // Gleiche Karten, anderer Blick: Jede Brille nennt ihre Frage und führt zu den
@@ -151,7 +188,7 @@ export const BRILLEN = [
     text: 'Miete, Wohnungsmarkt, Arbeitslosenquote sowie Kinderzulage und Kita-Abzug. Es sind Durchschnitte je Kanton; einen Standortentscheid ersetzen sie nicht.',
     karten: ['miete', 'leer', 'alq', 'kinderzulage', 'kita'] },
   { id: 'kanton', name: 'Kanton oder Gemeinde', frage: 'Wie schwer wiegt die Prämie, wie häufig ist Unterstützung?',
-    text: 'Prämienlast nach der Verbilligung, Sozialhilfe, Ergänzungsleistungen (EL), Arbeitslosigkeit und Leerwohnungen im Kanton.',
+    text: 'Prämienlast nach der Verbilligung, Sozialhilfe, Ergänzungsleistungen (EL), Arbeitslosigkeit und Leerwohnungen im Kanton. Dazu die <a href="#befunde">Befunde</a>.',
     karten: ['lastNachIpv', 'sozialhilfe', 'el', 'alq', 'leer'] },
   { id: 'stiftung', name: 'Stiftung oder Verein', frage: 'Wo beziehen viele Menschen Unterstützung?',
     text: 'Sozialhilfe, Ergänzungsleistungen, Arbeitslosenquote und Prämienlast nach der Verbilligung. Ein hoher Anteil zeigt, wo mehr Menschen Unterstützung beziehen, nicht, wo sie mehr nützt.',
@@ -250,7 +287,9 @@ export const KANTONSATLAS = {
 <!--FIG:el-->
         <p class="leise"><strong>Vorbehalt:</strong> Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte. Wer eine Leistung nicht beantragt, fehlt. Eine hohe Quote kann auf mehr Bedarf hindeuten, aber auch darauf, dass die Leistung bekannter ist oder leichter beantragt wird. Was Ihnen zustehen könnte, zeigt die Seite <a href="/was-steht-mir-zu/">Was steht mir zu?</a></p>`,
     },
+    BEFUNDE_ABSCHNITT,
   ],
+  zahlen: () => ({ ...zahlenKrankenkasse(), ...vergleichZahlen(), }),
   bloecke: BLOECKE_ATLAS,
   quellen: [
     ...QUELLEN_AUS_VERGLEICH.map((key) => {
@@ -258,6 +297,10 @@ export const KANTONSATLAS = {
       if (!q) throw new Error(`Kantonsatlas: Quelle ${key} fehlt auf /kantone-im-vergleich/`);
       return q;
     }),
+    { key: 'parlamentGe', herausgeber: 'Keystone-ATS, veröffentlicht auf parlament.ch', titel: 'Le Parlement donne son feu vert au congé parental genevois', datum: '22.09.2026', url: 'https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx', belegt: 'Gewährleistung durch das Parlament am 22.09.2026, ohne die Bestimmung zu Pflegefamilien; Inhalt: 8 Wochen für den anderen Elternteil zu 16 Wochen Mutterschaft', amtlich: false },
+    { key: 'as2026433', herausgeber: 'Bundeskanzlei (Fedlex), AS 2026 433', titel: 'Bundesgesetz über den Erwerbsersatz (Erwerbsersatzgesetz, EOG) (Angleichung der EO-Leistungen), Änderung vom 19. Dezember 2025', datum: 'in Kraft ab 1.7.2027', url: 'https://www.fedlex.admin.ch/eli/oc/2026/433/de', belegt: 'Art. 16m^bis EOG: Kantone dürfen die Entschädigung des anderen Elternteils verlängern; Inkrafttreten 1.7.2027', amtlich: true },
+    { key: 'sthg', herausgeber: 'Bundeskanzlei (Fedlex), SR 642.14', titel: 'Bundesgesetz über die Harmonisierung der direkten Steuern der Kantone und Gemeinden (StHG), Art. 9 Abs. 2 Bst. m', datum: 'Fassung vom 1.1.2025', url: 'https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de', belegt: 'Abzug für die Drittbetreuung von Kindern, Höhe nach kantonalem Recht', amtlich: true },
+    { key: 'geElternurlaub', herausgeber: 'République et canton de Genève', titel: 'Congé parental : les étapes de la mise en œuvre', datum: 'ohne Datum, gelesen 06.11.2026', url: 'https://www.ge.ch/dossier/cohesion-sociale-geneve/domaines-developpement/conge-parental-etapes-mise-oeuvre', belegt: 'Abstimmung 18.06.2023, Änderung der Erwerbsersatzordnung vom 19.12.2025 mit Inkrafttreten 1.7.2027, fehlendes Ausführungsgesetz, kein Startdatum', amtlich: true },
     // Rechtsprüfung 06.11.2026: Die BFS-Geodaten stehen unter «OPEN-BY» (freie Nutzung,
     // Quellenangabe mit Autor, Titel und Link Pflicht). swiss-maps (BSD-3-Clause) hat sie
     // aufbereitet. swisstopo nicht nennen: als Rechteinhaber nicht belegt.
@@ -294,6 +337,11 @@ export const KANTONSATLAS = {
     @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
     .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
+    .befund{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px; margin:18px 0 }
+    .befund h3{ margin:0 0 10px }
+    .befund dl{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; font-size:15px }
+    .befund dt{ color:var(--leise) } .befund dd{ margin:0 }
+    @media (max-width:600px){ .befund dl{ grid-template-columns:1fr } .befund dt{ margin-top:6px } }
     .brillen{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:14px 0 }
     .brille{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px; display:grid; gap:8px; align-content:start }
     .brille h3{ margin:0; font-size:17px }

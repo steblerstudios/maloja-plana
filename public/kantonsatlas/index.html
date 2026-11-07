@@ -316,6 +316,11 @@
     @media (forced-colors:active){ .atlas-legende i, .atlas svg{ forced-color-adjust:none } }
     .atlas-werte{ margin:10px 0 0 }
     .atlas-werte summary{ cursor:pointer; color:var(--heidel-text); font-size:15px; padding:10px 0 }
+    .befund{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px; margin:18px 0 }
+    .befund h3{ margin:0 0 10px }
+    .befund dl{ display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; font-size:15px }
+    .befund dt{ color:var(--leise) } .befund dd{ margin:0 }
+    @media (max-width:600px){ .befund dl{ grid-template-columns:1fr } .befund dt{ margin-top:6px } }
     .brillen{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:14px 0 }
     .brille{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px; display:grid; gap:8px; align-content:start }
     .brille h3{ margin:0; font-size:17px }
@@ -353,6 +358,7 @@
           <li><a href="#familie">Familie</a></li>
           <li><a href="#arbeit">Arbeit</a></li>
           <li><a href="#unterstuetzung">Unterstützung</a></li>
+          <li><a href="#befunde">Befunde</a></li>
         </ol>
       </nav>
 
@@ -377,7 +383,7 @@
           </section>
           <section class="brille" aria-labelledby="brille-kanton">
             <h3 id="brille-kanton">Kanton oder Gemeinde: Wie schwer wiegt die Prämie, wie häufig ist Unterstützung?</h3>
-            <p>Prämienlast nach der Verbilligung, Sozialhilfe, Ergänzungsleistungen (EL), Arbeitslosigkeit und Leerwohnungen im Kanton.</p>
+            <p>Prämienlast nach der Verbilligung, Sozialhilfe, Ergänzungsleistungen (EL), Arbeitslosigkeit und Leerwohnungen im Kanton. Dazu die <a href="#befunde">Befunde</a>.</p>
             <ul role="list"><li><a href="#karte-lastnachipv">Prämienlast nach Verbilligung</a></li><li><a href="#karte-sozialhilfe">Sozialhilfequote</a></li><li><a href="#karte-el">Ergänzungsleistungen zur AHV</a></li><li><a href="#karte-alq">Arbeitslosenquote</a></li><li><a href="#karte-leer">Leerwohnungsziffer</a></li></ul>
           </section>
           <section class="brille" aria-labelledby="brille-stiftung">
@@ -822,6 +828,29 @@
         </figure>
         <p class="leise"><strong>Vorbehalt:</strong> Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte. Wer eine Leistung nicht beantragt, fehlt. Eine hohe Quote kann auf mehr Bedarf hindeuten, aber auch darauf, dass die Leistung bekannter ist oder leichter beantragt wird. Was Ihnen zustehen könnte, zeigt die Seite <a href="/was-steht-mir-zu/">Was steht mir zu?</a></p>
 
+      <h2 id="befunde" tabindex="-1"><span class="nr">9</span> Befunde</h2>
+        <p>Manchmal zeigen die Zahlen selbst einen Unterschied: eine grosse Spanne oder eine beschlossene Regel, die noch nicht in Kraft ist. Hier stehen solche Befunde. Ein Befund ist eine Beobachtung, keine Forderung. Er nennt, was belegt ist, woher es kommt und wer die Regel festlegt. Was jemand daraus macht, steht nicht auf dieser Seite.</p>
+        <article class="befund" aria-labelledby="befund-kita">
+          <h3 id="befund-kita">Abzug für Kinderbetreuung: grosse Spanne zwischen den Kantonen</h3>
+          <dl>
+            <dt>Art</dt><dd>grosse Spanne</dd>
+            <dt>Belegt</dt><dd>ja</dd>
+            <dt>Was die Zahlen zeigen</dt><dd>Bei der direkten Bundessteuer lassen sich im Steuerjahr 2026 bis zu 25'800 Franken je Kind abziehen.<sup class="beleg"><a href="#quelle-dbg" id="beleg-dbg-1" aria-label="Quelle 15">15</a></sup> Bei den Kantons- und Gemeindesteuern reichen die Grenzen von 8'000 Franken im Kanton Schwyz bis 27'300 Franken im Kanton Graubünden. 17 Kantone liegen unter dem Betrag des Bundes, 8 auf oder darüber.<sup class="beleg"><a href="#quelle-estvKantonsblaetter" id="beleg-estvKantonsblaetter-2" aria-label="Quelle 10">10</a></sup> Alle Werte stehen in der Tabelle zur Karte im Abschnitt Familie.</dd>
+            <dt>Wer die Regel festlegt</dt><dd>Den Abzug und seine Bedingungen schreibt das Bundesrecht vor, die Höhe bei den Kantons- und Gemeindesteuern legt jeder Kanton in seinem Steuergesetz fest.<sup class="beleg"><a href="#quelle-sthg" id="beleg-sthg-1" aria-label="Quelle 16">16</a></sup></dd>
+            <dt>Vorbehalt</dt><dd>Ein tiefer Abzug sagt noch nicht, was Betreuung kostet: Das hängt auch davon ab, wie stark Kanton und Gemeinde die Plätze verbilligen, und vom Steuertarif. Neuenburg ist nicht mitgezählt, weil für den Kanton nur der Wert für 2025 vorliegt.</dd>
+          </dl>
+        </article>
+        <article class="befund" aria-labelledby="befund-ge">
+          <h3 id="befund-ge">Genf: Elternurlaub in der Verfassung, Ausführungsgesetz in Arbeit</h3>
+          <dl>
+            <dt>Art</dt><dd>Stand der Umsetzung</dd>
+            <dt>Belegt</dt><dd>ja</dd>
+            <dt>Was belegt ist</dt><dd>Die Genfer Stimmberechtigten haben am 18. Juni 2023 einen Elternurlaub in die Kantonsverfassung geschrieben: zu den 16 Wochen Mutterschaftsurlaub 8 Wochen für den anderen Elternteil, die heutigen 2 Wochen nach Bundesrecht eingerechnet. Das Bundesparlament hat die Verfassungsänderung am 22. September 2026 bestätigt (gewährleistet); ausgenommen ist die Bestimmung zu Pflegefamilien.<sup class="beleg"><a href="#quelle-parlamentGe" id="beleg-parlamentGe-1" aria-label="Quelle 17">17</a></sup> Möglich wird das durch eine Änderung des Erwerbsersatzgesetzes (EOG) vom 19. Dezember 2025: Sie erlaubt den Kantonen, den Urlaub des anderen Elternteils zu verlängern, und tritt am 1. Juli 2027 in Kraft.<sup class="beleg"><a href="#quelle-as2026433" id="beleg-as2026433-1" aria-label="Quelle 18">18</a></sup> Das kantonale Ausführungsgesetz ist laut Kanton noch in Arbeit, ein Datum für den Start nennt er nicht.<sup class="beleg"><a href="#quelle-geElternurlaub" id="beleg-geElternurlaub-1" aria-label="Quelle 19">19</a></sup></dd>
+            <dt>Wer die Regel festlegt</dt><dd>Staatsrat und Grosser Rat des Kantons Genf. Laut Kanton wirken vorher auch das Bundesamt für Sozialversicherungen und allenfalls der Bundesrat mit.</dd>
+            <dt>Vorbehalt</dt><dd>Bis das Genfer Ausführungsgesetz in Kraft ist, gibt es den längeren Urlaub für den anderen Elternteil nicht; es gelten die bisherigen Regeln. Ob und wie viel Sie erhalten, hängt von Ihrer Situation ab. Massgebend ist die Auskunft der Ausgleichskasse.</dd>
+          </dl>
+        </article>
+
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
@@ -919,7 +948,7 @@
             <p class="q-titel"><a href="https://www.estv.admin.ch/de/kantonsblaetter" rel="noopener">Kantonsblätter</a></p>
             <p class="q-her">Eidgenössische Steuerverwaltung und Schweizerische Steuerkonferenz · Stand Februar 2026</p>
             <p class="q-belegt">Belegt: Abzug für Kinderbetreuung je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvKantonsblaetter-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvKantonsblaetter-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#beleg-estvKantonsblaetter-2" aria-label="Zurück zur Stelle 2 im Text">2</a></p>
           </div>
         </li>
         <li id="quelle-estvDrittbetreuung">
@@ -956,6 +985,51 @@
             <p class="q-her">Bundesamt für Sozialversicherungen · Dezember 2025, publiziert 26.05.2026</p>
             <p class="q-belegt">Belegt: EL-Quote zur AHV je Kanton</p>
             <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvEl-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-dbg">
+          <span class="q-nr">15</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/20260101/de" rel="noopener">Bundesgesetz über die direkte Bundessteuer (DBG), Art. 33 Abs. 3</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex), SR 642.11 · Fassung vom 1.1.2026; Betrag von 25'800 Fr. seit 1.1.2025 (AS 2024 479)</p>
+            <p class="q-belegt">Belegt: Höchstabzug für Kinderdrittbetreuung bei der direkten Bundessteuer und seine Bedingungen</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-dbg-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-sthg">
+          <span class="q-nr">16</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de" rel="noopener">Bundesgesetz über die Harmonisierung der direkten Steuern der Kantone und Gemeinden (StHG), Art. 9 Abs. 2 Bst. m</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex), SR 642.14 · Fassung vom 1.1.2025</p>
+            <p class="q-belegt">Belegt: Abzug für die Drittbetreuung von Kindern, Höhe nach kantonalem Recht</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-sthg-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-parlamentGe">
+          <span class="q-nr">17</span>
+          <div>
+            <p class="q-titel"><a href="https://www.parlament.ch/fr/services/news/Pages/2026/20260922084151244194158159026_bsf021.aspx" rel="noopener">Le Parlement donne son feu vert au congé parental genevois</a></p>
+            <p class="q-her">Keystone-ATS, veröffentlicht auf parlament.ch · 22.09.2026<span class="q-art">keine Behörde</span></p>
+            <p class="q-belegt">Belegt: Gewährleistung durch das Parlament am 22.09.2026, ohne die Bestimmung zu Pflegefamilien; Inhalt: 8 Wochen für den anderen Elternteil zu 16 Wochen Mutterschaft</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-parlamentGe-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-as2026433">
+          <span class="q-nr">18</span>
+          <div>
+            <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/oc/2026/433/de" rel="noopener">Bundesgesetz über den Erwerbsersatz (Erwerbsersatzgesetz, EOG) (Angleichung der EO-Leistungen), Änderung vom 19. Dezember 2025</a></p>
+            <p class="q-her">Bundeskanzlei (Fedlex), AS 2026 433 · in Kraft ab 1.7.2027</p>
+            <p class="q-belegt">Belegt: Art. 16m^bis EOG: Kantone dürfen die Entschädigung des anderen Elternteils verlängern; Inkrafttreten 1.7.2027</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-as2026433-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+          </div>
+        </li>
+        <li id="quelle-geElternurlaub">
+          <span class="q-nr">19</span>
+          <div>
+            <p class="q-titel"><a href="https://www.ge.ch/dossier/cohesion-sociale-geneve/domaines-developpement/conge-parental-etapes-mise-oeuvre" rel="noopener">Congé parental : les étapes de la mise en œuvre</a></p>
+            <p class="q-her">République et canton de Genève · ohne Datum, gelesen 06.11.2026</p>
+            <p class="q-belegt">Belegt: Abstimmung 18.06.2023, Änderung der Erwerbsersatzordnung vom 19.12.2025 mit Inkrafttreten 1.7.2027, fehlendes Ausführungsgesetz, kein Startdatum</p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-geElternurlaub-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
           </div>
         </li>
       </ol>
