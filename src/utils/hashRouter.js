@@ -25,7 +25,7 @@ export const VALID_VIEWS = new Set([
   'sozialhilfe', 'direktlinks', 'unterlagen', 'drucken', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
   'digitaleordnung', 'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'selbstmahnen', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
-  'versicherungskapitel', 'notfallvorsorge',
+  'versicherungskapitel', 'notfallvorsorge', 'testament',
 ]);
 // Nur Design-Vorschau (Tresor 2b-UI): der Eintrag existiert ausschliesslich in DEV,
 // damit der Prod-Build byte-neutral bleibt (der Render-Branch in main.jsx ist ebenso DEV-gated).
@@ -88,6 +88,9 @@ export const UMLEITUNGEN = {
   // Sprungmarke = BENACHRICHTIGUNGEN_ANKER in NotificationSettings.jsx, hier als Literal, weil die
   // Einstellungen erst bei Bedarf laden (Wächter: benachrichtigungenUmleitung.test.js).
   notifications: { view: 'settings', chapterIndex: null, anker: 'mp-benachrichtigungen' },
+  // Lebenslagen C3 (07.11.2026): das Testament ist Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung»,
+  // keine eigene Seite. Die Kachel «Testament» im Block Vorsorge springt dorthin (Sprungmarke in Vorsorgeauftrag.jsx).
+  testament: { view: 'vorsorgeauftrag', chapterIndex: null, anker: 'mp-testament' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):

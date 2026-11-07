@@ -32,7 +32,7 @@ describe('Text-Export', () => {
     expect(voll).not.toContain('f2500');
     expect(voll).toContain('Lehre EFZ');
     expect(voll).toContain('Keine Einträge');
-    expect(voll).toContain('Ja Holografisches');
+    expect(voll).toContain('Ja, eigenhändig'); // seit Lebenslagen C3 (07.11.2026) statt «Ja Holografisches»
     expect(voll).toContain('Ablehnung'); // Organspende seit 27.09.2026: Zustimmungsregelung, nicht «Widersprochen»
     for (const roh of ['apprenticeship', 'handwritten', 'declined']) expect(voll).not.toContain(roh);
   });
