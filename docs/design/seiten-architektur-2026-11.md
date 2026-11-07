@@ -159,6 +159,16 @@ Auf «jetzt wollen wir ergänzen … wie man auf was kommt, welche Abläufe und 
 Politsystem, Umzug/Neu in der Schweiz → Kantone · **E** «Beispiel ansehen» für den Kantonsatlas. Empfehlung A + B.
 Nichts gebaut. Hinweis zur Zählung: Aussteuerung wirkte unverbunden, ist aber seit 24.10. Teil von «Stelle verloren».
 
+**07.11.: A + B gebaut** («A und B») → Entwurfs-PR #744, gestapelt auf #742.
+
+### Plan C · D · E (07.11.2026, offen)
+
+Bild [C D E](seiten-architektur-8-cde.html), je drei Varianten. Empfehlung: **C-A** eigene Zeile «Zum Verstehen» +
+«Auf der Karte» unter «Passend zu diesem Bereich» (Vorspann oben seit 27.09. bewusst weg, «Passend» laut Regel nur
+App-Ziele) · **D-A** «Mehr dazu: <Seitenname>» am passenden Schritt — Einbürgerung Schritt 4 und Neu in der Schweiz
+Schritt 1 → Wie die Schweiz entscheidet, Umzug «Was sich ändert» → Kantone im Vergleich · **E-A** Kantonsatlas →
+Versicherungs-Übersicht, Politsystem bleibt Startseite. Nichts gebaut.
+
 ### Umzüge von A nach B (07.11.2026)
 
 Bild [Umzüge](seiten-architektur-6-umzuege.html): jede Seite, die ihren Ort wechselt, mit heute (`main` `ea1e42e9`)

@@ -1,0 +1,98 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Plan C D E</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6;--blau:#3F5C8A;--gold:#B08A3E;--gruen:#5A7868;--rot:#B0524C}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d;--blau:#8FA9D6;--gold:#D6B46A;--gruen:#8DB09B;--rot:#D98A84}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1150px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17px;margin:28px 0 6px}h3{font-size:14px;margin:0 0 6px}p{color:var(--soft);margin:4px 0}
+.reihe{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:860px){.reihe{grid-template-columns:1fr}}
+.var{background:var(--card);border-radius:12px;padding:10px 12px;border:2px solid transparent}.var.emp{border-color:var(--gold)}
+.var .kopf{font-weight:600;margin-bottom:6px}.var .kopf i{font-style:normal;color:var(--gold);font-size:12px;margin-left:6px}
+.handy{border:1px solid var(--line);border-radius:14px;padding:8px;background:var(--bg);font-size:12px}
+.f{border-radius:6px;padding:6px 8px;margin:4px 0;background:var(--chip);border:1px dashed var(--line);color:var(--soft)}
+.f.neu{border:2px solid var(--blau);color:var(--ink);background:transparent}.f.neu b{color:var(--blau)}
+.f.alt{opacity:.7}.f.no{border:2px solid var(--rot);color:var(--ink)}
+.lnk{color:var(--blau);text-decoration:underline;text-underline-offset:2px}
+.urteil{font-size:12px;margin-top:6px}.ok{color:var(--gruen)}.no-t{color:var(--rot)}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;font-size:12.5px;margin-top:6px}td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:600}
+.box{background:var(--card);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin:14px 0}
+</style>
+<h1>Plan C · D · E — Erklärseiten und Kantonsatlas in der App</h1>
+<p>Stand 07.11.2026. Aus dem Bild «Wege durch Maloja». Je Punkt drei Varianten, die gelb umrandete ist meine Empfehlung. Blau umrandet = neu. Nur Plan, nichts gebaut.</p>
+
+<h2>C · «Zum Verstehen» auf den Kapitelseiten</h2>
+<p>Befund im Code: Am 27.09. wurde der Vorspann oben auf den Kapitelseiten bewusst entfernt («Ihre Daten fliessen in …», <code>ChapterView.jsx</code>). Jedes Kapitel endet mit «Passend zu diesem Bereich» — dort stehen laut Regel <b>nur Ziele in der App</b>. Kapitelseite lädt nach, das Startbündel bleibt unberührt.</p>
+<div class=reihe>
+ <div class="var emp"><div class=kopf>C-A · Eigene Zeile unter «Passend» <i>Empfehlung</i></div>
+  <div class=handy>
+   <div class="f alt">Felder des Kapitels</div>
+   <div class="f alt">Passend zu diesem Bereich<br>(Werkzeuge in der App)</div>
+   <div class="f neu"><b>Zum Verstehen</b><br><span class=lnk>Krankenkasse</span> · <span class=lnk>Prämienverbilligung</span><br><b>Auf der Karte</b><br><span class=lnk>Prämie</span> · <span class=lnk>Prämienlast</span> · <span class=lnk>EL</span></div>
+   <div class="f alt">Weiter mit … ›</div>
+  </div>
+  <div class="urteil ok">Hält beide Regeln: kein Vorspann, «Passend» bleibt rein. Steht da, wo man ohnehin weiterschaut.</div></div>
+ <div class=var><div class=kopf>C-B · In «Passend» hinein</div>
+  <div class=handy>
+   <div class="f alt">Felder des Kapitels</div>
+   <div class="f no">Passend zu diesem Bereich<br>Werkzeuge … + <span class=lnk>Krankenkasse ↗</span> + <span class=lnk>Karte ↗</span></div>
+   <div class="f alt">Weiter mit … ›</div>
+  </div>
+  <div class="urteil no-t">Bricht die Regel «nur Ziele in der App». Innen und aussen gemischt, ein Teil öffnet neue Tabs.</div></div>
+ <div class=var><div class=kopf>C-C · Oben unter dem Titel</div>
+  <div class=handy>
+   <div class="f no">Zum Verstehen: <span class=lnk>Krankenkasse</span> · <span class=lnk>Karte</span></div>
+   <div class="f alt">Felder des Kapitels</div>
+   <div class="f alt">Passend zu diesem Bereich</div>
+  </div>
+  <div class="urteil no-t">Widerspricht dem Entscheid vom 27.09. (kein Vorspann vor dem Inhalt).</div></div>
+</div>
+<table>
+<tr><th>Kapitel</th><th>Zum Verstehen</th><th>Auf der Karte</th></tr>
+<tr><td>Persönliche Basis</td><td>–</td><td>Kinderzulage · Abzug für Kinderbetreuung</td></tr>
+<tr><td>Wohnen</td><td>–</td><td>Miete 3 Zimmer · Leerwohnungsziffer</td></tr>
+<tr><td>Finanzen</td><td>Sozialhilfe · Steuern</td><td>Steuern bei 80'000 Fr. · Sozialhilfequote</td></tr>
+<tr><td>Versicherungen &amp; Vorsorge</td><td>Krankenkasse · Prämienverbilligung</td><td>Prämie · Prämienlast · EL zur AHV</td></tr>
+<tr><td>Ausbildung &amp; Arbeit</td><td>–</td><td>Arbeitslosenquote</td></tr>
+<tr><td>Behörden · Gesundheit</td><td colspan=2>keine Zeile (es gibt weder Erklärseite noch Karte)</td></tr>
+</table>
+<p>Genau die Zuordnung aus dem Organigramm. Eine Quelle: dieselbe Tabelle steuert Organigramm-Bild und App, damit nichts auseinanderläuft.</p>
+
+<h2>D · Brücken aus Abläufen</h2>
+<p>Befund: Der Link in Abläufen (<code>AblaufLink</code>) springt nur innerhalb der App. Für Erklärseiten braucht es die äussere Form wie bei A (neuer Tab, deutsch). Beschriftung = Name der Seite, kein Fachsatz — so muss nichts neu belegt werden.</p>
+<div class=reihe>
+ <div class="var emp"><div class=kopf>D-A · Am Schritt, wo es passt <i>Empfehlung</i></div>
+  <div class=handy>
+   <b>Einbürgerung</b>
+   <div class="f alt">3 · Das Gesuch: Gemeinde und Kanton</div>
+   <div class="f alt">4 · Bund, Entscheid und Kosten<div class="f neu">Mehr dazu: <span class=lnk>Wie die Schweiz entscheidet ↗</span></div></div>
+   <b>Umzug</b>
+   <div class="f alt">Was sich ändert: Prämie prüfen · Steuern ansehen<div class="f neu">Mehr dazu: <span class=lnk>Kantone im Vergleich ↗</span></div></div>
+   <b>Neu in der Schweiz</b>
+   <div class="f alt">1 · Bei der Gemeinde anmelden<div class="f neu">Mehr dazu: <span class=lnk>Wie die Schweiz entscheidet ↗</span></div></div>
+  </div>
+  <div class="urteil ok">Der Link steht im Moment, in dem die Frage aufkommt: «wer entscheidet über mein Gesuch?», «was ändert sich im neuen Kanton?».</div></div>
+ <div class=var><div class=kopf>D-B · Unten bei «Verwandte Ereignisse»</div>
+  <div class=handy>
+   <div class="f alt">Schritte 1–5</div>
+   <div class="f alt">Verwandte Ereignisse<br>Bewilligung · Heirat …</div>
+   <div class="f neu">+ <span class=lnk>Wie die Schweiz entscheidet ↗</span></div>
+  </div>
+  <div class="urteil no-t">«Verwandte» sind laut Wächter nur Abläufe der App. Mischt innen und aussen, wie C-B.</div></div>
+ <div class=var><div class=kopf>D-C · Nur in Einbürgerung</div>
+  <div class=handy>
+   <div class="f alt">4 · Bund, Entscheid und Kosten<div class="f neu">Mehr dazu: <span class=lnk>Wie die Schweiz entscheidet ↗</span></div></div>
+  </div>
+  <div class="urteil">Kleinster Schritt. Umzug und Neu in der Schweiz blieben ohne Weg zu den Kantonsseiten.</div></div>
+</div>
+<p>Baustein: eine Zeile «Mehr dazu: &lt;Seitenname&gt;», dieselbe Bauform wie A. Neuer Text nur «Mehr dazu» in 5 Sprachen; die Seitennamen bleiben deutsch wie im Beta-Tor.</p>
+
+<h2>E · «Beispiel ansehen» auf dem Kantonsatlas</h2>
+<p>Heute führt der Knopf auf Kantonsatlas und Politsystem zur Startseite, auf allen anderen Erklärseiten ins passende Werkzeug (<code>WERKZEUG_IN_DER_APP</code>).</p>
+<div class=reihe>
+ <div class="var emp"><div class=kopf>E-A · Kantonsatlas → Versicherungs-Übersicht <i>Empfehlung</i></div>
+  <p>Wie «Kantone im Vergleich», dieselben Daten. Die erste Karte ist die Prämie. Politsystem bleibt Startseite — kein Werkzeug rechnet Politik.</p></div>
+ <div class=var><div class=kopf>E-B · Kantonsatlas → Was steht mir zu?</div>
+  <p>Passt zur Brille «Person» (Prämie, Steuern, Familie), ist aber ein Fragebogen, kein Beispiel einer Rechnung.</p></div>
+ <div class=var><div class=kopf>E-C · Lassen</div>
+  <p>Startseite. Dann bleibt der Satz «die rechnet Maloja mit Ihren Angaben» ohne direkten Weg.</p></div>
+</div>
+
+<div class=box><b>Wenn alles nach Empfehlung:</b> C-A + D-A + E-A in einem Zweig auf #744 (braucht den Kantonsatlas). Eine Tabelle für C, ein Baustein für C und D, eine Zeile für E. Wächter wie bei A: jedes Ziel existiert, Mutationsprobe. Kantonsfreie Teile (D: Politsystem, Kantone im Vergleich) liefen auch schon auf main.</div>
