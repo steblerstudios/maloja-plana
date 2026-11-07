@@ -141,6 +141,12 @@ Kapitel.** Das entspricht den Erklärseiten-Links in den Werkzeugen (D1, `Erklae
 Blatt — an App und Seiten ist nichts gebaut. Offen zur Durchsicht des Kantonsatlas: «Kantone im Vergleich» und
 Kantonsatlas zeigen dieselben sechs Themen aus denselben Daten (`seiten-vergleich.mjs`), als Tabelle bzw. als Karten.
 
+### Umzüge von A nach B (07.11.2026)
+
+Bild [Umzüge](seiten-architektur-6-umzuege.html): jede Seite, die ihren Ort wechselt, mit heute (`main` `ea1e42e9`)
+→ nach dem Bau (#738, #739), aus den Registern gelesen. Abgleich 07.11.: der Code in #738 setzt jede Zeile des
+Organigramms so um, #738 und #739 sind mergebar.
+
 **Abzeichen-Farben aus den Entscheiden** (für die Icon-Sitzung): KK-Seiten (Vertrag) und Versicherungs-Übersicht
 orange · IPV gold · Sozialhilfe Behörden · Steuern/Quellensteuer Behörden · KVG-Leistungen/Belege/Unfall Mini-Schild ·
 ALV, EO, Stundenlohn, Stipendien Fünfliber gold · Lehre Arbeit.
