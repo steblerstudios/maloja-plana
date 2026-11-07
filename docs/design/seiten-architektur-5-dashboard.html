@@ -1,0 +1,66 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Dashboard-Ordnung</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1200px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}p{color:var(--soft);margin:4px 0}
+.drei{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}@media(max-width:900px){.drei{grid-template-columns:1fr}}
+.tel{background:var(--card);border-radius:22px;padding:12px;border:1px solid var(--line)}.tel.emp{outline:2px solid #C4A870}
+.tel>h3{margin:0 0 8px;font-size:14px}
+.blk{background:var(--chip);border-radius:10px;padding:7px 9px;margin:7px 0;font-size:12px}.blk>b{display:block;font-size:12.5px;margin-bottom:3px}
+.nr{display:inline-block;width:17px;height:17px;border-radius:50%;background:#2E3A2F;color:#fff;font-size:10px;text-align:center;line-height:17px;margin-right:4px}
+.berg{display:flex;gap:3px;align-items:flex-end;height:34px}.berg i{flex:1;border-radius:4px 4px 0 0}
+.k{display:flex;align-items:center;gap:6px;margin:3px 0}.k i{width:10px;height:10px;border-radius:3px;flex:none}
+.k small{color:var(--soft)}
+.sub{margin-left:16px;font-size:11px;color:var(--soft)}
+.stufe{font-size:10.5px;text-transform:none;color:var(--soft);margin-top:5px;font-weight:600}
+.warn{color:#B0524C}
+.warum{font-size:12.5px;color:var(--soft);margin-top:8px}
+.box{background:var(--card);border-left:4px solid #C4A870;border-radius:8px;padding:10px 14px;margin:14px 0}
+</style>
+<h1>Frage 4 · Was zeigt die Startseite, und in welcher Ordnung?</h1>
+<p>Von oben nach unten, wie man am Handy scrollt. «Heute» ist aus <code>Dashboard.jsx</code> und <code>WerkzeugGruppen.jsx</code> gelesen, Stand <code>main</code>.</p>
+
+<div class=drei>
+ <div class=tel><h3>Heute · drei Ordnungen übereinander</h3>
+  <div class=blk><b><span class=nr>1</span>Berge</b><div class=berg><i style="height:60%;background:#5A7868"></i><i style="height:75%;background:#7E9A4E"></i><i style="height:90%;background:#C4A870"></i><i style="height:100%;background:#6E90B0"></i><i style="height:80%;background:#8A6D4B"></i><i style="height:70%;background:#5A6472"></i><i style="height:55%;background:#B0524C"></i></div><small>7 Kapitel als Stationen</small></div>
+  <div class=blk><b><span class=nr>2</span>Was ist jetzt dran?</b>ein nächster Schritt · Frist · Sicherung</div>
+  <div class=blk><b><span class=nr>3</span>Fortschritt nach <u>Kapitel</u></b>
+   <div class=stufe>Dein Alltag</div>Basis · Wohnen · Finanzen
+   <div class=stufe>Deine Absicherung</div>Versicherungen · Ausbildung
+   <div class=stufe>Dein Schutz</div>Behörden · Notfall</div>
+  <div class=blk><b><span class=nr>4</span>Werkzeuge in 7 Gruppen</b>
+   Lebensereignisse <small>(darin 9 <u>Äste</u> als Zwischentitel)</small><br>Ankommen · Mit 18<br><span class=warn>Geld &amp; Steuern · Versicherung &amp; Gesundheit · Dokumente &amp; Behörden · Organisieren &amp; Profil</span> <small>(<u>Themen</u>)</small></div>
+  <div class=blk><b><span class=nr>5</span>Was steht mir zu?</b>Finanz-Übersicht · Notfallkarte · Schnellcheck · Leistungen</div>
+  <div class=warum>Kapitel, Äste und Themen wechseln sich ab. «Versicherung &amp; Gesundheit» und «Dokumente &amp; Behörden» mischen, was wir eben getrennt haben. Eine Seite wie IPV steht in Gruppe «Versicherung &amp; Gesundheit», ihr Ablauf-Nachbar «KK wechseln» unter «Lebensereignisse › Versicherungen».</div></div>
+
+ <div class="tel emp"><h3>A · Kapitel führen, Äste darin ✔ Empfehlung</h3>
+  <div class=blk><b><span class=nr>1</span>Berge</b><div class=berg><i style="height:60%;background:#5A7868"></i><i style="height:75%;background:#7E9A4E"></i><i style="height:90%;background:#C4A870"></i><i style="height:100%;background:#6E90B0"></i><i style="height:80%;background:#8A6D4B"></i><i style="height:70%;background:#5A6472"></i><i style="height:55%;background:#C67A4A"></i></div><small>7 Kapitel, das letzte heisst Gesundheit</small></div>
+  <div class=blk><b><span class=nr>2</span>Was ist jetzt dran?</b>unverändert</div>
+  <div class=blk><b><span class=nr>3</span>Fortschritt nach Kapitel</b>dieselben 7, dieselbe Reihenfolge</div>
+  <div class=blk><b><span class=nr>4</span>Alle Seiten nach Kapitel</b> <small>(statt der 7 Werkzeug-Gruppen)</small>
+   <div class=k><i style="background:#5A7868"></i>Persönliche Basis <small>›</small></div><div class=sub>Person · Familie</div>
+   <div class=k><i style="background:#7E9A4E"></i>Wohnen</div>
+   <div class=k><i style="background:#C4A870"></i>Finanzen</div>
+   <div class=k><i style="background:#6E90B0"></i>Versicherungen &amp; Vorsorge <small>›</small></div><div class=sub>Versicherungen · Vorsorge</div>
+   <div class=k><i style="background:#8A6D4B"></i>Ausbildung &amp; Arbeit <small>›</small></div><div class=sub>Bildung · Arbeit</div>
+   <div class=k><i style="background:#5A6472"></i>Behörden</div>
+   <div class=k><i style="background:#C67A4A"></i>Gesundheit <small>›</small></div><div class=sub>Gesundheit · Notfall</div>
+   <small>Je Kapitel aufklappbar, darin Abläufe <b>und</b> Werkzeuge zusammen, Ast als Zwischentitel. Darunter zwei Türen quer: <b>Ankommen</b> · <b>Mit 18</b>. Dann eine Zeile <b>Klammer</b>: Kalender · Merkliste · Unterlagen …</small></div>
+  <div class=blk><b><span class=nr>5</span>Was steht mir zu?</b>unverändert</div>
+  <div class=warum><b>Eine Ordnung überall:</b> Berge, Fortschritt, Seitenliste, Menü und Brotkrume («Übersicht › Kapitel › Ablauf») zeigen dieselben 7 in derselben Reihenfolge. Die Kapitel tragen die Leitformen, die Äste Farbe und Abzeichen, genau wie im Organigramm.</div></div>
+
+ <div class=tel><h3>B · Äste führen (Lebensbaum)</h3>
+  <div class=blk><b><span class=nr>1</span>Berge oder Baum</b>11 Äste</div>
+  <div class=blk><b><span class=nr>2</span>Was ist jetzt dran?</b></div>
+  <div class=blk><b><span class=nr>3</span>11 Äste in 4 Wuchsstufen</b> <small>(Entscheid 06.07.)</small>
+   <div class=stufe>Wurzeln</div>Person · Wohnen · Finanzen · Gesundheit
+   <div class=stufe>Einbettung</div>Arbeit · Versicherungen · Behörden
+   <div class=stufe>Lebensphase</div>Familie · Vorsorge · Bildung
+   <div class=stufe>Krone</div>Notfall</div>
+  <div class=blk><b><span class=nr>4</span>Seiten nach Ast</b>11 Gruppen</div>
+  <div class=blk><b><span class=nr>5</span>Was steht mir zu?</b></div>
+  <div class=warum>Wie der Lebensbaum gedacht war. Aber Gesundheit und Notfall stünden in verschiedenen Stufen, obwohl sie jetzt <b>ein</b> Kapitel sind. Menü und Brotkrume zeigen weiter Kapitel, dann gibt es zwei Ordnungen. Und 11 Überschriften sind lang am Handy.</div></div>
+</div>
+
+<div class=box><b>Was A nicht anfasst:</b> Berge mit Prozent, Lebensbaum und Obstgarten bleiben (Entscheid 06.07.: der Baum ist eine Linse und zeigt die 11 Äste als Bild). «Was ist jetzt dran?» und «Was steht mir zu?» bleiben.<br>
+<b>Danach offen (4b):</b> Die drei Stufen «Dein Alltag · Deine Absicherung · Dein Schutz» passen mit Gesundheit nicht mehr ganz (Ausbildung steht heute bei «Absicherung»). Ob und wie sie neu heissen, ist ein eigener kleiner Schritt.</div>

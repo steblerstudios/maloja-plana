@@ -1,0 +1,52 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Testament</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6;--blau:#3F5C8A;--gold:#B08A3E;--gruen:#5A7868;--rot:#B0524C}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d;--blau:#8FA9D6;--gold:#D6B46A;--gruen:#8DB09B;--rot:#D98A84}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1150px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17px;margin:26px 0 6px}p{color:var(--soft);margin:4px 0}
+.reihe{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:860px){.reihe{grid-template-columns:1fr}}
+.var{background:var(--card);border-radius:12px;padding:10px 12px;border:2px solid transparent}.var.emp{border-color:var(--gold)}
+.var .kopf{font-weight:600;margin-bottom:6px}.var .kopf i{font-style:normal;color:var(--gold);font-size:12px;margin-left:6px}
+.handy{border:1px solid var(--line);border-radius:14px;padding:8px;background:var(--bg);font-size:12px}
+.kacheln{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.f{border-radius:6px;padding:6px 8px;margin:3px 0;background:var(--chip);border:1px dashed var(--line);color:var(--soft)}
+.f.neu{border:2px solid var(--blau);color:var(--ink);background:transparent}.f.neu b{color:var(--blau)}
+.urteil{font-size:12px;margin-top:6px}.ok{color:var(--gruen)}.no{color:var(--rot)}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;font-size:12.5px;margin-top:6px}td,th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:600}
+</style>
+<h1>C3 · Das eigene Testament</h1>
+<p>Stand 07.11.2026. Gelb umrandet = Empfehlung, blau = neu. Nur Plan, nichts gebaut.</p>
+
+<h2>Befund: nicht vergessen, sondern versteckt und verstreut</h2>
+<p>Mein Befund «Testament fehlt» vom Abgleich war zu grob. Im Code steht es an drei Orten — aber an keinem, wo man es sucht:</p>
+<table>
+<tr><th>Wo</th><th>Was</th><th>Problem</th></tr>
+<tr><td>Ablauf «Vorsorgeauftrag und Patientenverfügung», <b>Schritt 6</b></td><td>«Das Testament — was nach dem Tod gilt»: Formen (eigenhändig, öffentlich, mündlich), Aufbewahrung, Pflichtteil — mit ZGB-Artikeln, bereits geprüft</td><td>Der Name des Ablaufs sagt nichts vom Testament. Die Suche findet es über das Wort «testament», die Übersicht nicht.</td></tr>
+<tr><td>Kapitel <b>Behörden</b>, Feld «Testament erstellt?»</td><td>Antwort, die Dossier, Export und Rucksack («Abschied») schon nutzen</td><td>Steht bei Behörden, die Geschwister (Patientenverfügung, Vorsorgeauftrag, Organspende, Bestattung) im Kapitel Gesundheit, Block «Vorsorge». Antworten «Ja Holografisches» / «Ja Öffentliches» sind Fachwörter, der Ablauf sagt «eigenhändig» / «öffentlich».</td></tr>
+<tr><td>Offizielle Links</td><td>ch.ch «Testament und Erbvertrag»</td><td>Gut, aber nur dort.</td></tr>
+</table>
+
+<h2>Varianten</h2>
+<div class=reihe>
+ <div class="var emp"><div class=kopf>A · Fünfte Kachel im Block «Vorsorge» <i>Empfehlung</i></div>
+  <div class=handy>
+   <b>Vorsorge · 2 von 5 geregelt</b>
+   <div class=kacheln>
+    <div class=f>Organspende</div><div class=f>Patienten­verfügung</div>
+    <div class=f>Vorsorge­auftrag</div><div class=f>Bestattungs­wünsche</div>
+    <div class="f neu"><b>Testament</b><br>Nein · ansehen ›</div>
+   </div>
+  </div>
+  <div class="urteil ok">Liest das bestehende Feld (keine Datenmigration, Export und Dossier bleiben gleich). «ansehen» führt direkt zu Schritt 6. Kein neuer Rechtstext. Dazu die Antworten verständlich: «Ja, eigenhändig» · «Ja, öffentlich beurkundet» — gleiche Wörter wie im Ablauf.</div></div>
+ <div class=var><div class=kopf>B · Eigener Ablauf «Testament»</div>
+  <div class=handy>
+   <div class="f neu"><b>Testament und Nachlass</b><br>1 Wer erbt ohne Testament · 2 Was frei verfügbar ist · 3 Form · 4 Aufbewahren · 5 Konkubinat, Patchwork</div>
+  </div>
+  <div class="urteil no">Neue Rechtstexte (gesetzliche Erbfolge, verfügbare Quote, Konkubinat): Rechtsprüfung am Volltext nötig. Doppelt sich mit Schritt 6. Gross — später, wenn A nicht reicht.</div></div>
+ <div class=var><div class=kopf>C · Feld ins Kapitel Gesundheit verschieben</div>
+  <div class=handy>
+   <div class="f">Behörden: <s>Testament erstellt?</s></div>
+   <div class="f neu">Gesundheit · Vorsorge: <b>Testament erstellt?</b></div>
+  </div>
+  <div class="urteil no">Verschiebt gespeicherte Daten (behoerden → notfall): Migration, Export, Dossier, Tests. Viel Aufwand für dasselbe Bild wie A.</div></div>
+</div>
+<p>Bei A zählt die Kachel wie die anderen: «geregelt», sobald die Antwort ein Ja ist. Vor dem Bau: die zwei neuen Antwortnamen in 5 Sprachen vom copy-pruefer, «öffentlich beurkundet» vom rechts-pruefer gegen ZGB Art. 499 ff.</p>
