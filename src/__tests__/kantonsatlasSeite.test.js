@@ -53,6 +53,20 @@ describe('/kantonsatlas/', () => {
     }
   });
 
+  // Durchgang 07.11.2026: auf den Karten stand kein Kantonsname. Jeder Kanton trägt
+  // Name und Wert als <title> (Maus-Hinweis ohne Skript), direkt um seine Fläche.
+  it('jeder Kanton nennt beim Darüberfahren Namen und Wert', () => {
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    for (const key of KARTEN) {
+      const f = karte(key);
+      for (const k of KANTONE) {
+        const name = de.cantons[k];
+        expect(name, k).toBeTruthy();
+        expect(f, `${key} ${k}`).toContain(`<g><title>${esc(`${name}: ${EBENEN[key].fmt(EBENEN[key].wert(k))}`)}</title><use href="#ka-${k}" `);
+      }
+    }
+  });
+
   it('die Legende nennt die Spanne jeder Stufe aus den Daten', () => {
     for (const key of KARTEN) {
       const { spannen } = stufen(key);
