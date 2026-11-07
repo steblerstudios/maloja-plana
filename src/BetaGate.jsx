@@ -25,10 +25,11 @@ const ERKLAERSEITEN = [
   ['/steuern/', 'Steuern'],
 ];
 // Seiten über alle Themen, im Organigramm oben «Die Schweiz verstehen» (Entscheid 07.11.2026,
-// docs/design/seiten-architektur-2026-11.md). Der Kantonsatlas kommt dazu, sobald er auf main ist.
+// docs/design/seiten-architektur-2026-11.md). Kantonsatlas seit 07.11.2026 auf main (#741), Nachtrag zu #743.
 const SCHWEIZ_VERSTEHEN = [
   ['/politsystem/', 'Wie die Schweiz entscheidet'],
   ['/kantone-im-vergleich/', 'Kantone im Vergleich'],
+  ['/kantonsatlas/', 'Kantonsatlas'],
 ];
 // Gemeinsame Form der zwei ruhigen Knöpfe unter «Öffnen» (Demo · Einfache Ansicht).
 const ruhigerKnopf = {
