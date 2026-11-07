@@ -124,6 +124,23 @@ Alle Seiten haben ein Kapitel und einen Ast. Endstand im [Organigramm](seiten-ar
 | *ohne Kapitel* | Klammer | Kalender · Merkliste · Unterlagen · Lebensmappe · Drucken · Briefe · Offizielle Links · Teilen · Suche |
 | *ohne Kapitel* | oben | Was steht mir zu? · Schnellcheck |
 
+### ✅ Erklärseiten im Organigramm (07.11.2026)
+
+Befund im Durchgang 07.11.: Das Organigramm kannte nur die App-Seiten, die Erklärseiten (öffentlich, vor dem Tor)
+standen nirgends. ✅ **07.11.: so zugeordnet** (Stebler Studios: «Ja, so»):
+
+| Ort | Erklärseiten |
+|---|---|
+| Kapitel Versicherungen & Vorsorge, «Zum Verstehen» | Krankenkasse (`/krankenkasse/`) · Prämienverbilligung (`/praemienverbilligung/`) |
+| Kapitel Finanzen, «Zum Verstehen» | Sozialhilfe (`/sozialhilfe/`) · Steuern (`/steuern/`) |
+| Oben, ohne Kapitel, «Die Schweiz verstehen» | Politsystem (`/politsystem/`) · Kantone im Vergleich (`/kantone-im-vergleich/`) · Kantonsatlas (`/kantonsatlas/`, Entwurf #741) |
+| Oben, ohne Kapitel (wie bisher) | Was steht mir zu? (`/was-steht-mir-zu/`) |
+
+Regel: **Eine Erklärseite zu einem Thema hängt am Kapitel dieses Themas, eine Seite über alle Themen hat kein
+Kapitel.** Das entspricht den Erklärseiten-Links in den Werkzeugen (D1, `ErklaerseiteLink.jsx`). Nur Ordnung im
+Blatt — an App und Seiten ist nichts gebaut. Offen zur Durchsicht des Kantonsatlas: «Kantone im Vergleich» und
+Kantonsatlas zeigen dieselben sechs Themen aus denselben Daten (`seiten-vergleich.mjs`), als Tabelle bzw. als Karten.
+
 **Abzeichen-Farben aus den Entscheiden** (für die Icon-Sitzung): KK-Seiten (Vertrag) und Versicherungs-Übersicht
 orange · IPV gold · Sozialhilfe Behörden · Steuern/Quellensteuer Behörden · KVG-Leistungen/Belege/Unfall Mini-Schild ·
 ALV, EO, Stundenlohn, Stipendien Fünfliber gold · Lehre Arbeit.
