@@ -1952,13 +1952,9 @@ export default {
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
     bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale', bildung: 'Formazione', notfall: 'Emergenza' },
     toolGroups: {
-      lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',
       mit18: 'A 18 anni',
-      money: 'Denaro & imposte',
-      insurance: 'Assicurazione & salute',
-      documents: 'Documenti & autorità',
-      organize: 'Organizzare & profilo',
+      klammer: 'Calendario, promemoria e documenti',
     },
     anspruchTitle: 'A cosa ho diritto?',
     anspruchIntro: 'Spesso si ha diritto a più di quanto si pensi. Una panoramica tranquilla — senza impegno né giudizio.',

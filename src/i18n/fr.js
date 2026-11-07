@@ -1953,13 +1953,9 @@ export default {
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
     bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle', bildung: 'Formation', notfall: 'Urgence' },
     toolGroups: {
-      lebensereignisse: 'Événements de vie',
       ankommen: 'Arrivée en Suisse',
       mit18: 'À 18 ans',
-      money: 'Argent & impôts',
-      insurance: 'Assurance & santé',
-      documents: 'Documents & autorités',
-      organize: 'Organiser & profil',
+      klammer: 'Calendrier, liste & documents',
     },
     anspruchTitle: 'À quoi ai-je droit ?',
     anspruchIntro: 'Bien des prestations existent sans qu’on le sache. Un aperçu tranquille — sans engagement ni jugement.',
