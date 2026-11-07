@@ -70,7 +70,7 @@ describe('E18 · Alle Daten auf diesem Gerät löschen', () => {
     expect(r.fehler).toEqual([]);
     expect([...local._m.keys()].sort()).toEqual(['fremd_schluessel', 'or5_beta_access']);
     expect([...session._m.keys()]).toEqual(['anderes']);
-    expect(BEHALTEN).toEqual(['or5_beta_access']);
+    expect(BEHALTEN).toEqual(['or5_beta_access', 'or5_nutzungstage_aus']);
   });
 
   it('löscht die IndexedDB-Datenbanken der App (Dokumente + Auto-Sicherungen), keine fremden', async () => {

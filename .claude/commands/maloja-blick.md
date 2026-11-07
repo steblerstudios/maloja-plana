@@ -4,7 +4,7 @@ argument-hint: Screenshot-Pfade, eingefügte Bilder, eine Route (z.B. "#/situati
 allowed-tools: Read, Bash, Grep, Glob, mcp__Claude_Browser
 ---
 
-Starte den **Maloja-Blick** — die Sichtprüfung des gerenderten Ergebnisses. Maloja ist ein Ort, kein Dashboard: keine Conversion, kein Funnel, keine Engagement-Metriken. Die Zielgrössen sind **Orientierung, Ruhe, Würde, Verständlichkeit, Barrierefreiheit.**
+Starte den **Maloja-Blick** — die Sichtprüfung des gerenderten Ergebnisses. Maloja ist ein Ort, kein Dashboard: nichts im Bild drängt zum Klicken oder Bleiben. Gezählt wird nur nach `docs/STATISTIK.md` («Zählen ja, drängen nein»). Die Zielgrössen sind **Orientierung, Ruhe, Würde, Verständlichkeit, Barrierefreiheit.**
 
 **Governance:** Read-only. Nichts ändern, committen oder deployen. Alle Funde sind VORSCHLÄGE — Stebler Studios entscheidet (nichts ungefragt wegnehmen). Keine Agent-Kaskaden.
 

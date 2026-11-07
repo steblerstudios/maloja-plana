@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
-import { SecondaryButton, knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
+import { SecondaryButton, knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { getCantonName } from './config/kantonPLZ.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
@@ -19,8 +19,6 @@ import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
 import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
-import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
-import { version as APP_VERSION } from '../package.json';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -42,6 +40,7 @@ const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: [
 const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
 const WerkzeugGruppen = lazyMitTexten(() => import('./components/WerkzeugGruppen.jsx'));
 const InstrumentePanel = lazyMitTexten(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
+const BetaFeedback = lazyMitTexten(() => import('./components/BetaFeedback.jsx').then(m => ({ default: m.BetaFeedback })));
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -153,158 +152,6 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
       }, '×')
     )
   );
-
-// Beta-Feedback (26.10.2026, Entscheid Stebler Studios): der Knopf hiess «Feedback senden», schickte
-// aber nichts — die Antworten lagen nur im Gerätespeicher, wo sie niemand liest. Jetzt wird
-// daraus ein Mail-Entwurf, der vor dem Klick sichtbar dasteht. Gesendet wird erst mit dem
-// eigenen Klick im Mailprogramm; wer keins hat, kopiert den Text. Auf dem Gerät bleibt nur
-// der Merker «erledigt», die Antworten selbst nicht.
-const BetaFeedback = ({ palette, t }) => {
-  const storageKey = 'or5_beta_feedback';
-  const { lang } = useT();
-  // 'neu' = Formular · 'offen' = Entwurf eben geöffnet (diese Sitzung) · 'frueher' = schon erledigt
-  const [phase, setPhase] = useState(() => {
-    try { return localStorage.getItem(storageKey) === 'done' ? 'frueher' : 'neu'; } catch { return 'neu'; }
-  });
-  const [expanded, setExpanded] = useState(false);
-  const [q1, setQ1] = useState('');
-  const [q2, setQ2] = useState('');
-  const [q3, setQ3] = useState('');
-  const [kopie, setKopie] = useState(''); // '' · 'ok' · 'fehler'
-
-  const leer = !q1 && !q2 && !q3.trim();
-  const entwurf = betaFeedbackText({ q1, q2, q3, t, version: APP_VERSION, lang });
-  const href = betaFeedbackHref(entwurf);
-
-  const kopieren = async () => {
-    // Erst beim Klick geladen: hält das Startbündel unter dem size-limit.
-    const ok = await import('./utils/zwischenablage.js')
-      .then((m) => m.inZwischenablage(t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf))
-      .catch(() => false);
-    setKopie(ok ? 'ok' : 'fehler');
-  };
-
-  // «Text kopieren» ist eine Handlung (Nebenknopf), «erneut öffnen» ein Link (Fassung 9).
-  const kopierKnopf = knopfStil(palette, 'neben');
-  const kopieHinweis = kopie && React.createElement('div', {
-    role: 'status', style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' },
-  }, t(kopie === 'ok' ? 'beta.feedback.copied' : 'beta.feedback.copyFailed'));
-
-  if (phase === 'frueher') {
-    return React.createElement('div', {
-      style: { textAlign: 'center', margin: space.xl + 'px 0', fontSize: text.sm, color: palette.mid },
-    }, t('beta.feedback.thanksLater'));
-  }
-
-  if (phase === 'offen') {
-    return React.createElement('div', {
-      style: {
-        textAlign: 'center', padding: space.lg + 'px', margin: space.xl + 'px 0',
-        background: palette.sageMist || palette.up, borderRadius: radius.md,
-      }
-    },
-      React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.medium, color: palette.text } }, t('beta.feedback.thanks')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, t('beta.feedback.thanksDetail')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.md + 'px' } },
-        t('beta.feedback.noMailApp') + ' ',
-        React.createElement('button', { type: 'button', onClick: kopieren, style: kopierKnopf }, t('beta.feedback.copy')),
-        ' · ',
-        React.createElement('a', { href, style: linkStil(palette) }, t('beta.feedback.reopen'))
-      ),
-      kopieHinweis
-    );
-  }
-
-  if (!expanded) {
-    return React.createElement('div', { style: { textAlign: 'center', margin: space.xl + 'px 0' } },
-      React.createElement('button', {
-        onClick: () => setExpanded(true),
-        style: knopfStil(palette, 'neben')
-      }, t('beta.feedback.title'))
-    );
-  }
-
-  const radioStyle = (selected) => ({
-    ...auswahlStil(palette, selected), padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm,
-    fontWeight: selected ? weight.medium : weight.normal,
-  });
-
-  // Erst den Merker setzen, dann das Mailprogramm öffnen. Die Antworten werden nicht
-  // gespeichert — sie stehen im Entwurf, und den schickt die Person selbst.
-  const handleSubmit = () => {
-    try { localStorage.setItem(storageKey, 'done'); } catch { /* ignore */ }
-    try { window.location.href = href; } catch { /* Kopier-Ausweg bleibt */ }
-    setPhase('offen');
-  };
-
-  return React.createElement('div', {
-    style: {
-      margin: space.xl + 'px 0', padding: space.lg + 'px', borderRadius: radius.md,
-      background: palette.sageMist || palette.up, border: '1px solid ' + palette.border + '44',
-    }
-  },
-    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text, marginBottom: space.xs + 'px' } }, t('beta.feedback.title')),
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.lg + 'px' } }, t('beta.feedback.subtitle')),
-
-    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q1')),
-      React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        React.createElement('button', { onClick: () => setQ1('yes'), style: radioStyle(q1 === 'yes') }, t('beta.feedback.scaleYes')),
-        React.createElement('button', { onClick: () => setQ1('mostly'), style: radioStyle(q1 === 'mostly') }, t('beta.feedback.scaleMostly')),
-        React.createElement('button', { onClick: () => setQ1('unclear'), style: radioStyle(q1 === 'unclear') }, t('beta.feedback.scaleUnclear'))
-      )
-    ),
-
-    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q2')),
-      React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap' } },
-        React.createElement('button', { onClick: () => setQ2('high'), style: radioStyle(q2 === 'high') }, t('beta.feedback.trustHigh')),
-        React.createElement('button', { onClick: () => setQ2('ok'), style: radioStyle(q2 === 'ok') }, t('beta.feedback.trustOk')),
-        React.createElement('button', { onClick: () => setQ2('low'), style: radioStyle(q2 === 'low') }, t('beta.feedback.trustLow'))
-      )
-    ),
-
-    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q3')),
-      React.createElement('textarea', {
-        value: q3, onChange: (e) => setQ3(e.target.value), 'aria-label': t('beta.feedback.q3'),
-        placeholder: t('beta.feedback.q3placeholder'),
-        rows: 3,
-        style: {
-          width: '100%', padding: space.sm + 'px', fontSize: text.sm, fontFamily: 'inherit',
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          background: palette.surface, color: palette.text, resize: 'vertical',
-          boxSizing: 'border-box',
-        }
-      })
-    ),
-
-    // Vorschau: genau der Text, der im Entwurf steht — erst wenn etwas beantwortet ist.
-    !leer && React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.previewTitle')),
-      React.createElement('pre', {
-        style: {
-          margin: 0, padding: space.sm + 'px ' + space.md + 'px', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
-          fontFamily: 'inherit', fontSize: text.sm, lineHeight: leading.relaxed,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          background: palette.surface, color: palette.text,
-        }
-      }, t('beta.feedback.to') + ': info@malojaplana.ch\n\n' + entwurf)
-    ),
-
-    React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', flexWrap: 'wrap' } },
-      React.createElement('button', {
-        type: 'button',
-        onClick: handleSubmit,
-        disabled: leer,
-        style: knopfStil(palette, 'haupt', { disabled: leer })
-      }, t('beta.feedback.submit')),
-      !leer && React.createElement('button', { type: 'button', onClick: kopieren, style: kopierKnopf }, t('beta.feedback.copy'))
-    ),
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' } }, t('beta.feedback.submitHint')),
-    kopieHinweis
-  );
-};
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
 // Wo der Berg klebt: direkt unter der Kopfzeile — ausser er ist höher als das Fenster, dann
@@ -777,7 +624,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     );
     })(),
 
-    !demoMode && React.createElement(BetaFeedback, { palette, t })
+    !demoMode && React.createElement(React.Suspense, { fallback: null }, React.createElement(BetaFeedback, { palette, t }))
     )
   );
 };

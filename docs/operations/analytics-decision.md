@@ -18,6 +18,8 @@ Dazu Architektur-Sperren:
 
 → Jede *In-App*-Analytics — auch „cookieless" — würde ein Kernversprechen brechen.
 
+> **Abgrenzung, Entscheid 02.11.2026:** Der Tageszähler auf dem Gerät (`src/utils/nutzungsTage.js`) ist keine Analytics in diesem Sinn: Er sendet nichts, ist ablehnbar, und die Zahl geht nur angekreuzt in eine selbst gesendete E-Mail. Der Satz oben gilt weiter für alles, was die App selbst sendet. Siehe `docs/STATISTIK.md`.
+
 ## Weg 1 — Server-Log-Statistik (JETZT, kein Code)
 
 > 📋 Schritt-für-Schritt-Runbook zum Abarbeiten: [`analytics-weg1-anleitung.md`](analytics-weg1-anleitung.md)

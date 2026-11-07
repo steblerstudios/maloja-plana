@@ -27,6 +27,7 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Stand der Rechtstexte** November 2026 (IV-Rente bei den Gesundheitsdaten).
 
 ### Geändert
+- Beta-Feedback: Die Zahl der Tage im Monat, an denen Maloja geöffnet wurde, zählt nur auf dem Gerät und lässt sich freiwillig im Mail-Entwurf mitschicken. Das Feedback erscheint frühestens alle drei Monate wieder und lässt sich wegklicken. Die App sendet weiterhin nichts.
 - **Fusszeile am Handy mit 5 statt 7 Plätzen** (#545): Übersicht · Rucksack | ＋ | Anspruch · Menü. Kalender
   liegt im ＋-Fächer («Frist») und im Menü, die Suche oben im Menü und neu als Lupe in der Kopfzeile.
 - **Kopfzeile Handy und Desktop gleich** (#545): Lupe und Zahnrad oben rechts; am Desktop ersetzt das Zahnrad

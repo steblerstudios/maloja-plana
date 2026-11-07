@@ -5,7 +5,7 @@
 > die Anwendung. Diese Datei ist Arbeitsfassung und Herkunftsnachweis (festgehalten 28.09.2026, Schutz-Durchgang).
 
 **Gemäss neuem Datenschutzgesetz (nDSG), in Kraft seit 1. September 2023**
-**Stand: 24.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
+**Stand: 06.11.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
 
 ---
 
@@ -55,12 +55,20 @@ Die folgenden Daten werden ausschliesslich in Deinem Browser gespeichert:
 | Sicherheitskopien vor einer Wiederherstellung | localStorage (`or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date`) | Rückgängig-Möglichkeit nach einem Backup-Import; werden nicht automatisch gelöscht, wohl aber mit «Alle Daten auf diesem Gerät löschen» (7.2) |
 | Beta-Zugang | localStorage (`or5_beta_access`) | Zugangsschranke während der Beta (nur UI-Hürde, keine Verschlüsselung) |
 | Einstellungen (Sprache, Theme, Onboarding) | localStorage (`or5_lang`, `or5_theme`, `or5_onboarding_done`) | App-Konfiguration |
+| Tageszähler | localStorage (`or5_nutzungstage`) | Zahl der Tage im laufenden Monat, an denen die App geöffnet wurde, mit Monat und Datum des letzten Tages; ohne Kennung, nur auf dem Gerät, ablehnbar (siehe 3.1) |
+| Ablehnung des Tageszählers | localStorage (`or5_nutzungstage_aus`) | Merkt sich die Ablehnung; bleibt auch nach «Alle Daten auf diesem Gerät löschen» (siehe 3.1) |
+| Beta-Feedback-Merker | localStorage (`or5_beta_feedback`) | Datum der letzten Antwort oder Absage, damit das Beta-Feedback frühestens nach 90 Tagen wieder erscheint |
 
 Markiert jemand ein Feld als «trifft nicht zu», steht in `or5_data` je Kapitel eine Liste der betroffenen Feldnamen (`_na`, `src/utils/vollstaendigkeit.js` Z. 4–8). Sie enthält keine weiteren Angaben, wird mitgesichert und mitgelöscht.
 
 Daneben legt die App weitere Schlüssel mit dem Präfix `or5_` an (Barrierefreiheits-Einstellungen, Zeitstempel des letzten Backups, Migrations-Schnappschuss `or5_data_premigration`); sie enthalten Einstellungen oder Kopien der oben genannten Daten. Die Speichernamen sind im Quellcode belegt (`src/utils/storage.js` Z. 51, `src/utils/autoBackup.js` Z. 11, `src/utils/backupCrypto.js` Z. 216–227, `src/utils/docBlobs.js` Z. 4–6, `src/BetaGate.jsx` Z. 15, `src/MerklisteView.jsx` Z. 10). Ältere Installationen wurden von `ordnung-ruhe-documents` / `ordnung-ruhe-backups` auf die neuen Namen migriert; die alten Datenbanken werden dabei gelöscht (`storage.js` Z. 88, `autoBackup.js` Z. 52).
 
-**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei unter Werkzeuge → Export (siehe 7.3): als Sicherung, in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar, oder unverschlüsselt als JSON oder CSV. Einzelne Ansichten bieten zusätzlich eigene Dateien an, ebenfalls nur auf Deinen Klick: Behörden-Dossier, Budget-Bericht und Unterlagen zur Prämienverbilligung als JSON, Lebenslauf als HTML oder JSON, Termine als Kalenderdatei (`.ics`), Dossiers, Briefe und weitere Druckansichten zum Drucken oder Speichern als PDF (blockiert der Browser das neue Fenster, wird die Ansicht als `.html`-Datei heruntergeladen, `src/utils/helpers.js` Z. 58–72). Vor jeder solchen Datei zeigt die App, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx`). Das Notfall-Dossier und die Organspende zeigen ausserdem einen QR-Code mit ausgewählten Angaben, **unverschlüsselt**: Wer ihn scannt, kann die Angaben speichern, etwa als Kontakt im eigenen Adressbuch. Welche Angaben im Notfall-QR stehen, legt `NOTFALL_QR_FELDER` in `src/dossierGenerator.js` fest (die AHV-Nummer und die Fachrichtung behandelnder Ärztinnen und Ärzte nicht). Bis zum 16.09.2026 stand hier «(Backup-Export, JSON oder verschlüsselt)»; CSV, `MANIFEST.txt` und die Dateien aus den übrigen Ansichten fehlten. Danach, bis zur Bau-Liste K39 am selben Tag, stand hier «(JSON oder CSV, auf Wunsch verschlüsselt)»; seit E10 ist die verschlüsselte Sicherung die Voreinstellung.
+**Diese Daten verlassen Dein Gerät nicht von selbst**, ausser Du exportierst sie aktiv als Datei unter Werkzeuge → Export (siehe 7.3): als Sicherung, in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar, oder unverschlüsselt als JSON oder CSV. Einzelne Ansichten bieten zusätzlich eigene Dateien an, ebenfalls nur auf Deinen Klick: Behörden-Dossier, Budget-Bericht und Unterlagen zur Prämienverbilligung als JSON, Lebenslauf als HTML oder JSON, Termine als Kalenderdatei (`.ics`), Dossiers, Briefe und weitere Druckansichten zum Drucken oder Speichern als PDF (blockiert der Browser das neue Fenster, wird die Ansicht als `.html`-Datei heruntergeladen, `src/utils/helpers.js` Z. 58–72). Vor jeder solchen Datei zeigt die App, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx`). Das Notfall-Dossier und die Organspende zeigen ausserdem einen QR-Code mit ausgewählten Angaben, **unverschlüsselt**: Wer ihn scannt, kann die Angaben speichern, etwa als Kontakt im eigenen Adressbuch. Welche Angaben im Notfall-QR stehen, legt `NOTFALL_QR_FELDER` in `src/dossierGenerator.js` fest (die AHV-Nummer und die Fachrichtung behandelnder Ärztinnen und Ärzte nicht). Bis zum 16.09.2026 stand hier «(Backup-Export, JSON oder verschlüsselt)»; CSV, `MANIFEST.txt` und die Dateien aus den übrigen Ansichten fehlten. Danach, bis zur Bau-Liste K39 am selben Tag, stand hier «(JSON oder CSV, auf Wunsch verschlüsselt)»; seit E10 ist die verschlüsselte Sicherung die Voreinstellung.
+
+
+### 3.1 Zählung auf diesem Gerät
+
+Maloja Plana zählt auf Deinem Gerät, an wie vielen Tagen im laufenden Monat die App geöffnet wurde. Gezählt wird erst nach der Einführung und nie im Beispiel. Zweck: Wird die Zahl freiwillig mitgeschickt, hilft sie zu verstehen, ob Maloja wiederkehrend genutzt wird. Gespeichert werden nur diese Zahl, der Monat und das Datum des letzten Tages, ohne Kennung (`src/utils/nutzungsTage.js`); der Vormonat wird überschrieben. Die Betreiberin sieht die Zahl nicht, solange sie nicht gesendet wird. Sie wird nie automatisch gesendet: Sie verlässt das Gerät nur, wenn Du sie im Beta-Feedback ankreuzt (Vorgabe: nicht angekreuzt) und die E-Mail selbst sendest; dort steht sie neben Deiner Absenderadresse, für die E-Mail gilt 5.2. Das Zählen lässt sich unter Einstellungen → «Zählung auf diesem Gerät» ablehnen, und die Zahl lässt sich dort löschen. Diese Ablehnung bleibt auch nach «Alle Daten auf diesem Gerät löschen» gespeichert (`src/utils/datenLoeschen.js`, `BEHALTEN`). So steht es in der App (`legal.privacy.zaehlung1`).
 
 ---
 
@@ -100,7 +108,7 @@ Wer an info@malojaplana.ch schreibt, gibt der Betreiberin E-Mail-Adresse, Inhalt
 ### 5.3 Keine weiteren Dritten
 
 Es gibt **keine** weiteren Datenempfänger:
-- Keine Werbung, kein Tracking, keine Analyse-Cookies
+- Keine Werbung, kein Tracking, keine Analyse-Cookies. Die App sendet nichts von selbst; zum Tageszähler, der nur auf dem Gerät zählt, siehe 3.1
 - Keine Social-Media-Plugins
 - Keine Datenverkäufe oder -weitergaben
 - Keine Cloud-Dienste für Nutzerdaten
@@ -227,3 +235,4 @@ Abschnitt 3 (Export-Satz und Speichernamen-Beleg): auf Code-Stand `main` 8399deb
 Abschnitt 7.2 und 8 (Löschweg «Alle Daten auf diesem Gerät löschen», Bau-Liste E18): auf den Stand des Zweigs `feat/e17-e18-trifft-nicht-zu-loeschweg` gebracht (seit PR #174 auf `main`), nicht juristisch geprüft.
 Kopf-Datum, Abschnitte 3, 7.1, 7.3 und 8 (Verschlüsselung als Voreinstellung E10, Schnappschüsse K34, «trifft nicht zu» E17): auf Code-Stand `main` 3500330 gebracht (Bau-Liste K39), nicht juristisch geprüft.
 Abschnitte 5.1 (Log-Frist, Auftragsbearbeitung), 5.2 neu (E-Mail-Korrespondenz) und 7.4 (Rechte bei E-Mails): an die App-Texte `legal.privacy.hosting1`/`contact1` angeglichen, 24.09.2026 (Deploy-Gate 0.1.40-beta), nicht juristisch geprüft.
+Kopf-Datum, Abschnitt 3 (Tabelle, «nicht von selbst»), 3.1 neu (Zählung auf diesem Gerät) und 5.3: an die App-Texte `legal.privacy.zaehlung1`/`security1` angeglichen, 06.11.2026 (PR #652, rechts-pruefer Soll 1), nicht juristisch geprüft.
