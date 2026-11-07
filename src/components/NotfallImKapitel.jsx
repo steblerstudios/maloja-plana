@@ -96,12 +96,21 @@ export const VORSORGE = [
   { k: 'patientenverfuegung', weg: 'patientenverfuegung', wegKey: 'notfallKapitel.erstellen' },
   { k: 'vorsorgeauftrag', weg: 'vorsorgeauftrag', wegKey: 'notfallKapitel.erstellen' },
   { k: 'bestattungswuensche', weg: 'bestattung', wegKey: 'notfallKapitel.festhalten' },
+  // Lebenslagen C3 (Entscheid Stebler Studios 07.11.2026, «Ja, A bauen»): das Testament gehört zum Vorausverfügen.
+  // Das Feld bleibt, wo es gespeichert ist (Kapitel Behörden) — keine Datenmigration; Export, Dossier und Rucksack
+  // lesen es dort weiter. Der Weg führt zu Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung».
+  { k: 'willMade', kapitel: 'behoerden', weg: 'testament', wegKey: 'notfallKapitel.nachlesen' },
 ];
+// Testament: geregelt, wenn eines errichtet ist (eigenhändig oder öffentlich), nicht bei «Nein» oder «In Bearbeitung».
+const TESTAMENT_ERRICHTET = ['handwritten', 'public'];
 export const vorsorgeGeregelt = (nf, k) => {
   const v = (nf || {})[k];
   if (!v) return false;
+  if (k === 'willMade') return TESTAMENT_ERRICHTET.includes(v);
   return k === 'organDonor' ? v !== 'undecided' : v === 'yes';
 };
+// Dasselbe für einen Eintrag aus VORSORGE, mit allen Daten: liest das Kapitel, in dem das Feld gespeichert ist.
+export const vorsorgeEintragGeregelt = (alle, v) => vorsorgeGeregelt((alle || {})[v.kapitel || 'notfall'], v.k);
 
 // Felder, die oben direkt ausgefüllt werden (Text, Telefon). Auswahlfelder führen zum Feld im Formular.
 const EINGABE = { emergencyContact: 'text', emergencyPhone: 'tel', allergies: 'text', medications: 'text', doctor: 'text', doctorPhone: 'tel' };
@@ -331,12 +340,12 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   );
 
   // 4. Vorsorge
-  const geregelt = VORSORGE.filter((v) => vorsorgeGeregelt(nf, v.k)).length;
+  const geregelt = VORSORGE.filter((v) => vorsorgeEintragGeregelt(alle, v)).length;
   const pvFeld = feld('notfall', 'patientenverfuegung');
-  const vorsorgeWert = (k) => {
-    const v = nf[k];
+  const vorsorgeWert = (k, kapitel = 'notfall') => {
+    const v = (alle[kapitel] || {})[k];
     if (!v) return t('notfallKapitel.nichtErfasst');
-    return t('chapters.notfall.fields.' + k + '.options.' + v) || v;
+    return t('chapters.' + kapitel + '.fields.' + k + '.options.' + v) || v;
   };
   const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
     h('h3', { id: 'mp-notfall-vorsorge', tabIndex: -1, style: kapH }, t('notfallKapitel.vorsorgeTitel')),
@@ -344,11 +353,11 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
       VORSORGE.map((v) => {
-        const ok = vorsorgeGeregelt(nf, v.k);
+        const ok = vorsorgeEintragGeregelt(alle, v);
         const innen = [
           h('span', { key: 'n', style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, hyphens: 'manual', WebkitHyphens: 'manual', overflowWrap: 'break-word' } }, t('notfallKapitel.vorsorge.' + v.k)),
           // Zeichen UND Wort — nicht nur Farbe (Haken / Kästchen).
-          h('span', { key: 'w', style: { display: 'block', fontSize: text.xs, color: ok ? palette.text : palette.mid, overflowWrap: 'break-word' } }, hinweisZeichen(ok ? 'check' : 'kaestchen', 12), (v.k === 'organDonor' && ok && nf.organDonor !== 'declined' && nf.organDonor !== 'delegated' ? t('notfallKapitel.zustimmung') : vorsorgeWert(v.k))),
+          h('span', { key: 'w', style: { display: 'block', fontSize: text.xs, color: ok ? palette.text : palette.mid, overflowWrap: 'break-word' } }, hinweisZeichen(ok ? 'check' : 'kaestchen', 12), (v.k === 'organDonor' && ok && nf.organDonor !== 'declined' && nf.organDonor !== 'delegated' ? t('notfallKapitel.zustimmung') : vorsorgeWert(v.k, v.kapitel))),
         ];
         const stil = { display: 'block', textAlign: 'left', minHeight: '64px', padding: space.sm + 'px', borderRadius: radius.sm, border: '1px solid ' + (ok ? (palette.sage || palette.border) : palette.border), background: 'none', fontFamily: 'inherit', minWidth: 0 };
         if (ok || !v.weg) {

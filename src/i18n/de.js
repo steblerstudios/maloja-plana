@@ -763,7 +763,7 @@ export default {
   vorsorgeauftrag: {
     vorlageLink: 'Vorlage zum Abschreiben erstellen',
     step6Title: '6 · Das Testament — was nach dem Tod gilt',
-    step6Text: 'Ein Testament kann errichten, wer 18 Jahre alt und urteilsfähig ist (ZGB Art. 467). Eigenhändig heisst: von Anfang bis Ende von Hand geschrieben, mit Jahr, Monat und Tag, und unterschrieben (Art. 505 Abs. 1). Öffentlich heisst: bei einer Urkundsperson, mit zwei Zeugen (Art. 499). Mündlich geht es nur in ausserordentlichen Umständen, vor zwei Zeugen (Art. 506). Ein eigenhändiges Testament kann bei einer Amtsstelle aufbewahrt werden (Art. 505 Abs. 2). Nachkommen, Ehegatten und eingetragene Partnerinnen oder Partner haben einen Pflichtteil: die Hälfte ihres gesetzlichen Erbanspruchs (Art. 470 f.).',
+    step6Text: 'Ein Testament kann errichten, wer 18 Jahre alt und urteilsfähig ist (ZGB Art. 467). Eigenhändig heisst: von Anfang bis Ende von Hand geschrieben, mit Jahr, Monat und Tag, und unterschrieben (Art. 505 Abs. 1). Öffentlich beurkundet heisst: bei einer Urkundsperson, mit zwei Zeugen (Art. 499). Mündlich geht es nur in ausserordentlichen Umständen, vor zwei Zeugen (Art. 506). Ein eigenhändiges Testament kann bei einer Amtsstelle aufbewahrt werden (Art. 505 Abs. 2). Nachkommen, Ehegatten und eingetragene Partnerinnen oder Partner haben einen Pflichtteil: die Hälfte ihres gesetzlichen Erbanspruchs (Art. 470 f.).',
     step6Warn: 'Maloja erstellt kein Testament: Pflichtteile, Güterrecht und Form hängen von der eigenen Familienlage ab. Beratung bieten Notariate und die Anwaltschaft.',
     step6LinkBw: 'Bestattungswünsche festhalten',
     step4LinkPv: 'Patientenverfügung in Fragen erstellen',
@@ -1813,9 +1813,10 @@ export default {
     vorsorgeSatz: { sie: 'Was gilt, wenn Sie selbst nicht mehr entscheiden können.', du: 'Was gilt, wenn du selbst nicht mehr entscheiden kannst.' },
     geregelt: '{n} von {total} geregelt.',
     // Weiche Trennstriche (\u00AD): in der schmalen Kachel bricht das Wort an der Fuge, nicht mitten in der Silbe.
-    vorsorge: { organDonor: 'Organspende', patientenverfuegung: 'Patienten\u00ADverfügung', vorsorgeauftrag: 'Vorsorge\u00ADauftrag', bestattungswuensche: 'Bestattungs\u00ADwünsche' },
+    vorsorge: { organDonor: 'Organspende', patientenverfuegung: 'Patienten\u00ADverfügung', vorsorgeauftrag: 'Vorsorge\u00ADauftrag', bestattungswuensche: 'Bestattungs\u00ADwünsche', willMade: 'Testament' },
     erstellen: 'erstellen ›',
     festhalten: 'festhalten ›',
+    nachlesen: 'nachlesen ›',
     ergaenzen: 'ergänzen ›',
     nichtErfasst: 'nicht erfasst',
     zustimmung: 'Zustimmung',
@@ -2360,7 +2361,7 @@ export default {
         courtCases: { label: 'Laufende Gerichtsverfahren?', options: { no: 'Nein', yes: 'Ja' } },
         legalRepresentative: 'Rechtsbeistand',
         representativePhone: 'Telefon Rechtsbeistand',
-        willMade: { label: 'Testament erstellt?', options: { no: 'Nein', handwritten: 'Ja Holografisches', public: 'Ja Öffentliches', inProgress: 'In Bearbeitung' } },
+        willMade: { label: 'Testament erstellt?', options: { no: 'Nein', handwritten: 'Ja, eigenhändig', public: 'Ja, öffentlich beurkundet', inProgress: 'In Bearbeitung' } },
       },
       docs: {
         betreibungsauszug: 'Betreibungsauszug',

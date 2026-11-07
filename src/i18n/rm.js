@@ -4526,9 +4526,12 @@ export default {
     zurueckVorsorge: 'Turnar a la prevenziun',
     vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
     geregelt: '{n} da {total} reglads.',
-    vorsorge: { organDonor: 'Donaziun d’organs', patientenverfuegung: 'Disposiziun dal pazient', vorsorgeauftrag: 'Mandat da prevenziun', bestattungswuensche: 'Giavischs da sepultura' },
+    // TODO(rm): provisorisch — Gegenlese «Testament» (Lebenslagen C3, 07.11.2026)
+    vorsorge: { organDonor: 'Donaziun d’organs', patientenverfuegung: 'Disposiziun dal pazient', vorsorgeauftrag: 'Mandat da prevenziun', bestattungswuensche: 'Giavischs da sepultura', willMade: 'Testament' },
     erstellen: 'crear ›',
     festhalten: 'fixar ›',
+    // TODO(rm): provisorisch — Gegenlese (Lebenslagen C3, 07.11.2026)
+    nachlesen: 'leger ›',
     ergaenzen: 'cumplettar ›',
     nichtErfasst: 'betg registrà',
     zustimmung: 'Consentiment',

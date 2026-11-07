@@ -85,6 +85,8 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate, data, onUpda
       onNavigate && React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.step5LinkDossier'), onClick: () => onNavigate('notfalldossier') })
     ),
     // Testament — nur Wegweiser, kein Generator (Rechtsprüfung 27.09.2026).
+    // Sprungmarke für die Kachel «Testament» im Block Vorsorge (UMLEITUNGEN.testament, 07.11.2026).
+    React.createElement('div', { id: 'mp-testament', 'aria-hidden': 'true' }),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step6Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step6Text')),
       React.createElement(AblaufWarnung, { palette }, t('vorsorgeauftrag.step6Warn')),

@@ -8,7 +8,8 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANKER, knopfRot, NOTFALL_ANGABEN, SCENARIOS, bereitschaft, vorsorgeGeregelt, HILFE_IN_DER_KRISE } from '../components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANKER, knopfRot, NOTFALL_ANGABEN, SCENARIOS, bereitschaft, vorsorgeGeregelt, HILFE_IN_DER_KRISE, VORSORGE } from '../components/NotfallImKapitel.jsx';
+import { VALID_VIEWS, UMLEITUNGEN } from '../utils/hashRouter.js';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { stufen } from '../config/brotkrumePfade.js';
 import { feldHatWert } from '../utils/vollstaendigkeit.js';
@@ -132,9 +133,11 @@ describe('Unterlagen und Vorsorge', () => {
     const text = nurText(ort());
     for (const s of ['Ihre Notfall-Unterlagen', 'Notfallkarte Am Telefon vorlesen', 'Notfallpass Auf den Sperrbildschirm', 'Notfall-Dossier Für Helfende', 'Portemonnaie-Karte Zum Drucken']) expect(text).toContain(s);
   });
-  it('Vorsorge: Maria hat 1 von 4 geregelt, offene führen zum Werkzeug', () => {
+  // Seit Lebenslagen C3 (07.11.2026) fünf Kacheln: das Testament (Feld im Kapitel Behörden, Maria: «Nein»).
+  it('Vorsorge: Maria hat 1 von 5 geregelt, offene führen zum Werkzeug', () => {
     const text = nurText(ort());
-    expect(text).toContain('1 von 4 geregelt.');
+    expect(text).toContain('1 von 5 geregelt.');
+    expect(text).toContain('Testament Nein nachlesen ›');
     expect(text).toContain('Organspende Zustimmung');
     expect(text).toContain('Patientenverfügung Noch nicht erstellen ›');
     expect(text).toContain('Bestattungswünsche Noch nicht festhalten ›');
@@ -144,6 +147,11 @@ describe('Unterlagen und Vorsorge', () => {
     expect(vorsorgeGeregelt({ organDonor: 'undecided' }, 'organDonor')).toBe(false);
     expect(vorsorgeGeregelt({ patientenverfuegung: 'no' }, 'patientenverfuegung')).toBe(false);
     expect(vorsorgeGeregelt({ patientenverfuegung: 'yes' }, 'patientenverfuegung')).toBe(true);
+    // Testament: errichtet (eigenhändig oder öffentlich), nicht «Nein» oder «In Bearbeitung».
+    expect(vorsorgeGeregelt({ willMade: 'handwritten' }, 'willMade')).toBe(true);
+    expect(vorsorgeGeregelt({ willMade: 'public' }, 'willMade')).toBe(true);
+    expect(vorsorgeGeregelt({ willMade: 'no' }, 'willMade')).toBe(false);
+    expect(vorsorgeGeregelt({ willMade: 'inProgress' }, 'willMade')).toBe(false);
   });
 });
 
@@ -293,5 +301,45 @@ describe('Notfall: Hilfe in einer Krise oder bei Gewalt', () => {
 
   it('der Titel steht in allen fünf Sprachen', () => {
     for (const l of [de, fr, it_, en, rm]) expect(typeof l.notfallKapitel.krisenTitel, 'krisenTitel').toBe('string');
+  });
+});
+
+// Lebenslagen C3 (Entscheid Stebler Studios 07.11.2026, «Ja, A bauen»): das Testament als fünfte Kachel im Block
+// Vorsorge. Das Feld bleibt im Kapitel Behörden gespeichert; die Kachel führt zu Schritt 6 im Ablauf VA & PV.
+describe('Vorsorge: Testament', () => {
+  const kachel = (html) => (html.match(/<button[^>]*data-vorsorge="willMade"[\s\S]*?<\/button>|<div[^>]*data-vorsorge="willMade"[\s\S]*?<\/div>/) || [''])[0];
+
+  it('liest das Feld im Kapitel Behörden, nicht im Notfall', () => {
+    const v = VORSORGE.find((x) => x.k === 'willMade');
+    expect(v).toMatchObject({ kapitel: 'behoerden', weg: 'testament', wegKey: 'notfallKapitel.nachlesen' });
+    const mit = { ...DEMO_DATA, behoerden: { ...DEMO_DATA.behoerden, willMade: 'handwritten' } };
+    expect(nurText(ort(mit))).toContain('2 von 5 geregelt.');
+    expect(nurText(ort(mit))).toContain('Testament Ja, eigenhändig');
+  });
+
+  it('offen: ein Knopf zum Testament-Schritt; geregelt: kein Knopf', () => {
+    expect(kachel(ort())).toMatch(/^<button/);
+    expect(nurText(kachel(ort()))).toContain('nachlesen ›');
+    const mit = { ...DEMO_DATA, behoerden: { ...DEMO_DATA.behoerden, willMade: 'public' } };
+    expect(kachel(ort(mit))).toMatch(/^<div/);
+  });
+
+  it('«testament» leitet zu Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung», die Sprungmarke steht dort', () => {
+    expect(VALID_VIEWS.has('testament')).toBe(true);
+    expect(UMLEITUNGEN.testament).toEqual({ view: 'vorsorgeauftrag', chapterIndex: null, anker: 'mp-testament' });
+    const va = QUELLE('Vorsorgeauftrag.jsx');
+    const marke = va.indexOf("id: 'mp-testament'");
+    expect(marke).toBeGreaterThan(-1);
+    expect(va.indexOf("t('vorsorgeauftrag.step6Title')")).toBeGreaterThan(marke);
+  });
+
+  it('die Antworten sagen dasselbe wie der Ablauf: eigenhändig, öffentlich beurkundet', () => {
+    expect(t('chapters.behoerden.fields.willMade.options.handwritten')).toBe('Ja, eigenhändig');
+    expect(t('chapters.behoerden.fields.willMade.options.public')).toBe('Ja, öffentlich beurkundet');
+    expect(fr.chapters.behoerden.fields.willMade.options.public).toBe('Oui, par acte public');
+    for (const l of [de, fr, it_, en, rm]) {
+      expect(typeof l.notfallKapitel.vorsorge.willMade, 'Kachelname').toBe('string');
+      expect(typeof l.notfallKapitel.nachlesen, 'nachlesen').toBe('string');
+    }
   });
 });
