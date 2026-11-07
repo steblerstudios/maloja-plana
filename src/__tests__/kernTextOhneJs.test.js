@@ -110,7 +110,8 @@ describe('Kern-Text ohne JavaScript — was ein JS-loser Crawler liest', () => {
 describe('Startseite verlinkt die öffentlichen Erklärseiten', () => {
   const betaGate = fs.readFileSync(path.resolve(process.cwd(), 'src/BetaGate.jsx'), 'utf8');
   // Krankenkasse seit 06.11.2026 (Verbesserungen D2): indexiert, stand aber auf keinem der beiden Wege.
-  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse', 'sozialhilfe', 'steuern'];
+  // Politsystem + Kantone im Vergleich seit 07.11.2026 als Zeile «Die Schweiz verstehen» (Seiten-Architektur).
+  const seiten = ['was-steht-mir-zu', 'praemienverbilligung', 'krankenkasse', 'sozialhilfe', 'steuern', 'politsystem', 'kantone-im-vergleich'];
 
   it.each(seiten)('/%s/ existiert, steht im noscript-Block und auf der Code-Wand', (seite) => {
     expect(fs.existsSync(path.resolve(process.cwd(), 'public', seite, 'index.html'))).toBe(true);

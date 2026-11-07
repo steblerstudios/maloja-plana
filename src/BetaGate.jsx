@@ -24,6 +24,12 @@ const ERKLAERSEITEN = [
   ['/sozialhilfe/', 'Sozialhilfe'],
   ['/steuern/', 'Steuern'],
 ];
+// Seiten über alle Themen, im Organigramm oben «Die Schweiz verstehen» (Entscheid 07.11.2026,
+// docs/design/seiten-architektur-2026-11.md). Der Kantonsatlas kommt dazu, sobald er auf main ist.
+const SCHWEIZ_VERSTEHEN = [
+  ['/politsystem/', 'Wie die Schweiz entscheidet'],
+  ['/kantone-im-vergleich/', 'Kantone im Vergleich'],
+];
 // Gemeinsame Form der zwei ruhigen Knöpfe unter «Öffnen» (Demo · Einfache Ansicht).
 const ruhigerKnopf = {
   marginTop: space.md, width: '100%', padding: '10px', borderRadius: radius.sm,
@@ -232,15 +238,19 @@ export const BetaGate = ({ children }) => {
       // nach dem Rendern von der Startseite sieht. Bis 01.11.2026 führte von hier kein Weg
       // dorthin (Search Console: «Gefunden – zurzeit nicht indexiert»). Deutsch in jeder
       // Sprache, weil fr/it/en/rm noch nicht freigegeben sind (ERKLAERSEITEN, Wächter: kernTextOhneJs.test.js).
-      React.createElement('nav', { 'aria-label': 'Erklärseiten', lang: 'de', style: { marginTop: space.md } },
-        ERKLAERSEITEN.map(([pfad, name]) => React.createElement('a', {
-          key: pfad, href: pfad,
-          style: {
-            display: 'inline-block', minHeight: '44px', lineHeight: '44px', padding: '0 8px',
-            color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
-            textDecoration: 'underline', textUnderlineOffset: '2px',
-          }
-        }, name))
+      [['Erklärseiten', ERKLAERSEITEN, space.md], ['Die Schweiz verstehen', SCHWEIZ_VERSTEHEN, 0]].map(([titel, liste, oben], i) =>
+        React.createElement('nav', { key: titel, 'aria-label': titel, lang: 'de', style: { marginTop: oben } },
+          // Die zweite Zeile nennt ihren Namen sichtbar, damit sie nicht wie eine Fortsetzung der ersten wirkt.
+          i > 0 && React.createElement('span', { style: { color: palette.mid, fontSize: text.xs, padding: '0 8px' } }, `${titel}:`),
+          liste.map(([pfad, name]) => React.createElement('a', {
+            key: pfad, href: pfad,
+            style: {
+              display: 'inline-block', minHeight: '44px', lineHeight: '44px', padding: '0 8px',
+              color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
+              textDecoration: 'underline', textUnderlineOffset: '2px',
+            }
+          }, name))
+        )
       ),
       React.createElement('button', {
         type: 'button',
