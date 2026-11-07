@@ -149,6 +149,28 @@ abgeglichen gegen beide Register — jede Seite steht drin. Neu: Einstellungen (
 Als App installieren) in der Klammer · Startseite nach Frage 4 · geplante Erklärseiten gestrichelt
 (EL und AHV/Pensionierung bei Versicherungen, ALV bei Arbeit) · Hinweis, wo gebaut ist (#738, #739, #743).
 
+### ✅ Prüfung des Organigramms: Logik, UX, Psychologie, Abläufe (07.11.2026)
+
+Auf «macht es Sinn nach Webseiten-Logik und UI/UX und psychologisch und ablaufmässig, ist alles richtig eingeteilt?».
+Ergebnis: Das Gerüst stimmt (Lebensbereiche statt Werkzeuge, drei Ebenen, Regel «die Sache, um die es geht»,
+Krankenkasse nach Vertrag/Leistung). Fünf Befunde, ✅ **1, 2 und 4 übernommen** (Stebler Studios: «1, 2 und 4»):
+
+1. **Finanzen** — elf Seiten an einem Ast, Alltag neben Krise. Zwischentitel ohne neuen Ast: *Im Alltag* (Monatsbudget,
+   Finanzen & Geld, Kreditkarte, Mindestlohn prüfen) · *Steuern* (Steuern, Quellensteuer) · *Wenn es eng wird* (Schulden,
+   Mahnung erhalten, Betreibung erhalten, Sozialhilfe) · *Wenn man Geld zugut hat* (Ihnen schuldet jemand Geld).
+2. **Ast Notfall** — ruhige Planung unter Alarmrot. Ort bleibt (② ④), Zwischentitel: *Im Ernstfall* (Notfall-Einstieg,
+   Notfallkarte, Notfallpass) · *Vorausverfügen* (Patientenverfügung, Vorsorgeauftrag & PV, Organspende, Bestattungswünsche).
+4. **Querwege, wo die Einteilung trennt** (im Code geprüft 07.11.): Betreibungsauszug (Behörden, Suchwort «wohnungssuche»)
+   wird von keinem Wohnen-Ablauf verlinkt (Umzug, Wohnung gekündigt) · Stundenlohn (Arbeit) nutzt die Mindestlohn-Regel,
+   verlinkt «Mindestlohn prüfen» (Finanzen) aber nicht. Ort bleibt, Querverweis fehlt.
+
+Nicht übernommen, festgehalten: **3** zwei Türen quer zu den Kapiteln («Wenn die Stelle wegfällt»: Stelle verloren →
+ALV → Ausgesteuert → Sozialhilfe → IPV · «Älter werden»: Pensionierung → EL → Vorsorgeauftrag → Pflege →
+Bestattungswünsche) · **5** Kapitelnamen «Behörden» (amtlich) und «Persönliche Basis» (abstrakt) — vorerst nicht ändern.
+
+Nur Organigramm, nichts gebaut. Beim Bau: Zwischentitel in der Startseite nach Kapitel (#739, gleiche Bauform wie die
+Ast-Titel) und auf der Kapitelseite · drei Querverweise.
+
 ### Wege durch Maloja · Ergänzungen A–E (07.11.2026, offen)
 
 Auf «jetzt wollen wir ergänzen … wie man auf was kommt, welche Abläufe und Logiken»: Bild

@@ -12,6 +12,8 @@ h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17
 .s{display:block;background:var(--chip);border-left:3px solid var(--line);border-radius:4px;padding:2px 6px;margin:3px 0;font-size:12px}
 .s.ok{border-left-color:#5A7868}.s.f{border-left-color:#C4A870;background:repeating-linear-gradient(135deg,var(--chip),var(--chip) 6px,rgba(196,168,112,.13) 6px,rgba(196,168,112,.13) 12px)}
 .s.e.plan{border-left-style:dashed;opacity:.75}
+.zt{margin:7px 0 1px 2px;font-size:11px;font-style:italic;color:var(--soft)}.zt:before{content:"— "}
+.qv{display:block;font-size:10.5px;color:#8A6D4B;margin-top:1px}.qv:before{content:"↔ "}
 .s.kt{border-left-color:#4A5D8F;background:repeating-linear-gradient(90deg,var(--chip),var(--chip) 10px,rgba(74,93,143,.07) 10px,rgba(74,93,143,.07) 11px)}.s.kt:before{content:"▦ ";color:#4A5D8F}
 .s.e{border-left-color:#3F5C8A;border-left-style:double;border-left-width:4px}.zv{margin:8px 0 2px;font-size:11px;color:var(--soft)}
 .s em{font-style:normal;color:var(--soft);font-size:10.5px}
@@ -38,7 +40,7 @@ table{border-collapse:collapse;width:100%;background:var(--card);border-radius:1
 
 <h2>Entschieden · Gesundheit ist ein Kapitel, der Notfall gehört dazu</h2>
 <p>So wie die Vorsorge zu den Versicherungen gehört. Es bleiben <b>7 Kapitel</b> und <b>11 Äste</b>. Jedes Kapitel hat ein oder zwei Äste.</p>
-<div class=legende><span>✅ <b>Stand 07.11.2026: fertig.</b> Alle Seiten der App mit ihrem Namen in der App (<code>de.js</code>, Zweig #739), alle Erklärseiten, die geplanten Erklärseiten gestrichelt.</span><span>Ziffer ①–⑦ = durch welchen Entscheid die Seite ihren Ort bekam.</span><span><span class="s ok" style="display:inline-block">Seite der App</span> <span class="s e" style="display:inline-block">Erklärseite</span> <span class="s e plan" style="display:inline-block">Erklärseite geplant</span> <span class="s kt" style="display:inline-block">Karte im Kantonsatlas</span></span></div>
+<div class=legende><span>✅ <b>Stand 07.11.2026: fertig.</b> Alle Seiten der App mit ihrem Namen in der App (<code>de.js</code>, Zweig #739), alle Erklärseiten, die geplanten Erklärseiten gestrichelt.</span><span>Ziffer ①–⑦ = durch welchen Entscheid die Seite ihren Ort bekam.</span><span><span class="s ok" style="display:inline-block">Seite der App</span> <span class="s e" style="display:inline-block">Erklärseite</span> <span class="s e plan" style="display:inline-block">Erklärseite geplant</span> <span class="s kt" style="display:inline-block">Karte im Kantonsatlas</span></span><span><i class=zt style="display:inline">Zwischentitel im Ast</i> · <span class=qv style="display:inline">Querweg, wo die Einteilung trennt</span> (07.11.)</span></div>
 
 <div class=dach>
  <div><b>Startseite</b>Kapitel führen, Äste als Zwischentitel · «Alle Seiten nach Kapitel» statt Werkzeug-Gruppen · Türen «Ankommen in der Schweiz» und «Mit 18» · Stufen bleiben <em>(Frage 4 ✅ 06.11., gebaut in #739)</em></div>
@@ -59,14 +61,20 @@ table{border-collapse:collapse;width:100%;background:var(--card);border-radius:1
  </div>
  <div class=kap style="border-color:#7E9A4E"><b>Wohnen</b><small>Chalet</small>
   <div class=ast><i style="background:#7E9A4E"></i>Wohnen</div>
-  <span class="s ok">Umzug</span><span class="s ok">Wohnung gekündigt</span><span class="s ok">Zusammenziehen ohne Trauschein</span><span class="s ok">Mietbeiträge</span>
+  <span class="s ok">Umzug<span class=qv>Betreibungsauszug (Behörden) — Verweis fehlt</span></span><span class="s ok">Wohnung gekündigt<span class=qv>Betreibungsauszug (Behörden) — Verweis fehlt</span></span><span class="s ok">Zusammenziehen ohne Trauschein</span><span class="s ok">Mietbeiträge</span>
   <div class=zv>Auf der Karte</div>
   <span class="s kt">Miete 3 Zimmer</span><span class="s kt">Leerwohnungsziffer</span>
  </div>
  <div class=kap style="border-color:#C4A870"><b>Finanzen</b><small>Fünfliber</small>
   <div class=ast><i style="background:#C4A870"></i>Finanzen</div>
-  <span class="s ok">Monatsbudget</span><span class="s ok">Finanzen &amp; Geld</span><span class="s ok">Kreditkarte: lohnt sie sich?</span><span class="s ok">Schulden</span><span class="s ok">Mahnung erhalten</span><span class="s ok">Ihnen schuldet jemand Geld</span><span class="s ok">Betreibung erhalten</span><span class="s ok">Quellensteuer</span><span class="s ok">Sozialhilfe ✅</span>
-  <span class="s ok">Steuern ③</span><span class="s ok">Mindestlohn prüfen ⑥ <em>(in der Kapitelseite)</em></span>
+  <div class=zt>Im Alltag</div>
+  <span class="s ok">Monatsbudget</span><span class="s ok">Finanzen &amp; Geld</span><span class="s ok">Kreditkarte: lohnt sie sich?</span><span class="s ok">Mindestlohn prüfen ⑥ <em>(in der Kapitelseite)</em><span class=qv>Stundenlohn (Arbeit) — Verweis fehlt</span></span>
+  <div class=zt>Steuern</div>
+  <span class="s ok">Steuern ③</span><span class="s ok">Quellensteuer</span>
+  <div class=zt>Wenn es eng wird</div>
+  <span class="s ok">Schulden</span><span class="s ok">Mahnung erhalten</span><span class="s ok">Betreibung erhalten</span><span class="s ok">Sozialhilfe ✅</span>
+  <div class=zt>Wenn man Geld zugut hat</div>
+  <span class="s ok">Ihnen schuldet jemand Geld</span>
   <div class=zv>Zum Verstehen</div>
   <span class="s e">Sozialhilfe <em>/sozialhilfe/</em></span><span class="s e">Steuern <em>/steuern/</em></span>
   <div class=zv>Auf der Karte</div>
@@ -87,7 +95,7 @@ table{border-collapse:collapse;width:100%;background:var(--card);border-radius:1
   <div class=ast><i style="background:#8A6D4B"></i>Bildung</div>
   <span class="s ok">Stipendien</span><span class="s ok">Lehre beginnen ⑦</span>
   <div class=ast><i style="background:#A8895E"></i>Arbeit</div>
-  <span class="s ok">Neuer Job</span><span class="s ok">Stelle verloren</span><span class="s ok">Ausgesteuert</span><span class="s ok">Selbständig werden</span><span class="s ok">Lebenslauf ⑦</span><span class="s ok">Arbeitslosenentschädigung ⑤</span><span class="s ok">Stundenlohn: was steht mir zu? ⑥</span>
+  <span class="s ok">Neuer Job</span><span class="s ok">Stelle verloren</span><span class="s ok">Ausgesteuert</span><span class="s ok">Selbständig werden</span><span class="s ok">Lebenslauf ⑦</span><span class="s ok">Arbeitslosenentschädigung ⑤</span><span class="s ok">Stundenlohn: was steht mir zu? ⑥<span class=qv>Mindestlohn prüfen (Finanzen) — Verweis fehlt</span></span>
   <div class=zv>Zum Verstehen</div>
   <span class="s e plan">Arbeitslosigkeit (ALV) <em>geplant, als Zweite</em></span>
   <div class=zv>Auf der Karte</div>
@@ -95,13 +103,16 @@ table{border-collapse:collapse;width:100%;background:var(--card);border-radius:1
  </div>
  <div class=kap style="border-color:#5A6472"><b>Behörden</b><small>Helvetia</small>
   <div class=ast><i style="background:#5A6472"></i>Behörden</div>
-  <span class="s ok">Neu in der Schweiz</span><span class="s ok">Bewilligung verlängern</span><span class="s ok">Einbürgerung</span><span class="s ok">Asyl &amp; Schutz</span><span class="s ok">Wegzug ins Ausland</span><span class="s ok">Pass oder Identitätskarte</span><span class="s ok">Führerausweis</span><span class="s ok">Militär- oder Zivildienst</span><span class="s ok">Betreibungsauszug bestellen ✅</span>
+  <span class="s ok">Neu in der Schweiz</span><span class="s ok">Bewilligung verlängern</span><span class="s ok">Einbürgerung</span><span class="s ok">Asyl &amp; Schutz</span><span class="s ok">Wegzug ins Ausland</span><span class="s ok">Pass oder Identitätskarte</span><span class="s ok">Führerausweis</span><span class="s ok">Militär- oder Zivildienst</span><span class="s ok">Betreibungsauszug bestellen ✅<span class=qv>Umzug, Wohnung gekündigt (Wohnen) — Verweis fehlt</span></span>
  </div>
  <div class="kap neu" style="border-color:#C67A4A"><b>Gesundheit</b> <small>neu · statt «Notfall»</small><br><small>Arztkoffer</small>
   <div class=ast><i style="background:#C67A4A"></i>Gesundheit</div>
   <span class="s ok">Arztkoffer</span><span class="s ok">Unfall oder Krankheit</span><span class="s ok">Krankheit &amp; IV</span><span class="s ok">Angehörige pflegen</span><span class="s ok">KVG-Leistungen &amp; Franchise ①</span><span class="s ok">Krankenkassenkarte scannen ①</span>
   <div class=ast><i style="background:#B0524C"></i>Notfall</div>
-  <span class="s ok">Notfall-Einstieg</span><span class="s ok">Notfallkarte</span><span class="s ok">Notfallpass</span><span class="s ok">Patientenverfügung erstellen ②</span><span class="s ok">Vorsorgeauftrag &amp; Patientenverfügung ②</span><span class="s ok">Organspende ④</span><span class="s ok">Bestattungswünsche ④</span>
+  <div class=zt>Im Ernstfall</div>
+  <span class="s ok">Notfall-Einstieg</span><span class="s ok">Notfallkarte</span><span class="s ok">Notfallpass</span>
+  <div class=zt>Vorausverfügen</div>
+  <span class="s ok">Patientenverfügung erstellen ②</span><span class="s ok">Vorsorgeauftrag &amp; Patientenverfügung ②</span><span class="s ok">Organspende ④</span><span class="s ok">Bestattungswünsche ④</span>
  </div>
 </div>
 
