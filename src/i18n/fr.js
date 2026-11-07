@@ -1772,6 +1772,7 @@ export default {
   },
   // Chapitre Urgence · « un seul endroit » (round 9, AE ; construit réception F6, 25.10.2026)
   notfallKapitel: {
+    krisenTitel: 'En cas de crise ou de violence',
     vollstaendig: 'complet',
     fehlt: 'manquant',
     zuklappen: 'refermer',

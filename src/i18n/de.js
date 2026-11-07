@@ -1781,6 +1781,8 @@ export default {
   },
   // Kapitel Notfall · «ein Ort» (Runde 9, AE; gebaut Abnahme F6, 25.10.2026)
   notfallKapitel: {
+    // Lebenslagen C1+C2 (07.11.2026), Wortlaut vom copy-pruefer abgenommen.
+    krisenTitel: 'In einer Krise oder bei Gewalt',
     vollstaendig: 'vollständig',
     fehlt: 'fehlt',
     zuklappen: 'zuklappen',

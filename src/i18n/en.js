@@ -1772,6 +1772,7 @@ export default {
   },
   // Emergency chapter · "one place" (round 9, AE; built in acceptance F6, 25.10.2026)
   notfallKapitel: {
+    krisenTitel: 'In a crisis or in case of violence',
     vollstaendig: 'complete',
     fehlt: 'missing',
     zuklappen: 'close',

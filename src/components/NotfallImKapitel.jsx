@@ -20,6 +20,8 @@ import { CHAPTER_KEYS } from '../config/constants.js';
 // Sprungmarke NOTFALL_ANKER (UMLEITUNGEN.notfalleinstieg).
 
 export const NOTFALL_ANKER = 'mp-notfall-ernstfall';
+// Lebenslagen C1+C2 (07.11.2026): Hilfe bei seelischer Krise und Gewalt — dieselben Einträge wie in «Offizielle Links».
+export const HILFE_IN_DER_KRISE = ['help1', 'help2', 'help3', 'help4'];
 
 export const SCENARIOS = [
   {
@@ -190,6 +192,25 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
 
   // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
   // kann er nur in einem Behälter, der so hoch ist wie das Kapitel); hier folgt «… anrufen».
+  // Lebenslagen C1+C2 (Entscheid Stebler Studios 07.11.2026, «A, so bauen»): bei seelischer Krise oder Gewalt.
+  // Die vier Einträge stehen unverändert so in «Offizielle Links» → Beratung (legal.resources.help1–4) — keine neuen
+  // Fakten. Immer sichtbar, unabhängig von den Angaben. Nur Links: nichts wird gespeichert, kein Merkpunkt, keine
+  // Erinnerung — das Gerät kann geteilt sein.
+  const hilfe = HILFE_IN_DER_KRISE.map((k) => [k, t('legal.resources.' + k)]).filter(([, e]) => e && typeof e === 'object' && e.name && e.url);
+  const hilfeInDerKrise = hilfe.length > 0 && h('section', { 'data-teil': 'notfall-krise', 'aria-labelledby': 'mp-notfall-krise', style: { marginTop: space.md + 'px' } },
+    h('h3', { id: 'mp-notfall-krise', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('notfallKapitel.krisenTitel')),
+    h('ul', { style: { listStyle: 'none', margin: 0, padding: 0 } },
+      hilfe.map(([k, e]) => {
+        const istTel = e.url.startsWith('tel:');
+        const inhalt = [
+          h('span', { key: 'n', style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, e.name),
+          e.desc && h('small', { key: 'd', style: { display: 'block', ...klein } }, e.desc),
+        ];
+        const zeile = { display: 'block', minHeight: '44px', padding: space.xs + 'px 0', borderBottom: '1px solid ' + palette.border + '88', textDecoration: 'none', color: palette.text };
+        return h('li', { key: k, 'data-hilfe': k },
+          istTel ? h('a', { href: e.url, style: zeile }, ...inhalt) : h(ExternerLink, { t, href: e.url, style: zeile }, ...inhalt));
+      })));
+
   const telefon = String(nf.emergencyPhone || '').trim();
   const telHref = telefon ? 'tel:' + telefon.replace(/[^\d+]/g, '') : '';
   const ernstfall = h('div', { 'data-teil': 'notfall-ernstfall', style: { marginBottom: space.md + 'px' } },
@@ -200,7 +221,8 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       h('span', { style: { minWidth: 0 } },
         h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('notfallKapitel.anrufen', { name: nf.emergencyContact })),
         h('small', { style: { display: 'block', ...klein } }, t('chapters.notfall.fields.emergencyContact') + ' · ', h('span', { style: { whiteSpace: 'nowrap' } }, telefon))),
-      h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: palette.sandDeep || palette.mid } }, h(Icon, { name: 'phone', size: 18 })))
+      h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: palette.sandDeep || palette.mid } }, h(Icon, { name: 'phone', size: 18 }))),
+    hilfeInDerKrise
   );
 
   // 2. Bereit für den Ernstfall

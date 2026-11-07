@@ -90,7 +90,9 @@ export const SEARCH_VIEWS = [
   // Karte auf dem Dashboard führt in `notfalleinstieg`, und keine dieser Seiten stand hier.
   // Der Name ist derselbe wie auf der Dashboard-Karte.
   // Runde 5 / «ein Ort»: «Notfallkarte» trifft nur noch die Notfallkarte (Q), nicht mehr das Kapitel.
-  { view: 'notfalleinstieg', nav: 'chapters.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card'] },
+  { view: 'notfalleinstieg', nav: 'chapters.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card',
+    // Lebenslagen C1+C2 (07.11.2026): Krise und Gewalt finden die Hilfe im Notfall-Block (legal.resources.help1–4).
+    'krise', 'gewalt', 'häusliche gewalt', 'suizid', 'dargebotene hand', 'opferhilfe', 'frauenhaus', 'crise', 'violence', 'crisi', 'violenza', 'crisis'] },
   { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
   { view: 'notfallpass', nav: 'notfallpass.title', icon: 'notfall', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
