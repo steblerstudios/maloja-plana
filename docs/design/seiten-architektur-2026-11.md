@@ -149,6 +149,28 @@ abgeglichen gegen beide Register — jede Seite steht drin. Neu: Einstellungen (
 Als App installieren) in der Klammer · Startseite nach Frage 4 · geplante Erklärseiten gestrichelt
 (EL und AHV/Pensionierung bei Versicherungen, ALV bei Arbeit) · Hinweis, wo gebaut ist (#738, #739, #743).
 
+### ✅ Was fehlte · Organigramm gegen die Ansichten der App (07.11.2026)
+
+Auf «was fehlt, was haben wir noch nicht, was haben wir komplett vergessen?». Massstab: `VALID_VIEWS` und
+`UMLEITUNGEN` in `utils/hashRouter.js`, dazu das Schweizer Lebensmodell (Skill maloja-swiss-life-model).
+✅ **A und B nachgeführt** (Stebler Studios: «Ja, A und B»):
+
+- **A · sechs «Seiten», die seit 24./27.10. Teil einer anderen sind** (alte Adressen leiten um, je mit Wächter):
+  Finanzen & Geld → Auswertung der Kapitelseite Finanzen · Ausgesteuert → «Stelle verloren» · Notfall-Einstieg →
+  Block «Bereit für den Ernstfall» · Schnellcheck → «Was steht mir zu?», Teil «Mit Ihren Angaben» · Merkliste →
+  Reiter von «Was ansteht» · Lebensmappe → Auswahl in «Unterlagen drucken». Im Bild gepunktet als «Teil von».
+- **B · fehlende Teile:** Eingang (Beta-Tor, 5 Sprachen) · Mein Obstgarten · Rucksack · Rechtliches (Datenschutz,
+  Impressum) · Anspruch-Check (geführter Weg, nur aus «Was steht mir zu?») · Einstellungen heissen in der App
+  «Ansicht & Sprache».
+- **Namen:** Zwischentitel Notfall angeglichen an den App-Block «Bereit für den Ernstfall». 🛑 Der App-Block
+  «Vorsorge» im Kapitel Gesundheit heisst gleich wie der Ast Vorsorge bei Versicherungen — Doppelname, offen.
+
+**C · offen, Inhaltsentscheid** (im Code belegt): (1) psychische Krise — 143/147 nur in «Offizielle Links», im
+Notfall nur 144 · (2) häusliche Gewalt — Opferhilfe/Frauenhaus nur in «Offizielle Links» · (3) eigenes Testament
+fehlt unter «Vorausverfügen» · (4) Kinder zwischen Geburt und 18 (Kita, Schuleintritt) ohne Ablauf · (5) Hausrat,
+Haftpflicht, Rechtsschutz, UVG/KTG ohne eigenen Weg (Abdeckung der Versicherungs-Übersicht nicht geprüft) ·
+(6) Studium, Matura, Weiterbildung nur über Stipendien. Wohneigentum bewusst nicht gezählt (Mietende).
+
 ### ✅ Prüfung des Organigramms: Logik, UX, Psychologie, Abläufe (07.11.2026)
 
 Auf «macht es Sinn nach Webseiten-Logik und UI/UX und psychologisch und ablaufmässig, ist alles richtig eingeteilt?».
