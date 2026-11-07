@@ -164,14 +164,14 @@ Stebler Studios: «aber ist alv nicht auch rav? und rav ist doch ein amt» → j
 | IV | Gesundheit · Gesundheit | `ereignisIv` | Arztkoffer + Mini-Schild mit Edelweiss blau | ✓ | — |
 | **Pflege** | Gesundheit · **Gesundheit** | `ereignisPflege` | Arztkoffer + Pflegebett **rot** → ✅ **kirschrot** (07.11., C) | ⚠️ **1** rot hiess «Ast Notfall spielt mit»; die Seite steht im Ast Gesundheit → jetzt Familie spielt mit | erledigt |
 | Notfall (Einstieg, heute Block «Bereit für den Ernstfall») | Gesundheit · Notfall | `notfall` | Arztkoffer + Herz mit Puls rot | ✓ | — |
-| **Notfallkarte** | Gesundheit · Notfall | Menü `notfall` · Kachel im Kapitel `phone` | Menü: Karte (wie KK-Karte, Kreditkarte) · Kachel: Hörer (Punkt 9 «Kachel Notfallkarte») | ⚠️ **2** zwei Zeichen für dieselbe Seite | Frage 2 |
+| **Notfallkarte** | Gesundheit · Notfall | Menü `notfall` · Kachel im Kapitel `phone` | Menü: Karte (wie KK-Karte, Kreditkarte) · Kachel: Hörer (Punkt 9 «Kachel Notfallkarte») → ✅ **Hörer überall** (07.11., C) | ⚠️ **2** zwei Zeichen für dieselbe Seite | erledigt |
 | Notfallpass | Gesundheit · Notfall | Menü + Kachel `notfall` | Arztkoffer + Handy rot | ✓ (Kachel zieht beim Bau mit) | — |
 | Patientenverfügung | Gesundheit · Notfall (Vorausverfügen) | `document` | Arztkoffer + Blatt mit Herz rot | ✓ | — |
 | Vorsorgeauftrag & PV | Gesundheit · Notfall (Vorausverfügen) | `ereignisVorsorgeauftrag` | Arztkoffer + Blatt violett | ✓ Architektur sagt «rot»; violett = Vorsorge spielt mit (Regel Rot/Violett, 06.11.) | Architektur-Tabelle nachführen |
 | Organspende | Gesundheit · Notfall | `ereignisOrgan` | Arztkoffer + Herz rot | ✓ | — |
 | Bestattungswünsche | Gesundheit · Notfall | `ereignisBestattung` | Arztkoffer + Kerze violett | ✓ wie VA | — |
 | **Kachel «Notfall-Dossier»** (Kapitel Gesundheit) | Gesundheit · Notfall | `notfall` | ❓ nicht besprochen — nach 4b D: Stapel + rotes Abzeichen | ❓ **A** | Frage 3 |
-| **Kachel «Portemonnaie-Karte»** | Gesundheit · Notfall | `document` | ❓ nicht besprochen — Karte (rot) | ❓ **B** | Frage 3 |
+| **Kachel «Portemonnaie-Karte»** | Gesundheit · Notfall | `document` | ✅ Karte (aus Frage 2 C) | ✓ | erledigt |
 | **Kachel «Testament»** (neu, Block «Vorsorge») | Gesundheit · Notfall (Feld liegt bei Behörden) | **kein Zeichen** — wie die vier Geschwister nur Haken/Kästchen | — | ✓ passt: die Vorsorge-Kacheln zeigen Stand, nicht Thema; Haken = «geschafft» (Punkt 3) | nichts zeichnen |
 | **Block «In einer Krise oder bei Gewalt»** (neu) | Gesundheit · Notfall | Zeile «… anrufen» `phone`; die vier Hilfe-Zeilen ohne Zeichen | — | ✓ Hörer = anrufen (Punkt 9). Zeilen ohne Zeichen wie in «Offizielle Links» — ruhig | nichts zeichnen |
 | **Kapitel-Ende «Zum Verstehen / Auf der Karte»** (neu) | Basis, Wohnen, Finanzen, Versicherungen, Ausbildung | Textlinks, je mit `external` (Pfeil hinaus, von `ExternerLink`) | — | ✓ ein Zeichen = eine Bedeutung: «öffnet neuen Tab» | nichts zeichnen |
@@ -196,7 +196,7 @@ Stebler Studios: «aber ist alv nicht auch rav? und rav ist doch ein amt» → j
 | Militär / Zivildienst | Behörden · Behörden | `ereignisDienst` | Helvetia + Gradabzeichen grün (Ast Person) | ✓ (Gruppe «erwachsen werden») | — |
 | Mietbeiträge | Wohnen · Wohnen | `ereignisMietzins` | Chalet + Fünfliber gold | ✓ | — |
 | Offizielle Links | ohne Kapitel · Klammer | Register `globe`, Werkzeug-Gruppen `dokumentTresor` — **zwei Zeichen** | Kette | heute ✗ · entschieden ✓ | — |
-| **Drucken** · Lebensmappe | ohne Kapitel · Klammer | beide `documents` | Lebensmappe = Stapel (+ du grün, 4b) · Drucken ❓ | ❓ **C** gleiches Zeichen | Frage 3 |
+| **Drucken** · Lebensmappe | ohne Kapitel · Klammer | beide `documents` | ✅ schon 4b D: Drucken = Blatt + drucken · Lebensmappe = Ordner + du grün | ✓ (mein Lesefehler) | — |
 | Einstellungen: Sicherung · Benachrichtigungen · Als App installieren | ohne Kapitel | `sicherung` · `cowbell` · `download` | Pfeil nach unten · Kuhglocke Strich · Handy ohne Abzeichen | ✓ | — |
 | «Was steht mir zu?» · Übersicht · Menü | oben / Leiste | `geschenk` · Sackmesser · drei Striche | Wegweiser · Feldstecher · Sackmesser | ✓ | — |
 
@@ -206,6 +206,9 @@ Stebler Studios: «aber ist alv nicht auch rav? und rav ist doch ein amt» → j
 Stebler Studios zu Frage 1: «ich bin unsicher kannst du die map darstellen / visualisieren» → Bild [Icon-Landkarte](icon-landkarte.html): alle 7 Kapitel → Äste → Zwischentitel → Seiten, je mit dem entschiedenen Zeichen (Stand nach der Nacht: Fünfliber Q, leer, Militär grün, Lenkrad G2), hell/dunkel umschaltbar, Pflege A/B/C umschaltbar, offene Stellen markiert. Werkzeug `bau41_landkarte.py`.
 ✅ **07.11.: Frage 1, Pflege = C, kirschrot** («C, kirschrot»; meine Empfehlung C): Pflege = Arztkoffer + Pflegebett im kirschroten Abzeichen (Ast Familie spielt mit: Angehörige pflegen, Betreuungsgutschrift). Überholt damit «Pflege = Pflegebett rot» vom 06.11. ⚠️1 erledigt.
 **Frage 2, Notfallkarte:** Bild [Notfallkarte](icon-besprechung-notfallkarte.html), Menü und Kacheln «Ihre Notfall-Unterlagen»: A wie entschieden (Menü Karte, Kachel Hörer) · B Karte überall · C Hörer überall, Karte für die Portemonnaie-Karte. Empfehlung C. Offen.
+✅ **07.11.: Frage 2, Notfallkarte = C, Hörer überall** («C, Hörer überall»; meine Empfehlung C): Menü = Arztkoffer + Hörer rot · Kachel = Hörer · die Karte geht an die **Portemonnaie-Karte** (Kachel). Überholt damit das Karten-Abzeichen der Notfallkarte (06.11., Kreditkarte-Runde). ⚠️2 erledigt, ❓B damit auch.
+❓C geklärt ohne Frage: «Unterlagen drucken» und Lebensmappe sind seit 4b D entschieden (Blatt + drucken · Ordner + du grün) und sehen nicht mehr gleich aus; die Zeile oben war ein Lesefehler von mir (ich hatte nur Punkt 4 «Stapel» gelesen).
+**Frage 3, Notfall-Dossier (Kachel):** Bild [Notfall-Kacheln](icon-besprechung-notfall-kacheln.html): A Stapel · B Blatt + drucken mit rotem Abzeichen (wie «Unterlagen drucken», Notfall spielt mit). Empfehlung B. Offen.
 **Nebenbefund zum Bau:** `WerkzeugGruppen.jsx` färbt alle Zeichen neutral (`palette.mid`); Entscheid 2d (Familie in Ast-Farbe) braucht dort die Farbe aus `getBereich(bereich)`.
 
 **📍 Stand 07.11., ca. 00:40 — nächster Schritt: Gesamtmatrix.** Seit 23:45 entschieden: Haken C · Merkliste Lesezeichen · Blätter (Blatt/Stapel/Ordner/Rechner/Kette/Teilen/Export) · Funktionen folgen dem System (D) · Kalender C · Bahnhofsuhr · Telefon (Hörer/Handy) · Sackmesser = Menü · Glocke A · Übersicht Feldstecher · «Was steht mir zu?» Wegweiser · `exportTool` weg. Offen: Gesamtmatrix bauen und durchgehen (dabei Fehlendes, ALV-Ort, Zeichen Ausbildung & Arbeit, Punkt 6) · Wörterbuch-Abweichungen (Frist, Export, Einbürgerung, Sackmesser) beim Bau nachführen · Rechts-Prüfer Kreuz + Bahnhofsuhr.
