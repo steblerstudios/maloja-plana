@@ -29,11 +29,12 @@ describe('Gruppe «Ankommen in der Schweiz» in der Übersicht', () => {
     expect(titel).toEqual(['Ankommen in der Schweiz', 'Arrivée en Suisse', 'Arrivo in Svizzera', 'Arriving in Switzerland', 'Arrivada en Svizra']);
   });
 
-  it('die Übersicht zeigt die Gruppe direkt nach den Lebensereignissen', () => {
+  // Seit der Seiten-Architektur (06.11.2026) stehen davor die 7 Kapitel, danach «Mit 18» und die Klammer.
+  it('die Übersicht zeigt die Gruppe direkt nach den Kapiteln', () => {
     const d = quelle('components/WerkzeugGruppen.jsx');
-    const a = d.indexOf("t('dashboard.toolGroups.lebensereignisse')");
+    const a = d.indexOf('...kapitelGruppen');
     const b = d.indexOf("t('dashboard.toolGroups.ankommen')");
-    const c = d.indexOf("t('dashboard.toolGroups.money')");
+    const c = d.indexOf("t('dashboard.toolGroups.mit18')");
     expect(a).toBeGreaterThan(-1);
     expect(b).toBeGreaterThan(a);
     expect(c).toBeGreaterThan(b);

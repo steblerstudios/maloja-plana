@@ -1929,6 +1929,10 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'Come funziona, spiegato nel dettaglio (in tedesco)',
+    karte: 'E negli altri cantoni? Vedi la cartina (in tedesco)',
+    zumVerstehen: 'Per capire (pagine in tedesco)',
+    aufDerKarte: 'Sulla cartina (in tedesco)',
+    mehrDazu: 'Per saperne di più (in tedesco):',
   },
   dashboard: {
     welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
@@ -1951,15 +1955,11 @@ export default {
     toolsAndFeatures: 'Strumenti',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale' },
+    bereich: { versicherungen: 'Assicurazioni', arbeit: 'Lavoro', gesundheit: 'Salute', wohnen: 'Abitare', vorsorge: 'Previdenza', finanzen: 'Denaro', familie: 'Famiglia', behoerden: 'Autorità', person: 'Vita personale', bildung: 'Formazione', notfall: 'Emergenza' },
     toolGroups: {
-      lebensereignisse: 'Eventi della vita',
       ankommen: 'Arrivo in Svizzera',
       mit18: 'A 18 anni',
-      money: 'Denaro & imposte',
-      insurance: 'Assicurazione & salute',
-      documents: 'Documenti & autorità',
-      organize: 'Organizzare & profilo',
+      klammer: 'Calendario, promemoria e documenti',
     },
     anspruchTitle: 'A cosa ho diritto?',
     anspruchIntro: 'Spesso si ha diritto a più di quanto si pensi. Una panoramica tranquilla — senza impegno né giudizio.',
@@ -2360,9 +2360,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Emergenza',
-      short: 'Emergenza',
-      description: 'Contatti di emergenza, informazioni mediche',
+      title: 'Salute',
+      short: 'Salute',
+      description: 'Salute, emergenza e direttive',
       intro: { sie: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per Lei e la Sua famiglia.', du: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per te e la tua famiglia.' },
       emptyState: { sie: 'La Sua scheda di emergenza — pronta in 2 minuti, lì quando serve.', du: 'La tua scheda di emergenza — pronta in 2 minuti, lì quando serve.' },
       emptyStateHint: 'Un contatto con un numero di telefono basta per iniziare.',

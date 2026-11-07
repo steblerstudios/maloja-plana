@@ -1,0 +1,54 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Krankenkasse aufteilen</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1200px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:16px;margin:22px 0 6px}p{color:var(--soft);margin:4px 0}
+.vier{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:900px){.vier{grid-template-columns:1fr 1fr}}@media(max-width:560px){.vier{grid-template-columns:1fr}}
+.feld{background:var(--card);border-radius:12px;padding:10px 12px}.feld h3{margin:0 0 8px;font-size:13px;font-weight:600}.feld.emp{outline:2px solid #C4A870}
+.kap{border-top:4px solid;border-radius:6px;background:var(--chip);padding:5px 7px;margin:6px 0}.kap>b{font-size:12px}
+.z{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:12.5px}
+.form{position:relative;width:30px;height:30px;border-radius:7px;flex:none;color:#fff;font-size:8.5px;display:flex;align-items:center;justify-content:center}
+.abz{position:absolute;right:-5px;bottom:-5px;width:14px;height:14px;border-radius:50%;border:2px solid var(--chip);color:#fff;font-size:7px;display:flex;align-items:center;justify-content:center}
+.warum{font-size:12.5px;color:var(--soft);margin-top:8px}
+.box{background:var(--card);border-left:4px solid #C4A870;border-radius:8px;padding:10px 14px;margin:14px 0}
+ul{margin:4px 0;padding-left:18px;font-size:12.5px}
+</style>
+<h1>① Krankenkasse · Vertrag bei den Versicherungen, Leistungen bei der Gesundheit?</h1>
+<p>Sieben Seiten haben mit der Krankenkasse zu tun. Grosse Kachel = Kapitel (Leitform: <b>Schild</b> Versicherungen, <b>Koffer</b> Gesundheit). Punkt unten rechts = Ast, der mitspielt. Orange = Gesundheit, blau mit S = Mini-Schild Versicherungen, gold = Geld.</p>
+
+<div class=vier>
+ <div class=feld><h3>Heute</h3>
+  <div class=kap style="border-color:#6E90B0"><b>Register: Versicherungen</b>
+   <div class=z>KK-Erstanmeldung</div><div class=z>KK wechseln <small>(Grund + Zusatz, seit 27.10. ein Ablauf)</small></div><div class=z>Versicherungs-Übersicht</div><div class=z>IPV</div><div class=z>KVG-Leistungen</div><div class=z>KK-Belege (Scanner)</div></div>
+  <div class=kap style="border-color:#C67A4A"><b>Ast Gesundheit</b><div class=z>Unfall / Krankheit</div></div>
+  <div class=warum>Gleichzeitig sind im <b>Arztkoffer</b> KVG-Leistungen, KK-Belege, KK wechseln und Unfall als Fächer bzw. Wege eingetragen. Die gleichen Seiten haben also zwei Zuhause.</div></div>
+
+ <div class="feld emp"><h3>A · teilen ✔ Empfehlung</h3>
+  <div class=kap style="border-color:#6E90B0"><b>Versicherungen · der Vertrag</b>
+   <div class=z><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C67A4A"></span></span>KK-Erstanmeldung</div>
+   <div class=z><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C67A4A"></span></span>KK wechseln</div>
+   <div class=z><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C67A4A"></span></span>Versicherungs-Übersicht</div>
+   <div class=z><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C4A870"></span></span>IPV</div></div>
+  <div class=kap style="border-color:#C67A4A"><b>Gesundheit · was die Kasse zahlt</b>
+   <div class=z><span class=form style="background:#C67A4A">Koffer<span class=abz style="background:#6E90B0">S</span></span>KVG-Leistungen</div>
+   <div class=z><span class=form style="background:#C67A4A">Koffer<span class=abz style="background:#6E90B0">S</span></span>KK-Belege</div>
+   <div class=z><span class=form style="background:#C67A4A">Koffer<span class=abz style="background:#6E90B0">S</span></span>Unfall / Krankheit</div></div>
+  <div class=warum><b>Regel «die Sache, um die es geht»:</b> Anmelden, wechseln, Prämie zahlen, Verbilligung = es geht um den Versicherungs­vertrag. Arztrechnung, was zahlt die Kasse, Unfall = es geht um dich, wenn du krank bist. Löst nebenbei Frage 1b: die Übersicht bleibt Schild, Abzeichen orange.</div></div>
+
+ <div class=feld><h3>B · alles Versicherungen</h3>
+  <div class=kap style="border-color:#6E90B0"><b>Versicherungen</b>
+   <div class=z><span class=form style="background:#6E90B0">Schild<span class=abz style="background:#C67A4A"></span></span>alle sieben, Abzeichen orange</div></div>
+  <div class=kap style="border-color:#C67A4A"><b>Gesundheit</b><div class=z>nur Arztkoffer, IV, Pflege, Notfall</div></div>
+  <div class=warum>Einfach. Aber das Kapitel Gesundheit wäre fast leer, und der Arztkoffer verlöre seine Fächer.</div></div>
+
+ <div class=feld><h3>C · alles Gesundheit</h3>
+  <div class=kap style="border-color:#C67A4A"><b>Gesundheit</b>
+   <div class=z><span class=form style="background:#C67A4A">Koffer<span class=abz style="background:#6E90B0">S</span></span>alle sieben, Mini-Schild</div></div>
+  <div class=kap style="border-color:#6E90B0"><b>Versicherungen</b><div class=z>ohne Krankenkasse: nur Hausrat, Haftpflicht, Auto, BVG …</div></div>
+  <div class=warum>Die Krankenkasse ist aber die wichtigste Versicherung der Schweiz. Ohne sie wäre das Versicherungs-Kapitel ein Rest, und die KK-Felder (Kasse, Modell, Franchise) stehen dort.</div></div>
+</div>
+
+<div class=box><b>Mit A gilt:</b>
+<ul><li>Daten und Felder bleiben, wo sie sind (Kasse, Modell, Franchise im Kapitel Versicherungen).</li>
+<li>Der Arztkoffer behält «KK wechseln» als <b>Weg</b> (Querverweis), nicht als eigenes Fach. Die Fächer sind dann nur Gesundheits-Sachen.</li>
+<li>Gebaut wird erst nach dem ganzen Durchgang: dann ändern sich nur das Feld <code>bereich</code>/<code>fach</code> bei KVG-Leistungen und Belegen.</li></ul></div>

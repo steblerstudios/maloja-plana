@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage, plusMonate } from './utils/fristen.js';
+import { MehrDazu } from './components/ErklaerseiteLink.jsx';
 
 // Neu in der Schweiz (Zuzug aus dem Ausland) — geführter Ablauf, gebaut 24.09.2026 auf
 // Wunsch von Stebler Studios. Vorher verwies der Lebenszustand «Neu in der Schweiz» auf «Bewilligung
@@ -30,7 +31,9 @@ export const ZuzugAusland = ({ palette, t, onNavigate }) => {
         reminderTitle: t('zuzug.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step1LinkBewilligung'), onClick: () => onNavigate('bewilligung') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step1LinkTresor'), onClick: () => onNavigate('tresor') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('zuzug.step1LinkTresor'), onClick: () => onNavigate('tresor') }),
+      // D-A (Wege durch Maloja, 07.11.2026): wer neu ankommt, lebt in Gemeinde, Kanton und Bund.
+      React.createElement(MehrDazu, { palette, t, seite: 'politsystem' })
     ),
     React.createElement(AblaufStep, { palette, title: t('zuzug.step2Title') },
       React.createElement('p', { style: s.stepText }, t('zuzug.step2Text')),

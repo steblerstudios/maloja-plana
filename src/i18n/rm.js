@@ -2068,6 +2068,12 @@ export default {
   // TODO(rm): provisorisch — Gegenlese (D1, 06.11.2026)
   erklaerseite: {
     link: 'Co che quai funcziuna, explitgà en detagl (en tudestg)',
+    // TODO(rm): provisorisch — Gegenlese (Ergänzung A, 07.11.2026)
+    karte: 'Co èsi en ils auters chantuns? Tar la charta (en tudestg)',
+    // TODO(rm): provisorisch — Gegenlese (C-A, D-A, 07.11.2026)
+    zumVerstehen: 'Per chapir (paginas en tudestg)',
+    aufDerKarte: 'Sin la charta (en tudestg)',
+    mehrDazu: 'Dapli davart quai (en tudestg):',
   },
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
@@ -2092,17 +2098,14 @@ export default {
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
     // TODO(rm): provisorisch — Gegenlese (A2 Lebensbereiche, 06.11.2026)
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Assicuranzas', arbeit: 'Lavur', gesundheit: 'Sanadad', wohnen: 'Abitar', vorsorge: 'Prevenziun', finanzen: 'Daners', familie: 'Famiglia', behoerden: 'Autoritads', person: 'Vita persunala' },
+    bereich: { versicherungen: 'Assicuranzas', arbeit: 'Lavur', gesundheit: 'Sanadad', wohnen: 'Abitar', vorsorge: 'Prevenziun', finanzen: 'Daners', familie: 'Famiglia', behoerden: 'Autoritads', person: 'Vita persunala', bildung: 'Furmaziun', notfall: 'Urgenza' },
     toolGroups: {
-      lebensereignisse: 'Eveniments da vita',
       // TODO(rm): provisorisch — Gegenlese (G1 Ankommen, 05.11.2026)
       ankommen: 'Arrivada en Svizra',
       // TODO(rm): provisorisch — Gegenlese (G2 Mit 18, 06.11.2026)
       mit18: 'Cun 18 onns',
-      money: 'Daners & taglias',
-      insurance: 'Assicuranza & sanadad',
-      documents: 'Documents & autoritads',
-      organize: 'Organisar & profil',
+      // TODO(rm): provisorisch — Gegenlese (Seiten-Architektur, 06.11.2026)
+      klammer: 'Chalender, glista & documents',
     },
     anspruchTitle: 'A tge hai jau dretg?',
     anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
@@ -2562,9 +2565,10 @@ export default {
       },
     },
     notfall: {
-      title: 'Urgenza',
-      short: 'Urgenza',
-      description: "Contacts d'urgenza e datas medicalas",
+      // TODO(rm): provisorisch — Gegenlese (Kapitel Gesundheit, Seiten-Architektur 06.11.2026)
+      title: 'Sanadad',
+      short: 'Sanadad',
+      description: 'Sanadad, urgenza e disposiziuns',
       // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
       intro: { sie: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas.", du: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas." },
       // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).

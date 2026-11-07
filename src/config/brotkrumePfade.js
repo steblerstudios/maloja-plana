@@ -26,7 +26,7 @@ export const PFADE = Object.freeze({
 // «Meine Unterlagen», die es als eigenen Ort nicht gibt (nur eine Umleitung auf die Ablage).
 export const ELTERN_TITEL = Object.freeze({
   tresor: 'nav.tresor',
-  notfalleinstieg: 'chapters.notfall.title',
+  notfalleinstieg: 'arztkoffer.faecher.notfall.title',
   versicherungskapitel: 'chapters.versicherungen.title',
   notfallvorsorge: 'chapters.notfall.title',
 });
@@ -35,8 +35,9 @@ export const ELTERN_TITEL = Object.freeze({
 // sie in der Brotkrume steht. Die Hülle components/RechnerForm.jsx zeichnet «Übersicht › Kapitel › Rechner»
 // selbst; main.jsx lässt darum «← Übersicht» weg. Ein Eintrag hier = der Rechner ist umgestellt.
 export const RECHNER_KAPITEL = Object.freeze({
-  alv: 'finanzen',
-  eo: 'finanzen',
+  // Seiten-Architektur (Stebler Studios 06.11.2026): ALV → Arbeit, EO → Familie, KVG-Leistungen → Gesundheit.
+  alv: 'ausbildung',
+  eo: 'basis',
   stundenlohn: 'ausbildung',
   kreditkarte: 'finanzen',
   mietzins: 'wohnen',
@@ -44,7 +45,7 @@ export const RECHNER_KAPITEL = Object.freeze({
   vorsorge: 'versicherungen',
   schulden: 'finanzen',
   sozialhilfe: 'finanzen',
-  kvg: 'versicherungen',
+  kvg: 'notfall',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

@@ -1929,6 +1929,10 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'How this works, explained in full (in German)',
+    karte: 'How is it in other cantons? See the map (in German)',
+    zumVerstehen: 'To understand (pages in German)',
+    aufDerKarte: 'On the map (in German)',
+    mehrDazu: 'More on this (in German):',
   },
   dashboard: {
     welcome: 'Understand what you’re entitled to. Organize what lies ahead.',
@@ -1951,15 +1955,11 @@ export default {
     toolsAndFeatures: 'Tools',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Insurance', arbeit: 'Work', gesundheit: 'Health', wohnen: 'Housing', vorsorge: 'Planning ahead', finanzen: 'Money', familie: 'Family', behoerden: 'Authorities', person: 'Personal matters' },
+    bereich: { versicherungen: 'Insurance', arbeit: 'Work', gesundheit: 'Health', wohnen: 'Housing', vorsorge: 'Planning ahead', finanzen: 'Money', familie: 'Family', behoerden: 'Authorities', person: 'Personal matters', bildung: 'Education', notfall: 'Emergency' },
     toolGroups: {
-      lebensereignisse: 'Life events',
       ankommen: 'Arriving in Switzerland',
       mit18: 'At 18',
-      money: 'Money & taxes',
-      insurance: 'Insurance & health',
-      documents: 'Documents & authorities',
-      organize: 'Organize & profile',
+      klammer: 'Calendar, to-do list & documents',
     },
     anspruchTitle: 'What am I entitled to?',
     anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',
@@ -2360,9 +2360,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Emergency',
-      short: 'Emergency',
-      description: 'Emergency contacts, medical information',
+      title: 'Health',
+      short: 'Health',
+      description: 'Health and emergency information',
       intro: 'Important information for emergencies. Having this ready can make a real difference for you and your family.',
       emptyState: 'Your emergency card — ready in 2 minutes, there when it matters.',
       emptyStateHint: 'One contact with a phone number is enough to start.',

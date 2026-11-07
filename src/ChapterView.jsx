@@ -43,6 +43,7 @@ import landschaft from './assets/berge/landschaft.webp?url';
 import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { istAngestellt } from './utils/anstellung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
+import { ZumVerstehen } from './components/ErklaerseiteLink.jsx';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -2497,6 +2498,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // stehen seit AE zugeklappt in «Bereit für den Ernstfall»; das letzte Kapitel endet mit «Alle
     // Kapitel durchgegangen».
     renderPassend(),
+    // C-A (Wege durch Maloja, 07.11.2026): Erklärseiten und Karten des Kapitels, unter «Passend» (dort nur App-Ziele).
+    React.createElement(ZumVerstehen, { palette, t: tr, kapitel: chapter.key }),
     istFinanzen && renderAuswertung('unten'),
     nextChapter && onNext ? renderAlsNaechstes() : (!nextChapter && onNavigate ? renderAlleDurch() : null),
 

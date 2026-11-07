@@ -50,13 +50,14 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
   // damit die Frucht dieselbe Ast-Farbe erbt.
   // Zuordnung über die Äste ausbalanciert (max. 2 Werkzeug-Früchte je Ast), damit
   // der Baum ruhig bleibt: Geld-Werkzeuge an Finanzen, der Lohn-/Mindestlohn-Check
-  // am Ausbildung-&-Arbeit-Ast, die Sozialhilfe-Orientierung am Behörden-Ast.
+  // am Ausbildung-&-Arbeit-Ast. Die Sozialhilfe hängt seit der Seiten-Architektur (06.11.2026) am
+  // Finanzen-Ast wie in Merkliste und Kalender — dort sind es damit bis zu drei (untereinander, nur aktive).
   const connections = [
     { key: 'tax', area: 'finanzen', label: t('datenWirken.tax'), short: t('datenWirken.short.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
     { key: 'budget', area: 'finanzen', label: t('datenWirken.budget'), short: t('datenWirken.short.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
     { key: 'lohn', area: 'ausbildung', label: t('datenWirken.lohn'), short: t('datenWirken.short.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
     { key: 'ipv', area: 'versicherungen', label: t('datenWirken.ipv'), short: t('datenWirken.short.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
-    { key: 'sozial', area: 'behoerden', label: t('datenWirken.sozial'), short: t('datenWirken.short.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
+    { key: 'sozial', area: 'finanzen', label: t('datenWirken.sozial'), short: t('datenWirken.short.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
     { key: 'notfall', area: 'notfall', label: t('datenWirken.notfall'), short: t('datenWirken.short.notfall'), active: !!(data.notfall?.emergencyContact) },
   ];
   const active = connections.filter(c => c.active);

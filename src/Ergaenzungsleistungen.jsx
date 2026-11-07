@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusMonate } from './utils/fristen.js';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 
 // Ergänzungsleistungen beantragen — geführter Ablauf, gebaut 25.09.2026 auf Wunsch von Stebler Studios.
 // Inhalt aus der Fachprüfung (swiss-precision) vom 25.09.2026, jede Aussage am Gesetzeswortlaut
@@ -20,7 +21,9 @@ export const Ergaenzungsleistungen = ({ palette, t, onNavigate }) => {
       // BFH 2021 (Quellenzeile), bewusst ohne Quote, weil die einzige Zahl nur für Basel-Stadt gilt.
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('ergaenzungsleistungen.step1Nichtbezug')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('ergaenzungsleistungen.step1LinkAnspruch'), onClick: () => onNavigate('anspruchcheck') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('ergaenzungsleistungen.step1LinkSozialhilfe'), onClick: () => onNavigate('sozialhilfe') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('ergaenzungsleistungen.step1LinkSozialhilfe'), onClick: () => onNavigate('sozialhilfe') }),
+      // Ergänzung A (07.11.2026): die Karte zeigt, wie viele in jedem Kanton EL beziehen — passt zum Nichtbezug.
+      React.createElement(ErklaerseiteLink, { palette, t, view: 'ergaenzungsleistungen' })
     ),
     React.createElement(AblaufStep, { palette, title: t('ergaenzungsleistungen.step2Title') },
       React.createElement('p', { style: s.stepText }, t('ergaenzungsleistungen.step2Text'))

@@ -1,7 +1,10 @@
 import React from 'react';
 import Icons, { aufklappZeichen } from '../IconKern.jsx';
 import { text, weight, radius, space, ease, duration } from '../config/tokens.js';
-import { ABLAEUFE, ANKOMMEN, MIT18, ansichtIkon } from '../config/ansichtenRegister.js';
+import { ABLAEUFE, ANKOMMEN, MIT18, SEARCH_VIEWS, ansichtIkon } from '../config/ansichtenRegister.js';
+import { WERKZEUGE } from '../data/werkzeugRegister.js';
+import { LEBENSBEREICHE, astKapitel } from '../data/lebensbereiche.js';
+import { CHAPTER_KEYS } from '../config/constants.js';
 
 // Werkzeuggruppen der Übersicht (aufklappbare <details>), aus Dashboard.jsx ausgelagert am 06.11.2026
 // (Seitenlandkarte G2): die Übersicht liegt im Startbündel (Grenze 65 kB), die Gruppen stehen zugeklappt
@@ -38,43 +41,45 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
       )
     );
   };
-  const alsEintrag = (a) => ({ label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon });
+  const alsEintrag = (a) => ({ label: t(a.nav), sub: a.sub ? t(a.sub) : null, view: a.view, icon: a.icon });
+  // Seiten-Architektur (Stebler Studios 06.11.2026, docs/design/seiten-architektur-2026-11.md, Frage 4 «A, Kapitel
+  // führen»): alle Seiten nach den 7 Kapiteln, in der Reihenfolge der Berge — statt der Themen-Gruppen «Geld &
+  // Steuern», «Versicherung & Gesundheit», «Dokumente & Behörden», «Organisieren & Profil» und der Ast-Liste
+  // «Lebensereignisse». Ein Kapitel mit zwei Ästen gliedert nach Ast (Zwischentitel dashboard.bereich.*).
+  // Quelle ist allein das Register: Feld `bereich` bei Werkzeugen, Abläufen und den übrigen Seiten der Suche.
+  // Reihenfolge je Ast: Werkzeuge, dann die übrigen Seiten, dann die Abläufe (Wächter: startseiteNachKapitel.test.js).
+  const werkzeugEintrag = (w) => (w.view === 'chapter'
+    ? { key: w.key, label: t(w.nav), sub: w.sub ? t(w.sub) : null, icon: w.icon,
+      action: () => onSelectChapter((chapters || []).findIndex((ch) => ch.key === w.kapitel)) }
+    : { label: t(w.nav), sub: w.sub ? t(w.sub) : null, view: w.view, icon: w.icon });
+  const seitenDesAstes = (ast) => [
+    ...WERKZEUGE.filter((w) => w.bereich === ast).map(werkzeugEintrag),
+    ...SEARCH_VIEWS.filter((v) => v.bereich === ast && !ABLAEUFE.includes(v) && !WERKZEUGE.some((w) => w.view === v.view)).map(alsEintrag),
+    ...ABLAEUFE.filter((a) => a.bereich === ast).map(alsEintrag),
+  ];
+  const kapitelName = (key) => {
+    const ch = (chapters || []).find((c) => c.key === key);
+    return (ch && ch.title) || t('chapters.' + key + '.title');
+  };
+  const kapitelGruppen = CHAPTER_KEYS.map((key) => {
+    const aeste = LEBENSBEREICHE.filter((b) => astKapitel(b.key) === key).map((b) => b.key);
+    const teile = aeste.map((ast) => ({ key: ast, titel: t('dashboard.bereich.' + ast), items: seitenDesAstes(ast) })).filter((teil) => teil.items.length);
+    return { label: kapitelName(key), items: teile.flatMap((teil) => teil.items), teile: teile.length > 1 ? teile : null };
+  });
   const groups = [
-    // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
-    // A2 (06.11.2026): die 36 Abläufe nach Lebensbereich gegliedert, Reihenfolge der Bereiche wie im Register
-    // (erstes Vorkommen in ABLAEUFE). Zwischentitel dashboard.bereich.* (Wächter: lebensereignisseNachBereich.test.js).
-    { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map(alsEintrag),
-      teile: [...new Set(ABLAEUFE.map((a) => a.bereich))].map((b) => ({ key: b, titel: t('dashboard.bereich.' + b), items: ABLAEUFE.filter((a) => a.bereich === b).map(alsEintrag) })) },
-    // G1 (05.11.2026): die Abläufe nach dem Zuzug als Reihe; sie bleiben auch oben stehen.
+    ...kapitelGruppen,
+    // Zwei Türen quer über die Kapitel: G1 (05.11.2026) Ankommen, G2 (06.11.2026) Mit 18. Die Abläufe stehen
+    // zugleich in ihrem Kapitel.
     { label: t('dashboard.toolGroups.ankommen'), items: ANKOMMEN.map((v) => ABLAEUFE.find((a) => a.view === v)).filter(Boolean).map(alsEintrag) },
-    // G2 (06.11.2026): der Weg ins Erwachsenenleben als Reihe; die Abläufe bleiben auch oben stehen.
     { label: t('dashboard.toolGroups.mit18'), items: MIT18.map((v) => ABLAEUFE.find((a) => a.view === v)).filter(Boolean).map(alsEintrag) },
-    // A1 (06.11.2026): keine Gruppen mit nur einem Eintrag. «Gesundheit» (nur Arztkoffer) ist in «Versicherung &
-    // Gesundheit» aufgegangen; «Unterstützung & Anspruch» (nur «Was steht mir zu?») ist weg — die Seite steht fest
-    // in der Leiste unten (Wächter: gruppenStraffen.test.js).
-    { label: t('dashboard.toolGroups.money'), items: [
-      { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
-      { label: t('budgetSync.title'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
-      { label: t('nav.mietzins'), sub: t('nav.sub.mietzins'), view: 'mietzins', icon: 'home' },
-      { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
-      { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
-    ] },
-    { label: t('dashboard.toolGroups.insurance'), items: [
-      { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
-      { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
-      { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
-      { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
-    ] },
-    { label: t('dashboard.toolGroups.documents'), items: [
+    // Die Klammer ohne Kapitel (Organigramm 06.11.2026): Kalender, Merkliste, Unterlagen, Links, Teilen, Suche.
+    { label: t('dashboard.toolGroups.klammer'), items: [
+      { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
+      { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
       { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },
       { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
       { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
-    ] },
-    { label: t('dashboard.toolGroups.organize'), items: [
       { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
-      { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
-      { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
-      { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
     ] },
   ];
   // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus

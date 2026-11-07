@@ -54,6 +54,9 @@ const WERKZEUG_IN_DER_APP = {
   steuern: 'tax',
   krankenkasse: 'praemien',
   'kantone-im-vergleich': 'praemien',
+  // E-A (Wege durch Maloja, 07.11.2026): dieselben Daten wie Kantone im Vergleich, erste Karte ist die Prämie.
+  // Politsystem bleibt bei der Startseite: kein Werkzeug rechnet Politik.
+  kantonsatlas: 'praemien',
 };
 const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/#/${WERKZEUG_IN_DER_APP[pfad]}` : '/');
 const pfadIntern = (pfad, sprache) => `/${sprache.praefix}${pfad}/`;
@@ -680,9 +683,9 @@ ${quellenListe(seite.quellen, nummer, stellen)}
       </ol>
       <p class="leise">${esc(seite.quellenHinweis)}</p>
 
-      <div class="anhang">
+      <div class="anhang">${seite.gesetze ? `
         <h3>Gesetzesstellen</h3>
-        <p>${esc(seite.gesetze)}</p>
+        <p>${esc(seite.gesetze)}</p>` : ''}
         <h3>Eigene Rechnungen</h3>
 ${seite.eigeneRechnungen.map((r) => `        <p>${z(r)}</p>`).join('\n')}
       </div>

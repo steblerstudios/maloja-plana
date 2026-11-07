@@ -36,7 +36,7 @@ const text = sichtbar(html);
 
 describe('/politsystem/', () => {
   it('steht in der Liste der Hintergrundseiten, nach Krankenkasse und Kantonsvergleich', () => {
-    expect(HINTERGRUND.map((h) => h.pfad)).toEqual(['krankenkasse', 'kantone-im-vergleich', 'politsystem']);
+    expect(HINTERGRUND.map((h) => h.pfad)).toEqual(['krankenkasse', 'kantone-im-vergleich', 'politsystem', 'kantonsatlas']);
   });
 
   it('ist noch nicht über ihr Prüfdatum hinaus', () => {

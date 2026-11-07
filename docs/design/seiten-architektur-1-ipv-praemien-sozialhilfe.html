@@ -1,0 +1,82 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>IPV, Prämien, Sozialhilfe</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--line:#eee}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--line:#3a3935}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1100px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17px;margin:26px 0 6px}p{color:var(--soft);margin:4px 0}
+.reihe{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:8px;margin:8px 0}@media(max-width:820px){.reihe{grid-template-columns:1fr 1fr}}
+.feld{background:var(--card);border-radius:12px;padding:10px 12px}.feld h3{margin:0 0 6px;font-size:13px;font-weight:600}
+.feld.emp{outline:2px solid #C4A870}
+.heute li{margin:3px 0;font-size:12.5px}.heute ul{margin:0;padding-left:16px}
+.kachel{display:flex;align-items:center;gap:10px;margin:6px 0}
+.form{position:relative;width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600;text-align:center;line-height:1.1}
+.abz{position:absolute;right:-6px;bottom:-6px;width:20px;height:20px;border-radius:50%;border:2px solid var(--card)}
+.kachel b{font-size:13px;font-weight:600;display:block}.kachel small{font-size:11.5px;color:var(--soft)}
+.warum{font-size:12.5px;color:var(--soft);margin-top:6px}
+.box{background:var(--card);border-left:4px solid #C4A870;border-radius:8px;padding:10px 14px;margin:14px 0}
+.rot{color:#B0524C;font-weight:600}
+.legende{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--soft);margin:6px 0}.legende span{display:inline-flex;align-items:center;gap:5px}.legende i{width:12px;height:12px;border-radius:50%;display:inline-block}
+</style>
+<h1>Frage 1 · Wo gehören IPV, Prämien und Sozialhilfe hin?</h1>
+<p>Je Seite: links <b>heute</b> (wo sie in der App überall hängt, gelesen aus dem Code, Stand <code>main</code>), rechts drei Möglichkeiten. Die grosse Kachel ist das <b>Kapitel</b> (wo man die Seite findet, und welche Leitform das Icon bekommt). Der kleine Punkt unten rechts ist der <b>Ast, der mitspielt</b> (Farbe des Abzeichens).</p>
+<div class=legende>
+<span><i style="background:#6E90B0"></i>Versicherungen</span><span><i style="background:#C4A870"></i>Finanzen</span><span><i style="background:#5A6472"></i>Behörden</span><span><i style="background:#C67A4A"></i>Gesundheit</span><span><i style="background:#7E9A4E"></i>Wohnen</span></div>
+
+<div class=box><b>Vorschlag für eine Regel, die alle drei entscheidet</b> (und später jede andere Seite):<br>
+<b>Kapitel = die Sache, um die es geht.</b> Geld, das dazu fliesst, spielt mit und zeigt sich im goldenen Abzeichen.<br>
+Das habt ihr schon zweimal so entschieden: <b>Mietzinsverbilligung</b> = Chalet (Wohnen) + Fünfliber gold · <b>Betreibung</b> geteilt: der Auszug ist Behörden, die Betreibung ist Finanzen.</div>
+
+<h2>IPV · Prämienverbilligung</h2>
+<div class=reihe>
+ <div class="feld heute"><h3>Heute — an vier Orten, dreimal Versicherungen</h3><ul>
+  <li>Merkliste/Kalender-Farbe: <b>Versicherungen</b> (Fach «gesundheit»)</li>
+  <li>Lebensbaum: Frucht am <b>Versicherungen</b>-Ast</li>
+  <li>Kapitel Versicherungen: steht in der Weg-Liste</li>
+  <li>Kapitel <b>Finanzen</b>: Querverweis beim Einkommen</li>
+  <li>Startseite: Gruppe «Versicherung & Gesundheit»</li></ul></div>
+ <div class="feld emp"><h3>A · Versicherungen ✔ Empfehlung</h3>
+  <div class=kachel><div class=form style="background:#6E90B0">Schild<span class=abz style="background:#C4A870"></span></div><div><b>Edelweiss-Schild + Fünfliber gold</b><small>Kapitel Versicherungen · Geld spielt mit</small></div></div>
+  <div class=warum>Es geht um die <b>Krankenkassen-Prämie</b>. Wer «meine Krankenkasse ist zu teuer» denkt, sucht dort. Genau wie die Mietzinsverbilligung beim Wohnen. <b>IPV folgt der Krankenkasse</b>: zieht die Krankenkasse in Frage 2 um, zieht IPV mit.</div></div>
+ <div class=feld><h3>B · Finanzen</h3>
+  <div class=kachel><div class=form style="background:#C4A870">Fünf­liber<span class=abz style="background:#C67A4A"></span></div><div><b>Fünfliber + Abzeichen Gesundheit</b><small>weil es Geld ist</small></div></div>
+  <div class=warum>Passt zum Querverweis beim Einkommen. Aber dann müsste die Mietzinsverbilligung auch zu Finanzen. Die Regel bräche.</div></div>
+ <div class=feld><h3>C · Behörden</h3>
+  <div class=kachel><div class=form style="background:#5A6472">Helvetia<span class=abz style="background:#C4A870"></span></div><div><b>Helvetia + Fünfliber gold</b><small>weil man sie beim Amt (SVA) beantragt</small></div></div>
+  <div class=warum>Stimmt für den Antrag, aber niemand denkt zuerst ans Amt. Je Kanton ist es ein anderes Amt.</div></div>
+</div>
+
+<h2>Prämien · «Versicherungs-Übersicht» (Prämien, Franchise, Kassen)</h2>
+<div class=reihe>
+ <div class="feld heute"><h3>Heute — eindeutig</h3><ul>
+  <li>Merkliste-Farbe: <b>Versicherungen</b></li>
+  <li>Kapitel Versicherungen: «alle Versicherungen»</li>
+  <li>Startseite: Gruppe «Versicherung & Gesundheit»</li>
+  <li>Icon heute: <code>insurance</code> (das Schild selbst)</li></ul></div>
+ <div class="feld emp"><h3>A · Versicherungen ✔ Empfehlung</h3>
+  <div class=kachel><div class=form style="background:#6E90B0">Schild<span class=abz style="background:#6E90B0"></span></div><div><b>Edelweiss-Schild, Abzeichen blau</b><small>Kapitel Versicherungen · kein anderer Ast</small></div></div>
+  <div class=warum>Die Seite <b>ist</b> die Übersicht über deine Versicherungen. Da fliesst kein Geld zu dir, darum kein Gold. Sie ist eigentlich die «Mappe» des Kapitels.</div></div>
+ <div class=feld><h3>B · Finanzen</h3>
+  <div class=kachel><div class=form style="background:#C4A870">Fünf­liber<span class=abz style="background:#6E90B0"></span></div><div><b>Fünfliber + Abzeichen blau</b><small>weil Prämien Kosten sind</small></div></div>
+  <div class=warum>Prämien stehen auch im Budget, aber das Budget liest sie nur. Die Sache ist die Versicherung.</div></div>
+ <div class=feld><h3>C · beides</h3>
+  <div class=warum>Seite in Versicherungen, im Budget nur ein Verweis darauf. Das ist A mit einem Link. Kein eigener Entscheid nötig.</div></div>
+</div>
+
+<h2>Sozialhilfe · Rechner nach SKOS</h2>
+<div class=reihe>
+ <div class="feld heute"><h3>Heute — <span class=rot>drei verschiedene Orte</span></h3><ul>
+  <li>Merkliste/Kalender-Farbe: <b>Finanzen</b> (Fach «geld»)</li>
+  <li>Lebensbaum: Frucht am <b>Behörden</b>-Ast</li>
+  <li>Schnellcheck: <b>grün</b> (Salbei, kein Ast)</li>
+  <li>Kapitel Finanzen + Persönliche Basis: Querverweise</li>
+  <li>Startseite: in keiner Werkzeug-Gruppe, nur in «Was steht mir zu?»</li></ul></div>
+ <div class="feld emp"><h3>A · Finanzen ✔ Empfehlung</h3>
+  <div class=kachel><div class=form style="background:#C4A870">Fünf­liber<span class=abz style="background:#5A6472"></span></div><div><b>Fünfliber + Abzeichen Behörden</b><small>Kapitel Finanzen · das Amt spielt mit</small></div></div>
+  <div class=warum>Es geht ums <b>Geld zum Leben</b>: reicht mein Einkommen fürs Existenzminimum? Der Rechner rechnet mit dem Budget. Der Sozialdienst der Gemeinde spielt mit, darum Behörden im Abzeichen.</div></div>
+ <div class=feld><h3>B · Behörden</h3>
+  <div class=kachel><div class=form style="background:#5A6472">Helvetia<span class=abz style="background:#C4A870"></span></div><div><b>Helvetia + Fünfliber gold</b><small>wie der Baum heute</small></div></div>
+  <div class=warum>Passt zum Gang aufs Amt. Aber dann wäre IPV auch Behörden (C oben). Und Ergänzungsleistungen auch. Alle Geldleistungen landeten beim Amt.</div></div>
+ <div class=feld><h3>C · kein Kapitel, nur «Was steht mir zu?»</h3>
+  <div class=warum>Sozialhilfe stünde nur oben bei den Ansprüchen, ohne Ast. Dann fehlt ihr Farbe und Heimat in der Merkliste. Das ist der Zustand, aus dem die drei Farben heute kommen.</div></div>
+</div>
+
+<div class=box><b>Was sich mit A · A · A ändern würde</b> (erst nach dem Ja, später im Bau): nur Sozialhilfe. Der Baum hängt ihre Frucht an den Finanzen-Ast statt an Behörden, und der Schnellcheck nimmt Gold statt Grün. IPV und Prämien stehen schon richtig.</div>

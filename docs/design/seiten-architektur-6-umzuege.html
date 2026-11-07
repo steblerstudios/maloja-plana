@@ -1,0 +1,52 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Umzüge von A nach B</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--chip:#FBF8F2;--line:#e5e0d6}
+@media (prefers-color-scheme:dark){:root{--bg:#22211F;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--chip:#363531;--line:#44423d}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1100px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:16px;margin:24px 0 6px}p{color:var(--soft);margin:4px 0}
+.zug{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(0,1fr) 28px minmax(0,1fr);gap:6px;align-items:center;background:var(--card);border-radius:10px;padding:8px 12px;margin:6px 0}
+.zug b{font-size:13.5px}.zug small{display:block;color:var(--soft);font-size:11.5px}
+.ort{background:var(--chip);border-left:5px solid;border-radius:5px;padding:3px 8px;font-size:12.5px}
+.ort.alt{opacity:.75}.pf{text-align:center;color:var(--soft);font-size:18px}
+.k-ba{border-color:#5A7868}.k-wo{border-color:#7E9A4E}.k-fi{border-color:#C4A870}.k-ve{border-color:#6E90B0}.k-au{border-color:#8A6D4B}.k-be{border-color:#5A6472}.k-ge{border-color:#C67A4A}.k-nf{border-color:#B0524C}.k-no{border-color:#bbb}
+.drei{font-size:11.5px;color:var(--soft)}
+@media(max-width:640px){.zug{grid-template-columns:1fr 1fr;}.zug>div:first-child{grid-column:1/-1}.pf{display:none}}
+.box{background:var(--card);border-left:4px solid #C67A4A;border-radius:8px;padding:10px 14px;margin:14px 0}
+</style>
+<h1>Umzüge · was von A nach B kommt</h1>
+<p>Links, wo die Seite heute hängt (<code>main</code> <code>ea1e42e9</code>), rechts, wo sie nach dem Bau steht (Entwurf #738 Zuordnung, #739 Startseite). Farbe = Kapitel. Quelle: die Felder <code>bereich</code>/<code>fach</code> in <code>werkzeugRegister.js</code> und <code>ansichtenRegister.js</code>, <code>lebensbereiche.js</code>, <code>Lebensbaum.jsx</code>, <code>Schnellcheck.jsx</code>. Entscheide: Blatt <code>seiten-architektur-2026-11.md</code>.</p>
+
+<div class=box><b>Das Grösste zuerst:</b> Das Kapitel «Notfall» heisst neu <b>Gesundheit</b> und bekommt zwei Äste, Gesundheit und Notfall. Der Schlüssel <code>notfall</code> und alle Daten bleiben — niemand verliert etwas.</div>
+
+<h2>Ins neue Kapitel Gesundheit</h2>
+<div class=zug><div><b>Arztkoffer</b><small>Zuhause für Gesundheit</small></div><div class="ort alt k-ve">Versicherungen</div><div class=pf>→</div><div class="ort k-ge">Gesundheit · Ast Gesundheit</div></div>
+<div class=zug><div><b>KVG-Leistungen</b><small>was die Kasse zahlt ①</small></div><div class="ort alt k-ve">Versicherungen</div><div class=pf>→</div><div class="ort k-ge">Gesundheit · Ast Gesundheit</div></div>
+<div class=zug><div><b>KK-Belege</b><small>Scanner ①</small></div><div class="ort alt k-ve">Versicherungen</div><div class=pf>→</div><div class="ort k-ge">Gesundheit · Ast Gesundheit</div></div>
+<div class=zug><div><b>Patientenverfügung</b><small>②</small></div><div class="ort alt k-ve">Versicherungen <span class=drei>(Fach Gesundheit)</span></div><div class=pf>→</div><div class="ort k-nf">Gesundheit · Ast Notfall</div></div>
+<div class=zug><div><b>Vorsorgeauftrag &amp; Patientenverfügung</b><small>②</small></div><div class="ort alt k-ve">Versicherungen · Ast Vorsorge</div><div class=pf>→</div><div class="ort k-nf">Gesundheit · Ast Notfall</div></div>
+<div class=zug><div><b>Notfall-Einstieg · Notfallkarte · Notfallpass · Organspende · Bestattungswünsche</b><small>④ — nur der Kapitelname ändert</small></div><div class="ort alt k-nf">Kapitel Notfall</div><div class=pf>→</div><div class="ort k-nf">Gesundheit · Ast Notfall</div></div>
+
+<h2>Zur Arbeit und zur Familie</h2>
+<div class=zug><div><b>ALV-Taggeld</b><small>⑤ · Abzeichen Fünfliber gold</small></div><div class="ort alt k-fi">Finanzen <span class=drei>(Fach Geld)</span></div><div class=pf>→</div><div class="ort k-au">Ausbildung &amp; Arbeit · Ast Arbeit</div></div>
+<div class=zug><div><b>Stundenlohn</b><small>⑥ · Fünfliber gold</small></div><div class="ort alt k-fi">Finanzen</div><div class=pf>→</div><div class="ort k-au">Ausbildung &amp; Arbeit · Ast Arbeit</div></div>
+<div class=zug><div><b>Lebenslauf</b><small>⑦</small></div><div class="ort alt k-no">ohne Bereich (Aussenfach)</div><div class=pf>→</div><div class="ort k-au">Ausbildung &amp; Arbeit · Ast Arbeit</div></div>
+<div class=zug><div><b>Lehre</b><small>⑦ · gleiches Kapitel, anderer Ast</small></div><div class="ort alt k-au">Ast Arbeit</div><div class=pf>→</div><div class="ort k-au">Ausbildung &amp; Arbeit · Ast Bildung</div></div>
+<div class=zug><div><b>EO Mutter/Vater</b><small>⑤ · Fünfliber gold</small></div><div class="ort alt k-fi">Finanzen</div><div class=pf>→</div><div class="ort k-ba">Persönliche Basis · Ast Familie</div></div>
+
+<h2>Finanzen und Behörden tauschen</h2>
+<div class=zug><div><b>Sozialhilfe</b><small>✅ Frage 1 · Abzeichen Behörden</small></div><div class="ort alt k-be">an drei Orten: Merkliste Finanzen · Lebensbaum Behörden · Schnellcheck Salbei</div><div class=pf>→</div><div class="ort k-fi">Finanzen, überall (Baum, Schnellcheck gold)</div></div>
+<div class=zug><div><b>Betreibungsauszug</b><small>✅ Icon-Entscheid</small></div><div class="ort alt k-fi">Finanzen</div><div class=pf>→</div><div class="ort k-be">Behörden</div></div>
+
+<h2>Bleiben, wo sie sind — jetzt aber ausdrücklich</h2>
+<div class=zug><div><b>IPV · Versicherungs-Übersicht · KK-Erstanmeldung · KK wechseln</b><small>① Vertrag · IPV gold, die anderen orange</small></div><div class="ort alt k-ve">Versicherungen</div><div class=pf>=</div><div class="ort k-ve">Versicherungen · Ast Versicherungen</div></div>
+<div class=zug><div><b>Steuern · Quellensteuer</b><small>③ · Abzeichen Behörden</small></div><div class="ort alt k-fi">Finanzen <span class=drei>(nur über Fach Geld)</span></div><div class=pf>=</div><div class="ort k-fi">Finanzen · eigenes Feld <code>bereich</code></div></div>
+<div class=zug><div><b>Mindestlohn-Check</b><small>⑥ · Abschnitt der Kapitelseite</small></div><div class="ort alt k-fi">Finanzen</div><div class=pf>=</div><div class="ort k-fi">Finanzen</div></div>
+
+<h2>Die Startseite</h2>
+<div class=zug><div><b>«Alle Seiten»</b><small>Frage 4 · #739</small></div><div class="ort alt k-no">7 Werkzeug-Gruppen nach Thema</div><div class=pf>→</div><div class="ort k-no">7 Kapitel, Äste als Zwischentitel · Ankommen + Mit 18 als Türen · Klammer eine Zeile</div></div>
+
+<h2>Die Erklärseiten (07.11.)</h2>
+<div class=zug><div><b>Krankenkasse · Prämienverbilligung</b></div><div class="ort alt k-no">nirgends im Organigramm</div><div class=pf>→</div><div class="ort k-ve">Versicherungen · «Zum Verstehen»</div></div>
+<div class=zug><div><b>Sozialhilfe · Steuern</b></div><div class="ort alt k-no">nirgends</div><div class=pf>→</div><div class="ort k-fi">Finanzen · «Zum Verstehen»</div></div>
+<div class=zug><div><b>Politsystem · Kantone im Vergleich · Kantonsatlas</b></div><div class="ort alt k-no">nirgends</div><div class=pf>→</div><div class="ort k-no">oben · «Die Schweiz verstehen»</div></div>
+
+<p style="margin-top:18px">Stand 07.11.2026. Gebaut in den Entwürfen #738 und #739 (beide mergebar, CI grün laut GitHub), <b>nicht gemergt, nicht live</b>, nicht im Browser angesehen. Die Erklärseiten-Zeile ist nur im Blatt, nicht gebaut.</p>

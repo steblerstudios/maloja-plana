@@ -98,7 +98,7 @@ export const KANTONE_IM_VERGLEICH = {
       id: 'nebeneinander',
       titel: '7. Alle Zahlen nebeneinander',
       html: `
-        <p>Eine Auswahl der Zahlen aller Kantone in einer Tabelle, alphabetisch. Auf dem Handy lässt sie sich waagrecht verschieben; die Spalte mit dem Kanton bleibt stehen.</p>
+        <p>Eine Auswahl der Zahlen aller Kantone in einer Tabelle, alphabetisch. Auf dem Handy lässt sie sich waagrecht verschieben; die Spalte mit dem Kanton bleibt stehen. Als Karten zeigt dieselben Zahlen der <a href="/kantonsatlas/">Kantonsatlas</a>.</p>
 <!--TAB:nebeneinander-->`,
     },
     {

@@ -18,7 +18,7 @@ import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const DATEIEN = ['praemien.json', 'last.json', 'steuern.json', 'lohn_miete.json', 'leerwohnungsziffer.json', 'sozialhilfe.json', 'el_quote.json', 'arbeitslosenquote.json', 'familienzulagen.json', 'kita_abzug.json', 'alimente.json'];
+const DATEIEN = ['praemien.json', 'last.json', 'steuern.json', 'lohn_miete.json', 'leerwohnungsziffer.json', 'sozialhilfe.json', 'el_quote.json', 'arbeitslosenquote.json', 'familienzulagen.json', 'kita_abzug.json', 'alimente.json', 'paths.json'];
 const arg = process.argv.indexOf('--atlas');
 const kandidaten = arg > 0 ? [resolve(process.argv[arg + 1])]
   : [resolve(WURZEL, '..', 'kantonsatlas'), resolve(WURZEL, '..', '..', 'kantonsatlas')];

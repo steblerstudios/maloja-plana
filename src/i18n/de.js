@@ -1940,6 +1940,11 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'So funktioniert das, ausführlich erklärt',
+    // Ergänzung A (07.11.2026): zur passenden Karte im Kantonsatlas.
+    karte: 'Wie ist das in anderen Kantonen? Zur Karte',
+    zumVerstehen: 'Zum Verstehen',
+    aufDerKarte: 'Auf der Karte',
+    mehrDazu: 'Mehr dazu:',
   },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',
@@ -1962,15 +1967,11 @@ export default {
     toolsAndFeatures: 'Werkzeuge',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von deinen Kapiteldaten nutzbar.' },
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches' },
+    bereich: { versicherungen: 'Versicherungen', arbeit: 'Arbeit', gesundheit: 'Gesundheit', wohnen: 'Wohnen', vorsorge: 'Vorsorge', finanzen: 'Geld', familie: 'Familie', behoerden: 'Behörden', person: 'Persönliches', bildung: 'Bildung', notfall: 'Notfall' },
     toolGroups: {
-      lebensereignisse: 'Lebensereignisse',
       ankommen: 'Ankommen in der Schweiz',
       mit18: 'Mit 18',
-      money: 'Geld & Steuern',
-      insurance: 'Versicherung & Gesundheit',
-      documents: 'Dokumente & Behörden',
-      organize: 'Organisieren & Profil',
+      klammer: 'Kalender, Merkliste & Unterlagen',
     },
     anspruchTitle: 'Was steht mir zu?',
     anspruchIntro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier ein ruhiger Überblick — unverbindlich, ohne Bewertung.',
@@ -2370,9 +2371,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Notfall',
-      short: 'Notfall',
-      description: 'Notfallkontakte und medizinische Informationen',
+      title: 'Gesundheit',
+      short: 'Gesundheit',
+      description: 'Gesundheit, Notfall und Verfügungen',
       intro: { sie: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.', du: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für dich und deine Familie einen echten Unterschied machen.' },
       emptyState: { sie: 'Ihre Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.', du: 'Deine Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.' },
       emptyStateHint: 'Ein Kontakt mit Telefonnummer genügt als Anfang.',

@@ -3,6 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { berechneTaggeld, alvErgebnis, ALV_PARAMS, ALV_DATA_SOURCE } from './data/alvRechner.js';
 import { RechnerForm, ErgebnisZahl, ErgebnisZeile, Einzelwahl } from './components/RechnerForm.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { zahl, betrag } from './utils/geld.js';
 import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
@@ -142,7 +143,9 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     stelle: React.createElement(OfficialLinkBox, { palette, t, data, ids: ['arbeitslosigkeit', 'ueberbrueckungsleistungen'], alsZeilen: true }),
     // F7-R6: die Quelle, die der Rechner schon führt (data/alvRechner.js, ALV_QUELLE_JE_JAHR) — mit Stand.
     quelle: t('rechnerForm.quelle', { q: ALV_DATA_SOURCE }),
-  });
+  },
+    // Ergänzung A (07.11.2026): zur Karte Arbeitslosenquote im Kantonsatlas.
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'alv' }));
 };
 
 export default AlvRechner;

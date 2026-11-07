@@ -1929,6 +1929,10 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'Comment cela fonctionne, expliqué en détail (en allemand)',
+    karte: 'Et dans les autres cantons ? Voir la carte (en allemand)',
+    zumVerstehen: 'Pour comprendre (pages en allemand)',
+    aufDerKarte: 'Sur la carte (en allemand)',
+    mehrDazu: 'En savoir plus (en allemand) :',
   },
   dashboard: {
     welcome: { sie: 'Comprendre vos droits. Organiser ce qui vous attend.', du: 'Comprendre tes droits. Organiser ce qui t’attend.' },
@@ -1952,15 +1956,11 @@ export default {
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: { sie: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.', du: 'Calculateurs et outils — utilisables indépendamment de tes chapitres.' },
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).
-    bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle' },
+    bereich: { versicherungen: 'Assurances', arbeit: 'Travail', gesundheit: 'Santé', wohnen: 'Logement', vorsorge: 'Prévoyance', finanzen: 'Argent', familie: 'Famille', behoerden: 'Autorités', person: 'Vie personnelle', bildung: 'Formation', notfall: 'Urgence' },
     toolGroups: {
-      lebensereignisse: 'Événements de vie',
       ankommen: 'Arrivée en Suisse',
       mit18: 'À 18 ans',
-      money: 'Argent & impôts',
-      insurance: 'Assurance & santé',
-      documents: 'Documents & autorités',
-      organize: 'Organiser & profil',
+      klammer: 'Calendrier, liste & documents',
     },
     anspruchTitle: 'À quoi ai-je droit ?',
     anspruchIntro: 'Bien des prestations existent sans qu’on le sache. Un aperçu tranquille — sans engagement ni jugement.',
@@ -2360,9 +2360,9 @@ export default {
       },
     },
     notfall: {
-      title: 'Urgence',
-      short: 'Urgence',
-      description: 'Contacts d\'urgence, informations médicales',
+      title: 'Santé',
+      short: 'Santé',
+      description: 'Santé, urgence et directives',
       intro: { sie: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour vous et votre famille.', du: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour toi et ta famille.' },
       emptyState: { sie: 'Votre carte d\'urgence — prête en 2 minutes, là quand ça compte.', du: 'Ta carte d\'urgence — prête en 2 minutes, là quand ça compte.' },
       emptyStateHint: 'Un contact avec un numéro de téléphone suffit pour commencer.',
