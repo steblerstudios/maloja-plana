@@ -69,7 +69,10 @@ function karte(ctx, key, { legende, nachher = '' }) {
   const defs = erste
     ? `<defs>${KANTONE.map((k) => `<path id="ka-${k}" d="${GEO.cantons[k].d}"/>`).join('')}${GEO.lakes.map((d, i) => `<path id="ka-see-${i}" d="${d}"/>`).join('')}</defs>`
     : '';
-  const flaechen = KANTONE.map((k) => `<use href="#ka-${k}" class="k${stufe[k]}"/>`).join('');
+  // Je Kanton Name und Wert als <title>: erscheint beim Darüberfahren mit der Maus, ohne Skript
+  // (Durchgang 07.11.2026: auf den Karten stand kein Kantonsname). Vorlesen bleibt bei der Tabelle,
+  // weil role="img" die Kinder für Screenreader zusammenfasst.
+  const flaechen = KANTONE.map((k) => `<g><title>${esc(`${de.cantons[k]}: ${E.fmt(E.wert(k))}`)}</title><use href="#ka-${k}" class="k${stufe[k]}"/></g>`).join('');
   const seen = GEO.lakes.map((_, i) => `<use href="#ka-see-${i}" class="see"/>`).join('');
   const spanne = (s) => s.min === s.max ? E.fmt(s.min) : `${E.fmt(s.min)} bis ${E.fmt(s.max)}`;
   const titel = `Karte: ${E.titel}`;

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { KANTONSATLAS, stufen, BRILLEN } from '../../scripts/seiten/kantonsatlas.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
 import { KANTONE, EBENEN } from '../../scripts/seiten-vergleich.mjs';
+import de from '../../src/i18n/de.js';
 
 // ─────────────────────────────────────────────────────────────
 // /kantonsatlas/ · Der Kantonsatlas als Maloja-Erklärseite (Stebler Studios, 06.11.2026)
@@ -48,6 +49,20 @@ describe('/kantonsatlas/', () => {
       for (const a of KANTONE) for (const b of KANTONE) {
         if (EBENEN[key].wert(a) === EBENEN[key].wert(b)) expect(stufe[a]).toBe(stufe[b]);
         if (EBENEN[key].wert(a) < EBENEN[key].wert(b)) expect(stufe[a]).toBeLessThanOrEqual(stufe[b]);
+      }
+    }
+  });
+
+  // Durchgang 07.11.2026: auf den Karten stand kein Kantonsname. Jeder Kanton trägt
+  // Name und Wert als <title> (Maus-Hinweis ohne Skript), direkt um seine Fläche.
+  it('jeder Kanton nennt beim Darüberfahren Namen und Wert', () => {
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    for (const key of KARTEN) {
+      const f = karte(key);
+      for (const k of KANTONE) {
+        const name = de.cantons[k];
+        expect(name, k).toBeTruthy();
+        expect(f, `${key} ${k}`).toContain(`<g><title>${esc(`${name}: ${EBENEN[key].fmt(EBENEN[key].wert(k))}`)}</title><use href="#ka-${k}" `);
       }
     }
   });
