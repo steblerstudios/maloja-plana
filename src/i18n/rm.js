@@ -4497,6 +4497,8 @@ export default {
   },
   // Chapitel Urgenza · «in lieu» (runda 9, AE; construì acceptanza F6, 25.10.2026) — texts betg anc examinads
   notfallKapitel: {
+    // TODO(rm): provisorisch — Gegenlese (Lebenslagen C1+C2, 07.11.2026)
+    krisenTitel: 'En ina crisa u en cas da violenza',
     vollstaendig: 'cumplet',
     fehlt: 'manca',
     zuklappen: 'serrar',

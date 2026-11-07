@@ -1772,6 +1772,7 @@ export default {
   },
   // Capitolo Emergenza · «un solo luogo» (round 9, AE; costruito collaudo F6, 25.10.2026)
   notfallKapitel: {
+    krisenTitel: 'In caso di crisi o di violenza',
     vollstaendig: 'completo',
     fehlt: 'mancante',
     zuklappen: 'chiudi',

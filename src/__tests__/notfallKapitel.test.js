@@ -8,7 +8,7 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANKER, knopfRot, NOTFALL_ANGABEN, SCENARIOS, bereitschaft, vorsorgeGeregelt } from '../components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANKER, knopfRot, NOTFALL_ANGABEN, SCENARIOS, bereitschaft, vorsorgeGeregelt, HILFE_IN_DER_KRISE } from '../components/NotfallImKapitel.jsx';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { stufen } from '../config/brotkrumePfade.js';
 import { feldHatWert } from '../utils/vollstaendigkeit.js';
@@ -121,7 +121,9 @@ describe('Im Ernstfall', () => {
     expect(ort()).toContain('href="tel:+41796543210"');
     expect(nurText(ort())).toContain('Peter Muster anrufen');
     const ohne = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, emergencyPhone: '' } };
-    expect(ort(ohne)).not.toContain('tel:');
+    // Seit Lebenslagen C1+C2 (07.11.2026) stehen 143 und 147 immer als tel:-Link da — geprüft wird der Kontakt-Link.
+    expect(ort(ohne)).not.toContain('data-teil="notfall-anrufen"');
+    expect(ort(ohne)).not.toContain('Peter Muster anrufen');
   });
 });
 
@@ -243,5 +245,53 @@ describe('Namen, Wege, Suche', () => {
       expect(blatt(sprache, 'mirror.notfall.blutgruppe')).toBeTruthy();
       expect(blatt(sprache, 'mirror.notfall.allergien')).toBeTruthy();
     }
+  });
+});
+
+// Lebenslagen C1+C2 (Entscheid Stebler Studios 07.11.2026, «A, so bauen»): Hilfe bei seelischer Krise und Gewalt
+// im Teil «Im Ernstfall» — dieselben vier Einträge wie in «Offizielle Links» → Beratung, nichts Neues, nichts gespeichert.
+describe('Notfall: Hilfe in einer Krise oder bei Gewalt', () => {
+  const krise = (html) => (html.match(/<section data-teil="notfall-krise"[\s\S]*?<\/section>/) || [''])[0];
+
+  it('steht immer da, auch ohne Angaben, mit den vier Einträgen aus «Offizielle Links»', () => {
+    for (const daten of [DEMO_DATA, {}]) {
+      const teil = krise(ort(daten));
+      expect(teil, 'Abschnitt fehlt').not.toBe('');
+      expect(nurText(teil)).toContain(t('notfallKapitel.krisenTitel'));
+      for (const k of HILFE_IN_DER_KRISE) {
+        const e = t('legal.resources.' + k);
+        expect(teil, k).toContain(`href="${e.url}"`);
+        expect(nurText(teil), k).toContain(e.name);
+      }
+    }
+  });
+
+  it('143 und 147 rufen direkt an; Opferhilfe und Frauenhaus öffnen im neuen Tab', () => {
+    const teil = krise(ort());
+    expect(teil).toContain('href="tel:143"');
+    expect(teil).toContain('href="tel:147"');
+    expect((teil.match(/target="_blank"/g) || []).length).toBe(2);
+  });
+
+  it('steht im Teil «Im Ernstfall», vor «Bereit für den Ernstfall»', () => {
+    const html = ort();
+    expect(html.indexOf('data-teil="notfall-krise"')).toBeGreaterThan(html.indexOf('data-teil="notfall-ernstfall"'));
+    expect(html.indexOf('data-teil="notfall-krise"')).toBeLessThan(html.indexOf('data-teil="notfall-bereit"'));
+  });
+
+  it('speichert nichts: kein Knopf, kein Formular, kein onUpdate im Abschnitt', () => {
+    const teil = krise(ort());
+    expect(teil).not.toMatch(/<button|<input|<select|<form/);
+  });
+
+  it('die Suche findet den Notfall über Krise und Gewalt', () => {
+    const reg = fs.readFileSync(path.resolve(__dirname, '..', 'config', 'ansichtenRegister.js'), 'utf8');
+    const zeile = reg.split('\n').findIndex((z) => z.includes("view: 'notfalleinstieg'"));
+    const block = reg.split('\n').slice(zeile, zeile + 4).join('\n');
+    for (const w of ['krise', 'gewalt', 'opferhilfe', 'frauenhaus', 'dargebotene hand']) expect(block, w).toContain(`'${w}'`);
+  });
+
+  it('der Titel steht in allen fünf Sprachen', () => {
+    for (const l of [de, fr, it_, en, rm]) expect(typeof l.notfallKapitel.krisenTitel, 'krisenTitel').toBe('string');
   });
 });
