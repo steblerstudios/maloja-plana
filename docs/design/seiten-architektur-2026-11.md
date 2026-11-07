@@ -174,6 +174,11 @@ Bild [Lebenslagen](seiten-architektur-9-lebenslagen.html), Besprechung 07.11. be
 Zeile im Block «Bereit für den Ernstfall» mit den vier bestehenden Einträgen `legal.resources.help1–4` (143, 147,
 Opferhilfe, Frauenhaus) plus Suchwörter — keine neuen Fakten, nichts gespeichert (Gerät kann geteilt sein).
 3 als Nächstes planen (Erbrecht, Rechtsprüfung am Volltext) · 4 sammeln · 5 erst Versicherungs-Übersicht prüfen · 6 parken.
+✅ **1+2 = A gebaut** → Entwurfs-PR #746. **C3 berichtigt** (Bild [Testament](seiten-architektur-10-testament.html)): nicht
+vergessen, sondern versteckt — Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung» (geprüfter Text, ZGB 467,
+499, 505, 506, 470 f.), Feld «Testament erstellt?» im Kapitel Behörden (Antworten «Ja Holografisches»/«Ja Öffentliches»),
+Link ch.ch in Offizielle Links. Empfehlung **A**: fünfte Kachel «Testament» im Block «Vorsorge» (liest das bestehende
+Feld, keine Migration, Weg zu Schritt 6), Antworten «Ja, eigenhändig» / «Ja, öffentlich beurkundet». Offen.
 
 ### ✅ Prüfung des Organigramms: Logik, UX, Psychologie, Abläufe (07.11.2026)
 
