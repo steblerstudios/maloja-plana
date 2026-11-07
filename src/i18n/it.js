@@ -1928,6 +1928,7 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'Come funziona, spiegato nel dettaglio (in tedesco)',
+    karte: 'E negli altri cantoni? Vedi la cartina (in tedesco)',
   },
   dashboard: {
     welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',

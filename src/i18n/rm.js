@@ -2068,6 +2068,8 @@ export default {
   // TODO(rm): provisorisch — Gegenlese (D1, 06.11.2026)
   erklaerseite: {
     link: 'Co che quai funcziuna, explitgà en detagl (en tudestg)',
+    // TODO(rm): provisorisch — Gegenlese (Ergänzung A, 07.11.2026)
+    karte: 'Co èsi en ils auters chantuns? Tar la charta (en tudestg)',
   },
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',

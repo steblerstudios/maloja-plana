@@ -1928,6 +1928,7 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'How this works, explained in full (in German)',
+    karte: 'How is it in other cantons? See the map (in German)',
   },
   dashboard: {
     welcome: 'Understand what you’re entitled to. Organize what lies ahead.',
