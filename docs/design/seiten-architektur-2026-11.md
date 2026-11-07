@@ -170,6 +170,10 @@ Notfall nur 144 · (2) häusliche Gewalt — Opferhilfe/Frauenhaus nur in «Offi
 fehlt unter «Vorausverfügen» · (4) Kinder zwischen Geburt und 18 (Kita, Schuleintritt) ohne Ablauf · (5) Hausrat,
 Haftpflicht, Rechtsschutz, UVG/KTG ohne eigenen Weg (Abdeckung der Versicherungs-Übersicht nicht geprüft) ·
 (6) Studium, Matura, Weiterbildung nur über Stipendien. Wohneigentum bewusst nicht gezählt (Mietende).
+Bild [Lebenslagen](seiten-architektur-9-lebenslagen.html), Besprechung 07.11. begonnen. Empfehlung **1+2 = A**: eine ruhige
+Zeile im Block «Bereit für den Ernstfall» mit den vier bestehenden Einträgen `legal.resources.help1–4` (143, 147,
+Opferhilfe, Frauenhaus) plus Suchwörter — keine neuen Fakten, nichts gespeichert (Gerät kann geteilt sein).
+3 als Nächstes planen (Erbrecht, Rechtsprüfung am Volltext) · 4 sammeln · 5 erst Versicherungs-Übersicht prüfen · 6 parken.
 
 ### ✅ Prüfung des Organigramms: Logik, UX, Psychologie, Abläufe (07.11.2026)
 
