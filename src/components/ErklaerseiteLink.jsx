@@ -17,14 +17,30 @@ export const ERKLAERSEITE = {
   praemien: '/krankenkasse/',
 };
 
+// Ergänzung A (Wege durch Maloja, Entscheid Stebler Studios 07.11.2026): aus dem Werkzeug zur passenden Karte
+// im Kantonsatlas — sonst führt aus der App kein Weg dorthin. Die Anker erzeugt scripts/seiten/kantonsatlas.mjs
+// (`karte-${key.toLowerCase()}`); der Wächter appZurErklaerseite.test.js prüft, dass jedes Ziel auf der Seite steht.
+export const KANTONSKARTE = {
+  praemien: '/kantonsatlas/#karte-praemie',
+  premium: '/kantonsatlas/#karte-lastnachipv',
+  tax: '/kantonsatlas/#karte-steuer',
+  mietzins: '/kantonsatlas/#karte-miete',
+  alv: '/kantonsatlas/#karte-alq',
+  sozialhilfe: '/kantonsatlas/#karte-sozialhilfe',
+  ergaenzungsleistungen: '/kantonsatlas/#karte-el',
+};
+
+const linkStil = (palette) => ({ color: palette.skyDeep || palette.text, fontWeight: weight.medium, textDecoration: 'underline', textUnderlineOffset: '2px' });
+
 export const ErklaerseiteLink = ({ palette, t, view }) => {
   const href = ERKLAERSEITE[view];
-  if (!href) return null;
-  return React.createElement('p', { style: { margin: space.sm + 'px 0 0', fontSize: text.sm } },
-    React.createElement(ExternerLink, {
-      t, href, hrefLang: 'de',
-      style: { color: palette.skyDeep || palette.text, fontWeight: weight.medium, textDecoration: 'underline', textUnderlineOffset: '2px' },
-    }, t('erklaerseite.link')));
+  const karte = KANTONSKARTE[view];
+  if (!href && !karte) return null;
+  const zeile = (ziel, schluessel) => React.createElement('p', { key: schluessel, style: { margin: space.sm + 'px 0 0', fontSize: text.sm } },
+    React.createElement(ExternerLink, { t, href: ziel, hrefLang: 'de', style: linkStil(palette) }, t(schluessel)));
+  return React.createElement(React.Fragment, null,
+    href && zeile(href, 'erklaerseite.link'),
+    karte && zeile(karte, 'erklaerseite.karte'));
 };
 
 export default ErklaerseiteLink;

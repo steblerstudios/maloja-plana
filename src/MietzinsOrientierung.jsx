@@ -15,6 +15,7 @@ import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { linkStil } from './components/PrimaryButton.jsx';
 import { Belege } from './components/Belege.jsx';
+import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -217,7 +218,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   },
     canton && onNavigate && React.createElement('div', { style: { paddingTop: space.sm + 'px' } },
       React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('sync') }, t('mietzinsView.linkBudget')),
-      React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('nav.finanzUebersicht')))
+      React.createElement('button', { type: 'button', style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('nav.finanzUebersicht'))),
+    // Ergänzung A (07.11.2026): zur Karte Miete im Kantonsatlas.
+    React.createElement(ErklaerseiteLink, { palette, t, view: 'mietzins' })
   );
 };
 

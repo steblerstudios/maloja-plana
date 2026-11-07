@@ -1938,6 +1938,8 @@ export default {
   // D1 (06.11.2026): Link vom Werkzeug zur öffentlichen Erklärseite (components/ErklaerseiteLink.jsx).
   erklaerseite: {
     link: 'So funktioniert das, ausführlich erklärt',
+    // Ergänzung A (07.11.2026): zur passenden Karte im Kantonsatlas.
+    karte: 'Wie ist das in anderen Kantonen? Zur Karte',
   },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',

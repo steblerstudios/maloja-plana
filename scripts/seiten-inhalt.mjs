@@ -290,7 +290,8 @@ export const SEITEN = [
     ],
     quellen: ['bwoKantone', 'bsvEL', 'ahvMerkblatt'],
     // Hintergrundseiten (scripts/seiten/hintergrund.mjs), nur auf Deutsch verlinkt.
-    hintergrund: ['krankenkasse', 'kantone-im-vergleich', 'politsystem'],
+    // Kantonsatlas: Ergänzung B (Wege durch Maloja, 07.11.2026).
+    hintergrund: ['krankenkasse', 'kantone-im-vergleich', 'kantonsatlas', 'politsystem'],
   },
 
   // ─── Prämienverbilligung ──────────────────────────────────────────────────
@@ -350,7 +351,7 @@ export const SEITEN = [
       },
     ],
     quellen: ['priminfo', 'fedlexKvgArt65'],
-    hintergrund: ['krankenkasse', 'kantone-im-vergleich'],
+    hintergrund: ['krankenkasse', 'kantone-im-vergleich', 'kantonsatlas'],
   },
 
   // ─── Sozialhilfe ──────────────────────────────────────────────────────────
@@ -415,6 +416,8 @@ export const SEITEN = [
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
+    // Ergänzung B (07.11.2026): bisher ohne Weg zu den Kantonsseiten, obwohl der Atlas eine Karte Sozialhilfequote hat.
+    hintergrund: ['kantone-im-vergleich', 'kantonsatlas'],
   },
 
   // ─── Steuern ──────────────────────────────────────────────────────────────
@@ -473,6 +476,8 @@ export const SEITEN = [
       },
     ],
     quellen: ['estvRechner'],
+    // Ergänzung B (07.11.2026): bisher ohne Weg zu den Kantonsseiten, obwohl der Atlas eine Karte Steuern hat.
+    hintergrund: ['kantone-im-vergleich', 'kantonsatlas'],
   },
 ];
 
