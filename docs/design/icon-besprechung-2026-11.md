@@ -147,6 +147,62 @@ Stebler Studios: «aber ist alv nicht auch rav? und rav ist doch ein amt» → j
 **G Lenkrad · H drei grüne Abzeichen (07.11.):** auf meine Frage «beim Bau prüfen?» Stebler Studios: «Jetzt anschauen». Bild [Lenkrad und grüne Abzeichen](icon-besprechung-lenkrad-gruen.html), Behörden-Menü im heutigen Stand. G: bisher (Kreis mit T) · G1 Nabe + drei getrennte Speichen · G2 Nabe + gebogener Balken; Empfehlung G1. H: Befund Wegzug (Minus) und Pass/ID (Karte) stehen untereinander, klein beide «grüner Kreis mit Querstrich». H0 bisher · H1 nur Wegzug = Pfeil hinaus (wie Umzug) · H2 Zuzug Pfeil herein + Wegzug Pfeil hinaus (ändert Plus/Minus vom 06.11.); Empfehlung H1. ✅ **07.11.: G2** («G2»; meine Empfehlung war G1): Führerausweis = Nabe + leicht gebogener Balken wie beim Auto + Speiche unten, leer. H: «h verstehe ich nicht ganz» → Bild [H einfach](icon-besprechung-h-einfach.html): vier Zeilen untereinander, gross und in echter Grösse, die zwei Verwechselbaren (Wegzug Minus, Pass/ID Karte) umrandet; H0 bisher · H1 Wegzug = Pfeil hinaus. ✅ **07.11.: H0, Minus lassen** («Minus lassen»; meine Empfehlung war H1): Zuzug Plus · Wegzug Minus · Einbürgerung Karte + Plus · Pass/ID Karte mit Person bleiben. G und H erledigt. Nachfrage Stebler Studios: «soll der militärdienst noch grün werden?» → nachgeschaut: die Seite steht in der Gruppe «erwachsen werden» mit Volljährig und Lehre (`gepaeck.js`, Entscheid F7-A9 vom 27.10.). Bild [Militär grün?](icon-besprechung-militaer-gruen.html): L leer · N grün (Ast Person spielt mit, Basis-Grün wie Pass/Einbürgerung). Empfehlung N. ✅ **07.11.: N, grün** («N, grün»): Militär/Zivildienst = Helvetia + Gradabzeichen im grünen Abzeichen (Basis-Grün, Ast Person spielt mit). Überholt damit für diese Seite: «leer» aus E.
 **I, Leitformen reicher (07.11.):** Bild [Leitformen reicher](icon-besprechung-leitformen-reicher.html): die reichen Zeichnungen vom 06.11. jetzt im ganzen Menü (mit den Entscheiden dieser Nacht): Persönliche Basis flach · K Ausweiskarte reich · A Apfel · Ausbildung & Arbeit flach · R Schulhut/Helm reich · Gesundheit flach · R Arztkoffer reich. Empfehlung: reich überall, Basis = K (beim Apfel sähen Person und Familie gleich aus). Stebler Studios: «k und a gefallen mir nicht» → nachgefragt (flach lassen · weniger Details · andere Form · vertagen; und Schulhut/Helm/Arztkoffer reich?). ⏸️ **07.11.: I vertagt** («ok machen wir i auch dann, wenn wir eine nacht geschlafen haben»). Zuerst klären: was an K und A stört, und ob Schulhut/Helm/Arztkoffer reich gefallen.
 
+## 🔍 Abgleich Icons ↔ Seiten-Architektur (07.11.2026, nachmittags)
+
+**Auftrag:** passt das ganze Zeichensystem zur Seiten-Architektur, die seit heute auf `main` ist (`78424292`, PRs #735 #738 #739 #741–#750)?
+**Gelesen an der Quelle (main):** `data/lebensbereiche.js` (`astKapitel`, `KAPITEL_OHNE_EIGENES`) · `bereich` + `icon` in `config/ansichtenRegister.js` und `data/werkzeugRegister.js` · `MobileNav.jsx` (`chapterIcons`) · `components/WerkzeugGruppen.jsx` · `components/NotfallImKapitel.jsx` · `components/ErklaerseiteLink.jsx` · `components/ExternerLink.jsx` · `i18n/de.js` · Blatt `seiten-architektur-2026-11.md` (Übergabe-Tabelle).
+
+**Kurz:** Die Register auf main tragen schon die neuen Kapitel/Äste (#738) — jede Seite steht dort, wo das Organigramm sie hat. Die **Zeichen auf main sind noch alle die alten** (gebaut ist von diesem Blatt nichts), darum passt «heute» fast nirgends; das ist erwartet. Gefragt ist, ob die **entschiedenen** Zeichen zur Architektur passen. Ergebnis: ja, bis auf **fünf echte Abweichungen** (⚠️ unten) und **vier Stellen ohne Entscheid** (❓).
+
+| Seite | Kapitel · Ast (main) | heute (main) | entschieden (dieses Blatt) | passt zur Architektur? | Vorschlag |
+|---|---|---|---|---|---|
+| **Kapitel Gesundheit** (Menü, Startseite) | Gesundheit (`notfall`) · Farbe Hagebutte | `notfall` = Herz mit Kreuz, jetzt orange (Kapitel heisst seit #738 «Gesundheit», Farbe kommt vom ersten Ast) | Arztkoffer, eckig, kräftiges Kreuz, orange | heute ✗ (Notfall-Herz steht für das ganze Kapitel) · entschieden ✓ | beim Bau `chapterIcons.notfall` → Arztkoffer. § Kreuz vor dem Bau |
+| Arztkoffer (Seite `gesundheit`) | Gesundheit · Gesundheit | `health` | Arztkoffer (= Kapitel-Leitform) | ✓ | — |
+| KVG-Leistungen | Gesundheit · Gesundheit | `health` (= gleich wie Arztkoffer) | Arztkoffer + Haken blau | ✓ Architektur sagt «Mini-Schild»; Farbe blau stimmt, Zeichen bewusst Haken (D, 06.11.) | Architektur-Tabelle nachführen |
+| KK-Belege | Gesundheit · Gesundheit | `barcode` | Arztkoffer + Blatt blau | ✓ (wie oben) | — |
+| Unfall / Krankheit | Gesundheit · Gesundheit | `ereignisUnfall` | Arztkoffer + ! blau | ✓ (wie oben) | — |
+| IV | Gesundheit · Gesundheit | `ereignisIv` | Arztkoffer + Mini-Schild mit Edelweiss blau | ✓ | — |
+| **Pflege** | Gesundheit · **Gesundheit** | `ereignisPflege` | Arztkoffer + Pflegebett **rot** | ⚠️ **1** rot heisst «Ast Notfall spielt mit»; die Seite steht im Ast Gesundheit, nicht im Notfall | Frage 1 |
+| Notfall (Einstieg, heute Block «Bereit für den Ernstfall») | Gesundheit · Notfall | `notfall` | Arztkoffer + Herz mit Puls rot | ✓ | — |
+| **Notfallkarte** | Gesundheit · Notfall | Menü `notfall` · Kachel im Kapitel `phone` | Menü: Karte (wie KK-Karte, Kreditkarte) · Kachel: Hörer (Punkt 9 «Kachel Notfallkarte») | ⚠️ **2** zwei Zeichen für dieselbe Seite | Frage 2 |
+| Notfallpass | Gesundheit · Notfall | Menü + Kachel `notfall` | Arztkoffer + Handy rot | ✓ (Kachel zieht beim Bau mit) | — |
+| Patientenverfügung | Gesundheit · Notfall (Vorausverfügen) | `document` | Arztkoffer + Blatt mit Herz rot | ✓ | — |
+| Vorsorgeauftrag & PV | Gesundheit · Notfall (Vorausverfügen) | `ereignisVorsorgeauftrag` | Arztkoffer + Blatt violett | ✓ Architektur sagt «rot»; violett = Vorsorge spielt mit (Regel Rot/Violett, 06.11.) | Architektur-Tabelle nachführen |
+| Organspende | Gesundheit · Notfall | `ereignisOrgan` | Arztkoffer + Herz rot | ✓ | — |
+| Bestattungswünsche | Gesundheit · Notfall | `ereignisBestattung` | Arztkoffer + Kerze violett | ✓ wie VA | — |
+| **Kachel «Notfall-Dossier»** (Kapitel Gesundheit) | Gesundheit · Notfall | `notfall` | ❓ nicht besprochen — nach 4b D: Stapel + rotes Abzeichen | ❓ **A** | Frage 3 |
+| **Kachel «Portemonnaie-Karte»** | Gesundheit · Notfall | `document` | ❓ nicht besprochen — Karte (rot) | ❓ **B** | Frage 3 |
+| **Kachel «Testament»** (neu, Block «Vorsorge») | Gesundheit · Notfall (Feld liegt bei Behörden) | **kein Zeichen** — wie die vier Geschwister nur Haken/Kästchen | — | ✓ passt: die Vorsorge-Kacheln zeigen Stand, nicht Thema; Haken = «geschafft» (Punkt 3) | nichts zeichnen |
+| **Block «In einer Krise oder bei Gewalt»** (neu) | Gesundheit · Notfall | Zeile «… anrufen» `phone`; die vier Hilfe-Zeilen ohne Zeichen | — | ✓ Hörer = anrufen (Punkt 9). Zeilen ohne Zeichen wie in «Offizielle Links» — ruhig | nichts zeichnen |
+| **Kapitel-Ende «Zum Verstehen / Auf der Karte»** (neu) | Basis, Wohnen, Finanzen, Versicherungen, Ausbildung | Textlinks, je mit `external` (Pfeil hinaus, von `ExternerLink`) | — | ✓ ein Zeichen = eine Bedeutung: «öffnet neuen Tab» | nichts zeichnen |
+| Erklärseiten-Links in Werkzeugen | Finanzen (Sozialhilfe, Steuern), Versicherungen (IPV, Prämien) | wie oben | — | ✓ | — |
+| «Die Schweiz verstehen» (Politsystem, Kantone, Kantonsatlas) | ohne Kapitel, oben | nur im Beta-Tor als Textlinks | — | ✓ kein Zeichen nötig | — |
+| **Sozialhilfe** | Finanzen · Finanzen | `sozialhilfe` (Hand) | Fünfliber + Schirm **grün** (Persönliche Basis spielt mit) | ⚠️ **3** Architektur-Übergabe: Abzeichen **Behörden** (Sozialdienst spielt mit). Das Icon-Blatt hat danach grün entschieden | Frage 4 |
+| Steuern | Finanzen · Finanzen | `money` | Fünfliber + Prozent grau | ✓ | — |
+| Quellensteuer | Finanzen · Finanzen | `ereignisQuellensteuer` | Fünfliber + Prozent haselnuss | ⚠️ **4** Architektur: Behörden (grau). Icon-Blatt bewusst B «geht direkt vom Lohn weg» | bleibt haselnuss, Architektur-Tabelle nachführen (Empfehlung) |
+| Kreditkarte · Finanzübersicht · Budget · Schulden · Mahnung · Selbst mahnen | Finanzen · Finanzen | `money` / `budget` / `budgetWallet` / `debt` / Ereignisse | Fünfliber + eigenes Zeichen, leer | ✓ | — |
+| Betreibung erhalten | Finanzen · Finanzen | `ereignisBetreibung` | Fünfliber + Minus grau | ✓ | — |
+| Betreibungsauszug | Behörden · Behörden | `ereignisBetreibungsauszug` | Helvetia + Blatt gold | ✓ | — |
+| IPV | Versicherungen · Versicherungen | `praemienverbilligung` | Schild + echter Fünfliber gold (Q) | ✓ | — |
+| Prämien (Versicherungs-Übersicht) | Versicherungen · Versicherungen | `insurance` | Schild + Balken orange | ✓ | — |
+| KK-Erstanmeldung · KK wechseln | Versicherungen · Versicherungen | Ereignisse | Schild + orange | ✓ | — |
+| Ergänzungsleistungen | Versicherungen · Vorsorge | `ereignisErgaenzungsleistungen` | ⏸️ vertagt (Empfehlung G) | ❓ | Punkt EL |
+| ALV-Taggeld | Ausbildung · Arbeit | `work` (= Arbeit-Hauptbild) | Helm + echter Fünfliber gold | ✓ | — |
+| **Stundenlohn** | Ausbildung · Arbeit | `money` | Helm + Bahnhofsuhr, leer | ⚠️ **5** Architektur-Übergabe: Fünfliber gold. Icon-Blatt bewusst C (06.11.) «Stundenlohn = Uhr» | bleibt Uhr, Architektur-Tabelle nachführen (Empfehlung) |
+| **Aussteuerung** | Ausbildung · Arbeit (seit 24.10. Teil von «Stelle verloren») | `lebenslauf` — **gleich wie Lebenslauf** | Helm + Sanduhr, leer | heute ✗ (doppelt) · entschieden ✓ | — |
+| Lebenslauf | Ausbildung · Arbeit | `lebenslauf` | Helm + Blatt, leer | ✓ | — |
+| Lehre · Stipendien | Ausbildung · Bildung | Ereignisse | Schulhut + Mini-Helm haselnuss · Schulhut + Fünfliber gold | ✓ | — |
+| EO | Basis · Familie | `family` (= Familie-Hauptbild) | Ausweiskarte (zwei Personen) + Fünfliber gold | ✓ | — |
+| Militär / Zivildienst | Behörden · Behörden | `ereignisDienst` | Helvetia + Gradabzeichen grün (Ast Person) | ✓ (Gruppe «erwachsen werden») | — |
+| Mietbeiträge | Wohnen · Wohnen | `ereignisMietzins` | Chalet + Fünfliber gold | ✓ | — |
+| Offizielle Links | ohne Kapitel · Klammer | Register `globe`, Werkzeug-Gruppen `dokumentTresor` — **zwei Zeichen** | Kette | heute ✗ · entschieden ✓ | — |
+| **Drucken** · Lebensmappe | ohne Kapitel · Klammer | beide `documents` | Lebensmappe = Stapel (+ du grün, 4b) · Drucken ❓ | ❓ **C** gleiches Zeichen | Frage 3 |
+| Einstellungen: Sicherung · Benachrichtigungen · Als App installieren | ohne Kapitel | `sicherung` · `cowbell` · `download` | Pfeil nach unten · Kuhglocke Strich · Handy ohne Abzeichen | ✓ | — |
+| «Was steht mir zu?» · Übersicht · Menü | oben / Leiste | `geschenk` · Sackmesser · drei Striche | Wegweiser · Feldstecher · Sackmesser | ✓ | — |
+
+**Ohne Abweichung zur Architektur:** Wohnen, Persönliche Basis, Behörden, Versicherungen & Vorsorge (bis EL), die Funktionen.
+**Nebenbefund zum Bau:** `WerkzeugGruppen.jsx` färbt alle Zeichen neutral (`palette.mid`); Entscheid 2d (Familie in Ast-Farbe) braucht dort die Farbe aus `getBereich(bereich)`.
+
 **📍 Stand 07.11., ca. 00:40 — nächster Schritt: Gesamtmatrix.** Seit 23:45 entschieden: Haken C · Merkliste Lesezeichen · Blätter (Blatt/Stapel/Ordner/Rechner/Kette/Teilen/Export) · Funktionen folgen dem System (D) · Kalender C · Bahnhofsuhr · Telefon (Hörer/Handy) · Sackmesser = Menü · Glocke A · Übersicht Feldstecher · «Was steht mir zu?» Wegweiser · `exportTool` weg. Offen: Gesamtmatrix bauen und durchgehen (dabei Fehlendes, ALV-Ort, Zeichen Ausbildung & Arbeit, Punkt 6) · Wörterbuch-Abweichungen (Frist, Export, Einbürgerung, Sackmesser) beim Bau nachführen · Rechts-Prüfer Kreuz + Bahnhofsuhr.
 
 **📍 Stand 06.11., ca. 23:45 — Pause.** Heute in dieser Sitzung entschieden: Finanzen-Rest (leer, Kreditkarte Chip) · KVG Haken / Unfall Ausrufezeichen / IV Schild · Organspende Herz · Notfallpass Telefon · Wohnen leer · Volljährig 18 · Prämien Balken orange · Pensionierung Berg · EL violett · Ausbildung & Arbeit C (leer, Stundenlohn Uhr) · ALV, EO, Mietzins- und Prämienverbilligung grau. **Weiter mit:** 1) ALV: Arbeit oder Behörden · 2) Zeichen Ausbildung & Arbeit abnehmen (Neuer Job Plus, Stelle verloren Kreuzchen, Aussteuerung Sanduhr, Selbständigkeit Blitz, Lebenslauf Blatt, Lehre Mini-Helm, Schulhut, Helm) · 3) Punkt 5 Funktionen · 4) Punkt 6 (leer für übrige Kapitel, Militär, Lenkrad, Leitformen reicher mit Apfel) · Rechts-Prüfer Kreuz. ❓ Für die Seiten-Architektur: eigene Seiten für AHV/PK/3a?
