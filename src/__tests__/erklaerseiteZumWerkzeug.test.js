@@ -21,7 +21,14 @@ const ERWARTET = {
   steuern: 'tax',
   krankenkasse: 'praemien',
   'kantone-im-vergleich': 'praemien',
+  // E-A (Wege durch Maloja, 07.11.2026).
+  kantonsatlas: 'praemien',
 };
+
+describe('E-A · Kantonsatlas führt in die Versicherungs-Übersicht, Politsystem bleibt bei der Startseite', () => {
+  it('kantonsatlas → #/praemien', () => expect(knopf(lies('kantonsatlas'))).toEqual(['/#/praemien']));
+  it('politsystem → /', () => expect(knopf(lies('politsystem'))).toEqual(['/']));
+});
 
 describe('Erklärseiten führen direkt zum passenden Werkzeug', () => {
   for (const s of SPRACHEN) {

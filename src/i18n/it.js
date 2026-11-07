@@ -1929,6 +1929,9 @@ export default {
   erklaerseite: {
     link: 'Come funziona, spiegato nel dettaglio (in tedesco)',
     karte: 'E negli altri cantoni? Vedi la cartina (in tedesco)',
+    zumVerstehen: 'Per capire (pagine in tedesco)',
+    aufDerKarte: 'Sulla cartina (in tedesco)',
+    mehrDazu: 'Per saperne di più (in tedesco):',
   },
   dashboard: {
     welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',

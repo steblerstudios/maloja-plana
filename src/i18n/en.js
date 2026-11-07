@@ -1929,6 +1929,9 @@ export default {
   erklaerseite: {
     link: 'How this works, explained in full (in German)',
     karte: 'How is it in other cantons? See the map (in German)',
+    zumVerstehen: 'To understand (pages in German)',
+    aufDerKarte: 'On the map (in German)',
+    mehrDazu: 'More on this (in German):',
   },
   dashboard: {
     welcome: 'Understand what you’re entitled to. Organize what lies ahead.',

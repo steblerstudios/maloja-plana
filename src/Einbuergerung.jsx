@@ -1,5 +1,6 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { MehrDazu } from './components/ErklaerseiteLink.jsx';
 
 // Einbürgerung — geführter Ablauf, gebaut 24.09.2026 (in docs/ABLAEUFE.md seit Juli als
 // Lücke H2). Ordentliche Einbürgerung: C + zehn Jahre (BüG 9, 33), kantonale Wohndauer
@@ -33,7 +34,9 @@ export const Einbuergerung = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('einbuergerung.step3LinkUmzug'), onClick: () => onNavigate('umzug') })
     ),
     React.createElement(AblaufStep, { palette, title: t('einbuergerung.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('einbuergerung.step4Text'))
+      React.createElement('p', { style: s.stepText }, t('einbuergerung.step4Text')),
+      // D-A (Wege durch Maloja, 07.11.2026): Gemeinde, Kanton, Bund — die Seite erklärt die drei Ebenen.
+      React.createElement(MehrDazu, { palette, t, seite: 'politsystem' })
     ),
     React.createElement(AblaufStep, { palette, title: t('einbuergerung.step5Title') },
       React.createElement('p', { style: s.stepText }, t('einbuergerung.step5Text')),

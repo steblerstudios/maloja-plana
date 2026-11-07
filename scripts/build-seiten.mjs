@@ -54,6 +54,9 @@ const WERKZEUG_IN_DER_APP = {
   steuern: 'tax',
   krankenkasse: 'praemien',
   'kantone-im-vergleich': 'praemien',
+  // E-A (Wege durch Maloja, 07.11.2026): dieselben Daten wie Kantone im Vergleich, erste Karte ist die Prämie.
+  // Politsystem bleibt bei der Startseite: kein Werkzeug rechnet Politik.
+  kantonsatlas: 'praemien',
 };
 const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/#/${WERKZEUG_IN_DER_APP[pfad]}` : '/');
 const pfadIntern = (pfad, sprache) => `/${sprache.praefix}${pfad}/`;

@@ -2070,6 +2070,10 @@ export default {
     link: 'Co che quai funcziuna, explitgà en detagl (en tudestg)',
     // TODO(rm): provisorisch — Gegenlese (Ergänzung A, 07.11.2026)
     karte: 'Co èsi en ils auters chantuns? Tar la charta (en tudestg)',
+    // TODO(rm): provisorisch — Gegenlese (C-A, D-A, 07.11.2026)
+    zumVerstehen: 'Per chapir (paginas en tudestg)',
+    aufDerKarte: 'Sin la charta (en tudestg)',
+    mehrDazu: 'Dapli davart quai (en tudestg):',
   },
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
