@@ -178,7 +178,14 @@ Opferhilfe, Frauenhaus) plus Suchwörter — keine neuen Fakten, nichts gespeich
 vergessen, sondern versteckt — Schritt 6 im Ablauf «Vorsorgeauftrag und Patientenverfügung» (geprüfter Text, ZGB 467,
 499, 505, 506, 470 f.), Feld «Testament erstellt?» im Kapitel Behörden (Antworten «Ja Holografisches»/«Ja Öffentliches»),
 Link ch.ch in Offizielle Links. Empfehlung **A**: fünfte Kachel «Testament» im Block «Vorsorge» (liest das bestehende
-Feld, keine Migration, Weg zu Schritt 6), Antworten «Ja, eigenhändig» / «Ja, öffentlich beurkundet». Offen.
+Feld, keine Migration, Weg zu Schritt 6), Antworten «Ja, eigenhändig» / «Ja, öffentlich beurkundet». ✅ **A gebaut** →
+Entwurfs-PR #747 (auf #746); dabei fr «authentique» → «par acte public» (rechts-pruefer, ZGB 499).
+**C5 geprüft (07.11.):** keine Lücke im Bestand. Das Kapitel Versicherungen erfasst alle — Krankenkasse + Zusatz, BVG,
+Leben, Freizügigkeit, UVG + Zusatz, Krankentaggeld, Haftpflicht, Rechtsschutz, Kinder, Hausrat, Reise, Cyber, Auto
+(`constants.js`); das VersicherungenInstrument zählt sie im Budget, das Netz-Schild zeigt, welche Risiken gedeckt sind;
+«Weitere Versicherungen» fängt den Rest. **Die eigentliche Lücke ist Orientierung:** von 29 Feldern haben nur 4 einen
+Erklärsatz (Krankenkasse, Franchise, BVG, UVG — darin ein Satz zum KTG). Haftpflicht, Hausrat, Rechtsschutz, Leben,
+Reise haben keinen Satz «wofür, wann sinnvoll». Kein eigener Weg nötig.
 
 ### ✅ Prüfung des Organigramms: Logik, UX, Psychologie, Abläufe (07.11.2026)
 
