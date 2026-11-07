@@ -353,15 +353,17 @@ export function getChapters(t) {
         // Freiwillige Zusatzversicherung zum UVG (VVG, meist über den Arbeitgeber) — zweite Stufe «Unfall» im Netz-Schild (F7-K3-6, 27.10.2026).
         { k: 'uvgZusatz', type: 'select', sel: 1 },
         { k: 'uvgZusatzPremium', type: 'currency', hint: 1, jahr: true },
-        { k: 'ktg', type: 'select', sel: 1, hint: 1 },
-        { k: 'liabilityInsurance', type: 'select', sel: 1 },
+        // Lebenslagen C5 (07.11.2026): Erklärsätze nach Fach-, Rechts- und Wordingprüfung
+        // (docs/entscheide/versicherungen-erklaersaetze-2026-11.md).
+        { k: 'ktg', type: 'select', sel: 1, hint: 1, orientation: or(t, 'ktg') },
+        { k: 'liabilityInsurance', type: 'select', sel: 1, orientation: or(t, 'haftpflicht') },
         { k: 'liabilityAmount', type: 'currency' },
         // Haftpflicht-Prämie (Jahr) — zählt im Budget ÷ 12 (utils/monatsrechnung.js, 25.10.2026).
         // liabilityAmount bleibt die Versicherungssumme; alte Einträge dort werden nicht verschoben.
         { k: 'liabilityPremium', type: 'currency', hint: 1, jahr: true },
-        { k: 'legalInsurance', type: 'select', sel: 1 },
+        { k: 'legalInsurance', type: 'select', sel: 1, orientation: or(t, 'rechtsschutz') },
         { k: 'childInsurance', type: 'select', sel: 1 },
-        { k: 'householdInsurance', type: 'select', sel: 1, sec: 'property', secondary: true },
+        { k: 'householdInsurance', type: 'select', sel: 1, sec: 'property', secondary: true, orientation: or(t, 'hausrat') },
         { k: 'householdInsuranceAmount', type: 'currency', hint: 1, secondary: true, jahr: true },
         { k: 'travelInsurance', type: 'select', sel: 1, secondary: true },
         { k: 'cyberInsurance', type: 'select', sel: 1, secondary: true },
