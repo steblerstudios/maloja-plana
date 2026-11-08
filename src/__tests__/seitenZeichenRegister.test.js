@@ -40,6 +40,10 @@ describe('B4 · Seiten-Zeichen im Register', () => {
     expect(g).toMatch(/Icons\[w\.view \? ansichtIkon\(w\.view, w\.icon\) : w\.icon\]/);
     expect(g).toMatch(/background: seite \? palette\.surface : palette\.gold, boxShadow: seite \? 'inset 0 0 0 1\.2px ' \+ palette\.gold/);
   });
+  it('die grossen Karten der Startseite zeigen dasselbe Zeichen (mit Kern-Rückfall, bis das Register da ist)', () => {
+    const d = readFileSync(resolve(__dirname, '../Dashboard.jsx'), 'utf8');
+    expect(d).toMatch(/const IconFn = Icons\[ansichtIkon\(item\.view, item\.icon\)\] \|\| Icons\[item\.icon\];/);
+  });
   it('main.jsx setzt die Ast-Variablen aus lebensbereiche.js, für jeden Ast', () => {
     const main = readFileSync(resolve(__dirname, '../main.jsx'), 'utf8');
     expect(main).toMatch(/for \(const b of LEBENSBEREICHE\) document\.documentElement\.style\.setProperty\('--mp-ast-' \+ b\.key, isDarkMode \? b\.dark : b\.light\)/);

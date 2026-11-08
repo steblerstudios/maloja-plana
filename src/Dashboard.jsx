@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { SecondaryButton, knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
@@ -690,7 +691,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
         ].filter(Boolean);
         const renderItem = (item) => {
-          const IconFn = Icons[item.icon];
+          // Dasselbe Zeichen wie in Menü und Suche (Seiten-Zeichen, Bauplan B4); bis das Register
+          // nachgeladen ist, das bisherige Kern-Zeichen.
+          const IconFn = Icons[ansichtIkon(item.view, item.icon)] || Icons[item.icon];
           return React.createElement('button', {
             key: item.view,
             onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
