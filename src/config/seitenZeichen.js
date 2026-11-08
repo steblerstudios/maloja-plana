@@ -13,8 +13,8 @@
 //                                     data/werkzeugRegister.js, Kapitel über astKapitel()
 //   · alle Farben                  → data/lebensbereiche.js
 //
-// Noch zeichnet nichts nach dieser Tabelle; das kommt in B3/B4. Bis dahin hält der Wächter
-// __tests__/seitenZeichen.test.js sie vollständig und widerspruchsfrei.
+// Seit Bauplan B4 (08.11.2026) zeichnen alle sieben Kapitel nach dieser Tabelle (IconAbzeichen.jsx,
+// über ansichtIkon()). Der Wächter __tests__/seitenZeichen.test.js hält sie vollständig und widerspruchsfrei.
 
 import { astKapitel, getBereich, getBereichForChapter } from '../data/lebensbereiche.js';
 
