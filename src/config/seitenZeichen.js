@@ -177,3 +177,16 @@ export const abzeichenFarbe = (bereich, mit, isDark = false) => {
   const ast = getBereich(mit === GELD ? 'finanzen' : mit);
   return { art: 'voll', farbe: ast ? (isDark ? ast.dark : ast.light) : null };
 };
+
+// Alles, was das Abzeichen-Bauteil (IconAbzeichen.jsx, Bauplan B3) für eine Seite braucht.
+// `bereich` kommt vom Aufrufer aus dem Register (eine Quelle).
+export const seitenBild = (view, bereich, isDark = false) => {
+  const e = SEITEN_ZEICHEN[view];
+  if (!e || !bereich) return null;
+  const f = abzeichenFarbe(bereich, e.mit, isDark);
+  const form = getBereichForChapter(astKapitel(bereich));
+  return {
+    leitform: leitformFuer(bereich), zeichen: e.zeichen, art: f.art, farbe: f.farbe,
+    formFarbe: form ? (isDark ? form.dark : form.light) : null,
+  };
+};
