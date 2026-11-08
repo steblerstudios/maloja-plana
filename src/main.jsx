@@ -337,7 +337,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHan
   const fan = [
     { key: 'tresor', label: t('nav.capDokument'), icon: 'ordner', left: 'calc(50% - 104px)', bottom: '84px' },
     { key: 'kk', label: t('nav.capBeleg'), icon: 'quittung', left: 'calc(50% - 40px)', bottom: '126px' },
-    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendar', left: 'calc(50% + 40px)', bottom: '126px' },
+    { key: 'calendar', label: t('nav.capFrist'), icon: 'kalenderPlus', left: 'calc(50% + 40px)', bottom: '126px' },
     { key: 'merkliste', label: t('nav.merkliste'), icon: 'lesezeichen', left: 'calc(50% + 104px)', bottom: '84px' },
   ];
   return React.createElement(React.Fragment, null,
@@ -796,6 +796,10 @@ const AppInner = ({ demo }) => {
     // Ast-Farben für die Seiten-Zeichen (Icon-Plan, Bauplan B4): eine Quelle, lebensbereiche.js.
     try { for (const b of LEBENSBEREICHE) document.documentElement.style.setProperty('--mp-ast-' + b.key, isDarkMode ? b.dark : b.light); } catch {}
   }, [isDarkMode]);
+  // Rollenfarben für die Kalender-Abzeichen (Icon-Plan B5c): Blau = Fristen, Rot = warnen (Fassung 9).
+  useEffect(() => {
+    try { document.documentElement.style.setProperty('--mp-frist', palette.sky); document.documentElement.style.setProperty('--mp-warnen', palette.rose); } catch {}
+  }, [palette.sky, palette.rose]);
   useEffect(() => { try { localStorage.setItem('or5_readable', String(readable)); } catch {} document.documentElement.classList.toggle('mp-readable', readable); }, [readable]);
   useEffect(() => {
     const on = () => setIsOffline(false);

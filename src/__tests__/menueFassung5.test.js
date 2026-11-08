@@ -162,7 +162,8 @@ describe('Icons · Was ansteht / Ablage / Merkliste', () => {
     // Seit 23.10.2026 liegt der Kalender nur noch im Erfassen-Fächer, nicht mehr in der Leiste.
     // Seit 06.11.2026 (Icon-Plan, Schritt 3) ist es das Kalenderblatt aus dem Register; der Tag
     // kommt dort aus Zürich (`_calendar` in IconKern.jsx).
-    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'calendar'/);
+    // Seit Bauplan B5c (08.11.2026): «Frist erfassen» = Kalender + leeres Abzeichen mit Plus (Punkt 8 «C»).
+    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'kalenderPlus'/);
     expect(lies('IconKern.jsx')).toMatch(/const day = tagInZuerich\(\)/);
     expect(main).not.toMatch(/new Date\(\)\.getDate\(\)/);
     expect(lies('IconKern.jsx')).not.toMatch(/new Date\(\)\.getDate\(\)/);
