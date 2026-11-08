@@ -81,6 +81,15 @@ describe('B5c · Kalender mit Abzeichen', () => {
     // der Kalender selbst ist drin (Tagesdatum), unten rechts freigeschnitten
     expect(z('kalenderFrist')).toMatch(/<mask id="kal[^"]+a"/);
   });
+  it('mit Abzeichen rückt das Datum nach links und wird kleiner (Entscheid «B»), der einfache Kalender nicht', async () => {
+    await muenzenBereit();
+    const z = (n) => renderToStaticMarkup(React.createElement(Icons[n]));
+    for (const n of ['kalenderPlus', 'kalenderFrist', 'kalenderUeberfaellig']) {
+      expect(z(n)).toMatch(/<text x="7\.8" y="18\.2"[^>]*font-size="6\.5"[^>]*>\d{1,2}<\/text>/);
+      expect(z(n)).not.toMatch(/<text x="12"/);
+    }
+    expect(z('calendar')).toMatch(/<text x="12" y="18\.6"[^>]*font-size="8\.5"/);
+  });
   it('zwei Kalender nebeneinander bekommen verschiedene Masken', () => {
     const zwei = renderToStaticMarkup(React.createElement('div', null,
       React.createElement(Icons.kalenderFrist, { key: 1 }), React.createElement(Icons.kalenderFrist, { key: 2 })));

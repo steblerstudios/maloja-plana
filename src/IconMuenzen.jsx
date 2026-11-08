@@ -346,6 +346,16 @@ const KALENDER_ZEICHEN = {
   sanduhr: 'M16.6 15.9 H20 L18.3 18.3 Z M16.6 20.7 H20 L18.3 18.3 Z',
   ausruf: 'M18.3 15.7 V18.6 M18.3 20.7 V20.75',
 };
+// Das Tagesdatum rückt nach links und wird kleiner (Entscheid Stebler Studios 08.11.2026, «B»): so schneidet
+// das Abzeichen die Zahl nicht an, auch an zweistelligen Tagen. Der einfache Kalender behält die grosse Zahl
+// in der Mitte. Die Zahl selbst kommt weiter aus dem Kern (Tag in Zürich), hier wird nur ihr Platz gesetzt.
+const DATUM_MIT_ABZEICHEN = { x: '7.8', y: '18.2', fontSize: '6.5' };
+const kalenderBlatt = () => {
+  const blatt = Icons.calendar();
+  const teile = React.Children.map(blatt.props.children, (teil) =>
+    (teil && teil.type === 'text' ? React.cloneElement(teil, DATUM_MIT_ABZEICHEN) : teil));
+  return React.cloneElement(blatt, { x: '0', y: '0', width: '24', height: '24', strokeWidth: 'inherit' }, ...teile);
+};
 const KalenderMitBild = ({ zeichen, farbe, ...rest }) => {
   // Feste Masken-Kennung je Zeichen (useId): bleibt beim Neuzeichnen gleich, kollidiert nicht zwischen zwei Kalendern.
   const id = 'kal' + React.useId().replace(/:/g, '');
@@ -354,7 +364,7 @@ const KalenderMitBild = ({ zeichen, farbe, ...rest }) => {
   return React.createElement('svg', { viewBox: '0 0 24 24', strokeWidth: '1.8', ...rest },
     React.createElement('mask', { id: id + 'a' }, React.createElement('rect', { width: '24', height: '24', fill: '#fff' }),
       React.createElement('circle', { cx: '18.3', cy: '18.3', r: '6.6', fill: '#000' })),
-    React.createElement('g', { mask: 'url(#' + id + 'a)' }, React.cloneElement(Icons.calendar(), { x: '0', y: '0', width: '24', height: '24', strokeWidth: 'inherit' })),
+    React.createElement('g', { mask: 'url(#' + id + 'a)' }, kalenderBlatt()),
     farbe
       ? [React.createElement('mask', { key: 'm', id: id + 'b' }, React.createElement('circle', { cx: '18.3', cy: '18.3', r: '5.5', fill: '#fff' }),
           React.createElement('path', { d: KALENDER_ZEICHEN[zeichen], stroke: '#000', ...strich })),
