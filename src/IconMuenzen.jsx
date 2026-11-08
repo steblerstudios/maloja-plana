@@ -1,6 +1,7 @@
 import React from 'react';
 
-// Die zwei Münz-Illustrationen der Kapitel «Finanzen» und «Behörden» — aus IconKern.jsx
+// Die zwei Münz-Illustrationen der Kapitel «Finanzen» und «Behörden» und (seit 08.11.2026) die
+// ausgestanzten Leitformen — aus IconKern.jsx
 // ausgelagert (25.09.2026), weil sie als reine Pfad-Daten 2,66 kB gzip im Startbündel
 // kosteten. IconKern lädt diese Datei sofort beim Start nach und zeichnet bis dahin einen
 // schlichten Münzkreis. Namen und Aufruf bleiben dort (`Icons.finanzen()`).
@@ -235,3 +236,85 @@ export const behoerden = () => React.createElement('svg', { viewBox: '0 0 48 48'
   // "HELVETIA" inscription
   React.createElement('text', { x: '21', y: '47.5', textAnchor: 'middle', fontSize: '3.2', fontWeight: 'bold', fill: 'currentColor', style: { fontFamily: 'Georgia, serif' }, letterSpacing: '1.5' }, 'HELVETIA'),
 );
+
+// ═══════════════════════════════════════════════════════════════
+// Leitformen (Icon-Plan November 2026, Bauplan B2) — ebenfalls nachgeladen, Namen im Kern.
+// ═══════════════════════════════════════════════════════════════
+// ─── Leitformen «ausgestanzt» (Icon-Plan November 2026, Bauplan B2) ───────
+// Entscheide im Blatt docs/design/icon-besprechung-2026-11.md: Dunkelmodus ausgestanzt (2c) —
+// die hellen Details sind Löcher, der Hintergrund scheint durch, statt «white» zu malen (das im
+// Dunkeln falsch leuchtet). Stufe «mittel» (07.11.): Umriss + ein bis zwei kräftige Merkmale,
+// keine Haarlinien, gleich viel gezeichnet wie Chalet, Fünfliber und Helvetia.
+// Je Teil [Element, Attribute, loch]: ohne `loch` gehört die Fläche zum Zeichen, mit `loch` wird
+// sie ausgeschnitten. Die Maske braucht eine eigene id je Stelle, sonst greift eine ausgeblendete
+// Kopie auf die falsche Maske. Ein Zähler statt `useId`: einige Stellen (und Tests) rufen die
+// Bauteile direkt auf, ausserhalb eines React-Renders — dort gibt es keine Hooks.
+let maskenZaehler = 0;
+const Ausgestanzt = ({ teile, ...rest }) => {
+  const id = 'leitform' + (maskenZaehler += 1);
+  const farbe = (loch) => (loch ? '#000' : '#fff');
+  return React.createElement('svg', { viewBox: '0 0 24 24', ...rest },
+    React.createElement('mask', { id },
+      teile.map(([el, a, loch], i) => React.createElement(el, {
+        key: i, ...a, ...(a.fill === 'none' ? { stroke: farbe(loch) } : { fill: farbe(loch) }),
+      }))),
+    React.createElement('rect', { width: '24', height: '24', fill: 'currentColor', mask: `url(#${id})` }));
+};
+export const ausgestanzt = (teile) => () => React.createElement(Ausgestanzt, { teile });
+export const LOCH = true;
+export const linie = (d, w, opacity = 1) => ['path', { d, fill: 'none', strokeWidth: w, opacity, strokeLinecap: 'round', strokeLinejoin: 'round' }, LOCH];
+
+// Ausweiskarte: Foto, drei Zeilen, Chip (eine Person = Ast Person; zwei Personen = Ast Familie).
+export const KARTE = [['rect', { x: '1.5', y: '4.5', width: '21', height: '15', rx: '2' }], ['rect', { x: '3.6', y: '8.6', width: '6.4', height: '8.2', rx: '0.6' }, LOCH]];
+export const KARTE_REST = [
+  linie('M11.8 9.6 H18.6 M11.8 11.6 H20.2 M11.8 13.6 H17', '0.9'),
+  ['rect', { x: '18.2', y: '13.4', width: '2.6', height: '2', rx: '0.4', opacity: '0.75' }, LOCH],
+  linie('M3 5.8 H6', '0.5', '0.5'),
+];
+export const basis = ausgestanzt([...KARTE,
+  ['circle', { cx: '6.8', cy: '11.4', r: '1.6' }], ['path', { d: 'M4.3 16.8 Q6.8 13.1 9.3 16.8 Z' }], ...KARTE_REST]);
+
+// Edelweiss-Schild: der Edelweiss-Stern (Entscheid 6, Variante C+): acht spitze Hochblätter um die
+// Mitte, drei Körbchen. Jedes Blatt dreht um die Blütenmitte — vorher drehten die schrägen Blätter
+// um den Ursprung und landeten auf den geraden, sichtbar blieb ein Kreuz.
+const BLATT = 'M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z';
+export const versicherungen = ausgestanzt([
+  ['path', { d: 'M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z' }],
+  ...[22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].map((w) => ['path', { d: BLATT, transform: `translate(12 12.5) scale(1.12) rotate(${w})` }, LOCH]),
+  ['circle', { cx: '12', cy: '12.5', r: '2.13' }, LOCH],
+  ['circle', { cx: '12', cy: '11.8', r: '0.55' }], ['circle', { cx: '11.35', cy: '12.9', r: '0.55' }], ['circle', { cx: '12.65', cy: '12.9', r: '0.55' }],
+]);
+
+// Schulhut (Ast Bildung, Leitform des Kapitels Ausbildung & Arbeit): Kante, Band, Quaste.
+export const ausbildung = ausgestanzt([
+  ['path', { d: 'M12 3.2 L23 8.4 L12 13.6 L1 8.4 Z' }],
+  ['path', { d: 'M5.4 10.8 V15.4 C5.4 17.6 8.5 19 12 19 C15.5 19 18.6 17.6 18.6 15.4 V10.8 L12 13.9 Z' }],
+  ['path', { d: 'M12 8.4 L20.4 9.6 V15', fill: 'none', strokeWidth: '0.8' }],
+  ['path', { d: 'M19.6 15 H21.2 L21.7 18.6 H19.1 Z' }], ['circle', { cx: '12', cy: '8.4', r: '0.95' }],
+  linie('M5.6 12.3 Q12 15.5 18.4 12.3', '0.6', '0.55'),
+  linie('M19.7 16.7 V18.3 M20.4 16.7 V18.3 M21.1 16.7 V18.3', '0.3', '0.65'),
+  ['circle', { cx: '12', cy: '8.4', r: '0.4', opacity: '0.6' }, LOCH],
+]);
+
+// Arztkoffer = Kapitel Gesundheit (Schlüssel `notfall`). Kräftiges Kreuz, ausgestanzt, nie rot
+// (Rechts-Prüfung 07.11.2026: kein rotes Kreuz auf Weiss, RKG Art. 1; kein Schweizerkreuz, WSchG
+// Art. 1 — die Arme sind kürzer als breit und werden nicht auf 7:6 «korrigiert»; der Koffer
+// erscheint nur in der Kapitelfarbe, nie in Notfall-Rot. Wächter: leitformen.test.js).
+export const notfall = ausgestanzt([
+  ['rect', { x: '2', y: '7.6', width: '20', height: '13.4', rx: '2.6' }],
+  ['path', { d: 'M8.6 7.6 V5.6 A1.6 1.6 0 0 1 10.2 4 H13.8 A1.6 1.6 0 0 1 15.4 5.6 V7.6', fill: 'none', strokeWidth: '1.6' }],
+  ['rect', { x: '10.3', y: '3.3', width: '3.4', height: '1.5', rx: '0.7' }],
+  linie('M2.3 10.6 H21.7', '0.7', '0.9'),
+  ['rect', { x: '4.8', y: '9.5', width: '1.9', height: '2.1', rx: '0.35', opacity: '0.8' }, LOCH],
+  ['rect', { x: '17.3', y: '9.5', width: '1.9', height: '2.1', rx: '0.35', opacity: '0.8' }, LOCH],
+  ['path', { d: 'M12 12.4 v6.4 M8.8 15.6 h6.4', fill: 'none', strokeWidth: '2.6' }, LOCH],
+  linie('M2.6 18.4 L4.4 20.4 M21.4 18.4 L19.6 20.4', '0.5', '0.5'),
+]);
+
+// Herz mit Puls = Ast Notfall (Entscheid 06.11.: «das rote Herz mit Puls», ohne Kreuz).
+export const herzPuls = ausgestanzt([
+  ['path', { d: 'M12 21 C6.4 17.3 2.6 13.6 2.6 9.2 C2.6 6 5 3.8 7.8 3.8 C9.6 3.8 11.1 4.8 12 6.2 C12.9 4.8 14.4 3.8 16.2 3.8 C19 3.8 21.4 6 21.4 9.2 C21.4 13.6 17.6 17.3 12 21 Z' }],
+  linie('M4.6 11.2 H8 L9.3 8.6 L11 13.6 L12.6 8.2 L13.8 11.2 H19.4', '1.5'),
+  linie('M5.1 8.3 Q5.5 6.4 7.6 5.9', '0.8', '0.6'),
+]);
+

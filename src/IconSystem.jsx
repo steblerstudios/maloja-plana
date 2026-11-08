@@ -1,5 +1,6 @@
 import React from 'react';
 import { zeichenErgaenzen } from './IconKern.jsx';
+import { ausgestanzt, linie, KARTE, KARTE_REST } from './IconMuenzen.jsx';
 import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 
 // ─── Maloja Plana SVG Pictogram System — das volle Register ─
@@ -352,6 +353,20 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // Frist/Zeit), `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
 // `exportTool` (Sackmesser-Gestalt), `delete`, `filter` (Trichter).
 // Stebler Studios hat entschieden: behalten. Nur auf Zuruf entfernen.
+// Ast-Leitformen (Icon-Plan November 2026, Bauplan B2, Stufe «mittel», ausgestanzt — siehe IconKern.jsx).
+// Ausweiskarte mit zwei Personen = Ast Familie (Kapitel Persönliche Basis).
+const _basisFamilie = ausgestanzt([...KARTE,
+  ['circle', { cx: '5.8', cy: '11.5', r: '1.35' }], ['path', { d: 'M3.8 16.8 Q5.8 13.4 7.8 16.8 Z' }],
+  ['circle', { cx: '8.3', cy: '12.5', r: '1.05' }], ['path', { d: 'M6.8 16.8 Q8.3 14.3 9.8 16.8 Z' }], ...KARTE_REST]);
+// Schutzhelm = Ast Arbeit (Kapitel Ausbildung & Arbeit): Mittelgrat, Krempe.
+const _helm = ausgestanzt([
+  ['path', { d: 'M3.6 15.2 Q3.6 6 12 6 Q20.4 6 20.4 15.2 Z' }],
+  ['path', { d: 'M1.6 15.4 H22.4 Q22.4 18.2 20 18.2 H4 Q1.6 18.2 1.6 15.4 Z' }],
+  ['path', { d: 'M10.6 6.4 Q12 5.1 13.4 6.4 V15.2 H10.6 Z' }],
+  linie('M10.4 6.7 V15 M13.6 6.7 V15', '0.5', '0.75'),
+  linie('M2.5 16.3 H21.5', '0.6', '0.6'),
+  linie('M5.9 11.6 Q6.6 8.6 9.3 7.3', '0.6', '0.5'),
+]);
 zeichenErgaenzen({
   kalenderUhr: _kalenderUhr,
   schulden: _schulden,
@@ -387,6 +402,8 @@ zeichenErgaenzen({
   tag: _tag,
   paw: _paw,
   palette: _palette,
+  basisFamilie: _basisFamilie,
+  helm: _helm,
 });
 
 // Lebensereignisse (Gruppe E, Icon-Plan Schritt 7b): ein Zeichen je Ereignis, dasselbe im

@@ -333,8 +333,8 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.unterlagenSatz')),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
       kachel('notfallkarte', t('notfallkarte.title'), t('notfallKapitel.karteSub'), 'phone', () => onNavigate('notfallkarte')),
-      kachel('notfallpass', t('notfallpass.title'), t('notfallKapitel.passSub'), 'notfall', () => onNavigate('notfallpass')),
-      kachel('notfalldossier', t('notfallDossier.title'), t('notfallKapitel.dossierSub'), 'notfall', () => onNavigate('notfalldossier')),
+      kachel('notfallpass', t('notfallpass.title'), t('notfallKapitel.passSub'), 'handy', () => onNavigate('notfallpass')),
+      kachel('notfalldossier', t('notfallDossier.title'), t('notfallKapitel.dossierSub'), 'documents', () => onNavigate('notfalldossier')),
       kachel('portemonnaie', t('notfallKapitel.portemonnaie'), karteMoeglich ? t('notfallKapitel.portemonnaieSub') : t('notfallKapitel.portemonnaieLeer'), 'document', onKarteDrucken, !karteMoeglich)),
     karteVorschau || null
   );

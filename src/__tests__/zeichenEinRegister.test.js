@@ -50,10 +50,12 @@ describe('ein Ding, ein Zeichen', () => {
   it('der Weg zur Sicherung trägt das Sicherungs-Zeichen, nicht das Schloss', () => {
     expect(lesen('components/UnterlagenWege.jsx')).toMatch(/icon: 'sicherung', onClick: \(\) => onNavigate\('export'\)/);
   });
-  it('Notfallpass und Notfall-Dossier im Kapitel tragen das Notfall-Zeichen', () => {
+  // Icon-Besprechung 07.11.2026: Notfallpass = Handy (das Gerät), Notfall-Dossier = Stapel; der
+  // Arztkoffer («notfall») erscheint nie in den roten Kacheln (Rechts-Prüfung, Bauplan B2).
+  it('Notfallpass und Notfall-Dossier im Kapitel tragen ihr eigenes Zeichen, nie den Koffer', () => {
     const k = lesen('components/NotfallImKapitel.jsx');
-    expect(k).toMatch(/kachel\('notfallpass'[^\n]*'notfall', \(\) => onNavigate\('notfallpass'\)/);
-    expect(k).toMatch(/kachel\('notfalldossier'[^\n]*'notfall', \(\) => onNavigate\('notfalldossier'\)/);
+    expect(k).toMatch(/kachel\('notfallpass'[^\n]*'handy', \(\) => onNavigate\('notfallpass'\)/);
+    expect(k).toMatch(/kachel\('notfalldossier'[^\n]*'documents', \(\) => onNavigate\('notfalldossier'\)/);
   });
   it('das Behörden-Dossier trägt überall die Waage, wie seine Seite', () => {
     expect(lesen('BehoerdenDossier.jsx')).toMatch(/name: 'legal'/);

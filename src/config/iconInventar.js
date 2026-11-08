@@ -21,13 +21,16 @@ const g = (gruppe, eintraege) => Object.fromEntries(Object.entries(eintraege).ma
 export const ICON_INVENTAR = {
   // ── A · Lebensbereiche ──
   ...g('A', {
-    basis: "Lebensbereich Persönliche Basis — Identitätskarte",
+    basis: "Lebensbereich Persönliche Basis — Ausweiskarte (eine Person = Ast Person), ausgestanzt",
     wohnen: "Lebensbereich Wohnen — Chalet, Leitform «Haus»",
     finanzen: "Lebensbereich Finanzen — Fünfliber (Münze, nachgeladen)",
-    versicherungen: "Lebensbereich Versicherungen — Edelweiss-Schild",
-    ausbildung: "Lebensbereich Ausbildung — Maturahut",
+    versicherungen: "Lebensbereich Versicherungen — Edelweiss-Schild (Edelweiss-Stern C+), ausgestanzt",
+    ausbildung: "Lebensbereich Ausbildung & Arbeit — Schulhut (Ast Bildung), ausgestanzt",
     behoerden: "Lebensbereich Behörden — Helvetia (Münze, nachgeladen)",
-    notfall: "Lebensbereich Notfall — Rettungskreuz im Herz",
+    notfall: "Kapitel Gesundheit (Schlüssel notfall) — Arztkoffer mit ausgestanztem Kreuz, nie rot",
+    herzPuls: "Ast Notfall — Herz mit Puls, ohne Kreuz",
+    basisFamilie: "Ast Familie — Ausweiskarte mit zwei Personen",
+    helm: "Ast Arbeit — Schutzhelm",
     vorsorge: "Lebensbereich Vorsorge",
     steuern: "Steuern — Steuererklärung mit Prozent",
     schulden: "Schulden und Betreibung — Rechnung mit Minus",
@@ -41,7 +44,7 @@ export const ICON_INVENTAR = {
   }),
   // ── A2 · Themen ──
   ...g('A2', {
-    insurance: "Thema Versicherung (klein, neben dem Lebensbereich «versicherungen»)",
+    insurance: "Thema Versicherung — dasselbe Edelweiss-Schild wie «versicherungen» (kein Kreuz im Schild, WSchG Art. 2/8)",
     health: "Thema Gesundheit, Arztkoffer",
     family: "Thema Familie",
     work: "Thema Arbeit",
