@@ -81,10 +81,10 @@ export const WERKZEUGE = [
   // «Dokumentenablage» und «Finanzen & Geld». Die Adressen bleiben (UMLEITUNGEN), die Suchwörter wandern mit.
   { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'ordner', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor', 'unterlagen', 'dossier', 'lebensmappe'] },
   { view: 'calendar', nav: 'nav.wasAnsteht', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: 2, aliases: ['ical', 'ics', 'termine', 'kalender', 'calendrier', 'calendario', 'calendar', 'chalender'] },
-  { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
+  { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'lesezeichen', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
   { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', bereich: 'arbeit', fach: AUSSENFACH, aliases: ['cv', 'lebenslauf', 'resume'] },
-  { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'globe', fach: AUSSENFACH, aliases: ['links', 'behoerden', 'amt'] },
-  { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'qr', fach: AUSSENFACH, aliases: ['qr', 'teilen', 'share', 'flyer'] },
+  { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'kette', fach: AUSSENFACH, aliases: ['links', 'behoerden', 'amt'] },
+  { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'teilen', fach: AUSSENFACH, aliases: ['qr', 'teilen', 'share', 'flyer'] },
   // Gewählt 27.09.2026: Lebenssituationen als «Was steht mir zu?» über den Gegenständen
   // (und im Menü); die Arztkoffer-Ansicht «Gesundheit» im Gegenstand Arztkoffer.
 // Seit Fassung 9 (F9-D1) beide auch in der Suche — vorher fand die Lupe sie nicht.

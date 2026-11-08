@@ -101,14 +101,14 @@ export const SEARCH_VIEWS = [
   // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
   // jetzt auf die ganze Seite.
-  { view: 'drucken', nav: 'unterlagen.drucken.title', icon: 'documents', aliases: ['drucken', 'dossier', 'behördendossier', 'notfalldossier', 'imprimer', 'stampare', 'print'] },
+  { view: 'drucken', nav: 'unterlagen.drucken.title', icon: 'drucker', aliases: ['drucken', 'dossier', 'behördendossier', 'notfalldossier', 'imprimer', 'stampare', 'print'] },
   { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'cartella', 'life folder'] },
   // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
   // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
   // sucht, sucht mit genau diesen Wörtern.
   // Die geführten Abläufe — aus der einen Liste oben, nicht von Hand wiederholt.
   ...ABLAEUFE,
-  { view: 'installApp', nav: 'nav.installApp', sub: 'nav.sub.installApp', icon: 'download', aliases: ['install', 'installieren', 'app', 'pwa', 'homescreen', 'startbildschirm', 'herunterladen', 'download'] },
+  { view: 'installApp', nav: 'nav.installApp', sub: 'nav.sub.installApp', icon: 'handy', aliases: ['install', 'installieren', 'app', 'pwa', 'homescreen', 'startbildschirm', 'herunterladen', 'download'] },
 ];
 
 // Name einer Ansicht für «Zurück zu …» (main.jsx) — der i18n-Schlüssel, nicht der Text.

@@ -169,26 +169,6 @@ const _behoerden = () => React.createElement(Muenze, { art: 'behoerden' });
 // Chapter Icons — extended set (Verwaltung & Organisation)
 // ═══════════════════════════════════════════════════════════════
 
-const _dokumentTresor = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Safe body
-  React.createElement('rect', { x: '3', y: '4', width: '18', height: '16', rx: '2' }),
-  // Safe door outline
-  React.createElement('rect', { x: '4.5', y: '5.5', width: '15', height: '13', rx: '1.5', fill: 'none', stroke: 'white', strokeWidth: '0.5', opacity: '0.4' }),
-  // Circular dial
-  React.createElement('circle', { cx: '12', cy: '12', r: '3.5', fill: 'none', stroke: 'white', strokeWidth: '1.2' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '1', fill: 'white' }),
-  // Dial marks
-  React.createElement('line', { x1: '12', y1: '9', x2: '12', y2: '9.8', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('line', { x1: '12', y1: '14.2', x2: '12', y2: '15', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('line', { x1: '9', y1: '12', x2: '9.8', y2: '12', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('line', { x1: '14.2', y1: '12', x2: '15', y2: '12', stroke: 'white', strokeWidth: '0.6' }),
-  // Handle bar
-  React.createElement('rect', { x: '17', y: '10.5', width: '2.5', height: '3', rx: '0.8', fill: 'white' }),
-  // Small document hint
-  React.createElement('rect', { x: '18.5', y: '2.5', width: '4', height: '5', rx: '0.5', fill: 'currentColor', stroke: 'white', strokeWidth: '0.4', opacity: '0.7' }),
-  React.createElement('line', { x1: '19.3', y1: '4', x2: '21.7', y2: '4', stroke: 'white', strokeWidth: '0.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '19.3', y1: '5.5', x2: '21', y2: '5.5', stroke: 'white', strokeWidth: '0.5', strokeLinecap: 'round' }),
-);
 
 const _budgetWallet = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Wallet body
@@ -392,11 +372,30 @@ const _external = () => React.createElement('svg', { viewBox: '0 0 24 24', fill:
   React.createElement('path', { d: 'M 10 14 L 21 3' })
 );
 
-const _cowbell = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 10 3 Q 10 1.5 12 1.5 Q 14 1.5 14 3 L 14 4 L 10 4 Z', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' }),
-  React.createElement('path', { d: 'M 9 4 L 7 19 Q 7 21 8 21 L 16 21 Q 17 21 17 19 L 15 4 Z' }),
-  React.createElement('line', { x1: '12.5', y1: '15', x2: '12.5', y2: '21', stroke: 'white', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.6' }),
-  React.createElement('circle', { cx: '12.5', cy: '21.5', r: '1.2', fill: 'white', opacity: '0.7' }),
+// Kuhglocke als Strich (Icon-Besprechung Punkt 1, Entscheid 07.11.: «A, Kuhglocke Strich»):
+// nur Erinnerung/Benachrichtigung; «überfällig» trägt der Kalender mit rotem Ausrufezeichen.
+const _cowbell = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M8.4 7.2h7.2l2.7 10.4a1.6 1.6 0 0 1-1.6 2H7.3a1.6 1.6 0 0 1-1.6-2Z' }),
+  React.createElement('path', { d: 'M10 7.2V5.4a2 2 0 0 1 4 0V7.2' }),
+  React.createElement('circle', { cx: '12', cy: '21.4', r: '.9', fill: 'currentColor', stroke: 'none' }),
+);
+
+// Kette = Offizielle Links (Punkt 4, 06.11.): Verweis nach aussen, kein Gegenstand.
+const _kette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M10 14a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1' }),
+  React.createElement('path', { d: 'M14 10a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1' }),
+);
+
+// Teilen = Blatt mit Pfeil (Punkt 4, 06.11.): der Flyer zum Weitergeben.
+const _teilen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M7 3.5h7.5l3.5 3.5v13.5H7z' }),
+  React.createElement('path', { d: 'M14.5 3.5V7H18' }),
+  React.createElement('path', { d: 'M12 17v-5.5M9.8 13.5 12 11.3l2.2 2.2' }),
+);
+
+// Lesezeichen = Merkliste (Punkt 3, Entscheid 06.11.: «E, Lesezeichen»): «hier will ich zurück».
+const _lesezeichen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M7 3.5h10v17l-5-3.6-5 3.6z' }),
 );
 
 // Leaf — green/eco marker (z.B. „grün gehostet"). Outline-Stil, 2 Elemente.
@@ -485,7 +484,6 @@ const _iconFactories = {
   herzPuls: _herzPuls,
 
   // Extended chapter icons
-  dokumentTresor: _dokumentTresor,
   ordner: _ordner,
   budgetWallet: _budgetWallet,
   praemienverbilligung: _praemienverbilligung,
@@ -518,6 +516,9 @@ const _iconFactories = {
   pfeil: _pfeil,
   chevron: _chevron,
   cowbell: _cowbell,
+  lesezeichen: _lesezeichen,
+  kette: _kette,
+  teilen: _teilen,
   leaf: _leaf,
 
   // Boden-Anker und Menü (Schritt 3)

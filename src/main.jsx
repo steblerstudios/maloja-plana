@@ -338,7 +338,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     { key: 'tresor', label: t('nav.capDokument'), icon: 'ordner', left: 'calc(50% - 104px)', bottom: '84px' },
     { key: 'kk', label: t('nav.capBeleg'), icon: 'quittung', left: 'calc(50% - 40px)', bottom: '126px' },
     { key: 'calendar', label: t('nav.capFrist'), icon: 'calendar', left: 'calc(50% + 40px)', bottom: '126px' },
-    { key: 'merkliste', label: t('nav.merkliste'), icon: 'check', left: 'calc(50% + 104px)', bottom: '84px' },
+    { key: 'merkliste', label: t('nav.merkliste'), icon: 'lesezeichen', left: 'calc(50% + 104px)', bottom: '84px' },
   ];
   return React.createElement(React.Fragment, null,
     React.createElement('div', {
