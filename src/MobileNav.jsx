@@ -157,10 +157,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   // Ein Name je Seite (23.10.2026): Menü, Leiste, Seitentitel und «Zurück zu …» lesen
   // denselben Schlüssel — nav.wasAnsteht, nav.rucksack, dashboard.anspruchTitle.
   const ANKER = [
-    { key: 'dashboard', view: 'dashboard', label: t('nav.dashboard'), satz: t('nav.ankerSatz.dashboard'), icon: 'sackmesser' },
+    { key: 'dashboard', view: 'dashboard', label: t('nav.dashboard'), satz: t('nav.ankerSatz.dashboard'), icon: 'feldstecher' },
     { key: 'calendar', view: 'calendar', label: t('nav.wasAnsteht'), satz: t('nav.ankerSatz.wasAnsteht'), icon: 'calendar' },
     { key: 'gepaeck', view: 'gepaeck', label: t('nav.rucksack'), satz: t('nav.ankerSatz.rucksack'), icon: 'rucksack' },
-    { key: 'situationen', view: 'situationen', label: t('dashboard.anspruchTitle'), satz: t('nav.ankerSatz.anspruch'), icon: 'geschenk' },
+    { key: 'situationen', view: 'situationen', label: t('dashboard.anspruchTitle'), satz: t('nav.ankerSatz.anspruch'), icon: 'wegweiser' },
   ];
 
   // Bereichsfarbe für das Zeichen eines Kapitels — dieselbe Quelle wie Baum und Reiter.
@@ -225,7 +225,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   const suchErgebnisse = (q) => {
     const results = [];
     if (t('nav.dashboard').toLowerCase().includes(q)) {
-      results.push(navItem('dashboard', t('nav.dashboard'), 'sackmesser', geh('dashboard'), activeView === 'dashboard'));
+      results.push(navItem('dashboard', t('nav.dashboard'), 'feldstecher', geh('dashboard'), activeView === 'dashboard'));
     }
     (chapters || []).forEach((ch, idx) => {
       const match = ch.title.toLowerCase().includes(q) || (ch.description || '').toLowerCase().includes(q) || ch.key.toLowerCase().includes(q);

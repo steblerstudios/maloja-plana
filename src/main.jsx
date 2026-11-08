@@ -283,8 +283,8 @@ const zeichen = (name, px, strich, extra) => {
 
 const bottomIcon = (name, color, size) => zeichen(name, size || 20, 1.6, { stroke: color, style: { color } });
 
-// Sackmesser mit Zustand: die Werkzeuge fahren nur aus dem Griff, wenn man auf der
-// Übersicht ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
+// Sackmesser mit Zustand (seit 07.11.2026 = Menü, Icon-Besprechung «B»): die Werkzeuge fahren aus
+// dem Griff, solange das Menü offen ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
 // zwei Werkzeuge skalieren um den Drehpunkt (15|12) aus/ein (Stebler Studios: „offen nur bei
 // der Übersicht, sonst schliesst es sich").
 const SackmesserIcon = ({ open, color, size = 20 }) => {
@@ -308,7 +308,7 @@ const SackmesserIcon = ({ open, color, size = 20 }) => {
     )
   );
 };
-const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
+const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHand }) => {
   const [fanOpen, setFanOpen] = useState(false);
   // Escape schliesst den Erfassen-Fächer (wie der Backdrop-Klick) — Tastatur-Parität.
   useEffect(() => {
@@ -329,7 +329,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     },
   },
     it.icon === 'sackmesser'
-      ? React.createElement(SackmesserIcon, { open: it.active, color: it.active ? palette.sage : palette.mid })
+      ? React.createElement(SackmesserIcon, { open: !!it.offen, color: it.offen ? palette.sage : palette.mid })
       : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
     React.createElement('span', { style: { fontSize: '10px', lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
@@ -377,7 +377,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
       // in der Mitte. Seit 23.10.2026 wieder zwei je Seite (Stebler Studios: sieben waren
       // am Handy zu viel): Kalender liegt im „+"-Fächer und im Menü, die Suche oben im Menü.
       ...(() => {
-        const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
+        const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'feldstecher', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
         const left2 = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
@@ -391,8 +391,8 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
         );
-        const right1 = slot({ key: 'situationen', label: t('dashboard.anspruchTitle'), icon: 'geschenk', active: view === 'situationen', onClick: () => onNavigate('situationen') });
-        const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menue', active: false, onClick: onMenu });
+        const right1 = slot({ key: 'situationen', label: t('dashboard.anspruchTitle'), icon: 'wegweiser', active: view === 'situationen', onClick: () => onNavigate('situationen') });
+        const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'sackmesser', active: false, offen: menuOffen, onClick: onMenu });
         return leftHand
           ? [right2, right1, center, left2, left1]
           : [left1, left2, center, right1, right2];
@@ -1346,7 +1346,7 @@ const AppInner = ({ demo }) => {
           onClick: () => setMobileNavOpen(!mobileNavOpen),
           style: { padding: '8px 12px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
-          zeichen('menue', 16, 1.5)
+          zeichen('sackmesser', 16, 1.5)
         )
       )
     ),
@@ -1708,7 +1708,7 @@ const AppInner = ({ demo }) => {
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError, fremdGeaendert }),
     // Web: Fusszeile pinned unter dem Inhalt.
     !isMobile && footerEl,
-    isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true), leftHand })
+    isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true), menuOffen: mobileNavOpen, leftHand })
   )));
 };
 
