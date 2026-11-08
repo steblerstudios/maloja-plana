@@ -58,8 +58,8 @@ describe('7b · ein Lebensereignis, ein Zeichen', () => {
     }
   });
   // Seit Bauplan B4 (08.11.2026) tragen Suche, Übersicht und Seitenkopf das Seiten-Zeichen
-  // (Leitform + Abzeichen), Kapitel für Kapitel. Der Rucksack zeigt auf seinen goldenen Anhängern
-  // vorerst weiter das Strich-Zeichen — offene Frage an Stebler Studios (farbig auf Gold).
+  // (Leitform + Abzeichen), Kapitel für Kapitel — und der Rucksack auch (Entscheid «B, hell mit
+  // Rand»: er liest ansichtIkon wie alle, siehe seitenZeichenRegister.test.js).
   it('Suche und Übersicht zeigen für das Ereignis dasselbe Zeichen wie der Rucksack — oder das Seiten-Zeichen', () => {
     const anders = wege.filter((w) => ansichtIkon(w.view) !== w.icon && ansichtIkon(w.view) !== seitenZeichenName(w.view))
       .map((w) => `${w.view}: ${ansichtIkon(w.view)} ≠ ${w.icon}`);

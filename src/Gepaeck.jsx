@@ -3,6 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { GEGENSTAENDE, GRUPPEN, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
 import { werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 import Icons from './IconSystem.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
@@ -159,18 +160,29 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     borderRadius: radius.md, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
     cursor: 'pointer', fontFamily: 'inherit', color: palette.text,
   };
-  const chip = (w) => h('button', {
-    key: w.key, onClick: () => onNavigate(w.view),
-    style: { ...chipStyle, transition: 'transform 160ms ' + ease },
-  },
-    h('span', {
-      style: {
-        width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0,
-        background: palette.gold, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      },
-    }, Icons[w.icon] ? React.cloneElement(Icons[w.icon](), { width: 15, height: 15, stroke: '#3a2c14', strokeWidth: 1.7 }) : null),
-    h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('gepaeck.w.' + w.key)),
-  );
+  // Seit Bauplan B4 (Entscheid Stebler Studios 08.11.2026, «B, hell mit Rand»): trägt die Seite ihr
+  // Seiten-Zeichen (Leitform + Abzeichen), steht es auch hier — auf einem hellen Anhänger mit goldenem
+  // Rand, damit die Farben der Abzeichen tragen. Sonst wie bisher das Strich-Zeichen auf Messing.
+  const chip = (w) => {
+    const name = ansichtIkon(w.view, w.icon);
+    const seite = name.startsWith('seite:') && Icons[name];
+    return h('button', {
+      key: w.key, onClick: () => onNavigate(w.view),
+      style: { ...chipStyle, transition: 'transform 160ms ' + ease },
+    },
+      h('span', {
+        'aria-hidden': 'true',
+        style: {
+          width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0,
+          background: seite ? palette.surface : palette.gold, boxShadow: seite ? 'inset 0 0 0 1.2px ' + palette.gold : 'none',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        },
+      }, seite
+        ? h('span', { style: { width: '22px', height: '22px', display: 'inline-flex' } }, Icons[name]())
+        : (Icons[w.icon] ? React.cloneElement(Icons[w.icon](), { width: 15, height: 15, stroke: '#3a2c14', strokeWidth: 1.7 }) : null)),
+      h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('gepaeck.w.' + w.key)),
+    );
+  };
 
   // ── Ein Werkzeug (aus dem Register) → führt in seine Ansicht ────────────────
   // Gleiches Zeichen wie im Menü und in der Suche (Icon-System), gleicher Name (nav-Key).
@@ -184,7 +196,8 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     onNavigate(w.view);
   };
   const werkzeugChip = (w) => {
-    const IconFn = Icons[w.icon];
+    // Dasselbe Zeichen wie in Menü und Suche — mit Seiten-Zeichen, wo die Seite eines hat (B4).
+    const IconFn = Icons[w.view ? ansichtIkon(w.view, w.icon) : w.icon];
     return h('button', {
       key: werkzeugKey(w), onClick: () => oeffne(w),
       style: { ...chipStyle, borderLeft: '3px solid ' + palette.gold },
