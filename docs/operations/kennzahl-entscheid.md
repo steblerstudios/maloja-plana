@@ -1,6 +1,6 @@
 # Die eine Kennzahl — Entscheidungsblatt
 
-**Stand:** 2026-11-08 · **Status:** ⏸️ offen, Entscheid bei Stebler Studios
+**Stand:** 2026-11-08 · **Status:** ✅ entschieden — **A** (Stebler Studios, 08.11.2026, «Ja, A»)
 **Gehört zu:** [`analytics-decision.md`](analytics-decision.md) (Weg 1 läuft, Weg 2 offen)
 
 ## Worum es geht
@@ -58,6 +58,6 @@ braucht In-App-Messung und grosse Zahlen. Ersatz: eine Änderung, dann die näch
 
 ## Offen — braucht Entscheid
 
-- [ ] A als die eine Kennzahl? (oder anders: ____ )
+- [x] A als die eine Kennzahl — entschieden 08.11.2026; C und E begleiten, B nur beobachten, D ausgeschlossen
 - [ ] Erste Testsitzungen: wer, wann?
 - [ ] Weg 2 bleibt unabhängig davon offen
