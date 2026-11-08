@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import PrimaryButton, { knopfStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
@@ -183,7 +184,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' } },
     // Left: Scanner
     React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'barcode', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('kk', 'barcode'), size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.title')),
 
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {

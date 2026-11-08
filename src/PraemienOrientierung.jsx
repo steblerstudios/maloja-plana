@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
@@ -279,7 +280,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
   return h('div', { style: s.card },
     onNavigate && React.createElement(Brotkrume, { palette, t, view: 'praemien', onNavigate }),
-    h(PageTitle, { palette, icon: h(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('po.title')),
+    h(PageTitle, { palette, icon: h(Icon, { name: ansichtIkon('praemien', 'insurance'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('po.title')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.relaxed } }, t('vu.satz')),
 
     marken.length > 0 && h('div', { 'data-teil': 'vu-marken', style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px', marginBottom: space.md + 'px' } },

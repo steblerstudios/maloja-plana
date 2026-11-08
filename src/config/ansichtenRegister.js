@@ -168,7 +168,7 @@ const WEITERE_ZEICHEN = {
 // Leitform + Abzeichen je Seite aus config/seitenZeichen.js, gezeichnet von IconAbzeichen.jsx
 // (nachgeladen wie die Münzen). Die Namen `seite:<view>` hängt IconSystem.jsx ins Register, wie die
 // Ereignis-Zeichen. Kapitel für Kapitel freigeschaltet — ein PR je ein bis zwei Kapitel.
-export const SEITEN_ZEICHEN_KAPITEL = new Set(['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'behoerden']);
+export const SEITEN_ZEICHEN_KAPITEL = new Set(['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'behoerden', 'notfall']);
 export const seitenZeichenName = (view) => 'seite:' + view;
 export const SEITEN_BEREICH = new Map();
 for (const e of [...ABLAEUFE, ...SEARCH_VIEWS, ...WERKZEUGE]) {

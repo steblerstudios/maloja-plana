@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { getNotfallDossierPreview } from './dossierGenerator.js';
@@ -86,7 +87,8 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
   return React.createElement(React.Fragment, null,
     onNavigate && React.createElement(Brotkrume, { palette, t, view: 'notfallpass', onNavigate }),
     React.createElement(AblaufContainer, {
-    palette, icon: 'herzPuls',
+    // Seiten-Zeichen aus dem Register (Icon-Plan, Bauplan B4): Arztkoffer + Notfall-Abzeichen.
+    palette, icon: ansichtIkon('notfallpass', 'herzPuls'),
     title: t('notfallpass.title'),
     intro: t('notfallpass.intro'),
   },
