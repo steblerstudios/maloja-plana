@@ -332,3 +332,6 @@ export const helm = ausgestanzt([
   linie('M2.5 16.3 H21.5', '0.6', '0.6'),
   linie('M5.9 11.6 Q6.6 8.6 9.3 7.3', '0.6', '0.5'),
 ]);
+
+// Seiten-Zeichen (Bauplan B4): IconKern lädt nur diese Datei nach; das Bauteil steht in IconAbzeichen.jsx.
+export { seite } from './IconAbzeichen.jsx';

@@ -13,6 +13,8 @@
 // + ein paar sprachneutrale Abkürzungs-Aliase, damit z.B. „ipv"/„ahv" greifen.
 
 import { SUCHBARE_WERKZEUGE } from '../data/werkzeugRegister.js';
+import { WERKZEUGE } from '../data/werkzeugRegister.js';
+import { astKapitel } from '../data/lebensbereiche.js';
 
 // ─── Die geführten Abläufe (Lebensereignisse) ────────────────────────────────
 // EINE Liste für das Dashboard (Gruppe «Lebensereignisse») UND die Suche.
@@ -162,7 +164,19 @@ const WEITERE_ZEICHEN = {
 // Piktogramm einer Ansicht — mit Rückfall, damit ein unbekannter Schlüssel
 // nichts umwirft. Der Rückfall verdeckt eine Lücke, statt sie zu zeigen; darum
 // prüft der Wächter oben, dass jedes bekannte Ziel ohne ihn auskommt.
+// ─── Seiten-Zeichen (Icon-Plan November 2026, Bauplan B4) ─────────────────
+// Leitform + Abzeichen je Seite aus config/seitenZeichen.js, gezeichnet von IconAbzeichen.jsx
+// (nachgeladen wie die Münzen). Die Namen `seite:<view>` hängt IconSystem.jsx ins Register, wie die
+// Ereignis-Zeichen. Kapitel für Kapitel freigeschaltet — ein PR je ein bis zwei Kapitel.
+export const SEITEN_ZEICHEN_KAPITEL = new Set(['basis', 'wohnen']);
+export const seitenZeichenName = (view) => 'seite:' + view;
+export const SEITEN_BEREICH = new Map();
+for (const e of [...ABLAEUFE, ...SEARCH_VIEWS, ...WERKZEUGE]) {
+  if (e.view && e.view !== 'chapter' && e.bereich && SEITEN_ZEICHEN_KAPITEL.has(astKapitel(e.bereich))) SEITEN_BEREICH.set(e.view, e.bereich);
+}
+
 export const ansichtIkon = (view, rueckfall = 'document') => {
+  if (SEITEN_BEREICH.has(view)) return seitenZeichenName(view);
   const e = SEARCH_VIEWS.find((v) => v.view === view);
   return (e && e.icon) || WEITERE_ZEICHEN[view] || rueckfall;
 };
