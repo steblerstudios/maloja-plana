@@ -1,7 +1,20 @@
 # Die eine Kennzahl — Entscheidungsblatt
 
-**Stand:** 2026-11-08 · **Status:** ✅ entschieden — **A** (Stebler Studios, 08.11.2026, «Ja, A»)
+**Stand:** 2026-11-08 · **Status:** ✅ entschieden — **A** (Stebler Studios, 08.11.2026, «Ja, A») · ⚠️ Verhältnis zum North-Star «Wiederkehr» vom 26.10. offen, siehe Korrektur
 **Gehört zu:** [`analytics-decision.md`](analytics-decision.md) (Weg 1 läuft, Weg 2 offen)
+
+> ⚠️ **Korrektur 09.11.2026 — dieses Blatt wurde ohne zwei frühere Entscheide geschrieben.**
+> 1. **Es gibt schon einen North-Star:** «Wiederkehr pro Monat» (wie viele Menschen Maloja an
+>    mindestens 2 Tagen im Monat nutzen), entschieden 26.10.2026, Messweg aus den Server-Zahlen
+>    (Oktober ≈ 1,26 Sitzungen je Einzelbesucher). Steht in den internen Betriebsunterlagen
+>    von Stebler Studios, nicht in diesem Repo.
+> 2. **Die Statistik-Regel vom 02.11.2026** «Zählen ja, drängen nein»: Weg B (Wiederkehr nur auf
+>    dem Gerät zählen, freiwillig im Beta-Feedback mitschicken) ist als Entwurfs-PR #652 gebaut.
+>
+> Darum ist die Begründung bei **D unten falsch**: Wiederkehr lässt sich ohne Wiedererkennung
+> messen (auf dem Gerät gezählt oder aus den Server-Zahlen angenähert). Die Zeile bleibt als Beleg
+> stehen. **Offen:** Ersetzt A die Wiederkehr als die eine Zahl, oder misst A in Testsitzungen,
+> *ob ein Besuch hilft*, während die Wiederkehr der Live-Nordstern bleibt?
 
 ## Worum es geht
 
