@@ -177,6 +177,30 @@ function hinweisOben(sprache) {
   return '';
 }
 
+// Drei Schichten auf einer Erklärseite (Brand Book §8, 09.11.2026). Bisher
+// nur auf Deutsch: Die Übersetzungen warten auf die menschliche Lektüre und
+// bleiben im alten Aufbau. `kurzAbsatz` ist ein Index in `absaetze` — der
+// Absatz wandert nach vorne statt neu geschrieben zu werden, darum bleibt die
+// Zahl der Absätze in allen Sprachen gleich. `bild` entfällt, wo kein Bild
+// etwas zeigt. `wege` nennt Pfade; der Text ist die Brotkrume der Zielseite.
+function schichtAbschnitt(a, sprache) {
+  const inhalt = inhaltFuer(sprache.code);
+  const rest = a.absaetze.filter((_, i) => i !== a.kurzAbsatz).map((p) => `          <p>${p}</p>`).join('\n');
+  const wege = (a.wege || []).map((p) => {
+    const z = inhalt.seiten.find((s) => s.pfad === p) || HINTERGRUND.find((h) => h.pfad === p);
+    if (!z) throw new Error(`Weg zu unbekannter Seite ${p}`);
+    return `<a class="weg" href="${pfadIntern(z.pfad, sprache)}"><span aria-hidden="true">→</span> ${esc(z.brotkrume)}</a>`;
+  }).join('');
+  return `        <h2${a.id ? ` id="${a.id}"` : ''}>${esc(a.titel)}</h2>${a.bild ? `
+        <div class="schicht-bild">${a.bild}</div>` : ''}
+        <p class="schicht-kurz">${a.absaetze[a.kurzAbsatz]}</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+${rest}
+        </details>${wege ? `
+        <nav class="wege" aria-label="Weiter von: ${esc(a.titel)}">${wege}</nav>` : ''}`;
+}
+
 function seiteBauen(seite, sprache) {
   const R = RAHMEN[sprache.code];
   const inhalt = inhaltFuer(sprache.code);
@@ -185,6 +209,7 @@ function seiteBauen(seite, sprache) {
   const andere = inhalt.seiten.filter((s) => s.pfad !== seite.pfad);
 
   const abschnitte = seite.abschnitte.map((a) => {
+    if (seite.schichten) return schichtAbschnitt(a, sprache);
     const absaetze = a.absaetze.map((p) => `        <p>${p}</p>`).join('\n');
     let verweise = '';
     if (a.verweise) {
@@ -262,6 +287,11 @@ function seiteBauen(seite, sprache) {
     seite, sprache, seitenUrl, ld,
     quelle: sprache.code === 'de' ? 'scripts/seiten-inhalt.mjs' : `scripts/seiten/${sprache.code}.mjs`,
     hreflang: hreflangRing(seite.pfad),
+    // Bereichsfarbe Versicherungen (Heidelbeere) wie auf den Hintergrundseiten.
+    ...(seite.schichten ? { extraStil: `
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }` + STIL_SCHICHTEN } : {}),
   })}
 
     <main>
@@ -609,8 +639,12 @@ const STIL_SCHICHTEN = `
     ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
     .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
     .kern .zeit{ padding:10px 0 0 }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
     .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
-    .zeit .jahr{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
     .zeit .was{ font-size:15px }
     @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }`;
 
@@ -680,7 +714,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
       <details class="schicht-mehr">
         <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>${einsetzen(a.html, werte, bloecke, ctx)}
       </details>${wege ? `
-      <nav class="wege" aria-label="Weiter von hier">${wege}</nav>` : ''}`;
+      <nav class="wege" aria-label="Weiter von: ${esc(a.titel.replace(/^\d+\.\s*/, ''))}">${wege}</nav>` : ''}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 

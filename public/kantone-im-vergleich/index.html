@@ -314,8 +314,12 @@
     ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
     .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
     .kern .zeit{ padding:10px 0 0 }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
     .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
-    .zeit .jahr{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
     .zeit .was{ font-size:15px }
     @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
     .streifen{ margin:0 0 20px }
@@ -444,7 +448,7 @@
         </table></div>
         <p class="leise"><strong>Vorbehalte:</strong> Prämie, Einkommen und Verbilligung stammen aus drei verschiedenen Jahren; quellenbesteuerte Personen fehlen, und die Lohnentwicklung seit 2022 ist nicht drin. Die Verbilligung umfasst alle 2025 ausbezahlten Beiträge, auch Nachzahlungen für Vorjahre. Solche Nachzahlungen fallen in einigen Kantonen stärker ins Gewicht, vor allem in Zürich, Appenzell Innerrhoden und Graubünden; dort liegt der Rechenwert tiefer, als er für das Jahr 2025 allein wäre. Im Kanton Aargau ist es umgekehrt: Die Beiträge für Vorjahre ergeben dort unter dem Strich weniger als null, der Rechenwert liegt deshalb etwas höher. Im Kanton Zürich wird die Verbilligung zuerst provisorisch ausbezahlt und später abgerechnet.<sup class="beleg"><a href="#quelle-zhIpv" id="beleg-zhIpv-1" aria-label="Quelle 4">4</a></sup> Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Ob Sie Anspruch auf Verbilligung haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/krankenkasse/"><span aria-hidden="true">→</span> Krankenkasse erklärt</a><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wie schwer wiegt die Prämie?"><a class="weg" href="/krankenkasse/"><span aria-hidden="true">→</span> Krankenkasse erklärt</a><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
 
       <h2 id="steuern" tabindex="-1"><span class="nr">2</span> Wie viel bleibt nach den Steuern?</h2>
       <div class="schicht-bild"><div class="kern">
@@ -491,7 +495,7 @@
         </table></div>
         <p class="leise">Ein Beispiel für eine einzige Lebenslage. Mit Kindern, Partnerin oder Partner, Vermögen oder anderem Lohn sieht die Rechnung anders aus; wie die Steuern aufgebaut sind, steht auf der Seite <a href="/steuern/">Steuern</a>.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/steuern/"><span aria-hidden="true">→</span> Steuern</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wie viel bleibt nach den Steuern?"><a class="weg" href="/steuern/"><span aria-hidden="true">→</span> Steuern</a></nav>
 
       <h2 id="wohnen" tabindex="-1"><span class="nr">3</span> Was kostet das Wohnen?</h2>
       <div class="schicht-bild"><div class="kern">
@@ -610,7 +614,7 @@
         </table></div>
         <p class="leise"><strong>Vorbehalte:</strong> Die Mieten sind Durchschnitte aller vermieteten Wohnungen, auch langjähriger Verträge, nicht die Preise neuer Inserate; in kleinen Kantonen sind sie unsicherer geschätzt. Der Medianlohn ist ein Bruttolohn, auf eine Vollzeitstelle umgerechnet, und gilt für eine der sieben Grossregionen, nicht für den einzelnen Kanton. Wer Teilzeit arbeitet oder mit dem Nettolohn rechnet, kommt auf einen höheren Anteil.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#nebeneinander"><span aria-hidden="true">→</span> Alle Zahlen nebeneinander</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
+      <nav class="wege" aria-label="Weiter von: Was kostet das Wohnen?"><a class="weg" href="#nebeneinander"><span aria-hidden="true">→</span> Alle Zahlen nebeneinander</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
 
       <h2 id="unterstuetzung" tabindex="-1"><span class="nr">4</span> Wie viele beziehen Unterstützung?</h2>
       <div class="schicht-bild"><div class="kern">
@@ -665,7 +669,7 @@
         </table></div>
         <p class="leise"><strong>Vorbehalt:</strong> Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte. Wer eine Leistung nicht beantragt, fehlt in der Statistik. Die Regeln, das Vermögen, die Mieten und die Finanzierung von Heimaufenthalten unterscheiden sich von Kanton zu Kanton. Eine hohe Quote kann auf mehr Bedarf hindeuten, aber auch darauf, dass die Leistung bekannter ist oder leichter beantragt wird.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/sozialhilfe/"><span aria-hidden="true">→</span> Sozialhilfe</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wie viele beziehen Unterstützung?"><a class="weg" href="/sozialhilfe/"><span aria-hidden="true">→</span> Sozialhilfe</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <h2 id="familie" tabindex="-1"><span class="nr">5</span> Was bekommen Familien?</h2>
       <div class="schicht-bild"><div class="kern">
@@ -744,7 +748,7 @@
         </table></div>
         <p class="leise"><strong>Vorbehalt:</strong> Ein tiefer Abzug ist nicht automatisch eine Lücke. Wie viel Betreuung kostet, hängt auch davon ab, wie stark Kanton und Gemeinde Kita-Plätze verbilligen und wie hoch der Steuertarif ist. Abzüge für die Betreuung durch die Eltern selbst, die einzelne Kantone kennen, sind nicht verglichen. Für Neuenburg ist nur der Wert für 2025 ausgewiesen; der Abzug ist dort zudem auf die Elternbeiträge an die familienergänzende Betreuung nach dem kantonalen Gesetz begrenzt.<sup class="beleg"><a href="#quelle-estvDrittbetreuung" id="beleg-estvDrittbetreuung-1" aria-label="Quelle 15">15</a></sup> Neuenburg zählt deshalb beim Vergleich mit dem Bund nicht mit.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Was bekommen Familien?"><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <h2 id="arbeit" tabindex="-1"><span class="nr">6</span> Wie viele sind als arbeitslos gemeldet?</h2>
       <div class="schicht-bild"><div class="kern">
@@ -792,7 +796,7 @@
         </table></div>
         <p class="leise"><strong>Vorbehalt:</strong> Die Quote zählt Menschen, die beim RAV als arbeitslos gemeldet sind. Wer keine Stelle hat, aber nicht gemeldet ist, fehlt. Es ist ein Monatswert, der saisonal schwankt.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#zusammenhaenge"><span aria-hidden="true">→</span> Was zusammenhängt</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wie viele sind als arbeitslos gemeldet?"><a class="weg" href="#zusammenhaenge"><span aria-hidden="true">→</span> Was zusammenhängt</a></nav>
 
       <h2 id="nebeneinander" tabindex="-1"><span class="nr">7</span> Alle Zahlen nebeneinander</h2>
       <div class="schicht-bild"><div class="kern">
@@ -887,7 +891,7 @@
             <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="n">487.60</td><td class="n">11,1 %</td><td class="n"><span aria-hidden="true">–</span><span class="sr-only">kein Wert</span></td><td class="n">1'446</td><td class="n">0,93 %</td><td class="n">2,9 %</td><td class="n">12,3 %</td><td class="n">3,0 %</td><td class="n"><span aria-hidden="true">–</span><span class="sr-only">kein Wert</span></td></tr>
         </table></div>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Als Karten im Kantonsatlas</a><a class="weg" href="#zusammenhaenge"><span aria-hidden="true">→</span> Was zusammenhängt</a></nav>
+      <nav class="wege" aria-label="Weiter von: Alle Zahlen nebeneinander"><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Als Karten im Kantonsatlas</a><a class="weg" href="#zusammenhaenge"><span aria-hidden="true">→</span> Was zusammenhängt</a></nav>
 
       <h2 id="zusammenhaenge" tabindex="-1"><span class="nr">8</span> Was zusammenhängt</h2>
       <div class="schicht-bild">
@@ -906,7 +910,7 @@
         <p>Legt man die Zahlen nebeneinander, fällt auf, dass manche zusammen steigen und fallen. Die Tabelle oben zeigt das als Korrelation über die 26 Kantone. Als Kontrolle ist auch die Rangfolge gerechnet; sagen beide Rechnungen Verschiedenes, steht die schwächere Stufe.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen. Dass Kantone mit höherer Prämie meist auch mehr Sozialhilfe haben, heisst nicht, dass Menschen mit hoher Prämie eher Sozialhilfe beziehen. Oft haben dieselben Kantone bei mehreren Zahlen hohe Werte, und dahinter können ganz andere Gründe liegen: Sprachregion, Alter der Bevölkerung, Wohnungsmarkt, Arbeitsplätze, Regeln. Jeder Kanton zählt einmal, egal wie viele Menschen dort leben. Was die Zahlen zeigen, ist ein Anlass zum Fragen, nicht die Antwort.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#nebeneinander"><span aria-hidden="true">→</span> Alle Zahlen nebeneinander</a></nav>
+      <nav class="wege" aria-label="Weiter von: Was zusammenhängt"><a class="weg" href="#nebeneinander"><span aria-hidden="true">→</span> Alle Zahlen nebeneinander</a></nav>
 
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>

@@ -314,8 +314,12 @@
     ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
     .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
     .kern .zeit{ padding:10px 0 0 }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
     .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
-    .zeit .jahr{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
     .zeit .was{ font-size:15px }
     @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
     :root{ --heidel:#5A6472; --heidel-text:#5A6472; --heidel-hauch:#E9EBEE; --hl-hi:#5A7868 }
@@ -403,7 +407,7 @@
         <p>Beim Bund teilen sich drei Behörden die Arbeit: Die Bundesversammlung, also das Parlament, beschliesst die Gesetze. Der Bundesrat regiert und führt sie aus. Das Bundesgericht urteilt in Streitfällen. Ein Bundesgesetz aufheben kann es nicht: Bundesgesetze und Völkerrecht muss es anwenden.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-6" aria-label="Quelle 1">1</a></sup></p>
 
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wer ist wofür zuständig?"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
 
       <h2 id="weg" tabindex="-1"><span class="nr">2</span> Welchen Weg nimmt ein Gesetz?</h2>
       <div class="schicht-bild">
@@ -439,7 +443,7 @@
         <p>Der Anstoss kann auch von aussen kommen: 100'000 Stimmberechtigte können innert 18 Monaten eine Änderung der Verfassung verlangen. Die Bundesversammlung prüft, ob die Initiative gültig ist, und gibt eine Empfehlung ab; sie kann einen Gegenentwurf daneben stellen. Aufhalten kann sie eine gültige Initiative nicht. Ist sie als fertiger Text formuliert, entscheiden am Ende Volk und Kantone.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-15" aria-label="Quelle 1">1</a></sup></p>
         <p class="merke"><strong>Kurz gesagt:</strong> Ein Gesetz braucht beide Räte. Danach hat das Volk ein letztes Wort, wenn genug Menschen es verlangen. Bei der Verfassung hat es dieses Wort immer.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#mehr"><span aria-hidden="true">→</span> Was ist das doppelte Mehr?</a><a class="weg" href="#selbst"><span aria-hidden="true">→</span> Was können Sie selbst tun?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Welchen Weg nimmt ein Gesetz?"><a class="weg" href="#mehr"><span aria-hidden="true">→</span> Was ist das doppelte Mehr?</a><a class="weg" href="#selbst"><span aria-hidden="true">→</span> Was können Sie selbst tun?</a></nav>
 
       <h2 id="bundesrat" tabindex="-1"><span class="nr">3</span> Wer regiert?</h2>
       <div class="schicht-bild">
@@ -454,7 +458,7 @@
         <p>Die Bundesversammlung wählt die Mitglieder nach jeder Wahl des Nationalrats für vier Jahre, die beiden Räte gemeinsam.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-17" aria-label="Quelle 1">1</a></sup> Den Vorsitz führt die Bundespräsidentin oder der Bundespräsident, für ein Jahr. Für das folgende Jahr ist eine Wiederwahl nicht möglich.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-18" aria-label="Quelle 1">1</a></sup></p>
         <p>Die grossen Parteien teilen sich die Sitze, statt sich als Regierung und Opposition gegenüberzustehen. Das heisst Konkordanz. Es ist eine freiwillige Übung, keine Regel der Verfassung.<sup class="beleg"><a href="#quelle-hls" id="beleg-hls-2" aria-label="Quelle 7">7</a></sup> Von 1959 bis 2003 galt die «Zauberformel»: Die FDP, die Konservativen (später CVP) und die SP hatten je zwei Sitze, die Bauern-, Gewerbe- und Bürgerpartei (BGB) einen.<sup class="beleg"><a href="#quelle-hls" id="beleg-hls-3" aria-label="Quelle 7">7</a></sup> Die BGB heisst seit 1971 SVP.<sup class="beleg"><a href="#quelle-hlsSvp" id="beleg-hlsSvp-1" aria-label="Quelle 9">9</a></sup> 2003 gewann die SVP auf Kosten der CVP einen zweiten Sitz.<sup class="beleg"><a href="#quelle-hls" id="beleg-hls-4" aria-label="Quelle 7">7</a></sup> Im November 2026 sitzen im Bundesrat zwei Mitglieder der SVP, zwei Mitglieder der SP, zwei Mitglieder der FDP und ein Mitglied der Mitte.<sup class="beleg"><a href="#quelle-bundesrat" id="beleg-bundesrat-4" aria-label="Quelle 6">6</a></sup></p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#staenderat"><span aria-hidden="true">→</span> Wer wählt den Bundesrat?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wer regiert?"><a class="weg" href="#staenderat"><span aria-hidden="true">→</span> Wer wählt den Bundesrat?</a></nav>
 
       <h2 id="mehr" tabindex="-1"><span class="nr">4</span> Was ist das doppelte Mehr?</h2>
       <div class="schicht-bild">
@@ -479,7 +483,7 @@
         </figure>
         <p>Das schützt die kleinen Kantone. Zürich wählt 36 Mitglieder des Nationalrats, Uri 1. Bei den Ständen zählen beide gleich viel.<sup class="beleg"><a href="#quelle-sitze2023" id="beleg-sitze2023-1" aria-label="Quelle 10">10</a></sup><sup class="beleg folge"><a href="#quelle-bv" id="beleg-bv-24" aria-label="Quelle 1">1</a></sup> So kann eine Vorlage beim Volk knapp angenommen und bei den Ständen abgelehnt werden. Dann gilt sie nicht.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#staenderat"><span aria-hidden="true">→</span> Warum ist der Ständerat gleich wichtig?</a><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Was ist das doppelte Mehr?"><a class="weg" href="#staenderat"><span aria-hidden="true">→</span> Warum ist der Ständerat gleich wichtig?</a><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a></nav>
 
       <h2 id="nationalrat" tabindex="-1"><span class="nr">5</span> Wie wird der Nationalrat gewählt?</h2>
       <div class="schicht-bild">
@@ -531,7 +535,7 @@
         <p>Daraus folgt: Eine Stimme wirkt je nach Kanton anders. Eine kleine Partei kann in Zürich mit wenigen Prozent einen Sitz holen, in Uri mit demselben Anteil keinen.</p>
         <p>Weil sich die Bevölkerung verschiebt, legt der Bundesrat die Verteilung vor jeder Wahl neu fest, nach den Zahlen der Wohnbevölkerung und einer festen Rechnung.<sup class="beleg"><a href="#quelle-bpr" id="beleg-bpr-4" aria-label="Quelle 11">11</a></sup> Für die Wahlen 2027 gewinnen Luzern und Freiburg je einen Sitz, Bern und Graubünden geben je einen ab.<sup class="beleg"><a href="#quelle-sitze2023" id="beleg-sitze2023-3" aria-label="Quelle 10">10</a></sup><sup class="beleg folge"><a href="#quelle-sitze" id="beleg-sitze-1" aria-label="Quelle 12">12</a></sup></p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#staenderat"><span aria-hidden="true">→</span> Und der Ständerat?</a><a class="weg" href="#selbst"><span aria-hidden="true">→</span> Was können Sie selbst tun?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wie wird der Nationalrat gewählt?"><a class="weg" href="#staenderat"><span aria-hidden="true">→</span> Und der Ständerat?</a><a class="weg" href="#selbst"><span aria-hidden="true">→</span> Was können Sie selbst tun?</a></nav>
 
       <h2 id="staenderat" tabindex="-1"><span class="nr">6</span> Warum ist der Ständerat gleich wichtig?</h2>
       <div class="schicht-bild"><figure class="kern">
@@ -544,7 +548,7 @@
         <p>Im Ständerat zählt die Grösse des Kantons nicht. 20 Kantone haben je zwei Sitze, die sechs Kantone mit halber Standesstimme je einen. Das ergibt 46 Sitze. Wie gewählt wird, bestimmt jeder Kanton selbst.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-29" aria-label="Quelle 1">1</a></sup></p>
         <p>Trotz 200 zu 46 Sitzen sind die beiden Räte einander gleichgestellt. Ein Gesetz gilt nur, wenn beide zustimmen. So zählen die Menschen und die Kantone zugleich.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-30" aria-label="Quelle 1">1</a></sup> Bei Wahlen wie der des Bundesrats tagen beide Räte gemeinsam als Vereinigte Bundesversammlung. Dort zählt jede Stimme einzeln, und der grössere Nationalrat hat mehr Gewicht.<sup class="beleg"><a href="#quelle-bv" id="beleg-bv-31" aria-label="Quelle 1">1</a></sup></p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a><a class="weg" href="#mehr"><span aria-hidden="true">→</span> Was ist das doppelte Mehr?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Warum ist der Ständerat gleich wichtig?"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a><a class="weg" href="#mehr"><span aria-hidden="true">→</span> Was ist das doppelte Mehr?</a></nav>
 
       <h2 id="selbst" tabindex="-1"><span class="nr">7</span> Was können Sie selbst tun?</h2>
       <div class="schicht-bild"><figure class="kern">
@@ -567,7 +571,7 @@
         </table></div>
         <p>In Kantonen und Gemeinden gelten eigene Regeln, die von denen des Bundes abweichen können. Was bei Ihnen gilt, sagt Ihre Gemeinde.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Was können Sie selbst tun?"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a></nav>
 
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>

@@ -314,8 +314,12 @@
     ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
     .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
     .kern .zeit{ padding:10px 0 0 }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
     .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
-    .zeit .jahr{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
     .zeit .was{ font-size:15px }
     @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
   </style>
@@ -377,7 +381,7 @@
         </table></div>
         <p class="merke"><strong>Das Wichtigste auf dieser Seite:</strong> Die 61 Menschen, die am wenigsten kosten, brauchen zusammen rund 11 % des Geldes oder weniger. Die 5 Teuersten brauchen mindestens 27 %, vermutlich deutlich mehr.<sup class="beleg"><a href="#quelle-efind" id="beleg-efind-2" aria-label="Quelle 1">1</a></sup> Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen. Und nächstes Jahr können auch Sie zu den wenigen gehören.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#querfinanzierung"><span aria-hidden="true">→</span> Wer zahlt für wen?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Warum ein gemeinsamer Topf?"><a class="weg" href="#querfinanzierung"><span aria-hidden="true">→</span> Wer zahlt für wen?</a></nav>
 
       <h2 id="querfinanzierung" tabindex="-1"><span class="nr">2</span> Wer zahlt für wen? Die Querfinanzierung</h2>
       <div class="schicht-bild">
@@ -405,7 +409,7 @@
         <h3>Von Kasse zu Kasse</h3>
         <p>Eine Kasse mit vielen Jungen und Gesunden wäre sonst billig, eine mit vielen Alten teuer, und alle würden nur noch Gesunde anlocken. Darum gibt es den Risikoausgleich: Kassen mit günstigen Versicherten zahlen an Kassen mit teuren. Für 2024 flossen so netto rund 1,1 Milliarden Franken.<sup class="beleg"><a href="#quelle-kvgorg" id="beleg-kvgorg-1" aria-label="Quelle 4">4</a></sup></p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wer zahlt für wen? Die Querfinanzierung"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a></nav>
 
       <h2 id="franchise" tabindex="-1"><span class="nr">3</span> Warum gibt es Franchise und Selbstbehalt?</h2>
       <div class="schicht-bild">
@@ -439,7 +443,7 @@
         <p>Das hat Folgen, die man im Alltag merkt. Von den 26- bis 30-Jährigen bekamen 2024 rund 64 von 100 im ganzen Jahr keinen Franken von der Kasse. Bei 28 davon lag der Kasse gar keine Rechnung vor, bei 36 blieb alles innerhalb der eigenen Kostenbeteiligung. Prämien zahlten sie trotzdem. Über alle Altersgruppen waren es 37 von 100.<sup class="beleg"><a href="#quelle-efind" id="beleg-efind-5" aria-label="Quelle 1">1</a></sup></p>
         <p>Und der Haken: Die Bremse wirkt bei allen gleich stark in Franken, aber nicht gleich stark im Leben. 500 Franken sind für manche ein Abendessen, für andere ein Monatsbudget. In einer Befragung von 2023 gaben 18,8 % der Erwachsenen an, in den zwölf Monaten davor trotz eines gesundheitlichen Problems aus Kostengründen nicht zum Arzt gegangen zu sein.<sup class="beleg"><a href="#quelle-ihp" id="beleg-ihp-1" aria-label="Quelle 6">6</a></sup> Die Befragung sagt allerdings nicht, ob das aus Not oder freiwillig geschah. Auch der Bundesrat hält fest: Wird eine Behandlung aufgeschoben, können später deutlich höhere Kosten entstehen.<sup class="beleg"><a href="#quelle-franchiseBericht" id="beleg-franchiseBericht-2" aria-label="Quelle 5">5</a></sup> Und hohe Franchisen wählen vor allem Menschen, die ohnehin wenig Kosten erwarten.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Warum gibt es Franchise und Selbstbehalt?"><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a></nav>
 
       <h2 id="preise" tabindex="-1"><span class="nr">4</span> Woher kommen die Preise?</h2>
       <div class="schicht-bild"><figure class="kern" aria-labelledby="stab-preise">
@@ -471,7 +475,7 @@
         <p class="leise">Franken je Monat und Person, 2025, noch unter dem alten Tarif, vor Abzug der Kostenbeteiligung. Zusammen 411 Franken (gerundet). Beim Spital stationär nur der Kassenanteil; der Kanton zahlt mindestens 55 % dazu.<sup class="beleg"><a href="#quelle-leistungen2025" id="beleg-leistungen2025-3" aria-label="Quelle 7">7</a></sup></p>
         <p>Ein Preis allein macht aber noch keine Kosten. Es gilt immer: <strong>Kosten = Preis mal Menge.</strong> Die Rechnung steigt, wenn eine Behandlung teurer wird oder wenn mehr davon gemacht wird. Das ist wichtig für Frage 7.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#problem"><span aria-hidden="true">→</span> Wo liegt das Problem?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Woher kommen die Preise?"><a class="weg" href="#problem"><span aria-hidden="true">→</span> Wo liegt das Problem?</a></nav>
 
       <h2 id="praemie" tabindex="-1"><span class="nr">5</span> Wie wird daraus die Prämie?</h2>
       <div class="schicht-bild">
@@ -510,7 +514,7 @@
           <tr><td>Alle zusammen</td><td class="n">412.00</td></tr>
         </table></div>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a><a class="weg" href="#problem"><span aria-hidden="true">→</span> Wo liegt das Problem?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wie wird daraus die Prämie?"><a class="weg" href="#nachbar"><span aria-hidden="true">→</span> Warum zahlen andere weniger?</a><a class="weg" href="#problem"><span aria-hidden="true">→</span> Wo liegt das Problem?</a></nav>
 
       <h2 id="nachbar" tabindex="-1"><span class="nr">6</span> Warum zahlen andere weniger?</h2>
       <div class="schicht-bild">
@@ -614,7 +618,7 @@
         <p>Die Leistungen der Grundversicherung sind bei allen Kassen gleich, die Prämie nicht.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht: Die Kasse darf deshalb keine höhere Prämie verlangen.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a><a class="weg" href="#franchise"><span aria-hidden="true">→</span> Franchise und Selbstbehalt</a></nav>
+      <nav class="wege" aria-label="Weiter von: Warum zahlen andere weniger?"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a><a class="weg" href="#franchise"><span aria-hidden="true">→</span> Franchise und Selbstbehalt</a></nav>
 
       <h2 id="problem" tabindex="-1"><span class="nr">7</span> Wo liegt das Problem?</h2>
       <div class="schicht-bild"><figure class="kern">
@@ -641,7 +645,7 @@
         <h3>Und wen trifft es?</h3>
         <p>Weil die Prämie pro Kopf gleich ist, drückt sie bei tiefen Einkommen am stärksten. Die Prämien stiegen über zwanzig Jahre von rund 4 auf rund 7 % des verfügbaren Einkommens, das sind Durchschnittswerte.<sup class="beleg"><a href="#quelle-bfh" id="beleg-bfh-1" aria-label="Quelle 20">20</a></sup> Das Gesundheitswesen kostete 2024 rund 97 Milliarden Franken. Davon trugen die Haushalte 21 % direkt aus der eigenen Tasche und weitere 41 % indirekt, vor allem über die Prämien. Die öffentliche Hand trug 31 %.<sup class="beleg"><a href="#quelle-bfs" id="beleg-bfs-1" aria-label="Quelle 21">21</a></sup></p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/politsystem/"><span aria-hidden="true">→</span> Politik erklärt</a><a class="weg" href="#aenderungen"><span aria-hidden="true">→</span> Was ändert sich?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Wo liegt das Problem?"><a class="weg" href="/politsystem/"><span aria-hidden="true">→</span> Politik erklärt</a><a class="weg" href="#aenderungen"><span aria-hidden="true">→</span> Was ändert sich?</a></nav>
 
       <h2 id="aenderungen" tabindex="-1"><span class="nr">8</span> Was ändert sich?</h2>
       <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Was sich wann ändert">
@@ -658,7 +662,7 @@
         <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Wer gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht.<sup class="beleg"><a href="#quelle-kvg" id="beleg-kvg-18" aria-label="Quelle 2">2</a></sup> Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes.<sup class="beleg"><a href="#quelle-priminfo" id="beleg-priminfo-1" aria-label="Quelle 23">23</a></sup></p>
         <p>Ob Sie Anspruch auf eine Verbilligung der Prämie haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
       </details>
-      <nav class="wege" aria-label="Weiter von hier"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
+      <nav class="wege" aria-label="Weiter von: Was ändert sich?"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>

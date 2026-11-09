@@ -303,8 +303,18 @@ export const SEITEN = [
     brotkrume: 'Prämienverbilligung',
     vorspann:
       'Die individuelle Prämienverbilligung — meist kurz IPV — ist ein Beitrag der öffentlichen Hand an die Krankenkassenprämie. Sie ist im Krankenversicherungsgesetz (KVG) angelegt, aber der Bund führt sie nicht aus: das tun die Kantone, jeder nach eigenen Regeln, im Rahmen des Bundesrechts.',
+    // Drei Schichten (Brand Book §8, 09.11.2026), vorerst nur Deutsch.
+    schichten: true,
     abschnitte: [
       {
+        id: 'bund-kanton',
+        bild: `<ol class="zeit kern" role="list" aria-label="Wer was tut">
+          <li><span class="jahr">Bund</span><span class="was">schreibt vor, dass es sie gibt, setzt Mindestvorgaben und zahlt mit</span></li>
+          <li><span class="jahr">Kanton</span><span class="was">entscheidet im Rahmen dieser Vorgaben, wer sie bekommt und wie viel, mit Grenzen, Antrag und Fristen</span></li>
+          <li><span class="jahr">Krankenkasse</span><span class="was">bekommt den Beitrag direkt vom Kanton, nicht die versicherte Person</span></li>
+        </ol>`,
+        kurzAbsatz: 3,
+        wege: ['kantone-im-vergleich', 'kantonsatlas'],
         titel: 'Was der Bund vorgibt und was der Kanton entscheidet',
         absaetze: [
           'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, setzt dafür Mindestvorgaben und beteiligt sich an der Finanzierung. Im Rahmen dieser Vorgaben entscheidet der Kanton, wer sie bekommt und wie viel.',
@@ -314,6 +324,17 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'zahlen',
+        bild: `<div class="kern">
+          <ol class="zeit" role="list" aria-label="Woher die Zahlen kommen">
+            <li><span class="jahr">Steuererklärung</span><span class="was">oft nicht die des laufenden Jahres</span></li>
+            <li><span class="jahr">Veranlagung</span><span class="was">oft eine frühere, bereits rechtskräftige</span></li>
+            <li><span class="jahr">Verbilligung</span><span class="was">stützt sich in der Regel darauf</span></li>
+          </ol>
+          <p class="unter">Haben sich Einkommen oder Familie seither deutlich verändert, fragen Sie bei der zuständigen Stelle nach (Art. 65 Abs. 3 KVG).</p>
+        </div>`,
+        kurzAbsatz: 0,
+        wege: ['steuern'],
         titel: 'Welche Zahlen zählen',
         absaetze: [
           'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.',
@@ -321,6 +342,13 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'irrtum',
+        bild: `<ul class="irrtum" role="list">
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Mit einem Erwerbseinkommen bekommt man grundsätzlich nichts.</span><span class="richtig"><span class="sr-only">Richtig: </span>Trifft nicht zu: Auch mit Lohn kann ein Anspruch bestehen.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Ein abgelehnter Antrag gilt für immer.</span><span class="richtig"><span class="sr-only">Richtig: </span>Er betrifft in der Regel ein Jahr. Ändert sich Ihre Lage, lohnt sich eine neue Anfrage.</span></li>
+        </ul>`,
+        kurzAbsatz: 0,
+        wege: ['was-steht-mir-zu'],
         titel: 'Der häufigste Irrtum',
         absaetze: [
           'Viele gehen davon aus, dass man mit einem Erwerbseinkommen grundsätzlich nichts bekommt. Das trifft nicht zu: Prämienverbilligung ist keine Leistung nur für Menschen ohne Arbeit. Familien mit Kindern, Personen in Ausbildung und Haushalte mit mittlerem Einkommen fallen in vielen Kantonen darunter.',
