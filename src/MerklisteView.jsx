@@ -4,6 +4,7 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
+import { useFremdeListe } from './hooks/useFremdeListe.js';
 import { loadTodos, saveTodos, merkpunktBauen, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 
@@ -54,6 +55,8 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     if (vorlaeufig) return;
     if (!punkte) saveTodos(eigene);
   }, [eigene, vorlaeufig, punkte]);
+  // Änderungen aus einem anderen Tab übernehmen, statt sie beim nächsten Abhaken zu überschreiben.
+  useFremdeListe('or5_merkliste', loadTodos, setEigene, !punkte && !vorlaeufig);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 

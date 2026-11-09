@@ -7,6 +7,7 @@ import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, space, radius, fontFamily, fontFamilyDisplay, ease, duration, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
+import { useFremdeListe } from './hooks/useFremdeListe.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { anspruchSignaleListe } from './data/anspruchSignale.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -137,6 +138,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // Orten, gleicher Zustand. Gespeichert wird nur bei einer Änderung, nie im Beispiel.
   const [todos, setTodos] = useState(() => (vorlaeufig ? [] : loadTodos()));
   const aendereTodos = (fn) => setTodos(prev => { const neu = fn(prev); if (!vorlaeufig) saveTodos(neu); return neu; });
+  // Änderungen aus einem anderen Tab übernehmen, statt sie bei der nächsten Änderung zu überschreiben.
+  useFremdeListe('or5_reminders', loadReminders, setReminders, !vorlaeufig);
+  useFremdeListe('or5_merkliste', loadTodos, setTodos, !vorlaeufig);
   const [eigenerReiter, setEigenerReiter] = useState(wahl);
   const offen = (onReiter ? wahl : eigenerReiter) === 'merkliste' ? 'merkliste' : 'ansicht';
   const zeigeReiter = onReiter || setEigenerReiter;
