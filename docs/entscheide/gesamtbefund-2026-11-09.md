@@ -179,6 +179,6 @@ siebenmal neu entschieden werden:
    **Kapitel 2 · Wohnen** (09.11.): Bild [kapitel-2-wohnen.html](../design/kapitel-2-wohnen.html). Gestaltung ohne Befund (ausser
    Überschriftenstufe). Inhalt hoch: W1 Genf «pro Zimmer» ohne «pro Jahr» · W2 Mietbeiträge-Ergebnis prüft nur Einkommen
    (Wohnsitz/Vermögen in Daten, nie verwendet) · W3 Sperrfrist OR 271a ohne Bedingung. Dazu W4–W13, Sprache S1–S7.
-   🔄 Entscheid offen.
+   ✅ **09.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-2-wohnen` (von `main`).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
