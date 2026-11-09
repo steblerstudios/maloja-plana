@@ -7,18 +7,12 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { zugeklappteIds } from './_schichten.js';
 
 const WURZEL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const SEITEN = ['krankenkasse', 'politsystem', 'kantone-im-vergleich']
   .map((p) => path.resolve(WURZEL, 'public', p, 'index.html'))
   .filter((f) => fs.existsSync(f) && fs.readFileSync(f, 'utf8').includes('class="schicht-mehr"'));
-
-export function zugeklappteIds(html) {
-  const ids = new Set();
-  for (const d of html.matchAll(/<details class="schicht-mehr">([\s\S]*?)<\/details>/g))
-    for (const m of d[1].matchAll(/id="([^"]+)"/g)) ids.add(m[1]);
-  return ids;
-}
 
 describe('Zurück-Links zeigen nie in zugeklappten Text', () => {
   it('es gibt Seiten mit Schichten zu prüfen', () => expect(SEITEN.length).toBeGreaterThan(0));
