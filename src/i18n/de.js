@@ -3014,6 +3014,17 @@ export default {
 
     gueltig: 'gültig',
     title: 'Dokumentenablage',
+    geteilt: {
+      titel: 'Noch nicht eingeordnet ({count})',
+      satz: { sie: 'Diese Dateien liegen nur auf diesem Gerät. Wählen Sie, wohin sie gehören.', du: 'Diese Dateien liegen nur auf diesem Gerät. Wähle, wohin sie gehören.' },
+      bereich: 'Bereich',
+      ablegen: 'Ablegen',
+      verwerfen: 'Verwerfen',
+      abgelegt: '«{name}» ist abgelegt.',
+      verworfenMeldung: '«{name}» ist verworfen.',
+      fehler: { sie: 'Die wartenden Dateien liessen sich nicht lesen. Fügen Sie sie bitte nochmals hinzu.', du: 'Die wartenden Dateien liessen sich nicht lesen. Füge sie bitte nochmals hinzu.' },
+      hinzufuegen: 'Datei hinzufügen',
+    },
     active: 'Aktiv',
     expiringSoon: 'Bald fällig',
     archive: 'Archiv',

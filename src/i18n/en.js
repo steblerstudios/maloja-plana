@@ -2998,6 +2998,17 @@ export default {
 
     gueltig: 'valid',
     title: 'Document folder',
+    geteilt: {
+      titel: 'Not yet filed ({count})',
+      satz: 'These files stay on this device only. Choose where they belong.',
+      bereich: 'Area',
+      ablegen: 'File it',
+      verwerfen: 'Discard',
+      abgelegt: '“{name}” is filed.',
+      verworfenMeldung: '“{name}” is discarded.',
+      fehler: 'The waiting files could not be read. Please add them again.',
+      hinzufuegen: 'Add a file',
+    },
     active: 'Active',
     expiringSoon: 'Expiring soon',
     archive: 'Archive',

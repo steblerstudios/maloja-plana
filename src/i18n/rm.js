@@ -3137,6 +3137,17 @@ export default {
 
     gueltig: 'valaivel',
     title: 'Deposita da documents',
+    geteilt: {
+      titel: 'Anc betg ordinà ({count})',
+      satz: { sie: "Questas datotecas restan mo sin quest apparat. Tscherni nua ch'ellas tutgan.", du: "Questas datotecas restan mo sin quest apparat. Tscherna nua ch'ellas tutgan." },
+      bereich: 'Sectur',
+      ablegen: 'Deponer',
+      verwerfen: 'Stizzar',
+      abgelegt: '«{name}» è deponì.',
+      verworfenMeldung: '«{name}» è stizzà.',
+      fehler: { sie: "Las datotecas che spetgan n'han betg pudì vegnir legidas. Agiuntai ellas per plaschair anc ina giada.", du: "Las datotecas che spetgan n'han betg pudì vegnir legidas. Agiunta ellas per plaschair anc ina giada." },
+      hinzufuegen: 'Agiuntar ina datoteca',
+    },
     active: 'Activ',
     expiringSoon: 'Bainprest scadent',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)

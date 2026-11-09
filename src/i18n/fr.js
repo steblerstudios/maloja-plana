@@ -2997,6 +2997,17 @@ export default {
 
     gueltig: 'valable',
     title: 'Classeur de documents',
+    geteilt: {
+      titel: 'Pas encore classé ({count})',
+      satz: { sie: 'Ces fichiers restent uniquement sur cet appareil. Choisissez où les ranger.', du: 'Ces fichiers restent uniquement sur cet appareil. Choisis où les ranger.' },
+      bereich: 'Domaine',
+      ablegen: 'Classer',
+      verwerfen: 'Supprimer',
+      abgelegt: '« {name} » est classé.',
+      verworfenMeldung: '« {name} » est supprimé.',
+      fehler: { sie: 'Impossible de lire les fichiers en attente. Veuillez les ajouter à nouveau.', du: 'Impossible de lire les fichiers en attente. Ajoute-les à nouveau.' },
+      hinzufuegen: 'Ajouter un fichier',
+    },
     active: 'Actifs',
     expiringSoon: 'Bientôt échus',
     archive: 'Archive',

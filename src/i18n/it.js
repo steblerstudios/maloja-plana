@@ -2998,6 +2998,17 @@ export default {
 
     gueltig: 'valido',
     title: 'Raccoglitore documenti',
+    geteilt: {
+      titel: 'Non ancora archiviato ({count})',
+      satz: { sie: 'Questi file restano solo su questo dispositivo. Scelga dove archiviarli.', du: 'Questi file restano solo su questo dispositivo. Scegli dove archiviarli.' },
+      bereich: 'Ambito',
+      ablegen: 'Archiviare',
+      verwerfen: 'Scartare',
+      abgelegt: '«{name}» è archiviato.',
+      verworfenMeldung: '«{name}» è scartato.',
+      fehler: { sie: 'Non è stato possibile leggere i file in attesa. La preghiamo di aggiungerli di nuovo.', du: 'Non è stato possibile leggere i file in attesa. Aggiungili di nuovo.' },
+      hinzufuegen: 'Aggiungere un file',
+    },
     active: 'Attivi',
     expiringSoon: 'In scadenza',
     archive: 'Archivio',
