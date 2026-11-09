@@ -38,6 +38,15 @@ const daysBetween = (a, b) => {
 // gestern: eine heute fällige Frist galt als morgen, eine gestrige als heute.
 const todayISO = () => inDays(0);
 
+// Tage bis zum nächsten jährlichen Stichtag 'MM-DD' (heute zählt als 0). Bis 09.11.2026
+// zielte die KK-Vorlage aufs 30.11. des LAUFENDEN Jahres: am 30.11. kam daraus 30.12.
+// (0 || 30), ab 1.12. ein Datum in der Vergangenheit (Bugsuche 09.11.2026).
+export const tageBisNaechstem = (heuteISO, mmtt) => {
+  const jahr = Number(heuteISO.slice(0, 4));
+  const diesesJahr = daysBetween(heuteISO, jahr + '-' + mmtt);
+  return diesesJahr >= 0 ? diesesJahr : daysBetween(heuteISO, (jahr + 1) + '-' + mmtt);
+};
+
 // Wiederholungen nach Kalender (utils/wiederholung.js): bis 26.10.2026 feste Tageszahlen (30 / 365)
 // und das Ergebnis in UTC — Termine wanderten, nachts kam der Vortag heraus.
 
@@ -61,7 +70,7 @@ const TEMPLATES = (t) => [
   { title: t('calendar.templates.integrationCourse'), category: 'education', recurrence: 'weekly', daysFromNow: 7 },
   { title: t('calendar.templates.vaccinations'), category: 'health', recurrence: 'yearly', daysFromNow: 180, coverage: t('calendar.coverage.vaccinations') },
   { title: t('calendar.templates.medicationRefill'), category: 'health', recurrence: 'quarterly', daysFromNow: 60, coverage: t('calendar.coverage.medication') },
-  { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', daysFromNow: daysBetween(todayISO(), new Date().getFullYear() + '-11-30') },
+  { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', daysFromNow: tageBisNaechstem(todayISO(), '11-30') },
 ];
 
 // Icon keys mapping to IconSystem — used for category display
@@ -196,7 +205,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   };
 
   const addFromTemplate = (template) => {
-    const dueDate = inDays(template.daysFromNow || 30); // lokal, wie todayISO
+    const dueDate = inDays(template.daysFromNow ?? 30); // lokal, wie todayISO; 0 Tage = heute
     const reminder = {
       id: Date.now().toString() + '_' + Math.random().toString(36).slice(2, 8),
       title: template.title,
