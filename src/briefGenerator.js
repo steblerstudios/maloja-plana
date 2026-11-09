@@ -350,6 +350,7 @@ function getTaxExtensionFields(data, t) {
     recipient: recipientPlaceholder(t),
     taxYear: year - 1,
     canton: data.basis?.canton || data.wohnen?.canton || '',
+    city: data.wohnen?.city || '', // «Ort, Datum» (Bugsuche B-14)
     filled: {
       name: !!getFullName(data.basis),
       address: !!data.wohnen?.address,
@@ -365,6 +366,7 @@ function getInsuranceSwitchFields(data, t) {
     // Bewusst NICHT kkCardNumber (Versichertenkarten-Nr. ≠ Policennummer) — sonst stünde
     // im ausgehenden Kündigungsbrief eine falsche Referenz. Ohne echtes Policennummer-Feld leer.
     policyNumber: data.versicherungen?.policyNumber || '',
+    city: data.wohnen?.city || '', // «Ort, Datum» (Bugsuche B-14)
     filled: {
       name: !!getFullName(data.basis),
       insurer: !!data.versicherungen?.kkInsurer,
@@ -530,6 +532,7 @@ function getKkReklamationFields(data, t) {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
     insurer: data.versicherungen?.kkInsurer || '',
+    city: data.wohnen?.city || '', // «Ort, Datum» (Bugsuche B-14)
     filled: {
       name: !!getFullName(data.basis),
       insurer: !!data.versicherungen?.kkInsurer,
@@ -540,6 +543,7 @@ function getKkReklamationFields(data, t) {
 function generateKkReklamation(data, t, options = {}) {
   const f = getKkReklamationFields(data, t);
   const dateStr = today();
+  const cityDate = f.city ? `${esc(f.city)}, ${dateStr}` : dateStr;
   // Klartext für t()-Interpolation (wird im ${esc(t(...))} einmal escaped) — kein
   // fillHint-HTML, das sonst als Tag-Text im Brief erschiene.
   const insurerLine = f.insurer || t('briefe.fillIn');
@@ -577,7 +581,7 @@ function generateKkReklamation(data, t, options = {}) {
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
     <div class="recipient">${f.insurer ? esc(f.insurer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + f.recipient + '</div>'}</div>
-    <div class="date-line">${dateStr}</div>
+    <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.kkReklamation.subject'))}</div>
     <div class="body-text">
       <p>${esc(t('briefe.kkReklamation.salutation'))}</p>
