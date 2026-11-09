@@ -187,5 +187,8 @@ siebenmal neu entschieden werden:
    Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
    Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
    (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
+   ✅ **Gebaut** → Entwurfs-PR #802: Arbeitsort-Feld, Rechtsvorschlag, Steuer-Grenzen (13 000, 3a gekappt), Sozialhilfe,
+   Rückerstattung nur ZH, 44-px-Felder, Sprache; rechts-pruefer mit Volltext, 8750 Tests grün. Offen: Budget-Brotkrume (Umbau),
+   menschliche Lektüre fr/it.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
