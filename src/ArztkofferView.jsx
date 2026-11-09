@@ -11,7 +11,8 @@ import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 // Gesundheit hatte bisher kein eigenes Kapitel; der Arztkoffer sammelt die
 // verstreuten Gesundheits-Werkzeuge als „Instrumente" (Fächer) an einem Ort.
 // Identität = Hagebutte + orange-rot (Ast „gesundheit" aus lebensbereiche.js).
-// Schutzrecht: bewusst KEIN Schweizer Kreuz.
+// Zeichen: Arztkoffer mit ausgestanztem Kreuz, nur in der Kapitelfarbe, nie rot — kein Rotkreuz-
+// und kein Schweizerkreuz-Zeichen (Rechts-Prüfung 07.11.2026, Icon-Plan Bauplan B2).
 //
 // Ehrlichkeit: Fächer ohne fertiges Werkzeug werden als ruhiges „in
 // Vorbereitung" gezeigt (nicht klickbar) — nichts wird vorgetäuscht.

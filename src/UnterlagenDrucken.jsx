@@ -21,7 +21,7 @@ import { NotfallDossier } from './NotfallDossier.jsx';
 export const DRUCK_WAHLEN = [
   { key: 'alles', label: 'unterlagen.drucken.alles', dossier: 'unterlagen.dossier.lebensmappe.title', icon: 'home' },
   { key: 'amt', label: 'unterlagen.drucken.amt', dossier: 'unterlagen.dossier.behoerden.title', icon: 'legal' },
-  { key: 'notfall', label: 'unterlagen.drucken.notfall', dossier: 'unterlagen.dossier.notfall.title', icon: 'notfall' },
+  { key: 'notfall', label: 'unterlagen.drucken.notfall', dossier: 'unterlagen.dossier.notfall.title', icon: 'herzPuls' },
 ];
 
 // Unbekannte oder fehlende Wahl → «Alles».

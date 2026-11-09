@@ -683,7 +683,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
           // Zweite grosse Karte daneben (gewählt 27.09.2026): die Notfallkarte — vorher klein
           // unter der Linie. Die Ansprüche erreicht man über den Leistungs-Kompass.
-          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall', primary: true },
+          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'herzPuls', primary: true },
           // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.

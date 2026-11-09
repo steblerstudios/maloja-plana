@@ -36,8 +36,11 @@ describe('Strich nach Grösse', () => {
   });
 
   it('Flächen-Icons bleiben, wie sie gezeichnet sind', () => {
-    const roh = renderToStaticMarkup(React.createElement(Icons.basis));
-    const imIcon = renderToStaticMarkup(React.createElement(Icon, { name: 'basis', size: 14 }));
+    // Die ausgestanzten Leitformen (Bauplan B2) nummerieren ihre Maske je Stelle — die Nummer
+    // zählt hier nicht, nur die Zeichnung.
+    const ohneNummer = (s) => s.replace(/leitform\d+/g, 'leitform');
+    const roh = ohneNummer(renderToStaticMarkup(React.createElement(Icons.basis)));
+    const imIcon = ohneNummer(renderToStaticMarkup(React.createElement(Icon, { name: 'basis', size: 14 })));
     expect(imIcon).toContain(roh);
   });
 });

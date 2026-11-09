@@ -125,7 +125,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
   return React.createElement(React.Fragment, null,
     onNavigate && React.createElement(Brotkrume, { palette, t, view: 'notfallkarte', onNavigate }),
     React.createElement(AblaufContainer, {
-    palette, icon: 'notfall',
+    palette, icon: 'herzPuls',
     title: t('notfallkarte.title'),
     intro: t('notfallkarte.intro'),
   },

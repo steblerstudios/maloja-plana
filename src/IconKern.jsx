@@ -49,17 +49,10 @@ import { tagInZuerich } from './utils/zuerichTag.js';
 // Chapter Icons (24x24 default)
 // ═══════════════════════════════════════════════════════════════
 
-const _basis = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // ID card outline — rounded rectangle framing the person
-  React.createElement('rect', { x: '2', y: '3', width: '20', height: '18', rx: '2.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
-  // Person silhouette — centered in card
-  React.createElement('circle', { cx: '9', cy: '10', r: '3' }),
-  React.createElement('path', { d: 'M 4.5 18 Q 4.5 14 9 14 Q 13.5 14 13.5 18' }),
-  // Data lines on right side
-  React.createElement('line', { x1: '15.5', y1: '9', x2: '19.5', y2: '9', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.5' }),
-  React.createElement('line', { x1: '15.5', y1: '12', x2: '18.5', y2: '12', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.4' }),
-  React.createElement('line', { x1: '15.5', y1: '15', x2: '19', y2: '15', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.35' }),
-);
+// Die Leitformen Ausweiskarte, Edelweiss-Schild, Schulhut, Arztkoffer und das Herz mit Puls
+// (Icon-Plan November 2026, Bauplan B2) kommen wie die Münzen nachgeladen aus IconMuenzen.jsx —
+// gemessen 08.11.2026: im Kern hätten sie das Startbündel auf 64 997 von 65 000 Bytes gebracht.
+const _basis = () => React.createElement(Muenze, { art: 'basis' });
 
 const _wohnen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Swiss chalet — wide overhanging roof
@@ -162,43 +155,12 @@ const Muenze = ({ art, ...rest }) => {
 };
 
 const _finanzen = () => React.createElement(Muenze, { art: 'finanzen' });
-
-const _versicherungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Shield — Swiss protection shape
-  React.createElement('path', { d: 'M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z' }),
-  // Inner shield border
-  React.createElement('path', { d: 'M 12 4 L 6 7.2 L 6 12 Q 6 17.5 12 20 Q 18 17.5 18 12 L 18 7.2 Z', fill: 'none', stroke: 'white', strokeWidth: '0.5', opacity: '0.3' }),
-  // Edelweiss — Alpine protection flower (8 petals + center)
-  React.createElement('g', { transform: 'translate(12, 12.5)' },
-    React.createElement('circle', { r: '1.5', fill: 'white' }),
-    React.createElement('ellipse', { cx: '0', cy: '-4', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.9' }),
-    React.createElement('ellipse', { cx: '0', cy: '4', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.9' }),
-    React.createElement('ellipse', { cx: '-4', cy: '0', rx: '2.5', ry: '1.2', fill: 'white', opacity: '0.9' }),
-    React.createElement('ellipse', { cx: '4', cy: '0', rx: '2.5', ry: '1.2', fill: 'white', opacity: '0.9' }),
-    React.createElement('ellipse', { cx: '-2.8', cy: '-2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(-45)' }),
-    React.createElement('ellipse', { cx: '2.8', cy: '-2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(45)' }),
-    React.createElement('ellipse', { cx: '-2.8', cy: '2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(45)' }),
-    React.createElement('ellipse', { cx: '2.8', cy: '2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(-45)' }),
-  ),
-);
-
-const _ausbildung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 2 10 L 12 5 L 22 10 L 12 15 Z' }),
-  React.createElement('path', { d: 'M 6 12.5 L 6 18 L 12 21 L 18 18 L 18 12.5' }),
-  React.createElement('line', { x1: '20', y1: '10', x2: '20', y2: '17', stroke: 'currentColor', strokeWidth: '1.5' })
-);
+const _versicherungen = () => React.createElement(Muenze, { art: 'versicherungen' });
+const _ausbildung = () => React.createElement(Muenze, { art: 'ausbildung' });
+const _notfall = () => React.createElement(Muenze, { art: 'notfall' });
+const _herzPuls = () => React.createElement(Muenze, { art: 'herzPuls' });
 
 const _behoerden = () => React.createElement(Muenze, { art: 'behoerden' });
-
-const _notfall = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Heart-shaped container — warm, precautionary, not alarming
-  React.createElement('path', { d: 'M 12 21 Q 3 14 3 8.5 Q 3 4 7 4 Q 9.5 4 12 7 Q 14.5 4 17 4 Q 21 4 21 8.5 Q 21 14 12 21 Z' }),
-  // Soft inner glow line
-  React.createElement('path', { d: 'M 12 19 Q 5 13.5 5 9 Q 5 5.8 7.5 5.5 Q 9.5 5.5 12 8 Q 14.5 5.5 16.5 5.5 Q 19 5.8 19 9 Q 19 13.5 12 19 Z', fill: 'none', stroke: 'white', strokeWidth: '0.4', opacity: '0.25' }),
-  // Medical cross — centered, proportional
-  React.createElement('rect', { x: '10.5', y: '7.5', width: '3', height: '8', rx: '0.8', fill: 'white' }),
-  React.createElement('rect', { x: '8', y: '10', width: '8', height: '3', rx: '0.8', fill: 'white' }),
-);
 
 // ═══════════════════════════════════════════════════════════════
 // Chapter Icons — extended set (Verwaltung & Organisation)
@@ -378,12 +340,9 @@ const _home = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'no
   React.createElement('rect', { x: '10', y: '14', width: '4', height: '7' })
 );
 
-const _insurance = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Shield with Swiss cross
-  React.createElement('path', { d: 'M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z' }),
-  React.createElement('rect', { x: '10', y: '8', width: '4', height: '8', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '8', y: '10', width: '8', height: '4', rx: '0.5', fill: 'white' })
-);
+// Thema Versicherung: dasselbe Edelweiss-Schild wie der Lebensbereich (Rechts-Prüfung 07.11.2026:
+// ein Kreuz im Dreieckschild ist die Form des Schweizerwappens, WSchG Art. 2 und 8).
+const _insurance = _versicherungen;
 
 const _documents = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Stacked documents
@@ -520,6 +479,7 @@ const _iconFactories = {
   ausbildung: _ausbildung,
   behoerden: _behoerden,
   notfall: _notfall,
+  herzPuls: _herzPuls,
 
   // Extended chapter icons
   dokumentTresor: _dokumentTresor,

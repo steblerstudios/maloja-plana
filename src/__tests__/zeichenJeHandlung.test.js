@@ -82,9 +82,11 @@ describe('Ein Thema, ein Zeichen', () => {
       expect(lesen(datei), datei).not.toMatch(/'emergency'/);
     }
   });
+  // Seit Bauplan B2 (07.11.2026): das Icon «notfall» ist der Arztkoffer des Kapitels Gesundheit;
+  // die Notfall-Seiten tragen bis zum Abzeichen-Bau (B4) das Herz mit Puls des Asts Notfall.
   it('Notfallpass steht bei seinen Geschwistern', () => {
-    expect(ansichtIkon('notfallpass')).toBe('notfall');
-    expect(ansichtIkon('notfallkarte')).toBe('notfall');
+    expect(ansichtIkon('notfallpass')).toBe('herzPuls');
+    expect(ansichtIkon('notfallkarte')).toBe('herzPuls');
   });
   // Seit Schritt 7b (06.11.2026) trägt Organspende als Lebensereignis überall das Zeichen aus dem
   // Rucksack — nicht mehr das Gesundheits-Kreuz (vorher) und nicht zwei verschiedene Herzen.

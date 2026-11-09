@@ -129,7 +129,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         border: '1px solid ' + palette.border, marginBottom: '24px',
       }
     },
-      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'notfall', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'herzPuls', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '16px' }
       }, t('notfallDossier.subtitle')),

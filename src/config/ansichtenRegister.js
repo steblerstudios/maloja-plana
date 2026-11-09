@@ -90,11 +90,11 @@ export const SEARCH_VIEWS = [
   // Karte auf dem Dashboard führt in `notfalleinstieg`, und keine dieser Seiten stand hier.
   // Der Name ist derselbe wie auf der Dashboard-Karte.
   // Runde 5 / «ein Ort»: «Notfallkarte» trifft nur noch die Notfallkarte (Q), nicht mehr das Kapitel.
-  { view: 'notfalleinstieg', bereich: 'notfall', nav: 'arztkoffer.faecher.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card',
+  { view: 'notfalleinstieg', bereich: 'notfall', nav: 'arztkoffer.faecher.notfall.title', icon: 'herzPuls', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card',
     // Lebenslagen C1+C2 (07.11.2026): Krise und Gewalt finden die Hilfe im Notfall-Block (legal.resources.help1–4).
     'krise', 'gewalt', 'häusliche gewalt', 'suizid', 'dargebotene hand', 'opferhilfe', 'frauenhaus', 'crise', 'violence', 'crisi', 'violenza', 'crisis'] },
-  { view: 'notfallkarte', bereich: 'notfall', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
-  { view: 'notfallpass', bereich: 'notfall', nav: 'notfallpass.title', icon: 'notfall', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
+  { view: 'notfallkarte', bereich: 'notfall', nav: 'notfallkarte.title', icon: 'herzPuls', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
+  { view: 'notfallpass', bereich: 'notfall', nav: 'notfallpass.title', icon: 'herzPuls', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
   // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
@@ -156,7 +156,7 @@ export const ansichtName = (view) => {
 // («verlässt Maloja»). Die Seite trägt den Titel des Notfall-Kapitels, also auch
 // dessen Zeichen. Wächter: zeichenEineQuelle.test.js («Kein Zeichen aus dem Rückfall»).
 const WEITERE_ZEICHEN = {
-  notfalleinstieg: 'notfall',
+  notfalleinstieg: 'herzPuls',
 };
 
 // Piktogramm einer Ansicht — mit Rückfall, damit ein unbekannter Schlüssel

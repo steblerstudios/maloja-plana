@@ -86,7 +86,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
   return React.createElement(React.Fragment, null,
     onNavigate && React.createElement(Brotkrume, { palette, t, view: 'notfallpass', onNavigate }),
     React.createElement(AblaufContainer, {
-    palette, icon: 'notfall',
+    palette, icon: 'herzPuls',
     title: t('notfallpass.title'),
     intro: t('notfallpass.intro'),
   },
