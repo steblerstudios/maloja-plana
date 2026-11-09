@@ -105,12 +105,27 @@ const werteTabelle = (tab, text) => `
           <summary>${text}</summary>${BLOECKE_VERGLEICH[`TAB:${tab}`]()}
         </details>`;
 
+// Legenden der Karten, die auch die App zeigt (scripts/app-verstehen.mjs, 09.11.2026): eine Quelle für
+// Jahr, Rahmung und Belege, damit Seite und App nie Verschiedenes sagen.
+export const LEGENDE = {
+  praemie: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+  lastNachIpv: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+};
+
+// Stufenfarben (Heidelbeere), hell und dunkel. Im dunklen Modus ist die höchste Stufe die hellste.
+// Auch die App liest sie (über scripts/app-verstehen.mjs), nicht von Hand kopiert.
+export const STUFEN_FARBEN = {
+  hell: { 1: '#D3DEE9', 2: '#B3C4D6', 3: '#6787A5', 4: '#3D5A76', see: '#F2F2F0' },
+  dunkel: { 1: '#2E3742', 2: '#4A6380', 3: '#86A6C2', 4: '#C6D6E5', see: '#22211F' },
+};
+const cssStufen = (f) => `--k1:${f[1]}; --k2:${f[2]}; --k3:${f[3]}; --k4:${f[4]}; --k-see:${f.see}`;
+
 const BLOECKE_ATLAS = {
   'FIG:praemie': (ctx) => karte(ctx, 'praemie', {
-    legende: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+    legende: LEGENDE.praemie,
     nachher: werteTabelle('vpraemie', 'Prämie je Kanton als Tabelle') }),
   'FIG:lastnachipv': (ctx) => karte(ctx, 'lastNachIpv', {
-    legende: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+    legende: LEGENDE.lastNachIpv,
     nachher: werteTabelle('vlast', 'Prämienlast vor und nach Verbilligung als Tabelle') }),
   'FIG:steuer': (ctx) => karte(ctx, 'steuer', {
     legende: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
@@ -317,13 +332,13 @@ export const KANTONSATLAS = {
   // Kartengrundlage: die gehört zu allen Karten und steht im ersten Abschnitt.
   stilZusatz: `
     /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
-    :root{ --k1:#D3DEE9; --k2:#B3C4D6; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
+    :root{ ${cssStufen(STUFEN_FARBEN.hell)} }
     /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
        damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
     .nur-dunkel{ display:none }
     @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
-      :root{ --k1:#2E3742; --k2:#4A6380; --k3:#86A6C2; --k4:#C6D6E5; --k-see:#22211F }
+      :root{ ${cssStufen(STUFEN_FARBEN.dunkel)} }
     }
     .atlas .abb-bild svg{ max-height:420px }
     .atlas svg use{ stroke:var(--leise); stroke-width:.6 }
