@@ -17,7 +17,19 @@
 // geladen wird; relevant nur für Offline-Nutzung/Cache-Aufräumen. Im Dev-Modus
 // bleibt der Platzhalter stehen (harmlos, wird nie deployt).
 const CACHE_NAME = 'maloja-plana-__BUILD_HASH__';
-const OFFLINE_URL = '/';
+// Pfadneutral (Plan «App nach /app/», PR 1): Die App läuft unter `/` und unter `/app/`.
+// Alle eigenen Adressen hängen am Ordner, für den dieser Service Worker angemeldet ist
+// (registration.scope). Ohne Scope (Testumgebung, sehr alte Browser) gilt `/` wie bisher.
+const BASIS = (() => {
+  try {
+    const pfad = new URL(self.registration.scope).pathname;
+    return pfad.endsWith('/') ? pfad : pfad + '/';
+  } catch (e) {
+    return '/';
+  }
+})();
+const OFFLINE_URL = BASIS;
+const ASSETS = BASIS + 'assets/';
 // K59: Module und Schriften fragt der Browser mit `Origin` an; ein Server mit
 // `Vary: Origin` (z. B. vite preview) liesse den Cache sonst ins Leere greifen.
 // Unbedenklich: die Dateien sind nach Inhalt benannt bzw. nur von hier.
@@ -28,11 +40,11 @@ const TREFFER = { ignoreVary: true };
 // sie landeten nie im Cache, und offline blieb die Seite leer. Darum:
 // (1) beim Install die Dateien mitnehmen, die die Startseite selbst einbindet;
 // (2) die Seite meldet nach der Anmeldung, was sie schon geladen hat (message).
-// Nur eigene Dateien unter /assets/ — nie fremde Adressen.
+// Nur eigene Dateien unter <BASIS>assets/ — nie fremde Adressen.
 const alsEigeneAssetAdresse = (adresse) => {
   try {
     const url = new URL(adresse, self.location.origin);
-    if (url.origin !== self.location.origin || !url.pathname.startsWith('/assets/')) return null;
+    if (url.origin !== self.location.origin || !url.pathname.startsWith(ASSETS)) return null;
     return url.pathname;
   } catch (e) {
     return null;
@@ -60,9 +72,9 @@ self.addEventListener('install', (event) => {
       await einzelnAblegen(cache, [
         // Synchron im <head> geladen (K4): offline ohne Cache fiele der Abruf sonst auf
         // OFFLINE_URL zurück — HTML statt Skript.
-        '/theme-init.js',
-        '/fonts/lexend-latin-400-normal.woff2',
-        '/fonts/lexend-latin-600-normal.woff2',
+        BASIS + 'theme-init.js',
+        BASIS + 'fonts/lexend-latin-400-normal.woff2',
+        BASIS + 'fonts/lexend-latin-600-normal.woff2',
       ]);
       try {
         const antwort = await fetch(OFFLINE_URL, { cache: 'no-store' });
@@ -119,7 +131,7 @@ self.addEventListener('fetch', (event) => {
   // direkt ans Netz (Sicherheitsprüfung 25.09.2026). Die CSP lässt heute ohnehin
   // nur 'self' zu; das hier hält auch, falls sie je gelockert wird.
   if (url.origin !== self.location.origin) return;
-  const isHashedAsset = url.pathname.startsWith('/assets/');
+  const isHashedAsset = url.pathname.startsWith(ASSETS);
 
   if (isHashedAsset) {
     event.respondWith(
@@ -170,10 +182,10 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body || '',
-      icon: '/icon-192.png',
-      badge: '/icon-192.png',
+      icon: BASIS + 'icon-192.png',
+      badge: BASIS + 'icon-192.png',
       tag: data.tag || 'ordnung-ruhe',
-      data: { url: data.url || '/' },
+      data: { url: data.url || BASIS },
       // Respectful: no vibration, no sound by default
       silent: true,
     };
@@ -194,9 +206,9 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   // Nur die eigene Origin öffnen: die Adresse stammt aus der Push-Payload (heute dormant,
   // kein subscribe). Fremde oder ungültige Ziele fallen auf die App-Startseite zurück.
-  let url = '/';
+  let url = BASIS;
   try {
-    const target = new URL(event.notification.data?.url || '/', self.location.origin);
+    const target = new URL(event.notification.data?.url || BASIS, self.location.origin);
     if (target.origin === self.location.origin) url = target.href;
   } catch (e) { /* ungültige Adresse → Startseite */ }
 
