@@ -27,8 +27,14 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
     expect(abschnitt).toContain('zehn Karten der 26 Kantone');
   });
 
-  it('die Wege in den Atlas sind gross genug zum Tippen (44 px)', () => {
-    expect(html).toContain('#atlas .liste a{ display:inline-block; padding:13px 0 }');
+  it('die Wege in den Atlas und «Zum Nachlesen» sind gross genug zum Tippen (44 px)', () => {
+    expect(html).toContain('.liste > li > a{ display:inline-block; padding:13px 0 }');
+    // Beide Listen tragen ihre Links direkt im Listenpunkt, sonst greift die Regel nicht.
+    const nachlesen = html.match(/<h2>Zum Nachlesen<\/h2>\s*<ul class="liste eins">[\s\S]*?<\/ul>/)[0];
+    expect(nachlesen.match(/<li><a href=/g)).toHaveLength(5);
+    expect(abschnitt.match(/<\/p><a href="\/kantonsatlas\/#fuer-/g)).toHaveLength(BRILLEN.length);
+    // Der Link im Satz (Datenschutz) steht in einem <p> und wird nicht aufgebläht.
+    expect(html).toMatch(/<p>[^<]*Keine Werbung[^<]*<a href="\/rechtliches\/">Datenschutz<\/a>/);
   });
 
   it('verspricht nicht für jede Karte eine Rechnung (es gibt nicht zu jeder ein Werkzeug)', () => {

@@ -291,9 +291,6 @@
     .geraet li{ margin-bottom:8px; padding-left:4px }
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
     .bald, .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
-    /* Atlas-Abschnitt: «Karten für diese Frage» ist ein eigenständiger Weg, kein Link im Satz — 44 px wie jedes
-       Bedienelement (Brand Book §7a, Regel I; gemessen bei 375 px: vorher 19 px). */
-    #atlas .liste a{ display:inline-block; padding:13px 0 }
     .bald strong{ color:var(--text) }
 
     /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */
@@ -302,6 +299,10 @@
     .liste li{ border-top:1px solid var(--rand); padding-top:14px }
     .liste p, .liste span{ font-size:15px; color:var(--leise) }
     .liste a{ font-weight:600 }
+    /* Ein Link, der allein im Listenpunkt steht («Karten für diese Frage», «Zum Nachlesen»), ist ein eigener Weg,
+       kein Link im Satz — 44 px wie jedes Bedienelement (Brand Book §7a, Regel I; gemessen bei 375 px: vorher 19 px).
+       Links im Fliesstext (z. B. «Datenschutz» unter «Kein Tracking») bleiben unberührt. */
+    .liste > li > a{ display:inline-block; padding:13px 0 }
     .liste span{ display:block }
     .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:72px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
