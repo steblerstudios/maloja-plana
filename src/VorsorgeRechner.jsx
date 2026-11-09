@@ -19,6 +19,7 @@ import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahre
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
 import { ahvBezugAlterFuer, ahvKapitalImBild, fruehesterAhvBezugImBildMonate } from './utils/ahvZukunftsbild.js';
+import { ikHochrechnen } from './utils/ikHochrechnung.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { hauptlohnMonate, dreizehnterStatus } from './utils/dreizehnter.js';
@@ -187,10 +188,28 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     [ikActive, ikEntries]
   );
 
+  // IK bis zum Referenzalter hochrechnen (Bugsuche B-17, Entscheid Stebler Studios 10.11.2026):
+  // die künftigen Jahre wie ohne IK — Annahme bis zum Referenzalter minus Annahme bis heute —,
+  // Einkommen gemischt (utils/ikHochrechnung.js). Ohne Geburtsdatum keine Hochrechnung (wie bisher).
+  const ikHoch = useMemo(() => {
+    if (!ikResult || !alter) return null;
+    const bisRef = angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre);
+    const bisHeute = Math.min(bisRef, Math.max(0, Math.floor(alter) - 21));
+    return ikHochrechnen({ ik: ikResult, zukunftsJahre: bisRef - bisHeute, einkommenHeute: parsedEinkommen, volleDauer });
+  }, [ikResult, alter, refAlterJahre, parsedEinkommen, volleDauer]);
+  // Beitragsjahre bei Bezug aus den Jahren bis zum Referenzalter — dieselbe Zählung wie ohne IK.
+  const ikBeitragsjahreBei = (bezug) => (ikHoch
+    ? Math.max(0, Math.min(ikHoch.beitragsjahreReferenzalter, volleDauer) - fehlendeJahreBisReferenzalter(bezug))
+    : (ikResult ? ikResult.beitragsjahre : 0));
+  const ikBeitragsjahreBeiBezug = ikBeitragsjahreBei(parsedBezugAlter);
+  const ikEinkommen = ikHoch ? ikHoch.durchschnittlichesJahreseinkommen : (ikResult ? ikResult.durchschnittlichesJahreseinkommen : 0);
+  const ikReferenzalterJahre = ikHoch ? ikHoch.beitragsjahreReferenzalter : undefined;
+
   const ahvResult = useMemo(() => {
-    // Bei aktivem IK-Auszug ersetzt die echte Historie die Annahme (Einkommen/Beitragsjahre/Erziehung).
-    const eink = ikResult ? ikResult.durchschnittlichesJahreseinkommen : parsedEinkommen;
-    const bj = ikResult ? ikResult.beitragsjahre : parsedBeitragsjahre;
+    // Bei aktivem IK-Auszug ersetzt die echte Historie die Annahme (Einkommen/Beitragsjahre/Erziehung),
+    // hochgerechnet bis zum Referenzalter (B-17).
+    const eink = ikResult ? ikEinkommen : parsedEinkommen;
+    const bj = ikResult ? ikBeitragsjahreBeiBezug : parsedBeitragsjahre;
     const erz = ikResult ? ikResult.erziehungsjahre : (Number(erziehungsjahre) || 0);
     const betr = ikResult ? ikResult.betreuungsjahre : (Number(betreuungsjahre) || 0);
     if (eink <= 0) return null;
@@ -206,9 +225,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
-      beitragsjahreReferenzalter: ikResult ? undefined : beitragsjahreReferenzalter,
+      beitragsjahreReferenzalter: ikResult ? ikReferenzalterJahre : beitragsjahreReferenzalter,
     });
-  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [ikResult, ikEinkommen, ikBeitragsjahreBeiBezug, ikReferenzalterJahre, parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
@@ -259,25 +278,29 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // (Bugsuche B-18, utils/ahvZukunftsbild.js).
   const fruehesterAhvBezugMonate = fruehesterAhvBezugImBildMonate(refAlterMonate);
   const ahvBezugImBild = ahvBezugAlterFuer(parsedBezugAlter, fruehesterAhvBezugMonate);
-  const beitragsjahreImBild = beitragsjahreBeiBezug(ahvBezugImBild);
+  // Mit IK (hochgerechnet, B-17) dieselben Werte wie im AHV-Block — vorher las das Bild den IK
+  // gar nicht, obwohl vr.zukunftIkAktiv sagt, es nutze die IK-Historie.
+  const mitIkImBild = !!ikHoch;
+  const beitragsjahreImBild = mitIkImBild ? ikBeitragsjahreBei(ahvBezugImBild) : beitragsjahreBeiBezug(ahvBezugImBild);
+  const einkommenImBild = mitIkImBild ? ikEinkommen : parsedEinkommen;
   const projektionAhv = useMemo(() => {
-    if (parsedEinkommen <= 0) return null;
+    if (einkommenImBild <= 0) return null;
     const bj = beitragsjahreImBild;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
       geburtsmonat: birthMonth,
       geschlecht: data.basis?.gender,
-      durchschnittlichesJahreseinkommen: parsedEinkommen,
+      durchschnittlichesJahreseinkommen: einkommenImBild,
       beitragsjahre: bj,
-      erziehungsjahre: Number(erziehungsjahre) || 0,
-      betreuungsjahre: Number(betreuungsjahre) || 0,
+      erziehungsjahre: mitIkImBild ? ikResult.erziehungsjahre : (Number(erziehungsjahre) || 0),
+      betreuungsjahre: mitIkImBild ? ikResult.betreuungsjahre : (Number(betreuungsjahre) || 0),
       bezugAlter: ahvBezugImBild,
       verheiratet,
       gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
-      beitragsjahreReferenzalter,
+      beitragsjahreReferenzalter: mitIkImBild ? ikReferenzalterJahre : beitragsjahreReferenzalter,
     });
-  }, [parsedEinkommen, beitragsjahreImBild, beitragsjahreReferenzalter, ahvBezugImBild, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [einkommenImBild, beitragsjahreImBild, mitIkImBild, ikResult, ikReferenzalterJahre, beitragsjahreReferenzalter, ahvBezugImBild, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   // Heutige AHV-Anwartschaft für den Startpunkt der AHV-Fläche im Zukunftsbild: nur die Jahre
   // bis heute (IK-Historie oder höchstens Alter − 21), Bezug im Referenzalter. Seit leere
