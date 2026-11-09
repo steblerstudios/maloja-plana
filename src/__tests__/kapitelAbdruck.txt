@@ -6,10 +6,10 @@ de   k=lastName type="text" required=true mvo=true autoComplete="family-name" la
 de   k=academicTitle type="text" autoComplete="honorific-prefix" hint~42d218b2 label~09ea0d77
 de   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~cc5ccbe6
 de   k=gender type="select" label~b2bec09f options=3 optWerte~c41e840c optLabels~0c2cb9c8
-de   k=pronouns type="select" label~c91cb56d options=4 optWerte~a161f8e0 optLabels~ec9e100b
+de   k=pronouns type="select" label~c91cb56d options=4 optWerte~a161f8e0 optLabels~269d4c3f
 de   k=nationality type="select" label~11fd0bba options=6 optWerte~4fd616d7 optLabels~63e127bf
 de   k=canton type="select" mvo=true label~426d5396 options=26 optWerte~25f3960d optLabels~5a274633
-de   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~42ec9773 placeholder~ba44eeab label~9efa9d9c sectionIntro~e5f81fa8
+de   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~42ec9773 placeholder~ba44eeab label~9efa9d9c sectionIntro~c6d312da
 de   k=email type="email" recommended=true naOk=true autoComplete="email" label~b463dcd0
 de   k=ahv type="text" orientation~089d05e5 hint~302dc2a1 placeholder~6fc297e9 label~5874dcd9
 de   k=maritalStatus type="select" section~87778534 label~bf99b615 sectionIntro~9657498a options=7 optWerte~ea8bd93f optLabels~3f6db097
@@ -174,7 +174,7 @@ fr   k=gender type="select" label~1c27eb60 options=3 optWerte~c41e840c optLabels
 fr   k=pronouns type="select" label~95fee8e7 options=4 optWerte~a161f8e0 optLabels~752a4151
 fr   k=nationality type="select" label~b7ab7099 options=6 optWerte~4fd616d7 optLabels~5c9e8d7f
 fr   k=canton type="select" mvo=true label~c1c737be options=26 optWerte~25f3960d optLabels~869f43a7
-fr   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~5a7efbf7 sectionIntro~5b3205a4
+fr   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~5a7efbf7 sectionIntro~dcb12d47
 fr   k=email type="email" recommended=true naOk=true autoComplete="email" label~31bb94b0
 fr   k=ahv type="text" orientation~00642a96 hint~daee59a5 placeholder~6fc297e9 label~5d3f5709
 fr   k=maritalStatus type="select" section~7b7e2e15 label~101c0a06 sectionIntro~6e89a052 options=7 optWerte~ea8bd93f optLabels~1b5efc7e
@@ -336,10 +336,10 @@ it   k=lastName type="text" required=true mvo=true autoComplete="family-name" la
 it   k=academicTitle type="text" autoComplete="honorific-prefix" hint~4fce84f0 label~73ad2236
 it   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~19637711
 it   k=gender type="select" label~2f3f1b79 options=3 optWerte~c41e840c optLabels~ef8c1a31
-it   k=pronouns type="select" label~7ffec645 options=4 optWerte~a161f8e0 optLabels~860678b7
+it   k=pronouns type="select" label~7ffec645 options=4 optWerte~a161f8e0 optLabels~fda235a8
 it   k=nationality type="select" label~9152ad98 options=6 optWerte~4fd616d7 optLabels~99bb8961
 it   k=canton type="select" mvo=true label~e79cedc1 options=26 optWerte~25f3960d optLabels~cf4927a4
-it   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~9a6a2c39 placeholder~ba44eeab label~3786a589 sectionIntro~2b536485
+it   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~9a6a2c39 placeholder~ba44eeab label~3786a589 sectionIntro~20a30bfc
 it   k=email type="email" recommended=true naOk=true autoComplete="email" label~31bb94b0
 it   k=ahv type="text" orientation~b31b8b82 hint~91bafc78 placeholder~6fc297e9 label~3096babd
 it   k=maritalStatus type="select" section~35531553 label~0f8c2e7e sectionIntro~5a59bbc9 options=7 optWerte~ea8bd93f optLabels~d417c6c0
@@ -501,7 +501,7 @@ en   k=lastName type="text" required=true mvo=true autoComplete="family-name" la
 en   k=academicTitle type="text" autoComplete="honorific-prefix" hint~33a6a1f6 label~24d471a9
 en   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~96156047
 en   k=gender type="select" label~a72c0ba0 options=3 optWerte~c41e840c optLabels~67a1172c
-en   k=pronouns type="select" label~854aeb71 options=4 optWerte~a161f8e0 optLabels~d8160749
+en   k=pronouns type="select" label~854aeb71 options=4 optWerte~a161f8e0 optLabels~b337fb49
 en   k=nationality type="select" label~47aac049 options=6 optWerte~4fd616d7 optLabels~272b65d7
 en   k=canton type="select" mvo=true label~c1c737be options=26 optWerte~25f3960d optLabels~b651dc64
 en   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~4930944f sectionIntro~4940945d
