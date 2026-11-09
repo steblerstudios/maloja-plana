@@ -12,7 +12,7 @@ export const GRUPPEN = {
   B: { name: 'Funktionen', strich: true, regel: 'Strich, nie «white», kein Text im Zeichen' },
   N: { name: 'Navigation', strich: true, regel: 'Strich, Leiste und Menü' },
   Z: { name: 'Barrierefreiheit', strich: true, regel: 'Strich, Einstellungen zur Darstellung' },
-  E: { name: 'Lebensereignisse', strich: true, regel: 'Strich, ein Zeichen je Ereignis — Rucksack, Suche, Übersicht, Seitentitel' },
+  E: { name: 'Lebensereignisse', strich: true, regel: 'Strich, ein Zeichen je Ereignis — seit Bauplan B4 nur Rückfall: sichtbar trägt jede Seite Leitform + Abzeichen (config/seitenZeichen.js)' },
   C: { name: 'Kultur-Schicht', strich: false, regel: 'Easter Eggs, ruhig, abschaltbar — noch leer' },
 };
 
@@ -126,6 +126,8 @@ export const ICON_INVENTAR = {
     hand: "Einhand-Bedienung",
   }),
   // ── E · Lebensereignisse (Pfade in data/ereignisZeichen.js) ──
+  // Seit Bauplan B4 (08.11.2026) Rückfall: ansichtIkon() nimmt zuerst das Seiten-Zeichen aus
+  // config/seitenZeichen.js; diese Zeichen erscheinen nur, wo eine Seite dort keinen Eintrag hat.
   ...g('E', {
     ereignisDigitaleordnung: "Lebensereignis: Digitale Ordnung",
     ereignisBetreibungsauszug: "Lebensereignis: Betreibungsauszug bestellen",

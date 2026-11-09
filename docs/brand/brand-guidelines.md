@@ -142,13 +142,22 @@ Ordnen, was ansteht.»
 **Prinzip:** Jedes Icon ist eine bewusste **Schweizer Metapher** für *eine* Funktion. Eine
 Funktion = ein Icon (keine Doppelungen), Stil = detaillierte Piktogramme, Farben aus Granit.
 
-Beispiele: Übersicht = **Sackmesser** · Erinnerungen = **Kuhglocke** · Frist/Zeit =
-**Mondaine-Bahnhofsuhr** · Finanzen = **Fünfliber** · Versicherungen = **Schild mit Edelweiss**
-· Behörden = **Bundeshaus** · Notfall = **generisches Rettungskreuz** (NICHT Rega-Logo).
+Beispiele (Stand 08.11.2026, Bauplan B1–B5c): Übersicht = **Feldstecher** · Menü = **Sackmesser** ·
+«Was steht mir zu?» = **Wegweiser** · Erinnerungen = **Kuhglocke** · Frist = **Kalender mit Sanduhr** ·
+Finanzen = **Fünfliber** · Versicherungen = **Schild mit Edelweiss-Stern** · Behörden = **Helvetia** ·
+Gesundheit = **Arztkoffer**, Notfall = **Herz mit Puls** (kein Kreuz, nie Rega-Logo).
+⟨bis 06./07.11.2026: Übersicht = Sackmesser, Frist = Mondaine-Bahnhofsuhr, Behörden = Bundeshaus,
+Notfall = Rettungskreuz⟩
+
+**Seit November 2026 mit System:** jede Seite trägt **Leitform + Abzeichen** — Leitform = das Kapitel,
+Zeichen im Abzeichen = was passiert, Farbe = wer mitspielt (anderer Lebensbereich, Geld = Gold, sonst
+leer). Unter 20 px das einfache Zeichen. Helle Details sind ausgestanzt, nie weiss gemalt. Das kleine
+Kalender-Zeichen (Sanduhr blau, ! rot) und das grosse **Kalenderblatt** unten in §7 sprechen dieselbe
+Farbsprache: Sky = Frist, Rose = vorbei/überfällig. Regeln und Quellen: [`ICON_KONVENTION.md`](../ICON_KONVENTION.md).
 
 Vollständige Tabelle inkl. Status (✓/🔄/➕/⚠️) und Code-Keys:
 [`icon-dictionary.md`](icon-dictionary.md). Offen u.a.: Export-Metapher, Vorsorge-Metapher,
-Organspende-vs-Notfall-Abgrenzung.
+Organspende-vs-Notfall-Abgrenzung. *(08.11.2026: Export, Vorsorge und Organspende sind entschieden — siehe Wörterbuch, Nachtrag 08.11.)*
 
 ---
 
@@ -314,11 +323,11 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
 
 ## 9. Offene Brand-Themen
 
-- [ ] Export-Icon — neue Metapher (auf Tester-Feedback)
+- [x] Export-Icon — Pfeil nach unten, Sicherung eigenes Zeichen (vorläufig, 08.11.2026; Tester-Feedback kann es ändern)
 - [x] ~~Signet-Farben an Granit angleichen~~ — gegenstandslos, Signet durch Markenpaket 1.0 abgelöst (24.09.2026)
 - [x] `og-image` mit der neuen Bildmarke (24.09.2026, Paket `social-preview-1200x630`)
 - [ ] Claim-Entscheid: «Ihr Leben. Ihre Übersicht.» oder «Verstehen, was zusteht. Ordnen, was ansteht.» (siehe §4)
-- [ ] Vorsorge-/Organspende-Icon-Metaphern klären
+- [x] Vorsorge-/Organspende-Icon-Metaphern — Vorsorge = Ast im Edelweiss-Schild (Traube-Farbe), Organspende = Herz im Arztkoffer, Ast Notfall (08.11.2026)
 - [ ] OFL-Lizenztexte zu den WOFF2 legen *(Logo-Schriftzug ist seit 24.09. als Pfade geliefert — Outlinen erledigt)*
 - [ ] FR: Entscheid voller tu-Toggle vs. vous-only
 - [ ] RM: muttersprachliche Review vor Deploy

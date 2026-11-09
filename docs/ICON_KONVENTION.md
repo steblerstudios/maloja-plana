@@ -363,3 +363,29 @@ vorher 9× die Helvetia, 5× das Haus, 3× das Herz für verschiedene Ereignisse
 `dashboard` → `sackmesser` · `rechner` → `document` (ein echter Rechner folgt beim Zeichnen) ·
 `mappe` → `ordner` (Schritt 3). **Bewusst geblieben** (Entscheid 24.09.: «nur auf Zuruf»):
 `kalenderUhr`, `mietzinsverbilligung`, `exportTool`, `delete`, `filter`.
+
+### ⟨Nachtrag 08.11.2026, Bauplan B1–B5c⟩ Leitform + Abzeichen
+
+Die Seiten tragen jetzt **ein zusammengesetztes Zeichen**: Leitform (Kapitel oder Ast) + Abzeichen unten
+rechts (was passiert), Farbe = wer mitspielt. Wo was steht — eine Quelle je Wahrheit:
+
+| Wahrheit | Datei | Wächter |
+|---|---|---|
+| welches Zeichen jede Seite trägt, und wer mitspielt | `src/config/seitenZeichen.js` | `seitenZeichen.test.js` (vollständig, keine zwei Seiten im selben Kapitel-Menü gleich, Farbe nur aus Ast/Gold/leer) |
+| Kapitel und Ast einer Seite | Feld `bereich` in `config/ansichtenRegister.js` / `data/werkzeugRegister.js` | — |
+| alle Farben | `data/lebensbereiche.js` → CSS-Variablen `--mp-ast-*` (main.jsx) | `seitenZeichenRegister.test.js` |
+| die Zeichnung (Leitform, Abzeichen voll/leer/Fünfliber) | `src/IconAbzeichen.jsx`, über `IconMuenzen.jsx` **nachgeladen** | `leitformen.test.js` |
+
+**Regeln, die dazugekommen sind:**
+- **Alles Neue wird nachgeladen** (wie Fünfliber und Helvetia). Das Startbündel steht bei rund 64,4 von
+  65 kB (`size-limit`); der Kern zeichnet bis dahin den einfachen Rückfall.
+- **Unter 20 px das einfache Zeichen**, ohne Abzeichen (Knopf «Frist eintragen» 16 px: einfacher Kalender).
+- **Ausgestanzt statt weiss:** helle Details sind Löcher in einer Maske, der Hintergrund scheint durch
+  (hell und dunkel gleich). Jede Stelle bekommt ihre eigene Masken-Kennung (`useId`).
+- **Rollenfarben:** Sanduhr = Frist = Sky (`--mp-frist`), ! = überfällig = Rose (`--mp-warnen`), Gold
+  = Geld bzw. handeln. Die Kuhglocke heisst nur noch Erinnerung.
+- **Gruppe E** (39 Ereignis-Zeichen) ist seit B4 nur noch **Rückfall**: `ansichtIkon()` gibt jeder Seite
+  mit Eintrag in `seitenZeichen.js` ihr Seiten-Zeichen; das Ereignis-Zeichen erscheint nur, wo keiner steht.
+
+Die Bedeutungen der einzelnen Zeichen: [`docs/brand/icon-dictionary.md`](brand/icon-dictionary.md),
+Nachtrag 08.11.2026.
