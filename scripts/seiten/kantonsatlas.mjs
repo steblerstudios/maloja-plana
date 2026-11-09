@@ -37,6 +37,7 @@ import { EBENEN, KANTONE, BLOECKE_VERGLEICH, KITA_NICHT_VERGLICHEN } from '../se
 import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
 import { zahlen as zahlenKrankenkasse } from '../seiten-figuren.mjs';
 import { vergleichZahlen } from '../seiten-vergleich.mjs';
+import { appAnsicht } from '../seiten-ziele.mjs';
 
 const GEO = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
 for (const k of KANTONE) if (!GEO.cantons[k]) throw new Error(`Kantonsatlas-Karte: ${k} fehlt in paths.json`);
@@ -114,8 +115,18 @@ function karte(ctx, key, { legende, nachher = '' }) {
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
   const schweiz = E.ch != null ? `Ganze Schweiz: ${E.fmt(E.ch)}` : '';
+  // Brillen als Filter (A, Brückenstück 09.11.2026): Welche Brillen diese Karte zeigen, steht an der figure.
+  // Ist eine andere Brille gewählt, klappt die Karte auf eine Zeile zu; «Karte zeigen» springt zu ihr und
+  // hebt damit den Filter auf (ohne Skript, nur :target).
+  const brillen = BRILLEN.filter((b) => b.karten.includes(key));
+  const zu = `
+          <p class="atlas-zu">${esc(E.titel)}: gehört nicht zu dieser Brille. <a href="#${id}">Karte zeigen<span class="sr-only">: ${esc(E.titel)}</span></a></p>`;
+  // Weg in die App (C): zum Werkzeug, das mit den eigenen Angaben rechnet. Nur wo es eines gibt.
+  const view = KARTE_WERKZEUG[key];
+  const weiter = view ? `
+          <p class="atlas-weiter"><a href="${appAnsicht(view)}">Ihre eigene Lage in Maloja ansehen<span class="sr-only">: ${esc(E.titel)}</span></a> <span>Beispiel ohne Zugangscode</span></p>` : '';
   return `
-        <figure class="abb atlas" id="${id}">
+        <figure class="abb atlas" id="${id}" data-brillen="${brillen.map((b) => b.id).join(' ')}">${zu}
           <div class="abb-karte f-${frucht}">
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
@@ -123,9 +134,17 @@ function karte(ctx, key, { legende, nachher = '' }) {
             <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', tiefste Zahlen' : i === spannen.length - 1 ? ', höchste Zahlen' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
             ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
-          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
+          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${weiter}${nachher}
         </figure>`;
 }
+
+// Karte → Werkzeug der App, das dieselbe Frage mit den eigenen Angaben rechnet (C, Brückenstück 09.11.2026).
+// Die Umkehrung von KANTONSKARTE in src/components/ErklaerseiteLink.jsx (Wächter: atlasBruecke.test.js).
+// Leerwohnungen, Kinderzulage und Kita-Abzug haben kein eigenes Werkzeug: dort steht kein Weg.
+export const KARTE_WERKZEUG = {
+  praemie: 'praemien', lastNachIpv: 'premium', steuer: 'tax', miete: 'mietzins',
+  alq: 'alv', sozialhilfe: 'sozialhilfe', el: 'ergaenzungsleistungen',
+};
 
 // Die Werte zu einer Karte: dieselbe Tabelle wie auf /kantone-im-vergleich/,
 // zugeklappt, damit die Karten auf dem Handy nahe beieinander stehen.
@@ -245,13 +264,49 @@ export const BRILLEN = [
     karten: ['sozialhilfe', 'el', 'alq', 'lastNachIpv'] },
 ];
 
+// ─── Brillen als Filter, ohne Skript (A, Brückenstück 09.11.2026) ────────────
+// Jede Brille hat eine eigene Adresse (#fuer-firma …), damit man sie verlinken und teilen kann, auch von der
+// Startseite aus. Gewählt ist, was im Adressfeld steht (:target): Die Karten der Brille bleiben offen, die
+// übrigen klappen auf eine Zeile zu. «Karte zeigen» und «Alle Karten» ändern die Adresse und heben den Filter
+// auf. Ohne :has() (ältere Browser) bleiben einfach alle Karten offen. Die Seite hat kein Skript (CSP).
+const BRILLEN_CSS = [
+  '    .brillen-anker{ display:block; position:relative; top:-16px }',
+  '    .brillen-wahl{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 6px }',
+  '    .brillen-wahl a{ display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border:1px solid var(--rand); border-radius:999px; font-size:15px; color:var(--heidel-text); text-decoration:none; background:var(--flaeche) }',
+  '    .brillen-wahl a:hover{ border-color:var(--heidel-text) }',
+  '    .brillen-wahl a:focus-visible{ outline:2px solid var(--text); outline-offset:2px }',
+  // Gewählt: Rand und Grund in Heidelbeere, dazu fett (nicht nur Farbe, WCAG 1.4.1).
+  '    body:not(:has(.brillen-anker:target)) .brillen-wahl .wahl-alle,',
+  ...BRILLEN.map((b, i) => `    body:has(#fuer-${b.id}:target) .brillen-wahl a[href="#fuer-${b.id}"]${i < BRILLEN.length - 1 ? ',' : ''}`),
+  '      { border-color:var(--heidel-text); background:var(--heidel-hauch); color:var(--text); font-weight:600 }',
+  '    .brillen-status{ display:none; font-size:15px }',
+  '    .atlas-zu{ display:none; margin:0; padding:12px 16px; border:1px dashed var(--rand); border-radius:16px; color:var(--leise); font-size:15px }',
+  '    .atlas-zu a{ color:var(--heidel-text) }',
+  ...BRILLEN.flatMap((b) => [
+    `    body:has(#fuer-${b.id}:target) .nur-fuer-${b.id}{ display:block }`,
+    `    body:has(#fuer-${b.id}:target) .brille:not([data-brille="${b.id}"]){ display:none }`,
+    `    body:has(#fuer-${b.id}:target) .atlas:not([data-brillen~="${b.id}"]) > :not(.atlas-zu){ display:none }`,
+    `    body:has(#fuer-${b.id}:target) .atlas:not([data-brillen~="${b.id}"]) > .atlas-zu{ display:block }`,
+  ]),
+  // Weg in die App unter der Karte (C).
+  '    .atlas-weiter{ margin:10px 0 0; font-size:15px }',
+  '    .atlas-weiter a{ color:var(--heidel-text); font-weight:600; text-underline-offset:3px }',
+  '    .atlas-weiter span:not(.sr-only){ color:var(--leise); margin-left:6px }',
+].join('\n');
+
 const BRILLEN_ABSCHNITT = {
   id: 'brillen',
   titel: '2. Vier Brillen: wer welche Karten braucht',
   html: `
-        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person fragt, was der Wohnort für sie bedeutet. Eine Firma schaut auf den Standort ihrer Mitarbeitenden. Die Karten selbst sind für alle dieselben und frei zugänglich. Wir ordnen sie hier aus vier Blickwinkeln, als «Brillen»: Jede stellt eine Frage und nennt die Karten, mit denen Sie beginnen können.</p>
+        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person fragt, was der Wohnort für sie bedeutet. Eine Firma schaut auf den Standort ihrer Mitarbeitenden. Die Karten selbst sind für alle dieselben und frei zugänglich. Wir ordnen sie hier aus vier Blickwinkeln, als «Brillen»: Wählen Sie eine, bleiben ihre Karten offen und die übrigen klappen zu. Keine Karte verschwindet.</p>
+${BRILLEN.map((b) => `        <span class="brillen-anker" id="fuer-${b.id}"></span>`).join('\n')}
+        <nav class="brillen-wahl" aria-label="Karten nach Brille zeigen">
+          <a href="#brillen" class="wahl-alle">Alle Karten</a>
+${BRILLEN.map((b) => `          <a href="#fuer-${b.id}">${b.name}</a>`).join('\n')}
+        </nav>
+${BRILLEN.map((b) => `        <p class="brillen-status nur-fuer-${b.id}">Brille ${b.name}: ${b.karten.length} von ${Object.keys(KARTEN_FRUCHT).length} Karten offen, die übrigen sind zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>`).join('\n')}
         <div class="brillen">
-${BRILLEN.map((b) => `          <section class="brille" aria-labelledby="brille-${b.id}">
+${BRILLEN.map((b) => `          <section class="brille" data-brille="${b.id}" aria-labelledby="brille-${b.id}">
             <h3 id="brille-${b.id}">${b.name}: ${b.frage}</h3>
             <p>${b.text}</p>
             <ul role="list">${b.karten.map((k) => `<li><a href="#karte-${k.toLowerCase()}">${EBENEN[k].titel}</a></li>`).join('')}</ul>
@@ -407,6 +462,7 @@ ${FRUCHT_CSS_DUNKEL}
     .brille li a{ display:inline-block; padding:4px 10px; border:1px solid var(--rand); border-radius:999px; font-size:14px; color:var(--heidel-text); text-underline-offset:3px }
     .brille li a:hover{ border-color:var(--heidel-text) }
     .brille li a:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+${BRILLEN_CSS}
     .atlas-werte summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }`,
 };
 

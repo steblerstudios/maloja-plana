@@ -29,6 +29,7 @@ import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
 import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
+import { appAnsicht } from './seiten-ziele.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
 const BLOECKE = { ...BLOECKE_FIGUREN, ...BLOECKE_VERGLEICH };
@@ -58,7 +59,7 @@ const WERKZEUG_IN_DER_APP = {
   // Politsystem bleibt bei der Startseite: kein Werkzeug rechnet Politik.
   kantonsatlas: 'praemien',
 };
-const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/#/${WERKZEUG_IN_DER_APP[pfad]}` : '/');
+const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? appAnsicht(WERKZEUG_IN_DER_APP[pfad]) : '/');
 const pfadIntern = (pfad, sprache) => `/${sprache.praefix}${pfad}/`;
 
 // Der hreflang-Ring. Er nennt ausschliesslich freigegebene Sprachen: auf eine
