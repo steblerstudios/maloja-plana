@@ -134,6 +134,13 @@ Kantonen auf die **Prämienverbilligung**, nicht auf die Sozialhilfe:
 Das betrifft schon heute die App, nicht erst die neuen Seiten. Behebung als eigener
 kleiner PR, vor Welle 2.
 
+> ⟨Nachtrag 09.11.2026, nach der Linkprüfung⟩ Es waren **vier** Kantone, nicht zwei:
+> auch **VD** (`demander-des-subsides…`) und **ZG** (dieselbe Adresse wie `ipv`). Behoben in
+> PR #769, mit Prüfdatum je Link. **Nicht prüfbar mit curl:** VS (vs.ch antwortet auf jeden
+> Pfad mit 404, auch auf die Startseite) und BL (Cloudflare-Schranke). Für diese zwei gibt
+> es nach Riegel 1 (Abschnitt 4) keine Kantonsseite, bis die Links im Browser geprüft sind.
+> Der Satz oben bleibt als Beleg stehen.
+
 Dazu: `DIREKTLINKS_VERSION` steht auf `2026-06`, es gibt kein Prüfdatum je Link. Vor
 Welle 1 prüft der `link-checker` alle 26 `ipv`-Links. Jeder Link bekommt ein Datum.
 
