@@ -62,7 +62,9 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
         display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0,
       }
     },
-      React.createElement(Icon, { name: 'cowbell', size: 18, color: overdue.length > 0 ? palette.rose : palette.sky }),
+      // Kalender mit Abzeichen (Icon-Besprechung Punkt 8 «C», Punkt 1): überfällig = rotes !, heute fällig =
+      // blaue Sanduhr. Die Glocke heisst nur noch Erinnerung/Benachrichtigung.
+      React.createElement(Icon, { name: overdue.length > 0 ? 'kalenderUeberfaellig' : 'kalenderFrist', size: 20, color: palette.text }),
       React.createElement('span', {
         style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text }
       }, total)

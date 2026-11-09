@@ -142,7 +142,7 @@ let muenzen = null;
 const muenzenLaden = import('./IconMuenzen.jsx').then((m) => { muenzen = m; return m; }, () => null);
 // Für Tests: wartet, bis die Münzen da sind (oder das Laden gescheitert ist).
 export const muenzenBereit = () => muenzenLaden;
-const Muenze = ({ art, ...rest }) => {
+const Muenze = ({ art, rueckfall, ...rest }) => {
   const [, neuZeichnen] = React.useState(0);
   React.useEffect(() => {
     let aktiv = true;
@@ -150,6 +150,7 @@ const Muenze = ({ art, ...rest }) => {
     return () => { aktiv = false; };
   }, []);
   if (muenzen) return React.cloneElement(muenzen[art](), rest);
+  if (rueckfall) return React.cloneElement(rueckfall(), rest);
   return React.createElement('svg', { viewBox: '0 0 48 48', ...rest },
     React.createElement('circle', { cx: '24', cy: '24', r: '19', fill: 'none', stroke: 'currentColor', strokeWidth: '2.5', opacity: '0.55' }));
 };
@@ -303,6 +304,14 @@ const _calendar = () => {
     React.createElement('text', { x: '12', y: '18.6', textAnchor: 'middle', fontSize: '8.5', fontWeight: '700', fill: 'currentColor', stroke: 'none', style: { fontFamily: "'Hanken Grotesk', sans-serif" } }, String(day))
   );
 };
+
+// Kalender mit Abzeichen (Icon-Besprechung Punkt 8, «C»): gezeichnet in IconMuenzen.jsx (nachgeladen,
+// gemessen 08.11.2026: im Kern +487 B); bis dahin der einfache Kalender. fill/stroke als Eigenschaften,
+// damit `Icon` die Strichstärke nach Grösse setzt (Schritt 4).
+const kalenderMit = (zeichen) => () => React.createElement(Muenze, { art: 'kalenderMit', zeichen, rueckfall: _calendar, fill: 'none', stroke: 'currentColor' });
+const _kalenderPlus = kalenderMit('plus');
+const _kalenderFrist = kalenderMit('sanduhr');
+const _kalenderUeberfaellig = kalenderMit('ausruf');
 
 // Ordner — die Dokumentenablage (Fassung 5, 23.10.2026). Dieselbe Form wie das
 // `OrdnerIcon` in DocumentTresor.jsx (Rücken mit Reiter, vordere Klappe), hier als
@@ -508,6 +517,9 @@ const _iconFactories = {
   money: _money,
   health: _health,
   calendar: _calendar,
+  kalenderPlus: _kalenderPlus,
+  kalenderFrist: _kalenderFrist,
+  kalenderUeberfaellig: _kalenderUeberfaellig,
   search: _search,
 
   // Semantic icons
