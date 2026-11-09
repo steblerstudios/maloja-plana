@@ -335,8 +335,13 @@ zeichenErgaenzen({
   tag: _tag,
   paw: _paw,
   palette: _palette,
-  basisFamilie: _basisFamilie,
-  helm: _helm,
+  // Erst beim Zeichnen nachschlagen, nicht beim Eintragen: IconKern lädt IconMuenzen.jsx beim
+  // Start nach, und dieser Import hier holt dieselbe Datei fest. Je nach Reihenfolge ist sie beim
+  // Eintragen erst halb ausgewertet, `_basisFamilie`/`_helm` sind dann noch `undefined`. Dann
+  // fiel CI 09.11.2026 zweimal mit «fn is not a function» in iconsVersteckt.test.js. Wächter:
+  // zeichenErgaenzen weist Nicht-Funktionen mit Namen ab.
+  basisFamilie: () => _basisFamilie(),
+  helm: () => _helm(),
 });
 
 // Lebensereignisse (Gruppe E, Icon-Plan Schritt 7b): ein Zeichen je Ereignis, dasselbe im
