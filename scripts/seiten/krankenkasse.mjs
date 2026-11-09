@@ -117,8 +117,8 @@ export const KRANKENKASSE = {
       id: 'franchise',
       titel: '3. Warum gibt es Franchise und Selbstbehalt?',
       bild: '<!--FIG:kostenteil-->',
-      kurz: 'Je höher die Franchise, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab. Der Selbstbehalt hat ein Dach.',
-      wege: [{ href: '#nachbar', text: 'Wie viel Rabatt die Franchise bringt' }],
+      kurz: 'Je höher die Franchise, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab. Danach zahlen Sie {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr; der Spitalbeitrag und gewisse Medikamente liegen ausserhalb dieses Dachs. [[q:kvg]]',
+      wege: [{ href: '#nachbar', text: 'Warum zahlen andere weniger?' }],
       html: `
         <p>Stellen Sie sich ein Buffet vor, bei dem alle schon bezahlt haben. Wer schon bezahlt hat, nimmt eher mehr. Die Kostenbeteiligung soll genau das bremsen. Sie hat laut Bundesrat zwei Ziele: Kleinigkeiten nicht über die Versicherung laufen zu lassen und die Eigenverantwortung zu stärken. Laut Bundesrat wirkt das auch: Steigt die Kostenbeteiligung für alle, sinken die Leistungskosten. [[q:franchiseBericht]]</p>
         <p><strong>Franchise:</strong> Der Betrag, den Sie jedes Jahr zuerst selbst zahlen. Erwachsene wählen zwischen {{franchise.min}} und {{franchise.max}} Franken. [[q:kvg]] Je höher, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab.</p>
@@ -132,7 +132,7 @@ export const KRANKENKASSE = {
       titel: '4. Woher kommen die Preise?',
       // Dieselben sechs Werte wie die Tabelle in C (BAG, Leistungen 2025).
       bild: `<figure class="kern" aria-labelledby="stab-preise">
-        <p class="unter" id="stab-preise">Was die Grundversicherung 2025 je Person und Monat bezahlte, Franken</p>
+        <p class="unter" id="stab-preise">Was die Grundversicherung 2025 je Person und Monat bezahlte, vor Abzug der Kostenbeteiligung, Franken</p>
         <ul class="stab" role="list">
           <li><span>Arzt ambulant</span><i style="width:100%" aria-hidden="true"></i><b>93</b></li>
           <li><span>Medikamente</span><i style="width:96%" aria-hidden="true"></i><b>89</b></li>
@@ -141,9 +141,9 @@ export const KRANKENKASSE = {
           <li><span>Pflegeheime</span><i style="width:23%" aria-hidden="true"></i><b>21</b></li>
           <li><span>Labor, Physio, Spitex, Hilfsmittel, Übriges</span><i style="width:83%" aria-hidden="true"></i><b>77</b></li>
         </ul>
-        <p class="unter">Zusammen 411 Franken (gerundet). [[q:leistungen2025]]</p>
+        <p class="unter">Zusammen 411 Franken (gerundet). Beim Spital stationär nur der Kassenanteil; der Kanton zahlt mindestens 55 % dazu. [[q:leistungen2025]]</p>
       </figure>`,
-      kurz: 'Es gilt immer: <strong>Kosten = Preis mal Menge.</strong>',
+      kurz: 'Preise werden ausgehandelt oder vom Staat festgelegt. Es gilt immer: <strong>Kosten = Preis mal Menge.</strong>',
       wege: [{ href: '#problem', text: 'Wo liegt das Problem?' }],
       html: `
         <p>Im Laden sieht man den Preis und entscheidet. Beim Arzt nicht. Man kennt den Preis nicht, kann schlecht vergleichen, und oft entscheidet jemand anderes, was nötig ist. Darum gibt es keinen freien Markt. Preise werden ausgehandelt oder vom Staat festgelegt. [[q:leistungen2025]]</p>
@@ -164,7 +164,7 @@ export const KRANKENKASSE = {
       id: 'praemie',
       titel: '5. Wie wird daraus die Prämie?',
       bild: '<!--FIG:praemie-->',
-      kurz: 'Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.',
+      kurz: 'Die Prämie ist hoch, weil die Behandlungen viel kosten, nicht wegen der Verwaltung: Die Verwaltung kostet 4,6 % der Prämien. [[q:kennzahlen]]',
       wege: [{ href: '#nachbar', text: 'Warum zahlen andere weniger?' }, { href: '#problem', text: 'Wo liegt das Problem?' }],
       html: `
         <p>So setzt sich die Prämie zusammen. Jede Kasse rechnet für jede Region und Altersgruppe wie mit einem Rezept. Hier mit den echten Zahlen von 2025, pro Person und Monat: [[q:leistungen2025]]</p>
@@ -186,7 +186,7 @@ export const KRANKENKASSE = {
       id: 'nachbar',
       titel: '6. Warum zahlen andere weniger?',
       bild: '<!--FIG:kantone-->',
-      kurz: 'Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen.',
+      kurz: 'Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht. [[q:kvg]]',
       wege: [{ href: '/kantone-im-vergleich/', text: 'Kantone im Vergleich' }, { href: '/kantonsatlas/', text: 'Kantonsatlas' }, { href: '#franchise', text: 'Franchise und Selbstbehalt' }],
       html: `
         <p>Die mittlere Prämie von {{mittel.gesamtFr}} Franken zahlt fast niemand genau. Das BAG zählt für {{jahr}} über 200'000 verschiedene Prämien. [[q:bag2027]] Welche davon die eigene ist, hängt von sieben Dingen ab.</p>
@@ -223,7 +223,7 @@ export const KRANKENKASSE = {
       titel: '7. Wo liegt das Problem?',
       bild: `<figure class="kern">
         <p class="zahl">16 bis 19 %</p>
-        <p class="unter">der Kosten wären laut einer Studie im Auftrag des BAG vermeidbar, für 2016 waren das 7 bis 8 Milliarden Franken. Ganz erreichen lässt sich das kaum. [[q:infras]]</p>
+        <p class="unter">der Kosten wären laut einer Schätzung im Auftrag des BAG vermeidbar, für 2016 waren das 7 bis 8 Milliarden Franken. Die Forschenden warnen: Ganz erreichen lässt sich das kaum. [[q:infras]]</p>
       </figure>`,
       kurz: 'Die Bevölkerung wird älter, und es gibt Therapien, die es früher nicht gab. Dazu kommen aber Gründe, die nicht sein müssten.',
       wege: [{ href: '/politsystem/', text: 'Politik erklärt' }, { href: '#aenderungen', text: 'Was ändert sich?' }],
@@ -250,10 +250,10 @@ export const KRANKENKASSE = {
       titel: '8. Was ändert sich?',
       bild: `<ol class="zeit kern" role="list" aria-label="Was sich wann ändert">
         <li><span class="jahr">2026</span><span class="was">TARDOC ersetzt TARMED</span></li>
-        <li><span class="jahr">2028</span><span class="was">EFAS: ambulant und stationär nach demselben Schlüssel</span></li>
+        <li><span class="jahr">2028</span><span class="was">EFAS: ambulant und stationär nach demselben Schlüssel [[q:kvg]]</span></li>
         <li><span class="jahr">2032</span><span class="was">Die Pflege kommt zu EFAS dazu</span></li>
       </ol>`,
-      kurz: 'Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein.',
+      kurz: 'Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Wer gemahnte Prämien oder Kostenbeteiligungen offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt sind. [[q:kvg]]',
       wege: [{ href: '/praemienverbilligung/', text: 'Prämienverbilligung' }, { href: '/was-steht-mir-zu/', text: 'Was steht mir zu?' }],
       html: `
         <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst.</p>

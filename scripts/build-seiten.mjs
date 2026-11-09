@@ -651,7 +651,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
       <div class="schicht-bild">${einsetzen(a.bild || '', werte, bloecke, ctx)}</div>
       <p class="schicht-kurz">${einsetzen(a.kurz, werte, bloecke, ctx)}</p>
       <details class="schicht-mehr">
-        <summary>Ausführlich lesen</summary>${einsetzen(a.html, werte, bloecke, ctx)}
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>${einsetzen(a.html, werte, bloecke, ctx)}
       </details>${wege ? `
       <nav class="wege" aria-label="Weiter von hier">${wege}</nav>` : ''}`;
   }).join('\n\n');
