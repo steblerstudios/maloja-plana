@@ -24,7 +24,10 @@ const h = React.createElement;
 export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
   const K = KARTEN[karte];
   if (!K) return null;
-  const farben = palette.bg === DARK_PALETTE.bg ? STUFEN_DUNKEL : STUFEN_HELL;
+  // Im dunklen Modus dreht der Atlas die Helligkeit: die höchste Stufe ist die hellste. Der Satz unter
+  // der Karte muss das mitsagen (Durchsicht im Browser 09.11.2026: er sagte «dunkler» auch im dunklen Modus).
+  const dunkel = palette.bg === DARK_PALETTE.bg;
+  const farben = dunkel ? STUFEN_DUNKEL : STUFEN_HELL;
   const eigen = kanton && K.werte[kanton] ? kanton : null;
   const name = eigen ? getCantonName(eigen, t) : '';
   const beschreibung = eigen
@@ -61,5 +64,5 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
         K.spannen.map((s) => h('li', { key: s.s, style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
           h('i', { 'aria-hidden': 'true', style: { display: 'inline-block', width: 12, height: 12, borderRadius: radius.hair, background: farben[s.s] } }),
           s.text))),
-      zeile({ color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px' }, t('erklaerseite.stufenHinweis'))));
+      zeile({ color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px' }, t(dunkel ? 'erklaerseite.stufenHinweisDunkel' : 'erklaerseite.stufenHinweis'))));
 }

@@ -1957,6 +1957,7 @@ export default {
     ohneKanton: { sie: 'Wenn Sie Ihren Kanton in den Grunddaten eintragen, ist er hier markiert.', du: 'Wenn du deinen Kanton in den Grunddaten einträgst, ist er hier markiert.' },
     ganzeSchweiz: 'Ganze Schweiz',
     stufenHinweis: 'Dunkler heisst höhere Zahl, nicht besser oder schlechter.',
+    stufenHinweisDunkel: 'Heller heisst höhere Zahl, nicht besser oder schlechter.',
     belegWort: 'Quelle',
     bewegt: 'Als bewegtes Bild ausprobieren',
   },

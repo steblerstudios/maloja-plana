@@ -1944,6 +1944,7 @@ export default {
     ohneKanton: { sie: 'If you enter your canton in the basic details, it is marked here.', du: 'If you enter your canton in the basic details, it is marked here.' },
     ganzeSchweiz: 'All of Switzerland',
     stufenHinweis: 'Darker means a higher number, not better or worse.',
+    stufenHinweisDunkel: 'Lighter means a higher number, not better or worse.',
     belegWort: 'Source',
     bewegt: 'Try the animated picture (in German)',
   },

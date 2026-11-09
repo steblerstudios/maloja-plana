@@ -67,6 +67,9 @@ describe('Die Karte (C)', () => {
     expect(hell).toContain('#3D5A76');
     expect(dunkel).toContain('#C6D6E5');
     expect(dunkel).not.toContain('#3D5A76');
+    expect(hell).toContain(t('erklaerseite.stufenHinweis'));
+    expect(dunkel).toContain(t('erklaerseite.stufenHinweisDunkel'));
+    expect(dunkel).not.toContain(t('erklaerseite.stufenHinweis'));
   });
 });
 

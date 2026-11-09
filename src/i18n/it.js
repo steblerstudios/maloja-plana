@@ -1944,6 +1944,7 @@ export default {
     ohneKanton: { sie: 'Se indica il suo cantone nei dati di base, qui viene evidenziato.', du: 'Se indichi il tuo cantone nei dati di base, qui viene evidenziato.' },
     ganzeSchweiz: 'Tutta la Svizzera',
     stufenHinweis: 'Più scuro significa un numero più alto, non migliore o peggiore.',
+    stufenHinweisDunkel: 'Più chiaro significa un numero più alto, non migliore o peggiore.',
     belegWort: 'Fonte',
     bewegt: 'Provare l’immagine animata (in tedesco)',
   },

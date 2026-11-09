@@ -2085,6 +2085,7 @@ export default {
     ohneKanton: { sie: 'Sche Vus inditgais Voss chantun en las datas da basa, è el marcà qua.', du: 'Sche ti inditgas tes chantun en las datas da basa, è el marcà qua.' },
     ganzeSchweiz: 'Tut la Svizra',
     stufenHinweis: 'Pli stgir munta in dumber pli aut, betg meglier u mender.',
+    stufenHinweisDunkel: 'Pli cler munta in dumber pli aut, betg meglier u mender.',
     belegWort: 'Funtauna',
     bewegt: 'Empruvar il maletg animà (en tudestg)',
   },
