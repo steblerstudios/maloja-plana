@@ -7775,7 +7775,12 @@ export default {
     abAlterKurz: 'a partir da {alter}: CHF {betrag}',
     vorbezug: 'Reducziun (retschavida anticipada)',
     // rm ungeprüft F5
-    vorbezugFrauenUebergang: 'Per dunnas da las annadas 1961–1969 valan quotas da reducziun pli bassas che na vegnan betg mussadas qua (fegl d’infurmaziun AVS 3.04). Per plaschair verifitgar tar la cassa da cumpensaziun.',
+    vorbezugFrauenUebergang: 'Per dunnas da las annadas 1961–1969 valan quotas da reducziun pli bassas che na vegnan betg mussadas qua (fegl d’infurmaziun AVS 3.04). Tgi che retira anticipadamain perda ultra da quai il supplement da renta per vita (art. 34bis LAVS). Per plaschair verifitgar tar la cassa da cumpensaziun.',
+    bezugAlterFrueh: { sie: 'La renta AVS cumenza il pli baud cun {frueh}. Per l’AVS vegn ina pensiun pli baud quintada a partir da {frueh}; ils onns avant finanziais Vus cun auters meds.', du: 'La renta AVS cumenza il pli baud cun {frueh}. Per l’AVS vegn ina pensiun pli baud quintada a partir da {frueh}; ils onns avant finanzieschas ti cun auters meds.' },
+    bezugAlterUebergang: 'Dunnas da las annadas 1961–1969 pon retrair l’AVS anticipadamain gia a partir da 62 onns. Cun tge quota che vegn reducì, na quinta l’app betg (fegl d’infurmaziun AVS 3.04).',
+    rentenzuschlag: 'Supplement da renta per la generaziun da transiziun: + CHF {betrag} / mais, per vita, mo senza retratga anticipada (art. 34bis LAVS). Stimaziun; las tabellas da l’UFAS èn decisivas.',
+    umwandlungssatzVorReferenzalter: { sie: 'Cun ina pensiun avant {referenzalter} po Vossa cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8 % mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgai la quota da Voss attest.', du: 'Cun ina pensiun avant {referenzalter} po tia cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8 % mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgescha la quota da tes attest.' },
+    saeule3aGekappt: 'Quintà cun il import maximal da CHF {max} per onn; dapli na po betg vegnir deducì en il pilaster 3a (art. 7 OPP 3).',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",
     plafoniert: 'Plafonament pèr da maridads',

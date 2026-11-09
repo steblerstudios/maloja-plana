@@ -211,6 +211,29 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen, w) {
 }
 
 
+// Rentenzuschlag für Frauen der Übergangsgeneration (AHVG Art. 34bis, Fassung 1.1.2026, gelesen 10.11.2026;
+// AHVV Art. 53quater). Nur ohne Vorbezug («die ihre Altersrente nicht vorbeziehen», Abs. 1). Grundzuschlag
+// nach dem massgebenden durchschnittlichen Jahreseinkommen: bis zur vierfachen minimalen jährlichen
+// Altersrente 160 Franken, bis zur fünffachen 100, darüber 50 (Abs. 1 Bst. a–c). Abgestuft nach Jahrgang
+// (Abs. 2). Bei unvollständiger Beitragsdauer im Verhältnis der Beitragsjahre zu denen des Jahrgangs gekürzt
+// (AHVV Art. 53quater Abs. 3), aufgerundet auf ganze Franken (Abs. 4). Er kommt zur Rente dazu und wird nicht
+// plafoniert (Art. 34bis Abs. 4); beim Aufschub nicht erhöht (AHVV Art. 53quater Abs. 5).
+// Verbindlich sind die Tabellen des BSV (AHVV Art. 53quater Abs. 4) — hier eine Schätzung nach dem Gesetz.
+export const RENTENZUSCHLAG_PROZENT_JE_JAHRGANG = Object.freeze({
+  1961: 25, 1962: 50, 1963: 75, 1964: 100, 1965: 100, 1966: 81, 1967: 63, 1968: 44, 1969: 25,
+});
+
+export function berechneRentenzuschlag({ geschlecht, geburtsjahr, durchschnittlichesJahreseinkommen, beitragsjahre, volleDauer, vorbezug = false, stichtag }) {
+  const prozent = geschlecht === 'female' ? RENTENZUSCHLAG_PROZENT_JE_JAHRGANG[geburtsjahr] : undefined;
+  if (!prozent || vorbezug) return 0;
+  const w = ahvWerte(stichtag);
+  const minJahresrente = w.minRente * 12;
+  const eink = Number(durchschnittlichesJahreseinkommen) || 0;
+  const grund = eink <= 4 * minJahresrente ? 160 : eink <= 5 * minJahresrente ? 100 : 50;
+  const anteil = volleDauer > 0 ? Math.min(1, (Number(beitragsjahre) || 0) / volleDauer) : 1;
+  return Math.ceil(grund * (prozent / 100) * anteil);
+}
+
 /**
  * Berechne die geschätzte AHV-Altersrente.
  *
@@ -328,6 +351,12 @@ export function berechneAltersrente({
   }
   pReferenzalter = pReferenzalter || p;
   const { rente, rentePartner, plafoniert } = p;
+  // Massgebend ist das Einkommen mit Gutschriften (wie für die Rente), bei Erreichen des Referenzalters.
+  const rentenzuschlag = berechneRentenzuschlag({
+    geschlecht, geburtsjahr,
+    durchschnittlichesJahreseinkommen: durchschnittlichesJahreseinkommen + gutschriftProJahr,
+    beitragsjahre: bjReferenzalter, volleDauer, vorbezug: vorbezugMonate > 0, stichtag,
+  });
 
   return {
     monatsrente: rente,
@@ -365,6 +394,8 @@ export function berechneAltersrente({
     rentePartner: verheiratet ? rentePartner : null,
     totalEhepaar: verheiratet ? Math.round((rente + rentePartner) * 100) / 100 : null,
     werteJahr: w.jahr, // Jahr der verwendeten Rentenwerte (für eine Anzeige «Stand …»)
+    // Zuschlag Übergangsgeneration (CHF/Monat), separat: nicht in `monatsrente`, nicht plafoniert.
+    rentenzuschlag,
   };
 }
 
