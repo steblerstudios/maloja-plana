@@ -1,5 +1,6 @@
 import React from 'react';
-import { zeichenErgaenzen } from './IconKern.jsx';
+import { zeichenErgaenzen, nachgeladen } from './IconKern.jsx';
+import { SEITEN_BEREICH, seitenZeichenName } from './config/ansichtenRegister.js';
 import { basisFamilie as _basisFamilie, helm as _helm } from './IconMuenzen.jsx';
 import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 
@@ -397,6 +398,10 @@ zeichenErgaenzen({
 zeichenErgaenzen(Object.fromEntries(Object.entries(EREIGNIS_PFADE).map(([name, pfade]) => [name, () =>
   React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
     ...pfade.map((d, i) => React.createElement('path', { key: i, d })))])));
+
+// Seiten-Zeichen (Icon-Plan, Bauplan B4): Leitform + Abzeichen je Seite, nachgeladen.
+zeichenErgaenzen(Object.fromEntries([...SEITEN_BEREICH].map(([view, bereich]) =>
+  [seitenZeichenName(view), () => nachgeladen('seite', { view, bereich })])));
 
 export { Icons, Icon, HinweisZeichen, erledigtZeichen, aufklappZeichen, zurueckZeichen, hinweisZeichen } from './IconKern.jsx';
 export { default } from './IconKern.jsx';

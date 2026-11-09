@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
 import { herkunftName, ablaufBereich, SCHLUSS_ZIELE } from './config/ansichtenRegister.js';
+import { LEBENSBEREICHE } from './data/lebensbereiche.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -792,6 +793,8 @@ const AppInner = ({ demo }) => {
     // data-theme markiert den Modus für tokens.css (Fokusring braucht im Hellmodus
     // eine dunklere Farbe für WCAG 1.4.11; der Rest der Farben kommt aus den JS-Paletten).
     try { document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light'); } catch {}
+    // Ast-Farben für die Seiten-Zeichen (Icon-Plan, Bauplan B4): eine Quelle, lebensbereiche.js.
+    try { for (const b of LEBENSBEREICHE) document.documentElement.style.setProperty('--mp-ast-' + b.key, isDarkMode ? b.dark : b.light); } catch {}
   }, [isDarkMode]);
   useEffect(() => { try { localStorage.setItem('or5_readable', String(readable)); } catch {} document.documentElement.classList.toggle('mp-readable', readable); }, [readable]);
   useEffect(() => {

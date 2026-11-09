@@ -154,6 +154,9 @@ const Muenze = ({ art, ...rest }) => {
     React.createElement('circle', { cx: '24', cy: '24', r: '19', fill: 'none', stroke: 'currentColor', strokeWidth: '2.5', opacity: '0.55' }));
 };
 
+// Für die Seiten-Zeichen (Bauplan B4): dieselbe Nachlade-Hülle, mit Eigenschaften.
+export const nachgeladen = (art, eigenschaften) => React.createElement(Muenze, { art, ...eigenschaften });
+
 const _finanzen = () => React.createElement(Muenze, { art: 'finanzen' });
 const _versicherungen = () => React.createElement(Muenze, { art: 'versicherungen' });
 const _ausbildung = () => React.createElement(Muenze, { art: 'ausbildung' });

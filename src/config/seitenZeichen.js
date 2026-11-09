@@ -190,3 +190,21 @@ export const seitenBild = (view, bereich, isDark = false) => {
     formFarbe: form ? (isDark ? form.dark : form.light) : null,
   };
 };
+
+// Wie seitenBild, aber die Farben als CSS-Variablen `--mp-ast-<Ast>` (gesetzt in main.jsx aus
+// lebensbereiche.js, je nach hell/dunkel) — mit der hellen Farbe als Rückfall (Bauplan B4).
+export const astVariable = (key) => {
+  const b = getBereich(key);
+  return b ? `var(--mp-ast-${key}, ${b.light})` : null;
+};
+export const seitenBildVariabel = (view, bereich) => {
+  const e = SEITEN_ZEICHEN[view];
+  if (!e || !bereich) return null;
+  const form = getBereichForChapter(astKapitel(bereich));
+  const formVar = form ? astVariable(form.key) : null;
+  return {
+    leitform: leitformFuer(bereich), zeichen: e.zeichen, art: e.mit ? 'voll' : 'leer',
+    farbe: e.mit ? astVariable(e.mit === GELD ? 'finanzen' : e.mit) : formVar,
+    formFarbe: formVar,
+  };
+};

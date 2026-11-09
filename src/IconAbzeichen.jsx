@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icons } from './IconKern.jsx';
+import { seitenBildVariabel } from './config/seitenZeichen.js';
 import { basis, basisFamilie, versicherungen, ausbildung, helm, notfall, finanzen, behoerden } from './IconMuenzen.jsx';
 
 // ─── Abzeichen-Bauteil (Icon-Plan November 2026, Bauplan B3) ───────────────
@@ -55,16 +56,18 @@ export const ZEICHEN_BILD = {
 };
 
 // Leitform-Name (config/seitenZeichen.js) → Zeichnung.
+// Als Funktionen, die erst beim Zeichnen nachschlagen: IconMuenzen.jsx reicht dieses Bauteil weiter
+// (Bauplan B4), die beiden Dateien laden sich gegenseitig.
 const LEITFORM_BILD = {
-  ausweiskarte: basis,
-  ausweiskarteZwei: basisFamilie,
+  ausweiskarte: () => basis(),
+  ausweiskarteZwei: () => basisFamilie(),
   chalet: () => Icons.wohnen(),
-  fuenfliber: finanzen,
-  edelweissSchild: versicherungen,
-  schulhut: ausbildung,
-  helm,
-  helvetia: behoerden,
-  arztkoffer: notfall,
+  fuenfliber: () => finanzen(),
+  edelweissSchild: () => versicherungen(),
+  schulhut: () => ausbildung(),
+  helm: () => helm(),
+  helvetia: () => behoerden(),
+  arztkoffer: () => notfall(),
 };
 export const LEITFORMEN = Object.keys(LEITFORM_BILD);
 
@@ -101,16 +104,24 @@ export const FamilienZeichen = ({ leitform, zeichen, art = 'voll', farbe, formFa
     kinder.push(React.createElement('g', { key: 'f', mask: url(id + 'f'), style: { color: formFarbe } }, eingebettet(form, 0, 0, 24)));
     if (zeichen === 'fuenfliber') {
       // Der echte Fünfliber im Kleinen (Entscheid Q, 07.11.): die Finanzen-Leitform, gold.
-      kinder.push(React.createElement('g', { key: 'a', style: { color: farbe } }, eingebettet(finanzen, MITTE - 5.5, MITTE - 5.5, 11)));
+      kinder.push(React.createElement('g', { key: 'a', style: { color: farbe } }, eingebettet(() => finanzen(), MITTE - 5.5, MITTE - 5.5, 11)));
     } else if (art === 'leer') {
-      kinder.push(React.createElement('circle', { key: 'r', cx: MITTE, cy: MITTE, r: '5.1', fill: 'none', stroke: farbe, strokeWidth: '0.9' }));
+      kinder.push(React.createElement('circle', { key: 'r', cx: MITTE, cy: MITTE, r: '5.1', fill: 'none', strokeWidth: '0.9', style: { stroke: farbe } }));
       kinder.push(React.createElement('mask', { key: 'zm', id: id + 'z' }, zeichenTeile(zeichen, true)));
-      kinder.push(React.createElement('rect', { key: 'z', width: '24', height: '24', fill: farbe, mask: url(id + 'z') }));
+      kinder.push(React.createElement('rect', { key: 'z', width: '24', height: '24', mask: url(id + 'z'), style: { fill: farbe } }));
     } else {
       kinder.push(React.createElement('mask', { key: 'zm', id: id + 'z' },
         React.createElement('circle', { cx: MITTE, cy: MITTE, r: '5.5', fill: '#fff' }), zeichenTeile(zeichen, false)));
-      kinder.push(React.createElement('rect', { key: 'z', width: '24', height: '24', fill: farbe, mask: url(id + 'z') }));
+      kinder.push(React.createElement('rect', { key: 'z', width: '24', height: '24', mask: url(id + 'z'), style: { fill: farbe } }));
     }
   }
   return React.createElement('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true', focusable: 'false', ...rest }, ...kinder);
 };
+
+// Ein Seiten-Zeichen aus dem Register (Bauplan B4): Farben als CSS-Variablen (--mp-ast-…, gesetzt in
+// main.jsx aus lebensbereiche.js), damit hell/dunkel ohne neues Zeichnen wechselt.
+export const SeitenZeichen = ({ view, bereich, ...rest }) => {
+  const bild = seitenBildVariabel(view, bereich);
+  return bild ? React.createElement(FamilienZeichen, { ...bild, ...rest }) : null;
+};
+export const seite = () => React.createElement(SeitenZeichen);
