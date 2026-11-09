@@ -1,6 +1,7 @@
 # Die eine Kennzahl — Entscheidungsblatt
 
-**Stand:** 2026-11-08 · **Status:** ✅ entschieden — **A** (Stebler Studios, 08.11.2026, «Ja, A») · ⚠️ Verhältnis zum North-Star «Wiederkehr» vom 26.10. offen, siehe Korrektur
+**Stand:** 2026-11-08 · **Status:** ✅ entschieden — **A** (Stebler Studios, 08.11.2026, «Ja, A»)
+**Rolle geklärt 09.11.2026** (Stebler Studios, «Beide, getrennte Rollen»): **Wiederkehr pro Monat bleibt der Live-North-Star** (26.10.). **A ist die Zahl für Testsitzungen**: ob ein einzelner Besuch hilft. A ersetzt die Wiederkehr nicht.
 **Gehört zu:** [`analytics-decision.md`](analytics-decision.md) (Weg 1 läuft, Weg 2 offen)
 
 > ⚠️ **Korrektur 09.11.2026 — dieses Blatt wurde ohne zwei frühere Entscheide geschrieben.**
@@ -13,8 +14,9 @@
 >
 > Darum ist die Begründung bei **D unten falsch**: Wiederkehr lässt sich ohne Wiedererkennung
 > messen (auf dem Gerät gezählt oder aus den Server-Zahlen angenähert). Die Zeile bleibt als Beleg
-> stehen. **Offen:** Ersetzt A die Wiederkehr als die eine Zahl, oder misst A in Testsitzungen,
-> *ob ein Besuch hilft*, während die Wiederkehr der Live-Nordstern bleibt?
+> stehen. ~~**Offen:** Ersetzt A die Wiederkehr …?~~ → **Geklärt 09.11.:** beide, getrennte Rollen
+> (siehe Status oben). Wiederkehr allein ist für eine Behörden-Hilfe mehrdeutig — wer sein Problem
+> gelöst hat, kommt zu Recht nicht wieder; A deckt genau diese Lücke.
 
 ## Worum es geht
 
