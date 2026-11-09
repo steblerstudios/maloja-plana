@@ -134,12 +134,28 @@ const werteTabelle = (tab, text) => `
           <summary>${text}</summary>${BLOECKE_VERGLEICH[`TAB:${tab}`]()}
         </details>`;
 
+// Legenden der Karten, die auch die App zeigt (scripts/app-verstehen.mjs, 09.11.2026): eine Quelle für
+// Jahr, Rahmung und Belege, damit Seite und App nie Verschiedenes sagen.
+export const LEGENDE = {
+  praemie: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+  lastNachIpv: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+};
+
+// Stufenfarben je Frucht, hell und dunkel, mit der Farbe der Seen. Im dunklen Modus ist die höchste Stufe
+// die hellste. Aus FRUCHT_STUFEN erzeugt; auch die App liest sie (über scripts/app-verstehen.mjs), nicht
+// von Hand kopiert. Welche Frucht eine Karte trägt: KARTEN_FRUCHT.
+const SEE = { hell: '#F2F2F0', dunkel: '#22211F' };
+const alsSatz = (s, see) => ({ 1: s[0], 2: s[1], 3: s[2], 4: s[3], see });
+export const STUFEN_FARBEN = Object.fromEntries(Object.entries(FRUCHT_STUFEN).map(([f, s]) =>
+  [f, { hell: alsSatz(s.hell, SEE.hell), dunkel: alsSatz(s.dunkel, SEE.dunkel) }]));
+const cssStufen = (f) => `--k1:${f[1]}; --k2:${f[2]}; --k3:${f[3]}; --k4:${f[4]}; --k-see:${f.see}`;
+
 const BLOECKE_ATLAS = {
   'FIG:praemie': (ctx) => karte(ctx, 'praemie', {
-    legende: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+    legende: LEGENDE.praemie,
     nachher: werteTabelle('vpraemie', 'Prämie je Kanton als Tabelle') }),
   'FIG:lastnachipv': (ctx) => karte(ctx, 'lastNachIpv', {
-    legende: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+    legende: LEGENDE.lastNachIpv,
     nachher: werteTabelle('vlast', 'Prämienlast vor und nach Verbilligung als Tabelle') }),
   'FIG:steuer': (ctx) => karte(ctx, 'steuer', {
     legende: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
@@ -347,14 +363,14 @@ export const KANTONSATLAS = {
   stilZusatz: `
     /* ─── Kantonsatlas: je Karte die Frucht ihres Lebensbereichs, vier Stufen ─── */
     /* :root trägt die Heidelbeere als Grundwert; jede Karte setzt ihre Frucht (KARTEN_FRUCHT). */
-    :root{ --k1:#D3DEE9; --k2:#98AFC4; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
+    :root{ ${cssStufen(STUFEN_FARBEN.heidelbeere.hell)} }
 ${FRUCHT_CSS_HELL}
     /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
        damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
     .nur-dunkel{ display:none }
     @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
-      :root{ --k1:#2E3742; --k2:#576A7D; --k3:#86A6C2; --k4:#D3E0EC; --k-see:#22211F }
+      :root{ ${cssStufen(STUFEN_FARBEN.heidelbeere.dunkel)} }
 ${FRUCHT_CSS_DUNKEL}
     }
     .atlas .abb-bild svg{ max-height:420px }

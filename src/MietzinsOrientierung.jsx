@@ -94,6 +94,19 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   // O3: die Art des Ergebnisses, abgeleitet aus der Einschätzung oben (data/mietzinsbeitraege.js).
   const art = mietzinsErgebnis({ info, assessmentKey: assessment && assessment.key, annualIncome });
 
+  // Weitere Voraussetzungen des Kantons (W2): nur bei Ergebnissen, die zur Prüfung raten oder offen sind.
+  const zeigtVoraussetzungen = hasProgram && assessment && ['likely', 'effortBased', 'municipalLimit', 'tableLimit', 'jungeErwachseneOffen', 'needIncome'].includes(assessment.key);
+  const zimmer = parseFloat(String(data?.wohnen?.rooms ?? '').replace(',', '.'));
+  const voraussetzungen = !zeigtVoraussetzungen ? [] : [
+    info.residencyYears && { key: 'wohnsitz', text: t(canton === 'GE' ? 'mietzinsView.vorausWohnsitzGE' : 'mietzinsView.vorausWohnsitz', { jahre: info.residencyYears }) },
+    info.assetLimit && { key: 'vermoegen', text: t('mietzinsView.vorausVermoegen', { betrag: zahl(info.assetLimit) }) },
+    canton === 'BS' && { key: 'mindestmiete', text: t('mietzinsView.vorausMindestmieteBS') },
+    // ZG: höchstens zwei Zimmer mehr als Personen (Merkblatt Sept. 2025). Kennt die App die Zimmer, prüft sie mit.
+    canton === 'ZG' && (Number.isFinite(zimmer) && zimmer > householdSize + 2
+      ? { key: 'zimmer', achtung: true, text: t('mietzinsView.vorausZimmerZGZuViel', { zimmer: String(zimmer), personen: householdSize }) }
+      : { key: 'zimmer', text: t('mietzinsView.vorausZimmerZG') }),
+  ].filter(Boolean);
+
   const linkBtn = { ...linkStil(palette), display: 'block', minHeight: '44px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium, marginTop: space.sm + 'px' };
 
   const klein = { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal };
@@ -134,6 +147,13 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     // ZG 50'000–60'000: nur bei Mietbelastung über 25 % (nach Verbilligung) — hier nur mit Miete vor Verbilligung prüfbar.
     assessment && assessment.key === 'likely' && info.mietbelastung && annualIncome > info.mietbelastung.ab && rentMonthly * 12 <= info.mietbelastung.anteil * annualIncome && React.createElement('div', { style: klein },
       hinweisZeichen(), t('mietzinsView.mietbelastungZG')),
+    // Kapitel 2 W2 (09.11.2026): Das Ergebnis schaut nur auf das Einkommen. Wohnsitzdauer, Vermögensgrenze,
+    // Zimmerzahl und (BS) Mindestmiete entscheiden mit — sichtbar als ruhige Liste, aus den Daten des Kantons.
+    voraussetzungen.length > 0 && React.createElement('div', { 'data-teil': 'voraussetzungen', style: { marginTop: space.md + 'px' } },
+      React.createElement('h3', { style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('mietzinsView.vorausTitel')),
+      React.createElement('ul', { style: { margin: 0, paddingLeft: '20px', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+        voraussetzungen.map((v) => React.createElement('li', { key: v.key, style: { marginTop: space.xs + 'px', color: palette.text } },
+          v.achtung && hinweisZeichen(), v.text)))),
     // F7-R3: das Instrument des Kapitels Wohnen — «Wo steht Ihre Miete?» (dasselbe Bauteil wie in der Finanz-Übersicht).
     canton && React.createElement('div', { style: { marginTop: space.md + 'px' } },
       React.createElement(MietVergleich, { palette, t, data, isDarkMode, canton }))
