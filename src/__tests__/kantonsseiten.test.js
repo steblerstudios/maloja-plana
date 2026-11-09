@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { KANTONSSEITEN, WEGE, WEG_AUS_NOTEKEY, monatJahr } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
+import { KANTONSSEITEN, KANTONSFOLGE, WEGE, WEG_AUS_NOTEKEY, monatJahr, appRechnetFuer, rechenmodul } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
 import { BASIS, QUELLEN } from '../../scripts/seiten-inhalt.mjs';
 import { CANTONAL_IPV } from '../config/cantonalData.js';
 import { CANTONAL_LINKS, CANTONAL_LINKS_GEPRUEFT } from '../data/direktLinks.js';
@@ -54,8 +54,21 @@ const VERBOTEN = [
 const EIGENER_TEXT_MIN = 0.40;
 
 describe('Kantonsseiten Prämienverbilligung', () => {
-  it('es gibt die drei Pilotkantone (Entscheid E2)', () => {
-    expect(KANTONSSEITEN.map((k) => k.kanton).sort()).toEqual(['BE', 'TG', 'ZH']);
+  it('«rechnet» hängt am Code: TG, JU und SO zeigen nie einen Betrag, die übrigen Module schon', () => {
+    // Datei vorhanden reicht nicht: ipvThurgau.js existiert und zeigt nie eine Zahl.
+    for (const k of ['TG', 'JU', 'SO']) {
+      expect(rechenmodul(k), k).toBeTruthy();
+      expect(appRechnetFuer(k), k).toBe(false);
+    }
+    for (const k of ['ZH', 'BE', 'GE', 'AG']) expect(appRechnetFuer(k), k).toBe(true);
+  });
+
+  // Seit 09.11.2026 abends vollständig: VS (vs.ch war tagsüber in Wartung) und BL (alter
+  // Amtslink tot, neu die SVA BL) kamen dazu, als ihr Amtslink geprüft war (Riegel 1).
+  it('jeder Kanton hat eine Seite', () => {
+    const ohne = KANTONSFOLGE.filter((k) => !KANTONSSEITEN.some((x) => x.kanton === k));
+    expect(ohne).toEqual([]);
+    expect(KANTONSSEITEN.map((x) => x.kanton)).toEqual(KANTONSFOLGE);
   });
 
   describe.each(KANTONSSEITEN.map((k) => [k.pfad, k]))('/%s/', (pfad, k) => {
@@ -90,17 +103,20 @@ describe('Kantonsseiten Prämienverbilligung', () => {
       expect(text).not.toContain('Inhaltlich geprüft');
     });
 
-    it('verspricht eine Rechnung nur, wo die App ein Rechenmodul für den Kanton hat', () => {
-      const modul = k.appModul ? path.resolve(WURZEL, 'src', 'config', k.appModul) : null;
-      if (modul) expect(fs.existsSync(modul), modul).toBe(true);
+    it('verspricht eine Rechnung nur, wo das Rechenmodul der App einen Betrag zeigt', () => {
+      expect(k.appRechnet).toBe(appRechnetFuer(k.kanton));
       const karte = sichtbar(html.split('<div class="karte">')[1].split('</div>')[0]);
       if (k.appRechnet) expect(karte).toContain('rechnet das für viele Haushalte durch');
       else expect(karte).not.toMatch(/rechnet/);
     });
 
-    it('nennt eine Frist (ohne Datum) im Kasten «Muss ich etwas tun?»', () => {
+    it('nennt im Kasten «Muss ich etwas tun?», was zur Frist gilt (auch: dass es keine gibt)', () => {
+      // Bis 09.11.2026 verlangte dieser Test das Wort «Frist». Für AI (keine Antragsfrist)
+      // schrieb ein Entwurf darauf die Einsprachefrist in den Kasten — den Test bedient
+      // statt die Sache. Jetzt zählt nur, dass der Frist-Satz des Kantons dort steht.
+      expect(k.fristSatz.length).toBeGreaterThan(20);
       const box = sichtbar(html.split(`<div class="weg ${k.weg}">`)[1].split('</div>')[0]);
-      expect(box).toMatch(/Frist|laufende Jahr/);
+      expect(box).toContain(k.fristSatz);
     });
 
     it('nennt denselben Weg wie die App, mit Wort und Zeichen', () => {
@@ -135,6 +151,12 @@ describe('Kantonsseiten Prämienverbilligung', () => {
       const aussen = [...html.matchAll(/href="(https?:\/\/[^"]+)"/g)].map((m) => m[1])
         .filter((u) => !u.startsWith(BASIS));
       for (const u of aussen) expect(erlaubt.has(u), `fremder Link ${u}`).toBe(true);
+    });
+
+    it('sagt «keine genauen Fristen», nicht «keine Fristen» (Kantonsseiten nennen, dass Fristen gelten)', () => {
+      // Rechtsprüfung 09.11.2026: Der gemeinsame Satz der Erklärseiten widersprach dem fristSatz.
+      expect(text).toContain('keine Beträge und keine genauen Fristen');
+      expect(text).not.toMatch(/keine Beträge und Fristen|keine Beträge, Fristen/);
     });
 
     it('trägt den Vorbehalt weit oben und verlinkt Impressum und Datenschutz', () => {

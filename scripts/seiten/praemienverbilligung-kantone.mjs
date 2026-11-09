@@ -23,12 +23,11 @@
 // weil dann ein Kanton unbemerkt aus der Liste fiele.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { existsSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { CANTONAL_IPV } from '../../src/config/cantonalData.js';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { CANTONAL_IPV, IPV_MODULE } from '../../src/config/cantonalData.js';
 import { CANTONAL_LINKS, CANTONAL_LINKS_GEPRUEFT } from '../../src/data/direktLinks.js';
-import { QUELLEN } from '../seiten-inhalt.mjs';
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -37,6 +36,21 @@ const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const WEGE = {
   antrag: { label: 'Antrag nötig' },
   automatisch: { label: 'In der Regel von Amtes wegen' },
+};
+
+// Kopf- und Fusshinweis der Kantonsseiten. Bis 09.11.2026 der gemeinsame Text der
+// Erklärseiten («nennt bewusst keine Beträge und Fristen»). Rechtsprüfung 09.11.2026: Mehrere
+// Kantonsseiten nennen, DASS eine Frist gilt und wann sie ungefähr endet (z. B. Ende des
+// Anspruchsjahres), und müssen das auch — sonst fehlt der Hinweis, der den Anspruch rettet.
+// Der Satz «keine Fristen» widersprach dem. Neu: keine genauen Fristen (keine Tage, keine Daten).
+export const KANTON_HINWEIS = {
+  kurz: 'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. ' +
+    'Diese Seite nennt bewusst keine Beträge und keine genauen Fristen.',
+  vorbehalt: 'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — ' +
+    'keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, keine ' +
+    'Einkommensgrenzen und keine genauen Fristen: die ändern regelmässig. Wo sie sagt, dass eine ' +
+    'Frist gilt, finden Sie die genaue Frist bei der zuständigen Stelle. Massgebend ist immer die ' +
+    'Auskunft beziehungsweise die Verfügung der zuständigen Stelle.',
 };
 
 // Welcher noteKey der App zu welchem Weg gehört. Der Generator und der Test
@@ -48,170 +62,39 @@ export const WEG_AUS_NOTEKEY = (noteKey) => {
   return null;
 };
 
-const KVG65 = { text: QUELLEN.fedlexKvgArt65.text, url: QUELLEN.fedlexKvgArt65.url };
 
-const TEXTE = {
-  ZH: {
-    name: 'Zürich',
-    slug: 'zuerich',
-    weg: 'antrag',
-    // Das Rechenmodul der App für diesen Kanton. null heisst: Die App rechnet hier
-    // keinen Betrag, dann darf die Karte das auch nicht versprechen (Rechtsprüfung
-    // 09.11.2026, Art. 3 Abs. 1 lit. b UWG). Der Test prüft, dass die Datei existiert.
-    appModul: 'ipvZuerich.js',
-    abgeglichen: '2026-11-09',
-    wegSaetze: [
-      // Quellenblatt ZH «Zuständig / Weg»: «Antragsformular wird automatisch zugestellt».
-      'Im Kanton Zürich gibt es die Prämienverbilligung in der Regel nur auf Antrag. Wer nach den Steuerdaten in Frage kommt, bekommt das Antragsformular von der SVA Zürich zugestellt.',
-      // Kundeninformation 2026: Online-Formular für Nachmeldungen.
-      'Falls Sie kein Formular erhalten haben, aber Anspruch vermuten, melden Sie sich bei der SVA Zürich. Das geht auch online.',
-      // EG KVG § 14 Abs. 1 (SVA überweist bei EL-Anspruch direkt dem Versicherer) und
-      // Abs. 3 (fällt die EL weg, gilt das EL-Gesuch als Antrag).
-      'Wer Ergänzungsleistungen zur AHV oder IV bezieht, muss keinen eigenen Antrag stellen.',
-    ],
-    // EG KVG § 21 Abs. 1 (Frist im Gesetz); Formular; SVA.
-    fristSatz: 'Für den Antrag gilt eine Frist. Sie steht im Gesetz, auf dem Formular und bei der SVA Zürich.',
-    stelle: 'Sozialversicherungsanstalt Zürich (SVA Zürich)',
-    // EG KVG § 18 «Antrag und Entscheid».
-    stelleSatz: 'Die SVA Zürich führt die Prämienverbilligung im Auftrag des Kantons durch und entscheidet über die Anträge.',
-    amtsseite: 'Seite des Kantons Zürich zur Prämienverbilligung',
-    besonders: [
-      // Quellenblatt ZH: provisorische Auszahlung, definitive Abrechnung. Kundeninformation
-      // Ziff. 8 («Restzahlung oder Rückforderung»), Ziff. 12, Ziff. 14.3 («Um Rückforderungen
-      // zu vermeiden, verzichten Sie …»); EG KVG § 12 Abs. 1 / § 13 (Meldepflicht), § 19 Abs. 2.
-      'Zuerst wird ein vorläufiger Betrag ausgerichtet. Die definitive Abrechnung folgt, wenn die Steuerdaten des Jahres vorliegen. Fällt der endgültige Betrag tiefer aus, fordert die SVA die Differenz zurück.',
-      'Änderungen, etwa eine Heirat oder das Ende einer Ausbildung, melden Sie darum der SVA Zürich. Steigt Ihr Einkommen stark, lohnt es sich, vor dem Einreichen zu prüfen, ob der Antrag noch sinnvoll ist.',
-      // Kundeninformation Ziff. 14.1 und 14.2: Steuerfaktoren der Eltern; Abschluss, Abbruch
-      // oder längerer Unterbruch der Ausbildung ist zu melden.
-      'Bei jungen Erwachsenen in Ausbildung zählen die Steuerdaten der Eltern, ausser sie sind verheiratet oder haben eigene Kinder. Endet die Ausbildung oder wird sie länger unterbrochen, ist das der SVA zu melden.',
-      // Quellenblatt ZH «Massgebendes Einkommen»: «Bei quellenbesteuerten Personen entspricht
-      // das massgebende Einkommen dem steuerbaren Einkommen unter Berücksichtigung des Kinderabzuges.»
-      'Für Personen mit Quellensteuer gilt eine eigene Berechnungsgrundlage.',
-    ],
-    quellen: [
-      { text: 'SVA Zürich: Kundeninformation zur Prämienverbilligung (PDF)', url: 'https://svazurich.ch/dam/sva-dokumente/4000_ipv/4000_vl3_ipv_kundeninformation_2026.pdf' },
-      { text: 'SVA Zürich: Prämienverbilligung, Leistung', url: 'https://svazurich.ch/unsere-produkte/weitere-produkte/krankenversicherung--kvg-/praemienverbilligung/leistung.html' },
-      // Kein stabiler Link auf die Zürcher Gesetzessammlung gefunden (gemessen 09.11.2026): nur der Titel.
-      { text: 'Einführungsgesetz zum Krankenversicherungsgesetz des Kantons Zürich (EG KVG, LS 832.01)' },
-      KVG65,
-    ],
-  },
-  BE: {
-    name: 'Bern',
-    slug: 'bern',
-    weg: 'automatisch',
-    appModul: 'ipvBern.js',
-    abgeglichen: '2026-11-09',
-    wegSaetze: [
-      // Informationsblatt 2026, S. 1: «Ihr Anrecht auf Prämienverbilligung wird in der Regel
-      // automatisch überprüft.» KKVV Art. 7 Abs. 1: definitive Veranlagung des vorletzten Steuerjahres.
-      'Im Kanton Bern prüft das Amt den Anspruch in der Regel von Amtes wegen, also ohne dass Sie etwas einreichen. Grundlage sind die definitiven Steuerdaten des vorletzten Jahres.',
-      'Für etliche Gruppen gilt das aber nicht.',
-    ],
-    // Informationsblatt 2026, S. 2, «Wann kann Ihr Anrecht auf Prämienverbilligung nicht
-    // automatisch überprüft werden?» — alle zehn Fälle, ohne die Beträge.
-    selbst: {
-      einleitung: 'Sie müssen den Antrag selbst stellen, wenn einer dieser Fälle auf Sie zutrifft:',
-      punkte: [
-        'Sie haben eine Aufenthaltsbewilligung B, F, G, L, N oder S oder werden an der Quelle besteuert.',
-        'Sie haben in der Steuererklärung kein Einkommen ausgewiesen oder keine Steuererklärung eingereicht.',
-        'Sie sind auf Jahresbeginn aus einem anderen Kanton oder im Lauf des Jahres aus dem Ausland in den Kanton Bern gezogen.',
-        'Ihr zivilrechtlicher Wohnsitz ist im Kanton Bern, Ihr Steuerwohnsitz aber in einem anderen Kanton.',
-        'Sie wohnen in einem EU-Staat, sind aber in der Schweiz versicherungspflichtig.',
-        'Sie haben in der Steuererklärung ein hohes Bruttovermögen ausgewiesen, also vor Abzug der Schulden, zum Beispiel mit einer Liegenschaft.',
-        'Sie sind mindestens 25 Jahre alt, haben keine eigenen Kinder, die zur Familie zählen, und Ihr korrigiertes Reineinkommen liegt unter einer festen Grenze.',
-        'Sie sind ledig, älter als 18 und noch nicht 25 Jahre alt, haben ein tiefes Einkommen, und Ihre Eltern leben in einem anderen Kanton oder im Ausland.',
-        'Sie sind älter als 18 und noch nicht 25 Jahre alt, in Ausbildung, zählen nicht zur Familie Ihrer Eltern und möchten den höheren Beitrag für Personen in Ausbildung.',
-        'Sie haben beim Wegzug aus dem Kanton Bern Sozialhilfe oder Ergänzungsleistungen bezogen und beziehen diese im neuen Kanton nicht mehr.',
-      ],
-      schluss: 'Die Grenzen stehen im Informationsblatt des Amts für Sozialversicherungen. Im Zweifel lohnt sich die Nachfrage.',
-    },
-    // Informationsblatt S. 2: «während des laufenden Kalenderjahres».
-    fristSatz: 'Ein Antrag gilt nur für das laufende Jahr und muss in diesem Jahr gestellt werden.',
-    stelle: 'Amt für Sozialversicherungen des Kantons Bern (ASV)',
-    // Informationsblatt S. 3: Sozialhilfe → Auszahlung an den Sozialdienst; EL → Ausgleichskasse
-    // des Kantons Bern (AKB) berechnet den Beitrag.
-    stelleSatz: 'Das ASV prüft den Anspruch und nimmt die Anträge entgegen. Wer Ergänzungsleistungen bezieht, hat einen eigenen Weg: Den Beitrag berechnet die Ausgleichskasse des Kantons Bern. Wer Sozialhilfe bezieht, wendet sich an den Sozialdienst.',
-    amtsseite: 'Seite des Amts für Sozialversicherungen zur Prämienverbilligung',
-    besonders: [
-      // Informationsblatt S. 3, «Wann können Sie die Überprüfung … während des Jahres beantragen?»:
-      // familiäre Verhältnisse; finanzielle «erheblich und dauerhaft»; «Arbeitslosigkeit gilt nicht
-      // als dauerhaft»; «rückwirkend, aber maximal bis zum 1. Januar des laufenden Kalenderjahres».
-      'Haben sich Ihre Familienverhältnisse geändert, etwa durch Heirat, Trennung oder einen Todesfall, oder ist Ihr Einkommen erheblich und dauerhaft gesunken, können Sie eine neue Prüfung beantragen. Arbeitslosigkeit gilt dabei nicht als dauerhaft.',
-      'Die neue Prüfung wirkt höchstens bis zum Anfang des laufenden Jahres zurück. Ein Anspruch folgt aus dem Antrag nicht von selbst.',
-      // Informationsblatt S. 1: unverheiratet, gleicher Haushalt, mindestens ein gemeinsames Kind
-      // → «wie bei einem verheirateten Paar».
-      'Paare, die unverheiratet zusammenleben und ein gemeinsames Kind haben, werden wie ein Ehepaar berechnet.',
-    ],
-    quellen: [
-      { text: 'Amt für Sozialversicherungen: Informationen zur Prämienverbilligung (PDF)', url: 'https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Informationsblatt%202026_de.pdf' },
-      { text: 'Amt für Sozialversicherungen: Prämienverbilligung beantragen', url: 'https://www.asv.dij.be.ch/de/start/themen/pv/pv_anrecht-auf-pv-beantragen.html' },
-      // BELEX ist eine Web-App (jede Adresse 200); Bestand über die API belegt, 842.999 → 404.
-      { text: 'Einführungsgesetz zu den Bundesgesetzen über die Kranken-, Unfall- und Militärversicherung (EG KUMV, BSG 842.11)', url: 'https://www.belex.sites.be.ch/app/de/texts_of_law/842.11' },
-      { text: 'Kantonale Krankenversicherungsverordnung (KKVV, BSG 842.111.1)', url: 'https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1' },
-      KVG65,
-    ],
-  },
-  TG: {
-    name: 'Thurgau',
-    slug: 'thurgau',
-    weg: 'antrag',
-    // Für den Thurgau zeigt die App bewusst keine Zahl (Quellenblatt TG, Nachprüfung 28.09.2026).
-    appModul: null,
-    abgeglichen: '2026-11-09',
-    wegSaetze: [
-      // Quellenblatt TG «Zuständig / Weg»: «reines Antragsprinzip, jährlich; Gemeinde stellt
-      // Berechtigten im Frühjahr ein Formular zu».
-      'Im Kanton Thurgau gibt es die Prämienverbilligung nur auf Antrag, und zwar jedes Jahr neu. Die Gemeinde stellt Personen, die nach den Steuerdaten in Frage kommen, im Frühjahr ein Formular zu.',
-      'Das unterschriebene Formular geben Sie bei der Krankenkassenkontrollstelle Ihrer Gemeinde ab.',
-      // Merkblatt S. 2: «EL-Bezügerinnen und -Bezüger erhalten eine Prämienpauschale … Ein
-      // IPV-Antrag ist nicht notwendig.»
-      'Wer Ergänzungsleistungen bezieht, erhält eine Prämienpauschale und muss keinen Antrag stellen.',
-    ],
-    // Merkblatt S. 2 (Jahresaufenthalt mit Quellensteuer ohne Formular, Grenzgänger,
-    // Kurzaufenthalter: Antrag selbst stellen; «Wird diese Frist verpasst, verfällt der Anspruch.»;
-    // «Bei einem Wegfall der Ergänzungsleistungen oder der Sozialhilfe … muss fristgerecht
-    // eingereicht werden»); TG KVV § 22 Abs. 1 und § 22a Abs. 1.
-    selbst: {
-      einleitung: 'Kein Formular bekommen Sie zum Beispiel in diesen Fällen. Dann müssen Sie den Antrag selbst stellen:',
-      punkte: [
-        'Sie arbeiten als Grenzgängerin oder Grenzgänger im Thurgau.',
-        'Sie haben eine Kurzaufenthaltsbewilligung.',
-        'Sie haben eine Jahresaufenthaltsbewilligung, werden an der Quelle besteuert und haben kein Formular erhalten.',
-        'Sie beziehen keine Ergänzungsleistungen oder keine Sozialhilfe mehr.',
-      ],
-      schluss: 'Auch dafür gilt eine Frist.',
-    },
-    // Merkblatt S. 1: «Wird diese Frist verpasst, verfällt der Anspruch.»; TG KVG § 9 Abs. 2.
-    fristSatz: 'Laut Merkblatt des Kantons verfällt der Anspruch, wenn die Frist verpasst wird. Die Frist steht auf dem Formular und im Merkblatt.',
-    stelle: 'Krankenkassenkontrollstelle Ihrer Wohngemeinde',
-    // TG KVV § 2 Abs. 3; Merkblatt «Zuständigkeiten»: Grenzgänger bei der Gemeinde des Arbeitsorts.
-    stelleSatz: 'Zuständig ist die Gemeinde, in der Sie wohnen. Grenzgängerinnen und Grenzgänger wenden sich an die Gemeinde ihres Arbeitsorts.',
-    amtsseite: 'Seite des Amts für Gesundheit des Kantons Thurgau zur Prämienverbilligung',
-    besonders: [
-      // TG KVV § 14; einfache Steuer aus Einkommen und Vermögen (TG StG § 6 Abs. 1).
-      'Der Thurgau rechnet nicht direkt mit dem Einkommen, sondern mit dem einfachen Steuerbetrag laut Steuerdaten. Es gibt wenige feste Stufen.',
-      // TG KVG § 5 Abs. 1bis; TG StG § 53 Abs. 1 (Freibeträge), Quellenblatt TG «präzisiert».
-      'Anspruch hat nur, wer nach Abzug der steuerfreien Beträge kein steuerbares Vermögen hat. Erspartes allein schliesst Sie also nicht aus. Bei Kindern zählt das Vermögen der Eltern.',
-      // TG KVV § 15 Abs. 2: Neubemessung nur auf Antrag, kurze Frist ab rechtskräftiger
-      // Feststellung (u. a. definitive Steuerschlussrechnung, Sozialhilfe-Entscheid);
-      // Merkblatt S. 2: «Wird die Frist verpasst, verfällt ein allfälliger Anspruch.»
-      'Eine Neubemessung gibt es nur auf Antrag, und die Frist dafür ist kurz. Sie beginnt mit dem Entscheid, der die Änderung belegt, etwa der definitiven Steuerschlussrechnung oder einem Entscheid über Sozialhilfe. Wer sie verpasst, verliert den Anspruch.',
-      // Merkblatt S. 1 «Junge Erwachsene in Ausbildung»: «erhalten im laufenden Jahr die zustehende
-      // IPV … Sie können im Folgejahr eine Neubeurteilung beantragen.»; TG KVG § 5 Abs. 6.
-      'Junge Erwachsene, die Ende Jahr in Ausbildung sind, können einen höheren Beitrag bekommen. Dafür beantragen sie im folgenden Jahr eine Neubeurteilung.',
-      // TG KVG § 4 Abs. 3: Neugeborene und neu Angemeldete sind ab dem folgenden Jahr bezugsberechtigt.
-      'Wer neu in den Thurgau zieht, ist hier erst ab dem folgenden Jahr bezugsberechtigt. Das gilt auch für Neugeborene.',
-    ],
-    quellen: [
-      { text: 'Amt für Gesundheit Thurgau: Merkblatt Prämienverbilligung (PDF)', url: 'https://gesundheit.tg.ch/public/upload/assets/183453/Merkblatt%20IPV%202026.pdf' },
-      // Rechtsbuch TG ist eine Web-App (jede Adresse 200); Bestand über die API belegt, 832.999 → 404.
-      { text: 'Gesetz über die Krankenversicherung des Kantons Thurgau (TG KVG, RB 832.1)', url: 'https://www.rechtsbuch.tg.ch/app/de/texts_of_law/832.1' },
-      { text: 'Verordnung zum Gesetz über die Krankenversicherung des Kantons Thurgau (TG KVV, RB 832.10)', url: 'https://www.rechtsbuch.tg.ch/app/de/texts_of_law/832.10' },
-      KVG65,
-    ],
-  },
-};
+// Texte je Kanton: scripts/seiten/ipv-kantone/<KT>.mjs, eine Datei je Kanton. Fehlt
+// die Datei, gibt es für den Kanton keine Seite (seit 09.11.2026 hat jeder Kanton eine).
+// Reihenfolge der Kantone wie in der Bundesverfassung, Art. 1.
+export const KANTONSFOLGE = ['ZH', 'BE', 'LU', 'UR', 'SZ', 'OW', 'NW', 'GL', 'ZG', 'FR', 'SO', 'BS', 'BL',
+  'SH', 'AR', 'AI', 'SG', 'GR', 'AG', 'TG', 'TI', 'VD', 'VS', 'NE', 'GE', 'JU'];
+const ORDNER = resolve(dirname(fileURLToPath(import.meta.url)), 'ipv-kantone');
+const vorhanden = new Set(readdirSync(ORDNER).filter((f) => /^[A-Z]{2}\.mjs$/.test(f)).map((f) => f.slice(0, 2)));
+const TEXTE = {};
+for (const k of KANTONSFOLGE) {
+  if (vorhanden.has(k)) TEXTE[k] = (await import(pathToFileURL(resolve(ORDNER, `${k}.mjs`)).href)).default;
+}
+
+// Rechnet die App für diesen Kanton einen Betrag? Abgeleitet aus dem Rechenmodul,
+// nicht von Hand: Ein Modul, das nie einen Betrag zeigt (TG, JU, SO), sagt es in
+// seinem Kopf mit «🛑 … KEINE ZAHL» bzw. «… FÜR KEINE PERSON EINEN BETRAG». Dass die
+// Datei existiert, reicht NICHT (ipvThurgau.js existiert und zeigt nie eine Zahl).
+// Rechtsprüfung 09.11.2026, Art. 3 Abs. 1 lit. b UWG: «rechnet» nur, wo es stimmt.
+export const OHNE_BETRAG = /🛑[^\n]*(KEINE ZAHL|FÜR KEINE PERSON EINEN BETRAG)/;
+// Aus dem Quelltext von IPV_MODULE gelesen, nicht aus laden.toString(): Vitest schreibt
+// den Funktionstext um (gemessen 09.11.2026, dort kam null zurück).
+const CANTONAL_DATA_QUELLE = readFileSync(resolve(WURZEL, 'src', 'config', 'cantonalData.js'), 'utf8');
+export function rechenmodul(k) {
+  if (!IPV_MODULE[k]) return null;
+  const m = new RegExp(`^\\s*${k}: \\{ laden: \\(\\) => import\\('\\./(ipv[A-Za-z]+\\.js)'\\)`, 'm').exec(CANTONAL_DATA_QUELLE);
+  return m ? m[1] : null;
+}
+export function appRechnetFuer(k) {
+  const datei = rechenmodul(k);
+  if (!datei) return false;
+  const kopf = readFileSync(resolve(WURZEL, 'src', 'config', datei), 'utf8').split('\n').slice(0, 15).join('\n');
+  return !OHNE_BETRAG.test(kopf);
+}
 
 const MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August',
   'September', 'Oktober', 'November', 'Dezember'];
@@ -230,18 +113,16 @@ export const KANTONSSEITEN = Object.entries(TEXTE).map(([k, t]) => {
   if (!link || !linkGeprueft) throw new Error(`Kantonsseite ${k}: ipv-Link fehlt oder ist ungeprüft`);
   const appWeg = WEG_AUS_NOTEKEY(ipv.noteKey);
   if (appWeg !== t.weg) throw new Error(`Kantonsseite ${k}: Weg «${t.weg}» ≠ App «${appWeg}» (${ipv.noteKey})`);
-  if (t.appModul && !existsSync(resolve(WURZEL, 'src', 'config', t.appModul))) {
-    throw new Error(`Kantonsseite ${k}: Rechenmodul ${t.appModul} fehlt`);
-  }
   return {
     kanton: k,
     ...t,
     pfad: `praemienverbilligung/${t.slug}`,
-    titel: `Prämienverbilligung im Kanton ${t.name}`,
+    // Lange Namen (Appenzell Ausserrhoden …) sprengen sonst die 65 Zeichen des <title>.
+    titel: t.titel || `Prämienverbilligung im Kanton ${t.name}`,
     brotkrume: `Kanton ${t.name}`,
     beschreibung: `Prämienverbilligung im Kanton ${t.name}: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was hier anders ist als anderswo.`,
     link,
-    appRechnet: Boolean(t.appModul),
+    appRechnet: appRechnetFuer(k),
     geprueft: monatJahr(t.abgeglichen),
   };
 });

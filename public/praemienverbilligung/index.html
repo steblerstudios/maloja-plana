@@ -179,7 +179,10 @@
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
     :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
     @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
     .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
@@ -277,12 +280,39 @@
         </details>
         <nav class="wege" aria-label="Weiter von: Der häufigste Irrtum"><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
-        <h2>In Ihrem Kanton</h2>
+        <h2 id="kantone">In Ihrem Kanton</h2>
         <p>Für diese Kantone gibt es eine eigene Seite: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was dort anders ist.</p>
-        <ul class="weiter">
-          <li><a href="/praemienverbilligung/zuerich/">Kanton Zürich</a><span>Antrag nötig</span></li>
-          <li><a href="/praemienverbilligung/bern/">Kanton Bern</a><span>In der Regel von Amtes wegen</span></li>
-          <li><a href="/praemienverbilligung/thurgau/">Kanton Thurgau</a><span>Antrag nötig</span></li>
+        <h3>Antrag nötig</h3>
+        <ul class="weiter kantone">
+          <li><a href="/praemienverbilligung/zuerich/">Kanton Zürich</a></li>
+          <li><a href="/praemienverbilligung/luzern/">Kanton Luzern</a></li>
+          <li><a href="/praemienverbilligung/schwyz/">Kanton Schwyz</a></li>
+          <li><a href="/praemienverbilligung/obwalden/">Kanton Obwalden</a></li>
+          <li><a href="/praemienverbilligung/nidwalden/">Kanton Nidwalden</a></li>
+          <li><a href="/praemienverbilligung/glarus/">Kanton Glarus</a></li>
+          <li><a href="/praemienverbilligung/zug/">Kanton Zug</a></li>
+          <li><a href="/praemienverbilligung/freiburg/">Kanton Freiburg</a></li>
+          <li><a href="/praemienverbilligung/solothurn/">Kanton Solothurn</a></li>
+          <li><a href="/praemienverbilligung/basel-stadt/">Kanton Basel-Stadt</a></li>
+          <li><a href="/praemienverbilligung/basel-landschaft/">Kanton Basel-Landschaft</a></li>
+          <li><a href="/praemienverbilligung/schaffhausen/">Kanton Schaffhausen</a></li>
+          <li><a href="/praemienverbilligung/appenzell-ausserrhoden/">Kanton Appenzell Ausserrhoden</a></li>
+          <li><a href="/praemienverbilligung/st-gallen/">Kanton St. Gallen</a></li>
+          <li><a href="/praemienverbilligung/graubuenden/">Kanton Graubünden</a></li>
+          <li><a href="/praemienverbilligung/aargau/">Kanton Aargau</a></li>
+          <li><a href="/praemienverbilligung/thurgau/">Kanton Thurgau</a></li>
+          <li><a href="/praemienverbilligung/tessin/">Kanton Tessin</a></li>
+          <li><a href="/praemienverbilligung/waadt/">Kanton Waadt</a></li>
+        </ul>
+        <h3>In der Regel von Amtes wegen</h3>
+        <ul class="weiter kantone">
+          <li><a href="/praemienverbilligung/bern/">Kanton Bern</a></li>
+          <li><a href="/praemienverbilligung/uri/">Kanton Uri</a></li>
+          <li><a href="/praemienverbilligung/appenzell-innerrhoden/">Kanton Appenzell Innerrhoden</a></li>
+          <li><a href="/praemienverbilligung/wallis/">Kanton Wallis</a></li>
+          <li><a href="/praemienverbilligung/neuenburg/">Kanton Neuenburg</a></li>
+          <li><a href="/praemienverbilligung/genf/">Kanton Genf</a></li>
+          <li><a href="/praemienverbilligung/jura/">Kanton Jura</a></li>
         </ul>
 
       <h2>Häufige Fragen</h2>
