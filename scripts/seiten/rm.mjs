@@ -179,7 +179,7 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'Il dretg che nagin na po perder',
+        titel: 'Dretg d’agid en situaziuns da basegn', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Independentamain da tut quai survart stat en la <strong>Constituziun federala, artitgel 12</strong>, il dretg da survegnir agid en situaziuns d’basegn: tgi che vegn en basegn e n’è betg abel da procurar per sasez, ha il dretg da vegnir agidà ed assistì e da survegnir ils meds ch’èn indispensabels per ina existenza degna da l’uman.',
           'Quest dretg tutga a mintga persuna en Svizra. El n’è betg il medem sco l’agid social e cuvra damain — ma el è il limit il pli bass sut il qual ins na dastga betg ir.',

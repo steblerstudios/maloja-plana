@@ -177,6 +177,37 @@ function hinweisOben(sprache) {
   return '';
 }
 
+// Drei Schichten auf einer Erklärseite (Brand Book §8, 09.11.2026). Bisher
+// nur auf Deutsch: Die Übersetzungen warten auf die menschliche Lektüre und
+// bleiben im alten Aufbau. `kurzAbsatz` ist ein Index in `absaetze` — der
+// Absatz wandert nach vorne statt neu geschrieben zu werden, darum bleibt die
+// Zahl der Absätze in allen Sprachen gleich. `bild` entfällt, wo kein Bild
+// etwas zeigt. `wege` nennt Pfade; der Text ist die Brotkrume der Zielseite.
+function schichtAbschnitt(a, sprache) {
+  const inhalt = inhaltFuer(sprache.code);
+  const rest = a.absaetze.filter((_, i) => i !== a.kurzAbsatz).map((p) => `          <p>${p}</p>`).join('\n');
+  const wege = (a.wege || []).map((p) => {
+    const z = inhalt.seiten.find((s) => s.pfad === p) || HINTERGRUND.find((h) => h.pfad === p);
+    if (!z) throw new Error(`Weg zu unbekannter Seite ${p}`);
+    return `<a class="weg" href="${pfadIntern(z.pfad, sprache)}"><span aria-hidden="true">→</span> ${esc(z.brotkrume)}</a>`;
+  }).join('');
+  // Verweise (Karten zu den Themen) sind selbst das Bild, wenn kein eigenes da ist.
+  const karten = !a.bild && a.verweise ? `<ul class="weiter">\n${a.verweise.map((p) => {
+    const z = inhalt.seiten.find((s) => s.pfad === p);
+    return `          <li><a href="${pfadIntern(z.pfad, sprache)}">${esc(z.brotkrume)}</a><span>${esc(z.beschreibung)}</span></li>`;
+  }).join('\n')}\n        </ul>` : '';
+  const bild = a.bild || karten;
+  // Leitet der Satz die Karten ein («… lohnt sich der Blick:»), steht er davor.
+  const kurz = `\n        <p class="schicht-kurz">${a.absaetze[a.kurzAbsatz]}</p>`;
+  const bildHtml = bild ? `\n        <div class="schicht-bild">${bild}</div>` : '';
+  return `        <h2${a.id ? ` id="${a.id}"` : ''}>${esc(a.titel)}</h2>${karten ? kurz + bildHtml : bildHtml + kurz}${rest ? `
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+${rest}
+        </details>` : ''}${wege ? `
+        <nav class="wege" aria-label="Weiter von: ${esc(a.titel)}">${wege}</nav>` : ''}`;
+}
+
 function seiteBauen(seite, sprache) {
   const R = RAHMEN[sprache.code];
   const inhalt = inhaltFuer(sprache.code);
@@ -185,6 +216,7 @@ function seiteBauen(seite, sprache) {
   const andere = inhalt.seiten.filter((s) => s.pfad !== seite.pfad);
 
   const abschnitte = seite.abschnitte.map((a) => {
+    if (seite.schichten) return schichtAbschnitt(a, sprache);
     const absaetze = a.absaetze.map((p) => `        <p>${p}</p>`).join('\n');
     let verweise = '';
     if (a.verweise) {
@@ -262,6 +294,11 @@ function seiteBauen(seite, sprache) {
     seite, sprache, seitenUrl, ld,
     quelle: sprache.code === 'de' ? 'scripts/seiten-inhalt.mjs' : `scripts/seiten/${sprache.code}.mjs`,
     hreflang: hreflangRing(seite.pfad),
+    // Bereichsfarbe Versicherungen (Heidelbeere) wie auf den Hintergrundseiten.
+    ...(seite.schichten ? { extraStil: `
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }` + STIL_SCHICHTEN } : {}),
   })}
 
     <main>
@@ -659,6 +696,45 @@ function quellenListe(quellen, nummer, stellen, zugeklappt = new Map()) {
   }).join('\n');
 }
 
+// Drei Schichten (Brand Book §8, seit 09.11.2026): A Bild, B Satz, C aufklappbar, D Wege.
+// Farben über --heidel*, damit jede Seite ihre Bereichsfarbe behält.
+const STIL_SCHICHTEN = `
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }`;
+
 function hintergrundBauen(seite) {
   // Schalter für eine bewegte Fassung ohne Dateien dahinter: lieber abbrechen
   // als einen toten Link ausliefern (scripts/seiten/politsystem.mjs).
@@ -725,7 +801,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
       <details class="schicht-mehr">
         <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>${einsetzen(a.html, werte, bloecke, ctx)}
       </details>${wege ? `
-      <nav class="wege" aria-label="Weiter von hier">${wege}</nav>` : ''}`;
+      <nav class="wege" aria-label="Weiter von: ${esc(a.titel.replace(/^\d+\.\s*/, ''))}">${wege}</nav>` : ''}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
@@ -738,7 +814,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
-    extraStil: stilHintergrund + (seite.stilZusatz || ''),
+    extraStil: stilHintergrund + (seite.schichten ? STIL_SCHICHTEN : '') + (seite.stilZusatz || ''),
     // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
     // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
     ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),
