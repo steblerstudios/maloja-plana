@@ -472,11 +472,11 @@ export const SEITEN = [
       {
         id: 'notlage',
         bild: `<figure class="kern">
-          <p class="zahl">Hilfe in Notlagen</p>
-          <p class="unter">Bundesverfassung, Artikel 12: für alle, die in Not geraten und nicht für sich sorgen können. Die Untergrenze.</p>
+          <p class="zahl">Die Untergrenze</p>
+          <p class="unter">Bundesverfassung, Artikel 12: für alle, die in Not geraten und nicht für sich sorgen können.</p>
         </figure>`,
         kurzAbsatz: 0,
-        titel: 'Das Recht, das niemand verlieren kann',
+        titel: 'Recht auf Hilfe in Notlagen', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Unabhängig von allem oben steht in der <strong>Bundesverfassung, Artikel 12</strong>, das Recht auf Hilfe in Notlagen: Wer in Not gerät und nicht in der Lage ist, für sich zu sorgen, hat Anspruch auf Hilfe und Betreuung und auf die Mittel, die für ein menschenwürdiges Dasein unerlässlich sind.',
           'Dieses Recht steht allen Menschen in der Schweiz zu. Es ist nicht dasselbe wie Sozialhilfe und deckt weniger ab — aber es ist die Untergrenze, die nicht unterschritten werden darf.',
