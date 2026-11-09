@@ -53,7 +53,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
 
   const inputStyle = {
     padding: (space.ms) + 'px ' + space.sm + 'px',
-    borderRadius: radius.sm, border: '1px solid ' + palette.border,
+    borderRadius: radius.sm, border: '1px solid ' + palette.feldrand,
     background: palette.up, color: palette.text, boxSizing: 'border-box',
     fontSize: text.sm, fontFamily, cursor: 'text',
   };
@@ -102,7 +102,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
             style: { ...inputStyle, cursor: 'pointer' },
           }),
           // Betrag mit klarer CHF-Einheit (sonst unklar „250 was?" — Stebler Studios).
-          React.createElement('div', { style: { display: 'flex', alignItems: 'stretch', border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.up, overflow: 'hidden' } },
+          React.createElement('div', { style: { display: 'flex', alignItems: 'stretch', border: '1px solid ' + palette.feldrand, borderRadius: radius.sm, background: palette.up, overflow: 'hidden' } },
             React.createElement('span', { style: { fontSize: text.xs, color: palette.mid, alignSelf: 'center', padding: '0 ' + space.xs + 'px 0 ' + space.sm + 'px', whiteSpace: 'nowrap' } }, 'CHF'),
             React.createElement('input', {
               type: 'number', inputMode: 'decimal', value: dep.amount || '',

@@ -191,7 +191,7 @@ export const BetaGate = ({ children }) => {
         'aria-describedby': error ? 'beta-error' : undefined,
         style: {
           width: '100%', padding: '12px 16px', fontSize: text.body,
-          border: '1px solid ' + (error ? palette.rose : palette.border),
+          border: '1px solid ' + (error ? palette.rose : palette.feldrand),
           borderRadius: radius.md, background: palette.up, color: palette.text,
           outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
         }

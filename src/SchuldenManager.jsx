@@ -220,7 +220,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     padding: space.sm + 'px ' + (space.ms) + 'px',
     marginBottom: space.sm,
     borderRadius: radius.md,
-    border: '1px solid ' + palette.border,
+    border: '1px solid ' + palette.feldrand,
     background: palette.surface,
     color: palette.text,
     boxSizing: 'border-box',
