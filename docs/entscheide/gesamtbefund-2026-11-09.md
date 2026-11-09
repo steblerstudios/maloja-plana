@@ -146,9 +146,33 @@ siebenmal neu entschieden werden:
    ([Bild](../design/querschnitt-1-echt.html)). ✅ **09.11.: A und B = A** (Stebler Studios: «Ja, A und B»).
    Bau im Zweig `feat/querschnitt-1-gestaltung`.
 2. **Querschnitt Formulare:** Fokus und Ansage in `FragenAblauf` (G4, U6), Vorlese-Knopf aus dem Label (U3/U4).
+   ✅ **09.11.: gebaut** (Stebler Studios: «Ja, Querschnitt 2»), Zweig `feat/querschnitt-2-formulare` auf #770.
+   Fokus auf die neue Frage («Frage 2 von 8: Welche Art von Grab?», im Browser geprüft), `gruppe`/`personen` als
+   fieldset/legend je Rolle, Auswahlzeilen und «Warum» 44 px, Vorlese-Knopf 44 × 44 neben statt im Label.
+   **Bewusst nicht übernommen: U13** (`autoComplete` für Name und Telefon). Die Felder im Fragen-Ablauf gelten
+   anderen Menschen (Vertrauensperson, Ersatzperson); `autocomplete="name"` würde den eigenen Namen einsetzen.
 3. **SEO-Weg:** Sprachfreigabe fr/it/en (G1) und 403 an den Sprachwurzeln (S6) gehören zusammen. Welche neuen
    Erklärseiten zuerst kommen (G2), ist ein Inhaltsentscheid und braucht den rechts- und swiss-precision-pruefer.
+   **⟨Berichtigung 09.11., beim Start von Querschnitt 3⟩ G1 ist keine Lücke im Code, sondern eine gewollte Sperre.**
+   `scripts/seiten-sprachen.mjs` gibt eine Sprache erst frei, wenn ein Mensch sie gelesen hat; der Prüfdurchgang
+   durch Agenten (#692, gemergt 06.11.) ersetzt das ausdrücklich nicht. Offen laut Plan vom 05.11.: menschliche
+   Lektüre (en, evtl. fr: Stebler Studios; it: Person mit Italienisch), drei Gesetzeszitate am Fedlex-Text
+   (UWG Art. 3 fr/it, BV Art. 12 en), Entscheid zu den Stellen der Romandie und des Tessins. Der Satz in G1
+   «im Code noch nicht umgesetzt» war zu kurz.
+   **S6 · 403 an `/fr/` usw.:** Die `.htaccess` geht nicht mit dem Deploy (`deploy.sh` lädt sie nicht hoch, die
+   Server-Datei pflegt Stebler Studios von Hand). Lösung, die mit dem normalen Deploy kommt: je Sprache eine kleine
+   **Sprach-Startseite** `/fr/index.html` usw. mit der Liste der Erklärseiten dieser Sprache und dem Weg in die App
+   (`/?lang=fr`). Solange die Sprache gesperrt ist, trägt sie wie die Unterseiten `noindex, follow`.
+   ✅ **09.11.: gebaut** (Stebler Studios: «Ja, so») → Entwurfs-PR #775, Zweig `feat/seo-sprachwurzeln` (von `main`):
+   Sprach-Startseiten, Startseiten-Titel «Maloja Plana — Prämienverbilligung, Steuern, Sozialhilfe» (S5), Lesebogen
+   Englisch `docs/uebersetzung/lesebogen-en-2026-11.html` (133 Stellen, 56 gelb). **Offen bei Stebler Studios:** Englisch
+   lesen; wer liest Französisch und Italienisch; Deploy. **Offen bei mir:** drei Gesetzeszitate am Fedlex-Text.
 4. Danach die sieben Kapitel in der Ordnung des Dashboards: Basis · Wohnen · Finanzen · Versicherungen & Vorsorge ·
    Ausbildung & Arbeit · Behörden · Gesundheit.
+   **Kapitel 1 · Persönliche Basis** (09.11.): Bild [kapitel-1-basis.html](../design/kapitel-1-basis.html). Gestaltung A Pfad-Pille
+   bricht um · B Weg zu hoch auf dem Handy · C Knöpfe und Felder in Arial (app-weit, eine Zeile fehlt im Grundstil).
+   Inhalt F1–F4 fehlende Voraussetzungen (EO, Bevorschussung, Einmischung in den Nachlass), F5–F9 klein. Sprache T1–T6
+   (du/ihr gemischt, Italienisch Sie=du, Gesetzeskürzel bei «18 werden», Maskulin, Pronomen-Feld). ✅ **09.11.: alles wie
+   empfohlen** (Stebler Studios: «Ja, alles»). Zwei Zweige: Gestaltung, Inhalt.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

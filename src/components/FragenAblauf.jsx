@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PageTitle } from './Heading.jsx';
 import { Icon } from '../IconSystem.jsx';
 import { knopfStil } from './PrimaryButton.jsx';
@@ -22,12 +22,21 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   const [schritt, setSchritt] = useState(0);
   const total = fragen.length;
   const imVorschau = schritt >= total;
+  // Querschnitt 2 (09.11.2026): nach Weiter/Zurück springt der Fokus auf die neue Frage. Die Fläche
+  // trägt Rolle und Namen («Frage 3 von 9: …»), so sagt der Screenreader den Wechsel an — gleiches
+  // Muster wie AblaufSchale (Fokus statt aria-live, sonst doppelte Ansage).
+  const flaeche = useRef(null);
+  const gewechselt = useRef(false);
+  useEffect(() => {
+    if (gewechselt.current && flaeche.current) flaeche.current.focus();
+  }, [schritt]);
+  const geheZu = (n) => { gewechselt.current = true; setSchritt(n); };
 
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const frageStil = { ...labelStil, fontSize: text.body, marginBottom: space.sm + 'px' };
   const hilfeStil = { margin: space.xs + 'px 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
   const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
-  const zeileStil = { display: 'flex', alignItems: 'center', gap: '12px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
+  const zeileStil = { display: 'flex', alignItems: 'center', gap: '12px', minHeight: '44px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
   // Fassung 9: Haupt- und Nebenknopf aus dem Baustein (auch für die Vorschau der Fragen-Abläufe).
   const knopf = (hervor) => knopfStil(palette, hervor ? 'haupt' : 'neben');
 
@@ -77,8 +86,8 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
     if (f.art === 'gruppe') {
       const g = antworten[f.key] || {};
       const teilSetzen = (patch) => setzen({ [f.key]: { ...g, ...patch } });
-      return React.createElement(React.Fragment, null,
-        React.createElement('div', { style: { ...frageStil, marginBottom: space.xs + 'px' } }, t(ns + '.frage.' + f.key)),
+      return React.createElement('fieldset', { style: { border: 'none', padding: 0, margin: 0 } },
+        React.createElement('legend', { style: { ...frageStil, marginBottom: space.xs + 'px' } }, t(ns + '.frage.' + f.key)),
         hilfe,
         f.teile.map((teil) => React.createElement('div', { key: teil.key },
           auswahl(ns + '-' + teil.key, t(ns + '.frage.' + teil.key), teil.optionen, teil.key, g[teil.key], (o) => teilSetzen({ [teil.key]: o })),
@@ -86,13 +95,15 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
     }
     // personen: je Rolle ein Kasten mit Feldern
     const felder = f.felder || ['name', 'beziehung', 'telefon'];
-    return React.createElement(React.Fragment, null,
-      React.createElement('div', { style: { ...frageStil, marginBottom: space.xs + 'px' } }, t(ns + '.frage.' + f.key)),
+    // Jede Rolle ist eine eigene Gruppe: bei zwei Rollen sagt der Screenreader «Ersatzperson, Name» statt
+    // zweimal nur «Name» (Querschnitt 2).
+    return React.createElement('fieldset', { style: { border: 'none', padding: 0, margin: 0 } },
+      React.createElement('legend', { style: { ...frageStil, marginBottom: space.xs + 'px' } }, t(ns + '.frage.' + f.key)),
       hilfe,
       f.rollen.map((rolle) => {
         const p = antworten[rolle] || {};
-        return React.createElement('div', { key: rolle, style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, marginBottom: space.sm + 'px' } },
-          f.rollen.length > 1 && React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, fontSize: text.sm, margin: space.xs + 'px 0 ' + space.sm + 'px' } }, t(ns + '.doc.rolle_' + rolle)),
+        return React.createElement('fieldset', { key: rolle, style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, margin: '0 0 ' + space.sm + 'px', minWidth: 0 } },
+          f.rollen.length > 1 && React.createElement('legend', { style: { fontWeight: weight.semi, color: palette.text, fontSize: text.sm, padding: 0, margin: space.xs + 'px 0 ' + space.sm + 'px', float: 'left', width: '100%' } }, t(ns + '.doc.rolle_' + rolle)),
           felder.map((k) => feld(ns + '-' + rolle + '-' + k, t(ns + '.ui.' + k), p[k], (v) => setzen({ [rolle]: { ...p, [k]: v } }), { typ: k === 'geburt' ? 'date' : 'text', schmal: k === 'geburt' })));
       }));
   };
@@ -111,16 +122,21 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
           React.createElement('div', { style: { height: '100%', width: Math.round(((schritt + 1) / total) * 100) + '%', background: palette.sage, borderRadius: radius.hair + 'px' } }))
       ),
       // B — Frage · C — Warum
-      imVorschau ? vorschau({ zumAnfang: () => setSchritt(0), knopf }) : React.createElement('div', { key: f.key },
+      React.createElement('div', {
+        ref: flaeche, tabIndex: -1, role: 'group', 'data-fragen-flaeche': '', style: { outline: 'none', scrollMarginTop: 'var(--mp-sprungabstand)' },
+        'aria-label': imVorschau ? titel : t(ns + '.ui.fortschritt', { n: schritt + 1, total }) + ': ' + t(ns + '.frage.' + f.key),
+      },
+      imVorschau ? vorschau({ zumAnfang: () => geheZu(0), knopf }) : React.createElement('div', { key: f.key },
         frageSeite(f),
         React.createElement('details', { style: { marginTop: space.sm + 'px', fontSize: text.sm, color: palette.mid } },
-          React.createElement('summary', { style: { cursor: 'pointer', color: palette.sandDeep, fontWeight: weight.medium, minHeight: '32px' } }, t(ns + '.ui.warum')),
+          // 12 + 20 + 12 = 44 px Tippfläche; display:flex würde in WebKit das Dreieck nehmen.
+          React.createElement('summary', { style: { cursor: 'pointer', color: palette.sandDeep, fontWeight: weight.medium, padding: '12px 0', lineHeight: '20px' } }, t(ns + '.ui.warum')),
           React.createElement('p', { style: { margin: space.xs + 'px 0 0', lineHeight: leading.normal, color: palette.mid } }, t(ns + '.warum.' + f.key)))
-      ),
+      )),
       // D — Zurück / Weiter
       !imVorschau && React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', marginTop: space.md + 'px' } },
-        React.createElement('button', { type: 'button', style: { ...knopf(false), visibility: schritt === 0 ? 'hidden' : 'visible' }, onClick: () => setSchritt(schritt - 1) }, t(ns + '.ui.zurueck')),
-        React.createElement('button', { type: 'button', style: knopf(true), onClick: () => setSchritt(schritt + 1) }, schritt === total - 1 ? t(ns + '.ui.zurVorschau') : t(ns + '.ui.weiter'))
+        React.createElement('button', { type: 'button', style: { ...knopf(false), visibility: schritt === 0 ? 'hidden' : 'visible' }, onClick: () => geheZu(schritt - 1) }, t(ns + '.ui.zurueck')),
+        React.createElement('button', { type: 'button', style: knopf(true), onClick: () => geheZu(schritt + 1) }, schritt === total - 1 ? t(ns + '.ui.zurVorschau') : t(ns + '.ui.weiter'))
       )
     ),
     imVorschau && hinweis && React.createElement('p', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px', lineHeight: leading.normal } }, hinweis)
