@@ -66,6 +66,25 @@ describe('ahvBezugAlterFuer / ahvKapitalImBild', () => {
   });
 });
 
+describe('Frauen der Übergangsgeneration (Fachprüfung 09.11.2026)', () => {
+  // fruehesterVorbezugMonate sagt 62 (Art. 40c AHVG), berechneAltersrente kürzt aber höchstens
+  // 24 Monate und kennt deren tiefere Sätze noch nicht (D10). Ab 62 gäbe es bei JG 1964 36 Monate
+  // Rente mit der Kürzung für 24. Das Bild beginnt deshalb, wo der Rechner rechnen kann: 63.
+  it('Frau JG 1964, Rücktritt 58: AHV-Bezug im Bild 63, höchstens 24 Monate Vorbezug', async () => {
+    const { fruehesterAhvBezugImBildMonate } = await import('../utils/ahvZukunftsbild.js');
+    const { referenzalterMonate } = await import('../data/ahvRechner.js');
+    const ref = referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1964 });
+    const frueh = fruehesterAhvBezugImBildMonate(ref);
+    expect(frueh).toBe(63 * 12);
+    const bild = ahvKapitalImBild({ ruecktrittJahre: 58, fruehesterBezugMonate: frueh, refAlterJahre: ref / 12, lebenserwartung: 88, monatsrente: 1, monatsrenteReferenzalter: 1 });
+    expect(bild.vorbezugM).toBeLessThanOrEqual(24);
+  });
+  it('Frau JG 1962 (Referenzalter 64 J 6 M): nie früher als 63', async () => {
+    const { fruehesterAhvBezugImBildMonate } = await import('../utils/ahvZukunftsbild.js');
+    expect(fruehesterAhvBezugImBildMonate(64 * 12 + 6)).toBe(63 * 12);
+  });
+});
+
 describe('Vorsorge-Rechner, Reiter Zukunft', () => {
   it('Rücktritt mit 58 zeigt dieselbe AHV wie Bezug mit 63', () => {
     bezugAlter = '63';

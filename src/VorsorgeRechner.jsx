@@ -17,8 +17,8 @@ import { zahl } from './utils/geld.js';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
-import { nettoZuBruttoRichtwert, fruehesterVorbezugMonate } from './data/lohnAbzuege.js';
-import { ahvBezugAlterFuer, ahvKapitalImBild } from './utils/ahvZukunftsbild.js';
+import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
+import { ahvBezugAlterFuer, ahvKapitalImBild, fruehesterAhvBezugImBildMonate } from './utils/ahvZukunftsbild.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { hauptlohnMonate, dreizehnterStatus } from './utils/dreizehnter.js';
@@ -257,7 +257,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Das Zukunftsbild setzt das RÜCKTRITTSalter (Regler ab 58). Die AHV kommt nie vor dem frühesten
   // Vorbezug, und bis dahin bleibt man beitragspflichtig → AHV wie bei Bezug am frühesten Tag
   // (Bugsuche B-18, utils/ahvZukunftsbild.js).
-  const fruehesterAhvBezugMonate = fruehesterVorbezugMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear || 1970 });
+  const fruehesterAhvBezugMonate = fruehesterAhvBezugImBildMonate(refAlterMonate);
   const ahvBezugImBild = ahvBezugAlterFuer(parsedBezugAlter, fruehesterAhvBezugMonate);
   const beitragsjahreImBild = beitragsjahreBeiBezug(ahvBezugImBild);
   const projektionAhv = useMemo(() => {
@@ -733,13 +733,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // sonst widerspräche der Szenariotext der (bereits korrekten) Prozentzahl aus
             // projektionAhv. Delta in Monaten, weil das Referenzalter der Übergangs-
             // generation krumm ist (z. B. 64 J 6 M) und „0,5 Jahre" unschön läse.
-            // 63 steht auch fest in den Texten (vr.zukunftSzenarioAhvFrueh/-Bridge, 5 Sprachen). Für
-            // Frauen der Übergangsgeneration (frühestens 62, fruehesterVorbezugMonate) rechnet
-            // projektionAhv seit B-18 schon ab 62 — Text dazu offen (BUGS.md B-18).
-            const ahvMin = 63;
+            // Dieselbe Grenze wie projektionAhv und die AHV-Fläche (utils/ahvZukunftsbild.js): 63,
+            // so wie es auch die Texte nennen. Frauen der Übergangsgeneration (ab 62) noch nicht
+            // abgebildet (D10, BUGS.md B-18).
+            const ahvMin = fruehesterAhvBezugMonate / 12;
             // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen: es beschreibt den
-            // Rücktritt. projektionAhv rechnet mit max(Rücktritt, frühester Bezug) — ab dort
-            // dasselbe, so driften Szenario-Text und pct im krummen Referenzalter-Default nicht auseinander.
+            // Rücktritt. projektionAhv rechnet mit max(Rücktritt, ahvMin) — ab dort dasselbe, so
+            // driften Szenario-Text und pct im krummen Referenzalter-Default nicht auseinander.
             const deltaMonate = Math.round((parsedBezugAlter - refAlterJahre) * 12);
             const nAbsM = Math.abs(deltaMonate);
             const delta = deltaMonate;
