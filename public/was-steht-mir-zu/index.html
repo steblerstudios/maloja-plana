@@ -180,6 +180,44 @@
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
   </style>
 </head>
 <body>
@@ -196,23 +234,46 @@
       <p class="vorspann">Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Der häufigste Grund, warum Leistungen nicht bezogen werden, ist nicht ein fehlender Anspruch. Es ist fehlendes Wissen, dass es sie gibt.</p>
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
-        <h2>Drei Ebenen, die sich nicht abstimmen</h2>
-        <p>Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung weitgehend den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.</p>
-        <p>Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Das ist kein Fehler im System, das ist das System.</p>
-        <p>Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der man tatsächlich zu tun hat.</p>
-        <p>Praktisch heisst das: Eine allgemeine Antwort auf «steht mir das zu?» gibt es nicht. Es gibt nur die Antwort für Ihren Wohnort, Ihre Situation und Ihr Jahr.</p>
+        <h2 id="ebenen">Drei Ebenen, die sich nicht abstimmen</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Wer was tut">
+          <li><span class="jahr">Bund</span><span class="was">setzt bei vielen Leistungen nur den Rahmen</span></li>
+          <li><span class="jahr">Kantone</span><span class="was">füllen ihn aus, mit eigenen Grenzen, Formularen und Fristen</span></li>
+          <li><span class="jahr">Gemeinden</span><span class="was">führen in mehreren Bereichen aus; in der Sozialhilfe oft die Stelle, mit der man zu tun hat</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Praktisch heisst das: Eine allgemeine Antwort auf «steht mir das zu?» gibt es nicht. Es gibt nur die Antwort für Ihren Wohnort, Ihre Situation und Ihr Jahr.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung weitgehend den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.</p>
+          <p>Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Das ist kein Fehler im System, das ist das System.</p>
+          <p>Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der man tatsächlich zu tun hat.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Drei Ebenen, die sich nicht abstimmen"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a><a class="weg" href="/politsystem/"><span aria-hidden="true">→</span> Politik erklärt</a></nav>
 
-        <h2>Die Themen im Einzelnen</h2>
-        <p>Drei Bereiche betreffen die meisten Menschen, und bei allen dreien lohnt sich der Blick auch dann, wenn man meint, es treffe einen nicht zu:</p>
-        <ul class="weiter">
+        <h2 id="themen">Die Themen im Einzelnen</h2>
+        <p class="schicht-kurz">Drei Bereiche betreffen die meisten Menschen, und bei allen dreien lohnt sich der Blick auch dann, wenn man meint, es treffe einen nicht zu:</p>
+        <div class="schicht-bild"><ul class="weiter">
           <li><a href="/praemienverbilligung/">Prämienverbilligung</a><span>Die Prämienverbilligung (IPV) ist ein Beitrag an die Krankenkassenprämie. Der Bund setzt den Rahmen, die Kantone entscheiden — was das für Sie bedeutet.</span></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a><span>Wer über Sozialhilfe entscheidet, woraus sie sich zusammensetzt und warum die SKOS-Richtlinien nicht automatisch Gesetz sind. Eine Einordnung ohne Zahlen.</span></li>
           <li><a href="/steuern/">Steuern</a><span>Warum dieselbe Lohnsumme je nach Wohnort sehr unterschiedlich besteuert wird — die drei Ebenen, der Steuerfuss und was das praktisch bedeutet.</span></li>
-        </ul>
+        </ul></div>
 
-        <h2>Warum so vieles liegen bleibt</h2>
-        <p>Ein Anspruch, von dem niemand weiss, wird nicht bezogen. Dazu kommen Hürden, die mit dem Anspruch selbst nichts zu tun haben: Formulare in einer Sprache, die man erst lernen muss. Fristen, die nirgends zusammen stehen. Die Sorge, etwas falsch zu machen. Und die verbreitete Annahme, Unterstützung sei etwas für andere.</p>
-        <p>Nichts davon ändert etwas am Anspruch. Aber alles davon führt dazu, dass er nicht geltend gemacht wird.</p>
+        <h2 id="liegen">Warum so vieles liegen bleibt</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="unter" id="huerden">Was Menschen vom Antrag abhält, ohne am Anspruch etwas zu ändern:</p>
+          <ul class="chips" role="list" aria-labelledby="huerden">
+            <li>nicht wissen, dass es die Leistung gibt</li>
+            <li>Formulare in einer fremden Sprache</li>
+            <li>Fristen, die nirgends zusammen stehen</li>
+            <li>die Sorge, etwas falsch zu machen</li>
+            <li>«Unterstützung ist etwas für andere»</li>
+          </ul>
+        </div></div>
+        <p class="schicht-kurz">Nichts davon ändert etwas am Anspruch. Aber alles davon führt dazu, dass er nicht geltend gemacht wird.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Ein Anspruch, von dem niemand weiss, wird nicht bezogen. Dazu kommen Hürden, die mit dem Anspruch selbst nichts zu tun haben: Formulare in einer Sprache, die man erst lernen muss. Fristen, die nirgends zusammen stehen. Die Sorge, etwas falsch zu machen. Und die verbreitete Annahme, Unterstützung sei etwas für andere.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Warum so vieles liegen bleibt"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
 
       <h2>Häufige Fragen</h2>
         <h3>Wie finde ich heraus, was mir zusteht?</h3>

@@ -64,8 +64,9 @@ export const merkpunktBereich = (link) => {
 export const merkpunktZeichen = (link) => {
   const b = merkpunktBereich(link);
   if (b) return b;
-  if (!link) return 'check';
-  return ansichtIkon(link, 'check');
+  // Ein Merkpunkt ist «gemerkt», nicht «geschafft»: Lesezeichen (Icon-Besprechung Punkt 3).
+  if (!link) return 'lesezeichen';
+  return ansichtIkon(link, 'lesezeichen');
 };
 
 export const kategorieBereich = (category) => KATEGORIE_BEREICH[category] || null;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import PrimaryButton from './components/PrimaryButton.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
@@ -53,7 +54,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         border: '1px solid ' + palette.border, marginBottom: '24px',
       }
     },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('finanzUebersicht.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('finanzuebersicht', 'budget'), size: 22 }), style: { marginBottom: space.md + 'px' } }, t('finanzUebersicht.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
       }, t('finanzUebersicht.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('finanzUebersicht.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') }))

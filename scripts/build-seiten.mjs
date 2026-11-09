@@ -178,6 +178,37 @@ function hinweisOben(sprache) {
   return '';
 }
 
+// Drei Schichten auf einer Erklärseite (Brand Book §8, 09.11.2026). Bisher
+// nur auf Deutsch: Die Übersetzungen warten auf die menschliche Lektüre und
+// bleiben im alten Aufbau. `kurzAbsatz` ist ein Index in `absaetze` — der
+// Absatz wandert nach vorne statt neu geschrieben zu werden, darum bleibt die
+// Zahl der Absätze in allen Sprachen gleich. `bild` entfällt, wo kein Bild
+// etwas zeigt. `wege` nennt Pfade; der Text ist die Brotkrume der Zielseite.
+function schichtAbschnitt(a, sprache) {
+  const inhalt = inhaltFuer(sprache.code);
+  const rest = a.absaetze.filter((_, i) => i !== a.kurzAbsatz).map((p) => `          <p>${p}</p>`).join('\n');
+  const wege = (a.wege || []).map((p) => {
+    const z = inhalt.seiten.find((s) => s.pfad === p) || HINTERGRUND.find((h) => h.pfad === p);
+    if (!z) throw new Error(`Weg zu unbekannter Seite ${p}`);
+    return `<a class="weg" href="${pfadIntern(z.pfad, sprache)}"><span aria-hidden="true">→</span> ${esc(z.brotkrume)}</a>`;
+  }).join('');
+  // Verweise (Karten zu den Themen) sind selbst das Bild, wenn kein eigenes da ist.
+  const karten = !a.bild && a.verweise ? `<ul class="weiter">\n${a.verweise.map((p) => {
+    const z = inhalt.seiten.find((s) => s.pfad === p);
+    return `          <li><a href="${pfadIntern(z.pfad, sprache)}">${esc(z.brotkrume)}</a><span>${esc(z.beschreibung)}</span></li>`;
+  }).join('\n')}\n        </ul>` : '';
+  const bild = a.bild || karten;
+  // Leitet der Satz die Karten ein («… lohnt sich der Blick:»), steht er davor.
+  const kurz = `\n        <p class="schicht-kurz">${a.absaetze[a.kurzAbsatz]}</p>`;
+  const bildHtml = bild ? `\n        <div class="schicht-bild">${bild}</div>` : '';
+  return `        <h2${a.id ? ` id="${a.id}"` : ''}>${esc(a.titel)}</h2>${karten ? kurz + bildHtml : bildHtml + kurz}${rest ? `
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+${rest}
+        </details>` : ''}${wege ? `
+        <nav class="wege" aria-label="Weiter von: ${esc(a.titel)}">${wege}</nav>` : ''}`;
+}
+
 function seiteBauen(seite, sprache) {
   const R = RAHMEN[sprache.code];
   const inhalt = inhaltFuer(sprache.code);
@@ -186,6 +217,7 @@ function seiteBauen(seite, sprache) {
   const andere = inhalt.seiten.filter((s) => s.pfad !== seite.pfad);
 
   const abschnitte = seite.abschnitte.map((a) => {
+    if (seite.schichten) return schichtAbschnitt(a, sprache);
     const absaetze = a.absaetze.map((p) => `        <p>${p}</p>`).join('\n');
     let verweise = '';
     if (a.verweise) {
@@ -272,6 +304,11 @@ function seiteBauen(seite, sprache) {
     seite, sprache, seitenUrl, ld,
     quelle: sprache.code === 'de' ? 'scripts/seiten-inhalt.mjs' : `scripts/seiten/${sprache.code}.mjs`,
     hreflang: hreflangRing(seite.pfad),
+    // Bereichsfarbe Versicherungen (Heidelbeere) wie auf den Hintergrundseiten.
+    ...(seite.schichten ? { extraStil: `
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }` + STIL_SCHICHTEN } : {}),
   })}
 
     <main>
@@ -309,6 +346,57 @@ ${istErklaerseite ? `          <li><a href="${pfadIntern('rechtliches', sprache)
     </main>
 
 ${fuss(sprache, `${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}`)}`;
+}
+
+// ─── Sprach-Startseiten /fr/ /it/ /en/ /rm/ (seit 09.11.2026) ───────────────
+// Bis dahin antworteten die Sprachwurzeln mit «403 Access forbidden» (kein index.html,
+// Gesamtbefund S6). Die Server-.htaccess geht nicht mit dem Deploy, darum hier eine Seite,
+// die mit den Erklärseiten ausgeliefert wird. Sie bringt KEINEN neuen Text: Titel, Liste und
+// Karte kommen aus RAHMEN und den Seiten der Sprache, die schon übersetzt sind. Der Knopf
+// führt in die App in derselben Sprache (/?lang=xx). Freigabe wie jede Seite der Sprache:
+// gesperrt → noindex und nicht in der Sitemap.
+function sprachStartBauen(sprache) {
+  const R = RAHMEN[sprache.code];
+  const inhalt = inhaltFuer(sprache.code);
+  const seitenUrl = `${BASIS}/${sprache.praefix}`;
+  // Titel «Accueil — Maloja Plana», Brotkrume «Accueil › Français»: beides aus vorhandenen Wörtern.
+  const seite = { titel: R.start, brotkrume: SPRACHNAME[sprache.code], beschreibung: R.karteText };
+  const liste = inhalt.seiten.map((s) =>
+    `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a>` +
+    `<span>${esc(s.beschreibung)}</span></li>`).join('\n');
+  const waehler = SPRACHEN.map((s) => (s.code === sprache.code
+    ? `<span aria-current="true">${SPRACHNAME[s.code]}</span>`
+    : `<a href="/${s.praefix}" hreflang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`)).join(' · ');
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [{
+      '@type': 'WebPage', '@id': `${seitenUrl}#webpage`, url: seitenUrl, name: seite.titel,
+      description: seite.beschreibung, inLanguage: sprache.ldLang,
+      isPartOf: { '@id': `${BASIS}/#website` }, publisher: { '@id': `${BASIS}/#org` }, about: { '@id': `${BASIS}/#app` },
+    }],
+  };
+  return `${kopf({ seite, sprache, seitenUrl, ld, quelle: `scripts/seiten/${sprache.code}.mjs (Rahmen + Seitenliste)`, hreflang: '' })}
+
+    <main>
+${hinweisOben(sprache)}      <h1>Maloja Plana</h1>
+      <p class="vorspann">${esc(R.karteText)}</p>
+
+      <ul class="weiter">
+${liste}
+      </ul>
+
+      <div class="karte">
+        <p><strong>${esc(R.karteTitel)}</strong></p>
+        <p>${R.karteBeta}</p>
+        <p><a class="knopf" href="/?lang=${sprache.code}">${esc(R.karteKnopf)}</a></p>
+      </div>
+
+      <ul>
+          <li><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a></li>
+      </ul>
+    </main>
+
+${fuss(sprache, `${esc(R.spracheLabel)}: ${waehler}`)}`;
 }
 
 // ─── Kopf und Fuss — gemeinsam für Erklär- und Hintergrundseiten ─────────────
@@ -578,12 +666,33 @@ function belegeSetzen(html, quellen) {
   return { text: text.replace(/<\/sup><sup class="beleg">/g, '</sup><sup class="beleg folge">'), nummer, stellen };
 }
 
-function quellenListe(quellen, nummer, stellen) {
+// Drei Schichten: Belege im zugeklappten Teil. Der «Zurück»-Link springt dann
+// auf die Überschrift des Abschnitts, die immer sichtbar ist — ob ein Browser
+// <details> beim Sprung aufklappt, ist nicht überall belegt (Safari ungeprüft).
+// Wächter: src/__tests__/schichtenBelegSprung.test.js.
+function zugeklappteBelege(text) {
+  const ziel = new Map();
+  for (const teil of text.split(/(?=<h2 id=")/)) {
+    const h = teil.match(/^<h2 id="([^"]+)"/);
+    if (!h) continue;
+    for (const d of teil.matchAll(/<details class="schicht-mehr">([\s\S]*?)<\/details>/g))
+      for (const m of d[1].matchAll(/id="(beleg-[^"]+)"/g)) ziel.set(m[1], h[1]);
+  }
+  return ziel;
+}
+
+function quellenListe(quellen, nummer, stellen, zugeklappt = new Map()) {
   return [...quellen].sort((a, b) => nummer.get(a.key) - nummer.get(b.key)).map((q) => {
     const n = nummer.get(q.key);
     const anzahl = stellen.get(q.key);
     const zurueck = 'Zurück zum Text: ' + Array.from({ length: anzahl }, (_, i) =>
-      `<a href="#beleg-${q.key}-${i + 1}" aria-label="Zurück zur Stelle ${i + 1} im Text">${anzahl > 1 ? i + 1 : '↩'}</a>`).join(' · ');
+      {
+        const id = `beleg-${q.key}-${i + 1}`;
+        const abschnitt = zugeklappt.get(id);
+        return abschnitt
+          ? `<a href="#${abschnitt}" aria-label="Zurück zum Abschnitt mit Stelle ${i + 1}; sie steht unter «Ausführlich lesen»">${anzahl > 1 ? i + 1 : '↩'}</a>`
+          : `<a href="#${id}" aria-label="Zurück zur Stelle ${i + 1} im Text">${anzahl > 1 ? i + 1 : '↩'}</a>`;
+      }).join(' · ');
     const auch = q.auch ? `\n            <p class="q-her">Dazu: <a href="${esc(q.auch.url)}" rel="noopener">${esc(q.auch.text)}</a></p>` : '';
     return `        <li id="quelle-${q.key}">
           <span class="q-nr">${n}</span>
@@ -596,6 +705,45 @@ function quellenListe(quellen, nummer, stellen) {
         </li>`;
   }).join('\n');
 }
+
+// Drei Schichten (Brand Book §8, seit 09.11.2026): A Bild, B Satz, C aufklappbar, D Wege.
+// Farben über --heidel*, damit jede Seite ihre Bereichsfarbe behält.
+const STIL_SCHICHTEN = `
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }`;
 
 function hintergrundBauen(seite) {
   // Schalter für eine bewegte Fassung ohne Dateien dahinter: lieber abbrechen
@@ -650,7 +798,20 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
     // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
     // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
-    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, bloecke, ctx)}`;
+    const kopf = `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>`;
+    if (!seite.schichten) return `${kopf}${einsetzen(a.html, werte, bloecke, ctx)}`;
+    // Drei Schichten (Probe 09.11.2026, Stebler Studios «Ja, Probe bauen»):
+    // A Bild zuerst, B ein Satz, C der ganze Text aufklappbar, D Wege.
+    // Der Text in C bleibt unverändert; nichts fällt weg, es ist nur zu.
+    const wege = (a.wege || []).map((w) =>
+      `<a class="weg" href="${w.href}"><span aria-hidden="true">→</span> ${esc(w.text)}</a>`).join('');
+    return `${kopf}
+      <div class="schicht-bild">${einsetzen(a.bild || '', werte, bloecke, ctx)}</div>
+      <p class="schicht-kurz">${einsetzen(a.kurz, werte, bloecke, ctx)}</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>${einsetzen(a.html, werte, bloecke, ctx)}
+      </details>${wege ? `
+      <nav class="wege" aria-label="Weiter von: ${esc(a.titel.replace(/^\d+\.\s*/, ''))}">${wege}</nav>` : ''}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
@@ -663,7 +824,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
-    extraStil: stilHintergrund + (seite.stilZusatz || ''),
+    extraStil: stilHintergrund + (seite.schichten ? STIL_SCHICHTEN : '') + (seite.stilZusatz || ''),
     // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
     // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
     ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),
@@ -689,7 +850,7 @@ ${abschnitte}
       <h2 id="quellen">Quellen</h2>
       <p class="leise">Die hochgestellten Nummern im Text führen hierher, «Zurück zum Text» wieder an die Stelle.</p>
       <ol class="quellen">
-${quellenListe(seite.quellen, nummer, stellen)}
+${quellenListe(seite.quellen, nummer, stellen, zugeklappteBelege(abschnitte))}
       </ol>
       <p class="leise">${esc(seite.quellenHinweis)}</p>
 
@@ -946,6 +1107,8 @@ function sitemapBauen() {
   const zeilen = [eintrag(`${BASIS}/`, '1.0', null)];
   for (const s of frei) {
     const i = inhaltFuer(s.code);
+    // Sprach-Startseite (nur freigegebene Sprachen ausser Deutsch, dessen Start «/» ist).
+    if (s.praefix) zeilen.push(eintrag(`${BASIS}/${s.praefix}`, '0.9', null));
     zeilen.push(...i.seiten.map((x) => eintrag(url(x.pfad, s), '0.8', x.pfad)));
     zeilen.push(...i.sonderseiten.map((x) => eintrag(url(x.pfad, s), '0.3', x.pfad)));
     // Hintergrundseiten: nur Deutsch, darum ohne Sprach-Alternativen.
@@ -996,6 +1159,15 @@ for (const sprache of SPRACHEN) {
       name,
     });
   }
+}
+
+// Sprach-Startseiten: alle Sprachen ausser Deutsch (Deutsch hat die App-Startseite «/»).
+for (const sprache of SPRACHEN.filter((x) => x.praefix)) {
+  seitenAusgaben.push({
+    ziel: resolve(WURZEL, 'public', ...sprache.praefix.split('/').filter(Boolean), 'index.html'),
+    inhalt: sprachStartBauen(sprache),
+    name: `${sprache.praefix}index.html`,
+  });
 }
 
 const bewegtDatei = (pfad, inhalt) => ({

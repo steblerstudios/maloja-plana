@@ -49,6 +49,17 @@ async function matchesBetaCode(value) {
   }
 }
 
+// `?beispiel` in der Adresse → die Adresse ohne diesen Zusatz (Pfad, übrige Zusätze und
+// Anker bleiben). Ohne `?beispiel`: null. Rein, damit der Wächter sie ohne Browser prüft.
+export function beispielAusAdresse(ort = typeof location !== 'undefined' ? location : null) {
+  if (!ort) return null;
+  const zusaetze = new URLSearchParams(ort.search || '');
+  if (!zusaetze.has('beispiel')) return null;
+  zusaetze.delete('beispiel');
+  const rest = zusaetze.toString();
+  return (ort.pathname || '/') + (rest ? '?' + rest : '') + (ort.hash || '');
+}
+
 export const BetaGate = ({ children }) => {
   const { t, lang } = useT();
   const [granted, setGranted] = useState(() => {
@@ -90,6 +101,18 @@ export const BetaGate = ({ children }) => {
       .then((s) => { s.speicherAbschirmen(); setDemo({ data: s.DEMO_DATA, onLeave: s.demoVerlassen }); })
       .catch(() => setDemo(null)); // Ladefehler (z. B. offline): Knopf wieder frei
   };
+  // Plan «App nach /app/», PR 1: `?beispiel` öffnet das Beispiel direkt, ohne Klick — für
+  // Knöpfe «Beispiel ansehen» auf der Website. Der Zusatz wird sofort aus der Adresse
+  // genommen (Anker `#/…` bleibt): «Beispiel verlassen» lädt neu und soll dann die Wand
+  // zeigen, nicht wieder das Beispiel. Wer den Zugang hat, bekommt die eigene App.
+  useEffect(() => {
+    if (granted) return;
+    const adresse = beispielAusAdresse();
+    if (!adresse) return;
+    try { history.replaceState(history.state, '', adresse); } catch { /* ohne History: Beispiel trotzdem */ }
+    startDemo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (granted) return children;
   if (demo?.data) return React.cloneElement(children, { demo });
@@ -191,7 +214,7 @@ export const BetaGate = ({ children }) => {
         'aria-describedby': error ? 'beta-error' : undefined,
         style: {
           width: '100%', padding: '12px 16px', fontSize: text.body,
-          border: '1px solid ' + (error ? palette.rose : palette.border),
+          border: '1px solid ' + (error ? palette.rose : palette.feldrand),
           borderRadius: radius.md, background: palette.up, color: palette.text,
           outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
         }

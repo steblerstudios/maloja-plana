@@ -13,6 +13,8 @@
 // + ein paar sprachneutrale Abkürzungs-Aliase, damit z.B. „ipv"/„ahv" greifen.
 
 import { SUCHBARE_WERKZEUGE } from '../data/werkzeugRegister.js';
+import { WERKZEUGE } from '../data/werkzeugRegister.js';
+import { astKapitel } from '../data/lebensbereiche.js';
 
 // ─── Die geführten Abläufe (Lebensereignisse) ────────────────────────────────
 // EINE Liste für das Dashboard (Gruppe «Lebensereignisse») UND die Suche.
@@ -99,14 +101,14 @@ export const SEARCH_VIEWS = [
   // «Unterlagen drucken» (F7-S2, 27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier auf einer Seite. Der
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
   // jetzt auf die ganze Seite.
-  { view: 'drucken', nav: 'unterlagen.drucken.title', icon: 'documents', aliases: ['drucken', 'dossier', 'behördendossier', 'notfalldossier', 'imprimer', 'stampare', 'print'] },
-  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'cartella', 'life folder'] },
+  { view: 'drucken', nav: 'unterlagen.drucken.title', icon: 'drucker', aliases: ['drucken', 'dossier', 'behördendossier', 'notfalldossier', 'imprimer', 'stampare', 'print'] },
+  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'lebensmappe', aliases: ['lebensmappe', 'mappe', 'cartella', 'life folder'] },
   // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
   // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
   // sucht, sucht mit genau diesen Wörtern.
   // Die geführten Abläufe — aus der einen Liste oben, nicht von Hand wiederholt.
   ...ABLAEUFE,
-  { view: 'installApp', nav: 'nav.installApp', sub: 'nav.sub.installApp', icon: 'download', aliases: ['install', 'installieren', 'app', 'pwa', 'homescreen', 'startbildschirm', 'herunterladen', 'download'] },
+  { view: 'installApp', nav: 'nav.installApp', sub: 'nav.sub.installApp', icon: 'handy', aliases: ['install', 'installieren', 'app', 'pwa', 'homescreen', 'startbildschirm', 'herunterladen', 'download'] },
 ];
 
 // Name einer Ansicht für «Zurück zu …» (main.jsx) — der i18n-Schlüssel, nicht der Text.
@@ -162,7 +164,19 @@ const WEITERE_ZEICHEN = {
 // Piktogramm einer Ansicht — mit Rückfall, damit ein unbekannter Schlüssel
 // nichts umwirft. Der Rückfall verdeckt eine Lücke, statt sie zu zeigen; darum
 // prüft der Wächter oben, dass jedes bekannte Ziel ohne ihn auskommt.
+// ─── Seiten-Zeichen (Icon-Plan November 2026, Bauplan B4) ─────────────────
+// Leitform + Abzeichen je Seite aus config/seitenZeichen.js, gezeichnet von IconAbzeichen.jsx
+// (nachgeladen wie die Münzen). Die Namen `seite:<view>` hängt IconSystem.jsx ins Register, wie die
+// Ereignis-Zeichen. Kapitel für Kapitel freigeschaltet — ein PR je ein bis zwei Kapitel.
+export const SEITEN_ZEICHEN_KAPITEL = new Set(['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'behoerden', 'notfall']);
+export const seitenZeichenName = (view) => 'seite:' + view;
+export const SEITEN_BEREICH = new Map();
+for (const e of [...ABLAEUFE, ...SEARCH_VIEWS, ...WERKZEUGE]) {
+  if (e.view && e.view !== 'chapter' && e.bereich && SEITEN_ZEICHEN_KAPITEL.has(astKapitel(e.bereich))) SEITEN_BEREICH.set(e.view, e.bereich);
+}
+
 export const ansichtIkon = (view, rueckfall = 'document') => {
+  if (SEITEN_BEREICH.has(view)) return seitenZeichenName(view);
   const e = SEARCH_VIEWS.find((v) => v.view === view);
   return (e && e.icon) || WEITERE_ZEICHEN[view] || rueckfall;
 };

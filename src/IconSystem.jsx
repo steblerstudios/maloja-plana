@@ -1,6 +1,7 @@
 import React from 'react';
-import { zeichenErgaenzen } from './IconKern.jsx';
-import { ausgestanzt, linie, KARTE, KARTE_REST } from './IconMuenzen.jsx';
+import { zeichenErgaenzen, nachgeladen } from './IconKern.jsx';
+import { SEITEN_BEREICH, seitenZeichenName } from './config/ansichtenRegister.js';
+import { basisFamilie as _basisFamilie, helm as _helm } from './IconMuenzen.jsx';
 import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 
 // ─── Maloja Plana SVG Pictogram System — das volle Register ─
@@ -16,33 +17,6 @@ import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 //
 // Neues Icon: hierher, ausser der fest geladene Teil zeigt es — dann in den Kern.
 
-const _kalenderUhr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Bahnhofsuhr-inspired clock
-  React.createElement('circle', { cx: '12', cy: '12', r: '10.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '9.2', fill: 'none', stroke: 'currentColor', strokeWidth: '0.4' }),
-  // Hour markers
-  React.createElement('line', { x1: '12', y1: '2.8', x2: '12', y2: '4.5', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '12', y1: '19.5', x2: '12', y2: '21.2', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '2.8', y1: '12', x2: '4.5', y2: '12', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '19.5', y1: '12', x2: '21.2', y2: '12', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  // Minor markers
-  React.createElement('line', { x1: '16.6', y1: '3.8', x2: '16', y2: '5', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '20.2', y1: '7.4', x2: '19', y2: '8', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '20.2', y1: '16.6', x2: '19', y2: '16', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '16.6', y1: '20.2', x2: '16', y2: '19', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '7.4', y1: '20.2', x2: '8', y2: '19', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '3.8', y1: '16.6', x2: '5', y2: '16', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '3.8', y1: '7.4', x2: '5', y2: '8', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '7.4', y1: '3.8', x2: '8', y2: '5', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  // Hour hand (10:10 position)
-  React.createElement('line', { x1: '12', y1: '12', x2: '9.5', y2: '7', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' }),
-  // Minute hand
-  React.createElement('line', { x1: '12', y1: '12', x2: '15.5', y2: '6.5', stroke: 'currentColor', strokeWidth: '1', strokeLinecap: 'round' }),
-  // Second hand — generisch (KEIN roter SBB/Mondaine-Lollipop; Schutzrecht)
-  React.createElement('line', { x1: '12', y1: '11.5', x2: '12', y2: '16.5', stroke: '#C4A870', strokeWidth: '0.6', strokeLinecap: 'round' }),
-  // Center cap
-  React.createElement('circle', { cx: '12', cy: '12', r: '1.2' }),
-);
 
 const _schulden = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Document/bill
@@ -102,20 +76,6 @@ const _chartsSchoko = () => React.createElement('svg', { viewBox: '0 0 24 24', f
   React.createElement('rect', { x: '19', y: '1.5', width: '4', height: '4', rx: '0.8', fill: 'currentColor', opacity: '0.5', transform: 'rotate(12 21 3.5)' }),
 );
 
-const _exportTool = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Swiss army knife body (generic silhouette)
-  React.createElement('rect', { x: '4', y: '9', width: '16', height: '6', rx: '3', fill: 'currentColor' }),
-  // Blade extended
-  React.createElement('path', { d: 'M 16 9 L 21 3 L 21.5 3.8 L 17.5 9.5', fill: 'currentColor', opacity: '0.8' }),
-  // Small tool extended down
-  React.createElement('path', { d: 'M 16 15 L 20 19.5 L 19.3 20 L 15.5 15.5', fill: 'currentColor', opacity: '0.6' }),
-  // Pivot
-  React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' }),
-  // (kein Emblem auf dem Griff — generisches Sackmesser, KEIN Victorinox-Kreuz; Schutzrecht)
-  // Export arrow
-  React.createElement('path', { d: 'M 4.5 18.5 L 7.5 21.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('polyline', { points: '5,21.5 7.5,21.5 7.5,19', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round' }),
-);
 
 const _mietzinsverbilligung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Small chalet
@@ -204,24 +164,12 @@ const _filter = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('path', { d: 'M4 5 H20 L14 12.5 V18.5 L10 20.5 V12.5 Z' })
 );
 
-const _success = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
-  React.createElement('path', { d: 'M8.2 12.4 L11 15.2 L16 9.6' })
-);
 
 const _error = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
   React.createElement('path', { d: 'M9.2 9.2 L14.8 14.8 M14.8 9.2 L9.2 14.8' })
 );
 
-const _qr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('rect', { x: '3.5', y: '3.5', width: '6', height: '6', rx: '1' }),
-  React.createElement('rect', { x: '14.5', y: '3.5', width: '6', height: '6', rx: '1' }),
-  React.createElement('rect', { x: '3.5', y: '14.5', width: '6', height: '6', rx: '1' }),
-  React.createElement('rect', { x: '14.5', y: '14.5', width: '2.5', height: '2.5', rx: '0.6' }),
-  React.createElement('rect', { x: '18', y: '14.5', width: '2.5', height: '2.5', rx: '0.6' }),
-  React.createElement('rect', { x: '16.25', y: '18', width: '2.5', height: '2.5', rx: '0.6' })
-);
 
 // ═══════════════════════════════════════════════════════════════
 // Semantic Icons — domain-specific pictograms
@@ -297,10 +245,13 @@ const _edit = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'no
 
 // Smartphone — «Auf den Startbildschirm legen» (Karte im Bergpanorama und Menü, 25.09.2026).
 // Vorher zeigte das Menü den Telefonhörer («anrufen») und die Karte am Computer einen Bildschirm.
+// Handy = das Gerät (Punkt 9, Entscheid 07.11.): deutlich gezeichnet — Rahmen, Bildschirmkanten, Taste.
 const _handy = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('rect', { x: '6.5', y: '2.5', width: '11', height: '19', rx: '2' }),
-  React.createElement('path', { d: 'M11 18.5h2' })
+  React.createElement('rect', { x: '6.5', y: '2.5', width: '11', height: '19', rx: '2.2' }),
+  React.createElement('path', { d: 'M6.5 6h11M6.5 17.5h11' }),
+  React.createElement('path', { d: 'M11 19.8h2' }),
 );
+
 
 const _phone = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('path', { d: 'M7.2 3.5 h2.6 l1.4 3.8 -1.9 1.5 a11 11 0 0 0 5.9 5.9 l1.5 -1.9 3.8 1.4 v2.6 a2 2 0 0 1 -2.2 2 A16.5 16.5 0 0 1 5.2 5.7 a2 2 0 0 1 2 -2.2 Z' })
@@ -349,31 +300,15 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // ═══════════════════════════════════════════════════════════════
 // 🛑 Nicht jedes Icon hier hat schon einen Einsatz — und das ist kein toter Code.
 // Stand 24.09.2026 ohne Verwendung, aber gestaltetes Marken-Vokabular aus
-// docs/brand/icon-dictionary.md: `kalenderUhr` (Bahnhofsuhr, geplant für
-// Frist/Zeit), `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
-// `exportTool` (Sackmesser-Gestalt), `delete`, `filter` (Trichter).
+// docs/brand/icon-dictionary.md: `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
+// `delete`, `filter` (Trichter).
 // Stebler Studios hat entschieden: behalten. Nur auf Zuruf entfernen.
-// Ast-Leitformen (Icon-Plan November 2026, Bauplan B2, Stufe «mittel», ausgestanzt — siehe IconKern.jsx).
-// Ausweiskarte mit zwei Personen = Ast Familie (Kapitel Persönliche Basis).
-const _basisFamilie = ausgestanzt([...KARTE,
-  ['circle', { cx: '5.8', cy: '11.5', r: '1.35' }], ['path', { d: 'M3.8 16.8 Q5.8 13.4 7.8 16.8 Z' }],
-  ['circle', { cx: '8.3', cy: '12.5', r: '1.05' }], ['path', { d: 'M6.8 16.8 Q8.3 14.3 9.8 16.8 Z' }], ...KARTE_REST]);
-// Schutzhelm = Ast Arbeit (Kapitel Ausbildung & Arbeit): Mittelgrat, Krempe.
-const _helm = ausgestanzt([
-  ['path', { d: 'M3.6 15.2 Q3.6 6 12 6 Q20.4 6 20.4 15.2 Z' }],
-  ['path', { d: 'M1.6 15.4 H22.4 Q22.4 18.2 20 18.2 H4 Q1.6 18.2 1.6 15.4 Z' }],
-  ['path', { d: 'M10.6 6.4 Q12 5.1 13.4 6.4 V15.2 H10.6 Z' }],
-  linie('M10.4 6.7 V15 M13.6 6.7 V15', '0.5', '0.75'),
-  linie('M2.5 16.3 H21.5', '0.6', '0.6'),
-  linie('M5.9 11.6 Q6.6 8.6 9.3 7.3', '0.6', '0.5'),
-]);
+// (09.11.2026: `kalenderUhr` und `exportTool` standen hier auch; mit B5a aufgelöst.)
 zeichenErgaenzen({
-  kalenderUhr: _kalenderUhr,
   schulden: _schulden,
   steuern: _steuern,
   organspende: _organspende,
   chartsSchoko: _chartsSchoko,
-  exportTool: _exportTool,
   mietzinsverbilligung: _mietzinsverbilligung,
   sozialhilfe: _sozialhilfe,
   ergaenzungsleistungen: _ergaenzungsleistungen,
@@ -383,9 +318,7 @@ zeichenErgaenzen({
   csv: _csv,
   debt: _debt,
   filter: _filter,
-  success: _success,
   error: _error,
-  qr: _qr,
   dentist: _dentist,
   doctor: _doctor,
   timeline: _timeline,
@@ -411,6 +344,30 @@ zeichenErgaenzen({
 zeichenErgaenzen(Object.fromEntries(Object.entries(EREIGNIS_PFADE).map(([name, pfade]) => [name, () =>
   React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
     ...pfade.map((d, i) => React.createElement('path', { key: i, d })))])));
+
+// Balken = Übersicht in Zahlen (Schulden-Reiter «Übersicht», Icon-Besprechung Punkt 11).
+const _balken = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M5 20V14M12 20V6M19 20V10M3 20h18' }));
+// Lebensmappe = Ordner + «du» im grünen Abzeichen (Punkt 4b D: Gegenstand + was passiert, Farbe = Ast Person).
+// Abzeichen ausgestanzt, Grün aus der Ast-Variablen (main.jsx), Ordner in Textfarbe.
+let mappenZaehler = 0;
+const Lebensmappe = (eigenschaften) => {
+  const id = 'mappe' + (mappenZaehler += 1);
+  return React.createElement('svg', { viewBox: '0 0 24 24', ...eigenschaften },
+    React.createElement('mask', { id: id + 'a' }, React.createElement('rect', { width: '24', height: '24', fill: '#fff' }),
+      React.createElement('circle', { cx: '18.3', cy: '18.3', r: '6.6', fill: '#000' })),
+    React.createElement('mask', { id: id + 'b' }, React.createElement('circle', { cx: '18.3', cy: '18.3', r: '5.5', fill: '#fff' }),
+      React.createElement('g', { fill: 'none', stroke: '#000', strokeWidth: '1.15', strokeLinecap: 'round' },
+        React.createElement('circle', { cx: '18.3', cy: '16.9', r: '1.1' }), React.createElement('path', { d: 'M16.4 20.6a1.9 1.9 0 0 1 3.8 0' }))),
+    React.createElement('path', { d: 'M3.5 6.5a1.5 1.5 0 0 1 1.5-1.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5v9.5A1.5 1.5 0 0 1 19 20H5a1.5 1.5 0 0 1-1.5-1.5z',
+      fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round', mask: 'url(#' + id + 'a)' }),
+    React.createElement('rect', { width: '24', height: '24', mask: 'url(#' + id + 'b)', style: { fill: 'var(--mp-ast-person, #5A7868)' } }));
+};
+zeichenErgaenzen({ balken: _balken, lebensmappe: () => React.createElement(Lebensmappe) });
+
+// Seiten-Zeichen (Icon-Plan, Bauplan B4): Leitform + Abzeichen je Seite, nachgeladen.
+zeichenErgaenzen(Object.fromEntries([...SEITEN_BEREICH].map(([view, bereich]) =>
+  [seitenZeichenName(view), () => nachgeladen('seite', { view, bereich })])));
 
 export { Icons, Icon, HinweisZeichen, erledigtZeichen, aufklappZeichen, zurueckZeichen, hinweisZeichen } from './IconKern.jsx';
 export { default } from './IconKern.jsx';

@@ -12,7 +12,7 @@ export const GRUPPEN = {
   B: { name: 'Funktionen', strich: true, regel: 'Strich, nie «white», kein Text im Zeichen' },
   N: { name: 'Navigation', strich: true, regel: 'Strich, Leiste und Menü' },
   Z: { name: 'Barrierefreiheit', strich: true, regel: 'Strich, Einstellungen zur Darstellung' },
-  E: { name: 'Lebensereignisse', strich: true, regel: 'Strich, ein Zeichen je Ereignis — Rucksack, Suche, Übersicht, Seitentitel' },
+  E: { name: 'Lebensereignisse', strich: true, regel: 'Strich, ein Zeichen je Ereignis — seit Bauplan B4 nur Rückfall: sichtbar trägt jede Seite Leitform + Abzeichen (config/seitenZeichen.js)' },
   C: { name: 'Kultur-Schicht', strich: false, regel: 'Easter Eggs, ruhig, abschaltbar — noch leer' },
 };
 
@@ -34,7 +34,6 @@ export const ICON_INVENTAR = {
     vorsorge: "Lebensbereich Vorsorge",
     steuern: "Steuern — Steuererklärung mit Prozent",
     schulden: "Schulden und Betreibung — Rechnung mit Minus",
-    dokumentTresor: "Dokumente sicher aufbewahren — Tresor",
     lebenslauf: "Lebenslauf — CV-Blatt",
     praemienverbilligung: "Prämienverbilligung — Schild mit Pfeil nach unten",
     mietzinsverbilligung: "Mietzinsverbilligung — Chalet mit Pfeil (behalten 24.09., noch ohne Einsatz)",
@@ -62,15 +61,15 @@ export const ICON_INVENTAR = {
     contacts: "Kontakte, Personen",
     paw: "Haustier — Pfote",
     palette: "Gestaltung, Darstellung",
-    cowbell: "Erinnerungen und Benachrichtigungen — Kuhglocke (Wörterbuch)",
+    cowbell: "Erinnerungen und Benachrichtigungen — Kuhglocke als Strich (Punkt 1, A)",
+    balken: "Übersicht in Zahlen — Balken (Schulden-Reiter)",
+    lebensmappe: "Lebensmappe — Ordner + «du» im grünen Abzeichen (4b D)",
+    lesezeichen: "Merkliste — Lesezeichen «hier will ich zurück» (Punkt 3, E)",
     chartsSchoko: "Diagramme — Schoggi-Tafel (behalten, noch ohne Einsatz)",
-    kalenderUhr: "Frist und Zeit — Bahnhofsuhr (behalten 24.09.; generisch neu zeichnen, Schritt 8)",
-    exportTool: "Sackmesser-Gestalt, gefüllt (behalten 24.09.; Export bekommt eigenes Bild, Schritt 8)",
   }),
   // ── B · Funktionen ──
   ...g('B', {
     check: "erledigt, gespeichert — Haken",
-    success: "Rückmeldung «hat geklappt» — Haken im Kreis",
     kreuz: "schliessen, entfernen — Kreuz",
     error: "Fehler, sanft — Kreuz im Kreis",
     kaestchen: "offener Merkpunkt — leeres Kästchen",
@@ -91,27 +90,31 @@ export const ICON_INVENTAR = {
     warning: "Warnung, sanft — Dreieck",
     lock: "privat, lokal gespeichert — Schloss",
     recurring: "wiederkehrend — Kreispfeile",
+    kalenderPlus: "Frist eintragen — Kalender + leeres Abzeichen mit Plus (Punkt 8 C)",
+    kalenderFrist: "Frist läuft — Kalender + Sanduhr im blauen Abzeichen (Punkt 8 C)",
+    kalenderUeberfaellig: "Überfällig — Kalender + rotes Ausrufezeichen (Punkt 8 C)",
     calendar: "Kalender, heutiger Tag in Zürich — Datumsblatt",
     ordner: "Dokumentenablage — Ordner (E2: auch für «mappe»)",
     document: "ein Blatt, Dokument, Berechnung",
     csv: "Tabelle, CSV-Export",
-    qr: "QR-Code, Flyer, scannen",
     barcode: "Strichcode, Krankenkassen-Karte scannen",
     timeline: "Verlauf, Liste mit Punkten",
     debt: "Schulden-Werkzeug — Minus im Kreis",
     phone: "anrufen — Hörer (Notfallnummern)",
-    handy: "Handy — App aufs Telefon",
+    handy: "Handy — das Gerät; «Als App installieren» ohne Abzeichen (Punkt 9)",
+    kette: "Offizielle Links — Kette (Punkt 4)",
+    teilen: "Teilen — Blatt mit Pfeil, Flyer (Punkt 4)",
     globe: "Sprache, offizielle Links — Globus",
     tag: "Etikett, Kategorie",
   }),
   // ── N · Navigation ──
   ...g('N', {
-    sackmesser: "Übersicht — Schweizer Sackmesser, generisch (Wörterbuch)",
+    sackmesser: "Menü — Schweizer Sackmesser, generisch (07.11. «B»; vorher Übersicht)",
     rucksack: "Rucksack — Wege und Werkzeuge",
-    geschenk: "«Was steht mir zu?» — Geschenk",
+    wegweiser: "«Was steht mir zu?» — Wegweiser (Leiste, Menü, Register; 07.11. «G»)",
+    feldstecher: "Übersicht — Feldstecher (07.11. «G»)",
     home: "Startseite (Navigation); Wohnen selbst ist das Chalet",
     quittung: "Beleg erfassen — Quittung",
-    menue: "Menü",
   }),
   // ── Z · Barrierefreiheit ──
   ...g('Z', {
@@ -123,6 +126,8 @@ export const ICON_INVENTAR = {
     hand: "Einhand-Bedienung",
   }),
   // ── E · Lebensereignisse (Pfade in data/ereignisZeichen.js) ──
+  // Seit Bauplan B4 (08.11.2026) Rückfall: ansichtIkon() nimmt zuerst das Seiten-Zeichen aus
+  // config/seitenZeichen.js; diese Zeichen erscheinen nur, wo eine Seite dort keinen Eintrag hat.
   ...g('E', {
     ereignisDigitaleordnung: "Lebensereignis: Digitale Ordnung",
     ereignisBetreibungsauszug: "Lebensereignis: Betreibungsauszug bestellen",

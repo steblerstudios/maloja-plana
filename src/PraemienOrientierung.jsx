@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
+import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
@@ -14,7 +15,8 @@ import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
 import { zahl, betrag } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { VersicherungenInstrument } from './components/VersicherungenInstrument.jsx';
-import { Schutzschild } from './components/Schutzschild.jsx';
+import { NetzSchild } from './components/NetzSchild.jsx';
+import { CHAPTER_KEYS } from './config/constants.js';
 import { schildOptionen } from './data/schutzschild.js';
 import { absicherungJeRisiko } from './data/absicherungRisiko.js';
 import { franchiseVorschlag } from './data/franchiseTacho.js';
@@ -157,7 +159,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
-    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '8px 12px', minHeight: '44px', fontSize: text.sm }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },
@@ -279,7 +281,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
   return h('div', { style: s.card },
     onNavigate && React.createElement(Brotkrume, { palette, t, view: 'praemien', onNavigate }),
-    h(PageTitle, { palette, icon: h(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('po.title')),
+    h(PageTitle, { palette, icon: h(Icon, { name: ansichtIkon('praemien', 'insurance'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('po.title')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.relaxed } }, t('vu.satz')),
 
     marken.length > 0 && h('div', { 'data-teil': 'vu-marken', style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px', marginBottom: space.md + 'px' } },
@@ -332,7 +334,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     h('section', { 'data-teil': 'vu-zeilen', 'aria-label': t('vu.zeilenAria') }, zeilen.map(zeileKnopf)),
 
     h('h3', { style: kapH }, t('instrumente.schild')),
-    h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(data) }),
+    // Spiegel Werkzeug (Stebler Studios 09.11.2026): das Netz-Schild mittel, wie im Kapitel gerechnet; vorher stand hier
+    // noch das alte Schild «Pflicht / Empfohlen» (58 px), das F7-K3-6 im Kapitel schon abgelöst hatte.
+    h(NetzSchild, { palette, t, versicherungen: v, finanzen: data?.finanzen, kanton: data?.basis?.canton, stunden: data?.ausbildung?.workHoursPerWeek,
+      ...schildOptionen(data), groesse: 'mittel', onZuhause: onNavigate ? () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')) : undefined }),
 
     h('div', { style: { marginTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '88' } },
       // Absicherung je Risiko (Stebler Studios 26.10.2026: Liste statt Netz) — was eingetragen ist und was das Gesetz vorsieht,
@@ -662,6 +667,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       zeileKnopf({ key: 'scanner', titel: t('vu.scanner'), sub: t('nav.kkScanner'), gehe: () => onNavigate('kk') })),
 
     // D1 (06.11.2026): zur öffentlichen Erklärseite «Warum die Krankenkasse so viel kostet».
+    // C + D (09.11.2026): Karte mit dem eigenen Kanton und Erklärfigur, erst beim Aufklappen geladen.
+    h(VerstehenImWerkzeug, { palette, t, view: 'praemien', kanton: data.basis?.canton || regionInfo?.kanton || '', altersklasse: ageClass }),
     h(ErklaerseiteLink, { palette, t, view: 'praemien' }),
     h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),

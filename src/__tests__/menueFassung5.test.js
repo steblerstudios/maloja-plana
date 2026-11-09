@@ -146,22 +146,24 @@ describe('Icons · Was ansteht / Ablage / Merkliste', () => {
     expect(svg).toContain('>' + tagInZuerich() + '</text>');
   });
 
-  it('Register: Ablage = Ordner, Kalender = Kalenderblatt, Merkliste = Haken', () => {
+  // Seit Bauplan B5 (08.11.2026): Merkliste = Lesezeichen (Punkt 3, «E»); der Haken heisst «geschafft».
+  it('Register: Ablage = Ordner, Kalender = Kalenderblatt, Merkliste = Lesezeichen', () => {
     const icon = Object.fromEntries(WERKZEUGE.map((w) => [w.view, w.icon]));
     expect(icon.tresor).toBe('ordner');
     expect(icon.calendar).toBe('calendar');
-    expect(icon.merkliste).toBe('check');
+    expect(icon.merkliste).toBe('lesezeichen');
     expect(Icons.ordner).toBeTruthy();
   });
 
   it('Boden-Anker und Erfassen-Fächer nutzen dieselben drei Zeichen, der Tag kommt aus Zürich', () => {
     const main = lies('main.jsx');
     expect(main).toMatch(/key: 'tresor', label: t\('nav\.capDokument'\), icon: 'ordner'/);
-    expect(main).toMatch(/key: 'merkliste', label: t\('nav\.merkliste'\), icon: 'check'/);
+    expect(main).toMatch(/key: 'merkliste', label: t\('nav\.merkliste'\), icon: 'lesezeichen'/);
     // Seit 23.10.2026 liegt der Kalender nur noch im Erfassen-Fächer, nicht mehr in der Leiste.
     // Seit 06.11.2026 (Icon-Plan, Schritt 3) ist es das Kalenderblatt aus dem Register; der Tag
     // kommt dort aus Zürich (`_calendar` in IconKern.jsx).
-    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'calendar'/);
+    // Seit Bauplan B5c (08.11.2026): «Frist erfassen» = Kalender + leeres Abzeichen mit Plus (Punkt 8 «C»).
+    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'kalenderPlus'/);
     expect(lies('IconKern.jsx')).toMatch(/const day = tagInZuerich\(\)/);
     expect(main).not.toMatch(/new Date\(\)\.getDate\(\)/);
     expect(lies('IconKern.jsx')).not.toMatch(/new Date\(\)\.getDate\(\)/);

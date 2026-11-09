@@ -83,7 +83,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents }) => {
         border: '1px solid ' + palette.border, marginBottom: '24px',
       }
     },
-      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('lebensmappe.title')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'lebensmappe', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('lebensmappe.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '16px' }
       }, t('lebensmappe.subtitle')),

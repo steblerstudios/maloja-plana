@@ -34,6 +34,12 @@ Jede Seite hat Kapitel und Ast (Tabelle «Zuordnung steht» unten), die Dashboar
 statt der 7 Werkzeug-Gruppen, Ankommen + Mit 18 als Türen, Klammer als Zeile; Stufe «Dein Schutz» mit Gesundheit)
 kommt erst auf Ja von Stebler Studios, am besten nach der Icon-Sitzung in einem Zug.
 
+> **Nachtrag 09.11.2026 (Gesamtbefund, `main` `b8bdea43`):** Der Satz «Gebaut ist nichts» oben ist überholt und
+> bleibt als Beleg stehen. Fast die ganze Liste «Was beim Bau nachzieht» ist auf `main` umgesetzt, ebenso das Dashboard
+> «Alle Seiten nach Kapitel» (`components/WerkzeugGruppen.jsx:46-70`). Offen ist nur `FACH_BEREICH.gesundheit` in
+> `data/aufgabenBereiche.js:33`, das noch auf `'versicherungen'` zeigt. Siehe
+> [Gesamtbefund](../entscheide/gesamtbefund-2026-11-09.md), Befund A1/A2.
+
 ## Übergabe an die Icon-Sitzung (Zweig `docs/icon-plan`, PR #708)
 
 Regel aus Frage 1, gilt für alle Seiten: **Kapitel = die Sache, um die es geht → Leitform. Geld, das dazu fliesst →
@@ -58,6 +64,30 @@ Fünfliber gold im Abzeichen. Ein anderer Ast spielt mit → dessen Farbe im Abz
 | Betreibungsauszug | Behörden → Helvetia | (wie dort entschieden) |
 
 Alle übrigen Seiten: Kapitel und Ast wie im [Organigramm](seiten-architektur-organigramm.html).
+
+### ⟨Nachtrag 08.11.2026, Bauplan B6⟩ So ist es gebaut
+
+Die Tabelle oben ist die Übergabe vom 06.11. und bleibt so stehen. **Gebaut** (B1–B4, Entwurfs-PRs #751–#757)
+ist, was in [`src/config/seitenZeichen.js`](../../src/config/seitenZeichen.js) steht — das ist ab jetzt die
+eine Quelle; Leitform und Farbe werden aus dem Register abgeleitet. Wo der Bau die Übergabe ergänzt oder
+abweicht (ausgelesen aus dem Code am 08.11.):
+
+| Seite | Leitform (aus dem Kapitel) | Zeichen im Abzeichen | Farbe (wer mitspielt) | gegenüber oben |
+|---|---|---|---|---|
+| **Sozialhilfe** | Fünfliber (Finanzen) | Schirm | Behörden | Zeichen ergänzt |
+| **Quellensteuer** | Fünfliber (Finanzen) | Schere («vom Lohn abgezogen») | Behörden | Zeichen ergänzt |
+| **Stundenlohn** | Helm (Ast Arbeit) | Uhr (generische Bahnhofsuhr) | Gold (Geld) | Zeichen ergänzt |
+| **Ergänzungsleistungen** | Edelweiss-Schild (Ast Vorsorge) | Plus | Gold (Geld) | neu, stand oben nicht |
+| **Pflege** | Arztkoffer (Ast Gesundheit) | Pflegebett | **Familie** | oben «Ast Gesundheit» → die Familie spielt mit |
+| **Notfallkarte** | Arztkoffer (Ast Notfall) | Hörer | Rot (Ast Notfall) | Zeichen ergänzt; Notfallpass trägt das Handy |
+| KVG-Leistungen · KK-Belege · Unfall/Krankheit | Arztkoffer (Ast Gesundheit) | Haken · Blatt · Ausrufezeichen | Versicherungen (blau) | oben «Mini-Schild»: die Farbe zeigt die Versicherung, das Zeichen, was passiert |
+| **IV** | Arztkoffer (Ast Gesundheit) | Mini-Schild | Versicherungen | oben «Ast Gesundheit» → die Versicherung spielt mit |
+| **Vorsorgeauftrag & PV** · **Bestattungswünsche** | Arztkoffer (Ast Notfall) | Blatt · Kerze | **Vorsorge** | oben «rot (Ast Notfall)» → die Vorsorge spielt mit; Patientenverfügung und Organspende bleiben rot |
+
+Die übrigen Zeilen oben stimmen mit dem Bau überein (IPV Fünfliber gold, Prämien Balken orange,
+KK-Erstanmeldung Plus und KK wechseln Wechselpfeile orange, Notfall-Einstieg Herz mit Puls und Notfallpass
+Handy rot, Patientenverfügung Blatt mit Herz und Organspende Herz rot, Steuern Prozent Behörden, ALV und EO
+Fünfliber gold, Lehre Mini-Helm Arbeit, Lebenslauf Blatt leer, Betreibungsauszug Blatt Finanzen).
 
 ## Zuerst das Organigramm (06.11.2026, Stebler Studios)
 

@@ -142,7 +142,7 @@ let muenzen = null;
 const muenzenLaden = import('./IconMuenzen.jsx').then((m) => { muenzen = m; return m; }, () => null);
 // Für Tests: wartet, bis die Münzen da sind (oder das Laden gescheitert ist).
 export const muenzenBereit = () => muenzenLaden;
-const Muenze = ({ art, ...rest }) => {
+const Muenze = ({ art, rueckfall, ...rest }) => {
   const [, neuZeichnen] = React.useState(0);
   React.useEffect(() => {
     let aktiv = true;
@@ -150,9 +150,13 @@ const Muenze = ({ art, ...rest }) => {
     return () => { aktiv = false; };
   }, []);
   if (muenzen) return React.cloneElement(muenzen[art](), rest);
+  if (rueckfall) return React.cloneElement(rueckfall(), rest);
   return React.createElement('svg', { viewBox: '0 0 48 48', ...rest },
     React.createElement('circle', { cx: '24', cy: '24', r: '19', fill: 'none', stroke: 'currentColor', strokeWidth: '2.5', opacity: '0.55' }));
 };
+
+// Für die Seiten-Zeichen (Bauplan B4): dieselbe Nachlade-Hülle, mit Eigenschaften.
+export const nachgeladen = (art, eigenschaften) => React.createElement(Muenze, { art, ...eigenschaften });
 
 const _finanzen = () => React.createElement(Muenze, { art: 'finanzen' });
 const _versicherungen = () => React.createElement(Muenze, { art: 'versicherungen' });
@@ -166,26 +170,6 @@ const _behoerden = () => React.createElement(Muenze, { art: 'behoerden' });
 // Chapter Icons — extended set (Verwaltung & Organisation)
 // ═══════════════════════════════════════════════════════════════
 
-const _dokumentTresor = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Safe body
-  React.createElement('rect', { x: '3', y: '4', width: '18', height: '16', rx: '2' }),
-  // Safe door outline
-  React.createElement('rect', { x: '4.5', y: '5.5', width: '15', height: '13', rx: '1.5', fill: 'none', stroke: 'white', strokeWidth: '0.5', opacity: '0.4' }),
-  // Circular dial
-  React.createElement('circle', { cx: '12', cy: '12', r: '3.5', fill: 'none', stroke: 'white', strokeWidth: '1.2' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '1', fill: 'white' }),
-  // Dial marks
-  React.createElement('line', { x1: '12', y1: '9', x2: '12', y2: '9.8', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('line', { x1: '12', y1: '14.2', x2: '12', y2: '15', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('line', { x1: '9', y1: '12', x2: '9.8', y2: '12', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('line', { x1: '14.2', y1: '12', x2: '15', y2: '12', stroke: 'white', strokeWidth: '0.6' }),
-  // Handle bar
-  React.createElement('rect', { x: '17', y: '10.5', width: '2.5', height: '3', rx: '0.8', fill: 'white' }),
-  // Small document hint
-  React.createElement('rect', { x: '18.5', y: '2.5', width: '4', height: '5', rx: '0.5', fill: 'currentColor', stroke: 'white', strokeWidth: '0.4', opacity: '0.7' }),
-  React.createElement('line', { x1: '19.3', y1: '4', x2: '21.7', y2: '4', stroke: 'white', strokeWidth: '0.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '19.3', y1: '5.5', x2: '21', y2: '5.5', stroke: 'white', strokeWidth: '0.5', strokeLinecap: 'round' }),
-);
 
 const _budgetWallet = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Wallet body
@@ -321,6 +305,14 @@ const _calendar = () => {
   );
 };
 
+// Kalender mit Abzeichen (Icon-Besprechung Punkt 8, «C»): gezeichnet in IconMuenzen.jsx (nachgeladen,
+// gemessen 08.11.2026: im Kern +487 B); bis dahin der einfache Kalender. fill/stroke als Eigenschaften,
+// damit `Icon` die Strichstärke nach Grösse setzt (Schritt 4).
+const kalenderMit = (zeichen) => () => React.createElement(Muenze, { art: 'kalenderMit', zeichen, rueckfall: _calendar, fill: 'none', stroke: 'currentColor' });
+const _kalenderPlus = kalenderMit('plus');
+const _kalenderFrist = kalenderMit('sanduhr');
+const _kalenderUeberfaellig = kalenderMit('ausruf');
+
 // Ordner — die Dokumentenablage (Fassung 5, 23.10.2026). Dieselbe Form wie das
 // `OrdnerIcon` in DocumentTresor.jsx (Rücken mit Reiter, vordere Klappe), hier als
 // Linie im Stil der übrigen Zeichen. Vorher trug die Ablage den Tresor.
@@ -389,11 +381,30 @@ const _external = () => React.createElement('svg', { viewBox: '0 0 24 24', fill:
   React.createElement('path', { d: 'M 10 14 L 21 3' })
 );
 
-const _cowbell = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 10 3 Q 10 1.5 12 1.5 Q 14 1.5 14 3 L 14 4 L 10 4 Z', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' }),
-  React.createElement('path', { d: 'M 9 4 L 7 19 Q 7 21 8 21 L 16 21 Q 17 21 17 19 L 15 4 Z' }),
-  React.createElement('line', { x1: '12.5', y1: '15', x2: '12.5', y2: '21', stroke: 'white', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.6' }),
-  React.createElement('circle', { cx: '12.5', cy: '21.5', r: '1.2', fill: 'white', opacity: '0.7' }),
+// Kuhglocke als Strich (Icon-Besprechung Punkt 1, Entscheid 07.11.: «A, Kuhglocke Strich»):
+// nur Erinnerung/Benachrichtigung; «überfällig» trägt der Kalender mit rotem Ausrufezeichen.
+const _cowbell = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M8.4 7.2h7.2l2.7 10.4a1.6 1.6 0 0 1-1.6 2H7.3a1.6 1.6 0 0 1-1.6-2Z' }),
+  React.createElement('path', { d: 'M10 7.2V5.4a2 2 0 0 1 4 0V7.2' }),
+  React.createElement('circle', { cx: '12', cy: '21.4', r: '.9', fill: 'currentColor', stroke: 'none' }),
+);
+
+// Kette = Offizielle Links (Punkt 4, 06.11.): Verweis nach aussen, kein Gegenstand.
+const _kette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M10 14a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1' }),
+  React.createElement('path', { d: 'M14 10a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1' }),
+);
+
+// Teilen = Blatt mit Pfeil (Punkt 4, 06.11.): der Flyer zum Weitergeben.
+const _teilen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M7 3.5h7.5l3.5 3.5v13.5H7z' }),
+  React.createElement('path', { d: 'M14.5 3.5V7H18' }),
+  React.createElement('path', { d: 'M12 17v-5.5M9.8 13.5 12 11.3l2.2 2.2' }),
+);
+
+// Lesezeichen = Merkliste (Punkt 3, Entscheid 06.11.: «E, Lesezeichen»): «hier will ich zurück».
+const _lesezeichen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M7 3.5h10v17l-5-3.6-5 3.6z' }),
 );
 
 // Leaf — green/eco marker (z.B. „grün gehostet"). Outline-Stil, 2 Elemente.
@@ -414,15 +425,21 @@ const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
 // Linien, jetzt hier, in der Strichstärke der übrigen Zeichen.
 const _linie = (...pfade) => () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   ...pfade.map((d, i) => React.createElement('path', { key: i, d })));
-// Übersicht = Schweizer Sackmesser, generisch, ohne Kreuz (icon-dictionary.md). Ruhende Form;
-// die Leiste klappt die Werkzeuge mit `SackmesserIcon` in main.jsx aus.
+// Menü = Schweizer Sackmesser, generisch, ohne Kreuz (Icon-Besprechung 07.11.: «B, Sackmesser = Menü»;
+// vorher Übersicht). Ruhende Form; die Leiste klappt die Werkzeuge mit `SackmesserIcon` in main.jsx aus,
+// solange das Menü offen ist.
 const _sackmesser = _linie('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5');
 const _rucksack = _linie('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z', 'M9 8a3 3 0 0 1 6 0', 'M9 14h6');
-// «Was steht mir zu?» — in Leiste, Menü und Register dasselbe Geschenk.
-const _geschenk = _linie('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8');
+// «Was steht mir zu?» = Wegweiser (Icon-Besprechung 07.11., «G»; das Geschenk widersprach dem
+// App-Satz «Ein Recht, kein Entgegenkommen»). In Leiste, Menü und Register dasselbe Zeichen.
+const _wegweiser = _linie('M11 21V3.5', 'M11 5.5h7.5l2 2-2 2H11', 'M11 11.5H5l-2 2 2 2h6', 'M8.5 21h5');
+// Übersicht = Feldstecher (07.11., «G»): «wo stehe ich, was liegt vor mir».
+const _feldstecher = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '7', cy: '15.5', r: '3.8' }), React.createElement('circle', { cx: '17', cy: '15.5', r: '3.8' }),
+  React.createElement('path', { d: 'M10.6 14.2h2.8' }),
+  React.createElement('path', { d: 'M4.2 13l1.6-6.5a1.6 1.6 0 0 1 3.1.3l.4 4.6M19.8 13l-1.6-6.5a1.6 1.6 0 0 0-3.1.3l-.4 4.6' }));
 const _plus = _linie('M12 5 V19 M5 12 H19');
 const _quittung = _linie('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15');
-const _menue = _linie('M4 7 H20 M4 12 H20 M4 17 H20');
 
 // Kopfzeile und Barrierefreiheits-Leiste (Schritt 3): bis 06.11.2026 von Hand in main.jsx.
 const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -482,7 +499,6 @@ const _iconFactories = {
   herzPuls: _herzPuls,
 
   // Extended chapter icons
-  dokumentTresor: _dokumentTresor,
   ordner: _ordner,
   budgetWallet: _budgetWallet,
   praemienverbilligung: _praemienverbilligung,
@@ -501,6 +517,9 @@ const _iconFactories = {
   money: _money,
   health: _health,
   calendar: _calendar,
+  kalenderPlus: _kalenderPlus,
+  kalenderFrist: _kalenderFrist,
+  kalenderUeberfaellig: _kalenderUeberfaellig,
   search: _search,
 
   // Semantic icons
@@ -515,15 +534,18 @@ const _iconFactories = {
   pfeil: _pfeil,
   chevron: _chevron,
   cowbell: _cowbell,
+  lesezeichen: _lesezeichen,
+  kette: _kette,
+  teilen: _teilen,
   leaf: _leaf,
 
   // Boden-Anker und Menü (Schritt 3)
   sackmesser: _sackmesser,
   rucksack: _rucksack,
-  geschenk: _geschenk,
+  wegweiser: _wegweiser,
+  feldstecher: _feldstecher,
   plus: _plus,
   quittung: _quittung,
-  menue: _menue,
 
   // Kopfzeile und Barrierefreiheit (Schritt 3)
   settings: _settings,

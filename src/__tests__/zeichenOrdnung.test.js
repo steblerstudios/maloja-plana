@@ -7,7 +7,7 @@ import { Icons } from '../IconKern.jsx';
 import '../IconSystem.jsx';
 import { ICON_INVENTAR, GRUPPEN } from '../config/iconInventar.js';
 import { alleWege } from '../data/gepaeck.js';
-import { ansichtIkon } from '../config/ansichtenRegister.js';
+import { ansichtIkon, seitenZeichenName, SEITEN_BEREICH } from '../config/ansichtenRegister.js';
 
 // Icon-Plan November 2026, Schritt 7 «Aufräumen» (Auftrag Stebler Studios 06.11.2026: «lass uns
 // Logik, System und Einheit in das Ganze bringen»). Grundlage: docs/design/icon-inventar-2026-11-06.html.
@@ -24,7 +24,12 @@ const istStrich = (name) => /fill="none"/.test(wurzel(name)) && /stroke="/.test(
 
 describe('7a · eine Liste für alle Zeichen', () => {
   it('jedes Icon im Register steht in der Liste, und die Liste nennt keines, das es nicht gibt', () => {
-    expect(Object.keys(ICON_INVENTAR).sort()).toEqual(Object.keys(Icons).sort());
+    // Die Seiten-Zeichen `seite:<view>` (Bauplan B4) sind erzeugt, nicht gezeichnet: ihr Inventar ist
+    // config/seitenZeichen.js mit eigenem Wächter (seitenZeichen.test.js, abzeichen.test.js).
+    const gezeichnet = Object.keys(Icons).filter((n) => !n.startsWith('seite:'));
+    expect(Object.keys(ICON_INVENTAR).sort()).toEqual(gezeichnet.sort());
+    expect(Object.keys(Icons).filter((n) => n.startsWith('seite:')).sort())
+      .toEqual([...SEITEN_BEREICH.keys()].map(seitenZeichenName).sort());
   });
   it('jeder Eintrag hat eine bekannte Gruppe und eine Bedeutung in Worten', () => {
     for (const [name, e] of Object.entries(ICON_INVENTAR)) {
@@ -52,8 +57,12 @@ describe('7b · ein Lebensereignis, ein Zeichen', () => {
       expect(ICON_INVENTAR[w.icon]?.gruppe, w.key).toBe('E');
     }
   });
-  it('Suche und Übersicht zeigen für das Ereignis dasselbe Zeichen wie der Rucksack', () => {
-    const anders = wege.filter((w) => ansichtIkon(w.view) !== w.icon).map((w) => `${w.view}: ${ansichtIkon(w.view)} ≠ ${w.icon}`);
+  // Seit Bauplan B4 (08.11.2026) tragen Suche, Übersicht und Seitenkopf das Seiten-Zeichen
+  // (Leitform + Abzeichen), Kapitel für Kapitel — und der Rucksack auch (Entscheid «B, hell mit
+  // Rand»: er liest ansichtIkon wie alle, siehe seitenZeichenRegister.test.js).
+  it('Suche und Übersicht zeigen für das Ereignis dasselbe Zeichen wie der Rucksack — oder das Seiten-Zeichen', () => {
+    const anders = wege.filter((w) => ansichtIkon(w.view) !== w.icon && ansichtIkon(w.view) !== seitenZeichenName(w.view))
+      .map((w) => `${w.view}: ${ansichtIkon(w.view)} ≠ ${w.icon}`);
     expect(anders).toEqual([]);
   });
   it('der Seitentitel eines Ablaufs nimmt sein Zeichen aus dem Register', () => {
