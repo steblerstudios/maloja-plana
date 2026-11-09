@@ -20,6 +20,9 @@
 
 ---
 
+> **Neu 09.11.2026:** Fragen L1–L6 zu einem späteren Konto/Login stehen in
+> [`login-rechtsliste.md`](login-rechtsliste.md) — ins gebündelte Dossier übernehmen.
+
 ## Was Maloja Plana ist — in vier Sätzen
 
 Ein Orientierungs- und Ordnungswerkzeug für das Leben in der Schweiz: Sozialhilfe,
