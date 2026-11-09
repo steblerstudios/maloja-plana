@@ -26,7 +26,8 @@ describe('Boden-Anker und Menü zeichnen keine eigenen Icons', () => {
     expect(svgAnzahl(lesen('MobileNav.jsx'))).toBe(0);
   });
   it('die Zeichen der Leiste stehen im Kern (der Boden-Anker liegt im Startbündel)', () => {
-    for (const n of ['rucksack', 'sackmesser', 'geschenk', 'plus', 'quittung', 'menue', 'ordner', 'check', 'calendar']) {
+    // Seit Bauplan B5b (08.11.2026): ① Übersicht = Feldstecher, ④ Was steht mir zu? = Wegweiser, ⑤ Menü = Sackmesser.
+    for (const n of ['rucksack', 'sackmesser', 'feldstecher', 'wegweiser', 'plus', 'quittung', 'ordner', 'lesezeichen', 'calendar']) {
       expect(KERN_NAMEN, n).toContain(n);
     }
   });
@@ -39,13 +40,15 @@ describe('ein Ding, ein Zeichen', () => {
       expect(lesen(datei), datei).not.toMatch(/'mappe'/);
     }
   });
-  it('«Was steht mir zu?» trägt in Leiste, Menü und Register dasselbe Geschenk', () => {
-    expect(WERKZEUGE.find((w) => w.view === 'situationen').icon).toBe('geschenk');
-    expect(lesen('main.jsx')).toMatch(/key: 'situationen'[^\n]*icon: 'geschenk'/);
+  // Seit Bauplan B5b (08.11.2026): Wegweiser statt Geschenk (Icon-Besprechung 07.11., «G»).
+  it('«Was steht mir zu?» trägt in Leiste, Menü und Register denselben Wegweiser', () => {
+    expect(WERKZEUGE.find((w) => w.view === 'situationen').icon).toBe('wegweiser');
+    expect(lesen('main.jsx')).toMatch(/key: 'situationen'[^\n]*icon: 'wegweiser'/);
+    expect(lesen('MobileNav.jsx')).toMatch(/key: 'situationen'[^\n]*icon: 'wegweiser'/);
     // In den Werkzeuggruppen steht «Was steht mir zu?» seit A1 (06.11.2026, #719) nicht mehr — die Seite
     // steht fest in der Leiste unten. Steht sie dort je wieder, dann mit dem Geschenk.
     const gruppen = lesen('components/WerkzeugGruppen.jsx');
-    if (/view: 'situationen'/.test(gruppen)) expect(gruppen).toMatch(/view: 'situationen', icon: 'geschenk'/);
+    if (/view: 'situationen'/.test(gruppen)) expect(gruppen).toMatch(/view: 'situationen', icon: 'wegweiser'/);
   });
   it('der Weg zur Sicherung trägt das Sicherungs-Zeichen, nicht das Schloss', () => {
     expect(lesen('components/UnterlagenWege.jsx')).toMatch(/icon: 'sicherung', onClick: \(\) => onNavigate\('export'\)/);

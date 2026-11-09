@@ -416,15 +416,21 @@ const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
 // Linien, jetzt hier, in der Strichstärke der übrigen Zeichen.
 const _linie = (...pfade) => () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   ...pfade.map((d, i) => React.createElement('path', { key: i, d })));
-// Übersicht = Schweizer Sackmesser, generisch, ohne Kreuz (icon-dictionary.md). Ruhende Form;
-// die Leiste klappt die Werkzeuge mit `SackmesserIcon` in main.jsx aus.
+// Menü = Schweizer Sackmesser, generisch, ohne Kreuz (Icon-Besprechung 07.11.: «B, Sackmesser = Menü»;
+// vorher Übersicht). Ruhende Form; die Leiste klappt die Werkzeuge mit `SackmesserIcon` in main.jsx aus,
+// solange das Menü offen ist.
 const _sackmesser = _linie('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5');
 const _rucksack = _linie('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z', 'M9 8a3 3 0 0 1 6 0', 'M9 14h6');
-// «Was steht mir zu?» — in Leiste, Menü und Register dasselbe Geschenk.
-const _geschenk = _linie('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8');
+// «Was steht mir zu?» = Wegweiser (Icon-Besprechung 07.11., «G»; das Geschenk widersprach dem
+// App-Satz «Ein Recht, kein Entgegenkommen»). In Leiste, Menü und Register dasselbe Zeichen.
+const _wegweiser = _linie('M11 21V3.5', 'M11 5.5h7.5l2 2-2 2H11', 'M11 11.5H5l-2 2 2 2h6', 'M8.5 21h5');
+// Übersicht = Feldstecher (07.11., «G»): «wo stehe ich, was liegt vor mir».
+const _feldstecher = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '7', cy: '15.5', r: '3.8' }), React.createElement('circle', { cx: '17', cy: '15.5', r: '3.8' }),
+  React.createElement('path', { d: 'M10.6 14.2h2.8' }),
+  React.createElement('path', { d: 'M4.2 13l1.6-6.5a1.6 1.6 0 0 1 3.1.3l.4 4.6M19.8 13l-1.6-6.5a1.6 1.6 0 0 0-3.1.3l-.4 4.6' }));
 const _plus = _linie('M12 5 V19 M5 12 H19');
 const _quittung = _linie('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15');
-const _menue = _linie('M4 7 H20 M4 12 H20 M4 17 H20');
 
 // Kopfzeile und Barrierefreiheits-Leiste (Schritt 3): bis 06.11.2026 von Hand in main.jsx.
 const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
@@ -524,10 +530,10 @@ const _iconFactories = {
   // Boden-Anker und Menü (Schritt 3)
   sackmesser: _sackmesser,
   rucksack: _rucksack,
-  geschenk: _geschenk,
+  wegweiser: _wegweiser,
+  feldstecher: _feldstecher,
   plus: _plus,
   quittung: _quittung,
-  menue: _menue,
 
   // Kopfzeile und Barrierefreiheit (Schritt 3)
   settings: _settings,

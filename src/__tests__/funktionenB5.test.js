@@ -31,3 +31,24 @@ describe('B5a · Funktions-Zeichen', () => {
     expect(['success', 'qr', 'dokumentTresor', 'exportTool', 'kalenderUhr'].filter((n) => Icons[n])).toEqual([]);
   });
 });
+
+// Bauplan B5b (08.11.2026): die Leiste nach der Icon-Besprechung 07.11. («G» und «B»).
+describe('B5b · Leiste, Schulden-Reiter, Lebensmappe', () => {
+  it('① Übersicht = Feldstecher, ④ Was steht mir zu? = Wegweiser, ⑤ Menü = Sackmesser (offen, solange das Menü offen ist)', () => {
+    const main = lies('main.jsx');
+    expect(main).toMatch(/key: 'dashboard', label: t\('nav\.dashboard'\), icon: 'feldstecher'/);
+    expect(main).toMatch(/key: 'situationen', label: t\('dashboard\.anspruchTitle'\), icon: 'wegweiser'/);
+    expect(main).toMatch(/key: 'menu', label: t\('nav\.menu'\), icon: 'sackmesser', active: false, offen: menuOffen/);
+    expect(main).toMatch(/SackmesserIcon, \{ open: !!it\.offen/);
+    expect(main).toMatch(/menuOffen: mobileNavOpen/);
+    expect(lies('MobileNav.jsx')).toMatch(/navItem\('dashboard', t\('nav\.dashboard'\), 'feldstecher'/);
+  });
+  it('die drei Striche und das Geschenk gibt es nicht mehr', () => {
+    expect(['menue', 'geschenk'].filter((n) => Icons[n])).toEqual([]);
+  });
+  it('Schulden-Reiter «Übersicht» = Balken; Lebensmappe = Ordner + du (grünes Abzeichen aus der Ast-Variablen)', () => {
+    expect(lies('SchuldenManager.jsx')).toMatch(/key: 'overview', icon: 'balken'/);
+    expect(ansichtIkon('lebensmappe')).toBe('lebensmappe');
+    expect(lies('IconSystem.jsx')).toMatch(/fill: 'var\(--mp-ast-person, #5A7868\)'/);
+  });
+});

@@ -102,7 +102,7 @@ export const SEARCH_VIEWS = [
   // Eintrag «Lebensmappe» bleibt (Kapitel Basis zeigt ihn) und öffnet dort die Auswahl «Alles»; «dossier» führt
   // jetzt auf die ganze Seite.
   { view: 'drucken', nav: 'unterlagen.drucken.title', icon: 'drucker', aliases: ['drucken', 'dossier', 'behördendossier', 'notfalldossier', 'imprimer', 'stampare', 'print'] },
-  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'cartella', 'life folder'] },
+  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'lebensmappe', aliases: ['lebensmappe', 'mappe', 'cartella', 'life folder'] },
   // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
   // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
   // sucht, sucht mit genau diesen Wörtern.

@@ -62,6 +62,8 @@ export const ICON_INVENTAR = {
     paw: "Haustier — Pfote",
     palette: "Gestaltung, Darstellung",
     cowbell: "Erinnerungen und Benachrichtigungen — Kuhglocke als Strich (Punkt 1, A)",
+    balken: "Übersicht in Zahlen — Balken (Schulden-Reiter)",
+    lebensmappe: "Lebensmappe — Ordner + «du» im grünen Abzeichen (4b D)",
     lesezeichen: "Merkliste — Lesezeichen «hier will ich zurück» (Punkt 3, E)",
     chartsSchoko: "Diagramme — Schoggi-Tafel (behalten, noch ohne Einsatz)",
   }),
@@ -104,12 +106,12 @@ export const ICON_INVENTAR = {
   }),
   // ── N · Navigation ──
   ...g('N', {
-    sackmesser: "Übersicht — Schweizer Sackmesser, generisch (Wörterbuch)",
+    sackmesser: "Menü — Schweizer Sackmesser, generisch (07.11. «B»; vorher Übersicht)",
     rucksack: "Rucksack — Wege und Werkzeuge",
-    geschenk: "«Was steht mir zu?» — Geschenk",
+    wegweiser: "«Was steht mir zu?» — Wegweiser (Leiste, Menü, Register; 07.11. «G»)",
+    feldstecher: "Übersicht — Feldstecher (07.11. «G»)",
     home: "Startseite (Navigation); Wohnen selbst ist das Chalet",
     quittung: "Beleg erfassen — Quittung",
-    menue: "Menü",
   }),
   // ── Z · Barrierefreiheit ──
   ...g('Z', {

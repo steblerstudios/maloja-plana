@@ -88,7 +88,7 @@ export const WERKZEUGE = [
   // Gewählt 27.09.2026: Lebenssituationen als «Was steht mir zu?» über den Gegenständen
   // (und im Menü); die Arztkoffer-Ansicht «Gesundheit» im Gegenstand Arztkoffer.
 // Seit Fassung 9 (F9-D1) beide auch in der Suche — vorher fand die Lupe sie nicht.
-  { view: 'situationen', nav: 'dashboard.anspruchTitle', sub: 'lebenszustaende.pageSub', icon: 'geschenk', fach: OBEN, imMenue: 6, aliases: ['anspruch', 'ansprüche', 'was steht mir zu'] },
+  { view: 'situationen', nav: 'dashboard.anspruchTitle', sub: 'lebenszustaende.pageSub', icon: 'wegweiser', fach: OBEN, imMenue: 6, aliases: ['anspruch', 'ansprüche', 'was steht mir zu'] },
   { view: 'gesundheit', nav: 'nav.arztkoffer', sub: 'nav.sub.arztkoffer', icon: 'notfall', bereich: 'gesundheit', fach: 'gesundheit', aliases: ['arztkoffer', 'gesundheit', 'medikamente', 'ärztin', 'arzt'] },
   { view: 'search', nav: 'nav.search', sub: 'nav.sub.search', icon: 'search', fach: AUSSENFACH, suche: false },
 

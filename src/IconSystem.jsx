@@ -345,6 +345,26 @@ zeichenErgaenzen(Object.fromEntries(Object.entries(EREIGNIS_PFADE).map(([name, p
   React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
     ...pfade.map((d, i) => React.createElement('path', { key: i, d })))])));
 
+// Balken = Übersicht in Zahlen (Schulden-Reiter «Übersicht», Icon-Besprechung Punkt 11).
+const _balken = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M5 20V14M12 20V6M19 20V10M3 20h18' }));
+// Lebensmappe = Ordner + «du» im grünen Abzeichen (Punkt 4b D: Gegenstand + was passiert, Farbe = Ast Person).
+// Abzeichen ausgestanzt, Grün aus der Ast-Variablen (main.jsx), Ordner in Textfarbe.
+let mappenZaehler = 0;
+const Lebensmappe = (eigenschaften) => {
+  const id = 'mappe' + (mappenZaehler += 1);
+  return React.createElement('svg', { viewBox: '0 0 24 24', ...eigenschaften },
+    React.createElement('mask', { id: id + 'a' }, React.createElement('rect', { width: '24', height: '24', fill: '#fff' }),
+      React.createElement('circle', { cx: '18.3', cy: '18.3', r: '6.6', fill: '#000' })),
+    React.createElement('mask', { id: id + 'b' }, React.createElement('circle', { cx: '18.3', cy: '18.3', r: '5.5', fill: '#fff' }),
+      React.createElement('g', { fill: 'none', stroke: '#000', strokeWidth: '1.15', strokeLinecap: 'round' },
+        React.createElement('circle', { cx: '18.3', cy: '16.9', r: '1.1' }), React.createElement('path', { d: 'M16.4 20.6a1.9 1.9 0 0 1 3.8 0' }))),
+    React.createElement('path', { d: 'M3.5 6.5a1.5 1.5 0 0 1 1.5-1.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5v9.5A1.5 1.5 0 0 1 19 20H5a1.5 1.5 0 0 1-1.5-1.5z',
+      fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round', mask: 'url(#' + id + 'a)' }),
+    React.createElement('rect', { width: '24', height: '24', mask: 'url(#' + id + 'b)', style: { fill: 'var(--mp-ast-person, #5A7868)' } }));
+};
+zeichenErgaenzen({ balken: _balken, lebensmappe: () => React.createElement(Lebensmappe) });
+
 // Seiten-Zeichen (Icon-Plan, Bauplan B4): Leitform + Abzeichen je Seite, nachgeladen.
 zeichenErgaenzen(Object.fromEntries([...SEITEN_BEREICH].map(([view, bereich]) =>
   [seitenZeichenName(view), () => nachgeladen('seite', { view, bereich })])));
