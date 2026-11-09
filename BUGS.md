@@ -132,6 +132,30 @@ zuerst. **Offen bleiben B-11 und B-16.** Den Bereich Rechner/Fachlogik hat die S
 - 2026-11-09 · **B-16** · Klein: `.ics` faltet Zeilen über 75 Byte nicht (`utils/icsExport.js`),
   gedruckte Briefe und Dossiers tragen immer `lang="de"`.
 
+**Nachtrag Rechner/Fachlogik (09.11.2026 abends, auf `fix/bugsuche-top4` gelesen, im Code
+gegengeprüft, im Browser nicht nachgestellt).** Geprüft wurde nur die innere Logik, nicht ob
+gesetzliche Werte stimmen. Ein Fix hier ist Fachlogik → vorher `swiss-precision-pruefer`.
+
+- 2026-11-09 · **B-17** · **Mit IK-Auszug zählt die AHV nur die Beitragsjahre bis heute.**
+  `VorsorgeRechner.jsx` (`ahvResult`): mit IK geht `ikResult.beitragsjahre` als Beitragsjahre ein,
+  `beitragsjahreReferenzalter` wird `undefined`. Ohne IK werden die Jahre bis zum Bezug angenommen
+  (Kommentar Audit B9). Widerspruch im selben Rechner: beim Vorbezug schlägt
+  `berechneAltersrente` (`data/ahvRechner.js`) dann `floor(vorbezugMonate/12)` Jahre drauf, beim
+  Bezug im Referenzalter keine. Gemeldetes Beispiel (vom Lesedurchgang mit Node gerechnet): Mann,
+  40, IK 20 Jahre à 80 000 → Bezug 65 «fehlend 24», Bezug 63 «fehlend 22». Dazu liest
+  `projektionAhv` den IK gar nicht, obwohl der Zukunft-Reiter `vr.zukunftIkAktiv` sagt, die
+  Projektion nutze die IK-Historie. **Offen ist auch der Fachentscheid**, ob der IK-Weg künftige
+  Jahre hochrechnen soll.
+- 2026-11-09 · **B-18** · **Zukunftsbild rechnet AHV ab dem Rücktritt, auch vor 63.**
+  `VorsorgeRechner.jsx` (Zukunftsgrafik): der Regler geht ab 58, `ahvVorbezugM =
+  (Referenzalter − Rücktritt) × 12` → bei 58 rund 84 Monate AHV-Vorbezugsrente ab 58. Der
+  Kommentar daneben sagt «auf frühestens 63 gedeckelt» — gedeckelt ist nur der Kürzungssatz, nicht
+  die Bezugsdauer. Folge: früher aufhören zeigt ein grösseres AHV-Fundament. Erwartet: AHV erst
+  ab `max(Rücktritt, 63)`.
+- 2026-11-09 · **B-19** · Klein: Das Feld «Bezugsalter» sagt `min 63`, der Regler im Zukunftsbild
+  setzt denselben Wert ab 58. Bei 60 rechnet die AHV wie 63, angezeigt bleibt 60. Eher
+  Klarheitsfrage (Rücktritt ≠ AHV-Bezug) als Rechenfehler.
+
 Nicht als Bug geführt: die automatischen Sicherungen (`autoBackup.js`) werden angelegt, lassen
 sich in der App aber nicht zurückholen — fehlende Funktion, gehört in die Bau-Liste.
 
