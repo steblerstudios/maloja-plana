@@ -82,7 +82,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
         padding: '12px 12px', marginBottom: space.xs + 'px',
         background: palette.surface, color: palette.text, textDecoration: 'none',
-        border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
+        border: '1px solid ' + palette.border + '44', borderRadius: radius.lg,
         cursor: 'pointer', fontFamily: 'inherit',
         transition: `border-color ${duration.normal}ms ${ease}`,
       },
@@ -182,7 +182,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
             display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
             padding: '12px 12px', marginBottom: space.xs + 'px',
             background: palette.surface, color: palette.text, textDecoration: 'none',
-            border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
+            border: '1px solid ' + palette.border + '44', borderRadius: radius.lg,
             cursor: 'pointer', fontFamily: 'inherit',
             transition: `border-color ${duration.normal}ms ${ease}`,
           };

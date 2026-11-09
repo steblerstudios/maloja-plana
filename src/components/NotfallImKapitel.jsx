@@ -256,7 +256,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     // Offen: das Kästchen-Zeichen wie in den Szenarien (Form, nicht nur Farbe); keine geklebten Glyphen.
     const titel = h('span', { style: { fontSize: text.sm, color: palette.text } }, hinweisZeichen('kaestchen', 12), feldName(f.chapter, f.k), ' ',
       h('small', { style: { fontSize: text.xs, color: palette.mid } }, '· ' + t('notfallKapitel.fehltFuer', { lagen: lagenName(f.lagen) })));
-    const rahmen = { border: '1px dashed ' + notfallRot, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', marginBottom: space.sm + 'px' };
+    const rahmen = { border: '1px dashed ' + notfallRot, borderRadius: radius.lg, padding: space.sm + 'px ' + space.md + 'px', marginBottom: space.sm + 'px' };
     const wegZeile = (key, onClick, beschriftung) => h('div', { key, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
       titel,
       h('button', { type: 'button', className: 'mp-link', onClick, style: wegLink }, beschriftung));
