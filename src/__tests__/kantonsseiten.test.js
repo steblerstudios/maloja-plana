@@ -63,9 +63,10 @@ describe('Kantonsseiten Prämienverbilligung', () => {
     for (const k of ['ZH', 'BE', 'GE', 'AG']) expect(appRechnetFuer(k), k).toBe(true);
   });
 
-  it('jeder Kanton hat eine Seite, ausser BL und VS (Amtslink ungeprüft, Riegel 1)', () => {
+  // VS seit 09.11.2026 abends dabei (vs.ch war tagsüber in Wartung, Amtslink dann geprüft).
+  it('jeder Kanton hat eine Seite, ausser BL (Amtslink ungeprüft, Riegel 1)', () => {
     const ohne = KANTONSFOLGE.filter((k) => !KANTONSSEITEN.some((x) => x.kanton === k));
-    expect(ohne).toEqual(['BL', 'VS']);
+    expect(ohne).toEqual(['BL']);
     for (const k of ohne) expect(CANTONAL_LINKS_GEPRUEFT[k].ipv, k).toBeNull();
   });
 

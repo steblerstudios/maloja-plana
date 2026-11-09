@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten/praemienverbilligung-kantone.mjs (Texte) · src/config/cantonalData.js · src/data/direktLinks.js
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Kantonsseite, nur Deutsch. Indexierbar wie die deutschen Erklärseiten. -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>Prämienverbilligung im Kanton Wallis — Maloja Plana</title>
+  <meta name="description" content="Prämienverbilligung im Kanton Wallis: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was hier anders ist als anderswo.">
+  <link rel="canonical" href="https://malojaplana.ch/praemienverbilligung/wallis/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Prämienverbilligung im Kanton Wallis">
+  <meta property="og:description" content="Prämienverbilligung im Kanton Wallis: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was hier anders ist als anderswo.">
+  <meta property="og:url" content="https://malojaplana.ch/praemienverbilligung/wallis/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prämienverbilligung im Kanton Wallis">
+  <meta name="twitter:description" content="Prämienverbilligung im Kanton Wallis: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was hier anders ist als anderswo.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/praemienverbilligung/wallis/#webpage",
+        "url": "https://malojaplana.ch/praemienverbilligung/wallis/",
+        "name": "Prämienverbilligung im Kanton Wallis",
+        "description": "Prämienverbilligung im Kanton Wallis: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was hier anders ist als anderswo.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/praemienverbilligung/wallis/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Prämienverbilligung",
+            "item": "https://malojaplana.ch/praemienverbilligung/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Kanton Wallis",
+            "item": "https://malojaplana.ch/praemienverbilligung/wallis/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
+           --rand:#E0DDD8; --gold:#C4A870 }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --gold:#C4A870 }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    /* Hover ohne Farbwechsel: Salbei #7E9F8C hatte auf #F2F2F0 nur 2.6:1 (WCAG 1.4.3 verlangt 4.5:1).
+       Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
+    a:hover{ text-decoration-thickness:2px }
+    header{ padding:28px 0 0 }
+    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    main{ padding:8px 0 16px }
+    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
+    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
+    p{ margin-bottom:14px }
+    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
+      padding:20px 22px; margin:28px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:10px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
+    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
+      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
+    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:14px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    footer p{ margin-bottom:6px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:14px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
+    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
+      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
+    /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
+    .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
+    /* Weg (C): Gold heisst handeln, Heidelbeere heisst informieren (Farbrollen,
+       Entscheid E4). Die Farbe sitzt nur am Rand und im Zeichen, der Text bleibt
+       in --text: Gold als Schrift hätte auf hellem Grund zu wenig Kontrast. */
+    :root{ --heidel-text:#4A6A88 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel-text:#8CAAC6 } }
+    .weg{ border:1px solid var(--rand); border-left:4px solid var(--gold); border-radius:10px;
+      background:var(--flaeche); padding:18px 20px; margin:20px 0 28px }
+    .weg.automatisch{ border-left-color:var(--heidel-text) }
+    .weg .marke-weg{ display:flex; align-items:center; gap:10px; font-weight:600; font-size:17px; margin-bottom:8px }
+    .weg svg{ flex:none; width:22px; height:22px }
+    .weg.antrag svg{ color:#8A6F35 }
+    @media (prefers-color-scheme: dark){ .weg.antrag svg{ color:var(--gold) } }
+    .weg.automatisch svg{ color:var(--heidel-text) }
+    .weg p:last-child{ margin-bottom:0 }
+    .stelle a{ font-weight:600 }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › <a href="/praemienverbilligung/">Prämienverbilligung</a> › Kanton Wallis
+      </nav>
+    </header>
+
+    <main>
+      <h1>Prämienverbilligung im Kanton Wallis</h1>
+      <p class="vorspann">Die Prämienverbilligung ist ein Beitrag an die Krankenkassenprämie. Wie sie allgemein funktioniert, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>. Hier steht, was im Kanton Wallis gilt.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
+
+      <h2>Muss ich etwas tun?</h2>
+      <div class="weg automatisch">
+        <p class="marke-weg"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg><span>In der Regel von Amtes wegen</span></p>
+        <p>Im Kanton Wallis prüft die Ausgleichskasse den Anspruch in der Regel von Amtes wegen. Grundlage ist Ihre Steuerveranlagung von vor zwei Jahren. Wer im Steuerregister erfasst ist und Anspruch hat, bekommt zu Beginn des Jahres einen Entscheid.</p>
+        <p>Das Geld geht direkt an Ihre Krankenkasse, die es von Ihren Prämien abzieht.</p>
+        <p>Eines müssen Sie aber selbst tun, wenn Sie im Vorjahr keine Verbilligung hatten: Schicken Sie der Ausgleichskasse eine Kopie Ihrer Krankenkassen-Police für das neue Jahr. Wer schon im Vorjahr eine Verbilligung hatte und bei derselben Kasse bleibt, erhält nur eine Bestätigung. Haben Sie die Kasse gewechselt, fragen Sie nach, ob die Ausgleichskasse die neue Police braucht.</p>
+        <p>Laut Verordnung gilt ab dem Entscheid eine feste Frist, innert der Sie den Anspruch bei der Ausgleichskasse geltend machen. Schicken Sie verlangte Unterlagen, etwa die Police, darum bald, und fragen Sie nach, wenn unklar ist, was noch fehlt.</p>
+        <p>In diesen Fällen stellen Sie selbst ein Gesuch bei der Ausgleichskasse, auch wenn Sie schon einen Entscheid haben:</p>
+        <ul>
+          <li>Sie werden an der Quelle besteuert (Ausweis B, F, L oder N). Dann stellen Sie für das Jahr ein eigenes Gesuch. Wer mit Ausweis B schon im Vorjahr Anspruch hatte, bekommt das Formular zugeschickt, muss es aber selbst ausfüllen und einreichen.</li>
+          <li>Sie haben im Vorjahr die Niederlassungsbewilligung C erhalten. Dann reichen Sie ein Gesuch zusammen mit einer Kopie Ihrer letzten Steuererklärung ein.</li>
+          <li>Sie sind volljährig, aber noch keine 21, und wohnen nicht mehr am selben Wohnort wie Ihre Eltern. Dann können Sie ein eigenes Gesuch stellen, mit einer Wohnsitzbestätigung für sich und Ihre Eltern.</li>
+          <li>Ihr Einkommen ist im Vorjahr deutlich gesunken, mindestens um einen Anteil, den die Verordnung festlegt. Dann können Sie mit einem begründeten Gesuch beantragen, dass mit Ihrer Steuererklärung für das Vorjahr gerechnet wird. Ob das geschieht, entscheidet die Behörde. Das gilt nicht für Selbständigerwerbende und nicht für Personen, die eine AHV- oder IV-Rente rückwirkend erhalten haben.</li>
+          <li>Ihre Familie hat sich verändert, etwa durch Trennung oder Scheidung. Dann stellen Sie ein besonderes Gesuch mit den Belegen. Berücksichtigt wird die Änderung in der Regel erst im folgenden Jahr.</li>
+          <li>Sie ziehen im Lauf des Jahres ins Wallis und beziehen schon Ergänzungsleistungen oder Sozialhilfe. Dann ist eine Verbilligung ab dem Zuzug möglich, mit einem besonderen Gesuch.</li>
+          <li>Sie sind zwischen 21 und 25, noch in Ausbildung, und Ihre Verbilligung liegt unter einem Anteil, den die Verordnung festlegt. Dann können Sie bei der Ausgleichskasse einen Zuschlag beantragen.</li>
+          <li>Sie sind erst vor kurzem ins Wallis gezogen und haben keinen Entscheid erhalten. Dann stellen Sie das Gesuch selbst; auf dem Formular geben Sie an, seit wann und woher Sie zugezogen sind.</li>
+          <li>Ihre Lage verschlechtert sich im Lauf des Jahres stark. Dann wenden Sie sich an Ihre Gemeinde: Sie entscheidet über Sozialhilfe, und danach richtet sich auch die Verbilligung.</li>
+          <li>Sie sind in einer besonderen Notlage. Dann kann der Kanton auf ein begründetes Gesuch hin eine befristete Verbilligung gewähren, auch unabhängig vom Einkommen.</li>
+        </ul>
+        <p>Auch sonst gilt: Glauben Sie, Anspruch zu haben, und haben Sie keinen Entscheid erhalten, reichen Sie ein begründetes Gesuch ein. Das Formular «Spezielles Subventionsgesuch» gibt es bei der Ausgleichskasse. Ohne die verlangten Belege wird das Gesuch nicht behandelt.</p>
+        <p>Für Gesuche gibt es eine Frist. Das Formular der Ausgleichskasse nennt das Ende des Jahres, für das Sie die Verbilligung wollen. Nach der Verordnung wirkt ein Gesuch ausserdem nur für eine begrenzte Zeit zurück, gerechnet ab dem Monat, in dem es bei der Ausgleichskasse eingeht. Rechnen Sie mit dem Jahresende, und fragen Sie im Zweifel bei der Ausgleichskasse nach.</p>
+      </div>
+
+      <h2>Wer zuständig ist</h2>
+      <p class="stelle">Ausgleichskasse des Kantons Wallis</p>
+      <p>Die Ausgleichskasse in Sitten erstellt und verschickt die Entscheide, bearbeitet die Gesuche und gibt Auskunft. Gesuche nimmt sie nur über ihre Website, ihr Kontaktformular, per E-Mail oder per Post entgegen. Sie kommt nicht an die Haustür und vereinbart dafür keine Termine.</p>
+      <p>Amtsseite: <a href="https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html" rel="noopener">Seite der Ausgleichskasse des Kantons Wallis zur Prämienverbilligung</a></p>
+
+      <h2>Was im Kanton Wallis anders ist</h2>
+      <ul>
+        <li>Anspruch haben kann nur, wer zu Jahresbeginn im Wallis wohnt. Wer im Lauf des Jahres zuzieht, fällt für dieses Jahr in der Regel noch nicht darunter. Wer in einen anderen Kanton zieht, behält die Verbilligung bis Ende Jahr, ausser bei Ergänzungsleistungen oder Sozialhilfe. Bei einem Wegzug ins Ausland gilt das nicht; melden Sie ihn der Ausgleichskasse. Wer im Ausland wohnt und in der Schweiz versichert ist, namentlich in der EU oder EFTA, fragt bei der Ausgleichskasse nach: Die Verordnung behält dafür das Bundesrecht vor.</li>
+        <li>Ausländische Studierende, die allein in die Schweiz kommen, haben grundsätzlich keinen Anspruch, ausser in einem Härtefall.</li>
+        <li>Wer Ergänzungsleistungen zur AHV oder IV oder Sozialhilfe bezieht, erhält eine Verbilligung in der Höhe der vollen Referenzprämie. Dasselbe gilt, wenn der Sozialdienst Ihr Einkommen als ungenügend eingestuft hat, auch ohne Unterstützung. Enden diese Leistungen, gilt die volle Verbilligung noch einige Monate weiter, längstens bis Ende Jahr.</li>
+        <li>Kinder und junge Erwachsene bis 20 werden mit den Eltern gerechnet, ihr eigenes Einkommen zählt dabei nicht. In Familien mit unteren und mittleren Einkommen sieht die Verordnung für sie einen festen Mindestanteil der Referenzprämie vor. Wer Ende Vorjahr 20 war, wird als eigene Person gerechnet.</li>
+        <li>Getrennt lebende Ehepaare ohne Kinder werden je als Einzelperson gerechnet. Leben Eltern getrennt, zählen die Kinder bei einem Elternteil: bei alleiniger Obhut bei diesem, bei geteilter Obhut bei dem, der Unterhaltsbeiträge erhält, sonst bei dem mit dem höheren Einkommen.</li>
+        <li>Ein Kind, das im Lauf des Jahres geboren oder adoptiert wird, zählt ab diesem Monat mit. Schicken Sie dann eine Kopie seiner Police an die Ausgleichskasse.</li>
+        <li>Wer nach einer Ausbildung zu arbeiten begonnen hat und im Vorjahr deutlich und dauerhaft mehr verdient, kann nach dem Einkommen des Vorjahres beurteilt werden statt nach dem älteren Steuerjahr. Wen das betrifft, regelt das Departement in Richtlinien.</li>
+        <li>Neben dem Einkommen zählt das Vermögen: Liegt das Bruttovermögen über einer Grenze, die der Staatsrat festlegt, gibt es keine Verbilligung. Wer nach Ermessen veranlagt wurde, erhält keine.</li>
+        <li>Steigt Ihr Einkommen erst im laufenden Jahr, bleibt die Verbilligung für dieses Jahr bestehen. Melden Sie der Ausgleichskasse aber sofort jede Änderung Ihrer persönlichen Lage, etwa Heirat, Trennung, Geburt oder Umzug, und auch, wenn Ihr Einkommen schon vor dem Jahr der Verbilligung deutlich und dauerhaft gestiegen ist. Was zu Unrecht bezogen wurde, etwa wegen falscher Angaben oder einer fehlenden Meldung, wird zurückgefordert. Wer gutgläubig war und durch die Rückzahlung übermässig belastet würde, muss nach der Verordnung nicht zurückzahlen.</li>
+        <li>Sind Sie mit dem Entscheid nicht einverstanden, können Sie innert kurzer Frist ab Zustellung beim Departement für Gesundheit, Soziales und Kultur Einsprache erheben. Gegen den Einspracheentscheid ist eine Beschwerde beim Staatsrat möglich.</li>
+      </ul>
+
+      <h2>Wie viel?</h2>
+      <p>Wie hoch die Verbilligung ist, hängt unter anderem von Ihren Steuerdaten und Ihrem Haushalt ab, und die Werte ändern jedes Jahr. Darum steht hier kein Betrag.</p>
+      <div class="karte">
+        <p><strong>Maloja Plana rechnet das für viele Haushalte durch.</strong></p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/#/premium">Beispiel ansehen — ohne Zugangscode</a></p>
+      </div>
+
+      <h2>Quellen</h2>
+      <ul>
+        <li><a href="https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html" rel="noopener">Ausgleichskasse des Kantons Wallis: Prämienverbilligung</a></li>
+        <li><a href="https://lex.vs.ch/app/de/texts_of_law/832.105" rel="noopener">Verordnung über die obligatorische Krankenversicherung und die individuellen Prämienverbilligungen (VüIPV, SGS 832.105)</a></li>
+        <li><a href="https://lex.vs.ch/app/de/texts_of_law/832.1" rel="noopener">Gesetz über die Krankenversicherung des Kantons Wallis (SGS 832.1)</a></li>
+        <li><a href="https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_65" rel="noopener">KVG Art. 65 und 66 (SR 832.10, Systematische Sammlung)</a></li>
+      </ul>
+      <p class="leise">Eine Auswahl, nicht abschliessend. Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
+
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal verschieden und ändern regelmässig. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Mit den Unterlagen des Kantons abgeglichen: November 2026.</strong> Keine amtliche Auskunft.</p>
+
+      <h2>Weiterlesen</h2>
+      <ul>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung: so funktioniert sie in der ganzen Schweiz</a></li>
+          <li><a href="/praemienverbilligung/#kantone">Prämienverbilligung in den anderen Kantonen</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <p class="sprachen">Sprache: Deutsch</p>
+    </footer>
+  </div>
+</body>
+</html>
