@@ -42,10 +42,10 @@ export const UnterlagenWege = ({ palette, t, onNavigate }) => {
 
     // Eine Zeile statt drei (F7-S2, 27.10.2026): Lebensmappe, Notfall- und Behörden-Dossier sind die drei
     // Auswahlen der Seite «Unterlagen drucken». Die Unterzeile nennt sie, damit niemand sie sucht.
-    React.createElement(Weg, { palette, icon: 'documents', onClick: () => onNavigate('drucken'),
+    React.createElement(Weg, { palette, icon: 'drucker', onClick: () => onNavigate('drucken'),
       title: t('unterlagen.drucken.title'), description: t('unterlagen.drucken.beschreibung'),
       status: [t('unterlagen.dossier.lebensmappe.title'), t('unterlagen.dossier.behoerden.title'), t('unterlagen.dossier.notfall.title')].join(' · ') }),
-    React.createElement(Weg, { palette, icon: 'documents', onClick: () => onNavigate('briefe'),
+    React.createElement(Weg, { palette, icon: 'document', onClick: () => onNavigate('briefe'),
       title: t('unterlagen.dossier.briefe.title'), description: t('unterlagen.dossier.briefe.description') }),
     React.createElement(Weg, { palette, icon: 'sicherung', onClick: () => onNavigate('export'),
       title: t('unterlagen.backup.title'), description: t('unterlagen.backup.description'), status: t('unterlagen.backup.action') })

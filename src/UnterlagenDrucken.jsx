@@ -59,7 +59,7 @@ export const UnterlagenDrucken = ({ palette, t, data, chapters, documents, onNav
 
   return React.createElement('div', { style: { maxWidth: '520px' } },
     React.createElement(Brotkrume, { palette, t, view: 'drucken', onNavigate }),
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('unterlagen.drucken.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'drucker', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('unterlagen.drucken.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px' } }, t('unterlagen.drucken.beschreibung')),
 
     React.createElement('div', { role: 'radiogroup', 'aria-labelledby': 'mp-drucken-legende', style: { marginBottom: space.lg + 'px' } },

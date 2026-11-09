@@ -13,8 +13,10 @@ import '../IconSystem.jsx';
 // verschwinden darin.
 
 export const SCHICHT_B_STRICH = [
-  'info', 'warning', 'success', 'error', 'delete', 'filter', 'phone',
-  'debt', 'csv', 'qr', 'barcode', 'timeline', 'document',
+  'info', 'warning', 'error', 'delete', 'filter', 'phone',
+  'debt', 'csv', 'barcode', 'timeline', 'document',
+  // Bauplan B5 (08.11.2026): success und qr fallen weg; neu Strich: Lesezeichen, Kette, Teilen, Glocke.
+  'lesezeichen', 'kette', 'teilen', 'cowbell',
 ];
 
 const zeichnung = (name) => renderToStaticMarkup(React.createElement(Icons[name]));

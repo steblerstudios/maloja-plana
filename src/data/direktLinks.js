@@ -148,7 +148,7 @@ export const KATEGORIEN = {
   arbeit: { de: 'Arbeit', en: 'Employment', fr: 'Travail', icon: 'budget' },
   familie: { de: 'Familie', en: 'Family', fr: 'Famille', icon: 'family' },
   finanzen: { de: 'Finanzen', en: 'Finances', fr: 'Finances', icon: 'budget' },
-  recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'dokumentTresor' },
+  recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'legal' },
 };
 
 // Beratung & Hilfe: gemeinnützige Beratungs-Anlaufstellen (kostenlos/niederschwellig)

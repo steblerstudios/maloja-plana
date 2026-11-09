@@ -17,33 +17,6 @@ import { EREIGNIS_PFADE } from './data/ereignisZeichen.js';
 //
 // Neues Icon: hierher, ausser der fest geladene Teil zeigt es — dann in den Kern.
 
-const _kalenderUhr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Bahnhofsuhr-inspired clock
-  React.createElement('circle', { cx: '12', cy: '12', r: '10.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '9.2', fill: 'none', stroke: 'currentColor', strokeWidth: '0.4' }),
-  // Hour markers
-  React.createElement('line', { x1: '12', y1: '2.8', x2: '12', y2: '4.5', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '12', y1: '19.5', x2: '12', y2: '21.2', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '2.8', y1: '12', x2: '4.5', y2: '12', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '19.5', y1: '12', x2: '21.2', y2: '12', stroke: 'currentColor', strokeWidth: '1.3', strokeLinecap: 'round' }),
-  // Minor markers
-  React.createElement('line', { x1: '16.6', y1: '3.8', x2: '16', y2: '5', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '20.2', y1: '7.4', x2: '19', y2: '8', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '20.2', y1: '16.6', x2: '19', y2: '16', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '16.6', y1: '20.2', x2: '16', y2: '19', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '7.4', y1: '20.2', x2: '8', y2: '19', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '3.8', y1: '16.6', x2: '5', y2: '16', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '3.8', y1: '7.4', x2: '5', y2: '8', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '7.4', y1: '3.8', x2: '8', y2: '5', stroke: 'currentColor', strokeWidth: '0.8', strokeLinecap: 'round' }),
-  // Hour hand (10:10 position)
-  React.createElement('line', { x1: '12', y1: '12', x2: '9.5', y2: '7', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' }),
-  // Minute hand
-  React.createElement('line', { x1: '12', y1: '12', x2: '15.5', y2: '6.5', stroke: 'currentColor', strokeWidth: '1', strokeLinecap: 'round' }),
-  // Second hand — generisch (KEIN roter SBB/Mondaine-Lollipop; Schutzrecht)
-  React.createElement('line', { x1: '12', y1: '11.5', x2: '12', y2: '16.5', stroke: '#C4A870', strokeWidth: '0.6', strokeLinecap: 'round' }),
-  // Center cap
-  React.createElement('circle', { cx: '12', cy: '12', r: '1.2' }),
-);
 
 const _schulden = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Document/bill
@@ -103,20 +76,6 @@ const _chartsSchoko = () => React.createElement('svg', { viewBox: '0 0 24 24', f
   React.createElement('rect', { x: '19', y: '1.5', width: '4', height: '4', rx: '0.8', fill: 'currentColor', opacity: '0.5', transform: 'rotate(12 21 3.5)' }),
 );
 
-const _exportTool = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Swiss army knife body (generic silhouette)
-  React.createElement('rect', { x: '4', y: '9', width: '16', height: '6', rx: '3', fill: 'currentColor' }),
-  // Blade extended
-  React.createElement('path', { d: 'M 16 9 L 21 3 L 21.5 3.8 L 17.5 9.5', fill: 'currentColor', opacity: '0.8' }),
-  // Small tool extended down
-  React.createElement('path', { d: 'M 16 15 L 20 19.5 L 19.3 20 L 15.5 15.5', fill: 'currentColor', opacity: '0.6' }),
-  // Pivot
-  React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' }),
-  // (kein Emblem auf dem Griff — generisches Sackmesser, KEIN Victorinox-Kreuz; Schutzrecht)
-  // Export arrow
-  React.createElement('path', { d: 'M 4.5 18.5 L 7.5 21.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('polyline', { points: '5,21.5 7.5,21.5 7.5,19', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round' }),
-);
 
 const _mietzinsverbilligung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Small chalet
@@ -205,24 +164,12 @@ const _filter = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('path', { d: 'M4 5 H20 L14 12.5 V18.5 L10 20.5 V12.5 Z' })
 );
 
-const _success = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
-  React.createElement('path', { d: 'M8.2 12.4 L11 15.2 L16 9.6' })
-);
 
 const _error = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
   React.createElement('path', { d: 'M9.2 9.2 L14.8 14.8 M14.8 9.2 L9.2 14.8' })
 );
 
-const _qr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('rect', { x: '3.5', y: '3.5', width: '6', height: '6', rx: '1' }),
-  React.createElement('rect', { x: '14.5', y: '3.5', width: '6', height: '6', rx: '1' }),
-  React.createElement('rect', { x: '3.5', y: '14.5', width: '6', height: '6', rx: '1' }),
-  React.createElement('rect', { x: '14.5', y: '14.5', width: '2.5', height: '2.5', rx: '0.6' }),
-  React.createElement('rect', { x: '18', y: '14.5', width: '2.5', height: '2.5', rx: '0.6' }),
-  React.createElement('rect', { x: '16.25', y: '18', width: '2.5', height: '2.5', rx: '0.6' })
-);
 
 // ═══════════════════════════════════════════════════════════════
 // Semantic Icons — domain-specific pictograms
@@ -298,10 +245,13 @@ const _edit = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'no
 
 // Smartphone — «Auf den Startbildschirm legen» (Karte im Bergpanorama und Menü, 25.09.2026).
 // Vorher zeigte das Menü den Telefonhörer («anrufen») und die Karte am Computer einen Bildschirm.
+// Handy = das Gerät (Punkt 9, Entscheid 07.11.): deutlich gezeichnet — Rahmen, Bildschirmkanten, Taste.
 const _handy = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
-  React.createElement('rect', { x: '6.5', y: '2.5', width: '11', height: '19', rx: '2' }),
-  React.createElement('path', { d: 'M11 18.5h2' })
+  React.createElement('rect', { x: '6.5', y: '2.5', width: '11', height: '19', rx: '2.2' }),
+  React.createElement('path', { d: 'M6.5 6h11M6.5 17.5h11' }),
+  React.createElement('path', { d: 'M11 19.8h2' }),
 );
+
 
 const _phone = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('path', { d: 'M7.2 3.5 h2.6 l1.4 3.8 -1.9 1.5 a11 11 0 0 0 5.9 5.9 l1.5 -1.9 3.8 1.4 v2.6 a2 2 0 0 1 -2.2 2 A16.5 16.5 0 0 1 5.2 5.7 a2 2 0 0 1 2 -2.2 Z' })
@@ -355,12 +305,10 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // `exportTool` (Sackmesser-Gestalt), `delete`, `filter` (Trichter).
 // Stebler Studios hat entschieden: behalten. Nur auf Zuruf entfernen.
 zeichenErgaenzen({
-  kalenderUhr: _kalenderUhr,
   schulden: _schulden,
   steuern: _steuern,
   organspende: _organspende,
   chartsSchoko: _chartsSchoko,
-  exportTool: _exportTool,
   mietzinsverbilligung: _mietzinsverbilligung,
   sozialhilfe: _sozialhilfe,
   ergaenzungsleistungen: _ergaenzungsleistungen,
@@ -370,9 +318,7 @@ zeichenErgaenzen({
   csv: _csv,
   debt: _debt,
   filter: _filter,
-  success: _success,
   error: _error,
-  qr: _qr,
   dentist: _dentist,
   doctor: _doctor,
   timeline: _timeline,
