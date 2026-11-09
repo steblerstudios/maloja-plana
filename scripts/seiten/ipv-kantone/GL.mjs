@@ -48,7 +48,9 @@ export default {
   // der Durchführungsstelle eingereicht werden, werden nur diejenigen Prämien verbilligt, die ab
   // dem Folgemonat nach der Antragstellung fällig werden.»); Merkblatt «Um die IPV für das ganze
   // Jahr zu erhalten …»; Formular «Einreichefrist».
-  fristSatz: 'Die Frist liegt ganz am Anfang des Jahres. Sie steht auf dem Formular und im Merkblatt. Ein späterer Antrag ist noch möglich, verbilligt aber nur die Prämien ab dem Monat nach dem Eingang.',
+  // Prüfbefund 09.11.: Merkblatt Ziff. 3: «Nur korrekt und vollständig ausgefüllte Anträge gelten als
+  // termingerecht eingereichte Anträge.»; Ziff. 2: «mit allen Beilagen».
+  fristSatz: 'Die Frist liegt ganz am Anfang des Jahres. Sie steht auf dem Formular und im Merkblatt. Als fristgerecht gilt nur ein vollständiger Antrag mit allen Beilagen. Ein späterer Antrag ist noch möglich, verbilligt aber nur die Prämien ab dem Monat nach dem Eingang.',
   stelle: 'Kantonale Steuerverwaltung Glarus, Fachstelle IPV',
   // VV PV Art. 3 (Hauptabteilung Steuern = Durchführungsstelle), Art. 11 («anfechtbarer
   // Verfügung»); Merkblatt Ziff. 5 («Eine direkte Auszahlung an Sie ist nicht möglich.»).
@@ -61,22 +63,37 @@ export default {
     // EG KVG Art. 11 Abs. 2: «Für Neugeborene und für Personen, die im Kanton Glarus Wohnsitz
     // nehmen, beginnt die Berechtigung am 1. Januar des auf die Geburt respektive den Zuzug
     // folgenden Jahres.»
-    'Wer neu in den Kanton zieht, ist erst ab dem folgenden Jahr berechtigt. Das gilt auch für Neugeborene.',
+    // Prüfbefund 09.11.: VV PV Art. 8 Abs. 1: «Bei Änderung der persönlichen Verhältnisse während des
+    // Auszahlungsjahres, namentlich bei Zuzug in den Kanton aus dem Ausland, … kann bis spätestens …
+    // nach Erhalt der definitiven Steuerveranlagung des Ereignisjahres ein Antrag auf
+    // Prämienverbilligung gestellt werden.»
+    'Wer neu in den Kanton zieht, ist erst ab dem folgenden Jahr berechtigt. Das gilt auch für Neugeborene. Wer aus dem Ausland zuzieht, fragt bei der Fachstelle nach; die Verordnung nennt dafür einen eigenen Antrag.',
     // VV PV Art. 7 Abs. 1 und 3 (erheblich verschlechtert, Antrag innert kurzer Frist seit
     // Zustellung der Steuerveranlagung des Vorjahres, zu begründen) und Art. 8 (Heirat, Trennung,
     // Scheidung, Tod: Antrag nach Erhalt der definitiven Steuerveranlagung des Ereignisjahres).
-    'Ist Ihr Einkommen deutlich gesunken, können Sie verlangen, dass mit einer neueren Steuerveranlagung gerechnet wird. Ähnliches gilt nach Heirat, Trennung, Scheidung oder dem Tod des Ehepartners. Der Antrag ist zu begründen, und die Frist dafür ist kurz: Sie beginnt, sobald Sie die betreffende Steuerveranlagung erhalten.',
+    'Ist Ihr Einkommen deutlich gesunken, können Sie verlangen, dass mit einer neueren Steuerveranlagung gerechnet wird. Ähnliches gilt nach Heirat, Trennung, Scheidung oder dem Tod des Ehepartners. Der Antrag ist zu begründen, und die Frist dafür ist kurz: Sie beginnt, sobald Sie die betreffende Steuerveranlagung erhalten. Stellen Sie den Antrag auch dann fristgerecht, wenn die alte Veranlagung zu hoch ist.',
+    // ↑ Prüfbefund 09.11.: VV PV Art. 7 Abs. 1 setzt einen Antrag voraus («Hat sich die
+    // wirtschaftliche Leistungsfähigkeit der Antrag stellenden Person … erheblich verschlechtert»).
     // EG KVG Art. 13 Abs. 1 lit. b/c (Verwirkung bei verspäteten Meldungen und fehlenden
     // Unterlagen), Art. 21 (Rückerstattung); VV PV Art. 14.
-    'Melden Sie Änderungen rechtzeitig und reichen Sie verlangte Unterlagen fristgerecht ein. Sonst kann der Anspruch verfallen. Zu Unrecht ausbezahlte Beiträge werden zurückgefordert.',
+    // Prüfbefund 09.11. (Rechtsprüfung): zwingend. EG KVG Art. 13 Abs. 1: «Der Anspruch auf
+    // individuelle Prämienverbilligung verwirkt, wenn: … b. anspruchsbegründende oder
+    // mitteilungspflichtige Änderungen nicht innerhalb der vom Regierungsrat vorgeschriebenen
+    // Fristen erfolgen».
+    'Melden Sie Änderungen rechtzeitig und reichen Sie verlangte Unterlagen fristgerecht ein. Sonst verfällt der Anspruch. Zu Unrecht ausbezahlte Beiträge werden zurückgefordert.',
     // EG KVG Art. 9 Abs. 3 lit. a (Quellensteuerpflichtige «unter Vorbehalt von Absatz 2»
     // ausgeschlossen), Art. 16 Abs. 2 (Jahresaufenthalt: Bruttoeinkommen); VV PV Art. 22 (Wohnsitz
     // in der EU/EFTA). Die Stellen sind nicht widerspruchsfrei lesbar, darum nur der Hinweis.
-    'Für Personen mit Quellensteuer und für Personen, die in einem EU- oder EFTA-Staat wohnen, gelten eigene Regeln. Ob ein Anspruch besteht, klären Sie am besten direkt mit der Fachstelle.',
+    'Für Personen mit Quellensteuer und für Personen, die in einem EU- oder EFTA-Staat wohnen, gelten eigene Regeln. Ob ein Anspruch besteht, klären Sie am besten direkt mit der Fachstelle. Stellen Sie den Antrag vorsorglich innerhalb der Frist.',
+    // ↑ Prüfbefund 09.11.: EG KVG Art. 13 Abs. 1 lit. a (verwirkt ohne fristgerechte Geltendmachung).
     // EG KVG Version 2686 («Stand 1. Januar 2028»), Art. 17 Abs. 1: «Personen, welche Anspruch auf
     // Prämienverbilligung haben, stellt die zuständige kantonale Verwaltungsbehörde eine Verfügung
     // zu» — beschlossen 03.05.2026, in Kraft erst ab 01.01.2028. Jahreszahlen bewusst weggelassen.
-    'Die Landsgemeinde hat beschlossen, später auf ein Verfahren ohne Antrag umzustellen. Bis dahin gilt weiterhin: ohne Antrag keine Prämienverbilligung.',
+    // Prüfbefund 09.11.: Anker für «später» = Inkrafttreten laut Gesetzessammlung (Änderungstabelle
+    // Version 2686: «Art. 17 Abs. 1 geändert», «Abs. 1b eingefügt»). Künftiger Art. 17 Abs. 1b:
+    // «Versicherte, die keine Verfügung erhalten haben und Anspruch auf Prämienverbilligung erheben,
+    // können den Erlass einer solchen bei der zuständigen kantonalen Verwaltungsbehörde verlangen.»
+    'Die Landsgemeinde hat beschlossen, auf ein Verfahren ohne Antrag umzustellen: Wer Anspruch hat, bekommt dann eine Verfügung, und wer keine erhält, kann sie verlangen. Die neue Regel gilt erst ab dem Inkrafttreten, das in der Gesetzessammlung des Kantons steht. Bis dahin gilt weiterhin: ohne Antrag keine Prämienverbilligung.',
   ],
   quellen: [
     { text: 'Kantonale Steuerverwaltung Glarus: Merkblatt Prämienverbilligung (PDF)', url: 'https://www.gl.ch/public/upload/assets/63123/02%20Merkblatt%20IPV%202026.pdf?fp=1' },

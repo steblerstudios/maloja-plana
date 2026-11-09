@@ -52,7 +52,10 @@ export default {
   // StKB Art. 15a Abs. 1: «Gegen Verfügungen über Prämienverbilligungen kann innert 30 Tagen nach
   // der Eröffnung beim Gesundheits- und Sozialdepartement schriftlich Einsprache geführt werden.»
   // Eine Antragsfrist für die Prüfung von Amtes wegen nennen Merkblatt und StKB nicht.
-  fristSatz: 'Eine Antragsfrist gibt es für die Prüfung von Amtes wegen nicht. Sind Sie mit der Verfügung nicht einverstanden, können Sie innert einer kurzen Frist schriftlich und begründet Einsprache beim Gesundheits- und Sozialdepartement erheben. Die Frist steht im Standeskommissionsbeschluss.',
+  // StKB Art. 5a Abs. 5: «Eine erhöhte Prämienverbilligung nach Art. 5 Abs. 5 kann nur geleistet
+  // werden, wenn der junge Erwachsene bis zum 31. März des Anspruchsjahres nachgewiesen hat, dass er
+  // im Vorjahr zumindest mehrheitlich in Ausbildung war.» (Prüfbefund 09.11.2026, Blocker)
+  fristSatz: 'Eine Antragsfrist gibt es nicht. Für junge Erwachsene in Ausbildung kann aber eine Nachweisfrist gelten, siehe unten. Mit einer Verfügung nicht einverstanden? Dann gilt für die Einsprache eine kurze Frist; sie steht im Standeskommissionsbeschluss. Die Einsprache richten Sie schriftlich und begründet an das Gesundheits- und Sozialdepartement.',
   stelle: 'Gesundheitsamt Appenzell Innerrhoden',
   // StKB Art. 2 (Vollzug beim Gesundheits- und Sozialdepartement), Art. 10, Art. 11; Merkblatt
   // Ziff. 4: «im Verlaufe des Jahres rückwirkend für das gesamte Jahr … direkt der
@@ -76,19 +79,32 @@ export default {
     // spielt, ob es das gemeinsame Kind ist oder nicht» · «Konkubinatspaare, die ohne Kinder im
     // gleichen Haushalt leben, werden alleine berechnet.»
     'Gemeinsam berechnet werden Ehepaare und eingetragene Paare, ebenso Konkubinatspaare mit mindestens einem Kind im Haushalt, auch wenn es nicht ihr gemeinsames ist. Konkubinatspaare ohne Kind werden einzeln berechnet.',
-    // StKB Art. 3 Abs. 3 (junge Erwachsene zwischen 18 und 25, bei den Eltern, ledig, ohne eigene
-    // Kinder, tiefes eigenes Einkommen → Gesamtanspruch); Fragen und Antworten: «Es muss keine
-    // Ausbildungsbestätigung eingereicht werden, da sie seit 2026 durch das Gesundheitsamt
-    // elektronisch bei der Zentralen Ausgleichsstelle ZAS abgefragt wird.» Achtung: StKB Art. 5a
-    // Abs. 5 verlangt weiterhin einen Nachweis bis Ende März — Widerspruch, siehe Bericht.
-    'Junge Erwachsene zwischen 18 und 25, die ledig sind, bei den Eltern wohnen und wenig eigenes Einkommen haben, zählen zum Anspruch der Familie. Ob sie in Ausbildung waren, fragt das Gesundheitsamt nach eigenen Angaben elektronisch ab. Im Zweifel lohnt sich die Nachfrage.',
+    // StKB Art. 3 Abs. 3: «Junge Erwachsene zwischen 18 und 25 Jahren haben zusammen mit den Eltern
+    // oder einem Elternteil einen Gesamtanspruch …, wenn a) sie bei den Eltern oder einem Elternteil
+    // wohnen, b) sie ledig sind, c) sie keine Kinder haben … und d) ihr massgebendes Gesamteinkommen …
+    // den Grenzwert … nicht übersteigt.» Merkblatt Ziff. 3.1 nennt die Gruppe nach Jahrgängen
+    // («Junge Erwachsene (Jahrgänge 2001 - 2007)»), Altersangaben deshalb angeglichen.
+    'Junge Erwachsene (im Merkblatt nach Jahrgängen genannt), die ledig sind, bei den Eltern wohnen, keine eigenen Kinder haben und wenig eigenes Einkommen haben, zählen zum Anspruch der Familie.',
+    // Fragen und Antworten: «Es muss keine Ausbildungsbestätigung eingereicht werden, da sie seit 2026
+    // durch das Gesundheitsamt elektronisch bei der Zentralen Ausgleichsstelle ZAS abgefragt wird.»
+    // StKB Art. 5a Abs. 5 (Version in Kraft seit 01.01.2026): erhöhte Verbilligung nur, «wenn der junge
+    // Erwachsene bis zum 31. März des Anspruchsjahres nachgewiesen hat, dass er im Vorjahr zumindest
+    // mehrheitlich in Ausbildung war. Die zuständige Amtsstelle informiert die jungen Erwachsenen
+    // vorgängig über diese Obliegenheit.» Widerspruch FAQ ↔ StKB: Blocker der Prüfung 09.11.2026.
+    'Laut Gesundheitsamt wird die Ausbildung elektronisch abgefragt. Der Beschluss verlangt aber weiterhin einen Nachweis bis zu einem Stichtag im Frühling. Fragen Sie beim Gesundheitsamt nach, ob Sie selbst einen Nachweis einreichen müssen, besonders wenn für Sie keine Ausbildungszulage bezahlt wird.',
     // StKB Art. 6 Abs. 1: bei Quellensteuer das auf ein Jahr umgerechnete Einkommen abzüglich eines
-    // Pauschalabzugs; bei nachträglicher ordentlicher Veranlagung gilt diese.
-    'Bei Quellensteuer ohne ordentliche Veranlagung rechnet das Amt mit dem Bruttoeinkommen abzüglich eines Pauschalabzugs.',
+    // Pauschalabzugs; bei nachträglicher ordentlicher Veranlagung gilt diese. Wie Quellenbesteuerte
+    // erfasst werden (von Amtes wegen oder auf Antrag), sagen weder StKB noch Merkblatt noch Fragen und
+    // Antworten; Prüfbefund 09.11.2026: nichts behaupten, zur Nachfrage raten.
+    'Bei Quellensteuer ohne ordentliche Veranlagung rechnet das Amt mit dem Bruttoeinkommen abzüglich eines Pauschalabzugs. Werden Sie an der Quelle besteuert und sind unsicher, ob Ihr Anspruch geprüft wird, fragen Sie beim Gesundheitsamt nach.',
     // StKB Art. 6 Abs. 3 (Neuzuzug aus dem Ausland: Pro-Rata-Anteil), Abs. 4 lit. a (kein Anspruch
     // für Angehörige eines nicht in Art. 65a KVG aufgeführten Staates mit einer Bewilligung von
     // weniger als einem Jahr).
     'Wer aus dem Ausland zuzieht und nicht das ganze Jahr versichert ist, erhält einen anteiligen Betrag. Keinen Anspruch hat, wer aus einem Staat kommt, der nicht unter Art. 65a KVG fällt, und eine Aufenthaltsbewilligung von weniger als einem Jahr hat.',
+    // StKB Art. 6 Abs. 4 lit. c: Keinen Anspruch haben «Personen, bei welchen Familienmitglieder oder
+    // Dritte vollständig für den Lebensunterhalt aufkommen. Ausgenommen bleiben Personen gemäss Art. 6
+    // Abs. 2» (EL-Bezüger, die ohnehin über die EL laufen; Ausnahme deshalb nicht erwähnt).
+    'Keinen Anspruch hat auch, wer vollständig von Familienmitgliedern oder Dritten unterhalten wird.',
     // Merkblatt Ziff. 2.3: mehr als 60 aufeinander folgende Tage Militärdienst → Militärversicherung,
     // Prämienverbilligung «für diesen Zeitraum anteilsmässig gekürzt».
     'Dauert ein Militärdienst mehr als 60 Tage am Stück, ist dafür die Militärversicherung zuständig. Die Verbilligung wird für diese Zeit gekürzt.',

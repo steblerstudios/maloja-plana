@@ -73,7 +73,8 @@ export default {
     // RLCAMal art. 14 cpv. 2 lett. b–f (Arbeitseinkommen, Renten, Unterhalt, Mieteinnahmen,
     // Vermögen; «Su richiesta»), art. 29 (istanza di revisione), art. 30 lett. a: «dall'inizio del
     // mese in cui è stato annunciato il cambiamento, ma al più presto dal mese in cui questo avviene».
-    'Ändern sich Ihr Arbeitseinkommen, Renten, Unterhaltsbeiträge, Mieteinnahmen oder Ihr Vermögen deutlich, können Sie eine Neuberechnung verlangen. Sie wirkt frühestens ab dem Monat, in dem Sie die Änderung melden. Darum lohnt es sich, nicht zu warten.',
+    // Rechtsprüfung 09.11.: Folge als Tatsache statt «lohnt es sich, nicht zu warten».
+    'Ändern sich Ihr Arbeitseinkommen, Renten, Unterhaltsbeiträge, Mieteinnahmen oder Ihr Vermögen deutlich, können Sie eine Neuberechnung verlangen. Sie wirkt frühestens ab dem Monat, in dem Sie die Änderung melden. Für die Monate davor wird nicht neu gerechnet.',
     // LCAMal art. 27 cpv. 1; [IAS-I] Ziff. 1.1 («non supera i 30 anni; non è coniugato; non ha figli
     // a carico; … redditi … inferiore al limite di fabbisogno …; è in prima formazione»).
     'Junge Erwachsene bis 30 Jahre, die ledig sind, keine Kinder haben, in der ersten Ausbildung stehen und wenig eigenes Einkommen haben, gehören zur Berechnungseinheit der Eltern.',

@@ -30,7 +30,8 @@ export default {
     // Prämienverbilligung von Amtes wegen ausgerichtet.» Merkblatt S. 4: EL-Beziehende «müssen keine
     // Anmeldung ausfüllen». EGzKVG § 17a Abs. 1 lit. a: Die Fürsorgebehörde ist berechtigt, «auch
     // ohne Zustimmung der versicherten Person ein Gesuch … einzureichen» für Sozialhilfeempfänger.
-    'Wer Ergänzungsleistungen bezieht, muss sich nicht anmelden. Für Personen mit Sozialhilfe kann die Fürsorgebehörde das Gesuch einreichen.',
+    // Prüfbefund 09.11.: § 17a Abs. 1 «ist berechtigt» = kann, muss nicht → Klärung empfehlen.
+    'Wer Ergänzungsleistungen bezieht, muss sich nicht anmelden. Für Personen mit Sozialhilfe kann die Fürsorgebehörde das Gesuch einreichen. Klären Sie mit ihr, ob sie das tut; sonst melden Sie sich selbst an.',
   ],
   // VVzEGzKVG § 12 Abs. 2: «Weitere Personen, welche kein Anmeldeformular erhalten haben … beziehen
   // das Anmeldeformular bei der AHV-Zweigstelle ihrer Wohngemeinde oder bei der
@@ -46,16 +47,26 @@ export default {
     punkte: [
       'Sie haben kein Formular erhalten, vermuten aber einen Anspruch. Das Formular gibt es bei der AHV-Zweigstelle Ihrer Gemeinde, bei der SVA Schwyz oder online.',
       'Sie werden an der Quelle besteuert. Dann reichen Sie zum Formular ein Zusatzblatt ein.',
-      'Sie sind neu in den Kanton gezogen, Ihr Zivilstand hat sich geändert, oder Ihre letzte definitive Steuerveranlagung ist älter als drei Jahre. Dann rechnet die SVA mit Ihrem Einkommen des laufenden Jahres.',
+      // Prüfbefund 09.11.: Merkblatt 2027 nennt «die Einkommen des laufenden Jahres 2026» — also des
+      // Jahres vor dem Anspruchsjahr, nicht des Anspruchsjahres.
+      'Sie sind neu in den Kanton gezogen, Ihr Zivilstand hat sich geändert, oder Ihre letzte definitive Steuerveranlagung ist älter als drei Jahre. Dann rechnet die SVA mit Ihrem Einkommen des Jahres vor dem Anspruchsjahr.',
       'Ihre letzte Steuerveranlagung ist eine Ermessensveranlagung. Dann verlangt die SVA für dieses Jahr die vollständige Steuererklärung.',
     ],
-    schluss: 'Im Zweifel lohnt sich die Anmeldung oder eine Nachfrage bei der SVA Schwyz.',
+    // Prüfbefund 09.11. (Rechtsprüfung: Wertung ohne Beleg) → der SVA zugeschrieben. Merkblatt S. 14:
+    // «Bei Unklarheiten über den Anspruch geben die Mitarbeiterinnen und Mitarbeiter der SVA Schwyz
+    // gerne Auskunft.»
+    schluss: 'Bei Unklarheiten über den Anspruch gibt die SVA Schwyz Auskunft.',
   },
   // EGzKVG § 17 Abs. 1 (Frist im Gesetz) und Abs. 2: «Ansprüche, die nach Ablauf der Frist geltend
   // gemacht werden, sind verwirkt.» SVA-Seite: «Anmelde- und Verwirkungsfrist». Merkblatt S. 14:
   // «Reichen Sie Ihre Anmeldung möglichst bis im Herbst … ein. … Die Krankenkasse kann dann … die
   // Prämienverbilligung bereits ab Januar … berücksichtigen.»
-  fristSatz: 'Die Anmeldung muss bis zu einer Frist im Anspruchsjahr eingehen, danach ist der Anspruch verwirkt. Die Frist steht im Gesetz, im Merkblatt und auf der Seite der SVA. Wer sich schon im Herbst des Vorjahres anmeldet, erhält die Verbilligung in der Regel ab Januar.',
+  // Prüfbefund 09.11. (auch Rechtsprüfung): Herbst-Satz als Empfehlung der SVA. Merkblatt S. 14:
+  // «Wir empfehlen: Reichen Sie Ihre Anmeldung möglichst bis im Herbst … ein. … Die Krankenkasse
+  // kann dann in diesem Fall die Prämienverbilligung bereits ab Januar … bei Ihren
+  // Prämienrechnungen berücksichtigen.» SVA-Seite: «Je nach Anmeldeeingang erhalten Sie die
+  // Prämienverbilligung möglicherweise rückwirkend per 1. Januar».
+  fristSatz: 'Die Anmeldung muss bis zu einer Frist im Anspruchsjahr eingehen, danach ist der Anspruch verwirkt. Die Frist steht im Gesetz, im Merkblatt und auf der Seite der SVA. Die SVA empfiehlt, sich schon im Herbst des Vorjahres anzumelden; dann kann die Krankenkasse die Verbilligung bereits ab Januar auf der Rechnung abziehen. Eine spätere Anmeldung innerhalb der Frist kann auch rückwirkend wirken.',
   stelle: 'Sozialversicherungsanstalt Schwyz (SVA Schwyz)',
   // EGzKVG § 16 Abs. 1 (SVA = Durchführungsstelle), § 22 (Verfügung), § 18 Abs. 1 (Auszahlung «in der
   // Regel an die Krankenversicherer»).
@@ -65,7 +76,10 @@ export default {
     // Merkblatt S. 6: «Bitte beachten Sie, dass Sie beweispflichtig sind, sollte das
     // Anmeldeformular nicht bei der SVA Schwyz eingehen.» · «Wenn Sie sich via IPVdigital anmelden,
     // erhalten Sie umgehend eine schriftliche Eingangsbestätigung».
-    'Geht eine Anmeldung auf dem Postweg verloren, müssen Sie belegen, dass Sie sie geschickt haben. Bei der Anmeldung online erhalten Sie sofort eine Eingangsbestätigung per E-Mail.',
+    // Prüfbefund 09.11.: Beweis betrifft den Eingang, nicht den Versand. Merkblatt S. 6: «Zudem steht
+    // Ihnen offen, für die Zustellung Ihrer Anmeldung eine der beiden bewährten Dienstleistungen der
+    // Post zu nutzen: Einschreiben oder A-Post-Plus.» · Bestätigung auf Anfrage bzw. am Schalter.
+    'Geht eine Anmeldung nicht bei der SVA ein, müssen Sie belegen, dass sie bei der SVA eingegangen ist, etwa mit Einschreiben, A-Post-Plus oder einer Eingangsbestätigung. Bei der Anmeldung online erhalten Sie sofort eine Eingangsbestätigung per E-Mail.',
     // EGzKVG § 7 Abs. 2 lit. a (Anteil des Reinvermögens nach eigenen Freibeträgen) und § 5 Abs. 1
     // lit. d (Vermögensgrenze «nach Abzug der Vermögensfreibeträge gemäss § 7 Abs. 2 und 3»);
     // § 7 Abs. 1: Grundlage ist das «Reineinkommen gemäss dem Bundesgesetz über die direkte
@@ -79,8 +93,10 @@ export default {
     // VVzEGzKVG § 10 Abs. 1–3: wesentliche Änderungen der wirtschaftlichen Verhältnisse «werden auf
     // Antrag berücksichtigt», Antrag bis in das Folgejahr. ⚠️ Merkblatt S. 8 dagegen: «Änderungen der
     // wirtschaftlichen Verhältnisse nach dem 1. Januar … können erst in den Folgejahren
-    // berücksichtigt werden.» Beide Texte genannt, Auflösung bei der SVA.
-    'Kommt im Anspruchsjahr ein Kind zur Welt, wird auf Antrag ab dem Geburtsmonat neu gerechnet. Auch eine wesentliche Änderung des Einkommens kann die Verordnung auf Antrag berücksichtigen; beide Anträge haben eine Frist im folgenden Jahr. Das Merkblatt beschreibt die Einkommensänderung enger als die Verordnung, darum lohnt sich hier die Nachfrage.',
+    // berücksichtigt werden.» Prüfbefund 09.11.: massgebend ist die Verordnung — Merkblatt, «Vorbehalt»:
+    // «Für die Beurteilung des Anspruchs im Einzelfall gelten ausschliesslich die gesetzlichen
+    // Bestimmungen.»; VVzEGzKVG § 10 Abs. 1: «werden auf Antrag berücksichtigt».
+    'Kommt im Anspruchsjahr ein Kind zur Welt, wird auf Antrag ab dem Geburtsmonat neu gerechnet. Auch eine wesentliche Änderung des Einkommens berücksichtigt die SVA laut Verordnung auf Antrag; beide Anträge haben eine Frist im folgenden Jahr. Das Merkblatt beschreibt das enger. Stellen Sie den Antrag trotzdem fristgerecht.',
     // VVzEGzKVG § 6 Abs. 2: «Bei Wegfall von Ergänzungsleistungen während des Anspruchsjahres prüft die
     // Sozialversicherungsanstalt Schwyz von Amtes wegen den Leistungsanspruch für den Rest des
     // Anspruchsjahres.» § 6 Abs. 4: «Bei Wegfall von Sozialhilfe wird für den Rest des
@@ -91,10 +107,17 @@ export default {
     // der Steuerveranlagungen zeigt, dass … das massgebende Einkommen oder Vermögen … über den
     // Berechtigungsgrenzen … liegt». § 18 Abs. 2: kleine Jahresbeträge «werden nicht ausbezahlt und
     // verfallen».
-    'Änderungen melden Sie der SVA umgehend. Zeigt die definitive Steuerveranlagung später, dass Einkommen oder Vermögen über den Grenzen lagen, wird die Verbilligung bei der Krankenkasse zurückgefordert. Sehr kleine Jahresbeträge werden nicht ausbezahlt und verfallen.',
+    // Prüfbefund 09.11.: auch die Person ist betroffen. Anmeldeformular Ziff. 7: «Die zu Unrecht
+    // bezogenen Leistungen – unabhängig von der Auszahlungsart – sind zurückzuerstatten.» EGzKVG § 20:
+    // «Die Rückforderung kann erlassen werden, wenn die rückerstattungspflichtige Person gutgläubig
+    // gehandelt hat und gleichzeitig eine grosse Härte vorliegt.»
+    'Änderungen melden Sie der SVA umgehend. Zeigt die definitive Steuerveranlagung später, dass Einkommen oder Vermögen über den Grenzen lagen, wird die Verbilligung bei der Krankenkasse zurückgefordert; zu Unrecht bezogene Leistungen sind laut Formular zurückzuerstatten, was auch Sie treffen kann. Erlassen wird die Rückforderung nur bei gutem Glauben und grosser Härte. Sehr kleine Jahresbeträge werden nicht ausbezahlt und verfallen.',
   ],
   quellen: [
     { text: 'SVA Schwyz: Merkblatt Prämienverbilligung im Kanton Schwyz (PDF)', url: 'https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Merkblatt-IPV-2027.pdf' },
+    // Prüfbefund 09.11.: Formular belegt die Rückerstattung durch die Person. Abgerufen 09.11.2026:
+    // …/Anmeldung-IPV-2027.pdf → 200; Gegenprobe …/Anmeldung-IPV-2099.pdf → 404.
+    { text: 'SVA Schwyz: Anmeldeformular Prämienverbilligung (PDF)', url: 'https://www.sva-sz.ch/uploads/Dateien/Formulare/Individuelle-Praemienverbilligung-IPV/Anmeldung-IPV-2027.pdf' },
     { text: 'Einführungsgesetz zum Bundesgesetz über die Krankenversicherung (EGzKVG, SRSZ 361.100, PDF)', url: 'https://www.sz.ch/public/upload/assets/6155/361_100.pdf' },
     { text: 'Vollzugsverordnung zum EGzKVG (VVzEGzKVG, SRSZ 361.111, PDF)', url: 'https://www.sz.ch/public/upload/assets/6017/361_111.pdf?fp=20' },
     KVG65,

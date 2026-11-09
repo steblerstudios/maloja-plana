@@ -44,16 +44,28 @@ export default {
     punkte: [
       'Sie haben kein Einladungsschreiben erhalten, vermuten aber einen Anspruch. Dann nutzen Sie das Online-Formular auf der Seite der Ausgleichskasse oder verlangen dort Zugangsdaten.',
       'Sie sind junge erwachsene Person und werden im Anspruchsjahr 18 oder sind älter. Dann stellen Sie einen eigenen Antrag; Ehepaare und Familien mit jüngeren Kindern stellen einen gemeinsamen.',
+      // Prüfbefund 09.11.: EV KVG Art. 6 Abs. 3: «Personen, die gemeinsam besteuert werden, haben
+      // einen Gesamtanspruch»; Abs. 4: «Bei nicht gemeinsam besteuerten Eltern hat jener Elternteil
+      // Anspruch auf Prämienverbilligung für Kinder, welchem der Abzug gemäss Art. 37 Abs. 1 Bst. a
+      // des Steuergesetzes (StG) zusteht.»
+      'Sie sind Eltern und werden nicht gemeinsam besteuert, etwa weil Sie nicht verheiratet sind. Dann stellen Sie je einen eigenen Antrag; die Kinder gehören zu dem Elternteil, dem der Kinderabzug in der Steuer zusteht.',
       'Ein Naturereignis, ein Todesfall, ein Unfall, eine Krankheit oder Arbeitslosigkeit hat Ihre Zahlungsfähigkeit stark beeinträchtigt. Dann können Sie beantragen, dass nach Ihrer Lage im laufenden Jahr gerechnet wird.',
     ],
-    schluss: 'Auch dafür gilt die Antragsfrist. Tritt ein solches Ereignis erst danach ein, zählt es im folgenden Jahr.',
+    // Prüfbefund 09.11.: EV KVG Art. 10 Abs. 6: «Die zuständigen Stellen der Einwohnergemeinden haben
+    // die Antragsformulare … für Personen, welche Ereignisse im Sinne von Art. 8 Abs. 4 dieser
+    // Verordnung geltend machen, bis … bei der Vollzugsstelle einzureichen.»
+    schluss: 'Auch dafür gilt die Antragsfrist. Tritt ein solches Ereignis erst danach ein, zählt es im folgenden Jahr. Über die Gemeinde gilt dafür eine eigene Frist; fragen Sie bei Ihrer Gemeindestelle nach.',
   },
   // EV KVG Art. 10 Abs. 3 (Frist in der Verordnung) und Abs. 7: «Werden Ansprüche nicht fristgerecht
   // geltend gemacht … und liegen dafür keine besonderen Gründe vor, so gelten die Ansprüche auf
   // Prämienverbilligung als verwirkt.» Merkblatt: «Einsendeschluss … Senden Sie das Anmeldeformular
   // nach dieser Frist ein, ist der Anspruch verwirkt.» ⚠️ Die Frist wurde mit der EV-Fassung vom
   // 01.06.2026 verschoben (Quellenblatt OW, Nachprüfung 28.09.2026) — darum kein Datum.
-  fristSatz: 'Der Antrag muss bis zu einer Frist im Anspruchsjahr eingehen. Wer sie ohne besonderen Grund verpasst, verliert den Anspruch. Die Frist steht in der Verordnung und im Merkblatt der Ausgleichskasse; sie wurde zuletzt geändert, darum gilt die aktuelle Angabe der Ausgleichskasse.',
+  // Prüfbefund 09.11. (Blocker, auch Rechtsprüfung): EV KVG Art. 10 Abs. 3 in der Fassung «in Kraft
+  // seit: 01.06.2026» nennt eine frühere Frist als die Fassung bis 31.05.2026 (pruef-ow/v1966,
+  // «Stand 18. Dezember 2025»); das Merkblatt 2026 («Einsendeschluss») nennt noch die alte.
+  // Massgebend ist die Verordnung, nicht die Angabe der Ausgleichskasse.
+  fristSatz: 'Der Antrag muss bis zu einer Frist im Anspruchsjahr eingehen. Wer sie ohne besonderen Grund verpasst, verliert den Anspruch. Die Frist steht in der Verordnung. Sie wurde vorverlegt; ältere Merkblätter nennen noch die spätere Frist. Massgebend ist die Verordnung.',
   stelle: 'Ausgleichskasse Obwalden',
   // ow.ch/fachbereiche/2737: Prämienverbilligung «der Ausgleichskasse angegliedert». EV KVG Art. 3
   // Abs. 1 lit. b/c (Ansprüche festlegen, Verfügungen), Art. 14 Abs. 1 (Auszahlung «an den
@@ -75,7 +87,10 @@ export default {
     // EV KVG Art. 8 Abs. 5: Ist das anrechenbare Einkommen im Jahr nach der Bemessungsperiode deutlich
     // gesunken, zählt das nur, «wenn die anspruchsberechtigte Person innert 30 Tagen seit Zustellung
     // der Verfügung … ein begründetes Gesuch einreicht». (Schwelle in Prozent dort genannt.)
-    'Ist Ihr Einkommen im Jahr nach der verwendeten Steuerperiode deutlich gesunken, wird das nur auf ein begründetes Gesuch hin berücksichtigt. Die Frist dafür ist kurz und beginnt mit der Zustellung der Verfügung.',
+    // Prüfbefund 09.11. (Blocker): Art. 8 Abs. 5 knüpft an die «Zustellung der Verfügung» an, die es
+    // nur nach einem Antrag gibt; Art. 10 Abs. 2: «Versicherte, welche keine Zugangsdaten erhalten
+    // haben, können diese bei der Vollzugsstelle verlangen.»
+    'Ist Ihr Einkommen im Jahr nach der verwendeten Steuerperiode deutlich gesunken, wird das nur auf ein begründetes Gesuch hin berücksichtigt. Die Frist dafür ist kurz und beginnt mit der Zustellung der Verfügung. Dafür braucht es zuerst einen fristgerechten Antrag, auch wenn Sie kein Einladungsschreiben erhalten haben.',
     // EV KVG Art. 8 Abs. 2: Quellensteuerpflichtige erhalten einen «Pro-Rata-Anteil»; massgebend sind
     // «die Monate der Erwerbstätigkeit» und ein Anteil des Bruttoerwerbseinkommens. Art. 8 Abs. 3:
     // «Asylsuchende, vorläufig Aufgenommene und Schutzbedürftige, bei denen der Bund die
@@ -90,7 +105,8 @@ export default {
   ],
   quellen: [
     { text: 'Ausgleichskasse Obwalden: Prämienverbilligung', url: 'https://www.akow.ch/ipv' },
-    { text: 'Ausgleichskasse Obwalden: Merkblatt Prämienverbilligung (PDF)', url: 'https://www.akow.ch/uploads/PDF-Formulare-Merkblaetter/IPV/IPV26_Merkblatt_2026-01.pdf' },
+    // Prüfbefund 09.11.: Merkblatt nennt noch die Frist der Fassung vor dem 01.06.2026 — so beschriftet.
+    { text: 'Ausgleichskasse Obwalden: Merkblatt Prämienverbilligung (PDF, ältere Fassung: die Frist darin ist überholt)', url: 'https://www.akow.ch/uploads/PDF-Formulare-Merkblaetter/IPV/IPV26_Merkblatt_2026-01.pdf' },
     // GDB OW ist eine Web-App (jede /app/-Adresse 200, auch 851.99); Bestand über die API belegt,
     // …/api/de/texts_of_law/851.99/show_as_json → 404.
     { text: 'Verordnung zum Einführungsgesetz zum Krankenversicherungsgesetz (EV KVG, GDB 851.11)', url: 'https://gdb.ow.ch/app/de/texts_of_law/851.11' },

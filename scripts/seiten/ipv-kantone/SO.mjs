@@ -9,6 +9,10 @@
 //   Sozialverordnung (SV) BGS 831.2, Versions-PDF 5624 (200) und show_as_json (200);
 //   Sozialgesetz (SG) BGS 831.1 show_as_json (200); 831.29 → 404.
 //   Seite der AKSO akso.ch/dienstleistungen/praemienverbilligung-ipv (200; …-ipvxyz → 404).
+//   Reglement über die Prämienverbilligung in Härtefällen, BGS 832.214, und Reglement über die
+//   Prämienverbilligung für Personen, die an der Quelle besteuert werden, BGS 832.215, je
+//   show_as_json gelesen; «abrogated: false»; API …/texts_of_law/832.214 und 832.215 → 200,
+//   832.299 → 404 (Gegenprobe 09.11.2026). Beide stützen sich noch auf die alte VO KVG / VO PV.
 import { KVG65 } from '../praemienverbilligung-kantone-gemeinsam.mjs';
 
 export default {
@@ -28,8 +32,10 @@ export default {
     // Anträgen verwirkt der Anspruch auf IPV.» Zahl bewusst weggelassen.
     'Das unterschriebene Formular schicken Sie mit den verlangten Unterlagen zurück. Dafür bleibt nach der Zustellung nur wenig Zeit.',
     // SV § 71 Abs. 2: «Die Prämienverbilligung ist in den Ergänzungsleistungen mit enthalten.»;
-    // Abs. 3: «Die Sozialhilfebehörde meldet die Prämienverbilligung der Ausgleichskasse».
-    'Wer Ergänzungsleistungen zur AHV oder IV bezieht, erhält die Prämienverbilligung mit den Ergänzungsleistungen. Bei Sozialhilfe meldet die Sozialhilfebehörde die Prämienverbilligung der Ausgleichskasse.',
+    // Abs. 3: «Die Sozialhilfebehörde meldet die Prämienverbilligung der Ausgleichskasse, unter Angabe
+    // der AHV-Nr. der unterstützten Person.»; § 75 Abs. 1 (Antragsformular ohne Gesuch): «Vorbehalten
+    // bleibt § 71.»
+    'Wer Ergänzungsleistungen zur AHV oder IV bezieht, erhält die Prämienverbilligung mit den Ergänzungsleistungen. Wer Sozialhilfe bezieht, stellt keinen eigenen Antrag; die Sozialhilfebehörde meldet die Verbilligung der Ausgleichskasse.',
   ],
   // SV § 75 Abs. 2 (ohne Formular: Gesuch bei der Ausgleichskasse bis zu einem Datum im Sommer,
   // sonst verwirkt; vorbehalten Personen ohne rechtskräftige Steuerveranlagung), § 72 (fehlende
@@ -40,9 +46,20 @@ export default {
   selbst: {
     einleitung: 'In diesen Fällen müssen Sie den Antrag selbst stellen:',
     punkte: [
-      'Sie haben kein Formular erhalten, rechnen aber mit einem Anspruch. Dann stellen Sie bei der Ausgleichskasse ein Gesuch. Dafür gilt eine eigene, spätere Frist.',
+      // SV § 75 Abs. 2: «Versicherte, die kein Antragsformular erhalten haben und Anspruch auf
+      // Prämienverbilligung erheben wollen, können bei der Ausgleichskasse bis spätestens am 31. Juli
+      // des Anspruchsjahres ein entsprechendes Gesuch stellen.» SG § 87 Abs. 1 lit. b: Anspruch, wenn
+      // sie «am 1. Januar des Anspruchsjahres im Kanton Solothurn Wohnsitz hatten».
+      'Sie haben kein Formular erhalten, etwa weil Sie neu zugezogen sind, rechnen aber mit einem Anspruch. Dann stellen Sie bei der Ausgleichskasse ein Gesuch. Dafür gilt eine feste Frist im Lauf des Anspruchsjahres. Massgebend ist der Wohnsitz am Jahresanfang.',
       'Für Sie liegt noch keine rechtskräftige Steuerveranlagung vor. Sobald sie vorliegt, können Sie den Anspruch rückwirkend geltend machen, aber nur innert kurzer Frist.',
-      'Sie werden an der Quelle besteuert und haben eine Bewilligung B, F, G, L oder S. Das Antragsformular gibt es jeweils ab dem späten Frühling beim Arbeitgeber oder auf der Seite der Ausgleichskasse. Es gilt eine eigene, längere Frist.',
+      // Merkblatt QS «Welche Fristen gelten?»: «Das ausgefüllte Antragsformular ist innerhalb von 30
+      // Tagen nach Erhalt der Ausgleichskasse zurückzuschicken. Die letzte Frist für den Bezug des
+      // Antrags ist der 31. Dezember des Anspruchsjahres.» BGS 832.215 § 4 Abs. 3: «Quellenbesteuerte
+      // Personen haben bis spätestens 31. Dezember einen Antrag auf Prämienverbilligung bei der
+      // Ausgleichskasse einzureichen.» § 5 Abs. 1: die Ausgleichskasse «stellt ihnen [den Arbeitgebern]
+      // Antragsformulare zu». Merkblatt («Bezug») und Reglement («einzureichen») sagen nicht dasselbe →
+      // Rechtsprüfung 09.11.2026: zur Nachfrage raten.
+      'Sie werden an der Quelle besteuert und haben eine Bewilligung B, F, G, L oder S. Das Antragsformular gibt es jeweils ab dem späten Frühling beim Arbeitgeber oder auf der Seite der Ausgleichskasse. Den ausgefüllten Antrag schicken Sie kurz nach Erhalt zurück, spätestens bis zu einer Frist am Ende des Anspruchsjahres. Merkblatt und Reglement beschreiben diese Frist nicht gleich; fragen Sie im Zweifel bei der Ausgleichskasse nach.',
     ],
     // SV § 72 und § 75 Abs. 2 («Bei Fristversäumnis verwirkt der Anspruch»); Merkblatt QS
     // («Bei zu spät eingereichten Anträgen verwirkt der Anspruch auf IPV.»).
@@ -68,10 +85,20 @@ export default {
     // Frage auf dem Formular mit «ja» beantworten; «Wir halten Ihren Antrag pendent, bis die
     // definitive Steuerveranlagung … vorliegt.» SG § 90 Abs. 2 (Nachvergütung auf Antrag oder
     // Rückerstattung von Amtes wegen bei wesentlich abweichendem späterem Einkommen).
-    'Sind Ihr Einkommen oder Ihr Vermögen im Vorjahr deutlich gestiegen, beantworten Sie die Frage dazu auf dem Formular mit «ja». Die Ausgleichskasse wartet dann die neue Veranlagung ab. Weicht ein später festgesetztes Einkommen stark ab, kann es eine Nachzahlung auf Antrag oder eine Rückforderung geben.',
+    // SG § 90 Abs. 2 wörtlich: «Weicht das in einem späteren Zeitpunkt rechtskräftig festgesetzte
+    // steuerbare Einkommen wesentlich von dem der Berechnung der Prämienverbilligung zugrundeliegenden
+    // Einkommen ab, kann im Kalenderjahr ein Antrag auf Nachvergütung gestellt oder von Amtes wegen eine
+    // Rückerstattung eingeleitet werden.»
+    'Sind Ihr Einkommen oder Ihr Vermögen im Vorjahr deutlich gestiegen, beantworten Sie die Frage dazu auf dem Formular mit «ja». Die Ausgleichskasse wartet dann die neue Veranlagung ab. Weicht ein später festgesetztes Einkommen stark ab, kann es eine Nachzahlung geben; den Antrag stellen Sie im selben Kalenderjahr. Umgekehrt kann die Ausgleichskasse zu viel Bezahltes zurückfordern.',
     // SV § 71 Abs. 4 (besondere Verhältnisse wie Todesfall, Krankheit, Arbeitslosigkeit:
     // Berechnung nach der Leistungsfähigkeit im Anspruchsjahr auf Antrag bei der Ausgleichskasse).
-    'Wer zum Beispiel durch Krankheit, einen Todesfall, Arbeitslosigkeit oder einen geschäftlichen Rückschlag in der Zahlungsfähigkeit stark beeinträchtigt ist, kann bei der Ausgleichskasse beantragen, dass nach der aktuellen Lage gerechnet wird.',
+    // BGS 832.214 § 2 Abs. 3: «Prämienverbilligung in Härtefällen wird für das Kalenderjahr der
+    // Gesuchseinreichung ausgerichtet. Für vergangene Jahre wird keine Prämienverbilligung in
+    // Härtefällen gewährt.» § 3 Abs. 3: «Das Antragsformular ist der Ausgleichskasse zusammen mit den
+    // einverlangten Unterlagen innert 30 Tagen vollständig und unterzeichnet einzureichen.» § 3 Abs. 5:
+    // «Bei Fristversäumnis tritt die Ausgleichskasse auf das Gesuch nicht ein und verwirkt der
+    // Anspruch». § 2 Abs. 2 (persönliche Voraussetzungen erfüllt, ordentlicher Anspruch nicht verwirkt).
+    'Wer zum Beispiel durch Krankheit, einen Todesfall, Arbeitslosigkeit oder einen geschäftlichen Rückschlag in der Zahlungsfähigkeit stark beeinträchtigt ist, kann bei der Ausgleichskasse beantragen, dass nach der aktuellen Lage gerechnet wird. Das geht nur für das laufende Jahr, nicht rückwirkend, und das Formular dafür hat wieder eine kurze Frist.',
     // Merkblatt «Junge Erwachsene» (in Ausbildung am 1. Januar, Sozialabzug der Eltern Ziffer 630:
     // auf dem Antrag der Eltern, Ausbildungsnachweis beilegen); «Regelung Konkubinatspaare»
     // (beide Einkommen massgebend, wenn beide einen halben Sozialabzug geltend machen).
@@ -86,6 +113,9 @@ export default {
     // BGS Solothurn ist eine Web-App; Bestand über die API belegt, 831.29 → 404.
     { text: 'Sozialgesetz des Kantons Solothurn (SG, BGS 831.1)', url: 'https://bgs.so.ch/app/de/texts_of_law/831.1' },
     { text: 'Sozialverordnung des Kantons Solothurn (SV, BGS 831.2)', url: 'https://bgs.so.ch/app/de/texts_of_law/831.2' },
+    // API …/texts_of_law/832.214 und 832.215 → 200; Gegenprobe 832.299 → 404 (09.11.2026).
+    { text: 'Reglement über die Prämienverbilligung in Härtefällen (BGS 832.214)', url: 'https://bgs.so.ch/app/de/texts_of_law/832.214' },
+    { text: 'Reglement über die Prämienverbilligung für Personen, die an der Quelle besteuert werden (BGS 832.215)', url: 'https://bgs.so.ch/app/de/texts_of_law/832.215' },
     KVG65,
   ],
 };

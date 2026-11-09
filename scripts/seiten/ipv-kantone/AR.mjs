@@ -21,8 +21,11 @@ export default {
     // angeschrieben. Ein Antrag … ist bis spätestens … möglich.»
     'In Appenzell Ausserrhoden gibt es die Prämienverbilligung nur auf Antrag, und zwar jedes Jahr neu. Wer voraussichtlich Anspruch hat, wird von den Sozialversicherungen Appenzell Ausserrhoden (SOVAR) angeschrieben.',
     // V zum KVG Art. 10 Abs. 1: «reichen ihren Antrag … bei der AHV-Gemeindezweigstelle der
-    // Gemeinde ein, in welcher sie am 1. Januar des Jahres Wohnsitz hatten.»
-    'Den Antrag reichen Sie bei der AHV-Zweigstelle der Gemeinde ein, in der Sie am 1. Januar gewohnt haben.',
+    // Gemeinde ein, in welcher sie am 1. Januar des Jahres Wohnsitz hatten.» Medienmitteilung
+    // 12.12.2025: «werden von den Sozialversicherungen Appenzell Ausserrhoden angeschrieben». Der Zusatz
+    // «oder wie im Schreiben der SOVAR angegeben» folgt dem Prüfbefund 09.11.2026; das Schreiben selbst
+    // liegt nicht als Quelle vor, der Zusatz behauptet deshalb keinen anderen Weg, er verweist nur darauf.
+    'Den Antrag reichen Sie bei der AHV-Zweigstelle der Gemeinde ein, in der Sie am 1. Januar gewohnt haben, oder wie im Schreiben der SOVAR angegeben.',
     // Merkblatt «Sonderfälle»: «Bei Bezügern von Ergänzungsleistungen erfolgt die Vergütung der
     // Prämie … durch die Ergänzungsleistungen direkt an den Krankenversicherer (Art. 21a ELG) ohne
     // zusätzliche Antragsstellung.»
@@ -30,7 +33,10 @@ export default {
     // EG zum KVG Art. 15 Abs. 1 («Anspruch auf vollständige Prämienverbilligung in der Höhe seiner
     // Grundversicherung, jedoch höchstens auf die ganze Richtprämie»), Abs. 2 («Die Gemeinde kann
     // den Anspruch im Namen der Bezügerinnen und Bezüger … geltend machen.»).
-    'Wer wirtschaftliche Sozialhilfe bezieht, hat Anspruch auf eine volle Verbilligung, höchstens bis zur Richtprämie. Den Anspruch kann die Gemeinde für Sie geltend machen.',
+    // EG zum KVG Art. 15 Abs. 2 wörtlich: «Die Gemeinde kann den Anspruch im Namen der Bezügerinnen und
+    // Bezüger von wirtschaftlicher Sozialhilfe geltend machen.» («kann», nicht «muss»); V zum KVG
+    // Art. 10 Abs. 1 (Antrag «bis spätestens 31. März») gilt für alle, die Anspruch erheben.
+    'Wer wirtschaftliche Sozialhilfe bezieht, hat Anspruch auf eine volle Verbilligung, höchstens bis zur Richtprämie. Den Anspruch kann die Gemeinde für Sie geltend machen. Klären Sie mit dem Sozialdienst, ob er den Antrag stellt; sonst gilt die Frist auch für Sie.',
   ],
   // Medienmitteilung 12.12.2025 (angeschrieben werden nur mutmasslich Berechtigte); SOVAR-Seite
   // «Zuzug aus dem Ausland … ab dem Monat Anspruch …, in dem sie ihren Antrag im laufenden
@@ -49,7 +55,12 @@ export default {
   // Bezugsjahr, wenn das Gesuch nach Ablauf der Frist gestellt wird oder die … erforderlichen
   // Angaben und Unterlagen nicht fristgerecht eingereicht werden.» EG zum KVG Art. 22; V zum KVG
   // Art. 10 Abs. 2 (Verlängerung in Härtefällen), Art. 12 Abs. 2–3 (Frist und Nachfrist für Angaben).
-  fristSatz: 'Für den Antrag gilt eine feste Frist in den ersten Monaten des Jahres. Wer sie verpasst oder verlangte Unterlagen nicht rechtzeitig nachreicht, verliert den Anspruch für das ganze Jahr. In Härtefällen kann die SOVAR die Frist verlängern. Die Daten stehen im Merkblatt der SOVAR.',
+  // V zum KVG Art. 10 Abs. 2: «Die Ausgleichskasse Appenzell Ausserrhoden kann in Härtefällen die Frist
+  // für die Einreichung des Antrags bis spätestens 30. April verlängern.» (einen Monat nach der
+  // ordentlichen Frist). V zum KVG Art. 6 Abs. 1 lit. b: Anspruch «bei Zuzug aus dem Ausland mit dem
+  // Monat der Antragstellung»; SOVAR-Seite: «ab dem Monat …, in dem sie ihren Antrag im laufenden
+  // Antragsjahr eingereicht haben».
+  fristSatz: 'Für den Antrag gilt eine feste Frist in den ersten Monaten des Jahres. Wer sie verpasst oder verlangte Unterlagen nicht rechtzeitig nachreicht, verliert den Anspruch für das ganze Jahr. In Härtefällen kann die SOVAR die Frist nur um kurze Zeit verlängern. Die Daten stehen im Merkblatt der SOVAR. Ausgenommen ist der Zuzug aus dem Ausland, siehe oben.',
   stelle: 'AHV-Zweigstelle Ihrer Wohngemeinde',
   // V zum KVG Art. 11 (Vorprüfung durch die AHV-Gemeindezweigstelle, Weiterleitung an die
   // Ausgleichskasse); EG zum KVG Art. 6 Abs. 1 lit. b (Ausgleichskasse vollzieht die

@@ -20,7 +20,9 @@ export default {
     // ordentlich besteuert wird, erhält … einen Entscheid …, ohne sich … eigens anmelden zu müssen.»
     // Reglement Art. 7 Abs. 3: «rechtskräftige Steuerveranlagung des Steuerjahrs, das dem
     // Anspruchsjahr zwei Jahre vorausgeht».
-    'Im Kanton Uri prüft die Sozialversicherungsstelle den Anspruch in der Regel von Amtes wegen, also ohne dass Sie etwas einreichen. Das gilt für alle, die am Jahresanfang im Kanton wohnen und ordentlich besteuert werden. Grundlage ist die definitive Steuerveranlagung von vor zwei Jahren.',
+    // Prüfbefund 09.11.: «Das gilt für alle …» → «grundsätzlich», weil die Ausnahmen unten folgen
+    // (SVS-Seite, «Ausnahmen von dieser Regel»).
+    'Im Kanton Uri prüft die Sozialversicherungsstelle den Anspruch in der Regel von Amtes wegen, also ohne dass Sie etwas einreichen. Das gilt grundsätzlich für alle, die am Jahresanfang im Kanton wohnen und ordentlich besteuert werden; die Ausnahmen stehen unten. Grundlage ist die definitive Steuerveranlagung von vor zwei Jahren.',
     // SVS-Seite: «Das gilt auch für Bezügerinnen und Bezüger von Ergänzungsleistungen und von
     // Sozialhilfe.» Reglement Art. 8 Abs. 2: «Der zuständige Sozialdienst meldet der
     // Sozialversicherungsstelle Uri jährlich die Bezügerinnen und Bezüger von wirtschaftlicher
@@ -30,7 +32,12 @@ export default {
     // hat entweder keinen Anspruch auf Prämienverbilligung oder es liegen noch keine rechtskräftig
     // veranlagten Steuerdaten … vor.» Reglement Art. 10 Abs. 2: Berechnung «zurückgestellt, bis die
     // rechtskräftigen Daten vorliegen».
-    'Bekommen Sie keinen Entscheid, haben Sie entweder keinen Anspruch, oder Ihre Steuerveranlagung ist noch nicht definitiv. Dann wird später gerechnet.',
+    // Prüfbefund 09.11.: Satz auf Personen ohne Ausnahme beschränkt; Ergänzung aus Reglement Art. 7
+    // Abs. 3 Satz 2: «Wesentliche Änderungen der wirtschaftlichen Verhältnisse zwischen der
+    // verwendeten Steuerveranlagung und dem 31. Dezember vor dem Anspruchsjahr werden auf Antrag
+    // berücksichtigt.» und Art. 11 Abs. 1: Antrag «im laufenden Anspruchsjahr mit dem offiziellen
+    // Formular».
+    'Gehören Sie nicht zu den Fällen unten und bekommen keinen Entscheid, haben Sie entweder keinen Anspruch, oder Ihre Steuerveranlagung ist noch nicht definitiv. Dann wird später gerechnet. Ist Ihr Einkommen seither stark gesunken, können Sie mit dem Formular im laufenden Jahr eine Neuberechnung beantragen.',
   ],
   // SVS-Seite, «Ausnahmen von dieser Regel»: «Quellenbesteuerte müssen sich … anmelden.» ·
   // «Personen, die während des Anspruchsjahrs aus dem Ausland in den Kanton Uri zuziehen, müssen
@@ -43,9 +50,16 @@ export default {
     einleitung: 'Selbst anmelden müssen Sie sich, wenn einer dieser Fälle auf Sie zutrifft:',
     punkte: [
       'Sie werden an der Quelle besteuert.',
-      'Sie sind im Lauf des Jahres aus dem Ausland in den Kanton Uri gezogen. Der Anspruch beginnt dann im Monat nach dem Zuzug.',
+      // Prüfbefund 09.11.: Reglement Art. 2 lit. b: «Personen, die vor dem 30. Juni des
+      // Anspruchsjahrs aus dem Ausland zuziehen, haben ab dem Folgemonat ihres Zuzugs Anspruch»;
+      // Art. 11 Abs. 3: «in der ersten Hälfte des Anspruchsjahrs aus dem Ausland zugezogen».
+      'Sie sind in der ersten Jahreshälfte aus dem Ausland in den Kanton Uri gezogen. Der Anspruch beginnt dann im Monat nach dem Zuzug.',
       'Sie sind im Vorjahr in den Kanton Uri gezogen. Dann melden Sie sich im ersten Urner Jahr selbst an.',
       'Sie sind verheiratet, und Sie und Ihre Ehepartnerin oder Ihr Ehepartner haben getrennte Wohnsitze, einer in Uri und einer in einem anderen Kanton.',
+      // Prüfbefund 09.11. (Blocker): Reglement Art. 4 Abs. 3 Satz 3: «Für minderjährige Kinder wird
+      // der Mindestanspruch auf Prämienverbilligung automatisch berechnet.» Art. 7 Abs. 3 und
+      // Art. 11 Abs. 1 (Antrag «im laufenden Anspruchsjahr mit dem offiziellen Formular»).
+      'Sie sind junge erwachsene Person in Ausbildung. Den Mindestbeitrag für die Ausbildung berechnet die SVS laut Reglement nur bei minderjährigen Kindern automatisch. Reichen Sie das Formular im laufenden Jahr ein oder fragen Sie bei der SVS nach.',
     ],
     // Medienmitteilung 18.12.2025: «Auch bei eingetretenen Zivilstandsänderungen wie Tod, Trennung
     // oder Scheidung empfiehlt sich eine Anmeldung oder im Zweifelsfall eine Kontaktaufnahme mit der
@@ -77,17 +91,18 @@ export default {
     // minderjährige Kinder wird der Mindestanspruch … automatisch berechnet.» Formular Frage 4:
     // «Sind Sie zwischen 19 und 25 Jahre alt und standen Sie am 1. Januar des Anspruchsjahrs in
     // Ausbildung?»
-    'Junge Erwachsene werden ab dem Jahr nach ihrem 18. Geburtstag eigenständig berechnet, unabhängig vom Einkommen der Eltern. Den Mindestbeitrag für minderjährige Kinder berechnet die SVS automatisch. Für junge Erwachsene in Ausbildung fragt das Formular nach der Ausbildung; im Zweifel fragen Sie nach.',
+    // Prüfbefund 09.11.: Hinweis zu jungen Erwachsenen in Ausbildung steht jetzt in der Liste oben.
+    'Junge Erwachsene werden ab dem Jahr nach ihrem 18. Geburtstag eigenständig berechnet, unabhängig vom Einkommen der Eltern. Den Mindestbeitrag für minderjährige Kinder berechnet die SVS automatisch.',
     // Reglement Art. 7 Abs. 1 (PV-Einkommen = Nettoeinkünfte «zuzüglich eines vom Regierungsrat
     // festzulegenden Anteils des steuerbaren Vermögens»); Art. 7 Abs. 4 (Quellensteuer: Anteil des
     // «der Quellensteuer zu Grunde liegenden Einkommens»). Im ganzen Reglement (Art. 1–20) keine
     // Vermögensgrenze (gelesen 09.11.2026).
     'Vom Vermögen wird ein Anteil zum Einkommen gezählt, und zwar vom steuerbaren Vermögen, also nach den steuerlichen Abzügen. Eine feste Vermögensgrenze nennt das Reglement nicht. Für Personen mit Quellensteuer gilt eine eigene Berechnungsgrundlage.',
     // Reglement Art. 15 Abs. 1: «eingetretene Änderungen umgehend mitzuteilen». Art. 18 Abs. 1: zu
-    // Unrecht ausgerichtete Leistungen «fordert die Sozialversicherungsstelle Uri von den
-    // Versicherern zurück». Art. 3 Abs. 3: Im Todesfall erlischt der Anspruch mit dem folgenden
-    // Monat; «Auf eine Rückforderung bereits ausbezahlter Prämienverbilligungen … wird verzichtet.»
-    'Änderungen melden Sie der SVS Uri umgehend. Zu Unrecht ausbezahlte Beträge fordert sie bei der Krankenkasse zurück. Nach einem Todesfall endet der Anspruch mit dem folgenden Monat, schon Ausbezahltes wird dann nicht zurückverlangt.',
+    // Versicherern zurück». Art. 3 Abs. 3 (Prüfbefund 09.11., Wortlaut): «Im Todesfall erlischt der
+    // Anspruch auf Prämienverbilligung mit Beginn des darauffolgenden Monats. Auf eine Rückforderung
+    // bereits ausbezahlter Prämienverbilligungen gemäss Artikel 18 wird verzichtet.»
+    'Änderungen melden Sie der SVS Uri umgehend. Zu Unrecht ausbezahlte Beträge fordert sie bei der Krankenkasse zurück. Nach einem Todesfall erlischt der Anspruch mit Beginn des darauffolgenden Monats, schon Ausbezahltes wird dann nicht zurückverlangt.',
   ],
   quellen: [
     { text: 'Sozialversicherungsstelle Uri: Prämienverbilligung (IPV)', url: 'https://www.svsuri.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv' },
@@ -96,6 +111,10 @@ export default {
     // belegt, …/api/de/texts_of_law/20.2299/show_as_json → 404. Die Nummer RB 20.2213 steht nicht im
     // sichtbaren Titel, weil der Test jede Zahl mit vier Ziffern verbietet («2213»).
     { text: 'Reglement über die Prämienverbilligung für die Krankenpflege-Grundversicherung (Prämienverbilligungsreglement, Rechtsbuch Uri)', url: 'https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213' },
+    // Prüfbefund 09.11.: Medienmitteilung GSUD vom 18.12.2025 belegt die Sätze «keinen Entscheid»
+    // und «Todesfall, Trennung oder Scheidung». Am 09.11.2026 abgerufen: …/131963 → 200,
+    // Gegenprobe …/999999991 → 404. Titel ohne Jahreszahl (Riegel: keine Zahl mit vier Ziffern).
+    { text: 'Kanton Uri: Medienmitteilung zur Verbilligung der Krankenkassenprämien', url: 'https://www.ur.ch/mmdirektionen/131963' },
     KVG65,
   ],
 };

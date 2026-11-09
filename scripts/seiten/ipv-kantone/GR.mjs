@@ -82,7 +82,9 @@ export default {
     'Auch wenn sich Ihr Einkommen deutlich verändert hat oder die Steuerdaten Ihre heutige Lage nicht zeigen, können Sie mit Begründung eine Neuberechnung verlangen. Das Gesetz nennt dafür eine Mindestschwelle.',
     // [G] Art. 10 lit. b («anspruchsbegründende Änderungen nicht innerhalb der vorgeschriebenen Fristen
     // mitgeteilt»), Art. 13 Abs. 2 («innert fünf Jahren seit Auszahlung zurückgefordert»).
-    'Änderungen, die den Anspruch betreffen, melden Sie fristgerecht, sonst kann er verfallen. Zu Unrecht bezogene Beträge kann die SVA noch einige Jahre nach der Auszahlung zurückfordern.',
+    // [G] Art. 10 Abs. 1: «Die Ansprüche auf individuelle Prämienverbilligungen verwirken, wenn» —
+    // zwingend, darum «verfällt» statt «kann verfallen» (Rechtsprüfung 09.11.).
+    'Änderungen, die den Anspruch betreffen, melden Sie fristgerecht. Sonst verfällt der Anspruch. Zu Unrecht bezogene Beträge kann die SVA noch einige Jahre nach der Auszahlung zurückfordern.',
   ],
   quellen: [
     // HTTP 200, PDF; Gegenprobe …/downloads/ipv_wegleitung_xq.pdf → 404.

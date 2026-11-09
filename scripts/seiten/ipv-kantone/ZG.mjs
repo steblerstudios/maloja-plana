@@ -30,6 +30,10 @@ export default {
     // zg.ch: «Personen, die Ergänzungsleistungen zur AHV oder IV erhalten, müssen kein Formular
     // ausfüllen.»
     'Wer Ergänzungsleistungen zur AHV oder IV bezieht, muss kein Formular ausfüllen.',
+    // Prüfbefund 09.11.: IPVG § 7 Abs. 3: Personen mit wirtschaftlicher Sozialhilfe «haben Anspruch
+    // auf Prämienverbilligung, soweit die Einwohner- oder Bürgergemeinden ausstehende oder laufende
+    // Prämien im Durchführungsjahr bezahlen müssen». Ob dafür ein Antrag nötig ist, sagt keine Quelle.
+    'Wer wirtschaftliche Sozialhilfe bezieht, hat Anspruch, soweit die Gemeinde die Prämien bezahlen muss. Klären Sie das mit dem Sozialdienst.',
   ],
   // IPVG § 10 Abs. 3 («Versicherte, die keine Bescheinigung erhalten haben und Anspruch …
   // erheben, können bei der Gemeindestelle bis spätestens … ein Gesuch stellen.»); Broschüre S. 2
@@ -42,8 +46,15 @@ export default {
     einleitung: 'Ohne persönliches Schreiben müssen Sie selbst aktiv werden, etwa in diesen Fällen:',
     punkte: [
       'Sie haben kein Schreiben bekommen, rechnen aber mit einem Anspruch. Das Formular finden Sie im Internet bei der Ausgleichskasse oder bei Ihrer Gemeindestelle.',
-      'Sie sind neu in den Kanton Zug gezogen. Dann weist Sie die Ausgleichskasse mit einem Informationsschreiben auf die Prämienverbilligung hin.',
-      'Sie werden an der Quelle besteuert. Auch dann erhalten Sie ein Informationsschreiben. Bei Ihnen zählt das Einkommen, auf dem die Quellensteuer erhoben wird.',
+      // Prüfbefund 09.11.: Informationsschreiben ≠ Bescheinigung (IPVG § 10 Abs. 1); Gesuch nach
+      // § 10 Abs. 3 «bei der Gemeindestelle bis spätestens … des Jahres».
+      'Sie sind neu in den Kanton Zug gezogen. Dann weist Sie die Ausgleichskasse mit einem Informationsschreiben auf die Prämienverbilligung hin. Dieses Schreiben ersetzt den Antrag nicht; stellen Sie ihn selbst innerhalb der Frist.',
+      'Sie werden an der Quelle besteuert. Auch dann erhalten Sie ein Informationsschreiben. Dieses Schreiben ersetzt den Antrag nicht; stellen Sie ihn selbst innerhalb der Frist. Bei Ihnen zählt das Einkommen, auf dem die Quellensteuer erhoben wird.',
+      // Prüfbefund 09.11.: IPVG § 7bis Abs. 1: Gesamtanspruch mit den Eltern nur, «sofern für sie in
+      // der massgebenden Steuerveranlagung ein Kinderabzug gewährt wird»; Abs. 3: «Steht einer oder
+      // einem jungen Erwachsenen in Ausbildung ein nicht reduzierter, selbstständiger Anspruch … zu,
+      // so wird mindestens die Hälfte der massgebenden Prämie vergütet.» Eigener Antrag abgeleitet.
+      'Sie sind junge erwachsene Person in Ausbildung, und Ihre Eltern erhalten für Sie keinen Kinderabzug. Dann stellen Sie einen eigenen Antrag. Für junge Erwachsene in Ausbildung sieht das Gesetz dabei einen Mindestbeitrag vor.',
       'Ihre Ergänzungsleistungen wurden eingestellt. Ab dem folgenden Jahr braucht es dann eine eigene Anmeldung.',
     ],
     schluss: 'Für alle diese Fälle gilt dieselbe Frist wie für die übrigen Anträge.',
@@ -57,7 +68,10 @@ export default {
   // IPVG § 2 Abs. 2/3, § 12 (Vorprüfung durch die Gemeindestelle), § 14 Abs. 1 (Verfügung der
   // Ausgleichskasse), § 20 Abs. 1 (Einsprache bei der Ausgleichskasse); Broschüre S. 5 («Die
   // Ausgleichskasse Zug … fordert die … Steuerfaktoren direkt bei der Steuerverwaltung ein.»).
-  stelleSatz: 'Die Gemeindestelle prüft ein Papierformular auf Vollständigkeit. Die Ausgleichskasse holt die Steuerdaten selbst bei der Steuerverwaltung und entscheidet mit einer Verfügung. Gegen diese Verfügung können Sie innert kurzer Frist bei der Ausgleichskasse Einsprache erheben.',
+  stelleSatz: 'Die Gemeindestelle prüft ein Papierformular auf Vollständigkeit. Die Ausgleichskasse holt die Steuerdaten selbst bei der Steuerverwaltung und entscheidet mit einer Verfügung. Gegen diese Verfügung können Sie innert kurzer Frist bei der Ausgleichskasse schriftlich und begründet Einsprache erheben.',
+  // ↑ Prüfbefund 09.11. (Rechtsprüfung): IPVG § 20 Abs. 1: «Gegen die Verfügung der Ausgleichskasse
+  // kann innert … seit der Mitteilung bei der Ausgleichskasse schriftlich und begründet Einsprache
+  // erhoben werden.»
   amtsseite: 'Seite des Kantons Zug zur Prämienverbilligung',
   besonders: [
     // IPVG § 6 Abs. 2 (vorletzte Steuerperiode, für Zugezogene die letzte); Broschüre S. 4 («Bei
@@ -68,7 +82,12 @@ export default {
     // Gesuch stellen, wenn Ihr massgebendes Einkommen des Jahres … mindestens 25 % tiefer ist …
     // Reichen Sie das Gesuch innerhalb von 20 Tagen, nachdem Sie die Verfügung erhalten haben,
     // schriftlich und unterzeichnet … ein.» Zahlen bewusst weggelassen.
-    'War Ihr Einkommen im Vorjahr deutlich tiefer, können Sie nach Erhalt der Verfügung eine Neuberechnung verlangen. Das Gesuch muss begründet, schriftlich und unterschrieben sein, und die Frist dafür ist kurz.',
+    // Prüfbefund 09.11. (Blocker): IPVG § 6ter Abs. 1: «Liegt das massgebende Einkommen gemäss der dem
+    // Durchführungsjahr vorangehenden Steuerperiode … tiefer als das massgebende Einkommen gemäss § 6
+    // Abs. 2, wird auf begründetes Gesuch hin darauf abgestellt.» Neuberechnung «nach Erhalt der
+    // Verfügung» setzt einen Antrag voraus; § 10 Abs. 3: ohne Bescheinigung Gesuch «bei der
+    // Gemeindestelle bis spätestens …».
+    'War Ihr Einkommen im Vorjahr deutlich tiefer als im Jahr der verwendeten Steuerveranlagung, können Sie nach Erhalt der Verfügung eine Neuberechnung verlangen. Dafür müssen Sie zuerst fristgerecht einen Antrag stellen, auch ohne persönliches Schreiben. Das Gesuch um Neuberechnung muss begründet, schriftlich und unterschrieben sein, und die Frist dafür ist kurz.',
     // IPVG § 6ter Abs. 2; Broschüre S. 4: «Änderungen im laufenden Jahr werden erst im Folgejahr
     // berücksichtigt.»
     'Was sich im laufenden Jahr ändert, etwa durch Heirat, Geburt oder einen neuen Lohn, zählt erst im folgenden Jahr.',

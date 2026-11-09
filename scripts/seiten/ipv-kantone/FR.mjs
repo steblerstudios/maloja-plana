@@ -20,9 +20,13 @@ export default {
     // Art. 17 Abs. 4 («Die AHV-Kasse schickt den möglichen Anspruchsberechtigten das Gesuchsformular»);
     // [S]: «Der Antrag auf Prämienverbilligung (Online-Antrag oder Papierantrag)».
     'Im Kanton Freiburg gibt es die Prämienverbilligung nur auf Gesuch. Mögliche Berechtigte bekommen das Formular von der kantonalen Ausgleichskasse zugeschickt. Das Gesuch lässt sich auch online stellen.',
-    // [M] «Von der Einreichung eines (neuen) Gesuches sind befreit»: Versicherte mit Anspruch bis Ende
-    // Jahr («von Amtes wegen überprüft») und Personen, die «noch keinen Entscheid erhalten haben».
-    'Wer im laufenden Jahr Prämienverbilligung erhalten hat, muss für das nächste Jahr kein neues Gesuch stellen. Die Ausgleichskasse prüft den Anspruch dann von Amtes wegen. Dasselbe gilt, wenn über ein Gesuch noch nicht entschieden ist.',
+    // [M] «Von der Einreichung eines (neuen) Gesuches sind befreit»: «Versicherte, die schon bis Ende
+    // Jahr vom genannte Jahr Anrecht auf eine Prämienverbilligung hatten: wird der Anspruch für das
+    // folgende Jahr von der Kantonalen AHV-Ausgleichskasse von Amtes wegen überprüft» und «Personen, die
+    // schon für das genannte Jahr ein Gesuch gestellt haben und die noch keinen Entscheid erhalten haben».
+    // Ausnahmen: [VKP] Art. 5 Abs. 3 («im Folgejahr ein neues Gesuch … einzureichen») und Art. 3 Abs. 6
+    // («Im Folgejahr müssen sie ab 1. Januar ein eigenes Gesuch nach Artikel 2 einreichen»).
+    'Wer bis Ende Jahr Anspruch hatte, muss für das nächste Jahr in der Regel kein neues Gesuch stellen; die Ausgleichskasse prüft dann von Amtes wegen. Dasselbe gilt, wenn über ein Gesuch noch nicht entschieden ist. Ausnahmen: Zivilstandsänderung oder abgeschlossene Ausbildung, siehe unten.',
     // [M] ebd.: «AHV/IV-Rentner, die Ergänzungsleistungen beziehen»; Betrag «direkt den Krankenkassen
     // überwiesen».
     'Wer Ergänzungsleistungen zur AHV oder IV bezieht, muss kein Gesuch stellen. Der Betrag geht direkt an die Krankenkasse.',
@@ -30,17 +34,31 @@ export default {
   selbst: {
     // [VKP] Art. 2 Abs. 2: Gesuch «ausnahmsweise später», wenn die Person «a) Sozialhilfeempfänger wird;
     // b) vom Ausland her kommend im Kanton Wohnsitz nimmt; c) den Anspruch auf Ergänzungsleistungen verliert».
-    einleitung: 'Selbst ein Gesuch stellen müssen Sie zum Beispiel in diesen Fällen. Bei den ersten drei geht das ausnahmsweise auch nach Ablauf der Frist:',
+    // Einleitung angepasst, weil der neue erste Punkt nicht zu den Ausnahmen von Art. 2 Abs. 2 gehört.
+    einleitung: 'Selbst ein Gesuch stellen müssen Sie zum Beispiel in diesen Fällen. Wer neu Sozialhilfe bezieht, aus dem Ausland zuzieht oder den Anspruch auf Ergänzungsleistungen verliert, kann das ausnahmsweise auch nach Ablauf der Frist:',
     punkte: [
+      // [G] Art. 17 Abs. 3 («stellt der AHV-Kasse auf Ersuchen das Verzeichnis der Steuerpflichtigen zur
+      // Verfügung, die möglicherweise Anspruch … haben») und Abs. 4 («schickt den möglichen
+      // Anspruchsberechtigten das Gesuchsformular»): das Formular geht nur an Personen aus dem
+      // Steuerverzeichnis. [VKP] Art. 5 Abs. 8 lit. a («Lässt sich eine versicherte Person aus einem
+      // anderen Kanton oder aus dem Ausland im Kanton Freiburg nieder, so erfolgt die Berechnung … anhand
+      // der ersten Steuerveranlagung»). [VKP] Art. 2 Abs. 1 («muss bis spätestens am 31. August des
+      // laufenden Jahres … eingereicht werden»). [S]: «Der Antrag auf Prämienverbilligung (Online-Antrag
+      // oder Papierantrag)».
+      'Sie haben kein Formular bekommen, könnten aber Anspruch haben, zum Beispiel weil Sie erstmals ein Gesuch stellen oder neu im Kanton wohnen. Dann stellen Sie das Gesuch selbst, online oder auf Papier, innert der Frist.',
       'Sie beziehen neu Sozialhilfe.',
       'Sie sind aus dem Ausland in den Kanton gezogen.',
       'Sie haben den Anspruch auf Ergänzungsleistungen verloren.',
       // [VKP] Art. 5 Abs. 3: Heirat, eingetragene Partnerschaft, Scheidung, Tod eines Ehegatten,
       // Trennung «erst ab dem 1. Tag des folgenden Jahres»; «im Folgejahr ein neues Gesuch … einzureichen».
-      'Sie haben im Lauf des Jahres geheiratet, eine eingetragene Partnerschaft begründet, sich getrennt, scheiden lassen oder den Ehepartner verloren. Dann reichen Sie im folgenden Jahr ein neues Gesuch ein.',
-      // [VKP] Art. 3 Abs. 6: nach abgeschlossener Berufsausbildung «Im Folgejahr müssen sie … ein
-      // eigenes Gesuch nach Artikel 2 einreichen.»
-      'Sie haben eine Berufsausbildung abgeschlossen und waren bisher bei den Eltern mitgerechnet. Ab dem folgenden Jahr stellen Sie ein eigenes Gesuch.',
+      // [VKP] Art. 7a Abs. 1: Anspruch «frühestens aber mit dem ersten Tag des Monats, in dem das Gesuch
+      // bei der AHV-Ausgleichskasse eingereicht wird». Formular: «Sind nicht alle erforderlichen Dokumente
+      // vorhanden, so kann der Antrag trotzdem eingereicht werden. Die fehlenden Unterlagen können später
+      // nachgereicht werden (Art. 2 und 7a VKP).»
+      'Sie haben im Lauf des Jahres geheiratet, eine eingetragene Partnerschaft begründet, sich getrennt, scheiden lassen oder den Ehepartner verloren. Dann reichen Sie das neue Gesuch gleich zu Beginn des folgenden Jahres ein, auch wenn noch Unterlagen fehlen. Die Verbilligung beginnt erst im Monat, in dem das Gesuch eintrifft.',
+      // [VKP] Art. 3 Abs. 6: nach abgeschlossener Berufsausbildung «Im Folgejahr müssen sie ab 1. Januar
+      // ein eigenes Gesuch nach Artikel 2 einreichen.» [VKP] Art. 7a Abs. 1 und Formular wie oben.
+      'Sie haben eine Berufsausbildung abgeschlossen und waren bisher bei den Eltern mitgerechnet. Dann reichen Sie Ihr eigenes Gesuch gleich zu Beginn des folgenden Jahres ein, auch wenn noch Unterlagen fehlen. Die Verbilligung beginnt erst im Monat, in dem das Gesuch eintrifft.',
       // [VKP] Art. 3 Abs. 5: «Auf schriftlichen Antrag können junge Erwachsene zwischen 18 und 25 Jahren
       // die individuelle Prüfung ihres Dossiers beantragen, wenn sie beweisen können, dass die Eltern
       // ihnen gegenüber keine Unterhaltspflicht mehr haben.»
@@ -75,18 +93,23 @@ export default {
     // Versicherungsprämien und -Beiträge Codes 4.110–4.140 und «ein Zwanzigstel … des steuerbaren
     // Vermögens»); [M] Ziff. 2.1.1.
     'Freiburg rechnet mit dem Nettoeinkommen laut Freiburger Steuerveranlagung von zwei Jahren vor dem Anspruchsjahr. Dazu kommen unter anderem die abgezogenen Versicherungsprämien und Vorsorgebeiträge sowie ein kleiner Teil des steuerbaren Vermögens.',
-    // [VKP] Art. 4 Abs. 1 (Nettoeinkommen oder steuerbares Vermögen über festen Beträgen; von Amtes wegen
-    // veranlagt) und Abs. 2 (Prüfung trotzdem, wenn die Steuerverwaltung bestätigt, dass die Elemente
-    // genau ermittelt werden konnten).
-    'Ausgeschlossen ist, wer ein hohes Nettoeinkommen oder ein hohes steuerbares Vermögen hat. Wer von Amtes wegen veranlagt wurde, ist in der Regel ebenfalls ausgeschlossen.',
+    // [VKP] Art. 4 Abs. 1 (Nettoeinkommen oder steuerbares Vermögen über festen Beträgen; «Personen, die von
+    // Amtes wegen steuerlich veranlagt wurden») und Abs. 2 («wird eine Verbilligung … trotzdem geprüft und
+    // gegebenenfalls zugesprochen, wenn die kantonale Steuerverwaltung bestätigt, dass die steuerbaren
+    // Elemente dennoch genau ermittelt werden konnten»).
+    'Ausgeschlossen ist, wer ein hohes Nettoeinkommen oder ein hohes steuerbares Vermögen hat. Ausgeschlossen ist auch, wer von Amtes wegen veranlagt wurde, ausser die Steuerverwaltung bestätigt, dass die Steuerwerte trotzdem genau ermittelt werden konnten.',
     // [M] «Änderung der Einkommens-Vermögenssituation»: «werden nicht sofort berücksichtigt»;
-    // [VKP] Art. 5 Abs. 7 (wer in den zwei vorangehenden Jahren keine Verbilligung erhielt, «auf
-    // begründetes Gesuch», Abweichung «mindestens 30 %»).
-    'Änderungen von Einkommen oder Vermögen im Lauf des Jahres zählen nicht sofort. Wer in den beiden Jahren davor keine Verbilligung hatte, kann bei einer starken Abweichung mit Begründung verlangen, dass die neuere Steuerveranlagung zählt.',
-    // [M] «Auskunftspflicht»: unverzüglich zu melden «jeder Wechsel des Wohnsitzes; die Geburt eines
-    // Kindes; allfällige Zivilstandsänderungen …»; «Zu Unrecht bezogene Beträge … müssen vom Begünstigten
-    // oder von seinen Erben rückerstattet werden.» [G] Art. 20.
-    'Einen Umzug, die Geburt eines Kindes und Änderungen des Zivilstands melden Sie der Ausgleichskasse sofort. Zu Unrecht bezogene Beträge müssen zurückbezahlt werden, notfalls von den Erben.',
+    // [VKP] Art. 5 Abs. 7: «Für Personen, die in den zwei vorangehenden Jahren keine Prämienverbilligung
+    // erhalten haben, kann die AHV-Kasse – auf begründetes Gesuch der betroffenen Person hin – auf der
+    // Grundlage der Steuerveranlagung der neuen Steuerperiode befinden», Abweichung «mindestens 30 %».
+    'Änderungen von Einkommen oder Vermögen im Lauf des Jahres zählen nicht sofort. Wer in den beiden Jahren davor keine Verbilligung hatte, kann bei einer starken Abweichung ein begründetes Gesuch stellen. Die Ausgleichskasse kann dann auf die neuere Steuerveranlagung abstellen.',
+    // [M] «Auskunftspflicht»: «Die kantonale AHV-Ausgleichskasse muss vom Gesuchsteller oder seinem
+    // gesetzlichen Vertreter über jede erhebliche Änderung seiner persönlichen Lage informiert werden.
+    // Zudem ist unverzüglich zu melden: jeder Wechsel des Wohnsitzes; die Geburt eines Kindes; allfällige
+    // Zivilstandsänderungen mit Beweismittel». [G] Art. 20 Abs. 1: «so muss der ihr entsprechende Betrag
+    // von der begünstigten Person oder von ihren Erben, unter Vorbehalt eines Erlasses, zurückerstattet
+    // werden.»
+    'Jede erhebliche Änderung Ihrer persönlichen Lage melden Sie der Ausgleichskasse, einen Umzug, die Geburt eines Kindes und Änderungen des Zivilstands sofort. Zu Unrecht bezogene Beträge müssen zurückbezahlt werden, notfalls von den Erben, unter Vorbehalt eines Erlasses.',
     // [VKP] Art. 6 Abs. 2 (Mindestsatz für Kinder und für junge Erwachsene in Ausbildung bis 25);
     // [M] «Wie hoch …»: «Für unterhaltsberechtigte Kinder, deren Eltern zu den Anspruchsberechtigten …
     // gehören»; Regionen: «Region 1 (Saanebezirk)», «Region 2 (Broye-, Glane-, Greyerz-, See-, Sense und

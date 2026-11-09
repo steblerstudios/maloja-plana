@@ -27,7 +27,10 @@ export default {
     // Ergänzungsleistungen.» § 8 Abs. 3: bei wirtschaftlicher Sozialhilfe ebenfalls ohne § 12.
     // PVV § 6 Abs. 2: «Die zuständige Sozialbehörde meldet dem Sozialversicherungszentrum Beginn und
     // Ende der wirtschaftlichen Sozialhilfe.»
-    'Wer Ergänzungsleistungen oder wirtschaftliche Sozialhilfe bezieht, muss sich nicht anmelden. Bei der Sozialhilfe meldet die Sozialbehörde Beginn und Ende.',
+    // Prüfbefund 09.11.: PVV § 6 Abs. 3: «Die Absätze 1 und 2 gelten nicht für unterstützungsbedürftige
+    // Asylbewerber (Art. 10a Abs. 1 der Asylverordnung 2 …) und vorläufig aufgenommene Ausländer ohne
+    // Flüchtlingseigenschaft mit Ausländerausweis F.»
+    'Wer Ergänzungsleistungen oder wirtschaftliche Sozialhilfe bezieht, muss sich nicht anmelden. Bei der Sozialhilfe meldet die Sozialbehörde Beginn und Ende; das gilt allerdings nicht für Asylsuchende und vorläufig Aufgenommene mit Ausweis F.',
   ],
   // Merkblatt 02/26: «Ehepartner/in, Kinder und junge Erwachsene … in Ausbildung werden automatisch
   // mitberechnet, weshalb es pro Familie im gleichen Haushalt nur eine Anmeldung braucht.» —
@@ -38,8 +41,13 @@ export default {
   // Familienangehörige haben, die in einem EU/EFTA-Staat wohnen … Diese Personen werden nicht
   // automatisch mitberechnet.» (dazu PVV § 6a Abs. 1: «mit einem Zusatzblatt zur ordentlichen
   // Anmeldung»).
+  // Prüfbefund 09.11. (Blocker «ganzer Haushalt»): Merkblatt 02/26 «pro Familie im gleichen Haushalt
+  // nur eine Anmeldung»; PVG § 5 Abs. 2: «Personen, die gemeinsam besteuert werden, haben einen
+  // Gesamtanspruch auf Prämienverbilligung». Paare ohne Trauschein werden nicht gemeinsam besteuert
+  // und gehören nicht zu den im Merkblatt genannten Mitberechneten (Ehepartner/in, Kinder, junge
+  // Erwachsene in Ausbildung) — abgeleitet, nicht wörtlich.
   selbst: {
-    einleitung: 'In der Regel reicht eine Anmeldung für den ganzen Haushalt: Ehepartnerin oder Ehepartner, Kinder und junge Erwachsene in Ausbildung werden mitgerechnet. Eine eigene Anmeldung braucht es aber in diesen Fällen:',
+    einleitung: 'In der Regel reicht eine Anmeldung für die Familie im selben Haushalt: Ehepartnerin oder Ehepartner, Kinder und junge Erwachsene in Ausbildung werden mitgerechnet. Paare ohne Trauschein und andere Erwachsene im Haushalt melden sich je selbst an. Eine eigene Anmeldung braucht es ausserdem in diesen Fällen:',
     punkte: [
       'Sie haben sich vor dem Stichtag im Herbst von Ihrer Ehepartnerin oder Ihrem Ehepartner getrennt. Dann melden sich beide selbst an.',
       'Sie sind junge erwachsene Person und am Stichtag nicht in Ausbildung.',
@@ -70,7 +78,9 @@ export default {
     // erst ab dem Jahr berücksichtigt, in dem das Gesuch eingereicht wurde.»). WAS-Seite,
     // «Neuberechnung»: Einkommen «verschlechtert» über einer Schwelle «oder Sie haben im
     // Anspruchsjahr ein Kind bekommen»; «bis spätestens am 31. Dezember des Anspruchsjahres».
-    'Ist Ihr Einkommen seither deutlich gesunken oder haben Sie im laufenden Jahr ein Kind bekommen, können Sie eine Neuberechnung beantragen. Das Gesuch muss bis Ende des betreffenden Jahres eingehen, sonst zählt die Änderung erst ab dem Jahr, in dem Sie es einreichen.',
+    // Prüfbefund 09.11.: WAS-Seite: «Ihre Einkommensverhältnisse haben sich im Vergleich zu den im
+    // Entscheid verwendeten Steuerzahlen/Quellensteuereinkommen … verschlechtert».
+    'Ist Ihr Einkommen gegenüber der Steuerveranlagung, auf die der Entscheid abstellt, deutlich gesunken oder haben Sie im laufenden Jahr ein Kind bekommen, können Sie eine Neuberechnung beantragen. Das Gesuch muss bis Ende des betreffenden Jahres eingehen, sonst zählt die Änderung erst ab dem Jahr, in dem Sie es einreichen.',
     // PVG § 7 Abs. 5: «Personen, die keine Steuererklärung einreichen, obwohl sie dazu verpflichtet
     // wären, haben keinen Anspruch auf Prämienverbilligung.» Merkblatt: «Ist die letzte
     // Steuerveranlagung eine Ermessensveranlagung, besteht kein Anspruch auf Prämienverbilligung.»

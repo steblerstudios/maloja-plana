@@ -56,7 +56,11 @@ export default {
   // entraîne la péremption du droit aux subsides pour l'année concernée.» RaLAMal art. 13B al. 5
   // (zweites Halbjahr ⇒ «jusqu'au 30 juin de l'année suivante»); [D26] Domiciliation: «Les
   // personnes arrivées à Genève dès le 1er novembre 2026 ont un délai jusqu'au 30 juin 2027».
-  fristSatz: 'Für diese Anträge gilt eine Frist im laufenden Jahr. Was später eintrifft, behandelt der SAM nicht mehr, der Anspruch für dieses Jahr verfällt. Für Änderungen in der zweiten Jahreshälfte und für einen Zuzug spät im Jahr gilt eine längere Frist.',
+  // RaLAMal art. 11D al. 2: «Lorsque la taxation est notifiée après le 30 novembre de l'année
+  // d'ouverture du droit aux subsides, ceux-ci sont accordés … sur demande adressée au service avant
+  // le 31 décembre de cette même année. … Le service n'entre pas en matière sur les demandes
+  // présentées hors délai.» (Rechtsprüfung 09.11.: dritter Sonderfall, ohne Daten.)
+  fristSatz: 'Für diese Anträge gilt eine Frist im laufenden Jahr. Was später eintrifft, behandelt der SAM nicht mehr, der Anspruch für dieses Jahr verfällt. Für Änderungen in der zweiten Jahreshälfte und für einen Zuzug spät im Jahr gilt eine längere Frist. Wird Ihnen die Veranlagung erst gegen Ende Jahr eröffnet, gilt eine eigene Frist bis Ende Jahr.',
   stelle: 'Service de l’assurance-maladie (SAM)',
   // [INFO]: «Les demandes de subside sont effectuées par correspondance ou en ligne. Le SAM ne reçoit
   // du public que sur rendez-vous.» RaLAMal art. 11A al. 1 (PC AVS/AI: «le service des prestations

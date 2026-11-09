@@ -27,14 +27,20 @@ export default {
     'Ein zugestelltes Formular ist noch kein Entscheid, und ohne Formular sind Sie nicht ausgeschlossen. Sie können es bei der Ausgleichskasse beziehen, herunterladen oder sich online anmelden.',
     // Merkblatt «Wer muss keine Anmeldung ausfüllen? Einzig Rentner und Rentnerinnen, die am
     // 1.1. … Ergänzungsleistungen zur AHV / IV erhalten haben, müssen keine Anmeldung ausfüllen.»
-    'Keine Anmeldung brauchen nur Personen, die zu Jahresbeginn Ergänzungsleistungen zur AHV oder IV beziehen.',
+    // Prüfbefund 09.11.: Sozialhilfe ausdrücklich. Merkblatt: «Einzig Rentner und Rentnerinnen, die …
+    // Ergänzungsleistungen … erhalten haben, müssen keine Anmeldung ausfüllen.» kKVG Art. 22 Abs. 4:
+    // «Wer im Verlauf eines Kalenderjahres neu wirtschaftliche Sozialhilfe bezieht, hat das Gesuch …
+    // einzureichen.»
+    'Keine Anmeldung brauchen nur Personen, die zu Jahresbeginn Ergänzungsleistungen zur AHV oder IV beziehen. Auch wer Sozialhilfe bezieht, braucht eine Anmeldung.',
   ],
   // kKVG Art. 22 Abs. 2–5 (je eigene Frist ab Einreise, Geburt, Entscheid bzw. Mitteilung);
   // Merkblatt («Personen, die aus dem Ausland zuziehen, haben die Anmeldung innert 3 Monaten seit
   // der Einreise einzureichen. Anträge für Neugeborene können innert 3 Monaten nach der Geburt
   // nachgereicht werden.»). Zahl bewusst weggelassen (Regel: keine Fristen).
   selbst: {
-    einleitung: 'Für einige Fälle gilt eine eigene, kürzere Frist, die erst mit dem Ereignis beginnt:',
+    // Prüfbefund 09.11.: «kürzer» stimmt nicht immer (Frist beginnt erst mit Einreise, Geburt,
+    // Entscheid bzw. Mitteilung, kKVG Art. 22 Abs. 2–5) → gestrichen.
+    einleitung: 'Für einige Fälle gilt eine eigene Frist, die erst mit dem Ereignis beginnt:',
     punkte: [
       'Sie ziehen aus dem Ausland in den Kanton Nidwalden.',
       'Ein Kind kommt zur Welt.',
@@ -62,7 +68,12 @@ export default {
     // kKVG Art. 14 Abs. 1 (Kinder, Grenze bei den Steuerwerten der Eltern), Art. 15 Abs. 1 und 3
     // (junge Erwachsene in Ausbildung «zur Hälfte»; Berechtigung entfällt über dem Höchstbetrag der
     // vollen AHV-Altersrente); Merkblatt «Welche Personen werden speziell unterstützt?».
-    'Für Kinder und für junge Erwachsene in Ausbildung gibt es einen besonderen Beitrag, solange die Steuerwerte unter einer festen Grenze bleiben. Bei jungen Erwachsenen entfällt er, wenn ihr eigenes Reineinkommen zu hoch ist.',
+    // Prüfbefund 09.11. (Blocker): Grenze bei den Steuerwerten gilt nur für Kinder. Art. 14 Abs. 1:
+    // «für Kinder zu 80 Prozent vergütet, sofern die Summe der Steuerwerte der Eltern … nicht
+    // übersteigt». Art. 15 Abs. 1: junge Erwachsene in Ausbildung «zur Hälfte vergütet» (ohne
+    // Elterngrenze); Abs. 3: «Übersteigt das Reineinkommen gemäss Art. 12 den Höchstbetrag der vollen
+    // AHV-Altersrente, entfällt die Berechtigung.» Merkblatt: «entfällt die Berechtigung ganz».
+    'Für Kinder gibt es einen besonderen Beitrag, solange die Steuerwerte der Eltern unter einer festen Grenze bleiben. Für junge Erwachsene in Ausbildung gibt es ihn unabhängig vom Einkommen der Eltern; er entfällt ganz, wenn ihr eigenes Reineinkommen eine feste Grenze übersteigt.',
     // Merkblatt: Steuerperiode «2024, bei Neuzugezogenen und 19-jährigen die Periode 2025»;
     // kKVG Art. 17 Abs. 1 (Verhältnisse am 1. Januar), Abs. 2 («Geburten und Todesfälle werden bis
     // Ende Kalenderjahr berücksichtigt.»).
@@ -72,14 +83,17 @@ export default {
     'Bei Personen mit Quellensteuer zählt ein fester Anteil des Einkommens, auf dem die Quellensteuer erhoben wird.',
     // kKVG Art. 28 Abs. 1: «Zu Unrecht ausgerichtete Leistungen sind von der Ausgleichskasse bei
     // den Personen, welche sie bezogen haben, zurückzufordern.»
-    'Wurde zu viel ausbezahlt, fordert die Ausgleichskasse den Betrag von Ihnen zurück.',
+    // Prüfbefund 09.11. (auch Rechtsprüfung): Wortlaut «bei den Personen, welche sie bezogen haben».
+    'Zu Unrecht ausgerichtete Leistungen fordert die Ausgleichskasse bei den Personen zurück, die sie bezogen haben.',
   ],
   quellen: [
     { text: 'Ausgleichskasse Nidwalden: Merkblatt Prämienverbilligung (PDF)', url: 'https://www.aknw.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/IPV-OKP-KVGRegress/Merkblatt-Praemienverbilligung-2026.pdf' },
     // Gesetzessammlung NW ist eine Web-App (die /app/-Seite ist eine Hülle); Bestand über die
     // API belegt, 742.199 → 404.
     { text: 'Einführungsgesetz zum Bundesgesetz über die Krankenversicherung (kKVG, NG 742.1)', url: 'https://gesetze.nw.ch/app/de/texts_of_law/742.1' },
-    { text: 'Verordnung zur Prämienverbilligung des Kantons Nidwalden (NG 742.111)', url: 'https://gesetze.nw.ch/app/de/texts_of_law/742.111' },
+    // Prüfbefund 09.11.: amtlicher Titel «Verordnung zur Prämienverbilligung für das Jahr 2026» —
+    // Jahresverordnung, kein Dauerrecht; Jahreszahl wegen Riegel weggelassen.
+    { text: 'Verordnung zur Prämienverbilligung für das jeweilige Jahr (Jahresverordnung, NG 742.111)', url: 'https://gesetze.nw.ch/app/de/texts_of_law/742.111' },
     KVG65,
   ],
 };

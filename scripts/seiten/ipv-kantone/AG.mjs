@@ -55,7 +55,11 @@ export default {
   },
   // [G] § 10 Abs. 2 («innert sechs Wochen»), Abs. 4 («andernfalls der Anspruch … verwirkt ist»);
   // [I]: «Der Code ist 6 Wochen gültig.»; §§ 11–16 (ausserordentliches Verfahren).
-  fristSatz: 'Für den Antrag gilt eine Frist im Vorjahr. Sie steht im Gesetz und im Informationsblatt der SVA, und der zugeschickte Code ist nur einige Wochen gültig. Wer die Frist verpasst, verliert den Anspruch für dieses Jahr. Für die Fälle oben sieht das Gesetz ein eigenes Verfahren vor.',
+  // Letzter Satz (Rechtsprüfung 09.11.): § 10 Abs. 4 «in jedem Fall bis spätestens 31. Dezember im
+  // Vorjahr»; §§ 11–16 nennen keine eigene Frist, § 12 Abs. 2: «gilt ab dem Zeitpunkt des Eintritts
+  // der Veränderung». Ob § 10 Abs. 4 auch für die Fälle oben gilt, ist am Text nicht eindeutig —
+  // darum vorsichtig und mit Verweis an die SVA.
+  fristSatz: 'Für den Antrag gilt eine Frist im Vorjahr. Sie steht im Gesetz und im Informationsblatt der SVA, und der zugeschickte Code ist nur einige Wochen gültig. Wer die Frist verpasst, verliert den Anspruch für dieses Jahr. Für die Fälle oben nennt das Gesetz Wege während des Jahres; fragen Sie bei der SVA nach, welche Frist für Sie gilt.',
   stelle: 'SVA Aargau',
   // [G] § 8: «Durchführungsstelle für den Bereich «Prämienverbilligung» ist die SVA Aargau.»
   // [I]: «Sie haben kein Internetzugang? Ihre Gemeindezweigstelle oder SVA Aargau hilft Ihnen gerne weiter.»

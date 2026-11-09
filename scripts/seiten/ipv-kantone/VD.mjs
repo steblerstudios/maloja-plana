@@ -40,7 +40,10 @@ export default {
   // (siehe Kopf). Rückwirkung: RLVLAMal art. 25 al. 1 Satz 2 (in der geltenden Fassung und in der ab
   // 01.01.2027 gleich): «Lorsque le requérant établit avoir été empêché sans sa faute de déposer plus
   // tôt sa demande, … il peut être accordé exceptionnellement un subside avec effet rétroactif».
-  fristSatz: 'Eine feste Frist für den Antrag nennen die Unterlagen des OVAM nicht. Die Verbilligung beginnt aber erst einige Zeit nach dem Antrag und nicht rückwirkend auf den Jahresanfang. Rückwirkend gibt es sie nur ausnahmsweise, etwa wenn Sie belegen, dass Sie ohne eigenes Verschulden nicht früher einreichen konnten. Wer Anspruch vermutet, stellt den Antrag darum besser früh.',
+  // Letzter Satz (Rechtsprüfung 09.11.: Tatsache statt eigener Empfehlung): [N26] Ziff. 4 / [N27]
+  // «Le droit au subside prend naissance le premier jour du deuxième mois qui suit le dépôt de la
+  // demande»; RLVLAMal art. 25 al. 1 ab 2027: «le premier jour du mois suivant».
+  fristSatz: 'Eine feste Frist für den Antrag nennen die Unterlagen des OVAM nicht. Die Verbilligung beginnt aber erst einige Zeit nach dem Antrag und nicht rückwirkend auf den Jahresanfang. Rückwirkend gibt es sie nur ausnahmsweise, etwa wenn Sie belegen, dass Sie ohne eigenes Verschulden nicht früher einreichen konnten. Monate vor dem Antrag werden in der Regel nicht verbilligt.',
   stelle: 'Office vaudois de l’assurance-maladie (OVAM)',
   // [VD] §2: «l'Office vaudois de l'assurance-maladie (OVAM) vous adressera une décision par courrier
   // postal … celui-ci sera versé à votre assureur et vous payerez le solde restant de votre prime.»
@@ -58,9 +61,10 @@ export default {
     'Massgebend ist die letzte rechtskräftige Steuerveranlagung. Dazu zählen unter anderem die Einzahlungen in die Säule 3a und ein Teil des Vermögens über einem Freibetrag.',
     // [N27] S. 2: «au-delà d'une limite pour la fortune mobilière (notamment les comptes bancaires
     // ou postaux) le droit au subside est refusé»; Ziff. 4 «Condition économique modeste»: «le subside
-    // est refusé à tous les membres du ménage». Gilt laut [N27] ab 01.01.2027; darum ohne Jahr und
-    // mit «ab wann … steht in der Notice».
-    'Der Kanton hat eine Grenze für das bewegliche Vermögen eingeführt, etwa für Bank- und Postkonten. Liegt es darüber, erhält niemand im Haushalt eine Verbilligung. Ab wann die Grenze gilt und wie hoch sie ist, steht in der Notice des OVAM.',
+    // est refusé à tous les membres du ménage». [N27] S. 1: «Plusieurs changements entrent en vigueur
+    // au 1er janvier 2027»; RLVLAMal Modif. 13 du 07.10.2026. Künftiges Recht (Rechtsprüfung 09.11.),
+    // darum «ab dem kommenden Anspruchsjahr» und ohne Jahreszahl.
+    'Ab dem kommenden Anspruchsjahr gilt neu eine Grenze für das bewegliche Vermögen, etwa für Bank- und Postkonten. Liegt es darüber, erhält niemand im Haushalt eine Verbilligung. Wie hoch die Grenze ist, steht in der Notice des OVAM.',
     // [N26] und [N27] Ziff. 4 «Condition économique modeste»: «ne met pas toute sa capacité de gain à
     // contribution … ; a contracté des dettes ou cédé ses biens sans contrepartie ; renonce
     // volontairement à d'autres prestations sociales.»

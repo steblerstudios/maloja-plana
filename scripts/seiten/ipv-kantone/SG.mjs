@@ -6,6 +6,7 @@
 //        (svasg.ch/produkte/ipv/, Antworten unter /fragen_und_antworten/ipv/…)
 //   [EG] EG-KVG, sGS 331.11, Fassung in Vollzug seit 01.01.2026 (API-Version 3907)
 //   [VO] Verordnung zum EG-KVG, sGS 331.111, Fassung in Vollzug seit 01.08.2026 (API-Version 3828)
+//   [K]  Kanton St.Gallen, Seite «Prämienverbilligung» (sg.ch), Fristwiederherstellung nach ATSG Art. 41
 import { KVG65 } from '../praemienverbilligung-kantone-gemeinsam.mjs';
 
 export default {
@@ -23,12 +24,18 @@ export default {
     'Das Schreiben ist noch kein Entscheid. Ob ein Anspruch besteht, prüft die SVA erst nach der Anmeldung.',
     // [S] Häufige Fragen: «Haben Sie bis zum 31. Dezember kein IPV-Login-Schreiben erhalten, können
     // Sie sich über das Online Formular IPV Anmeldung … anmelden.» · «Bei Ungewissheit raten wir in
-    // jedem Fall zu einer IPV-Anmeldung.»
-    'Haben Sie kein Schreiben erhalten, können Sie sich trotzdem online anmelden. Im Zweifel rät die SVA selbst zur Anmeldung.',
+    // jedem Fall zu einer IPV-Anmeldung.» [VO] Art. 22 Abs. 3bis: «Das Anmeldeformular kann auch in
+    // Papierform bei der Sozialversicherungsanstalt bezogen werden.» [EG] Art. 11bis Abs. 1 lit. a:
+    // Anspruch «für das ganze Kalenderjahr» setzt eine Anmeldung «bis am 31. März» voraus.
+    'Haben Sie bis Ende Jahr kein Schreiben erhalten und könnten Anspruch haben, melden Sie sich selbst an, online oder mit Papierformular. Für das ganze Jahr gilt die Frist unten. Im Zweifel rät die SVA selbst zur Anmeldung.',
     // [S]: «Wer Ergänzungsleistungen oder Leistungen vom Sozialamt bezieht, muss sich nicht anmelden.
     // Eine Abrechnung von Leistungen erfolgt direkt mit dem Krankenversicherer.» [M] Ziff. 1.6;
-    // [EG] Art. 11ter Abs. 4: die Meldung der Gemeinde «ersetzt die Anmeldung».
-    'Wer Ergänzungsleistungen oder Sozialhilfe bezieht, muss sich nicht anmelden. Die Verbilligung wird dann direkt mit der Krankenkasse abgerechnet.',
+    // [EG] Art. 11ter Abs. 4: die Meldung der Gemeinde «ersetzt die Anmeldung». [EG] Art. 11quater
+    // Abs. 1 («Die für den Vollzug der Elternschaftsbeiträge zuständige Stelle der politischen Gemeinde
+    // meldet der Sozialversicherungsanstalt Beginn und Ende der Ausrichtung von Elternschaftsbeiträgen»)
+    // und Abs. 4 («Die Meldung ersetzt die Anmeldung auf Prämienverbilligung nach Art. 11bis»);
+    // Art. 11bis Abs. 1 lit. b.
+    'Wer Ergänzungsleistungen, Sozialhilfe oder Elternschaftsbeiträge der Gemeinde bezieht, muss sich nicht anmelden. Die Verbilligung wird dann direkt mit der Krankenkasse abgerechnet.',
   ],
   // [VO] Art. 22 Abs. 2: kein vorausgefülltes Formular für Wohnsitz EU/Island/Norwegen/UK,
   // erwerbstätige F, N, S, L «mit einer bewilligten ununterbrochenen Aufenthaltsdauer von wenigstens
@@ -46,19 +53,30 @@ export default {
       // [S] Häufige Fragen: junge Erwachsene «für die durch einen Elternteil Familienzulagen bezogen
       // werden, sind auf dem Antragsformular der Eltern aufzuführen … für die keine Familienzulagen
       // ausgerichtet werden, können sich selber … anmelden.» [VO] Art. 22a Abs. 1.
-      'Sie sind zwischen 19 und 25 Jahre alt, in Ausbildung, und für Sie werden keine Familienzulagen bezogen. Werden Familienzulagen bezogen, gehören Sie auf die Anmeldung der Eltern.',
+      // [VO] Art. 14 Abs. 2ter: «Junge erwachsene Personen, bei denen der Kanton St.Gallen nicht für die
+      // Prämienverbilligung der Eltern oder des Elternteils, der die Familienzulagen bezieht, zuständig
+      // ist, stellen eine eigene Anmeldung auf Prämienverbilligung.»
+      'Sie sind zwischen 19 und 25 Jahre alt, in Ausbildung, und für Sie werden keine Familienzulagen bezogen. Werden Familienzulagen bezogen, gehören Sie auf die Anmeldung der Eltern. Ist für die Prämienverbilligung Ihrer Eltern aber nicht der Kanton St. Gallen zuständig, melden Sie sich selbst an.',
       // [M] Ziff. 1.2: Geburt wird berücksichtigt, «wenn uns diese bis 31. März 2027 mitgeteilt wird.
       // Wer sich bereits angemeldet hat, kann einfach einen Nachtrag senden. Sonst ist eine ordentliche
       // IPV-Anmeldung notwendig.» [VO] Art. 13 Abs. 2.
       'Ihr Kind ist im Lauf des Jahres geboren. Die Geburt zählt nur, wenn Sie sie bis zu einer Frist im folgenden Jahr melden, mit einem Nachtrag oder mit einer eigenen Anmeldung.',
     ],
-    // [S]: «Für Zuziehende aus einem anderen Kanton besteht der Anspruch erst im Folgejahr.»
-    schluss: 'Wer aus einem anderen Kanton zuzieht, hat im Kanton St. Gallen erst im folgenden Jahr Anspruch.',
+    // [S]: «Für Zuziehende aus einem anderen Kanton besteht der Anspruch erst im Folgejahr.» [VO]
+    // Art. 12a Abs. 1: «Zieht eine Person aus dem Ausland oder einem anderen Kanton zu, wird auf das
+    // massgebende Einkommen des Jahres vor dem Bezugsjahr abgestellt, wenn ein … Reineinkommen der
+    // Steuerperiode des vorletzten Jahres fehlt.» Ohne St. Galler Steuerdaten kein vorausgefülltes
+    // Formular sicher; [EG] Art. 11bis Abs. 1 lit. a (Frist).
+    schluss: 'Wer aus einem anderen Kanton zuzieht, hat im Kanton St. Gallen erst im folgenden Jahr Anspruch. Melden Sie sich dafür bis zur Frist selbst an, falls kein Schreiben kommt.',
   },
   // [EG] Art. 11bis Abs. 1 lit. a (Anmeldung bis zu einem Stichtag «für das ganze Kalenderjahr»),
   // Abs. 3: «entsteht der Anspruch … ab dem Monat der Anmeldung»; [M] Ziff. 2: «Ausnahmen bestehen für
   // gesuchstellende Personen …, die unverschuldet von der Anmeldung abgehalten worden sind.»
-  fristSatz: 'Für den Anspruch aufs ganze Jahr gilt eine Frist. Sie steht im Gesetz und im Merkblatt der SVA. Wer später einreicht, erhält eine allfällige Verbilligung erst ab dem Monat der Anmeldung, ausser er oder sie war ohne eigenes Verschulden daran gehindert.',
+  // [EG] Art. 11bis Abs. 3: «Vorbehalten bleibt die sachgemässe Anwendung von Art. 41 des
+  // Bundesgesetzes über den Allgemeinen Teil des Sozialversicherungsrechts». [K]: «Sobald der
+  // unverschuldete Grund wegfällt, müssen Sie innert 30 Tagen sowohl ein begründetes Gesuch um
+  // Wiederherstellung der Anmeldefrist als auch die Anmeldung … einreichen.»
+  fristSatz: 'Für den Anspruch aufs ganze Jahr gilt eine Frist. Sie steht im Gesetz und im Merkblatt der SVA. Wer später einreicht, erhält eine allfällige Verbilligung erst ab dem Monat der Anmeldung, ausser er oder sie war ohne eigenes Verschulden daran gehindert. Das müssen Sie rasch nach Wegfall des Hindernisses geltend machen, mit Begründung und zusammen mit der Anmeldung.',
   stelle: 'Sozialversicherungsanstalt St.Gallen (SVA St.Gallen)',
   // [VO] Art. 11 Abs. 1 (ermittelt «zusammen mit den Steuerbehörden»), Art. 25, Art. 28;
   // [M] Ziff. 5: «setzt den Betrag … mit einer Verfügung fest. Danach überweisen wir den Betrag den
@@ -85,9 +103,12 @@ export default {
     // die Änderungen erst ab dem Folgejahr wirksam. Änderungen können uns mitgeteilt werden über das
     // Online Formular IPV Ergänzungen.»
     'Heirat oder Scheidung wirken sich erst im folgenden Jahr aus. Änderungen teilen Sie der SVA über das Online-Formular für Ergänzungen mit.',
-    // [EG] Art. 11 Abs. 3 («wird auf diese abgestellt»); [VO] Art. 12quater: Einkommensgrundlagen
-    // «dauerhaft verändert», Abweichung «wenigstens einen Viertel».
-    'Haben sich Ihre Einkommensverhältnisse dauerhaft und deutlich verändert, stellt die SVA auf die aktuelle wirtschaftliche Lage ab. Die Verordnung nennt dafür eine Mindestabweichung.',
+    // [EG] Art. 11 Abs. 3: «Entspricht das ermittelte Einkommen offensichtlich nicht der
+    // wirtschaftlichen Leistungsfähigkeit, wird auf diese abgestellt.» [VO] Art. 12quater Abs. 1
+    // («wenn sich die Einkommensgrundlagen dauerhaft verändert haben») und Abs. 2 («wenigstens einen
+    // Viertel»). [S] Häufige Fragen: «Sollten Sie uns nachträglich Unterlagen zustellen oder Änderungen
+    // mitteilen wollen, können Sie dies tun über das Online Formular IPV Ergänzungen.»
+    'Haben sich Ihre Einkommensverhältnisse dauerhaft und deutlich verändert, kann die SVA auf die aktuelle wirtschaftliche Lage abstellen. Teilen Sie die Änderung mit Belegen über das Formular für Ergänzungen mit; die Verordnung nennt eine Mindestabweichung.',
     // [S] Häufige Fragen «Vorvorjahr»: «Wurden dennoch provisorische Steuerdaten verwendet, so wird der
     // IPV-Anspruch zu einem späteren Zeitpunkt automatisch angepasst … Dies kann zu Rückforderungen oder
     // zu Nachzahlungen führen.» [VO] Art. 20 (Mindestbetrag); [M] Ziff. 5.

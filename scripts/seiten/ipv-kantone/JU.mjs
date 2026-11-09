@@ -32,8 +32,8 @@ export default {
     'Hatten Sie schon im Vorjahr eine Verbilligung, kommt der Entscheid direkt. Kommen Sie neu in Frage, erhalten Sie eine Bescheinigung oder einen Fragebogen. Diesen füllen Sie aus, unterschreiben ihn und schicken ihn mit dem Versicherungsausweis Ihrer Krankenkasse zurück. Das gilt als Antrag.',
     // [ECAS]: «Si vous n'êtes pas taxés pour 2024 avant décembre 2026 ou si vous n'obtenez pas de
     // courrier de notre part après avoir été taxé pour 2024 dans les 30 jours suivant la taxation,
-    // nous vous prions de bien vouloir déposer une requête».
-    'Kommt innert 30 Tagen nach Ihrer Veranlagung kein Brief, oder sind Sie gegen Ende Jahr noch nicht veranlagt, stellen Sie selbst einen Antrag.',
+    // nous vous prions de bien vouloir déposer une requête». Rechtsprüfung 09.11.: ohne Tageszahl.
+    'Kommt innert kurzer Frist nach Ihrer Veranlagung kein Brief, oder sind Sie gegen Ende Jahr noch nicht veranlagt, stellen Sie selbst einen Antrag.',
     // [ORPAMal] art. 14: «… à l'exception des bénéficiaires de prestations complémentaires à
     // l'AVS/AI qui l'obtiennent d'office.» Art. 18 al. 1–2: «Celui qui fournit des aides financières
     // aux assurés démunis peut présenter la demande … à la place des assurés … bénéficiaires d'aide sociale.»
@@ -74,7 +74,9 @@ export default {
     // Arrêté art. 1 al. 1 (siehe oben), al. 4–5 (Korrekturen und Abzüge); [ECAS]: «calculé sur la
     // base du revenu imposable tel qu'il ressort de la taxation fiscale définitive de l'année 2024 …
     // et est corrigé par diverses déductions ou majorations». ipvJura.js: darum keine Zahl in der App.
-    'Der Jura rechnet mit dem steuerbaren Einkommen der definitiven Veranlagung, also nach den Steuerabzügen, und korrigiert es mit einigen Zu- und Abschlägen. Es liegt meist tiefer als das Nettoeinkommen auf dem Lohnausweis.',
+    // Satz «Es liegt meist tiefer als das Nettoeinkommen auf dem Lohnausweis.» gestrichen
+    // (Rechtsprüfung 09.11.: ohne Quelle).
+    'Der Jura rechnet mit dem steuerbaren Einkommen der definitiven Veranlagung, also nach den Steuerabzügen, und korrigiert es mit einigen Zu- und Abschlägen.',
     // [ORPAMal] art. 7a al. 1: «Les assurés dont la fortune déterminante est supérieure à … n'ont pas
     // droit à la réduction des primes»; Arrêté art. 1 al. 2 («titres et autres placements de
     // capitaux selon avis de taxation»); [ECAS]: «pour autant que leur fortune disponible soit inférieure à …».
@@ -89,8 +91,9 @@ export default {
     'Fällt die Veranlagung des Vorjahres für Sie günstiger aus oder verlieren Sie die Stelle, können Sie eine Neuberechnung verlangen.',
     // [ECAS-CH]: «vos revenus ont depuis augmenté, il n'est pas nécessaire de nous transmettre
     // l'information. Aucun remboursement ne vous sera demandé en lien avec une augmentation de
-    // revenus … prise en compte dans les taxations suivantes».
-    'Steigt Ihr Einkommen, müssen Sie das nicht melden, und es wird deswegen nichts zurückgefordert. Das höhere Einkommen zählt erst mit einer späteren Veranlagung.',
+    // revenus … prise en compte dans les taxations suivantes». Rechtsprüfung 09.11.: der Ausgleichskasse
+    // zugeschrieben (Aussage der ECAS-Seite, nicht der Verordnung).
+    'Steigt Ihr Einkommen? Laut Ausgleichskasse müssen Sie das nicht melden, und es wird deswegen nichts zurückgefordert. Das höhere Einkommen zählt erst mit einer späteren Veranlagung.',
     // [ECAS-CH]: «Vous avez donné naissance à un enfant ou adopté un enfant … Annoncez-nous la
     // naissance ou l'adoption … en nous indiquant également sa caisse-maladie.»
     'Eine Geburt oder Adoption melden Sie der Ausgleichskasse, zusammen mit dem Namen der Krankenkasse des Kindes.',
@@ -107,7 +110,7 @@ export default {
     'Eine Verbilligung, die zu Unrecht ausgerichtet wurde, ist zurückzuerstatten.',
   ],
   quellen: [
-    { text: 'Ordonnance concernant la réduction des primes dans l’assurance-maladie (RSJU 832.115, PDF)', url: 'https://www.ecasjura.ch/Htdocs/Files/v/bee518871de457c7d9af3cdfad0dfa39037365333dfc328573cdf2e7eb86da34.pdf/ORPAMal-valable-des-01.01.2026.pdf?download=1' },
+    { text: 'Ordonnance concernant la réduction des primes dans l’assurance-maladie (RSJU 832.115, PDF der Ausgleichskasse)', url: 'https://www.ecasjura.ch/Htdocs/Files/v/bee518871de457c7d9af3cdfad0dfa39037365333dfc328573cdf2e7eb86da34.pdf/ORPAMal-valable-des-01.01.2026.pdf?download=1' },
     { text: 'Arrêté zur Prämienverbilligung des Jahres, mit Tabellen (RSJU 832.115.1, PDF, französisch)', url: 'https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1' },
     KVG65,
   ],

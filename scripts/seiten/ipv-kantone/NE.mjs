@@ -28,7 +28,8 @@ export default {
     // subside identifié. L'office les informe alors qu'ils peuvent déposer une nouvelle demande au GSR».
     // [NE]: «un courrier accompagné d'un coupon-réponse … doit impérativement être renvoyé dans un
     // délai de 30 jours. Au-delà de ce délai, vous perdez votre droit à un subside».
-    'Haben Sie neu Anspruch, kommt nach der Veranlagung ein Brief mit einem Antwortschein, dem «coupon-réponse». Diesen Schein schicken Sie innert 30 Tagen zurück. Sonst verfällt der Anspruch, und es bleibt nur ein neues Gesuch beim regionalen Sozialschalter.',
+    // Rechtsprüfung 09.11.: ohne Tageszahl («innert kurzer Frist»), wie fristSatz.
+    'Haben Sie neu Anspruch, kommt nach der Veranlagung ein Brief mit einem Antwortschein, dem «coupon-réponse». Diesen Schein schicken Sie innert kurzer Frist zurück. Sonst verfällt der Anspruch, und es bleibt nur ein neues Gesuch beim regionalen Sozialschalter.',
     // [NE]: «Automaticité mixte».
     'Der Kanton nennt das «automaticité mixte»: Die Berechnung läuft von selbst, neu Berechtigte bestätigen sie einmal.',
   ],
