@@ -17,7 +17,8 @@ import { zahl } from './utils/geld.js';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
-import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
+import { nettoZuBruttoRichtwert, fruehesterVorbezugMonate } from './data/lohnAbzuege.js';
+import { ahvBezugAlterFuer, ahvKapitalImBild } from './utils/ahvZukunftsbild.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { hauptlohnMonate, dreizehnterStatus } from './utils/dreizehnter.js';
@@ -253,9 +254,15 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // AHV fürs Zukunftsbild: auf durchgehende Beiträge bis zum Rücktritt projiziert
   // (angenommeneBeitragsjahre, beim Vorbezug ab Referenzalter neu berechnet), sonst würde die
   // AHV mit den heutigen Beitragsjahren stark unterschätzt. Eingetragene Beitragsjahre gehen vor.
+  // Das Zukunftsbild setzt das RÜCKTRITTSalter (Regler ab 58). Die AHV kommt nie vor dem frühesten
+  // Vorbezug, und bis dahin bleibt man beitragspflichtig → AHV wie bei Bezug am frühesten Tag
+  // (Bugsuche B-18, utils/ahvZukunftsbild.js).
+  const fruehesterAhvBezugMonate = fruehesterVorbezugMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear || 1970 });
+  const ahvBezugImBild = ahvBezugAlterFuer(parsedBezugAlter, fruehesterAhvBezugMonate);
+  const beitragsjahreImBild = beitragsjahreBeiBezug(ahvBezugImBild);
   const projektionAhv = useMemo(() => {
     if (parsedEinkommen <= 0) return null;
-    const bj = parsedBeitragsjahre;
+    const bj = beitragsjahreImBild;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
       geburtsmonat: birthMonth,
@@ -264,13 +271,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       beitragsjahre: bj,
       erziehungsjahre: Number(erziehungsjahre) || 0,
       betreuungsjahre: Number(betreuungsjahre) || 0,
-      bezugAlter: parsedBezugAlter,
+      bezugAlter: ahvBezugImBild,
       verheiratet,
       gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
       beitragsjahreReferenzalter,
     });
-  }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [parsedEinkommen, beitragsjahreImBild, beitragsjahreReferenzalter, ahvBezugImBild, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   // Heutige AHV-Anwartschaft für den Startpunkt der AHV-Fläche im Zukunftsbild: nur die Jahre
   // bis heute (IK-Historie oder höchstens Alter − 21), Bezug im Referenzalter. Seit leere
@@ -553,11 +560,16 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // Monatsrente × Monate bis Alter 85). Wächst von heutiger Anwartschaft zur
         // projizierten bei Rücktritt, dann flach — die 1. Säule als sichtbares Fundament.
         // Beim Vorbezug: bis zum Referenzalter die Vorbezugsrente, danach die neu berechnete.
-        const ahvHorizonM = Math.max(12, (parsedLE - ret) * 12);
-        const ahvVorbezugM = Math.min(ahvHorizonM, Math.max(0, Math.round((refAlterJahre - parsedBezugAlter) * 12)));
-        const ahvCapRet = projektionAhv
-          ? projektionAhv.monatsrente * ahvVorbezugM + projektionAhv.monatsrenteReferenzalter * (ahvHorizonM - ahvVorbezugM)
-          : 0;
+        // Nie vor dem frühesten Vorbezug (Bugsuche B-18): vorher zählten bei Rücktritt 58 rund 84
+        // Monate Vorbezugsrente, und früher aufhören zeigte ein grösseres Fundament.
+        const ahvBild = ahvKapitalImBild({
+          ruecktrittJahre: parsedBezugAlter, fruehesterBezugMonate: fruehesterAhvBezugMonate, refAlterJahre,
+          lebenserwartung: parsedLE,
+          monatsrente: projektionAhv ? projektionAhv.monatsrente : 0,
+          monatsrenteReferenzalter: projektionAhv ? projektionAhv.monatsrenteReferenzalter : 0,
+        });
+        const ahvHorizonM = ahvBild.horizonM;
+        const ahvCapRet = projektionAhv ? ahvBild.kapital : 0;
         const ahvCapNow = (ahvHeute ? ahvHeute.monatsrente : 0) * ahvHorizonM;
         const ahvAt = (a) => a <= START ? ahvCapNow : (a >= ret ? ahvCapRet : ahvCapNow + (ahvCapRet - ahvCapNow) * (a - START) / Math.max(1, ret - START));
         // Stabile y-Skala (rundet auf, damit sie beim Ziehen nicht zappelt).
@@ -721,10 +733,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // sonst widerspräche der Szenariotext der (bereits korrekten) Prozentzahl aus
             // projektionAhv. Delta in Monaten, weil das Referenzalter der Übergangs-
             // generation krumm ist (z. B. 64 J 6 M) und „0,5 Jahre" unschön läse.
+            // 63 steht auch fest in den Texten (vr.zukunftSzenarioAhvFrueh/-Bridge, 5 Sprachen). Für
+            // Frauen der Übergangsgeneration (frühestens 62, fruehesterVorbezugMonate) rechnet
+            // projektionAhv seit B-18 schon ab 62 — Text dazu offen (BUGS.md B-18).
             const ahvMin = 63;
-            // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen — projektionAhv,
-            // die Quelle der Prozentzahl unten, nutzt ebenfalls parsedBezugAlter; sonst
-            // driften Szenario-Text und pct im krummen Referenzalter-Default auseinander.
+            // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen: es beschreibt den
+            // Rücktritt. projektionAhv rechnet mit max(Rücktritt, frühester Bezug) — ab dort
+            // dasselbe, so driften Szenario-Text und pct im krummen Referenzalter-Default nicht auseinander.
             const deltaMonate = Math.round((parsedBezugAlter - refAlterJahre) * 12);
             const nAbsM = Math.abs(deltaMonate);
             const delta = deltaMonate;
