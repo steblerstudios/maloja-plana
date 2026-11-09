@@ -43,11 +43,13 @@ export default {
   // Anmeldung»).
   // Prüfbefund 09.11. (Blocker «ganzer Haushalt»): Merkblatt 02/26 «pro Familie im gleichen Haushalt
   // nur eine Anmeldung»; PVG § 5 Abs. 2: «Personen, die gemeinsam besteuert werden, haben einen
+  // Nachprüfung 09.11.2026: tragfähig als Schluss aus § 5 Abs. 2; zur Anmeldung gemeinsamer Kinder
+  // unverheirateter Paare sagen die LU-Quellen nichts → Nachfrage statt Behauptung.
   // Gesamtanspruch auf Prämienverbilligung». Paare ohne Trauschein werden nicht gemeinsam besteuert
   // und gehören nicht zu den im Merkblatt genannten Mitberechneten (Ehepartner/in, Kinder, junge
   // Erwachsene in Ausbildung) — abgeleitet, nicht wörtlich.
   selbst: {
-    einleitung: 'In der Regel reicht eine Anmeldung für die Familie im selben Haushalt: Ehepartnerin oder Ehepartner, Kinder und junge Erwachsene in Ausbildung werden mitgerechnet. Paare ohne Trauschein und andere Erwachsene im Haushalt melden sich je selbst an. Eine eigene Anmeldung braucht es ausserdem in diesen Fällen:',
+    einleitung: 'In der Regel reicht eine Anmeldung für die Familie im selben Haushalt: Ehepartnerin oder Ehepartner, Kinder und junge Erwachsene in Ausbildung werden mitgerechnet. Unverheiratete Paare melden sich je selbst an, ebenso andere Erwachsene im Haushalt. Haben Sie als unverheiratetes Paar gemeinsame Kinder, fragen Sie bei der WAS nach, auf welcher Anmeldung die Kinder stehen. Eine eigene Anmeldung braucht es ausserdem in diesen Fällen:',
     punkte: [
       'Sie haben sich vor dem Stichtag im Herbst von Ihrer Ehepartnerin oder Ihrem Ehepartner getrennt. Dann melden sich beide selbst an.',
       'Sie sind junge erwachsene Person und am Stichtag nicht in Ausbildung.',

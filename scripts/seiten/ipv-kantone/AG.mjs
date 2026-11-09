@@ -26,7 +26,10 @@ export default {
     // [I]: «Beziehen Sie Sozialhilfe oder Ergänzungsleistungen? Sie müssen sich nicht … anmelden.»
     // [A]: «Es ist keine Anmeldung nötig.» [G] § 17 Abs. 1: «Der Eintritt in die Sozialhilfe gilt als
     // Antrag auf Prämienverbilligung.»
-    'Wer Sozialhilfe oder Ergänzungsleistungen bezieht, muss sich nicht anmelden. Der Eintritt in die Sozialhilfe gilt bereits als Antrag.',
+    // Letzter Satz (Fachprüfung 09.11.): [G] § 17 Abs. 4: «Der Austritt aus der Sozialhilfe gilt als
+    // Verbesserung der wirtschaftlichen Situation.» Umkehrschluss aus § 17 Abs. 1 und § 10 Abs. 4
+    // («Anträge … sind in jedem Fall bis spätestens 31. Dezember im Vorjahr des Anspruchsjahres zu stellen»).
+    'Wer Sozialhilfe oder Ergänzungsleistungen bezieht, muss sich nicht anmelden. Der Eintritt in die Sozialhilfe gilt bereits als Antrag. Endet die Sozialhilfe, stellen Sie für das folgende Jahr wieder selbst einen Antrag.',
   ],
   // [G] § 11 Abs. 1 (ausserordentliches Verfahren), § 12 Abs. 1–2 (aktuelle Verhältnisse, ab Eintritt
   // der Veränderung).
@@ -36,7 +39,10 @@ export default {
       // [I]: «Sind Sie neu im Kanton Aargau wohnhaft? Sie müssen keinen Code bei uns bestellen. Melden
       // Sie sich über unseren Änderungsantrag an». [G] § 16 Abs. 1: «Ein allfälliger Anspruch … gilt ab
       // dem 1. Januar des Folgejahres nach Zuzug.»
-      'Sie sind neu im Kanton Aargau. Dann melden Sie sich über den Änderungsantrag der SVA an. Wer aus einem anderen Kanton zuzieht, hat frühestens ab dem folgenden Jahr Anspruch.',
+      // Fachprüfung 09.11.: [G] § 16 Abs. 1 «gilt ab dem 1. Januar des Folgejahres nach Zuzug» und
+      // § 10 Abs. 4 «Anträge … sind in jedem Fall bis spätestens 31. Dezember im Vorjahr des
+      // Anspruchsjahres zu stellen» → Antrag noch im Jahr des Zuzugs.
+      'Sie sind neu im Kanton Aargau. Dann melden Sie sich über den Änderungsantrag der SVA an. Wer aus einem anderen Kanton zuzieht, hat frühestens ab dem Anfang des folgenden Jahres Anspruch. Den Antrag dafür stellen Sie noch im Jahr des Zuzugs.',
       // [G] § 16 Abs. 2 (Zuzug aus dem Ausland oder «aufgrund ihres Alters über keine rechtskräftige
       // Steuerveranlagung»: § 11 Abs. 1); § 12 Abs. 1.
       'Sie ziehen aus dem Ausland zu oder haben wegen Ihres Alters noch keine Steuerveranlagung. Dann rechnet die SVA mit Ihren aktuellen Verhältnissen.',
@@ -48,7 +54,9 @@ export default {
       'Ihre persönlichen Verhältnisse haben sich verändert, etwa durch die Geburt eines Kindes, einen Todesfall in der Familie, die Pensionierung oder die Aufhebung des gemeinsamen Haushalts.',
       // [G] § 9 Abs. 3 lit. a (zwischen dem 19. und dem 25. Altersjahr; Steuerveranlagung unter einem
       // Grenzwert → auf dem Antrag der Eltern; Widerspruch «nötigenfalls zu belegen»); [V] § 5 Abs. 2.
-      'Sie sind zwischen 19 und 25 Jahre alt und Ihr steuerbares Einkommen liegt unter einer festen Grenze. Dann gehören Sie auf den Antrag Ihrer Eltern. Unterstützen Ihre Eltern Sie nicht, können Sie dem widersprechen und müssen das nötigenfalls belegen.',
+      // Fachprüfung 09.11.: [I] «Sie sind zwischen 18 und 25 Jahre alt?»; [A] «Junge Erwachsene
+      // (Jahrgang 2002 - 2008)» — massgebend ist der Jahrgang, nicht der Geburtstag.
+      'Sie sind zwischen 18 und 25 Jahre alt (massgebend ist der Jahrgang) und Ihr steuerbares Einkommen liegt unter einer festen Grenze. Dann gehören Sie auf den Antrag Ihrer Eltern. Unterstützen Ihre Eltern Sie nicht, können Sie dem widersprechen und müssen das nötigenfalls belegen.',
     ],
     // [I]: «www.sva-aargau.ch/aenderungsantrag».
     schluss: 'Den Änderungsantrag finden Sie auf der Seite der SVA Aargau.',
@@ -59,7 +67,12 @@ export default {
   // Vorjahr»; §§ 11–16 nennen keine eigene Frist, § 12 Abs. 2: «gilt ab dem Zeitpunkt des Eintritts
   // der Veränderung». Ob § 10 Abs. 4 auch für die Fälle oben gilt, ist am Text nicht eindeutig —
   // darum vorsichtig und mit Verweis an die SVA.
-  fristSatz: 'Für den Antrag gilt eine Frist im Vorjahr. Sie steht im Gesetz und im Informationsblatt der SVA, und der zugeschickte Code ist nur einige Wochen gültig. Wer die Frist verpasst, verliert den Anspruch für dieses Jahr. Für die Fälle oben nennt das Gesetz Wege während des Jahres; fragen Sie bei der SVA nach, welche Frist für Sie gilt.',
+  // Fachprüfung 09.11.: [I] «Der Code ist 6 Wochen gültig. Bitte reichen Sie Ihren Antrag spätestens
+  // bis am 31. Dezember 2026 ein – danach können Sie die Prämienverbilligung 2027 nicht mehr
+  // beantragen.» · «Sie möchten Ihren individuellen Code für die Onlineanmeldung bei uns bestellen?»
+  // Letzter Satz: [G] § 12 Abs. 2 «Der neu berechnete Anspruch … gilt ab dem Zeitpunkt des Eintritts
+  // der Veränderung.»
+  fristSatz: 'Für den Antrag gilt eine Frist im Vorjahr. Sie steht im Gesetz und im Informationsblatt der SVA, und der zugeschickte Code ist nur einige Wochen gültig. Den Anspruch verliert, wer bis Ende des Vorjahres keinen Antrag stellt. Ist Ihr Code abgelaufen, fragen Sie die SVA nach einem neuen. Für die Fälle oben nennt das Gesetz Wege während des Jahres; fragen Sie bei der SVA nach, welche Frist für Sie gilt. Stellen Sie den Antrag sofort, wenn die Veränderung eintritt.',
   stelle: 'SVA Aargau',
   // [G] § 8: «Durchführungsstelle für den Bereich «Prämienverbilligung» ist die SVA Aargau.»
   // [I]: «Sie haben kein Internetzugang? Ihre Gemeindezweigstelle oder SVA Aargau hilft Ihnen gerne weiter.»

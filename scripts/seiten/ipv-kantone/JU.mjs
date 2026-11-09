@@ -29,7 +29,11 @@ export default {
     // attestation an neu Berechtigte; «L'assuré présente l'attestation dûment remplie, signée et
     // accompagnée de son certificat d'assurance-maladie … à titre de demande.» [ECAS]: «vous recevrez
     // de notre part soit une décision, soit un questionnaire».
-    'Hatten Sie schon im Vorjahr eine Verbilligung, kommt der Entscheid direkt. Kommen Sie neu in Frage, erhalten Sie eine Bescheinigung oder einen Fragebogen. Diesen füllen Sie aus, unterschreiben ihn und schicken ihn mit dem Versicherungsausweis Ihrer Krankenkasse zurück. Das gilt als Antrag.',
+    // Letzter Satz (Fachprüfung 09.11.): [ECAS-J]: «Si vous recevez une décision de réduction des primes
+    // d'assurance-maladie sur laquelle un jeune adulte de 18 à 25 ans en formation n'apparaît pas,
+    // veuillez nous demander de corriger votre décision en nous remettant une copie de l'attestation
+    // d'études/de formation»; Frist wie [ORPAMal] art. 22 al. 8 (bis Ende des Versicherungsjahres).
+    'Hatten Sie schon im Vorjahr eine Verbilligung, kommt der Entscheid direkt. Kommen Sie neu in Frage, erhalten Sie eine Bescheinigung oder einen Fragebogen. Diesen füllen Sie aus, unterschreiben ihn und schicken ihn mit dem Versicherungsausweis Ihrer Krankenkasse zurück. Das gilt als Antrag. Fehlt auf dem Entscheid ein Kind zwischen 18 und 25 in Ausbildung, verlangen Sie mit der Ausbildungsbestätigung eine Korrektur, noch im selben Jahr.',
     // [ECAS]: «Si vous n'êtes pas taxés pour 2024 avant décembre 2026 ou si vous n'obtenez pas de
     // courrier de notre part après avoir été taxé pour 2024 dans les 30 jours suivant la taxation,
     // nous vous prions de bien vouloir déposer une requête». Rechtsprüfung 09.11.: ohne Tageszahl.
@@ -51,11 +55,26 @@ export default {
     einleitung: 'Keine Bescheinigung bekommen Sie in diesen Fällen. Dann stellen Sie den Antrag mit dem passenden Formular der Ausgleichskasse selbst:',
     punkte: [
       'Sie werden an der Quelle besteuert.',
-      'Sie sind volljährig, aber jünger als 25 Jahre. Sind Sie in Ausbildung, stellen Ihre Eltern den Antrag für Sie.',
-      'Sie leben unverheiratet zusammen und haben mindestens ein gemeinsames Kind. Dann zählen Einkommen und Vermögen beider zusammen, und beide müssen definitiv veranlagt sein.',
+      // Fachprüfung 09.11.: [ORPAMal] art. 17 al. 1: «Les assurés de moins de 25 ans doivent présenter une
+      // demande … lorsqu'ils assument eux-mêmes leur entretien.» Al. 2: «Dans les autres cas, la demande
+      // est introduite par leurs parents». [ECAS-J]: «s'il commence une formation durant l'année 2026,
+      // une requête … doit être déposée … au nom du parent»; «Si vous avez entre 18 et 25 ans et n'êtes
+      // plus en formation, nous pouvons étudier votre éventuel droit … dès l'année qui suit la fin de
+      // votre formation. A cet effet, veuillez nous faire parvenir une requête».
+      'Sie sind volljährig, aber jünger als 25 Jahre. Sind Sie in Ausbildung, stellen Ihre Eltern den Antrag für Sie; beginnen Sie im Lauf des Jahres eine Ausbildung, melden die Eltern das noch im selben Jahr. Nach Ende der Ausbildung stellen Sie ab dem folgenden Jahr selbst einen Antrag.',
+      // Fachprüfung 09.11.: [ECAS-K]: «Afin d'établir le droit à la réduction des primes (ainsi que du
+      // supplément famille) des enfants en commun à charge : La fortune disponible est cumulée ; Les
+      // revenus déterminants des concubins sont cumulés.» — gilt für die gemeinsamen Kinder.
+      'Sie leben unverheiratet zusammen und haben mindestens ein gemeinsames Kind. Dann werden für Ihre gemeinsamen Kinder Einkommen und Vermögen beider zusammengezählt, und beide müssen definitiv veranlagt sein.',
       'Sie beziehen Sozialhilfe.',
       'Sie wurden nur provisorisch veranlagt oder sind im Kanton nur teilweise steuerpflichtig.',
-      'Sie sind im Vorjahr in den Kanton Jura gezogen.',
+      // Fachprüfung 09.11.: [ORPAMal] art. 22 al. 6: «Les assurés en provenance d'un autre canton le
+      // premier janvier de l'année d'assurance, peuvent déposer une demande en cours d'année.»
+      'Sie sind im Vorjahr oder auf den Jahresanfang in den Kanton Jura gezogen.',
+      // Fachprüfung 09.11.: [ORPAMal] art. 22 al. 4: «Les assurés en provenance de l'étranger peuvent
+      // déposer une demande en cours d'année.» Art. 21 al. 2: «le droit … naît le premier jour du mois
+      // de l'affiliation, à condition que la demande soit déposée avant la fin de cette année.»
+      'Sie sind im laufenden Jahr aus dem Ausland zugezogen. Der Antrag muss noch im selben Jahr eintreffen.',
     ],
     schluss: 'Die Formulare stehen auf der Seite der Ausgleichskasse.',
   },
@@ -63,7 +82,11 @@ export default {
   // l'année au cours de laquelle la demande est déposée.» Art. 22 al. 8: «Les demandes
   // intermédiaires doivent être déposées au plus tard jusqu'au 31 décembre de l'année d'assurance.»
   // [ECAS]: «une requête, qui devra nous parvenir avant le 31 décembre 2026».
-  fristSatz: 'Für den Antrag gilt eine Frist: Er muss im laufenden Jahr bei der Ausgleichskasse eintreffen, ebenso ein Gesuch um Neuberechnung. Ein Antrag in dieser Frist wirkt auf den Anfang des Jahres zurück.',
+  // Fachprüfung 09.11.: art. 21 al. 1 gilt für den Antrag; für Gesuche um Neuberechnung legt art. 22
+  // al. 7 eine andere Grundlage fest («sera fixé sur la base de la taxation définitive de l'année
+  // d'assurance pour laquelle la demande a été déposée»), art. 21 al. 2 den Beginn bei Zuzug («le
+  // premier jour du mois de l'affiliation»).
+  fristSatz: 'Für den Antrag gilt eine Frist: Er muss im laufenden Jahr bei der Ausgleichskasse eintreffen, ebenso ein Gesuch um Neuberechnung. Ein Antrag, der in dieser Frist eintrifft, wirkt auf den Anfang des Jahres zurück. Für Neuberechnungen gilt das nicht in jedem Fall; melden Sie Änderungen sofort.',
   stelle: 'Caisse de compensation du canton du Jura (ECAS)',
   // [ECAS]: «La Caisse de compensation du canton du Jura est chargée de l'application de la
   // réduction des primes»; Adresse «ETABLISSEMENT CANTONAL DES ASSURANCES SOCIALES - ECAS Jura …
@@ -84,7 +107,10 @@ export default {
     // [ECAS] «Qui peut bénéficier de « supplément famille » ?»: «Réaliser un revenu professionnel par
     // le biais d'une activité principale ; Avoir un ou des enfants à charge ; Avoir un revenu
     // déterminant inférieur à …».
-    'Familien mit tiefem Einkommen, in denen mindestens ein Elternteil im Hauptberuf erwerbstätig ist, erhalten einen Familienzuschlag.',
+    // Zweiter Satz (Fachprüfung 09.11.): [ECAS] Fussnote: «Si vous avez annoncé au fisc un revenu
+    // professionnel en gain accessoire (chiffre 110) …, le supplément famille ne vous a pas été accordé.
+    // … veuillez nous le signaler en fournissant les justificatifs.»
+    'Familien mit tiefem Einkommen, in denen mindestens ein Elternteil im Hauptberuf erwerbstätig ist, erhalten einen Familienzuschlag. Haben Sie ein kleines Erwerbseinkommen in der Steuererklärung als Nebenerwerb angegeben, wird der Zuschlag nicht automatisch gewährt; melden Sie es der Ausgleichskasse mit Belegen.',
     // [ECAS-CH]: «Vos revenus ont diminué … transmettez-nous … votre décision de taxation définitive
     // 2025 en nous demandant de revoir la décision»; «Vous avez perdu votre emploi … en nous demandant
     // de revoir la décision»; [ORPAMal] art. 22 al. 1–2.

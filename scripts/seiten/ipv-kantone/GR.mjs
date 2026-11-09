@@ -17,9 +17,12 @@ export default {
     // AHV-Zweigstelle der Wohnsitzgemeinde einzureichen»; [W] Kopf und Schluss: «Online-Anmeldung».
     'Im Kanton Graubünden gibt es die Prämienverbilligung auf Anmeldung. Das Formular reichen Sie online, bei der SVA Graubünden oder bei der AHV-Zweigstelle Ihrer Wohngemeinde ein.',
     // [VO] Art. 14 Abs. 2: «Personen, die von Amtes wegen eine Mitteilung über die Vorschusszahlung
-    // erhalten, gelten als angemeldet.» Art. 16 Abs. 2: für Personen, die die Kasse «am 31. Dezember
-    // des Vorjahres als anspruchsberechtigt führte».
-    'Wer bisher schon Prämienverbilligung bezogen hat, erhält in der Regel von Amtes wegen eine Mitteilung über eine Vorschusszahlung und gilt damit als angemeldet.',
+    // erhalten, gelten als angemeldet.» Art. 16 Abs. 2: «Die AHV-Ausgleichskasse berechnet für Personen,
+    // welche sie am 31. Dezember des Vorjahres als anspruchsberechtigt führte, von Amtes wegen die
+    // Vorschusszahlung und stellt ihnen bis Ende März des laufenden Jahres die Mitteilung über die
+    // Vorschusszahlung zu.» [G] Art. 10 lit. a (Verwirkung bei verpasster Anmeldefrist).
+    // Fachprüfung 09.11.: «bisher bezogen» war zu weit — massgebend ist die Führung am Ende des Vorjahres.
+    'Wer am Ende des Vorjahres als berechtigt geführt wurde, erhält in der Regel im Frühling von Amtes wegen eine Mitteilung über einen Vorschuss und gilt damit als angemeldet.',
     // [G] Art. 9 Abs. 1 (volle Verbilligung bei EL, öffentlicher Unterstützung, Mutterschaftsbeiträgen);
     // [W] «Volle Prämienverbilligung»: «Die Meldepflicht liegt bei den zuständigen Instanzen.»
     // [W] «Ergänzungsleistungen»: Anspruch «bereits in der Berechnung der EL enthalten».
@@ -29,19 +32,29 @@ export default {
     einleitung: 'Selbst anmelden müssen Sie sich zum Beispiel in diesen Fällen:',
     punkte: [
       // Umkehrschluss aus [VO] Art. 14 Abs. 1/2 und Art. 16 Abs. 2: als angemeldet gilt nur, wer eine
-      // Mitteilung über die Vorschusszahlung erhält.
-      'Sie haben bisher keine Prämienverbilligung bezogen.',
+      // Mitteilung über die Vorschusszahlung erhält («Personen, die von Amtes wegen eine Mitteilung über
+      // die Vorschusszahlung erhalten, gelten als angemeldet»; Zustellung «bis Ende März des laufenden
+      // Jahres»). Fachprüfung 09.11.: auch frühere Bezügerinnen ohne Mitteilung müssen sich anmelden.
+      'Sie haben bis zum Frühling keine Mitteilung über eine Vorschusszahlung erhalten, auch wenn Sie früher schon Prämienverbilligung bezogen haben.',
       // [W] «Quellensteuerpflichtige»: «Quellenbesteuerte Personen haben sich jährlich anzumelden.»
       // und Liste der Belege («Lohnausweise aller Arbeitgeber» …).
       'Sie werden an der Quelle besteuert. Dann melden Sie sich jedes Jahr neu an und legen die Belege zu allen Einkünften bei.',
       // [W] «Anspruchsberechtigte Personen» lit. c: «die Anspruchsberechtigung beginnt ab dem
       // Folgemonat nach dem Zeitpunkt der Wohnsitznahme».
       'Sie sind im Lauf des Jahres aus dem Ausland zugezogen. Der Anspruch beginnt im Monat nach Ihrer Wohnsitznahme.',
-      // [G] Art. 5 Abs. 1 lit. b; [VO] Art. 15 Abs. 1: Anmeldung «bei der AHV-Zweigstelle der Gemeinde,
-      // in der sie ihren Aufenthalt haben oder ihre Erwerbstätigkeit ausüben».
-      'Sie wohnen nicht im Kanton, halten sich aber mit einer Aufenthaltsbewilligung hier auf oder arbeiten hier. Dann melden Sie sich bei der AHV-Zweigstelle der Gemeinde an, in der Sie sich aufhalten oder arbeiten.',
-      // [W] lit. d; [G] Art. 5 Abs. 1 lit. c.
-      'Sie wohnen in einem EU- oder EFTA-Staat und sind in der Schweiz obligatorisch krankenversichert.',
+      // [W] «Anspruchsberechtigte Personen» lit. a: Anspruch haben Personen, die «am 01. Januar 2026 im
+      // Kanton Graubünden Wohnsitz hatten»; Zuzug im Lauf des Jahres nur aus dem Ausland (lit. c).
+      // Umkehrschluss: wer aus einem anderen Kanton zuzieht, ist für dieses Jahr nicht in GR berechtigt.
+      'Sind Sie im Lauf des Jahres aus einem anderen Kanton zugezogen, melden Sie sich für dieses Jahr noch im bisherigen Kanton an, für das folgende Jahr in Graubünden.',
+      // [G] Art. 5 Abs. 1 lit. b: «Personen mit einer Aufenthaltsbewilligung im Kanton Graubünden, die
+      // mindestens drei Monaten gültig ist, sofern sie der obligatorischen Krankenpflegeversicherung
+      // unterstehen»; [VO] Art. 15 Abs. 1: Anmeldung «bei der AHV-Zweigstelle der Gemeinde, in der sie
+      // ihren Aufenthalt haben». Fachprüfung 09.11.: Arbeit allein begründet nach Art. 5 keinen Anspruch;
+      // massgebend ist der Wohnkanton (Art. 5 Abs. 1 lit. a, Abs. 3).
+      'Sie wohnen nicht im Kanton, haben aber eine Aufenthaltsbewilligung für Graubünden, die eine Mindestdauer gültig ist. Dann melden Sie sich bei der AHV-Zweigstelle der Gemeinde an, in der Sie sich aufhalten. Wer in einem anderen Kanton wohnt und nur hier arbeitet, wendet sich an den Wohnkanton.',
+      // [W] lit. d; [G] Art. 5 Abs. 1 lit. c: «… der obligatorischen Krankenpflegeversicherung unterstellt
+      // sind und für die gemäss Zuständigkeitsregelung des Bundes der Kanton Graubünden zuständig ist.»
+      'Sie wohnen in einem EU- oder EFTA-Staat, sind in der Schweiz obligatorisch krankenversichert, und Graubünden ist für Sie zuständig.',
       // [VO] Art. 13 Abs. 1 und 3: selbstständiger Anspruch, «sofern Drittpersonen … kein Kinder- oder
       // Unterstützungsabzug … gewährt wird»; «haben den Nachweis der Ausbildung einzureichen».
       'Sie sind in Ausbildung, selbst steuerpflichtig, und niemand macht für Sie in der Steuererklärung einen Kinder- oder Unterstützungsabzug. Dann haben Sie einen eigenen Anspruch und reichen einen Nachweis der Ausbildung ein.',
@@ -49,7 +62,11 @@ export default {
       'Sie leben als Paar, werden aber getrennt besteuert. Dann meldet sich jede Person getrennt an.',
     ],
     // [W] «Gesamtanspruch»: «Kinder bis zum 18. Altersjahr sind zusammen mit den Eltern anzumelden.»
-    schluss: 'Kinder bis 18 werden zusammen mit den Eltern angemeldet.',
+    // [G] Art. 6 Abs. 2: Gesamtanspruch mit den unterstützten Personen, «sofern ihnen im Rahmen der
+    // Steuerveranlagung für diese Personen ein Kinder- oder Unterstützungsabzug gewährt wird».
+    // [VO] Art. 13 Abs. 2: «Erhebt eine steuerpflichtige Person in Ausbildung, die dem Gesamtanspruch
+    // unterliegt, einen Anspruch auf Prämienverbilligung, wird nicht darauf eingetreten.»
+    schluss: 'Kinder bis 18 und junge Erwachsene in Ausbildung, für die die Eltern einen Kinder- oder Unterstützungsabzug erhalten, werden zusammen mit den Eltern angemeldet.',
   },
   // [VO] Art. 14 Abs. 1: «bis spätestens Ende des anspruchsberechtigten Jahres»; [W] «Meldefristen»:
   // «Massgebend ist der Posteingang bei der SVA»; [G] Art. 10 lit. a: Ansprüche verwirken, «wenn die
@@ -76,7 +93,11 @@ export default {
     // [VO] Art. 23 Abs. 1–2 (Antrag «innerhalb des anspruchsbegründenden Jahres»; «Geburten, Todesfälle
     // und Wegzüge aus dem Kanton … ab dem ersten Tag des Folgemonats»); [W] «Persönliche oder familiäre
     // Veränderungen»: «Eine Heirat, Trennung oder Scheidung wirkt sich erst im Folgejahr aus».
-    'Bei einer Geburt, einem Todesfall oder einem Wegzug können Sie im laufenden Jahr eine Neuberechnung verlangen. Sie wirkt ab dem folgenden Monat. Heirat, Trennung oder Scheidung zählen erst im folgenden Jahr.',
+    // [VO] Art. 23 Abs. 2: «Änderungen der persönlichen und familiären Verhältnisse sind Geburten,
+    // Todesfälle und Wegzüge aus dem Kanton. Sie werden ab dem ersten Tag des Folgemonats nach Eintritt
+    // des Ereignisses berücksichtigt.» Fachprüfung 09.11.: einen Wegzug meldet man, man verlangt keine
+    // Neuberechnung zu eigenen Gunsten.
+    'Bei einer Geburt oder einem Todesfall können Sie im laufenden Jahr eine Neuberechnung verlangen; einen Wegzug melden Sie. Beides wirkt ab dem folgenden Monat. Heirat, Trennung oder Scheidung zählen erst im folgenden Jahr.',
     // [G] Art. 8c (Neuberechnung «bei einer Änderung des anrechenbaren Einkommens von mindestens
     // 20 Prozent»); Art. 8a Abs. 3 («aufgrund eines begründeten Antrages der versicherten Person»).
     'Auch wenn sich Ihr Einkommen deutlich verändert hat oder die Steuerdaten Ihre heutige Lage nicht zeigen, können Sie mit Begründung eine Neuberechnung verlangen. Das Gesetz nennt dafür eine Mindestschwelle.',
@@ -84,7 +105,9 @@ export default {
     // mitgeteilt»), Art. 13 Abs. 2 («innert fünf Jahren seit Auszahlung zurückgefordert»).
     // [G] Art. 10 Abs. 1: «Die Ansprüche auf individuelle Prämienverbilligungen verwirken, wenn» —
     // zwingend, darum «verfällt» statt «kann verfallen» (Rechtsprüfung 09.11.).
-    'Änderungen, die den Anspruch betreffen, melden Sie fristgerecht. Sonst verfällt der Anspruch. Zu Unrecht bezogene Beträge kann die SVA noch einige Jahre nach der Auszahlung zurückfordern.',
+    // [G] Art. 10 lit. c: Ansprüche verwirken, wenn «die nachgeforderten Unterlagen nicht fristgerecht
+    // eingehen» (Fachprüfung 09.11.).
+    'Änderungen, die den Anspruch betreffen, melden Sie fristgerecht, und nachgeforderte Unterlagen reichen Sie rechtzeitig ein. Sonst verfällt der Anspruch. Zu Unrecht bezogene Beträge kann die SVA noch einige Jahre nach der Auszahlung zurückfordern.',
   ],
   quellen: [
     // HTTP 200, PDF; Gegenprobe …/downloads/ipv_wegleitung_xq.pdf → 404.

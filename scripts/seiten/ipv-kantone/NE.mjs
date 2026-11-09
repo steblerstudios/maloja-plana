@@ -29,7 +29,11 @@ export default {
     // [NE]: «un courrier accompagné d'un coupon-réponse … doit impérativement être renvoyé dans un
     // délai de 30 jours. Au-delà de ce délai, vous perdez votre droit à un subside».
     // Rechtsprüfung 09.11.: ohne Tageszahl («innert kurzer Frist»), wie fristSatz.
-    'Haben Sie neu Anspruch, kommt nach der Veranlagung ein Brief mit einem Antwortschein, dem «coupon-réponse». Diesen Schein schicken Sie innert kurzer Frist zurück. Sonst verfällt der Anspruch, und es bleibt nur ein neues Gesuch beim regionalen Sozialschalter.',
+    // Letzter Satz (Fachprüfung 09.11.): RALILAMal art. 31 al. 4: «Si les réponses données dans le
+    // questionnaire nécessitent un examen détaillé de la situation des assurés, leur droit au subside
+    // est suspendu et ils doivent déposer une nouvelle demande au GSR dans les 30 jours dès la
+    // notification de la décision de suspension.»
+    'Haben Sie neu Anspruch, kommt nach der Veranlagung ein Brief mit einem Antwortschein, dem «coupon-réponse». Diesen Schein schicken Sie innert kurzer Frist zurück. Sonst verfällt der Anspruch, und es bleibt nur ein neues Gesuch beim regionalen Sozialschalter. Braucht Ihre Antwort eine genauere Prüfung, wird der Anspruch ausgesetzt; dann stellen Sie innert kurzer Frist ein neues Gesuch beim GSR.',
     // [NE]: «Automaticité mixte».
     'Der Kanton nennt das «automaticité mixte»: Die Berechnung läuft von selbst, neu Berechtigte bestätigen sie einmal.',
   ],
@@ -43,11 +47,21 @@ export default {
     einleitung: 'Keinen Brief bekommen Sie in diesen Fällen. Dann stellen Sie selbst ein Gesuch beim Guichet social régional (GSR), dem regionalen Sozialschalter:',
     punkte: [
       // [NE] FAQ: «Vous êtes célibataire et avez entre 19 et 25 ans ? Il n'y a pas d'automatisme.»
-      'Sie sind ledig und zwischen 19 und 25 Jahre alt.',
+      // Fachprüfung 09.11.: [NE] «Vous n'avez pas reçu de courrier ? … vous avez moins de 26 ans»;
+      // «Dès le 1er janvier de l'année de vos 26 ans, votre droit à un subside est calculé
+      // automatiquement». RALILAMal art. 36 al. 1 («assurés célibataires âgés de moins de 25 ans …
+      // classifiés d'office dans la catégorie des personnes "non bénéficiaires"»).
+      'Sie sind jünger als 26 (ab dem Jahr, in dem Sie 26 werden, läuft es automatisch).',
       'Sie sind neu in den Kanton Neuenburg gezogen.',
       'Sie werden an der Quelle besteuert oder wurden nach Ermessen veranlagt (taxation d’office).',
       'Ihre finanzielle oder familiäre Lage hat sich verändert.',
       'Ihr Einkommen liegt unter einer festen Untergrenze. Dann gelten Sie zunächst als nicht berechtigt und können eine Überprüfung verlangen.',
+      // Fachprüfung 09.11.: RALILAMal art. 33 al. 2: «Lorsque la taxation fiscale ordinaire n'est pas
+      // établie durant l'année courante, une nouvelle classification ne peut prendre effet, au plus tôt,
+      // qu'au 1er janvier de l'année de notification de la taxation.» Al. 4: «les assurés doivent déposer
+      // une demande formelle auprès de l'office, dans un délai de trois mois à compter de la notification
+      // de la taxation fiscale. La date de réception de la demande est déterminante.»
+      'Ihre Veranlagung kam erst nach Ende des Jahres. Dann stellen Sie innert weniger Monate nach Erhalt der Veranlagung ein Gesuch beim OCAB.',
     ],
     schluss: 'Wer selbständig erwerbend ist, erhält einen Brief mit der Bitte, sich beim GSR zu melden, und stellt das Gesuch dort innert einer Frist. Auch ohne Brief können Sie ein Gesuch stellen, wenn Sie Anspruch vermuten. Die Beratung beim GSR ist kostenlos.',
   },
@@ -83,11 +97,20 @@ export default {
     // LILAMal art. 29 al. 1: «Les subsides indûment perçus doivent être restitués à l'Etat.»
     // ANO art. 21 al. 2: «Lorsque la différence de revenu déterminant résultant de la comparaison
     // dépasse 20%, l'office peut exiger la restitution du subside indu.»
-    'Das OCAB vergleicht die Einstufung später mit der nächsten Veranlagung. Weicht das Einkommen stark ab, kann es zu viel bezahlte Verbilligung zurückverlangen.',
+    // Erster Satz (Fachprüfung 09.11.): LILAMal art. 29 al. 1 (wie oben); RALILAMal art. 47 al. 4:
+    // «L'inobservation de l'obligation de renseigner peut entraîner la modification ou la suppression du
+    // subside. L'office en fixe, le cas échéant, l'effet rétroactif.» Art. 48 al. 1: «L'office exige de
+    // l'assuré la restitution des subsides indûment perçus.»
+    'Zu Unrecht bezogene Verbilligung muss zurückgezahlt werden, zum Beispiel wenn Sie eine Änderung nicht gemeldet haben. Das OCAB vergleicht die Einstufung zudem später mit der nächsten Veranlagung. Weicht das Einkommen stark ab, kann es zu viel bezahlte Verbilligung zurückverlangen.',
     // [NE] «Arrivée ou départ du canton»: «Votre canton de domicile au 1er janvier reste compétent
     // jusqu'au 31 décembre …», «Le subside restera valable jusqu'au 31 décembre de l'année en cours.»
     // LILAMal art. 19 al. 1.
-    'Ziehen Sie im Lauf des Jahres zu, bleibt für dieses Jahr der bisherige Kanton zuständig. Ziehen Sie weg, behalten Sie die Neuenburger Verbilligung bis Ende Jahr.',
+    // Fachprüfung 09.11.: Regel «canton de domicile au 1er janvier» betrifft nur den Zuzug aus einem
+    // anderen Kanton. LILAMal art. 16 al. 2: «L'assuré qui prend ou reprend domicile dans le canton est
+    // classifié dans le groupe des assurés non bénéficiaires.» RALILAMal art. 42 al. 1: «La
+    // classification … peut être révisée au cours de l'année, sur demande ou d'office, lorsque: a)
+    // l'assuré prend ou reprend domicile dans le canton».
+    'Ziehen Sie im Lauf des Jahres aus einem anderen Kanton zu, bleibt für dieses Jahr der bisherige Kanton zuständig. Ziehen Sie aus dem Ausland zu, stellen Sie das Gesuch beim GSR. Ziehen Sie weg, behalten Sie die Neuenburger Verbilligung bis Ende Jahr.',
     // RALILAMal art. 38 al. 2–3: «L'assuré majeur en formation initiale est classifié personnellement,
     // sur sa demande écrite auprès du GSR … Le droit au subside est établi en fonction du revenu
     // déterminant de l'UER dont fait partie la personne en formation.»

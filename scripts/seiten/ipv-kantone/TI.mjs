@@ -48,7 +48,10 @@ export default {
   // presentata dopo il termine …, ma nell'anno di competenza, il diritto … è dato solo a partire dal
   // mese seguente la presentazione.» [IAS-I] Ziff. 2: «(fa stato la data del timbro postale)»;
   // «Questa regola si applica a tutti gli assicurati, … tassati in modo ordinario che … alla fonte.»
-  fristSatz: 'Für den Antrag gilt eine Frist. Sie steht im Gesetz und in der Anleitung des IAS. Wer sie verpasst, kann im laufenden Jahr trotzdem noch einen Antrag stellen. Die Verbilligung gilt dann aber erst ab dem Monat nach der Einreichung, die Monate davor fallen weg. Massgebend ist der Poststempel.',
+  // Fachprüfung 09.11.: LCAMal art. 25 cpv. 2: «se l'istanza è presentata entro la fine dell'anno che
+  // precede l'anno di competenza la riduzione dei premi inizia a decorrere dal 1° gennaio dell'anno di
+  // competenza.»
+  fristSatz: 'Für den Antrag gilt eine Frist. Sie endet schon vor Beginn des Jahres, für das die Verbilligung gilt, und steht im Gesetz und in der Anleitung des IAS. Wer sie verpasst, kann im laufenden Jahr trotzdem noch einen Antrag stellen. Die Verbilligung gilt dann aber erst ab dem Monat nach der Einreichung, die Monate davor fallen weg. Massgebend ist der Poststempel.',
   stelle: 'Istituto delle assicurazioni sociali (IAS), Servizio sussidi assicurazione malattia',
   // [IAS-S] «La decisione spetta all'Istituto delle assicurazioni sociali»; «A chi rivolgersi:
   // Servizio sussidi assicurazione malattia, Via Ghiringhelli 15a, … 6501 Bellinzona».
@@ -69,12 +72,19 @@ export default {
     // imposta alla fonte; nessuna tassazione; decesso del coniuge; divorzio o separazione;
     // «cessazione totale dell'attività lucrativa a seguito di disoccupazione, pensionamento,
     // infortunio, malattia, maternità o paternità …».
-    'In einigen Fällen rechnet das IAS mit der aktuellen Lage statt mit der Veranlagung: bei Quellensteuer, wenn keine Veranlagung vorliegt, nach dem Tod der Ehe- oder eingetragenen Partnerin oder des Partners, nach Scheidung, Trennung oder Auflösung der Partnerschaft und wenn die Erwerbstätigkeit ganz endet, etwa wegen Arbeitslosigkeit, Pensionierung oder Krankheit.',
+    // Angehängt (Fachprüfung 09.11.): RLCAMal art. 29: «Ogni membro dell'unità di riferimento può
+    // presentare un'istanza di revisione … al verificarsi di una delle situazioni di cui all'art. 14.»
+    // Art. 30 lett. a: «in caso di cambiamento della situazione economica, dall'inizio del mese in cui
+    // è stato annunciato il cambiamento, ma al più presto dal mese in cui questo avviene».
+    'In einigen Fällen rechnet das IAS mit der aktuellen Lage statt mit der Veranlagung: bei Quellensteuer, wenn keine Veranlagung vorliegt, nach dem Tod der Ehe- oder eingetragenen Partnerin oder des Partners, nach Scheidung, Trennung oder Auflösung der Partnerschaft und wenn die Erwerbstätigkeit ganz endet, etwa wegen Arbeitslosigkeit, Pensionierung oder Krankheit. Tritt einer dieser Fälle während des Jahres ein, stellen Sie beim IAS ein Gesuch um Neuberechnung. Bei einer Änderung Ihrer wirtschaftlichen Lage wirkt es erst ab dem Monat, in dem Sie es melden.',
     // RLCAMal art. 14 cpv. 2 lett. b–f (Arbeitseinkommen, Renten, Unterhalt, Mieteinnahmen,
     // Vermögen; «Su richiesta»), art. 29 (istanza di revisione), art. 30 lett. a: «dall'inizio del
     // mese in cui è stato annunciato il cambiamento, ma al più presto dal mese in cui questo avviene».
     // Rechtsprüfung 09.11.: Folge als Tatsache statt «lohnt es sich, nicht zu warten».
-    'Ändern sich Ihr Arbeitseinkommen, Renten, Unterhaltsbeiträge, Mieteinnahmen oder Ihr Vermögen deutlich, können Sie eine Neuberechnung verlangen. Sie wirkt frühestens ab dem Monat, in dem Sie die Änderung melden. Für die Monate davor wird nicht neu gerechnet.',
+    // Fachprüfung 09.11.: RLCAMal art. 14 cpv. 2 lett. b–d: «diminuzione o aumento … rispetto al
+    // relativo dato desunto dalla tassazione fiscale determinante» (ohne Schwelle); lett. e–f: Vermögen
+    // nur bei Änderung über einem festen Betrag («di almeno … franchi»).
+    'Ändern sich Ihr Arbeitseinkommen, Renten, Unterhaltsbeiträge oder Mieteinnahmen gegenüber der Veranlagung oder Ihr Vermögen erheblich, können Sie eine Neuberechnung verlangen. Sie wirkt frühestens ab dem Monat, in dem Sie die Änderung melden. Für die Monate davor wird nicht neu gerechnet.',
     // LCAMal art. 27 cpv. 1; [IAS-I] Ziff. 1.1 («non supera i 30 anni; non è coniugato; non ha figli
     // a carico; … redditi … inferiore al limite di fabbisogno …; è in prima formazione»).
     'Junge Erwachsene bis 30 Jahre, die ledig sind, keine Kinder haben, in der ersten Ausbildung stehen und wenig eigenes Einkommen haben, gehören zur Berechnungseinheit der Eltern.',

@@ -54,7 +54,10 @@ export default {
       // der massgebenden Steuerveranlagung ein Kinderabzug gewährt wird»; Abs. 3: «Steht einer oder
       // einem jungen Erwachsenen in Ausbildung ein nicht reduzierter, selbstständiger Anspruch … zu,
       // so wird mindestens die Hälfte der massgebenden Prämie vergütet.» Eigener Antrag abgeleitet.
-      'Sie sind junge erwachsene Person in Ausbildung, und Ihre Eltern erhalten für Sie keinen Kinderabzug. Dann stellen Sie einen eigenen Antrag. Für junge Erwachsene in Ausbildung sieht das Gesetz dabei einen Mindestbeitrag vor.',
+      // Nachprüfung 09.11.2026: eigener Antrag aus § 7bis Abs. 1/3 und § 11 Abs. 1 hergeleitet;
+      // Mindestbeitrag nur bei «nicht reduzierte[m], selbstständige[m] Anspruch» (§ 7bis Abs. 3;
+      // Broschüre «… Anspruch auf eine nicht reduzierte Verbilligung»).
+      'Sie sind junge erwachsene Person in Ausbildung, und Ihre Eltern erhalten für Sie keinen Kinderabzug. Dann zählen Sie nicht zum Antrag Ihrer Eltern, sondern haben einen eigenen Anspruch und stellen einen eigenen Antrag, auch wenn Sie kein Schreiben bekommen haben. Wird Ihre Verbilligung nicht gekürzt, sieht das Gesetz für junge Erwachsene in Ausbildung einen Mindestbeitrag vor.',
       'Ihre Ergänzungsleistungen wurden eingestellt. Ab dem folgenden Jahr braucht es dann eine eigene Anmeldung.',
     ],
     schluss: 'Für alle diese Fälle gilt dieselbe Frist wie für die übrigen Anträge.',

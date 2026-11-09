@@ -40,13 +40,29 @@ export default {
   selbst: {
     einleitung: 'Einen Antrag beim SAM stellen müssen Sie, wenn einer dieser Fälle auf Sie zutrifft. «Massgebendes Jahr» heisst hier: das Steuerjahr von vor zwei Jahren.',
     punkte: [
-      'Sie sind zwischen 19 und 25 Jahre alt.',
+      // Fachprüfung 09.11.: LaLAMal art. 20 al. 3 lit. b: «les assurés ayant atteint leur majorité avant
+      // le 1er janvier de l'année civile et jusqu'à 25 ans révolus»; RaLAMal art. 10 al. 8: «est
+      // déterminant l'âge de l'assuré le 1er janvier de l'année d'ouverture du droit aux subsides»;
+      // al. 7 lit. a/b (mit und ohne «domicile commun avec ses parents»).
+      'Sie waren am Jahresanfang volljährig und sind höchstens 25 (massgebend ist der Jahrgang), ob Sie bei den Eltern wohnen oder nicht.',
       'Sie wurden im massgebenden Jahr an der Quelle besteuert.',
       'Sie sind im Vorjahr oder im laufenden Jahr nach Genf gezogen.',
       'Ihr Einkommen lag im massgebenden Jahr unter einer festen Untergrenze.',
       'Ihr Bruttoeinkommen oder Ihr Bruttovermögen lag im massgebenden Jahr über einer festen Grenze.',
       'Sie haben für das massgebende Jahr keine Veranlagung erhalten oder wurden nach Ermessen veranlagt (taxation d’office).',
       'Ihre wirtschaftliche oder familiäre Lage hat sich seither verändert, zum Beispiel durch ein weiteres Kind.',
+      // Fachprüfung 09.11. (aus «besonders» hierher verschoben): RaLAMal art. 9: «les revenus
+      // déterminants … ainsi que ceux des concubins faisant ménage commun avec un ou plusieurs enfants
+      // issus de leur union, sont cumulés.» [D26]/[D27]: «les personnes vivant en concubinage avec un ou
+      // plusieurs enfants issus de leur union, forment un groupe familial» · «Formulaire pour les
+      // personnes vivant en concubinage».
+      'Sie leben unverheiratet zusammen und haben ein gemeinsames Kind. Dann reichen Sie das Formular für Paare im Konkubinat ein; Ihre Einkommen werden zusammengezählt.',
+      // Fachprüfung 09.11.: LaLAMal art. 24A al. 1: «L'assuré domicilié à l'étranger de condition
+      // économique modeste doit présenter une requête dûment motivée au service de l'assurance-maladie».
+      // RaLAMal art. 12A al. 1: «La demande … doit être adressée au service avant le 30 novembre de
+      // l'année d'ouverture du droit aux subsides. … Le service n'entre pas en matière sur les demandes
+      // présentées hors délai.»
+      'Sie wohnen im Ausland und sind in der Schweiz krankenversichert, zum Beispiel als Grenzgängerin oder Grenzgänger. Dann gibt es die Verbilligung nur auf einen begründeten Antrag, und für ihn gilt eine Frist im laufenden Jahr.',
     ],
     schluss: 'Formulare und Grenzen stehen auf den Seiten des SAM. In diesen Fällen gibt es ohne Antrag keine Verbilligung.',
   },
@@ -72,10 +88,6 @@ export default {
     // LaLAMal art. 21 al. 3 («revenu déterminant … loi sur le revenu déterminant unifié»), art. 21
     // al. 1 (Gruppen 1–8), art. 22 al. 1 («Le montant des subsides est de : Groupe 1 : … par mois»).
     'Genf rechnet mit dem «revenu déterminant unifié» (RDU), einem einheitlichen massgebenden Einkommen, das auch für andere kantonale Leistungen gilt. Danach kommen Sie in eine Gruppe, und jede Gruppe hat einen festen Monatsbetrag.',
-    // [D26]/[D27]: «les personnes vivant en concubinage avec un ou plusieurs enfants issus de leur
-    // union, forment un groupe familial. Les RDU … respectifs sont additionnés … Formulaire pour les
-    // personnes vivant en concubinage».
-    'Unverheiratete Paare mit gemeinsamem Kind gelten wie Ehepaare als eine Familie, ihre Einkommen werden zusammengezählt. Für sie gibt es ein eigenes Formular.',
     // RaLAMal art. 13B al. 1–3: «situation économique s'est durablement et notablement aggravée …
     // par une demande écrite»; «durable … depuis plus de 6 mois»; «notable … diminution de 20% ou
     // plus». Art. 13E al. 1: «tenus d'informer le service sans délai lorsque leur situation s'améliore».
@@ -86,7 +98,8 @@ export default {
     // LaLAMal art. 32: «En cas de changement d'assureur, l'assuré doit annoncer au service de
     // l'assurance-maladie dans les meilleurs délais, mais au plus tard à la fin de l'année civile en
     // cours, le nom de son nouvel assureur pour bénéficier du subside.»
-    'Wechseln Sie die Krankenkasse, melden Sie dem SAM laut Gesetz den Namen der neuen Kasse möglichst bald, spätestens bis Ende Jahr.',
+    // Ergänzt (Fachprüfung 09.11.): Verweis an den SAM, weil die Praxis vom Gesetzestext abweichen kann.
+    'Wechseln Sie die Krankenkasse, melden Sie dem SAM laut Gesetz den Namen der neuen Kasse möglichst bald, spätestens bis Ende Jahr; fragen Sie beim SAM nach, ob das nötig ist.',
     // LaLAMal art. 27 lit. b: «les assurés qui font l'objet d'une taxation d'office, à moins que
     // ceux-ci puissent justifier de démarches en vue de la régularisation de leur situation fiscale …»
     'Wer nach Ermessen veranlagt wurde, hat grundsätzlich keinen Anspruch, ausser die Person belegt, dass sie ihre Steuersituation in Ordnung bringt.',
