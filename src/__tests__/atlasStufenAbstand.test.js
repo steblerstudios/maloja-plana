@@ -42,7 +42,7 @@ describe('Kantonsatlas: Stufen gleichmässig unterscheidbar', () => {
 
 describe('Kantonsatlas: Farbe je Karte nach dem Brand Book', () => {
   it('jede Karte der Seite hat eine Frucht mit Stufen', () => {
-    const karten = [...seite.matchAll(/<figure class="abb atlas f-([a-z]+)" id="karte-/g)].map((m) => m[1]);
+    const karten = [...seite.matchAll(/<figure class="abb atlas" id="karte-[a-z]+">\s*<div class="abb-karte f-([a-z]+)">/g)].map((m) => m[1]);
     expect(karten.length).toBe(Object.keys(KARTEN_FRUCHT).length);
     for (const f of karten) expect(FRUCHT_STUFEN[f]).toBeTruthy();
   });

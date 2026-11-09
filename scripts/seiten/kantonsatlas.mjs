@@ -64,8 +64,8 @@ export const FRUCHT_STUFEN = {
   zwetschge:   { hell: ['#D9DDE2', '#A5ADB8', '#7A8593', '#4F5966'], dunkel: ['#32373D', '#616874', '#98A4B5', '#DADFE6'] },
 };
 const stufenVars = (s) => s.map((c, i) => `--k${i + 1}:${c}`).join('; ');
-const FRUCHT_CSS_HELL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `    .atlas.f-${f}{ ${stufenVars(s.hell)} }`).join('\n');
-const FRUCHT_CSS_DUNKEL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `      .atlas.f-${f}{ ${stufenVars(s.dunkel)} }`).join('\n');
+const FRUCHT_CSS_HELL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `    .atlas .f-${f}{ ${stufenVars(s.hell)} }`).join('\n');
+const FRUCHT_CSS_DUNKEL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `      .atlas .f-${f}{ ${stufenVars(s.dunkel)} }`).join('\n');
 
 // ─── Stufen: vier gleich grosse Gruppen von Kantonen ────────────────────────
 // Nach dem Wert sortiert, in Viertel geteilt. Gleiche Werte bleiben in
@@ -115,8 +115,8 @@ function karte(ctx, key, { legende, nachher = '' }) {
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
   const schweiz = E.ch != null ? `Ganze Schweiz: ${E.fmt(E.ch)}` : '';
   return `
-        <figure class="abb atlas f-${frucht}" id="${id}">
-          <div class="abb-karte">
+        <figure class="abb atlas" id="${id}">
+          <div class="abb-karte f-${frucht}">
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
