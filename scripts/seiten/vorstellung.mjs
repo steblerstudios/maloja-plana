@@ -21,6 +21,9 @@ import { BRILLEN } from './kantonsatlas.mjs';
 // den Atlas als eigenen Abschnitt; jede Brille führt gefiltert hinein (/kantonsatlas/#fuer-<id>, Teil A).
 // Brillen aus kantonsatlas.mjs, damit Name und Frage hier und dort dieselben sind.
 const ATLAS_KARTEN = new Set(BRILLEN.flatMap((b) => b.karten)).size;
+// Zahlen im Fliesstext ausgeschrieben wie «sieben Kapitel» (Copy-Prüfung 09.11.2026). Ändert sich die Zahl, hier ergänzen.
+const ATLAS_KARTEN_WORT = { 10: 'zehn' }[ATLAS_KARTEN];
+if (!ATLAS_KARTEN_WORT) throw new Error(`vorstellung.mjs: ${ATLAS_KARTEN} Atlas-Karten, Wort fehlt`);
 
 export const VORSTELLUNG = {
   titel: 'Maloja Plana — Schweizer Lebensordner',
@@ -224,7 +227,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .geraet ol{ padding-left:20px; color:var(--leise); font-size:15px }
     .geraet li{ margin-bottom:8px; padding-left:4px }
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
-    .bald{ margin-top:20px; font-size:15px; color:var(--leise) }
+    .bald, .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
     .bald strong{ color:var(--text) }
 
     /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */
@@ -480,13 +483,13 @@ ${stationen()}
     <!-- ═══ Kantonsatlas: das Brückenstück zwischen Website und App ═══ -->
     <section id="atlas" aria-labelledby="t-atlas">
       <p class="augenbraue">Kantonsatlas</p>
-      <h2 id="t-atlas">Ihr Kanton auf der Karte.</h2>
-      <p class="unterzeile">Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: ${ATLAS_KARTEN} Karten der 26 Kantone aus öffentlichen Statistiken, frei zugänglich und ohne Rangliste. Je nachdem, wer fragt, zählen andere Karten.</p>
+      <h2 id="t-atlas">Die Kantone auf der Karte.</h2>
+      <p class="unterzeile">Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: ${ATLAS_KARTEN_WORT} Karten der 26 Kantone aus öffentlichen Statistiken, frei zugänglich und ohne Rangliste. Welche Karten wichtig sind, hängt von der Frage ab. Vier Beispiele:</p>
       <ul class="liste">
 ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><a href="/kantonsatlas/#fuer-${b.id}">Karten für diese Frage<span class="unsichtbar">: ${esc(b.name)}</span></a></li>`).join('\n')}
       </ul>
-      <div class="wege"><a class="knopf zweit" href="/kantonsatlas/">Alle ${ATLAS_KARTEN} Karten ansehen</a></div>
-      <p class="bald">Die Karten zeigen Durchschnitte je Kanton. Was sie für Sie bedeuten, rechnet Maloja Plana mit Ihren Angaben, auf Ihrem Gerät.</p>
+      <div class="wege"><a class="knopf zweit" href="/kantonsatlas/">Alle ${ATLAS_KARTEN_WORT} Karten ansehen</a></div>
+      <p class="atlas-hinweis">Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage. Was davon für Sie gilt, zeigt die App Schritt für Schritt, mit Ihren Angaben, auf Ihrem Gerät.</p>
     </section>
 
     <!-- ═══ Holen ═══ -->
