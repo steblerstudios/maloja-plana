@@ -25,7 +25,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EBENEN, KANTONE } from './seiten-vergleich.mjs';
-import { stufen, LEGENDE, STUFEN_FARBEN } from './seiten/kantonsatlas.mjs';
+import { stufen, LEGENDE, STUFEN_FARBEN, KARTEN_FRUCHT } from './seiten/kantonsatlas.mjs';
 import { KANTONE_IM_VERGLEICH } from './seiten/kantone-im-vergleich.mjs';
 import { standbildSvg, kostenteilAngaben } from './seiten-figuren.mjs';
 import { KRANKENKASSE } from './seiten/krankenkasse.mjs';
@@ -70,6 +70,8 @@ export function erzeugeKarten() {
       titel: E.titel,
       einheit: E.einheit,
       anker: `karte-${key.toLowerCase()}`,
+      // Farbe der Karte = Frucht ihres Lebensbereichs, wie auf /kantonsatlas/ (Brand Book §7c).
+      frucht: KARTEN_FRUCHT[key],
       // Legende wie auf /kantonsatlas/: Jahr, Rahmung («Rechenwert …»), Belege (Swiss-Precision-Prüfung 09.11.2026).
       ...belege(LEGENDE[key], KANTONE_IM_VERGLEICH.quellen),
       ch: E.ch != null ? E.fmt(E.ch) : null,
@@ -79,7 +81,11 @@ export function erzeugeKarten() {
       ...(APP_ALTERSKLASSEN[key] ? { altersklassen: altersklassen(APP_ALTERSKLASSEN[key], E.fmt) } : {}),
     };
   }
-  const farben = STUFEN_FARBEN;
+  // Nur die Früchte, die eine App-Karte trägt, damit das nachgeladene Stück klein bleibt.
+  const farben = Object.fromEntries([...new Set(Object.values(karten).map((K) => K.frucht))].map((f) => {
+    if (!STUFEN_FARBEN[f]) throw new Error(`app-verstehen: keine Stufenfarben für Frucht ${f}`);
+    return [f, STUFEN_FARBEN[f]];
+  }));
   const geoKlein = { w: geo.w, h: geo.h, kantone: Object.fromEntries(KANTONE.map((k) => [k, geo.cantons[k].d])), seen: geo.lakes };
   return KOPF +
     '// Kartengrundlage: BFS GEOSTAT, Generalisierte Gemeindegrenzen (OPEN-BY), aufbereitet mit swiss-maps (BSD-3-Clause), siehe NOTICE.\n' +
