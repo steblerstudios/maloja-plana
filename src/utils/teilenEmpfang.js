@@ -50,6 +50,31 @@ export const geteilteDateienLesen = async () => {
   return dateien.sort((a, b) => (a.schluessel < b.schluessel ? -1 : a.schluessel > b.schluessel ? 1 : 0));
 };
 
+// «Datei hinzufügen» im Eingang (09.11.2026): der Weg für Geräte ohne Teilen-Empfang
+// (iPhone/iPad, Desktop-Browser). Gleicher Cache, gleiche Form wie aus dem Service Worker,
+// damit eine gewählte Datei auch nach dem Schliessen der App weiter wartet.
+// Gibt die Dateien zurück, die NICHT angenommen wurden (leer oder zu gross).
+export const dateienInEingang = async (dateien, basis = '/', jetzt = Date.now()) => {
+  const passend = [];
+  const abgelehnt = [];
+  for (const datei of dateien) {
+    if (datei && datei.size > 0 && datei.size <= MAX_GETEILT_BYTES) passend.push(datei);
+    else if (datei) abgelehnt.push(datei);
+  }
+  if (!passend.length) return { angenommen: [], abgelehnt };
+  if (!cachesDa()) return { angenommen: passend, abgelehnt, ohneCache: true };
+  const cache = await caches.open(GETEILT_CACHE);
+  const ordner = (basis.endsWith('/') ? basis : basis + '/') + GETEILT_ORDNER;
+  await Promise.all(passend.map((datei, i) => cache.put(
+    ordner + jetzt + '-h' + String(i).padStart(2, '0'),
+    new Response(datei, { headers: {
+      'Content-Type': datei.type || 'application/octet-stream',
+      [NAME_KOPF]: encodeURIComponent(datei.name || 'Datei'),
+    } }),
+  )));
+  return { angenommen: passend, abgelehnt };
+};
+
 export const geteilteDateiEntfernen = async (schluessel) => {
   if (!cachesDa()) return false;
   const cache = await caches.open(GETEILT_CACHE);

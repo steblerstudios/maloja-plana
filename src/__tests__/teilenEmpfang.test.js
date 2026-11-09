@@ -10,7 +10,7 @@ import { DocumentTresor } from '../DocumentTresor.jsx';
 import { GeteiltEingang } from '../components/GeteiltEingang.jsx';
 import {
   GETEILT_CACHE, GETEILT_ORDNER, NAME_KOPF, MAX_GETEILT_BYTES,
-  geteilteDateienLesen, geteilteDateiEntfernen, dateinameAusKopf, alsDokument,
+  geteilteDateienLesen, geteilteDateiEntfernen, dateienInEingang, dateinameAusKopf, alsDokument,
 } from '../utils/teilenEmpfang.js';
 
 // Teilen-Empfang (09.11.2026): eine Datei über «Teilen …» an die installierte App kommt als
@@ -155,6 +155,29 @@ describe('Teilen-Empfang · Lesen und Einordnen', () => {
     expect([...c.keys()]).toEqual(['/geteilt/2-00']);
   });
 
+  it('«Datei hinzufügen» legt in denselben Eingang wie der Service Worker, unter dem Scope', async () => {
+    const c = fakeCaches([]);
+    globalThis.caches = { open: async () => ({
+      put: async (k, v) => { c.set(k, v); },
+      keys: async () => [...c.keys()].map((url) => ({ url })),
+      match: async (r) => c.get(r.url),
+    }) };
+    const gross = new File([new Uint8Array(MAX_GETEILT_BYTES + 1)], 'riesig.pdf', { type: 'application/pdf' });
+    const { angenommen, abgelehnt } = await dateienInEingang(
+      [new File(['%PDF'], 'Mietvertrag.pdf', { type: 'application/pdf' }), new File([], 'leer.jpg'), gross], '/app/', 1234);
+    expect(angenommen.map((d) => d.name)).toEqual(['Mietvertrag.pdf']);
+    expect(abgelehnt.map((d) => d.name)).toEqual(['leer.jpg', 'riesig.pdf']);
+    expect([...c.keys()]).toEqual(['/app/geteilt/1234-h00']);
+    const [eins] = await geteilteDateienLesen();
+    expect([eins.name, eins.typ, eins.groesse]).toEqual(['Mietvertrag.pdf', 'application/pdf', 4]);
+  });
+
+  it('«Datei hinzufügen» ohne Cache-API: angenommen, aber nur für diese Sitzung', async () => {
+    const r = await dateienInEingang([new File(['x'], 'a.png', { type: 'image/png' })]);
+    expect(r).toMatchObject({ ohneCache: true, abgelehnt: [] });
+    expect(r.angenommen).toHaveLength(1);
+  });
+
   it('ohne Cache-API: leerer Eingang statt Fehler', async () => {
     expect(await geteilteDateienLesen()).toEqual([]);
     expect(await geteilteDateiEntfernen('/geteilt/x')).toBe(false);
@@ -180,14 +203,18 @@ describe('Teilen-Empfang · Lesen und Einordnen', () => {
 describe('Teilen-Empfang · Eingang in der Ablage', () => {
   const datei = { schluessel: ORIGIN + '/geteilt/1-00', name: 'Police KK.pdf', typ: 'application/pdf', groesse: 2048, blob: null };
 
-  it('ohne Datei bleibt nur die leere Status-Region', () => {
+  it('ohne Datei: leere Status-Region und «Datei hinzufügen» (PDF und Bilder, mehrere)', () => {
     const html = renderToStaticMarkup(React.createElement(GeteiltEingang, { palette, t, chapters, onAblegen: async () => {}, laden: async () => [] }));
-    expect(html).toBe('<div role="status" style="color:#777777;font-size:15px"></div>');
+    expect(html).toContain('<div role="status" style="color:#777777;font-size:15px"></div>');
+    expect(html).not.toContain('data-geteilt-eingang="offen"');
+    expect(html).toMatch(/<label data-weg="datei-hinzufuegen"[^>]*>.*Datei hinzufügen<input type="file" multiple="" accept="application\/pdf,\.pdf,image\/\*"/);
   });
 
   it('mit Datei: Name, drei beschriftete Felder, Ablegen gesperrt bis alles gewählt ist, Verwerfen frei', () => {
     const html = renderToStaticMarkup(React.createElement(GeteiltEingang, { palette, t, chapters, onAblegen: async () => {}, laden: async () => [datei], start: [datei] }));
-    expect(html).toContain('Geteilt, noch nicht eingeordnet (1)');
+    expect(html).toContain('Noch nicht eingeordnet (1)');
+    // «Datei hinzufügen» steht dann einmal, im Eingang unter der Liste.
+    expect(html.match(/data-weg="datei-hinzufuegen"/g)).toHaveLength(1);
     expect(html).toContain('Police KK.pdf');
     for (const feld of ['bereich', 'art', 'ablauf']) expect(html).toMatch(new RegExp(`for="geteilt-${feld}-[a-z0-9]+"`, 'i'));
     expect(html).toMatch(/<button type="button" disabled=""[^>]*>Ablegen<\/button>/);
