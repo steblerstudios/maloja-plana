@@ -294,7 +294,7 @@ export const CANTONAL_LINKS = {
   },
   SO: {
     steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/steueramt/',
-    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/sozialhilfe-und-asyl/sozialhilfe/',
+    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/sozialhilfe-und-asyl/sozialhilfe/ansprechstellen-in-der-sozialhilfe/', // Verzeichnis der Sozialregionen
     ipv: 'https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv',
   },
   FR: {
@@ -304,12 +304,12 @@ export const CANTONAL_LINKS = {
   },
   TG: {
     steuererklaerung: 'https://steuerverwaltung.tg.ch/',
-    sozialdienst: 'https://sozialamt.tg.ch/',
+    sozialdienst: 'https://sozialamt.tg.ch/sozialhilfe.html/4501', // bis 09.11.2026 Startseite Sozialamt
     ipv: 'https://gesundheit.tg.ch/bevoelkerung/krankenversicherung/praemienverbilligung.html/5578',
   },
   GR: {
     steuererklaerung: 'https://www.gr.ch/DE/institutionen/verwaltung/dfg/stv/Seiten/startseite.aspx',
-    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/dvs/soa/home/Seiten/Sozialamt.aspx',
+    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/dvs/soa/beratung/finanzielle-unterstuetzung/sozialhilfe/Seiten/default.aspx', // bis 09.11.2026 Startseite Amt für Soziales
     ipv: 'https://www.sva.gr.ch/praemienverbilligung.html',
   },
   SH: {
@@ -344,12 +344,12 @@ export const CANTONAL_LINKS = {
   },
   OW: {
     steuererklaerung: 'https://www.ow.ch/aemter/186',
-    sozialdienst: 'https://www.ow.ch/aemter/244',
+    sozialdienst: 'https://www.ow.ch/familie/5447', // bis 09.11.2026 Kantonales Sozialamt (aemter/244); Gesuche laufen über den Regionalen Sozialdienst
     ipv: 'https://www.ow.ch/fachbereiche/2737',
   },
   NW: {
     steuererklaerung: 'https://www.nw.ch/steueramt',
-    sozialdienst: 'https://www.nw.ch/sozialamt',
+    sozialdienst: 'https://www.nw.ch/sozialdienst/1138', // bis 09.11.2026 nw.ch/sozialamt (Amtsseite)
     ipv: 'https://www.aknw.ch/dienstleistungen/praemienverbilligung-ipv',
   },
   GL: {
@@ -359,7 +359,7 @@ export const CANTONAL_LINKS = {
   },
   AR: {
     steuererklaerung: 'https://www.ar.ch/verwaltung/departement-finanzen/steuerverwaltung/',
-    sozialdienst: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/',
+    sozialdienst: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/abteilung-sozialhilfe-und-asyl/sozialhilfe/adressen-sozialaemter/', // Adressen der Sozialämter; bis 09.11.2026 Amtsseite
     ipv: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/sozialversicherungen-appenzell-ausserrhoden/',
   },
   AI: {
@@ -372,9 +372,11 @@ export const CANTONAL_LINKS = {
 // Prüfdatum je Link (Felder `ipv` und `sozialdienst`), gemessen mit curl (Status, Titel/h1,
 // Gegenprobe mit erfundenem Pfad je Domain). Getrennt von CANTONAL_LINKS, weil DirektLinks.jsx
 // jedes Feld dort als Link anzeigt. `null` heisst: nicht geprüft, mit Grund im Kommentar.
-//   VS: vs.ch antwortet curl auf JEDEN Pfad mit 404, auch auf die Startseite. Im Browser zeigten
-//       am 09.11.2026 beide Links die Seite «Wartungsarbeiten» (Stebler Studios). Nicht tot,
-//       nicht geprüft — nochmals ansehen, wenn vs.ch wieder läuft.
+//   VS: vs.ch antwortete curl am 09.11.2026 zuerst auf JEDEN Pfad mit 404 (im Browser: «Wartungsarbeiten»).
+//       Abends wieder messbar: sozialdienst 200 «Dienststelle für Sozialwesen», ipv 200 «Subsides à
+//       l'assurance-maladie», erfundener Pfad 404. Beide geprüft.
+//   OW, NW, SO, AR, GR, TG: sozialdienst am 09.11.2026 auf die genauere Seite gesetzt (Gesuchsstelle
+//       bzw. Verzeichnis statt Amtsstartseite), Quelle docs/sources/sozialhilfe-kantone-2026.md.
 //   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
 //       im Browser geprüft und ersetzt (Stebler Studios); ipv noch nicht im Browser geprüft.
 const G = '2026-11-09';
@@ -387,7 +389,7 @@ export const CANTONAL_LINKS_GEPRUEFT = {
   SH: { ipv: G, sozialdienst: G }, AR: { ipv: G, sozialdienst: G }, AI: { ipv: G, sozialdienst: G },
   SG: { ipv: G, sozialdienst: G }, GR: { ipv: G, sozialdienst: G }, AG: { ipv: G, sozialdienst: G },
   TG: { ipv: G, sozialdienst: G }, TI: { ipv: G, sozialdienst: G }, VD: { ipv: G, sozialdienst: G },
-  VS: { ipv: null, sozialdienst: null },
+  VS: { ipv: G, sozialdienst: G },
   NE: { ipv: G, sozialdienst: G }, GE: { ipv: G, sozialdienst: G }, JU: { ipv: G, sozialdienst: G },
 };
 
