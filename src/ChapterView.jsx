@@ -173,6 +173,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
   // Kapitelwechsel ohne Neuaufbau: die Regel gilt fürs neue Kapitel neu.
   useEffect(() => { setOffeneAbschnitte(abschnitteAnfang()); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Ein angefangener Upload gehört zum Kapitel, in dem er begann — sonst landete er mit dem
+  // Typ des alten Kapitels im neuen (Bugsuche 09.11.2026).
+  useEffect(() => {
+    setUploadFile(null);
+    setUploadType('');
+    setUploadExpiry('');
+    setUploadError('');
+    setUploadSuccess('');
+  }, [chapter.key]);
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => feldHatWert(data, f.k));
   const storageKey = 'or5_disclosure_' + chapter.key;
   const [showSecondary, setShowSecondary] = useState(() => {
