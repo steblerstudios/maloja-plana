@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { zugeklappteIds } from './_schichten.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { HINTERGRUND, KRANKENKASSE } from '../../scripts/seiten/krankenkasse.mjs';
@@ -314,9 +315,12 @@ describe('Hintergrundseiten', () => {
     it('jeder Beleg im Text führt zu einer Quelle, und jede Quelle führt zurück', () => {
       const belege = [...html.matchAll(/<sup class="beleg(?: folge)?"><a href="#quelle-([a-zA-Z0-9]+)" id="(beleg-[a-zA-Z0-9]+-\d+)"/g)];
       expect(belege.length).toBeGreaterThan(30);
+      // Drei Schichten (09.11.2026): Belege unter «Ausführlich lesen» führen auf
+      // die Überschrift ihres Abschnitts zurück (schichtenBelegSprung.test.js).
+      const zugeklappt = zugeklappteIds(html);
       for (const [, key, id] of belege) {
         expect(html, `Quelle ${key} fehlt`).toContain(`<li id="quelle-${key}">`);
-        expect(html, `Rücksprung ${id} fehlt`).toContain(`href="#${id}"`);
+        if (!zugeklappt.has(id)) expect(html, `Rücksprung ${id} fehlt`).toContain(`href="#${id}"`);
       }
       // Jede eingetragene Quelle wird im Text gebraucht.
       for (const q of KRANKENKASSE.quellen) expect(html).toContain(`href="#quelle-${q.key}"`);

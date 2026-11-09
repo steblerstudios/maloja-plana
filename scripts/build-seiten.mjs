@@ -605,12 +605,33 @@ function belegeSetzen(html, quellen) {
   return { text: text.replace(/<\/sup><sup class="beleg">/g, '</sup><sup class="beleg folge">'), nummer, stellen };
 }
 
-function quellenListe(quellen, nummer, stellen) {
+// Drei Schichten: Belege im zugeklappten Teil. Der «Zurück»-Link springt dann
+// auf die Überschrift des Abschnitts, die immer sichtbar ist — ob ein Browser
+// <details> beim Sprung aufklappt, ist nicht überall belegt (Safari ungeprüft).
+// Wächter: src/__tests__/schichtenBelegSprung.test.js.
+function zugeklappteBelege(text) {
+  const ziel = new Map();
+  for (const teil of text.split(/(?=<h2 id=")/)) {
+    const h = teil.match(/^<h2 id="([^"]+)"/);
+    if (!h) continue;
+    for (const d of teil.matchAll(/<details class="schicht-mehr">([\s\S]*?)<\/details>/g))
+      for (const m of d[1].matchAll(/id="(beleg-[^"]+)"/g)) ziel.set(m[1], h[1]);
+  }
+  return ziel;
+}
+
+function quellenListe(quellen, nummer, stellen, zugeklappt = new Map()) {
   return [...quellen].sort((a, b) => nummer.get(a.key) - nummer.get(b.key)).map((q) => {
     const n = nummer.get(q.key);
     const anzahl = stellen.get(q.key);
     const zurueck = 'Zurück zum Text: ' + Array.from({ length: anzahl }, (_, i) =>
-      `<a href="#beleg-${q.key}-${i + 1}" aria-label="Zurück zur Stelle ${i + 1} im Text">${anzahl > 1 ? i + 1 : '↩'}</a>`).join(' · ');
+      {
+        const id = `beleg-${q.key}-${i + 1}`;
+        const abschnitt = zugeklappt.get(id);
+        return abschnitt
+          ? `<a href="#${abschnitt}" aria-label="Zurück zum Abschnitt mit Stelle ${i + 1}; sie steht unter «Ausführlich lesen»">${anzahl > 1 ? i + 1 : '↩'}</a>`
+          : `<a href="#${id}" aria-label="Zurück zur Stelle ${i + 1} im Text">${anzahl > 1 ? i + 1 : '↩'}</a>`;
+      }).join(' · ');
     const auch = q.auch ? `\n            <p class="q-her">Dazu: <a href="${esc(q.auch.url)}" rel="noopener">${esc(q.auch.text)}</a></p>` : '';
     return `        <li id="quelle-${q.key}">
           <span class="q-nr">${n}</span>
@@ -768,7 +789,7 @@ ${abschnitte}
       <h2 id="quellen">Quellen</h2>
       <p class="leise">Die hochgestellten Nummern im Text führen hierher, «Zurück zum Text» wieder an die Stelle.</p>
       <ol class="quellen">
-${quellenListe(seite.quellen, nummer, stellen)}
+${quellenListe(seite.quellen, nummer, stellen, zugeklappteBelege(abschnitte))}
       </ol>
       <p class="leise">${esc(seite.quellenHinweis)}</p>
 
