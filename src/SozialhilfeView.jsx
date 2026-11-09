@@ -25,6 +25,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const hh = getHouseholdInfo(data);
   const minorChildren = hh.children.filter(c => (Number(c.age) || 0) < 18).length;
   const rueckFreibetrag = rueckerstattungsFreibetrag(hh.adults, minorChildren);
+  const rueckKanton = data.basis?.canton || null;
   const [erbschaft, setErbschaft] = useState('');
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
   // Das Feld speichert `weekly` (constants.js); verglichen wurde mit 'wochenaufenthalt' — der Hinweis erschien
@@ -121,7 +122,12 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
             placeholder: '0',
             style: { width: '160px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
           }),
-          (Number(erbschaft) || 0) > 0 && React.createElement('div', {
+          // Kapitel 3 F10 (09.11.2026): die Freibeträge sind die Zürcher (§ 27 SHG ZH). Eine Zahl nur für ZH;
+          // anderswo der Hinweis, dass der Kanton entscheidet — sonst stand «könnte zurückgefordert werden»
+          // auch dort, wo es keine Rückerstattung gibt.
+          (Number(erbschaft) || 0) > 0 && rueckKanton !== 'ZH' && React.createElement('div', { role: 'status', style: { marginTop: space.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
+            t('sozialhilfe.repaymentNurZH', { kanton: rueckKanton ? t('cantons.' + rueckKanton) : t('sozialhilfe.repaymentKantonOffen') })),
+          (Number(erbschaft) || 0) > 0 && rueckKanton === 'ZH' && React.createElement('div', {
             style: { marginTop: space.sm, padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, lineHeight: leading.relaxed },
           },
             Math.max(0, (Number(erbschaft) || 0) - rueckFreibetrag) > 0

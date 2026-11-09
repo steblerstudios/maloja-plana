@@ -65,7 +65,7 @@ export const Monatsring = ({ data, t, palette, einkommen, verplant, titel, titel
   });
   const umschalter = (wert, name) => React.createElement('button', {
     type: 'button', 'aria-pressed': faktor === wert, onClick: () => setFaktor(wert),
-    style: { ...auswahlStil(palette, faktor === wert), minHeight: '36px', padding: '0 ' + space.sm + 'px', fontSize: text.xs, fontWeight: weight.normal },
+    style: { ...auswahlStil(palette, faktor === wert), minHeight: '44px', padding: '0 ' + space.ms + 'px', fontSize: text.xs, fontWeight: weight.normal },
   }, name);
   const raster = { display: 'grid', gridTemplateColumns: SPALTEN, gap: space.xs + 'px', alignItems: 'baseline' };
   const zahlen = { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', textAlign: 'right' };

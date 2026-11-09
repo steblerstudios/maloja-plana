@@ -16,7 +16,7 @@ import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
+import { arbeitsKanton, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, wochenstundenZuTiefFuerMonatslohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
@@ -1331,7 +1331,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             } else if (hrs > 0) {
               const perMonth = stundenAufMonat(hrs);
               const perYear = stundenAufJahr(hrs);
-              const kanton = allData && allData.basis && allData.basis.canton;
+              const { kanton } = arbeitsKanton(allData);
               const monthlyIncome = parseFloat(allData && allData.finanzen && allData.finanzen.monthlyIncome) || 0;
               // Einkommensart mitgeben (Mindestlohn = brutto) — sonst rechnet dieser zweite
               // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
@@ -1510,7 +1510,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ['ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome'],
               ['sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint'],
             ], ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint']);
-            const kanton = allData && allData.basis && allData.basis.canton;
+            const { kanton, angenommen: kantonAngenommen } = arbeitsKanton(allData);
             if (kanton && kantonHatMindestlohn(kanton) && !mindestlohnNichtAnwendbar(allData)) {
               const lohn = parseFloat(data[field.k]) || 0;
               if (lohn > 0) {
@@ -1628,6 +1628,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         // Rechtsverletzung festzustellen (siehe `WAGECLAIM_BEREIT`).
                         .replace('{ausnahmen}', () => tr('lohnCheck.ausnahmen'))
                     )
+                  );
+                  // Kapitel 3 F1: ohne erfassten Arbeitsort gilt die Annahme Wohnkanton — sichtbar, weil der
+                  // Mindestlohn am Arbeitsort gilt (Fehlalarm, wenn jemand in einem anderen Kanton arbeitet).
+                  kantonAngenommen && elements.push(
+                    React.createElement('div', { key: 'mindestlohn-arbeitsort', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm + 'px' } },
+                      tr('lohnCheck.arbeitsortAnnahme', { kanton }))
                   );
                   // ⚠️ Brief-Knopf ruht — siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
                   if (WAGECLAIM_BEREIT && onNavigate) {

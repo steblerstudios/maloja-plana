@@ -159,8 +159,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   const infoLabel = (key, label) => React.createElement('button', {
     type: 'button', onClick: () => toggleInfo(key), 'aria-expanded': openInfo.has(key),
     style: {
-      background: 'none', border: 'none', padding: 0, font: 'inherit', color: 'inherit',
-      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'baseline', gap: '4px'
+      // Kapitel 3 Gestaltung B (09.11.2026): Tippfläche 44 px, ohne die Zeile höher zu machen (Rand ±10 px).
+      background: 'none', border: 'none', padding: '10px 0', margin: '-10px 0', minHeight: '44px', font: 'inherit', color: 'inherit',
+      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'center', gap: '4px'
     }
   },
     React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
@@ -203,7 +204,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         info ? infoLabel(item.key, item.label) : React.createElement('span', null, item.label),
         isEmpty
           ? React.createElement('span', { style: emptyValueStyle }, '—')
-          : React.createElement('span', null, formatCHF(item.value * mult))
+          : React.createElement('span', { style: { whiteSpace: 'nowrap', flexShrink: 0 } }, formatCHF(item.value * mult))
       ),
       open && bm && renderBenchmarkLine(bm, item.key),
       open && trend && renderTrendLine(trend, item.key),
@@ -258,9 +259,10 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
         info ? infoLabel(group.key, groupLabel) : React.createElement('span', null, groupLabel),
-        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm } },
+        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm, flexShrink: 0 } },
           group.total > 0
-            ? React.createElement('span', null, formatCHF(group.total * mult))
+            // Gestaltung C: der Betrag bricht nie um («CHF / 609»), der Name darf zweizeilig werden.
+            ? React.createElement('span', { style: { whiteSpace: 'nowrap' } }, formatCHF(group.total * mult))
             : React.createElement('span', { style: emptyValueStyle }, '—'),
           pct && React.createElement('span', {
             style: { fontSize: text.sm, color: palette.soft, fontWeight: weight.normal, minWidth: '28px', textAlign: 'right' }
