@@ -85,6 +85,48 @@ Datei; dafür hat das Studio einen eigenen Weg.
   ableiten. Test-Vorschlag: kein rm-Wert darf wörtlich gleich dem fr-Wert sein, ausser auf einer
   begründeten Ausnahmeliste.
 
+### Bugsuche 2026-11-09 (Lesedurchgänge über `main` `dff64ec7`, jeder Fund im Code gegengeprüft)
+
+**Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
+Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — **nicht gemergt, nicht
+live**. B-11 bis B-16 sind offen. Den Bereich Rechner/Fachlogik hat die Suche nicht geprüft.
+
+- 2026-11-09 · **B-7** · **Dokument-Datei galt als gespeichert, bevor sie es war.**
+  `idb.save` (`src/utils/storage.js`) löste bei `req.onsuccess` auf. Bei vollem Speicher bricht
+  die Transaktion oft erst danach ab (QuotaExceededError) → «gespeichert», Eintrag in der Liste,
+  Datei fehlt. Trifft auch die Einmal-Verschiebung alter Inline-Dateien (`main.jsx`), danach
+  überschreibt `setDocuments(metaDocs)` die einzige Kopie. Fix: Erfolg erst bei `tx.oncomplete`.
+  Test `dokumentSpeichernAbschluss.test.js`.
+- 2026-11-09 · **B-8** · **Zwei Tabs überschrieben sich bei Merkliste und Kalender.** K116 schützt
+  nur `or5_data`/`or5_docs`; beide Listen schrieben bei jeder Änderung den Stand vom Öffnen.
+  Nachstellen: Tab A Merkliste offen, Tab B «merken», in Tab A abhaken → Punkt aus B weg.
+  Fix: `hooks/useFremdeListe.js` lädt die Liste neu, wenn ein anderer Tab sie ändert.
+  Test `fremdeListeTabs.test.js`.
+- 2026-11-09 · **B-9** · **Vorlage «Krankenkasse wechseln» ab 30.11. auf falschem Datum.** Gezählt
+  wurde bis zum 30.11. des laufenden Jahres: am 30.11. → 30.12. (`0 || 30`), ab 1.12. ein
+  vergangenes Datum. Fix: `tageBisNaechstem(heute, '11-30')`, `?? 30`. Test `kkWechselStichtag.test.js`.
+- 2026-11-09 · **B-10** · **Angefangener Upload rutschte ins nächste Kapitel.** `ChapterView` wird
+  beim Wechsel nicht neu aufgebaut; Datei, Typ und Datum blieben stehen, das Dokument landete mit
+  dem Typ des alten Kapitels im neuen. Fix: Effekt auf `chapter.key` leert das Formular.
+  Test `kapitelwechselUpload.test.js`.
+- 2026-11-09 · **B-11** · **Wiederherstellen kann halb gelingen.** `applyBackup`
+  (`utils/backupCrypto.js`) schreibt `or5_data` zuerst; scheitert danach eine Datei am Speicher,
+  sind die Angaben ersetzt, die Dokumente alt — die Meldung sagt nur «fehlgeschlagen».
+- 2026-11-09 · **B-12** · **Merkliste meldet «gespeichert» auch bei vollem Speicher.**
+  `addTodo` (`utils/merkliste.js`) wertet die Rückgabe von `saveTodos` nicht aus.
+- 2026-11-09 · **B-13** · **Ankunfts-Satz bleibt stehen.** `ChapterView.jsx`, Effekt um
+  `prevFilledRef`: zweites Feld innerhalb von 6 s → Timer gelöscht, Satz bleibt, wandert beim
+  Kapitelwechsel mit (`ankunft.<nächstes Kapitel>`).
+- 2026-11-09 · **B-14** · **Ort fehlt vor dem Datum** in Fristerstreckung Steuern, Kassenwechsel
+  und KK-Reklamation (`briefGenerator.js`: Felder ohne `city`, Reklamation nur `dateStr`).
+- 2026-11-09 · **B-15** · **«Weitere Bereiche» übernimmt den Zustand des vorigen Kapitels**
+  (`ChapterView.jsx`, `showSecondary` nur beim ersten Aufbau gelesen). Gleiche Ursache wie B-10/B-13.
+- 2026-11-09 · **B-16** · Klein: `.ics` faltet Zeilen über 75 Byte nicht (`utils/icsExport.js`),
+  gedruckte Briefe und Dossiers tragen immer `lang="de"`.
+
+Nicht als Bug geführt: die automatischen Sicherungen (`autoBackup.js`) werden angelegt, lassen
+sich in der App aber nicht zurückholen — fehlende Funktion, gehört in die Bau-Liste.
+
 ## Geprüft — kein offener Bug (2026-07-08)
 
 Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich: keiner ist ein Bug. Festgehalten, damit sie nicht als Phantome wiederkommen.
