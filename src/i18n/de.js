@@ -6407,8 +6407,8 @@ export default {
   },
 
   seo: {
-    title: 'Maloja Plana — Schweizer Lebensordner: Steuern, Sozialhilfe, Versicherungen',
-    description: 'Maloja Plana — Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — lokal gespeichert, offline-fähig, kostenlos.',
+    title: 'Maloja Plana — Prämienverbilligung, Steuern, Sozialhilfe',
+    description: 'Ruhiger Überblick über das Leben in der Schweiz: Prämienverbilligung, Krankenkasse, Steuern, Sozialhilfe und Notfallkarte. Lokal gespeichert, kostenlos.',
   },
   obstgarten: {
     title: 'Mein Obstgarten',
