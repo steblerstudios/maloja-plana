@@ -17,7 +17,7 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
-> 🧾 **Nachtrag 09.11.2026, 12:30 — Predeploy auf `main` gelaufen, NICHT live.** Live weiter `4f37d580`.
+> 🧾 **Nachtrag 09.11.2026, 11:50 — Predeploy auf `main` gelaufen, NICHT live.** Live weiter `4f37d580`.
 >
 > - **Auf main seit live (395 Commits, gemessen mit `scripts/stand-jetzt.sh` 11:10):** Fassung 9 vollständig
 >   (Titel/Knöpfe, Farbrollen, du klein, Hausbegriffe, Zitierform, eine Suche, Kalenderblatt), Ecken und Luft nach
