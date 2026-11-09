@@ -278,6 +278,23 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
 | **H** | **Nichts kleiner als die Skala** — der kleinste Schritt ist `text.xs` = 13 px | Keine Rohschrift unter 13 px, kein `text.xs - 1`. Ausnahmen nur Deko-Zeichen (Aufklapp-Pfeil) und Grafik-Beschriftungen; diese stehen als Bestand mit Sperrklinke und werden einzeln bei 375 px gemessen |
 | **I** | **Was man bedient, sieht man** — Rand eines Bedienelements mindestens 3:1 (WCAG 1.4.11) | Eingabefelder, Auswahlfelder, Textfelder: Rand `palette.feldrand` (hell `#808286` 3,25:1, dunkel `#80838A` 3,33:1). `border` bleibt Schmuck-Haarlinie zwischen Karten und Zeilen |
 
+### 7c. Kantonskarten — eine Frucht, vier Stufen *(09.11.2026)*
+
+Gilt für `/kantonsatlas/` und die Karten im App-Teil («Ihr Kanton auf der Karte»). Herleitung und
+Werte: [`farb-und-daten-system.md` § Karten](../design/farb-und-daten-system.md#karten--kantonsatlas).
+Stebler Studios, 09.11.2026: «Ja, so bauen». Bis dahin trugen alle Karten Heidelbeere.
+
+- **Farbe = Thema, nie Wertung.** Jede Karte trägt die Frucht ihres Lebensbereichs (Regel 3 im
+  Daten-System). Dunkler (im dunklen Modus heller) heisst «höhere Zahl», nicht besser oder schlechter.
+- **Gold und Rosé bleiben frei.** Aprikose (≈ Gold, «finanziell enger») und Kirsche (≈ Rosé, harte
+  Schwelle) sind keine Kartenfarben. Steuern und Familie nehmen darum Zwetschge (Behörden): Regel 1 vor Regel 3.
+- **Vier Stufen, gleichmässig** (Regel B): je Nachbarpaar etwa 1,7:1 hell, 2,2:1 dunkel, nie unter 1,6:1.
+  3:1 je Paar ist mit vier Stufen nicht erreichbar (27:1 > 21:1); die Werte stehen in Titel, Legende und Tabelle.
+- **Viertel statt fester Skala.** Die Stufen teilen die 26 Kantone je Karte in Viertel. Das widerspricht «Skala
+  fest» nicht: Sie springen nicht zwischen Sitzungen, nur einmal im Jahr mit neuen Daten.
+- Quelle: `KARTEN_FRUCHT` und `FRUCHT_STUFEN` in `scripts/seiten/kantonsatlas.mjs`. Wächter:
+  `src/__tests__/atlasStufenAbstand.test.js`.
+
 
 ### Knöpfe (seit Fassung 9, 05.11.2026)
 
