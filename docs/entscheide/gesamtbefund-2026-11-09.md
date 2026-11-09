@@ -174,5 +174,18 @@ siebenmal neu entschieden werden:
    Inhalt F1–F4 fehlende Voraussetzungen (EO, Bevorschussung, Einmischung in den Nachlass), F5–F9 klein. Sprache T1–T6
    (du/ihr gemischt, Italienisch Sie=du, Gesetzeskürzel bei «18 werden», Maskulin, Pronomen-Feld). ✅ **09.11.: alles wie
    empfohlen** (Stebler Studios: «Ja, alles»). Zwei Zweige: Gestaltung, Inhalt.
+   ✅ **Gebaut:** Gestaltung → Entwurfs-PR #781 (auf #771) · Inhalt und Sprache → Entwurfs-PR #784 (von `main`), Fachsätze
+   am Fedlex-Volltext geprüft (rechts-pruefer), 8625 Tests grün. Offen: menschliche Lektüre fr/it.
+   **Kapitel 2 · Wohnen** (09.11.): Bild [kapitel-2-wohnen.html](../design/kapitel-2-wohnen.html). Gestaltung ohne Befund (ausser
+   Überschriftenstufe). Inhalt hoch: W1 Genf «pro Zimmer» ohne «pro Jahr» · W2 Mietbeiträge-Ergebnis prüft nur Einkommen
+   (Wohnsitz/Vermögen in Daten, nie verwendet) · W3 Sperrfrist OR 271a ohne Bedingung. Dazu W4–W13, Sprache S1–S7.
+   ✅ **09.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-2-wohnen` (von `main`).
+   ✅ **Gebaut** → Entwurfs-PR #792: Genf pro Jahr, Voraussetzungen im Mietbeiträge-Rechner, OR 271a, W4–W13, Sprache.
+   rechts-pruefer mit Volltext, 8743 Tests grün. Offen: menschliche Lektüre fr/it.
+   **Kapitel 3 · Finanzen** (09.11.): Bild [kapitel-3-finanzen.html](../design/kapitel-3-finanzen.html). Hoch: F1 Mindestlohn nach Wohn-
+   statt Arbeitskanton · F2 Rechtsvorschlag «Gläubiger muss vor Gericht» (falsch bei Schuldanerkennung und Behörden) · F3
+   Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
+   Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
+   (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

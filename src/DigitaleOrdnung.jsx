@@ -20,7 +20,8 @@ export const DigitaleOrdnung = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   const absatz = (key) => React.createElement('p', { key, style: { ...s.stepText, marginTop: '8px' } }, t(key));
   const aussen = (key, href) => React.createElement('p', { key, style: { ...s.stepText, marginTop: '8px' } },
-    React.createElement(ExternerLink, { t, href, style: { color: palette.sageDeep } }, t(key)));
+    // Eigene Zeile, kein Fliesstext: Tippfläche 44 px (12 + 20 + 12), Kapitel 1 Kleinkram (09.11.2026).
+    React.createElement(ExternerLink, { t, href, style: { color: palette.sageDeep, display: 'inline-block', padding: '12px 0', lineHeight: '20px' } }, t(key)));
   const schritt = (n, ...kinder) => React.createElement(AblaufStep, { key: n, palette, info: false, title: t('digitaleOrdnung.step' + n + 'Title') },
     React.createElement('p', { style: s.stepText }, t('digitaleOrdnung.step' + n + 'Text')),
     ...kinder);
