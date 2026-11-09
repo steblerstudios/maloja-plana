@@ -14,7 +14,7 @@ import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegis
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, astKapitel } from './data/lebensbereiche.js';
-import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
+import { kontrast, lesbareFarbe, kachelZeichenFarbe } from './utils/lebensbereichFruechte.js';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
 import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
@@ -70,8 +70,8 @@ const ablaufFarbe = (palette, name = ablaufAusAdresse()) => {
   if (!key || !hexGrund(palette)) return null;
   const dunkel = dunkelGrund(palette);
   const farbe = bereichColor(key, dunkel);
-  // Das Zeichen ist Grafik: 3:1 (WCAG 1.4.11) genügt.
-  return farbe ? { balken: farbe, zeichen: lesbareFarbe(farbe, palette.surface || palette.bg, dunkel, 3) } : null;
+  // Das Zeichen ist Grafik: 3:1 (WCAG 1.4.11) genügt — gemessen gegen seine getönte Kachel (09.11.2026).
+  return farbe ? { balken: farbe, zeichen: kachelZeichenFarbe(farbe, palette) } : null;
 };
 
 // Schriftfarbe des Bereichs für kleinen Text («Schritt 2 von 4»): 4.5:1 statt 3:1 wie beim Zeichen.

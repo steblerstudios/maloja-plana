@@ -384,6 +384,10 @@ rechts (was passiert), Farbe = wer mitspielt. Wo was steht — eine Quelle je Wa
   (hell und dunkel gleich). Jede Stelle bekommt ihre eigene Masken-Kennung (`useId`).
 - **Rollenfarben:** Sanduhr = Frist = Sky (`--mp-frist`), ! = überfällig = Rose (`--mp-warnen`), Gold
   = Geld bzw. handeln. Die Kuhglocke heisst nur noch Erinnerung.
+- **Zeichen auf getönter Kachel: 3:1 gegen die Kachel** (Entscheid 09.11.2026, «B, tieferer Ton»). Die Kachel
+  ist die Bereichsfarbe zu 18 % (`+ '2E'`); das Zeichen nimmt denselben Farbton, abgedunkelt bzw. aufgehellt bis
+  3:1 — `kachelZeichenFarbe()` in `utils/lebensbereichFruechte.js`, Wächter `kachelZeichenKontrast.test.js`.
+  Vorher im Menü (hell): Finanzen 1,9 · Wohnen 2,6 · Gesundheit 2,7 · Versicherungen 2,7.
 - **Gruppe E** (39 Ereignis-Zeichen) ist seit B4 nur noch **Rückfall**: `ansichtIkon()` gibt jeder Seite
   mit Eintrag in `seitenZeichen.js` ihr Seiten-Zeichen; das Ereignis-Zeichen erscheint nur, wo keiner steht.
 
