@@ -640,7 +640,20 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     const kopfzeile = m ? `<span class="nr">${m[1]}</span> ${esc(m[2])}` : esc(a.titel);
     // tabindex="-1": nach dem Sprung aus dem Inhaltsverzeichnis steht der
     // Tastatur-Fokus an der Überschrift, nicht mehr oben im Verzeichnis.
-    return `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>${einsetzen(a.html, werte, bloecke, ctx)}`;
+    const kopf = `      <h2 id="${a.id}" tabindex="-1">${kopfzeile}</h2>`;
+    if (!seite.schichten) return `${kopf}${einsetzen(a.html, werte, bloecke, ctx)}`;
+    // Drei Schichten (Probe 09.11.2026, Stebler Studios «Ja, Probe bauen»):
+    // A Bild zuerst, B ein Satz, C der ganze Text aufklappbar, D Wege.
+    // Der Text in C bleibt unverändert; nichts fällt weg, es ist nur zu.
+    const wege = (a.wege || []).map((w) =>
+      `<a class="weg" href="${w.href}"><span aria-hidden="true">→</span> ${esc(w.text)}</a>`).join('');
+    return `${kopf}
+      <div class="schicht-bild">${einsetzen(a.bild || '', werte, bloecke, ctx)}</div>
+      <p class="schicht-kurz">${einsetzen(a.kurz, werte, bloecke, ctx)}</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen</summary>${einsetzen(a.html, werte, bloecke, ctx)}
+      </details>${wege ? `
+      <nav class="wege" aria-label="Weiter von hier">${wege}</nav>` : ''}`;
   }).join('\n\n');
   const { text: abschnitte, nummer, stellen } = belegeSetzen(roh, seite.quellen);
 
