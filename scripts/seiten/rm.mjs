@@ -240,7 +240,7 @@ export const SEITEN = [
         titel: 'Tge che vegn deducì da l’entrada',
         absaetze: [
           'Taxà na vegn betg il salari, mabain l’<strong>entrada taxabla</strong> — pia quai che resta suenter las deducziuns admessas. Vi da quai tutgan tenor la situaziun expensas professiunalas, contribuziuns al pitgel 3a, custs da malsagna sur ina limita, deducziuns per uffants e per lur tgira ed ulteriuras.',
-          'Tge deducziuns ch’èn admessas ed en tge dimensiun differeschia tranter la Confederaziun ed il chantun e tranter ils chantuns. Precis qua va il pli bler a perder — betg tras indicaziuns faussas, mabain tras deducziuns che nagin n’ha inscrit.',
+          'Tge deducziuns ch’èn admessas ed en tge dimensiun differeschia tranter la Confederaziun ed il chantun e tranter ils chantuns. Savens va qua daners a perder — betg tras indicaziuns faussas, mabain tras deducziuns che nagin n’ha inscrit.',
         ],
       },
     ],

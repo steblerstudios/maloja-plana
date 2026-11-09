@@ -449,7 +449,7 @@ export const SEITEN = [
         titel: 'Was vom Einkommen abgezogen wird',
         absaetze: [
           'Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.',
-          'Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Genau hier geht am meisten verloren — nicht durch falsche Angaben, sondern durch Abzüge, die niemand eingetragen hat.',
+          'Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Hier geht oft Geld verloren — nicht durch falsche Angaben, sondern durch Abzüge, die niemand eingetragen hat.',
         ],
       },
     ],
