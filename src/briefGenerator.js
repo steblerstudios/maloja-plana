@@ -17,6 +17,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle, nennbareKontrollstelle } from './data/lohnRechtsstellen.js';
 import { escapeHtml as esc } from './utils/helpers.js';
+import { htmlSprache } from './utils/htmlSprache.js';
 import { zahl } from './utils/geld.js';
 import { plusTage, heuteIso } from './utils/fristen.js';
 
@@ -409,7 +410,7 @@ const LETTER_CSS = `
 
 function wrapLetter(content, t) {
   return `<!DOCTYPE html>
-<html lang="de">
+<html lang="${htmlSprache(t)}">
 <head><meta charset="utf-8"><title>${esc(t('briefe.title'))}</title>
 <style>${LETTER_CSS}</style></head>
 <body>${content}</body></html>`;
