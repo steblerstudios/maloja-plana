@@ -288,7 +288,8 @@ export const CANTONAL_LINKS = {
   // maschinell verifizierbar, daher unverändert gelassen. Bei Pflege manuell prüfen.
   BL: {
     steuererklaerung: 'https://www.baselland.ch/politik-und-behorden/direktionen/finanz-und-kirchendirektion/steuerverwaltung',
-    sozialdienst: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage',
+    // Bis 09.11.2026 das Amt für Sozialbeiträge (führt u. a. die IPV). Neu die Themenseite Sozialhilfe, im Browser geprüft von Stebler Studios.
+    sozialdienst: 'https://www.baselland.ch/themen/sozialhilfe',
     ipv: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage/praemienverbilligung',
   },
   SO: {
@@ -371,16 +372,18 @@ export const CANTONAL_LINKS = {
 // Prüfdatum je Link (Felder `ipv` und `sozialdienst`), gemessen mit curl (Status, Titel/h1,
 // Gegenprobe mit erfundenem Pfad je Domain). Getrennt von CANTONAL_LINKS, weil DirektLinks.jsx
 // jedes Feld dort als Link anzeigt. `null` heisst: nicht geprüft, mit Grund im Kommentar.
-//   VS: vs.ch antwortet curl auf JEDEN Pfad mit 404, auch auf die Startseite — kein Befund
-//       über die Links möglich, Prüfung im Browser offen.
-//   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403) — Prüfung im Browser offen.
+//   VS: vs.ch antwortet curl auf JEDEN Pfad mit 404, auch auf die Startseite. Im Browser zeigten
+//       am 09.11.2026 beide Links die Seite «Wartungsarbeiten» (Stebler Studios). Nicht tot,
+//       nicht geprüft — nochmals ansehen, wenn vs.ch wieder läuft.
+//   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
+//       im Browser geprüft und ersetzt (Stebler Studios); ipv noch nicht im Browser geprüft.
 const G = '2026-11-09';
 export const CANTONAL_LINKS_GEPRUEFT = {
   ZH: { ipv: G, sozialdienst: G }, BE: { ipv: G, sozialdienst: G }, LU: { ipv: G, sozialdienst: G },
   UR: { ipv: G, sozialdienst: G }, SZ: { ipv: G, sozialdienst: G }, OW: { ipv: G, sozialdienst: G },
   NW: { ipv: G, sozialdienst: G }, GL: { ipv: G, sozialdienst: G }, ZG: { ipv: G, sozialdienst: G },
   FR: { ipv: G, sozialdienst: G }, SO: { ipv: G, sozialdienst: G }, BS: { ipv: G, sozialdienst: G },
-  BL: { ipv: null, sozialdienst: null },
+  BL: { ipv: null, sozialdienst: G },
   SH: { ipv: G, sozialdienst: G }, AR: { ipv: G, sozialdienst: G }, AI: { ipv: G, sozialdienst: G },
   SG: { ipv: G, sozialdienst: G }, GR: { ipv: G, sozialdienst: G }, AG: { ipv: G, sozialdienst: G },
   TG: { ipv: G, sozialdienst: G }, TI: { ipv: G, sozialdienst: G }, VD: { ipv: G, sozialdienst: G },

@@ -30,10 +30,10 @@ describe('Kantonale Links: Sozialdienst ist Sozialhilfe, nicht IPV', () => {
   }
 });
 
-// Benannte Ausnahme, keine weichere Regel: Diese Kantone sind mit curl nicht messbar
-// (VS: jeder Pfad 404, auch die Startseite · BL: Cloudflare-Schranke). Ihr Prüfdatum ist
-// `null`, bis jemand sie im Browser geprüft hat. Die Liste darf nur schrumpfen.
-const NICHT_GEPRUEFT = ['BL', 'VS'];
+// Benannte Ausnahme, keine weichere Regel: Diese Felder sind mit curl nicht messbar
+// (VS: jeder Pfad 404, im Browser am 09.11. «Wartungsarbeiten» · BL: Cloudflare-Schranke).
+// Ihr Prüfdatum ist `null`, bis jemand sie im Browser geprüft hat. Die Liste darf nur schrumpfen.
+const NICHT_GEPRUEFT = ['BL.ipv', 'VS.ipv', 'VS.sozialdienst'];
 
 describe('Kantonale Links: Prüfdatum je Link', () => {
   for (const k of KANTONE) {
@@ -41,14 +41,17 @@ describe('Kantonale Links: Prüfdatum je Link', () => {
       const g = CANTONAL_LINKS_GEPRUEFT[k];
       expect(g, `${k} fehlt in CANTONAL_LINKS_GEPRUEFT`).toBeDefined();
       for (const feld of ['ipv', 'sozialdienst']) {
-        if (NICHT_GEPRUEFT.includes(k)) expect(g[feld], `${k}.${feld}`).toBeNull();
+        if (NICHT_GEPRUEFT.includes(`${k}.${feld}`)) expect(g[feld], `${k}.${feld}`).toBeNull();
         else expect(g[feld], `${k}.${feld}`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       }
     });
   }
 
   it('genau die benannten Ausnahmen sind ohne Prüfdatum', () => {
-    const ohne = KANTONE.filter((k) => Object.values(CANTONAL_LINKS_GEPRUEFT[k] || {}).some((v) => v === null));
+    const ohne = [];
+    for (const k of KANTONE) for (const feld of ['ipv', 'sozialdienst']) {
+      if ((CANTONAL_LINKS_GEPRUEFT[k] || {})[feld] === null) ohne.push(`${k}.${feld}`);
+    }
     expect(ohne.sort()).toEqual([...NICHT_GEPRUEFT].sort());
   });
 
