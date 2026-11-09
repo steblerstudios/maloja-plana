@@ -277,7 +277,11 @@ export function figurAlter(ctx) {
 export function kostenteilAngaben() {
   const frBild = 1000;
   return {
-    id: 'abb-kostenteil', datei: 'krankenkasse-kostenteil.svg', stil: 'hl', kurz: 'Der eigene Anteil',
+    id: 'abb-kostenteil',
+    // Belegstellen für die App, wo die Gesetzesliste der Seite fehlt. Aus der am Volltext geprüften Liste
+    // von /krankenkasse/ (quellen kvg «64 und 64a (Kostenbeteiligung …)», gesetze «KVV Art. … 93 … 103»,
+    // rechts-pruefer 04.11.2026), nicht neu nachgeprüft.
+    artikel: { kvg: 'Art. 64', kvgAnker: '#art_64', weitere: 'KVV Art. 93 und 103 (SR 832.102)' }, datei: 'krankenkasse-kostenteil.svg', stil: 'hl', kurz: 'Der eigene Anteil',
     titel: `Der eigene Anteil je nach Jahreskosten, bei Franchise ${fr(frBild)}`,
     beschreibung: `Eine Treppe aus 25 Pfosten, einer je 500 Franken Jahreskosten. Bis zur Franchise von ${fr(frBild)} Franken steigt sie steil, danach flacher mit ${Math.round(SELBSTBEHALT_RATE * 100)} Prozent, und ab dem Dach von ${fr(frBild + SELBSTBEHALT_MAX)} Franken bleibt sie gleich hoch.`,
     wert: `Franchise ${fr(frBild)} · höchstens ${fr(frBild + SELBSTBEHALT_MAX)} Fr. im Jahr`,

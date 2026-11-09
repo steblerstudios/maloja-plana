@@ -33,18 +33,22 @@ export default function ErklaerFigurKlein({ palette, t, figur }) {
   if (!F) return null;
   const mische = (anteil) => `color-mix(in srgb, ${palette.mid} ${anteil}%, ${palette.surface})`;
   const vars = { '--hl-plate': palette.surface, '--hl-hi': palette.skyDeep, '--hl-edge': palette.mid, '--hl-mid': mische(45), '--hl-lo': mische(22) };
-  const klein = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid };
-  return h('figure', { 'data-teil': 'erklaerfigur-klein', lang: 'de', style: { margin: space.sm + 'px 0 0' } },
+  const leise = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid };
+  const link = { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px' };
+  // lang="de" nur auf dem, was deutsch aus /krankenkasse/ kommt; «Quelle» und der Linktext sind übersetzt
+  // und sollen in der Sprache der App vorgelesen werden (a11y-Prüfung 09.11.2026).
+  return h('figure', { 'data-teil': 'erklaerfigur-klein', style: { margin: space.sm + 'px 0 0' } },
     h('style', null, STIL),
-    h('p', { style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, F.kurz),
-    h('div', { className: 'mp-hl', style: vars, dangerouslySetInnerHTML: { __html: F.svg } }),
+    h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, F.kurz),
+    h('div', { className: 'mp-hl', lang: 'de', style: vars, dangerouslySetInnerHTML: { __html: F.svg } }),
     h('figcaption', null,
-      h('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, F.wert),
-      h('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.sm, color: palette.text } }, F.legende),
-      F.quellen.length > 0 && h('p', { style: klein }, `${t('erklaerseite.belegWort')}: `,
+      h('p', { lang: 'de', style: { margin: space.xs + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, F.wert),
+      h('p', { lang: 'de', style: { margin: space.xs + 'px 0 0', fontSize: text.sm, color: palette.text } }, F.legende),
+      F.quellen.length > 0 && h('p', { style: leise }, `${t('erklaerseite.belegWort')}: `,
         F.quellen.map((q, i) => h(React.Fragment, { key: q.url }, i > 0 && ' · ',
-          h(ExternerLink, { t, href: q.url, hrefLang: 'de', style: { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px' } }, q.text)))),
-      h('p', { style: { ...klein, fontSize: text.sm } },
-        h(ExternerLink, { t, href: F.bewegt, hrefLang: 'de', style: { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px', display: 'inline-block', minHeight: '44px', lineHeight: '44px' } },
+          h(ExternerLink, { t, href: q.url, hrefLang: 'de', lang: 'de', style: link }, q.text))),
+        F.weitereStellen && h('span', { lang: 'de' }, ` · ${F.weitereStellen}`)),
+      h('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.sm } },
+        h(ExternerLink, { t, href: F.bewegt, hrefLang: 'de', style: { ...link, display: 'inline-block', minHeight: '44px', lineHeight: '44px' } },
           t('erklaerseite.bewegt')))));
 }

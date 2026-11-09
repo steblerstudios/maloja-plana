@@ -1,6 +1,8 @@
 import React from 'react';
 import { ExternerLink } from './ExternerLink.jsx';
-import { text, weight, space } from '../config/tokens.js';
+import { text, weight, space, visuallyHiddenStyle } from '../config/tokens.js';
+import { aufklappZeichen } from '../IconKern.jsx';
+import { knopfStil } from './PrimaryButton.jsx';
 
 // Vom Werkzeug zur eigenen öffentlichen Erklärseite (Verbesserungen D1, 06.11.2026). Seit E1 führt die
 // Erklärseite ins Werkzeug; hier der Weg zurück, für wer verstehen will, wie das System dahinter funktioniert.
@@ -104,49 +106,88 @@ export const MehrDazu = ({ palette, t, seite }) => {
 //   C · «Ihr Kanton auf der Karte»: die Atlas-Karte, der eigene Kanton markiert, seine Zahl daneben;
 //   D · «Im Bild erklärt»: das Standbild der Erklärfigur, die bewegte Fassung als Link.
 // Pilot Kapitel Versicherungen (Prämien, Prämienverbilligung). Beides wird erst beim Aufklappen
-// nachgeladen: Startbündel bei 64.19 von 65 kB, das Limit wird nicht angehoben (Regel 02.11.2026).
+// nachgeladen: Startbündel vorher 64.19 von 65 kB, das Limit wird nicht angehoben (Regel 02.11.2026).
 // Die Textlinks darunter bleiben als Weg zur ganzen Seite.
 export const VERSTEHEN = {
   praemien: { karte: 'praemie', figur: 'kostenteil' },
   premium: { karte: 'lastNachIpv' },
 };
 
-const KantonsKarteKlein = React.lazy(() => import('./KantonsKarteKlein.jsx'));
-const ErklaerFigurKlein = React.lazy(() => import('./ErklaerFigurKlein.jsx'));
+// Die beiden Teile werden nur dynamisch importiert (Wächter verstehenImWerkzeug.test.js).
+export const TEILE = {
+  karte: () => import('./KantonsKarteKlein.jsx'),
+  figur: () => import('./ErklaerFigurKlein.jsx'),
+};
 
-// Schlägt das Nachladen fehl (offline, alte Fassung im Cache): ein ruhiger Satz statt eines leeren Kastens.
-class NachladeGrenze extends React.Component {
+// Schlägt das Nachladen fehl (offline, alte Fassung nach einem Deploy): ein ruhiger Satz und «Nochmals
+// versuchen». React.lazy merkt sich einen gescheiterten Import für immer; darum baut der Aufklapper bei
+// jedem Versuch ein neues lazy (Qualitätsprüfung 09.11.2026: vorher half nur ein Neuladen der Seite).
+export class NachladeGrenze extends React.Component {
   constructor(props) { super(props); this.state = { fehler: false }; }
   static getDerivedStateFromError() { return { fehler: true }; }
-  componentDidCatch(error) { console.error('[Maloja Plana] Nachladen:', error); }
+  componentDidCatch(error) {
+    console.error('[Maloja Plana] Nachladen:', error);
+    if (this.props.onFehler) this.props.onFehler();
+  }
   render() {
-    if (this.state.fehler) return React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: this.props.palette.mid } }, this.props.t('erklaerseite.ladeFehler'));
-    return this.props.children;
+    const { palette, t, nochmals } = this.props;
+    if (!this.state.fehler) return this.props.children;
+    return React.createElement('div', { 'data-teil': 'nachladen-fehler', style: { margin: space.sm + 'px 0 0' } },
+      React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.mid } }, t('erklaerseite.ladeFehler')),
+      React.createElement('button', { type: 'button', onClick: nochmals, style: { ...knopfStil(palette, 'neben'), marginTop: space.sm + 'px' } }, t('erklaerseite.nochmals')));
   }
 }
 
-// Ein Aufklapper: der Inhalt wird erst gerendert (und damit geladen), wenn er offen ist.
-const Aufklapper = ({ palette, t, titel, teil, children }) => {
+// Meldet einen Zustand an die Ansage-Zeile, sobald er sichtbar wird.
+const Melde = ({ setze, wert }) => { React.useEffect(() => { setze(wert); }, [setze, wert]); return null; };
+
+// Ein Aufklapper wie die übrigen der App (aufklappZeile, PraemienOrientierung): Linie unten, Zeichen links,
+// Titel halbfett (Gestaltungsprüfung 09.11.2026). Der Inhalt wird erst gerendert (und damit geladen), wenn er
+// offen ist. Die Ansage-Zeile (role=status) steht immer im Dokument, damit Vorlese-Programme «wird geladen»
+// und den Fehler auch ansagen (a11y-Prüfung 09.11.2026: eine Live-Region, die mit ihrem Text erst erscheint,
+// wird oft nicht vorgelesen).
+const Aufklapper = ({ palette, t, titel, teil, laden, props }) => {
   const [offen, setOffen] = React.useState(false);
-  return React.createElement('details', {
-    'data-teil': teil, onToggle: (e) => setOffen(e.currentTarget.open),
-    style: { marginTop: space.sm + 'px', borderTop: `1px solid ${palette.border}`, paddingTop: space.xs + 'px' },
-  },
-  React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', lineHeight: '44px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel),
-  offen && React.createElement(NachladeGrenze, { palette, t },
+  const [versuch, setVersuch] = React.useState(0);
+  const [ansage, setAnsage] = React.useState('');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const Teil = React.useMemo(() => React.lazy(laden), [laden, versuch]);
+  const leise = { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.mid };
+  return React.createElement(React.Fragment, null,
+    React.createElement('details', {
+      'data-teil': teil, onToggle: (e) => setOffen(e.currentTarget.open),
+      style: { borderBottom: '1px solid ' + palette.border, padding: space.xs + 'px 0 ' + space.sm + 'px' },
+    },
+    React.createElement('summary', {
+      className: 'mp-summary',
+      style: { cursor: 'pointer', minHeight: '44px', listStyle: 'none', display: 'block', paddingTop: space.ms + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+    }, aufklappZeichen(offen), titel),
+    offen && React.createElement(NachladeGrenze, {
+      key: versuch, palette, t,
+      onFehler: () => setAnsage(t('erklaerseite.ladeFehler')),
+      nochmals: () => { setAnsage(''); setVersuch((n) => n + 1); },
+    },
     React.createElement(React.Suspense, {
-      fallback: React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.mid } }, t('erklaerseite.laedt')),
-    }, children)));
+      fallback: React.createElement(React.Fragment, null,
+        React.createElement('p', { style: leise }, t('erklaerseite.laedt')),
+        React.createElement(Melde, { setze: setAnsage, wert: t('erklaerseite.laedt') })),
+    },
+    React.createElement(Melde, { setze: setAnsage, wert: '' }),
+    React.createElement(Teil, { palette, t, ...props })))),
+    React.createElement('p', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, ansage));
 };
 
 export const VerstehenImWerkzeug = ({ palette, t, view, kanton }) => {
   const v = VERSTEHEN[view];
   if (!v) return null;
   return React.createElement('div', { 'data-teil': 'verstehen-im-werkzeug', style: { marginTop: space.md + 'px' } },
-    v.karte && React.createElement(Aufklapper, { palette, t, teil: 'aufklapper-karte', titel: t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton') },
-      React.createElement(KantonsKarteKlein, { palette, t, karte: v.karte, kanton })),
-    v.figur && React.createElement(Aufklapper, { palette, t, teil: 'aufklapper-figur', titel: t('erklaerseite.imBild') },
-      React.createElement(ErklaerFigurKlein, { palette, t, figur: v.figur })));
+    v.karte && React.createElement(Aufklapper, {
+      palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton },
+      titel: t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton'),
+    }),
+    v.figur && React.createElement(Aufklapper, {
+      palette, t, teil: 'aufklapper-figur', laden: TEILE.figur, props: { figur: v.figur }, titel: t('erklaerseite.imBild'),
+    }));
 };
 
 export default ErklaerseiteLink;
