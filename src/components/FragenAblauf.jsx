@@ -26,7 +26,7 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const frageStil = { ...labelStil, fontSize: text.body, marginBottom: space.sm + 'px' };
   const hilfeStil = { margin: space.xs + 'px 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
+  const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', boxSizing: 'border-box' };
   const zeileStil = { display: 'flex', alignItems: 'center', gap: '12px', minHeight: '40px', fontSize: text.sm, color: palette.text, cursor: 'pointer' };
   // Fassung 9: Haupt- und Nebenknopf aus dem Baustein (auch für die Vorschau der Fragen-Abläufe).
   const knopf = (hervor) => knopfStil(palette, hervor ? 'haupt' : 'neben');

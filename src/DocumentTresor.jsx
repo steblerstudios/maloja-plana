@@ -166,7 +166,7 @@ export const DocumentTresor = ({
 
   const feld = {
     width: '100%', padding: '0 ' + space.sm + 'px', minHeight: '44px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.surface,
+    border: '1px solid ' + palette.feldrand, background: palette.surface,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm, font: 'inherit',
   };
 

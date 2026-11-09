@@ -250,7 +250,8 @@ describe('NetzSchild: offene Stelle und Schrift (F7-K3-4)', () => {
   const html = (v, palette, o = {}) => renderToStaticMarkup(React.createElement(NetzSchild, { palette, t, versicherungen: v, ...o }));
   const finanzen = { employmentType: 'employed', pension3a: '7000' };
   const voll = { kkInsurer: 'CSS', kkZusatz: 'Top', uvg: 'employer', uvgZusatz: 'yes', bvgContribution: '200', liabilityInsurance: 'yes', householdInsurance: 'yes', lifeInsurance: 'yes' };
-  const schrift = (out, name) => out.match(new RegExp('<text[^>]*style="([^"]*)"[^>]*>' + name + '</text>'))[1];
+  // Seit 09.11.2026 steht das Wort in einer <tspan>-Zeile (Umbruch «Kranken-/kasse»); die Schrift-Farbe trägt weiter <text>.
+  const schrift = (out, name) => out.match(new RegExp('<text[^>]*style="([^"]*)"[^>]*>(?:<tspan[^>]*>)?' + name + '(?:</tspan>)?</text>'))[1];
 
   it('nur ein offenes Teil ist schraffiert, und die Marke beim Satz steht nur dann', () => {
     const offen = html({ bvgBalance: '1', liabilityInsurance: 'yes' }, LIGHT_PALETTE, { finanzen });

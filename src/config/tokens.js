@@ -60,6 +60,11 @@ export const radius = {
             // definierte `radius.pill` (fiel still auf 10 px zurück, IDEEN §15)
 };
 
+// ─── Instrumente: ein Zuhause, feste Spiegel (Stebler Studios 09.11.2026) ──
+// Breite der Bild-Instrumente (Netz-Schild, Tank, Säule …), Verhältnis 1 : 2 : 4 (Brand Book «Instrumente»).
+// gross = Zuhause im eigenen Kapitel · mittel = Spiegel auf Werkzeug-Seiten · klein = Spiegel Startseite.
+export const INSTRUMENT_GROESSE = { klein: 64, mittel: 128, gross: 256 };
+
 // ─── Shadows (subtle, premium) ──────────────────────────────
 export const shadow = {
   sm: '0 1px 3px rgba(0,0,0,0.06)',

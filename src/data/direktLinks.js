@@ -237,7 +237,8 @@ export const CANTONAL_LINKS = {
   },
   BE: {
     steuererklaerung: 'https://www.taxme.ch/',
-    sozialdienst: 'https://www.asv.dij.be.ch/de/start/themen/pv.html',
+    // Bis 09.11.2026 stand hier die IPV-Seite (identisch mit `ipv`). Sozialhilfe = GSI, Amt für Integration und Soziales.
+    sozialdienst: 'https://www.gsi.be.ch/de/start/themen/soziales/sozialhilfe.html',
     ipv: 'https://www.asv.dij.be.ch/de/start/themen/pv.html',
   },
   LU: {
@@ -247,17 +248,19 @@ export const CANTONAL_LINKS = {
   },
   BS: {
     steuererklaerung: 'https://www.steuerverwaltung.bs.ch/',
-    sozialdienst: 'https://www.sozialhilfe.bs.ch/',
+    sozialdienst: 'https://www.bs.ch/wsu/sozialhilfe',
     ipv: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungen/praemienverbilligung',
   },
   GE: {
     steuererklaerung: 'https://ge.ch/tax/',
-    sozialdienst: 'https://www.ge.ch/informations-generales-subside-assurance-maladie',
+    // Bis 09.11.2026 stand hier eine IPV-Seite (subside). Die Sozialhilfe führt das Hospice général (öffentlich-rechtliche Anstalt des Kantons).
+    sozialdienst: 'https://www.hospicegeneral.ch/obtenir-de-laide/',
     ipv: 'https://www.ge.ch/demander-subside-assurance-maladie-2026',
   },
   VD: {
     steuererklaerung: 'https://www.vd.ch/themes/etat-droit-finances/impots/',
-    sozialdienst: 'https://www.vd.ch/prestation/demander-des-subsides-a-lassurance-maladie',
+    // Bis 09.11.2026 stand hier eine IPV-Seite (subsides). Sozialhilfe heisst in VD Revenu d'insertion (RI), Antrag beim CSR.
+    sozialdienst: 'https://www.vd.ch/aides-financieres-et-soutien-social/aides-financieres-et-comment-les-demander/revenu-dinsertion-ri',
     ipv: 'https://www.vd.ch/sante-soins-et-handicap/assurance-maladie/subside-a-lassurance-maladie',
   },
   AG: {
@@ -277,20 +280,22 @@ export const CANTONAL_LINKS = {
   },
   ZG: {
     steuererklaerung: 'https://zg.ch/de/steuern-finanzen/steuern/natuerliche-personen/steuerabzuege',
-    sozialdienst: 'https://zg.ch/de/gesundheit/krankenversicherung/praemienverbilligung',
+    // Bis 09.11.2026 stand hier die IPV-Seite (identisch mit `ipv`).
+    sozialdienst: 'https://zg.ch/de/soziales/sozialhilfe/persoenliche-und-wirtschaftliche-sozialhilfe',
     ipv: 'https://zg.ch/de/gesundheit/krankenversicherung/praemienverbilligung',
   },
   // BL: baselland.ch blockt automatisierte Zugriffe (WAF, HTTP 403) — Links nicht
   // maschinell verifizierbar, daher unverändert gelassen. Bei Pflege manuell prüfen.
   BL: {
     steuererklaerung: 'https://www.baselland.ch/politik-und-behorden/direktionen/finanz-und-kirchendirektion/steuerverwaltung',
-    sozialdienst: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage',
+    // Bis 09.11.2026 das Amt für Sozialbeiträge (führt u. a. die IPV). Neu die Themenseite Sozialhilfe, im Browser geprüft von Stebler Studios.
+    sozialdienst: 'https://www.baselland.ch/themen/sozialhilfe',
     ipv: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage/praemienverbilligung',
   },
   SO: {
     steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/steueramt/',
     sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/sozialhilfe-und-asyl/sozialhilfe/',
-    ipv: 'https://www.akso.ch/produkte/individuelle-praemienverbilligung-ipv/',
+    ipv: 'https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv',
   },
   FR: {
     steuererklaerung: 'https://www.fr.ch/de/steuern',
@@ -314,8 +319,8 @@ export const CANTONAL_LINKS = {
   },
   NE: {
     steuererklaerung: 'https://www.ne.ch/themes/Pages/impots.aspx',
-    sozialdienst: 'https://www.ne.ch/autorites/DECS/SASO/Pages/accueil.aspx',
-    ipv: 'https://www.ne.ch/autorites/DECS/SASO/assurance-maladie/subsidesLAMal/Pages/accueil.aspx',
+    sozialdienst: 'https://www.ne.ch/autorites/decs/saso',
+    ipv: 'https://www.ne.ch/themes/social/assurance-maladie/subsides-assurance-maladie-lamal',
   },
   VS: {
     steuererklaerung: 'https://www.vs.ch/de/web/scc',
@@ -354,7 +359,7 @@ export const CANTONAL_LINKS = {
   },
   AR: {
     steuererklaerung: 'https://www.ar.ch/verwaltung/departement-finanzen/steuerverwaltung/',
-    sozialdienst: 'https://www.ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/',
+    sozialdienst: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/',
     ipv: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/sozialversicherungen-appenzell-ausserrhoden/',
   },
   AI: {
@@ -362,6 +367,28 @@ export const CANTONAL_LINKS = {
     sozialdienst: 'https://www.ai.ch/themen/gesundheit-alter-und-soziales/sozialhilfe',
     ipv: 'https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung',
   },
+};
+
+// Prüfdatum je Link (Felder `ipv` und `sozialdienst`), gemessen mit curl (Status, Titel/h1,
+// Gegenprobe mit erfundenem Pfad je Domain). Getrennt von CANTONAL_LINKS, weil DirektLinks.jsx
+// jedes Feld dort als Link anzeigt. `null` heisst: nicht geprüft, mit Grund im Kommentar.
+//   VS: vs.ch antwortet curl auf JEDEN Pfad mit 404, auch auf die Startseite. Im Browser zeigten
+//       am 09.11.2026 beide Links die Seite «Wartungsarbeiten» (Stebler Studios). Nicht tot,
+//       nicht geprüft — nochmals ansehen, wenn vs.ch wieder läuft.
+//   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
+//       im Browser geprüft und ersetzt (Stebler Studios); ipv noch nicht im Browser geprüft.
+const G = '2026-11-09';
+export const CANTONAL_LINKS_GEPRUEFT = {
+  ZH: { ipv: G, sozialdienst: G }, BE: { ipv: G, sozialdienst: G }, LU: { ipv: G, sozialdienst: G },
+  UR: { ipv: G, sozialdienst: G }, SZ: { ipv: G, sozialdienst: G }, OW: { ipv: G, sozialdienst: G },
+  NW: { ipv: G, sozialdienst: G }, GL: { ipv: G, sozialdienst: G }, ZG: { ipv: G, sozialdienst: G },
+  FR: { ipv: G, sozialdienst: G }, SO: { ipv: G, sozialdienst: G }, BS: { ipv: G, sozialdienst: G },
+  BL: { ipv: null, sozialdienst: G },
+  SH: { ipv: G, sozialdienst: G }, AR: { ipv: G, sozialdienst: G }, AI: { ipv: G, sozialdienst: G },
+  SG: { ipv: G, sozialdienst: G }, GR: { ipv: G, sozialdienst: G }, AG: { ipv: G, sozialdienst: G },
+  TG: { ipv: G, sozialdienst: G }, TI: { ipv: G, sozialdienst: G }, VD: { ipv: G, sozialdienst: G },
+  VS: { ipv: null, sozialdienst: null },
+  NE: { ipv: G, sozialdienst: G }, GE: { ipv: G, sozialdienst: G }, JU: { ipv: G, sozialdienst: G },
 };
 
 export function getCantonalLinks(canton) {
