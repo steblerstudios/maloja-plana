@@ -296,13 +296,15 @@
     .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:28px } h2{ font-size:21px } .abb-karte{ padding:10px 10px 8px } }
     /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
-    :root{ --k1:#D3DEE9; --k2:#B3C4D6; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
+    /* Stufen gleichmässig verteilt (Leuchtdichte, gleicher Farbton): Nachbarn hell 1,66 · 1,66 · 1,91,
+       dunkel 2,16 · 2,19 · 1,90. Stufe 3 ist --heidel und bleibt. Wächter: atlasStufenAbstand.test.js */
+    :root{ --k1:#D3DEE9; --k2:#98AFC4; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
     /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
        damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
     .nur-dunkel{ display:none }
     @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
-      :root{ --k1:#2E3742; --k2:#4A6380; --k3:#86A6C2; --k4:#C6D6E5; --k-see:#22211F }
+      :root{ --k1:#2E3742; --k2:#576A7D; --k3:#86A6C2; --k4:#D3E0EC; --k-see:#22211F }
     }
     .atlas .abb-bild svg{ max-height:420px }
     .atlas svg use{ stroke:var(--leise); stroke-width:.6 }
