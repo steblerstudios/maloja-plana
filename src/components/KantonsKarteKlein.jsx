@@ -61,15 +61,41 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
   const zeile = (stil, ...kinder) => h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, ...stil } }, ...kinder);
   const leise = { color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px' };
   const link = { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px' };
+  const ohneKanton = zeile({ color: palette.mid }, t('erklaerseite.ohneKanton', { bereich: t('chapters.basis.title') }));
+
+  // «Beides» (Sophie 09.11.2026): neben der Karte die Zahl davor und danach, als kleine Tabelle. Die Farben
+  // zeigen nur die Karte (nach Verbilligung); die Wirkung der Verbilligung steht in den Zahlen.
+  const vergleichsTabelle = () => {
+    const V = K.vergleich;
+    const zelle = { padding: space.xs + 'px ' + space.sm + 'px', textAlign: 'right', fontVariantNumeric: 'tabular-nums', color: palette.text };
+    const kopf = { ...zelle, fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, verticalAlign: 'bottom' };
+    const reihe = (titel, vor, nach, fett) => h('tr', { key: titel },
+      h('th', { scope: 'row', style: { ...zelle, textAlign: 'left', paddingLeft: 0, fontWeight: fett ? weight.semi : weight.normal } }, titel),
+      h('td', { lang: 'de', style: zelle }, vor),
+      h('td', { lang: 'de', style: { ...zelle, fontWeight: fett ? weight.semi : weight.normal } }, nach));
+    return h(React.Fragment, null,
+      h('table', { 'data-teil': 'vor-nach', style: { borderCollapse: 'collapse', fontSize: text.sm, width: '100%' } },
+        h('thead', null, h('tr', null,
+          h('td', null),
+          h('th', { scope: 'col', lang: 'de', style: kopf }, V.titel),
+          h('th', { scope: 'col', lang: 'de', style: kopf }, K.titel))),
+        h('tbody', null,
+          eigen && reihe(name, V.werte[eigen], K.werte[eigen].text, true),
+          V.ch && K.ch && reihe(t('erklaerseite.ganzeSchweiz'), V.ch, K.ch, false))),
+      !eigen && h('div', { style: { marginTop: space.xs + 'px' } }, ohneKanton));
+  };
 
   return h('figure', { 'data-teil': 'kantonskarte-klein', style: { margin: space.sm + 'px 0 0' } },
     h('p', { lang: 'de', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, `${K.titel} · ${K.einheit}`),
     svg,
     h('figcaption', { style: { marginTop: space.sm + 'px' } },
-      eigen
-        ? zeile({ fontWeight: weight.semi }, `${name}: `, h('span', { lang: 'de' }, K.werte[eigen].text))
-        : zeile({ color: palette.mid }, t('erklaerseite.ohneKanton', { bereich: t('chapters.basis.title') })),
-      K.ch && zeile({ color: palette.mid, marginTop: space.xs + 'px' }, `${t('erklaerseite.ganzeSchweiz')}: `, h('span', { lang: 'de' }, K.ch)),
+      K.vergleich
+        ? vergleichsTabelle()
+        : h(React.Fragment, null,
+          eigen
+            ? zeile({ fontWeight: weight.semi }, `${name}: `, h('span', { lang: 'de' }, K.werte[eigen].text))
+            : ohneKanton,
+          K.ch && zeile({ color: palette.mid, marginTop: space.xs + 'px' }, `${t('erklaerseite.ganzeSchweiz')}: `, h('span', { lang: 'de' }, K.ch))),
       h('ul', { role: 'list', lang: 'de', style: { listStyle: 'none', padding: 0, margin: space.sm + 'px 0 0', display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px ' + space.ms + 'px', fontSize: text.xs, color: palette.mid } },
         K.spannen.map((s) => h('li', { key: s.s, style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
           h('i', { 'aria-hidden': 'true', style: { display: 'inline-block', width: FELD_PX, height: FELD_PX, borderRadius: radius.hair, background: farben[s.s], boxShadow: `inset 0 0 0 1px ${palette.mid}` } }),

@@ -74,6 +74,26 @@ describe('Die Karte (C)', () => {
     }
   });
 
+  // «Beides» (Sophie 09.11.2026): bei der Last nach Verbilligung auch die Last davor, als Zahl, nicht als Karte.
+  it('Last nach Verbilligung: Tabelle vor/nach für den Kanton und die Schweiz, Werte aus der Atlas-Datei', () => {
+    const last = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'scripts', 'daten', 'kantonsatlas', 'last.json'), 'utf8'));
+    const pz = (n) => `${Number(n).toFixed(1).replace('.', ',')} %`;
+    const html = karte(P, 'lastNachIpv', 'ZH');
+    expect(html).toContain('data-teil="vor-nach"');
+    const zeileZH = html.match(new RegExp(`<tr><th scope="row"[^>]*>${t('cantons.ZH')}</th>(.*?)</tr>`))[1];
+    expect(zeileZH.match(/<td[^>]*>([^<]+)<\/td>/g).map((z) => z.replace(/<[^>]+>/g, ''))).toEqual([pz(last.ZH.lastSingle), pz(last.ZH.lastNachIpv)]);
+    const zeileCH = html.match(new RegExp(`<tr><th scope="row"[^>]*>${t('erklaerseite.ganzeSchweiz')}</th>(.*?)</tr>`))[1];
+    expect(zeileCH.match(/<td[^>]*>([^<]+)<\/td>/g).map((z) => z.replace(/<[^>]+>/g, ''))).toEqual([pz(last.CH.lastSingle), pz(last.CH.lastNachIpv)]);
+    // Spaltenköpfe in dieser Reihenfolge: erst vor, dann nach
+    expect(html.indexOf('Prämienlast vor Verbilligung')).toBeLessThan(html.indexOf('Prämienlast nach Verbilligung</th>'));
+    // ohne Kanton: nur die Schweiz und der Hinweis
+    const ohne = karte(P, 'lastNachIpv', '');
+    expect(ohne.match(/<tr><th scope="row"/g)).toHaveLength(1);
+    expect(ohne).toContain(`«${t('chapters.basis.title')}»`);
+    // bei der Prämie keine Tabelle
+    expect(karte(P, 'praemie', 'ZH')).not.toContain('data-teil="vor-nach"');
+  });
+
   // a11y-Prüfung: ein Ring in Textfarbe allein verschwand auf der dunkelsten Stufe (hell 2,1:1, dunkel 1,2:1).
   it('zwei Ringe, breiter aussen in der Flächenfarbe, in Bildschirm-Pixeln', () => {
     for (const palette of [P, DARK_PALETTE]) {

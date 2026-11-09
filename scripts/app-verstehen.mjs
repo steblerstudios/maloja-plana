@@ -37,6 +37,15 @@ const KOPF = '// Erzeugt von scripts/app-verstehen.mjs — nicht von Hand änder
 
 // Welche Karten die App zeigt. Schlüssel = Ebene des Atlas; der Anker ist dieselbe id wie auf /kantonsatlas/.
 export const APP_KARTEN = ['praemie', 'lastNachIpv'];
+// Zu welcher Karte die App eine zweite Zahl daneben stellt (Sophie 09.11.2026, «beides?»): bei der Last nach
+// Verbilligung auch die Last davor. Nur als Zahl, nicht als zweite Karte: Der Atlas teilt jede Karte in eigene
+// Viertel; zwei Karten hätten zwei Farbskalen, und ein Kanton könnte vorher und nachher gleich aussehen.
+export const APP_VERGLEICH = { lastNachIpv: 'last' };
+
+function vergleich(key) {
+  const V = EBENEN[key];
+  return { titel: V.titel, ch: V.ch != null ? V.fmt(V.ch) : null, werte: Object.fromEntries(KANTONE.map((k) => [k, V.fmt(V.wert(k))])) };
+}
 
 export function erzeugeKarten() {
   const geo = JSON.parse(readFileSync(resolve(HIER, 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
@@ -53,6 +62,7 @@ export function erzeugeKarten() {
       ch: E.ch != null ? E.fmt(E.ch) : null,
       spannen: spannen.map((s) => ({ s: s.s, text: s.min === s.max ? E.fmt(s.min) : `${E.fmt(s.min)} bis ${E.fmt(s.max)}` })),
       werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)) }])),
+      ...(APP_VERGLEICH[key] ? { vergleich: vergleich(APP_VERGLEICH[key]) } : {}),
     };
   }
   const farben = STUFEN_FARBEN;
