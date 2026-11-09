@@ -77,8 +77,9 @@ describe('Zeilen mit Wert', () => {
 });
 
 describe('Schutzschild und aufklappbare Teile', () => {
-  it('Schutzschild steht auf der Seite', () => {
-    expect(nurText(seite())).toContain('Pflicht · 3/3');
+  // Seit 09.11.2026 (Stebler Studios «wir nehmen das Netz-Schild»): das Netz-Schild mittel statt «Pflicht / Empfohlen».
+  it('Schild steht auf der Seite: Netz-Schild mittel', () => {
+    expect(seite()).toContain('data-schild="netz" data-groesse="mittel"');
   });
   it('Region, Vergleich und Kassen sind zugeklappt', () => {
     const html = seite();
@@ -104,12 +105,13 @@ describe('Aufbau wie die Finanz-Auswertung (F7-L6)', () => {
     const pos = (id) => { const i = teile.indexOf(id); expect(i, id).toBeGreaterThan(-1); return i; };
     const kette = ['vu-marken', 'versicherungen-instrument', 'vu-zeilen', 'mp-vu-risiken', 'mp-vu-kreuz', 'mp-vu-region', 'mp-vu-vergleich', 'mp-vu-kassen', 'vu-wege'].map(pos);
     expect([...kette].sort((a, b) => a - b)).toEqual(kette);
-    // Schutzschild zwischen Zeilen und aufklappbaren Teilen
-    expect(html.indexOf('id="schild-pflicht"')).toBeGreaterThan(html.indexOf('data-teil="vu-zeilen"'));
-    expect(html.indexOf('id="schild-pflicht"')).toBeLessThan(html.indexOf('data-teil="mp-vu-risiken"'));
+    // Schild (seit 09.11.2026 das Netz-Schild) zwischen Zeilen und aufklappbaren Teilen
+    expect(html.indexOf('data-schild="netz"')).toBeGreaterThan(html.indexOf('data-teil="vu-zeilen"'));
+    expect(html.indexOf('data-schild="netz"')).toBeLessThan(html.indexOf('data-teil="mp-vu-risiken"'));
   });
   it('Zeilen mit Wert: Franchise, Wechsel, IPV, Gesundheitskosten, KVG-Leistungen, Vorsorge — in dieser Reihenfolge', () => {
-    const zeilen = reihenfolge(seite()).filter((id) => ['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner'].includes(id));
+    // Nur die Zeilen (data-zeile): das Netz-Schild markiert seine Teile mit data-teil="vorsorge" usw.
+    const zeilen = [...seite().matchAll(/data-zeile="([^"]+)"/g)].map((m) => m[1]).filter((id) => ['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner'].includes(id));
     expect(zeilen).toEqual(['franchise', 'wechsel', 'ipv', 'kosten', 'kvg', 'vorsorge', 'zusatz', 'scanner']);
   });
   it('Franchise-Zeile mit Wert, KVG-Leistungen als Zeile (eigene Seite bleibt)', () => {

@@ -201,7 +201,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
             }, t(baseKey + '.text')),
             React.createElement('div', {
               key: 'quelle',
-              style: { fontSize: text.xs - 1, color: palette.soft, marginTop: space.xs + 'px' }
+              style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' }
             }, t('lebenszustaende.quelleLabel') + ': ' + b.quelle + ' · ' + t('lebenszustaende.standLabel') + ' ' + b.stand)
           ];
           return isExternal

@@ -37,8 +37,9 @@ const MUSTER = [
 const AUSNAHMEN = new Set([
   // Bis 06.11.2026 stand hier der Boden-Anker (main.jsx `bottomIcon`), der seine Zeichen selbst
   // zeichnete. Seit dem Icon-Plan, Schritt 3, liest er aus dem Register — keine Ausnahme mehr.
-  // Browser-Benachrichtigung: ein Bildpfad, kein Icon-Name.
-  'notifications.js:/icon-192.png',
+  // Bis 09.11.2026 stand hier `notifications.js:/icon-192.png` (Bildpfad der Browser-
+  // Benachrichtigung). Seit «App pfadneutral» heisst er BASIS + 'icon-192.png' und fällt
+  // nicht mehr unter die Muster — keine Ausnahme mehr.
 ]);
 
 const verweise = () => {

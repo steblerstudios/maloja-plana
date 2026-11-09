@@ -153,7 +153,9 @@ Notfall = Rettungskreuz⟩
 Zeichen im Abzeichen = was passiert, Farbe = wer mitspielt (anderer Lebensbereich, Geld = Gold, sonst
 leer). Unter 20 px das einfache Zeichen. Helle Details sind ausgestanzt, nie weiss gemalt. Das kleine
 Kalender-Zeichen (Sanduhr blau, ! rot) und das grosse **Kalenderblatt** unten in §7 sprechen dieselbe
-Farbsprache: Sky = Frist, Rose = vorbei/überfällig. Regeln und Quellen: [`ICON_KONVENTION.md`](../ICON_KONVENTION.md).
+Farbsprache: Sky = Frist, Rose = vorbei/überfällig. **Auf getönten Kacheln** steht das Zeichen im selben
+Farbton, nur so viel tiefer, dass es gegen die Kachel 3:1 erreicht (09.11.2026); die Kachel selbst bleibt.
+Regeln und Quellen: [`ICON_KONVENTION.md`](../ICON_KONVENTION.md).
 
 Vollständige Tabelle inkl. Status (✓/🔄/➕/⚠️) und Code-Keys:
 [`icon-dictionary.md`](icon-dictionary.md). Offen u.a.: Export-Metapher, Vorsorge-Metapher,
@@ -246,6 +248,35 @@ sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *
 | **F** | **Takt aus der Schrift** — Grundschrift × Zeilenhöhe ergibt den Grundtakt | 16 × 1.5 = **24** = `lg`. Fliesstext höchstens etwa 65 Zeichen breit |
 
 Dazu unverändert: Tippflächen mindestens 44 × 44 px (WCAG 2.5.5).
+
+### 7b. Instrumente — ein Zuhause, feste Spiegel *(09.11.2026)*
+
+Instrumente sind Bilder, die einen Stand zeigen: Netz-Schild, Reserve-Tank, Steuer-Säule, Franchise-Kreuz.
+Befund vor der Regel (Landkarte 09.11.): Jedes stand dort, wo es gebaut wurde, in Grössen von 36 bis 480 px, und
+das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` in `src/config/tokens.js`.
+
+| Auftritt | Grösse | Was dazugehört |
+|---|---|---|
+| **Zuhause** — das eigene Kapitel | **gross 256 px**, oben, ohne Aufklappen | Satz, Liste, Hinweise |
+| **Spiegel Werkzeug** — Seiten, deren Daten es füllen | **mittel 128 px** | Satz + Weg ins Kapitel |
+| **Spiegel Startseite** — Kapitel-Zeile | **klein 64 px**, alle gleich breit | nur das Bild, **keine Wörter darin**, Zahl daneben |
+
+- Verhältnis **1 : 2 : 4** (Regel B): drei Stufen, die das Auge unterscheidet.
+- **Ein Bild, eine Bedeutung.** Das **Netz-Schild** ist *das* Schild (F7-K3-6). Das alte Schild «Pflicht /
+  Empfohlen» ist seit 09.11. von Startseite und Prämien-Übersicht entfernt.
+- Spiegel rechnen **dieselbe Zahl** wie das Zuhause (Startseite: «5/5 eingetragen» aus `netzSchildTeile`).
+- Wächter: `src/__tests__/instrumenteZuhauseSpiegel.test.js`.
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
+  KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
+
+**Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
+«Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
+
+| | Regel | Für Maloja heisst das |
+|---|---|---|
+| **G** | **Material statt Effekt** — eine Fläche ist Papier (deckend) oder Granit (Grund); getrennt wird mit einer Haarlinie | Kopfzeile, Leiste unten und Pfad-Pille: `surface` mit `border`, **kein Milchglas** (`backdropFilter`), kein Schatten. Das Landschaftsband ist ein Bauteil: `components/Landschaftsband.jsx` |
+| **H** | **Nichts kleiner als die Skala** — der kleinste Schritt ist `text.xs` = 13 px | Keine Rohschrift unter 13 px, kein `text.xs - 1`. Ausnahmen nur Deko-Zeichen (Aufklapp-Pfeil) und Grafik-Beschriftungen; diese stehen als Bestand mit Sperrklinke und werden einzeln bei 375 px gemessen |
+| **I** | **Was man bedient, sieht man** — Rand eines Bedienelements mindestens 3:1 (WCAG 1.4.11) | Eingabefelder, Auswahlfelder, Textfelder: Rand `palette.feldrand` (hell `#808286` 3,25:1, dunkel `#80838A` 3,33:1). `border` bleibt Schmuck-Haarlinie zwischen Karten und Zeilen |
 
 
 ### Knöpfe (seit Fassung 9, 05.11.2026)

@@ -1,0 +1,25 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Querschnitt 1 am echten Bild</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--gold:#B08A3E;--rot:#C0392B}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a18;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--gold:#D6B46A}}
+body{font:15px/1.5 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:900px}
+h1{font-size:20px;margin:0 0 6px}p{color:var(--soft);margin:4px 0 12px}
+.paar{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bild{position:relative}.bild img{width:100%;display:block;border-radius:12px}
+.kasten{position:absolute;border:3px solid var(--rot);border-radius:8px}
+.kasten b{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:var(--rot);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+.titel{font-weight:600;margin:0 0 6px}
+.erkl{background:var(--card);border-radius:10px;padding:12px 14px;margin-top:16px}
+.erkl b.l{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--rot);color:#fff;align-items:center;justify-content:center;margin-right:6px}
+</style>
+<h1>Querschnitt 1 · A und B an der echten App</h1>
+<p>Seite «Was ansteht», Beispiel-Modus, Handy-Breite 375 px, Dunkelmodus, 09.11.2026. Links die App, wie sie heute ist. Rechts dieselbe App mit den zwei Änderungen, nur zum Ansehen im Browser eingestellt. Gebaut ist nichts.</p>
+<div class=paar>
+ <div><div class=titel>Heute</div><div class=bild><img src="querschnitt-1/heute.jpg" alt="Kalenderseite heute">
+  <div class=kasten style="left:0;top:0;width:100%;height:12%"><b>A</b></div>
+  <div class=kasten style="left:0;top:91%;width:100%;height:9%"><b>B</b></div></div></div>
+ <div><div class=titel>Vorschlag</div><div class=bild><img src="querschnitt-1/vorschlag.jpg" alt="Kalenderseite mit Vorschlag">
+  <div class=kasten style="left:0;top:0;width:100%;height:10%"><b>A</b></div>
+  <div class=kasten style="left:0;top:91%;width:100%;height:9%"><b>B</b></div></div></div>
+</div>
+<div class=erkl><b class=l>A</b><b>Die Kopfzeile oben ist ein wenig durchsichtig.</b> Links sieht man unter «Maloja Plana» die Zeile «Termin · Fällig in 12 Tagen» durchschimmern, verschwommen. Vorschlag: Die Kopfzeile wird ganz undurchsichtig, wie Papier. Was darunter wegscrollt, verschwindet sauber hinter einer feinen Linie. Dasselbe gilt für die Leiste unten und für die kleine Pille «Übersicht › …» oben auf den Seiten.</div>
+<div class=erkl><b class=l>B</b><b>Die Wörter in der Leiste unten sind zu klein.</b> «Übersicht · Rucksack · Was steht mir zu? · Menü» haben heute 10 px, auf jeder Seite der App. Vorschlag: 13 px. Das ist die kleinste Grösse, die Maloja sonst überall verwendet. Es passt noch in die Breite, nur «Was steht mir zu?» bricht auf zwei Zeilen um, wie heute auch. Dasselbe gilt für rund 90 weitere kleine Schriften, zum Beispiel die Wochentage im Kalender (heute 10,5 px).</div>
