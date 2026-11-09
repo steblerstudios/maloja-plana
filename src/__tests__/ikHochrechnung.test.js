@@ -59,7 +59,29 @@ describe('ikHochrechnen', () => {
   });
   it('Lücken der Vergangenheit bleiben: nur die Zukunft wird gefüllt', () => {
     const mitLuecken = { beitragsjahre: 15, durchschnittlichesJahreseinkommen: 80000 };
-    expect(ikHochrechnen({ ik: mitLuecken, zukunftsJahre: 25, einkommenHeute: 80000, volleDauer: 44 }).beitragsjahreReferenzalter).toBe(40);
+    expect(ikHochrechnen({ ik: mitLuecken, zukunftsJahre: 24, einkommenHeute: 80000, volleDauer: 44 }).beitragsjahreReferenzalter).toBe(39);
+  });
+});
+
+// Fachprüfung 10.11.2026: die künftigen Jahre zählen ab dem Jahr NACH dem letzten IK-Jahr, bis
+// zum letzten Beitragsjahr vor dem Referenzalter. Vorher (Alter − 21 als «bis heute») kam bei
+// 40 J. ein Jahr doppelt dazu: 25 statt 24 — bei Lücken eine um rund 2 % zu hohe Rente.
+describe('kuenftigeIkJahre', () => {
+  it('40 J., IK von 21 bis 40 erfasst (20 Kalenderjahre): 24 künftige Jahre bis 64', async () => {
+    const { kuenftigeIkJahre } = await import('../utils/ikHochrechnung.js');
+    const eintraege = vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter: 40, aktuellesEinkommen: 80000 });
+    expect(kuenftigeIkJahre({ eintraege, geburtsjahr, jahreBisReferenzalter: 44 })).toBe(24);
+  });
+  it('nur die abgeschlossenen Jahre erfasst (bis 39): 25 künftige Jahre', async () => {
+    const { kuenftigeIkJahre } = await import('../utils/ikHochrechnung.js');
+    const eintraege = vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter: 39, aktuellesEinkommen: 80000 });
+    expect(kuenftigeIkJahre({ eintraege, geburtsjahr, jahreBisReferenzalter: 44 })).toBe(25);
+  });
+  it('mit Lücken im IK: die Lücken zählen nicht als künftige Jahre', async () => {
+    const { kuenftigeIkJahre } = await import('../utils/ikHochrechnung.js');
+    const eintraege = vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter: 40, aktuellesEinkommen: 80000 })
+      .map((e, i) => (i < 5 ? { ...e, typ: 'luecke' } : e));
+    expect(kuenftigeIkJahre({ eintraege, geburtsjahr, jahreBisReferenzalter: 44 })).toBe(24);
   });
 });
 
@@ -68,6 +90,18 @@ describe('Vorsorge-Rechner mit IK-Auszug', () => {
     const html = zeichne(mitIk());
     expect(html).toContain('CHF ' + esc(zahl(vollrente)) + ' / ' + t('vr.monat'));
     expect(html).not.toContain(esc(t('vr.fehlendeBeitragsjahre')));
+  });
+
+  it('Reiter Vergleich mit IK: Zeile 65 zeigt dieselbe Rente wie der AHV-Block', () => {
+    reiter = 'vergleich';
+    const html = zeichne(mitIk(40000));
+    reiter = 'ahv';
+    const ahvBlock = zeichne(mitIk(40000));
+    const betrag = (ahvBlock.match(/CHF ([0-9’'&#x27;]+) \/ Monat/) || [])[1];
+    // Genau die Tabellenzeile 65 lesen — «Zusammensetzung: AHV CHF …» steht sonst auch da.
+    const zeile65 = (html.match(/<td[^>]*>65<\/td><td[^>]*>CHF ([^<]*)</) || [])[1];
+    expect(betrag).toBeTruthy();
+    expect(zeile65).toBe(betrag);
   });
 
   it('der Zukunft-Reiter nutzt den IK wirklich: andere IK-Einkommen ändern das Bild', () => {

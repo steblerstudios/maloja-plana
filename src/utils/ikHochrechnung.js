@@ -11,6 +11,19 @@
 // Durchschnittseinkommen nach demselben Grundsatz wie berechneIKAuszug (Summe der Einkommen /
 // Beitragsjahre): IK-Summe plus das heutige Einkommen für jedes künftige Jahr. Ohne heutiges
 // Einkommen bleibt der IK-Durchschnitt.
+// Künftige Beitragsjahre nach dem IK-Auszug: vom Jahr NACH dem letzten erfassten IK-Jahr bis zum
+// letzten Beitragsjahr vor dem Referenzalter. Die Beitragsjahre laufen ab dem Jahr, in dem man 21
+// wird (vorbelegeIKAuszug: Jahr = Geburtsjahr + Alter); `jahreBisReferenzalter` ist dieselbe
+// Annahme wie ohne IK (utils/beitragsjahreAnnahme.js). Fachprüfung 10.11.2026: vorher zählte die
+// Rechnung «bis heute» als Alter − 21 und legte bei vollständigem IK ein Jahr doppelt dazu.
+// Gezählt wird ab dem letzten Jahr, nicht nach Anzahl Einträgen — Lücken bleiben Lücken.
+export const kuenftigeIkJahre = ({ eintraege, geburtsjahr, jahreBisReferenzalter }) => {
+  const jahre = (Array.isArray(eintraege) ? eintraege : []).map((e) => Number(e && e.jahr)).filter(Number.isFinite);
+  if (!jahre.length || !geburtsjahr) return 0;
+  const abgedeckt = Math.max(...jahre) - geburtsjahr - 20; // Jahre 21 … letztes IK-Jahr
+  return Math.max(0, jahreBisReferenzalter - Math.max(0, abgedeckt));
+};
+
 export const ikHochrechnen = ({ ik, zukunftsJahre, einkommenHeute, volleDauer }) => {
   if (!ik) return null;
   const zukunft = Math.max(0, Math.floor(Number(zukunftsJahre) || 0));
