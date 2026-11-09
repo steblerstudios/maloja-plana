@@ -90,7 +90,8 @@ Datei; dafür hat das Studio einen eigenen Weg.
 **Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
 Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — **nicht gemergt, nicht
 live**. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
-zuerst. **Offen bleiben B-11 und B-16.** Den Bereich Rechner/Fachlogik hat die Suche nicht geprüft.
+zuerst. Danach auch **B-11, B-16 und B-18** behoben (siehe je dort). **Offen bleiben B-17 und
+B-19** sowie die Text-Punkte aus der Fachprüfung zu B-18. Rechner/Fachlogik: siehe Nachtrag unten.
 
 - 2026-11-09 · **B-7** · **Dokument-Datei galt als gespeichert, bevor sie es war.**
   `idb.save` (`src/utils/storage.js`) löste bei `req.onsuccess` auf. Bei vollem Speicher bricht
@@ -113,6 +114,10 @@ zuerst. **Offen bleiben B-11 und B-16.** Den Bereich Rechner/Fachlogik hat die S
 - 2026-11-09 · **B-11** · **Wiederherstellen kann halb gelingen.** `applyBackup`
   (`utils/backupCrypto.js`) schreibt `or5_data` zuerst; scheitert danach eine Datei am Speicher,
   sind die Angaben ersetzt, die Dokumente alt — die Meldung sagt nur «fehlgeschlagen».
+  Fix: ganz oder gar nicht — zuerst die Dateien, dann alle Listen; scheitert eines, werden die in
+  diesem Lauf geschriebenen Schlüssel zurückgesetzt (wie `createPreRestoreSnapshot`). Tests in
+  `utils/__tests__/backupRestore.test.js` («scheitert mitten im Schreiben»). *Behoben (Zweig).*
+  Schon geschriebene Dateien bleiben in IndexedDB liegen (ohne Eintrag unsichtbar).
 - 2026-11-09 · **B-12** · **Merkliste meldete «gespeichert» auch bei vollem Speicher.**
   `addTodo` (`utils/merkliste.js`) wertete die Rückgabe von `saveTodos` nicht aus. Fix: Rückgabe
   `null` bei Fehlschlag, wie `addReminder`. Test `merklisteSpeicherVoll.test.js`. *Behoben (Zweig).*
@@ -130,7 +135,9 @@ zuerst. **Offen bleiben B-11 und B-16.** Den Bereich Rechner/Fachlogik hat die S
   `chapter.key` mit `weitereBereicheAnfang()`. Test `weitereBereicheJeKapitel.test.js`.
   *Behoben (Zweig).*
 - 2026-11-09 · **B-16** · Klein: `.ics` faltet Zeilen über 75 Byte nicht (`utils/icsExport.js`),
-  gedruckte Briefe und Dossiers tragen immer `lang="de"`.
+  gedruckte Briefe und Dossiers tragen immer `lang="de"`. Fix: Faltung nach UTF-8-Bytes + CRLF
+  am Ende (Test `icsZeilenFalten.test.js`); `utils/htmlSprache.js` liest die Sprache aus dem
+  Übersetzer des Dokuments (Test `dokumentSprache.test.js`). *Behoben (Zweig).*
 
 **Nachtrag Rechner/Fachlogik (09.11.2026 abends, auf `fix/bugsuche-top4` gelesen, im Code
 gegengeprüft, im Browser nicht nachgestellt).** Geprüft wurde nur die innere Logik, nicht ob
