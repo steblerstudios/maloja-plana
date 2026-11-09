@@ -55,6 +55,16 @@ describe('Kantonale Links: Prüfdatum je Link', () => {
     expect(ohne.sort()).toEqual([...NICHT_GEPRUEFT].sort());
   });
 
+  it('kein ipv- oder sozialdienst-Link hängt an einer Jahreszahl', () => {
+    // Anlass 09.11.2026: GE und JU zeigten auf Seiten «…-2026». Ab Januar führen solche Links
+    // auf die Fristen und Gruppen des Vorjahres, ohne dass es jemand merkt.
+    for (const k of KANTONE) {
+      for (const feld of ['ipv', 'sozialdienst']) {
+        expect(CANTONAL_LINKS[k][feld], `${k}.${feld}`).not.toMatch(/(^|[^0-9])20[0-9]{2}([^0-9]|$)/);
+      }
+    }
+  });
+
   it('das Prüfdatum liegt nicht in CANTONAL_LINKS selbst (die App zeigt jedes Feld dort als Link an)', () => {
     for (const k of KANTONE) {
       for (const v of Object.values(CANTONAL_LINKS[k])) expect(v).toMatch(/^https:\/\//);

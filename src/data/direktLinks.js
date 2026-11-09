@@ -255,7 +255,9 @@ export const CANTONAL_LINKS = {
     steuererklaerung: 'https://ge.ch/tax/',
     // Bis 09.11.2026 stand hier eine IPV-Seite (subside). Die Sozialhilfe führt das Hospice général (öffentlich-rechtliche Anstalt des Kantons).
     sozialdienst: 'https://www.hospicegeneral.ch/obtenir-de-laide/',
-    ipv: 'https://www.ge.ch/demander-subside-assurance-maladie-2026',
+    // Bis 09.11.2026 die Antragsseite «…-2026»: an ein Jahr gebunden. Die allgemeine Seite ohne Jahr
+    // verweist auf die Antragsseiten des laufenden und des nächsten Jahres (gemessen 09.11.2026).
+    ipv: 'https://www.ge.ch/informations-generales-subside-assurance-maladie',
   },
   VD: {
     steuererklaerung: 'https://www.vd.ch/themes/etat-droit-finances/impots/',
@@ -330,7 +332,10 @@ export const CANTONAL_LINKS = {
   JU: {
     steuererklaerung: 'https://www.jura.ch/fr/Autorites/Administration/DFI/CTR/Service-des-contributions-CTR.html',
     sozialdienst: 'https://www.jura.ch/sas',
-    ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026.html',
+    // Bis 09.11.2026 die Seite «Informations générales 2026»: an ein Jahr gebunden, eine Fassung 2027
+    // gibt es nicht (404). Die Bereichsseite ohne Jahr leitet auf die aktuelle Seite weiter und führt
+    // im Menü alle Seiten zur RPI (gemessen 09.11.2026).
+    ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie.html',
   },
   UR: {
     steuererklaerung: 'https://www.ur.ch/finanzen/1570', // «Natürliche Personen» mit eTax.UR (geprüft 21.10.2026); vorher 3040 = Organisation von Anlässen
