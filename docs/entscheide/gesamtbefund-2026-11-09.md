@@ -146,6 +146,11 @@ siebenmal neu entschieden werden:
    ([Bild](../design/querschnitt-1-echt.html)). ✅ **09.11.: A und B = A** (Stebler Studios: «Ja, A und B»).
    Bau im Zweig `feat/querschnitt-1-gestaltung`.
 2. **Querschnitt Formulare:** Fokus und Ansage in `FragenAblauf` (G4, U6), Vorlese-Knopf aus dem Label (U3/U4).
+   ✅ **09.11.: gebaut** (Stebler Studios: «Ja, Querschnitt 2»), Zweig `feat/querschnitt-2-formulare` auf #770.
+   Fokus auf die neue Frage («Frage 2 von 8: Welche Art von Grab?», im Browser geprüft), `gruppe`/`personen` als
+   fieldset/legend je Rolle, Auswahlzeilen und «Warum» 44 px, Vorlese-Knopf 44 × 44 neben statt im Label.
+   **Bewusst nicht übernommen: U13** (`autoComplete` für Name und Telefon). Die Felder im Fragen-Ablauf gelten
+   anderen Menschen (Vertrauensperson, Ersatzperson); `autocomplete="name"` würde den eigenen Namen einsetzen.
 3. **SEO-Weg:** Sprachfreigabe fr/it/en (G1) und 403 an den Sprachwurzeln (S6) gehören zusammen. Welche neuen
    Erklärseiten zuerst kommen (G2), ist ein Inhaltsentscheid und braucht den rechts- und swiss-precision-pruefer.
 4. Danach die sieben Kapitel in der Ordnung des Dashboards: Basis · Wohnen · Finanzen · Versicherungen & Vorsorge ·
