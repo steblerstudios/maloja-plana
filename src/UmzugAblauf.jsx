@@ -138,7 +138,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus
           t('mietzins.title').replace(/\s*:\s*$/, ''),
           React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.soft } }, '+')),
         React.createElement('div', { style: { paddingBottom: space.sm + 'px' } },
-          React.createElement(MietzinsHinweis, { palette, t, canton: userCanton, ohneTitel: true }),
+          React.createElement(MietzinsHinweis, { palette, t, canton: userCanton, ohneTitel: true, gespeicherteAdresse: true }),
           // Voller Mietzinsbeiträge-Schnellcheck (mit echten Beträgen), nicht nur der Hinweis.
           onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkMietzins'), onClick: () => onNavigate('mietzins') }))
       ),
