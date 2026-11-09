@@ -227,7 +227,7 @@ export const SEITEN = [
         titel: 'Che cosa viene dedotto dal reddito',
         absaetze: [
           'Non viene tassato il salario, bensì il <strong>reddito imponibile</strong> — ossia ciò che resta dopo le deduzioni ammesse. Ne fanno parte, a seconda della situazione, le spese professionali, i contributi al pilastro 3a, le spese di malattia oltre una soglia, le deduzioni per figli e per la loro custodia e altre ancora.',
-          'Quali deduzioni siano ammesse e in quale misura differisce tra Confederazione e Cantone e tra i Cantoni. È proprio qui che si perde di più — non per indicazioni errate, bensì per deduzioni che nessuno ha iscritto.',
+          'Quali deduzioni siano ammesse e in quale misura differisce tra Confederazione e Cantone e tra i Cantoni. È spesso qui che si perde denaro — non per indicazioni errate, bensì per deduzioni che nessuno ha iscritto.',
         ],
       },
     ],

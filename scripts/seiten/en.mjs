@@ -231,7 +231,7 @@ export const SEITEN = [
         titel: 'What is deducted from income',
         absaetze: [
           'What is taxed is not the salary but the <strong>taxable income</strong> — that is, what remains after the permitted deductions. Depending on the situation these include work-related expenses, contributions to pillar 3a, medical costs above a threshold, deductions for children and childcare, and others.',
-          'Which deductions are permitted, and at what level, differs between the federal government and the canton, and between the cantons. This is precisely where most is lost — not through wrong entries, but through deductions nobody entered.',
+          'Which deductions are permitted, and at what level, differs between the federal government and the canton, and between the cantons. This is often where money is lost — not through wrong entries, but through deductions nobody entered.',
         ],
       },
     ],

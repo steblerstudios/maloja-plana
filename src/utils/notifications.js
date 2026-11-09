@@ -8,7 +8,10 @@
 
 import { inDays } from './helpers.js';
 
-const SW_PATH = '/sw.js';
+// Pfadneutral: unter `/app/` gebaut (BASE_URL), liegt auch der Service Worker dort und
+// gilt nur für diesen Ordner — nie für die Website daneben.
+const BASIS = import.meta.env.BASE_URL || '/';
+const SW_PATH = BASIS + 'sw.js';
 
 // ─── Service Worker Registration ───────────────────────────
 export const registerServiceWorker = async () => {
@@ -19,7 +22,7 @@ export const registerServiceWorker = async () => {
 
   try {
     const registration = await navigator.serviceWorker.register(SW_PATH, {
-      scope: '/',
+      scope: BASIS,
       // sw.js immer am Netz prüfen (nicht aus dem HTTP-Cache) — sonst bemerkt der
       // Browser ein Deploy u. U. tagelang nicht.
       updateViaCache: 'none',
@@ -93,7 +96,7 @@ export const showLocalNotification = (title, body, tag) => {
   try {
     const notification = new Notification(title, {
       body,
-      icon: '/icon-192.png',
+      icon: BASIS + 'icon-192.png',
       tag: tag || 'maloja-plana-reminder',
       silent: true, // respectful: no sound
     });
