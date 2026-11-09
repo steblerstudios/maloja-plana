@@ -44,6 +44,9 @@ const VERWORFEN = [
 
 // Verworfene Form, die an einer Stelle bewusst bleibt (Schlüssel und Grund).
 const VERWORFEN_AUSNAHMEN = {
+  'Mietzinsbeitrag/-beiträge': [
+    { schluessel: 'result_wfgNein', grund: 'Kanton Zug: möglicher amtlicher Name, nicht belegt — Wortlaut gelassen' },
+  ],
 };
 
 // Bewusst stehen gelassen — Schlüssel, Wort, Grund.
