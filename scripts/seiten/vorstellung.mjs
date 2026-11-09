@@ -15,6 +15,12 @@
 // Nur Deutsch. Weitere Sprachen erst als eigene Seiten (Rechtsprüfung 26.10., UWG Art. 3 Abs. 1 lit. b).
 
 import { BASIS } from '../seiten-inhalt.mjs';
+import { BRILLEN } from './kantonsatlas.mjs';
+
+// Kantonsatlas als Brückenstück (Stebler Studios 09.11.2026, «Ja, A bis C bauen», Teil B): Die Website zeigt
+// den Atlas als eigenen Abschnitt; jede Brille führt gefiltert hinein (/kantonsatlas/#fuer-<id>, Teil A).
+// Brillen aus kantonsatlas.mjs, damit Name und Frage hier und dort dieselben sind.
+const ATLAS_KARTEN = new Set(BRILLEN.flatMap((b) => b.karten)).size;
 
 export const VORSTELLUNG = {
   titel: 'Maloja Plana — Schweizer Lebensordner',
@@ -469,6 +475,18 @@ ${stationen()}
           <p>Kontaktperson, Hausarzt, wichtige Hinweise — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
         </div>
       </div>
+    </section>
+
+    <!-- ═══ Kantonsatlas: das Brückenstück zwischen Website und App ═══ -->
+    <section id="atlas" aria-labelledby="t-atlas">
+      <p class="augenbraue">Kantonsatlas</p>
+      <h2 id="t-atlas">Ihr Kanton auf der Karte.</h2>
+      <p class="unterzeile">Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: ${ATLAS_KARTEN} Karten der 26 Kantone aus öffentlichen Statistiken, frei zugänglich und ohne Rangliste. Je nachdem, wer fragt, zählen andere Karten.</p>
+      <ul class="liste">
+${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><a href="/kantonsatlas/#fuer-${b.id}">Karten für diese Frage<span class="unsichtbar">: ${esc(b.name)}</span></a></li>`).join('\n')}
+      </ul>
+      <div class="wege"><a class="knopf zweit" href="/kantonsatlas/">Alle ${ATLAS_KARTEN} Karten ansehen</a></div>
+      <p class="bald">Die Karten zeigen Durchschnitte je Kanton. Was sie für Sie bedeuten, rechnet Maloja Plana mit Ihren Angaben, auf Ihrem Gerät.</p>
     </section>
 
     <!-- ═══ Holen ═══ -->
