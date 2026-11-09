@@ -174,5 +174,7 @@ siebenmal neu entschieden werden:
    Inhalt F1–F4 fehlende Voraussetzungen (EO, Bevorschussung, Einmischung in den Nachlass), F5–F9 klein. Sprache T1–T6
    (du/ihr gemischt, Italienisch Sie=du, Gesetzeskürzel bei «18 werden», Maskulin, Pronomen-Feld). ✅ **09.11.: alles wie
    empfohlen** (Stebler Studios: «Ja, alles»). Zwei Zweige: Gestaltung, Inhalt.
+   ✅ **Gebaut:** Gestaltung → Entwurfs-PR #781 (auf #771) · Inhalt und Sprache → Entwurfs-PR #784 (von `main`), Fachsätze
+   am Fedlex-Volltext geprüft (rechts-pruefer), 8625 Tests grün. Offen: menschliche Lektüre fr/it.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
