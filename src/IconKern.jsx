@@ -583,8 +583,13 @@ export const KERN_NAMEN = Object.freeze(Object.keys(Icons));
 
 // Von `IconSystem.jsx` aufgerufen: die übrigen Icons in dasselbe Objekt einhängen.
 // Dasselbe Objekt, damit `Icon`, `hinweisZeichen` & Co. EINE Quelle bleiben.
+// Eine Nicht-Funktion wird sofort mit Namen abgewiesen, statt erst beim Zeichnen als «fn is not a
+// function» ohne Namen zu scheitern (so geschehen 09.11.2026, Ladereihenfolge — siehe IconSystem.jsx).
 export const zeichenErgaenzen = (fabriken) => {
-  for (const [key, fn] of Object.entries(fabriken)) Icons[key] = fuellend(fn);
+  for (const [key, fn] of Object.entries(fabriken)) {
+    if (typeof fn !== 'function') throw new TypeError(`Icon «${key}»: Fabrik ist keine Funktion (${typeof fn})`);
+    Icons[key] = fuellend(fn);
+  }
 };
 
 // ═══════════════════════════════════════════════════════════════

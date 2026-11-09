@@ -30,6 +30,7 @@ import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
 import { appAnsicht } from './seiten-ziele.mjs';
+import { KANTONSSEITEN, WEGE, KANTON_HINWEIS } from './seiten/praemienverbilligung-kantone.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
 const BLOECKE = { ...BLOECKE_FIGUREN, ...BLOECKE_VERGLEICH };
@@ -159,7 +160,10 @@ const stil = `
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }`;
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }`;
 
 // Der Hinweis über dem Titel hängt an der FREIGABE, nicht daran, ob ein Text
 // in RAHMEN steht (Befund Rechtsprüfung 05.11.2026):
@@ -253,6 +257,21 @@ function seiteBauen(seite, sprache) {
     return `\n          <li><a href="${pfadIntern(z.pfad, sprache)}">${esc(z.titel)}</a></li>`;
   }).join('');
 
+  // Kantonsseiten (seit 09.11.2026): nur Deutsch, darum nur auf der deutschen
+  // Hauptseite verlinkt. Ohne diesen Link fände Google die Unterseiten nur über
+  // die Sitemap (vgl. /krankenkasse/: nicht verlinkt, «gefunden – nicht indexiert»).
+  const kantonsBlock = sprache.code === 'de' && seite.pfad === 'praemienverbilligung' && KANTONSSEITEN.length
+    ? `\n\n        <h2 id="kantone">In Ihrem Kanton</h2>\n        <p>Für diese Kantone gibt es eine eigene Seite: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was dort anders ist.</p>` +
+      // Nach Weg gegliedert (Bauplan §3), innerhalb in der Reihenfolge der Bundesverfassung.
+      Object.keys(WEGE).map((weg) => {
+        const liste = KANTONSSEITEN.filter((k) => k.weg === weg);
+        if (!liste.length) return '';
+        return `\n        <h3>${esc(WEGE[weg].label)}</h3>\n        <ul class="weiter kantone">\n` +
+          liste.map((k) => `          <li><a href="/${k.pfad}/">${esc(k.brotkrume)}</a></li>`).join('\n') +
+          `\n        </ul>`;
+      }).join('')
+    : '';
+
   // JSON-LD. FAQPage ist hier zulässig, WEIL die Fragen und Antworten auf der
   // Seite sichtbar stehen — Google verlangt genau das. Der Text im strukturierten
   // Datum ist derselbe wie im sichtbaren, nur ohne Tags.
@@ -307,7 +326,7 @@ ${hinweisOben(sprache)}      <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
 ${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}</p>` : ''}
 
-${abschnitte}
+${abschnitte}${kantonsBlock}
 
 ${seite.faq.length ? `      <h2>${esc(R.faqTitel)}</h2>
 ${faq}
@@ -393,7 +412,7 @@ ${fuss(sprache, `${esc(R.spracheLabel)}: ${waehler}`)}`;
 // ─── Kopf und Fuss — gemeinsam für Erklär- und Hintergrundseiten ─────────────
 const CSP = "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'";
 
-function kopf({ seite, sprache, seitenUrl, ld, quelle, hreflang, robots, robotsNotiz, extraStil = '', csp = CSP }) {
+function kopf({ seite, sprache, seitenUrl, ld, quelle, hreflang, robots, robotsNotiz, extraStil = '', csp = CSP, krumeMitte = null }) {
   const R = RAHMEN[sprache.code];
   const index = robots ?? (sprache.freigegeben ? 'index, follow' : 'noindex, follow');
   const notiz = robotsNotiz ?? (sprache.freigegeben
@@ -449,7 +468,7 @@ ${JSON.stringify(ld, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
     <header>
       <a class="marke" href="/">Maloja&nbsp;Plana</a>
       <nav class="krume" aria-label="${esc(R.krumeLabel)}">
-        <a href="/">${esc(R.start)}</a> › ${esc(seite.brotkrume)}
+        <a href="/">${esc(R.start)}</a> › ${krumeMitte ? `<a href="${krumeMitte.href}">${esc(krumeMitte.text)}</a> › ` : ''}${esc(seite.brotkrume)}
       </nav>
     </header>`;
 }
@@ -864,6 +883,142 @@ ${weiter}
 ${fuss(sprache, `${esc(R.spracheLabel)}: <span aria-current="true">${SPRACHNAME.de}</span> <span class="leise">(diese Seite gibt es bisher nur auf Deutsch)</span>`)}`;
 }
 
+
+// ─── Kantonsseiten (seit 09.11.2026) ─────────────────────────────────────────
+// /praemienverbilligung/<kanton>/. Nur Deutsch, wie die Hintergrundseiten.
+// Inhalt, Belege und Riegel: scripts/seiten/praemienverbilligung-kantone.mjs.
+// Bauplan: docs/roadmap/BAUPLAN-kantonsseiten-2026-11.md. Abschnitte A–G dort.
+const stilKanton = `
+    /* Weg (C): Gold heisst handeln, Heidelbeere heisst informieren (Farbrollen,
+       Entscheid E4). Die Farbe sitzt nur am Rand und im Zeichen, der Text bleibt
+       in --text: Gold als Schrift hätte auf hellem Grund zu wenig Kontrast. */
+    :root{ --heidel-text:#4A6A88 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel-text:#8CAAC6 } }
+    .weg{ border:1px solid var(--rand); border-left:4px solid var(--gold); border-radius:10px;
+      background:var(--flaeche); padding:18px 20px; margin:20px 0 28px }
+    .weg.automatisch{ border-left-color:var(--heidel-text) }
+    .weg .marke-weg{ display:flex; align-items:center; gap:10px; font-weight:600; font-size:17px; margin-bottom:8px }
+    .weg svg{ flex:none; width:22px; height:22px }
+    .weg.antrag svg{ color:#8A6F35 }
+    @media (prefers-color-scheme: dark){ .weg.antrag svg{ color:var(--gold) } }
+    .weg.automatisch svg{ color:var(--heidel-text) }
+    .weg p:last-child{ margin-bottom:0 }
+    .stelle a{ font-weight:600 }`;
+
+// Zeichen je Weg (Form + Wort, nie nur Farbe): Stift = selbst ausfüllen,
+// Kreis mit Haken = geschieht von selbst. aria-hidden, weil das Wort daneben steht.
+const WEG_ZEICHEN = {
+  antrag: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',
+  automatisch: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>',
+};
+
+function kantonsseiteBauen(k) {
+  const sprache = SPRACHEN.find((s) => s.code === 'de');
+  const R = RAHMEN.de;
+  const seitenUrl = url(k.pfad, sprache);
+  const haupt = SEITEN.find((s) => s.pfad === 'praemienverbilligung');
+  const w = WEGE[k.weg];
+
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${seitenUrl}#webpage`,
+        url: seitenUrl,
+        name: k.titel,
+        description: k.beschreibung,
+        inLanguage: sprache.ldLang,
+        isPartOf: { '@id': `${BASIS}/#website` },
+        publisher: { '@id': `${BASIS}/#org` },
+        about: { '@id': `${BASIS}/#app` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${seitenUrl}#krume`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Maloja Plana', item: `${BASIS}/` },
+          { '@type': 'ListItem', position: 2, name: haupt.brotkrume, item: url(haupt.pfad, sprache) },
+          { '@type': 'ListItem', position: 3, name: k.brotkrume, item: seitenUrl },
+        ],
+      },
+    ],
+  };
+
+  const absaetze = (liste) => liste.map((p) => `        <p>${esc(p)}</p>`).join('\n');
+
+  return `${kopf({
+    seite: k, sprache, seitenUrl, ld,
+    quelle: 'scripts/seiten/praemienverbilligung-kantone.mjs (Texte) · src/config/cantonalData.js · src/data/direktLinks.js',
+    hreflang: '',
+    robots: 'index, follow',
+    robotsNotiz: 'Kantonsseite, nur Deutsch. Indexierbar wie die deutschen Erklärseiten.',
+    extraStil: stilKanton,
+    krumeMitte: { href: `/${haupt.pfad}/`, text: haupt.brotkrume },
+  })}
+
+    <main>
+      <h1>${esc(k.titel)}</h1>
+      <p class="vorspann">Die Prämienverbilligung ist ein Beitrag an die Krankenkassenprämie. Wie sie allgemein funktioniert, steht auf der Seite <a href="/${haupt.pfad}/">${esc(haupt.brotkrume)}</a>. Hier steht, was im Kanton ${esc(k.name)} gilt.</p>
+      <p class="hinweis">${esc(KANTON_HINWEIS.kurz)}</p>
+
+      <h2>Muss ich etwas tun?</h2>
+      <div class="weg ${k.weg}">
+        <p class="marke-weg">${WEG_ZEICHEN[k.weg]}<span>${esc(w.label)}</span></p>
+${absaetze(k.wegSaetze)}${k.selbst ? `
+        <p>${esc(k.selbst.einleitung)}</p>
+        <ul>
+${k.selbst.punkte.map((x) => `          <li>${esc(x)}</li>`).join('\n')}
+        </ul>
+        <p>${esc(k.selbst.schluss)}</p>` : ''}
+        <p>${esc(k.fristSatz)}</p>
+      </div>
+
+      <h2>Wer zuständig ist</h2>
+      <p class="stelle">${esc(k.stelle)}</p>
+      <p>${esc(k.stelleSatz)}</p>
+      <p>Amtsseite: <a href="${esc(k.link)}" rel="noopener">${esc(k.amtsseite)}</a></p>
+
+      <h2>Was im Kanton ${esc(k.name)} anders ist</h2>
+      <ul>
+${k.besonders.map((b) => `        <li>${esc(b)}</li>`).join('\n')}
+      </ul>
+
+      <h2>Wie viel?</h2>
+      <p>Wie hoch die Verbilligung ist, hängt unter anderem von Ihren Steuerdaten und Ihrem Haushalt ab, und die Werte ändern jedes Jahr. Darum steht hier kein Betrag.</p>
+      <div class="karte">
+        <p><strong>${k.appRechnet
+          // Nur wo die App für diesen Kanton ein Rechenmodul hat (appModul). Auch dort nicht
+          // für jeden Haushalt, darum «für viele». Rechtsprüfung 09.11.2026, Art. 3 Abs. 1 lit. b UWG.
+          ? 'Maloja Plana rechnet das für viele Haushalte durch.'
+          : `Maloja Plana erklärt, worauf es im Kanton ${esc(k.name)} ankommt.`}</strong></p>
+        <p>${esc(R.karteText)}</p>
+        <p>${R.karteBeta}</p>
+        <p><a class="knopf" href="${beispielZiel('praemienverbilligung')}">${esc(R.karteKnopf)}</a></p>
+      </div>
+
+      <h2>Quellen</h2>
+      <ul>
+${k.quellen.map((q) => (q.url
+    ? `        <li><a href="${esc(q.url)}" rel="noopener">${esc(q.text)}</a></li>`
+    : `        <li>${esc(q.text)}</li>`)).join('\n')}
+      </ul>
+      <p class="leise">Eine Auswahl, nicht abschliessend. Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
+
+      <p class="vorbehalt">${KANTON_HINWEIS.vorbehalt}<br>
+      <strong>Mit den Unterlagen des Kantons abgeglichen: ${esc(k.geprueft)}.</strong> Keine amtliche Auskunft.</p>
+
+      <h2>${esc(R.weiterlesenTitel)}</h2>
+      <ul>
+          <li><a href="/${haupt.pfad}/">${esc(haupt.brotkrume)}: so funktioniert sie in der ganzen Schweiz</a></li>
+          <li><a href="/${haupt.pfad}/#kantone">Prämienverbilligung in den anderen Kantonen</a></li>
+          <li><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a></li>
+      </ul>
+    </main>
+
+${fuss(sprache, `${esc(R.spracheLabel)}: ${SPRACHNAME.de}`)}`;
+}
+
 // ─── Bewegte Fassungen der Figuren (seit 04.11.2026) ─────────────────────────
 // Je Figur eine kleine Seite unter /krankenkasse/bewegt/<name>/, von der
 // Hauptseite aus verlinkt. Die einzigen öffentlichen Seiten mit Skript. Die
@@ -967,6 +1122,8 @@ function sitemapBauen() {
     zeilen.push(...i.sonderseiten.map((x) => eintrag(url(x.pfad, s), '0.3', x.pfad)));
     // Hintergrundseiten: nur Deutsch, darum ohne Sprach-Alternativen.
     if (s.code === 'de') zeilen.push(...HINTERGRUND.map((x) => eintrag(url(x.pfad, s), '0.8', null)));
+    // Kantonsseiten: nur Deutsch, ohne Sprach-Alternativen.
+    if (s.code === 'de') zeilen.push(...KANTONSSEITEN.map((x) => eintrag(url(x.pfad, s), '0.6', null)));
   }
 
   const nichtFrei = SPRACHEN.filter((s) => !s.freigegeben).map((s) => s.code);
@@ -1039,6 +1196,14 @@ for (const h of HINTERGRUND) {
     ziel: resolve(WURZEL, 'public', h.pfad, 'index.html'),
     inhalt: hintergrundBauen(h),
     name: `${h.pfad}/index.html`,
+  });
+}
+
+for (const k of KANTONSSEITEN) {
+  seitenAusgaben.push({
+    ziel: resolve(WURZEL, 'public', ...k.pfad.split('/'), 'index.html'),
+    inhalt: kantonsseiteBauen(k),
+    name: `${k.pfad}/index.html`,
   });
 }
 
