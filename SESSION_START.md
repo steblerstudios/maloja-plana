@@ -17,6 +17,20 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 09.11.2026, 12:30 — Predeploy auf `main` gelaufen, NICHT live.** Live weiter `4f37d580`.
+>
+> - **Auf main seit live (395 Commits, gemessen mit `scripts/stand-jetzt.sh` 11:10):** Fassung 9 vollständig
+>   (Titel/Knöpfe, Farbrollen, du klein, Hausbegriffe, Zitierform, eine Suche, Kalenderblatt), Ecken und Luft nach
+>   Regeln (#734, #761, #763, #766), Icon-System Leitform + Abzeichen (#751–#760, #762), Seiten-Architektur mit
+>   Kapitel Gesundheit (#735, #738, #739), Werte 2027 (ZH/AG/VD weiter verriegelt), dazu #687, #686, #655, #690.
+> - **Predeploy:** mechanisch grün (8625 Tests, Build, SEO 0, 64.36/65 kB, PII, ESTV 156/156, SL-Preise), 9 Prüfer
+>   ohne Blocker. Ampel und offene «sollte»: `stebler-studios/_handoffs/2026-11-09-predeploy-ampel.md`.
+> - ⚠️ **Startbündel 64.36 / 65 kB**, Polster 0.64 kB. Neues nachladen, Limit nie anheben.
+> - **Offen, Entscheid Stebler Studios:** Versicherungssätze fr/it/en ohne Gegenlese · UVG-Satz `additional`
+>   (schon live, eigenes PR) · Stichprobe Sitze 2027, Kantonsatlas-Werte, BAG-Prämien 2027.
+> - **Nach dem Deploy:** `scripts/stand-jetzt.sh`, Bundle-Hash gegen Build, neue Seiten /kantonsatlas/,
+>   /kantone-im-vergleich/, /politsystem/ (heute 404, weil nicht live), FEATURES-Zeile auf `deployed`.
+
 > 🧾 **Nachtrag 05.11.2026, 12:00 — `4f37d580` ist LIVE (0.1.49-beta, Version nicht erhöht), gebaut 11:48, Deploy Stebler Studios, vorher Stage 11:47.** Überholt alle Stände darunter.
 >
 > - **Drin:** #670 bis #682 (EL, 2. Säule, Dossier, Renten), #684 IPV brutto→netto, #676 EL-Hinweis Nichtbezug, #680, #660 Stipendien, #679 Hintergrundseite /krankenkasse/ (Figuren nur als Link), Doku #678 #685.

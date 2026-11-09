@@ -2094,7 +2094,6 @@ export default {
     tierSupporting: { sie: 'Vossa segirezza', du: 'Tia segirezza' },
     tierProtective: { sie: 'Vossa protecziun', du: 'Tia protecziun' },
     toolsAndFeatures: 'Utensils',
-    detailProgress: 'Progress detaglià per chapitel',
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
     // TODO(rm): provisorisch — Gegenlese (A2 Lebensbereiche, 06.11.2026)
     // A2 (06.11.2026): Zwischentitel der Lebensereignisse, je Lebensbereich (ABLAEUFE.bereich).

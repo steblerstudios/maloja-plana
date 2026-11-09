@@ -300,10 +300,10 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // ═══════════════════════════════════════════════════════════════
 // 🛑 Nicht jedes Icon hier hat schon einen Einsatz — und das ist kein toter Code.
 // Stand 24.09.2026 ohne Verwendung, aber gestaltetes Marken-Vokabular aus
-// docs/brand/icon-dictionary.md: `kalenderUhr` (Bahnhofsuhr, geplant für
-// Frist/Zeit), `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
-// `exportTool` (Sackmesser-Gestalt), `delete`, `filter` (Trichter).
+// docs/brand/icon-dictionary.md: `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
+// `delete`, `filter` (Trichter).
 // Stebler Studios hat entschieden: behalten. Nur auf Zuruf entfernen.
+// (09.11.2026: `kalenderUhr` und `exportTool` standen hier auch; mit B5a aufgelöst.)
 zeichenErgaenzen({
   schulden: _schulden,
   steuern: _steuern,
