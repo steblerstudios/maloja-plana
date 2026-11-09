@@ -214,7 +214,7 @@ const LanguageSwitcher = ({ palette }) => {
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',
-        border: '1px solid ' + palette.border, borderRadius: radius.sm,
+        border: '1px solid ' + palette.feldrand, borderRadius: radius.sm,
         paddingBlock: '4px', paddingInlineStart: '32px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
@@ -252,7 +252,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       border: '1px solid ' + (vorlesen.enabled ? palette.sand : palette.border),
       borderRadius: KNOPF_RADIUS,
       cursor: 'pointer',
-      fontSize: '11px',
+      fontSize: text.xs,
       lineHeight: 1,
       display: 'flex',
       alignItems: 'center',
@@ -333,7 +333,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHan
     it.icon === 'sackmesser'
       ? React.createElement(SackmesserIcon, { open: !!it.offen, color: it.offen ? palette.sage : palette.mid })
       : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
-    React.createElement('span', { style: { fontSize: '10px', lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
+    React.createElement('span', { style: { fontSize: text.xs, lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
   );
   const fan = [
@@ -360,19 +360,17 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHan
       },
     },
       React.createElement('span', { style: { width: '48px', height: '48px', borderRadius: '50%', background: palette.surface, border: '0.5px solid ' + palette.sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: palette.sage, boxShadow: shadow.sm } }, bottomIcon(a.icon, palette.sage)),
-      React.createElement('span', { style: { fontSize: '10px', color: palette.mid } }, a.label)
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, a.label)
     )),
     React.createElement('nav', {
       'aria-label': t('nav.menu'),
       style: {
-        display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border + '88',
-        background: palette.surface + 'F2', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        // Papier mit Haarlinie, ohne Milchglas (Querschnitt 1 A-A, Stebler Studios 09.11.2026).
+        display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border,
+        background: palette.surface,
         // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
         paddingBottom: 'env(safe-area-inset-bottom)',
-        // Eigene Ebene: sonst zeichnet iOS/Android die Leiste mit Weichzeichner beim Ein-/
-        // Ausfahren der Adressleiste neu und sie zittert hinterher.
-        transform: 'translateZ(0)',
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
@@ -1292,7 +1290,7 @@ const AppInner = ({ demo }) => {
         onLater: () => setTourOpen(false),
       })
     ),
-    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '16px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
+    React.createElement('header', { role: 'banner', style: { background: palette.surface, borderBottom: '1px solid ' + palette.border, padding: '16px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10 } },
       // Das h1 bleibt eine ECHTE Überschrift. Vorher trug es `role="link"` — eine
       // ARIA-Rolle ersetzt die native Semantik, damit hatte die Seite für
       // Screenreader gar kein h1 mehr (WCAG 1.3.1). Das Anklickbare ist jetzt ein

@@ -158,7 +158,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
-    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     gemeindeBtn: (active) => ({ ...auswahlStil(palette, active), padding: '8px 12px', minHeight: '44px', fontSize: text.sm }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     warn: { padding: space.md + 'px', background: palette.sky + '18', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sky, marginBottom: space.md + 'px' },

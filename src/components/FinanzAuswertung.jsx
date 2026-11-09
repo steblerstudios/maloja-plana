@@ -321,14 +321,14 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
     },
       React.createElement('div', { style: { fontWeight: weight.medium, color: palette.skyDeep, marginBottom: '2px' } },
         t('finanzUebersicht.belowPoverty')),
-      React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: '1.5' } },
         // Link führt zur BFS-Methodik (Erhebung Armutsstatistik), nicht zu einer
         // publizierten Zahl — der Betrag hier ist haushaltsindividuell gerechnet.
         renderSource(t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }), null, t)),
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       // Vor der Beitragspflicht (AHVG Art. 3 Abs. 2 lit. a) keine AHV/ALV/PK-Abzüge — dann kein Brutto-Hinweis.
-      !nurBefund && !beitragsfrei && !['keinLohn', 'quellensteuer'].includes(lohnVergleichSperre(data, rentenalter)) && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '4px' } },
+      !nurBefund && !beitragsfrei && !['keinLohn', 'quellensteuer'].includes(lohnVergleichSperre(data, rentenalter)) && (rentenalter || lohnSatz?.key === 'spiegel') && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, lineHeight: '1.5', marginTop: '4px' } },
         // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
         t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
           brutto: formatCHF(nettoZuBruttoRichtwert(income, bvgAlter, rentenalter)),
@@ -375,7 +375,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
               style: {
                 // padding vertikal 6px: 10px-Text (~12px Zeile) + 12px → ~24px hoch,
                 // damit das Tipp-Ziel WCAG 2.5.8 (24×24) trifft, nicht nur ~16px.
-                fontSize: '10px', padding: '8px 8px', borderRadius: KNOPF_RADIUS,
+                fontSize: text.xs, padding: '8px 8px', borderRadius: KNOPF_RADIUS,
                 cursor: 'pointer',
                 // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
                 // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'
@@ -402,9 +402,9 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
                 zuklapp(t('finanzUebersicht.andereBranchen', { n: andere.length })))
             : React.createElement(React.Fragment, null,
                 zuklapp(t('finanzUebersicht.brancheVergleichen', { n: andere.length })),
-                React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '4px' } }, t('finanzUebersicht.brancheAngeben')));
+                React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' } }, t('finanzUebersicht.brancheAngeben')));
         })(),
-        React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '8px' } },
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '8px' } },
           t('finanzUebersicht.branchenQuelle')
         )
       );

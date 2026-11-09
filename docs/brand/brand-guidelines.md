@@ -247,6 +247,15 @@ sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *
 
 Dazu unverändert: Tippflächen mindestens 44 × 44 px (WCAG 2.5.5).
 
+**Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
+«Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
+
+| | Regel | Für Maloja heisst das |
+|---|---|---|
+| **G** | **Material statt Effekt** — eine Fläche ist Papier (deckend) oder Granit (Grund); getrennt wird mit einer Haarlinie | Kopfzeile, Leiste unten und Pfad-Pille: `surface` mit `border`, **kein Milchglas** (`backdropFilter`), kein Schatten. Das Landschaftsband ist ein Bauteil: `components/Landschaftsband.jsx` |
+| **H** | **Nichts kleiner als die Skala** — der kleinste Schritt ist `text.xs` = 13 px | Keine Rohschrift unter 13 px, kein `text.xs - 1`. Ausnahmen nur Deko-Zeichen (Aufklapp-Pfeil) und Grafik-Beschriftungen; diese stehen als Bestand mit Sperrklinke und werden einzeln bei 375 px gemessen |
+| **I** | **Was man bedient, sieht man** — Rand eines Bedienelements mindestens 3:1 (WCAG 1.4.11) | Eingabefelder, Auswahlfelder, Textfelder: Rand `palette.feldrand` (hell `#808286` 3,25:1, dunkel `#80838A` 3,33:1). `border` bleibt Schmuck-Haarlinie zwischen Karten und Zeilen |
+
 
 ### Knöpfe (seit Fassung 9, 05.11.2026)
 

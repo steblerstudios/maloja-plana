@@ -77,7 +77,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
           }, t('arztkoffer.faecher.' + f.key + '.title')),
           !isReady && React.createElement('span', {
             style: {
-              fontSize: '10px', color: palette.mid, fontWeight: weight.medium,
+              fontSize: text.xs, color: palette.mid, fontWeight: weight.medium,
               border: '1px solid ' + palette.border, borderRadius: radius.sm,
               padding: '1px 8px',
             },

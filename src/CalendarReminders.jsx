@@ -20,7 +20,7 @@ import { naechsterTermin, bisHeuteWeiter, INTERVALLE } from './utils/wiederholun
 import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, ABLAEUFE_MIT_STAND } from './utils/laufendeAblaeufe.js';
-import landschaft from './assets/berge/landschaft.webp?url';
+import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx';
 import { MerklisteView } from './MerklisteView.jsx';
 import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
@@ -245,7 +245,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
 
   const inputStyle = {
     width: '100%', padding: '12px 12px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.up,
+    border: '1px solid ' + palette.feldrand, background: palette.up,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
     fontFamily: fontFamily, marginBottom: '12px'
   };
@@ -275,7 +275,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement(Kalenderblatt, { iso, palette, locale: LOCALE, vorbei: !done && iso < today, klein: true }))
         : React.createElement('div', { 'aria-hidden': 'true', style: { width: '48px', flexShrink: 0, textAlign: 'center', color: palette.text, fontVariantNumeric: 'tabular-nums' } },
           React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontSize: '20px', fontWeight: weight.bold, lineHeight: 1 } }, d ? d.getDate() : ''),
-          React.createElement('div', { style: { fontSize: '11px', color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
         ),
       React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: farbe + '2E', boxShadow: 'inset 0 0 0 1px ' + farbe + '4D', color: farbe } },
         React.createElement(Icon, { name: icon, size: 16 })),
@@ -283,7 +283,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         isJustDone && React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '2px', animation: 'mp-check-pop ' + duration.slow + 'ms ' + ease + ' forwards' } }, hinweisZeichen('check'), t('calendar.nicelyDone')),
         React.createElement('div', { style: { fontSize: text.sm, color: done ? palette.soft : palette.text, textDecoration: done ? 'line-through' : 'none', overflowWrap: 'break-word', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel),
         // «Termin · Fällig in 3 Tagen · aus dem Ablauf Umzug» ruhig wie im Entwurf; nur die Art etwas heller.
-        React.createElement('div', { style: { fontSize: '12px', color: palette.soft, marginTop: '1px', lineHeight: leading.normal } },
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '1px', lineHeight: leading.normal } },
           React.createElement('span', { style: { color: palette.mid } }, artName), ' · ', React.createElement('span', { style: { color: dueColor } }, wann), herkunft ? ' · ' + herkunft : null),
         // Ohne Haken-Knopf steht das Datum sonst nur in der ausgeblendeten Spalte: Screenreader hörten es nie.
         !onToggle && d ? React.createElement('span', { style: visuallyHiddenStyle }, datumLang(iso)) : null,
@@ -415,12 +415,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // darunter Kachel, Titel und Untertitel. Keine Karte mehr um die Seite (Entwurf G).
   return React.createElement('div', { 'data-seite': 'was-ansteht', style: { maxWidth: '720px' } },
     React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '112px', margin: '0 -24px', overflow: 'hidden' } },
-        React.createElement('div', { style: { position: 'absolute', inset: 0, backgroundImage: 'url(' + landschaft + ')', backgroundSize: 'cover', backgroundPosition: 'center 72%', opacity: 0.5 } }),
-        React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + palette.sage + '38 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
-      ),
+      React.createElement(Landschaftsband, { palette, grund: palette.sage + '38' }),
       React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
-        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 12px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
+        React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
             type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
             style: { ...linkStil(palette), fontSize: text.sm, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
@@ -546,7 +543,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             style: {
               position: 'absolute', top: 0, height: '26px', left: (lage.von * 46) + 'px', width: ((lage.bis - lage.von + 1) * 46) + 'px', boxSizing: 'border-box',
               borderRadius: [r(!lage.weiterLinks), r(!lage.weiterRechts), r(!lage.weiterRechts), r(!lage.weiterLinks)].join(' '),
-              display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: '12px', fontWeight: weight.medium, whiteSpace: 'nowrap', overflow: 'hidden',
+              display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: text.xs, fontWeight: weight.medium, whiteSpace: 'nowrap', overflow: 'hidden',
               // Bandfarbe so gesetzt, dass die Schrift in der Grundfarbe 4.5:1 hält (utils/laufendeAblaeufe.js).
               color: palette.bg, background: bandFarbe(a.bereich, palette),
             },
@@ -586,7 +583,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
                 'aria-pressed': iso === selDate, 'aria-label': tagAria(iso),
                 style: tagKnopf, onClick: () => tagAntippen(iso),
               },
-                React.createElement('span', { style: { fontSize: '10.5px', color: d === 1 ? palette.text : palette.soft, fontWeight: d === 1 ? weight.medium : weight.normal } },
+                React.createElement('span', { style: { fontSize: text.xs, color: d === 1 ? palette.text : palette.soft, fontWeight: d === 1 ? weight.medium : weight.normal } },
                   d === 1 ? dt.toLocaleDateString(LOCALE, { month: 'short' }).replace('.', '') : dt.toLocaleDateString(LOCALE, { weekday: 'short' })),
                 tagZahl(d, isToday, iso === selDate),
                 markenReihe(iso)
@@ -594,7 +591,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             })),
           ...baender
         ),
-        React.createElement('div', { 'data-legende': 'true', style: { display: 'flex', flexWrap: 'wrap', gap: '4px 16px', fontSize: '12px', color: palette.soft, margin: '8px 0 0', alignItems: 'center' } },
+        React.createElement('div', { 'data-legende': 'true', style: { display: 'flex', flexWrap: 'wrap', gap: '4px 16px', fontSize: text.xs, color: palette.soft, margin: '8px 0 0', alignItems: 'center' } },
           ...legende.map(([art, bereich]) => React.createElement('span', { key: art, style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } },
             React.createElement(ArtMarke, { art, farbe: bereichZeichenFarbe(bereich, palette), palette }), art === 'aufgabe' ? t('calendar.aufgabe') : t('calendar.legende.' + art))),
           React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, React.createElement(ArtMarke, { art: 'frist', erledigt: true, farbe: palette.soft, palette }), t('calendar.legende.erledigt')),
@@ -604,7 +601,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         React.createElement('details', { style: { marginTop: '12px' }, open: verteilen ? true : undefined, onToggle: aufklappSchalter('monat') },
           React.createElement('summary', { className: 'mp-summary', style: aufklapp }, t('calendar.ganzerMonat'), React.createElement('span', { 'aria-hidden': 'true' }, offenIn.monat || verteilen ? '−' : '+')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px', textAlign: 'center' } },
-            ...wdNames.map((w, i) => React.createElement('div', { key: 'w' + i, style: { fontSize: '11px', color: palette.soft, padding: '4px 0' } }, w)),
+            ...wdNames.map((w, i) => React.createElement('div', { key: 'w' + i, style: { fontSize: text.xs, color: palette.soft, padding: '4px 0' } }, w)),
             ...cells.map((d, i) => {
               if (d === null) return React.createElement('div', { key: 'b' + i });
               const iso = isoOf(d), isToday = iso === today;
