@@ -323,7 +323,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const kachel = (key, titel, sub, ikon, onClick, aus) => h('button', {
     // Ohne Angaben: erreichbar, aber still (aria-disabled statt disabled — der Grund im Untertitel bleibt lesbar).
     key, type: 'button', onClick: aus ? undefined : onClick, 'aria-disabled': aus ? 'true' : undefined, 'data-kachel': key,
-    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px ' + (aus ? 'dashed ' : 'solid ') + palette.border, borderRadius: radius.md, background: aus ? 'none' : palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
+    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px ' + (aus ? 'dashed ' : 'solid ') + palette.border, borderRadius: radius.lg, background: aus ? 'none' : palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
   },
     h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: notfallRot } }, h(Icon, { name: ikon, size: 20 })),
     h('span', { style: { display: 'block', marginTop: '8px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'manual', WebkitHyphens: 'manual' } }, titel),
@@ -359,7 +359,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
           // Zeichen UND Wort — nicht nur Farbe (Haken / Kästchen).
           h('span', { key: 'w', style: { display: 'block', fontSize: text.xs, color: ok ? palette.text : palette.mid, overflowWrap: 'break-word' } }, hinweisZeichen(ok ? 'check' : 'kaestchen', 12), (v.k === 'organDonor' && ok && nf.organDonor !== 'declined' && nf.organDonor !== 'delegated' ? t('notfallKapitel.zustimmung') : vorsorgeWert(v.k, v.kapitel))),
         ];
-        const stil = { display: 'block', textAlign: 'left', minHeight: '64px', padding: space.sm + 'px', borderRadius: radius.md, border: '1px solid ' + (ok ? (palette.sage || palette.border) : palette.border), background: 'none', fontFamily: 'inherit', minWidth: 0 };
+        const stil = { display: 'block', textAlign: 'left', minHeight: '64px', padding: space.sm + 'px', borderRadius: radius.lg, border: '1px solid ' + (ok ? (palette.sage || palette.border) : palette.border), background: 'none', fontFamily: 'inherit', minWidth: 0 };
         if (ok || !v.weg) {
           // Offen ohne eigenes Werkzeug (Organspende): zum Feld im Formular.
           if (!ok && zumFeld) {

@@ -2,7 +2,8 @@
 // Ein Kasten über die volle Breite, deutlich höher als ein Bedienelement (44 px), ist eine
 // Karte und bekommt radius.lg (16 px). radius.md (10) gehört zu Knöpfen, Feldern, Auswahlen.
 // Gefunden beim Browser-Durchlauf über alle 74 Ansichten auf main a045d901 (08.11.2026).
-// Bewusst nicht hier: halbbreite Kacheln im Notfall-Raster (NotfallImKapitel) — offene Frage.
+// Kacheln im Raster gelten auch als Karten (Stebler Studios 09.11.2026, «Ja, Kacheln 16»):
+// halbbreit, aber 64–88 px hoch, also weit über Bedienhöhe. Alle Kacheln eines Rasters zusammen.
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,6 +23,8 @@ const STELLEN = [
   ['Lebenssituationen.jsx', 'const cardStyle', 'Situationen: Berechtigungs-Karten'],
   ['AnspruchLandkarte.jsx', 'const cardStyle', 'Situationen/Anspruch-Landkarte: Karten (SERAFE, SBB …)'],
   ['components/NotfallImKapitel.jsx', 'const rahmen', 'Notfall-Kapitel: Rahmen Patientenverfügung'],
+  ['components/NotfallImKapitel.jsx', 'const kachel = ', 'Notfall-Kapitel: Kacheln «Ihre Notfall-Unterlagen»'],
+  ['components/NotfallImKapitel.jsx', 'const stil = { display', 'Notfall-Kapitel: Kacheln Vorsorge (Organspende …)'],
 ];
 
 describe('Kästen über die volle Breite sind Karten (radius.lg)', () => {
