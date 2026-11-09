@@ -5,7 +5,7 @@ export const initBarcodeScanner = async () => {
     if (!document.getElementById('jsqr')) {
       const script = document.createElement('script');
       script.id = 'jsqr';
-      script.src = '/vendor/jsQR.js';
+      script.src = (import.meta.env.BASE_URL || '/') + 'vendor/jsQR.js';
       document.head.appendChild(script);
     }
 
