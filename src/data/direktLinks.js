@@ -286,13 +286,18 @@ export const CANTONAL_LINKS = {
     sozialdienst: 'https://zg.ch/de/soziales/sozialhilfe/persoenliche-und-wirtschaftliche-sozialhilfe',
     ipv: 'https://zg.ch/de/gesundheit/krankenversicherung/praemienverbilligung',
   },
-  // BL: baselland.ch blockt automatisierte Zugriffe (WAF, HTTP 403) — Links nicht
-  // maschinell verifizierbar, daher unverändert gelassen. Bei Pflege manuell prüfen.
+  // BL: baselland.ch blockt automatisierte Zugriffe (Cloudflare, HTTP 403) — Links dort nur im
+  // Browser prüfbar. Bei Pflege manuell prüfen.
   BL: {
     steuererklaerung: 'https://www.baselland.ch/politik-und-behorden/direktionen/finanz-und-kirchendirektion/steuerverwaltung',
     // Bis 09.11.2026 das Amt für Sozialbeiträge (führt u. a. die IPV). Neu die Themenseite Sozialhilfe, im Browser geprüft von Stebler Studios.
     sozialdienst: 'https://www.baselland.ch/themen/sozialhilfe',
-    ipv: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage/praemienverbilligung',
+    // Bis 09.11.2026 baselland.ch/…/amt-fur-sozialbeitrage/praemienverbilligung: im Browser am
+    // 09.11.2026 abends «Nicht gefunden» (HTTP 404, nach der Cloudflare-Prüfung). Neu die IPV-Seite der
+    // SVA Basel-Landschaft (Ausgleichskasse, führt die IPV): curl 200, Titel «SVA Basel-Landschaft:
+    // Individuelle Prämienverbilligung (IPV)»; Gegenprobe …/individuelle-praemienverbilligung-ipv/
+    // gibts-nicht-xyz → 404.
+    ipv: 'https://www.sva-bl.ch/de/ausgleichskasse/individuelle-praemienverbilligung-ipv',
   },
   SO: {
     steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/steueramt/',
@@ -389,14 +394,15 @@ export const CANTONAL_LINKS = {
 //       «Wartungsarbeiten» (Stebler Studios). Am Abend desselben Tags wieder erreichbar: beide
 //       Links mit curl geprüft und ersetzt (Kommentare beim Eintrag VS oben).
 //   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
-//       im Browser geprüft und ersetzt (Stebler Studios); ipv noch nicht im Browser geprüft.
+//       im Browser geprüft und ersetzt (Stebler Studios). ipv am 09.11.2026 abends im Browser:
+//       alter Link 404, ersetzt durch die Seite der SVA BL (mit curl geprüft).
 const G = '2026-11-09';
 export const CANTONAL_LINKS_GEPRUEFT = {
   ZH: { ipv: G, sozialdienst: G }, BE: { ipv: G, sozialdienst: G }, LU: { ipv: G, sozialdienst: G },
   UR: { ipv: G, sozialdienst: G }, SZ: { ipv: G, sozialdienst: G }, OW: { ipv: G, sozialdienst: G },
   NW: { ipv: G, sozialdienst: G }, GL: { ipv: G, sozialdienst: G }, ZG: { ipv: G, sozialdienst: G },
   FR: { ipv: G, sozialdienst: G }, SO: { ipv: G, sozialdienst: G }, BS: { ipv: G, sozialdienst: G },
-  BL: { ipv: null, sozialdienst: G },
+  BL: { ipv: G, sozialdienst: G },
   SH: { ipv: G, sozialdienst: G }, AR: { ipv: G, sozialdienst: G }, AI: { ipv: G, sozialdienst: G },
   SG: { ipv: G, sozialdienst: G }, GR: { ipv: G, sozialdienst: G }, AG: { ipv: G, sozialdienst: G },
   TG: { ipv: G, sozialdienst: G }, TI: { ipv: G, sozialdienst: G }, VD: { ipv: G, sozialdienst: G },
