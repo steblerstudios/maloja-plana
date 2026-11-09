@@ -182,5 +182,9 @@ siebenmal neu entschieden werden:
    ✅ **09.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-2-wohnen` (von `main`).
    ✅ **Gebaut** → Entwurfs-PR #792: Genf pro Jahr, Voraussetzungen im Mietbeiträge-Rechner, OR 271a, W4–W13, Sprache.
    rechts-pruefer mit Volltext, 8743 Tests grün. Offen: menschliche Lektüre fr/it.
+   **Kapitel 3 · Finanzen** (09.11.): Bild [kapitel-3-finanzen.html](../design/kapitel-3-finanzen.html). Hoch: F1 Mindestlohn nach Wohn-
+   statt Arbeitskanton · F2 Rechtsvorschlag «Gläubiger muss vor Gericht» (falsch bei Schuldanerkennung und Behörden) · F3
+   Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
+   Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. 🔄 Entscheid offen.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
