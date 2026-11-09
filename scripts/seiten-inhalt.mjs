@@ -241,8 +241,18 @@ export const SEITEN = [
     brotkrume: 'Was steht mir zu?',
     vorspann:
       'Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Der häufigste Grund, warum Leistungen nicht bezogen werden, ist nicht ein fehlender Anspruch. Es ist fehlendes Wissen, dass es sie gibt.',
+    // Drei Schichten (Brand Book §8, 09.11.2026), vorerst nur Deutsch.
+    schichten: true,
     abschnitte: [
       {
+        id: 'ebenen',
+        bild: `<ol class="zeit kern" role="list" aria-label="Wer was tut">
+          <li><span class="jahr">Bund</span><span class="was">setzt bei vielen Leistungen nur den Rahmen</span></li>
+          <li><span class="jahr">Kantone</span><span class="was">füllen ihn aus, mit eigenen Grenzen, Formularen und Fristen</span></li>
+          <li><span class="jahr">Gemeinden</span><span class="was">führen in mehreren Bereichen aus; in der Sozialhilfe oft die Stelle, mit der man zu tun hat</span></li>
+        </ol>`,
+        kurzAbsatz: 3,
+        wege: ['kantone-im-vergleich', 'politsystem'],
         titel: 'Drei Ebenen, die sich nicht abstimmen',
         absaetze: [
           'Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung weitgehend den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.',
@@ -252,6 +262,8 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'themen',
+        kurzAbsatz: 0,
         titel: 'Die Themen im Einzelnen',
         absaetze: [
           'Drei Bereiche betreffen die meisten Menschen, und bei allen dreien lohnt sich der Blick auch dann, wenn man meint, es treffe einen nicht zu:',
@@ -259,6 +271,19 @@ export const SEITEN = [
         verweise: ['praemienverbilligung', 'sozialhilfe', 'steuern'],
       },
       {
+        id: 'liegen',
+        bild: `<div class="kern">
+          <p class="unter" id="huerden">Was Menschen vom Antrag abhält, ohne am Anspruch etwas zu ändern:</p>
+          <ul class="chips" role="list" aria-labelledby="huerden">
+            <li>nicht wissen, dass es die Leistung gibt</li>
+            <li>Formulare in einer fremden Sprache</li>
+            <li>Fristen, die nirgends zusammen stehen</li>
+            <li>die Sorge, etwas falsch zu machen</li>
+            <li>«Unterstützung ist etwas für andere»</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 1,
+        wege: ['praemienverbilligung'],
         titel: 'Warum so vieles liegen bleibt',
         absaetze: [
           'Ein Anspruch, von dem niemand weiss, wird nicht bezogen. Dazu kommen Hürden, die mit dem Anspruch selbst nichts zu tun haben: Formulare in einer Sprache, die man erst lernen muss. Fristen, die nirgends zusammen stehen. Die Sorge, etwas falsch zu machen. Und die verbreitete Annahme, Unterstützung sei etwas für andere.',
@@ -391,8 +416,21 @@ export const SEITEN = [
     brotkrume: 'Sozialhilfe',
     vorspann:
       'Sozialhilfe ist die unterste Stufe im schweizerischen Netz — sie greift dort, wo alles andere nicht oder nicht mehr reicht. Zuständig sind nicht der Bund, sondern die Kantone und, in vielen von ihnen, die Gemeinden.',
+    // Drei Schichten (Brand Book §8, 09.11.2026), vorerst nur Deutsch.
+    schichten: true,
     abschnitte: [
       {
+        id: 'subsidiaer',
+        bild: `<div class="kern">
+          <p class="unter" id="zuerst">Zuerst geprüft:</p>
+          <ul class="chips" role="list" aria-labelledby="zuerst">
+            <li>Lohn</li><li>Arbeitslosenentschädigung</li><li>Renten</li><li>Ergänzungsleistungen</li>
+            <li>Prämienverbilligung</li><li>Unterhaltsbeiträge</li><li>Stipendien</li><li>eigenes Vermögen, mit Freibetrag</li>
+          </ul>
+          <p class="dann">Reicht das nicht, kommt Sozialhilfe in Frage.</p>
+        </div>`,
+        kurzAbsatz: 1,
+        wege: ['praemienverbilligung', 'was-steht-mir-zu'],
         titel: 'Subsidiär heisst: zuerst alles andere',
         absaetze: [
           'Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.',
@@ -400,6 +438,14 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'skos',
+        bild: `<ol class="zeit kern" role="list" aria-label="Was gilt">
+          <li><span class="jahr">SKOS-Richtlinien</span><span class="was">Empfehlungen</span></li>
+          <li><span class="jahr">Kantonales Recht</span><span class="was">macht sie verbindlich, soweit es sie übernimmt</span></li>
+          <li><span class="jahr">Verfügung</span><span class="was">was in Ihrem Fall gilt</span></li>
+        </ol>`,
+        kurzAbsatz: 1,
+        wege: ['kantone-im-vergleich'],
         titel: 'Die SKOS-Richtlinien sind Empfehlungen, nicht Gesetz',
         absaetze: [
           'Das ist der meistübersehene Punkt. Die Richtlinien der Schweizerischen Konferenz für Sozialhilfe (SKOS) sind <strong>Empfehlungen</strong>. Verbindlich werden sie erst, soweit ein Kanton sie in sein eigenes Recht übernimmt — und das tun die Kantone in unterschiedlichem Umfang.',
@@ -407,6 +453,16 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'bausteine',
+        bild: `<div class="kern">
+          <ul class="zeit" role="list" aria-label="Drei Bausteine in den meisten Kantonen">
+          <li><span class="jahr">Grundbedarf</span><span class="was">für den Lebensunterhalt</span></li>
+          <li><span class="jahr">Wohnkosten</span><span class="was">im ortsüblichen Rahmen</span></li>
+          <li><span class="jahr">Medizinische Grundversorgung</span></li>
+          </ul>
+          <p class="unter">In den meisten Kantonen; dazu können situationsbedingte Leistungen kommen.</p>
+        </div>`,
+        kurzAbsatz: 1,
         titel: 'Woraus sich die Unterstützung typischerweise zusammensetzt',
         absaetze: [
           'In den meisten Kantonen sind es drei Bausteine: ein <strong>Grundbedarf</strong> für den Lebensunterhalt, die <strong>Wohnkosten</strong> im ortsüblichen Rahmen, und die <strong>medizinische Grundversorgung</strong>. Dazu können situationsbedingte Leistungen kommen.',
@@ -414,7 +470,13 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'Das Recht, das niemand verlieren kann',
+        id: 'notlage',
+        bild: `<figure class="kern">
+          <p class="zahl">Die Untergrenze</p>
+          <p class="unter">Bundesverfassung, Artikel 12: für alle, die in Not geraten und nicht für sich sorgen können.</p>
+        </figure>`,
+        kurzAbsatz: 0,
+        titel: 'Recht auf Hilfe in Notlagen', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Unabhängig von allem oben steht in der <strong>Bundesverfassung, Artikel 12</strong>, das Recht auf Hilfe in Notlagen: Wer in Not gerät und nicht in der Lage ist, für sich zu sorgen, hat Anspruch auf Hilfe und Betreuung und auf die Mittel, die für ein menschenwürdiges Dasein unerlässlich sind.',
           'Dieses Recht steht allen Menschen in der Schweiz zu. Es ist nicht dasselbe wie Sozialhilfe und deckt weniger ab — aber es ist die Untergrenze, die nicht unterschritten werden darf.',
@@ -457,8 +519,17 @@ export const SEITEN = [
     brotkrume: 'Steuern',
     vorspann:
       'Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie in der Regel an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn an zwei Wohnorten zu spürbar verschiedenen Rechnungen führt.',
+    // Drei Schichten (Brand Book §8, 09.11.2026), vorerst nur Deutsch.
+    schichten: true,
     abschnitte: [
       {
+        id: 'ebenen',
+        bild: `<ol class="zeit kern" role="list" aria-label="Drei Stellen, an die Sie Steuern zahlen">
+          <li><span class="jahr">Bund</span><span class="was">überall derselbe Tarif</span></li>
+          <li><span class="jahr">Kanton</span><span class="was">eigener Tarif, meist mit Steuerfuss</span></li>
+          <li><span class="jahr">Gemeinde</span><span class="was">meist eigener Steuerfuss</span></li>
+        </ol>`,
+        kurzAbsatz: 0,
         titel: 'Die direkte Bundessteuer ist überall dieselbe',
         absaetze: [
           'Die direkte Bundessteuer richtet sich nach dem Bundesgesetz über die direkte Bundessteuer (DBG) und kennt für die ganze Schweiz denselben Tarif. Sie unterscheidet nach Zivilstand und Haushalt, aber nicht nach Wohnort.',
@@ -466,6 +537,19 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'steuerfuss',
+        bild: `<div class="kern">
+          <p class="formel" role="img" aria-label="Der Tarif ergibt die einfache Steuer; mal den Steuerfuss von Kanton und Gemeinde, wo es einen gibt, ergibt das die kantonale und kommunale Steuer. So in den meisten Kantonen; Ausnahmen gibt es.">
+            <span class="glied" aria-hidden="true"><strong>Tarif</strong>ergibt die einfache Steuer</span>
+            <span class="op" aria-hidden="true">×</span>
+            <span class="glied" aria-hidden="true"><strong>Steuerfuss</strong>je für Kanton und Gemeinde, wo es einen gibt</span>
+            <span class="op" aria-hidden="true">=</span>
+            <span class="glied" aria-hidden="true"><strong>Steuer</strong>von Kanton und Gemeinde</span>
+          </p>
+          <p class="unter">So in den meisten Kantonen; Ausnahmen gibt es.</p>
+        </div>`,
+        kurzAbsatz: 2,
+        wege: ['kantone-im-vergleich', 'kantonsatlas'],
         titel: 'Kanton und Gemeinde: Tarif mal Steuerfuss',
         absaetze: [
           'Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Faktor darauf, meist in Prozent angegeben, den Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.',
@@ -474,6 +558,15 @@ export const SEITEN = [
         ],
       },
       {
+        id: 'abzuege',
+        bild: `<div class="kern">
+          <p class="unter" id="abzug">Vom Lohn zum steuerbaren Einkommen, je nach Situation abzüglich:</p>
+          <ul class="chips" role="list" aria-labelledby="abzug">
+            <li>Berufsauslagen</li><li>Beiträge an die Säule 3a</li><li>Krankheitskosten über einer Schwelle</li><li>Kinder- und Betreuungsabzüge</li><li>weitere</li>
+          </ul>
+        </div>`,
+        kurzAbsatz: 1,
+        wege: ['kantone-im-vergleich'],
         titel: 'Was vom Einkommen abgezogen wird',
         absaetze: [
           'Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.',
