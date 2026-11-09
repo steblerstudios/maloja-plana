@@ -1960,6 +1960,9 @@ export default {
     stufenHinweisDunkel: 'Heller heisst höhere Zahl, nicht besser oder schlechter.',
     belegWort: 'Quelle',
     nochmals: 'Nochmals versuchen',
+    karteZeigtErwachsene: { sie: 'Die Karte zeigt Erwachsene ab 26 Jahren. Mittlere Prämie in Ihrer Altersklasse, gleiche Quelle:', du: 'Die Karte zeigt Erwachsene ab 26 Jahren. Mittlere Prämie in deiner Altersklasse, gleiche Quelle:' },
+    klasseKind: 'Kinder bis 18 Jahre',
+    klasseJung: 'Junge Erwachsene von 19 bis 25 Jahren',
     bewegt: 'Als bewegtes Bild ausprobieren',
   },
   dashboard: {

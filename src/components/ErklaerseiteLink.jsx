@@ -177,15 +177,17 @@ const Aufklapper = ({ palette, t, titel, teil, laden, props }) => {
     React.createElement('p', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, ansage));
 };
 
-export const VerstehenImWerkzeug = ({ palette, t, view, kanton }) => {
+// altersklasse wie ageClassFromBirth (franchiseTacho.js): 'kind' · 'jung' · 'erwachsen'. Bei Kindern keine Figur:
+// Sie zeigt Franchise 1'000 und Dach 700 für Erwachsene; für Kinder gibt es diese Franchise nicht (Fachprüfung 09.11.2026).
+export const VerstehenImWerkzeug = ({ palette, t, view, kanton, altersklasse }) => {
   const v = VERSTEHEN[view];
   if (!v) return null;
   return React.createElement('div', { 'data-teil': 'verstehen-im-werkzeug', style: { marginTop: space.md + 'px' } },
     v.karte && React.createElement(Aufklapper, {
-      palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton },
+      palette, t, teil: 'aufklapper-karte', laden: TEILE.karte, props: { karte: v.karte, kanton, altersklasse },
       titel: t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton'),
     }),
-    v.figur && React.createElement(Aufklapper, {
+    v.figur && altersklasse !== 'kind' && React.createElement(Aufklapper, {
       palette, t, teil: 'aufklapper-figur', laden: TEILE.figur, props: { figur: v.figur }, titel: t('erklaerseite.imBild'),
     }));
 };

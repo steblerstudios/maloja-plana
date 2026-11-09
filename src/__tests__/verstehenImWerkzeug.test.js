@@ -94,6 +94,36 @@ describe('Die Karte (C)', () => {
     expect(karte(P, 'praemie', 'ZH')).not.toContain('data-teil="vor-nach"');
   });
 
+  // Altersklasse (Stebler Studios 09.11.2026): Die Karte zeigt Erwachsene; für Kinder und junge Erwachsene steht
+  // deren mittlere Prämie darunter, aus derselben BAG-Datei. Grenzen wie ageClassFromBirth.
+  it('Kind und junge Erwachsene: eigene Prämie aus der Atlas-Datei, Erwachsene ohne Zusatz', () => {
+    const pr = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'scripts', 'daten', 'kantonsatlas', 'praemien.json'), 'utf8'));
+    const fr = (n) => Number(n).toFixed(2);
+    const kv = (kl) => renderToStaticMarkup(React.createElement(KantonsKarteKlein, { palette: P, t, karte: 'praemie', kanton: 'ZH', altersklasse: kl }));
+    const kind = kv('kind');
+    expect(kind).toContain(t('erklaerseite.klasseKind'));
+    expect(kind).toContain(`<span lang="de">${fr(pr.ZH.kind.y27)}</span>`);
+    expect(kind).toContain(`<span lang="de">${fr(pr.CH.kind.y27)}</span>`);
+    const jung = kv('jung');
+    expect(jung).toContain(t('erklaerseite.klasseJung'));
+    expect(jung).toContain(`<span lang="de">${fr(pr.ZH.jung.y27)}</span>`);
+    expect(jung).not.toContain(t('erklaerseite.klasseKind'));
+    expect(kv('erwachsen')).not.toContain('data-teil="altersklasse"');
+    expect(kv(undefined)).not.toContain('data-teil="altersklasse"');
+    // Die Grenzen im Text stimmen mit der Rechnung der App überein.
+    expect(t('erklaerseite.klasseKind')).toContain('18');
+    expect(t('erklaerseite.klasseJung')).toMatch(/19 bis 25/);
+    expect(quelle('data/franchiseTacho.js')).toMatch(/jahrAlter <= 18\) return 'kind';\s*\n\s*if \(jahrAlter <= 25\) return 'jung';/);
+  });
+
+  it('bei Kindern keine Figur (Franchise 1000 gibt es für sie nicht), bei jungen Erwachsenen schon', () => {
+    const z = (kl) => renderToStaticMarkup(React.createElement(VerstehenImWerkzeug, { palette: P, t, view: 'praemien', kanton: 'ZH', altersklasse: kl }));
+    expect(z('kind')).not.toContain(t('erklaerseite.imBild'));
+    expect(z('jung')).toContain(t('erklaerseite.imBild'));
+    expect(z('erwachsen')).toContain(t('erklaerseite.imBild'));
+    expect(quelle('PraemienOrientierung.jsx')).toContain('altersklasse: ageClass');
+  });
+
   // a11y-Prüfung: ein Ring in Textfarbe allein verschwand auf der dunkelsten Stufe (hell 2,1:1, dunkel 1,2:1).
   it('zwei Ringe, breiter aussen in der Flächenfarbe, in Bildschirm-Pixeln', () => {
     for (const palette of [P, DARK_PALETTE]) {

@@ -1947,6 +1947,9 @@ export default {
     stufenHinweisDunkel: 'Più chiaro significa un numero più alto, non migliore o peggiore.',
     belegWort: 'Fonte',
     nochmals: 'Riprova',
+    karteZeigtErwachsene: { sie: 'La cartina mostra gli adulti dai 26 anni. Premio medio nella Sua classe d’età, stessa fonte:', du: 'La cartina mostra gli adulti dai 26 anni. Premio medio nella tua classe d’età, stessa fonte:' },
+    klasseKind: 'Bambini fino a 18 anni',
+    klasseJung: 'Giovani adulti dai 19 ai 25 anni',
     bewegt: 'Provare l’immagine animata (in tedesco)',
   },
   dashboard: {

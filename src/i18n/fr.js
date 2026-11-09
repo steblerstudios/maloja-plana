@@ -1947,6 +1947,9 @@ export default {
     stufenHinweisDunkel: 'Plus clair signifie un chiffre plus élevé, pas mieux ou moins bien.',
     belegWort: 'Source',
     nochmals: 'Réessayer',
+    karteZeigtErwachsene: { sie: 'La carte montre les adultes dès 26 ans. Prime moyenne dans votre classe d’âge, même source :', du: 'La carte montre les adultes dès 26 ans. Prime moyenne dans ta classe d’âge, même source :' },
+    klasseKind: 'Enfants jusqu’à 18 ans',
+    klasseJung: 'Jeunes adultes de 19 à 25 ans',
     bewegt: 'Essayer l’image animée (en allemand)',
   },
   dashboard: {

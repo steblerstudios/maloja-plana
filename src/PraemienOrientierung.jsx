@@ -664,7 +664,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     // D1 (06.11.2026): zur öffentlichen Erklärseite «Warum die Krankenkasse so viel kostet».
     // C + D (09.11.2026): Karte mit dem eigenen Kanton und Erklärfigur, erst beim Aufklappen geladen.
-    h(VerstehenImWerkzeug, { palette, t, view: 'praemien', kanton: data.basis?.canton || regionInfo?.kanton || '' }),
+    h(VerstehenImWerkzeug, { palette, t, view: 'praemien', kanton: data.basis?.canton || regionInfo?.kanton || '', altersklasse: ageClass }),
     h(ErklaerseiteLink, { palette, t, view: 'praemien' }),
     h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),

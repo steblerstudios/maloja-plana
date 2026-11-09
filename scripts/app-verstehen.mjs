@@ -42,6 +42,19 @@ export const APP_KARTEN = ['praemie', 'lastNachIpv'];
 // Viertel; zwei Karten hätten zwei Farbskalen, und ein Kanton könnte vorher und nachher gleich aussehen.
 export const APP_VERGLEICH = { lastNachIpv: 'last' };
 
+// Prämie nach Altersklasse (Stebler Studios 09.11.2026, «sauber weiter»; Fachprüfung: die Karte zeigt Erwachsene,
+// das Werkzeug rechnet aber auch für Kinder und junge Erwachsene). Dieselbe BAG-Datei wie die Karte
+// (praemien.json, Felder kind/jung, y27), dasselbe Format. Klassen wie ageClassFromBirth in franchiseTacho.js.
+export const APP_ALTERSKLASSEN = { praemie: ['kind', 'jung'] };
+
+function altersklassen(klassen, fmt) {
+  const praemien = JSON.parse(readFileSync(resolve(HIER, 'daten', 'kantonsatlas', 'praemien.json'), 'utf8'));
+  return Object.fromEntries(klassen.map((kl) => [kl, {
+    ch: fmt(praemien.CH[kl].y27),
+    werte: Object.fromEntries(KANTONE.map((k) => [k, fmt(praemien[k][kl].y27)])),
+  }]));
+}
+
 function vergleich(key) {
   const V = EBENEN[key];
   return { titel: V.titel, ch: V.ch != null ? V.fmt(V.ch) : null, werte: Object.fromEntries(KANTONE.map((k) => [k, V.fmt(V.wert(k))])) };
@@ -63,6 +76,7 @@ export function erzeugeKarten() {
       spannen: spannen.map((s) => ({ s: s.s, text: s.min === s.max ? E.fmt(s.min) : `${E.fmt(s.min)} bis ${E.fmt(s.max)}` })),
       werte: Object.fromEntries(KANTONE.map((k) => [k, { s: stufe[k], text: E.fmt(E.wert(k)) }])),
       ...(APP_VERGLEICH[key] ? { vergleich: vergleich(APP_VERGLEICH[key]) } : {}),
+      ...(APP_ALTERSKLASSEN[key] ? { altersklassen: altersklassen(APP_ALTERSKLASSEN[key], E.fmt) } : {}),
     };
   }
   const farben = STUFEN_FARBEN;

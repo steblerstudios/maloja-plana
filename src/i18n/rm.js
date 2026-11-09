@@ -2088,6 +2088,9 @@ export default {
     stufenHinweisDunkel: 'Pli cler munta in dumber pli aut, betg meglier u mender.',
     belegWort: 'Funtauna',
     nochmals: 'Empruvar anc ina giada',
+    karteZeigtErwachsene: { sie: 'La charta mussa creschids a partir da 26 onns. Prima media en Vossa classa da vegliadetgna, medema funtauna:', du: 'La charta mussa creschids a partir da 26 onns. Prima media en tia classa da vegliadetgna, medema funtauna:' },
+    klasseKind: 'Uffants fin 18 onns',
+    klasseJung: 'Giuvenils creschids da 19 fin 25 onns',
     bewegt: 'Empruvar il maletg animà (en tudestg)',
   },
   dashboard: {

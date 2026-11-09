@@ -1947,6 +1947,9 @@ export default {
     stufenHinweisDunkel: 'Lighter means a higher number, not better or worse.',
     belegWort: 'Source',
     nochmals: 'Try again',
+    karteZeigtErwachsene: { sie: 'The map shows adults aged 26 and over. Average premium in your age group, same source:', du: 'The map shows adults aged 26 and over. Average premium in your age group, same source:' },
+    klasseKind: 'Children up to 18',
+    klasseJung: 'Young adults aged 19 to 25',
     bewegt: 'Try the animated picture (in German)',
   },
   dashboard: {

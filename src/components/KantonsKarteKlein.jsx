@@ -26,7 +26,7 @@ const FELD_PX = space.ms; // Legendenfeld
 
 const h = React.createElement;
 
-export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
+export default function KantonsKarteKlein({ palette, t, karte, kanton, altersklasse }) {
   const K = KARTEN[karte];
   if (!K) return null;
   // Im dunklen Modus dreht der Atlas die Helligkeit: die höchste Stufe ist die hellste. Der Satz unter
@@ -61,6 +61,14 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
   const zeile = (stil, ...kinder) => h('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, ...stil } }, ...kinder);
   const leise = { color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px' };
   const link = { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px' };
+  // Altersklasse (09.11.2026): Die Karte zeigt Erwachsene. Rechnet das Werkzeug für ein Kind oder eine junge
+  // erwachsene Person, steht darunter deren mittlere Prämie aus derselben BAG-Datei, für den Kanton und die Schweiz.
+  const klasse = altersklasse && K.altersklassen && K.altersklassen[altersklasse];
+  const klassenZeilen = klasse && h('div', { 'data-teil': 'altersklasse', style: { marginTop: space.sm + 'px' } },
+    zeile({ color: palette.mid }, t('erklaerseite.karteZeigtErwachsene')),
+    zeile({ fontWeight: weight.semi, marginTop: space.xs + 'px' }, `${t(altersklasse === 'kind' ? 'erklaerseite.klasseKind' : 'erklaerseite.klasseJung')}: `,
+      eigen && h(React.Fragment, null, `${name} `, h('span', { lang: 'de' }, klasse.werte[eigen]), ' · '),
+      `${t('erklaerseite.ganzeSchweiz')} `, h('span', { lang: 'de' }, klasse.ch), h('span', { lang: 'de' }, ` ${K.einheit}`)));
   const ohneKanton = zeile({ color: palette.mid }, t('erklaerseite.ohneKanton', { bereich: t('chapters.basis.title') }));
 
   // «Beides» (Stebler Studios 09.11.2026): neben der Karte die Zahl davor und danach, als kleine Tabelle. Die Farben
@@ -100,6 +108,7 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
         K.spannen.map((s) => h('li', { key: s.s, style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
           h('i', { 'aria-hidden': 'true', style: { display: 'inline-block', width: FELD_PX, height: FELD_PX, borderRadius: radius.hair, background: farben[s.s], boxShadow: `inset 0 0 0 1px ${palette.mid}` } }),
           s.text))),
+      klassenZeilen,
       zeile(leise, t(dunkel ? 'erklaerseite.stufenHinweisDunkel' : 'erklaerseite.stufenHinweis')),
       // Legende wie auf der Atlas-Seite: Jahr und Rahmung («Rechenwert über alle Versicherten …»).
       h('p', { lang: 'de', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.text } }, K.legende),
