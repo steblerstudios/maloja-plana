@@ -228,6 +228,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .geraet li{ margin-bottom:8px; padding-left:4px }
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
     .bald, .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
+    /* Atlas-Abschnitt: «Karten für diese Frage» ist ein eigenständiger Weg, kein Link im Satz — 44 px wie jedes
+       Bedienelement (Brand Book §7a, Regel I; gemessen bei 375 px: vorher 19 px). */
+    #atlas .liste a{ display:inline-block; padding:13px 0 }
     .bald strong{ color:var(--text) }
 
     /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */

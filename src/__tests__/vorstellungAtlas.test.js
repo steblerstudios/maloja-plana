@@ -27,6 +27,10 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
     expect(abschnitt).toContain('zehn Karten der 26 Kantone');
   });
 
+  it('die Wege in den Atlas sind gross genug zum Tippen (44 px)', () => {
+    expect(html).toContain('#atlas .liste a{ display:inline-block; padding:13px 0 }');
+  });
+
   it('verspricht nicht für jede Karte eine Rechnung (es gibt nicht zu jeder ein Werkzeug)', () => {
     expect(abschnitt).toContain('nicht Ihre eigene Lage');
     expect(abschnitt).not.toMatch(/rechnet Maloja/);
