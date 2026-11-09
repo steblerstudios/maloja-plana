@@ -56,7 +56,7 @@
 //    nicht überschritten werden» (gleich = nicht überschritten). Das Dekret ([2] § 1 Abs. 1:
 //    «anspruchsabschliessende Obergrenze … beträgt») entscheidet es nicht eindeutig. Knapp darunter
 //    ginge es um rund 2'190 im Jahr. Darum genau auf der Grenze keine Zahl und kein «kein
-//    Anspruch», sondern `orientierung('blGenauAufGrenze')`: nachfragen, im Zweifel Gesuch stellen.⟩
+//    Anspruch», sondern `orientierung('blGenauAufGrenze')`: nachfragen, ein Gesuch ist möglich.⟩
 // 2. GEMESSEN VOR DEN ABZÜGEN: Zwischentotal der steuerbaren Einkünfte (Ziffer 399) — Nettolohn
 //    nach AHV/ALV/PK/NBU ([4] Ziffer 100), noch ohne Berufsauslagen, Versicherungs- und
 //    3a-Abzug. Das liegt nahe am Nettoeinkommen der App; `SAEULE_3A.nichtAbgezogen`.
@@ -175,8 +175,11 @@ export function ipvBaselLandschaftRechnen({ kinderZahl = 0, me }) {
   // «anspruchsabschliessend» — ab der Grenze kein Anspruch, wie der SVA-Rechner (siehe Kopf).
   // GENAU auf der Grenze sagen die Unterlagen der SVA zweierlei → `genauAufGrenze`, der Aufrufer
   // zeigt dann weder Betrag noch «kein Anspruch».
-  if (me0 >= grenze) {
-    return { grenze, ueberGrenze: true, genauAufGrenze: me0 === grenze, total: 0, erwachsenenAnteil: 0, maximal: summe, unklar: false, varianten: null };
+  // Verglichen wird in ganzen Franken, wie die Veranlagung (Ziffer 399) sie ausweist: Rappen beim Lohn
+  // oder Vermögen ergäben sonst 31000.000000000004 statt 31'000 und kippten an der Klippe (Fachprüfung #801, H3).
+  const meFranken = Math.round(me0);
+  if (meFranken >= grenze) {
+    return { grenze, ueberGrenze: true, genauAufGrenze: meFranken === grenze, total: 0, erwachsenenAnteil: 0, maximal: summe, unklar: false, varianten: null };
   }
   const differenz = Math.max(0, summe - p.prozentanteil * me0);
   const bodenKind = p.mindestanteilKind * rpK;
