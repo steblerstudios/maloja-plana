@@ -279,7 +279,19 @@ describe('Erst beim Aufklappen geladen', () => {
     }
   });
 
-  it.each([['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium']])('%s zeigt den Block', (datei, view) => {
-    expect(quelle(datei)).toMatch(new RegExp(`VerstehenImWerkzeug, \\{ palette, t, view: '${view}', kanton:`));
+  // Ausgeweitet 09.11.2026 abends: jedes Werkzeug mit einer Karte in VERSTEHEN zeigt den Block, mit seinem Kanton.
+  const WERKZEUGE = [['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium'], ['TaxCalculator.jsx', 'tax'],
+    ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen']];
+  it('jede Ansicht in VERSTEHEN hat ein Werkzeug, und umgekehrt', () => {
+    expect(WERKZEUGE.map(([, v]) => v).sort()).toEqual(Object.keys(VERSTEHEN).sort());
+  });
+  it.each(WERKZEUGE)('%s zeigt den Block mit Kanton', (datei, view) => {
+    expect(quelle(datei)).toMatch(new RegExp(`VerstehenImWerkzeug, \\{ palette, t, view: '${view}', kanton: [^}]+\\}`));
+  });
+  it.each(Object.entries(VERSTEHEN))('%s: Karte gerendert, Legende und Quelle dabei', (view, v) => {
+    const html = karte(P, v.karte, 'BE');
+    expect(html, view).toContain('data-eigen="ja"');
+    expect(html, view).toContain(KARTEN[v.karte].legende.slice(0, 40).replace(/'/g, '&#x27;'));
+    expect(KARTEN[v.karte].quellen.length, view).toBeGreaterThan(0);
   });
 });

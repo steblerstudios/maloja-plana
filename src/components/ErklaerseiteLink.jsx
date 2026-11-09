@@ -111,6 +111,12 @@ export const MehrDazu = ({ palette, t, seite }) => {
 export const VERSTEHEN = {
   praemien: { karte: 'praemie', figur: 'kostenteil' },
   premium: { karte: 'lastNachIpv' },
+  // Ausgeweitet 09.11.2026 abends: dieselben Werkzeuge, die KANTONSKARTE schon auf ihre Atlas-Karte verlinkt.
+  tax: { karte: 'steuer' },
+  mietzins: { karte: 'miete' },
+  alv: { karte: 'alq' },
+  sozialhilfe: { karte: 'sozialhilfe' },
+  ergaenzungsleistungen: { karte: 'el' },
 };
 
 // Die beiden Teile werden nur dynamisch importiert (Wächter verstehenImWerkzeug.test.js).

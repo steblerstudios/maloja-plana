@@ -376,5 +376,690 @@ export const KARTEN = {
     "ZH": "11,4 %"
    }
   }
+ },
+ "steuer": {
+  "titel": "Steuern bei 80'000 Fr. Lohn",
+  "einheit": "% des Bruttolohns",
+  "anker": "karte-steuer",
+  "legende": "Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026.",
+  "quellen": [
+   {
+    "text": "Eidgenössische Steuerverwaltung, Steuerbelastung in den Kantonen und Gemeinden, Steuerjahr 2026, abgerufen 24.10.2026",
+    "url": "https://swisstaxcalculator.estv.admin.ch/#/taxburden/income-wealth-tax"
+   }
+  ],
+  "ch": null,
+  "spannen": [
+   {
+    "s": 1,
+    "text": "4,2 % bis 10,3 %"
+   },
+   {
+    "s": 2,
+    "text": "10,4 % bis 11,5 %"
+   },
+   {
+    "s": 3,
+    "text": "11,8 % bis 13,2 %"
+   },
+   {
+    "s": 4,
+    "text": "14,1 % bis 16,1 %"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 2,
+    "text": "10,4 %"
+   },
+   "AR": {
+    "s": 3,
+    "text": "12,6 %"
+   },
+   "AI": {
+    "s": 1,
+    "text": "9,0 %"
+   },
+   "BL": {
+    "s": 4,
+    "text": "14,1 %"
+   },
+   "BS": {
+    "s": 3,
+    "text": "12,7 %"
+   },
+   "BE": {
+    "s": 4,
+    "text": "14,6 %"
+   },
+   "FR": {
+    "s": 4,
+    "text": "14,3 %"
+   },
+   "GE": {
+    "s": 3,
+    "text": "13,1 %"
+   },
+   "GL": {
+    "s": 2,
+    "text": "11,5 %"
+   },
+   "GR": {
+    "s": 2,
+    "text": "10,5 %"
+   },
+   "JU": {
+    "s": 3,
+    "text": "13,2 %"
+   },
+   "LU": {
+    "s": 1,
+    "text": "10,3 %"
+   },
+   "NE": {
+    "s": 4,
+    "text": "16,1 %"
+   },
+   "NW": {
+    "s": 1,
+    "text": "10,0 %"
+   },
+   "OW": {
+    "s": 2,
+    "text": "10,4 %"
+   },
+   "SH": {
+    "s": 1,
+    "text": "9,7 %"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "6,7 %"
+   },
+   "SO": {
+    "s": 4,
+    "text": "14,3 %"
+   },
+   "SG": {
+    "s": 3,
+    "text": "13,0 %"
+   },
+   "TI": {
+    "s": 3,
+    "text": "11,8 %"
+   },
+   "TG": {
+    "s": 2,
+    "text": "11,5 %"
+   },
+   "UR": {
+    "s": 1,
+    "text": "10,3 %"
+   },
+   "VD": {
+    "s": 4,
+    "text": "14,8 %"
+   },
+   "VS": {
+    "s": 3,
+    "text": "11,9 %"
+   },
+   "ZG": {
+    "s": 1,
+    "text": "4,2 %"
+   },
+   "ZH": {
+    "s": 1,
+    "text": "9,9 %"
+   }
+  }
+ },
+ "miete": {
+  "titel": "Miete 3 Zimmer",
+  "einheit": "Fr. im Monat",
+  "anker": "karte-miete",
+  "legende": "Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge.",
+  "quellen": [
+   {
+    "text": "Bundesamt für Statistik, Strukturerhebung: durchschnittlicher Mietpreis nach Kanton und Zimmerzahl, 2024, Tabelle T 09.03.03.01",
+    "url": "https://dam-api.bfs.admin.ch/hub/api/dam/assets/36398431/master"
+   }
+  ],
+  "ch": "1'446",
+  "spannen": [
+   {
+    "s": 1,
+    "text": "926 bis 1'242"
+   },
+   {
+    "s": 2,
+    "text": "1'249 bis 1'308"
+   },
+   {
+    "s": 3,
+    "text": "1'312 bis 1'469"
+   },
+   {
+    "s": 4,
+    "text": "1'477 bis 1'875"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 3,
+    "text": "1'440"
+   },
+   "AR": {
+    "s": 2,
+    "text": "1'266"
+   },
+   "AI": {
+    "s": 1,
+    "text": "1'230"
+   },
+   "BL": {
+    "s": 3,
+    "text": "1'469"
+   },
+   "BS": {
+    "s": 3,
+    "text": "1'445"
+   },
+   "BE": {
+    "s": 2,
+    "text": "1'288"
+   },
+   "FR": {
+    "s": 2,
+    "text": "1'299"
+   },
+   "GE": {
+    "s": 4,
+    "text": "1'483"
+   },
+   "GL": {
+    "s": 1,
+    "text": "1'242"
+   },
+   "GR": {
+    "s": 3,
+    "text": "1'382"
+   },
+   "JU": {
+    "s": 1,
+    "text": "926"
+   },
+   "LU": {
+    "s": 3,
+    "text": "1'448"
+   },
+   "NE": {
+    "s": 1,
+    "text": "1'024"
+   },
+   "NW": {
+    "s": 4,
+    "text": "1'547"
+   },
+   "OW": {
+    "s": 3,
+    "text": "1'406"
+   },
+   "SH": {
+    "s": 1,
+    "text": "1'211"
+   },
+   "SZ": {
+    "s": 4,
+    "text": "1'655"
+   },
+   "SO": {
+    "s": 1,
+    "text": "1'228"
+   },
+   "SG": {
+    "s": 3,
+    "text": "1'312"
+   },
+   "TI": {
+    "s": 2,
+    "text": "1'249"
+   },
+   "TG": {
+    "s": 2,
+    "text": "1'308"
+   },
+   "UR": {
+    "s": 1,
+    "text": "1'203"
+   },
+   "VD": {
+    "s": 4,
+    "text": "1'477"
+   },
+   "VS": {
+    "s": 2,
+    "text": "1'260"
+   },
+   "ZG": {
+    "s": 4,
+    "text": "1'875"
+   },
+   "ZH": {
+    "s": 4,
+    "text": "1'732"
+   }
+  }
+ },
+ "alq": {
+  "titel": "Arbeitslosenquote",
+  "einheit": "% der Erwerbspersonen",
+  "anker": "karte-alq",
+  "legende": "Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren.",
+  "quellen": [
+   {
+    "text": "Staatssekretariat für Wirtschaft, Die Lage auf dem Arbeitsmarkt, September 2026, publiziert 6.10.2026",
+    "url": "https://www.seco.admin.ch/de/newnsb/Cdju9-o8WGML"
+   }
+  ],
+  "ch": "3,0 %",
+  "spannen": [
+   {
+    "s": 1,
+    "text": "0,8 % bis 1,5 %"
+   },
+   {
+    "s": 2,
+    "text": "1,7 % bis 2,5 %"
+   },
+   {
+    "s": 3,
+    "text": "2,8 % bis 3,1 %"
+   },
+   {
+    "s": 4,
+    "text": "3,2 % bis 5,3 %"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 4,
+    "text": "3,2 %"
+   },
+   "AR": {
+    "s": 1,
+    "text": "1,5 %"
+   },
+   "AI": {
+    "s": 1,
+    "text": "0,8 %"
+   },
+   "BL": {
+    "s": 3,
+    "text": "3,1 %"
+   },
+   "BS": {
+    "s": 4,
+    "text": "4,4 %"
+   },
+   "BE": {
+    "s": 2,
+    "text": "2,2 %"
+   },
+   "FR": {
+    "s": 2,
+    "text": "2,5 %"
+   },
+   "GE": {
+    "s": 4,
+    "text": "5,3 %"
+   },
+   "GL": {
+    "s": 2,
+    "text": "1,7 %"
+   },
+   "GR": {
+    "s": 1,
+    "text": "1,1 %"
+   },
+   "JU": {
+    "s": 4,
+    "text": "4,2 %"
+   },
+   "LU": {
+    "s": 2,
+    "text": "2,0 %"
+   },
+   "NE": {
+    "s": 4,
+    "text": "4,4 %"
+   },
+   "NW": {
+    "s": 1,
+    "text": "1,2 %"
+   },
+   "OW": {
+    "s": 1,
+    "text": "1,0 %"
+   },
+   "SH": {
+    "s": 3,
+    "text": "3,1 %"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "1,1 %"
+   },
+   "SO": {
+    "s": 3,
+    "text": "3,0 %"
+   },
+   "SG": {
+    "s": 2,
+    "text": "2,0 %"
+   },
+   "TI": {
+    "s": 3,
+    "text": "2,9 %"
+   },
+   "TG": {
+    "s": 2,
+    "text": "2,2 %"
+   },
+   "UR": {
+    "s": 1,
+    "text": "1,0 %"
+   },
+   "VD": {
+    "s": 4,
+    "text": "4,9 %"
+   },
+   "VS": {
+    "s": 3,
+    "text": "3,1 %"
+   },
+   "ZG": {
+    "s": 3,
+    "text": "2,8 %"
+   },
+   "ZH": {
+    "s": 3,
+    "text": "2,9 %"
+   }
+  }
+ },
+ "sozialhilfe": {
+  "titel": "Sozialhilfequote",
+  "einheit": "% der Bevölkerung",
+  "anker": "karte-sozialhilfe",
+  "legende": "Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog.",
+  "quellen": [
+   {
+    "text": "Bundesamt für Statistik, Sozialhilfestatistik: wirtschaftliche Sozialhilfe, 2024, publiziert 15.12.2025",
+    "url": "https://www.bfs.admin.ch/bfs/de/home/statistiken/soziale-sicherheit/sozialhilfe/sozialhilfebeziehende/wirtschaftliche-sozialhilfe.html"
+   }
+  ],
+  "ch": "2,9 %",
+  "spannen": [
+   {
+    "s": 1,
+    "text": "0,8 % bis 1,3 %"
+   },
+   {
+    "s": 2,
+    "text": "1,5 % bis 1,9 %"
+   },
+   {
+    "s": 3,
+    "text": "2,0 % bis 3,4 %"
+   },
+   {
+    "s": 4,
+    "text": "3,6 % bis 6,7 %"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 2,
+    "text": "1,6 %"
+   },
+   "AR": {
+    "s": 2,
+    "text": "1,9 %"
+   },
+   "AI": {
+    "s": 1,
+    "text": "0,9 %"
+   },
+   "BL": {
+    "s": 3,
+    "text": "2,4 %"
+   },
+   "BS": {
+    "s": 4,
+    "text": "4,7 %"
+   },
+   "BE": {
+    "s": 4,
+    "text": "3,6 %"
+   },
+   "FR": {
+    "s": 3,
+    "text": "2,0 %"
+   },
+   "GE": {
+    "s": 4,
+    "text": "6,7 %"
+   },
+   "GL": {
+    "s": 2,
+    "text": "1,5 %"
+   },
+   "GR": {
+    "s": 1,
+    "text": "1,0 %"
+   },
+   "JU": {
+    "s": 4,
+    "text": "3,9 %"
+   },
+   "LU": {
+    "s": 3,
+    "text": "2,1 %"
+   },
+   "NE": {
+    "s": 4,
+    "text": "5,7 %"
+   },
+   "NW": {
+    "s": 1,
+    "text": "1,0 %"
+   },
+   "OW": {
+    "s": 1,
+    "text": "0,8 %"
+   },
+   "SH": {
+    "s": 3,
+    "text": "2,8 %"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "1,3 %"
+   },
+   "SO": {
+    "s": 3,
+    "text": "3,4 %"
+   },
+   "SG": {
+    "s": 2,
+    "text": "1,8 %"
+   },
+   "TI": {
+    "s": 3,
+    "text": "2,8 %"
+   },
+   "TG": {
+    "s": 1,
+    "text": "1,1 %"
+   },
+   "UR": {
+    "s": 1,
+    "text": "1,1 %"
+   },
+   "VD": {
+    "s": 4,
+    "text": "4,2 %"
+   },
+   "VS": {
+    "s": 2,
+    "text": "1,9 %"
+   },
+   "ZG": {
+    "s": 1,
+    "text": "1,3 %"
+   },
+   "ZH": {
+    "s": 3,
+    "text": "2,5 %"
+   }
+  }
+ },
+ "el": {
+  "titel": "Ergänzungsleistungen zur AHV",
+  "einheit": "% der Menschen mit Altersrente",
+  "anker": "karte-el",
+  "legende": "Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen.",
+  "quellen": [
+   {
+    "text": "Bundesamt für Sozialversicherungen, Statistik der Ergänzungsleistungen 2025, Dezember 2025, publiziert 26.05.2026",
+    "url": "https://www.bsv.admin.ch/de/statistik-el"
+   }
+  ],
+  "ch": "12,3 %",
+  "spannen": [
+   {
+    "s": 1,
+    "text": "5,5 % bis 8,3 %"
+   },
+   {
+    "s": 2,
+    "text": "9,0 % bis 10,4 %"
+   },
+   {
+    "s": 3,
+    "text": "10,9 % bis 14,1 %"
+   },
+   {
+    "s": 4,
+    "text": "15,2 % bis 21,3 %"
+   }
+  ],
+  "werte": {
+   "AG": {
+    "s": 2,
+    "text": "9,1 %"
+   },
+   "AR": {
+    "s": 2,
+    "text": "9,4 %"
+   },
+   "AI": {
+    "s": 1,
+    "text": "5,5 %"
+   },
+   "BL": {
+    "s": 2,
+    "text": "9,5 %"
+   },
+   "BS": {
+    "s": 4,
+    "text": "21,3 %"
+   },
+   "BE": {
+    "s": 3,
+    "text": "13,2 %"
+   },
+   "FR": {
+    "s": 3,
+    "text": "14,1 %"
+   },
+   "GE": {
+    "s": 4,
+    "text": "16,4 %"
+   },
+   "GL": {
+    "s": 3,
+    "text": "11,6 %"
+   },
+   "GR": {
+    "s": 1,
+    "text": "7,9 %"
+   },
+   "JU": {
+    "s": 4,
+    "text": "18,3 %"
+   },
+   "LU": {
+    "s": 3,
+    "text": "13,5 %"
+   },
+   "NE": {
+    "s": 4,
+    "text": "18,3 %"
+   },
+   "NW": {
+    "s": 1,
+    "text": "7,0 %"
+   },
+   "OW": {
+    "s": 1,
+    "text": "8,3 %"
+   },
+   "SH": {
+    "s": 2,
+    "text": "10,4 %"
+   },
+   "SZ": {
+    "s": 1,
+    "text": "8,1 %"
+   },
+   "SO": {
+    "s": 3,
+    "text": "12,1 %"
+   },
+   "SG": {
+    "s": 3,
+    "text": "12,5 %"
+   },
+   "TI": {
+    "s": 4,
+    "text": "16,4 %"
+   },
+   "TG": {
+    "s": 2,
+    "text": "9,6 %"
+   },
+   "UR": {
+    "s": 2,
+    "text": "9,0 %"
+   },
+   "VD": {
+    "s": 4,
+    "text": "15,2 %"
+   },
+   "VS": {
+    "s": 1,
+    "text": "8,0 %"
+   },
+   "ZG": {
+    "s": 1,
+    "text": "6,9 %"
+   },
+   "ZH": {
+    "s": 3,
+    "text": "10,9 %"
+   }
+  }
  }
 };

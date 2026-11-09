@@ -36,7 +36,9 @@ const ZIEL_FIGUREN = resolve(HIER, '..', 'src', 'data', 'erklaerfiguren.js');
 const KOPF = '// Erzeugt von scripts/app-verstehen.mjs — nicht von Hand ändern.\n';
 
 // Welche Karten die App zeigt. Schlüssel = Ebene des Atlas; der Anker ist dieselbe id wie auf /kantonsatlas/.
-export const APP_KARTEN = ['praemie', 'lastNachIpv'];
+// Pilot 09.11.2026: praemie, lastNachIpv. Ausgeweitet am selben Abend (Stebler Studios «sauber weiter») auf die
+// fünf Werkzeuge, die schon auf ihre Atlas-Karte verlinkten.
+export const APP_KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'alq', 'sozialhilfe', 'el'];
 // Zu welcher Karte die App eine zweite Zahl daneben stellt (Stebler Studios 09.11.2026, «beides?»): bei der Last nach
 // Verbilligung auch die Last davor. Nur als Zahl, nicht als zweite Karte: Der Atlas teilt jede Karte in eigene
 // Viertel; zwei Karten hätten zwei Farbskalen, und ein Kanton könnte vorher und nachher gleich aussehen.
