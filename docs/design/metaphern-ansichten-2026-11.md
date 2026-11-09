@@ -87,6 +87,35 @@ keine Scham bei wenig Fortschritt, «Weiter» bei reinen Info-Schritten zählt n
 
 **Sieben Gegenstände bleiben, der Inhalt wird nachgeschärft.** Kein Pass-Etui.
 
+### Frage 5 · Die drei Tal-Strassen im Bergpanorama — ✅ 09.11.2026
+
+Vorschlag von Stebler Studios: «so wie wir den rucksack zeigen oben in den bergen auf den anderen
+beiden wegen den finanz baaum als icon und der leistungs kompass».
+
+**Die drei Zugänge, die keine Kapitel sind, stehen nebeneinander im Tal:**
+
+| Strasse | Zeichen | führt zu | Stand |
+|---|---|---|---|
+| links `{ x: 822, y: 560 }` | Rucksack | B Rucksack | steht seit 27.09. |
+| Mitte `{ x: 927, y: 555 }` | **Finanzbaum** | C, Kapitel Finanzen, Auswertung | neu |
+| rechts `{ x: 1003, y: 580 }` | **Leistungskompass** | E «Was steht mir zu?» | neu |
+
+Die Reihenfolge folgt dem Kommentar vom 27.09. (`BergLandschaft.jsx`: «zuerst der Wanderrucksack,
+später der Finanzbaum, das dritte ist offen»); die Plätze sind dort schon ausgemessen. Damit hat
+jede Kern-Ansicht ausser der Übersicht selbst ein Zeichen auf dem Berg: Kapitel auf der
+Passstrasse, die drei anderen Wege im Tal.
+
+**Für den Bau zu beachten (nicht gebaut):**
+- **Nur am Computer.** Am Handy liegt das Tal ausserhalb des Ausschnitts. Dort steht der Kompass
+  schon in der unteren Leiste (Platz «Anspruch»), allerdings mit dem Zeichen `gift`, nicht mit dem
+  Kompass. Der Finanzbaum hat am Handy keinen Platz und bleibt dort über das Kapitel Finanzen
+  erreichbar.
+- **Zeichen:** `components/miniKompass.js` gibt es schon (32 px, Gegenstück zum Mini-Rucksack).
+  Ein **Mini-Finanzbaum** fehlt und muss gezeichnet werden.
+- **Startbündel:** Dashboard und Panorama liegen im Startbündel (Grenze 65 kB, war im November
+  zeitweise auf 2 Bytes ausgeschöpft). Vor dem Bau messen; nachladen statt die Grenze anheben.
+- Wie beim Rucksack: kein Fortschrittsring an diesen drei Zeichen. Es sind Zugänge, keine Stationen.
+
 ## 3 · Was daraus für die Rucksack-Gegenstände folgt
 
 | Gegenstand | Fach (neu) | Änderung am Inhalt | Zeichen |
