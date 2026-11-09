@@ -116,6 +116,17 @@ Passstrasse, die drei anderen Wege im Tal.
   zeitweise auf 2 Bytes ausgeschöpft). Vor dem Bau messen; nachladen statt die Grenze anheben.
 - Wie beim Rucksack: kein Fortschrittsring an diesen drei Zeichen. Es sind Zugänge, keine Stationen.
 
+**Zeichen, ✅ 09.11.2026** (Skizze im Gespräch, drei Varianten A Baum + Aprikose · B Baum + Münze ·
+C Baum mit Ästen): Stebler Studios wählt **C · Baum mit Ästen**, wie im Lebensbaum. Empfohlen war A;
+B fiel weg, weil eine Münze am Baum «Geld wächst» heisst (Grundsatz «nie reicher»).
+Form wie die Tal-Zeichen heute (`rucksackZeichen`): Linie auf 24 × 24, Strich 1,9, `currentColor`,
+17 px im Kreis. Skizze: Stamm `M12 21V8`, Äste `M12 13l-4.5-4` · `M12 10.5l4-3.5` · `M12 16l3.5-2.5`,
+Boden `M8 21h8`, an jedem Astende ein Blattpunkt r 1,5.
+Der **Kompass** bekommt fürs Tal eine Linienfassung im selben Stil (Kreis r 8, Nadel als Raute,
+Mittelpunkt); `miniKompass.js` bleibt an seinem Ort. 🛑 **Nicht am Pixel geprüft:** beim Bau C in
+echter Grösse im Panorama ansehen (hell und dunkel, 3:1); wirkt er unruhig, Äste ausdünnen, nicht
+die Variante wechseln.
+
 ## 3 · Was daraus für die Rucksack-Gegenstände folgt
 
 | Gegenstand | Fach (neu) | Änderung am Inhalt | Zeichen |
