@@ -303,6 +303,7 @@ export const SONDERSEITEN = [
         titel: 'Contact par courriel',
         absaetze: [
           'Si vous écrivez à <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, nous traitons votre adresse, le contenu du message et les éventuelles pièces jointes afin d’y répondre. La boîte aux lettres est hébergée par Infomaniak en Suisse. La correspondance est conservée aussi longtemps que la demande et les questions de suivi habituelles l’exigent, puis elle est supprimée. Elle n’est pas transmise à des tiers, sauf obligation légale.',
+          '<strong>Liste d’attente :</strong> Si vous nous écrivez pour figurer sur la liste d’attente, nous conservons votre message et votre adresse e-mail uniquement à cette fin. Nous vous écrivons au plus deux fois : à la fin de la bêta et, le cas échéant, lorsque Maloja Plana paraîtra dans l’App Store. Ensuite, nous supprimons le message et l’adresse, au plus tard le 31 décembre 2027, même s’il n’existe pas encore de version pour l’App Store. Sur demande, nous les supprimons sans délai ; une réponse « désinscrire » (ou « abmelden ») suffit. Nous n’utilisons l’adresse à aucune autre fin, pas non plus pour une newsletter.',
         ],
       },
       {

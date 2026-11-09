@@ -79,6 +79,25 @@ describe('Vorstellungsseite: Inhalt', () => {
     expect(fragen).toMatch(/^[\s\S]{0,400}mailto:info@malojaplana\.ch\?subject=Maloja%20Plana%3A%20Zugangscode/);
   });
 
+  it('Warteliste ist nur ein Mail-Entwurf: kein Formular, kein Dienst (Entscheid 09.11.2026)', () => {
+    const absatz = html.match(/<p class="bald" id="warteliste">[\s\S]*?<\/p>/)[0];
+    const href = absatz.match(/href="([^"]+)"/)[1].replace(/&amp;/g, '&');
+    const url = new URL(href);
+    expect(url.protocol).toBe('mailto:');
+    expect(url.pathname).toBe('info@malojaplana.ch');
+    expect(url.searchParams.get('subject')).toBe('Maloja Plana: Warteliste');
+    // Der vorbefüllte Text sagt, was mit der Adresse passiert — gleich wie der Datenschutz.
+    expect(url.searchParams.get('body')).toMatch(/höchstens zweimal[\s\S]*Ende 2027[\s\S]*gelöscht[\s\S]*abmelden/);
+    expect(absatz).toMatch(/Ende 2027[\s\S]*href="\/rechtliches\/"/);
+    expect(html).not.toMatch(/<form|<input[^>]+type="email"/i);
+    // Der Datenschutz nennt die Warteliste in allen fünf Sprachen, mit derselben Höchstfrist.
+    for (const l of ['', 'fr/', 'it/', 'en/', 'rm/']) {
+      const recht = fs.readFileSync(path.join(WURZEL, 'public', l, 'rechtliches/index.html'), 'utf8');
+      expect(recht, l || 'de').toMatch(/2027/);
+      expect(recht, l || 'de').toMatch(/Warteliste|Liste d’attente|Lista d’attesa|Waiting list|Glista da spetga/);
+    }
+  });
+
   it('ohne Sozialberatung und ohne Platzhalter, solange die Rechtstexte offen sind', () => {
     expect(html).not.toMatch(/Sozialberatung|#beratung|\[Name\]|class="platzhalter"/i);
   });

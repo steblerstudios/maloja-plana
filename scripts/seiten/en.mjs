@@ -299,6 +299,7 @@ export const SONDERSEITEN = [
         titel: 'Contact by email',
         absaetze: [
           'If you write to <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, we process your address, the content of your message and any attachments in order to reply. The mailbox is hosted by Infomaniak in Switzerland. The correspondence is kept for as long as the enquiry and the usual follow-up questions require, then deleted. It is not passed on to third parties unless required by law.',
+          '<strong>Waiting list:</strong> If you write to us to join the waiting list, we keep your message and your email address for that purpose only. We will write to you at most twice: when the beta ends and, if it happens, when Maloja Plana appears in the App Store. After that we delete the message and the address, at the latest on 31 December 2027, even if there is no App Store version by then. On request we delete them without delay; a reply saying “unsubscribe” (or “abmelden”) is enough. We do not use the address for anything else, including a newsletter.',
         ],
       },
       {

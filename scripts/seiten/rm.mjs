@@ -309,6 +309,7 @@ export const SONDERSEITEN = [
         titel: 'Contact per e-mail',
         absaetze: [
           'Sche Vus scrivais a <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, elavurain nus Vossa adressa, il cuntegn dal messadi ed eventualas agiuntas per pudair respunder. La chascha da posta sa chatta tar Infomaniak en Svizra. La correspondenza resta uschè ditg sco la dumonda e las dumondas consuetas da suandar quai pretendan, lura vegn ella stizzada. Ella na vegn betg transmessa a terzas persunas, nun ch’il dretg pretenda quai.',
+          '<strong>Glista da spetga:</strong> Sche Vus ans scrivais per vegnir sin la glista da spetga, conservain nus Voss messadi e Vossa adressa dad e-mail mo per quest intent. Nus Vus scrivain il pli duas giadas: cura che la beta finescha e, sche quai capita, cura che Maloja Plana cumpara en l’App Store. Silsuenter stizzain nus il messadi e l’adressa, il pli tard ils 31 da december 2027, er sch’i na dat fin lura nagina versiun per l’App Store. Sin giavisch als stizzain nus immediatamain; ina resposta cun «abmelden» basta. Nus na duvrain l’adressa per nagut auter, er betg per in newsletter.',
         ],
       },
       {
