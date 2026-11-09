@@ -49,7 +49,7 @@ export const WEG_AUS_NOTEKEY = (noteKey) => {
 
 
 // Texte je Kanton: scripts/seiten/ipv-kantone/<KT>.mjs, eine Datei je Kanton. Fehlt
-// die Datei, gibt es für den Kanton keine Seite (z. B. BL: Amtslink ungeprüft).
+// die Datei, gibt es für den Kanton keine Seite (seit 09.11.2026 hat jeder Kanton eine).
 // Reihenfolge der Kantone wie in der Bundesverfassung, Art. 1.
 export const KANTONSFOLGE = ['ZH', 'BE', 'LU', 'UR', 'SZ', 'OW', 'NW', 'GL', 'ZG', 'FR', 'SO', 'BS', 'BL',
   'SH', 'AR', 'AI', 'SG', 'GR', 'AG', 'TG', 'TI', 'VD', 'VS', 'NE', 'GE', 'JU'];
