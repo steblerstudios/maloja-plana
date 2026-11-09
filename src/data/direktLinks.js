@@ -255,7 +255,9 @@ export const CANTONAL_LINKS = {
     steuererklaerung: 'https://ge.ch/tax/',
     // Bis 09.11.2026 stand hier eine IPV-Seite (subside). Die Sozialhilfe führt das Hospice général (öffentlich-rechtliche Anstalt des Kantons).
     sozialdienst: 'https://www.hospicegeneral.ch/obtenir-de-laide/',
-    ipv: 'https://www.ge.ch/demander-subside-assurance-maladie-2026',
+    // Bis 09.11.2026 die Antragsseite «…-2026»: an ein Jahr gebunden. Die allgemeine Seite ohne Jahr
+    // verweist auf die Antragsseiten des laufenden und des nächsten Jahres (gemessen 09.11.2026).
+    ipv: 'https://www.ge.ch/informations-generales-subside-assurance-maladie',
   },
   VD: {
     steuererklaerung: 'https://www.vd.ch/themes/etat-droit-finances/impots/',
@@ -284,13 +286,18 @@ export const CANTONAL_LINKS = {
     sozialdienst: 'https://zg.ch/de/soziales/sozialhilfe/persoenliche-und-wirtschaftliche-sozialhilfe',
     ipv: 'https://zg.ch/de/gesundheit/krankenversicherung/praemienverbilligung',
   },
-  // BL: baselland.ch blockt automatisierte Zugriffe (WAF, HTTP 403) — Links nicht
-  // maschinell verifizierbar, daher unverändert gelassen. Bei Pflege manuell prüfen.
+  // BL: baselland.ch blockt automatisierte Zugriffe (Cloudflare, HTTP 403) — Links dort nur im
+  // Browser prüfbar. Bei Pflege manuell prüfen.
   BL: {
     steuererklaerung: 'https://www.baselland.ch/politik-und-behorden/direktionen/finanz-und-kirchendirektion/steuerverwaltung',
     // Bis 09.11.2026 das Amt für Sozialbeiträge (führt u. a. die IPV). Neu die Themenseite Sozialhilfe, im Browser geprüft von Stebler Studios.
     sozialdienst: 'https://www.baselland.ch/themen/sozialhilfe',
-    ipv: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage/praemienverbilligung',
+    // Bis 09.11.2026 baselland.ch/…/amt-fur-sozialbeitrage/praemienverbilligung: im Browser am
+    // 09.11.2026 abends «Nicht gefunden» (HTTP 404, nach der Cloudflare-Prüfung). Neu die IPV-Seite der
+    // SVA Basel-Landschaft (Ausgleichskasse, führt die IPV): curl 200, Titel «SVA Basel-Landschaft:
+    // Individuelle Prämienverbilligung (IPV)»; Gegenprobe …/individuelle-praemienverbilligung-ipv/
+    // gibts-nicht-xyz → 404.
+    ipv: 'https://www.sva-bl.ch/de/ausgleichskasse/individuelle-praemienverbilligung-ipv',
   },
   SO: {
     steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/steueramt/',
@@ -324,13 +331,24 @@ export const CANTONAL_LINKS = {
   },
   VS: {
     steuererklaerung: 'https://www.vs.ch/de/web/scc',
-    sozialdienst: 'https://www.vs.ch/de/web/sas',
-    ipv: 'https://www.vs.ch/de/web/ssp/subsides-assurance-maladie',
+    // Bis 09.11.2026 die Startseite der Dienststelle für Sozialwesen (Sozialhilfe, Asyl, Opferhilfe …).
+    // Neu ihre Seite «Sozialhilfe» (gemessen mit curl 09.11.2026 abends: 200, Titel «Sozialhilfe»,
+    // Gegenprobe vs.ch/de/web/sas/gibts-nicht-xyz → 404).
+    sozialdienst: 'https://www.vs.ch/de/web/sas/aide-sociale',
+    // Bis 09.11.2026 vs.ch/de/web/ssp/subsides-assurance-maladie: eine französische Sammelseite der
+    // Dienststelle für Gesundheitswesen zur ganzen Krankenversicherung, die IPV nur als Abschnitt mit
+    // Verweis auf die Ausgleichskasse. Neu die deutsche IPV-Seite der Ausgleichskasse des Kantons
+    // Wallis, die den Anspruch feststellt (200, Titel «Prämienverbilligung»; Gegenprobe
+    // ahvwallis.ch/de/Versicherungen/Gibt-es-nicht-xyz.html → 404).
+    ipv: 'https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html',
   },
   JU: {
     steuererklaerung: 'https://www.jura.ch/fr/Autorites/Administration/DFI/CTR/Service-des-contributions-CTR.html',
     sozialdienst: 'https://www.jura.ch/sas',
-    ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026.html',
+    // Bis 09.11.2026 die Seite «Informations générales 2026»: an ein Jahr gebunden, eine Fassung 2027
+    // gibt es nicht (404). Die Bereichsseite ohne Jahr leitet auf die aktuelle Seite weiter und führt
+    // im Menü alle Seiten zur RPI (gemessen 09.11.2026).
+    ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie.html',
   },
   UR: {
     steuererklaerung: 'https://www.ur.ch/finanzen/1570', // «Natürliche Personen» mit eTax.UR (geprüft 21.10.2026); vorher 3040 = Organisation von Anlässen
@@ -372,20 +390,21 @@ export const CANTONAL_LINKS = {
 // Prüfdatum je Link (Felder `ipv` und `sozialdienst`), gemessen mit curl (Status, Titel/h1,
 // Gegenprobe mit erfundenem Pfad je Domain). Getrennt von CANTONAL_LINKS, weil DirektLinks.jsx
 // jedes Feld dort als Link anzeigt. `null` heisst: nicht geprüft, mit Grund im Kommentar.
-//   VS: vs.ch antwortete curl am 09.11.2026 zuerst auf JEDEN Pfad mit 404 (im Browser: «Wartungsarbeiten»).
-//       Abends wieder messbar: sozialdienst 200 «Dienststelle für Sozialwesen», ipv 200 «Subsides à
-//       l'assurance-maladie», erfundener Pfad 404. Beide geprüft.
+//   VS: ⟨erledigt⟩ vs.ch antwortete curl am 09.11.2026 tagsüber auf JEDEN Pfad mit 404, im Browser
+//       «Wartungsarbeiten» (Stebler Studios). Am Abend desselben Tags wieder erreichbar: beide
+//       Links mit curl geprüft und ersetzt (Kommentare beim Eintrag VS oben).
 //   OW, NW, SO, AR, GR, TG: sozialdienst am 09.11.2026 auf die genauere Seite gesetzt (Gesuchsstelle
 //       bzw. Verzeichnis statt Amtsstartseite), Quelle docs/sources/sozialhilfe-kantone-2026.md.
 //   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
-//       im Browser geprüft und ersetzt (Stebler Studios); ipv noch nicht im Browser geprüft.
+//       im Browser geprüft und ersetzt (Stebler Studios). ipv am 09.11.2026 abends im Browser:
+//       alter Link 404, ersetzt durch die Seite der SVA BL (mit curl geprüft).
 const G = '2026-11-09';
 export const CANTONAL_LINKS_GEPRUEFT = {
   ZH: { ipv: G, sozialdienst: G }, BE: { ipv: G, sozialdienst: G }, LU: { ipv: G, sozialdienst: G },
   UR: { ipv: G, sozialdienst: G }, SZ: { ipv: G, sozialdienst: G }, OW: { ipv: G, sozialdienst: G },
   NW: { ipv: G, sozialdienst: G }, GL: { ipv: G, sozialdienst: G }, ZG: { ipv: G, sozialdienst: G },
   FR: { ipv: G, sozialdienst: G }, SO: { ipv: G, sozialdienst: G }, BS: { ipv: G, sozialdienst: G },
-  BL: { ipv: null, sozialdienst: G },
+  BL: { ipv: G, sozialdienst: G },
   SH: { ipv: G, sozialdienst: G }, AR: { ipv: G, sozialdienst: G }, AI: { ipv: G, sozialdienst: G },
   SG: { ipv: G, sozialdienst: G }, GR: { ipv: G, sozialdienst: G }, AG: { ipv: G, sozialdienst: G },
   TG: { ipv: G, sozialdienst: G }, TI: { ipv: G, sozialdienst: G }, VD: { ipv: G, sozialdienst: G },
