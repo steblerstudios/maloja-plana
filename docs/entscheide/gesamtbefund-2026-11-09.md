@@ -191,6 +191,7 @@ siebenmal neu entschieden werden:
    Hoch: V1 Rat «Unfalldeckung abwählen» ohne 8-Stunden-Bedingung (UVV Art. 13) · P1 IK-Auszug halbiert die AHV (B-17) ·
    P2 Zukunftsbild zahlt AHV ab 58 (B-18) · P3 früher beziehen ergibt ab 65 mehr (B-19) · P4 Zuschlag Frauen 1961–69 fehlt
    (AHVG Art. 34bis). Dazu V2–V5, P5–P9, Kleines, Gestaltung A–D, Sprache S1–S10. Vorschlag: zwei Zweige (Rechner-Logik ·
-   Inhalt/Gestaltung/Sprache), Rätoromanisch offen. **Offen: Entscheid Stebler Studios.**
+   Inhalt/Gestaltung/Sprache), Rätoromanisch offen. ✅ **09.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»).
+   Zweige `feat/kapitel-4-rechner` (von `main`) und `feat/kapitel-4-versicherungen` (auf dem Befund-Zweig).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
