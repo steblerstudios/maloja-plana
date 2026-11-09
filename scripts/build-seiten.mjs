@@ -29,6 +29,7 @@ import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
 import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
+import { vorstellungBauen } from './seiten/vorstellung.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
 const BLOECKE = { ...BLOECKE_FIGUREN, ...BLOECKE_VERGLEICH };
@@ -58,7 +59,8 @@ const WERKZEUG_IN_DER_APP = {
   // Politsystem bleibt bei der Startseite: kein Werkzeug rechnet Politik.
   kantonsatlas: 'praemien',
 };
-const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/#/${WERKZEUG_IN_DER_APP[pfad]}` : '/');
+// Seit dem Umzug nach /app/ (Plan PR 3) direkt ins Beispiel: /app/?beispiel öffnet es ohne Klick (BetaGate).
+const beispielZiel = (pfad) => (WERKZEUG_IN_DER_APP[pfad] ? `/app/?beispiel#/${WERKZEUG_IN_DER_APP[pfad]}` : '/app/?beispiel');
 const pfadIntern = (pfad, sprache) => `/${sprache.praefix}${pfad}/`;
 
 // Der hreflang-Ring. Er nennt ausschliesslich freigegebene Sprachen: auf eine
@@ -891,6 +893,9 @@ for (const a of seitenAusgaben) if (a.name.endsWith('.html')) a.inhalt = tabelle
 
 const ausgaben = [
   ...seitenAusgaben,
+  // Vorstellungsseite auf der Wurzel (Plan «App nach /app/», PR 3). Liegt in website/, nicht in
+  // public/: public/ wird auch in den App-Ordner kopiert, und dort hat index.html die App.
+  { ziel: resolve(WURZEL, 'website', 'index.html'), inhalt: vorstellungBauen(), name: '../website/index.html' },
   { ziel: resolve(WURZEL, 'public', 'sitemap.xml'), inhalt: sitemapBauen(), name: 'sitemap.xml' },
 ];
 

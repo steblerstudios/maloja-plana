@@ -12,6 +12,7 @@ import { VALID_VIEWS, UMLEITUNGEN } from '../utils/hashRouter.js';
 // (im Browser geprüft 05.11.2026).
 const WURZEL = process.cwd();
 const lies = (p) => fs.readFileSync(path.resolve(WURZEL, 'public', p, 'index.html'), 'utf8');
+// Seit dem Umzug nach /app/ (Plan PR 3): direkt ins Beispiel, ohne Klick auf der Code-Wand.
 const knopf = (html) => [...html.matchAll(/<a class="knopf" href="([^"]+)"/g)].map((m) => m[1]);
 
 const ERWARTET = {
@@ -26,22 +27,22 @@ const ERWARTET = {
 };
 
 describe('E-A · Kantonsatlas führt in die Versicherungs-Übersicht, Politsystem bleibt bei der Startseite', () => {
-  it('kantonsatlas → #/praemien', () => expect(knopf(lies('kantonsatlas'))).toEqual(['/#/praemien']));
-  it('politsystem → /', () => expect(knopf(lies('politsystem'))).toEqual(['/']));
+  it('kantonsatlas → #/praemien', () => expect(knopf(lies('kantonsatlas'))).toEqual(['/app/?beispiel#/praemien']));
+  it('politsystem → Beispiel ohne Werkzeug', () => expect(knopf(lies('politsystem'))).toEqual(['/app/?beispiel']));
 });
 
 describe('Erklärseiten führen direkt zum passenden Werkzeug', () => {
   for (const s of SPRACHEN) {
     for (const pfad of ['was-steht-mir-zu', 'praemienverbilligung', 'sozialhilfe', 'steuern']) {
       it(`${s.code}/${pfad} → #/${ERWARTET[pfad]}`, () => {
-        expect(knopf(lies(s.praefix + pfad))).toEqual([`/#/${ERWARTET[pfad]}`]);
+        expect(knopf(lies(s.praefix + pfad))).toEqual([`/app/?beispiel#/${ERWARTET[pfad]}`]);
       });
     }
   }
 
   for (const h of HINTERGRUND) {
     it(`Hintergrund ${h.pfad} → #/${ERWARTET[h.pfad]}`, () => {
-      expect(knopf(lies(h.pfad))).toEqual([`/#/${ERWARTET[h.pfad]}`]);
+      expect(knopf(lies(h.pfad))).toEqual([`/app/?beispiel#/${ERWARTET[h.pfad]}`]);
     });
   }
 

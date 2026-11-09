@@ -113,19 +113,51 @@ describe('Abschieds-Service-Worker unter /sw.js', () => {
   });
 });
 
-describe('Wurzel: Platzhalter leitet in die App und darf nicht live', () => {
-  it('Zusätze und Anker gehen mit nach /app/', () => {
+describe('Wurzel: Vorstellungsseite, Weiterleitung nur für App-Adressen (PR 3)', () => {
+  const weiter = (search, hash, installiert = false) => {
     const ziele = [];
-    for (const [search, hash, erwartet] of [
-      ['', '', '/app/'], ['?lang=fr', '#/tax', '/app/?lang=fr#/tax'], ['', '#/praemien', '/app/#/praemien'],
-    ]) {
-      vm.runInNewContext(lies('website/weiterleitung.js'), { location: { search, hash, replace: (u) => ziele.push(u) } });
-      expect(ziele.pop()).toBe(erwartet);
-    }
+    vm.runInNewContext(lies('website/weiterleitung.js'), {
+      location: { search, hash, replace: (u) => ziele.push(u) },
+      window: { matchMedia: () => ({ matches: installiert }), addEventListener: () => {} },
+      navigator: {},
+    });
+    return ziele[0] ?? null;
+  };
+
+  it('alte App-Links gehen mit Zusätzen und Anker nach /app/', () => {
+    expect(weiter('?lang=fr', '#/tax')).toBe('/app/?lang=fr#/tax');
+    expect(weiter('', '#/praemien')).toBe('/app/#/praemien');
+    expect(weiter('?beispiel', '')).toBe('/app/?beispiel');
   });
 
-  it('der Platzhalter trägt das Merkmal, und deploy.sh hält ihn von der Produktion fern', () => {
-    expect(lies('website/index.html')).toContain('data-platzhalter="uebergang"');
+  it('wechselt auf der Website nur der Anker zu #/…, geht es ebenfalls in die App', () => {
+    const ziele = [];
+    const hoerer = {};
+    const location = { search: '', hash: '', replace: (u) => ziele.push(u) };
+    vm.runInNewContext(lies('website/weiterleitung.js'), {
+      location, navigator: {},
+      window: { matchMedia: () => ({ matches: false }), addEventListener: (t, fn) => { hoerer[t] = fn; } },
+    });
+    expect(ziele).toEqual([]);
+    location.hash = '#holen'; hoerer.hashchange();
+    expect(ziele).toEqual([]);
+    location.hash = '#/tax'; hoerer.hashchange();
+    expect(ziele).toEqual(['/app/#/tax']);
+  });
+
+  it('die installierte App (startete bis zum Umzug auf /) landet in der App', () => {
+    expect(weiter('', '', true)).toBe('/app/');
+  });
+
+  it('wer die Website öffnet, bleibt dort — auch mit Seiten-Anker oder fremdem Zusatz', () => {
+    expect(weiter('', '')).toBeNull();
+    expect(weiter('', '#holen')).toBeNull();
+    expect(weiter('?utm_source=x', '')).toBeNull();
+    expect(weiter('?language=fr', '')).toBeNull();
+  });
+
+  it('der Platzhalter ist weg, die Deploy-Sperre bleibt als Netz', () => {
+    expect(lies('website/index.html')).not.toContain('data-platzhalter');
     expect(lies('website/index.html')).toContain('<script src="/weiterleitung.js"></script>');
     expect(lies('deploy.sh')).toMatch(/STAGE" != "1" \] && grep -q 'data-platzhalter="uebergang"' dist\/index\.html[\s\S]{0,400}exit 1/);
   });
