@@ -109,6 +109,18 @@ export const lesbareFarbe = (farbe, grund, isDarkMode, min = 4.5) => {
   return ziel;
 };
 
+// Zeichen auf getönter Kachel (Stebler Studios 09.11.2026, «B, tieferer Ton»): die Kachel ist die
+// Bereichsfarbe zu 18 % (`+ '2E'`) auf dem Grund; das Zeichen darauf nimmt denselben Farbton, nur so weit
+// abgedunkelt (hell) bzw. aufgehellt (dunkel), bis es GEGEN DIE KACHEL 3:1 erreicht (WCAG 1.4.11).
+// Vorher wurde gegen die Karte gemessen oder gar nicht: Fünfliber im Menü 1.9:1. Die Kachel bleibt.
+export const KACHEL_DECKKRAFT = 0x2e / 255;
+export const kachelZeichenFarbe = (farbe, palette) => {
+  if (!/^#[0-9a-f]{6}$/i.test(farbe || '') || !/^#[0-9a-f]{6}$/i.test(palette.surface || palette.bg || '')) return farbe;
+  const grund = palette.surface || palette.bg;
+  const dunkel = kontrast(palette.bg || grund, '#FFFFFF') > kontrast(palette.bg || grund, '#000000');
+  return lesbareFarbe(farbe, mischeHex(grund, farbe, KACHEL_DECKKRAFT), dunkel, 3);
+};
+
 // Muster M8 (Fassung 6, Stebler Studios 25.10.2026): EINE Bereichsfarbe je Kapitel überall — die
 // Fruchtfarbe des Bereichs, je nach Grund hell oder dunkel. Für Grafiken, die nur die Palette
 // kennen (Balken, Kuchen, Geldfluss): dunkel ist, was einen dunklen Seitengrund hat.

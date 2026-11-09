@@ -316,7 +316,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
     sublabel: { color: palette.mid, fontSize: text.xs, marginTop: '2px' },
-    input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     row: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },

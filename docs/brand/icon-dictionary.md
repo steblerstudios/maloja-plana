@@ -292,7 +292,7 @@ leer). Eine Quelle: [`src/config/seitenZeichen.js`](../../src/config/seitenZeich
 | **Uhr** | nur «pro Stunde» (Stundenlohn-Abzeichen): generische Bahnhofsuhr, vier Striche, 10:10, **kein roter Sekundenzeiger** | Uhr = Frist/Zeit | Punkt 8, 07.11. |
 | **Export / Herunterladen** | Pfeil nach unten (`download`); **Sicherung** = Doppelblatt mit Pfeil (`sicherung`), zwei Zeichen | Couvert mit Pfeil | Punkt 4; Export/Sicherung «A», vorläufig, 08.11. |
 | **Einbürgerung** | Helvetia mit Abzeichen **Karte mit Plus**, Farbe Ast Person | Wilhelm Tell | Gesamtmatrix 07.11. |
-| **Menü** | **Sackmesser** (generisch, ohne Kreuz-Emblem); offen, solange das Menü offen ist, sonst nur der Griff | Sackmesser = Übersicht | Punkt 11 «B», 07.11. |
+| **Menü** | **Sackmesser** (generisch, ohne Kreuz-Emblem); offen, solange das Menü offen ist, geschlossen eine Klinge halb draussen | Sackmesser = Übersicht | Punkt 11 «B», 07.11.; halb aufgeklappt 09.11. |
 | **Übersicht** | **Feldstecher** | Sackmesser | Punkt 13 «G», 07.11. |
 | **«Was steht mir zu?»** | **Wegweiser** — das Geschenk fällt weg (ein Recht, kein Entgegenkommen) | Geschenk | Punkt 13 «G», 07.11. |
 | **Drucken** | Drucker (`drucker`), auch in Knöpfen | — | Punkt 4, 06.11. |

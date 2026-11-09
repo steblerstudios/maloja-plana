@@ -7,6 +7,7 @@ import { MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
 import { suchTreffer, oeffneTreffer, eintragKey } from './config/suche.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
 import { getBereichForChapter } from './data/lebensbereiche.js';
+import { kachelZeichenFarbe } from './utils/lebensbereichFruechte.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 
 // ─── Menü und Einstellungs-Schublade ──────────────────────
@@ -191,7 +192,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       style: {
         width: '48px', height: '48px', borderRadius: radius.lg, flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: farbe ? farbe + '2E' : palette.up, color: farbe || palette.mid,
+        background: farbe ? farbe + '2E' : palette.up, color: farbe ? kachelZeichenFarbe(farbe, palette) : palette.mid,
         boxShadow: farbe ? 'inset 0 0 0 1px ' + farbe + '4D' : 'none',
       },
     }, renderIcon(icon, '24px')),

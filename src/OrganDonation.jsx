@@ -158,7 +158,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
         React.createElement('input', {
           type: 'text', value: organs.other,
           onChange: (e) => setOrgans(prev => ({ ...prev, other: e.target.value })),
-          style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
+          style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
         })),
 
       status === 'delegated' && React.createElement(LabeledField, { palette, label: t('organ.vertrauensperson'), style: { marginBottom: 0 } },
@@ -166,7 +166,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
           // 80 Zeichen: der Organspende-QR bricht über 640 Byte ab, statt zu kürzen.
           type: 'text', value: vertrauensperson, autoComplete: 'off', maxLength: 80,
           onChange: (e) => setVertrauensperson(e.target.value),
-          style: { width: '100%', padding: space.sm, marginBottom: space.xs, borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
+          style: { width: '100%', padding: space.sm, marginBottom: space.xs, borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
         })),
 
       // Daten einer Drittperson in einem Ausweis, der gezeigt und fotografiert wird: vorher absprechen.

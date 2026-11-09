@@ -51,7 +51,7 @@ export const KRANKENKASSE = {
   vorbehalt:
     'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Anders als die übrigen Erklärseiten nennt sie Zahlen, damit sich das System verstehen lässt. Es sind Durchschnitte mit dem oben genannten Stand, und sie ändern jedes Jahr. Massgebend sind der Gesetzestext, die eigene Police, die eigene Kasse und die zuständige Stelle.',
   vorspann:
-    'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.',
+    'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende vor allem eines: das, was der Topf im nächsten Jahr voraussichtlich braucht, verteilt auf alle, die einzahlen.',
   inhaltsverzeichnis: true,
   kicker: 'Krankenkasse erklärt',
   inhaltTitel: 'Acht Fragen',

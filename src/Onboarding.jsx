@@ -109,7 +109,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   const inputStyle = {
     width: '100%', padding: '12px 16px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.up,
+    border: '1px solid ' + palette.feldrand, background: palette.up,
     color: palette.text, fontSize: text.body, boxSizing: 'border-box',
     fontFamily: fontFamily,
   };

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect, createContext, useContext } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon, HinweisZeichen, hinweisZeichen } from './IconSystem.jsx';
-import { text, weight, space, radius, leading, fontFamilyDisplay } from './config/tokens.js';
-import landschaft from './assets/berge/landschaft.webp?url';
+import { text, weight, space, radius, leading, fontFamilyDisplay, visuallyHiddenStyle } from './config/tokens.js';
+import { Landschaftsband, pfadPilleStil, BAND_HOEHE } from './components/Landschaftsband.jsx';
+import { useIsMobile } from './hooks/useIsMobile.js';
 import { erinnerungSichern, loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -14,7 +15,7 @@ import { ablaufBereich, ansichtName, ansichtIkon } from './config/ansichtenRegis
 import { VERWANDTE } from './config/ablaufVerwandte.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { bereichColor, astKapitel } from './data/lebensbereiche.js';
-import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
+import { kontrast, lesbareFarbe, kachelZeichenFarbe } from './utils/lebensbereichFruechte.js';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
 import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
@@ -70,8 +71,8 @@ const ablaufFarbe = (palette, name = ablaufAusAdresse()) => {
   if (!key || !hexGrund(palette)) return null;
   const dunkel = dunkelGrund(palette);
   const farbe = bereichColor(key, dunkel);
-  // Das Zeichen ist Grafik: 3:1 (WCAG 1.4.11) genügt.
-  return farbe ? { balken: farbe, zeichen: lesbareFarbe(farbe, palette.surface || palette.bg, dunkel, 3) } : null;
+  // Das Zeichen ist Grafik: 3:1 (WCAG 1.4.11) genügt — gemessen gegen seine getönte Kachel (09.11.2026).
+  return farbe ? { balken: farbe, zeichen: kachelZeichenFarbe(farbe, palette) } : null;
 };
 
 // Schriftfarbe des Bereichs für kleinen Text («Schritt 2 von 4»): 4.5:1 statt 3:1 wie beim Zeichen.
@@ -93,25 +94,23 @@ export const ablaufKapitel = (name) => astKapitel(ablaufBereich(name));
 // Pille, darunter das Zeichen in einer Kachel neben dem Titel. Ersetzt Balken oben und «← Übersicht»
 // (main.jsx lässt es für alle Abläufe im Register weg). Das Band hebt den Rand von <main> selbst auf
 // (24 px oben, 20 px seitlich). `kopf`: { t, onNavigate, bereichTitel, zumBereich }.
-const BAND_HOEHE = 112;
 const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
   const { t, onNavigate, bereichTitel, zumBereich } = kopf;
   const stufe = { ...linkStil(palette), fontSize: text.xs, minHeight: '44px' };
   const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.soft } }, '›');
   const balken = farbe ? farbe.balken : palette.sage;
   return React.createElement(React.Fragment, null,
-    React.createElement('div', { 'aria-hidden': 'true', 'data-ablauf-band': '', style: { position: 'relative', height: BAND_HOEHE + 'px', overflow: 'hidden', margin: '-24px -24px 0' } },
-      React.createElement('div', { style: { position: 'absolute', inset: 0, background: 'url(' + landschaft + ') center 72% / cover', opacity: 0.5 } }),
-      React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + balken + '38 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
-    ),
+    React.createElement(Landschaftsband, { palette, grund: balken + '38', margin: '-24px -24px 0', 'data-ablauf-band': '' }),
     React.createElement('div', { style: { position: 'relative', marginTop: '-52px' } },
       React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { marginBottom: space.md + 'px' } },
-        React.createElement('div', { style: { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px', padding: '0 12px', borderRadius: radius.full + 'px', background: palette.bg + 'B8', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' } },
+        React.createElement('div', { style: { ...pfadPilleStil(palette) } },
           React.createElement('button', { type: 'button', className: 'mp-link', style: stufe, onClick: () => onNavigate && onNavigate('dashboard') }, t('nav.backToDashboard')),
           bereichTitel && pfeil('p1'),
           bereichTitel && React.createElement('button', { type: 'button', className: 'mp-link', style: stufe, onClick: zumBereich }, bereichTitel),
-          pfeil('p2'),
-          React.createElement('span', { 'aria-current': 'page', style: { fontSize: text.xs, color: palette.text } }, title)
+          // Kapitel 1, Befund A (09.11.2026): die aktuelle Seite steht gleich darunter als grosser Titel.
+          // Sichtbar zeigte die Pille sie doppelt und brach auf dem Handy auf zwei Zeilen um. Für den
+          // Screenreader bleibt sie Teil des Pfads (aria-current), nur unsichtbar.
+          React.createElement('span', { 'aria-current': 'page', style: visuallyHiddenStyle }, title)
         )
       ),
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginBottom: space.sm + 'px' } },
@@ -448,7 +447,7 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
     !ohneFeld && React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
     !ohneFeld && React.createElement('input', {
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
-      style: { padding: '12px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+      style: { padding: '12px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
     !karte && ziel && !vorbei && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } }, t(hinweisKey, { date: formatDE(ziel) })),
     fristKarte
@@ -461,9 +460,11 @@ export const EreignisFrist = ({ palette, t, art, id, labelKey, hinweisKey, vorbe
 // Höhe wächst mit N (40 px je Kehre, damit sich die Fahrbahnen nie berühren). Geometrie aus dem Entwurf
 // (seiten-v5.html?nur=w). Der gefahrene Teil in der Farbe des Bereichs, erledigte Stationen mit Haken,
 // die aktuelle etwas grösser. Reine Grafik (aria-hidden) — wo man steht, sagt «Schritt n von N».
-export const passHoehe = (n) => Math.max(150, 36 + (n - 1) * 40);
-export const passPunkte = (n) => {
-  const H = passHoehe(n);
+// `flach` (Handy, Kapitel 1 Befund B, 09.11.2026): 22 statt 40 px je Kehre. Bei 5 Schritten 124 statt 196 px
+// hoch, so steht «Schritt 1» auf dem Handy im ersten Bild. 22 − 12 (Fahrbahn) lässt 10 px zwischen den Kehren.
+export const passHoehe = (n, flach = false) => (flach ? Math.max(84, 36 + (n - 1) * 22) : Math.max(150, 36 + (n - 1) * 40));
+export const passPunkte = (n, flach = false) => {
+  const H = passHoehe(n, flach);
   return Array.from({ length: n }, (_, i) => ({
     x: n === 1 ? 170 : (i % 2 === 0 ? [40, 74, 52, 88][(i / 2) % 4] : [300, 262, 284, 248][((i - 1) / 2) % 4]),
     y: H - 18 - (n === 1 ? 0 : i * ((H - 36) / (n - 1))),
@@ -480,11 +481,12 @@ export const passPfad = (pts) => pts.reduce((d, p, i) => {
 export const AblaufPass = ({ palette, name, total, aktuell, fertig, namen }) => {
   const farbe = (ablaufFarbe(palette, name) || {}).zeichen || palette.sageDeep || palette.sage;
   const n = Math.max(1, total);
-  const pts = passPunkte(n);
+  const flach = useIsMobile();
+  const pts = passPunkte(n, flach);
   const d = passPfad(pts);
   const bis = fertig ? n - 1 : Math.min(Math.max(aktuell, 0), n - 1);
   return React.createElement('svg', {
-    viewBox: '0 0 340 ' + passHoehe(n), 'aria-hidden': 'true', focusable: 'false', 'data-ablauf-pass': fertig ? 'fertig' : String(aktuell), 'data-kehren': String(n),
+    viewBox: '0 0 340 ' + passHoehe(n, flach), 'aria-hidden': 'true', focusable: 'false', 'data-ablauf-pass': fertig ? 'fertig' : String(aktuell), 'data-kehren': String(n),
     style: { display: 'block', width: '100%', maxWidth: '340px', height: 'auto', margin: '0 0 ' + space.md + 'px' },
   },
     React.createElement('path', { d, fill: 'none', stroke: palette.border, strokeWidth: 12, strokeLinecap: 'round' }),

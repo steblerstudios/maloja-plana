@@ -22,7 +22,7 @@
 //   • Befunde (E3) als eigener Abschnitt, nur belegte (siehe BEFUNDE_ABSCHNITT).
 //
 // Regeln aus dem Atlas-Entscheid vom 24.10.2026: keine Rangliste, keine
-// Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler
+// Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler (im dunklen Modus: heller)
 // heisst «höhere Zahl», nicht «besser» oder «schlechter».
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -80,7 +80,7 @@ function karte(ctx, key, { legende, nachher = '' }) {
   const titel = `Karte: ${E.titel}`;
   const tiefK = KANTONE.find((k) => E.wert(k) === spannen[0].min);
   const hochK = KANTONE.find((k) => E.wert(k) === spannen[spannen.length - 1].max);
-  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von hell (tiefere Zahl) bis dunkel (höhere Zahl). Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
+  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
   const svg = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
@@ -91,7 +91,7 @@ function karte(ctx, key, { legende, nachher = '' }) {
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
-            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', hell' : i === spannen.length - 1 ? ', dunkel' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
+            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', tiefste Zahlen' : i === spannen.length - 1 ? ', höchste Zahlen' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
             ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
           <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
@@ -247,8 +247,8 @@ export const KANTONSATLAS = {
       id: 'lesen',
       titel: '1. Wie die Karten zu lesen sind',
       html: `
-        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren. Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
-        <p class="merke"><strong>Kurz gesagt:</strong> Dunkel heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
+        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. <span class="nur-hell">Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren.</span><span class="nur-dunkel">Im dunklen Modus sind die Kantone mit den tieferen Zahlen dunkel, die mit den höheren hell.</span> Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
+        <p class="merke"><strong>Kurz gesagt:</strong> <span class="nur-hell">Dunkel</span><span class="nur-dunkel">Hell</span> heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>`,
     },
     BRILLEN_ABSCHNITT,
@@ -333,6 +333,10 @@ export const KANTONSATLAS = {
   stilZusatz: `
     /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
     :root{ ${cssStufen(STUFEN_FARBEN.hell)} }
+    /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
+       damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
+    .nur-dunkel{ display:none }
+    @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
       :root{ ${cssStufen(STUFEN_FARBEN.dunkel)} }
     }
