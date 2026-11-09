@@ -5,6 +5,10 @@
 export const DARK_PALETTE = {
   bg: '#22211F', surface: '#2B2A26', up: '#343330', top: '#3D3B35',
   border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#989CA4',
+  // feldrand: Rand von Eingabefeldern (input/select/textarea). border ist Schmuck-Haarlinie
+  // (1,20:1) und reicht für Bedienelemente nicht (WCAG 1.4.11, 3:1). #80838A: 3,33 auf up,
+  // 3,78 auf surface, bleibt unter mid. Entscheid Querschnitt 1 C-A, 09.11.2026.
+  feldrand: '#80838A',
   // soft (Feintext-Tier) angehoben #8E929A→#989CA4: alt trug auf der häufigen
   // up-Karte (#343330, 184× als bg) nur 4.20:1 → unter AA. Neu 4.76 (up) / 5.22
   // (surface), bleibt aber unter mid (#9CA0A6) → mid/soft-Hierarchie erhalten.
@@ -34,6 +38,8 @@ export const LIGHT_PALETTE = {
   // AA: up 4.33 / sageMist 4.49 / top 4.03. Neue Werte halten ≥4.5:1 auf ALLEN Flächen
   // (surface/bg/up/sageMist/top) — mid #5E6167 ≥4.88, soft #5A5D63 ≥5.19. Bleibt ruhig-grau.
   border: '#DCDAD6', text: '#24262A', mid: '#5E6167', soft: '#5A5D63',
+  // feldrand: siehe DARK_PALETTE. #808286: 3,25 auf up, 3,68 auf surface, heller als mid.
+  feldrand: '#808286',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
