@@ -6620,6 +6620,10 @@ export default {
     check: { sie: "Contribuziuns a la fittanza datti mo en singuls chantuns e vischnancas — blers chantuns n'han naginas, tschertas vischnancas gea. Controllai tar Vossa vischnanca u il chantun.", du: "Contribuziuns a la fittanza datti mo en singuls chantuns e vischnancas — blers chantuns n'han naginas, tschertas vischnancas gea. Controllescha tar tia vischnanca u il chantun." },
     linkCanton: 'Tar l\'uffizi chantunal',
     linkOverview: 'Survista chantunala (BWO)',
+    gespeicherteAdresse: 'Für die gespeicherte Adresse (Kanton {kanton}):', // TODO(rm): übersetzen
+    einschraenkung_BL: 'In Basel-Landschaft nur für Haushalte mit Kindern.', // TODO(rm): übersetzen
+    einschraenkung_ZG: 'In Zug nur für Wohnungen, die nach dem kantonalen Wohnraumförderungsgesetz gefördert sind.', // TODO(rm): übersetzen
+    einschraenkung_GE: 'In Genf nur für bestimmte, vom Kanton anerkannte Wohnungen.', // TODO(rm): übersetzen
   },
   // Patientenverfügung in Fragen (27.09.2026) — Fragen in Ich-Form, keine Sie/Du-Fassung nötig.
   // Geprüft: docs/design/patientenverfuegung-fragen-2026-09-27.md
@@ -7204,7 +7208,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
     cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
-    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
+    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza e per onn, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
     cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF 60’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25 % da l’entrada. Facultad netta fin CHF 144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
@@ -7218,6 +7222,13 @@ export default {
     doc3: 'Indicaziuns davart la chasada (persunas, uffants)',
     source: 'Funtauna: [[BWO «Agids chantunals»|https://www.bwo.admin.ch/de/kantonale-hilfen]].',
     linkBudget: 'Vesair en il budget',
+    vorausTitel: { sie: 'Weitere Voraussetzungen in Ihrem Kanton', du: 'Weitere Voraussetzungen in deinem Kanton' }, // TODO(rm): übersetzen
+    vorausWohnsitz: 'Wohnsitz im Kanton seit mindestens {jahre} Jahren.', // TODO(rm): übersetzen
+    vorausWohnsitzGE: 'Wohnsitz im Kanton während mindestens {jahre} Jahren ohne Unterbruch in den letzten fünf Jahren.', // TODO(rm): übersetzen
+    vorausVermoegen: 'Reinvermögen höchstens CHF {betrag}.', // TODO(rm): übersetzen
+    vorausMindestmieteBS: 'Die Miete muss je nach Zimmerzahl eine Mindesthöhe erreichen; darunter gibt es keinen Beitrag. Die Werte stehen im Merkblatt des Kantons.', // TODO(rm): übersetzen
+    vorausZimmerZG: 'Die Wohnung hat höchstens zwei Zimmer mehr, als Personen darin wohnen.', // TODO(rm): übersetzen
+    vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' }, // TODO(rm): übersetzen
   },
   calendar: {
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
