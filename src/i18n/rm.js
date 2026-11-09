@@ -2466,10 +2466,10 @@ export default {
         bvgInsurer: 'Cassa da pensiun',
         bvgBalance: 'Avair LPP actual CHF',
         // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-        uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
+        uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Tras l’engaschament', private: 'Privat', none: 'Nagina' } },
         uvgZusatz: { label: 'Assicuranza supplementara d’accident', options: { yes: 'Gea', no: 'Na / nunenconuschent' } }, // TODO(rm): provisorisch
         uvgZusatzPremium: "Premia supplementara d’accident CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
-        ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
+        ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Tras l’engaschament', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
         liabilityPremium: "Premia responsabladad civila CHF/onn",
@@ -5792,7 +5792,7 @@ export default {
     unfallLabel: 'Cuvrida d’accident',
     mitUnfall: 'Cun accident',
     ohneUnfall: 'Senza accident',
-    unfallSaving: 'Senza cuvrida d’accident: CHF {diff}/mais damain — deselecziunabel sco emploià (cuvert tras il patrun).',
+    unfallSaving: 'Senza cuvrida d’accident: CHF {diff}/mais damain. Mo deselecziunar, sch’ina plazza d’almain 8 uras l’emna assicurescha er en il temp liber.',
     title: 'Survista da las assicuranzas',
     plzLabel: 'Numer postal',
     selectGemeinde: 'Pliras vischnancas — per plaschair tscherner:',
@@ -6634,11 +6634,14 @@ export default {
     spiegelLink: 'Context en Assicuranzas',
   },
   uvgHint: {
-    title: 'Cuvrida d’accident: spargnar sco emploià',
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    body: { sie: 'Sco emploià·da essas Vus assicurà·da cunter accidents tras Voss patrun — inclus accidents na professiunals a partir da 8 uras/emna. Vus pudais deselecziunar la cuvrida d’accident tar Vossa cassa da malsauns; quai diminuescha Vossa premia notablamain.', du: 'Sco emploià·da es ti assicurà·da cunter accidents tras tes patrun — inclus accidents na professiunals a partir da 8 uras/emna. Ti pos deselecziunar la cuvrida d’accident tar tia cassa da malsauns; quai diminuescha tia premia notablamain.' },
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    fieldSuggest: { sie: 'Sco emploià·da essas Vus per regla cuvert·a tras Voss patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.', du: 'Sco emploià·da es ti per regla cuvert·a tras tes patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel 4, V1, 10.11.2026)
+    title: 'Cuvrida d’accident: spargnar cun ina plazza',
+    titleUnter8: 'Tegnair la cuvrida d’accident tar la cassa',
+    body: { sie: 'Tgi che lavura almain 8 uras l’emna per in patrun è assicurà·da tras la plazza er cunter accidents en il temp liber. Lura pudais Vus deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sch’la plazza finescha, inclidai puspè la cuvrida: la protecziun tras la plazza finescha 31 dis suenter, cun ina assicuranza tenor cunvegna fin 6 mais pli tard (art. 13 OAAc, art. 3 LAAc).', du: 'Tgi che lavura almain 8 uras l’emna per in patrun è assicurà·da tras la plazza er cunter accidents en il temp liber. Lura pos ti deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sch’la plazza finescha, inclida puspè la cuvrida: la protecziun tras la plazza finescha 31 dis suenter, cun ina assicuranza tenor cunvegna fin 6 mais pli tard (art. 13 OAAc, art. 3 LAAc).' },
+    bodyOffen: { sie: 'Lavurais Vus almain 8 uras l’emna per in patrun? Lura essas Vus assicurà·da tras la plazza er en il temp liber e pudais deselecziunar la cuvrida d’accident da la cassa da malsauns. Cun damain uras tegnai ella (art. 13 OAAc). Inditgai Voss pensum sut «Furmaziun & lavur», lura mussa l’app quai che correspunda.', du: 'Lavuras ti almain 8 uras l’emna per in patrun? Lura es ti assicurà·da tras la plazza er en il temp liber e pos deselecziunar la cuvrida d’accident da la cassa da malsauns. Cun damain uras tegna ella (art. 13 OAAc). Inditgescha tes pensum sut «Furmaziun & lavur», lura mussa l’app quai che correspunda.' },
+    bodyUnter8: { sie: 'Cun damain che 8 uras l’emna tar in patrun essas Vus assicurà·da tras la plazza mo durant la lavur e sin la via a la lavur, betg en il temp liber (art. 13 OAAc). Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Cun damain che 8 uras l’emna tar in patrun es ti assicurà·da tras la plazza mo durant la lavur e sin la via a la lavur, betg en il temp liber (art. 13 OAAc). Tegna la cuvrida d’accident tar la cassa da malsauns.' },
+    fieldSuggest: { sie: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pudais Vus deselecziunar la cuvrida d’accident da la cassa.', du: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pos ti deselecziunar la cuvrida d’accident da la cassa.' },
+    fieldUnter8: { sie: 'Sut 8 uras l’emna na As assicurescha la plazza betg cunter accidents en il temp liber. Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Sut 8 uras l’emna na t’assicurescha la plazza betg cunter accidents en il temp liber. Tegna la cuvrida d’accident tar la cassa da malsauns.' },
   },
   mietzins: {
     title: 'Contribuziuns a la fittanza:',

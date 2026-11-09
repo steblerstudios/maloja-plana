@@ -1,13 +1,15 @@
 import React from 'react';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
-import { istAngestellt } from '../utils/anstellung.js';
+import { nichtberufsunfallStatus } from '../utils/anstellung.js';
 
-// Ruhiger UVG-Hinweis: Angestellte sind über den Arbeitgeber unfallversichert
-// (ab 8 Std./Woche auch Nichtberufsunfälle) und können die Unfalldeckung bei der
-// Krankenkasse abwählen → tiefere Prämie. Würdevoll, kein Druck. Zeigt nichts,
-// wenn die Person nicht angestellt ist (dann greift dieser Spar-Weg nicht).
+// UVG-Hinweis: Angestellte mit mindestens 8 Std./Woche bei einer Arbeitgeberin sind auch in der Freizeit
+// unfallversichert (UVV Art. 13) und können die Unfalldeckung bei der Krankenkasse ruhen lassen (KVG Art. 8).
+// Kapitel 4, V1 (10.11.2026): Der Rat galt vorher für alle Angestellten — wer unter 8 Std. arbeitet, hätte
+// nach dem Abwählen keinen Schutz in der Freizeit. Darum je nach Pensum: Rat mit Bedingung, Warnung oder
+// Rat mit offener Frage. Zeigt nichts, wenn die Person nicht angestellt ist.
 export const UvgHinweis = ({ palette, t, data }) => {
-  if (!istAngestellt(data?.finanzen)) return null;
+  const status = nichtberufsunfallStatus(data);
+  if (!status) return null;
 
   return React.createElement('div', {
     style: {
@@ -16,10 +18,10 @@ export const UvgHinweis = ({ palette, t, data }) => {
     },
   },
     React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text, marginBottom: space.xs + 'px' } },
-      t('uvgHint.title')
+      t(status === 'nein' ? 'uvgHint.titleUnter8' : 'uvgHint.title')
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } },
-      t('uvgHint.body')
+      t(status === 'nein' ? 'uvgHint.bodyUnter8' : status === 'offen' ? 'uvgHint.bodyOffen' : 'uvgHint.body')
     ),
   );
 };
