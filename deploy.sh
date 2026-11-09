@@ -127,7 +127,18 @@ npm run build
 # liefert 503 bei .htaccess, Header übers Panel» — am 25.09.2026 widerlegt: die Datei
 # existiert, alle Header kommen aus ihr.)
 echo "→ .htaccess aus dem Build entfernen…"
-rm -f dist/.htaccess
+rm -f dist/.htaccess dist/app/.htaccess
+
+# ─── Platzhalter auf der Wurzel darf nicht live (Plan «App nach /app/», PR 2) ─
+# Seit dem Umzug liegt die App unter dist/app/, auf / steht die Website. Bis die
+# Vorstellungsseite da ist (PR 3), ist dist/index.html nur eine Weiterleitung. Live
+# hiesse das: malojaplana.ch zeigt Suchmaschinen nur noch eine Weiterleitung auf eine
+# nicht indexierte App. Auf der Vorschau (--stage) ist sie erlaubt.
+if [ "$STAGE" != "1" ] && grep -q 'data-platzhalter="uebergang"' dist/index.html 2>/dev/null; then
+  echo "✗ dist/index.html ist noch der Platzhalter (Weiterleitung nach /app/)." >&2
+  echo "  Produktion erst zusammen mit der Vorstellungsseite (PR 3). Vorschau: bash deploy.sh --stage" >&2
+  exit 1
+fi
 
 # ─── sitemap.xml: lastmod auf den Tag des Deploys ────────────────────────────
 # Von Hand gepflegt ist der Wert dreimal abgedriftet (zuletzt 20.09.2026: Sitemap
@@ -316,10 +327,14 @@ LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://$
 #
 # Läuft NACH dem Upload und ist nicht-fatal: schlägt das Aufräumen fehl, ist der
 # Deploy trotzdem gut. Die Rollback-Sicherung entstand vorher (Zeile ~138).
+#
+# Seit dem Umzug nach /app/ (Plan PR 2) entsteht der Build in dist/app/assets/. Das alte
+# /assets/ auf der Wurzel bleibt bewusst liegen: alte Service Worker und zwischengespeicherte
+# Seiten verweisen noch darauf. Wegräumen frühestens Juli 2027, von Hand.
 if [ "$STAGE" != "1" ]; then
-  echo "→ Verwaiste Build-Dateien in assets/ entfernen…"
+  echo "→ Verwaiste Build-Dateien in app/assets/ entfernen…"
   LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
-    -e "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; mirror -R --delete --verbose ./dist/assets/ \"${TARGET_DIR%/}/assets\"; bye" \
+    -e "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; mirror -R --delete --verbose ./dist/app/assets/ \"${TARGET_DIR%/}/app/assets\"; bye" \
     || echo "  ⚠️ Aufräumen fehlgeschlagen — der Deploy selbst ist durch."
 fi
 
