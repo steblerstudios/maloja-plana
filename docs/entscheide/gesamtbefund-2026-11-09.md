@@ -172,6 +172,7 @@ siebenmal neu entschieden werden:
    **Kapitel 1 · Persönliche Basis** (09.11.): Bild [kapitel-1-basis.html](../design/kapitel-1-basis.html). Gestaltung A Pfad-Pille
    bricht um · B Weg zu hoch auf dem Handy · C Knöpfe und Felder in Arial (app-weit, eine Zeile fehlt im Grundstil).
    Inhalt F1–F4 fehlende Voraussetzungen (EO, Bevorschussung, Einmischung in den Nachlass), F5–F9 klein. Sprache T1–T6
-   (du/ihr gemischt, Italienisch Sie=du, Gesetzeskürzel bei «18 werden», Maskulin, Pronomen-Feld). 🔄 Entscheid offen.
+   (du/ihr gemischt, Italienisch Sie=du, Gesetzeskürzel bei «18 werden», Maskulin, Pronomen-Feld). ✅ **09.11.: alles wie
+   empfohlen** (Stebler Studios: «Ja, alles»). Zwei Zweige: Gestaltung, Inhalt.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
