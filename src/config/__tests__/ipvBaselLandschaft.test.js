@@ -122,6 +122,35 @@ describe('K31 calculateIPV für BL (App-Angaben → Modell)', () => {
     expect(r.noteParams.grenze).toMatch(/^31.000$/);
   });
 
+  it('genau auf der Grenze (31 000): weder Betrag noch «kein Anspruch» — die SVA sagt es zweierlei', () => {
+    // 2 500 × 12 = 30 000, Vermögen 95 000 → 20 % von 5 000 = 1 000 → massgebend genau 31 000.
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { savingsAccount: 95000 } })))
+      .toMatchObject({ belegt: false, amount: null, offen: 'blGenauAufGrenze' });
+    // ein Franken Vermögensanteil darüber (95 005 → 1 001): wieder «kein Anspruch» wie bisher
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { savingsAccount: 95005 } })))
+      .toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.blKeinAnspruch' });
+    expect(ipvBaselLandschaftRechnen({ me: 31000 }).genauAufGrenze).toBe(true);
+    expect(ipvBaselLandschaftRechnen({ me: 31001 }).genauAufGrenze).toBe(false);
+  });
+
+  it('genau auf der Grenze gilt für jede Haushaltsgrösse (1 Kind: 52 000, 2 Kinder: 68 000)', () => {
+    expect(ipvBaselLandschaftRechnen({ kinderZahl: 1, me: 52000 })).toMatchObject({ ueberGrenze: true, genauAufGrenze: true });
+    expect(ipvBaselLandschaftRechnen({ kinderZahl: 1, me: 52001 })).toMatchObject({ ueberGrenze: true, genauAufGrenze: false });
+    expect(ipvBaselLandschaftRechnen({ kinderZahl: 2, me: 68000 }).genauAufGrenze).toBe(true);
+    expect(ipvBaselLandschaftRechnen({ kinderZahl: 1, me: 51999 }).ueberGrenze).toBe(false);
+  });
+
+  it('verglichen wird in ganzen Franken — Rappen-Rundungsfehler kippen die Klippe nicht (Fachprüfung #801, H3)', () => {
+    // 1 000.03 × 12 + 20 % von (184 998.20 − 90 000) = 31000.000000000004 in Fliesskomma
+    const knappDrueber = 1000.03 * 12 + 0.2 * (184998.2 - 90000);
+    expect(knappDrueber).not.toBe(31000);
+    expect(ipvBaselLandschaftRechnen({ me: knappDrueber }).genauAufGrenze).toBe(true);
+    // 1 000.03 × 13 + 20 % von (179 998.05 − 90 000) = 30999.999999999996
+    const knappDrunter = 1000.03 * 13 + 0.2 * (179998.05 - 90000);
+    expect(knappDrunter).not.toBe(31000);
+    expect(ipvBaselLandschaftRechnen({ me: knappDrunter })).toMatchObject({ ueberGrenze: true, genauAufGrenze: true });
+  });
+
   it('Vermögen: 20 % über 90 000 zählen (100 000 → + 2 000 → 2 581); keine Vermögensgrenze', () => {
     expect(calculateIPV(person({ finanzen: { savingsAccount: 90000 } })).annual).toBe(2736);
     expect(calculateIPV(person({ finanzen: { savingsAccount: 100000 } })).annual).toBe(2581);
