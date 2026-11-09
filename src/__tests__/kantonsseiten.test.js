@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { KANTONSSEITEN, WEGE, WEG_AUS_NOTEKEY, monatJahr } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
+import { KANTONSSEITEN, WEGE, WEG_AUS_NOTEKEY, monatJahr, appRechnetFuer, rechenmodul } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
 import { BASIS, QUELLEN } from '../../scripts/seiten-inhalt.mjs';
 import { CANTONAL_IPV } from '../config/cantonalData.js';
 import { CANTONAL_LINKS, CANTONAL_LINKS_GEPRUEFT } from '../data/direktLinks.js';
@@ -54,6 +54,15 @@ const VERBOTEN = [
 const EIGENER_TEXT_MIN = 0.40;
 
 describe('Kantonsseiten Prämienverbilligung', () => {
+  it('«rechnet» hängt am Code: TG, JU und SO zeigen nie einen Betrag, die übrigen Module schon', () => {
+    // Datei vorhanden reicht nicht: ipvThurgau.js existiert und zeigt nie eine Zahl.
+    for (const k of ['TG', 'JU', 'SO']) {
+      expect(rechenmodul(k), k).toBeTruthy();
+      expect(appRechnetFuer(k), k).toBe(false);
+    }
+    for (const k of ['ZH', 'BE', 'GE', 'AG']) expect(appRechnetFuer(k), k).toBe(true);
+  });
+
   it('es gibt die drei Pilotkantone (Entscheid E2)', () => {
     expect(KANTONSSEITEN.map((k) => k.kanton).sort()).toEqual(['BE', 'TG', 'ZH']);
   });
@@ -90,9 +99,8 @@ describe('Kantonsseiten Prämienverbilligung', () => {
       expect(text).not.toContain('Inhaltlich geprüft');
     });
 
-    it('verspricht eine Rechnung nur, wo die App ein Rechenmodul für den Kanton hat', () => {
-      const modul = k.appModul ? path.resolve(WURZEL, 'src', 'config', k.appModul) : null;
-      if (modul) expect(fs.existsSync(modul), modul).toBe(true);
+    it('verspricht eine Rechnung nur, wo das Rechenmodul der App einen Betrag zeigt', () => {
+      expect(k.appRechnet).toBe(appRechnetFuer(k.kanton));
       const karte = sichtbar(html.split('<div class="karte">')[1].split('</div>')[0]);
       if (k.appRechnet) expect(karte).toContain('rechnet das für viele Haushalte durch');
       else expect(karte).not.toMatch(/rechnet/);
