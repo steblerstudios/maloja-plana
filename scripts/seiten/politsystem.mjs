@@ -149,7 +149,7 @@ const figWahl = fig('abb-wahlbank', 'politsystem-wahlbank.svg', 'Sitze nach Kant
   `Eine Wahlbank: 26 Säulen mit zusammen ${REGELN.nationalrat} Scheiben, die Sitze im Nationalrat`,
   `Eine Bank mit 26 Säulen aus aufgestapelten Scheiben, eine Säule je Kanton, eine Scheibe je Sitz. Die erste Säule, Zürich, ist sehr hoch und hervorgehoben, die letzten bestehen aus einer einzigen Scheibe. Davor vier Schalen mit 13, 12, 8 und 3 Scheiben, zusammen die ${SITZE_SEIT_2023.ZH} Zürcher Sitze.`,
   `${REGELN.nationalrat} Sitze · 26 Wahlkreise`,
-  `Jede Säule ist ein Kanton, jede Scheibe ein Sitz im Nationalrat, seit den Wahlen 2023; die Zahlen stehen in der Tabelle darunter. [[q:sitze2023]] Vorne ein Beispiel mit vier erfundenen Parteien und erfundenen Stimmen: So verteilt die Rechnung des Gesetzes die ${SITZE_SEIT_2023.ZH} Zürcher Sitze, vereinfacht ohne Listenverbindungen. [[q:bpr]]`);
+  `Jede Säule ist ein Kanton, jede Scheibe ein Sitz im Nationalrat, seit den Wahlen 2023; die Zahlen stehen in der Tabelle unter «Ausführlich lesen». [[q:sitze2023]] Vorne ein Beispiel mit vier erfundenen Parteien und erfundenen Stimmen: So verteilt die Rechnung des Gesetzes die ${SITZE_SEIT_2023.ZH} Zürcher Sitze, vereinfacht ohne Listenverbindungen. [[q:bpr]]`);
 
 function tabelleSitze() {
   // Zahlenansicht wie auf /krankenkasse/: Balken ab null, längster = Zürich.
@@ -241,6 +241,9 @@ export const POLITSYSTEM = {
   // die Kugelbahn als Skriptdateien (script-src 'self') im Repo liegt — bis
   // dahin bricht der Bau ab (build-seiten.mjs).
   bewegtVerlinken: false,
+  // Drei Schichten je Frage (Brand Book §8, 09.11.2026): `bild` zuerst, `kurz`
+  // aus dem gegengelesenen Text, `html` aufklappbar, `wege` zu verwandten Fragen.
+  schichten: true,
   zahlen: zahlenPolitsystem,
   bloecke: BLOECKE_POLITSYSTEM,
   bilderQuelle: 'scripts/seiten/politsystem.mjs',
@@ -292,9 +295,11 @@ export const POLITSYSTEM = {
     {
       id: 'ebenen',
       titel: '1. Wer ist wofür zuständig?',
+      bild: '<!--FIG:ebenen-->',
+      kurz: 'Ob etwas in Ihrem Kanton anders ist als im Nachbarkanton, liegt oft genau daran: Die Aufgabe gehört dem Kanton. [[q:bv]]',
+      wege: [{ href: '#weg', text: 'Welchen Weg nimmt ein Gesetz?' }, { href: '/kantonsatlas/', text: 'Kantonsatlas' }],
       html: `
         <p>Vieles wird nicht in Bern entschieden. Die Schweiz hat drei Ebenen: den Bund, die 26 Kantone und die Gemeinden. Der Bund erfüllt die Aufgaben, die ihm die Bundesverfassung zuweist. Alle übrigen Rechte üben die Kantone aus. [[q:bv]] Wie viel die Gemeinden selbst regeln dürfen, bestimmt das Recht des Kantons. [[q:bv]]</p>
-<!--FIG:ebenen-->
         <div class="tabelle"><table>
           <caption>Einige Aufgaben und wo sie liegen</caption>
           <tr><th scope="col">Aufgabe</th><th scope="col">Zuständig</th><th scope="col">Stelle</th></tr>
@@ -307,15 +312,16 @@ export const POLITSYSTEM = {
         </table></div>
         <p class="leise">Auswahl. Die Stellen stehen in der Bundesverfassung (BV), im Umweltschutzgesetz (USG) und in der Abfallverordnung (VVEA). [[q:bv]] [[q:usg]] [[q:vvea]]</p>
         <p>Beim Bund teilen sich drei Behörden die Arbeit: Die Bundesversammlung, also das Parlament, beschliesst die Gesetze. Der Bundesrat regiert und führt sie aus. Das Bundesgericht urteilt in Streitfällen. Ein Bundesgesetz aufheben kann es nicht: Bundesgesetze und Völkerrecht muss es anwenden. [[q:bv]]</p>
-        <p class="merke"><strong>Kurz gesagt:</strong> Ob etwas in Ihrem Kanton anders ist als im Nachbarkanton, liegt oft genau daran: Die Aufgabe gehört dem Kanton.</p>`,
+`,
     },
     {
       id: 'weg',
       titel: '2. Welchen Weg nimmt ein Gesetz?',
+      bild: '<!--FIG:bahn-->\n<!--TAB:schritte-->',
+      kurz: 'Ein Gesetz braucht beide Räte. Danach kann in der Regel das Volk das letzte Wort verlangen: mit {{r.referendum}} Unterschriften, oder {{r.referendumKantone}} Kantone verlangen es. Jede Änderung der Verfassung kommt immer vor Volk und Kantone. [[q:bv]]',
+      wege: [{ href: '#mehr', text: 'Was ist das doppelte Mehr?' }, { href: '#selbst', text: 'Was können Sie selbst tun?' }],
       html: `
         <p>Vorlagen bereitet in der Regel der Bundesrat vor; er unterbreitet dem Parlament die Entwürfe. Ein neues Gesetz kann aber auch aus dem Parlament selbst kommen oder von einem Kanton angestossen werden. [[q:bv]] Bei wichtigen Vorhaben fragt der Bund zuerst die Kantone, die Parteien und interessierte Kreise nach ihrer Meinung. Das heisst Vernehmlassung. [[q:bv]]</p>
-<!--FIG:bahn-->
-<!--TAB:schritte-->
         <h3>Zwei Räte, ein Text</h3>
         <p>Dann beraten Nationalrat und Ständerat die Vorlage, jeder für sich. Ein Gesetz kommt nur zustande, wenn beide dasselbe beschliessen. [[q:bv]] Sind sie sich nicht einig, geht die Vorlage zwischen den Räten hin und her. Das heisst Differenzbereinigung. Bleibt nach drei Detailberatungen in jedem Rat ein Unterschied, sucht eine Einigungskonferenz einen Ausweg. Sie besteht aus je {{r.einigung}} Mitgliedern der beiden Kommissionen, die die Vorlage in ihrem Rat vorberaten haben. Lehnt ein Rat ihren Vorschlag ab, wird die Vorlage abgeschrieben: Sie ist gescheitert. [[q:parlg]]</p>
         <h3>Das Referendum</h3>
@@ -329,18 +335,22 @@ export const POLITSYSTEM = {
     {
       id: 'bundesrat',
       titel: '3. Wer regiert?',
+      bild: '<!--TAB:bundesrat-->',
+      kurz: 'Die Schweiz hat niemanden an der Spitze, der allein bestimmt. [[q:bundesrat]] Die grossen Parteien teilen sich die Sitze freiwillig, statt sich als Regierung und Opposition gegenüberzustehen; die Verfassung schreibt das nicht vor. [[q:hls]]',
+      wege: [{ href: '#staenderat', text: 'Wer wählt den Bundesrat?' }],
       html: `
         <p>Die Schweiz hat niemanden an der Spitze, der allein bestimmt. Die Regierung ist der Bundesrat mit {{r.bundesrat}} Mitgliedern, keines steht über den anderen. [[q:bundesrat]] Er entscheidet als Kollegium. [[q:bv]] Was beschlossen ist, vertreten alle Mitglieder. [[q:rvog]]</p>
-<!--TAB:bundesrat-->
         <p>Die Bundesversammlung wählt die Mitglieder nach jeder Wahl des Nationalrats für vier Jahre, die beiden Räte gemeinsam. [[q:bv]] Den Vorsitz führt die Bundespräsidentin oder der Bundespräsident, für ein Jahr. Für das folgende Jahr ist eine Wiederwahl nicht möglich. [[q:bv]]</p>
         <p>Die grossen Parteien teilen sich die Sitze, statt sich als Regierung und Opposition gegenüberzustehen. Das heisst Konkordanz. Es ist eine freiwillige Übung, keine Regel der Verfassung. [[q:hls]] Von 1959 bis 2003 galt die «Zauberformel»: Die FDP, die Konservativen (später CVP) und die SP hatten je zwei Sitze, die Bauern-, Gewerbe- und Bürgerpartei (BGB) einen. [[q:hls]] Die BGB heisst seit 1971 SVP. [[q:hlsSvp]] 2003 gewann die SVP auf Kosten der CVP einen zweiten Sitz. [[q:hls]] Im November 2026 sitzen im Bundesrat {{bundesrat.parteien}}. [[q:bundesrat]]</p>`,
     },
     {
       id: 'mehr',
       titel: '4. Was ist das doppelte Mehr?',
+      bild: '<!--FIG:mehr-->',
+      kurz: 'Für eine Änderung der Bundesverfassung reicht die Mehrheit der Stimmenden nicht. Es braucht auch die Mehrheit der Stände, also der Kantone. [[q:bv]]',
+      wege: [{ href: '#staenderat', text: 'Warum ist der Ständerat gleich wichtig?' }, { href: '#weg', text: 'Welchen Weg nimmt ein Gesetz?' }],
       html: `
         <p>Für eine Änderung der Bundesverfassung reicht die Mehrheit der Stimmenden nicht. Es braucht auch die Mehrheit der Stände, also der Kantone. Das Ergebnis im Kanton gilt als dessen Standesstimme. [[q:bv]]</p>
-<!--FIG:mehr-->
         <p>{{ganze.anzahl}} Kantone haben eine ganze Standesstimme, sechs eine halbe: {{halbe.namen}}. [[q:bv]] Zusammen sind das {{r.standesstimmen}} Stimmen (gerechnet). Eine Mehrheit braucht mehr als die Hälfte; ein Unentschieden von {{r.standesHalb}} zu {{r.standesHalb}} reicht also nicht.</p>
 <!--TAB:staende-->
         <p>Das schützt die kleinen Kantone. Zürich wählt {{sitze.zh}} Mitglieder des Nationalrats, Uri {{sitze.ur}}. Bei den Ständen zählen beide gleich viel. [[q:sitze2023]] [[q:bv]] So kann eine Vorlage beim Volk knapp angenommen und bei den Ständen abgelehnt werden. Dann gilt sie nicht.</p>`,
@@ -348,9 +358,11 @@ export const POLITSYSTEM = {
     {
       id: 'nationalrat',
       titel: '5. Wie wird der Nationalrat gewählt?',
+      bild: '<!--FIG:wahlbank-->',
+      kurz: 'Jeder Kanton ist ein Wahlkreis. Die Sitze werden nach der Bevölkerungszahl verteilt, jeder Kanton hat aber mindestens einen. [[q:bv]] Weil die Kantone so verschieden viele Sitze haben, wirkt eine Stimme je nach Kanton anders.',
+      wege: [{ href: '#staenderat', text: 'Und der Ständerat?' }, { href: '#selbst', text: 'Was können Sie selbst tun?' }],
       html: `
         <p>Der Nationalrat hat {{r.nationalrat}} Sitze und wird alle vier Jahre neu gewählt. Jeder Kanton ist ein Wahlkreis. Die Sitze werden nach der Bevölkerungszahl auf die Kantone verteilt; jeder Kanton hat mindestens einen. [[q:bv]]</p>
-<!--FIG:wahlbank-->
 <!--TAB:sitze-->
         <p>Wo es mehrere Sitze gibt, gilt der Proporz: Die Sitze werden nach dem Stimmenanteil der Listen verteilt. Weil das selten genau aufgeht, legt das Gesetz eine feste Rechnung für die Reste fest. [[q:bpr]] In den {{sitze.einSitzAnzahl}} Kantonen mit nur einem Sitz ({{sitze.einSitz}}) ist gewählt, wer am meisten Stimmen hat. [[q:bpr]]</p>
         <p>Daraus folgt: Eine Stimme wirkt je nach Kanton anders. Eine kleine Partei kann in Zürich mit wenigen Prozent einen Sitz holen, in Uri mit demselben Anteil keinen.</p>
@@ -359,6 +371,12 @@ export const POLITSYSTEM = {
     {
       id: 'staenderat',
       titel: '6. Warum ist der Ständerat gleich wichtig?',
+      bild: `<figure class="kern">
+        <div class="paar"><p><span class="zahl">{{r.nationalrat}}</span>Sitze im Nationalrat</p><p><span class="zahl">{{r.staenderat}}</span>Sitze im Ständerat</p></div>
+        <p class="unter">Ungleich gross, aber gleichgestellt: Ein Gesetz kommt nur zustande, wenn beide zustimmen. [[q:bv]]</p>
+      </figure>`,
+      kurz: 'Im Ständerat zählt die Grösse des Kantons nicht: {{ganze.anzahl}} Kantone haben je zwei Sitze, sechs je einen. Weil beide Räte zustimmen müssen, zählen die Menschen und die Kantone zugleich. [[q:bv]]',
+      wege: [{ href: '#weg', text: 'Welchen Weg nimmt ein Gesetz?' }, { href: '#mehr', text: 'Was ist das doppelte Mehr?' }],
       html: `
         <p>Im Ständerat zählt die Grösse des Kantons nicht. {{ganze.anzahl}} Kantone haben je zwei Sitze, die sechs Kantone mit halber Standesstimme je einen. Das ergibt {{r.staenderat}} Sitze. Wie gewählt wird, bestimmt jeder Kanton selbst. [[q:bv]]</p>
         <p>Trotz {{r.nationalrat}} zu {{r.staenderat}} Sitzen sind die beiden Räte einander gleichgestellt. Ein Gesetz gilt nur, wenn beide zustimmen. So zählen die Menschen und die Kantone zugleich. [[q:bv]] Bei Wahlen wie der des Bundesrats tagen beide Räte gemeinsam als Vereinigte Bundesversammlung. Dort zählt jede Stimme einzeln, und der grössere Nationalrat hat mehr Gewicht. [[q:bv]]</p>`,
@@ -366,6 +384,16 @@ export const POLITSYSTEM = {
     {
       id: 'selbst',
       titel: '7. Was können Sie selbst tun?',
+      bild: `<figure class="kern">
+        <p class="unter" id="rechte-bund">Wer stimmberechtigt ist, kann auf Bundesebene:</p>
+        <ul class="zeit" role="list" aria-labelledby="rechte-bund">
+        <li><span class="jahr">Wählen</span><span class="was">alle vier Jahre den Nationalrat</span></li>
+        <li><span class="jahr">Abstimmen</span><span class="was">unter anderem über jede Änderung der Bundesverfassung</span></li>
+        <li><span class="jahr">Unterschreiben</span><span class="was">für ein Referendum oder eine Volksinitiative</span></li>
+        </ul>
+      </figure>`,
+      kurz: 'Wer das Schweizer Bürgerrecht hat und mindestens {{r.stimmalter}} Jahre alt ist, darf in Bundessachen in der Regel wählen, abstimmen und unterschreiben. [[q:bv]]',
+      wege: [{ href: '#weg', text: 'Welchen Weg nimmt ein Gesetz?' }],
       html: `
         <p>Wer das Schweizer Bürgerrecht hat und {{r.stimmalter}} Jahre alt ist, darf in Bundessachen in der Regel wählen, abstimmen und unterschreiben. Ausgeschlossen sind nur Menschen, die dauernd urteilsunfähig sind, also nicht selbst entscheiden können, und deshalb unter umfassender Beistandschaft stehen oder durch eine vorsorgebeauftragte Person vertreten werden. [[q:bv]] [[q:bpr]] Wer im Ausland lebt, im Auslandschweizerregister eingetragen ist und mitreden will, meldet das der Gemeinde, in der man stimmberechtigt ist, über die zuständige Schweizer Vertretung. [[q:asg]]</p>
         <div class="tabelle"><table>

@@ -587,6 +587,33 @@ function quellenListe(quellen, nummer, stellen) {
   }).join('\n');
 }
 
+// Drei Schichten (Brand Book §8, seit 09.11.2026): A Bild, B Satz, C aufklappbar, D Wege.
+// Farben über --heidel*, damit jede Seite ihre Bereichsfarbe behält.
+const STIL_SCHICHTEN = `
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }`;
+
 function hintergrundBauen(seite) {
   // Schalter für eine bewegte Fassung ohne Dateien dahinter: lieber abbrechen
   // als einen toten Link ausliefern (scripts/seiten/politsystem.mjs).
@@ -666,7 +693,7 @@ ${seite.abschnitte.map((a) => `          <li><a href="#${a.id}">${esc(a.titel.re
     hreflang: '',
     robots: 'index, follow',
     robotsNotiz: 'Hintergrundseite, nur Deutsch. Gegengelesen und indexierbar; Übersetzungen gibt es noch keine.',
-    extraStil: stilHintergrund + (seite.stilZusatz || ''),
+    extraStil: stilHintergrund + (seite.schichten ? STIL_SCHICHTEN : '') + (seite.stilZusatz || ''),
     // Kein Skript auf dieser Seite. frame-src 'self' nur, wenn die bewegten
     // Fassungen aufklappen (eigene Seiten, eigene CSP, Skripte als Dateien).
     ...(seite.bewegtEinbetten ? { csp: CSP.replace("default-src 'none';", "default-src 'none'; frame-src 'self';") } : {}),
