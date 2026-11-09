@@ -38,6 +38,21 @@ export const WEGE = {
   automatisch: { label: 'In der Regel von Amtes wegen' },
 };
 
+// Kopf- und Fusshinweis der Kantonsseiten. Bis 09.11.2026 der gemeinsame Text der
+// Erklärseiten («nennt bewusst keine Beträge und Fristen»). Rechtsprüfung 09.11.2026: Mehrere
+// Kantonsseiten nennen, DASS eine Frist gilt und wann sie ungefähr endet (z. B. Ende des
+// Anspruchsjahres), und müssen das auch — sonst fehlt der Hinweis, der den Anspruch rettet.
+// Der Satz «keine Fristen» widersprach dem. Neu: keine genauen Fristen (keine Tage, keine Daten).
+export const KANTON_HINWEIS = {
+  kurz: 'Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. ' +
+    'Diese Seite nennt bewusst keine Beträge und keine genauen Fristen.',
+  vorbehalt: 'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — ' +
+    'keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, keine ' +
+    'Einkommensgrenzen und keine genauen Fristen: die ändern regelmässig. Wo sie sagt, dass eine ' +
+    'Frist gilt, finden Sie die genaue Frist bei der zuständigen Stelle. Massgebend ist immer die ' +
+    'Auskunft beziehungsweise die Verfügung der zuständigen Stelle.',
+};
+
 // Welcher noteKey der App zu welchem Weg gehört. Der Generator und der Test
 // prüfen, dass jede Kantonsseite denselben Weg nennt wie die App.
 export const WEG_AUS_NOTEKEY = (noteKey) => {

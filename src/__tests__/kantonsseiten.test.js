@@ -153,6 +153,12 @@ describe('Kantonsseiten Prämienverbilligung', () => {
       for (const u of aussen) expect(erlaubt.has(u), `fremder Link ${u}`).toBe(true);
     });
 
+    it('sagt «keine genauen Fristen», nicht «keine Fristen» (Kantonsseiten nennen, dass Fristen gelten)', () => {
+      // Rechtsprüfung 09.11.2026: Der gemeinsame Satz der Erklärseiten widersprach dem fristSatz.
+      expect(text).toContain('keine Beträge und keine genauen Fristen');
+      expect(text).not.toMatch(/keine Beträge und Fristen|keine Beträge, Fristen/);
+    });
+
     it('trägt den Vorbehalt weit oben und verlinkt Impressum und Datenschutz', () => {
       expect(text.slice(0, 700)).toContain('keine Rechts- oder Finanzberatung');
       expect(text).toContain('zuständigen Stelle');

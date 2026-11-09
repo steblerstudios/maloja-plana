@@ -29,7 +29,7 @@ import { SPRACHEN, RAHMEN, SPRACHNAME } from './seiten-sprachen.mjs';
 import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
-import { KANTONSSEITEN, WEGE } from './seiten/praemienverbilligung-kantone.mjs';
+import { KANTONSSEITEN, WEGE, KANTON_HINWEIS } from './seiten/praemienverbilligung-kantone.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
 const BLOECKE = { ...BLOECKE_FIGUREN, ...BLOECKE_VERGLEICH };
@@ -798,7 +798,7 @@ function kantonsseiteBauen(k) {
     <main>
       <h1>${esc(k.titel)}</h1>
       <p class="vorspann">Die Prämienverbilligung ist ein Beitrag an die Krankenkassenprämie. Wie sie allgemein funktioniert, steht auf der Seite <a href="/${haupt.pfad}/">${esc(haupt.brotkrume)}</a>. Hier steht, was im Kanton ${esc(k.name)} gilt.</p>
-      <p class="hinweis">${esc(R.kurzhinweis)}</p>
+      <p class="hinweis">${esc(KANTON_HINWEIS.kurz)}</p>
 
       <h2>Muss ich etwas tun?</h2>
       <div class="weg ${k.weg}">
@@ -843,7 +843,7 @@ ${k.quellen.map((q) => (q.url
       </ul>
       <p class="leise">Eine Auswahl, nicht abschliessend. Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
 
-      <p class="vorbehalt">${R.vorbehalt}<br>
+      <p class="vorbehalt">${KANTON_HINWEIS.vorbehalt}<br>
       <strong>Mit den Unterlagen des Kantons abgeglichen: ${esc(k.geprueft)}.</strong> Keine amtliche Auskunft.</p>
 
       <h2>${esc(R.weiterlesenTitel)}</h2>
