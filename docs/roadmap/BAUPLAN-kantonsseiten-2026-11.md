@@ -2,8 +2,8 @@
 
 **Stand:** 09.11.2026 · Entwurf · Auftrag von Stebler Studios («Ja, Bauplan»), nach der
 SEO-Durchsicht vom selben Tag.
-**Status:** nichts gebaut. Dieses Blatt beschreibt, was gebaut würde, und listet die
-Entscheide, die vor dem Bau fallen müssen (Abschnitt 9).
+**Status:** nichts gebaut. Entscheide E1–E4 gefallen am 09.11.2026 (Abschnitt 9).
+Nächster Schritt: PR 1 (Linkfehler BE/GE), dann PR 2 mit den Piloten.
 
 ---
 
@@ -195,7 +195,13 @@ Kanton) · `rechts-pruefer` (Haftungsausschluss, Quellen) · `copy-pruefer` (Ton
 3. die übrigen 23 Kantone + Abschnitt «Ihr Kanton» auf der Hauptseite
 4. Brand Book nachführen (neuer Seitentyp), im selben Zweig wie 2
 
-## 9. Offene Entscheide (vor dem Bau)
+## 9. Entscheide
+
+> ✅ **Entschieden 09.11.2026 von Stebler Studios: alle vier Empfehlungen angenommen**
+> (Antwort «Ja, alle vier»). Damit gilt: Thema zuerst in der Adresse · 3 Pilotkantone
+> ZH, BE, TG · deutsche Pfade, französische erst mit der Freigabe der Übersetzungen ·
+> «Antrag nötig» Gold, «von Amtes wegen» Blau, immer mit Wort und Zeichen.
+> Die Tabelle bleibt als Begründung stehen.
 
 | | Frage | Empfehlung |
 |---|---|---|
