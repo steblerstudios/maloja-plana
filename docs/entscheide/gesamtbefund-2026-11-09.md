@@ -153,6 +153,16 @@ siebenmal neu entschieden werden:
    anderen Menschen (Vertrauensperson, Ersatzperson); `autocomplete="name"` würde den eigenen Namen einsetzen.
 3. **SEO-Weg:** Sprachfreigabe fr/it/en (G1) und 403 an den Sprachwurzeln (S6) gehören zusammen. Welche neuen
    Erklärseiten zuerst kommen (G2), ist ein Inhaltsentscheid und braucht den rechts- und swiss-precision-pruefer.
+   **⟨Berichtigung 09.11., beim Start von Querschnitt 3⟩ G1 ist keine Lücke im Code, sondern eine gewollte Sperre.**
+   `scripts/seiten-sprachen.mjs` gibt eine Sprache erst frei, wenn ein Mensch sie gelesen hat; der Prüfdurchgang
+   durch Agenten (#692, gemergt 06.11.) ersetzt das ausdrücklich nicht. Offen laut Plan vom 05.11.: menschliche
+   Lektüre (en, evtl. fr: Stebler Studios; it: Person mit Italienisch), drei Gesetzeszitate am Fedlex-Text
+   (UWG Art. 3 fr/it, BV Art. 12 en), Entscheid zu den Stellen der Romandie und des Tessins. Der Satz in G1
+   «im Code noch nicht umgesetzt» war zu kurz.
+   **S6 · 403 an `/fr/` usw.:** Die `.htaccess` geht nicht mit dem Deploy (`deploy.sh` lädt sie nicht hoch, die
+   Server-Datei pflegt Stebler Studios von Hand). Lösung, die mit dem normalen Deploy kommt: je Sprache eine kleine
+   **Sprach-Startseite** `/fr/index.html` usw. mit der Liste der Erklärseiten dieser Sprache und dem Weg in die App
+   (`/?lang=fr`). Solange die Sprache gesperrt ist, trägt sie wie die Unterseiten `noindex, follow`.
 4. Danach die sieben Kapitel in der Ordnung des Dashboards: Basis · Wohnen · Finanzen · Versicherungen & Vorsorge ·
    Ausbildung & Arbeit · Behörden · Gesundheit.
 
