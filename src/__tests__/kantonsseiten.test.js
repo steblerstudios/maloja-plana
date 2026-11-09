@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { KANTONSSEITEN, WEGE, WEG_AUS_NOTEKEY, monatJahr, appRechnetFuer, rechenmodul } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
+import { KANTONSSEITEN, KANTONSFOLGE, WEGE, WEG_AUS_NOTEKEY, monatJahr, appRechnetFuer, rechenmodul } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
 import { BASIS, QUELLEN } from '../../scripts/seiten-inhalt.mjs';
 import { CANTONAL_IPV } from '../config/cantonalData.js';
 import { CANTONAL_LINKS, CANTONAL_LINKS_GEPRUEFT } from '../data/direktLinks.js';
@@ -63,8 +63,10 @@ describe('Kantonsseiten Prämienverbilligung', () => {
     for (const k of ['ZH', 'BE', 'GE', 'AG']) expect(appRechnetFuer(k), k).toBe(true);
   });
 
-  it('es gibt die drei Pilotkantone (Entscheid E2)', () => {
-    expect(KANTONSSEITEN.map((k) => k.kanton).sort()).toEqual(['BE', 'TG', 'ZH']);
+  it('jeder Kanton hat eine Seite, ausser BL und VS (Amtslink ungeprüft, Riegel 1)', () => {
+    const ohne = KANTONSFOLGE.filter((k) => !KANTONSSEITEN.some((x) => x.kanton === k));
+    expect(ohne).toEqual(['BL', 'VS']);
+    for (const k of ohne) expect(CANTONAL_LINKS_GEPRUEFT[k].ipv, k).toBeNull();
   });
 
   describe.each(KANTONSSEITEN.map((k) => [k.pfad, k]))('/%s/', (pfad, k) => {
@@ -106,9 +108,13 @@ describe('Kantonsseiten Prämienverbilligung', () => {
       else expect(karte).not.toMatch(/rechnet/);
     });
 
-    it('nennt eine Frist (ohne Datum) im Kasten «Muss ich etwas tun?»', () => {
+    it('nennt im Kasten «Muss ich etwas tun?», was zur Frist gilt (auch: dass es keine gibt)', () => {
+      // Bis 09.11.2026 verlangte dieser Test das Wort «Frist». Für AI (keine Antragsfrist)
+      // schrieb ein Entwurf darauf die Einsprachefrist in den Kasten — den Test bedient
+      // statt die Sache. Jetzt zählt nur, dass der Frist-Satz des Kantons dort steht.
+      expect(k.fristSatz.length).toBeGreaterThan(20);
       const box = sichtbar(html.split(`<div class="weg ${k.weg}">`)[1].split('</div>')[0]);
-      expect(box).toMatch(/Frist|laufende Jahr/);
+      expect(box).toContain(k.fristSatz);
     });
 
     it('nennt denselben Weg wie die App, mit Wort und Zeichen', () => {

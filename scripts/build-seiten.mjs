@@ -225,9 +225,15 @@ function seiteBauen(seite, sprache) {
   // Hauptseite verlinkt. Ohne diesen Link fände Google die Unterseiten nur über
   // die Sitemap (vgl. /krankenkasse/: nicht verlinkt, «gefunden – nicht indexiert»).
   const kantonsBlock = sprache.code === 'de' && seite.pfad === 'praemienverbilligung' && KANTONSSEITEN.length
-    ? `\n\n        <h2>In Ihrem Kanton</h2>\n        <p>Für diese Kantone gibt es eine eigene Seite: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was dort anders ist.</p>\n        <ul class="weiter">\n` +
-      KANTONSSEITEN.map((k) => `          <li><a href="/${k.pfad}/">${esc(k.brotkrume)}</a><span>${esc(WEGE[k.weg].label)}</span></li>`).join('\n') +
-      `\n        </ul>`
+    ? `\n\n        <h2 id="kantone">In Ihrem Kanton</h2>\n        <p>Für diese Kantone gibt es eine eigene Seite: ob Sie einen Antrag stellen müssen, welche Stelle zuständig ist und was dort anders ist.</p>` +
+      // Nach Weg gegliedert (Bauplan §3), innerhalb in der Reihenfolge der Bundesverfassung.
+      Object.keys(WEGE).map((weg) => {
+        const liste = KANTONSSEITEN.filter((k) => k.weg === weg);
+        if (!liste.length) return '';
+        return `\n        <h3>${esc(WEGE[weg].label)}</h3>\n        <ul class="weiter">\n` +
+          liste.map((k) => `          <li><a href="/${k.pfad}/">${esc(k.brotkrume)}</a></li>`).join('\n') +
+          `\n        </ul>`;
+      }).join('')
     : '';
 
   // JSON-LD. FAQPage ist hier zulässig, WEIL die Fragen und Antworten auf der
@@ -746,7 +752,6 @@ function kantonsseiteBauen(k) {
   const R = RAHMEN.de;
   const seitenUrl = url(k.pfad, sprache);
   const haupt = SEITEN.find((s) => s.pfad === 'praemienverbilligung');
-  const nachbarn = KANTONSSEITEN.filter((x) => x.kanton !== k.kanton);
   const w = WEGE[k.weg];
 
   const ld = {
@@ -841,7 +846,7 @@ ${k.quellen.map((q) => (q.url
       <h2>${esc(R.weiterlesenTitel)}</h2>
       <ul>
           <li><a href="/${haupt.pfad}/">${esc(haupt.brotkrume)}: so funktioniert sie in der ganzen Schweiz</a></li>
-${nachbarn.map((x) => `          <li><a href="/${x.pfad}/">Prämienverbilligung im ${esc(x.brotkrume)}</a></li>`).join('\n')}
+          <li><a href="/${haupt.pfad}/#kantone">Prämienverbilligung in den anderen Kantonen</a></li>
           <li><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a></li>
       </ul>
     </main>
