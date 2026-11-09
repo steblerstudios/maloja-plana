@@ -2345,6 +2345,7 @@ export default {
         incomeType: { label: "Tip d'entrada", options: { netto: 'Net (quai che jau retschaiv)', brutto: 'Brut (avant deducziuns)' } },
         dreizehnter: { label: '13avel salari mensil?', options: { no: 'Na', yes: 'Gea' } },
         employer: 'Patrun',
+        workCanton: 'Arbeitsort (Kanton)', // TODO(rm): übersetzen
         employerAddress: 'Adressa dal patrun',
         employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', apprentice: 'En emprendissadi', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
         startDate: 'Cumenzament dal lavur',
@@ -2387,6 +2388,7 @@ export default {
         sideEmployerAddress: 'Per il chau da brev — via, NPA e lieu, sco sin il certificat da salari.',
         sideHoursPerWeek: 'Necessari per la controlla dal salari minimal da l’activitad accessorica: senza uras na po nagin salari per ura vegnir calculà.',
         employerAddress: 'Per brevs al patrun — via, NPA e lieu.',
+        workCanton: { sie: 'Für den Mindestlohn zählt der Kanton, in dem Sie arbeiten. Leer bedeutet: Ihr Wohnkanton.', du: 'Für den Mindestlohn zählt der Kanton, in dem du arbeitest. Leer bedeutet: dein Wohnkanton.' }, // TODO(rm): übersetzen
         taxableIncome: 'Entrada taxabla da la decleraziun da taglia (per onn, suenter deducziuns). Mo per orientaziun — po alimentar il quintader da taglia.',
         familienzulagen: "Incl. supplements d'uffants e supplements da furmaziun. Sche las allocaziuns èn gia cuntegnidas en la paja endatada, betg endatar nagut qua, uschiglio dumbran ellas dubel.", // TODO(rm): provisorisch
         monthlyTax: 'Stimà u tenor quint da taglia.',
@@ -4743,6 +4745,7 @@ export default {
     dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
     jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
+    arbeitsortAnnahme: { sie: 'Geprüft für den Kanton {kanton}, in dem Sie wohnen. Massgebend ist der Arbeitsort — arbeiten Sie in einem anderen Kanton, tragen Sie ihn im Feld «Arbeitsort (Kanton)» ein.', du: 'Geprüft für den Kanton {kanton}, in dem du wohnst. Massgebend ist der Arbeitsort — arbeitest du in einem anderen Kanton, trag ihn im Feld «Arbeitsort (Kanton)» ein.' }, // TODO(rm): übersetzen
   },
 
 
@@ -4970,6 +4973,8 @@ export default {
     repaymentRechnerOver: { sie: "Radund {ueber} fissan sur la franchisa ({freibetrag}). Questa part pudess vegnir pretendida enavos — al pli tant sco Vus avais retschavì da l'agid social, e tenor il chantun.", du: "Radund {ueber} fissan sur la franchisa ({freibetrag}). Questa part pudess vegnir pretendida enavos — al pli tant sco ti has retschavì da l'agid social, e tenor il chantun." },
     repaymentRechnerUnder: "Quai fiss sut la franchisa ({freibetrag}) — lura na fiss per regla nagut da rembursar.",
     repaymentRechnerHint: { sie: "Orientaziun cun las franchisas turitgaisas. Variescha tenor il chantun — en cas da dubi, infurmai Vus tar il servetsch social da Vossa vischnanca.", du: "Orientaziun cun las franchisas turitgaisas. Variescha tenor il chantun — en cas da dubi, infurmescha tai tar il servetsch social da tia vischnanca." },
+    repaymentNurZH: { sie: 'Eine Zahl rechnet Maloja nur mit den Zürcher Freibeträgen. Ob und wie viel {kanton} zurückfordert, regelt der Kanton — fragen Sie beim Sozialdienst Ihrer Gemeinde.', du: 'Eine Zahl rechnet Maloja nur mit den Zürcher Freibeträgen. Ob und wie viel {kanton} zurückfordert, regelt der Kanton — frag beim Sozialdienst deiner Gemeinde.' }, // TODO(rm): übersetzen
+    repaymentKantonOffen: { sie: 'Ihr Kanton', du: 'dein Kanton' }, // TODO(rm): übersetzen
   },
 
   tax: {
@@ -4996,6 +5001,9 @@ export default {
     maintenance: 'Prestaziuns alimentaras',
     education: 'Furmaziun supplementara',
     otherDeductions: 'Autras deducziuns',
+    grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr 2026)', // TODO(rm): übersetzen
+    grenze_education: 'Gesetzlich höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren)', // TODO(rm): übersetzen
+    gekappt: 'Für die Schätzung auf {max} begrenzt.', // TODO(rm): übersetzen
     calculation: 'Calculaziun',
     taxableIncome: 'Entrada imponibla',
     estimatedTax: 'Taglientas stimadas',
