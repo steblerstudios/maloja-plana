@@ -141,7 +141,8 @@ siebenmal neu entschieden werden:
    Das sind drei kleine Bauteile mit Wirkung auf jeder Seite.
    Bild [Querschnitt 1](../design/querschnitt-1-gestaltung.html) (09.11.). Empfehlung **A-A** Papier mit Haarlinie statt
    Glas, **B-A** Boden 13 px und Grafiken einzeln bei 375 px messen, **C-A** neuer Token `feldrand` (hell `#808286`
-   3,25:1, dunkel `#80838A` 3,33:1). 🔄 Entscheid offen.
+   3,25:1, dunkel `#80838A` 3,33:1). ✅ **09.11.: C = A** (Stebler Studios: «c finde ich gut»). 🔄 **A und B
+   offen:** «a und b verstehe ich nicht» → an echten Seiten neu zeigen.
 2. **Querschnitt Formulare:** Fokus und Ansage in `FragenAblauf` (G4, U6), Vorlese-Knopf aus dem Label (U3/U4).
 3. **SEO-Weg:** Sprachfreigabe fr/it/en (G1) und 403 an den Sprachwurzeln (S6) gehören zusammen. Welche neuen
    Erklärseiten zuerst kommen (G2), ist ein Inhaltsentscheid und braucht den rechts- und swiss-precision-pruefer.
