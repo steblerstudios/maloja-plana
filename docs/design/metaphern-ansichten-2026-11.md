@@ -127,6 +127,34 @@ Mittelpunkt); `miniKompass.js` bleibt an seinem Ort. 🛑 **Nicht am Pixel gepr�
 echter Grösse im Panorama ansehen (hell und dunkel, 3:1); wirkt er unruhig, Äste ausdünnen, nicht
 die Variante wechseln.
 
+**Vorschau im Browser, 09.11.2026** (Wegwerf-Kopie von `main` `76f5c7bd`, Beispieldaten, nicht committet):
+- Mit Beschriftung **rechts** (wie heute beim Rucksack) überdecken sich die drei Zeichen schon bei
+  1000 px («Rucksac»). **Beschriftung unter dem Zeichen** (Vorschlag Stebler Studios) steht sauber;
+  gemessen per Überlappungs-Prüfung der Etiketten und Knöpfe: 1400 · 1280 · 1000 · 920 px ohne
+  Berührung, **820 und 768 px mit Überdeckung** (Finanzbaum gegen Rucksack und Kompass).
+- Zeichen C wirkt bei 17 px eher wie ein Y; hell ist das Gold blass. Der Kompass hält.
+- ~~Offen für den Bau: was unter ~900 px gilt (kürzere Beschriftung oder nur Zeichen).~~
+  **Gelöst, Vorschlag Stebler Studios:** Finanzbaum (Mitte) als einziges **oben** beschriftet,
+  Rucksack und Kompass unten — ein Zickzack. Gemessen 820 und 768 px: keine Überdeckung mehr.
+- **Farbe:** der Rucksack ist braun, weil sein Gold (`palette.gold`, seit 27.09.) für die weisse
+  Beschriftung auf 4,5:1 abgedunkelt wird (`etikettGrund`). Der Finanzbaum trägt in der Vorschau die
+  Finanzen-Farbe (Gold, `#C4A870`) und wird dadurch genauso braun. Zwei gleiche Farben nebeneinander
+  für zwei verschiedene Wege: offen.
+- **Vorschlag nach der Knopf-Logik** (Fassung 9, 05.11.2026, Markenhandbuch §7, `knopfarten.test.js`:
+  Gold = handeln · Grün = gut/erledigt · Blau = informieren · Rot = warnen), in der Vorschau gezeigt:
+  **Rucksack Gold** (was tue ich jetzt) · **Finanzbaum Grün** (wächst mit Erledigtem, Frage 3) ·
+  **Kompass Blau** (informiert, was zusteht). Rot nicht, weil Rot warnt. Ein früherer Entscheid
+  «Rucksack rot» war im Code, in den Blättern und im Gedächtnis nicht zu finden; rot ist der
+  Arztkoffer (Ochsenblut). Abweichung von der Farbregel 06.11. (Ast Finanzen = Gold): die
+  Tal-Zeichen sind Zugänge wie Knöpfe, keine Seitenzeichen. **✅ Entschieden 09.11.2026**
+  (Stebler Studios: «Ja, so»).
+
+**Stand für den Bau (Tal-Zeichen):** Rucksack links, Gold, Beschriftung unten · Finanzbaum Mitte,
+Grün, Zeichen C, Beschriftung **oben** · Kompass rechts, Blau, Linienfassung, Beschriftung unten.
+Vorschau-Code (verworfen, nur als Vorlage): Etikett `left: 0, transform: translateX(-50%)`,
+`top` bzw. für den Finanzbaum `bottom` = `sz / 2 + 4`. Offen beim Bau: C bei 17 px lesbarer machen,
+Startbündel messen, Texte in allen 5 Sprachen («Finanzbaum» ist neu).
+
 ## 3 · Was daraus für die Rucksack-Gegenstände folgt
 
 | Gegenstand | Fach (neu) | Änderung am Inhalt | Zeichen |
