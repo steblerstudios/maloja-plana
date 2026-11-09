@@ -63,7 +63,7 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton }) {
   const link = { color: palette.skyDeep || palette.text, textDecoration: 'underline', textUnderlineOffset: '2px' };
   const ohneKanton = zeile({ color: palette.mid }, t('erklaerseite.ohneKanton', { bereich: t('chapters.basis.title') }));
 
-  // «Beides» (Sophie 09.11.2026): neben der Karte die Zahl davor und danach, als kleine Tabelle. Die Farben
+  // «Beides» (Stebler Studios 09.11.2026): neben der Karte die Zahl davor und danach, als kleine Tabelle. Die Farben
   // zeigen nur die Karte (nach Verbilligung); die Wirkung der Verbilligung steht in den Zahlen.
   const vergleichsTabelle = () => {
     const V = K.vergleich;

@@ -74,7 +74,7 @@ describe('Die Karte (C)', () => {
     }
   });
 
-  // «Beides» (Sophie 09.11.2026): bei der Last nach Verbilligung auch die Last davor, als Zahl, nicht als Karte.
+  // «Beides» (Stebler Studios 09.11.2026): bei der Last nach Verbilligung auch die Last davor, als Zahl, nicht als Karte.
   it('Last nach Verbilligung: Tabelle vor/nach für den Kanton und die Schweiz, Werte aus der Atlas-Datei', () => {
     const last = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'scripts', 'daten', 'kantonsatlas', 'last.json'), 'utf8'));
     const pz = (n) => `${Number(n).toFixed(1).replace('.', ',')} %`;

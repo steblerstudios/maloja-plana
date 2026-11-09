@@ -37,7 +37,7 @@ const KOPF = '// Erzeugt von scripts/app-verstehen.mjs — nicht von Hand änder
 
 // Welche Karten die App zeigt. Schlüssel = Ebene des Atlas; der Anker ist dieselbe id wie auf /kantonsatlas/.
 export const APP_KARTEN = ['praemie', 'lastNachIpv'];
-// Zu welcher Karte die App eine zweite Zahl daneben stellt (Sophie 09.11.2026, «beides?»): bei der Last nach
+// Zu welcher Karte die App eine zweite Zahl daneben stellt (Stebler Studios 09.11.2026, «beides?»): bei der Last nach
 // Verbilligung auch die Last davor. Nur als Zahl, nicht als zweite Karte: Der Atlas teilt jede Karte in eigene
 // Viertel; zwei Karten hätten zwei Farbskalen, und ein Kanton könnte vorher und nachher gleich aussehen.
 export const APP_VERGLEICH = { lastNachIpv: 'last' };
