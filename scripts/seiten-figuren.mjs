@@ -273,16 +273,20 @@ export function figurAlter(ctx) {
   });
 }
 
-export function figurKostenteil(ctx) {
+// Angaben ohne «Abb. n» und ohne Tabelle: auch die App liest sie (scripts/app-verstehen.mjs, Variante D 09.11.2026).
+export function kostenteilAngaben() {
   const frBild = 1000;
-  return abbildung(ctx, {
+  return {
     id: 'abb-kostenteil', datei: 'krankenkasse-kostenteil.svg', stil: 'hl', kurz: 'Der eigene Anteil',
     titel: `Der eigene Anteil je nach Jahreskosten, bei Franchise ${fr(frBild)}`,
     beschreibung: `Eine Treppe aus 25 Pfosten, einer je 500 Franken Jahreskosten. Bis zur Franchise von ${fr(frBild)} Franken steigt sie steil, danach flacher mit ${Math.round(SELBSTBEHALT_RATE * 100)} Prozent, und ab dem Dach von ${fr(frBild + SELBSTBEHALT_MAX)} Franken bleibt sie gleich hoch.`,
     wert: `Franchise ${fr(frBild)} · höchstens ${fr(frBild + SELBSTBEHALT_MAX)} Fr. im Jahr`,
     legende: `Ein Pfosten je 500 Franken Jahreskosten, so hoch wie der eigene Anteil, bei einer Franchise von ${fr(frBild)} Franken. Erwachsene, Grundregel: Franchise, danach ${Math.round(SELBSTBEHALT_RATE * 100)} % Selbstbehalt bis höchstens ${fr(SELBSTBEHALT_MAX)} Franken. Ohne Spitalbeitrag und ohne den höheren Selbstbehalt bei gewissen Medikamenten. [[q:kvg]]`,
-    nachher: tabelleDach(),
-  });
+  };
+}
+
+export function figurKostenteil(ctx) {
+  return abbildung(ctx, { ...kostenteilAngaben(), nachher: tabelleDach() });
 }
 
 // Das Dach je Franchise, aus kvgLeistungen.js gerechnet.

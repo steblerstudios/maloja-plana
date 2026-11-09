@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { ansichtIkon } from './config/ansichtenRegister.js';
-import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
+import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
@@ -663,6 +663,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       zeileKnopf({ key: 'scanner', titel: t('vu.scanner'), sub: t('nav.kkScanner'), gehe: () => onNavigate('kk') })),
 
     // D1 (06.11.2026): zur öffentlichen Erklärseite «Warum die Krankenkasse so viel kostet».
+    // C + D (09.11.2026): Karte mit dem eigenen Kanton und Erklärfigur, erst beim Aufklappen geladen.
+    h(VerstehenImWerkzeug, { palette, t, view: 'praemien', kanton: data.basis?.canton || regionInfo?.kanton || '' }),
     h(ErklaerseiteLink, { palette, t, view: 'praemien' }),
     h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),

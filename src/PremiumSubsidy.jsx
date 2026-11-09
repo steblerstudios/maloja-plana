@@ -11,7 +11,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
+import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { ipvErinnerung, erinnerungLiegtSchon } from './data/ipvErinnerung.js';
@@ -613,6 +613,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     aufklappZeile(t('dl.mirrorTitle'),
       React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv', ohneRahmen: true })),
     // D1 (06.11.2026): zur öffentlichen Erklärseite «Prämienverbilligung: wer Anspruch hat».
+    // C (09.11.2026): Prämienlast nach Verbilligung auf der Karte, der eigene Kanton markiert.
+    React.createElement(VerstehenImWerkzeug, { palette, t, view: 'premium', kanton: canton }),
     React.createElement(ErklaerseiteLink, { palette, t, view: 'premium' }),
 
     // ── Ihr IPV-Weg ───────────────────────────────────────────────────────

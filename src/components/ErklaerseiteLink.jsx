@@ -98,4 +98,55 @@ export const MehrDazu = ({ palette, t, seite }) => {
     React.createElement(ExternerLink, { t, href: ziel[0], hrefLang: 'de', lang: 'de', style: linkStil(palette) }, ziel[1]));
 };
 
+// ─── C + D · «Verstehen im Werkzeug» (Entscheid Stebler Studios 09.11.2026, «Ja, C + D bauen») ─────────
+// Bis hier führten aus dem Werkzeug nur Textlinks in einen neuen Tab; Karten und Erklärfiguren sah man in der
+// App nie. Jetzt klappen sie direkt beim Werkzeug auf:
+//   C · «Ihr Kanton auf der Karte»: die Atlas-Karte, der eigene Kanton markiert, seine Zahl daneben;
+//   D · «Im Bild erklärt»: das Standbild der Erklärfigur, die bewegte Fassung als Link.
+// Pilot Kapitel Versicherungen (Prämien, Prämienverbilligung). Beides wird erst beim Aufklappen
+// nachgeladen: Startbündel bei 64.19 von 65 kB, das Limit wird nicht angehoben (Regel 02.11.2026).
+// Die Textlinks darunter bleiben als Weg zur ganzen Seite.
+export const VERSTEHEN = {
+  praemien: { karte: 'praemie', figur: 'kostenteil' },
+  premium: { karte: 'lastNachIpv' },
+};
+
+const KantonsKarteKlein = React.lazy(() => import('./KantonsKarteKlein.jsx'));
+const ErklaerFigurKlein = React.lazy(() => import('./ErklaerFigurKlein.jsx'));
+
+// Schlägt das Nachladen fehl (offline, alte Fassung im Cache): ein ruhiger Satz statt eines leeren Kastens.
+class NachladeGrenze extends React.Component {
+  constructor(props) { super(props); this.state = { fehler: false }; }
+  static getDerivedStateFromError() { return { fehler: true }; }
+  componentDidCatch(error) { console.error('[Maloja Plana] Nachladen:', error); }
+  render() {
+    if (this.state.fehler) return React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: this.props.palette.mid } }, this.props.t('erklaerseite.ladeFehler'));
+    return this.props.children;
+  }
+}
+
+// Ein Aufklapper: der Inhalt wird erst gerendert (und damit geladen), wenn er offen ist.
+const Aufklapper = ({ palette, t, titel, teil, children }) => {
+  const [offen, setOffen] = React.useState(false);
+  return React.createElement('details', {
+    'data-teil': teil, onToggle: (e) => setOffen(e.currentTarget.open),
+    style: { marginTop: space.sm + 'px', borderTop: `1px solid ${palette.border}`, paddingTop: space.xs + 'px' },
+  },
+  React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', lineHeight: '44px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel),
+  offen && React.createElement(NachladeGrenze, { palette, t },
+    React.createElement(React.Suspense, {
+      fallback: React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.mid } }, t('erklaerseite.laedt')),
+    }, children)));
+};
+
+export const VerstehenImWerkzeug = ({ palette, t, view, kanton }) => {
+  const v = VERSTEHEN[view];
+  if (!v) return null;
+  return React.createElement('div', { 'data-teil': 'verstehen-im-werkzeug', style: { marginTop: space.md + 'px' } },
+    v.karte && React.createElement(Aufklapper, { palette, t, teil: 'aufklapper-karte', titel: t(kanton ? 'erklaerseite.karteMitKanton' : 'erklaerseite.karteOhneKanton') },
+      React.createElement(KantonsKarteKlein, { palette, t, karte: v.karte, kanton })),
+    v.figur && React.createElement(Aufklapper, { palette, t, teil: 'aufklapper-figur', titel: t('erklaerseite.imBild') },
+      React.createElement(ErklaerFigurKlein, { palette, t, figur: v.figur })));
+};
+
 export default ErklaerseiteLink;
