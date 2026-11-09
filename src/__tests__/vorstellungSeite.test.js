@@ -74,6 +74,11 @@ describe('Vorstellungsseite: Inhalt', () => {
     for (const s of seiten) expect(fs.existsSync(path.join(WURZEL, 'public', s, 'index.html')), s).toBe(true);
   });
 
+  it('wer keinen Zugangscode hat, erfährt, wie er per E-Mail kommt (Entscheid 09.11.2026)', () => {
+    const fragen = html.slice(html.indexOf('Warum brauche ich einen Zugangscode?'));
+    expect(fragen).toMatch(/^[\s\S]{0,400}mailto:info@malojaplana\.ch\?subject=Maloja%20Plana%3A%20Zugangscode/);
+  });
+
   it('ohne Sozialberatung und ohne Platzhalter, solange die Rechtstexte offen sind', () => {
     expect(html).not.toMatch(/Sozialberatung|#beratung|\[Name\]|class="platzhalter"/i);
   });
