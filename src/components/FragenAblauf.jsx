@@ -123,14 +123,14 @@ export const FragenAblauf = ({ palette, t, ns, fragen, antworten, setzen, titel,
       ),
       // B — Frage · C — Warum
       React.createElement('div', {
-        ref: flaeche, tabIndex: -1, role: 'group', 'data-fragen-flaeche': '', style: { outline: 'none' },
+        ref: flaeche, tabIndex: -1, role: 'group', 'data-fragen-flaeche': '', style: { outline: 'none', scrollMarginTop: 'var(--mp-sprungabstand)' },
         'aria-label': imVorschau ? titel : t(ns + '.ui.fortschritt', { n: schritt + 1, total }) + ': ' + t(ns + '.frage.' + f.key),
       },
       imVorschau ? vorschau({ zumAnfang: () => geheZu(0), knopf }) : React.createElement('div', { key: f.key },
         frageSeite(f),
         React.createElement('details', { style: { marginTop: space.sm + 'px', fontSize: text.sm, color: palette.mid } },
-          // 12 px oben und unten ergeben mit der Zeile 44 px Tippfläche; display:flex würde in WebKit das Dreieck nehmen.
-          React.createElement('summary', { style: { cursor: 'pointer', color: palette.sandDeep, fontWeight: weight.medium, padding: '12px 0' } }, t(ns + '.ui.warum')),
+          // 12 + 20 + 12 = 44 px Tippfläche; display:flex würde in WebKit das Dreieck nehmen.
+          React.createElement('summary', { style: { cursor: 'pointer', color: palette.sandDeep, fontWeight: weight.medium, padding: '12px 0', lineHeight: '20px' } }, t(ns + '.ui.warum')),
           React.createElement('p', { style: { margin: space.xs + 'px 0 0', lineHeight: leading.normal, color: palette.mid } }, t(ns + '.warum.' + f.key)))
       )),
       // D — Zurück / Weiter
