@@ -153,7 +153,9 @@ Notfall = Rettungskreuz⟩
 Zeichen im Abzeichen = was passiert, Farbe = wer mitspielt (anderer Lebensbereich, Geld = Gold, sonst
 leer). Unter 20 px das einfache Zeichen. Helle Details sind ausgestanzt, nie weiss gemalt. Das kleine
 Kalender-Zeichen (Sanduhr blau, ! rot) und das grosse **Kalenderblatt** unten in §7 sprechen dieselbe
-Farbsprache: Sky = Frist, Rose = vorbei/überfällig. Regeln und Quellen: [`ICON_KONVENTION.md`](../ICON_KONVENTION.md).
+Farbsprache: Sky = Frist, Rose = vorbei/überfällig. **Auf getönten Kacheln** steht das Zeichen im selben
+Farbton, nur so viel tiefer, dass es gegen die Kachel 3:1 erreicht (09.11.2026); die Kachel selbst bleibt.
+Regeln und Quellen: [`ICON_KONVENTION.md`](../ICON_KONVENTION.md).
 
 Vollständige Tabelle inkl. Status (✓/🔄/➕/⚠️) und Code-Keys:
 [`icon-dictionary.md`](icon-dictionary.md). Offen u.a.: Export-Metapher, Vorsorge-Metapher,
