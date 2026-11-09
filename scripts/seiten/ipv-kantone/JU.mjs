@@ -92,7 +92,8 @@ export default {
   // réduction des primes»; Adresse «ETABLISSEMENT CANTONAL DES ASSURANCES SOCIALES - ECAS Jura …
   // Rue Bel-Air 3 … 2350 Saignelégier».
   stelleSatz: 'Zuständig ist die kantonale Ausgleichskasse in Saignelégier. Sie gehört zum Etablissement cantonal des assurances sociales (ECAS), der kantonalen Anstalt für Sozialversicherungen.',
-  amtsseite: 'Seite der Ausgleichskasse Jura zur Prämienverbilligung (französisch)',
+  // Ziel seit 09.11.2026 die Bereichsseite ohne Jahr; ihr Menü führt alle Seiten zur RPI.
+  amtsseite: 'Seite der Ausgleichskasse Jura zur Krankenversicherung und Prämienverbilligung (französisch)',
   besonders: [
     // Arrêté art. 1 al. 1 (siehe oben), al. 4–5 (Korrekturen und Abzüge); [ECAS]: «calculé sur la
     // base du revenu imposable tel qu'il ressort de la taxation fiscale définitive de l'année 2024 …

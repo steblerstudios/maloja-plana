@@ -83,7 +83,8 @@ export default {
   // complémentaires communique au service notamment le nom des assurés bénéficiaires …»), art. 11B
   // (PC familiales), art. 11C al. 1 und 4 (Hospice général); LaLAMal art. 22 al. 7–9.
   stelleSatz: 'Der kantonale Dienst für Krankenversicherung (SAM) entscheidet und nimmt Anträge per Post oder online entgegen. Am Schalter empfängt er nur mit Termin. Wer Ergänzungsleistungen zur AHV oder IV, Familien-Ergänzungsleistungen oder Sozialhilfe des Hospice général bezieht, erhält die Verbilligung über diese Stellen, die die Daten direkt an den SAM melden.',
-  amtsseite: 'Seite des Kantons Genf zum Antrag auf Prämienverbilligung (französisch)',
+  // Ziel seit 09.11.2026 die allgemeine Seite ohne Jahr; sie verweist auf die Antragsseiten.
+  amtsseite: 'Seite des Kantons Genf zur Prämienverbilligung, mit den Antragsseiten (französisch)',
   besonders: [
     // LaLAMal art. 21 al. 3 («revenu déterminant … loi sur le revenu déterminant unifié»), art. 21
     // al. 1 (Gruppen 1–8), art. 22 al. 1 («Le montant des subsides est de : Groupe 1 : … par mois»).
