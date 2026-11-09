@@ -1,0 +1,22 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Export und Sicherung</title>
+<style>body{margin:0;padding:16px;background:#F7F4EE;color:#2E3A2F;font:14px/1.45 system-ui,-apple-system,sans-serif;max-width:900px}h1{font-size:20px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}.b{border-radius:12px;padding:12px;border:1px solid #E4DED2;background:#fff}.b.dk{background:#2B2A27;color:#ECE7DD;border-color:#4A4843}
+.pt{font-weight:700}.cap{font-size:12.5px;opacity:.8;margin:4px 0 10px}.z{display:flex;gap:10px;align-items:center;padding:6px 4px;border-bottom:1px solid #E4DED288}.dk .z{border-color:#4A484388}
+.z small{display:block;font-size:11px;opacity:.6}.k{display:inline-flex;gap:6px;align-items:center;border:1px solid currentColor;border-radius:8px;padding:4px 10px;font-size:13px;margin:8px 6px 0 0}
+.emp{margin:16px 0;padding:12px 14px;border-left:3px solid #B08D57;background:#B08D5714}</style>
+<h1>Export und Sicherung: ein Zeichen oder zwei?</h1>
+<p>Im Blatt stehen zwei Sätze: am 06.11. (Bau Schritt 2) «Sicherung trägt das Sicherungs-Zeichen», am 07.11. (Blätter) «Export = Pfeil nach unten». Gezeigt an den echten Stellen: Einstellungen → Sicherung, Unterlagen → Weg «Sicherung», Seite «Daten sichern» mit den Knöpfen.</p>
+<div class=g id=g></div>
+<div class=emp><b>Empfehlung A, zwei Zeichen:</b> es sind zwei verschiedene Dinge. Die <b>Sicherung</b> ist eine Kopie der ganzen App, die man später zurückspielt (Doppelblatt mit Pfeil hinein). <b>Herunterladen/Exportieren</b> holt eine einzelne Datei (Pfeil in die Ablage) — dasselbe Zeichen wie bei «Kalender exportieren» oder «Lebenslauf herunterladen». «Jedes Zeichen genau eine Bedeutung» spricht für zwei. So ist es heute schon gebaut; der Satz vom 07.11. meinte den Export. Bei B wäre die Sicherung von einem gewöhnlichen Download nicht mehr zu unterscheiden.</div>
+<script>
+const st=(p)=>`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const SICH=st('<path d="M9 3H16L20 7V17"/><path d="M5 7H12L16 11V21H5Z"/><path d="M10.5 12V18"/><polyline points="8,15.5 10.5,18 13,15.5"/>');
+const DOWN=st('<path d="M12 4L12 16"/><polyline points="8,12 12,16 16,12"/><path d="M4 17L4 20L20 20L20 17"/>');
+const V={A:['A · zwei Zeichen (heute)','Sicherung = Doppelblatt mit Pfeil hinein · Exportieren/Herunterladen = Pfeil in die Ablage.',SICH,DOWN],B:['B · ein Zeichen','Alles = Pfeil in die Ablage.',DOWN,DOWN]};
+let h='';for(const d of [false,true])for(const k of 'AB'){const [t,c,s,e]=V[k];
+h+=`<div class="b${d?' dk':''}"><div class=pt>${t} · ${d?'dunkel':'hell'}</div><p class=cap>${c}</p>
+<div class=z>${s}<span>Sicherung<small>Einstellungen</small></span></div><div class=z>${s}<span>Sicherung<small>Unterlagen · Weg</small></span></div>
+<div class=z>${e}<span>Daten exportieren<small>Seite «Daten sichern» · Abschnitt</small></span></div>
+<span class=k>${s} Sicherung herunterladen</span><span class=k>${e} Kalender exportieren</span></div>`;}
+document.getElementById('g').innerHTML=h;
+</script>

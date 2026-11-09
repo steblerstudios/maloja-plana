@@ -338,6 +338,57 @@ ${istErklaerseite ? `          <li><a href="${pfadIntern('rechtliches', sprache)
 ${fuss(sprache, `${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}`)}`;
 }
 
+// ─── Sprach-Startseiten /fr/ /it/ /en/ /rm/ (seit 09.11.2026) ───────────────
+// Bis dahin antworteten die Sprachwurzeln mit «403 Access forbidden» (kein index.html,
+// Gesamtbefund S6). Die Server-.htaccess geht nicht mit dem Deploy, darum hier eine Seite,
+// die mit den Erklärseiten ausgeliefert wird. Sie bringt KEINEN neuen Text: Titel, Liste und
+// Karte kommen aus RAHMEN und den Seiten der Sprache, die schon übersetzt sind. Der Knopf
+// führt in die App in derselben Sprache (/?lang=xx). Freigabe wie jede Seite der Sprache:
+// gesperrt → noindex und nicht in der Sitemap.
+function sprachStartBauen(sprache) {
+  const R = RAHMEN[sprache.code];
+  const inhalt = inhaltFuer(sprache.code);
+  const seitenUrl = `${BASIS}/${sprache.praefix}`;
+  // Titel «Accueil — Maloja Plana», Brotkrume «Accueil › Français»: beides aus vorhandenen Wörtern.
+  const seite = { titel: R.start, brotkrume: SPRACHNAME[sprache.code], beschreibung: R.karteText };
+  const liste = inhalt.seiten.map((s) =>
+    `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a>` +
+    `<span>${esc(s.beschreibung)}</span></li>`).join('\n');
+  const waehler = SPRACHEN.map((s) => (s.code === sprache.code
+    ? `<span aria-current="true">${SPRACHNAME[s.code]}</span>`
+    : `<a href="/${s.praefix}" hreflang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`)).join(' · ');
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [{
+      '@type': 'WebPage', '@id': `${seitenUrl}#webpage`, url: seitenUrl, name: seite.titel,
+      description: seite.beschreibung, inLanguage: sprache.ldLang,
+      isPartOf: { '@id': `${BASIS}/#website` }, publisher: { '@id': `${BASIS}/#org` }, about: { '@id': `${BASIS}/#app` },
+    }],
+  };
+  return `${kopf({ seite, sprache, seitenUrl, ld, quelle: `scripts/seiten/${sprache.code}.mjs (Rahmen + Seitenliste)`, hreflang: '' })}
+
+    <main>
+${hinweisOben(sprache)}      <h1>Maloja Plana</h1>
+      <p class="vorspann">${esc(R.karteText)}</p>
+
+      <ul class="weiter">
+${liste}
+      </ul>
+
+      <div class="karte">
+        <p><strong>${esc(R.karteTitel)}</strong></p>
+        <p>${R.karteBeta}</p>
+        <p><a class="knopf" href="/?lang=${sprache.code}">${esc(R.karteKnopf)}</a></p>
+      </div>
+
+      <ul>
+          <li><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a></li>
+      </ul>
+    </main>
+
+${fuss(sprache, `${esc(R.spracheLabel)}: ${waehler}`)}`;
+}
+
 // ─── Kopf und Fuss — gemeinsam für Erklär- und Hintergrundseiten ─────────────
 const CSP = "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'";
 
@@ -909,6 +960,8 @@ function sitemapBauen() {
   const zeilen = [eintrag(`${BASIS}/`, '1.0', null)];
   for (const s of frei) {
     const i = inhaltFuer(s.code);
+    // Sprach-Startseite (nur freigegebene Sprachen ausser Deutsch, dessen Start «/» ist).
+    if (s.praefix) zeilen.push(eintrag(`${BASIS}/${s.praefix}`, '0.9', null));
     zeilen.push(...i.seiten.map((x) => eintrag(url(x.pfad, s), '0.8', x.pfad)));
     zeilen.push(...i.sonderseiten.map((x) => eintrag(url(x.pfad, s), '0.3', x.pfad)));
     // Hintergrundseiten: nur Deutsch, darum ohne Sprach-Alternativen.
@@ -957,6 +1010,15 @@ for (const sprache of SPRACHEN) {
       name,
     });
   }
+}
+
+// Sprach-Startseiten: alle Sprachen ausser Deutsch (Deutsch hat die App-Startseite «/»).
+for (const sprache of SPRACHEN.filter((x) => x.praefix)) {
+  seitenAusgaben.push({
+    ziel: resolve(WURZEL, 'public', ...sprache.praefix.split('/').filter(Boolean), 'index.html'),
+    inhalt: sprachStartBauen(sprache),
+    name: `${sprache.praefix}index.html`,
+  });
 }
 
 const bewegtDatei = (pfad, inhalt) => ({

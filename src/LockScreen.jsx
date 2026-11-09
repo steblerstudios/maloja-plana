@@ -97,7 +97,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
           'aria-describedby': isError ? 'tresor-error' : undefined,
           style: {
             width: '100%', padding: '12px 44px 12px 16px', fontSize: text.body,
-            border: '1px solid ' + (isError ? palette.rose : palette.border),
+            border: '1px solid ' + (isError ? palette.rose : palette.feldrand),
             borderRadius: radius.md, background: palette.up, color: palette.text,
             outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
           },

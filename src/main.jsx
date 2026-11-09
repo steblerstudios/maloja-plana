@@ -214,7 +214,7 @@ const LanguageSwitcher = ({ palette }) => {
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',
-        border: '1px solid ' + palette.border, borderRadius: radius.sm,
+        border: '1px solid ' + palette.feldrand, borderRadius: radius.sm,
         paddingBlock: '4px', paddingInlineStart: '32px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
@@ -252,7 +252,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       border: '1px solid ' + (vorlesen.enabled ? palette.sand : palette.border),
       borderRadius: KNOPF_RADIUS,
       cursor: 'pointer',
-      fontSize: '11px',
+      fontSize: text.xs,
       lineHeight: 1,
       display: 'flex',
       alignItems: 'center',
@@ -284,28 +284,30 @@ const zeichen = (name, px, strich, extra) => {
 const bottomIcon = (name, color, size) => zeichen(name, size || 20, 1.6, { stroke: color, style: { color } });
 
 // Sackmesser mit Zustand (seit 07.11.2026 = Menü, Icon-Besprechung «B»): die Werkzeuge fahren aus
-// dem Griff, solange das Menü offen ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
-// zwei Werkzeuge skalieren um den Drehpunkt (15|12) aus/ein (Stebler Studios: „offen nur bei
-// der Übersicht, sonst schliesst es sich").
+// dem Griff, solange das Menü offen ist (open). Geschlossen bleibt eine Klinge halb draussen
+// (Stebler Studios 09.11.2026, «Ja, halb aufgeklappt»): auf dem Handy deckt das offene Menü die Leiste
+// ab, man sieht dort nur das geschlossene Zeichen — als blosser Griff war es kaum als Sackmesser lesbar.
+// Die Klinge dreht um ihren Drehpunkt (15|10) von halb (22.5°) auf ganz (45°); das zweite Werkzeug
+// skaliert um (15|14) aus/ein.
+const SACKMESSER_HALB = 'rotate(22.5deg)';
 const SackmesserIcon = ({ open, color, size = 20 }) => {
   const s = size;
-  const toolStyle = {
-    transformBox: 'view-box', transformOrigin: '15px 12px',
-    transform: open ? 'scale(1)' : 'scale(0.02)',
-    opacity: open ? 1 : 0,
-    transition: `transform ${duration.normal}ms ${ease}, opacity ${duration.normal}ms ${ease}`,
+  const bewegung = `transform ${duration.normal}ms ${ease}, opacity ${duration.normal}ms ${ease}`;
+  const klinge = { transformBox: 'view-box', transformOrigin: '15px 10px', transform: open ? 'rotate(0deg)' : SACKMESSER_HALB, transition: bewegung };
+  const zweites = {
+    transformBox: 'view-box', transformOrigin: '15px 14px',
+    transform: open ? 'scale(1)' : 'scale(0.02)', opacity: open ? 1 : 0, transition: bewegung,
   };
   return React.createElement('svg', {
     width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color,
     strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true',
   },
-    // Griff — immer da (geschlossenes Sackmesser)
+    // Griff — immer da
     React.createElement('path', { d: 'M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z' }),
-    // Werkzeuge — fahren aus/ein
-    React.createElement('g', { style: toolStyle },
-      React.createElement('path', { d: 'M15 10 L21 4' }),
-      React.createElement('path', { d: 'M15 14 L20 18.5' })
-    )
+    // Klinge — geschlossen halb draussen, offen ganz
+    React.createElement('path', { d: 'M15 10 L21 4', style: klinge }),
+    // zweites Werkzeug — nur offen
+    React.createElement('path', { d: 'M15 14 L20 18.5', style: zweites })
   );
 };
 const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHand }) => {
@@ -331,7 +333,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHan
     it.icon === 'sackmesser'
       ? React.createElement(SackmesserIcon, { open: !!it.offen, color: it.offen ? palette.sage : palette.mid })
       : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
-    React.createElement('span', { style: { fontSize: '10px', lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
+    React.createElement('span', { style: { fontSize: text.xs, lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
   );
   const fan = [
@@ -358,19 +360,17 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, menuOffen, leftHan
       },
     },
       React.createElement('span', { style: { width: '48px', height: '48px', borderRadius: '50%', background: palette.surface, border: '0.5px solid ' + palette.sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: palette.sage, boxShadow: shadow.sm } }, bottomIcon(a.icon, palette.sage)),
-      React.createElement('span', { style: { fontSize: '10px', color: palette.mid } }, a.label)
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, a.label)
     )),
     React.createElement('nav', {
       'aria-label': t('nav.menu'),
       style: {
-        display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border + '88',
-        background: palette.surface + 'F2', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        // Papier mit Haarlinie, ohne Milchglas (Querschnitt 1 A-A, Stebler Studios 09.11.2026).
+        display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border,
+        background: palette.surface,
         // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
         paddingBottom: 'env(safe-area-inset-bottom)',
-        // Eigene Ebene: sonst zeichnet iOS/Android die Leiste mit Weichzeichner beim Ein-/
-        // Ausfahren der Adressleiste neu und sie zittert hinterher.
-        transform: 'translateZ(0)',
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
@@ -1290,7 +1290,7 @@ const AppInner = ({ demo }) => {
         onLater: () => setTourOpen(false),
       })
     ),
-    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '16px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
+    React.createElement('header', { role: 'banner', style: { background: palette.surface, borderBottom: '1px solid ' + palette.border, padding: '16px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10 } },
       // Das h1 bleibt eine ECHTE Überschrift. Vorher trug es `role="link"` — eine
       // ARIA-Rolle ersetzt die native Semantik, damit hatte die Seite für
       // Screenreader gar kein h1 mehr (WCAG 1.3.1). Das Anklickbare ist jetzt ein

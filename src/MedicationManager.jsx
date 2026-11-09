@@ -61,7 +61,7 @@ export const MedicationManager = ({ palette, t, lang, medications, onChange }) =
 
   const inputStyle = {
     width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
-    borderRadius: radius.sm, border: '1px solid ' + palette.border,
+    borderRadius: radius.sm, border: '1px solid ' + palette.feldrand,
     background: palette.up, color: palette.text, boxSizing: 'border-box',
     fontSize: text.sm, fontFamily, cursor: 'text'
   };
