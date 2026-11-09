@@ -154,6 +154,62 @@ Nicht Teil dieses Baus. Hier nur, damit die Adressen von Anfang an passen.
 | 3 | Steuererklärung je Kanton | `/steuern/<kanton>/` | Link + Software (z. B. TaxMe in BE); Tarife bleiben in der App |
 | — | Ergänzungsleistungen | offen | Durchführungsstelle je Kanton müsste erhoben werden |
 
+> ⟨Nachtrag 09.11.2026, Erhebung Welle 2⟩ Die Erhebung für die Sozialhilfe liegt vor:
+> `docs/sources/sozialhilfe-kantone-2026.md`, alle 26 Kantone aus Primärquellen, je Gruppe
+> vom `swiss-precision-pruefer` geprüft und nachgeführt. Die Zeile «dünn» oben bleibt als
+> Beleg für den Stand vor der Erhebung stehen.
+
+### 6.1 Welle 2 · Sozialhilfe: was belegbar ist
+
+**20 belegbar:** ZH, BE (nur bis 31.12.2026), LU, SZ, NW, GL, ZG, SO, BS, SH, AR, GR, AG,
+TG, TI, VD, VS, NE, GE, JU.
+
+**6 teilweise:** UR, OW, AI und SG (SKOS-Status amtlich nicht belegt: bei UR und AI fehlen
+die verbindlichen Richtlinien, OW verweist gar nicht auf die SKOS, SG verweist auf die
+KOS-Richtlinien ohne gefundene Verbindlicherklärung), FR (neues Gesetz seit 2026, Übergangsrecht,
+Ausführungserlasse noch zum alten Gesetz), BL (Amtsseiten mit curl nicht messbar,
+Antragsweg und Verzeichnis nicht belegt).
+
+**Riegel 1 (Abschnitt 4) gilt sinngemäss:** Eine Seite entsteht nur, wo Zuständigkeit und
+Antragsweg belegt sind und der Amtslink geprüft ist. Ein offener SKOS-Status allein
+verhindert die Seite nicht. Die Seite sagt dann «Die Bemessung regelt der Kanton; ob er die
+SKOS-Richtlinien übernimmt, ist nicht amtlich publiziert», ohne zu raten. Damit kämen
+**25 Seiten** in Frage. **BL** wartet, bis Antragsweg und Amtslinks im Browser geprüft sind.
+
+**Vor dem Bau zu klären:**
+
+- **BE:** Totalrevision des SHG tritt am 01.01.2027 in Kraft (Rückerstattung, Eltern-
+  Rückerstattung, neue Artikelnummern). Die BE-Seite erst nach Neuerhebung am beschlossenen
+  Text bauen, sonst ist sie am ersten Tag falsch.
+- **TG** (neue Fassung ab 01.01.2027) und **SO** (neue Fassung, Sozialhilfe-Paragrafen
+  unverändert): vor dem Bau an der Quelle nachsehen.
+- **Bundesrecht zur Aufenthaltsbewilligung** (AIG/VZAE) wurde nicht erhoben. Ein Satz zur
+  Aufenthaltsbewilligung erscheint nur, wo eine kantonale Quelle ihn trägt (ZH, BS, TG, GL,
+  VS, JU, BE), und nie als «keine Folge» in den übrigen Kantonen. Ein allgemeiner,
+  bundesrechtlich belegter Satz gehört auf die Hauptseite `/sozialhilfe/`, mit Prüfung durch
+  den `rechts-pruefer`.
+
+**Struktur je Seite** (gleiche Skizze wie Abschnitt 3, angepasst):
+
+| Teil | Inhalt Sozialhilfe | Quelle im Blatt |
+|---|---|---|
+| A, B | Brotkrume, h1 «Sozialhilfe im Kanton …» | — |
+| C | «Wer entscheidet?» — Gemeinde · Region · Kanton (Zeichen + Wort). Kantonal entscheiden GL, AI, TI, JU; GE über das Hospice général; BS in der Stadt Basel | «Zuständig (kurz)» |
+| D | Wo man den Antrag stellt + Link aufs Verzeichnis der Sozialdienste, wo eines besteht | «Zuständigkeit und Antrag» |
+| E | «Was Sie wissen sollten»: 2–4 belegte Sätze aus «Was Geld oder Rechte kosten kann» (Rückerstattung, Verwandtenunterstützung, Wohnsitzwechsel, Meldepflichten), ohne Zahl und ohne Frist | je Kanton |
+| F | SKOS: ein Satz, wie der Kanton sie übernimmt, im Wortlaut des Erlasses («wegleitend», «verbindlich», «orientiert sich») | «SKOS (kurz)» |
+| G | Rechtsgrundlage (Gesetz + Verordnung, Nummer), Aufsichtsstelle mit Link, «Inhaltlich geprüft: <Monat>» | «Erlasse», «Aufsicht» |
+
+**Eigener Inhalt je Seite** (Abschnitt 4, Riegel 2) ist bei der Sozialhilfe leichter als bei
+der IPV: Zuständigkeit, SKOS-Wortlaut und die Punkte unter E unterscheiden sich fast überall.
+Der Asylbereich bleibt ausgeklammert (eigene Regeln und Stellen), mit einem Satz und Verweis.
+
+**Nebenbefunde für die App (eigener kleiner PR, nicht Teil von Welle 2):** In
+`CANTONAL_LINKS_GEPRUEFT` steht `VS.sozialdienst: null`, obwohl vs.ch am 09.11.2026 mit
+curl messbar war (Amtsseite 200, erfundener Pfad 404). Für OW, NW, FR, SO, AR, GR und TG
+gibt es genauere Ziele (Gesuchsstelle bzw. Verzeichnis statt Amtsstartseite); die Adressen
+stehen im Quellenblatt.
+
 ## 7. Sprachen
 
 Welle 1 erscheint **auf Deutsch für alle 26 Kantone**. Das ist für GE, VD, NE, JU, FR,
