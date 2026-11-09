@@ -228,14 +228,14 @@ export const KRANKENKASSE = {
       id: 'aenderungen',
       titel: '8. Was ändert sich?',
       bild: `<ol class="zeit kern" role="list" aria-label="Was sich wann ändert">
-        <li><span class="jahr">2026</span><span class="was">TARDOC ersetzt TARMED</span></li>
+        <li><span class="jahr">2026</span><span class="was">TARDOC ersetzt TARMED [[q:tardoc]]</span></li>
         <li><span class="jahr">2028</span><span class="was">EFAS: ambulant und stationär nach demselben Schlüssel [[q:kvg]]</span></li>
         <li><span class="jahr">2032</span><span class="was">Die Pflege kommt zu EFAS dazu</span></li>
       </ol>`,
       kurz: 'Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Wer für sich selbst gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. [[q:kvg]]',
       wege: [{ href: '/praemienverbilligung/', text: 'Prämienverbilligung' }, { href: '/was-steht-mir-zu/', text: 'Was steht mir zu?' }],
       html: `
-        <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst.</p>
+        <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst. [[q:tardoc]]</p>
         <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen Anteil an den Kosten nach Abzug der Kostenbeteiligung, den jeder Kanton selbst festlegt, aber mit einem Mindestsatz: 2028 je nach Kanton mindestens 21,3 bis 28,5 %, ab 2031 meist mindestens 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht. [[q:kvg]]</p>
         <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nannte die Mitteilung vom 13.03.2026 nicht. [[q:mindestfranchise]]</p>
         <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Wer gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht. [[q:kvg]] Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes. [[q:priminfo]]</p>
@@ -272,6 +272,7 @@ export const KRANKENKASSE = {
     { key: 'franchiseBericht', herausgeber: 'Bundesrat', titel: 'Bericht zur Franchise', url: 'https://www.parlament.ch/centers/eparl/curia/2013/20133250/Bericht%20BR%20D.pdf', belegt: 'Zweck und Wirkung der Kostenbeteiligung, Folgen aufgeschobener Behandlung', amtlich: true },
     { key: 'mindestfranchise', herausgeber: 'Bundesrat', titel: 'Vernehmlassung zur Erhöhung der Mindestfranchise', datum: '13.03.2026', url: 'https://www.bag.admin.ch/de/newnsb/XwGuCzuLkCYzd1V5uKSav', belegt: 'Vorschlag 400 statt 300 Franken', amtlich: true },
     { key: 'kvg', herausgeber: 'Systematische Sammlung des Bundesrechts, SR 832.10', titel: 'Bundesgesetz über die Krankenversicherung (KVG)', url: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de', belegt: 'Art. 7 (Wechsel), 8 und 10 (Unfalldeckung), 49a (Kantonsanteil Spital), 61 und 62 (Prämien, Regionen, Rabatte), 64 und 64a (Kostenbeteiligung, Ausstände); EFAS: AS 2025 107. Weitere Stellen unten.', amtlich: true },
+    { key: 'tardoc', herausgeber: 'Bundesamt für Gesundheit', titel: 'TARDOC und Ambulante Pauschalen – das neue Tarifsystem', datum: 'abgerufen 09.11.2026; Genehmigung durch den Bundesrat am 30.04.2025', url: 'https://www.bag.admin.ch/de/tardoc-und-ambulante-pauschalen', belegt: 'TARDOC und Ambulante Pauschalen ersetzen TARMED seit dem 1. Januar 2026', amtlich: true },
     { key: 'priminfo', herausgeber: 'Bundesamt für Gesundheit', titel: 'Prämienrechner (Priminfo)', url: 'https://www.priminfo.admin.ch/de/praemien', belegt: 'die eigene Prämie vergleichen', amtlich: true },
   ],
   // Eigener Satz statt RAHMEN.quellenLeise: jener nennt die SKOS, die hier nicht
