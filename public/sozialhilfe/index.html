@@ -180,6 +180,44 @@
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
   </style>
 </head>
 <body>
@@ -196,21 +234,60 @@
       <p class="vorspann">Sozialhilfe ist die unterste Stufe im schweizerischen Netz — sie greift dort, wo alles andere nicht oder nicht mehr reicht. Zuständig sind nicht der Bund, sondern die Kantone und, in vielen von ihnen, die Gemeinden.</p>
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
-        <h2>Subsidiär heisst: zuerst alles andere</h2>
-        <p>Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.</p>
-        <p>Das ist der Grund, warum eine Anmeldung oft mit vielen Fragen zu ganz anderen Leistungen beginnt. Es geht nicht um Misstrauen, sondern um die gesetzliche Reihenfolge.</p>
+        <h2 id="subsidiaer">Subsidiär heisst: zuerst alles andere</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="unter" id="zuerst">Zuerst geprüft:</p>
+          <ul class="chips" role="list" aria-labelledby="zuerst">
+            <li>Lohn</li><li>Arbeitslosenentschädigung</li><li>Renten</li><li>Ergänzungsleistungen</li>
+            <li>Prämienverbilligung</li><li>Unterhaltsbeiträge</li><li>Stipendien</li><li>eigenes Vermögen, mit Freibetrag</li>
+          </ul>
+          <p class="dann">Reicht das nicht, kommt Sozialhilfe in Frage.</p>
+        </div></div>
+        <p class="schicht-kurz">Das ist der Grund, warum eine Anmeldung oft mit vielen Fragen zu ganz anderen Leistungen beginnt. Es geht nicht um Misstrauen, sondern um die gesetzliche Reihenfolge.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Subsidiär heisst: zuerst alles andere"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
-        <h2>Die SKOS-Richtlinien sind Empfehlungen, nicht Gesetz</h2>
-        <p>Das ist der meistübersehene Punkt. Die Richtlinien der Schweizerischen Konferenz für Sozialhilfe (SKOS) sind <strong>Empfehlungen</strong>. Verbindlich werden sie erst, soweit ein Kanton sie in sein eigenes Recht übernimmt — und das tun die Kantone in unterschiedlichem Umfang.</p>
-        <p>Praktisch bedeutet das: Ein SKOS-Rechner gibt eine gute erste Orientierung, aber er ist keine Zusage. Was in Ihrem Fall gilt, steht im kantonalen Sozialhilfegesetz und in der Verfügung der zuständigen Stelle.</p>
+        <h2 id="skos">Die SKOS-Richtlinien sind Empfehlungen, nicht Gesetz</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Was gilt">
+          <li><span class="jahr">SKOS-Richtlinien</span><span class="was">Empfehlungen</span></li>
+          <li><span class="jahr">Kantonales Recht</span><span class="was">macht sie verbindlich, soweit es sie übernimmt</span></li>
+          <li><span class="jahr">Verfügung</span><span class="was">was in Ihrem Fall gilt</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Praktisch bedeutet das: Ein SKOS-Rechner gibt eine gute erste Orientierung, aber er ist keine Zusage. Was in Ihrem Fall gilt, steht im kantonalen Sozialhilfegesetz und in der Verfügung der zuständigen Stelle.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Das ist der meistübersehene Punkt. Die Richtlinien der Schweizerischen Konferenz für Sozialhilfe (SKOS) sind <strong>Empfehlungen</strong>. Verbindlich werden sie erst, soweit ein Kanton sie in sein eigenes Recht übernimmt — und das tun die Kantone in unterschiedlichem Umfang.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Die SKOS-Richtlinien sind Empfehlungen, nicht Gesetz"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a></nav>
 
-        <h2>Woraus sich die Unterstützung typischerweise zusammensetzt</h2>
-        <p>In den meisten Kantonen sind es drei Bausteine: ein <strong>Grundbedarf</strong> für den Lebensunterhalt, die <strong>Wohnkosten</strong> im ortsüblichen Rahmen, und die <strong>medizinische Grundversorgung</strong>. Dazu können situationsbedingte Leistungen kommen.</p>
-        <p>Die Beträge nennen wir hier bewusst nicht: sie unterscheiden sich je nach Kanton und Haushaltsgrösse und werden regelmässig angepasst. Eine Zahl auf einer Seite wie dieser wäre nach kurzer Zeit falsch.</p>
+        <h2 id="bausteine">Woraus sich die Unterstützung typischerweise zusammensetzt</h2>
+        <div class="schicht-bild"><div class="kern">
+          <ul class="zeit" role="list" aria-label="Drei Bausteine in den meisten Kantonen">
+          <li><span class="jahr">Grundbedarf</span><span class="was">für den Lebensunterhalt</span></li>
+          <li><span class="jahr">Wohnkosten</span><span class="was">im ortsüblichen Rahmen</span></li>
+          <li><span class="jahr">Medizinische Grundversorgung</span></li>
+          </ul>
+          <p class="unter">In den meisten Kantonen; dazu können situationsbedingte Leistungen kommen.</p>
+        </div></div>
+        <p class="schicht-kurz">Die Beträge nennen wir hier bewusst nicht: sie unterscheiden sich je nach Kanton und Haushaltsgrösse und werden regelmässig angepasst. Eine Zahl auf einer Seite wie dieser wäre nach kurzer Zeit falsch.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>In den meisten Kantonen sind es drei Bausteine: ein <strong>Grundbedarf</strong> für den Lebensunterhalt, die <strong>Wohnkosten</strong> im ortsüblichen Rahmen, und die <strong>medizinische Grundversorgung</strong>. Dazu können situationsbedingte Leistungen kommen.</p>
+        </details>
 
-        <h2>Das Recht, das niemand verlieren kann</h2>
-        <p>Unabhängig von allem oben steht in der <strong>Bundesverfassung, Artikel 12</strong>, das Recht auf Hilfe in Notlagen: Wer in Not gerät und nicht in der Lage ist, für sich zu sorgen, hat Anspruch auf Hilfe und Betreuung und auf die Mittel, die für ein menschenwürdiges Dasein unerlässlich sind.</p>
-        <p>Dieses Recht steht allen Menschen in der Schweiz zu. Es ist nicht dasselbe wie Sozialhilfe und deckt weniger ab — aber es ist die Untergrenze, die nicht unterschritten werden darf.</p>
+        <h2 id="notlage">Das Recht, das niemand verlieren kann</h2>
+        <div class="schicht-bild"><figure class="kern">
+          <p class="zahl">Hilfe in Notlagen</p>
+          <p class="unter">Bundesverfassung, Artikel 12: für alle, die in Not geraten und nicht für sich sorgen können. Die Untergrenze.</p>
+        </figure></div>
+        <p class="schicht-kurz">Unabhängig von allem oben steht in der <strong>Bundesverfassung, Artikel 12</strong>, das Recht auf Hilfe in Notlagen: Wer in Not gerät und nicht in der Lage ist, für sich zu sorgen, hat Anspruch auf Hilfe und Betreuung und auf die Mittel, die für ein menschenwürdiges Dasein unerlässlich sind.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Dieses Recht steht allen Menschen in der Schweiz zu. Es ist nicht dasselbe wie Sozialhilfe und deckt weniger ab — aber es ist die Untergrenze, die nicht unterschritten werden darf.</p>
+        </details>
 
       <h2>Häufige Fragen</h2>
         <h3>Wie viel Sozialhilfe steht mir zu?</h3>

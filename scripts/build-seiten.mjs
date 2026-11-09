@@ -191,13 +191,20 @@ function schichtAbschnitt(a, sprache) {
     if (!z) throw new Error(`Weg zu unbekannter Seite ${p}`);
     return `<a class="weg" href="${pfadIntern(z.pfad, sprache)}"><span aria-hidden="true">→</span> ${esc(z.brotkrume)}</a>`;
   }).join('');
-  return `        <h2${a.id ? ` id="${a.id}"` : ''}>${esc(a.titel)}</h2>${a.bild ? `
-        <div class="schicht-bild">${a.bild}</div>` : ''}
-        <p class="schicht-kurz">${a.absaetze[a.kurzAbsatz]}</p>
+  // Verweise (Karten zu den Themen) sind selbst das Bild, wenn kein eigenes da ist.
+  const karten = !a.bild && a.verweise ? `<ul class="weiter">\n${a.verweise.map((p) => {
+    const z = inhalt.seiten.find((s) => s.pfad === p);
+    return `          <li><a href="${pfadIntern(z.pfad, sprache)}">${esc(z.brotkrume)}</a><span>${esc(z.beschreibung)}</span></li>`;
+  }).join('\n')}\n        </ul>` : '';
+  const bild = a.bild || karten;
+  // Leitet der Satz die Karten ein («… lohnt sich der Blick:»), steht er davor.
+  const kurz = `\n        <p class="schicht-kurz">${a.absaetze[a.kurzAbsatz]}</p>`;
+  const bildHtml = bild ? `\n        <div class="schicht-bild">${bild}</div>` : '';
+  return `        <h2${a.id ? ` id="${a.id}"` : ''}>${esc(a.titel)}</h2>${karten ? kurz + bildHtml : bildHtml + kurz}${rest ? `
         <details class="schicht-mehr">
           <summary>Ausführlich lesen</summary>
 ${rest}
-        </details>${wege ? `
+        </details>` : ''}${wege ? `
         <nav class="wege" aria-label="Weiter von: ${esc(a.titel)}">${wege}</nav>` : ''}`;
 }
 
@@ -639,6 +646,14 @@ const STIL_SCHICHTEN = `
     ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
     .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
     .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
     .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
     .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
     .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
