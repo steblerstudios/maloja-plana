@@ -2997,6 +2997,16 @@ export default {
 
     gueltig: 'valable',
     title: 'Classeur de documents',
+    geteilt: {
+      titel: 'Partagé, pas encore classé ({count})',
+      satz: { sie: 'Vous avez envoyé ces fichiers via « Partager ». Ils restent uniquement sur cet appareil. Choisissez où les ranger.', du: 'Tu as envoyé ces fichiers via « Partager ». Ils restent uniquement sur cet appareil. Choisis où les ranger.' },
+      bereich: 'Domaine',
+      ablegen: 'Classer',
+      verwerfen: 'Supprimer',
+      abgelegt: '« {name} » est classé.',
+      verworfenMeldung: '« {name} » est supprimé.',
+      fehler: { sie: 'Impossible de lire les fichiers partagés. Veuillez les partager à nouveau.', du: 'Impossible de lire les fichiers partagés. Partage-les à nouveau.' },
+    },
     active: 'Actifs',
     expiringSoon: 'Bientôt échus',
     archive: 'Archive',

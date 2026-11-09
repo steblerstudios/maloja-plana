@@ -3137,6 +3137,16 @@ export default {
 
     gueltig: 'valaivel',
     title: 'Deposita da documents',
+    geteilt: {
+      titel: 'Partì, anc betg ordinà ({count})',
+      satz: { sie: "Vus avais tramess questas datotecas cun «Parter». Ellas restan mo sin quest apparat. Tscherni nua ch'ellas tutgan.", du: "Ti has tramess questas datotecas cun «Parter». Ellas restan mo sin quest apparat. Tscherna nua ch'ellas tutgan." },
+      bereich: 'Sectur',
+      ablegen: 'Deponer',
+      verwerfen: 'Stizzar',
+      abgelegt: '«{name}» è deponì.',
+      verworfenMeldung: '«{name}» è stizzà.',
+      fehler: { sie: "Las datotecas partidas n'han betg pudì vegnir legidas. Partai ellas per plaschair anc ina giada.", du: "Las datotecas partidas n'han betg pudì vegnir legidas. Parta ellas per plaschair anc ina giada." },
+    },
     active: 'Activ',
     expiringSoon: 'Bainprest scadent',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)

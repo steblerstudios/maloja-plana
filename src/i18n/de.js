@@ -3014,6 +3014,16 @@ export default {
 
     gueltig: 'gültig',
     title: 'Dokumentenablage',
+    geteilt: {
+      titel: 'Geteilt, noch nicht eingeordnet ({count})',
+      satz: { sie: 'Diese Dateien haben Sie über «Teilen» geschickt. Sie liegen nur auf diesem Gerät. Wählen Sie, wohin sie gehören.', du: 'Diese Dateien hast du über «Teilen» geschickt. Sie liegen nur auf diesem Gerät. Wähle, wohin sie gehören.' },
+      bereich: 'Bereich',
+      ablegen: 'Ablegen',
+      verwerfen: 'Verwerfen',
+      abgelegt: '«{name}» ist abgelegt.',
+      verworfenMeldung: '«{name}» ist verworfen.',
+      fehler: { sie: 'Die geteilten Dateien liessen sich nicht lesen. Teilen Sie sie bitte nochmals.', du: 'Die geteilten Dateien liessen sich nicht lesen. Teile sie bitte nochmals.' },
+    },
     active: 'Aktiv',
     expiringSoon: 'Bald fällig',
     archive: 'Archiv',

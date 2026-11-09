@@ -961,6 +961,19 @@ const AppInner = ({ demo }) => {
   const handleAddDocument = (doc) =>
     docAktionen.hinzufuegen({ ...doc, id: Date.now().toString(), chapter: chapters[activeChapter]?.key || 'basis' });
 
+  // Über «Teilen …» angekommene Datei, von der Person im Eingang der Ablage eingeordnet.
+  // Gleicher Weg wie der Upload im Kapitel, gleicher Eintrag im Ereignisprotokoll.
+  const handleAddSharedDocument = async (doc) => {
+    await docAktionen.hinzufuegen({ ...doc, id: Date.now().toString(), chapter: doc.chapter || 'basis' });
+    runtimeEventBus.publish({
+      id: crypto.randomUUID(),
+      eventType: 'DOCUMENT_UPLOADED',
+      timestamp: new Date().toISOString(),
+      actor: 'user',
+      workflowId: 'document-tresor',
+    });
+  };
+
   const handleDeleteDocument = (docId) => {
     // Verwaisten Blob aus IndexedDB entfernen (fire-and-forget).
     docAktionen.loeschen(docId).catch((e) => console.warn('[app] Blob-Löschen fehlgeschlagen:', e.message));
@@ -1569,6 +1582,8 @@ const AppInner = ({ demo }) => {
           isDarkMode,
           // «Meine Unterlagen» steht seit 24.10.2026 unten in der Ablage (UnterlagenWege).
           onNavigate: handleNavigate,
+          // Teilen-Empfang: der Bereich kommt aus der Wahl im Eingang, nicht aus activeChapter.
+          onAddShared: handleAddSharedDocument,
         }),
         view === 'kk' && React.createElement(KKScanner, {
           palette, t, data: activeData, vorlaeufig,

@@ -2998,6 +2998,16 @@ export default {
 
     gueltig: 'valido',
     title: 'Raccoglitore documenti',
+    geteilt: {
+      titel: 'Condiviso, non ancora archiviato ({count})',
+      satz: { sie: 'Ha inviato questi file con «Condividi». Restano solo su questo dispositivo. Scelga dove archiviarli.', du: 'Hai inviato questi file con «Condividi». Restano solo su questo dispositivo. Scegli dove archiviarli.' },
+      bereich: 'Ambito',
+      ablegen: 'Archiviare',
+      verwerfen: 'Scartare',
+      abgelegt: '«{name}» è archiviato.',
+      verworfenMeldung: '«{name}» è scartato.',
+      fehler: { sie: 'Non è stato possibile leggere i file condivisi. La preghiamo di condividerli di nuovo.', du: 'Non è stato possibile leggere i file condivisi. Condividili di nuovo.' },
+    },
     active: 'Attivi',
     expiringSoon: 'In scadenza',
     archive: 'Archivio',

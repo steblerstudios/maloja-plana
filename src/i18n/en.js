@@ -2998,6 +2998,16 @@ export default {
 
     gueltig: 'valid',
     title: 'Document folder',
+    geteilt: {
+      titel: 'Shared, not yet filed ({count})',
+      satz: 'You sent these files via “Share”. They stay on this device only. Choose where they belong.',
+      bereich: 'Area',
+      ablegen: 'File it',
+      verwerfen: 'Discard',
+      abgelegt: '“{name}” is filed.',
+      verworfenMeldung: '“{name}” is discarded.',
+      fehler: 'The shared files could not be read. Please share them again.',
+    },
     active: 'Active',
     expiringSoon: 'Expiring soon',
     archive: 'Archive',
