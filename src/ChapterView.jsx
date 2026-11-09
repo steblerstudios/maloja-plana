@@ -39,7 +39,7 @@ import { zahl } from './utils/geld.js';
 import { kalenderdatum } from './utils/datumAnzeige.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
-import landschaft from './assets/berge/landschaft.webp?url';
+import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx';
 import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { istAngestellt } from './utils/anstellung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
@@ -273,7 +273,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     };
     const hhSelect = {
       width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
-      borderRadius: radius.sm, border: '1px solid ' + palette.border,
+      borderRadius: radius.sm, border: '1px solid ' + palette.feldrand,
       background: palette.up, color: palette.text, boxSizing: 'border-box',
       fontSize: text.body, fontFamily: fontFamily, cursor: 'pointer'
     };
@@ -611,18 +611,26 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Leere. Der Bezug läuft in diesen Fällen über `aria-labelledby` auf die
     // `-label`-id, die hier in beiden Fällen gesetzt bleibt. Ohne Control ist
     // <label> ausserdem das falsche Element, deshalb <div>.
-    const renderLabel = (fieldId, labelText, hint, alsGruppenTitel) => React.createElement(alsGruppenTitel ? 'div' : 'label', { id: fieldId + '-label', htmlFor: alsGruppenTitel ? undefined : fieldId, style: labelStyle },
-      labelText,
-      // E17: empfohlen statt Pflicht — leise, ohne Stern.
-      field.recommended && React.createElement('span', { style: { fontSize: text.xs, color: palette.soft, fontWeight: weight.normal } }, '· ' + tr('naZustand.empfohlen')),
-      vorlesen?.enabled && React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid, label: tr('vorlesen.label') })
-    );
+    // Querschnitt 2 (09.11.2026): der Vorlese-Knopf steht NEBEN dem Label, nicht darin. Ein Knopf im
+    // <label> ist ungültig, der Feldname hiess sonst «Vorname Vorlesen», und ein Klick aufs Label traf ihn.
+    const renderLabel = (fieldId, labelText, hint, alsGruppenTitel) => {
+      const label = React.createElement(alsGruppenTitel ? 'div' : 'label', { id: fieldId + '-label', htmlFor: alsGruppenTitel ? undefined : fieldId, style: vorlesen?.enabled ? { ...labelStyle, marginBottom: 0 } : labelStyle },
+        labelText,
+        // E17: empfohlen statt Pflicht — leise, ohne Stern.
+        field.recommended && React.createElement('span', { style: { fontSize: text.xs, color: palette.soft, fontWeight: weight.normal } }, '· ' + tr('naZustand.empfohlen'))
+      );
+      if (!vorlesen?.enabled) return label;
+      return React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '4px', marginBottom: labelStyle.marginBottom } },
+        label,
+        React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid, label: tr('vorlesen.label') })
+      );
+    };
 
     const inputStyle = {
       width: '100%',
       padding: (space.ms) + 'px ' + space.sm + 'px ' + (space.ms) + 'px ' + (space.ms) + 'px',
       borderRadius: radius.sm,
-      border: error ? '2px solid ' + palette.rose : '1px solid ' + palette.border,
+      border: error ? '2px solid ' + palette.rose : '1px solid ' + palette.feldrand,
       background: palette.up,
       color: palette.text,
       boxSizing: 'border-box',
@@ -2160,12 +2168,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const kachelGrund = bereichsfarbe ? bereichsfarbe.grund : palette.up;
   return React.createElement('div', { 'data-kapitel': chapter.key },
     React.createElement('div', { 'data-kapitelkopf': 'band', style: { textAlign: 'left', marginBottom: space.lg + 'px' } },
-      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '112px', margin: '0 -24px', overflow: 'hidden' } },
-        React.createElement('div', { style: { position: 'absolute', inset: 0, backgroundImage: 'url(' + landschaft + ')', backgroundSize: 'cover', backgroundPosition: 'center 72%', opacity: 0.5 } }),
-        React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + kachelGrund + ' 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
-      ),
+      React.createElement(Landschaftsband, { palette, grund: kachelGrund }),
       React.createElement('nav', { 'aria-label': tr('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
-        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 12px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
+        React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
             type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
             style: { ...linkStil(palette), fontSize: text.sm, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
@@ -2377,7 +2382,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               id: 'doc-upload-type',
               value: uploadType,
               onChange: (e) => setUploadType(e.target.value),
-              style: { width: '100%', padding: '12px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+              style: { width: '100%', padding: '12px', borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             },
               React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
               chapter.docs.map((doc, idx) => React.createElement('option', { key: idx, value: doc.k }, doc.label))
@@ -2390,7 +2395,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               type: 'date',
               value: uploadExpiry,
               onChange: (e) => setUploadExpiry(e.target.value),
-              style: { width: '100%', padding: '12px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+              style: { width: '100%', padding: '12px', borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             }),
             uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), getFileExpiryHint(uploadType, tr))
           )

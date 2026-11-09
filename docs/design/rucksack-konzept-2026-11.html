@@ -1,0 +1,87 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Rucksack: Konzept und Logik</title>
+<style>
+body{font:14px/1.5 system-ui,sans-serif;margin:16px;max-width:1000px;color:#2E3A33;background:#F6F2EA}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:16px;margin:28px 0 8px}h3{font-size:14px;margin:14px 0 4px}p{margin:4px 0 10px}
+.klein{font-size:12px;color:#5E6B63}code{font-size:12px}
+.karte{background:#FAFAF8;border:1px solid #E4E4E2;border-radius:12px;padding:12px 14px;margin:8px 0}
+.schema{display:grid;gap:8px}.ebene{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.box{background:#FAFAF8;border:1px solid #D8D4CA;border-radius:10px;padding:8px 10px;font-size:13px;flex:1;min-width:130px}
+.box b{display:block}.box.gold{border-color:#B8A06A;background:#FBF7EC}.box.strich{border-style:dashed;background:#ECECEA}
+.pfeil{text-align:center;color:#8A8F86;font-size:18px;line-height:1}
+.tab{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:760px;background:#FAFAF8;border:1px solid #E4E4E2}
+th,td{padding:7px 8px;border-bottom:1px solid #ECECEA;text-align:left;vertical-align:top;font-size:13px}th{font-size:12px;color:#5E6B63}
+.rot{color:#A32D2D;font-weight:600}
+.befund{counter-reset:b;list-style:none;padding:0}.befund li{counter-increment:b;margin:6px 0;padding-left:34px;position:relative}
+.befund li::before{content:"R" counter(b);position:absolute;left:0;font-weight:700;color:#A32D2D}
+.opt{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.o{background:#FAFAF8;border:1px solid #E4E4E2;border-radius:10px;padding:10px}.o.emp{border:2px solid #B8A06A}
+.frage{border-left:4px solid #B8A06A;padding-left:12px;margin:18px 0}
+</style>
+<h1>Rucksack: Konzept und Logik</h1>
+<p class=klein>Stand 09.11.2026 · erhoben aus den Entscheiden (Werkzeug-Gliederung 25./27.09., Icon-Besprechung 08./09.11., Gedächtnis) und dem Code (<code>Gepaeck.jsx</code>, <code>data/gepaeck.js</code>, <code>data/werkzeugRegister.js</code>). Zeichen der Gegenstände im Detail: <a href="icon-besprechung-rucksack-gegenstaende.html">Rucksack: alle Gegenstände</a>.</p>
+
+<h2>1 · Wofür der Rucksack da ist</h2>
+<div class=karte>
+<p><b>25.09.: «die Werkzeug-Seite ist der Rucksack».</b> Menü, Übersicht und Suche hatten je eine eigene Werkzeugliste, die sich widersprachen. Seither gilt <b>ein Register</b> für alle, und der Rucksack zeigt <b>alles</b>.</p>
+<p><b>27.09.:</b> Das Aussenfach kommt dazu, die Alltagswerkzeuge stehen zusätzlich im Menü. «Jeder Menüeintrag liegt auch im Gepäck.» Aus «Mein Gepäck» wird der Wanderrucksack.</p>
+<p><b>09.11. (Empfehlung, offen):</b> Der Rucksack ist der zweite Weg hinein: «was passiert mir gerade?» statt «welches Amt?».</p>
+<p class=klein>Kein Entscheid gefunden zur Abgrenzung gegen die Übersicht und gegen «Was steht mir zu?» (das steht heute als Zeile im Rucksack).</p>
+</div>
+
+<h2>2 · Aufbau heute</h2>
+<div class=schema>
+ <div class=ebene><div class=box><b>Leiste</b>Rucksack</div><div class=box><b>Menü</b>Anker + «Alle Werkzeuge im Rucksack»</div><div class=box><b>Übersicht</b>Kopf-Knopf, Bergpanorama, Werkzeug-Liste</div></div>
+ <div class=pfeil>↓ fünf Eingänge</div>
+ <div class=ebene><div class="box gold"><b>Rucksack-Zeichnung</b>Auspacken / Einpacken</div></div>
+ <div class=ebene><div class="box gold"><b>Was steht mir zu?</b>eine Zeile, kein Fach</div><div class="box strich"><b>Aussenfach · Ablegen und ordnen</b>7 Werkzeuge: Ablage, Kalender, Merkliste, Lebenslauf, Offizielle Links, Flyer, Suche · immer offen</div></div>
+ <div class=pfeil>↓</div>
+ <div class=ebene><div class=box><b>7 Gegenstände</b>je: Wege (Lebensereignisse) + Werkzeuge + 4 Punkte</div><div class="box strich"><b>Aussenfach noch einmal</b>als 8. Karte (gewollt, 27.09.)</div></div>
+</div>
+
+<div class=tab><table><thead><tr><th>Gegenstand · Fach</th><th>Wege (Kapitel)</th><th>Werkzeuge</th><th>die 4 Punkte messen</th><th>auffällig</th></tr></thead><tbody>
+<tr><td><b>Schlüsselbund</b><br>Ankommen &amp; Wohnen</td><td>12: 8 Behörden, 3 Wohnen, 1 Basis</td><td>—</td><td>Adresse, Ort, Miete, Kanton</td><td class=rot>Name Wohnen, Inhalt vor allem Papiere/Behörden</td></tr>
+<tr><td><b>Werkzeugrolle</b><br>Arbeit &amp; Einkommen</td><td>8: 5 Ausbildung &amp; Arbeit, je 1 Basis, Behörden, Finanzen</td><td class=rot>keines</td><td>Arbeitgeber, Lohn, Anstellung, Beruf</td><td class=rot>Stundenlohn, ALV (Portemonnaie) und Lebenslauf (Aussenfach) liegen anderswo</td></tr>
+<tr><td><b>Erinnerungskiste</b><br>Familie &amp; Beziehung</td><td>5: 4 Basis, 1 Wohnen</td><td>—</td><td>Zivilstand, Kinder, Zulagen, Alimente</td><td>passt</td></tr>
+<tr><td><b>Arztkoffer</b><br>Gesundheit &amp; Kasse</td><td>4: 2 Gesundheit, 2 Versicherungen</td><td>6, darunter ein Werkzeug namens «Arztkoffer»</td><td>Kasse, Franchise, Prämie, Hausarzt</td><td class=rot>«Arztkoffer» im Arztkoffer · helles Kreuz auf Rot</td></tr>
+<tr><td><b>Feldflasche</b><br>Alter &amp; Vorsorge</td><td>4: 2 Versicherungen, 2 Gesundheit (Vorsorgeauftrag, Pflege)</td><td>1 (Vorsorge)</td><td>PK, 3a, PK-Guthaben, IK-Auszug</td><td>passt</td></tr>
+<tr><td><b>Versiegelter Brief</b><br>Abschied</td><td>3: Todesfall, Bestattung, Organspende</td><td>—</td><td>Testament, Patientenverfügung, Vorsorgeauftrag, Organspende</td><td class=rot>Punkte zählen Seiten, die in Koffer und Flasche liegen</td></tr>
+<tr><td><b>Portemonnaie</b><br>Geld &amp; Steuern</td><td>3: Mahnung, Betreibung, jemand schuldet mir</td><td>10 (Steuern, Budget, Schulden, Kreditkarte, Stundenlohn, ALV, EO, Sozialhilfe …)</td><td>Steuer, Haushalt, Sparziel, Bank</td><td>«Geld, das fliesst» — logisch, aber sehr voll</td></tr>
+</tbody></table></div>
+
+<h2>3 · Befunde</h2>
+<ol class=befund>
+ <li><b>Fach und Inhalt passen nicht überall.</b> Schlüsselbund = vor allem Papiere und Behörden; Werkzeugrolle ohne Werkzeuge; Brief zählt fremde Seiten.</li>
+ <li><b>Die Punkte messen Daten, nicht Wege.</b> Wer alle Wege im Schlüsselbund geht, sieht trotzdem leere Punkte, solange keine Miete eingetragen ist. Ehrlich gemeint (Kommentar im Code), liest sich aber wie Fortschritt im Fach.</li>
+ <li><b>Fünf Eingänge</b> in den Rucksack (Leiste, zwei im Menü, zwei auf der Übersicht), und die Übersicht führt zusätzlich eine eigene Werkzeug-Liste (Entscheid «5 Hervorhebungen» offen seit 25.09.).</li>
+ <li><b>«Was steht mir zu?»</b> steht im Rucksack, in der Leiste und im Menü — im Rucksack als Zeile ohne Fach. Abgrenzung nie entschieden.</li>
+ <li><b>Doppelte Namen:</b> das Werkzeug «Arztkoffer» liegt im Gegenstand «Arztkoffer» (bemerkt 25.09.).</li>
+ <li><b>Zeichen der Gegenstände:</b> Koffer helles Kreuz auf Rot (Rechts-Auflage) · Kiste und Portemonnaie dasselbe Holz · Schlüssel, Flasche, Brief hell bzw. Werkzeugrolle, Kiste, Koffer, Portemonnaie dunkel unter 3:1.</li>
+ <li><b>Keine Leer-Zustände:</b> ein Fach ohne Daten hat keinen eigenen Satz, nur graue Punkte.</li>
+</ol>
+
+<h2>4 · Fragen, in dieser Reihenfolge</h2>
+<p class=klein>Jede Antwort bestimmt die nächste. Die Zeichen kommen zuletzt, weil sie aus Zweck und Fächern folgen.</p>
+
+<div class=frage id=k1><h3>K1 · Wofür ist der Rucksack da?</h3>
+<div class=opt>
+ <div class="o emp"><b>A · Lebenslagen + alle Werkzeuge</b> (Empfehlung)<br>So wie heute gemeint: «was passiert mir gerade?», und darin liegt alles, was man dafür braucht. Die Kapitel bleiben der Weg «nach Amt».</div>
+ <div class=o><b>B · nur Werkzeuge</b><br>Der Rucksack ist die Werkzeugkiste; die Lebensereignisse leben nur in den Kapiteln und in «Was steht mir zu?». Einfacher, aber der zweite Weg hinein fällt weg.</div>
+ <div class=o><b>C · nur Lebenslagen</b><br>Werkzeuge raus (sie stehen im Menü und in den Kapiteln). Der Rucksack erzählt nur noch Ereignisse.</div>
+</div></div>
+
+<div class=frage id=k2><h3>K2 · Passen die Fächer?</h3>
+<div class=opt>
+ <div class="o emp"><b>A · Gegenstände bleiben, Inhalt nachschärfen</b> (Empfehlung)<br>Schlüsselbund heisst «Ankommen, Wohnen &amp; Papiere» · Stundenlohn, ALV und Lebenslauf kommen in die Werkzeugrolle · Patientenverfügung und Vorsorgeauftrag liegen dort, wo der Brief sie zählt, oder der Brief zählt anders · das Werkzeug «Arztkoffer» bekommt einen eigenen Namen.</div>
+ <div class=o><b>B · ein Gegenstand mehr</b><br>Ein Pass-Etui «Papiere &amp; Ämter» nimmt die 8 Behörden-Wege aus dem Schlüsselbund; der Schlüsselbund bleibt reines Wohnen. Klarer, aber acht statt sieben Gegenstände.</div>
+</div></div>
+
+<div class=frage id=k3><h3>K3 · Was sollen die Punkte zeigen?</h3>
+<div class=opt>
+ <div class="o emp"><b>A · Daten, aber passend zum Fach</b> (Empfehlung)<br>Weiter ehrlich aus den eingetragenen Daten, nur die Felder nach K2 nachgeführt (Brief zählt seine eigenen Seiten).</div>
+ <div class=o><b>B · Wege</b><br>Die Punkte zeigen, wie viele Wege man angeschaut hat. Braucht einen neuen, lokal gespeicherten Stand je Weg.</div>
+ <div class=o><b>C · keine Punkte</b><br>Ruhiger; der Rucksack zeigt nur, was drin ist.</div>
+</div></div>
+
+<div class=frage id=k4><h3>K4 · Zeichen der Gegenstände</h3>
+<p>Folgt aus K1–K3. Vorschlag nach heutigem Stand: Material bleibt · Arztkoffer als <b>Doktortasche ohne Kreuz</b> (Bügelrahmen, Schnappverschluss, Ochsenblut) · Kiste und Portemonnaie unterscheidbar (Portemonnaie in hellem Leder) · Material-Töne so nachziehen, dass jeder Gegenstand hell und dunkel 3:1 auf der Karte hat. Kommt ein Pass-Etui dazu (K2 B), braucht es eine eigene Zeichnung.</p>
+</div>

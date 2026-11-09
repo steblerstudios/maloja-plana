@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icons } from './IconKern.jsx';
 
 // Die zwei Münz-Illustrationen der Kapitel «Finanzen» und «Behörden» und (seit 08.11.2026) die
 // ausgestanzten Leitformen — aus IconKern.jsx
@@ -318,3 +319,59 @@ export const herzPuls = ausgestanzt([
   linie('M5.1 8.3 Q5.5 6.4 7.6 5.9', '0.8', '0.6'),
 ]);
 
+// Ast-Leitformen (Icon-Plan November 2026, Bauplan B2, Stufe «mittel», ausgestanzt — siehe IconKern.jsx).
+// Ausweiskarte mit zwei Personen = Ast Familie (Kapitel Persönliche Basis).
+export const basisFamilie = ausgestanzt([...KARTE,
+  ['circle', { cx: '5.8', cy: '11.5', r: '1.35' }], ['path', { d: 'M3.8 16.8 Q5.8 13.4 7.8 16.8 Z' }],
+  ['circle', { cx: '8.3', cy: '12.5', r: '1.05' }], ['path', { d: 'M6.8 16.8 Q8.3 14.3 9.8 16.8 Z' }], ...KARTE_REST]);
+// Schutzhelm = Ast Arbeit (Kapitel Ausbildung & Arbeit): Mittelgrat, Krempe.
+export const helm = ausgestanzt([
+  ['path', { d: 'M3.6 15.2 Q3.6 6 12 6 Q20.4 6 20.4 15.2 Z' }],
+  ['path', { d: 'M1.6 15.4 H22.4 Q22.4 18.2 20 18.2 H4 Q1.6 18.2 1.6 15.4 Z' }],
+  ['path', { d: 'M10.6 6.4 Q12 5.1 13.4 6.4 V15.2 H10.6 Z' }],
+  linie('M10.4 6.7 V15 M13.6 6.7 V15', '0.5', '0.75'),
+  linie('M2.5 16.3 H21.5', '0.6', '0.6'),
+  linie('M5.9 11.6 Q6.6 8.6 9.3 7.3', '0.6', '0.5'),
+]);
+
+// Seiten-Zeichen (Bauplan B4): IconKern lädt nur diese Datei nach; das Bauteil steht in IconAbzeichen.jsx.
+export { seite } from './IconAbzeichen.jsx';
+
+// Kalender mit Abzeichen (Icon-Besprechung Punkt 8, Entscheid 07.11.: «C»): Kalender mit Tagesdatum in
+// Textfarbe, unten rechts freigeschnitten; + eintragen = leer (Ring in Textfarbe), Sanduhr = Frist
+// (blau, Farbrolle «informieren und Fristen»), ! = überfällig (rot, «warnen»). Die Rollenfarben kommen
+// als CSS-Variablen aus der Palette (main.jsx), damit hell/dunkel und Farbsicht-Modus stimmen.
+const KALENDER_ZEICHEN = {
+  plus: 'M15.9 18.3 H20.7 M18.3 15.9 V20.7',
+  sanduhr: 'M16.6 15.9 H20 L18.3 18.3 Z M16.6 20.7 H20 L18.3 18.3 Z',
+  ausruf: 'M18.3 15.7 V18.6 M18.3 20.7 V20.75',
+};
+// Das Tagesdatum rückt nach links und wird kleiner (Entscheid Stebler Studios 08.11.2026, «B»): so schneidet
+// das Abzeichen die Zahl nicht an, auch an zweistelligen Tagen. Der einfache Kalender behält die grosse Zahl
+// in der Mitte. Die Zahl selbst kommt weiter aus dem Kern (Tag in Zürich), hier wird nur ihr Platz gesetzt.
+const DATUM_MIT_ABZEICHEN = { x: '7.8', y: '18.2', fontSize: '6.5' };
+const kalenderBlatt = () => {
+  const blatt = Icons.calendar();
+  const teile = React.Children.map(blatt.props.children, (teil) =>
+    (teil && teil.type === 'text' ? React.cloneElement(teil, DATUM_MIT_ABZEICHEN) : teil));
+  return React.cloneElement(blatt, { x: '0', y: '0', width: '24', height: '24', strokeWidth: 'inherit' }, ...teile);
+};
+const KalenderMitBild = ({ zeichen, farbe, ...rest }) => {
+  // Feste Masken-Kennung je Zeichen (useId): bleibt beim Neuzeichnen gleich, kollidiert nicht zwischen zwei Kalendern.
+  const id = 'kal' + React.useId().replace(/:/g, '');
+  const strich = { fill: 'none', strokeWidth: '1.15', strokeLinecap: 'round', strokeLinejoin: 'round' };
+  // Wurzel als Strich-Zeichen (Gruppe B): ohne Fläche, Strich in Textfarbe; die Teile tragen ihre eigene Stärke.
+  return React.createElement('svg', { viewBox: '0 0 24 24', strokeWidth: '1.8', ...rest },
+    React.createElement('mask', { id: id + 'a' }, React.createElement('rect', { width: '24', height: '24', fill: '#fff' }),
+      React.createElement('circle', { cx: '18.3', cy: '18.3', r: '6.6', fill: '#000' })),
+    React.createElement('g', { mask: 'url(#' + id + 'a)' }, kalenderBlatt()),
+    farbe
+      ? [React.createElement('mask', { key: 'm', id: id + 'b' }, React.createElement('circle', { cx: '18.3', cy: '18.3', r: '5.5', fill: '#fff' }),
+          React.createElement('path', { d: KALENDER_ZEICHEN[zeichen], stroke: '#000', ...strich })),
+        React.createElement('rect', { key: 'z', width: '24', height: '24', mask: 'url(#' + id + 'b)', style: { fill: farbe } })]
+      : [React.createElement('circle', { key: 'r', cx: '18.3', cy: '18.3', r: '5.1', fill: 'none', stroke: 'currentColor', strokeWidth: '0.9' }),
+        React.createElement('path', { key: 'z', d: KALENDER_ZEICHEN[zeichen], stroke: 'currentColor', ...strich })]);
+};
+const FARBE = { sanduhr: 'var(--mp-frist, #6E90B0)', ausruf: 'var(--mp-warnen, #B87070)' };
+export const kalenderMit = () => React.createElement(KalenderMitDurchreichen);
+const KalenderMitDurchreichen = ({ zeichen, ...rest }) => React.createElement(KalenderMitBild, { zeichen, farbe: FARBE[zeichen], ...rest });

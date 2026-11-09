@@ -82,17 +82,19 @@ describe('Ein Thema, ein Zeichen', () => {
       expect(lesen(datei), datei).not.toMatch(/'emergency'/);
     }
   });
-  // Seit Bauplan B2 (07.11.2026): das Icon «notfall» ist der Arztkoffer des Kapitels Gesundheit;
-  // die Notfall-Seiten tragen bis zum Abzeichen-Bau (B4) das Herz mit Puls des Asts Notfall.
+  // Seit Bauplan B4d (08.11.2026): die Notfall-Seiten tragen ihr Seiten-Zeichen — Arztkoffer + rotes
+  // Abzeichen (Herz mit Puls, Hörer, Handy). Kopf der Seite und Register lesen dieselbe Quelle.
   it('Notfallpass steht bei seinen Geschwistern', () => {
-    expect(ansichtIkon('notfallpass')).toBe('herzPuls');
-    expect(ansichtIkon('notfallkarte')).toBe('herzPuls');
+    expect(ansichtIkon('notfallpass')).toBe('seite:notfallpass');
+    expect(ansichtIkon('notfallkarte')).toBe('seite:notfallkarte');
+    expect(lesen('NotfallpassBlatt.jsx')).toMatch(/icon: ansichtIkon\('notfallpass'/);
+    expect(lesen('NotfallVorlesekarte.jsx')).toMatch(/icon: ansichtIkon\('notfallkarte'/);
   });
-  // Seit Schritt 7b (06.11.2026) trägt Organspende als Lebensereignis überall das Zeichen aus dem
-  // Rucksack — nicht mehr das Gesundheits-Kreuz (vorher) und nicht zwei verschiedene Herzen.
-  it('Organspende zeigt ihr eigenes Herz — das Ereignis-Zeichen, wie im Rucksack', () => {
-    expect(ansichtIkon('organ')).toBe('ereignisOrgan');
-    expect(zeigt(lesen('OrganDonation.jsx'), 'ereignisOrgan')).toBe(true);
+  // Organspende: Arztkoffer + Herz im roten Abzeichen (Ast Notfall); die Seite selbst liest ihr
+  // Zeichen aus dem Register — nicht mehr das Gesundheits-Kreuz (vor Schritt 7b).
+  it('Organspende zeigt ihr eigenes Herz — dasselbe Zeichen wie in Suche und Rucksack', () => {
+    expect(ansichtIkon('organ')).toBe('seite:organ');
+    expect(lesen('OrganDonation.jsx')).toMatch(/name: ansichtIkon\('organ', 'ereignisOrgan'\)/);
     expect(lesen('OrganDonation.jsx')).not.toMatch(/name: 'health'/);
   });
   it('die Sicherung trägt das Sicherungs-Zeichen, nicht «herunterladen»', () => {

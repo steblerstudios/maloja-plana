@@ -27,7 +27,7 @@ const ZinsRechner = ({ palette, t }) => {
   const [satz, setSatz] = useState(String(SATZ_GESETZ));
   const r = verzugszins({ betrag: leseBetrag(betrag), satz, seit });
   const status = zinsEingabeStatus({ betrag: leseBetrag(betrag), satz, seit });
-  const feld = { padding: '12px 12px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box', width: '100%', maxWidth: '220px' };
+  const feld = { padding: '12px 12px', borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box', width: '100%', maxWidth: '220px' };
   const label = { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' };
   const hilfe = { fontSize: text.xs, color: palette.mid, margin: space.xs + 'px 0 0' };
   const eingabe = (id, lbl, value, set, type, extra) => [

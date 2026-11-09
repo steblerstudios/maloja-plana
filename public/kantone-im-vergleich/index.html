@@ -298,6 +298,56 @@
     .anhang{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 20px; margin:20px 0 }
     .anhang h3{ margin-top:0 } .anhang p{ font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:28px } h2{ font-size:21px } .abb-karte{ padding:10px 10px 8px } }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
+    .streifen{ margin:0 0 20px }
+    .streifen-titel{ font-size:15px; font-weight:600; margin:0 0 8px }
+    .streifen-achse{ position:relative; height:24px; margin:0 8px }
+    .streifen-achse::before{ content:""; position:absolute; left:0; right:0; top:11px; height:2px; background:var(--rand) }
+    .streifen-achse i{ position:absolute; top:6px; width:12px; height:12px; margin-left:-6px; box-sizing:border-box; border-radius:50%; border:1.5px solid var(--heidel); background:var(--flaeche) }
+    .streifen-achse b{ position:absolute; top:0; height:24px; width:2px; margin-left:-1px; background:var(--text) }
+    .streifen-ende{ display:flex; justify-content:space-between; gap:12px; margin:6px 0 0; font-size:13px; color:var(--leise) }
+    .streifen-ende span:last-child{ text-align:right }
+    .streifen-ch{ position:relative; height:18px; margin:0 8px; font-size:13px; color:var(--leise) }
+    .streifen-ch span{ position:absolute; transform:translateX(-50%); white-space:nowrap }
+    .streifen-ende strong{ color:var(--text); font-weight:600 }
+    .streifen-legende{ margin:4px 0 0; font-size:13px }
+    .streifen-legende i{ display:inline-block; width:10px; height:10px; box-sizing:border-box; border-radius:50%; border:1.5px solid var(--heidel); vertical-align:middle }
+    .streifen-legende b{ display:inline-block; width:2px; height:12px; background:var(--text); vertical-align:middle; margin-left:6px }
+    @media (forced-colors:active){ .streifen-achse b, .streifen-legende b, .streifen-achse::before{ background:CanvasText; forced-color-adjust:none } }
   </style>
 </head>
 <body>
@@ -330,7 +380,17 @@
       </nav>
 
       <h2 id="praemie-einkommen" tabindex="-1"><span class="nr">1</span> Wie schwer wiegt die Prämie?</h2>
-        <p>Die mittlere Prämie für Erwachsene liegt 2027 zwischen 324.90 Franken im Kanton Zug und 610.60 Franken im Kanton Genf, in der ganzen Schweiz bei 487.60 Franken.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-1" aria-label="Quelle 1">1</a></sup> Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Warum das so ist, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Prämie Erwachsene (Fr. im Monat; mittlere Prämie 2027): von 324.90 im Kanton Zug bis 610.60 im Kanton Genf, ganze Schweiz 487.60. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Prämie Erwachsene <span class="leise">Fr. im Monat; mittlere Prämie 2027</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:56.9%">Schweiz 487.60</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:48.9%"></i><i style="left:34.1%"></i><i style="left:5.5%"></i><i style="left:76.9%"></i><i style="left:86.0%"></i><i style="left:59.3%"></i><i style="left:49.2%"></i><i style="left:100.0%"></i><i style="left:35.6%"></i><i style="left:31.7%"></i><i style="left:79.1%"></i><i style="left:34.1%"></i><i style="left:81.9%"></i><i style="left:25.3%"></i><i style="left:21.6%"></i><i style="left:51.0%"></i><i style="left:32.8%"></i><i style="left:59.0%"></i><i style="left:35.9%"></i><i style="left:97.5%"></i><i style="left:37.9%"></i><i style="left:18.5%"></i><i style="left:76.5%"></i><i style="left:47.6%"></i><i style="left:0.0%"></i><i style="left:53.2%"></i><b style="left:56.9%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>324.90</strong> Zug</span><span><strong>610.60</strong> Genf</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Die mittlere Prämie für Erwachsene liegt 2027 je nach Kanton zwischen 324.90 und 610.60 Franken; wie schwer sie wiegt, hängt auch vom Einkommen ab.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-1" aria-label="Quelle 1">1</a></sup></p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
+        <p>Die mittlere Prämie für Erwachsene liegt 2027 zwischen 324.90 Franken im Kanton Zug und 610.60 Franken im Kanton Genf, in der ganzen Schweiz bei 487.60 Franken.<sup class="beleg"><a href="#quelle-praemienKantone" id="beleg-praemienKantone-2" aria-label="Quelle 1">1</a></sup> Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Warum das so ist, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
 
         <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Mittlere Monatsprämie Erwachsene 2027, in Franken"><table>
           <caption>Mittlere Monatsprämie Erwachsene 2027, in Franken, sortiert nach Prämie Erwachsene</caption>
@@ -398,9 +458,21 @@
               <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">13,5 %</td><td class="n">11,1 %</td></tr>
         </table></div>
         <p class="leise"><strong>Vorbehalte:</strong> Prämie, Einkommen und Verbilligung stammen aus drei verschiedenen Jahren; quellenbesteuerte Personen fehlen, und die Lohnentwicklung seit 2022 ist nicht drin. Die Verbilligung umfasst alle 2025 ausbezahlten Beiträge, auch Nachzahlungen für Vorjahre. Solche Nachzahlungen fallen in einigen Kantonen stärker ins Gewicht, vor allem in Zürich, Appenzell Innerrhoden und Graubünden; dort liegt der Rechenwert tiefer, als er für das Jahr 2025 allein wäre. Im Kanton Aargau ist es umgekehrt: Die Beiträge für Vorjahre ergeben dort unter dem Strich weniger als null, der Rechenwert liegt deshalb etwas höher. Im Kanton Zürich wird die Verbilligung zuerst provisorisch ausbezahlt und später abgerechnet.<sup class="beleg"><a href="#quelle-zhIpv" id="beleg-zhIpv-1" aria-label="Quelle 4">4</a></sup> Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Ob Sie Anspruch auf Verbilligung haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Wie schwer wiegt die Prämie?"><a class="weg" href="/krankenkasse/"><span aria-hidden="true">→</span> Krankenkasse erklärt</a><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
 
       <h2 id="steuern" tabindex="-1"><span class="nr">2</span> Wie viel bleibt nach den Steuern?</h2>
-        <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder und ohne Konfession im Kantonshauptort zwischen 4,2 % des Lohns im Kanton Zug und 16,1 % im Kanton Neuenburg an Bund, Kanton und Gemeinde.<sup class="beleg"><a href="#quelle-estvSteuerrechner" id="beleg-estvSteuerrechner-1" aria-label="Quelle 5">5</a></sup> Auch innerhalb eines Kantons zählt die Gemeinde; die Spalte «Gemeinden im Kanton» zeigt die Spanne von der tiefsten zur höchsten Belastung.</p>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Steuern bei 80'000 Fr. Lohn (% des Bruttolohns; Kantonshauptort, ledig, ohne Kinder und Konfession, Steuerjahr 2026): von 4,2 % im Kanton Zug bis 16,1 % im Kanton Neuenburg. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Steuern bei 80'000 Fr. Lohn <span class="leise">% des Bruttolohns; Kantonshauptort, ledig, ohne Kinder und Konfession, Steuerjahr 2026</span></p>
+          
+          <div class="streifen-achse" aria-hidden="true"><i style="left:52.1%"></i><i style="left:70.6%"></i><i style="left:40.3%"></i><i style="left:83.2%"></i><i style="left:71.4%"></i><i style="left:87.4%"></i><i style="left:84.9%"></i><i style="left:74.8%"></i><i style="left:61.3%"></i><i style="left:52.9%"></i><i style="left:75.6%"></i><i style="left:51.3%"></i><i style="left:100.0%"></i><i style="left:48.7%"></i><i style="left:52.1%"></i><i style="left:46.2%"></i><i style="left:21.0%"></i><i style="left:84.9%"></i><i style="left:73.9%"></i><i style="left:63.9%"></i><i style="left:61.3%"></i><i style="left:51.3%"></i><i style="left:89.1%"></i><i style="left:64.7%"></i><i style="left:0.0%"></i><i style="left:47.9%"></i></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>4,2 %</strong> Zug</span><span><strong>16,1 %</strong> Neuenburg</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Ein Beispiel für eine einzige Lebenslage: ledig, ohne Kinder, ohne Konfession, 80'000 Franken Bruttolohn, Steuern an Bund, Kanton und Gemeinde im Kantonshauptort, Steuerjahr 2026. In anderen Gemeinden desselben Kantons sieht es anders aus.<sup class="beleg"><a href="#quelle-estvSteuerrechner" id="beleg-estvSteuerrechner-1" aria-label="Quelle 5">5</a></sup></p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
+        <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder und ohne Konfession im Kantonshauptort zwischen 4,2 % des Lohns im Kanton Zug und 16,1 % im Kanton Neuenburg an Bund, Kanton und Gemeinde.<sup class="beleg"><a href="#quelle-estvSteuerrechner" id="beleg-estvSteuerrechner-2" aria-label="Quelle 5">5</a></sup> Auch innerhalb eines Kantons zählt die Gemeinde; die Spalte «Gemeinden im Kanton» zeigt die Spanne von der tiefsten zur höchsten Belastung.</p>
 
         <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Steuern im Kantonshauptort bei 80'000 Franken Bruttolohn, ledig, ohne Kinder, ohne Konfession, Steuerjahr 2026"><table>
           <caption>Steuern im Kantonshauptort bei 80'000 Franken Bruttolohn, ledig, ohne Kinder, ohne Konfession, Steuerjahr 2026, sortiert nach Steuern bei 80'000 Fr. Lohn</caption>
@@ -433,9 +505,27 @@
               <tr><th scope="row">Neuenburg</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">16,1 %</td><td class="n leise">15,9 % bis 17,2 %</td></tr>
         </table></div>
         <p class="leise">Ein Beispiel für eine einzige Lebenslage. Mit Kindern, Partnerin oder Partner, Vermögen oder anderem Lohn sieht die Rechnung anders aus; wie die Steuern aufgebaut sind, steht auf der Seite <a href="/steuern/">Steuern</a>.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Wie viel bleibt nach den Steuern?"><a class="weg" href="/steuern/"><span aria-hidden="true">→</span> Steuern</a></nav>
 
       <h2 id="wohnen" tabindex="-1"><span class="nr">3</span> Was kostet das Wohnen?</h2>
-        <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen 926 Franken im Monat im Kanton Jura und 1'875 Franken im Kanton Zug, in der ganzen Schweiz 1'446 Franken.<sup class="beleg"><a href="#quelle-bfsMiete" id="beleg-bfsMiete-1" aria-label="Quelle 6">6</a></sup> Gemessen am Medianlohn der Region sind das zwischen 13,3 % und 26,4 %.<sup class="beleg"><a href="#quelle-bfsLse" id="beleg-bfsLse-1" aria-label="Quelle 7">7</a></sup></p>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Miete 3 Zimmer (Fr. im Monat; 2024, Durchschnitt aller Verträge, nicht Inserate): von 926 im Kanton Jura bis 1'875 im Kanton Zug, ganze Schweiz 1'446. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Miete 3 Zimmer <span class="leise">Fr. im Monat; 2024, Durchschnitt aller Verträge, nicht Inserate</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:54.8%">Schweiz 1'446</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:54.2%"></i><i style="left:35.8%"></i><i style="left:32.0%"></i><i style="left:57.2%"></i><i style="left:54.7%"></i><i style="left:38.1%"></i><i style="left:39.3%"></i><i style="left:58.7%"></i><i style="left:33.3%"></i><i style="left:48.1%"></i><i style="left:0.0%"></i><i style="left:55.0%"></i><i style="left:10.3%"></i><i style="left:65.4%"></i><i style="left:50.6%"></i><i style="left:30.0%"></i><i style="left:76.8%"></i><i style="left:31.8%"></i><i style="left:40.7%"></i><i style="left:34.0%"></i><i style="left:40.3%"></i><i style="left:29.2%"></i><i style="left:58.1%"></i><i style="left:35.2%"></i><i style="left:100.0%"></i><i style="left:84.9%"></i><b style="left:54.8%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>926</strong> Jura</span><span><strong>1'875</strong> Zug</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Leerwohnungsziffer (% der Wohnungen; 1. Juni 2026): von 0,20 % im Kanton Zug bis 3,35 % im Kanton Jura, ganze Schweiz 0,93 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Leerwohnungsziffer <span class="leise">% der Wohnungen; 1. Juni 2026</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:23.2%">Schweiz 0,93 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:27.0%"></i><i style="left:29.2%"></i><i style="left:24.1%"></i><i style="left:14.0%"></i><i style="left:18.4%"></i><i style="left:26.7%"></i><i style="left:33.7%"></i><i style="left:3.5%"></i><i style="left:9.8%"></i><i style="left:9.8%"></i><i style="left:100.0%"></i><i style="left:15.9%"></i><i style="left:45.7%"></i><i style="left:13.3%"></i><i style="left:5.7%"></i><i style="left:20.3%"></i><i style="left:9.5%"></i><i style="left:54.3%"></i><i style="left:30.5%"></i><i style="left:50.2%"></i><i style="left:28.6%"></i><i style="left:7.0%"></i><i style="left:21.3%"></i><i style="left:26.7%"></i><i style="left:0.0%"></i><i style="left:10.2%"></i><b style="left:23.2%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>0,20 %</strong> Zug</span><span><strong>3,35 %</strong> Jura</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen 13,3 % und 26,4 % eines Vollzeit-Medianlohns (brutto) der Grossregion. Wer Teilzeit arbeitet oder mit dem Nettolohn rechnet, kommt auf mehr.<sup class="beleg"><a href="#quelle-bfsMiete" id="beleg-bfsMiete-1" aria-label="Quelle 6">6</a></sup><sup class="beleg folge"><a href="#quelle-bfsLse" id="beleg-bfsLse-1" aria-label="Quelle 7">7</a></sup></p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
+        <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen 926 Franken im Monat im Kanton Jura und 1'875 Franken im Kanton Zug, in der ganzen Schweiz 1'446 Franken.<sup class="beleg"><a href="#quelle-bfsMiete" id="beleg-bfsMiete-2" aria-label="Quelle 6">6</a></sup> Gemessen am Medianlohn der Region sind das zwischen 13,3 % und 26,4 %.<sup class="beleg"><a href="#quelle-bfsLse" id="beleg-bfsLse-2" aria-label="Quelle 7">7</a></sup></p>
 
         <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, in Franken im Monat"><table>
           <caption>Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, in Franken im Monat, sortiert nach Miete 3 Zimmer</caption>
@@ -534,8 +624,26 @@
               <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">0,93 %</td></tr>
         </table></div>
         <p class="leise"><strong>Vorbehalte:</strong> Die Mieten sind Durchschnitte aller vermieteten Wohnungen, auch langjähriger Verträge, nicht die Preise neuer Inserate; in kleinen Kantonen sind sie unsicherer geschätzt. Der Medianlohn ist ein Bruttolohn, auf eine Vollzeitstelle umgerechnet, und gilt für eine der sieben Grossregionen, nicht für den einzelnen Kanton. Wer Teilzeit arbeitet oder mit dem Nettolohn rechnet, kommt auf einen höheren Anteil.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Was kostet das Wohnen?"><a class="weg" href="#nebeneinander"><span aria-hidden="true">→</span> Alle Zahlen nebeneinander</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
 
       <h2 id="unterstuetzung" tabindex="-1"><span class="nr">4</span> Wie viele beziehen Unterstützung?</h2>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Sozialhilfequote (% der Bevölkerung; 2024): von 0,8 % im Kanton Obwalden bis 6,7 % im Kanton Genf, ganze Schweiz 2,9 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Sozialhilfequote <span class="leise">% der Bevölkerung; 2024</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:35.6%">Schweiz 2,9 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:13.6%"></i><i style="left:18.6%"></i><i style="left:1.7%"></i><i style="left:27.1%"></i><i style="left:66.1%"></i><i style="left:47.5%"></i><i style="left:20.3%"></i><i style="left:100.0%"></i><i style="left:11.9%"></i><i style="left:3.4%"></i><i style="left:52.5%"></i><i style="left:22.0%"></i><i style="left:83.1%"></i><i style="left:3.4%"></i><i style="left:0.0%"></i><i style="left:33.9%"></i><i style="left:8.5%"></i><i style="left:44.1%"></i><i style="left:16.9%"></i><i style="left:33.9%"></i><i style="left:5.1%"></i><i style="left:5.1%"></i><i style="left:57.6%"></i><i style="left:18.6%"></i><i style="left:8.5%"></i><i style="left:28.8%"></i><b style="left:35.6%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>0,8 %</strong> Obwalden</span><span><strong>6,7 %</strong> Genf</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Ergänzungsleistungen zur AHV (% der Menschen mit Altersrente; Dezember 2025): von 5,5 % im Kanton Appenzell Innerrhoden bis 21,3 % im Kanton Basel-Stadt, ganze Schweiz 12,3 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Ergänzungsleistungen zur AHV <span class="leise">% der Menschen mit Altersrente; Dezember 2025</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:43%">Schweiz 12,3 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:22.8%"></i><i style="left:24.7%"></i><i style="left:0.0%"></i><i style="left:25.3%"></i><i style="left:100.0%"></i><i style="left:48.7%"></i><i style="left:54.4%"></i><i style="left:69.0%"></i><i style="left:38.6%"></i><i style="left:15.2%"></i><i style="left:81.0%"></i><i style="left:50.6%"></i><i style="left:81.0%"></i><i style="left:9.5%"></i><i style="left:17.7%"></i><i style="left:31.0%"></i><i style="left:16.5%"></i><i style="left:41.8%"></i><i style="left:44.3%"></i><i style="left:69.0%"></i><i style="left:25.9%"></i><i style="left:22.2%"></i><i style="left:61.4%"></i><i style="left:15.8%"></i><i style="left:8.9%"></i><i style="left:34.2%"></i><b style="left:43.0%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>5,5 %</strong> Appenzell Innerrhoden</span><span><strong>21,3 %</strong> Basel-Stadt</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte.</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
         <p>Die Sozialhilfequote zeigt, wie viele Menschen im Jahr wirtschaftliche Sozialhilfe bezogen haben. Sie lag 2024 zwischen 0,8 % im Kanton Obwalden und 6,7 % im Kanton Genf, in der ganzen Schweiz bei 2,9 %.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 9">9</a></sup></p>
         <p>Ergänzungsleistungen (EL) helfen, wenn AHV- oder IV-Rente und eigenes Einkommen die Lebenskosten nicht decken. Im Dezember 2025 bezogen sie zwischen 5,5 % der Menschen mit Altersrente im Kanton Appenzell Innerrhoden und 21,3 % im Kanton Basel-Stadt.<sup class="beleg"><a href="#quelle-bsvEl" id="beleg-bsvEl-1" aria-label="Quelle 10">10</a></sup></p>
 <p class="leise legende" aria-hidden="true"><span class="b0"></span> Sozialhilfequote · <span class="b1"></span> Ergänzungsleistungen zur AHV</p>
@@ -571,9 +679,21 @@
               <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">2,9 %</td><td class="n">12,3 %</td></tr>
         </table></div>
         <p class="leise"><strong>Vorbehalt:</strong> Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte. Wer eine Leistung nicht beantragt, fehlt in der Statistik. Die Regeln, das Vermögen, die Mieten und die Finanzierung von Heimaufenthalten unterscheiden sich von Kanton zu Kanton. Eine hohe Quote kann auf mehr Bedarf hindeuten, aber auch darauf, dass die Leistung bekannter ist oder leichter beantragt wird.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Wie viele beziehen Unterstützung?"><a class="weg" href="/sozialhilfe/"><span aria-hidden="true">→</span> Sozialhilfe</a><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <h2 id="familie" tabindex="-1"><span class="nr">5</span> Was bekommen Familien?</h2>
-        <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens 215 Franken im Monat, das gesetzliche Minimum nach dem Familienzulagengesetz. Den höchsten ersten Ansatz gibt es im Kanton Zug: 330 Franken.<sup class="beleg"><a href="#quelle-bsvFamz" id="beleg-bsvFamz-1" aria-label="Quelle 11">11</a></sup> Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr, und in der Landwirtschaft gelten eigene Ansätze; die Tabelle zeigt den ersten Ansatz.</p>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Kinderzulage (Fr. im Monat je Kind; 2026, erster Ansatz): von 215 in 7 Kantonen bis 330 im Kanton Zug. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Kinderzulage <span class="leise">Fr. im Monat je Kind; 2026, erster Ansatz</span></p>
+          
+          <div class="streifen-achse" aria-hidden="true"><i style="left:8.7%"></i><i style="left:13.0%"></i><i style="left:26.1%"></i><i style="left:0.0%"></i><i style="left:52.2%"></i><i style="left:30.4%"></i><i style="left:43.5%"></i><i style="left:83.5%"></i><i style="left:0.0%"></i><i style="left:21.7%"></i><i style="left:52.2%"></i><i style="left:0.0%"></i><i style="left:21.7%"></i><i style="left:37.4%"></i><i style="left:4.3%"></i><i style="left:13.0%"></i><i style="left:13.0%"></i><i style="left:0.0%"></i><i style="left:26.1%"></i><i style="left:0.0%"></i><i style="left:0.0%"></i><i style="left:21.7%"></i><i style="left:93.0%"></i><i style="left:97.4%"></i><i style="left:100.0%"></i><i style="left:0.0%"></i></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>215</strong> 7 Kantone</span><span><strong>330</strong> Zug</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Die Kinderzulage beträgt 2026 in allen Kantonen mindestens 215 Franken im Monat, das gesetzliche Minimum.<sup class="beleg"><a href="#quelle-bsvFamz" id="beleg-bsvFamz-1" aria-label="Quelle 11">11</a></sup> Die Grafik zeigt den ersten Ansatz; viele Kantone zahlen für ältere Kinder oder ab dem dritten Kind mehr.</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
+        <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens 215 Franken im Monat, das gesetzliche Minimum nach dem Familienzulagengesetz. Den höchsten ersten Ansatz gibt es im Kanton Zug: 330 Franken.<sup class="beleg"><a href="#quelle-bsvFamz" id="beleg-bsvFamz-2" aria-label="Quelle 11">11</a></sup> Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr, und in der Landwirtschaft gelten eigene Ansätze; die Tabelle zeigt den ersten Ansatz.</p>
 
         <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Kinderzulage 2026 je Kind und Monat (erster Ansatz), in Franken"><table>
           <caption>Kinderzulage 2026 je Kind und Monat (erster Ansatz), in Franken, sortiert nach Kinderzulage</caption>
@@ -638,8 +758,20 @@
               <tr><th scope="row">Graubünden</th><td class="balken" aria-hidden="true"><span class="b0" style="width:100.0%"></span></td><td class="n">27'300</td><td class="n leise"></td></tr>
         </table></div>
         <p class="leise"><strong>Vorbehalt:</strong> Ein tiefer Abzug ist nicht automatisch eine Lücke. Wie viel Betreuung kostet, hängt auch davon ab, wie stark Kanton und Gemeinde Kita-Plätze verbilligen und wie hoch der Steuertarif ist. Abzüge für die Betreuung durch die Eltern selbst, die einzelne Kantone kennen, sind nicht verglichen. Für Neuenburg ist nur der Wert für 2025 ausgewiesen; der Abzug ist dort zudem auf die Elternbeiträge an die familienergänzende Betreuung nach dem kantonalen Gesetz begrenzt.<sup class="beleg"><a href="#quelle-estvDrittbetreuung" id="beleg-estvDrittbetreuung-1" aria-label="Quelle 15">15</a></sup> Neuenburg zählt deshalb beim Vergleich mit dem Bund nicht mit.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Was bekommen Familien?"><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <h2 id="arbeit" tabindex="-1"><span class="nr">6</span> Wie viele sind als arbeitslos gemeldet?</h2>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Arbeitslosenquote (% der Erwerbspersonen; September 2026, Monatswert): von 0,8 % im Kanton Appenzell Innerrhoden bis 5,3 % im Kanton Genf, ganze Schweiz 3,0 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Arbeitslosenquote <span class="leise">% der Erwerbspersonen; September 2026, Monatswert</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:48.9%">Schweiz 3,0 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:53.3%"></i><i style="left:15.6%"></i><i style="left:0.0%"></i><i style="left:51.1%"></i><i style="left:80.0%"></i><i style="left:31.1%"></i><i style="left:37.8%"></i><i style="left:100.0%"></i><i style="left:20.0%"></i><i style="left:6.7%"></i><i style="left:75.6%"></i><i style="left:26.7%"></i><i style="left:80.0%"></i><i style="left:8.9%"></i><i style="left:4.4%"></i><i style="left:51.1%"></i><i style="left:6.7%"></i><i style="left:48.9%"></i><i style="left:26.7%"></i><i style="left:46.7%"></i><i style="left:31.1%"></i><i style="left:4.4%"></i><i style="left:91.1%"></i><i style="left:51.1%"></i><i style="left:44.4%"></i><i style="left:46.7%"></i><b style="left:48.9%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>0,8 %</strong> Appenzell Innerrhoden</span><span><strong>5,3 %</strong> Genf</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Die Quote zählt Menschen, die beim RAV als arbeitslos gemeldet sind. Wer keine Stelle hat, aber nicht gemeldet ist, fehlt.</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
         <p>Im September 2026 waren zwischen 0,8 % der Erwerbspersonen im Kanton Appenzell Innerrhoden und 5,3 % im Kanton Genf als arbeitslos gemeldet, in der ganzen Schweiz 3,0 %.<sup class="beleg"><a href="#quelle-seco" id="beleg-seco-1" aria-label="Quelle 16">16</a></sup></p>
 
         <div class="tabelle zahlen" tabindex="0" role="region" aria-label="Arbeitslosenquote September 2026"><table>
@@ -674,8 +806,68 @@
               <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="balken" aria-hidden="true"></td><td class="n">3,0 %</td></tr>
         </table></div>
         <p class="leise"><strong>Vorbehalt:</strong> Die Quote zählt Menschen, die beim RAV als arbeitslos gemeldet sind. Wer keine Stelle hat, aber nicht gemeldet ist, fehlt. Es ist ein Monatswert, der saisonal schwankt.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Wie viele sind als arbeitslos gemeldet?"><a class="weg" href="#zusammenhaenge"><span aria-hidden="true">→</span> Was zusammenhängt</a></nav>
 
       <h2 id="nebeneinander" tabindex="-1"><span class="nr">7</span> Alle Zahlen nebeneinander</h2>
+      <div class="schicht-bild"><div class="kern">
+        <figure class="streifen" role="img" aria-label="Prämie Erwachsene (Fr. im Monat; mittlere Prämie 2027): von 324.90 im Kanton Zug bis 610.60 im Kanton Genf, ganze Schweiz 487.60. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Prämie Erwachsene <span class="leise">Fr. im Monat; mittlere Prämie 2027</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:56.9%">Schweiz 487.60</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:48.9%"></i><i style="left:34.1%"></i><i style="left:5.5%"></i><i style="left:76.9%"></i><i style="left:86.0%"></i><i style="left:59.3%"></i><i style="left:49.2%"></i><i style="left:100.0%"></i><i style="left:35.6%"></i><i style="left:31.7%"></i><i style="left:79.1%"></i><i style="left:34.1%"></i><i style="left:81.9%"></i><i style="left:25.3%"></i><i style="left:21.6%"></i><i style="left:51.0%"></i><i style="left:32.8%"></i><i style="left:59.0%"></i><i style="left:35.9%"></i><i style="left:97.5%"></i><i style="left:37.9%"></i><i style="left:18.5%"></i><i style="left:76.5%"></i><i style="left:47.6%"></i><i style="left:0.0%"></i><i style="left:53.2%"></i><b style="left:56.9%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>324.90</strong> Zug</span><span><strong>610.60</strong> Genf</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Prämienlast nach Verbilligung (% des Median-Reineinkommens, Rechenwert; nicht die Last einer Person; Prämie 2026, Einkommen 2022, Verbilligung 2025): von 6,3 % im Kanton Zug bis 17,3 % im Kanton Tessin, fast gleich hoch im Kanton Genf (17,2 %), ganze Schweiz 11,1 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Prämienlast nach Verbilligung <span class="leise">% des Median-Reineinkommens, Rechenwert; nicht die Last einer Person; Prämie 2026, Einkommen 2022, Verbilligung 2025</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:43.6%">Schweiz 11,1 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:33.6%"></i><i style="left:33.6%"></i><i style="left:10.9%"></i><i style="left:53.6%"></i><i style="left:58.2%"></i><i style="left:50.9%"></i><i style="left:44.5%"></i><i style="left:99.1%"></i><i style="left:37.3%"></i><i style="left:35.5%"></i><i style="left:87.3%"></i><i style="left:29.1%"></i><i style="left:80.9%"></i><i style="left:20.0%"></i><i style="left:22.7%"></i><i style="left:37.3%"></i><i style="left:22.7%"></i><i style="left:40.9%"></i><i style="left:35.5%"></i><i style="left:100.0%"></i><i style="left:36.4%"></i><i style="left:24.5%"></i><i style="left:57.3%"></i><i style="left:61.8%"></i><i style="left:0.0%"></i><i style="left:25.5%"></i><b style="left:43.6%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>6,3 %</strong> Zug</span><span><strong>17,3 %</strong> Tessin<br><span class="leise">fast gleich Genf 17,2 %</span></span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Steuern bei 80'000 Fr. Lohn (% des Bruttolohns; Kantonshauptort, ledig, ohne Kinder und Konfession, Steuerjahr 2026): von 4,2 % im Kanton Zug bis 16,1 % im Kanton Neuenburg. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Steuern bei 80'000 Fr. Lohn <span class="leise">% des Bruttolohns; Kantonshauptort, ledig, ohne Kinder und Konfession, Steuerjahr 2026</span></p>
+          
+          <div class="streifen-achse" aria-hidden="true"><i style="left:52.1%"></i><i style="left:70.6%"></i><i style="left:40.3%"></i><i style="left:83.2%"></i><i style="left:71.4%"></i><i style="left:87.4%"></i><i style="left:84.9%"></i><i style="left:74.8%"></i><i style="left:61.3%"></i><i style="left:52.9%"></i><i style="left:75.6%"></i><i style="left:51.3%"></i><i style="left:100.0%"></i><i style="left:48.7%"></i><i style="left:52.1%"></i><i style="left:46.2%"></i><i style="left:21.0%"></i><i style="left:84.9%"></i><i style="left:73.9%"></i><i style="left:63.9%"></i><i style="left:61.3%"></i><i style="left:51.3%"></i><i style="left:89.1%"></i><i style="left:64.7%"></i><i style="left:0.0%"></i><i style="left:47.9%"></i></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>4,2 %</strong> Zug</span><span><strong>16,1 %</strong> Neuenburg</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Miete 3 Zimmer (Fr. im Monat; 2024, Durchschnitt aller Verträge, nicht Inserate): von 926 im Kanton Jura bis 1'875 im Kanton Zug, ganze Schweiz 1'446. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Miete 3 Zimmer <span class="leise">Fr. im Monat; 2024, Durchschnitt aller Verträge, nicht Inserate</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:54.8%">Schweiz 1'446</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:54.2%"></i><i style="left:35.8%"></i><i style="left:32.0%"></i><i style="left:57.2%"></i><i style="left:54.7%"></i><i style="left:38.1%"></i><i style="left:39.3%"></i><i style="left:58.7%"></i><i style="left:33.3%"></i><i style="left:48.1%"></i><i style="left:0.0%"></i><i style="left:55.0%"></i><i style="left:10.3%"></i><i style="left:65.4%"></i><i style="left:50.6%"></i><i style="left:30.0%"></i><i style="left:76.8%"></i><i style="left:31.8%"></i><i style="left:40.7%"></i><i style="left:34.0%"></i><i style="left:40.3%"></i><i style="left:29.2%"></i><i style="left:58.1%"></i><i style="left:35.2%"></i><i style="left:100.0%"></i><i style="left:84.9%"></i><b style="left:54.8%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>926</strong> Jura</span><span><strong>1'875</strong> Zug</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Leerwohnungsziffer (% der Wohnungen; 1. Juni 2026): von 0,20 % im Kanton Zug bis 3,35 % im Kanton Jura, ganze Schweiz 0,93 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Leerwohnungsziffer <span class="leise">% der Wohnungen; 1. Juni 2026</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:23.2%">Schweiz 0,93 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:27.0%"></i><i style="left:29.2%"></i><i style="left:24.1%"></i><i style="left:14.0%"></i><i style="left:18.4%"></i><i style="left:26.7%"></i><i style="left:33.7%"></i><i style="left:3.5%"></i><i style="left:9.8%"></i><i style="left:9.8%"></i><i style="left:100.0%"></i><i style="left:15.9%"></i><i style="left:45.7%"></i><i style="left:13.3%"></i><i style="left:5.7%"></i><i style="left:20.3%"></i><i style="left:9.5%"></i><i style="left:54.3%"></i><i style="left:30.5%"></i><i style="left:50.2%"></i><i style="left:28.6%"></i><i style="left:7.0%"></i><i style="left:21.3%"></i><i style="left:26.7%"></i><i style="left:0.0%"></i><i style="left:10.2%"></i><b style="left:23.2%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>0,20 %</strong> Zug</span><span><strong>3,35 %</strong> Jura</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Sozialhilfequote (% der Bevölkerung; 2024): von 0,8 % im Kanton Obwalden bis 6,7 % im Kanton Genf, ganze Schweiz 2,9 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Sozialhilfequote <span class="leise">% der Bevölkerung; 2024</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:35.6%">Schweiz 2,9 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:13.6%"></i><i style="left:18.6%"></i><i style="left:1.7%"></i><i style="left:27.1%"></i><i style="left:66.1%"></i><i style="left:47.5%"></i><i style="left:20.3%"></i><i style="left:100.0%"></i><i style="left:11.9%"></i><i style="left:3.4%"></i><i style="left:52.5%"></i><i style="left:22.0%"></i><i style="left:83.1%"></i><i style="left:3.4%"></i><i style="left:0.0%"></i><i style="left:33.9%"></i><i style="left:8.5%"></i><i style="left:44.1%"></i><i style="left:16.9%"></i><i style="left:33.9%"></i><i style="left:5.1%"></i><i style="left:5.1%"></i><i style="left:57.6%"></i><i style="left:18.6%"></i><i style="left:8.5%"></i><i style="left:28.8%"></i><b style="left:35.6%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>0,8 %</strong> Obwalden</span><span><strong>6,7 %</strong> Genf</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Ergänzungsleistungen zur AHV (% der Menschen mit Altersrente; Dezember 2025): von 5,5 % im Kanton Appenzell Innerrhoden bis 21,3 % im Kanton Basel-Stadt, ganze Schweiz 12,3 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Ergänzungsleistungen zur AHV <span class="leise">% der Menschen mit Altersrente; Dezember 2025</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:43%">Schweiz 12,3 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:22.8%"></i><i style="left:24.7%"></i><i style="left:0.0%"></i><i style="left:25.3%"></i><i style="left:100.0%"></i><i style="left:48.7%"></i><i style="left:54.4%"></i><i style="left:69.0%"></i><i style="left:38.6%"></i><i style="left:15.2%"></i><i style="left:81.0%"></i><i style="left:50.6%"></i><i style="left:81.0%"></i><i style="left:9.5%"></i><i style="left:17.7%"></i><i style="left:31.0%"></i><i style="left:16.5%"></i><i style="left:41.8%"></i><i style="left:44.3%"></i><i style="left:69.0%"></i><i style="left:25.9%"></i><i style="left:22.2%"></i><i style="left:61.4%"></i><i style="left:15.8%"></i><i style="left:8.9%"></i><i style="left:34.2%"></i><b style="left:43.0%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>5,5 %</strong> Appenzell Innerrhoden</span><span><strong>21,3 %</strong> Basel-Stadt</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Arbeitslosenquote (% der Erwerbspersonen; September 2026, Monatswert): von 0,8 % im Kanton Appenzell Innerrhoden bis 5,3 % im Kanton Genf, ganze Schweiz 3,0 %. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Arbeitslosenquote <span class="leise">% der Erwerbspersonen; September 2026, Monatswert</span></p>
+          <p class="streifen-ch" aria-hidden="true"><span style="left:48.9%">Schweiz 3,0 %</span></p>
+          <div class="streifen-achse" aria-hidden="true"><i style="left:53.3%"></i><i style="left:15.6%"></i><i style="left:0.0%"></i><i style="left:51.1%"></i><i style="left:80.0%"></i><i style="left:31.1%"></i><i style="left:37.8%"></i><i style="left:100.0%"></i><i style="left:20.0%"></i><i style="left:6.7%"></i><i style="left:75.6%"></i><i style="left:26.7%"></i><i style="left:80.0%"></i><i style="left:8.9%"></i><i style="left:4.4%"></i><i style="left:51.1%"></i><i style="left:6.7%"></i><i style="left:48.9%"></i><i style="left:26.7%"></i><i style="left:46.7%"></i><i style="left:31.1%"></i><i style="left:4.4%"></i><i style="left:91.1%"></i><i style="left:51.1%"></i><i style="left:44.4%"></i><i style="left:46.7%"></i><b style="left:48.9%"></b></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>0,8 %</strong> Appenzell Innerrhoden</span><span><strong>5,3 %</strong> Genf</span></div>
+        </figure>
+        <figure class="streifen" role="img" aria-label="Kinderzulage (Fr. im Monat je Kind; 2026, erster Ansatz): von 215 in 7 Kantonen bis 330 im Kanton Zug. Jeder Punkt ist ein Kanton.">
+          <p class="streifen-titel" aria-hidden="true">Kinderzulage <span class="leise">Fr. im Monat je Kind; 2026, erster Ansatz</span></p>
+          
+          <div class="streifen-achse" aria-hidden="true"><i style="left:8.7%"></i><i style="left:13.0%"></i><i style="left:26.1%"></i><i style="left:0.0%"></i><i style="left:52.2%"></i><i style="left:30.4%"></i><i style="left:43.5%"></i><i style="left:83.5%"></i><i style="left:0.0%"></i><i style="left:21.7%"></i><i style="left:52.2%"></i><i style="left:0.0%"></i><i style="left:21.7%"></i><i style="left:37.4%"></i><i style="left:4.3%"></i><i style="left:13.0%"></i><i style="left:13.0%"></i><i style="left:0.0%"></i><i style="left:26.1%"></i><i style="left:0.0%"></i><i style="left:0.0%"></i><i style="left:21.7%"></i><i style="left:93.0%"></i><i style="left:97.4%"></i><i style="left:100.0%"></i><i style="left:0.0%"></i></div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>215</strong> 7 Kantone</span><span><strong>330</strong> Zug</span></div>
+        </figure><p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p></div></div>
+      <p class="schicht-kurz">Eine tiefe Zahl ist nicht besser und eine hohe nicht schlechter, hinter jeder stehen eigene Kosten, Löhne und Entscheide.</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
         <p>Eine Auswahl der Zahlen aller Kantone in einer Tabelle, alphabetisch. Auf dem Handy lässt sie sich waagrecht verschieben; die Spalte mit dem Kanton bleibt stehen. Als Karten zeigt dieselben Zahlen der <a href="/kantonsatlas/">Kantonsatlas</a>.</p>
 
         <div class="tabelle breit" tabindex="0" role="region" aria-label="Alle Kantone nebeneinander, waagrecht verschiebbar"><table>
@@ -709,10 +901,11 @@
             <tr><th scope="row">Zürich</th><td class="n">477.00</td><td class="n">9,1 %</td><td class="n">9,9 %</td><td class="n">1'732</td><td class="n">0,52 %</td><td class="n">2,5 %</td><td class="n">10,9 %</td><td class="n">2,9 %</td><td class="n">215</td></tr>
             <tr class="ch"><th scope="row">Ganze Schweiz</th><td class="n">487.60</td><td class="n">11,1 %</td><td class="n"><span aria-hidden="true">–</span><span class="sr-only">kein Wert</span></td><td class="n">1'446</td><td class="n">0,93 %</td><td class="n">2,9 %</td><td class="n">12,3 %</td><td class="n">3,0 %</td><td class="n"><span aria-hidden="true">–</span><span class="sr-only">kein Wert</span></td></tr>
         </table></div>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Alle Zahlen nebeneinander"><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Als Karten im Kantonsatlas</a><a class="weg" href="#zusammenhaenge"><span aria-hidden="true">→</span> Was zusammenhängt</a></nav>
 
       <h2 id="zusammenhaenge" tabindex="-1"><span class="nr">8</span> Was zusammenhängt</h2>
-        <p>Legt man die Zahlen nebeneinander, fällt auf, dass manche zusammen steigen und fallen. Die Tabelle zeigt das als Korrelation über die 26 Kantone. Als Kontrolle ist auch die Rangfolge gerechnet; sagen beide Rechnungen Verschiedenes, steht die schwächere Stufe.</p>
-
+      <div class="schicht-bild">
         <div class="tabelle" tabindex="0" role="region" aria-label="Zusammenhänge über die 26 Kantone"><table>
           <caption>Zusammenhang über die 26 Kantone. r reicht von −1 (genau gegenläufig) über 0 (kein linearer Zusammenhang) bis +1 (genau gleichläufig).</caption>
           <tr><th scope="col">Zahlen</th><th scope="col">Stärke</th><th scope="col" class="n">r</th><th scope="col">Was das heisst</th></tr>
@@ -721,8 +914,14 @@
           <tr><th scope="row">Ergänzungsleistungen und Sozialhilfequote</th><td>deutlich, gleichläufig</td><td class="n">0,82</td><td>In Kantonen, in denen mehr Menschen mit Altersrente Ergänzungsleistungen beziehen, ist meist auch die Sozialhilfequote höher.</td></tr>
           <tr><th scope="row">Miete und Leerwohnungen</th><td>teilweise, gegenläufig <span class="leise">(nach Rangfolge −0,58)</span></td><td class="n">−0,70</td><td>In Kantonen mit höheren Mieten stehen meist weniger Wohnungen leer.</td></tr>
           <tr><th scope="row">Steuern und Prämie</th><td>deutlich, gleichläufig</td><td class="n">0,68</td><td>In Kantonen mit höheren Steuern ist meist auch die Prämie höher.</td></tr>
-        </table></div>
+        </table></div></div>
+      <p class="schicht-kurz">Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen.</p>
+      <details class="schicht-mehr">
+        <summary>Ausführlich lesen, mit Ausnahmen und Quellen</summary>
+        <p>Legt man die Zahlen nebeneinander, fällt auf, dass manche zusammen steigen und fallen. Die Tabelle oben zeigt das als Korrelation über die 26 Kantone. Als Kontrolle ist auch die Rangfolge gerechnet; sagen beide Rechnungen Verschiedenes, steht die schwächere Stufe.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen. Dass Kantone mit höherer Prämie meist auch mehr Sozialhilfe haben, heisst nicht, dass Menschen mit hoher Prämie eher Sozialhilfe beziehen. Oft haben dieselben Kantone bei mehreren Zahlen hohe Werte, und dahinter können ganz andere Gründe liegen: Sprachregion, Alter der Bevölkerung, Wohnungsmarkt, Arbeitsplätze, Regeln. Jeder Kanton zählt einmal, egal wie viele Menschen dort leben. Was die Zahlen zeigen, ist ein Anlass zum Fragen, nicht die Antwort.</p>
+      </details>
+      <nav class="wege" aria-label="Weiter von: Was zusammenhängt"><a class="weg" href="#nebeneinander"><span aria-hidden="true">→</span> Alle Zahlen nebeneinander</a></nav>
 
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
@@ -740,7 +939,7 @@
             <p class="q-titel"><a href="https://cms.news.admin.ch/fileservice/sdweb-docs-prod-nsbcch-files/files/2026/09/29/f21880a8-516b-414a-8044-15f6e1c84c18.pdf" rel="noopener">Kantonale Prämien 2026/2027</a></p>
             <p class="q-her">Bundesamt für Gesundheit · 29.09.2026</p>
             <p class="q-belegt">Belegt: mittlere Prämie je Kanton und für die ganze Schweiz</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-praemienKantone-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-praemienKantone-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#praemie-einkommen" aria-label="Zurück zum Abschnitt mit Stelle 2; sie steht unter «Ausführlich lesen»">2</a></p>
           </div>
         </li>
         <li id="quelle-estvStatistik">
@@ -749,7 +948,7 @@
             <p class="q-titel"><a href="https://www.estv.admin.ch/de/statistiken-zur-direkten-bundessteuer" rel="noopener">Statistiken zur direkten Bundessteuer</a></p>
             <p class="q-her">Eidgenössische Steuerverwaltung · Steuerjahr 2022</p>
             <p class="q-belegt">Belegt: Median-Reineinkommen je Kanton, Grundlage der Prämienlast</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvStatistik-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#praemie-einkommen" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-bagOkp">
@@ -758,7 +957,7 @@
             <p class="q-titel"><a href="https://www.bag.admin.ch/de/statistik-der-obligatorischen-krankenversicherung" rel="noopener">Statistik der obligatorischen Krankenversicherung 2025</a></p>
             <p class="q-her">Bundesamt für Gesundheit · Tabellen T 4.02 und T 4.08, Datenstand 15.07.2026</p>
             <p class="q-belegt">Belegt: Bezugsquote und durchschnittlicher Beitrag der Prämienverbilligung je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bagOkp-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#praemie-einkommen" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-zhIpv">
@@ -767,7 +966,7 @@
             <p class="q-titel"><a href="https://www.zh.ch/de/news-uebersicht/medienmitteilungen/2024/09/kanton-legt-praemienverbilligungen-2025-fest.html" rel="noopener">Kanton legt Prämienverbilligungen 2025 fest</a></p>
             <p class="q-her">Kanton Zürich · 26.09.2024</p>
             <p class="q-belegt">Belegt: provisorische Auszahlung und spätere Abrechnung in Zürich</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-zhIpv-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#praemie-einkommen" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-estvSteuerrechner">
@@ -776,7 +975,7 @@
             <p class="q-titel"><a href="https://swisstaxcalculator.estv.admin.ch/#/taxburden/income-wealth-tax" rel="noopener">Steuerbelastung in den Kantonen und Gemeinden</a></p>
             <p class="q-her">Eidgenössische Steuerverwaltung · Steuerjahr 2026, abgerufen 24.10.2026</p>
             <p class="q-belegt">Belegt: Steuerbelastung im Kantonshauptort und in den Gemeinden</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvSteuerrechner-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvSteuerrechner-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#steuern" aria-label="Zurück zum Abschnitt mit Stelle 2; sie steht unter «Ausführlich lesen»">2</a></p>
           </div>
         </li>
         <li id="quelle-bfsMiete">
@@ -785,7 +984,7 @@
             <p class="q-titel"><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36398431/master" rel="noopener">Strukturerhebung: durchschnittlicher Mietpreis nach Kanton und Zimmerzahl</a></p>
             <p class="q-her">Bundesamt für Statistik · 2024, Tabelle T 09.03.03.01</p>
             <p class="q-belegt">Belegt: durchschnittliche Nettomiete je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsMiete-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsMiete-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#wohnen" aria-label="Zurück zum Abschnitt mit Stelle 2; sie steht unter «Ausführlich lesen»">2</a></p>
           </div>
         </li>
         <li id="quelle-bfsLse">
@@ -794,7 +993,7 @@
             <p class="q-titel"><a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/arbeit-erwerb/loehne-erwerbseinkommen-arbeitskosten/lohnstruktur/grossregionen.html" rel="noopener">Lohnstrukturerhebung nach Grossregion</a></p>
             <p class="q-her">Bundesamt für Statistik · 2024</p>
             <p class="q-belegt">Belegt: Medianlohn der Grossregion</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsLse-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsLse-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#wohnen" aria-label="Zurück zum Abschnitt mit Stelle 2; sie steht unter «Ausführlich lesen»">2</a></p>
           </div>
         </li>
         <li id="quelle-bfsLeer">
@@ -803,7 +1002,7 @@
             <p class="q-titel"><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/36836216/master" rel="noopener">Leerwohnungszählung 2026</a></p>
             <p class="q-her">Bundesamt für Statistik · Stichtag 1.6.2026, publiziert 10.9.2026</p>
             <p class="q-belegt">Belegt: Leerwohnungsziffer je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsLeer-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#wohnen" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-bfsSozialhilfe">
@@ -812,7 +1011,7 @@
             <p class="q-titel"><a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/soziale-sicherheit/sozialhilfe/sozialhilfebeziehende/wirtschaftliche-sozialhilfe.html" rel="noopener">Sozialhilfestatistik: wirtschaftliche Sozialhilfe</a></p>
             <p class="q-her">Bundesamt für Statistik · 2024, publiziert 15.12.2025</p>
             <p class="q-belegt">Belegt: Sozialhilfequote je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bfsSozialhilfe-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#unterstuetzung" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-bsvEl">
@@ -821,7 +1020,7 @@
             <p class="q-titel"><a href="https://www.bsv.admin.ch/de/statistik-el" rel="noopener">Statistik der Ergänzungsleistungen 2025</a></p>
             <p class="q-her">Bundesamt für Sozialversicherungen · Dezember 2025, publiziert 26.05.2026</p>
             <p class="q-belegt">Belegt: EL-Quote zur AHV je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvEl-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#unterstuetzung" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-bsvFamz">
@@ -830,7 +1029,7 @@
             <p class="q-titel"><a href="https://www.bsv.admin.ch/dam/de/sd-web/acU7RgJgeisY/Arten%20und%20Ans%C3%A4tze%20der%20Familienzulagen_2026.pdf" rel="noopener">Arten und Ansätze der Familienzulagen 2026</a></p>
             <p class="q-her">Bundesamt für Sozialversicherungen · Stand 1.1.2026</p>
             <p class="q-belegt">Belegt: Kinderzulage je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvFamz-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-bsvFamz-1" aria-label="Zurück zur Stelle 1 im Text">1</a> · <a href="#familie" aria-label="Zurück zum Abschnitt mit Stelle 2; sie steht unter «Ausführlich lesen»">2</a></p>
           </div>
         </li>
         <li id="quelle-dbg">
@@ -839,7 +1038,7 @@
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/20260101/de" rel="noopener">Bundesgesetz über die direkte Bundessteuer (DBG), Art. 33 Abs. 3</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex), SR 642.11 · Fassung vom 1.1.2026; Betrag von 25'800 Fr. seit 1.1.2025 (AS 2024 479)</p>
             <p class="q-belegt">Belegt: Höchstabzug für Kinderdrittbetreuung bei der direkten Bundessteuer und seine Bedingungen</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-dbg-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#familie" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-as2026486">
@@ -848,7 +1047,7 @@
             <p class="q-titel"><a href="https://www.fedlex.admin.ch/eli/oc/2026/486/de" rel="noopener">Verordnung des EFD über den Ausgleich der Folgen der kalten Progression für die natürlichen Personen bei der direkten Bundessteuer (Verordnung über die kalte Progression, VKP), Art. 5 Abs. 2</a></p>
             <p class="q-her">Bundeskanzlei (Fedlex) · vom 11.09.2026, in Kraft ab 1.1.2027 (AS 2026 486)</p>
             <p class="q-belegt">Belegt: Höchstabzug für Kinderdrittbetreuung ab 2027</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-as2026486-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#familie" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-estvKantonsblaetter">
@@ -857,7 +1056,7 @@
             <p class="q-titel"><a href="https://www.estv.admin.ch/de/kantonsblaetter" rel="noopener">Kantonsblätter</a></p>
             <p class="q-her">Eidgenössische Steuerverwaltung und Schweizerische Steuerkonferenz · Stand Februar 2026</p>
             <p class="q-belegt">Belegt: Abzug für Kinderbetreuung je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvKantonsblaetter-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#familie" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-estvDrittbetreuung">
@@ -866,7 +1065,7 @@
             <p class="q-titel"><a href="https://www.estv2.admin.ch/stp/sm/drittbetreuungskosten-de-fr.pdf" rel="noopener">Steuermäppchen: Abzug der Kosten für die Drittbetreuung der Kinder</a></p>
             <p class="q-her">Eidgenössische Steuerverwaltung · Steuerperiode 2025</p>
             <p class="q-belegt">Belegt: Höchstabzug und Begrenzung im Kanton Neuenburg</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-estvDrittbetreuung-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#familie" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
         <li id="quelle-seco">
@@ -875,7 +1074,7 @@
             <p class="q-titel"><a href="https://www.seco.admin.ch/de/newnsb/Cdju9-o8WGML" rel="noopener">Die Lage auf dem Arbeitsmarkt, September 2026</a></p>
             <p class="q-her">Staatssekretariat für Wirtschaft · publiziert 6.10.2026</p>
             <p class="q-belegt">Belegt: Arbeitslosenquote je Kanton</p>
-            <p class="q-zurueck">Zurück zum Text: <a href="#beleg-seco-1" aria-label="Zurück zur Stelle 1 im Text">↩</a></p>
+            <p class="q-zurueck">Zurück zum Text: <a href="#arbeit" aria-label="Zurück zum Abschnitt mit Stelle 1; sie steht unter «Ausführlich lesen»">↩</a></p>
           </div>
         </li>
       </ol>

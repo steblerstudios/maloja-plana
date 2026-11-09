@@ -13,8 +13,8 @@
 //                                     data/werkzeugRegister.js, Kapitel über astKapitel()
 //   · alle Farben                  → data/lebensbereiche.js
 //
-// Noch zeichnet nichts nach dieser Tabelle; das kommt in B3/B4. Bis dahin hält der Wächter
-// __tests__/seitenZeichen.test.js sie vollständig und widerspruchsfrei.
+// Seit Bauplan B4 (08.11.2026) zeichnen alle sieben Kapitel nach dieser Tabelle (IconAbzeichen.jsx,
+// über ansichtIkon()). Der Wächter __tests__/seitenZeichen.test.js hält sie vollständig und widerspruchsfrei.
 
 import { astKapitel, getBereich, getBereichForChapter } from '../data/lebensbereiche.js';
 
@@ -176,4 +176,35 @@ export const abzeichenFarbe = (bereich, mit, isDark = false) => {
   }
   const ast = getBereich(mit === GELD ? 'finanzen' : mit);
   return { art: 'voll', farbe: ast ? (isDark ? ast.dark : ast.light) : null };
+};
+
+// Alles, was das Abzeichen-Bauteil (IconAbzeichen.jsx, Bauplan B3) für eine Seite braucht.
+// `bereich` kommt vom Aufrufer aus dem Register (eine Quelle).
+export const seitenBild = (view, bereich, isDark = false) => {
+  const e = SEITEN_ZEICHEN[view];
+  if (!e || !bereich) return null;
+  const f = abzeichenFarbe(bereich, e.mit, isDark);
+  const form = getBereichForChapter(astKapitel(bereich));
+  return {
+    leitform: leitformFuer(bereich), zeichen: e.zeichen, art: f.art, farbe: f.farbe,
+    formFarbe: form ? (isDark ? form.dark : form.light) : null,
+  };
+};
+
+// Wie seitenBild, aber die Farben als CSS-Variablen `--mp-ast-<Ast>` (gesetzt in main.jsx aus
+// lebensbereiche.js, je nach hell/dunkel) — mit der hellen Farbe als Rückfall (Bauplan B4).
+export const astVariable = (key) => {
+  const b = getBereich(key);
+  return b ? `var(--mp-ast-${key}, ${b.light})` : null;
+};
+export const seitenBildVariabel = (view, bereich) => {
+  const e = SEITEN_ZEICHEN[view];
+  if (!e || !bereich) return null;
+  const form = getBereichForChapter(astKapitel(bereich));
+  const formVar = form ? astVariable(form.key) : null;
+  return {
+    leitform: leitformFuer(bereich), zeichen: e.zeichen, art: e.mit ? 'voll' : 'leer',
+    farbe: e.mit ? astVariable(e.mit === GELD ? 'finanzen' : e.mit) : formVar,
+    formFarbe: formVar,
+  };
 };

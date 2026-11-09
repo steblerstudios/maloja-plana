@@ -125,10 +125,18 @@ const steuerrechner = (data) => {
   return { alle, text, betraege, steuerbar: steuerbar ? texte(knoten(steuerbar.props.children)) : null, gespeichert, render };
 };
 
+// Eine andere Seite statisch zeichnen, ohne den Zustand des laufenden Rechners zu überschreiben
+// (seit Bauplan B4d zeigt die Finanzübersicht ein nachgeladenes Seiten-Zeichen mit eigenem Zustand).
 const statisch = (C, data) => {
+  const gemerkt = { slots: zustand.slots, i: zustand.i };
   zustand.slots = [];
   zustand.i = 0;
-  return renderToStaticMarkup(React.createElement(C, { palette, t, data, chapters: [], onNavigate: () => {} }));
+  try {
+    return renderToStaticMarkup(React.createElement(C, { palette, t, data, chapters: [], onNavigate: () => {} }));
+  } finally {
+    zustand.slots = gemerkt.slots;
+    zustand.i = gemerkt.i;
+  }
 };
 
 const dossierRechnung = (p) => {

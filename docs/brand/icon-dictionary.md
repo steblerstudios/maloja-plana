@@ -275,3 +275,35 @@ Entwurfs-PRs). Was sich an den Status dieser Liste ändert:
   überall dasselbe. Die Liste aller Icons mit Gruppe und Bedeutung: `src/config/iconInventar.js`.
 - **Wilhelm Tell:** erarbeitet (Braindump 29: Persönliche Basis/Apfel, geparkt; IDEEN.md:
   Auszeichnungen, geparkt; hier: Bürgerrecht), nie gezeichnet. Entscheid beim Zeichnen.
+
+### ⟨Nachtrag 08.11.2026, Bauplan B1–B5c⟩ Was jetzt gilt
+
+Entschieden in der Icon-Besprechung November 2026 (`docs/design/icon-besprechung-2026-11.md`), gebaut in
+den Entwurfs-PRs #751–#760. Die Zeilen oben bleiben als Verlauf stehen; **wo sie abweichen, gilt das hier.**
+
+**Das System:** jede Seite trägt **Leitform + Abzeichen**. Leitform = das Kapitel (bzw. der Ast), Zeichen
+im Abzeichen = was passiert, Farbe des Abzeichens = wer mitspielt (ein anderer Ast, Geld = gold, sonst
+leer). Eine Quelle: [`src/config/seitenZeichen.js`](../../src/config/seitenZeichen.js), gezeichnet von
+`src/IconAbzeichen.jsx` (nachgeladen). Unter 20 px steht das einfache Zeichen ohne Abzeichen.
+
+| Was | gilt jetzt | vorher hier | Entscheid |
+|---|---|---|---|
+| **Frist** | Kalender mit Tagesdatum + Abzeichen: **Sanduhr blau** (Frist läuft), **! rot** (überfällig), **+ leer** (eintragen). Mit Abzeichen steht das Datum links und kleiner | Mondaine-Bahnhofsuhr | Punkt 8 «C», 07.11.; Datum «B», 08.11. |
+| **Uhr** | nur «pro Stunde» (Stundenlohn-Abzeichen): generische Bahnhofsuhr, vier Striche, 10:10, **kein roter Sekundenzeiger** | Uhr = Frist/Zeit | Punkt 8, 07.11. |
+| **Export / Herunterladen** | Pfeil nach unten (`download`); **Sicherung** = Doppelblatt mit Pfeil (`sicherung`), zwei Zeichen | Couvert mit Pfeil | Punkt 4; Export/Sicherung «A», vorläufig, 08.11. |
+| **Einbürgerung** | Helvetia mit Abzeichen **Karte mit Plus**, Farbe Ast Person | Wilhelm Tell | Gesamtmatrix 07.11. |
+| **Menü** | **Sackmesser** (generisch, ohne Kreuz-Emblem); offen, solange das Menü offen ist, geschlossen eine Klinge halb draussen | Sackmesser = Übersicht | Punkt 11 «B», 07.11.; halb aufgeklappt 09.11. |
+| **Übersicht** | **Feldstecher** | Sackmesser | Punkt 13 «G», 07.11. |
+| **«Was steht mir zu?»** | **Wegweiser** — das Geschenk fällt weg (ein Recht, kein Entgegenkommen) | Geschenk | Punkt 13 «G», 07.11. |
+| **Drucken** | Drucker (`drucker`), auch in Knöpfen | — | Punkt 4, 06.11. |
+| **Behörden** | **Helvetia** (wie schon am 06.11. nachgetragen). ⏸️ Kreuz im Schild: wartet auf das IGE (B7) | Bundeshaus | 06.11. |
+| Erinnerungen | Kuhglocke als Strich — **nur** Erinnerung, nie «überfällig» | Kuhglocke | Punkt 1 «A», 07.11. |
+| Merkliste | Lesezeichen | — | Punkt 3 «E», 06.11. |
+| Erledigt | ein Haken (`check`); der zweite Haken (success) ist weg | zwei Haken | Punkt 3 «C», 06.11. |
+| Offizielle Links · Flyer | Kette · Blatt mit Pfeil (`teilen`); das Tresor-Zeichen ist weg | Tresor | Punkt 4, 06.11. |
+| Telefon | Hörer = anrufen · Handy = das Gerät («Auf den Startbildschirm» ohne Abzeichen) | — | Punkt 9, 07.11. |
+| Schulden-Reiter «Übersicht» | Balken | Sackmesser | Punkt 11, 07.11. |
+
+**Aufgelöst, nicht mehr im Register:** `success`, `dokumentTresor`, `exportTool`, `kalenderUhr`, `qr` (B5a).
+**Nicht mehr nötig** (Bild «Fehlendes», 07.11.): Couvert, Setzling, Sparschwein; Tell nur noch, falls
+«Leitformen reicher» gewünscht wird.

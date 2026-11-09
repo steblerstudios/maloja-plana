@@ -37,7 +37,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
       ),
       React.createElement('div', null,
         React.createElement('div', { style: { fontWeight: simpleView ? weight.semi : weight.medium, fontSize: simpleView ? text.body : text.sm } }, tool.label),
-        (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
+        (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
       )
     );
   };
@@ -75,10 +75,10 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
     // Die Klammer ohne Kapitel (Organigramm 06.11.2026): Kalender, Merkliste, Unterlagen, Links, Teilen, Suche.
     { label: t('dashboard.toolGroups.klammer'), items: [
       { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
-      { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
+      { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'lesezeichen' },
       { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'ordner' },
-      { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
-      { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
+      { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'kette' },
+      { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'teilen' },
       { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
     ] },
   ];

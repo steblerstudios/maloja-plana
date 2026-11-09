@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { schildState, schildOptionen } from '../data/schutzschild.js';
+import { schildOptionen } from '../data/schutzschild.js';
+import { netzSchildTeile } from '../data/netzSchild.js';
+import { NetzSchild } from './NetzSchild.jsx';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
@@ -10,9 +12,8 @@ import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
-import { shieldPath } from './shieldShape.js';
 import { PanelTitle } from './Heading.jsx';
-import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
+import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESSE } from '../config/tokens.js';
 
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
 // Instrument als Mini-Glyph + Peilung + Ort zeigt und in die Detailansicht führt.
@@ -41,7 +42,7 @@ const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
     els.push(h('line', { key: 'm', x1: mx1, y1: my1, x2: mx2, y2: my2, stroke: palette.mid, strokeWidth: 2 }));
   }
   els.push(h('circle', { key: 'h', cx, cy, r: 4, fill: palette.surface, stroke: palette.text, strokeWidth: 2 }));
-  return h('svg', { viewBox: '0 0 60 40', width: 60, height: 40, style: { overflow: 'visible' }, 'aria-hidden': true }, els);
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', style: { overflow: 'visible', height: 'auto', display: 'block' }, 'aria-hidden': true }, els);
 };
 
 // Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
@@ -59,7 +60,7 @@ const miniSaeule = (palette, t, { betragJahr, verheiratet, bundAnteil, titelText
   const titel = titelText || t('tax.saeulen.' + (verheiratet ? 'gemeinsam' : 'ledig')) + (betragJahr != null ? ': ' + chfBetrag(betragJahr) : '');
   // Mindesthöhe, damit der Bund-Teil auch bei kleinem Anteil sichtbar bleibt; die Zahl steht im Text.
   const bundHoch = bundAnteil != null ? Math.max(5, Math.round(S_HOCH * bundAnteil)) : null;
-  return h('svg', { viewBox: '0 0 56 44', width: 56, height: 44, role: 'img', 'aria-label': titel },
+  return h('svg', { viewBox: '0 0 56 44', width: '100%', style: { height: 'auto', display: 'block' }, role: 'img', 'aria-label': titel },
     bundHoch != null && h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand, opacity: 0.4 }, h('title', null, titel)),
     bundHoch != null && h('rect', { x, y: S_BASIS - bundHoch, width: S_BREIT, height: bundHoch, fill: palette.sand }),
     bundHoch != null ? null : betragJahr != null
@@ -74,7 +75,7 @@ const miniSaeule = (palette, t, { betragJahr, verheiratet, bundAnteil, titelText
 // Kosten — die Prämien-Pipeline läuft hier nicht, also kein erfundener Stand.
 const miniKreuz = (palette) => {
   const h = React.createElement;
-  return h('svg', { viewBox: '0 0 64 44', width: 64, height: 44, 'aria-hidden': true },
+  return h('svg', { viewBox: '0 0 64 44', width: '100%', style: { height: 'auto', display: 'block' }, 'aria-hidden': true },
     h('line', { x1: 4, x2: 60, y1: 40.5, y2: 40.5, stroke: palette.border, strokeWidth: 1 }),
     h('polyline', { points: '6,28 34,15 58,15', fill: 'none', stroke: palette.sand, strokeWidth: 2.5, strokeLinejoin: 'round' }),
     h('polyline', { points: '6,35 40,11 58,7', fill: 'none', stroke: palette.sky, strokeWidth: 2.5, strokeLinejoin: 'round' }),
@@ -83,28 +84,18 @@ const miniKreuz = (palette) => {
   );
 };
 
-const MINI_TOP = 3, MINI_BOTTOM = 38;
-const SHIELD = shieldPath(18, MINI_TOP, 26, MINI_BOTTOM - MINI_TOP);
-const miniShield = (palette, fraction) => {
-  const h = React.createElement;
-  const top = MINI_TOP, bottom = MINI_BOTTOM;
-  const fh = fraction * (bottom - top);
-  return h('svg', { viewBox: '0 0 36 42', width: 36, height: 42, 'aria-hidden': true },
-    h('defs', null, h('clipPath', { id: 'mini-shield-clip' }, h('path', { d: SHIELD }))),
-    h('g', { clipPath: 'url(#mini-shield-clip)' },
-      h('rect', { x: 3, y: 0, width: 30, height: 42, fill: palette.up }),
-      h('rect', { x: 3, y: bottom - fh, width: 30, height: fh + 2, fill: palette.sage, opacity: 0.85 })
-    ),
-    h('path', { d: SHIELD, fill: 'none', stroke: palette.sage, strokeWidth: 2 })
-  );
-};
+// Seit 09.11.2026 zeigt die Schild-Kachel das Netz-Schild klein (Stebler Studios: «wir nehmen das Netz-Schild»);
+// das alte Mini-Schild «Pflicht / Empfohlen» (36 px) war beim Umbau F7-K3-6 stehen geblieben.
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
 export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
-  const shield = schildState(v, schildOptionen(data));
+  // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
+  const netzOpts = { ...schildOptionen(data), finanzen: data?.finanzen, kanton: data?.basis?.canton };
+  const netz = netzSchildTeile(v, netzOpts);
+  const netzZahl = netz.teile.reduce((a, p) => ({ covered: a.covered + p.erreicht, total: a.total + p.n }), { covered: 0, total: 0 });
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
   // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
@@ -190,8 +181,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
     {
       key: 'schild', name: t('instrumente.schild'),
-      sub: shield.touched ? t('instrumente.schildCount', { covered: shield.overall.covered, total: shield.overall.total }) : setup,
-      glyph: miniShield(palette, shield.touched ? shield.overall.fraction : 0),
+      sub: netz.st.touched ? t('instrumente.schildCount', { covered: netzZahl.covered, total: netzZahl.total }) : setup,
+      glyph: netz.st.touched ? h(NetzSchild, { palette, t, versicherungen: v, ...netzOpts, groesse: 'klein' }) : null,
       onClick: () => onNavigate('chapter', 3),
     },
   ];
@@ -227,7 +218,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
         onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
       },
-        h('div', { style: { height: '44px', display: 'flex', alignItems: 'center' } }, tile.glyph),
+        // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
+        h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
         h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
         h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
       ))

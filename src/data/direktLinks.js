@@ -148,7 +148,7 @@ export const KATEGORIEN = {
   arbeit: { de: 'Arbeit', en: 'Employment', fr: 'Travail', icon: 'budget' },
   familie: { de: 'Familie', en: 'Family', fr: 'Famille', icon: 'family' },
   finanzen: { de: 'Finanzen', en: 'Finances', fr: 'Finances', icon: 'budget' },
-  recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'dokumentTresor' },
+  recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'legal' },
 };
 
 // Beratung & Hilfe: gemeinnützige Beratungs-Anlaufstellen (kostenlos/niederschwellig)
@@ -301,7 +301,7 @@ export const CANTONAL_LINKS = {
   },
   SO: {
     steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/steueramt/',
-    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/sozialhilfe-und-asyl/sozialhilfe/',
+    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/sozialhilfe-und-asyl/sozialhilfe/ansprechstellen-in-der-sozialhilfe/', // Verzeichnis der Sozialregionen
     ipv: 'https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv',
   },
   FR: {
@@ -311,12 +311,12 @@ export const CANTONAL_LINKS = {
   },
   TG: {
     steuererklaerung: 'https://steuerverwaltung.tg.ch/',
-    sozialdienst: 'https://sozialamt.tg.ch/',
+    sozialdienst: 'https://sozialamt.tg.ch/sozialhilfe.html/4501', // bis 09.11.2026 Startseite Sozialamt
     ipv: 'https://gesundheit.tg.ch/bevoelkerung/krankenversicherung/praemienverbilligung.html/5578',
   },
   GR: {
     steuererklaerung: 'https://www.gr.ch/DE/institutionen/verwaltung/dfg/stv/Seiten/startseite.aspx',
-    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/dvs/soa/home/Seiten/Sozialamt.aspx',
+    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/dvs/soa/beratung/finanzielle-unterstuetzung/sozialhilfe/Seiten/default.aspx', // bis 09.11.2026 Startseite Amt für Soziales
     ipv: 'https://www.sva.gr.ch/praemienverbilligung.html',
   },
   SH: {
@@ -362,12 +362,12 @@ export const CANTONAL_LINKS = {
   },
   OW: {
     steuererklaerung: 'https://www.ow.ch/aemter/186',
-    sozialdienst: 'https://www.ow.ch/aemter/244',
+    sozialdienst: 'https://www.ow.ch/familie/5447', // bis 09.11.2026 Kantonales Sozialamt (aemter/244); Gesuche laufen über den Regionalen Sozialdienst
     ipv: 'https://www.ow.ch/fachbereiche/2737',
   },
   NW: {
     steuererklaerung: 'https://www.nw.ch/steueramt',
-    sozialdienst: 'https://www.nw.ch/sozialamt',
+    sozialdienst: 'https://www.nw.ch/sozialdienst/1138', // bis 09.11.2026 nw.ch/sozialamt (Amtsseite)
     ipv: 'https://www.aknw.ch/dienstleistungen/praemienverbilligung-ipv',
   },
   GL: {
@@ -377,7 +377,7 @@ export const CANTONAL_LINKS = {
   },
   AR: {
     steuererklaerung: 'https://www.ar.ch/verwaltung/departement-finanzen/steuerverwaltung/',
-    sozialdienst: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/',
+    sozialdienst: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/abteilung-sozialhilfe-und-asyl/sozialhilfe/adressen-sozialaemter/', // Adressen der Sozialämter; bis 09.11.2026 Amtsseite
     ipv: 'https://ar.ch/verwaltung/departement-gesundheit-und-soziales/sozialversicherungen-appenzell-ausserrhoden/',
   },
   AI: {
@@ -393,6 +393,8 @@ export const CANTONAL_LINKS = {
 //   VS: ⟨erledigt⟩ vs.ch antwortete curl am 09.11.2026 tagsüber auf JEDEN Pfad mit 404, im Browser
 //       «Wartungsarbeiten» (Stebler Studios). Am Abend desselben Tags wieder erreichbar: beide
 //       Links mit curl geprüft und ersetzt (Kommentare beim Eintrag VS oben).
+//   OW, NW, SO, AR, GR, TG: sozialdienst am 09.11.2026 auf die genauere Seite gesetzt (Gesuchsstelle
+//       bzw. Verzeichnis statt Amtsstartseite), Quelle docs/sources/sozialhilfe-kantone-2026.md.
 //   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
 //       im Browser geprüft und ersetzt (Stebler Studios). ipv am 09.11.2026 abends im Browser:
 //       alter Link 404, ersetzt durch die Seite der SVA BL (mit curl geprüft).

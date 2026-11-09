@@ -142,13 +142,24 @@ Ordnen, was ansteht.»
 **Prinzip:** Jedes Icon ist eine bewusste **Schweizer Metapher** für *eine* Funktion. Eine
 Funktion = ein Icon (keine Doppelungen), Stil = detaillierte Piktogramme, Farben aus Granit.
 
-Beispiele: Übersicht = **Sackmesser** · Erinnerungen = **Kuhglocke** · Frist/Zeit =
-**Mondaine-Bahnhofsuhr** · Finanzen = **Fünfliber** · Versicherungen = **Schild mit Edelweiss**
-· Behörden = **Bundeshaus** · Notfall = **generisches Rettungskreuz** (NICHT Rega-Logo).
+Beispiele (Stand 08.11.2026, Bauplan B1–B5c): Übersicht = **Feldstecher** · Menü = **Sackmesser** ·
+«Was steht mir zu?» = **Wegweiser** · Erinnerungen = **Kuhglocke** · Frist = **Kalender mit Sanduhr** ·
+Finanzen = **Fünfliber** · Versicherungen = **Schild mit Edelweiss-Stern** · Behörden = **Helvetia** ·
+Gesundheit = **Arztkoffer**, Notfall = **Herz mit Puls** (kein Kreuz, nie Rega-Logo).
+⟨bis 06./07.11.2026: Übersicht = Sackmesser, Frist = Mondaine-Bahnhofsuhr, Behörden = Bundeshaus,
+Notfall = Rettungskreuz⟩
+
+**Seit November 2026 mit System:** jede Seite trägt **Leitform + Abzeichen** — Leitform = das Kapitel,
+Zeichen im Abzeichen = was passiert, Farbe = wer mitspielt (anderer Lebensbereich, Geld = Gold, sonst
+leer). Unter 20 px das einfache Zeichen. Helle Details sind ausgestanzt, nie weiss gemalt. Das kleine
+Kalender-Zeichen (Sanduhr blau, ! rot) und das grosse **Kalenderblatt** unten in §7 sprechen dieselbe
+Farbsprache: Sky = Frist, Rose = vorbei/überfällig. **Auf getönten Kacheln** steht das Zeichen im selben
+Farbton, nur so viel tiefer, dass es gegen die Kachel 3:1 erreicht (09.11.2026); die Kachel selbst bleibt.
+Regeln und Quellen: [`ICON_KONVENTION.md`](../ICON_KONVENTION.md).
 
 Vollständige Tabelle inkl. Status (✓/🔄/➕/⚠️) und Code-Keys:
 [`icon-dictionary.md`](icon-dictionary.md). Offen u.a.: Export-Metapher, Vorsorge-Metapher,
-Organspende-vs-Notfall-Abgrenzung.
+Organspende-vs-Notfall-Abgrenzung. *(08.11.2026: Export, Vorsorge und Organspende sind entschieden — siehe Wörterbuch, Nachtrag 08.11.)*
 
 ---
 
@@ -238,6 +249,35 @@ sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *
 
 Dazu unverändert: Tippflächen mindestens 44 × 44 px (WCAG 2.5.5).
 
+### 7b. Instrumente — ein Zuhause, feste Spiegel *(09.11.2026)*
+
+Instrumente sind Bilder, die einen Stand zeigen: Netz-Schild, Reserve-Tank, Steuer-Säule, Franchise-Kreuz.
+Befund vor der Regel (Landkarte 09.11.): Jedes stand dort, wo es gebaut wurde, in Grössen von 36 bis 480 px, und
+das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` in `src/config/tokens.js`.
+
+| Auftritt | Grösse | Was dazugehört |
+|---|---|---|
+| **Zuhause** — das eigene Kapitel | **gross 256 px**, oben, ohne Aufklappen | Satz, Liste, Hinweise |
+| **Spiegel Werkzeug** — Seiten, deren Daten es füllen | **mittel 128 px** | Satz + Weg ins Kapitel |
+| **Spiegel Startseite** — Kapitel-Zeile | **klein 64 px**, alle gleich breit | nur das Bild, **keine Wörter darin**, Zahl daneben |
+
+- Verhältnis **1 : 2 : 4** (Regel B): drei Stufen, die das Auge unterscheidet.
+- **Ein Bild, eine Bedeutung.** Das **Netz-Schild** ist *das* Schild (F7-K3-6). Das alte Schild «Pflicht /
+  Empfohlen» ist seit 09.11. von Startseite und Prämien-Übersicht entfernt.
+- Spiegel rechnen **dieselbe Zahl** wie das Zuhause (Startseite: «5/5 eingetragen» aus `netzSchildTeile`).
+- Wächter: `src/__tests__/instrumenteZuhauseSpiegel.test.js`.
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
+  KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
+
+**Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
+«Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
+
+| | Regel | Für Maloja heisst das |
+|---|---|---|
+| **G** | **Material statt Effekt** — eine Fläche ist Papier (deckend) oder Granit (Grund); getrennt wird mit einer Haarlinie | Kopfzeile, Leiste unten und Pfad-Pille: `surface` mit `border`, **kein Milchglas** (`backdropFilter`), kein Schatten. Das Landschaftsband ist ein Bauteil: `components/Landschaftsband.jsx` |
+| **H** | **Nichts kleiner als die Skala** — der kleinste Schritt ist `text.xs` = 13 px | Keine Rohschrift unter 13 px, kein `text.xs - 1`. Ausnahmen nur Deko-Zeichen (Aufklapp-Pfeil) und Grafik-Beschriftungen; diese stehen als Bestand mit Sperrklinke und werden einzeln bei 375 px gemessen |
+| **I** | **Was man bedient, sieht man** — Rand eines Bedienelements mindestens 3:1 (WCAG 1.4.11) | Eingabefelder, Auswahlfelder, Textfelder: Rand `palette.feldrand` (hell `#808286` 3,25:1, dunkel `#80838A` 3,33:1). `border` bleibt Schmuck-Haarlinie zwischen Karten und Zeilen |
+
 
 ### Knöpfe (seit Fassung 9, 05.11.2026)
 
@@ -310,15 +350,36 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
 
+### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
+
+Maloja erklärt zuerst mit Bild, Zahl und Weg, erst danach mit Text. Jeder Abschnitt einer
+erklärenden Seite hat diese Reihenfolge:
+
+| | Schicht | Regel |
+|---|---|---|
+| **A** | **Bild zuerst** | Abbildung, Balken, Kernzahl oder Zeitleiste. Wer nur das sieht, hat das Wichtigste. Jede Zahl darin trägt ihren Beleg |
+| **B** | **Ein Satz** | Höchstens zwei Sätze (auf den Erklärseiten ein kurzer Absatz, der nach vorne wandert), **aus dem geprüften Text** übernommen — keine neue Fachaussage. Fällt die Einschränkung aus dem Zusammenhang weg, kommt sie mit in den Satz |
+| **C** | **Ausführlich lesen, mit Ausnahmen und Quellen** | Der ganze Text bleibt, aufklappbar (`<details>`). Nichts wird gestrichen (siehe «Entschlacken … nie löschen» oben) |
+| **D** | **Wege** | Weg-Knöpfe zu verwandten Fragen auf der Seite und zu anderen Seiten statt Verweisen im Fliesstext. Rand, Fläche, Pfeil, 44 hoch, Ecke 10 (Regel C) |
+
+Gebaut: `/krankenkasse/`, `/politsystem/`, `/kantone-im-vergleich/` (Schalter `schichten`,
+Felder `bild`/`kurz`/`wege` in `scripts/seiten/*.mjs`; Zahlen als Punktstreifen) und
+`/praemienverbilligung/` (Feld `kurzAbsatz` in `scripts/seiten-inhalt.mjs`).
+**A entfällt nie stillschweigend, aber auch nie als Schmuck:** Zeigt kein Bild etwas, beginnt der
+Abschnitt mit B. **Mehrsprachige Seiten zuerst nur auf Deutsch;** die Übersetzungen folgen erst nach
+ihrer menschlichen Lektüre, damit keine ungeprüften Sätze dazukommen. Vor dem Merge laufen rechts- und swiss-precision-pruefer über A und B:
+ein wörtlich übernommener Satz kann allein zu absolut werden. *(Stebler Studios 09.11.2026,
+«Ja, Probe bauen» und «Gut, weiter so».)*
+
 ---
 
 ## 9. Offene Brand-Themen
 
-- [ ] Export-Icon — neue Metapher (auf Tester-Feedback)
+- [x] Export-Icon — Pfeil nach unten, Sicherung eigenes Zeichen (vorläufig, 08.11.2026; Tester-Feedback kann es ändern)
 - [x] ~~Signet-Farben an Granit angleichen~~ — gegenstandslos, Signet durch Markenpaket 1.0 abgelöst (24.09.2026)
 - [x] `og-image` mit der neuen Bildmarke (24.09.2026, Paket `social-preview-1200x630`)
 - [ ] Claim-Entscheid: «Ihr Leben. Ihre Übersicht.» oder «Verstehen, was zusteht. Ordnen, was ansteht.» (siehe §4)
-- [ ] Vorsorge-/Organspende-Icon-Metaphern klären
+- [x] Vorsorge-/Organspende-Icon-Metaphern — Vorsorge = Ast im Edelweiss-Schild (Traube-Farbe), Organspende = Herz im Arztkoffer, Ast Notfall (08.11.2026)
 - [ ] OFL-Lizenztexte zu den WOFF2 legen *(Logo-Schriftzug ist seit 24.09. als Pfade geliefert — Outlinen erledigt)*
 - [ ] FR: Entscheid voller tu-Toggle vs. vous-only
 - [ ] RM: muttersprachliche Review vor Deploy

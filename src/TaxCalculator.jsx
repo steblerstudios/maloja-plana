@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
@@ -189,7 +190,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     padding: space.sm,
     marginBottom: space.sm,
     borderRadius: radius.md,
-    border: '1px solid ' + palette.border,
+    border: '1px solid ' + palette.feldrand,
     background: palette.surface,
     color: palette.text,
     boxSizing: 'border-box',
@@ -214,7 +215,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
   const buttonStyle = knopfStil(palette, 'haupt');
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'money', size: 22 }), style: { marginBottom: space.sm } }, t('tax.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tax', 'money'), size: 22 }), style: { marginBottom: space.sm } }, t('tax.title')),
 
     React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border } }, t('tax.intro')),
 

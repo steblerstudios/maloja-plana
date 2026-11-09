@@ -90,8 +90,9 @@ describe('Bereichs-Zuordnung (Liste B, Seiten-Architektur 06.11.2026)', () => {
     ['tresor', null], ['calendar', null], ['direktlinks', null], [null, null],
   ])('Merkpunkt %s → %s', (link, bereich) => expect(merkpunktBereich(link)).toBe(bereich));
   it('ohne Bereich: eigenes Zeichen (Register), ohne Verknüpfung der Haken', () => {
-    expect(merkpunktZeichen(null)).toBe('check');
-    expect(merkpunktZeichen('direktlinks')).toBe('globe');
+    // Seit Bauplan B5 (08.11.2026): Merkliste = Lesezeichen, Offizielle Links = Kette.
+    expect(merkpunktZeichen(null)).toBe('lesezeichen');
+    expect(merkpunktZeichen('direktlinks')).toBe('kette');
     expect(merkpunktZeichen('tax')).toBe('finanzen');
   });
   it.each([

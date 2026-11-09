@@ -74,6 +74,23 @@ export const EBENEN = {
     wert: (k) => A.kita[k].chf, ch: null, fmt: fr, quelle: 'estvKantonsblaetter' },
 };
 
+// Stand und wichtigster Vorbehalt je Zahl, für die Punktstreifen, die zuerst
+// und allein sichtbar sind (Fachprüfung 09.11.2026). Aus `stand` der Seite.
+const STAND_STREIFEN = {
+  praemie: 'mittlere Prämie 2027',
+  lastNachIpv: 'nicht die Last einer Person; Prämie 2026, Einkommen 2022, Verbilligung 2025',
+  steuer: 'Kantonshauptort, ledig, ohne Kinder und Konfession, Steuerjahr 2026',
+  miete: '2024, Durchschnitt aller Verträge, nicht Inserate',
+  leer: '1. Juni 2026',
+  sozialhilfe: '2024',
+  el: 'Dezember 2025',
+  alq: 'September 2026, Monatswert',
+  kinderzulage: '2026, erster Ansatz',
+};
+// Zwei fast gleich hohe Spitzenwerte nicht als einen einzigen Höchstwert zeigen
+// (Fachprüfung 05.11.2026, gleiche Regel wie v.lastNachIpv.hochZusatz).
+const NAH_STREIFEN = { lastNachIpv: 0.2 };
+
 // Kita-Abzug: Kantone, deren Wert nicht vergleichbar ist, zählen beim Vergleich
 // mit dem Bund nicht mit (Fach- und Rechtsprüfung 05.11.2026). NE: nur Wert 2025
 // (ESTV-Steuermäppchen 2025: 20'400 Fr., höchstens die Elternbeiträge nach LAE);
@@ -196,6 +213,38 @@ ${zeilen}
         </table></div>`;
 }
 
+// ─── Punktstreifen (drei Schichten, «Bild zuerst», 09.11.2026) ───────────────
+// Jeder Kanton ein Punkt auf einer Linie vom tiefsten zum höchsten Wert, dazu
+// ein Strich für die ganze Schweiz. Eine Farbe, hohle Punkte (Überlappung
+// bleibt sichtbar), keine Rangliste und keine Wertungsfarben (Atlas-Regeln
+// vom 24.10.2026). Die genauen Zahlen stehen in den Tabellen unter
+// «Ausführlich lesen»; vorgelesen wird die Spanne als Satz.
+function streifen(key) {
+  const e = EBENEN[key], t = tief(key), h = hoch(key);
+  const lage = (v) => (h.v === t.v ? 50 : Math.min(100, Math.max(0, ((v - t.v) / (h.v - t.v)) * 100))).toFixed(1);
+  const punkte = werte(key).map((w) => `<i style="left:${lage(w.v)}%"></i>`).join('');
+  const ch = e.ch != null ? `<b style="left:${lage(e.ch)}%"></b>` : '';
+  // Gleichstand am Rand (z. B. Kinderzulage: viele Kantone zahlen das Minimum):
+  // dann die Zahl der Kantone statt eines zufällig ersten Namens.
+  const wer = (w) => { const n = werte(key).filter((x) => x.v === w.v).length; return n > 1 ? [`${n} Kantone`, `in ${n} Kantonen`] : [w.name, `im Kanton ${w.name}`]; };
+  const [tn, tSatz] = wer(t), [hn, hSatz] = wer(h);
+  const zweit = werte(key).sort((x, y) => y.v - x.v)[1];
+  const nah = NAH_STREIFEN[key] != null && h.v - zweit.v <= NAH_STREIFEN[key];
+  const nahSicht = nah ? `<br><span class="leise">fast gleich ${zweit.name} ${e.fmt(zweit.v)}</span>` : '';
+  const nahSatz = nah ? `, fast gleich hoch im Kanton ${zweit.name} (${e.fmt(zweit.v)})` : '';
+  const stand = STAND_STREIFEN[key] ? `; ${STAND_STREIFEN[key]}` : '';
+  const satz = `${e.titel} (${e.einheit}${stand}): von ${e.fmt(t.v)} ${tSatz} bis ${e.fmt(h.v)} ${hSatz}${nahSatz}${e.ch != null ? `, ganze Schweiz ${e.fmt(e.ch)}` : ''}. Jeder Punkt ist ein Kanton.`;
+  return `
+        <figure class="streifen" role="img" aria-label="${satz}">
+          <p class="streifen-titel" aria-hidden="true">${e.titel} <span class="leise">${e.einheit}${stand}</span></p>
+          ${e.ch != null ? `<p class="streifen-ch" aria-hidden="true"><span style="left:${Math.min(80, Math.max(20, Number(lage(e.ch))))}%">Schweiz ${e.fmt(e.ch)}</span></p>` : ''}
+          <div class="streifen-achse" aria-hidden="true">${punkte}${ch}</div>
+          <div class="streifen-ende" aria-hidden="true"><span><strong>${e.fmt(t.v)}</strong> ${tn}</span><span><strong>${e.fmt(h.v)}</strong> ${hn}${nahSicht}</span></div>
+        </figure>`;
+}
+const LEGENDE_STREIFEN = '<p class="leise streifen-legende" aria-hidden="true"><i></i> ein Kanton · <b></b> ganze Schweiz · keine Rangliste</p>';
+const streifenKarte = (...keys) => () => `<div class="kern">${keys.map(streifen).join('')}${LEGENDE_STREIFEN}</div>`;
+
 // ─── Zahlen für den Text ─────────────────────────────────────────────────────
 export function vergleichZahlen() {
   const z = {};
@@ -237,5 +286,12 @@ export const BLOECKE_VERGLEICH = {
     zusatz: (k) => (k === null ? 'Hinweis' : KITA_NICHT_VERGLICHEN.includes(k) ? 'Wert 2025, auf Elternbeiträge begrenzt' : '') }),
   'TAB:valq': () => tabelle(['alq'], { caption: 'Arbeitslosenquote September 2026' }),
   'TAB:nebeneinander': nebeneinander,
+  'FIG:spraemie': streifenKarte('praemie'),
+  'FIG:ssteuer': streifenKarte('steuer'),
+  'FIG:swohnen': streifenKarte('miete', 'leer'),
+  'FIG:sunterstuetzung': streifenKarte('sozialhilfe', 'el'),
+  'FIG:sfamilie': streifenKarte('kinderzulage'),
+  'FIG:salq': streifenKarte('alq'),
+  'FIG:salle': streifenKarte(...NEBENEINANDER),
   'TAB:zusammenhang': zusammenhaenge,
 };
