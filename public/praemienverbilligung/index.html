@@ -180,6 +180,44 @@
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
   </style>
 </head>
 <body>
@@ -196,19 +234,48 @@
       <p class="vorspann">Die individuelle Prämienverbilligung — meist kurz IPV — ist ein Beitrag der öffentlichen Hand an die Krankenkassenprämie. Sie ist im Krankenversicherungsgesetz (KVG) angelegt, aber der Bund führt sie nicht aus: das tun die Kantone, jeder nach eigenen Regeln, im Rahmen des Bundesrechts.</p>
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
-        <h2>Was der Bund vorgibt und was der Kanton entscheidet</h2>
-        <p>Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, setzt dafür Mindestvorgaben und beteiligt sich an der Finanzierung. Im Rahmen dieser Vorgaben entscheidet der Kanton, wer sie bekommt und wie viel.</p>
-        <p>Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.</p>
-        <p>Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.</p>
-        <p>Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.</p>
+        <h2 id="bund-kanton">Was der Bund vorgibt und was der Kanton entscheidet</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Wer was tut">
+          <li><span class="jahr">Bund</span><span class="was">schreibt vor, dass es sie gibt, setzt Mindestvorgaben und zahlt mit</span></li>
+          <li><span class="jahr">Kanton</span><span class="was">entscheidet im Rahmen dieser Vorgaben, wer sie bekommt und wie viel, mit Grenzen, Antrag und Fristen</span></li>
+          <li><span class="jahr">Krankenkasse</span><span class="was">bekommt den Beitrag direkt vom Kanton, nicht die versicherte Person</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, setzt dafür Mindestvorgaben und beteiligt sich an der Finanzierung. Im Rahmen dieser Vorgaben entscheidet der Kanton, wer sie bekommt und wie viel.</p>
+          <p>Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.</p>
+          <p>Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Was der Bund vorgibt und was der Kanton entscheidet"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
 
-        <h2>Welche Zahlen zählen</h2>
-        <p>Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.</p>
-        <p>Das KVG verlangt jedoch, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Auskunft gibt die zuständige Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.</p>
+        <h2 id="zahlen">Welche Zahlen zählen</h2>
+        <div class="schicht-bild"><div class="kern">
+          <ol class="zeit" role="list" aria-label="Woher die Zahlen kommen">
+            <li><span class="jahr">Steuererklärung</span><span class="was">oft nicht die des laufenden Jahres</span></li>
+            <li><span class="jahr">Veranlagung</span><span class="was">oft eine frühere, bereits rechtskräftige</span></li>
+            <li><span class="jahr">Verbilligung</span><span class="was">stützt sich in der Regel darauf</span></li>
+          </ol>
+          <p class="unter">Haben sich Einkommen oder Familie seither deutlich verändert, fragen Sie bei der zuständigen Stelle nach (Art. 65 Abs. 3 KVG).</p>
+        </div></div>
+        <p class="schicht-kurz">Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Das KVG verlangt jedoch, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Auskunft gibt die zuständige Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Welche Zahlen zählen"><a class="weg" href="/steuern/"><span aria-hidden="true">→</span> Steuern</a></nav>
 
-        <h2>Der häufigste Irrtum</h2>
-        <p>Viele gehen davon aus, dass man mit einem Erwerbseinkommen grundsätzlich nichts bekommt. Das trifft nicht zu: Prämienverbilligung ist keine Leistung nur für Menschen ohne Arbeit. Familien mit Kindern, Personen in Ausbildung und Haushalte mit mittlerem Einkommen fallen in vielen Kantonen darunter.</p>
-        <p>Der zweite häufige Irrtum ist, dass ein einmal abgelehnter Antrag für immer gilt. Er gilt für sein Jahr. Ändern sich Einkommen, Haushalt oder Wohnkanton, ist es eine neue Frage.</p>
+        <h2 id="irrtum">Der häufigste Irrtum</h2>
+        <div class="schicht-bild"><ul class="irrtum" role="list">
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Mit einem Erwerbseinkommen bekommt man grundsätzlich nichts.</span><span class="richtig"><span class="sr-only">Richtig: </span>Trifft nicht zu: Auch mit Lohn kann ein Anspruch bestehen.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Ein abgelehnter Antrag gilt für immer.</span><span class="richtig"><span class="sr-only">Richtig: </span>Er betrifft in der Regel ein Jahr. Ändert sich Ihre Lage, lohnt sich eine neue Anfrage.</span></li>
+        </ul></div>
+        <p class="schicht-kurz">Viele gehen davon aus, dass man mit einem Erwerbseinkommen grundsätzlich nichts bekommt. Das trifft nicht zu: Prämienverbilligung ist keine Leistung nur für Menschen ohne Arbeit. Familien mit Kindern, Personen in Ausbildung und Haushalte mit mittlerem Einkommen fallen in vielen Kantonen darunter.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Der zweite häufige Irrtum ist, dass ein einmal abgelehnter Antrag für immer gilt. Er gilt für sein Jahr. Ändern sich Einkommen, Haushalt oder Wohnkanton, ist es eine neue Frage.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Der häufigste Irrtum"><a class="weg" href="/was-steht-mir-zu/"><span aria-hidden="true">→</span> Was steht mir zu?</a></nav>
 
       <h2>Häufige Fragen</h2>
         <h3>Habe ich Anspruch auf Prämienverbilligung?</h3>

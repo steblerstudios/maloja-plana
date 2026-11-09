@@ -166,7 +166,7 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'Il diritto che nessuno può perdere',
+        titel: 'Diritto all’aiuto in situazioni di bisogno', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Indipendentemente da tutto quanto precede, la <strong>Costituzione federale, articolo 12</strong>, sancisce il diritto all’aiuto in situazioni di bisogno: chi è nel bisogno e non è in grado di provvedere a sé stesso ha diritto d’essere aiutato e assistito e di ricevere i mezzi indispensabili per un’esistenza dignitosa.',
           'Questo diritto spetta a ogni persona in Svizzera. Non è la stessa cosa dell’aiuto sociale e copre meno — ma è il limite inferiore al di sotto del quale non si può scendere.',

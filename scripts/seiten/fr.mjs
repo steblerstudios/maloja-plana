@@ -174,7 +174,7 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'Le droit que personne ne peut perdre',
+        titel: 'Droit d’obtenir de l’aide dans des situations de détresse', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Indépendamment de tout ce qui précède, la <strong>Constitution fédérale, article 12</strong>, consacre le droit d’obtenir de l’aide dans des situations de détresse : quiconque est dans une situation de détresse et n’est pas en mesure de subvenir à son entretien a le droit d’être aidé et assisté et de recevoir les moyens indispensables pour mener une existence conforme à la dignité humaine.',
           'Ce droit appartient à toute personne en Suisse. Il n’est pas la même chose que l’aide sociale et couvre moins — mais il est la limite inférieure en deçà de laquelle on ne doit pas descendre.',

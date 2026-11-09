@@ -180,6 +180,44 @@
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    :root{ --heidel:#6787A5; --heidel-text:#4A6A88; --heidel-hauch:#E9EEF3 }
+    @media (prefers-color-scheme: dark){ :root{ --heidel:#86A6C2; --heidel-text:#8CAAC6; --heidel-hauch:#2A3038 } }
+    .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
+    .schicht-bild{ margin:14px 0 0 } .schicht-bild .abb{ margin:0 }
+    .schicht-kurz{ font-size:20px; line-height:1.45; margin:16px 0 10px; font-weight:500 }
+    details.schicht-mehr{ border-top:1px solid var(--rand); border-bottom:1px solid var(--rand); margin:14px 0 }
+    details.schicht-mehr > summary{ padding:12px 0; min-height:44px; box-sizing:border-box; color:var(--heidel-text); font-weight:600; cursor:pointer }
+    details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
+    nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
+    a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+    a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
+    .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
+    .kern .paar{ display:flex; flex-wrap:wrap; gap:8px 40px } .kern .paar p{ margin:0; font-size:15px }
+    .kern .zahl{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
+    .kern .unter{ font-size:14px; color:var(--leise); margin:6px 0 0 }
+    ul.stab{ list-style:none; margin:0; padding:0 }
+    ul.stab li{ display:grid; grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em; gap:10px; align-items:center; padding:5px 0; font-size:15px }
+    ul.stab li i{ display:block; height:12px; border-radius:3px; background:var(--heidel); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+    ul.stab li b{ font-weight:400; text-align:right; font-variant-numeric:tabular-nums }
+    .zeit{ list-style:none; margin:0; padding:16px 18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px }
+    .kern .zeit{ padding:10px 0 0 }
+    ul.chips{ display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0 }
+    ul.chips li{ margin:0; border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:6px 12px; font-size:15px }
+    .kern .dann{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:20px; font-weight:600; color:var(--heidel-text); margin:12px 0 0 }
+    .formel{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px 10px; margin:0 }
+    @media (max-width:600px){ .formel{ grid-template-columns:1fr } .formel .op{ text-align:center } }
+    .formel .glied{ border:1px solid var(--rand); background:var(--bg); border-radius:10px; padding:8px 12px; font-size:15px }
+    .formel .glied strong{ display:block; font-family:'Hanken Grotesk','Lexend',sans-serif; color:var(--heidel-text) }
+    .formel .op{ font-size:20px; color:var(--leise) }
+    .irrtum{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none }
+    .irrtum li{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:14px 16px }
+    .irrtum .falsch{ display:block; color:var(--leise); text-decoration:line-through; text-decoration-thickness:1.5px }
+    .irrtum .richtig{ display:block; margin-top:6px; font-weight:600 }
+    .zeit li{ border-top:3px solid var(--heidel); padding:8px 0 0 }
+    .zeit .jahr{ display:block; hyphens:auto; overflow-wrap:break-word; font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:24px; font-weight:700; color:var(--heidel-text) }
+    .zeit .was{ font-size:15px }
+    @media (forced-colors:active){ ul.stab li i{ background:CanvasText; forced-color-adjust:none } .zeit li{ border-top-color:CanvasText } }
   </style>
 </head>
 <body>
@@ -196,18 +234,50 @@
       <p class="vorspann">Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie in der Regel an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn an zwei Wohnorten zu spürbar verschiedenen Rechnungen führt.</p>
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
-        <h2>Die direkte Bundessteuer ist überall dieselbe</h2>
-        <p>Die direkte Bundessteuer richtet sich nach dem Bundesgesetz über die direkte Bundessteuer (DBG) und kennt für die ganze Schweiz denselben Tarif. Sie unterscheidet nach Zivilstand und Haushalt, aber nicht nach Wohnort.</p>
-        <p>Erhoben wird sie trotzdem vom Kanton — die Steuererklärung ist dieselbe.</p>
+        <h2 id="ebenen">Die direkte Bundessteuer ist überall dieselbe</h2>
+        <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Drei Stellen, an die Sie Steuern zahlen">
+          <li><span class="jahr">Bund</span><span class="was">überall derselbe Tarif</span></li>
+          <li><span class="jahr">Kanton</span><span class="was">eigener Tarif, meist mit Steuerfuss</span></li>
+          <li><span class="jahr">Gemeinde</span><span class="was">meist eigener Steuerfuss</span></li>
+        </ol></div>
+        <p class="schicht-kurz">Die direkte Bundessteuer richtet sich nach dem Bundesgesetz über die direkte Bundessteuer (DBG) und kennt für die ganze Schweiz denselben Tarif. Sie unterscheidet nach Zivilstand und Haushalt, aber nicht nach Wohnort.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Erhoben wird sie trotzdem vom Kanton — die Steuererklärung ist dieselbe.</p>
+        </details>
 
-        <h2>Kanton und Gemeinde: Tarif mal Steuerfuss</h2>
-        <p>Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Faktor darauf, meist in Prozent angegeben, den Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.</p>
-        <p>Auf der Rechnung stehen je nach Kanton und Konfession noch weitere Posten, etwa die Kirchensteuer oder eine Personalsteuer. Sie sind meist klein, aber sie erklären, warum die Summe nicht genau dem entspricht, was ein reiner Einkommensrechner ausgibt.</p>
-        <p>Zwei Gemeinden im selben Kanton haben deshalb denselben Tarif, aber je ihren eigenen Steuerfuss — der sich unterscheiden kann. Zwei Kantone haben beides verschieden. Das ist der eigentliche Hebel hinter den bekannten Kantonsvergleichen. In einzelnen Kantonen gibt es daneben Besonderheiten, etwa Gemeinden ohne eigene Gemeindesteuer.</p>
+        <h2 id="steuerfuss">Kanton und Gemeinde: Tarif mal Steuerfuss</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="formel" role="img" aria-label="Der Tarif ergibt die einfache Steuer; mal den Steuerfuss von Kanton und Gemeinde, wo es einen gibt, ergibt das die kantonale und kommunale Steuer. So in den meisten Kantonen; Ausnahmen gibt es.">
+            <span class="glied" aria-hidden="true"><strong>Tarif</strong>ergibt die einfache Steuer</span>
+            <span class="op" aria-hidden="true">×</span>
+            <span class="glied" aria-hidden="true"><strong>Steuerfuss</strong>je für Kanton und Gemeinde, wo es einen gibt</span>
+            <span class="op" aria-hidden="true">=</span>
+            <span class="glied" aria-hidden="true"><strong>Steuer</strong>von Kanton und Gemeinde</span>
+          </p>
+          <p class="unter">So in den meisten Kantonen; Ausnahmen gibt es.</p>
+        </div></div>
+        <p class="schicht-kurz">Zwei Gemeinden im selben Kanton haben deshalb denselben Tarif, aber je ihren eigenen Steuerfuss — der sich unterscheiden kann. Zwei Kantone haben beides verschieden. Das ist der eigentliche Hebel hinter den bekannten Kantonsvergleichen. In einzelnen Kantonen gibt es daneben Besonderheiten, etwa Gemeinden ohne eigene Gemeindesteuer.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Faktor darauf, meist in Prozent angegeben, den Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.</p>
+          <p>Auf der Rechnung stehen je nach Kanton und Konfession noch weitere Posten, etwa die Kirchensteuer oder eine Personalsteuer. Sie sind meist klein, aber sie erklären, warum die Summe nicht genau dem entspricht, was ein reiner Einkommensrechner ausgibt.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Kanton und Gemeinde: Tarif mal Steuerfuss"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a><a class="weg" href="/kantonsatlas/"><span aria-hidden="true">→</span> Kantonsatlas</a></nav>
 
-        <h2>Was vom Einkommen abgezogen wird</h2>
-        <p>Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.</p>
-        <p>Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Hier geht oft Geld verloren — nicht durch falsche Angaben, sondern durch Abzüge, die niemand eingetragen hat.</p>
+        <h2 id="abzuege">Was vom Einkommen abgezogen wird</h2>
+        <div class="schicht-bild"><div class="kern">
+          <p class="unter" id="abzug">Vom Lohn zum steuerbaren Einkommen, je nach Situation abzüglich:</p>
+          <ul class="chips" role="list" aria-labelledby="abzug">
+            <li>Berufsauslagen</li><li>Beiträge an die Säule 3a</li><li>Krankheitskosten über einer Schwelle</li><li>Kinder- und Betreuungsabzüge</li><li>weitere</li>
+          </ul>
+        </div></div>
+        <p class="schicht-kurz">Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Hier geht oft Geld verloren — nicht durch falsche Angaben, sondern durch Abzüge, die niemand eingetragen hat.</p>
+        <details class="schicht-mehr">
+          <summary>Ausführlich lesen</summary>
+          <p>Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.</p>
+        </details>
+        <nav class="wege" aria-label="Weiter von: Was vom Einkommen abgezogen wird"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a></nav>
 
       <h2>Häufige Fragen</h2>
         <h3>Warum zahle ich anders als jemand im Nachbarkanton?</h3>

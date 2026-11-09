@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
+import { zugeklappteIds } from './_schichten.js';
 import {
   POLITSYSTEM, GEMEINDEN, SITZE_AB_2027, SITZE_SEIT_2023, STAENDERAT, HALBE, REGELN, BUNDESRAT_PARTEIEN, zahlenPolitsystem,
 } from '../../scripts/seiten/politsystem.mjs';
@@ -172,10 +173,13 @@ describe('/politsystem/', () => {
   });
 
   it('jeder Beleg im Text führt zu einer Quelle, und jede Quelle führt zurück', () => {
+    // Drei Schichten (09.11.2026): Belege unter «Ausführlich lesen» führen auf
+    // die Überschrift ihres Abschnitts zurück (schichtenBelegSprung.test.js).
+    const zugeklappt = zugeklappteIds(html);
     for (const q of seite.quellen) {
       expect(html).toContain(`<li id="quelle-${q.key}">`);
-      expect(html).toContain(`href="#beleg-${q.key}-1"`);
       expect(html).toContain(`id="beleg-${q.key}-1"`);
+      if (!zugeklappt.has(`beleg-${q.key}-1`)) expect(html).toContain(`href="#beleg-${q.key}-1"`);
     }
   });
 
