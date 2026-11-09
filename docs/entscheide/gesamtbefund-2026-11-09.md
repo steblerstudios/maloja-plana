@@ -187,5 +187,10 @@ siebenmal neu entschieden werden:
    Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
    Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
    (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
+   **Kapitel 4 · Versicherungen & Vorsorge** (09.11.): Bild [kapitel-4-versicherungen.html](../design/kapitel-4-versicherungen.html).
+   Hoch: V1 Rat «Unfalldeckung abwählen» ohne 8-Stunden-Bedingung (UVV Art. 13) · P1 IK-Auszug halbiert die AHV (B-17) ·
+   P2 Zukunftsbild zahlt AHV ab 58 (B-18) · P3 früher beziehen ergibt ab 65 mehr (B-19) · P4 Zuschlag Frauen 1961–69 fehlt
+   (AHVG Art. 34bis). Dazu V2–V5, P5–P9, Kleines, Gestaltung A–D, Sprache S1–S10. Vorschlag: zwei Zweige (Rechner-Logik ·
+   Inhalt/Gestaltung/Sprache), Rätoromanisch offen. **Offen: Entscheid Stebler Studios.**
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
