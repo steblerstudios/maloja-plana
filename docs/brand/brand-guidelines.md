@@ -249,6 +249,26 @@ sechs Regeln. Ein neuer Wert, der keiner Regel folgt, kommt nicht in den Code. *
 
 Dazu unverändert: Tippflächen mindestens 44 × 44 px (WCAG 2.5.5).
 
+### 7b. Instrumente — ein Zuhause, feste Spiegel *(09.11.2026)*
+
+Instrumente sind Bilder, die einen Stand zeigen: Netz-Schild, Reserve-Tank, Steuer-Säule, Franchise-Kreuz.
+Befund vor der Regel (Landkarte 09.11.): Jedes stand dort, wo es gebaut wurde, in Grössen von 36 bis 480 px, und
+das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` in `src/config/tokens.js`.
+
+| Auftritt | Grösse | Was dazugehört |
+|---|---|---|
+| **Zuhause** — das eigene Kapitel | **gross 256 px**, oben, ohne Aufklappen | Satz, Liste, Hinweise |
+| **Spiegel Werkzeug** — Seiten, deren Daten es füllen | **mittel 128 px** | Satz + Weg ins Kapitel |
+| **Spiegel Startseite** — Kapitel-Zeile | **klein 64 px**, alle gleich breit | nur das Bild, **keine Wörter darin**, Zahl daneben |
+
+- Verhältnis **1 : 2 : 4** (Regel B): drei Stufen, die das Auge unterscheidet.
+- **Ein Bild, eine Bedeutung.** Das **Netz-Schild** ist *das* Schild (F7-K3-6). Das alte Schild «Pflicht /
+  Empfohlen» ist seit 09.11. von Startseite und Prämien-Übersicht entfernt.
+- Spiegel rechnen **dieselbe Zahl** wie das Zuhause (Startseite: «5/5 eingetragen» aus `netzSchildTeile`).
+- Wächter: `src/__tests__/instrumenteZuhauseSpiegel.test.js`.
+- Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
+  KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
+
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
 

@@ -15,7 +15,8 @@ import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
 import { zahl, betrag } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
 import { VersicherungenInstrument } from './components/VersicherungenInstrument.jsx';
-import { Schutzschild } from './components/Schutzschild.jsx';
+import { NetzSchild } from './components/NetzSchild.jsx';
+import { CHAPTER_KEYS } from './config/constants.js';
 import { schildOptionen } from './data/schutzschild.js';
 import { absicherungJeRisiko } from './data/absicherungRisiko.js';
 import { franchiseVorschlag } from './data/franchiseTacho.js';
@@ -333,7 +334,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     h('section', { 'data-teil': 'vu-zeilen', 'aria-label': t('vu.zeilenAria') }, zeilen.map(zeileKnopf)),
 
     h('h3', { style: kapH }, t('instrumente.schild')),
-    h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(data) }),
+    // Spiegel Werkzeug (Stebler Studios 09.11.2026): das Netz-Schild mittel, wie im Kapitel gerechnet; vorher stand hier
+    // noch das alte Schild «Pflicht / Empfohlen» (58 px), das F7-K3-6 im Kapitel schon abgelöst hatte.
+    h(NetzSchild, { palette, t, versicherungen: v, finanzen: data?.finanzen, kanton: data?.basis?.canton, stunden: data?.ausbildung?.workHoursPerWeek,
+      ...schildOptionen(data), groesse: 'mittel', onZuhause: onNavigate ? () => onNavigate('chapter', CHAPTER_KEYS.indexOf('versicherungen')) : undefined }),
 
     h('div', { style: { marginTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '88' } },
       // Absicherung je Risiko (Stebler Studios 26.10.2026: Liste statt Netz) — was eingetragen ist und was das Gesetz vorsieht,
