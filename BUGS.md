@@ -152,6 +152,16 @@ gesetzliche Werte stimmen. Ein Fix hier ist Fachlogik → vorher `swiss-precisio
   Kommentar daneben sagt «auf frühestens 63 gedeckelt» — gedeckelt ist nur der Kürzungssatz, nicht
   die Bezugsdauer. Folge: früher aufhören zeigt ein grösseres AHV-Fundament. Erwartet: AHV erst
   ab `max(Rücktritt, 63)`.
+  **Behoben (Zweig):** `utils/ahvZukunftsbild.js` — AHV-Bezug im Bild = max(Rücktritt, Referenzalter
+  − 24 Monate, 63), Beitragsjahre bis dahin; Text-Grenze aus derselben Quelle. Test
+  `zukunftsbildAhvAb63.test.js` (Mann 58 = 63; Frau JG 1964/1962). Fachprüfung
+  `swiss-precision-pruefer` 09.11.: erster Stand nahm für Frauen JG 1961–1969 62 (36 Monate Rente,
+  Kürzung für 24) → korrigiert. **Offen aus der Fachprüfung:** (a) Annahmen im Text nennen —
+  «AHV am frühesten Termin bezogen» und «Beiträge als Nichterwerbstätige bezahlt» (AHVG Art. 3,
+  AHVV Art. 28; das Bild rechnet für die Jahre nach dem Rücktritt weiter mit dem Erwerbseinkommen,
+  die Rente ist dann eher zu hoch) — braucht Texte in 5 Sprachen; (b) Vorbezug ab 62 für Frauen
+  der Übergangsgeneration erst mit ihren Kürzungssätzen (D10). Quellen vom Prüfer aus dem Code
+  und Wissen, Wortlaut nicht nachgeschlagen.
 - 2026-11-09 · **B-19** · Klein: Das Feld «Bezugsalter» sagt `min 63`, der Regler im Zukunftsbild
   setzt denselben Wert ab 58. Bei 60 rechnet die AHV wie 63, angezeigt bleibt 60. Eher
   Klarheitsfrage (Rücktritt ≠ AHV-Bezug) als Rechenfehler.
