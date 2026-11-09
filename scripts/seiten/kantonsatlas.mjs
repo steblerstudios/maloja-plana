@@ -290,7 +290,8 @@ const BRILLEN_CSS = [
   ]),
   // Weg in die App unter der Karte (C).
   '    .atlas-weiter{ margin:10px 0 0; font-size:15px }',
-  '    .atlas-weiter a{ color:var(--heidel-text); font-weight:600; text-underline-offset:3px }',
+  // Eigenständiger Weg, kein Link im Fliesstext: 44 px hoch wie jedes Bedienelement.
+  '    .atlas-weiter a{ display:inline-block; padding:11px 0; color:var(--heidel-text); font-weight:600; text-underline-offset:3px }',
   '    .atlas-weiter span:not(.sr-only){ color:var(--leise); margin-left:6px }',
 ].join('\n');
 
