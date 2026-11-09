@@ -163,6 +163,10 @@ siebenmal neu entschieden werden:
    Server-Datei pflegt Stebler Studios von Hand). Lösung, die mit dem normalen Deploy kommt: je Sprache eine kleine
    **Sprach-Startseite** `/fr/index.html` usw. mit der Liste der Erklärseiten dieser Sprache und dem Weg in die App
    (`/?lang=fr`). Solange die Sprache gesperrt ist, trägt sie wie die Unterseiten `noindex, follow`.
+   ✅ **09.11.: gebaut** (Stebler Studios: «Ja, so») → Entwurfs-PR #775, Zweig `feat/seo-sprachwurzeln` (von `main`):
+   Sprach-Startseiten, Startseiten-Titel «Maloja Plana — Prämienverbilligung, Steuern, Sozialhilfe» (S5), Lesebogen
+   Englisch `docs/uebersetzung/lesebogen-en-2026-11.html` (133 Stellen, 56 gelb). **Offen bei Stebler Studios:** Englisch
+   lesen; wer liest Französisch und Italienisch; Deploy. **Offen bei mir:** drei Gesetzeszitate am Fedlex-Text.
 4. Danach die sieben Kapitel in der Ordnung des Dashboards: Basis · Wohnen · Finanzen · Versicherungen & Vorsorge ·
    Ausbildung & Arbeit · Behörden · Gesundheit.
 
