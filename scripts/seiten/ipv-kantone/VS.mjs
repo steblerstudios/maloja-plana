@@ -52,7 +52,8 @@ export default {
   selbst: {
     // Fachprüfung 09.11.: mehrere Punkte betreffen Personen, die schon einen Entscheid haben
     // (Art. 6 Abs. 3, Art. 12 Abs. 2 lit. a und b).
-    einleitung: 'In diesen Fällen stellen Sie selbst ein Gesuch bei der Ausgleichskasse, auch wenn Sie schon einen Entscheid haben:',
+    // Nachprüfung 09.11. (N1): «teils» — Zuzüger und Quellenbesteuerte haben keinen Entscheid.
+    einleitung: 'In diesen Fällen stellen Sie selbst ein Gesuch bei der Ausgleichskasse, teils auch dann, wenn Sie schon einen Entscheid haben:',
     punkte: [
       // [AK] «Quellenbesteuerung»: «Personen mit Quellenbesteuerung (Ausweis B, F, L und N) müssen für
       // 2026 ein persönliches Subventionsgesuch stellen.» · «Personen mit Ausweis B, welche 2025
@@ -81,7 +82,7 @@ export default {
       // persönlichen Verhältnisse werden im folgenden Jahr berücksichtigt.» Art. 12 Abs. 2 lit. a
       // (Sondergesuch «Änderung der familiären Verhältnisse»). [FORM]: «Bei Trennung oder Scheidung:
       // Trennungsvereinbarung oder Scheidungsurteil».
-      'Ihre Familie hat sich verändert, etwa durch Trennung oder Scheidung. Dann stellen Sie ein besonderes Gesuch mit den Belegen. Berücksichtigt wird die Änderung in der Regel erst im folgenden Jahr.',
+      'Ihre Familie hat sich verändert, etwa durch Trennung oder Scheidung. Dann stellen Sie ein besonderes Gesuch mit den Belegen. Berücksichtigt wird die Änderung laut Verordnung erst im folgenden Jahr.',
       // VüIPV Art. 3 Abs. 2: «Für Personen, die sich im Laufe des Jahres im Wallis niederlassen und
       // bereits Ergänzungsleistungen der AHV/IV oder kantonale Sozialhilfe erhalten, kann die
       // Prämienverbilligung ab dem Zeitpunkt der Niederlassung im Wallis gewährt werden.» Art. 12
@@ -94,13 +95,10 @@ export default {
       'Sie sind zwischen 21 und 25, noch in Ausbildung, und Ihre Verbilligung liegt unter einem Anteil, den die Verordnung festlegt. Dann können Sie bei der Ausgleichskasse einen Zuschlag beantragen.',
       // Fachprüfung 09.11.: [AK] teilt den Anspruch nur «Versicherten, welche im Steuerregister erfasst
       // sind» mit; [FORM] fragt «seit: … Herkommend von: …». Ohne Walliser Veranlagung kein Entscheid.
-      'Sie sind erst vor kurzem ins Wallis gezogen und haben keinen Entscheid erhalten. Dann stellen Sie das Gesuch selbst; auf dem Formular geben Sie an, seit wann und woher Sie zugezogen sind.',
-      // Fachprüfung 09.11.: VüIPV Art. 10 Abs. 6 Satz 2: «Für diese Personen wird die finanzielle
-      // Unterstützung aufgrund dieses Entscheids gewährt.» (aus «besonders» hierher, weil zu handeln ist)
-      'Ihre Lage verschlechtert sich im Lauf des Jahres stark. Dann wenden Sie sich an Ihre Gemeinde: Sie entscheidet über Sozialhilfe, und danach richtet sich auch die Verbilligung.',
+      'Sie sind vor Jahresbeginn ins Wallis gezogen und haben keinen Entscheid erhalten. Dann stellen Sie das Gesuch selbst; auf dem Formular geben Sie an, seit wann und woher Sie zugezogen sind.',
       // VüIPV Art. 4: «Auf begründetes Gesuch hin kann das Departement im Härtefall unabhängig vom
       // massgebenden Einkommen eine zeitlich begrenzte individuelle Prämienverbilligung gewähren.»
-      'Sie sind in einer besonderen Notlage. Dann kann der Kanton auf ein begründetes Gesuch hin eine befristete Verbilligung gewähren, auch unabhängig vom Einkommen.',
+      'Sie sind in einer besonderen Notlage. Dann kann das Departement auf ein begründetes Gesuch hin eine befristete Verbilligung gewähren, auch unabhängig vom Einkommen.',
     ],
     // VüIPV Art. 11 Abs. 2: «Personen, welche davon ausgehen, die Subventionsbedingungen zu erfüllen
     // und keinen Entscheid … erhalten, müssen bei der Ausgleichskasse ein begründetes Gesuch
@@ -190,8 +188,13 @@ export default {
     'Steigt Ihr Einkommen erst im laufenden Jahr, bleibt die Verbilligung für dieses Jahr bestehen. Melden Sie der Ausgleichskasse aber sofort jede Änderung Ihrer persönlichen Lage, etwa Heirat, Trennung, Geburt oder Umzug, und auch, wenn Ihr Einkommen schon vor dem Jahr der Verbilligung deutlich und dauerhaft gestiegen ist. Was zu Unrecht bezogen wurde, etwa wegen falscher Angaben oder einer fehlenden Meldung, wird zurückgefordert. Wer gutgläubig war und durch die Rückzahlung übermässig belastet würde, muss nach der Verordnung nicht zurückzahlen.',
     // VüIPV Art. 24 Abs. 1: «Die Entscheide … können innert 30 Tagen nach ihrer Mitteilung Gegenstand
     // einer Einsprache beim Departement bilden.» kGKVG Art. 12 Abs. 1.
+    // VüIPV Art. 10 Abs. 6: «Wenn sich die finanzielle Situation während des Jahres … stark
+    // verschlechtert, befindet die Gemeindebehörde über den Anspruch auf Sozialhilfe. Für diese Personen
+    // wird die finanzielle Unterstützung aufgrund dieses Entscheids gewährt.» Nachprüfung 09.11. (N2):
+    // hierher zurück, weil die Gemeinde und nicht die Ausgleichskasse entscheidet.
+    'Verschlechtert sich Ihre Lage im Lauf des Jahres stark, wenden Sie sich an Ihre Gemeinde: Sie entscheidet über Sozialhilfe, und danach richtet sich auch die Verbilligung.',
     // Rechtsprüfung 09.11.: Departement aus dem Kopf von [FORM]; Weiterzug Art. 24 Abs. 2, kGKVG Art. 12 Abs. 2.
-    'Sind Sie mit dem Entscheid nicht einverstanden, können Sie innert kurzer Frist ab Zustellung beim Departement für Gesundheit, Soziales und Kultur Einsprache erheben. Gegen den Einspracheentscheid ist eine Beschwerde beim Staatsrat möglich.',
+    'Sind Sie mit dem Entscheid nicht einverstanden, können Sie innert kurzer Frist ab Zustellung, einer Frist von Tagen und nicht Monaten, beim Departement für Gesundheit, Soziales und Kultur Einsprache erheben. Gegen den Einspracheentscheid ist eine Beschwerde beim Staatsrat möglich.',
   ],
   quellen: [
     { text: 'Ausgleichskasse des Kantons Wallis: Prämienverbilligung', url: 'https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html' },

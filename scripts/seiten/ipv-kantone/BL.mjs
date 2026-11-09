@@ -59,7 +59,7 @@ export default {
       // Kanton: «definitive Staatssteuerveranlagung vom Vor-Vorjahr des vorherigen Wohnkantons»; aus dem
       // Ausland: «vom Vorjahr in Basel-Landschaft». Fach-/Rechtsprüfung 09.11. (Muss): keine längere
       // Frist — erstes Anspruchsjahr ist das Jahr nach dem Zuzug, Frist dessen Ende.
-      'Sie sind aus einem anderen Kanton zugezogen, oder aus dem Ausland und werden nicht an der Quelle besteuert. Anspruch in Basel-Landschaft haben Sie ab dem Jahr nach dem Zuzug; das Gesuch dafür stellen Sie mit dem Formular für Zuziehende bis Ende dieses Jahres. Gerechnet wird mit der Veranlagung Ihres früheren Wohnkantons, bei einem Zuzug aus dem Ausland mit Ihrer ersten Veranlagung hier.',
+      'Sie sind aus einem anderen Kanton zugezogen, oder aus dem Ausland und werden nicht an der Quelle besteuert. Anspruch in Basel-Landschaft haben Sie ab dem Jahr nach dem Zuzug; das Gesuch dafür stellen Sie mit dem Formular für Zuziehende bis Ende dieses ersten Anspruchsjahres. Gerechnet wird mit der Veranlagung Ihres früheren Wohnkantons, bei einem Zuzug aus dem Ausland mit Ihrer ersten Veranlagung hier.',
       // [QST]: «Die Ausgleichskasse stellt quellenbesteuerten Personen, die mindestens seit dem 1. Januar
       // des Anspruchsjahres im Kanton angemeldet sind, jährlich automatisch das Gesuchsformular zu.
       // Quellenbesteuerte Personen, die bis Ende Februar des Anspruchsjahres kein Gesuchsformular
@@ -103,7 +103,7 @@ export default {
   // Abs. 1bis und § 18c Abs. 1bis (zugeschickte Gesuchsformulare: innert 1 Jahr ab Zustellung).
   // [ORD]/[ZUZ]/[QST]: «innerhalb eines Jahres seit Zustellung». Rechtsprüfung 09.11.: «auf dem
   // Formular» unbelegt → «auf der Seite der SVA»; Zuzugssatz gestrichen (siehe Punkt Zuzug).
-  fristSatz: 'Für Gesuche und für das Antragsformular gelten Fristen, und wer sie verpasst, verliert den Anspruch: Ein eigenes Gesuch reichen Sie bis Ende des Jahres ein, für das Sie die Verbilligung wollen. Ein zugeschicktes Antrags- oder Gesuchsformular schicken Sie innert einer festen Frist ab Zustellung zurück; sie steht im Gesetz und auf der Seite der SVA.',
+  fristSatz: 'Für Gesuche und für das Antragsformular gelten Fristen, und wer sie verpasst, verliert den Anspruch: Ein eigenes Gesuch um Prämienverbilligung reichen Sie bis Ende des Jahres ein, für das Sie die Verbilligung wollen. Ein zugeschicktes Antrags- oder Gesuchsformular schicken Sie innert einer festen Frist ab Zustellung zurück; sie steht in den Vorschriften und auf der Seite der SVA.',
   stelle: 'SVA Basel-Landschaft, Ausgleichskasse',
   // PVV § 2 Abs. 1: «Die Ausgleichskasse Basel-Landschaft … ist mit dem Vollzug der
   // Prämienverbilligung betraut.» EG KVG § 11 Abs. 1 («wird den Krankenversicherern ausgerichtet»).
@@ -131,7 +131,7 @@ export default {
     // Partnerschaft leben oder denen bei der Staatssteuer ein Kinderabzug gewährt wird oder die
     // Sozialhilfe beziehen.» PVV § 14b Abs. 1 lit. c («Eltern, die im Ausland wohnen, wird nicht
     // berücksichtigt»). EG KVG § 8 Abs. 3 («Für anspruchsberechtigte Kinder … mindestens …»).
-    'Wird für eine junge Person bis 25 eine Ausbildungszulage bezahlt und leben ihre Eltern in guten wirtschaftlichen Verhältnissen, hat sie keinen Anspruch. Das gilt nicht, wenn sie verheiratet ist oder in eingetragener Partnerschaft lebt, bei den Steuern einen Kinderabzug hat oder Sozialhilfe bezieht. Das Einkommen von Eltern im Ausland zählt nicht. Haben Kinder und junge Erwachsene bis 25 Anspruch, legt das Gesetz für sie einen festen Mindestanteil der Richtprämie fest.',
+    'Wird für eine junge Person bis 25 eine Ausbildungszulage bezahlt und leben ihre Eltern in guten wirtschaftlichen Verhältnissen, hat sie keinen Anspruch. Das gilt nicht, wenn sie verheiratet ist oder in eingetragener Partnerschaft lebt, bei den Steuern einen Kinderabzug hat oder Sozialhilfe bezieht. Das Einkommen von Eltern im Ausland zählt nicht. Haben Kinder und junge Erwachsene bis 25 Anspruch, legt das Gesetz für Kinder und für junge Erwachsene je einen festen Mindestanteil der Richtprämie fest.',
     // [FAQ]: «Die Prämienverbilligung für Kinder wird bei dem Elternteil geprüft, der in der
     // betreffenden Staatssteuerveranlagung den Kinderabzug geltend gemacht hat.»
     'Bei unverheirateten oder getrennten Eltern wird ein Kind bei dem Elternteil gerechnet, der in der Steuerveranlagung den Kinderabzug geltend gemacht hat.',
