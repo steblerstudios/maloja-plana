@@ -16,7 +16,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
 
   const s = {
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.65, marginBottom: space.md + 'px', maxWidth: '600px' },
-    disclaimer: { fontSize: text.sm, color: palette.sageDeep || palette.text, background: palette.sageMist || palette.up, borderInlineStart: '3px solid ' + palette.sage, borderRadius: radius.md + 'px', padding: space.sm + 'px ' + space.md + 'px', lineHeight: 1.6, marginBottom: space.lg + 'px' },
+    disclaimer: { fontSize: text.sm, color: palette.sageDeep || palette.text, background: palette.sageMist || palette.up, borderInlineStart: '3px solid ' + palette.sage, borderRadius: radius.lg + 'px', padding: space.sm + 'px ' + space.md + 'px', lineHeight: 1.6, marginBottom: space.lg + 'px' },
     sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, marginBottom: space.sm + 'px', marginTop: space.lg + 'px' },
     statusRow: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-start', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
     badge: { flexShrink: 0, width: '34px', height: '34px', borderRadius: radius.sm + 'px', background: palette.sage + '22', color: palette.sageDeep || palette.sage, fontWeight: weight.bold, fontSize: text.body, display: 'flex', alignItems: 'center', justifyContent: 'center' },
@@ -33,7 +33,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     crosslink: { ...linkStil(palette), display: 'block', minHeight: '44px', fontSize: text.sm, textAlign: 'start', marginTop: space.md + 'px' },
     rightItem: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', padding: '8px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55 },
     rightDot: { flexShrink: 0, color: palette.sage, marginTop: '1px' },
-    fristen: { background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.md + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
+    fristen: { background: palette.sky + '18', border: '1px solid ' + palette.sky, borderRadius: radius.lg + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
     fristenBody: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 },
     cantonBox: { background: palette.sageMist || palette.up, border: '1px solid ' + palette.sage + '66', borderRadius: radius.lg + 'px', padding: space.md + 'px', marginTop: space.sm + 'px' },
     cantonOfficeLink: { display: 'block', textDecoration: 'none', color: palette.skyDeep, fontSize: text.sm, fontWeight: weight.semi },

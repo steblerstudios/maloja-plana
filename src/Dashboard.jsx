@@ -121,7 +121,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
     'data-alpha-banner': true,
     style: {
-      padding: '12px 16px', marginBottom: '24px', borderRadius: radius.md,
+      padding: '12px 16px', marginBottom: '24px', borderRadius: radius.lg,
       background: palette.up, border: '1px solid ' + palette.border + '88',
       boxShadow: shadow.sm,
     }

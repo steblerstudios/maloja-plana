@@ -41,11 +41,11 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     ...ablaufStyles(palette),
     hinweis: {
       padding: '12px 16px', marginBottom: space.md + 'px', background: palette.up,
-      borderRadius: radius.md, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
+      borderRadius: radius.lg, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
     },
     gruppe: { marginTop: space.md + 'px' },
     gruppeTitel: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px 0', fontWeight: weight.medium },
-    liste: { listStyle: 'none', margin: 0, padding: 0, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface },
+    liste: { listStyle: 'none', margin: 0, padding: 0, border: '1px solid ' + palette.border, borderRadius: radius.lg, background: palette.surface },
     zeile: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: '12px 16px' },
     zeileLinie: { borderTop: '1px solid ' + palette.border },
     feldText: { flex: 1, minWidth: 0 },

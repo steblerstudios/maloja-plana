@@ -76,7 +76,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     sayValue: { fontWeight: weight.semi, color: palette.text },
     sayEmpty: { color: palette.mid },
     readWrap: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginTop: space.sm + 'px' },
-    readCard: { padding: '12px 16px', background: palette.up, borderRadius: radius.md, border: '1px solid ' + palette.border },
+    readCard: { padding: '12px 16px', background: palette.up, borderRadius: radius.lg, border: '1px solid ' + palette.border },
     readTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' },
     readRow: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', padding: '4px 0', fontSize: text.sm },
     readLabel: { color: palette.mid },
