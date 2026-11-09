@@ -170,7 +170,7 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'The right nobody can lose',
+        titel: 'Right to assistance when in need', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Independently of all of the above, <strong>Article 12 of the Federal Constitution</strong> lays down the right to assistance when in need: “Persons in need and unable to provide for themselves have the right to assistance and care, and to the financial means required for a decent standard of living.” (English translation on Fedlex, for information only. Only the German, French and Italian texts are legally binding.)',
           'This right belongs to everyone in Switzerland. It is not the same as social assistance and covers less — but it is the floor below which nobody may fall.',

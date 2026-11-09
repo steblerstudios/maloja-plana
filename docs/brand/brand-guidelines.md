@@ -350,6 +350,27 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
 
+### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
+
+Maloja erklärt zuerst mit Bild, Zahl und Weg, erst danach mit Text. Jeder Abschnitt einer
+erklärenden Seite hat diese Reihenfolge:
+
+| | Schicht | Regel |
+|---|---|---|
+| **A** | **Bild zuerst** | Abbildung, Balken, Kernzahl oder Zeitleiste. Wer nur das sieht, hat das Wichtigste. Jede Zahl darin trägt ihren Beleg |
+| **B** | **Ein Satz** | Höchstens zwei Sätze (auf den Erklärseiten ein kurzer Absatz, der nach vorne wandert), **aus dem geprüften Text** übernommen — keine neue Fachaussage. Fällt die Einschränkung aus dem Zusammenhang weg, kommt sie mit in den Satz |
+| **C** | **Ausführlich lesen, mit Ausnahmen und Quellen** | Der ganze Text bleibt, aufklappbar (`<details>`). Nichts wird gestrichen (siehe «Entschlacken … nie löschen» oben) |
+| **D** | **Wege** | Weg-Knöpfe zu verwandten Fragen auf der Seite und zu anderen Seiten statt Verweisen im Fliesstext. Rand, Fläche, Pfeil, 44 hoch, Ecke 10 (Regel C) |
+
+Gebaut: `/krankenkasse/`, `/politsystem/`, `/kantone-im-vergleich/` (Schalter `schichten`,
+Felder `bild`/`kurz`/`wege` in `scripts/seiten/*.mjs`; Zahlen als Punktstreifen) und
+`/praemienverbilligung/` (Feld `kurzAbsatz` in `scripts/seiten-inhalt.mjs`).
+**A entfällt nie stillschweigend, aber auch nie als Schmuck:** Zeigt kein Bild etwas, beginnt der
+Abschnitt mit B. **Mehrsprachige Seiten zuerst nur auf Deutsch;** die Übersetzungen folgen erst nach
+ihrer menschlichen Lektüre, damit keine ungeprüften Sätze dazukommen. Vor dem Merge laufen rechts- und swiss-precision-pruefer über A und B:
+ein wörtlich übernommener Satz kann allein zu absolut werden. *(Stebler Studios 09.11.2026,
+«Ja, Probe bauen» und «Gut, weiter so».)*
+
 ---
 
 ## 9. Offene Brand-Themen
