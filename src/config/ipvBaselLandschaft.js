@@ -49,6 +49,14 @@
 //    nichts». Der amtliche Rechner der SVA (sva_onlinecalculator.js, Knopf «check») rechnet
 //    `einkommen - obergrenze >= 0` → «NEIN», also schon bei GENAU 31'000 kein Anspruch. Das passt
 //    zu «anspruchsabschliessend»; die App folgt jetzt der ausführenden Stelle.⟩
+//    ⟨ergänzt 09.11.2026: GENAU AUF DER GRENZE IST ES STRITTIG. Die SVA BL sagt es zweimal
+//    verschieden — ihr Rechner (sva_onlinecalculator.js, am 09.11.2026 unverändert:
+//    `math = einkommen - obergrenze; if (math >= 0)` → «NEIN») verneint den Anspruch, ihre Seite
+//    «Häufige Anliegen – kurz erklärt» sagt: «Die Obergrenze des massgebenden Jahreseinkommens darf
+//    nicht überschritten werden» (gleich = nicht überschritten). Das Dekret ([2] § 1 Abs. 1:
+//    «anspruchsabschliessende Obergrenze … beträgt») entscheidet es nicht eindeutig. Knapp darunter
+//    ginge es um rund 2'190 im Jahr. Darum genau auf der Grenze keine Zahl und kein «kein
+//    Anspruch», sondern `orientierung('blGenauAufGrenze')`: nachfragen, im Zweifel Gesuch stellen.⟩
 // 2. GEMESSEN VOR DEN ABZÜGEN: Zwischentotal der steuerbaren Einkünfte (Ziffer 399) — Nettolohn
 //    nach AHV/ALV/PK/NBU ([4] Ziffer 100), noch ohne Berufsauslagen, Versicherungs- und
 //    3a-Abzug. Das liegt nahe am Nettoeinkommen der App; `SAEULE_3A.nichtAbgezogen`.
@@ -165,8 +173,10 @@ export function ipvBaselLandschaftRechnen({ kinderZahl = 0, me }) {
   const me0 = Math.max(0, me);
   const summe = rpE + kinderZahl * rpK;
   // «anspruchsabschliessend» — ab der Grenze kein Anspruch, wie der SVA-Rechner (siehe Kopf).
+  // GENAU auf der Grenze sagen die Unterlagen der SVA zweierlei → `genauAufGrenze`, der Aufrufer
+  // zeigt dann weder Betrag noch «kein Anspruch».
   if (me0 >= grenze) {
-    return { grenze, ueberGrenze: true, total: 0, erwachsenenAnteil: 0, maximal: summe, unklar: false, varianten: null };
+    return { grenze, ueberGrenze: true, genauAufGrenze: me0 === grenze, total: 0, erwachsenenAnteil: 0, maximal: summe, unklar: false, varianten: null };
   }
   const differenz = Math.max(0, summe - p.prozentanteil * me0);
   const bodenKind = p.mindestanteilKind * rpK;
@@ -237,6 +247,9 @@ export function ipvBaselLandschaft(data, hh, ipvData, youngAdultsCount, orientie
     canton: 'BL', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltBL',
     extra: { basisjahr, jahrKey: 'ipv.jahrBL' },
   };
+  // Genau auf der Grenze: Rechner der SVA «NEIN», ihre Häufigen Anliegen «nicht überschritten»
+  // (siehe Kopf, Punkt 1) — keine Aussage, Verweis an die SVA.
+  if (r.genauAufGrenze) return orientierung('blGenauAufGrenze');
   if (r.ueberGrenze) {
     // Fachprüfung W1: der Satz nennt die Veranlagung {basisjahr} — verglichen wird das heutige
     // Einkommen mit einer Klippe, knapp darüber ist «kein Anspruch» eine Aussage über eine Näherung.

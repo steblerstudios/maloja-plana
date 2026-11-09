@@ -4601,6 +4601,7 @@ export default {
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
       eingabeUnlesbar: 'An amount recorded — for income, assets, maintenance payments or family allowances — cannot be read as a number. No reduction can be calculated from it — please check the entries in the Finances chapter.',
       blKindNeu: 'A child may have been born after the year whose tax assessment counts in the canton of Basel-Landschaft. The child is then only taken into account on application, from the month of birth; the application, with the child’s health insurance policy, must reach SVA Basel-Landschaft by 31 December of the entitlement year. That is why the app does not calculate here; the child’s date of birth settles it.',
+      blGenauAufGrenze: 'The income here is exactly at the upper limit of the canton of Basel-Landschaft. SVA Basel-Landschaft says two different things about an entitlement exactly at the limit: its online calculator says no, its frequently asked questions only require that the limit is not exceeded. That is why the app does not calculate here; SVA Basel-Landschaft can clarify it, and if in doubt an application is worthwhile.',
       laden: 'The basis is still loading.',
     },
   },

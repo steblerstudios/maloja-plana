@@ -3735,6 +3735,7 @@ export default {
       eingabeUnlesbar: 'In import registrà — tar l’entrada, la facultad, las contribuziuns da mantegniment u las allocaziuns per famiglias — na sa lascha betg leger sco cifra. Uschia na sa lascha quintar nagina reducziun — per plaschair controllar las indicaziuns en il chapitel Finanzas.',
       // TODO(rm): provisorisch — Gegenlese (K31 BL, 28.09.2026)
       blKindNeu: 'In uffant è forsa naschì suenter l’onn, da la quala taxaziun fiscala dumbra en il chantun Basilea-Champagna. El vegn lura resguardà mo sin dumonda, a partir dal mais da naschientscha — la dumonda cun la polizza da la cassa da malsauns da l’uffant sto arrivar fin ils 31 da december da l’onn da dretg tar la SVA Basel-Landschaft. Perquai na quinta l’applicaziun betg qua; cun la data da naschientscha da l’uffant sa lascha quai sclerir.',
+      blGenauAufGrenze: 'L’entrada è qua exactamain sin la limita superiura dal chantun Basilea-Champagna. Davart in dretg exactamain sin la limita di la SVA Basel-Landschaft duas chaussas differentas: ses quintader online al snega, sias dumondas frequentas pretendan mo che la limita na vegnia betg surpassada. Perquai na quinta l’applicaziun betg qua; la SVA Basel-Landschaft po sclerir quai, ed en cas da dubi vala la paina d’inoltrar ina dumonda.',  // TODO(rm): Gegenlese
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },

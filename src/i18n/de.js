@@ -4677,6 +4677,7 @@ export default {
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
       eingabeUnlesbar: 'Ein erfasster Betrag — beim Einkommen, beim Vermögen, bei Unterhaltsbeiträgen oder Familienzulagen — lässt sich nicht als Zahl lesen. Damit lässt sich keine Verbilligung berechnen — bitte die Angaben im Kapitel Finanzen prüfen.',
       blKindNeu: 'Ein Kind ist möglicherweise nach dem Jahr geboren, dessen Steuerveranlagung im Kanton Basel-Landschaft zählt. Es wird dann erst auf ein Gesuch hin berücksichtigt, ab dem Geburtsmonat — das Gesuch mit der Krankenkassen-Police des Kindes geht bis zum 31. Dezember des Anspruchsjahres an die SVA Basel-Landschaft. Darum rechnet die App hier nicht; mit dem Geburtsdatum des Kindes lässt sich das klären.',
+      blGenauAufGrenze: 'Das Einkommen liegt hier genau auf der Obergrenze des Kantons Basel-Landschaft. Ob genau auf der Grenze noch Anspruch besteht, sagt die SVA Basel-Landschaft an zwei Stellen verschieden: Der Online-Rechner der SVA verneint es, die Seite «Häufige Anliegen» verlangt nur, dass die Grenze nicht überschritten wird. Darum rechnet die App hier nicht; Klarheit gibt die SVA Basel-Landschaft, und im Zweifel lohnt sich ein Gesuch.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },

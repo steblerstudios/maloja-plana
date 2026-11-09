@@ -4602,6 +4602,7 @@ export default {
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
       eingabeUnlesbar: 'Un importo registrato — per il reddito, la sostanza, i contributi di mantenimento o gli assegni familiari — non può essere letto come numero. Così non si può calcolare alcuna riduzione — si prega di verificare i dati nel capitolo Finanze.',
       blKindNeu: 'Un figlio è forse nato dopo l’anno la cui tassazione fiscale conta nel Cantone di Basilea Campagna. In tal caso viene considerato solo su domanda, dal mese di nascita — la domanda, con la polizza della cassa malati del figlio, va inoltrata alla SVA Basel-Landschaft entro il 31 dicembre dell’anno di diritto. Per questo l’app qui non calcola; la data di nascita del figlio permette di chiarirlo.',
+      blGenauAufGrenze: 'Il reddito si trova qui esattamente al limite superiore del Cantone di Basilea Campagna. Sul diritto esattamente al limite la SVA Basel-Landschaft dice due cose diverse: il suo calcolatore online lo nega, le sue domande frequenti chiedono solo che il limite non venga superato. Per questo l’app qui non calcola; la SVA Basel-Landschaft può chiarirlo, e in caso di dubbio conviene presentare una domanda.',
       laden: 'Le basi si stanno ancora caricando.',
     },
   },

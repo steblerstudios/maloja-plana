@@ -4600,6 +4600,7 @@ export default {
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
       eingabeUnlesbar: 'Un montant saisi — pour le revenu, la fortune, les contributions d’entretien ou les allocations familiales — ne peut pas être lu comme un nombre. Aucune réduction ne peut être calculée ainsi — merci de vérifier les indications dans le chapitre Finances.',
       blKindNeu: 'Un enfant est peut-être né après l’année dont la taxation fiscale compte dans le canton de Bâle-Campagne. Il n’est alors pris en compte que sur demande, dès le mois de naissance — la demande, avec la police d’assurance-maladie de l’enfant, doit parvenir à la SVA Basel-Landschaft d’ici au 31 décembre de l’année de droit. C’est pourquoi l’application ne calcule pas ici; la date de naissance de l’enfant permet de le clarifier.',
+      blGenauAufGrenze: 'Le revenu se situe ici exactement à la limite supérieure du canton de Bâle-Campagne. La SVA Basel-Landschaft dit deux choses différentes sur le droit exactement à la limite: son calculateur en ligne le nie, ses questions fréquentes exigent seulement que la limite ne soit pas dépassée. C’est pourquoi l’application ne calcule pas ici; la SVA Basel-Landschaft peut le clarifier, et en cas de doute, une demande vaut la peine.',
       laden: 'Les bases sont encore en cours de chargement.',
     },
   },
