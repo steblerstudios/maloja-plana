@@ -180,5 +180,7 @@ siebenmal neu entschieden werden:
    Überschriftenstufe). Inhalt hoch: W1 Genf «pro Zimmer» ohne «pro Jahr» · W2 Mietbeiträge-Ergebnis prüft nur Einkommen
    (Wohnsitz/Vermögen in Daten, nie verwendet) · W3 Sperrfrist OR 271a ohne Bedingung. Dazu W4–W13, Sprache S1–S7.
    ✅ **09.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-2-wohnen` (von `main`).
+   ✅ **Gebaut** → Entwurfs-PR #792: Genf pro Jahr, Voraussetzungen im Mietbeiträge-Rechner, OR 271a, W4–W13, Sprache.
+   rechts-pruefer mit Volltext, 8743 Tests grün. Offen: menschliche Lektüre fr/it.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
