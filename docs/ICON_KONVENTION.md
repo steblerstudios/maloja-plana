@@ -362,7 +362,9 @@ vorher 9× die Helvetia, 5× das Haus, 3× das Herz für verschiedene Ereignisse
 **Aufgelöst:** `emergency` (zweite Glocke; Notfall ist das Kreuz, Erinnerungen die Kuhglocke) ·
 `dashboard` → `sackmesser` · `rechner` → `document` (ein echter Rechner folgt beim Zeichnen) ·
 `mappe` → `ordner` (Schritt 3). **Bewusst geblieben** (Entscheid 24.09.: «nur auf Zuruf»):
-`kalenderUhr`, `mietzinsverbilligung`, `exportTool`, `delete`, `filter`.
+`mietzinsverbilligung`, `delete`, `filter`. ⟨Nachtrag 09.11.2026⟩ Hier standen auch `kalenderUhr` und
+`exportTool`; beide sind mit B5a aufgelöst (Frist = Sanduhr-Abzeichen, Übersicht = Sackmesser), siehe
+`docs/brand/icon-dictionary.md` und die Wächter `funktionenB5.test.js`, `iconWoerterbuchCode.test.js`.
 
 ### ⟨Nachtrag 08.11.2026, Bauplan B1–B5c⟩ Leitform + Abzeichen
 
