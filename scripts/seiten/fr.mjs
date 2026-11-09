@@ -235,7 +235,7 @@ export const SEITEN = [
         titel: 'Ce qui est déduit du revenu',
         absaetze: [
           'Ce n’est pas le salaire qui est imposé, mais le <strong>revenu imposable</strong> — donc ce qui reste après les déductions admises. En font partie, selon la situation, les frais professionnels, les cotisations au pilier 3a, les frais de maladie au-delà d’un seuil, les déductions pour enfants et pour leur garde, et d’autres encore.',
-          'Quelles déductions sont admises et dans quelle mesure, cela diffère entre la Confédération et le canton, et entre les cantons. C’est précisément là que le plus se perd — non pas par de fausses indications, mais par des déductions que personne n’a inscrites.',
+          'Quelles déductions sont admises et dans quelle mesure, cela diffère entre la Confédération et le canton, et entre les cantons. C’est souvent là que de l’argent se perd — non pas par de fausses indications, mais par des déductions que personne n’a inscrites.',
         ],
       },
     ],
