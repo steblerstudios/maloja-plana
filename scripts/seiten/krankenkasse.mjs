@@ -57,7 +57,7 @@ export const KRANKENKASSE = {
     details.schicht-mehr[open] > summary{ border-bottom:1px solid var(--rand); margin-bottom:6px }
     nav.wege{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0 }
     a.weg{ display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 16px; border:1px solid var(--rand);
-           border-radius:22px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
+           border-radius:10px; background:var(--flaeche); text-decoration:none; font-size:15px; color:var(--text) }
     a.weg:hover{ border-color:var(--heidel) } a.weg span{ color:var(--heidel-text) }
     .kern{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:16px 18px }
     .kern .zahl{ font-family:'Hanken Grotesk','Lexend',sans-serif; font-size:44px; font-weight:700; line-height:1.1; color:var(--heidel-text); margin:0 }
