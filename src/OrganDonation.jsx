@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
@@ -129,7 +130,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig, onNavigate
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'ereignisOrgan', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('organ', 'ereignisOrgan'), size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       // Nach der Migration v5: eine frühere Angabe liess den Umfang offen (oder widersprach
