@@ -326,8 +326,16 @@ export const CANTONAL_LINKS = {
   },
   VS: {
     steuererklaerung: 'https://www.vs.ch/de/web/scc',
-    sozialdienst: 'https://www.vs.ch/de/web/sas',
-    ipv: 'https://www.vs.ch/de/web/ssp/subsides-assurance-maladie',
+    // Bis 09.11.2026 die Startseite der Dienststelle für Sozialwesen (Sozialhilfe, Asyl, Opferhilfe …).
+    // Neu ihre Seite «Sozialhilfe» (gemessen mit curl 09.11.2026 abends: 200, Titel «Sozialhilfe»,
+    // Gegenprobe vs.ch/de/web/sas/gibts-nicht-xyz → 404).
+    sozialdienst: 'https://www.vs.ch/de/web/sas/aide-sociale',
+    // Bis 09.11.2026 vs.ch/de/web/ssp/subsides-assurance-maladie: eine französische Sammelseite der
+    // Dienststelle für Gesundheitswesen zur ganzen Krankenversicherung, die IPV nur als Abschnitt mit
+    // Verweis auf die Ausgleichskasse. Neu die deutsche IPV-Seite der Ausgleichskasse des Kantons
+    // Wallis, die den Anspruch feststellt (200, Titel «Prämienverbilligung»; Gegenprobe
+    // ahvwallis.ch/de/Versicherungen/Gibt-es-nicht-xyz.html → 404).
+    ipv: 'https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html',
   },
   JU: {
     steuererklaerung: 'https://www.jura.ch/fr/Autorites/Administration/DFI/CTR/Service-des-contributions-CTR.html',
@@ -377,9 +385,9 @@ export const CANTONAL_LINKS = {
 // Prüfdatum je Link (Felder `ipv` und `sozialdienst`), gemessen mit curl (Status, Titel/h1,
 // Gegenprobe mit erfundenem Pfad je Domain). Getrennt von CANTONAL_LINKS, weil DirektLinks.jsx
 // jedes Feld dort als Link anzeigt. `null` heisst: nicht geprüft, mit Grund im Kommentar.
-//   VS: vs.ch antwortet curl auf JEDEN Pfad mit 404, auch auf die Startseite. Im Browser zeigten
-//       am 09.11.2026 beide Links die Seite «Wartungsarbeiten» (Stebler Studios). Nicht tot,
-//       nicht geprüft — nochmals ansehen, wenn vs.ch wieder läuft.
+//   VS: ⟨erledigt⟩ vs.ch antwortete curl am 09.11.2026 tagsüber auf JEDEN Pfad mit 404, im Browser
+//       «Wartungsarbeiten» (Stebler Studios). Am Abend desselben Tags wieder erreichbar: beide
+//       Links mit curl geprüft und ersetzt (Kommentare beim Eintrag VS oben).
 //   BL: baselland.ch zeigt curl nur die Cloudflare-Schranke (403). sozialdienst am 09.11.2026
 //       im Browser geprüft und ersetzt (Stebler Studios); ipv noch nicht im Browser geprüft.
 const G = '2026-11-09';
@@ -392,7 +400,7 @@ export const CANTONAL_LINKS_GEPRUEFT = {
   SH: { ipv: G, sozialdienst: G }, AR: { ipv: G, sozialdienst: G }, AI: { ipv: G, sozialdienst: G },
   SG: { ipv: G, sozialdienst: G }, GR: { ipv: G, sozialdienst: G }, AG: { ipv: G, sozialdienst: G },
   TG: { ipv: G, sozialdienst: G }, TI: { ipv: G, sozialdienst: G }, VD: { ipv: G, sozialdienst: G },
-  VS: { ipv: null, sozialdienst: null },
+  VS: { ipv: G, sozialdienst: G },
   NE: { ipv: G, sozialdienst: G }, GE: { ipv: G, sozialdienst: G }, JU: { ipv: G, sozialdienst: G },
 };
 

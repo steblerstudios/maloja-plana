@@ -31,9 +31,10 @@ describe('Kantonale Links: Sozialdienst ist Sozialhilfe, nicht IPV', () => {
 });
 
 // Benannte Ausnahme, keine weichere Regel: Diese Felder sind mit curl nicht messbar
-// (VS: jeder Pfad 404, im Browser am 09.11. «Wartungsarbeiten» · BL: Cloudflare-Schranke).
-// Ihr Prüfdatum ist `null`, bis jemand sie im Browser geprüft hat. Die Liste darf nur schrumpfen.
-const NICHT_GEPRUEFT = ['BL.ipv', 'VS.ipv', 'VS.sozialdienst'];
+// (BL: Cloudflare-Schranke). Ihr Prüfdatum ist `null`, bis jemand sie im Browser geprüft hat.
+// Die Liste darf nur schrumpfen. VS.ipv und VS.sozialdienst sind seit 09.11.2026 abends
+// geprüft (vs.ch war tagsüber in Wartung).
+const NICHT_GEPRUEFT = ['BL.ipv'];
 
 describe('Kantonale Links: Prüfdatum je Link', () => {
   for (const k of KANTONE) {
