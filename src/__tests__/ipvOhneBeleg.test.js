@@ -72,7 +72,10 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     const tief = profil({ finanzen: { monthlyIncome: 800 } });
     const hoch = profil({ finanzen: { monthlyIncome: 25000 } });
     expect(calculateIPV(hoch)).toEqual(calculateIPV(tief));
-    expect(render(PremiumSubsidy, { data: hoch, onUpdateData: () => {} })).toBe(render(PremiumSubsidy, { data: tief, onUpdateData: () => {} }));
+    // Die Seiten-Zeichen nummerieren ihre Masken je Stelle (Icon-Plan, Bauplan B4) — die Nummer zählt hier nicht.
+    const ohneMaskenNummer = (html) => html.replace(/(abz|leitform)\d+/g, '$1');
+    expect(ohneMaskenNummer(render(PremiumSubsidy, { data: hoch, onUpdateData: () => {} })))
+      .toBe(ohneMaskenNummer(render(PremiumSubsidy, { data: tief, onUpdateData: () => {} })));
     expect(calculateMonthlyBudget(hoch, t).recommendations.map((r) => r.text)).toContain('budget.ipvHintOhneBetrag');
     const ipvZeile = (d) => render(Schnellcheck, { data: { ...d, finanzen: { ...d.finanzen, incomeType: 'netto' } } }).includes('schnellcheck.ipvOhneBetragNote');
     expect(ipvZeile(hoch)).toBe(true);
