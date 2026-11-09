@@ -141,6 +141,9 @@ export const haushaltsSaldo = (allData, kapitelBleibt) => {
 export const ankunftZeigen = (vorher, jetzt, schonGesehen) =>
   !schonGesehen && vorher.key === jetzt.key && vorher.anzahl === 0 && jetzt.anzahl > 0;
 
+// «Weitere Bereiche»: offen, sobald einer Daten trägt; sonst wie zuletzt in diesem Kapitel.
+export const weitereBereicheAnfang = (hatDaten, gespeichert) => hatDaten || gespeichert === 'true';
+
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen, chapters, onSelectChapter, lang, onEnterSandbox }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
@@ -189,10 +192,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   }, [chapter.key]);
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => feldHatWert(data, f.k));
   const storageKey = 'or5_disclosure_' + chapter.key;
-  const [showSecondary, setShowSecondary] = useState(() => {
-    if (secondaryHasData) return true;
-    try { return localStorage.getItem(storageKey) === 'true'; } catch { return false; }
-  });
+  const gespeicherteWahl = () => { try { return localStorage.getItem(storageKey); } catch { return null; } };
+  const [showSecondary, setShowSecondary] = useState(() => weitereBereicheAnfang(secondaryHasData, gespeicherteWahl()));
+  // Kapitelwechsel ohne Neuaufbau: der Startwert gilt fürs neue Kapitel neu (Bugsuche B-15).
+  useEffect(() => { setShowSecondary(weitereBereicheAnfang(secondaryHasData, gespeicherteWahl())); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
   const toggleSecondary = () => {
     const next = !showSecondary;
     setShowSecondary(next);
