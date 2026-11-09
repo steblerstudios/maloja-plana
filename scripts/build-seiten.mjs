@@ -159,7 +159,10 @@ const stil = `
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }`;
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }`;
 
 // Der Hinweis über dem Titel hängt an der FREIGABE, nicht daran, ob ein Text
 // in RAHMEN steht (Befund Rechtsprüfung 05.11.2026):
@@ -230,7 +233,7 @@ function seiteBauen(seite, sprache) {
       Object.keys(WEGE).map((weg) => {
         const liste = KANTONSSEITEN.filter((k) => k.weg === weg);
         if (!liste.length) return '';
-        return `\n        <h3>${esc(WEGE[weg].label)}</h3>\n        <ul class="weiter">\n` +
+        return `\n        <h3>${esc(WEGE[weg].label)}</h3>\n        <ul class="weiter kantone">\n` +
           liste.map((k) => `          <li><a href="/${k.pfad}/">${esc(k.brotkrume)}</a></li>`).join('\n') +
           `\n        </ul>`;
       }).join('')
