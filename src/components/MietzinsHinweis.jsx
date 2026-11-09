@@ -8,7 +8,11 @@ import { ExternerLink } from './ExternerLink.jsx';
 // (prüfen). Nie ein falsches „gibt's nicht" — würdevoll, keine falsche Hoffnung.
 // `ohneTitel`: steht der Hinweis in einer Aufklapp-Zeile, die schon «Mietzinsbeiträge» heisst
 // (Umzug, Fassung 5), fallen Titel und Trennlinie weg.
-export const MietzinsHinweis = ({ palette, t, canton, ohneTitel = false }) => {
+// `gespeicherteAdresse` (Umzug, Kapitel 2 W6, 09.11.2026): der Kanton kommt aus der gespeicherten Postleitzahl —
+// vor dem Umzug ist das die ALTE Adresse. Dann sagt der Hinweis, für welche Adresse er gilt.
+// W7: «hat ein Programm» heisst nicht «gilt für alle» — in BL, ZG und GE steht die Einschränkung dabei.
+const MIT_EINSCHRAENKUNG = ['BL', 'ZG', 'GE'];
+export const MietzinsHinweis = ({ palette, t, canton, ohneTitel = false, gespeicherteAdresse = false }) => {
   if (!canton) return null;
   const info = getMietzinsbeitraege(canton);
 
@@ -32,7 +36,9 @@ export const MietzinsHinweis = ({ palette, t, canton, ohneTitel = false }) => {
     },
   },
     !ohneTitel && React.createElement('span', { style: { fontWeight: weight.semi, color: palette.text } }, t('mietzins.title') + ' '),
+    gespeicherteAdresse && React.createElement('span', null, t('mietzins.gespeicherteAdresse', { kanton: t('cantons.' + canton) }) + ' '),
     React.createElement('span', null, body.msg + ' '),
+    info.state === 'has' && MIT_EINSCHRAENKUNG.includes(canton) && React.createElement('span', null, t('mietzins.einschraenkung_' + canton) + ' '),
     body.label && link(body.label),
   );
 };
