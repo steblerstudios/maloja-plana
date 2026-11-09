@@ -1,0 +1,61 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Kapitel 1 Basis</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--line:#e5e0d6;--gold:#B08A3E;--rot:#C0392B;--gruen:#5A7868}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a18;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--line:#44423d;--gold:#D6B46A;--gruen:#8DB09B}}
+body{font:15px/1.5 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:980px}
+h1{font-size:21px;margin:0 0 6px}h2{font-size:18px;margin:34px 0 8px}p{margin:4px 0 10px}.leise{color:var(--soft)}
+.paar{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:760px}
+.bild{position:relative}.bild img{width:100%;display:block;border-radius:12px}
+.kasten{position:absolute;border:3px solid var(--rot);border-radius:8px}
+.kasten b{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:var(--rot);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+.erkl{background:var(--card);border-radius:10px;padding:12px 14px;margin:12px 0}
+.erkl .l{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--rot);color:#fff;align-items:center;justify-content:center;margin-right:6px;font-weight:600}
+.emp{border-left:4px solid var(--gold)}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;overflow:hidden;font-size:14px}
+td,th{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+code{font-size:13px}
+</style>
+<h1>Kapitel 1 · Persönliche Basis</h1>
+<p class=leise>Durchgang 09.11.2026 auf dem Stand der Zweige #770/#771, Beispiel-Modus, Handy-Breite 375 px. Neun Seiten: Kapitelseite, 18 werden, Digitale Ordnung, Heirat, Kind, Adoption, Trennung, Todesfall, EO-Rechner. Je Seite gemessen (Breite, Schrift, Tippflächen, Überschriften, Feldnamen), dazu Fachprüfung und Textprüfung. Gebaut ist nichts.</p>
+<p><b>Gut:</b> keine Seite zu breit, kein Feld ohne Namen, keine Schrift unter 13 px mehr (ausser einem Zeichen, siehe unten). Der EO-Rechner rechnet richtig. Der Ton ist ruhig; der Einstieg bei Trennung und Todesfall («ohne Druck», «nicht allein tragen») gelingt.</p>
+
+<h2>Gestaltung: drei Stellen, mit Buchstaben</h2>
+<div class=paar>
+ <div><b>«18 werden» (ein Ablauf)</b><div class=bild><img src="kapitel-1/volljaehrig.jpg" alt="Ablauf 18 werden, oberer Teil">
+  <div class=kasten style="left:4%;top:27.5%;width:92%;height:8.4%"><b>A</b></div>
+  <div class=kasten style="left:12%;top:65%;width:78%;height:24.5%"><b>B</b></div></div></div>
+ <div><b>Kapitelseite Persönliche Basis</b><div class=bild><img src="kapitel-1/kapitelseite.jpg" alt="Kapitelseite Persönliche Basis">
+  <div class=kasten style="left:4%;top:69.5%;width:58%;height:6.2%"><b>C</b></div></div></div>
+</div>
+
+<div class="erkl emp"><span class=l>A</span><b>Die Pfad-Pille bricht um.</b> In jedem Ablauf steht «Übersicht › Persönliche Basis › 18 werden — was sich ändert». Auf dem Handy rutscht der dritte Teil auf eine zweite Zeile, und die runde Pille wird zu einem ungleichen Kasten. Der dritte Teil steht ohnehin gleich darunter als grosser Titel.<br><b>Empfehlung:</b> In Abläufen nur «Übersicht › Persönliche Basis» zeigen. Die aktuelle Seite bleibt für Screenreader als unsichtbarer Teil der Pille drin (<code>aria-current</code>). Regel: nichts doppelt zeigen, was einen Fingerbreit darunter schon steht.</div>
+
+<div class="erkl emp"><span class=l>B</span><b>Der Weg nimmt ein Viertel des Bildschirms ein, bevor der erste Schritt kommt.</b> Die gewundene Strasse mit den Punkten 1–5 ist das Zeichen der Abläufe und bleibt. Auf dem Handy ist sie aber so hoch, dass «Schritt 1» erst nach dem Scrollen sichtbar wird.<br><b>Empfehlung:</b> Auf schmalen Bildschirmen den Weg halb so hoch zeichnen (flachere Kurven). So steht «Schritt 1» mit seinem Titel im ersten Bild. Am Computer bleibt er, wie er ist.</div>
+
+<div class="erkl emp"><span class=l>C</span><b>Knöpfe und Felder in Arial.</b> «Angaben» und «Dokumente» sind nicht in der Maloja-Schrift Lexend gesetzt, sondern in Arial. Das ist kein Einzelfall: Gemessen auf zehn Seiten trifft es die Kapitel-Knöpfe der Übersicht, die Felder des Steuerrechners und viele andere. Ursache: Browser geben Knöpfen und Feldern ihre eigene Schrift, und im Grundstil fehlt die eine Zeile, die das aufhebt.<br><b>Empfehlung:</b> Eine Zeile im Grundstil (<code>button, input, select, textarea { font-family: inherit }</code>) und ein Test, der es bewacht. Wirkt auf die ganze App.</div>
+
+<h2>Inhalt: was fachlich fehlt</h2>
+<p>Was dasteht, stimmt fast überall. Die Risiken liegen in fehlenden Voraussetzungen: Wer sich darauf verlässt, rechnet sich einen Anspruch aus, den es nicht gibt. Geprüft vom swiss-precision-pruefer gegen den Gesetzeswortlaut, ohne Netz; vor dem Bau liest der rechts-pruefer jeden neuen Satz am Volltext.</p>
+<table><thead><tr><th>#</th><th>Seite</th><th>Was fehlt oder ungenau ist</th><th>Beleg</th></tr></thead><tbody>
+<tr><td>F1</td><td>Kind</td><td>Mutterschafts-Entschädigung: die dritte Bedingung fehlt — am Tag der Geburt angestellt, selbständig oder arbeitslos mit Taggeld.</td><td>EOG Art. 16b Abs. 1 Bst. c</td></tr>
+<tr><td>F2</td><td>EO-Rechner</td><td>«Voraussetzung: mind. 5 Monate erwerbstätig» — es fehlen die 9 Monate AHV-Versicherung und die Bedingung am Tag der Geburt. Bei der Vaterschaft fehlen die Bedingungen ganz.</td><td>EOG Art. 16b, 16i</td></tr>
+<tr><td>F3</td><td>Trennung</td><td>Bevorschussung und Inkassohilfe setzen ein Urteil oder einen behördlich genehmigten Unterhaltsvertrag voraus, nicht eine formlose Abmachung. Zuständig ist je nach Kanton nicht die Gemeinde.</td><td>ZGB Art. 290, 293 Abs. 2; InkHV</td></tr>
+<tr><td>F4</td><td>Todesfall</td><td>Die Frist von 3 Monaten stimmt. Es fehlt die Falle davor: Wer sich in den Nachlass einmischt (Konto leeren, Schulden aus dem Nachlass zahlen), verliert das Recht auszuschlagen.</td><td>ZGB Art. 571 Abs. 2</td></tr>
+<tr><td>F5–F9</td><td>Trennung, Heirat, 18, Kind, Digitale Ordnung</td><td>Kleiner: bei Kindern entscheidet das Gericht, nicht die KESB · gemeinsamer Name = Ledigname einer Person · «keine Franchise für Kinder» → keine ordentliche · zwei falsche Artikelnummern (KVG Art. 5 statt 3, DSG Art. 25 statt 26).</td><td>ZGB 160, 176, 279 · KVG 5, 64 · DSG 25</td></tr>
+</tbody></table>
+
+<h2>Sprache</h2>
+<table><thead><tr><th>#</th><th>Befund</th><th>Empfehlung</th></tr></thead><tbody>
+<tr><td>T1</td><td>In der Du-Fassung wechseln «du» und «ihr» auf derselben Seite (Todesfall: «du musst», dann «Fragt, lasst euch»). Dasselbe bei Heirat und Trennung, auch in fr/it/rm.</td><td>Durchgehend <b>du</b> (Singular): vor der App sitzt eine Person.</td></tr>
+<tr><td>T2</td><td>Italienisch: Bei Heirat und Trennung sind Sie- und Du-Fassung wörtlich gleich, und zwar in der Mehrzahl («Potete»).</td><td>Sie-Fassung mit «Lei», Du-Fassung mit «tu».</td></tr>
+<tr><td>T3</td><td>«18 werden»: Gesetzesangaben mitten im Satz («ZGB Art. 19 Abs. 1 und 2») und unerklärte Kürzel (KKG, KVV, StHG, BPR, MG). Für 18-Jährige schwer.</td><td>Je Schritt Alltagssprache; Artikel in die Quellen-Zeile.</td></tr>
+<tr><td>T4</td><td>Generisches Maskulin: «für Schweizer: der Dienst», «eingetragene Partner», «Vermieter», fr «un médecin», it «cittadini stranieri».</td><td>«für Schweizer Männer: die Stellungspflicht», «Personen in eingetragener Partnerschaft», «Vermieterin oder Vermieter» usw.</td></tr>
+<tr><td>T5</td><td>Feld Pronomen: «they (neutral)» steht auf Englisch, «sie» klein ist nicht von «Sie» zu unterscheiden.</td><td>«sie / ihr», «er / sein», «keine Pronomen (nur Vorname)», «Keine Angabe».</td></tr>
+<tr><td>T6</td><td>BACS, EDÖB, Eheschutzverfahren, Alimentenbevorschussung stehen ohne Erklärung.</td><td>Beim ersten Vorkommen ein kurzer Klammersatz.</td></tr>
+<tr><td>—</td><td>Rätoromanisch: «18 werden», «Adoption», «Digitale Ordnung» stehen noch auf Deutsch.</td><td>Nicht Teil dieses Durchgangs: Rumantsch ist bewusst vertagt (Entscheid 21.09.).</td></tr>
+</tbody></table>
+
+<h2>Kleinkram, ohne Entscheid</h2>
+<p>Quellen-Links bei Digitale Ordnung und EO sind 17–19 px hoch (in Listen, nicht im Satz) → auf 44 px Tippfläche bringen · Post-Link führt auf die englische Seite · Feld Zivilstand «Konkubinat» ist kein amtlicher Zivilstand → in Briefen nicht so ausgeben · das kleine ⓘ bei «IPV» in der Fusszeile hat 9 px.</p>
+
+<h2>Was ich vorschlage</h2>
+<p>Alles wie empfohlen, in zwei Zweigen: <b>Gestaltung</b> (A, B, C, Kleinkram) und <b>Inhalt</b> (F1–F9, T1–T6 in allen vier Sprachen ausser Rumantsch, jeder neue Fachsatz durch den rechts-pruefer am Volltext, bevor er als fertig gilt).</p>

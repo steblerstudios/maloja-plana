@@ -611,12 +611,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Leere. Der Bezug läuft in diesen Fällen über `aria-labelledby` auf die
     // `-label`-id, die hier in beiden Fällen gesetzt bleibt. Ohne Control ist
     // <label> ausserdem das falsche Element, deshalb <div>.
-    const renderLabel = (fieldId, labelText, hint, alsGruppenTitel) => React.createElement(alsGruppenTitel ? 'div' : 'label', { id: fieldId + '-label', htmlFor: alsGruppenTitel ? undefined : fieldId, style: labelStyle },
-      labelText,
-      // E17: empfohlen statt Pflicht — leise, ohne Stern.
-      field.recommended && React.createElement('span', { style: { fontSize: text.xs, color: palette.soft, fontWeight: weight.normal } }, '· ' + tr('naZustand.empfohlen')),
-      vorlesen?.enabled && React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid, label: tr('vorlesen.label') })
-    );
+    // Querschnitt 2 (09.11.2026): der Vorlese-Knopf steht NEBEN dem Label, nicht darin. Ein Knopf im
+    // <label> ist ungültig, der Feldname hiess sonst «Vorname Vorlesen», und ein Klick aufs Label traf ihn.
+    const renderLabel = (fieldId, labelText, hint, alsGruppenTitel) => {
+      const label = React.createElement(alsGruppenTitel ? 'div' : 'label', { id: fieldId + '-label', htmlFor: alsGruppenTitel ? undefined : fieldId, style: vorlesen?.enabled ? { ...labelStyle, marginBottom: 0 } : labelStyle },
+        labelText,
+        // E17: empfohlen statt Pflicht — leise, ohne Stern.
+        field.recommended && React.createElement('span', { style: { fontSize: text.xs, color: palette.soft, fontWeight: weight.normal } }, '· ' + tr('naZustand.empfohlen'))
+      );
+      if (!vorlesen?.enabled) return label;
+      return React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '4px', marginBottom: labelStyle.marginBottom } },
+        label,
+        React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid, label: tr('vorlesen.label') })
+      );
+    };
 
     const inputStyle = {
       width: '100%',

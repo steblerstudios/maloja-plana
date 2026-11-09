@@ -22,7 +22,7 @@
 //   • Befunde (E3) als eigener Abschnitt, nur belegte (siehe BEFUNDE_ABSCHNITT).
 //
 // Regeln aus dem Atlas-Entscheid vom 24.10.2026: keine Rangliste, keine
-// Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler
+// Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler (im dunklen Modus: heller)
 // heisst «höhere Zahl», nicht «besser» oder «schlechter».
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -80,7 +80,7 @@ function karte(ctx, key, { legende, nachher = '' }) {
   const titel = `Karte: ${E.titel}`;
   const tiefK = KANTONE.find((k) => E.wert(k) === spannen[0].min);
   const hochK = KANTONE.find((k) => E.wert(k) === spannen[spannen.length - 1].max);
-  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von hell (tiefere Zahl) bis dunkel (höhere Zahl). Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
+  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
   const svg = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
@@ -91,7 +91,7 @@ function karte(ctx, key, { legende, nachher = '' }) {
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
-            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', hell' : i === spannen.length - 1 ? ', dunkel' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
+            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', tiefste Zahlen' : i === spannen.length - 1 ? ', höchste Zahlen' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
             ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
           <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
@@ -105,12 +105,27 @@ const werteTabelle = (tab, text) => `
           <summary>${text}</summary>${BLOECKE_VERGLEICH[`TAB:${tab}`]()}
         </details>`;
 
+// Legenden der Karten, die auch die App zeigt (scripts/app-verstehen.mjs, 09.11.2026): eine Quelle für
+// Jahr, Rahmung und Belege, damit Seite und App nie Verschiedenes sagen.
+export const LEGENDE = {
+  praemie: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+  lastNachIpv: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+};
+
+// Stufenfarben (Heidelbeere), hell und dunkel. Im dunklen Modus ist die höchste Stufe die hellste.
+// Auch die App liest sie (über scripts/app-verstehen.mjs), nicht von Hand kopiert.
+export const STUFEN_FARBEN = {
+  hell: { 1: '#D3DEE9', 2: '#B3C4D6', 3: '#6787A5', 4: '#3D5A76', see: '#F2F2F0' },
+  dunkel: { 1: '#2E3742', 2: '#4A6380', 3: '#86A6C2', 4: '#C6D6E5', see: '#22211F' },
+};
+const cssStufen = (f) => `--k1:${f[1]}; --k2:${f[2]}; --k3:${f[3]}; --k4:${f[4]}; --k-see:${f.see}`;
+
 const BLOECKE_ATLAS = {
   'FIG:praemie': (ctx) => karte(ctx, 'praemie', {
-    legende: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+    legende: LEGENDE.praemie,
     nachher: werteTabelle('vpraemie', 'Prämie je Kanton als Tabelle') }),
   'FIG:lastnachipv': (ctx) => karte(ctx, 'lastNachIpv', {
-    legende: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+    legende: LEGENDE.lastNachIpv,
     nachher: werteTabelle('vlast', 'Prämienlast vor und nach Verbilligung als Tabelle') }),
   'FIG:steuer': (ctx) => karte(ctx, 'steuer', {
     legende: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
@@ -232,8 +247,8 @@ export const KANTONSATLAS = {
       id: 'lesen',
       titel: '1. Wie die Karten zu lesen sind',
       html: `
-        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren. Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
-        <p class="merke"><strong>Kurz gesagt:</strong> Dunkel heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
+        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. <span class="nur-hell">Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren.</span><span class="nur-dunkel">Im dunklen Modus sind die Kantone mit den tieferen Zahlen dunkel, die mit den höheren hell.</span> Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
+        <p class="merke"><strong>Kurz gesagt:</strong> <span class="nur-hell">Dunkel</span><span class="nur-dunkel">Hell</span> heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>`,
     },
     BRILLEN_ABSCHNITT,
@@ -317,9 +332,13 @@ export const KANTONSATLAS = {
   // Kartengrundlage: die gehört zu allen Karten und steht im ersten Abschnitt.
   stilZusatz: `
     /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
-    :root{ --k1:#D3DEE9; --k2:#B3C4D6; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
+    :root{ ${cssStufen(STUFEN_FARBEN.hell)} }
+    /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
+       damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
+    .nur-dunkel{ display:none }
+    @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
-      :root{ --k1:#2E3742; --k2:#4A6380; --k3:#86A6C2; --k4:#C6D6E5; --k-see:#22211F }
+      :root{ ${cssStufen(STUFEN_FARBEN.dunkel)} }
     }
     .atlas .abb-bild svg{ max-height:420px }
     .atlas svg use{ stroke:var(--leise); stroke-width:.6 }

@@ -2,7 +2,8 @@
 // Quellen: BAG KVG Art. 25–31, KLV, TARDOC/Tarmed, santésuisse
 export const KVG_DATA_VERSION = '2026-06';
 
-// Franchise-Stufen (KVG Art. 64)
+// Franchise-Stufen: ordentliche Franchise KVV Art. 103 Abs. 1 (300), wählbare Stufen KVV Art. 93
+// (Erwachsene 500–2500, Kinder 100–600); Kostenbeteiligung selbst: KVG Art. 64.
 export const FRANCHISE_STUFEN = [300, 500, 1000, 1500, 2000, 2500];
 export const FRANCHISE_KINDER = [0, 100, 200, 300, 400, 500, 600];
 export const SELBSTBEHALT_RATE = 0.10;

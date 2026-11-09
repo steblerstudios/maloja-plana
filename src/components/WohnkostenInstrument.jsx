@@ -108,7 +108,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
 
     // Regional-Barometer, wie in der Finanz-Auswertung. Folgt dem Regler.
     vergleich && React.createElement(React.Fragment, null,
-      React.createElement('h4', { style: kapH }, t('po.regionalCompare.rent.title')),
+      React.createElement('h3', { style: kapH }, t('po.regionalCompare.rent.title')),
       React.createElement(RegionalBarometer, {
         palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell, imKapitel: true,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,

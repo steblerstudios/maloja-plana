@@ -43,6 +43,8 @@ mit `anzahl`/`waehle` der Figur).
 `docs/legal/third-party-licenses.md` eingetragen. Die CSS-Regeln für die Strichklassen in
 `scripts/build-seiten.mjs` sind daran angelehnt.
 
+
+**Auch in der App (seit 09.11.2026, Variante D):** `scripts/app-verstehen.mjs` schreibt das Standbild `krankenkasse-kostenteil.svg` mit Titel, Beschreibung, Legende und Quelle (über `standbildSvg` und `kostenteilAngaben`) nach `src/data/erklaerfiguren.js`. Die Prämien-Orientierung klappt es als «Im Bild erklärt» auf, die bewegte Fassung bleibt ein Link. Nach einem neuen Abgriff: `node scripts/app-verstehen.mjs`.
 ---
 
 # Standbilder für die Hintergrundseite /politsystem/ (seit 05.11.2026)
