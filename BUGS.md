@@ -89,7 +89,8 @@ Datei; dafür hat das Studio einen eigenen Weg.
 
 **Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
 Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — **nicht gemergt, nicht
-live**. B-11 bis B-16 sind offen. Den Bereich Rechner/Fachlogik hat die Suche nicht geprüft.
+live**. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
+zuerst. **Offen bleiben B-11 und B-16.** Den Bereich Rechner/Fachlogik hat die Suche nicht geprüft.
 
 - 2026-11-09 · **B-7** · **Dokument-Datei galt als gespeichert, bevor sie es war.**
   `idb.save` (`src/utils/storage.js`) löste bei `req.onsuccess` auf. Bei vollem Speicher bricht
@@ -112,15 +113,22 @@ live**. B-11 bis B-16 sind offen. Den Bereich Rechner/Fachlogik hat die Suche ni
 - 2026-11-09 · **B-11** · **Wiederherstellen kann halb gelingen.** `applyBackup`
   (`utils/backupCrypto.js`) schreibt `or5_data` zuerst; scheitert danach eine Datei am Speicher,
   sind die Angaben ersetzt, die Dokumente alt — die Meldung sagt nur «fehlgeschlagen».
-- 2026-11-09 · **B-12** · **Merkliste meldet «gespeichert» auch bei vollem Speicher.**
-  `addTodo` (`utils/merkliste.js`) wertet die Rückgabe von `saveTodos` nicht aus.
-- 2026-11-09 · **B-13** · **Ankunfts-Satz bleibt stehen.** `ChapterView.jsx`, Effekt um
-  `prevFilledRef`: zweites Feld innerhalb von 6 s → Timer gelöscht, Satz bleibt, wandert beim
-  Kapitelwechsel mit (`ankunft.<nächstes Kapitel>`).
-- 2026-11-09 · **B-14** · **Ort fehlt vor dem Datum** in Fristerstreckung Steuern, Kassenwechsel
-  und KK-Reklamation (`briefGenerator.js`: Felder ohne `city`, Reklamation nur `dateStr`).
-- 2026-11-09 · **B-15** · **«Weitere Bereiche» übernimmt den Zustand des vorigen Kapitels**
-  (`ChapterView.jsx`, `showSecondary` nur beim ersten Aufbau gelesen). Gleiche Ursache wie B-10/B-13.
+- 2026-11-09 · **B-12** · **Merkliste meldete «gespeichert» auch bei vollem Speicher.**
+  `addTodo` (`utils/merkliste.js`) wertete die Rückgabe von `saveTodos` nicht aus. Fix: Rückgabe
+  `null` bei Fehlschlag, wie `addReminder`. Test `merklisteSpeicherVoll.test.js`. *Behoben (Zweig).*
+  Eine eigene Fehlermeldung am Knopf fehlt weiter (bräuchte Texte in 5 Sprachen) — der Knopf
+  bleibt dann einfach ohne Häkchen, wie beim Kalender.
+- 2026-11-09 · **B-13** · **Ankunfts-Satz blieb stehen.** `ChapterView.jsx`, Effekt um
+  `prevFilledRef`: zweites Feld innerhalb von 6 s → Timer gelöscht, Satz blieb, wanderte beim
+  Kapitelwechsel mit. Fix: `ankunftZeigen()`, Timer an `showAnkunft`, Kapitelwechsel blendet aus.
+  Test `ankunftSatz.test.js`. *Behoben (Zweig).*
+- 2026-11-09 · **B-14** · **Ort fehlte vor dem Datum** in Fristerstreckung Steuern, Kassenwechsel
+  und KK-Reklamation (`briefGenerator.js`). Fix: `city` aus «Wohnen». Test
+  `briefOrtVorDatum.test.js`. *Behoben (Zweig).*
+- 2026-11-09 · **B-15** · **«Weitere Bereiche» übernahm den Zustand des vorigen Kapitels**
+  (`ChapterView.jsx`, `showSecondary` nur beim ersten Aufbau gelesen). Fix: Effekt auf
+  `chapter.key` mit `weitereBereicheAnfang()`. Test `weitereBereicheJeKapitel.test.js`.
+  *Behoben (Zweig).*
 - 2026-11-09 · **B-16** · Klein: `.ics` faltet Zeilen über 75 Byte nicht (`utils/icsExport.js`),
   gedruckte Briefe und Dossiers tragen immer `lang="de"`.
 
