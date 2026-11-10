@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de" data-platzhalter="uebergang">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!--
+    PLATZHALTER für die Wurzel (Plan «App nach /app/», PR 2). Er leitet nur in die App
+    weiter. PR 3 ersetzt ihn durch die Vorstellungsseite.
+    🛑 Darf nicht live: deploy.sh bricht ohne --stage ab, solange dist/index.html
+    data-platzhalter="uebergang" trägt. Sonst stünde auf malojaplana.ch nur noch eine
+    Weiterleitung auf eine nicht indexierte App.
+  -->
+  <script src="/weiterleitung.js"></script>
+  <title>Maloja Plana — Schweizer Lebensordner</title>
+  <meta name="description" content="Maloja Plana — Schweizer Lebensordner. Steuerrechner, Sozialhilfe, IPV, Notfallkarte — lokal gespeichert, offline-fähig, kostenlos.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://malojaplana.ch/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Maloja Plana — Schweizer Lebensordner">
+  <meta property="og:description" content="Steuerrechner, Sozialhilfe, IPV, Notfallkarte — alles an einem Ort. Lokal gespeichert, offline-fähig, kostenlos.">
+  <meta property="og:url" content="https://malojaplana.ch/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "@id": "https://malojaplana.ch/#org", "name": "Stebler Studios", "url": "https://malojaplana.ch/", "email": "info@malojaplana.ch" },
+      { "@type": "WebSite", "@id": "https://malojaplana.ch/#website", "name": "Maloja Plana", "url": "https://malojaplana.ch/", "publisher": { "@id": "https://malojaplana.ch/#org" } },
+      { "@type": "WebApplication", "@id": "https://malojaplana.ch/#app", "name": "Maloja Plana", "url": "https://malojaplana.ch/app/", "applicationCategory": "LifestyleApplication", "operatingSystem": "Web", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CHF" }, "isPartOf": { "@id": "https://malojaplana.ch/#website" } }
+    ]
+  }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; font: 18px/1.5 system-ui, sans-serif; background: #F5F2EE; color: #2B2A28; }
+    @media (prefers-color-scheme: dark) { body { background: #1C1B1A; color: #EDE9E3; } a { color: #E2C98F; } }
+    main { max-width: 34rem; margin: 18vh auto 0; padding: 0 16px; }
+    a { color: #7A5B1F; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Maloja Plana</h1>
+    <p>Maloja Plana öffnet sich unter einer neuen Adresse.</p>
+    <p><a href="/app/">Maloja Plana öffnen</a></p>
+  </main>
+</body>
+</html>

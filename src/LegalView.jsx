@@ -185,7 +185,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
           style: { display: 'inline-block', marginTop: space.xs },
         },
           React.createElement('img', {
-            src: '/green-hosting-badge.png',
+            src: (import.meta.env.BASE_URL || '/') + 'green-hosting-badge.png',
             alt: t('greenHostingFooter'),
             width: 200, height: 95,
             loading: 'lazy',

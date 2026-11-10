@@ -44,6 +44,19 @@ need "og:url"                       'property="og:url"'
 need "JSON-LD (structured data)"    'application/ld\+json'
 
 # robots.txt / sitemap.xml als Dateien im Deploy-Ordner
+# App unter /app/ (Plan «App nach /app/», PR 2): nicht indexiert, eigener canonical,
+# eigener Service Worker; auf der Wurzel nur der Abschieds-SW.
+APP_HTML="$DIR/app/index.html"
+if [ -f "$APP_HTML" ]; then
+  if grep -q 'name="robots" content="noindex' "$APP_HTML"; then echo "  ✓ App /app/ trägt noindex"; else echo "  ✗ App /app/ ohne noindex"; fail=$((fail + 1)); fi
+  if grep -q 'rel="canonical" href="https://malojaplana.ch/app/"' "$APP_HTML"; then echo "  ✓ App /app/ mit eigenem canonical"; else echo "  ✗ App /app/ ohne canonical auf /app/"; fail=$((fail + 1)); fi
+  if [ -f "$DIR/app/sw.js" ] && grep -q 'registration.scope' "$DIR/app/sw.js"; then echo "  ✓ App-Service-Worker unter /app/sw.js"; else echo "  ✗ /app/sw.js fehlt"; fail=$((fail + 1)); fi
+  if [ -f "$DIR/sw.js" ] && grep -q 'unregister' "$DIR/sw.js"; then echo "  ✓ /sw.js ist der Abschieds-Service-Worker"; else echo "  ✗ /sw.js ist nicht der Abschieds-Service-Worker"; fail=$((fail + 1)); fi
+  if grep -q '<loc>https://malojaplana.ch/app/' "$DIR/sitemap.xml" 2>/dev/null; then echo "  ✗ /app/ steht in der sitemap.xml"; fail=$((fail + 1)); fi
+else
+  echo "  ✗ $APP_HTML fehlt — die App gehört seit PR 2 nach dist/app/"; fail=$((fail + 1))
+fi
+
 if [ -f "$DIR/robots.txt" ]; then echo "  ✓ robots.txt vorhanden"; else echo "  ✗ robots.txt fehlt"; fail=$((fail + 1)); fi
 if [ -f "$DIR/sitemap.xml" ]; then echo "  ✓ sitemap.xml vorhanden"; else echo "  ✗ sitemap.xml fehlt"; fail=$((fail + 1)); fi
 
