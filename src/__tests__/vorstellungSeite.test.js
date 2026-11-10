@@ -26,9 +26,9 @@ describe('Vorstellungsseite: Kopf und Suchmaschinen', () => {
     expect(app.url).toBe('https://malojaplana.ch/app/');
   });
 
-  it('genau ein Skript, das eigene /weiterleitung.js — und die CSP erlaubt nur eigene', () => {
+  it('nur eigene Skripte: /weiterleitung.js und /reise.js (Die Reise, 10.11.2026) — und die CSP erlaubt nur eigene', () => {
     const skripte = [...html.matchAll(/<script([^>]*)>/g)].map((m) => m[1]).filter((a) => !a.includes('ld+json'));
-    expect(skripte).toEqual([' src="/weiterleitung.js"']);
+    expect(skripte).toEqual([' src="/weiterleitung.js"', ' src="/reise.js" defer']);
     expect(html).toMatch(/content="default-src 'none'; script-src 'self';/);
     expect(html).not.toMatch(/https?:\/\/(?!malojaplana\.ch|www\.gnu\.org|github\.com|schema\.org)/);
   });

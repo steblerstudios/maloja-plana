@@ -35,7 +35,7 @@ describe('Build: Website und App getrennt zusammenstellen', () => {
     baum(pub, PUBLIC);
     // Vite kopiert ganz public/ in den App-Ordner — genau das räumt zusammenstellen auf.
     baum(path.join(ziel, 'app'), { ...PUBLIC, 'index.html': 'app', 'assets/index-x.js': 'js' });
-    baum(web, { 'index.html': 'platzhalter', 'weiterleitung.js': 'w', 'sw-abschied.js': 'abschied' });
+    baum(web, { 'index.html': 'platzhalter', 'weiterleitung.js': 'w', 'reise.js': 'r', 'sw-abschied.js': 'abschied' });
     zusammenstellen({ publicOrdner: pub, websiteOrdner: web, ziel });
     const da = (p) => fs.existsSync(path.join(ziel, p));
     return { ziel, da, lies: (p) => fs.readFileSync(path.join(ziel, p), 'utf8') };
@@ -52,7 +52,7 @@ describe('Build: Website und App getrennt zusammenstellen', () => {
 
   it('auf der Wurzel steht die Website, ohne zweiten App-Service-Worker und ohne App-Manifest', () => {
     const { da, lies: l } = aufbauen();
-    for (const p of ['krankenkasse/index.html', 'robots.txt', 'sitemap.xml', '404.html', 'fonts/a.woff2', 'weiterleitung.js']) {
+    for (const p of ['krankenkasse/index.html', 'robots.txt', 'sitemap.xml', '404.html', 'fonts/a.woff2', 'weiterleitung.js', 'reise.js']) {
       expect(da(p), p).toBe(true);
     }
     expect(l('index.html')).toBe('platzhalter');

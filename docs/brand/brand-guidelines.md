@@ -303,6 +303,21 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
 
 ---
 
+### 7e. Die Reise auf der Startseite — Kehren, Wanderstock, Stocknägel *(Entwurf 10.11.2026)*
+
+Der Abschnitt «Ein Weg, Kehre für Kehre» auf malojaplana.ch/ (`scripts/seiten/vorstellung.mjs`, `website/reise.js`).
+Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur Prinzipien, keine fremden Bilder oder Code.
+
+| Regel | Wie |
+|---|---|
+| **Bühne** | gemaltes Bild des Malojapasses (Serpentinen vom Bergell hinauf), randlos, klebt beim Scrollen. Zurzeit KI-gemalt und so beschriftet; später echte Malerei |
+| **Kehre = Kapitel** | sieben Kehren in der Reihenfolge der App (`CHAPTER_KEYS`), Kapitelfarben aus `lebensbereiche.js` |
+| **Sammelobjekt** | Wanderstock; je erreichter Kehre ein **Stocknagel** (Schild in der Kapitelfarbe). Schweizer Brauch statt Brandstempel. Rückfall: Wanderpass |
+| **Zahl** | grosse Kehren-Zahl 01–07 weiss auf dem Bild, `aria-hidden`; die Information steht als Text «Kehre n von 7» |
+| **Weglinie** | dünne weisse Schlangenlinie links, Punkt der aktuellen Kehre in Gold |
+| **Bewegung** | Bild wandert vom Tal zum Pass, Nagel «schlägt an» (0,55 s) — nur ohne «weniger Bewegung»; ohne Skript sind alle Nägel da |
+| **Kein Zwang** | Nägel sind Zeichen, keine Punkte; nichts wird gespeichert |
+
 ## 8. Calm-UX-Prinzipien
 
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;

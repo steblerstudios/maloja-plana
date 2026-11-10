@@ -51,7 +51,6 @@ const CSP = "default-src 'none'; script-src 'self'; img-src 'self' data:; style-
 
 const MARKE = '<svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="#7E9F8C"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="#C4A870"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="#7E9F8C"/></svg>';
 
-const WEG = 'M50 0 C50 25 42 25 42 50 C42 100 58 100 58 150 C58 200 42 200 42 250 C42 300 58 300 58 350 C58 400 42 400 42 450 C42 500 58 500 58 550 C58 600 42 600 42 650 C42 675 50 675 50 700';
 
 const STIL = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
@@ -172,36 +171,52 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     #l${i + 1}:checked ~ .chips [for=l${i + 1}]::before{ content:"✓ " / "" }
     #l${i + 1}:focus-visible ~ .chips [for=l${i + 1}]{ outline:2px solid var(--salbei-tief); outline-offset:3px }`).join('\n')}
 
-    /* ─── Der Weg über den Pass: sieben Lebensbereiche als Stationen ─ */
-    .weg{ position:relative; height:1120px; margin-top:var(--abstand-m) }
-    .stationen{ list-style:none }
-    .weg svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible }
-    .weg .bahn{ fill:none; stroke:var(--strasse); stroke-width:30; stroke-linecap:round; vector-effect:non-scaling-stroke }
-    .weg .saum{ fill:none; stroke:var(--strasse-saum); stroke-width:34; stroke-linecap:round; vector-effect:non-scaling-stroke }
-    .weg .mitte{ fill:none; stroke:var(--gold); stroke-width:2; stroke-dasharray:7 9; vector-effect:non-scaling-stroke; opacity:.8 }
-    .weg .begangen{ fill:none; stroke:var(--gold); stroke-width:4; stroke-linecap:round; vector-effect:non-scaling-stroke;
-      stroke-dasharray:1; stroke-dashoffset:0 }
-    .station{ position:absolute; left:0; right:0; top:calc(var(--y) * 1%); transform:translateY(-50%) }
-    .station .punkt{ position:absolute; left:calc(var(--x) * 1%); top:50%; transform:translate(-50%,-50%);
-      width:22px; height:22px; border-radius:50%; background:var(--farbe); box-shadow:0 0 0 5px var(--bg), 0 0 0 7px var(--farbe);
-      border:2px solid color-mix(in srgb, var(--farbe) 50%, var(--text)) }  /* Rand ≥3:1 auch bei Gold (a11y 09.11.) */
-    .station .text{ position:absolute; top:50%; transform:translateY(-50%); width:38% }
-    .station.links .text{ left:0; text-align:right }
-    .station.rechts .text{ right:0 }
-    /* Kapitelfarben sind Flächenfarben; für Text mit der Schriftfarbe gemischt. 50 % statt 65 %:
-       Gold (Finanzen) kam hell mit 65 % nur auf 3,72:1, mit 50 % auf 4,94:1 (a11y-Prüfung 09.11.2026). */
-    .station .name{ display:inline-block; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    /* ─── Die Reise: Kehre für Kehre auf den Malojapass (Brand Book §7d, Entwurf 10.11.2026) ───
+       Richtung «Stationen sammeln»: ein gemaltes Passbild als Bühne, links Weglinie, rechts der
+       Wanderstock, an den je Kehre ein Stocknagel kommt. Die Bühne klebt (sticky), die Stationen
+       ziehen darüber. Ohne Skript: alles da, alle Nägel am Stock, nur ohne Mitwandern. */
+    .reise-bruecke{ position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-top:var(--abstand-m) }
+    .reise-buehne{ position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:var(--himmel) }
+    .reise-bild{ position:absolute; inset:0 }
+    .reise-bild img{ width:100%; height:100%; object-fit:cover; object-position:40% 60%; display:block;
+      transform:scale(1.22) translate(calc((0.5 - var(--f, 0.5)) * 8%), calc((var(--f, 0.5) - 0.5) * 14%)) }
+    .reise-bild::after{ content:""; position:absolute; inset:0; pointer-events:none;
+      background:linear-gradient(90deg, rgba(20,20,18,.30) 0%, rgba(20,20,18,0) 40%) }
+    .reise-linie{ position:absolute; left:clamp(16px, 4vw, 56px); top:14vh; height:62vh; width:40px; overflow:visible }
+    .reise-linie path{ fill:none; stroke:#FBFBFA; stroke-width:1.6; stroke-linecap:round; opacity:.9 }
+    .reise-linie circle{ fill:#FBFBFA }
+    .reise-linie circle.hier{ fill:var(--gold); stroke:#FBFBFA; stroke-width:2 }
+    .reise-stock{ position:absolute; right:clamp(16px, 9vw, 140px); top:6vh; height:94vh; width:auto; aspect-ratio:60/700; overflow:visible }
+    .reise-stock .holz{ fill:#C9A57A } .reise-stock .maser{ fill:none; stroke:#9C7A4E; stroke-width:1; opacity:.6 }
+    .reise-stock .riemen{ fill:#7A4A3A }
+    .nagel{ transform-box:fill-box; transform-origin:50% 50% }
+    .nagel .schild{ stroke:#FBFBFA; stroke-width:2 } .nagel .kopf{ fill:#E8E6E1; stroke:#5A5650; stroke-width:.8 }
+    .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
+    .reise-quelle{ position:absolute; right:12px; bottom:8px; font-size:12px; color:#FBFBFA; text-shadow:0 1px 3px rgba(0,0,0,.7) }
+    .reise-stationen{ list-style:none; position:relative; margin-top:-100vh; margin-top:-100svh }
+    .reise-station{ min-height:100vh; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end;
+      padding:0 clamp(16px, 4vw, 56px) 12vh calc(clamp(16px, 4vw, 56px) + 64px) }
+    .reise-zahl{ font-size:clamp(64px, 9vw, 112px); line-height:.85; font-weight:600; letter-spacing:-0.03em; color:#FBFBFA;
+      text-shadow:0 2px 14px rgba(0,0,0,.45); margin:0 0 14px 2px }
+    .reise-karte{ max-width:30rem; background:color-mix(in srgb, var(--flaeche) 92%, transparent); color:var(--text);
+      border-radius:var(--radius-m); padding:22px 24px; box-shadow:0 8px 30px rgba(0,0,0,.12) }
+    .reise-karte .name{ display:inline-block; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
       color:color-mix(in srgb, var(--farbe) 50%, var(--text)); margin-bottom:4px }
-    .station p{ color:var(--leise); font-size:15px }
-    .station h3{ font-size:20px }
-    @supports (animation-timeline: view()){
-      @media (prefers-reduced-motion: no-preference){
-        .weg .begangen{ stroke-dashoffset:1; animation:begehen linear both; animation-timeline:view(); animation-range:entry 30% exit 70% }
-        .station .text, .station .punkt{ animation:auftauchen linear both; animation-timeline:view(); animation-range:entry 10% entry 60% }
-      }
+    .reise-karte h3{ font-size:22px }
+    .reise-karte p{ color:var(--leise); font-size:16px }
+    .reise-karte a{ display:inline-block; margin-top:10px; padding:10px 0; font-weight:600; color:var(--text) }
+    @media (prefers-reduced-motion: no-preference){
+      .js .reise-bild img{ transition:transform .6s cubic-bezier(.2,.7,.2,1) }
+      .js .nagel.dran{ animation:anschlagen .55s cubic-bezier(.2,.8,.2,1) }
+      @keyframes anschlagen{ 0%{ transform:translateX(26px) rotate(-14deg) scale(1.3); opacity:0 } 70%{ transform:translateX(-2px) rotate(2deg) scale(.96); opacity:1 } 100%{ transform:none } }
     }
-    @keyframes begehen{ to{ stroke-dashoffset:0 } }
-    @keyframes auftauchen{ from{ opacity:0; translate:0 18px } to{ opacity:1; translate:0 0 } }
+    @media (prefers-reduced-motion: reduce){ .reise-bild img{ transform:scale(1.1) } }
+    @media (max-height:520px){
+      .reise-buehne{ position:relative; height:70vh }
+      .reise-stationen{ margin-top:0 }
+      .reise-station{ min-height:auto; padding:16px; background:var(--bg) }
+      .reise-zahl{ color:var(--text); text-shadow:none }
+    }
 
     /* ─── Blick in die App (Editorial) ────────────────────────────── */
     .blick{ display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; margin-top:72px }
@@ -263,15 +278,11 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .pass .buehne{ display:none }
       .tafel{ padding:24px }
       .tafel p.gross{ font-size:19px }
-      .weg{ height:auto; padding-left:52px }
-      .weg svg{ display:none }
-      .weg::before{ content:""; position:absolute; left:12px; top:0; bottom:0; width:18px; border-radius:9px;
-        background:var(--strasse); box-shadow:0 0 0 2px var(--strasse-saum) }
-      .weg::after{ content:""; position:absolute; left:20px; top:12px; bottom:12px; width:2px;
-        background:repeating-linear-gradient(var(--gold) 0 7px, transparent 7px 16px) }
-      .station{ position:relative; top:auto; transform:none; padding:18px 0 }
-      .station .punkt{ left:-31px; top:30px }
-      .station .text, .station.links .text, .station.rechts .text{ position:static; transform:none; width:auto; text-align:left }
+      .reise-stock{ right:8px; top:18vh; height:64vh }
+      .reise-linie{ display:none }
+      .reise-station{ padding:0 16px 9vh }
+      .reise-karte{ padding:18px; max-width:calc(100% - 52px) }
+      .reise-karte h3{ font-size:19px }
       .blick, .blick.umgekehrt{ grid-template-columns:1fr; gap:28px; margin-top:56px }
       .blick.umgekehrt .blick-bild{ order:0 }
       .blick .telefon{ width:220px; border-radius:40px; padding:9px }
@@ -284,15 +295,36 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function stationen() {
+// Die Reise: eine Station je Kapitel. Das Beispiel öffnet direkt im Kapitel (Index wie CHAPTER_KEYS).
+function reiseStationen() {
+  return KAPITEL.map((k, i) => `        <li class="reise-station" id="kehre-${i + 1}" style="--farbe:var(--k${i})">
+          <p class="reise-zahl" aria-hidden="true">${String(i + 1).padStart(2, '0')}</p>
+          <div class="reise-karte"><span class="name">Kehre ${i + 1} von ${KAPITEL.length} · ${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p>
+            <a href="${BEISPIEL}#/chapter/${i}">${esc(k.name)} im Beispiel ansehen</a></div></li>`).join('\n');
+}
+
+// Weglinie links: eine handgezogene Schlangenlinie, ein Punkt je Kehre (unten = Kehre 1).
+function reiseLinie() {
   const n = KAPITEL.length;
-  return KAPITEL.map((k, i) => {
-    const seite = i % 2 === 0 ? 'links' : 'rechts';
-    const x = i % 2 === 0 ? 42 : 58;
-    const y = (((i + 0.5) / n) * 100).toFixed(2);
-    return `        <li class="station ${seite}" style="--x:${x}; --y:${y}; --farbe:var(--k${i})"><span class="punkt" aria-hidden="true"></span>
-          <div class="text"><span class="name">${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p></div></li>`;
-  }).join('\n');
+  const punkte = KAPITEL.map((_, i) => `<circle cx="${i % 2 ? 26 : 14}" cy="${(100 - (i + 0.5) * (100 / n)).toFixed(2)}" r="4"/>`).join('');
+  return `<svg class="reise-linie" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M20 100 C8 92 32 86 14 78 C2 72 34 64 26 57 C18 50 4 47 14 36 C22 28 36 24 26 15 C18 8 22 4 20 0" vector-effect="non-scaling-stroke"/>
+            ${punkte}
+          </svg>`;
+}
+
+// Der Wanderstock: Holz, Maserung, Riemen oben; je Kehre ein Stocknagel (Schild in der Kapitelfarbe).
+function reiseStock() {
+  const naegel = KAPITEL.map((_, i) => {
+    const y = 600 - i * 74;
+    return `<g class="nagel" data-kehre="${i + 1}"><path class="schild" style="fill:var(--k${i})" d="M8 ${y} h44 v22 c0 12 -10 20 -22 26 c-12 -6 -22 -14 -22 -26 z"/><circle class="kopf" cx="30" cy="${y + 6}" r="2.6"/><circle class="kopf" cx="30" cy="${y + 30}" r="2.6"/></g>`;
+  }).join('');
+  return `<svg class="reise-stock" viewBox="0 0 60 700" aria-hidden="true" focusable="false">
+            <rect class="holz" x="22" y="0" width="16" height="700" rx="7"/>
+            <path class="maser" d="M27 10 C29 140 25 260 28 400 C30 520 26 610 28 690 M33 20 C31 170 35 300 32 450 C30 560 34 640 32 690"/>
+            <rect class="riemen" x="19" y="24" width="22" height="34" rx="4"/>
+            ${naegel}
+          </svg>`;
 }
 
 function ld() {
@@ -429,21 +461,21 @@ ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p clas
       </fieldset>
     </section>
 
-    <!-- ═══ Der Weg über den Pass ═══ -->
-    <section id="weg" aria-labelledby="t-weg">
+    <!-- ═══ Die Reise: Kehre für Kehre auf den Malojapass ═══ -->
+    <section id="weg" class="reise" aria-labelledby="t-weg">
       <p class="augenbraue">Sieben Kapitel</p>
       <h2 id="t-weg">Ein Weg, Kehre für Kehre.</h2>
-      <p class="unterzeile">In der App liegen Ihre sieben Kapitel als Stationen auf der Malojapass-Strasse. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter.</p>
+      <p class="unterzeile">In der App liegen Ihre sieben Kapitel als Stationen auf der Malojapass-Strasse. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. An jeder Kehre kommt ein Stocknagel an den Wanderstock.</p>
 
-      <div class="weg">
-        <svg viewBox="0 0 100 700" preserveAspectRatio="none" aria-hidden="true">
-          <path class="saum" d="${WEG}"/>
-          <path class="bahn" d="${WEG}"/>
-          <path class="mitte" d="${WEG}"/>
-          <path class="begangen" pathLength="1" d="${WEG}"/>
-        </svg>
-        <ol class="stationen">
-${stationen()}
+      <div class="reise-bruecke">
+        <div class="reise-buehne" aria-hidden="true">
+          <div class="reise-bild"><img src="/vorstellung/pass-serpentinen.webp" alt="" width="1280" height="853" loading="lazy" decoding="async"></div>
+          ${reiseLinie()}
+          ${reiseStock()}
+          <span class="reise-quelle">Bild: KI-gemalt, freie Darstellung</span>
+        </div>
+        <ol class="reise-stationen">
+${reiseStationen()}
         </ol>
       </div>
     </section>
@@ -569,6 +601,7 @@ ${stationen()}
       <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
     </div>
   </footer>
+  <script src="/reise.js" defer></script>
 </body>
 </html>
 `;
