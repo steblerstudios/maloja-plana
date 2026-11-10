@@ -178,7 +178,7 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     KAPITEL.forEach((k, i) => expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`));
   });
 
-  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen, flach im Passbild-Stil (PROBE 10.11.: rund, gerade, ohne Schatten und Wölbung)', () => {
+  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen, flach im Passbild-Stil (10.11.: rund, gerade, ohne Schatten und Wölbung)', () => {
     const naegel = html.split('<g class="nagel">').slice(1).map((t) => t.split('<g class="nagel-dreh"')[0].split('</svg>\n')[0]);
     expect(naegel).toHaveLength(7);
     for (const n of naegel) {
@@ -284,8 +284,63 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(html).toMatch(new RegExp(`<input type="checkbox" id="anhalten"[^>]*>\\s*<div class="${sel.replace('.', '')}"`));
   });
 
-  it('Browserleiste hell und dunkel nach Granit', () => {
-    expect(html).toContain('<meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">');
+  // Design-Durchgang 10.11.2026 (Stebler Studios «Ja, alle so», Befunde A–M), Brand Book §7e.
+  it('A · eine Seitenfarbe: die Creme des Passbilds, auch Ausklang und Hero-Schleier; kein Granit-Grau mehr', () => {
+    const wurzel = stil.match(/:root\{([\s\S]*?)\n    \}/)[1];
+    expect(wurzel).toContain('--bg:#FCF0E4;');
+    expect(wurzel).toContain('--himmel:#FCF0E4;');
+    expect(wurzel).toContain('--schleier:252,240,228;');
+    const regeln = stil.replace(/\/\*[\s\S]*?\*\//g, '');   // Kommentare nennen die alten Töne als Historie
+    expect(regeln).not.toMatch(/rgba\(244,240,230/);
+    expect(regeln).not.toMatch(/#F2F2F0/i);
+    expect(stil).toMatch(/\.leiste\{[^}]*background:#FFF8F0/);
+  });
+
+  it('A · im dunklen Modus bleibt der Hero hell: seine Nebenknöpfe tragen festes Papier, keine Variable', () => {
+    expect(stil).toContain('.pass .knopf.zweit{ background:#FFF8F0 }');
+  });
+
+  it('B · nach der letzten Kehre gehen Stock, Weglinie und dunkle Schicht mit dem Bild weg', () => {
+    expect(js).toContain("buehne.setAttribute('data-ende', '')");
+    for (const teil of ['.reise-stock', '.reise-linie', '.reise-quelle']) expect(stil).toContain(`.js .reise-buehne[data-ende] ${teil}`);
+    expect(stil).toContain('.js .reise-buehne[data-ende]::after{ opacity:0 }');
+  });
+
+  it('C · der Stock ist 86 % hoch und mittig, nicht bildhoch', () => {
+    expect(stil).toMatch(/\.reise-stock\{ position:absolute; left:50%; top:7%; height:86%;/);
+    expect(stil).toContain('margin-left:calc(86svh * -120 / 700 / 2)');
+  });
+
+  it('D/E · am Handy lässt die Textfläche den Stock frei, «KI-gemalt» steht links unten', () => {
+    expect(handy).toContain('.reise-station{ align-items:center; padding:10vh 84px 10vh 16px }');
+    expect(handy).toMatch(/\.reise-stock\{ left:auto; right:-30px;/);
+    expect(stil).toMatch(/\.reise-quelle\{ position:absolute; left:12px;/);
+  });
+
+  it('F/G · die Karte von oben steht auf Inhaltsbreite, vor der Papier-Karte keine doppelte Luft', () => {
+    expect(stil).toMatch(/\.pass-karte-bild\{[^}]*max-width:1040px; margin:0 auto;/);
+    expect(stil).toContain('.pass-band-karte{ margin:0 }');
+  });
+
+  it('H/I · Reiter «Kantone» in Kopf und Leiste; am Handy rückt der gewählte Reiter in Sicht', () => {
+    expect(html.match(/<a href="#atlas">Kantone<\/a>/g)).toHaveLength(2);
+    expect(js).toContain('function inSicht(a)');
+    expect(js).toContain('if (aktuell) inSicht(aktuell)');
+  });
+
+  it('J · der Trennpunkt hängt am vorderen Wort (Hero und Fuss), keine Zeile beginnt mit «·»', () => {
+    expect(stil).toContain('.pass .fakten span:not(:last-child)::after{');
+    expect(stil).toContain('.fuss .vertrauen span:not(:last-child)::after{');
+    expect(stil).not.toMatch(/(fakten|vertrauen) span::before/);
+  });
+
+  it('K · unter 960 px steht der Hero in einer Spalte', () => {
+    const tablet = stil.slice(stil.indexOf('@media (max-width:960px)'));
+    expect(tablet.slice(0, tablet.indexOf('\n    }'))).toContain('.pass{ grid-template-columns:1fr;');
+  });
+
+  it('Browserleiste hell nach der Seitenfarbe, dunkel nach Granit', () => {
+    expect(html).toContain('<meta name="theme-color" content="#FCF0E4" media="(prefers-color-scheme: light)">');
     expect(html).toContain('<meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">');
   });
 

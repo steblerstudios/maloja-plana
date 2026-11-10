@@ -48,6 +48,10 @@
     var k = 0, s = stationen[Math.max(0, hier)];
     if (s) { var r = (s.querySelector('.reise-text') || s).getBoundingClientRect(); k = Math.min(1, Math.max(0, (schwelle - r.top) / h)); }
     buehne.setAttribute('data-hier', String(hier));
+    // B · Ist der Text der letzten Kehre oben hinaus, gehen Stock und Weglinie mit dem Bild weg (Ausklang).
+    var letzte = stationen[stationen.length - 1];
+    var ende = !!letzte && letzte.getBoundingClientRect().bottom <= h * 0.85;
+    if (ende !== buehne.hasAttribute('data-ende')) { if (ende) buehne.setAttribute('data-ende', ''); else buehne.removeAttribute('data-ende'); }
     bildZeigen(hier + 1);
     naegel.forEach(function (n, i) { n.classList.toggle('dran', i <= hier); });
     punkte.forEach(function (p, i) { p.classList.toggle('hier', i === hier); p.classList.toggle('gegangen', i < hier); });
@@ -83,6 +87,17 @@
       if (el && el.getBoundingClientRect().top <= h * 0.4) aktuell = a;
     });
     leisteLinks.forEach(function (a) { if (a === aktuell) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (aktuell !== bisherLink) { bisherLink = aktuell; if (aktuell) inSicht(aktuell); }
+  }
+  // I · Am Handy ist die Zeile wischbar und rechts leise ausgeblendet: den gewählten Reiter in den klaren Teil rücken.
+  // Nur waagrecht in der eigenen Zeile, die Seite selbst scrollt nicht mit.
+  var bisherLink = null;
+  function inSicht(a) {
+    var zeile = a.parentNode;
+    if (!zeile || zeile.scrollWidth <= zeile.clientWidth) return;
+    var z = zeile.getBoundingClientRect(), r = a.getBoundingClientRect(), klar = z.right - z.width * 0.18;
+    if (r.right > klar) zeile.scrollLeft += r.right - klar + 4;
+    else if (r.left < z.left) zeile.scrollLeft -= z.left - r.left + 4;
   }
 
   // Der Stock: Nägel rundum (je 1/7 Drehung), Maserung als feine Streifen. Vorne breit, seitlich schmal, hinten weg.
