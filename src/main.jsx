@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
+import { istSuchTaste } from './utils/suchTaste.js';
 import { herkunftName, ablaufBereich, SCHLUSS_ZIELE } from './config/ansichtenRegister.js';
 import { LEBENSBEREICHE } from './data/lebensbereiche.js';
 import ReactDOM from 'react-dom/client';
@@ -1051,6 +1052,34 @@ const AppInner = ({ demo }) => {
     });
   };
 
+  // ─── Suche per Taste (10.11.2026) ────────────────────────
+  // «/» und ⌘K bzw. Strg+K öffnen die Lupe; wann eine Taste zählt, steht in utils/suchTaste.js.
+  // Der Fokus gehört danach ins Suchfeld, nicht auf <main>: hauptteilFokussieren legt ihn im
+  // nächsten Bild auf <main>, und die Suchansicht lädt nach. Darum zwei Bilder warten und dann
+  // höchstens rund eine Sekunde nach dem Feld suchen. Hier oben, vor der Einführungs-Weiche —
+  // ein Hook darf nicht hinter einem frühen return stehen. In der Einführung tut die Taste nichts.
+  const zurSuche = React.useRef(null);
+  zurSuche.current = () => {
+    if (!onboardingDone) return false;
+    if (view !== 'search') handleNavigate('search');
+    let versuche = 0;
+    const fassen = () => {
+      const feld = document.querySelector('[data-suchfeld]');
+      if (feld) { if (document.activeElement !== feld) feld.focus(); return; }
+      if (versuche++ < 60) requestAnimationFrame(fassen);
+    };
+    requestAnimationFrame(() => requestAnimationFrame(fassen));
+    return true;
+  };
+  useEffect(() => {
+    const onKey = (e) => {
+      if (!istSuchTaste(e, { dialogOffen: !!document.querySelector('[aria-modal="true"]') })) return;
+      if (zurSuche.current()) e.preventDefault();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   // ─── Onboarding gate ─────────────────────────────────────
   if (!onboardingDone) {
     return React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
@@ -1339,7 +1368,10 @@ const AppInner = ({ demo }) => {
         React.createElement('button', {
           key: 'search',
           'aria-label': t('nav.search'),
-          title: isMobile ? undefined : t('nav.search'),
+          // Am Desktop nennt der Hinweis die Taste (Suche per Taste, 10.11.2026); Vorleseprogramme
+          // erfahren alle drei über aria-keyshortcuts. Am Handy keine Taste, kein Hinweis.
+          title: isMobile ? undefined : t('nav.search') + ' (/)',
+          'aria-keyshortcuts': isMobile ? undefined : '/ Control+K Meta+K',
           'aria-current': view === 'search' ? 'page' : undefined,
           onClick: () => handleNavigate('search'),
           style: { padding: '8px 12px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
