@@ -1,6 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { alleDatenLoeschen, APP_DATENBANKEN, BEHALTEN, LOESCH_SIGNAL } from '../utils/datenLoeschen.js';
+import { alleDatenLoeschen, APP_DATENBANKEN, APP_CACHES, BEHALTEN, LOESCH_SIGNAL } from '../utils/datenLoeschen.js';
+import { GETEILT_CACHE } from '../utils/teilenEmpfang.js';
 import { speicherAbschirmen } from '../demo/demoSpeicher.js';
 
 // E18 (Bau-Liste O11): «Alle Daten auf diesem Gerät löschen». Beleg, dass der
@@ -38,6 +39,17 @@ class FakeIDBFactory {
   }
 }
 const ORIG_OPEN = FakeIDBFactory.prototype.open;
+
+// CacheStorage-Fake (Methoden auf dem Prototyp, wie im Browser): delete löst mit
+// true/false auf, je nachdem ob es den Cache gab.
+class FakeCacheStorage {
+  constructor(namen = [], fehler = []) { this.namen = new Set(namen); this.fehler = new Set(fehler); }
+  async delete(name) {
+    if (this.fehler.has(name)) throw new Error('kaputt');
+    return this.namen.delete(name);
+  }
+}
+const ORIG_CACHE_DELETE = FakeCacheStorage.prototype.delete;
 const ORIG_DELETE = FakeIDBFactory.prototype.deleteDatabase;
 
 const ECHT = {
@@ -60,6 +72,7 @@ afterEach(() => {
   FakeStorage.prototype.setItem = ORIG_SET;
   FakeIDBFactory.prototype.open = ORIG_OPEN;
   FakeIDBFactory.prototype.deleteDatabase = ORIG_DELETE;
+  FakeCacheStorage.prototype.delete = ORIG_CACHE_DELETE;
 });
 
 describe('E18 · Alle Daten auf diesem Gerät löschen', () => {
@@ -78,6 +91,27 @@ describe('E18 · Alle Daten auf diesem Gerät löschen', () => {
     await alleDatenLoeschen({ local, session, idb });
     expect([...idb.dbs]).toEqual(['fremde-db']);
     expect(APP_DATENBANKEN).toEqual(expect.arrayContaining(['maloja-plana-documents', 'maloja-plana-backups']));
+  });
+
+  // Predeploy-Nachzug 10.11.: der Teilen-Empfang (#782) legt geteilte Dateien in einen
+  // eigenen Cache, den der Service Worker über Updates behält. Die Datenschutzerklärung
+  // verspricht «alles auf einmal» — also muss dieser Cache mit weg, der App-Cache nicht.
+  it('löscht den Teilen-Cache mit den geteilten Dateien, nicht den App-Cache', async () => {
+    const { local, session, idb } = neu();
+    const cacheSpeicher = new FakeCacheStorage([GETEILT_CACHE, 'maloja-plana-v123']);
+    const r = await alleDatenLoeschen({ local, session, idb, cacheSpeicher });
+    expect(r.fehler).toEqual([]);
+    expect([...cacheSpeicher.namen]).toEqual(['maloja-plana-v123']);
+    expect(APP_CACHES).toEqual([GETEILT_CACHE]);
+  });
+
+  it('meldet einen Fehler beim Teilen-Cache ehrlich und löscht den Rest trotzdem', async () => {
+    const { local, session, idb } = neu();
+    const cacheSpeicher = new FakeCacheStorage([GETEILT_CACHE], [GETEILT_CACHE]);
+    const r = await alleDatenLoeschen({ local, session, idb, cacheSpeicher });
+    expect(r.fehler).toEqual([GETEILT_CACHE]);
+    expect(local.getItem('or5_data')).toBe(null);
+    expect([...idb.dbs]).toEqual(['fremde-db']);
   });
 
   it('sperrt danach Schreiben und neues Öffnen bis zum Neustart (Auto-Save kann nichts zurückschreiben)', async () => {
@@ -102,8 +136,10 @@ describe('E18 · Alle Daten auf diesem Gerät löschen', () => {
 
   it('im Beispiel-Modus: nichts Echtes wird angefasst (B-3)', async () => {
     const { local, session, idb } = neu();
+    const cacheSpeicher = new FakeCacheStorage([GETEILT_CACHE]);
     const vorher = JSON.stringify([...local._m.entries()]);
-    const r = await alleDatenLoeschen({ demo: true, local, session, idb });
+    const r = await alleDatenLoeschen({ demo: true, local, session, idb, cacheSpeicher });
+    expect(cacheSpeicher.namen.has(GETEILT_CACHE)).toBe(true);
     expect(r.geloescht).toBe(false);
     expect(JSON.stringify([...local._m.entries()])).toBe(vorher);
     expect(session._m.size).toBe(2);
@@ -116,19 +152,22 @@ describe('E18 · Alle Daten auf diesem Gerät löschen', () => {
   it('Beispiel von der Code-Wand (Speicher-Schirm aktiv): auch ohne demo-Flag bleibt der echte Speicher unberührt', async () => {
     const { local, session, idb } = neu();
     const vorher = JSON.stringify([...local._m.entries()]);
-    const freigeben = speicherAbschirmen(FakeStorage.prototype, FakeIDBFactory.prototype);
+    const cacheSpeicher = new FakeCacheStorage([GETEILT_CACHE]);
+    const freigeben = speicherAbschirmen(FakeStorage.prototype, FakeIDBFactory.prototype, FakeCacheStorage.prototype);
     try {
-      const r = await alleDatenLoeschen({ local, session, idb });
+      const r = await alleDatenLoeschen({ local, session, idb, cacheSpeicher });
       expect(r.fehler.length).toBeGreaterThan(0); // deleteDatabase wirft unter dem Schirm
+      expect(r.fehler).toContain(GETEILT_CACHE); // CacheStorage.delete auch
     } finally {
       freigeben();
     }
+    expect(cacheSpeicher.namen.has(GETEILT_CACHE)).toBe(true);
     expect(JSON.stringify([...local._m.entries()])).toBe(vorher);
     expect(idb.dbs.size).toBe(3);
   });
 
   it('ohne verfügbaren Speicher (Privat-Modus): kein Absturz', async () => {
-    const r = await alleDatenLoeschen({ local: null, session: null, idb: null });
+    const r = await alleDatenLoeschen({ local: null, session: null, idb: null, cacheSpeicher: null });
     expect(r.geloescht).toBe(true);
     expect(r.fehler).toEqual([]);
   });

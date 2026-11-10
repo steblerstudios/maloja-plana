@@ -708,7 +708,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Daten in der Anwendung',
         absaetze: [
-          'Was Sie in Maloja Plana erfassen, bleibt <strong>auf Ihrem Gerät</strong> (localStorage und IndexedDB im Browser). Es gibt kein Konto, keine Anmeldung und keine Übermittlung an die Anbieterin oder an Dritte. Wer die Daten löschen will, löscht sie im Gerät — es gibt keine zweite Kopie anderswo.',
+          'Was Sie in Maloja Plana erfassen, bleibt <strong>auf Ihrem Gerät</strong> (localStorage, IndexedDB und für geteilte Dateien der Cache im Browser). Es gibt kein Konto, keine Anmeldung und keine Übermittlung an die Anbieterin oder an Dritte. Wer die Daten löschen will, löscht sie im Gerät — es gibt keine zweite Kopie anderswo.',
           'Besonders schützenswerte Angaben (Gesundheit, Sozialhilfe, Weltanschauung) speichert die App ebenfalls nur lokal. Die automatischen Sicherungskopien im Browser sind nicht verschlüsselt.',
           'Weil nichts übermittelt wird, kann die Anbieterin zu Ihren Eingaben auch keine Auskunft erteilen: sie hat sie nie gesehen. Die ausführliche Fassung mit allen Rechten nach DSG steht in der App unter «Datenschutz & Rechtliches».',
         ],

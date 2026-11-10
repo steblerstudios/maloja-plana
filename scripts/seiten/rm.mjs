@@ -314,7 +314,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Datas en l’applicaziun',
         absaetze: [
-          'Quai che Vus registrai en Maloja Plana resta <strong>sin Voss apparat</strong> (localStorage ed IndexedDB en il navigatur). I na dat nagin conto, nagina annunzia e nagina transmissiun a la purschidra u a terzas persunas. Tgi che vul stizzar las datas, las stizza sin l’apparat — i n’exista nagina segunda copia autrunda.',
+          'Quai che Vus registrai en Maloja Plana resta <strong>sin Voss apparat</strong> (localStorage, IndexedDB e, per datotecas partidas, il cache dal navigatur). I na dat nagin conto, nagina annunzia e nagina transmissiun a la purschidra u a terzas persunas. Tgi che vul stizzar las datas, las stizza sin l’apparat — i n’exista nagina segunda copia autrunda.',
           'Er las indicaziuns particularamain sensitivas (sanadad, agid social, convicziuns) vegnan memorisadas da l’applicaziun mo localmain. Las copias da segirezza automaticas en il navigatur n’èn betg criptadas.',
           'Perquai che nagut na vegn transmess, na po la purschidra era betg dar infurmaziuns davart Vossas endataziuns: ella n’las ha mai vis. La versiun detagliada cun tut ils dretgs tenor la LPD stat en l’applicaziun sut «Protecziun da datas e chaussas giuridicas».',
         ],

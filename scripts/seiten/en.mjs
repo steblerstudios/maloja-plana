@@ -304,7 +304,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Data in the application',
         absaetze: [
-          'What you enter in Maloja Plana stays <strong>on your device</strong> (localStorage and IndexedDB in the browser). There is no account, no login and no transmission to the provider or to third parties. Anyone wanting to delete the data deletes it on the device — there is no second copy anywhere else.',
+          'What you enter in Maloja Plana stays <strong>on your device</strong> (localStorage, IndexedDB and, for shared files, the browser cache). There is no account, no login and no transmission to the provider or to third parties. Anyone wanting to delete the data deletes it on the device — there is no second copy anywhere else.',
           'Particularly sensitive information (health, social assistance, beliefs) is likewise stored only locally by the app. The automatic backup copies in the browser are not encrypted.',
           'Because nothing is transmitted, the provider also cannot give information about your entries: it has never seen them. The detailed version with all rights under the Swiss Data Protection Act is in the app under “Privacy & Legal”.',
         ],
