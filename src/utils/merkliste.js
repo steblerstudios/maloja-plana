@@ -59,8 +59,8 @@ export const addTodo = ({ text, link = null, tag = null, wiederholung = null }) 
   const existing = items.find(i => !i.done && i.text === text && (i.link || null) === (link || null));
   if (existing) return existing;
   const item = merkpunktBauen({ text, link, tag, wiederholung });
-  saveTodos([item, ...items]);
-  return item;
+  // Nur als Erfolg melden, wenn das Speichern geklappt hat — wie addReminder (Bugsuche B-12).
+  return saveTodos([item, ...items]) ? item : null;
 };
 
 // Für andere Zweige (z. B. IPV «Jährlich erinnern»): einen Merkpunkt mit Tag und Wiederholung

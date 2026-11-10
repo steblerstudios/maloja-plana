@@ -222,47 +222,57 @@ import { createPreRestoreSnapshot } from './prerestore.js';
  * Returns { success, restored: string[], error }
  */
 export async function applyBackup(backup) {
-  const restored = [];
+  // Ganz oder gar nicht (Bugsuche B-11). Vorher kam or5_data zuerst; scheiterte danach ein
+  // Schreiben am Speicher, waren die Angaben ersetzt, die Dokumente alt, und die Meldung sagte
+  // nur «fehlgeschlagen». Jetzt: (1) zuerst die Dateien nach IndexedDB — dort wird der Speicher
+  // am ehesten knapp; (2) dann alle Listen; scheitert eines, werden die in diesem Lauf
+  // geschriebenen Schlüssel auf ihren alten Wert zurückgesetzt (wie createPreRestoreSnapshot).
+  // Schon geschriebene Dateien bleiben in IndexedDB liegen: ohne Eintrag in or5_docs zeigt sie
+  // niemand an, und eine gleiche id gehört zum selben Dokument.
+  const docs = backup.docs === undefined ? undefined : (Array.isArray(backup.docs) ? backup.docs : []);
+  const writes = [];
+  if (backup.data !== undefined) writes.push(['or5_data', JSON.stringify(backup.data)]);
+  // In or5_docs nur Metadaten. Rückwärtskompatibel: Alt-Backups tragen .data inline,
+  // neue Backups wurden via collectBackupDataAsync hydriert.
+  if (docs !== undefined) writes.push(['or5_docs', JSON.stringify(docs.map(stripBlob))]);
+  if (backup.reminders !== undefined) writes.push(['or5_reminders', JSON.stringify(backup.reminders)]);
+  if (backup.contacts !== undefined) writes.push(['or5_contacts', JSON.stringify(backup.contacts)]);
+  if (backup.merkliste !== undefined) writes.push(['or5_merkliste', JSON.stringify(backup.merkliste)]);
+  if (backup.meta) {
+    if (backup.meta.theme) writes.push(['or5_theme', backup.meta.theme]);
+    if (backup.meta.lang) writes.push(['or5_lang', backup.meta.lang]);
+  }
 
   try {
-    if (backup.data !== undefined) {
-      localStorage.setItem('or5_data', JSON.stringify(backup.data));
-      restored.push('or5_data');
-    }
-    if (backup.docs !== undefined) {
-      // Inline-Blobs aus dem Backup nach IndexedDB schreiben, in or5_docs nur
-      // Metadaten ablegen. Rückwärtskompatibel: Alt-Backups tragen .data inline,
-      // neue Backups wurden via collectBackupDataAsync hydriert.
-      const docs = Array.isArray(backup.docs) ? backup.docs : [];
-      for (const doc of docs) {
-        if (doc && doc.id != null && doc.data != null) {
-          await saveDocBlob(doc.id, doc.data);
-        }
+    for (const doc of docs || []) {
+      if (doc && doc.id != null && doc.data != null) {
+        await saveDocBlob(doc.id, doc.data);
       }
-      localStorage.setItem('or5_docs', JSON.stringify(docs.map(stripBlob)));
-      restored.push('or5_docs');
     }
-    if (backup.reminders !== undefined) {
-      localStorage.setItem('or5_reminders', JSON.stringify(backup.reminders));
-      restored.push('or5_reminders');
-    }
-    if (backup.contacts !== undefined) {
-      localStorage.setItem('or5_contacts', JSON.stringify(backup.contacts));
-      restored.push('or5_contacts');
-    }
-    if (backup.merkliste !== undefined) {
-      localStorage.setItem('or5_merkliste', JSON.stringify(backup.merkliste));
-      restored.push('or5_merkliste');
-    }
-    if (backup.meta) {
-      if (backup.meta.theme) localStorage.setItem('or5_theme', backup.meta.theme);
-      if (backup.meta.lang) localStorage.setItem('or5_lang', backup.meta.lang);
-    }
-
-    return { success: true, restored, error: null };
   } catch (e) {
-    return { success: false, restored, error: e.message };
+    return { success: false, restored: [], error: (e && e.message) || String(e) };
   }
+
+  const before = writes.map(([k]) => [k, localStorage.getItem(k)]);
+  let done = 0;
+  try {
+    for (const [k, v] of writes) {
+      localStorage.setItem(k, v);
+      done++;
+    }
+  } catch (e) {
+    // Auch der gescheiterte Schlüssel wird zurückgesetzt (Teil-Schreiben möglich).
+    for (const [k, prev] of before.slice(0, done + 1)) {
+      try {
+        if (prev === null) localStorage.removeItem(k);
+        else localStorage.setItem(k, prev);
+      } catch { /* bestmöglich */ }
+    }
+    return { success: false, restored: [], error: (e && e.message) || String(e) };
+  }
+
+  const restored = writes.map(([k]) => k).filter((k) => k !== 'or5_theme' && k !== 'or5_lang');
+  return { success: true, restored, error: null };
 }
 
 /**

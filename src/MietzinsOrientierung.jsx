@@ -98,8 +98,11 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const zeigtVoraussetzungen = hasProgram && assessment && ['likely', 'effortBased', 'municipalLimit', 'tableLimit', 'jungeErwachseneOffen', 'needIncome'].includes(assessment.key);
   const zimmer = parseFloat(String(data?.wohnen?.rooms ?? '').replace(',', '.'));
   const voraussetzungen = !zeigtVoraussetzungen ? [] : [
-    info.residencyYears && { key: 'wohnsitz', text: t(canton === 'GE' ? 'mietzinsView.vorausWohnsitzGE' : 'mietzinsView.vorausWohnsitz', { jahre: info.residencyYears }) },
-    info.assetLimit && { key: 'vermoegen', text: t('mietzinsView.vorausVermoegen', { betrag: zahl(info.assetLimit) }) },
+    info.residencyYears && { key: 'wohnsitz', text: t(canton === 'GE' ? 'mietzinsView.vorausWohnsitzGE' : info.residencyOderArbeit ? 'mietzinsView.vorausWohnsitzOderArbeit' : 'mietzinsView.vorausWohnsitz', { jahre: info.residencyYears }) },
+    // ZG: Grenze steigt je Kind — mit den erfassten Kindern gerechnet, die Regel steht dabei.
+    info.assetLimit && (info.assetPerChild
+      ? { key: 'vermoegen', text: t('mietzinsView.vorausVermoegenJeKind', { betrag: zahl(info.assetLimit + childrenCount * info.assetPerChild), basis: zahl(info.assetLimit), jeKind: zahl(info.assetPerChild) }) }
+      : { key: 'vermoegen', text: t('mietzinsView.vorausVermoegen', { betrag: zahl(info.assetLimit) }) }),
     canton === 'BS' && { key: 'mindestmiete', text: t('mietzinsView.vorausMindestmieteBS') },
     // ZG: höchstens zwei Zimmer mehr als Personen (Merkblatt Sept. 2025). Kennt die App die Zimmer, prüft sie mit.
     canton === 'ZG' && (Number.isFinite(zimmer) && zimmer > householdSize + 2

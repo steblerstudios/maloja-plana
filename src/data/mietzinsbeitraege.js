@@ -74,6 +74,14 @@ const PROGRAMS = {
   // die App den Nettolohn — der liegt meist höher. Über der Grenze sagt die Ansicht das dazu.
   ZG: { state: 'has', group: 'all', incomeLimit: 60000, einkommensBasis: 'steuerbar', incomePerChild: 2500, incomePerAdult: 20000,
         residencyYears: 3, assetLimit: 144000,
+        // ⟨10.11.2026, Predeploy-Nachzug⟩ Wohnsitz ODER Arbeitsplatz: WFG ZG (BGS 851.211) § 7 Abs. 1
+        // lit. b «ihren Wohnsitz oder Arbeitsplatz seit mindestens drei Jahren im Kanton Zug» (am Volltext
+        // bgs.zg.ch gelesen, Fachlogik-Prüfer). Die Liste W2 sagte vorher nur «Wohnsitz» → Pendler:innen
+        // fälschlich ausgeschlossen.
+        residencyOderArbeit: true,
+        // +16'900 je Kind: wie cantonNote_ZG (Merkblatt Sept. 2025); die Liste W2 nannte nur 144'000 und
+        // stufte Familien zu streng ein. Betrag hier nicht neu am Merkblatt nachgelesen.
+        assetPerChild: 16900,
         // Nur für Wohnungen, die dem WFG unterstellt sind (Merkblatt Sept. 2025; zg.ch: «rund 1900
         // Wohnungen»). Entscheid Stebler Studios 25.09.2026: der Rechner FRAGT danach (wohnen.wfgWohnung,
         // 'ja' | 'nein' | 'weissNicht'). «nein» → kein Anspruch; offen/«weiss nicht» → Hinweis beim Ergebnis.

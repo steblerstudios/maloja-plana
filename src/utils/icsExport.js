@@ -59,7 +59,26 @@ export function buildICS(reminders, t) {
     lines.push('END:VEVENT');
   }
   lines.push('END:VCALENDAR');
-  return lines.join('\r\n');
+  return lines.map(falte).join('\r\n') + '\r\n';
+}
+
+// RFC 5545 §3.1: Zeilen höchstens 75 Oktette (UTF-8), länger → CRLF + Leerzeichen; nie mitten in
+// einem Zeichen trennen (Umlaute = 2 Byte). Die Datei endet mit CRLF (Bugsuche B-16).
+const enc = new TextEncoder();
+function falte(zeile) {
+  if (enc.encode(zeile).length <= 75) return zeile;
+  const teile = [];
+  let aktuell = '';
+  let laenge = 0;
+  let grenze = 75; // erste Zeile 75, Fortsetzungen 74 + führendes Leerzeichen
+  for (const zeichen of zeile) {
+    const b = enc.encode(zeichen).length;
+    if (laenge + b > grenze) { teile.push(aktuell); aktuell = ''; laenge = 0; grenze = 74; }
+    aktuell += zeichen;
+    laenge += b;
+  }
+  teile.push(aktuell);
+  return teile.join('\r\n ');
 }
 
 // Stabiler kleiner Hash als UID-Fallback, falls kein id vorhanden.
