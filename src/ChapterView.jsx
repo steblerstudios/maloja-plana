@@ -41,7 +41,7 @@ import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx';
 import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
-import { istAngestellt } from './utils/anstellung.js';
+import { nichtberufsunfallStatus } from './utils/nichtberufsunfall.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 import { ZumVerstehen } from './components/ErklaerseiteLink.jsx';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
@@ -1023,8 +1023,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
         // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
-        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && istAngestellt(allData.finanzen) &&
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('uvgHint.fieldSuggest'))),
+        // Kapitel 4, V1: nur mit 8 Std./Woche bei einer Arbeitgeberin auch Freizeitunfälle (UVV Art. 13).
+        field.k === 'uvg' && chapter.key === 'versicherungen' && nichtberufsunfallStatus(allData) &&
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr(nichtberufsunfallStatus(allData) === 'nein' ? 'uvgHint.fieldUnter8' : 'uvgHint.fieldSuggest'))),
         renderOrientation(field)
       );
     }
