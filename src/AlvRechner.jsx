@@ -23,13 +23,20 @@ function currentAge(dateStr) {
 
 // Rechner-Form X (F7-A2, 27.10.2026): Ergebnis zuerst, dann «Ihre Angaben», RAV, offizielle Stelle, Quelle.
 export const AlvRechner = ({ palette, t, data, onNavigate }) => {
-  const alter = currentAge(data.basis?.dateOfBirth);
+  // Kapitel 5, L1 (10.11.2026): das Alter bestimmt die Höchstzahl der Taggelder (AVIG Art. 27 Abs. 2, 5bis).
+  // Vorbefüllt aus dem Geburtsdatum im Profil; ein eingetipptes Alter geht vor. Leer → keine feste Zahl.
+  const profilAlter = currentAge(data.basis?.dateOfBirth);
+  const [alterEingabe, setAlterEingabe] = useState(profilAlter != null ? String(profilAlter) : '');
+  const alterZahl = String(alterEingabe).trim() === '' ? NaN : Number(String(alterEingabe).replace(',', '.'));
+  const alter = Number.isFinite(alterZahl) && alterZahl >= 15 && alterZahl <= 70 ? Math.floor(alterZahl) : null;
   // 70 % statt 80 % gilt u. a. nur ohne Unterhaltspflicht gegenüber Kindern unter 25 Jahren
-  // (AVIG Art. 22 Abs. 2 Bst. a). Fassung 6 las nur `age`; ein Kind mit Geburtsdatum und leerem Alter zählte
+  // (AVIG Art. 22 Abs. 2 Bst. a). Kapitel 5, L4 (10.11.2026): vorbefüllt werden nur Kinder unter 18 — ab 18
+  // besteht die Unterhaltspflicht nur, solange das Kind in Ausbildung ist (ZGB Art. 277 Abs. 2). Ein arbeitendes
+  // 22-jähriges Kind hob vorher 70 % auf 80 %. Wer ein volljähriges Kind in Ausbildung hat, wählt «Ja». Fassung 6 las nur `age`; ein Kind mit Geburtsdatum und leerem Alter zählte
   // weiter, auch mit 30 (Befund X, `AlvRechner.jsx:22,30`, F7 27.10.2026). Jetzt dieselbe Altersregel wie die
   // Sozialhilfe-Vorbefüllung (`kindAlter`: Geburtsdatum vor Alter). Ohne beides zählt das Kind — überschreibbar.
   const householdChildren = (data.basis?.household?.children || [])
-    .filter((c) => { const a = kindAlter(c); return a == null || a < 25; }).length;
+    .filter((c) => { const a = kindAlter(c); return a == null || a < 18; }).length;
 
   // ALV-Taggeld basiert auf dem BRUTTO-Lohn. Als Brutto hinterlegt → vorbefüllt. Als Netto hinterlegt →
   // geschätztes Brutto, sichtbar «geschätzt» (F7-R4, 27.10.2026; Schätzung wie EinkommenFeld:
@@ -52,8 +59,12 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const parsedLohn = Number(String(bruttolohn).replace(',', '.')) || 0;
   const parsedMonate = Number(beitragsmonate) || 0;
+  // Kapitel 5, L2: unter 12 Beitragsmonaten kein Betrag. Wer befreit ist, bekommt einen Pauschalansatz, nicht
+  // den bisherigen Lohn (AVIG Art. 13, 14, Art. 23 Abs. 2) — ein Betrag aus dem Lohn wäre falsch.
+  const unter12 = beitragsmonate !== '' && parsedMonate < 12;
   // O3: die Art des Ergebnisses als festes Feld — Schätzung, dazu die Zahl der fehlenden Angaben.
-  const art = alvErgebnis({ bruttolohn: parsedLohn, beitragsmonate: parsedMonate, alter });
+  // Eingetragene Beitragsmonate gelten als Angabe, auch 0 (dann zeigt L2 den Weg zur Befreiung).
+  const art = alvErgebnis({ bruttolohn: parsedLohn, beitragsmonate: beitragsmonate !== '' ? Math.max(parsedMonate, 1) : 0, alter });
 
   const result = useMemo(() => {
     if (parsedLohn <= 0) return null;
@@ -98,12 +109,23 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
           React.createElement(ErgebnisZeile, { palette, label: t('alv.taggeldLabel'), wert: betrag(result.taggeld, { stellen: 2 }) }),
           React.createElement(ErgebnisZeile, { palette, label: t('alv.satzLabel'), wert: t('alv.satzValue', { p: Math.round(result.satz * 100) }) }),
           React.createElement(ErgebnisZeile, { palette, label: t('alv.wartetageLabel'), wert: t('alv.wartetageValue', { n: result.wartetage }) }),
-          result.anspruchstage != null && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(result.anspruchstage / ALV_PARAMS.taggelderProMonat) }) })
+          result.anspruchstage != null && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(result.anspruchstage / ALV_PARAMS.taggelderProMonat) }) }),
+          // L1: Beitragszeit reicht, das Alter fehlt → die Spanne, keine erfundene Zahl.
+          result.anspruchstageOffen && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchOffenAlter') })
         ))
     : React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, t('alv.noAnspruch')));
 
-  const vorbehalt = result && result.anspruch && React.createElement(React.Fragment, null,
-    result.anspruchstage == null && React.createElement('p', { style: fussText }, t('alv.anspruchLabel') + ': ' + t('alv.anspruchUnklar')),
+  // B (Kapitel 5): die Ausnahmen zur Beitragszeit aufklappbar statt als langer Absatz vor dem Formular.
+  const befreiung = React.createElement('details', { 'data-teil': 'befreiung', style: { margin: space.xs + 'px 0 0', maxWidth: '420px' } },
+    React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('alv.befreiungTitel')),
+    React.createElement('p', { style: { ...hinweis, fontSize: text.sm, margin: '0 0 ' + space.xs + 'px' } }, t('alv.befreiungText')));
+
+  const unter12Ergebnis = unter12 && React.createElement(React.Fragment, null,
+    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, t('alv.unter12')),
+    befreiung);
+
+  const vorbehalt = !unter12 && result && result.anspruch && React.createElement(React.Fragment, null,
+    result.anspruchstage == null && !result.anspruchstageOffen && React.createElement('p', { style: fussText }, t('alv.anspruchLabel') + ': ' + t('alv.anspruchUnklar')),
     result.gedeckelt && React.createElement('p', { style: fussText }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
     // Werte 2027 (26.10.2026): Grenzbetrag 80 % fürs laufende Jahr nicht belegt → sagen, nicht still rechnen.
     !ALV_PARAMS.satz80Belegt && React.createElement('p', { style: fussText }, t('alv.satz80NichtBelegt', { jahr: ALV_PARAMS.satz80Jahr, laufend: new Date().getFullYear(), betrag: ALV_PARAMS.satz80Schwelle })),
@@ -113,15 +135,18 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   return React.createElement(RechnerForm, {
     palette, t, view: 'alv', onNavigate,
     titel: t('alv.title'), satz: t('alv.intro'),
-    etikett: result && result.anspruch ? t('alv.resultTitle') : null,
-    ergebnis, ohneErgebnis: t('alv.enterBrutto'), art, vorbehalt,
+    etikett: !unter12 && result && result.anspruch ? t('alv.resultTitle') : null,
+    ergebnis: unter12 ? unter12Ergebnis : ergebnis, ohneErgebnis: t('alv.enterBrutto'), art, vorbehalt,
     angaben: {
-      erfasst: (parsedLohn > 0 ? 1 : 0) + (parsedMonate > 0 ? 1 : 0) + 2,
-      gesamt: 4,
+      erfasst: (parsedLohn > 0 ? 1 : 0) + (beitragsmonate !== '' ? 1 : 0) + (alter != null ? 1 : 0) + 2,
+      gesamt: 5,
       inhalt: React.createElement('div', { style: { paddingTop: space.xs + 'px' } },
-        zahlFeld('alv-brutto', t('alv.bruttolohn'), bruttolohn, setEingetippt, lohnHinweis, { placeholder: '6000', marke: geschaetzt ? t('rechnerForm.geschaetzt') : null }),
-        zahlFeld('alv-monate', t('alv.beitragsmonate'), beitragsmonate, setBeitragsmonate, t('alv.beitragsmonateHint'), { placeholder: '12', min: 0, max: 24 }),
-        React.createElement(Einzelwahl, { palette, id: 'alv-kinder', label: t('alv.kinder'), hinweis: t('alv.kinderHint'), optionen: jaNein, wert: hatKinder, onWahl: setHatKinder }),
+        // A (Kapitel 5): keine Zahlen als Platzhalter — eine graue «12» sah aus wie eine Eingabe.
+        zahlFeld('alv-brutto', t('alv.bruttolohn'), bruttolohn, setEingetippt, lohnHinweis, { marke: geschaetzt ? t('rechnerForm.geschaetzt') : null }),
+        zahlFeld('alv-monate', t('alv.beitragsmonate'), beitragsmonate, setBeitragsmonate, t('alv.beitragsmonateHint'), { min: 0, max: 24 }),
+        !unter12 && befreiung,
+        zahlFeld('alv-alter', t('alv.alter'), alterEingabe, setAlterEingabe, t('alv.alterHint'), { min: 15, max: 70 }),
+        React.createElement(Einzelwahl, { palette, id: 'alv-kinder', label: t('alv.kinder'), hinweis: t('alv.kinderHint') + ' ' + t('alv.kinderVolljaehrig'), optionen: jaNein, wert: hatKinder, onWahl: setHatKinder }),
         React.createElement(Einzelwahl, { palette, id: 'alv-iv', label: t('alv.ivGrad'), optionen: jaNein, wert: ivGrad40, onWahl: setIvGrad40 })
       ),
     },

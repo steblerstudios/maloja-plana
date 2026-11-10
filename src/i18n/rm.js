@@ -8096,6 +8096,8 @@ export default {
     beitragsmonateHint: { sie: "Quants mais avais Vus lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais.", du: "Quants mais has ti lavurà en ils ultims 2 onns? Per ordinari datti in dretg a partir da 12 mais." },
     kinder: "Obligaziun da mantegniment per uffants sut 25 onns?",
     kinderHint: "Influenzescha la tariffa e las dis d'spetga.",
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
+    kinderVolljaehrig: "Von 18 bis 24 Jahren nur, solange das Kind in Ausbildung ist (ZGB Art. 277).",
     ivGrad: "Renta AI cun grad d'invaliditad ≥ 40%?",
     enterBrutto: { sie: "Endatai Voss salari brut fin ussa per vesair l'orientaziun.", du: "Endatescha tes salari brut fin ussa per vesair l'orientaziun." },
     noAnspruch: "Sut CHF 500 da gudogn assicurà per mais n’datti per ordinari nagin dretg sin indemnisaziun da dischoccupaziun.",
@@ -8103,13 +8105,25 @@ export default {
     satzLabel: "Tariffa",
     satzValue: "{p}% dal gudogn assicurà",
     taggeldLabel: "Indemnisaziun dal di",
-    monatlichLabel: "Stimà per mais",
+    monatlichLabel: "Stimà per mais, brut (avant las deducziuns)",
     wartetageLabel: "Dis d'spetga",
     wartetageValue: "{n} dis",
     anspruchLabel: "Durada dal dretg",
     anspruchValue: "{n} indemnisaziuns dal di (≈ {m} mais)",
     // TODO(rm): provisorisch — Gegenlese (ALV-Befreiung AVIG 14 II, 24.09.2026)
-    anspruchUnklar: "Sut 12 mais da contribuziun ils ultims dus onns per ordinari nagin dretg. I dat excepziuns: tgi che sto tschertgar ina plazza pervia d’ina separaziun, d’in divorzi, da l’invaliditad u da la mort dal consort u da la consorta (era en partenadi registrà) ed abitava lura en Svizra po esser liberà dal temp da contribuziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn (LACI art. 14 al. 2, art. 27 al. 4). Ulteriuras liberaziuns valan p. ex. suenter ina scolaziun, ina malsogna u la fin d’ina renta AI. La cassa da dischoccupaziun scleriescha quai.",
+    anspruchUnklar: "Sut 12 mais da contribuziun ils ultims dus onns per ordinari nagin dretg.",
+    // Kapitel 5 (10.11.2026): befreiungText ist der bisherige rm-Text; die deutschen Zeilen braucht eine Person,
+    // die Romanisch schreibt.
+    alter: "Vegliadetgna",
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
+    alterHint: { sie: "Ihr Alter in Jahren. Davon hängt ab, wie viele Taggelder es höchstens gibt: unter 25 ohne Kinder 200, ab 55 mit 22 Beitragsmonaten 520 (AVIG Art. 27).", du: "Dein Alter in Jahren. Davon hängt ab, wie viele Taggelder es höchstens gibt: unter 25 ohne Kinder 200, ab 55 mit 22 Beitragsmonaten 520 (AVIG Art. 27)." },
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
+    anspruchOffenAlter: "200 bis 520 Taggelder, je nach Alter",
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
+    unter12: "Mit weniger als 12 Beitragsmonaten in den letzten zwei Jahren besteht in der Regel kein Anspruch. Wer von der Beitragszeit befreit ist, bekommt einen Pauschalbetrag, nicht einen Teil des bisherigen Lohns. Darum steht hier kein Betrag (AVIG Art. 23 Abs. 2).",
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
+    befreiungTitel: "Weniger als 12 Monate gearbeitet?",
+    befreiungText: "I dat excepziuns: tgi che sto tschertgar ina plazza pervia d’ina separaziun, d’in divorzi, da l’invaliditad u da la mort dal consort u da la consorta (era en partenadi registrà) ed abitava lura en Svizra po esser liberà dal temp da contribuziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn (LACI art. 14 al. 2, art. 27 al. 4). Ulteriuras liberaziuns valan p. ex. suenter ina scolaziun, ina malsogna u la fin d’ina renta AI. La cassa da dischoccupaziun scleriescha quai.",
     gedeckeltHint: "Gudogns sur CHF {max}/mais vegnan limitads al maximum.",
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     satz80NichtBelegt: "Il import limit per la tariffa da 80 % (CHF {betrag} per mais) è verifitgà en questa app tenor las funtaunas uffizialas per {jahr}. Sch’il DEFR al ha adattà per {laufend}, n’è anc betg registrà. Liant quinta la cassa da dischoccupaziun.",
@@ -8236,6 +8250,8 @@ export default {
     vollstaendig: '{satz}.',
     fehltEine: '{satz}. Noch eine Angabe nötig.',
     fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+    fehltNamen: "{satz}. Noch nötig: {liste}.",
+    angabe: { bruttolohn: "Bruttolohn", beitragsmonate: "Beitragsmonate", geburtsdatum: "Alter", einkommen: "Einkommen", einkommensart: "Brutto oder netto", wochenstunden: "Wochenstunden", miete: "Miete", kvgPraemie: "Krankenkassenprämie", erwerbseinkommen: "Erwerbseinkommen", vermoegen: "Vermögen", kanton: "Kanton", stundenlohn: "Stundenlohn", ferienform: "Ferienregelung", erwerbsunkosten: "Erwerbsunkosten", grad: "Grad der Hilflosigkeit", status: "Aufenthaltsstatus", scope: "Art der Ausbildung" },
   },
   // Furma dal quintader X (F7-A2, 27.10.2026): components/RechnerForm.jsx.
   rechnerForm: {

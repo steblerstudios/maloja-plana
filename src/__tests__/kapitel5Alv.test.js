@@ -47,12 +47,12 @@ describe('L2/L4/A · Rechner-Anzeige', () => {
 describe('C · «Noch nötig» nennt die Angabe', () => {
   const sprachen = { de, fr, it: it_, en, rm };
   it('ALV: «Noch nötig: Beitragsmonate» statt «Noch eine Angabe nötig»', () => {
-    const t = createT(de, 'de', 'sie');
+    const t = createT({ de }, 'de', 'sie');
     const s = ergebnisSatz(ergebnis(ERGEBNIS_ART.SCHAETZUNG, { fehlend: ['beitragsmonate'] }), t);
     expect(s).toMatch(/Noch nötig: Beitragsmonate\.$/);
   });
   it('mehrere Angaben werden aufgezählt', () => {
-    const t = createT(de, 'de', 'sie');
+    const t = createT({ de }, 'de', 'sie');
     const s = ergebnisSatz(ergebnis(ERGEBNIS_ART.SCHAETZUNG, { fehlend: ['beitragsmonate', 'geburtsdatum'] }), t);
     expect(s).toMatch(/Noch nötig: Beitragsmonate, Alter\.$/);
   });
