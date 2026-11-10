@@ -58,6 +58,8 @@ describe('L4, L5, L8, L9 · KVG-Sätze am Volltext', () => {
   it('L9 nach dem Höchstbetrag nicht «100 %»', () => {
     expect(t('kvg.selbstbehaltDone')).not.toContain('100');
     expect(t('kvg.selbstbehaltDone')).toContain('CHF 15 je Spitaltag');
+    expect(t('kvg.selbstbehaltDone')).toContain('nicht für Kinder');
+    expect(t('kvg.selbstbehaltDone')).not.toContain('Medikamenten');
   });
   it('Psychotherapie im Anordnungsmodell seit Juli 2022, in allen Sprachen (KLV Art. 11b)', () => {
     for (const [lang, d] of Object.entries(SPRACHEN)) {
@@ -99,11 +101,15 @@ describe('L2, L3 · Vertretung und Patientenverfügung am Volltext', () => {
     expect(x).toContain('sofern kein Vorsorgeauftrag und keine entsprechende Beistandschaft besteht');
   });
   it('Vertretungsreihe beginnt mit der Person aus dem Vorsorgeauftrag (ZGB Art. 378)', () => {
-    expect(t('vorsorgeauftrag.step4Text')).toContain('die im Vorsorgeauftrag bezeichnete Person, eine Beiständin oder ein Beistand');
+    // Rechtsprüfung nach dem Bau (Blocker): an erster Stelle die in der Patientenverfügung ODER im Vorsorgeauftrag
+    // bezeichnete Person (Art. 378 Abs. 1 Ziff. 1), nach dem mutmasslichen Willen (Abs. 3).
+    expect(t('vorsorgeauftrag.step4Text')).toContain('die in der Patientenverfügung oder im Vorsorgeauftrag bezeichnete Person');
+    expect(t('vorsorgeauftrag.step4Text')).toContain('nach Ihrem mutmasslichen Willen');
   });
   it('L3 in der Psychiatrie wird die Patientenverfügung nur berücksichtigt (ZGB Art. 380, 433)', () => {
     expect(t('pv.ui.einstiegPsych')).toContain('wird dort berücksichtigt, ist aber nicht in jedem Fall bindend');
     expect(t('pv.ui.einstiegPsych')).not.toContain('zusätzlich');
+    expect(t('pv.ui.einstiegPsych')).toContain('einer urteilsunfähigen Person');
   });
   it('Vorsorgeauftrag nur für Handlungsfähige (ZGB Art. 360)', () => {
     expect(t('va.ui.intro')).toContain('nicht unter umfassender Beistandschaft');
@@ -136,7 +142,7 @@ describe('L7 · Kurzurlaub für Erwachsene zahlt der Arbeitgeber, nicht die EO (
   });
   it('Betreuungsgutschrift nennt den Personenkreis (AHVG Art. 29septies)', () => {
     expect(x).toContain('Schwiegereltern, Stiefkinder');
-    expect(x).toContain('nach fünf Jahren im gemeinsamen Haushalt');
+    expect(x).toContain('nach fünf Jahren ununterbrochen im gemeinsamen Haushalt');
   });
 });
 

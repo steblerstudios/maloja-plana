@@ -214,5 +214,22 @@ siebenmal neu entschieden werden:
    «Vorsorge» zweimal). Sprache S1–S7 (rm Unfall-Seite ganz deutsch, Notfallkarte ohne rm-Sie-Formen, «Bleiben Sie ruhig»).
    Zweig `feat/kapitel-7-gesundheit` (von `main`), nur Befund, gebaut ist nichts.
    ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig, auf `main` nachgezogen.
+   ✅ **Gebaut** (Zweig `feat/kapitel-7-gesundheit`): L1 Vorlage ohne Unterschriftslinien (Satz «von Hand auf die
+   Abschrift») · KVG L4 Listenspital auch ausserkantonal, L5 Franchise ≠ Selbstbehalt, Kinder 350, L8 Mutterschaft ganze
+   Schwangerschaft, L9 kein «100 %» (CHF 15 je Spitaltag, nicht für Kinder), L10 Rechner Kind/Erwachsen (Stufen 0–600,
+   Höchstbetrag 350, unbekannte Werte genannt) · L2 Art. 374, Art. 378-Reihe, L3 Art. 380 (urteilsunfähig) / 433 · L6
+   IV-Schritt «Vorbescheid und Entscheid» mit Frist ab Erhalt + 30 Tage (EreignisFrist, eingeschriebener Brief Art. 38
+   Abs. 2bis), Beschwerde statt Einsprache · L7 OR 329h · K: handlungsfähig (Art. 360, 398), Art. 367, Personenkreis
+   Betreuungsgutschrift (inkl. eingetragene Partnerschaft, ATSG 13a), Organspende ab 16, Psychotherapie seit Juli 2022,
+   Impf-Referenzdokument 1.7.2026, KLV 12e, SIWF · Gestaltung A (Passend in zwei Gruppen, Arztkoffer unter «Gesundheit»),
+   B (Notruf-Knöpfe 48 px, 117), C (Intro weg, PV-Frage eingeklappt, «Organspende & Verfügungen») · S1 rm-Marken, S2,
+   S5, S6 (Elternstufe «Gesundheit»). rechts-pruefer nach dem Bau eingearbeitet (Blocker: Art. 378 Ziff. 1 nennt zuerst
+   die in der Patientenverfügung ODER im Vorsorgeauftrag bezeichnete Person). Test `kapitel7Gesundheit.test.js`,
+   Startbündel unverändert 64 995 / 65 000 Bytes (wie `main`). Offen: rm-Übersetzung (u. a. sieben Sie-Formen der
+   Notfallkarte), S3 Gesetzesangaben ans Satzende, S4 Kürzel, S7 Fachwörter, Kapitelseite-Kleines (Testament im Block
+   «Vorsorge», «1 von 5» neben «19 von 20», Szenario «Behördengang»), Arztkoffer-Platzhalter «In Vorbereitung» bewusst
+   belassen (Ehrlichkeitsregel im Code), Erklärseite Krankenkasse bleibt bei Versicherungen (Organigramm 07.11.),
+   Altersgrenze Kind «18» nach Jahrgang (KVV Art. 91 Abs. 3) nicht am Volltext belegt, Notrufnummern und
+   Medikamentenpreise an der Quelle.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
