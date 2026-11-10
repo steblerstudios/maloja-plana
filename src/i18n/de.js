@@ -1381,6 +1381,7 @@ export default {
     edit: 'Bearbeiten',
     delete: 'Entfernen',
     pickDate: 'Datum wählen',
+    betraegeVerbergen: 'Beträge verbergen',
     simpleView: 'Einfache Ansicht',
     grayscale: 'Schwarzweiss',
     colorBlind: 'Farbenblind-Modus',

@@ -16,7 +16,7 @@ import { feldNameOhneEinheit } from './utils/feldName.js';
 import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
-import { betrag } from './utils/geld.js';
+import { betragEcht as betrag } from './utils/geld.js'; // Export: immer der wahre Betrag, auch bei Sichtschutz
 import { vermoegensFelder, vermoegenSumme } from './utils/unterstuetzungseinheit.js';
 import { VFB_KANTON_GELESEN } from './data/vermoegensfreibetragKanton.js';
 

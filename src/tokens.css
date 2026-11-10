@@ -573,3 +573,10 @@ main[tabindex="-1"]:focus { outline: none; }
 
 /* Aufklapp-Teile mit eigenem Chevron (Versicherungs-Übersicht): kein zweiter Pfeil in Safari. */
 .mp-summary::-webkit-details-marker { display: none; }
+
+/* Sichtschutz «Beträge verbergen» (Kopfzeile, src/utils/geld.js). Angezeigte Beträge werden
+   im Formatierer zu «CHF •••»; Eingabefelder für Beträge sind hier nur unscharf und werden
+   beim Antippen wieder lesbar — wer tippt, will sehen, was er tippt. Nur am Bildschirm. */
+@media screen {
+  html[data-betraege="aus"] input[inputmode="decimal"]:not(:focus) { filter: blur(6px); }
+}

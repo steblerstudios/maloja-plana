@@ -1380,6 +1380,7 @@ export default {
     edit: 'Modifier',
     delete: 'Retirer',
     pickDate: 'Choisir une date',
+    betraegeVerbergen: 'Masquer les montants',
     simpleView: 'Vue simplifiée',
     grayscale: 'Niveaux de gris',
     colorBlind: 'Mode daltonien',

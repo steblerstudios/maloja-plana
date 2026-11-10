@@ -421,6 +421,15 @@ const AppInner = ({ demo }) => {
   const [simpleView, setSimpleView] = useState(() => { try { return localStorage.getItem('or5_simpleView') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_simpleView', simpleView ? '1' : '0'); } catch {} }, [simpleView]);
   // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
+  // Sichtschutz «Beträge verbergen»: das Attribut wird im Klick gesetzt, VOR dem neuen Rendern —
+  // betrag() in utils/geld.js liest es beim Rendern. Erstwert aus public/theme-init.js.
+  const [betraegeAus, setBetraegeAus] = useState(() => document.documentElement.dataset.betraege === 'aus');
+  const umschaltenBetraege = () => {
+    const aus = !betraegeAus;
+    if (aus) document.documentElement.dataset.betraege = 'aus'; else delete document.documentElement.dataset.betraege;
+    try { localStorage.setItem('or5_betraege', aus ? '1' : '0'); } catch {}
+    setBetraegeAus(aus);
+  };
   const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
   // Der Filter sitzt auf <html>, nicht auf dem App-Rahmen: ein `filter` auf einem Vorfahren
@@ -1112,6 +1121,14 @@ const AppInner = ({ demo }) => {
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
     React.createElement(ThemeToggle, { key: 'theme', palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
     React.createElement('button', {
+      key: 'betraege',
+      'aria-label': t('common.betraegeVerbergen'), 'aria-pressed': betraegeAus, title: t('common.betraegeVerbergen'),
+      onClick: umschaltenBetraege,
+      style: ctrlBtn(betraegeAus)
+    },
+      zeichen('auge', 17)
+    ),
+    React.createElement('button', {
       key: 'simpleview',
       'aria-label': t('common.simpleView'), 'aria-pressed': simpleView, title: t('common.simpleView'),
       // Beim Einschalten automatisch Vorlesen aktivieren (Inkrement-1-Entscheid).
@@ -1346,7 +1363,7 @@ const AppInner = ({ demo }) => {
         },
           zeichen('search', 18, 1.5)
         ),
-        ...(isMobile ? [] : settingsControls.filter(c => c.key === 'lang' || c.key === 'theme')),
+        ...(isMobile ? [] : settingsControls.filter(c => c.key === 'lang' || c.key === 'theme' || c.key === 'betraege')),
         React.createElement('button', {
           key: 'settings',
           'aria-label': t('nav.settings'),

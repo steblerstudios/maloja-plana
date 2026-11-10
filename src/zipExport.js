@@ -1,6 +1,6 @@
 // ZIP-Export für Datensicherung
 import { getFullName, getChapters } from './config/constants.js';
-import { betrag } from './utils/geld.js';
+import { betragEcht as betrag } from './utils/geld.js'; // Export: immer der wahre Betrag, auch bei Sichtschutz
 import { keineKontaktperson } from './utils/naGruppen.js';
 import { inDays } from './utils/helpers.js';
 import { organListe } from './utils/organspende.js';

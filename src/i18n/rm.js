@@ -1676,6 +1676,7 @@ export default {
     edit: 'Modifitgar',
     delete: 'Allontanar',
     pickDate: 'Tscherner ina data',
+    betraegeVerbergen: 'Zuppar ils imports',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
     colorBlind: 'Modus daltonic',

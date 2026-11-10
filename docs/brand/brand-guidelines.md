@@ -414,6 +414,14 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
+- **Sichtschutz: Beträge verbergen** *(10.11.2026, Idee aus dem Abgleich mit Nessie)*. Das Auge
+  (`auge`, Gruppe Z) blendet am Bildschirm jeden Betrag als «CHF ···» aus, wenn jemand mitliest.
+  Eingabefelder für Beträge werden nur unscharf und beim Antippen wieder lesbar. **Nur die Anzeige:**
+  gerechnet, gespeichert und exportiert wird mit dem wahren Wert (Exporte nehmen `betragEcht`).
+  Monate, Prozente, Jahre und Anzahlen bleiben sichtbar, denn sie verraten keinen Betrag. Am
+  Computer steht das Auge in der Kopfzeile, am Handy in «Ansicht & Sprache». Quelle:
+  `src/utils/geld.js`, `src/i18n/index.js` (Platzhalter hinter «CHF»), `public/theme-init.js`.
+  Wächter: `src/utils/__tests__/betraegeVerbergen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
 

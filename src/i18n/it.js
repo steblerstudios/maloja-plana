@@ -1380,6 +1380,7 @@ export default {
     edit: 'Modifica',
     delete: 'Rimuovi',
     pickDate: 'Scegli una data',
+    betraegeVerbergen: 'Nascondere gli importi',
     simpleView: 'Vista semplice',
     grayscale: 'Scala di grigi',
     colorBlind: 'Modalità daltonici',
