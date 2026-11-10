@@ -28,7 +28,13 @@
     st.forEach(function (g, i) { g.classList.toggle('erreicht', f >= anteile[i + 1] - 0.001); });
     leiste.forEach(function (a, i) {
       a.classList.toggle('erreicht', i <= hier);
-      if (i === hier) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+      if (i === hier) {
+        if (a.getAttribute('aria-current') !== 'step') {
+          var ol = a.parentNode.parentNode;
+          if (a.offsetLeft < ol.scrollLeft || a.offsetLeft + a.offsetWidth > ol.scrollLeft + ol.clientWidth) ol.scrollLeft = a.offsetLeft - 16;
+        }
+        a.setAttribute('aria-current', 'step');
+      } else a.removeAttribute('aria-current');
     });
   }
   var geplant = false;

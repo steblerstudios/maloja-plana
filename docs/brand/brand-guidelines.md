@@ -383,6 +383,9 @@ angelehnt an das Prinzip «Stationen sammeln» (Vorbild: «Collecting Stamps on 
 | **Pass** | die einzige echte Höhe: 1815 m ü. M. (HLS), dahinter der eine Hauptknopf «Beispiel ansehen» |
 | **Bewegung** | Weg wächst, Stempel «brennt ein» (0,5 s, nachfedernd) — nur ohne «weniger Bewegung»; ohne JS ist alles da |
 | **Kein Zwang** | Stempel sind Zeichen, keine Punkte, keine Ranglisten; nichts wird gespeichert |
+| **Zahl ist Schmuck** | die Etappen-Zahl ist `aria-hidden`; die Information steht als Text «Station n von 6» (deshalb kein 1.4.3) |
+| **Notfall ehrlich** | das Schild führt ins Beispiel, nicht zu Hilfe: zugänglicher Name sagt das, im Fuss steht der Notruf (144 · 117 · 118) |
+| **Klebt nur, wenn Platz ist** | bei kleiner Höhe (Zoom 400 %) kleben Kopf, Bild und Schild nicht mehr |
 
 ## 8. Calm-UX-Prinzipien
 

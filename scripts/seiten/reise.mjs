@@ -22,12 +22,12 @@ import { appBeispiel } from '../seiten-ziele.mjs';
 // Reihenfolge und Index wie CHAPTER_KEYS in src/config/constants.js
 // (basis 0 … behoerden 5, notfall 6). Ein Test hält beides zusammen.
 export const REISE_STATIONEN = [
-  { key: 'basis', titel: 'Grundlagen', kurz: 'Name, Kontakt, wer zum Haushalt gehört. Das Fundament, auf dem alles andere aufbaut.' },
-  { key: 'wohnen', titel: 'Wohnen', kurz: 'Adresse, Mietkosten, Vermieterschaft. Und beim Umzug die Schritte in der richtigen Reihenfolge.' },
+  { key: 'basis', titel: 'Grundlagen', kurz: 'Name, Kontakt, wer zum Haushalt gehört. Die Angaben, auf denen die anderen Kapitel aufbauen.' },
+  { key: 'wohnen', titel: 'Wohnen', kurz: 'Adresse, Mietkosten, Vermieterschaft. Und beim Umzug die Schritte, einer nach dem anderen.' },
   { key: 'finanzen', titel: 'Finanzen', kurz: 'Einkommen, Monatsausgaben, Sparen. Ein Budget, das zu Ihrem Alltag passt.' },
-  { key: 'versicherungen', titel: 'Versicherungen', kurz: 'Grundversicherung, Vorsorge, weitere Versicherungen. Und was Ihnen zustehen könnte.' },
-  { key: 'ausbildung', titel: 'Ausbildung', kurz: 'Abschlüsse, Lebenslauf, Weiterbildung. Was Sie gelernt haben, an einem Ort.' },
-  { key: 'behoerden', titel: 'Behörden', kurz: 'Steuern, Bewilligungen, Briefe an Ämter. Mit Fristen, die nicht untergehen.' },
+  { key: 'versicherungen', titel: 'Versicherungen', kurz: 'Grundversicherung, Vorsorge, weitere Versicherungen. Übersichtlich an einem Ort.' },
+  { key: 'ausbildung', titel: 'Ausbildung', kurz: 'Abschlüsse, Lebenslauf, Weiterbildung. Ihre Ausbildung an einem Ort.' },
+  { key: 'behoerden', titel: 'Behörden', kurz: 'Steuern, Bewilligungen, Briefe an Ämter. Fristen lassen sich als Erinnerung festhalten.' },
 ];
 export const REISE_NOTFALL_INDEX = 6;
 
@@ -45,22 +45,22 @@ const stil = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
     :root{ --bg:#F2F2F0; --flaeche:#FAFAF8; --text:#24262A; --leise:#5D5F63;
            --sand:#C4A06A; --sandTief:#7A5C2E; --aufSand:#24262A; --salbei:#5A7868; --rose:#B87070; --roseTief:#8F4A4A;
-           --berg:#E4E1D8; --bergRand:#CFCABD; --wegOffen:#9A978E;
+           --berg:#E4E1D8; --bergRand:#CFCABD; --wegOffen:#7C796F;
            --anzeige:'Hanken Grotesk',system-ui,sans-serif; --lese:'Lexend',system-ui,sans-serif }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2B2A26; --text:#E6E3DC; --leise:#B7B3AA; --sandTief:#D9BB8A; --salbei:#7E9F8C;
              --roseTief:#E0A3A3; --berg:#33312C; --bergRand:#4A473F; --wegOffen:#77746C }
     }
     *{ box-sizing:border-box }
-    html{ scroll-behavior:smooth }
+    html{ scroll-behavior:smooth; scroll-padding-top:110px }
     @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto } }
     body{ margin:0; background:var(--bg); color:var(--text); font-family:var(--lese); font-size:16px; line-height:1.5 }
     a{ color:var(--sandTief) }
-    a:focus-visible, summary:focus-visible{ outline:3px solid var(--sand); outline-offset:3px; border-radius:6px }
+    a:focus-visible, summary:focus-visible{ outline:3px solid var(--sandTief); outline-offset:3px; border-radius:6px }
     .kopf{ position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--bergRand) }
-    .entwurf{ font-size:13px; color:var(--leise); text-align:center; padding:6px 16px; border-bottom:1px solid var(--bergRand) }
-    .etappen{ display:flex; gap:4px; justify-content:center; list-style:none; margin:0; padding:4px 16px; overflow-x:auto }
-    .etappen a{ display:flex; align-items:center; gap:6px; text-decoration:none; color:var(--leise); font-size:13px; padding:6px 8px; min-height:44px; border-radius:8px }
+    .entwurf{ font-size:14px; color:var(--leise); text-align:center; padding:6px 16px; border-bottom:1px solid var(--bergRand) }
+    .etappen{ display:flex; gap:4px; justify-content:center; list-style:none; margin:0; padding:8px 16px; overflow-x:auto }
+    .etappen a{ display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; color:var(--leise); font-size:14px; padding:6px 8px; min-height:44px; min-width:44px; border-radius:8px }
     .etappen .punkt{ width:14px; height:14px; border-radius:50%; border:1.5px dashed var(--wegOffen); flex:none }
     .etappen a.erreicht{ color:var(--text) }
     .etappen a.erreicht .punkt{ background:var(--sand); border:1.5px solid var(--sandTief) }
@@ -73,6 +73,8 @@ const stil = `
     h1{ font-family:var(--anzeige); font-weight:700; font-size:clamp(40px,8vw,88px); line-height:1; margin:0 0 24px; max-width:12ch }
     .tal p{ max-width:34rem; margin:0 0 16px }
     .los{ font-size:14px; color:var(--leise) }
+    .sprung{ position:absolute; left:16px; top:-60px; z-index:7; background:var(--flaeche); color:var(--text); padding:10px 14px; border-radius:8px }
+    .sprung:focus{ top:8px }
     .reise{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; max-width:1100px; margin:0 auto; padding:0 16px }
     .bild{ position:sticky; top:110px; height:calc(100vh - 126px); display:flex; align-items:center; justify-content:center }
     .bild svg{ width:100%; max-height:100% }
@@ -82,7 +84,7 @@ const stil = `
     .station.erreicht .zahl{ color:var(--sand) }
     h2{ font-family:var(--anzeige); font-weight:700; font-size:32px; line-height:1.15; margin:8px 0 12px }
     .station p{ margin:0 0 12px; max-width:65ch }
-    .stempel-zeile{ font-size:13px; color:var(--leise) }
+    .stempel-zeile{ font-size:14px; color:var(--leise) }
     .hoehe{ font-family:var(--anzeige); font-weight:700; font-size:clamp(56px,9vw,104px); line-height:.95; margin:0 }
     .hoehe small{ font-size:.35em; letter-spacing:.04em; color:var(--leise) }
     .knopf{ display:inline-block; background:var(--sand); color:var(--aufSand); border-radius:12px; padding:14px 22px; text-decoration:none; min-height:44px; margin-top:8px }
@@ -98,12 +100,20 @@ const stil = `
       @keyframes einbrennen{ 0%{ transform:scale(1.7); opacity:.15 } 60%{ transform:scale(.94); opacity:1 } 100%{ transform:scale(1) } }
     }
     @media (max-width:767px){
-      .etappen .name{ display:none }
+      html{ scroll-padding-top:calc(96px + 30vh); scroll-padding-bottom:72px }
+      .etappen{ gap:0 }
+      .etappen .name{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap }
       .reise{ grid-template-columns:1fr; gap:0 }
       .bild{ top:96px; height:30vh; background:var(--bg); z-index:2; border-bottom:1px solid var(--bergRand); margin:0 -16px; padding:6px 0 }
       .station{ min-height:58vh; justify-content:flex-start; padding-top:24px; scroll-margin-top:calc(96px + 30vh) }
       h2{ font-size:26px }
       .zahl{ font-size:64px }
+    }
+    @media (max-height:520px){
+      html{ scroll-padding-top:0; scroll-padding-bottom:0 }
+      .kopf, .bild{ position:static }
+      .bild{ height:auto; max-height:40vh }
+      .notfall{ position:static; margin:8px 16px }
     }`;
 
 function bildSvg() {
@@ -127,7 +137,7 @@ function seite(csp) {
     `<li><a href="#${s.key}"><span class="punkt"></span><span class="name">${esc(s.titel)}</span></a></li>`).join('\n        ')
     + `\n        <li><a href="#pass"><span class="punkt"></span><span class="name">Pass</span></a></li>`;
   const stationen = REISE_STATIONEN.map((s, i) => `
-      <section class="station" id="${s.key}" aria-labelledby="t-${s.key}">
+      <section class="station" id="${s.key}">
         <p class="zahl" aria-hidden="true">${zwei(i + 1)}</p>
         <h2 id="t-${s.key}">${esc(s.titel)}</h2>
         <p>${esc(s.kurz)}</p>
@@ -145,44 +155,49 @@ function seite(csp) {
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, follow">
   <meta name="author" content="Stebler Studios">
-  <title>Die Reise — Maloja Plana</title>
+  <title>Die Reise: sechs Kapitel bis zum Beispiel — Maloja Plana</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <style>${stil}
   </style>
 </head>
 <body>
+  <a class="sprung" href="#inhalt">Zum Inhalt</a>
   <header class="kopf">
     <p class="entwurf">Entwurf · noch nicht verlinkt</p>
-    <nav aria-label="Etappen">
+    <nav aria-label="Etappen der Reise">
       <ol class="etappen">
         ${leiste}
       </ol>
     </nav>
   </header>
-  <a class="notfall" href="${appBeispiel(`chapter/${REISE_NOTFALL_INDEX}`)}">
+  <a class="notfall" aria-label="Notfall-Kapitel im Beispiel ansehen" href="${appBeispiel(`chapter/${REISE_NOTFALL_INDEX}`)}">
     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></svg>
     Notfall
   </a>
-  <section class="tal" aria-labelledby="titel">
+  <main id="inhalt">
+  <section class="tal">
     <p class="marke">MALOJA PLANA</p>
     <h1 id="titel">Ein Weg durch Ihr Leben in der Schweiz.</h1>
-    <p>${n} Stationen bis zum Pass. An jeder sehen Sie, wobei Maloja hilft.</p>
-    <p class="los">Scrollen, um loszugehen.</p>
+    <p>Maloja Plana ordnet Ihre Angaben und Unterlagen nach Lebensbereichen.</p>
+    <p>${n} Stationen bis zum Pass. An jeder sehen Sie, was Maloja dort festhält.</p>
+    <p class="los">Nach unten scrollen, um loszugehen.</p>
   </section>
-  <main class="reise">
+  <div class="reise">
     <div class="bild" aria-hidden="true">
       ${bildSvg()}
     </div>
     <div class="texte">${stationen}
-      <section class="station" id="pass" aria-labelledby="t-pass">
+      <section class="station" id="pass">
         <p class="hoehe">1815 m <small>ü. M.</small></p>
         <h2 id="t-pass">Auf dem Malojapass.</h2>
-        <p>Von hier sehen Sie alles. Schauen Sie sich Maloja mit Beispieldaten an, ohne etwas einzugeben.</p>
+        <p>Schauen Sie sich Maloja mit Beispieldaten an. Sie müssen dafür nichts eingeben.</p>
         <p><a class="knopf" href="${appBeispiel('dashboard')}">Beispiel ansehen</a></p>
       </section>
     </div>
+  </div>
   </main>
   <footer class="fuss">
+    <p>Im Ernstfall zählt der Notruf: 144 Sanität · 117 Polizei · 118 Feuerwehr. Das Notfall-Schild führt ins Beispiel, nicht zu einer Hilfe.</p>
     <p>Maloja Plana dient der Orientierung und ersetzt keine Beratung. <a href="/rechtliches/">Impressum und Datenschutz</a></p>
   </footer>
   <script src="/reise/reise.js"></script>
@@ -222,7 +237,13 @@ const skript = `// ERZEUGT — Quelle: scripts/seiten/reise.mjs
     st.forEach(function (g, i) { g.classList.toggle('erreicht', f >= anteile[i + 1] - 0.001); });
     leiste.forEach(function (a, i) {
       a.classList.toggle('erreicht', i <= hier);
-      if (i === hier) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+      if (i === hier) {
+        if (a.getAttribute('aria-current') !== 'step') {
+          var ol = a.parentNode.parentNode;
+          if (a.offsetLeft < ol.scrollLeft || a.offsetLeft + a.offsetWidth > ol.scrollLeft + ol.clientWidth) ol.scrollLeft = a.offsetLeft - 16;
+        }
+        a.setAttribute('aria-current', 'step');
+      } else a.removeAttribute('aria-current');
     });
   }
   var geplant = false;

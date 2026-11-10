@@ -23,7 +23,9 @@ describe('Die Reise', () => {
 
   it('Notfall ist ein festes Schild, das ins Notfall-Kapitel führt — keine Station', () => {
     expect(CHAPTER_KEYS[REISE_NOTFALL_INDEX]).toBe('notfall');
-    expect(html).toMatch(new RegExp(`class="notfall" href="/\\?beispiel#/chapter/${REISE_NOTFALL_INDEX}"`));
+    expect(html).toMatch(new RegExp(`class="notfall" aria-label="Notfall[^"]*" href="/\\?beispiel#/chapter/${REISE_NOTFALL_INDEX}"`));
+    // Das Schild führt ins Beispiel. Der Notruf steht deshalb als Text da (Wortlaut wie ernstfallSub in der App).
+    expect(html).toContain('144 Sanität · 117 Polizei · 118 Feuerwehr');
     expect(html).not.toMatch(/<section class="station" id="notfall"/);
   });
 
@@ -62,8 +64,19 @@ describe('Die Reise', () => {
     expect(html).toMatch(/@media \(prefers-color-scheme: dark\)/);
   });
 
+  it('die Etappen-Leiste behält ihre Namen auch auf schmalen Bildschirmen (nur visuell verborgen)', () => {
+    // display:none nähme den Namen aus dem Barrierebaum: sieben namenlose Links (a11y-Prüfung 10.11.2026).
+    expect(html).not.toMatch(/\.etappen \.name\{\s*display:none/);
+    expect(html).toMatch(/\.etappen \.name\{[^}]*clip-path:inset\(50%\)/);
+  });
+
+  it('hat einen Sprung zum Inhalt und ein main', () => {
+    expect(html).toContain('<a class="sprung" href="#inhalt">');
+    expect(html).toContain('<main id="inhalt">');
+  });
+
   it('der Notfall-Knopf und die Etappen-Leiste sind gross genug zum Tippen', () => {
     expect(html).toMatch(/\.notfall\{[^}]*min-height:44px/);
-    expect(html).toMatch(/\.etappen a\{[^}]*min-height:44px/);
+    expect(html).toMatch(/\.etappen a\{[^}]*min-height:44px; min-width:44px/);
   });
 });
