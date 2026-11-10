@@ -703,6 +703,7 @@ export const SONDERSEITEN = [
         titel: 'Kontakt per E-Mail',
         absaetze: [
           'Schreiben Sie an <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, bearbeiten wir Ihre Adresse, den Inhalt der Nachricht und allfällige Anhänge, um zu antworten. Das Postfach liegt bei Infomaniak in der Schweiz. Die Korrespondenz bleibt so lange, wie die Anfrage und übliche Nachfragen es brauchen, danach wird sie gelöscht. Eine Weitergabe an Dritte findet nicht statt, ausser sie ist gesetzlich geschuldet.',
+          '<strong>Warteliste:</strong> Schreiben Sie uns, um auf die Warteliste zu kommen, bewahren wir Ihre Nachricht mit Ihrer E-Mail-Adresse nur zu diesem Zweck auf. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es dazu kommt, wenn Maloja Plana im App Store erscheint. Danach löschen wir Nachricht und Adresse, spätestens am 31. Dezember 2027, auch wenn es bis dahin keine App-Store-Fassung gibt. Auf Wunsch löschen wir sie umgehend; eine Antwort mit «abmelden» genügt. Für etwas anderes verwenden wir die Adresse nicht, auch nicht für einen Newsletter.',
         ],
       },
       {

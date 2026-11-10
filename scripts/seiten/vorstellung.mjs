@@ -16,6 +16,17 @@
 
 import { BASIS } from '../seiten-inhalt.mjs';
 
+// Warteliste (Entscheid Stebler Studios 09.11.2026, Plan «Sichtbarkeit», Weg 1): nur ein Mail-Entwurf.
+// Kein Formular, kein Dienst, nichts wird automatisch gesendet — die Person schickt die Mail selbst.
+// Höchstens zwei Nachrichten (Beta endet · App Store), dann wird die Adresse gelöscht (Datenschutz,
+// Abschnitt «Kontakt per E-Mail»). Kein Newsletter über diese Liste.
+const WARTELISTE_BETREFF = 'Maloja Plana: Warteliste';
+const WARTELISTE_TEXT = 'Bitte nehmen Sie mich auf die Warteliste.\n\n'
+  + 'Sie schreiben mir höchstens zweimal: wenn die Beta endet und, falls es dazu kommt, wenn es Maloja Plana im App Store gibt. '
+  + 'Danach, spätestens Ende 2027, wird meine Adresse gelöscht. Abmelden geht jederzeit mit einer Antwort «abmelden».';
+export const WARTELISTE = 'mailto:info@malojaplana.ch?subject=' + encodeURIComponent(WARTELISTE_BETREFF)
+  + '&amp;body=' + encodeURIComponent(WARTELISTE_TEXT);
+
 export const VORSTELLUNG = {
   titel: 'Maloja Plana — Schweizer Lebensordner',
   beschreibung: 'Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.',
@@ -508,6 +519,7 @@ ${stationen()}
       </div>
       <div class="wege"><a class="knopf haupt" href="/app/">Maloja Plana öffnen</a></div>
       <p class="bald"><strong>Eine Fassung für den App Store ist geplant.</strong> Bis dahin funktioniert der Weg über den Startbildschirm auf Telefon, Tablet und Laptop.</p>
+      <p class="bald" id="warteliste">Möchten Sie Bescheid bekommen? <a href="${WARTELISTE}">Per E-Mail auf die Warteliste</a>. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es sie gibt, wenn die Fassung für den App Store erscheint. Spätestens Ende 2027 löschen wir Ihre Adresse (<a href="/rechtliches/">Datenschutz</a>).</p>
     </section>
 
     <!-- ═══ Vertrauen ═══ -->
