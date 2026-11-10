@@ -331,7 +331,22 @@
     .reise-ablauf{ position:relative; z-index:5; margin-top:-100vh; margin-top:-100svh }
     .reise{ padding-top:0; color:#FBFBFA }
     /* Ausklang: nach der letzten Kehre verläuft das Bild ruhig ins Papier der Seite, statt hart abzubrechen. */
-    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(0,0,0,0), var(--bg) 85%) }
+    /* Seit 10.11.2026 (Probe A1 «Salbei»): der Ausklang verläuft in das Salbei der Hänge, darunter liegt derselbe
+       Pass von oben — echte Höhenlinien (swissALTI3D) und die echte Passstrasse mit ihren Kehren (OpenStreetMap).
+       Die gemalten Kehren und die wirklichen finden so zusammen. Erst danach geht es ins Papier der Seite. */
+    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(126,143,123,0), #7E8F7B 85%) }
+    .pass-karte{ position:relative; background:#7E8F7B; color:#F6F2E8 }
+    .pass-karte-bild{ position:relative; aspect-ratio:280/130 }
+    .pass-karte-bild img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }
+    .pass-karte .hoehe{ position:absolute; left:57.7%; top:27%; margin:-10px 0 0 14px; font-size:15px; font-weight:600; letter-spacing:.02em;
+      text-shadow:0 0 6px rgba(85,104,90,.9) }
+    .pass-karte figcaption{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px; padding-top:12px; font-size:15px }
+    .pass-karte .quelle{ font-size:13px; opacity:.85 }
+    .pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)) }
+    @media (max-width:760px){
+      .pass-karte-bild{ aspect-ratio:4/3 }
+      .pass-karte .hoehe{ left:62.5% }   /* gleicher Punkt bei 4:3, object-fit:cover um die Mitte (Rechnung im Brand Book §7e) */
+    }
     /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
     .reise-stationen{ list-style:none }
     .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
@@ -677,6 +692,17 @@
           </ol>
         </section>
         <div class="reise-ausklang" aria-hidden="true"></div>
+        <figure class="pass-karte">
+          <div class="pass-karte-bild">
+            <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
+            <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
+          </div>
+          <figcaption class="rahmen">
+            <span>Oben angekommen: derselbe Weg von oben, mit den wirklichen Kehren.</span>
+            <span class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</span>
+          </figcaption>
+        </figure>
+        <div class="pass-karte-ende" aria-hidden="true"></div>
       </div>
     </div>
 
