@@ -70,6 +70,8 @@ describe('wischSchliesst', () => {
 
 describe('useWischSchliessen', () => {
   let zu, timerStand;
+  // Der Hook läuft hier bewusst ausserhalb einer Komponente — der Ersatz oben spielt sie nach.
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const render = (seite = 'right') => { zustand.i = 0; return useWischSchliessen({ seite, onClose: zu }); };
   const ziel = (feld = null) => ({ closest: (sel) => (feld && sel.includes(feld) ? {} : null) });
   const panel = { getBoundingClientRect: () => ({ width: 288 }), setPointerCapture: vi.fn() };
