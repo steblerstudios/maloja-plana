@@ -178,8 +178,11 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-bruecke{ position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-top:var(--abstand-m) }
     .reise-buehne{ position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:var(--himmel) }
     .reise-bild{ position:absolute; inset:0 }
-    .reise-bild img{ width:100%; height:100%; object-fit:cover; object-position:40% 60%; display:block;
-      transform:scale(1.22) translate(calc((0.5 - var(--f, 0.5)) * 8%), calc((var(--f, 0.5) - 0.5) * 14%)) }
+    /* Je Kehre ein eigenes Bild (KI-gemalt, Bergell → Silsersee); das aktuelle hat .an. Innerhalb einer
+       Kehre wandert es leicht mit (--k von 0 bis 1). */
+    .reise-bild img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:45% 60%; display:block;
+      opacity:0; transform:scale(1.12) translateY(calc((var(--k, 0.5) - 0.5) * 5%)) }
+    .reise-bild img.an{ opacity:1 }
     .reise-bild::after{ content:""; position:absolute; inset:0; pointer-events:none;
       background:linear-gradient(90deg, rgba(20,20,18,.30) 0%, rgba(20,20,18,0) 40%) }
     .reise-linie{ position:absolute; left:clamp(16px, 4vw, 56px); top:14vh; height:62vh; width:40px; overflow:visible }
@@ -206,11 +209,11 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-karte p{ color:var(--leise); font-size:16px }
     .reise-karte a{ display:inline-block; margin-top:10px; padding:10px 0; font-weight:600; color:var(--text) }
     @media (prefers-reduced-motion: no-preference){
-      .js .reise-bild img{ transition:transform .6s cubic-bezier(.2,.7,.2,1) }
+      .js .reise-bild img{ transition:opacity .9s ease, transform .6s cubic-bezier(.2,.7,.2,1) }
       .js .nagel.dran{ animation:anschlagen .55s cubic-bezier(.2,.8,.2,1) }
       @keyframes anschlagen{ 0%{ transform:translateX(26px) rotate(-14deg) scale(1.3); opacity:0 } 70%{ transform:translateX(-2px) rotate(2deg) scale(.96); opacity:1 } 100%{ transform:none } }
     }
-    @media (prefers-reduced-motion: reduce){ .reise-bild img{ transform:scale(1.1) } }
+    @media (prefers-reduced-motion: reduce){ .reise-bild img{ transform:none } }
     @media (max-height:520px){
       .reise-buehne{ position:relative; height:70vh }
       .reise-stationen{ margin-top:0 }
@@ -469,7 +472,9 @@ ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p clas
 
       <div class="reise-bruecke">
         <div class="reise-buehne" aria-hidden="true">
-          <div class="reise-bild"><img src="/vorstellung/pass-serpentinen.webp" alt="" width="1280" height="853" loading="lazy" decoding="async"></div>
+          <div class="reise-bild">
+${KAPITEL.map((_, i) => `            <img class="kehre-bild${i === 0 ? ' an' : ''}" src="/vorstellung/kehre-${i + 1}.webp" alt="" width="1280" height="853" loading="lazy" decoding="async">`).join('\n')}
+          </div>
           ${reiseLinie()}
           ${reiseStock()}
           <span class="reise-quelle">Bild: KI-gemalt, freie Darstellung</span>

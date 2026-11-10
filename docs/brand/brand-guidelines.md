@@ -310,12 +310,12 @@ Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur 
 
 | Regel | Wie |
 |---|---|
-| **Bühne** | gemaltes Bild des Malojapasses (Serpentinen vom Bergell hinauf), randlos, klebt beim Scrollen. Zurzeit KI-gemalt und so beschriftet; später echte Malerei |
+| **Bühne** | je Kehre ein eigenes gemaltes Bild, vom Talboden im Bergell über die Serpentinen bis zum Silsersee oben am Pass; randlos, klebt beim Scrollen, wechselt mit Überblendung. Zurzeit KI-gemalt (lockerer Aquarell-Gouache-Stil, Figma «Maloja Reise · Bilder») und so beschriftet; später echte Malerei |
 | **Kehre = Kapitel** | sieben Kehren in der Reihenfolge der App (`CHAPTER_KEYS`), Kapitelfarben aus `lebensbereiche.js` |
 | **Sammelobjekt** | Wanderstock; je erreichter Kehre ein **Stocknagel** (Schild in der Kapitelfarbe). Schweizer Brauch statt Brandstempel. Rückfall: Wanderpass |
 | **Zahl** | grosse Kehren-Zahl 01–07 weiss auf dem Bild, `aria-hidden`; die Information steht als Text «Kehre n von 7» |
 | **Weglinie** | dünne weisse Schlangenlinie links, Punkt der aktuellen Kehre in Gold |
-| **Bewegung** | Bild wandert vom Tal zum Pass, Nagel «schlägt an» (0,55 s) — nur ohne «weniger Bewegung»; ohne Skript sind alle Nägel da |
+| **Bewegung** | Bild blendet je Kehre über (0,9 s) und wandert leicht mit, Nagel «schlägt an» (0,55 s) — nur ohne «weniger Bewegung»; ohne Skript sind alle Nägel da |
 | **Kein Zwang** | Nägel sind Zeichen, keine Punkte; nichts wird gespeichert |
 
 ## 8. Calm-UX-Prinzipien
