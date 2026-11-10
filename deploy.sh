@@ -12,6 +12,7 @@
 #   ALLOW_ANY_BRANCH=1 bash deploy.sh   # Notfall: PRODUKTION aus einem anderen Branch deployen
 #   SKIP_BACKUP=1 bash deploy.sh        # Rollback-Backup der Live-Version gar nicht erst versuchen
 #   DEPLOY_OHNE_BACKUP=1 bash deploy.sh # Notfall: trotz fehlgeschlagenem/leerem Backup hochladen
+#   DEPLOY_OHNE_MARKE=1 bash deploy.sh  # Notfall: PRODUKTION ohne Freigabe-Marke (.maloja/predeploy-ok)
 #
 # Das Rollback-Backup ist ein GATE: schlägt es fehl oder bleibt es leer, bricht der
 # Deploy ab, BEVOR etwas hochgeht. Ohne Rückfallpunkt gäbe es keinen Weg zurück.
@@ -96,6 +97,32 @@ if [ "$STAGE" != "1" ]; then
   if [ "${ALLOW_ANY_BRANCH:-0}" != "1" ] && [ -n "$(git rev-list HEAD..origin/main 2>/dev/null || true)" ]; then
     echo "✗ 'main' ist hinter 'origin/main'. Erst aktualisieren:  git pull"
     exit 1
+  fi
+
+  # ─── Freigabe-Marke: nur den Stand deployen, der das Vortor bestanden hat ──
+  # /maloja-predeploy schreibt nach grünem Vortor den geprüften Commit in
+  # .maloja/predeploy-ok (Zeile 1 = Hash, Zeile 2 = Zeit). Bis 10.11.2026 prüfte
+  # das nur ein Claude-Hook (.claude/settings.json, PreToolUse) — im eigenen
+  # Terminal griff das Tor nicht: der Deploy vom 10.11. lief 40 s VOR der Marke
+  # (gleicher Commit, ohne Folgen). Jetzt prüft das Skript selbst, vor Passwort
+  # und Build. Stage ist frei (dort testet man ja gerade).
+  # Bewusster Ausweg im Notfall: DEPLOY_OHNE_MARKE=1.
+  MARKE="$(head -n1 "$(dirname "$0")/.maloja/predeploy-ok" 2>/dev/null || true)"
+  KOPF="$(git rev-parse HEAD 2>/dev/null || true)"
+  if [ "$MARKE" != "$KOPF" ]; then
+    if [ "${DEPLOY_OHNE_MARKE:-0}" = "1" ]; then
+      echo "⚠️  DEPLOY_OHNE_MARKE=1 — ohne gültige Freigabe-Marke (HEAD ${KOPF:-?}), es wird trotzdem deployt."
+    else
+      echo "✗ Freigabe-Marke fehlt oder passt nicht zum Stand, der live gehen soll."
+      echo "    HEAD:  ${KOPF:-?}"
+      echo "    Marke: ${MARKE:-keine}  (.maloja/predeploy-ok)"
+      echo
+      echo "  Erst das Vortor laufen lassen (/maloja-predeploy). Es setzt die Marke,"
+      echo "  wenn alles grün ist. Jeder Merge auf main macht sie wieder ungültig."
+      echo
+      echo "  Nur im Notfall ohne Marke:  DEPLOY_OHNE_MARKE=1 bash deploy.sh"
+      exit 1
+    fi
   fi
 fi
 
