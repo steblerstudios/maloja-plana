@@ -10,9 +10,10 @@ const html = vorstellungBauen();
 const abschnitt = html.match(/<section id="atlas" aria-labelledby="t-atlas">[\s\S]*?<\/section>/)[0];
 
 describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
-  it('steht zwischen «Ein Blick hinein» und «Holen»', () => {
+  // «Ein Blick hinein» ist seit 10.11.2026 in Kehre 7 und die Situationen aufgegangen: der Atlas folgt den Situationen.
+  it('steht zwischen den Situationen und «Holen»', () => {
     const i = (s) => html.indexOf(s);
-    expect(i('id="t-blick"')).toBeLessThan(i('id="t-atlas"'));
+    expect(i('id="t-lagen"')).toBeLessThan(i('id="t-atlas"'));
     expect(i('id="t-atlas"')).toBeLessThan(i('id="t-holen"'));
   });
 

@@ -74,6 +74,9 @@ const SITUATIONEN = [
 // Alle Knöpfe «Beispiel» führen direkt ins Beispiel (BetaGate liest ?beispiel, PR 1).
 export const BEISPIEL = '/app/?beispiel';
 const BILD = (n) => `/vorstellung/app-${n}.webp`;
+// Telefon an der Kehre (Stebler Studios 10.11.2026, Skizze A): Kapitel-Index → Aufnahme. Zurzeit nur Gesundheit
+// (Kehre 7); für die übrigen Kehren fehlen noch die Aufnahmen ihres Kapitels.
+export const KEHRE_BILDSCHIRM = { 6: 5 };
 
 const CSP = "default-src 'none'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'";
 
@@ -382,6 +385,14 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
     .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
     .reise-text p{ font-size:19px; line-height:1.55; color:#FBFBFA }
+    /* A · Telefon an der Kehre (Stebler Studios 10.11.2026, aus «Ein Blick hinein»): der Bildschirm des Kapitels steht
+       in der freien linken Bildhälfte, gegenüber dem Text; der Text behält seine Breite. Am Handy klein im Himmel darüber. */
+    .reise-station{ position:relative }
+    /* 27 % = Mitte zwischen Weglinie und Stock (gemessen bei 768 px: Linie endet 110, Stock beginnt 301). */
+    .reise-telefon{ position:absolute; left:27%; top:50%; transform:translate(-50%, -50%) }
+    .reise-telefon .telefon{ width:clamp(136px, 16vw, 220px); padding:9px; border-radius:38px }
+    .reise-telefon .bildschirm{ border-radius:30px; --statusleiste:30px }
+    .reise-telefon .insel{ top:16px; width:64px; height:18px }
     /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FFF8F0, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
     .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
     .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
@@ -419,8 +430,18 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       .reise-text{ background:rgba(20,20,18,.82); padding:18px 18px 20px; border-radius:16px;
         background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent) }   /* P · in der Kapitelfarbe getönt, 82 %: mind. 5,88:1 */
       .reise-text p{ font-size:16px }
+      .reise-station.mit-telefon{ flex-direction:column; justify-content:center; align-items:flex-start; gap:12px }
+      .reise-telefon{ position:static; transform:none }
+      .reise-telefon .telefon{ width:96px; padding:5px; border-radius:18px }
+      .reise-telefon .bildschirm{ border-radius:14px; --statusleiste:12px }
+      .reise-telefon .insel{ top:8px; width:30px; height:8px }
     }
     @media (max-height:520px){
+      .reise-station.mit-telefon{ flex-direction:column; align-items:flex-start; gap:12px }
+      .reise-telefon{ position:static; transform:none }
+      .reise-telefon .telefon{ width:96px; padding:5px; border-radius:18px }
+      .reise-telefon .bildschirm{ border-radius:14px; --statusleiste:12px }
+      .reise-telefon .insel{ top:8px; width:30px; height:8px }
       .reise-buehne{ position:relative; height:70vh }
       .reise-ablauf{ margin-top:0 }
       .reise-anfang{ background:var(--bg) }
@@ -433,13 +454,14 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       .leiste{ display:none }
     }
 
-    /* ─── Blick in die App (Editorial) ────────────────────────────── */
-    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:64px }
-    .blick.umgekehrt .blick-bild{ order:2 }
-    .blick .telefon{ width:250px; margin:0 auto }
-    .blick-text .zahl{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
-    .blick-text h3{ font-size:28px; line-height:1.25; font-weight:700; margin-bottom:12px; letter-spacing:-0.01em }
-    .blick-text p{ color:var(--leise); font-size:16px; max-width:28em }
+    /* C/D · «Was steht mir zu?» neben der Auswahl (Stebler Studios 10.11.2026; vorher im Abschnitt «Ein Blick hinein»,
+       der damit wegfällt). Darunter der Satz, dass die Wahl auf dem Gerät bleibt. */
+    .lagen-raster{ display:grid; grid-template-columns:minmax(0, 1fr) 220px; gap:64px; align-items:start }
+    .lagen-telefon{ margin:var(--abstand-m) 0 0 }
+    .lagen-telefon .telefon{ width:220px; padding:9px; border-radius:40px }
+    .lagen-telefon .bildschirm{ border-radius:31px; --statusleiste:32px }
+    .lagen-telefon .insel{ top:17px; width:72px; height:20px }
+    .lagen-telefon figcaption{ margin-top:16px; font-size:15px; color:var(--leise) }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ margin-top:16px; max-width:640px }
@@ -577,6 +599,8 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .schluss-text h2{ max-width:11em }
       .schluss-punkt, .knopf.am-punkt{ left:var(--xh) }
       .liste{ grid-template-columns:1fr 1fr }
+      .lagen-raster{ grid-template-columns:minmax(0, 1fr) 180px; gap:40px }
+      .lagen-telefon .telefon{ width:180px }
     }
     @media (max-width:760px){
       :root{ --abstand-l:64px }
@@ -602,11 +626,11 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .geraete .insel{ top:8px; width:30px; height:8px }
       .tafel{ padding:24px }
       .tafel p.gross{ font-size:19px }
-      .blick, .blick.umgekehrt{ grid-template-columns:1fr; gap:28px; margin-top:56px }
-      .blick.umgekehrt .blick-bild{ order:0 }
-      .blick .telefon{ width:220px; border-radius:40px; padding:9px }
-      .blick .bildschirm{ border-radius:31px; --statusleiste:32px }
-      .blick .insel{ top:17px; width:72px; height:20px }
+      .lagen-raster{ grid-template-columns:minmax(0, 1fr); gap:0 }
+      .lagen-telefon{ justify-self:center; max-width:280px; text-align:center }
+      .lagen-telefon .telefon{ width:180px; margin:0 auto; padding:8px; border-radius:34px }
+      .lagen-telefon .bildschirm{ border-radius:27px; --statusleiste:28px }
+      .lagen-telefon .insel{ top:15px; width:60px; height:17px }
       .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
       /* O am Handy: Punkte bleiben im Bild, die Wahl steht als Zeile darunter (das Bild ist zu niedrig für Schilder). */
       .geraet-wahl{ position:static; aspect-ratio:auto; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
@@ -636,7 +660,10 @@ function reiseStationen() {
   const n = KAPITEL.length;
   return KAPITEL.map((k, i) => {
     const weiter = i + 1 < n ? `<a class="weiter" href="#kehre-${i + 2}" aria-label="Weiter zu Kehre ${i + 2}">Weiter</a>` : '<a class="weiter" href="#holen">Weiter: App holen</a>';
-    return `          <li class="reise-station" id="kehre-${i + 1}" style="--farbe:var(--k${i})">
+    const bild = KEHRE_BILDSCHIRM[i];
+    const telefon = bild ? `
+            <div class="reise-telefon"><div class="telefon" role="img" aria-label="Kapitel ${esc(k.name)} im Beispiel, mit erfundenen Daten"><div class="insel"></div><div class="bildschirm"><img src="${BILD(bild)}" alt="" width="480" height="1040" loading="lazy" decoding="async"></div></div></div>` : '';
+    return `          <li class="reise-station${bild ? ' mit-telefon' : ''}" id="kehre-${i + 1}" style="--farbe:var(--k${i})">${telefon}
             <div class="reise-text">
               <div class="reise-gross" aria-hidden="true">${zeichen(i, `gross${i + 1}`)}</div>
               <span class="name">Kehre ${i + 1} von ${n} · ${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p>
@@ -892,6 +919,7 @@ ${reiseStationen()}
       <h2 id="t-lagen">Was ist bei Ihnen gerade los?</h2>
       <p class="unterzeile">Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer Situation. Wählen Sie, was passt.</p>
 
+      <div class="lagen-raster">
       <fieldset>
       <legend class="unsichtbar">Ihre Situation</legend>
 ${SITUATIONEN.map((_, i) => `      <input type="radio" name="lage" id="l${i + 1}" class="unsichtbar"${i === 0 ? ' checked' : ''}>`).join('\n')}
@@ -902,28 +930,10 @@ ${SITUATIONEN.map(([titel], i) => `        <label for="l${i + 1}">${esc(titel)}<
 ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p class="gross">${esc(text)}</p><a href="${BEISPIEL}#/situationen">Im Beispiel ansehen →</a></div>`).join('\n')}
       </div>
       </fieldset>
-    </section>
-
-    <!-- ═══ Blick in die App ═══ -->
-    <section aria-labelledby="t-blick">
-      <p class="augenbraue">Ein Blick hinein</p>
-      <h2 id="t-blick">So fühlt sich Ordnung an.</h2>
-
-      <div class="blick">
-        <div class="blick-bild"><div class="telefon" role="img" aria-label="Ansicht «Was steht mir zu?» im Beispiel"><div class="insel"></div><div class="bildschirm"><img src="${BILD(3)}" alt="" width="480" height="1040" loading="lazy"></div></div></div>
-        <div class="blick-text">
-          <p class="zahl">Was steht mir zu?</p>
-          <h3>Ihre Situation, nicht ein Formular.</h3>
-          <p>Sie wählen, was auf Sie zutrifft. Das bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</p>
-        </div>
-      </div>
-      <div class="blick umgekehrt">
-        <div class="blick-bild"><div class="telefon" role="img" aria-label="Gesundheit und Notfall im Beispiel"><div class="insel"></div><div class="bildschirm"><img src="${BILD(5)}" alt="" width="480" height="1040" loading="lazy"></div></div></div>
-        <div class="blick-text">
-          <p class="zahl">Gesundheit</p>
-          <h3>Wenn es darauf ankommt, liegt alles bereit.</h3>
-          <p>Kontaktperson, Hausarzt, wichtige Hinweise — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
-        </div>
+      <figure class="lagen-telefon">
+        <div class="telefon" role="img" aria-label="Ansicht «Was steht mir zu?» im Beispiel, mit erfundenen Daten"><div class="insel"></div><div class="bildschirm"><img src="${BILD(3)}" alt="" width="480" height="1040" loading="lazy" decoding="async"></div></div>
+        <figcaption>Was Sie wählen, bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</figcaption>
+      </figure>
       </div>
     </section>
 

@@ -400,9 +400,32 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   it('Brand Book §7e beschreibt Seitenfarbe, App holen (O), Schluss (N) und die Schicht in der Kapitelfarbe (P)', () => {
     const buch = fs.readFileSync(path.join(WURZEL, 'docs/brand/brand-guidelines.md'), 'utf8');
     const e = buch.slice(buch.indexOf('### 7e.'), buch.indexOf('## 8.'));
-    for (const zeile of ['| **Seitenfarbe** |', '| **App holen (O)** |', '| **Schluss (N)** |']) expect(e).toContain(zeile);
+    for (const zeile of ['| **Seitenfarbe** |', '| **App holen (O)** |', '| **Schluss (N)** |', '| **Telefon an der Kehre (A)**', '| **Situationen mit Telefon (C/D)**']) expect(e).toContain(zeile);
     expect(e).toContain('**in der Farbe der Kehre**');
     expect(e).toContain('`#FCF0E4`');
+  });
+
+  // «Ein Blick hinein» vereint mit Reise und Situationen (Stebler Studios 10.11.2026: «A, dazu C und D»).
+  it('A · Kehre 7 trägt das Telefon mit dem Gesundheits-Bildschirm, in der linken Bildhälfte; am Handy über der Karte', () => {
+    const kehre = (n) => html.match(new RegExp(`<li class="reise-station[^"]*" id="kehre-${n}"[\\s\\S]*?</li>`))[0];
+    expect(kehre(7)).toMatch(/^<li class="reise-station mit-telefon"/);
+    expect(kehre(7)).toMatch(/<div class="reise-telefon"><div class="telefon" role="img" aria-label="Kapitel Gesundheit im Beispiel, mit erfundenen Daten">[\s\S]*?<img src="\/vorstellung\/app-5\.webp"/);
+    expect(kehre(7).indexOf('class="reise-telefon"')).toBeLessThan(kehre(7).indexOf('class="reise-text"'));
+    for (const n of [1, 2, 3, 4, 5, 6]) expect(kehre(n), `Kehre ${n}`).not.toContain('reise-telefon');
+    expect(stil).toMatch(/\.reise-telefon\{ position:absolute; left:27%; top:50%/);
+    expect(handy).toMatch(/\.reise-telefon\{ position:static; transform:none \}/);
+    expect(handy).toMatch(/\.reise-station\.mit-telefon\{ flex-direction:column/);
+  });
+
+  it('C/D · «Was steht mir zu?» steht neben der Auswahl der Situationen, mit dem Satz zum Gerät; «Ein Blick hinein» ist weg', () => {
+    const lagen = html.match(/<section id="situationen"[\s\S]*?<\/section>/)[0];
+    expect(lagen).toMatch(/<div class="lagen-raster">\s*<fieldset>[\s\S]*<\/fieldset>\s*<figure class="lagen-telefon">/);
+    expect(lagen).toMatch(/aria-label="Ansicht «Was steht mir zu\?» im Beispiel, mit erfundenen Daten"[\s\S]*?<img src="\/vorstellung\/app-3\.webp"/);
+    expect(lagen).toContain('<figcaption>Was Sie wählen, bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</figcaption>');
+    expect(html).not.toContain('t-blick');
+    expect(html).not.toContain('<p class="augenbraue">Ein Blick hinein</p>');   // im Stil-Kommentar steht der Name als Historie
+    expect(stil).not.toMatch(/\.blick[\s.{-]/);
+    expect(html.match(/app-5\.webp/g)).toHaveLength(2);   // Bildfolge im Hero + Kehre 7
   });
 
   it('Browserleiste hell nach der Seitenfarbe, dunkel nach Granit', () => {

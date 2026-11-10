@@ -402,6 +402,14 @@
     .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
     .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
     .reise-text p{ font-size:19px; line-height:1.55; color:#FBFBFA }
+    /* A · Telefon an der Kehre (Stebler Studios 10.11.2026, aus «Ein Blick hinein»): der Bildschirm des Kapitels steht
+       in der freien linken Bildhälfte, gegenüber dem Text; der Text behält seine Breite. Am Handy klein im Himmel darüber. */
+    .reise-station{ position:relative }
+    /* 27 % = Mitte zwischen Weglinie und Stock (gemessen bei 768 px: Linie endet 110, Stock beginnt 301). */
+    .reise-telefon{ position:absolute; left:27%; top:50%; transform:translate(-50%, -50%) }
+    .reise-telefon .telefon{ width:clamp(136px, 16vw, 220px); padding:9px; border-radius:38px }
+    .reise-telefon .bildschirm{ border-radius:30px; --statusleiste:30px }
+    .reise-telefon .insel{ top:16px; width:64px; height:18px }
     /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FFF8F0, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
     .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
     .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
@@ -439,8 +447,18 @@
       .reise-text{ background:rgba(20,20,18,.82); padding:18px 18px 20px; border-radius:16px;
         background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent) }   /* P · in der Kapitelfarbe getönt, 82 %: mind. 5,88:1 */
       .reise-text p{ font-size:16px }
+      .reise-station.mit-telefon{ flex-direction:column; justify-content:center; align-items:flex-start; gap:12px }
+      .reise-telefon{ position:static; transform:none }
+      .reise-telefon .telefon{ width:96px; padding:5px; border-radius:18px }
+      .reise-telefon .bildschirm{ border-radius:14px; --statusleiste:12px }
+      .reise-telefon .insel{ top:8px; width:30px; height:8px }
     }
     @media (max-height:520px){
+      .reise-station.mit-telefon{ flex-direction:column; align-items:flex-start; gap:12px }
+      .reise-telefon{ position:static; transform:none }
+      .reise-telefon .telefon{ width:96px; padding:5px; border-radius:18px }
+      .reise-telefon .bildschirm{ border-radius:14px; --statusleiste:12px }
+      .reise-telefon .insel{ top:8px; width:30px; height:8px }
       .reise-buehne{ position:relative; height:70vh }
       .reise-ablauf{ margin-top:0 }
       .reise-anfang{ background:var(--bg) }
@@ -453,13 +471,14 @@
       .leiste{ display:none }
     }
 
-    /* ─── Blick in die App (Editorial) ────────────────────────────── */
-    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:64px }
-    .blick.umgekehrt .blick-bild{ order:2 }
-    .blick .telefon{ width:250px; margin:0 auto }
-    .blick-text .zahl{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
-    .blick-text h3{ font-size:28px; line-height:1.25; font-weight:700; margin-bottom:12px; letter-spacing:-0.01em }
-    .blick-text p{ color:var(--leise); font-size:16px; max-width:28em }
+    /* C/D · «Was steht mir zu?» neben der Auswahl (Stebler Studios 10.11.2026; vorher im Abschnitt «Ein Blick hinein»,
+       der damit wegfällt). Darunter der Satz, dass die Wahl auf dem Gerät bleibt. */
+    .lagen-raster{ display:grid; grid-template-columns:minmax(0, 1fr) 220px; gap:64px; align-items:start }
+    .lagen-telefon{ margin:var(--abstand-m) 0 0 }
+    .lagen-telefon .telefon{ width:220px; padding:9px; border-radius:40px }
+    .lagen-telefon .bildschirm{ border-radius:31px; --statusleiste:32px }
+    .lagen-telefon .insel{ top:17px; width:72px; height:20px }
+    .lagen-telefon figcaption{ margin-top:16px; font-size:15px; color:var(--leise) }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ margin-top:16px; max-width:640px }
@@ -605,6 +624,8 @@
       .schluss-text h2{ max-width:11em }
       .schluss-punkt, .knopf.am-punkt{ left:var(--xh) }
       .liste{ grid-template-columns:1fr 1fr }
+      .lagen-raster{ grid-template-columns:minmax(0, 1fr) 180px; gap:40px }
+      .lagen-telefon .telefon{ width:180px }
     }
     @media (max-width:760px){
       :root{ --abstand-l:64px }
@@ -630,11 +651,11 @@
       .geraete .insel{ top:8px; width:30px; height:8px }
       .tafel{ padding:24px }
       .tafel p.gross{ font-size:19px }
-      .blick, .blick.umgekehrt{ grid-template-columns:1fr; gap:28px; margin-top:56px }
-      .blick.umgekehrt .blick-bild{ order:0 }
-      .blick .telefon{ width:220px; border-radius:40px; padding:9px }
-      .blick .bildschirm{ border-radius:31px; --statusleiste:32px }
-      .blick .insel{ top:17px; width:72px; height:20px }
+      .lagen-raster{ grid-template-columns:minmax(0, 1fr); gap:0 }
+      .lagen-telefon{ justify-self:center; max-width:280px; text-align:center }
+      .lagen-telefon .telefon{ width:180px; margin:0 auto; padding:8px; border-radius:34px }
+      .lagen-telefon .bildschirm{ border-radius:27px; --statusleiste:28px }
+      .lagen-telefon .insel{ top:15px; width:60px; height:17px }
       .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
       /* O am Handy: Punkte bleiben im Bild, die Wahl steht als Zeile darunter (das Bild ist zu niedrig für Schilder). */
       .geraet-wahl{ position:static; aspect-ratio:auto; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
@@ -806,7 +827,8 @@
               <span class="name">Kehre 6 von 7 · Behörden</span><h3>Briefe und Fristen</h3><p>Schreiben an Ämter vorbereiten und Fristen im Blick behalten.</p>
               <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/5">Behörden im Beispiel ansehen</a><a class="weiter" href="#kehre-7" aria-label="Weiter zu Kehre 7">Weiter</a></p>
             </div></li>
-          <li class="reise-station" id="kehre-7" style="--farbe:var(--k6)">
+          <li class="reise-station mit-telefon" id="kehre-7" style="--farbe:var(--k6)">
+            <div class="reise-telefon"><div class="telefon" role="img" aria-label="Kapitel Gesundheit im Beispiel, mit erfundenen Daten"><div class="insel"></div><div class="bildschirm"><img src="/vorstellung/app-5.webp" alt="" width="480" height="1040" loading="lazy" decoding="async"></div></div></div>
             <div class="reise-text">
               <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="gross7-leitform4"><rect x="2" y="7.6" width="20" height="13.4" rx="2.6" fill="#fff"></rect><path d="M8.6 7.6 V5.6 A1.6 1.6 0 0 1 10.2 4 H13.8 A1.6 1.6 0 0 1 15.4 5.6 V7.6" fill="none" stroke-width="1.6" stroke="#fff"></path><rect x="10.3" y="3.3" width="3.4" height="1.5" rx="0.7" fill="#fff"></rect><path d="M2.3 10.6 H21.7" fill="none" stroke-width="0.7" opacity="0.9" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="4.8" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><rect x="17.3" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><path d="M12 12.4 v6.4 M8.8 15.6 h6.4" fill="none" stroke-width="2.6" stroke="#000"></path><path d="M2.6 18.4 L4.4 20.4 M21.4 18.4 L19.6 20.4" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#gross7-leitform4)"></rect></svg></g></svg></div>
               <span class="name">Kehre 7 von 7 · Gesundheit</span><h3>Gesundheit und Ernstfall</h3><p>Notfallkarte, Kontaktperson und Verfügungen — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
@@ -841,6 +863,7 @@
       <h2 id="t-lagen">Was ist bei Ihnen gerade los?</h2>
       <p class="unterzeile">Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer Situation. Wählen Sie, was passt.</p>
 
+      <div class="lagen-raster">
       <fieldset>
       <legend class="unsichtbar">Ihre Situation</legend>
       <input type="radio" name="lage" id="l1" class="unsichtbar" checked>
@@ -866,28 +889,10 @@
         <div class="tafel t6"><p class="gross">Krankenkasse, Prämienverbilligung, die erste Steuererklärung: Maloja zeigt, was in der Ausbildung wichtig wird.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
       </div>
       </fieldset>
-    </section>
-
-    <!-- ═══ Blick in die App ═══ -->
-    <section aria-labelledby="t-blick">
-      <p class="augenbraue">Ein Blick hinein</p>
-      <h2 id="t-blick">So fühlt sich Ordnung an.</h2>
-
-      <div class="blick">
-        <div class="blick-bild"><div class="telefon" role="img" aria-label="Ansicht «Was steht mir zu?» im Beispiel"><div class="insel"></div><div class="bildschirm"><img src="/vorstellung/app-3.webp" alt="" width="480" height="1040" loading="lazy"></div></div></div>
-        <div class="blick-text">
-          <p class="zahl">Was steht mir zu?</p>
-          <h3>Ihre Situation, nicht ein Formular.</h3>
-          <p>Sie wählen, was auf Sie zutrifft. Das bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</p>
-        </div>
-      </div>
-      <div class="blick umgekehrt">
-        <div class="blick-bild"><div class="telefon" role="img" aria-label="Gesundheit und Notfall im Beispiel"><div class="insel"></div><div class="bildschirm"><img src="/vorstellung/app-5.webp" alt="" width="480" height="1040" loading="lazy"></div></div></div>
-        <div class="blick-text">
-          <p class="zahl">Gesundheit</p>
-          <h3>Wenn es darauf ankommt, liegt alles bereit.</h3>
-          <p>Kontaktperson, Hausarzt, wichtige Hinweise — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
-        </div>
+      <figure class="lagen-telefon">
+        <div class="telefon" role="img" aria-label="Ansicht «Was steht mir zu?» im Beispiel, mit erfundenen Daten"><div class="insel"></div><div class="bildschirm"><img src="/vorstellung/app-3.webp" alt="" width="480" height="1040" loading="lazy" decoding="async"></div></div>
+        <figcaption>Was Sie wählen, bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</figcaption>
+      </figure>
       </div>
     </section>
 
