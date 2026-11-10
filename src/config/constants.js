@@ -418,7 +418,9 @@ export function getChapters(t) {
         { k: 'taxId', type: 'text' },
         { k: 'taxFilingDeadline', type: 'date' },
         { k: 'pendingTaxReturns', type: 'text' },
-        { k: 'registryOffice', type: 'text', sec: 'legal', orientation: or(t, 'sozialdienst') },
+        // Kapitel 6 · K (10.11.2026): hier stand der Orientierungstext zum Sozialdienst; das Feld ist das Betreibungsamt,
+        // die Orientierung dazu trägt das Feld darunter.
+        { k: 'registryOffice', type: 'text', sec: 'legal' },
         { k: 'betreibungsStatus', type: 'select', sel: 1, orientation: or(t, 'betreibung') },
         { k: 'courtCases', type: 'select', sel: 1 },
         { k: 'legalRepresentative', type: 'text', sec: 'representation' },
