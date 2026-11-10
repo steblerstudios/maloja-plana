@@ -15,6 +15,15 @@
 // Nur Deutsch. Weitere Sprachen erst als eigene Seiten (Rechtsprüfung 26.10., UWG Art. 3 Abs. 1 lit. b).
 
 import { BASIS } from '../seiten-inhalt.mjs';
+import { BRILLEN, KARTE_MASS } from './kantonsatlas.mjs';
+
+// Kantonsatlas als Brückenstück (Stebler Studios 09.11.2026, «Ja, A bis C bauen», Teil B): Die Website zeigt
+// den Atlas als eigenen Abschnitt; jede Brille führt gefiltert hinein (/kantonsatlas/#fuer-<id>, Teil A).
+// Brillen aus kantonsatlas.mjs, damit Name und Frage hier und dort dieselben sind.
+const ATLAS_KARTEN = new Set(BRILLEN.flatMap((b) => b.karten)).size;
+// Zahlen im Fliesstext ausgeschrieben wie «sieben Kapitel» (Copy-Prüfung 09.11.2026). Ändert sich die Zahl, hier ergänzen.
+const ATLAS_KARTEN_WORT = { 10: 'zehn' }[ATLAS_KARTEN];
+if (!ATLAS_KARTEN_WORT) throw new Error(`vorstellung.mjs: ${ATLAS_KARTEN} Atlas-Karten, Wort fehlt`);
 
 // Warteliste (Entscheid Stebler Studios 09.11.2026, Plan «Sichtbarkeit», Weg 1): nur ein Mail-Entwurf.
 // Kein Formular, kein Dienst, nichts wird automatisch gesendet — die Person schickt die Mail selbst.
@@ -229,8 +238,14 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .geraet ol{ padding-left:20px; color:var(--leise); font-size:15px }
     .geraet li{ margin-bottom:8px; padding-left:4px }
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
-    .bald{ margin-top:20px; font-size:15px; color:var(--leise) }
+    .bald, .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
     .bald strong{ color:var(--text) }
+    /* Atlas-Abschnitt: eine Karte als eigenes Bild (Entscheid 10.11.2026, C). Lädt erst beim Hinscrollen,
+       die Seite bleibt leicht; Breite und Höhe stehen am Bild, damit nichts springt. */
+    .atlas-bild{ margin-top:var(--abstand-m); max-width:640px }
+    .atlas-bild a{ display:block; border-radius:var(--radius-m) }
+    .atlas-bild img{ display:block; width:100%; height:auto }
+    .atlas-bild figcaption{ margin-top:8px; font-size:15px; color:var(--leise) }
 
     /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */
     .liste{ list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:28px 32px; margin-top:var(--abstand-m) }
@@ -238,6 +253,10 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .liste li{ border-top:1px solid var(--rand); padding-top:14px }
     .liste p, .liste span{ font-size:15px; color:var(--leise) }
     .liste a{ font-weight:600 }
+    /* Ein Link, der allein im Listenpunkt steht («Karten für diese Frage», «Zum Nachlesen»), ist ein eigener Weg,
+       kein Link im Satz — 44 px wie jedes Bedienelement (Brand Book §7a, Regel I; gemessen bei 375 px: vorher 19 px).
+       Links im Fliesstext (z. B. «Datenschutz» unter «Kein Tracking») bleiben unberührt. */
+    .liste > li > a{ display:inline-block; padding:13px 0 }
     .liste span{ display:block }
     .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:72px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
@@ -480,6 +499,22 @@ ${stationen()}
           <p>Kontaktperson, Hausarzt, wichtige Hinweise — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
         </div>
       </div>
+    </section>
+
+    <!-- ═══ Kantonsatlas: das Brückenstück zwischen Website und App ═══ -->
+    <section id="atlas" aria-labelledby="t-atlas">
+      <p class="augenbraue">Kantonsatlas</p>
+      <h2 id="t-atlas">Die Kantone auf der Karte.</h2>
+      <p class="unterzeile">Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: ${ATLAS_KARTEN_WORT} Karten der 26 Kantone aus öffentlichen Statistiken, frei zugänglich und ohne Rangliste. Welche Karten wichtig sind, hängt von der Frage ab. Vier Beispiele:</p>
+      <figure class="atlas-bild">
+        <a href="/kantonsatlas/#karte-praemie"><img src="/kantonsatlas/karte-praemie.svg" width="${KARTE_MASS.w}" height="${KARTE_MASS.h}" loading="lazy" decoding="async" alt="Karte der 26 Kantone: mittlere Monatsprämie für Erwachsene 2027, in vier Stufen von tief bis hoch. Zur Karte im Kantonsatlas, mit den Werten jedes Kantons."></a>
+        <figcaption>Ein Beispiel: die mittlere Monatsprämie 2027. Werte und Quelle stehen im Kantonsatlas.</figcaption>
+      </figure>
+      <ul class="liste">
+${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><a href="/kantonsatlas/#fuer-${b.id}">Karten für diese Frage<span class="unsichtbar">: ${esc(b.name)}</span></a></li>`).join('\n')}
+      </ul>
+      <div class="wege"><a class="knopf zweit" href="/kantonsatlas/">Alle ${ATLAS_KARTEN_WORT} Karten ansehen</a></div>
+      <p class="atlas-hinweis">Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage. Was davon für Sie gilt, zeigt die App Schritt für Schritt, mit Ihren Angaben, auf Ihrem Gerät.</p>
     </section>
 
     <!-- ═══ Holen ═══ -->
