@@ -12,6 +12,16 @@ RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
 RewriteCond %{HTTP_HOST} !^malojaplana\.ch$ [NC]
 RewriteRule ^(.*)$ https://malojaplana.ch/$1 [R=301,L]
 
+# Teilen-Empfang (#782) — gesetzt auf dem Server am 10.11.2026 (Stebler Studios),
+# per curl belegt: POST /teilen-empfang → 303 https://malojaplana.ch/ (vorher 404).
+# Eine über «Teilen …» geschickte Datei kommt als POST an /teilen-empfang. Normalerweise
+# fängt der Service Worker sie im Browser ab (public/sw.js). Ist er nicht aktiv (erster
+# Besuch, Website-Daten gelöscht), käme sie hier an: nicht annehmen, sondern zur App
+# schicken. 303 = der Browser holt danach / per GET, die App startet, der SW meldet sich an.
+# Die Datei dieses einen Versuchs ist verloren; Apache liest den Inhalt nicht ein.
+RewriteCond %{REQUEST_METHOD} =POST
+RewriteRule ^teilen-empfang/?$ / [R=303,L]
+
 <IfModule mod_headers.c>
 Header always set Strict-Transport-Security "max-age=31536000"
 Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
