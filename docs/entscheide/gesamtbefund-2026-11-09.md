@@ -198,5 +198,6 @@ siebenmal neu entschieden werden:
    A2 Erinnerung ab 75 ab Klick gerechnet. Gestaltung A Abläufe fehlen auf der Kapitelseite (7 von 9), B Überschriften 2 → 4,
    C drei Einleitungen. Sprache S1–S7 (rm 146 Texte deutsch, «ruhiger Überblick» in allen neun Intros). Zweig
    `feat/kapitel-6-behoerden` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
