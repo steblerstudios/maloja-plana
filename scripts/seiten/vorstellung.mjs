@@ -307,7 +307,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-buehne::after{ background:linear-gradient(0deg, rgba(18,18,16,.74) 0%, rgba(18,18,16,.6) 40%, rgba(18,18,16,0) 70%) }
       .reise-stock{ left:auto; right:6px; margin-left:0; height:86%; top:7% }
       .reise-linie{ display:none }
-      .reise-station{ align-items:flex-end; padding:0 76px 9vh 16px }
+      .reise-station{ align-items:center; padding:10vh 76px 10vh 16px }
       .reise-gross{ width:64px; padding:8px; border-radius:12px; margin-bottom:12px }
       /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene halbdurchsichtige Fläche (62 %). */
       .reise-text{ background:rgba(20,20,18,.62); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); padding:18px 18px 20px; border-radius:var(--radius-m) }
@@ -359,9 +359,46 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .schluss .unterzeile{ margin:0 auto }
     .schluss .wege{ justify-content:center }
 
-    footer{ border-top:1px solid var(--rand); padding:28px 0 56px; font-size:13px; color:var(--leise) }
-    footer a{ color:var(--sand-tief) }
-    footer p{ margin-bottom:6px }
+    /* D/E · Fuss: heller Grund mit Haarlinie (kein dunkles Band), Bildmarke Anthrazit führt nach oben. */
+    .fuss{ border-top:1px solid var(--rand); padding:48px 0 56px; font-size:14px; color:var(--leise) }
+    .fuss a{ color:var(--sand-tief) }
+    .fuss p{ margin-bottom:8px }
+    .fuss-spalten{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px }
+    .fuss .marke{ color:var(--text); margin-bottom:8px } .fuss .marke:hover{ color:var(--text) }
+    .fuss-titel{ font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text) }
+    .fuss ul{ list-style:none } .fuss li a{ display:inline-block; padding:6px 0 }
+    .fuss-zeile{ margin-top:32px; padding-top:16px; border-top:1px solid var(--rand); font-size:13px }
+    .fuss .vertrauen{ display:flex; flex-wrap:wrap; gap:4px 16px; color:var(--text) }
+    .fuss .vertrauen span::before{ content:"·"; margin-right:16px; color:var(--sand-tief) }
+    .fuss .vertrauen span:first-child::before{ content:none }
+
+    /* Zum Inhalt springen (wie in der App, .mp-skip-link): erst beim Fokus sichtbar. */
+    .sprung{ position:absolute; z-index:20; left:16px; top:-80px; padding:10px 16px; border-radius:var(--radius-knopf);
+      background:#FBFBFA; color:#24262A; font-weight:600 }
+    .sprung:focus{ top:12px }
+    main:focus{ outline:none }
+    html{ scroll-padding-top:64px }  /* Sprungziele landen unter der Leiste */
+
+    /* B/C · Leiste: Papier mit Haarlinie (kein Milchglas), 56 px. Erscheinen 250 ms, Verschwinden ⅔ davon (§7a E). */
+    .leiste{ position:fixed; z-index:8; top:0; left:0; right:0; background:#FBFBFA; color:#24262A; border-bottom:1px solid #E0DDD8;
+      transform:translateY(-100%); visibility:hidden }
+    .leiste[data-zustand="reise"], .leiste[data-zustand="seite"]{ transform:none; visibility:visible }
+    .leiste-innen{ display:flex; align-items:center; gap:20px; min-height:56px }
+    .leiste .marke{ color:#22211F } .leiste .marke svg{ height:26px }
+    .leiste-ort{ display:flex; align-items:center; gap:14px; margin:0; font-size:14px; font-weight:600; color:#24262A }
+    .leiste .punkte{ display:flex; gap:6px }
+    .leiste .punkte span{ width:8px; height:8px; border-radius:50%; border:1.5px solid #7A5F30 }
+    .leiste .punkte .gegangen{ background:#C4A06A; border-color:#C4A06A }
+    .leiste .punkte .hier{ background:#7A5F30; border-color:#7A5F30; box-shadow:0 0 0 3px rgba(196,160,106,.35) }
+    .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:14px }
+    .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px }
+    .leiste-links a:hover{ text-decoration:underline }
+    .leiste-links a[aria-current="true"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
+    .leiste[data-zustand="seite"] .leiste-ort{ display:none }
+    @media (prefers-reduced-motion: no-preference){
+      .leiste{ transition:transform .15s cubic-bezier(.4,0,.2,1), visibility 0s linear .15s }
+      .leiste[data-zustand="reise"], .leiste[data-zustand="seite"]{ transition:transform .25s cubic-bezier(.4,0,.2,1) }
+    }
 
     @media (prefers-reduced-motion: reduce){
       .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter{ display:none }
@@ -375,8 +412,17 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       :root{ --abstand-l:80px }
       h2{ font-size:26px }
       .unterzeile{ font-size:16px }
-      .kopf nav{ display:none }
-      .pass{ grid-template-columns:1fr; padding-top:84px; gap:28px; align-items:start }
+      /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
+      .kopf{ flex-wrap:wrap; row-gap:4px }
+      .kopf nav, .leiste-links{ width:100%; gap:8px; overflow-x:auto; scrollbar-width:none;
+        -webkit-mask-image:linear-gradient(90deg, #000 82%, transparent); mask-image:linear-gradient(90deg, #000 82%, transparent) }
+      .kopf nav a, .leiste-links a{ flex:none; display:inline-flex; align-items:center; min-height:44px; padding:0 14px;
+        border:1px solid rgba(36,38,42,.28); border-radius:var(--radius-knopf); background:rgba(251,251,250,.75); text-decoration:none }
+      .leiste-links a[aria-current="true"]{ background:#C4A06A; border-color:#C4A06A; color:#2A2620; text-decoration:none }
+      .leiste-innen{ flex-wrap:wrap; gap:6px 12px; padding-block:6px }
+      .leiste[data-zustand="reise"] .leiste-links{ display:none }
+      .fuss-spalten{ grid-template-columns:1fr; gap:24px }
+      .pass{ grid-template-columns:1fr; padding-top:136px; gap:28px; align-items:start }
       .pass h1{ font-size:32px }
       .pass .vorspann{ font-size:17px }
       .geraete{ justify-self:stretch; max-width:none }
@@ -493,7 +539,9 @@ export function vorstellungBauen() {
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Stebler Studios">
-  <meta name="theme-color" content="#F4F0E6">
+  <!-- Browserleiste je Farbschema (Granit, Brand Book §2) -->
+  <meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">
   <title>${esc(VORSTELLUNG.titel)}</title>
   <meta name="description" content="${esc(VORSTELLUNG.beschreibung)}">
   <link rel="canonical" href="${BASIS}/">
@@ -522,6 +570,7 @@ ${json}
   </style>
 </head>
 <body>
+  <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
   <!-- ═══ Kopf: liegt auf dem Passbild ═══ -->
   <header class="kopf-leiste">
@@ -539,7 +588,22 @@ ${json}
     </div>
   </header>
 
-  <main>
+  <!-- ═══ B/C · Leiste: fährt herein, sobald der Hero vorbei ist. Während der Reise «Kehre n von 7» mit sieben
+       Punkten, danach die Seiten-Links mit dem aktuellen Abschnitt. Ohne Skript erscheint sie nie. ═══ -->
+  <nav class="leiste" aria-label="Seite, Leiste" data-zustand="aus">
+    <div class="rahmen leiste-innen">
+      <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben">${MARKE}</a>
+      <p class="leiste-ort" aria-hidden="true"><span class="ort-text">Sieben Kapitel</span><span class="punkte">${KAPITEL.map(() => '<span></span>').join('')}</span></p>
+      <div class="leiste-links">
+        <a href="#weg">Kapitel</a>
+        <a href="#situationen">Situationen</a>
+        <a href="#holen">App holen</a>
+        <a href="/app/">Öffnen</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="inhalt" tabindex="-1">
     <!-- ═══ Hero und Reise: eine Bühne. Das Passbild unter dem Hero ist Bild 0, darauf folgen die Kehren. ═══ -->
     <div class="reise-bruecke">
       <div class="reise-buehne" aria-hidden="true" data-hier="-1">
@@ -733,15 +797,43 @@ ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p clas
     </div>
   </main>
 
-  <footer>
+  <!-- ═══ D/E · Fuss: Marke · Entdecken · Rechtliches, darunter die Vertrauenszeile ═══ -->
+  <footer class="fuss">
     <div class="rahmen">
-      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
-      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
-      <p>Quelloffen unter <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
-      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
-      <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
-      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> ·
-      <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <div class="fuss-spalten">
+        <div class="fuss-marke">
+          <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben">${MARKE}Maloja&nbsp;Plana</a>
+          <p>Ein Schweizer Lebensordner. Ein Projekt von Stebler Studios, Basel.</p>
+          <p><a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+        </div>
+        <nav aria-labelledby="f-entdecken">
+          <p class="fuss-titel" id="f-entdecken">Entdecken</p>
+          <ul>
+            <li><a href="${BEISPIEL}">Beispiel ansehen</a></li>
+            <li><a href="#weg">Die sieben Kapitel</a></li>
+            <li><a href="#holen">App holen</a></li>
+            <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+            <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+            <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+            <li><a href="/steuern/">Steuern</a></li>
+            <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-recht">
+          <p class="fuss-titel" id="f-recht">Rechtliches</p>
+          <ul>
+            <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+            <li><a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">Quelloffen unter AGPL-3.0</a></li>
+            <li><a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></li>
+            <li><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="fuss-zeile">
+        <p class="vertrauen"><span>Ohne Konto</span><span>Ohne Werbung</span><span>Ihre Angaben bleiben auf dem Gerät</span></p>
+        <p>Diese Seite gibt es auf Deutsch. Die App lässt sich auch auf Englisch, Französisch, Italienisch und Rätoromanisch einstellen.</p>
+        <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
+      </div>
     </div>
   </footer>
   <script src="/reise.js" defer></script>

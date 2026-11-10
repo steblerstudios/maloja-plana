@@ -64,6 +64,35 @@
     // der Stock, bis der neue Nagel vorn steht («im Kreis angeschaut» wie bei Fuji, kein Zoom).
     ziel = hier < 0 ? -SCHRITT : SCHRITT * (hier - 1 + Math.min(1, k / 0.4));
     if (ruhig.matches) { winkel = hier < 0 ? 0 : SCHRITT * hier; drehen(); } else if (!laeuft) { laeuft = true; window.requestAnimationFrame(schritt); }
+    leisteNeu(hier, h);
+  }
+
+  // B/C · Die Leiste oben: «aus», solange der Hero zu sehen ist; «reise» während der Kehren (Ort + sieben Punkte);
+  // «seite» danach (Seiten-Links, der aktuelle Abschnitt mit aria-current). Ohne Skript gibt es sie nicht.
+  var leiste = document.querySelector('.leiste');
+  var anfang = document.querySelector('.reise-anfang');
+  var leistePunkte = leiste ? [].slice.call(leiste.querySelectorAll('.punkte span')) : [];
+  var leisteOrt = leiste && leiste.querySelector('.ort-text');
+  var leisteLinks = leiste ? [].slice.call(leiste.querySelectorAll('.leiste-links a')) : [];
+  function leisteNeu(hier, h) {
+    if (!leiste || !anfang) return;
+    var zustand = 'aus';
+    if (anfang.getBoundingClientRect().bottom <= 56) {
+      zustand = bruecke.getBoundingClientRect().bottom > h * 0.5 ? 'reise' : 'seite';
+    }
+    if (leiste.getAttribute('data-zustand') !== zustand) leiste.setAttribute('data-zustand', zustand);
+    if (zustand === 'reise') {
+      if (leisteOrt) leisteOrt.textContent = hier < 0 ? 'Sieben Kapitel' : 'Kehre ' + (hier + 1) + ' von ' + stationen.length + ' · ' + namen[hier];
+      leistePunkte.forEach(function (p, i) { p.className = i < hier ? 'gegangen' : (i === hier ? 'hier' : ''); });
+    }
+    // Aktueller Abschnitt: der letzte, dessen Anfang die obere Bildhälfte erreicht hat.
+    var aktuell = null;
+    leisteLinks.forEach(function (a) {
+      var ziel = a.getAttribute('href');
+      var el = ziel && ziel.charAt(0) === '#' ? document.querySelector(ziel) : null;
+      if (el && el.getBoundingClientRect().top <= h * 0.4) aktuell = a;
+    });
+    leisteLinks.forEach(function (a) { if (a === aktuell) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
   }
 
   // Der Stock: Nägel rundum (je 1/7 Drehung), Maserung als feine Streifen. Vorne breit, seitlich schmal, hinten weg.

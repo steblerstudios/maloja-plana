@@ -203,3 +203,46 @@ describe('Vorstellungsseite: Brand Book', () => {
     KAPITEL_ZEICHEN.forEach((z) => expect(ohneIds(html)).toContain(ohneIds(z).replace('<svg ', '')));
   });
 });
+
+// Kopf, Leiste und Fuss nach der Durchsicht der eigenen Projekte (Skizze A–E, Stebler Studios «Alle», 10.11.2026).
+describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
+  const js = fs.readFileSync(path.join(WURZEL, 'website/reise.js'), 'utf8');
+  const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+  const handy = stil.slice(stil.indexOf('@media (max-width:760px)'));
+
+  it('«Zum Inhalt springen» ist der erste Link und zeigt auf main', () => {
+    expect(html.slice(html.indexOf('<body>')).match(/<a [^>]*>/)[0]).toBe('<a class="sprung" href="#inhalt">');
+    expect(html).toContain('<main id="inhalt" tabindex="-1">');
+  });
+
+  it('Browserleiste hell und dunkel nach Granit', () => {
+    expect(html).toContain('<meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">');
+    expect(html).toContain('<meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">');
+  });
+
+  it('A · am Handy verschwindet die Navigation nicht, sie wird eine wischbare Zeile mit 44 px', () => {
+    expect(handy).not.toMatch(/\.kopf nav\{ display:none \}/);
+    expect(handy).toMatch(/\.kopf nav, \.leiste-links\{[^}]*overflow-x:auto/);
+    expect(handy).toMatch(/\.kopf nav a, \.leiste-links a\{[^}]*min-height:44px/);
+  });
+
+  it('B/C · die Leiste kennt drei Zustände und erscheint ohne Skript nie', () => {
+    expect(html).toContain('<nav class="leiste" aria-label="Seite, Leiste" data-zustand="aus">');
+    expect(stil).toMatch(/\.leiste\{[^}]*visibility:hidden/);
+    for (const z of ["'aus'", "'reise'", "'seite'"]) expect(js).toContain(z);
+    expect((html.match(/<span class="punkte">((?:<span><\/span>)+)<\/span>/) || [])[1].match(/<span>/g)).toHaveLength(7);
+    expect(js).toContain("setAttribute('aria-current', 'true')");
+  });
+
+  it('D/E · Fuss: Marke, Entdecken, Rechtliches, darunter die Vertrauenszeile; alle Links der Seite bleiben erreichbar', () => {
+    const fuss = html.slice(html.indexOf('<footer class="fuss">'), html.indexOf('</footer>'));
+    for (const t of ['Entdecken', 'Rechtliches', 'Ohne Konto', 'Ihre Angaben bleiben auf dem Gerät', 'keine Rechts- oder Finanzberatung']) expect(fuss).toContain(t);
+    for (const ziel of ['/rechtliches/', 'https://github.com/steblerstudios/maloja-plana', '/krankenkasse/', BEISPIEL, 'Problem%20melden']) expect(fuss).toContain(ziel);
+    expect(fuss).toMatch(/Englisch, Französisch, Italienisch und Rätoromanisch/);
+  });
+
+  it('die Sprachen im Fuss sind die der App (SUPPORTED in src/i18n/index.js)', () => {
+    const i18n = fs.readFileSync(path.join(WURZEL, 'src/i18n/index.js'), 'utf8');
+    expect(i18n).toMatch(/const SUPPORTED = \['en', 'de', 'fr', 'it', 'rm'\];/);
+  });
+});
