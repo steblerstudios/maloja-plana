@@ -366,6 +366,27 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
 
 ---
 
+### 7d. Die Reise — Stationen und Stempel *(Entwurf 10.11.2026)*
+
+Richtung für die öffentliche Seite **und Kandidat für den späteren Gamification-Stil**: Maloja als Weg zum Pass,
+angelehnt an das Prinzip «Stationen sammeln» (Vorbild: «Collecting Stamps on Mt. Fuji»). Übernommen werden nur
+**Prinzipien**, nie fremde Bilder, Texturen oder Code. Erste Umsetzung: `/reise/` (`scripts/seiten/reise.mjs`, noindex).
+
+| Regel | Wie |
+|---|---|
+| **Weg nach oben** | senkrecht scrollen = aufsteigen; nie seitwärts (bricht am Handy) |
+| **Station = Lebens-Kapitel** | sechs Stationen in der Reihenfolge der App (`CHAPTER_KEYS` ohne Notfall); Test hält beides zusammen |
+| **Notfall ist keine Station** | festes Schild, immer sichtbar, Rose-Rand (Warnen), führt ins Notfall-Kapitel |
+| **Eine Stempelfarbe** | Sand. Offen = gestrichelter Ring, erreicht = gefüllter Sand-Kreis mit Haken (Form + Farbe) |
+| **Grosse Etappen-Zahl** | 01–06 in Hanken Grotesk 700, grau (`bergRand`) → Sand, wenn erreicht. Keine neue Schrift |
+| **Etappen-Leiste** | oben, jeder Punkt springt zur Station, aktuelle Etappe mit `aria-current="step"` |
+| **Pass** | die einzige echte Höhe: 1815 m ü. M. (HLS), dahinter der eine Hauptknopf «Beispiel ansehen» |
+| **Bewegung** | Weg wächst, Stempel «brennt ein» (0,5 s, nachfedernd) — nur ohne «weniger Bewegung»; ohne JS ist alles da |
+| **Kein Zwang** | Stempel sind Zeichen, keine Punkte, keine Ranglisten; nichts wird gespeichert |
+| **Zahl ist Schmuck** | die Etappen-Zahl ist `aria-hidden`; die Information steht als Text «Station n von 6» (deshalb kein 1.4.3) |
+| **Notfall ehrlich** | das Schild führt ins Beispiel, nicht zu Hilfe: zugänglicher Name sagt das, im Fuss steht der Notruf (144 · 117 · 118) |
+| **Klebt nur, wenn Platz ist** | bei kleiner Höhe (Zoom 400 %) kleben Kopf, Bild und Schild nicht mehr |
+
 ## 8. Calm-UX-Prinzipien
 
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;
