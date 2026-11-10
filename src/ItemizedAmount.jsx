@@ -4,7 +4,7 @@ import { knopfStil } from './components/PrimaryButton.jsx';
 import { anzeigeWert, hatWert } from './utils/vollstaendigkeit.js';
 import { Icon } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 // Wiederverwendbare Mehrfach-Betrags-Liste: mehrere benannte Posten {label, amount},
@@ -70,7 +70,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
         style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.body, padding: '4px 8px', flex: '0 0 auto', minWidth: '44px', minHeight: '44px' },
       }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     )),
-    React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: postenZurueck }),
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, rows), onRueckgaengig: postenZurueck }),
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: space.xs + 'px' },
     },

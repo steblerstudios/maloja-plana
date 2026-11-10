@@ -7,7 +7,7 @@ import {
 } from './data/saeule3a.js';
 import { zahl } from './utils/geld.js';
 import { knopfStil } from './components/PrimaryButton.jsx';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 const fmt = (v) => zahl(v);
@@ -134,7 +134,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
       )
     ),
 
-    React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: depositZurueck }),
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, list), onRueckgaengig: depositZurueck }),
 
     React.createElement('button', {
       onClick: addDeposit,

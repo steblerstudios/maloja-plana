@@ -26,7 +26,7 @@ import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx
 import { MerklisteView } from './MerklisteView.jsx';
 import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
@@ -677,7 +677,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             ]
             : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm + 'px' } }, t('calendar.noRemindersTitle')),
           // Das Tagespanel ist selbst die Live-Region — die Meldung sagt sich darum nicht zweimal an.
-          React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: reminderZurueck, ansagen: false }),
+          React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, reminders), onRueckgaengig: reminderZurueck, ansagen: false }),
           React.createElement('button', { type: 'button', style: { ...knopfRuhig, marginTop: space.xs + 'px' }, onClick: () => { setNewDate(selDate); setView('add'); } }, '+ ' + t('calendar.addReminder'))
         )
       );

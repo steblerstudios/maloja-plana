@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
@@ -196,7 +196,7 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     ),
 
     // «Entfernt · Rückgängig»: sofort weg, ein Tipp holt den Eintrag an dieselbe Stelle zurück.
-    React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: rueckgaengig })
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, items), onRueckgaengig: rueckgaengig })
   );
 };
 

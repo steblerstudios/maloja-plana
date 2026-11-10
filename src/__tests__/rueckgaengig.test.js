@@ -22,7 +22,7 @@ vi.mock('react', async (orig) => {
   return { ...echt, default: { ...echt.default, useState, useRef, useEffect }, useState, useRef, useEffect };
 });
 
-const { useRueckgaengig, wiederEinsetzen, RUECKGAENGIG_MS } = await import('../hooks/useRueckgaengig.js');
+const { useRueckgaengig, wiederEinsetzen, nochEntfernt, RUECKGAENGIG_MS } = await import('../hooks/useRueckgaengig.js');
 const { RueckgaengigMeldung } = await import('../components/RueckgaengigMeldung.jsx');
 
 const neu = () => { zustand.slots = []; zustand.effekte = []; };
@@ -40,10 +40,32 @@ describe('wiederEinsetzen', () => {
     expect(wiederEinsetzen([], 'a', 3)).toEqual(['a']);
     expect(wiederEinsetzen(undefined, 'a', 0)).toEqual(['a']);
   });
+  it('steht der Eintrag noch drin, kommt er nicht ein zweites Mal hinein', () => {
+    const b = { id: 'b' };
+    expect(wiederEinsetzen([{ id: 'a' }, b], b, 0)).toEqual([{ id: 'a' }, b]);
+  });
   it('ändert die übergebene Liste nicht', () => {
     const l = ['a', 'c'];
     wiederEinsetzen(l, 'b', 1);
     expect(l).toEqual(['a', 'c']);
+  });
+});
+
+// Befund im Browser (10.11.2026): im Beispiel verwirft main.jsx jedes Löschen (`if (demoMode) return`).
+// Die erste Fassung zeigte dort trotzdem «Entfernt · 12.03.2026, CHF 240», der Beleg blieb stehen.
+describe('nochEntfernt — keine Meldung für ein Löschen, das nicht ankam', () => {
+  const a = { id: 'a' }, b = { id: 'b' };
+  it('Eintrag fehlt in der Liste → Meldung', () => {
+    const e = { item: b, index: 1, text: 'b' };
+    expect(nochEntfernt(e, [a])).toBe(e);
+  });
+  it('Eintrag steht noch da (Löschen verworfen) → keine Meldung', () => {
+    expect(nochEntfernt({ item: b, index: 1, text: 'b' }, [a, b])).toBe(null);
+  });
+  it('nichts gemerkt oder keine Liste', () => {
+    expect(nochEntfernt(null, [a])).toBe(null);
+    const e = { item: a, index: 0, text: 'a' };
+    expect(nochEntfernt(e, undefined)).toBe(e);
   });
 });
 
@@ -126,7 +148,7 @@ describe('alle Lösch-Listen haben Rückgängig', () => {
       const src = fs.readFileSync(path.join(__dirname, '..', datei), 'utf8');
       expect(src).toMatch(/useRueckgaengig\(\)/);
       expect(src).toMatch(/\bmerke\(/);
-      expect(src).toMatch(/React\.createElement\(RueckgaengigMeldung,/);
+      expect(src).toMatch(/React\.createElement\(RueckgaengigMeldung, \{[^}]*entfernt: nochEntfernt\(entfernt, \w+\)/);
     });
   }
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 export const JobManager = ({ palette, t, jobs, onChange }) => {
@@ -94,7 +94,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
         )
       )
     ),
-    React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: jobZurueck }),
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, list), onRueckgaengig: jobZurueck }),
     React.createElement('button', {
       onClick: addJob,
       style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }

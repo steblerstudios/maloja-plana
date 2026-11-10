@@ -2,7 +2,7 @@ import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 const LEVELS = ['native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1'];
@@ -69,7 +69,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
         }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
       )
     ),
-    React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: langZurueck }),
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, list), onRueckgaengig: langZurueck }),
     React.createElement('button', {
       onClick: addLang,
       style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }

@@ -19,7 +19,7 @@ import { heuteIso } from './utils/fristen.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
-import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
 import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
@@ -792,7 +792,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
             )
           ),
       // Ausserhalb der Liste: nach dem letzten Beleg steht dort «keine Belege», die Meldung bleibt.
-      React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: belegZurueck }),
+      React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, belege), onRueckgaengig: belegZurueck }),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: '12px', paddingTop: '12px', borderTop: '1px solid ' + palette.border }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.belegRueckwirkend')))

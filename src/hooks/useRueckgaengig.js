@@ -31,8 +31,18 @@ export const useRueckgaengig = (ms = RUECKGAENGIG_MS) => {
 };
 
 // Setzt `item` an seine alte Stelle, höchstens ans Ende, wenn die Liste inzwischen kürzer ist.
+// Steht es noch drin (das Löschen wurde nicht übernommen), bleibt die Liste, wie sie ist —
+// sonst stünde der Eintrag danach doppelt da.
 export const wiederEinsetzen = (liste, item, index) => {
   const neu = Array.isArray(liste) ? [...liste] : [];
+  if (neu.includes(item)) return neu;
   neu.splice(Math.max(0, Math.min(index, neu.length)), 0, item);
   return neu;
 };
+
+// Die Meldung nur, solange der Eintrag wirklich fehlt. Nicht jedes Löschen kommt an: im Beispiel
+// verwirft main.jsx jede Änderung (`updateData` → `if (demoMode) return`). Ohne diese Prüfung
+// stünde dort «Entfernt», während der Eintrag sichtbar stehen bleibt. Verglichen wird das Objekt
+// selbst — gelöscht wird überall mit `filter`, das die übrigen Einträge unverändert lässt.
+export const nochEntfernt = (entfernt, liste) =>
+  (entfernt && !(Array.isArray(liste) && liste.includes(entfernt.item)) ? entfernt : null);
