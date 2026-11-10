@@ -1,6 +1,6 @@
 // CV/Resume Generator for Switzerland — i18n-aware
 import { getFullName } from './config/constants.js';
-import { escapeHtml } from './utils/helpers.js';
+import { escapeHtml, formatDE } from './utils/helpers.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
 
@@ -8,6 +8,7 @@ import { auswahlLabel } from './utils/auswahlLabel.js';
 // Person wählt sie ab (`persoenlich`, Standard: alle drei an, wie bisher). Abgewählt bleibt das Feld leer und
 // steht weder im Druck noch in der HTML-Datei. Das JSON Resume enthält sie ohnehin nicht.
 export const PERSOENLICH_FELDER = Object.freeze(['dateOfBirth', 'nationality', 'maritalStatus']);
+const geburtsdatum = (v) => (/^\d{4}-\d{2}-\d{2}$/.test(String(v || '')) ? formatDE(v) : v || '');
 export const generateCVTemplate = (data, t, persoenlich = {}) => {
   const mit = (feld) => persoenlich[feld] !== false;
   return {
@@ -19,7 +20,8 @@ export const generateCVTemplate = (data, t, persoenlich = {}) => {
       city: (data.wohnen?.postalCode || '') + ' ' + (data.wohnen?.city || '')
     },
     personal: {
-      dateOfBirth: mit('dateOfBirth') ? data.basis?.dateOfBirth || '' : '',
+      // Schweizer Schreibweise 15.03.1992 statt ISO 1992-03-15; ein anders erfasster Wert bleibt, wie er ist.
+      dateOfBirth: mit('dateOfBirth') ? geburtsdatum(data.basis?.dateOfBirth) : '',
       nationality: mit('nationality') ? auswahlLabel('basis', 'nationality', data.basis?.nationality, t) : '',
       // Der Lebenslauf zeigt den Text der Sprache, nicht den gespeicherten Schlüssel («married»).
       maritalStatus: mit('maritalStatus') ? zivilstandLabel(data.basis?.maritalStatus, t) : ''

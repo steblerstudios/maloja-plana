@@ -203,5 +203,8 @@ siebenmal neu entschieden werden:
    und Ausgesteuert (de, en; rm-Rückfall nachgezogen). rechts-pruefer am Volltext eingearbeitet. Offen: Mindestlohn-Hinweis
    «angenommen» (hängt an `arbeitsKanton` aus #802, noch nicht gemergt), Mindestlohn-Ausnahmen GE/TI/JU, S3 in fr/it,
    rm-Übersetzung, AHV-Werte 2027 Selbständige.
+   ✅ **10.11. Nachzug 2**: S3 in fr/it (Lehre, Ausgesteuert), Geburtsdatum TT.MM.JJJJ im Lebenslauf. AHV 2027 für
+   Selbständige nur teilweise belegt (AHVV Art. 21: Skala bis 61 500; Art. 28: AHV-Mindestbeitrag 444), Gesamt-
+   Mindestbeitrag AHV+IV+EO nicht → bleibt ohne Eintrag. Weiter offen: Mindestlohn «angenommen» (#802), GE/TI/JU, rm.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

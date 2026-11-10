@@ -9,6 +9,13 @@
 //            nicht rechtzeitig bezahlt → Verzugszins von jährlich 5 %
 // 2027: nicht eingetragen. Die AHV passt 2027 an; ein Merkblatt «Stand 1.1.2027» war am 10.11.2026 nicht
 // gelesen. Ab 1.1.2027 zeigt die Seite darum ausdrücklich die Werte 2026 mit «Stand 2026» (jahrestabelle.js).
+// Stand der Suche 10.11.2026 nachmittags: Merkblatt 2.02 unter ahv-iv.ch/p/2.02.d noch «Stand am 1. Januar 2026».
+// Am Volltext belegt für 2027 (Fedlex AHVV, Stand 1.1.2027, V vom 2.10.2026, AS 2026 541):
+//   AHVV Art. 21 Abs. 1  sinkende Skala ab 10 300 bis unter 61 500 Fr. (2026: 10 100 / 60 500)
+//   AHVV Art. 28 Abs. 1  AHV-Mindestbeitrag 444 Fr. (2026: 435)
+// NICHT belegt: der Mindestbeitrag AHV + IV + EO zusammen (2026: 530). IVG Art. 3 und EOG Art. 27 nennen 70 und
+// «höchstens 26» Fr. als Grundwerte; die für 2027 angepassten IV- und EO-Anteile waren nicht auffindbar. Darum
+// bleibt 2027 ohne Eintrag — ein halber Eintrag würde eine geratene Summe zeigen.
 import { werteFuerStichtag } from './jahrestabelle.js';
 
 export const SELBST_AHV_JE_JAHR = Object.freeze({

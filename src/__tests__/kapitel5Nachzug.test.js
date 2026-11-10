@@ -50,14 +50,14 @@ describe('Lebenslauf: Geburtsdatum, Nationalität, Zivilstand abwählbar', () =>
   it('ohne Wahl wie bisher alle drei', () => {
     const html = generateCVHTML(generateCVTemplate(data, t), t);
     expect(html).toContain('Geburtsdatum:');
-    expect(html).toContain('1990-04-01');
+    expect(html).toContain('01.04.1990');
   });
   it('abgewählt steht die Angabe weder im Objekt noch im Ausdruck', () => {
     const cv = generateCVTemplate(data, t, { dateOfBirth: false });
     expect(cv.personal.dateOfBirth).toBe('');
     const html = generateCVHTML(cv, t);
     expect(html).not.toContain('Geburtsdatum:');
-    expect(html).not.toContain('1990-04-01');
+    expect(html).not.toContain('01.04.1990');
     expect(html).toContain('Zivilstand:');
   });
   it('alle drei abgewählt: kein leerer Abschnitt «Persönliche Daten»', () => {
