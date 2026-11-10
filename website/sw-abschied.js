@@ -27,6 +27,8 @@ self.addEventListener('activate', (event) => {
     await Promise.all(namen.filter((n) => ALTER_CACHE.test(n)).map((n) => caches.delete(n)));
     await self.registration.unregister();
     const fenster = await self.clients.matchAll({ type: 'window' });
-    await Promise.all(fenster.map((f) => (typeof f.navigate === 'function' ? f.navigate(f.url) : null)));
+    // Einzeln abgesichert: steuert der SW ein Fenster nicht mehr, wirft navigate() — Caches und
+    // Abmeldung sind dann schon erledigt (Sicherheits-Prüfung 10.11.2026).
+    await Promise.all(fenster.map((f) => (typeof f.navigate === 'function' ? f.navigate(f.url).catch(() => {}) : null)));
   })());
 });

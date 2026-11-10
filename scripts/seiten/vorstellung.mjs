@@ -151,7 +151,7 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .marke:hover{ color:#22211F }
     .marke svg{ height:28px; width:auto }
     .kopf nav{ display:flex; gap:22px; font-size:15px }
-    .kopf nav a{ text-decoration:none; padding-block:10px; color:#24262A }
+    .kopf nav a{ text-decoration:none; padding-block:10px; color:#24262A; display:inline-flex; align-items:center; min-height:44px }
     .kopf nav a:hover{ text-decoration:underline }
     .reise-anfang{ position:relative; z-index:5 }
     .pass{ min-height:100vh; min-height:100svh; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center;
@@ -312,7 +312,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
       font-size:15px; font-weight:600; color:#7A5F30; border:1px solid #7A5F30; background:#FBFBFA; text-shadow:none }
     .reise-knoepfe a:hover{ color:#7A5F30; background:#F2EDE3 }
-    .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px }
+    .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px; box-shadow:0 0 0 5px #24262A }
     .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px }
     @media (prefers-reduced-motion: no-preference){
       .js .reise-buehne::before, .js .reise-buehne::after{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
@@ -427,7 +427,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .leiste-innen{ display:flex; align-items:center; gap:20px; min-height:56px }
     .leiste .marke{ color:#22211F } .leiste .marke svg{ height:26px }
     .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:15px }
-    .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px }
+    .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px; display:inline-flex; align-items:center; min-height:44px }
     .leiste-links a:hover{ text-decoration:underline }
     .leiste-links a[aria-current="location"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
     @media (prefers-reduced-motion: no-preference){
