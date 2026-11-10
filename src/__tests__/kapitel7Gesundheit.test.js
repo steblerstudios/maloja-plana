@@ -8,10 +8,14 @@ import it_ from '../i18n/it.js';
 import en from '../i18n/en.js';
 import rm from '../i18n/rm.js';
 import React from 'react';
+import fs from 'node:fs';
+import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import { vorlageHtml } from '../data/vorsorgeauftrag.js';
 import { KVGLeistungen } from '../KVGLeistungen.jsx';
+import { IvVerfahren } from '../IvVerfahren.jsx';
+import { PflegeAblauf } from '../PflegeAblauf.jsx';
 
 beforeEach(() => { globalThis.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} }; });
 const t = createT({ de }, 'de', 'sie');
@@ -81,4 +85,59 @@ describe('L10 · Franchise-Rechner kennt Kinder (KVG Art. 64 Abs. 4, KVV Art. 10
   it('ein unbekannter Wert wird genannt, nicht still zu 300', () => {
     expect(rechne('750')).toContain('Die gespeicherte Franchise (750) passt zu keiner Stufe.');
   });
+});
+
+const nurText = (h) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ');
+const seite = (C) => nurText(renderToStaticMarkup(React.createElement(C, { palette: LIGHT_PALETTE, t, onNavigate: () => {} })));
+
+describe('L2, L3 · Vertretung und Patientenverfügung am Volltext', () => {
+  it('L2 Ehegatten-Vertretung auch bei regelmässigem Beistand, nur ohne Vorsorgeauftrag/Beistandschaft (ZGB Art. 374)', () => {
+    const x = t('vorsorgeauftrag.step1Text');
+    expect(x).toContain('oder leistet sie Ihnen regelmässig und persönlich Beistand');
+    expect(x).toContain('sofern kein Vorsorgeauftrag und keine entsprechende Beistandschaft besteht');
+  });
+  it('Vertretungsreihe beginnt mit der Person aus dem Vorsorgeauftrag (ZGB Art. 378)', () => {
+    expect(t('vorsorgeauftrag.step4Text')).toContain('die im Vorsorgeauftrag bezeichnete Person, eine Beiständin oder ein Beistand');
+  });
+  it('L3 in der Psychiatrie wird die Patientenverfügung nur berücksichtigt (ZGB Art. 380, 433)', () => {
+    expect(t('pv.ui.einstiegPsych')).toContain('wird dort berücksichtigt, ist aber nicht in jedem Fall bindend');
+    expect(t('pv.ui.einstiegPsych')).not.toContain('zusätzlich');
+  });
+  it('Vorsorgeauftrag nur für Handlungsfähige (ZGB Art. 360)', () => {
+    expect(t('va.ui.intro')).toContain('nicht unter umfassender Beistandschaft');
+    expect(t('va.begleit.alter')).toContain('handlungsfähig');
+  });
+});
+
+describe('L6 · IV: Vorbescheid und Beschwerde statt Einsprache (IVG Art. 57a, 69)', () => {
+  const x = seite(IvVerfahren);
+  it('nennt die 30 Tage für Einwände und die direkte Beschwerde', () => {
+    expect(x).toContain('innert 30 Tagen Ihre Einwände vor (IVG Art. 57a)');
+    expect(x).toContain('gibt es bei der IV keine Einsprache');
+    expect(x).toContain('Vorbescheid erhalten am');
+  });
+  it('die Schritte sind fortlaufend nummeriert', () => {
+    expect(x).toMatch(/Schritt 5 von 6 Vorbescheid und Entscheid/);
+    expect(x).toMatch(/Schritt 6 von 6 Unterstützung/);
+  });
+  it('rechnet 30 Tage ab Erhalt des Vorbescheids', () => {
+    const quelle = fs.readFileSync(path.resolve(__dirname, '../IvVerfahren.jsx'), 'utf8');
+    expect(quelle).toMatch(/id: 'iv-vorbescheid', frist: \(d\) => plusTage\(d, 30\)/);
+  });
+});
+
+describe('L7 · Kurzurlaub für Erwachsene zahlt der Arbeitgeber, nicht die EO (OR Art. 329h)', () => {
+  const x = seite(PflegeAblauf);
+  it('steht mit Grenzen und Quelle', () => {
+    expect(x).toContain('gibt es keine EO, aber bezahlten Urlaub von der Arbeitgeberin oder dem Arbeitgeber');
+    expect(x).toContain('höchstens drei Tage je Ereignis und zehn Tage im Jahr (OR Art. 329h)');
+  });
+  it('Betreuungsgutschrift nennt den Personenkreis (AHVG Art. 29septies)', () => {
+    expect(x).toContain('Schwiegereltern, Stiefkinder');
+    expect(x).toContain('nach fünf Jahren im gemeinsamen Haushalt');
+  });
+});
+
+describe('Organspende · Mindestalter 16 (TxG Art. 8 Abs. 7)', () => {
+  it('steht im Rechtsstand', () => { expect(t('organ.rechtsstand')).toContain('wer 16 Jahre alt ist (TxG Art. 8 Abs. 7)'); });
 });
