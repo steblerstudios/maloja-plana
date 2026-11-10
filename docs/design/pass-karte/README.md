@@ -22,11 +22,19 @@ im Browser wird nichts gerechnet. Die Rohdaten liegen nicht im Repo (75 MB), sie
    `node karte.mjs maloja-hoehen.json strasse.json public/vorstellung/pass-karte.svg`
 
 5. `node karte.mjs … public/vorstellung/pass-karte-papier.svg papier` — B, dieselbe Karte auf Papier.
-6. Blick von der Seite (C, D): weiter Ausschnitt, 60 Kacheln LV95 E 2768–2777 / N 1138–1143 (75 MB),
-   `python3 -I raster-weit.py <kachelordner> hoehen-weit.json` (20 m, höchster Punkt muss bei 2776240/1139320
-   liegen = Piz da la Margna), dann
-   `node schraeg.mjs hoehen-weit.json salbei public/vorstellung/pass-blick.svg 2770300 1143700 3500 2775800 1139300 2200 55`
-   und dasselbe mit `papier` → `pass-blick-papier.svg`. Kamera ausserhalb des Datenblocks lässt vorne Gelände fehlen.
+6. Blick von der Seite (C, D) — **Perspektive des Kopfbilds**: von knapp über der Passhöhe über die Kehren ins
+   Bergell. Weiter Ausschnitt LV95 E 2760–2777 / N 1131–1143 (231 Kacheln, ca. 300 MB; drei Kacheln in der
+   Südostecke 2777/1131–1133 gibt es nicht, liegen ausserhalb des Blicks):
+   `python3 -I raster-bergell.py hoehen-bergell.json <kachelordner…>` (25 m). Für die Nähe zusätzlich das
+   10-m-Raster der Karte (`maloja-hoehen.json` aus Schritt 2) über die Umgebungsvariable `FEIN`:
+   `FEIN=maloja-hoehen.json node schraeg.mjs hoehen-bergell.json salbei public/vorstellung/pass-blick.svg 2773650 1140950 1967 2769450 1138700 450 72 strasse.json`
+   und dasselbe mit `papier` → `pass-blick-papier.svg`. `strasse.json` liegt hier (aus `strasse.py`).
+   🛑 In zsh die Kamera-Zahlen ausschreiben, nicht über eine Variable geben — zsh zerlegt `$VAR` nicht, dann
+   nimmt `schraeg.mjs` still die Standard-Kamera.
+   **Standort:** am Foto gesucht, aus dem das Kopfbild entstand (`suche.mjs hoehen-bergell.json maloja-hoehen.json strasse.json`
+   gibt die besten Kameras als Argumente aus), danach von Hand nachgestellt.
+   Frühere Fassungen (ersetzt, weil sie nicht die Perspektive des Kopfbilds hatten): Blick vom Lunghin zur Margna
+   (`raster-weit.py`), Blick das Bergell entlang von der Passhöhe.
 
 Gegenprobe beim Erzeugen: der höchste Strassenpunkt muss **1815 m** ergeben (amtliche Passhöhe). Weicht er ab,
 stimmen Ausschnitt oder Umrechnung nicht — dann nicht ausliefern. Ändert sich der Punkt im Bild, das Etikett
