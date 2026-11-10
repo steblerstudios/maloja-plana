@@ -438,6 +438,13 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   «8/8» · «So viel Ihrer Absicherung ist eingetragen»; Franchise-Kreuz «CHF 2’500» · «Eher diese Franchise».
   Beträge laufen über `betrag()`, damit der Sichtschutz greift. Ohne Zahl (nicht eingerichtet, Quellensteuer,
   leerer Notgroschen) bleibt die Kachel wie bisher: Name und kleiner Satz.
+- **Zwei Instrumente je Lebensbereich** *(10.11.2026, Stebler Studios; Landkarte in
+  `stebler-studios/_handoffs/2026-11-10-konkurrenz-faula-ahead-nessie.md`)*. Begonnen mit **Wohnen**:
+  Wohnkosten-Anteil (kleiner Drittel-Balken · «30 %» · wessen Einkommen gemeint ist · «Strich: ein Drittel —
+  eine Faustregel») und Miete im Vergleich (kleines Barometer · «−5 %» · «… Schnitt Ihrer Region (BFS 2024)»
+  · Zimmerzahl und Unsicherheiten wie im Kapitel). Dieselben Rechnungen wie gross im Kapitel Wohnen
+  (`wohnkostenRechnung`, `lageZurRegion`, `mietVorbehalte`). Bei Wohneigentum kein Mietvergleich.
+  Offen: Basis, Ausbildung & Arbeit, Behörden, Gesundheit.
   Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)

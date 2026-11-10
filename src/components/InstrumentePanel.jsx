@@ -3,12 +3,17 @@ import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
 import { ReserveTank } from './ReserveTank.jsx';
+import { wohnkostenRechnung, DrittelBalkenKlein, wohnkostenSatzKey } from './WohnkostenInstrument.jsx';
+import { RegionalBarometerKlein, lageZurRegion, mietVorbehalte } from './RegionalBarometer.jsx';
+import { getRentComparison } from '../data/mietpreise.js';
+import { getHouseholdInfo } from '../config/cantonalData.js';
+import { bereichFillColor } from '../data/lebensbereiche.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
 import { heuteIso } from '../utils/fristen.js';
-import { CHAPTER_KEYS } from '../config/constants.js';
+import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
@@ -137,6 +142,15 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     ...(fristGilt ? [t('instrumente.steuerFrist', { datum: frist.split('-').reverse().join('.') })] : []),
   ] : [];
 
+  // Wohnen (10.11.2026, «zwei Instrumente je Lebensbereich»): dieselben Rechnungen wie im Kapitel Wohnen.
+  const wohnR = wohnkostenRechnung(data?.wohnen, data, null);
+  const wohnFarbe = bereichFillColor('wohnen', palette.bg === DARK_PALETTE.bg) || palette.sage;
+  const kantonW = data?.basis?.canton || '';
+  const mietVergleich = kantonW && wohnR.netto > 0 && !wohnR.eigentum
+    ? getRentComparison(kantonW, { rooms: data?.wohnen?.rooms, householdSize: (getHouseholdInfo(data) || {}).householdSize || 1 }) : null;
+  const mietLage = mietVergleich ? lageZurRegion(wohnR.netto, mietVergleich.regional) : null;
+  const mietHinweise = mietVergleich ? mietVorbehalte(t, mietVergleich) : [];
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
@@ -175,6 +189,28 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
       glyph: h(ReserveTank, { palette, t, savings: tank.savings, monthlyExpenses: tank.monthlyExpenses || 0, groesse: 'klein' }),
       onClick: () => onNavigate('finanzuebersicht'),
+    },
+    {
+      key: 'wohnkosten', name: t('instrumente.wohnkosten'),
+      ...(wohnR.anteil != null ? {
+        zahl: { wert: zahl(wohnR.anteil, { hoechstens: wohnR.ueberDrittel && Math.round(wohnR.anteil) === 33 ? 1 : 0 }) + ' %', einheit: '' },
+        satz: t(wohnkostenSatzKey(wohnR)),
+        mehr: [t('instrumente.wohnkostenDrittel')],
+      } : {}),
+      sub: wohnR.kosten > 0 ? t('instrumente.wohnkostenOhneEinkommen') : setup,
+      glyph: wohnR.kosten > 0 ? h(DrittelBalkenKlein, { palette, r: wohnR, fillColor: wohnFarbe }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
+    },
+    {
+      key: 'miete', name: t('instrumente.miete'),
+      ...(mietLage ? {
+        zahl: { wert: mietLage.richtung === 'Equal' ? '≈ 0 %' : (mietLage.pct > 0 ? '+' : '−') + Math.abs(mietLage.pct) + ' %', einheit: '' },
+        satz: t('instrumente.mieteSatz', { year: mietVergleich.year }),
+        mehr: mietHinweise,
+      } : {}),
+      sub: wohnR.eigentum ? t('instrumente.mieteEigentum') : setup,
+      glyph: mietVergleich ? h(RegionalBarometerKlein, { palette, comparison: mietVergleich, userValue: wohnR.netto, fillColor: wohnFarbe }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
     },
     {
       key: 'schild', name: t('instrumente.schild'),

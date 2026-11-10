@@ -1,8 +1,51 @@
 import React from 'react';
-import { text, weight, space, leading, radius } from '../config/tokens.js';
+import { text, weight, space, leading, radius, INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { renderSource } from '../utils/renderSource.js';
 import { zahl } from '../utils/geld.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
+
+// Eigener Wert gegen den Regions-Schnitt — EINE Rechnung für Barometer und Instrument-Kachel
+// (10.11.2026). Schwelle ±2 % wie die Farbe des Regions-Punkts.
+export function lageZurRegion(userValue, regional) {
+  if (!(userValue > 0) || !(regional > 0)) return null;
+  const pct = Math.round((userValue / regional - 1) * 100);
+  const richtung = userValue > regional * 1.02 ? 'Above' : userValue < regional * 0.98 ? 'Below' : 'Equal';
+  return { pct, richtung };
+}
+
+// Womit verglichen wird und wie sicher der BFS-Wert ist (Fachprüfung 25.10.2026) — EINE Quelle für
+// das Barometer und die Instrument-Kachel (10.11.2026).
+export const mietVorbehalte = (t, comparison, { imKapitel } = {}) => {
+  const k = 'po.regionalCompare.rent.';
+  const { roomKey, zimmerAngenommen, ohneWertFuerGroesse, wenigeAntworten } = comparison;
+  return [
+    ohneWertFuerGroesse ? t(k + 'ohneWertFuerGroesse') : null,
+    roomKey === 'total' ? t(k + 'vergleichAlle') : roomKey === 'r6' ? t(k + 'vergleichAb6') : t(k + 'vergleichZimmer', { n: roomKey.slice(1) }),
+    zimmerAngenommen ? t(k + (imKapitel ? 'zimmerAngenommenHier' : 'zimmerAngenommen')) : null,
+    wenigeAntworten ? t(k + 'wenigeAntworten') : null,
+  ].filter(Boolean);
+};
+
+// Skala wie im grossen Barometer: etwas Luft nach oben, auf 50 gerundet.
+const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, national, userValue > 0 ? userValue : 0) * 1.15) / 50) * 50 || 50;
+
+// Das Barometer klein (64 px, Brand Book §7b «Spiegel Startseite»): nur das Bild — Füllung = eigener
+// Wert, Punkt = Region, Strich = Schweizer Schnitt. Keine Wörter, die Zahl steht daneben.
+export const RegionalBarometerKlein = ({ palette, comparison, userValue, fillColor }) => {
+  if (!comparison) return null;
+  const h = React.createElement;
+  const { regional, national } = comparison;
+  const max = skala(regional, national, userValue);
+  const x = (v) => 2 + Math.max(0, Math.min(1, v / max)) * 56;
+  const lage = lageZurRegion(userValue, regional);
+  const punkt = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-barometer': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('rect', { x: 2, y: 16, width: 56, height: 8, rx: 4, fill: palette.border }),
+    userValue > 0 && h('rect', { x: 2, y: 16, width: Math.max(8, x(userValue) - 2), height: 8, rx: 4, fill: fillColor || palette.sky }),
+    h('line', { x1: x(national), y1: 10, x2: x(national), y2: 30, stroke: palette.text, strokeWidth: 2 }),
+    h('circle', { cx: x(regional), cy: 20, r: 5, fill: punkt, stroke: palette.surface, strokeWidth: 1.5 }),
+  );
+};
 
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
@@ -34,14 +77,13 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
 export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {
   if (!comparison) return null;
-  const { regional, national, diffPct, year, roomKey, zimmerAngenommen, ohneWertFuerGroesse, wenigeAntworten } = comparison;
+  const { regional, national, diffPct, year, roomKey } = comparison;
   const ns = 'po.regionalCompare.';
   const k = ns + kind + '.';
 
   const hasUser = userValue != null && userValue > 0;
   // Skala mit etwas Luft nach oben, gerundet — Schweizer Schnitt sitzt als Marke darauf.
-  const maxVal = Math.max(regional, national, hasUser ? userValue : 0);
-  const scaleMax = Math.ceil((maxVal * 1.15) / 50) * 50 || 50;
+  const scaleMax = skala(regional, national, hasUser ? userValue : 0);
   const pct = (v) => Math.max(0, Math.min(100, (v / scaleMax) * 100));
   const nationalPct = pct(national);
   const regionalPct = pct(regional);
@@ -99,8 +141,9 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: zahl(userValue) })) : null;
   if (hasUser) ariaLabel += ' ' + userText;
   // Eigener Wert gegen Region, gleiche Schwelle (±2 %) wie die Farbe des Regions-Punkts.
-  const userPct = hasUser && regional > 0 ? Math.round((userValue / regional - 1) * 100) : 0;
-  const userDir = !hasUser ? null : userValue > regional * 1.02 ? 'Above' : userValue < regional * 0.98 ? 'Below' : 'Equal';
+  const lage = hasUser ? lageZurRegion(userValue, regional) : null;
+  const userPct = lage ? lage.pct : 0;
+  const userDir = lage ? lage.richtung : null;
   const userDiffText = userDir ? t(k + 'user' + userDir, { pct: Math.abs(userPct) }) : null;
   if (userDiffText) ariaLabel += ' ' + userDiffText;
   // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (a11y-Prüfer): Die Schwellen-Überschreitung stand
@@ -239,12 +282,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       'data-teil': 'miete-vergleich-groesse',
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     },
-      ohneWertFuerGroesse ? t(k + 'ohneWertFuerGroesse') + ' ' : '',
-      roomKey === 'total' ? t(k + 'vergleichAlle')
-        : roomKey === 'r6' ? t(k + 'vergleichAb6')
-        : t(k + 'vergleichZimmer', { n: roomKey.slice(1) }),
-      zimmerAngenommen ? ' ' + t(k + (imKapitel ? 'zimmerAngenommenHier' : 'zimmerAngenommen')) : '',
-      wenigeAntworten ? ' ' + t(k + 'wenigeAntworten') : ''
+      mietVorbehalte(t, comparison, { imKapitel }).join(' ')
     ),
 
     // Quelle
