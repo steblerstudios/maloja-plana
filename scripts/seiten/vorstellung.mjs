@@ -323,8 +323,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-text{ max-width:28rem; text-shadow:0 1px 14px rgba(0,0,0,.45) }
     /* Statt einer grossen Zahl steht gross das Kapitel-Zeichen der App (wie Fujis grosse Höhenzahl): in der Kapitelfarbe
        auf heller Plakette, Ecke 16 px (Karte, Brand Book §7a C). */
-    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; color:var(--farbe); margin:0 0 16px;   /* PROBE: ohne Kachel, schmaler Papierrand ums Zeichen (sonst verschwindet Behörden-Grau im dunklen Bild) */
-      filter:drop-shadow(0 0 1px #FBFBFA) drop-shadow(0 0 1px #FBFBFA) drop-shadow(0 0 1px #FBFBFA) }
+    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; color:#FBFBFA; margin:0 0 16px }   /* PROBE: ohne Kachel, weiss wie der Text (Rand verworfen) */
+    /* Zeichen mit weiss gezeichneten Details (Fünfliber, Haus): Details umkehren, sonst bleibt eine leere weisse Fläche */
+    .reise-gross [fill="white"]{ fill:#2E3A33 } .reise-gross [stroke="white"]{ stroke:#2E3A33 }
     .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
     .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
     .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
