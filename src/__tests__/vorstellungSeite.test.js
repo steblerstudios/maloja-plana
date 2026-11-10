@@ -228,6 +228,11 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(stil).toContain('.schalter, #anhalten{ display:none }');
   });
 
+  it('Predeploy 10.11.: «Bildfolge anhalten» trifft das Telefon in .geraete-bild (Pause-Möglichkeit)', () => {
+    const sel = stil.match(/#anhalten:checked ~ ([^,{]+) \.folge img/)[1].trim();
+    expect(html).toMatch(new RegExp(`<input type="checkbox" id="anhalten"[^>]*>\\s*<div class="${sel.replace('.', '')}"`));
+  });
+
   it('Browserleiste hell und dunkel nach Granit', () => {
     expect(html).toContain('<meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">');
     expect(html).toContain('<meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">');

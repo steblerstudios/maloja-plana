@@ -76,21 +76,18 @@ const STIL = `
     *{ margin:0; padding:0; box-sizing:border-box }
     :root{
       --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;  /* dunkler als vorher (#6A6E74): Kleintext liest sich ruhiger */
-      --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C; --salbei-tief:#4A6657;
-      --auf-gold:#24262A;
+      --rand:#E0DDD8;
       --himmel:#F4F0E6;                 /* Himmel der Landschaft — der Einstieg bleibt immer hell */
-      --strasse:#E6E0D2; --strasse-saum:#D6CBB2;
       --gehaeuse:#1B1A18; --gehaeuse-rand:#3A3936; --insel:#0E0E0D; --schirm:#22211F;
-      --radius-s:6px; --radius-m:12px;
-      --abstand-s:16px; --abstand-m:32px; --abstand-l:96px;  /* 96 = 64 × 1.5, Kapitelstufe der Startseite (§7a B) */
+      --radius-m:12px;
+      --abstand-m:32px; --abstand-l:96px;  /* 96 = 64 × 1.5, Kapitelstufe der Startseite (§7a B) */
 ${KAPITEL.map((k, i) => `      --k${i}:${k.farbe};`).join('\n')}
       --pinsel:${PINSEL};
       --sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30; --radius-knopf:10px;
     }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --salbei:#8FB09C; --salbei-tief:#8FB09C;
-             --strasse:#34332F; --strasse-saum:#4A463D;
+             --rand:#3A3936;
              --gehaeuse:#33322F; --gehaeuse-rand:#4A4945; --sand-tief:#C4A06A;
 ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
       html{ color-scheme:dark }
@@ -168,7 +165,7 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .geraete .bildschirm{ border-radius:19px; --statusleiste:16px }
     .geraete .insel{ top:10px; width:40px; height:11px; border-radius:8px }
     .geraete .unter-telefon{ margin-top:14px }
-    /* Telefon mit Bildfolge — steht auf der Landschaft */
+    /* Telefon mit Bildfolge */
     .buehne{ display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px }
     .telefon{ position:relative; width:280px; aspect-ratio:480/1040; padding:11px;
       background:var(--gehaeuse); border-radius:46px;
@@ -187,12 +184,12 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .folge img:nth-child(4){ animation-delay:16.5s }
     .folge img:nth-child(5){ animation-delay:22.5s }
     @keyframes wechsel{ 0%{opacity:0} 6%{opacity:1} 20%{opacity:1} 26%{opacity:0} 100%{opacity:0} }
-    #anhalten:checked ~ .telefon .folge img, .buehne:hover .folge img{ animation-play-state:paused }
+    #anhalten:checked ~ .geraete-bild .folge img, .buehne:hover .folge img{ animation-play-state:paused }
     .unter-telefon{ display:flex; flex-wrap:wrap; justify-content:center; gap:4px 14px; margin-top:14px;
       font-size:13px; color:#3E4247; text-align:center; background:rgba(244,240,230,.82); padding:4px 12px; border-radius:20px }
     .schalter{ cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:10px 2px; margin:-10px 0 }
     #anhalten:checked ~ .unter-telefon .schalter::before{ content:"✓ " / "" }
-    #anhalten:focus-visible ~ .unter-telefon .schalter{ outline:2px solid #4A6657; outline-offset:3px }
+    #anhalten:focus-visible ~ .unter-telefon .schalter{ outline:2px solid var(--sand-tief); outline-offset:3px }
 
     /* ─── Lebenssituationen (Radio-Reiter, ohne Skript) ───────────── */
     .lagen .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--abstand-m) }
@@ -213,8 +210,8 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
        Richtung «Stationen sammeln» (Fuji-Prinzipien). Seit Entscheid A–F (10.11.): die Bühne beginnt schon im
        Hero — Bild 0 ist das Passbild unter Kopf und Hero, darüber eine helle Schicht; ab Kehre 1 wechselt das
        Bild per Pinselstrich, die helle Schicht weicht der dunklen, und Stock und Weg erscheinen.
-       B Wanderstock in der Mitte, dreht sich um die eigene Achse (D) · C Text weiss auf dem Bild, Knöpfe
-       «Beispiel» und «Weiter» · D grosse Zahl, gepunkteter Weg mit Ort · E Pinselstrich quer übers Bild, Wolken.
+       B Wanderstock in der Mitte mit Aufklebern, die Kamera kreist um ihn · C Text weiss auf dem Bild, Knöpfe
+       «Beispiel» und «Weiter» · D grosses Kapitel-Zeichen, gepunkteter Weg mit Zeichen · E Pinselstrich quer übers Bild, Wolken.
        Ohne Skript: helle Hero-Fläche, dunkle Schicht für die Kehren, alle Nägel, Bild 0 bleibt stehen.
        Bei «weniger Bewegung»: dieselben Wechsel, aber ohne Bewegung. */
     .reise-bruecke{ position:relative; overflow-x:clip }
@@ -248,8 +245,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
     .reise-linie{ position:absolute; left:clamp(24px, 5vw, 64px); top:14vh; height:70vh; width:auto; aspect-ratio:60/600; overflow:visible }
     .reise-linie .weg{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:.1 9; opacity:.85 }
-    .reise-linie .gegangen{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:100 100; stroke-dashoffset:var(--weg, 0) }
+    .reise-linie .gegangen{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:100 100; stroke-dashoffset:100 }
     .reise-linie .halt circle{ fill:#FBFBFA; stroke:currentColor; stroke-width:2 }
+    .reise-linie .halt.gegangen circle{ stroke-width:3 }
     .reise-linie .halt{ transform-box:fill-box; transform-origin:center }
     .reise-linie .ort{ display:none } .js .reise-linie .ort{ display:block }
     .reise-linie .ort circle{ fill:none; stroke:var(--sand); stroke-width:3 }
@@ -473,7 +471,7 @@ function wegPunkt(t) {
   const b = (a, c, d, e) => (1 - u) ** 3 * a + 3 * (1 - u) ** 2 * u * c + 3 * (1 - u) * u ** 2 * d + u ** 3 * e;
   return [b(p0[0], x1, x2, x3), b(p0[1], y1, y2, y3)].map((v) => Math.round(v * 10) / 10);
 }
-export function reiseWegPunkte() {
+function reiseWegPunkte() {
   const n = KAPITEL.length;
   return KAPITEL.map((_, i) => wegPunkt(((i + 0.5) / n) * (WEG.length - 1)));
 }
@@ -492,7 +490,7 @@ function reiseLinie() {
 // B/D · Der Wanderstock in der Mitte: Holz mit Licht- und Schattenkante, Riemen oben, Spitze unten; je Kehre ein
 // Stocknagel (Schild in der Kapitelfarbe, darauf das Kapitel-Zeichen der App). Die Nägel sitzen rundum verteilt (je 1/7 Drehung);
 // das Skript dreht den Stock so, dass der neue Nagel von hinten nach vorn kommt. Ohne Skript stehen alle vorne.
-export const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
+const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
 // D · Die Plaketten als Aufkleber, wie man sie an einen Wanderstock klebt: verschiedene Formen, leicht schräg,
 // weisser Rand, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund). Darauf das Kapitel-Zeichen der App.
 const STICKER = [
@@ -860,7 +858,7 @@ ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p clas
       <div class="fuss-zeile">
         <p class="vertrauen"><span>Ohne Konto</span><span>Ohne Werbung</span><span>Ihre Angaben bleiben auf dem Gerät</span></p>
         <p>Die Bilder der Reise sind KI-gemalt, eine freie Darstellung des Malojapasses.</p>
-        <p>Diese Seite gibt es auf Deutsch. Die App lässt sich auch auf Englisch, Französisch, Italienisch und Rätoromanisch einstellen.</p>
+        <p>Diese Seite gibt es auf Deutsch. Die App lässt sich auch auf Englisch, Französisch, Italienisch und Rätoromanisch (noch provisorisch) einstellen.</p>
         <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
       </div>
     </div>

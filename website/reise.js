@@ -1,8 +1,8 @@
 // Die Reise auf der Vorstellungsseite (Abschnitt #weg, Entwurf 10.11.2026, Brand Book §7e, Entscheid A–E).
-// Beim Scrollen: vor Kehre 1 steht die Nacht über dem Pass (Eintritt); je Kehre breitet sich das neue Bild wie ein
+// Beim Scrollen: vor Kehre 1 steht das Passbild des Hero (Bild 0); je Kehre wischt das neue Bild wie ein
 // Pinselstrich quer über das alte, der Ort auf der Weglinie wandert mit, an den Wanderstock kommt je erreichter Kehre
 // ein Stocknagel, und der Stock dreht sich um die eigene Achse, bis der neue Nagel vorn steht.
-// Ohne dieses Skript ist alles da (alle Nägel am Stock, erstes Bild, Eintritt mit eigener dunkler Fläche).
+// Ohne dieses Skript ist alles da (alle Aufkleber am Stock, Passbild, Hero mit eigener heller Fläche).
 // Bei «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, nur ohne Bewegung (der Stock springt statt zu drehen).
 // Eigene Datei, weil die CSP nur script-src 'self' erlaubt. Reines ES5, keine Abhängigkeiten.
 (function () {
@@ -16,7 +16,7 @@
   var ort = bruecke.querySelector('.reise-linie .ort');
   var ortText = ort && ort.querySelector('text');
   var gegangen = bruecke.querySelector('.reise-linie .gegangen');
-  var bilder = [].slice.call(bruecke.querySelectorAll('.kehre-bild')); // [Nacht, Kehre 1 … Kehre 7]
+  var bilder = [].slice.call(bruecke.querySelectorAll('.kehre-bild')); // [Passbild, Kehre 1 … Kehre 7]
   var namen = stationen.map(function (s) { var n = s.querySelector('.name'); return n ? n.textContent.split('·').pop().trim() : ''; });
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
   var bisher = null;
@@ -26,7 +26,7 @@
     var alt = bisher;
     bilder.forEach(function (b) { b.classList.remove('an', 'vorher'); });
     if (alt !== null && bilder[alt]) bilder[alt].classList.add('vorher');
-    void bilder[nr].offsetWidth; // neu messen, damit der Klecks jedes Mal von klein anfängt
+    void bilder[nr].offsetWidth; // neu messen, damit der Pinselstrich jedes Mal von vorn wischt
     bilder[nr].classList.add('an');
     bisher = nr;
     // Das eigene und die zwei nächsten Bilder laden (Gewicht: nicht alle sieben auf einmal).
