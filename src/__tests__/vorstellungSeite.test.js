@@ -408,7 +408,9 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect((e.match(/<input type="radio" name="versprechen"/g) || []).length).toBe(5);
     expect((e.match(/<label for="v\d"/g) || []).length).toBe(5);
     expect(e).toMatch(/<h3>Grün gehostet<\/h3><p>[^<]*nach <a href="https:\/\/www\.infomaniak\.com\/en\/ecology">Angaben des Anbieters<\/a>/);
-    expect(e).not.toContain('class="zeichen"');   // Zeichen für die Versprechen: eigene Icon-Frage
+    // Zeichen typisch, ohne Strich (Stebler Studios 11.11.2026): je Versprechen eines, nie ein Verbots-Strich (kein roter Strich)
+    expect((e.match(/<label for="v\d"[^>]*><span class="zeichen"><svg viewBox="0 0 24 24"/g) || []).length).toBe(5);
+    expect(e).not.toMatch(/#A32D2D|#B87070|roseDeep/);
     // Schrift auf Salbei nur auf Papier: die Fläche läuft oben aus, der Kopf beginnt 96 px darüber
     expect(stil).toMatch(/\.bildwahl-salbei \.bildwahl-flaeche\{ margin-top:96px; aspect-ratio:280\/130; background:#7E8F7B;/);
     // der Text des gewählten Versprechens steht im Bild (in der Ebene), rechts auf der freien Seite der Karte

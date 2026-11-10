@@ -139,6 +139,21 @@ const VERSPRECHEN = [
   ['Quelloffen', 'Der Quellcode ist öffentlich einsehbar.'],
   ['Grün gehostet', 'Bei Infomaniak in Genf: Rechenzentren in der Schweiz, nach <a href="https://www.infomaniak.com/en/ecology">Angaben des Anbieters</a> mit erneuerbarem Strom betrieben.'],
 ];
+// Zeichen der fünf Versprechen (Stebler Studios 11.11.2026: «Typisch, ohne Strich»): die vertrauten Zeichen, damit sie
+// auch ohne Deutsch erkannt werden, aber ohne roten Verbots-Strich (ruhig statt Warnung). Linienstil wie die Kapitel-
+// Zeichen, Farbe aus dem Knopf. Das Blatt ist dasselbe wie «Grün gehostet» in der App (IconKern _leaf).
+const VERSPRECHEN_ZEICHEN = [
+  // Kein Konto: Person mit Häkchen («Sie bleiben anonym»)
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="7.5" r="3.5"/><path d="M3.5 20c0-3.9 2.9-6.5 6.5-6.5 1.6 0 3 .5 4.1 1.4"/><path d="M14.5 18.3l2.2 2.2 4.3-4.6"/></svg>',
+  // Nur auf diesem Gerät: Telefon mit Schloss
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2.5" width="12" height="19" rx="2.2"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.3 11V9.6a1.7 1.7 0 0 1 3.4 0V11"/></svg>',
+  // Kein Tracking: Auge geschlossen, als ruhiger Lidstrich mit Wimpern
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10c2.5 4 5.5 6 9 6s6.5-2 9-6"/><path d="M6.2 14.3l-1.6 2.1M12 16v2.7M17.8 14.3l1.6 2.1"/></svg>',
+  // Quelloffen: spitze Klammern
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.6 5l-3.2 14"/></svg>',
+  // Grün gehostet: Blatt (wie in der App)
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14Z"/><path d="M8 16l8-8"/></svg>',
+];
 const GERAET_ZEICHEN = {
   telefon: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/></svg>',
   laptop: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="5" width="15" height="10.5" rx="1.4"/><path d="M2.5 18.5h19"/></svg>',
@@ -549,6 +564,9 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .bildwahl-ebene label.unten{ transform:translate(-50%, 14px) } .bildwahl-ebene label.unten::after{ top:auto; bottom:100% }
     .bildwahl-ebene .zeichen{ display:inline-grid; color:color-mix(in oklab, var(--farbe) 65%, #24262A) }
     .bildwahl-ebene .zeichen svg{ width:22px; height:22px; display:block }
+    /* E · die Zeichen der Versprechen tragen die Farbe des Knopfs (Linie, keine Fläche) */
+    .bildwahl-salbei .bildwahl-ebene .zeichen{ color:inherit }
+    .bildwahl-salbei .bildwahl-ebene .zeichen svg{ fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
     .bildwahl-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
       background:#55685A; box-shadow:0 0 0 2px #FCF0E4 }
     /* D · Die Berichte eines Themas ploppen im Bild auf: Karte oben rechts über den Bergkämmen (Papier, Ecke 16, Haarlinie).
@@ -1073,7 +1091,7 @@ ${VERSPRECHEN.map((_, n) => `            <input type="radio" name="versprechen" 
 ${VERSPRECHEN_ORTE.map((o, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${o.x}%; --y:${o.y}%; --xh:${handyX(o.x)}" aria-hidden="true"></span>`).join('\n')}
               </div>
               <div class="bildwahl-ebene">
-${VERSPRECHEN.map(([titel], n) => `                <label for="v${n + 1}"${VERSPRECHEN_ORTE[n].unten ? ' class="unten"' : ''} style="--x:${VERSPRECHEN_ORTE[n].x}%; --y:${VERSPRECHEN_ORTE[n].y}%">${esc(titel)}</label>`).join('\n')}
+${VERSPRECHEN.map(([titel], n) => `                <label for="v${n + 1}"${VERSPRECHEN_ORTE[n].unten ? ' class="unten"' : ''} style="--x:${VERSPRECHEN_ORTE[n].x}%; --y:${VERSPRECHEN_ORTE[n].y}%"><span class="zeichen">${VERSPRECHEN_ZEICHEN[n]}</span>${esc(titel)}</label>`).join('\n')}
                 <div class="bildwahl-tafeln">
 ${VERSPRECHEN.map(([titel, text], n) => `                  <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${text}</p></div>`).join('\n')}
                 </div>

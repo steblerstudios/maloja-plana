@@ -538,6 +538,9 @@
     .bildwahl-ebene label.unten{ transform:translate(-50%, 14px) } .bildwahl-ebene label.unten::after{ top:auto; bottom:100% }
     .bildwahl-ebene .zeichen{ display:inline-grid; color:color-mix(in oklab, var(--farbe) 65%, #24262A) }
     .bildwahl-ebene .zeichen svg{ width:22px; height:22px; display:block }
+    /* E · die Zeichen der Versprechen tragen die Farbe des Knopfs (Linie, keine Fläche) */
+    .bildwahl-salbei .bildwahl-ebene .zeichen{ color:inherit }
+    .bildwahl-salbei .bildwahl-ebene .zeichen svg{ fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
     .bildwahl-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
       background:#55685A; box-shadow:0 0 0 2px #FCF0E4 }
     /* D · Die Berichte eines Themas ploppen im Bild auf: Karte oben rechts über den Bergkämmen (Papier, Ecke 16, Haarlinie).
@@ -1040,11 +1043,11 @@
                 <span class="bildwahl-punkt p5" style="--x:47.9%; --y:74.4%; --xh:46.6%" aria-hidden="true"></span>
               </div>
               <div class="bildwahl-ebene">
-                <label for="v1" style="--x:55%; --y:49.6%">Kein Konto</label>
-                <label for="v2" style="--x:42.6%; --y:68.2%">Nur auf diesem Gerät</label>
-                <label for="v3" style="--x:6.5%; --y:73.4%">Kein Tracking</label>
-                <label for="v4" style="--x:57.8%; --y:26.6%">Quelloffen</label>
-                <label for="v5" class="unten" style="--x:47.9%; --y:74.4%">Grün gehostet</label>
+                <label for="v1" style="--x:55%; --y:49.6%"><span class="zeichen"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="7.5" r="3.5"/><path d="M3.5 20c0-3.9 2.9-6.5 6.5-6.5 1.6 0 3 .5 4.1 1.4"/><path d="M14.5 18.3l2.2 2.2 4.3-4.6"/></svg></span>Kein Konto</label>
+                <label for="v2" style="--x:42.6%; --y:68.2%"><span class="zeichen"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2.5" width="12" height="19" rx="2.2"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.3 11V9.6a1.7 1.7 0 0 1 3.4 0V11"/></svg></span>Nur auf diesem Gerät</label>
+                <label for="v3" style="--x:6.5%; --y:73.4%"><span class="zeichen"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10c2.5 4 5.5 6 9 6s6.5-2 9-6"/><path d="M6.2 14.3l-1.6 2.1M12 16v2.7M17.8 14.3l1.6 2.1"/></svg></span>Kein Tracking</label>
+                <label for="v4" style="--x:57.8%; --y:26.6%"><span class="zeichen"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.6 5l-3.2 14"/></svg></span>Quelloffen</label>
+                <label for="v5" class="unten" style="--x:47.9%; --y:74.4%"><span class="zeichen"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14Z"/><path d="M8 16l8-8"/></svg></span>Grün gehostet</label>
                 <div class="bildwahl-tafeln">
                   <div class="bildwahl-tafel t1"><h3>Kein Konto</h3><p>Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.</p></div>
                   <div class="bildwahl-tafel t2"><h3>Nur auf diesem Gerät</h3><p>Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.</p></div>
