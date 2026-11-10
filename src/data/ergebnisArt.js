@@ -66,10 +66,14 @@ export function fehlendeAngaben(angaben) {
 //   ergebnisArt.vollstaendig  '{satz}.'
 //   ergebnisArt.fehltEine     '{satz}. Noch eine Angabe nötig.'
 //   ergebnisArt.fehltMehrere  '{satz}. Noch {n} Angaben nötig.'
+//   ergebnisArt.fehltNamen    '{satz}. Noch nötig: {liste}.' (Kapitel 5, C: die Angabe beim Namen nennen)
+//   ergebnisArt.angabe.<name> Bezeichnung je Name; fehlt eine, bleibt es bei der Zahl.
 export function ergebnisSatz(e, t) {
   const satz = t('ergebnisArt.satz.' + e.art);
   const n = e.fehlend.length;
   if (n === 0) return t('ergebnisArt.vollstaendig', { satz });
+  const namen = e.fehlend.map((name) => { const k = 'ergebnisArt.angabe.' + name; const v = t(k); return v && v !== k ? v : null; });
+  if (namen.every(Boolean)) return t('ergebnisArt.fehltNamen', { satz, liste: namen.join(', ') });
   if (n === 1) return t('ergebnisArt.fehltEine', { satz });
   return t('ergebnisArt.fehltMehrere', { satz, n });
 }

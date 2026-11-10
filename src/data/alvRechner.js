@@ -84,7 +84,10 @@ export function bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad
   if (!beitragsmonate || beitragsmonate < 12) return null;
   // AVIG Art. 27 Abs. 2 lit. c: 520 nur mit mindestens 22 Beitragsmonaten — ab 55 ODER mit IV-Rente (≥ 40 %).
   if (beitragsmonate >= 22 && (alter >= 55 || ivGrad40)) return 520;
-  if (alter && alter < 25 && !hatKinder) return 200; // jung, ohne Unterhaltspflicht
+  // Kapitel 5, L1 (10.11.2026): ohne Alter keine Zahl. Vorher fiel die Prüfung «unter 25» still weg und es
+  // standen 400 Taggelder da — unter 25 ohne Kinder sind es 200 (AVIG Art. 27 Abs. 5bis), ab 55 bis 520.
+  if (alter == null || alter === '' || !Number.isFinite(Number(alter))) return null;
+  if (alter < 25 && !hatKinder) return 200; // jung, ohne Unterhaltspflicht
   if (beitragsmonate >= 18) return 400;
   return 260; // 12 bis <18 Monate
 }
@@ -108,6 +111,8 @@ export function berechneTaggeld({ versicherterVerdienst, hatKinder, ivGrad40, be
     monatlich: Math.round(monatlich),
     wartetage: bestimmeWartetage({ versicherterVerdienst: v, hatKinder }),
     anspruchstage: bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }),
+    // Beitragszeit reicht, aber ohne Alter steht die Höchstzahl nicht fest (200 bis 520 Taggelder).
+    anspruchstageOffen: beitragsmonate >= 12 && bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }) == null,
   };
 }
 
