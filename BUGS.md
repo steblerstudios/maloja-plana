@@ -90,8 +90,8 @@ Datei; dafür hat das Studio einen eigenen Weg.
 **Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
 Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — **nicht gemergt, nicht
 live**. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
-zuerst. Danach auch **B-11, B-16 und B-18** behoben (siehe je dort). **Offen bleiben B-17 und
-B-19** sowie die Text-Punkte aus der Fachprüfung zu B-18. Rechner/Fachlogik: siehe Nachtrag unten.
+zuerst. Danach auch **B-11, B-16, B-17 und B-18** behoben (siehe je dort). **Offen bleibt
+B-19** sowie die Text-Punkte aus den Fachprüfungen zu B-17/B-18. Rechner/Fachlogik: siehe Nachtrag unten.
 
 - 2026-11-09 · **B-7** · **Dokument-Datei galt als gespeichert, bevor sie es war.**
   `idb.save` (`src/utils/storage.js`) löste bei `req.onsuccess` auf. Bei vollem Speicher bricht
@@ -151,8 +151,18 @@ gesetzliche Werte stimmen. Ein Fix hier ist Fachlogik → vorher `swiss-precisio
   Bezug im Referenzalter keine. Gemeldetes Beispiel (vom Lesedurchgang mit Node gerechnet): Mann,
   40, IK 20 Jahre à 80 000 → Bezug 65 «fehlend 24», Bezug 63 «fehlend 22». Dazu liest
   `projektionAhv` den IK gar nicht, obwohl der Zukunft-Reiter `vr.zukunftIkAktiv` sagt, die
-  Projektion nutze die IK-Historie. **Offen ist auch der Fachentscheid**, ob der IK-Weg künftige
-  Jahre hochrechnen soll.
+  Projektion nutze die IK-Historie. ~~Offen ist auch der Fachentscheid~~ → **Entscheid Stebler
+  Studios 10.11.2026: hochrechnen.** **Behoben (Zweig):** `utils/ikHochrechnung.js` — künftige Jahre
+  ab dem laufenden Jahr bzw. nach dem letzten IK-Jahr bis zur vollen Beitragsdauer des Jahrgangs,
+  Einkommen gemischt (IK-Summe + heutiges Einkommen je künftigem Jahr), Lücken der Vergangenheit
+  bleiben; dieselbe Zählung bei Bezug, Vorbezug, Vergleichstabelle und Zukunftsbild; Erziehung/
+  Betreuung = grössere Zahl aus IK und Eingabefeld. Test `ikHochrechnung.test.js`. Zwei Runden
+  `swiss-precision-pruefer`: (1) ein Jahr doppelt gezählt, Tabelle ohne IK, künftige Erziehungsjahre
+  fehlten; (2) früh endender IK zählte Vergangenheit als Zukunft, 44 statt 43 bei der
+  Übergangsgeneration — alles korrigiert. **Offen:** `vr.zukunftIkAktiv` nennt die IK-Rohwerte,
+  nicht die hochgerechneten (neuer Satz in 5 Sprachen nach Lektüre); kein Aufwertungsfaktor
+  (Art. 30 AHVG) — war vorher in `berechneIKAuszug` schon so, eher zu tief; die Vergleichstabelle
+  kennt keine Erziehungsgutschriften (vorbestehend, mit und ohne IK).
 - 2026-11-09 · **B-18** · **Zukunftsbild rechnet AHV ab dem Rücktritt, auch vor 63.**
   `VorsorgeRechner.jsx` (Zukunftsgrafik): der Regler geht ab 58, `ahvVorbezugM =
   (Referenzalter − Rücktritt) × 12` → bei 58 rund 84 Monate AHV-Vorbezugsrente ab 58. Der
