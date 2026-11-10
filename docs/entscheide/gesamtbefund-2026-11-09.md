@@ -192,5 +192,9 @@ siebenmal neu entschieden werden:
    Kinder ab 18, Einstelltage, Abredeversicherung-Frist), A1 AHV-Akonto für Selbständige, A2 Probezeit-Verlängerung. Gestaltung
    A–C (Zahlen-Platzhalter, langer Absatz, «Noch eine Angabe nötig» ohne Namen), Sprache S1–S7. Stundenlohn mit #802 erledigt.
    ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-5-ausbildung` (von `main`).
+   ✅ **Gebaut** → Entwurfs-PR #814: ALV-Rechner mit Alter (Spanne aus Beitragsmonaten), kein Betrag unter 12 Monaten,
+   brutto, Kinder ab 18 nur in Ausbildung, A–C; L5–L7, A1 (Jahrestabelle `selbstaendigAhv.js`), A2, Teile von K;
+   Überschriftenstufen; Sprache S2/S5/S6/S7 in den berührten Texten. rechts-pruefer mit Volltext eingearbeitet,
+   9396 Tests grün. Offen: Sprung zum Feld (C), rm-Übersetzung (S1), übrige K-Punkte, AHV-Werte 2027 für Selbständige.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
