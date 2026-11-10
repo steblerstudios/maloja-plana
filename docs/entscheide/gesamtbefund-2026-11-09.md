@@ -187,5 +187,21 @@ siebenmal neu entschieden werden:
    Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
    Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
    (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
+   **Kapitel 7 · Gesundheit** (10.11.): Bild [kapitel-7-gesundheit.html](../design/kapitel-7-gesundheit.html). Kapitelseite
+   und dreizehn Seiten (Notfallkarte, Notfallpass, Arztkoffer, Vorsorgeauftrag & Patientenverfügung, Patientenverfügung
+   erstellen, Bestattungswünsche, Organspende, KVG-Leistungen, Kassenkarten-Scanner, Unfall oder Krankheit, Krankheit & IV,
+   Angehörige pflegen, Erklärseite Krankenkasse), Fachprüfung am Fedlex-Volltext (rechts- und swiss-precision-pruefer).
+   Gut: Form des Vorsorgeauftrags richtig, Patientenverfügung richtig, Organspende richtig (erweiterte Zustimmungslösung
+   gilt bis zur Widerspruchslösung, laut BAG vss. 1. Halbjahr 2028), ZGB 360–381 ab 1.1.2027 unverändert. Hoch: L1 die
+   Vorsorgeauftrag-Vorlage druckt Linien für Ort, Datum und Unterschrift, ein unterschriebener Ausdruck ist ungültig
+   (ZGB Art. 361 Abs. 2). Mittel: L2 Ehegatten-Vertretung nur «im gemeinsamen Haushalt» (Art. 374: auch regelmässiger
+   Beistand; nur ohne Vorsorgeauftrag/Beistandschaft), L3 Patientenverfügung in der Psychiatrie nur zu berücksichtigen
+   (Art. 380, 433), L4 freie Spitalwahl (KVG Art. 41 Abs. 1bis), L5 «Franchise ist Ihr Selbstbehalt», Kinder 350, L6 IV
+   ohne Rechtsweg (Vorbescheid 30 Tage, Beschwerde statt Einsprache), L7 Kurzurlaub OR 329h unter «EO», L8 Mutterschaft
+   (KVG Art. 64 Abs. 7 Bst. a ganze Schwangerschaft), L9 «ab jetzt 100 %» trotz Spitalbeitrag, L10 Franchise-Rechner nur
+   für Erwachsene. Gestaltung A Gesundheit hat zwei Orte (Kapitelseite zeigt nur den Notfall, KVG/IV/Pflege/Unfall hängen
+   am Arztkoffer), B Notrufnummern als 19-px-Textlinks, C Doppeltes (drei Einleitungen, Patientenverfügung zweimal,
+   «Vorsorge» zweimal). Sprache S1–S7 (rm Unfall-Seite ganz deutsch, Notfallkarte ohne rm-Sie-Formen, «Bleiben Sie ruhig»).
+   Zweig `feat/kapitel-7-gesundheit` (von `main`), nur Befund, gebaut ist nichts.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
