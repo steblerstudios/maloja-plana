@@ -168,7 +168,7 @@ export const LEGENDE = {
   steuer: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
   miete: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
   alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
-  sozialhilfe: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]',
+  sozialhilfe: 'Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]',
   el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
 };
 
