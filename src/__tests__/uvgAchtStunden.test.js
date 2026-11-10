@@ -45,4 +45,13 @@ describe('UVG: Berufsunfälle ohne Stundengrenze, Nichtberufsunfälle ab 8 Std. 
     expect(de.unfallKrankheit.step2UnfallText.sie).toContain('Arbeitsweg als Berufsunfall');
     expect(de.unfallKrankheit.step2UnfallText.du).toContain('Arbeitsweg als Berufsunfall');
   });
+
+  // KVG Art. 8: die Unfalldeckung der Krankenkasse ist da, bis sie sistiert wird — keine Pflicht,
+  // «sie einzuschliessen» (Hinweis rechts-pruefer 10.11.). Wer unter 8 Std. arbeitet, soll sie nicht sistieren.
+  it('de: Krankenkasse deckt den Unfall, Sistieren nach KVG Art. 8', () => {
+    for (const v of [de.unfallKrankheit.step2UnfallText, de.neuerJob.step3Text]) {
+      for (const text of [v.sie, v.du]) expect(text).toMatch(/KVG Art\. 8 Abs\. 1/);
+    }
+    expect(de.unfallKrankheit.step2UnfallText.sie).not.toMatch(/muss der Unfall in der Krankenkasse eingeschlossen/);
+  });
 });
