@@ -140,6 +140,27 @@ function karte(ctx, key, { legende, nachher = '' }) {
         </figure>`;
 }
 
+// ─── Eine Karte als eigenes Bild ─────────────────────────────────────────────
+// Für die Vorstellungsseite (Entscheid Stebler Studios 10.11.2026, Skizze A–C → «C: als eigenes Bild»):
+// dieselben Formen und Stufen wie im Atlas, aber als Datei, die erst beim Hinscrollen lädt. Eine Datei
+// als <img> erbt kein CSS der Seite, darum stehen Farben und Rand hier fest, hell und dunkel.
+export const KARTE_MASS = { w: GEO.w, h: GEO.h };
+const RAND = { hell: '#6A6E74', dunkel: '#A8A5A0' }; // --leise der Seiten: Rand 3:1 gegen den Grund (1.4.11)
+export function karteBild(key) {
+  const E = EBENEN[key];
+  const f = FRUCHT_STUFEN[KARTEN_FRUCHT[key]];
+  if (!E || !f) throw new Error(`Kantonsatlas: keine Karte «${key}» für das Bild`);
+  const { stufe } = stufen(key);
+  const farben = (s, see, rand) => `use{stroke:${rand};stroke-width:.6}${s.map((c, i) => `.k${i + 1}{fill:${c}}`).join('')}.see{fill:${see};stroke:none}`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${GEO.w} ${GEO.h}" width="${GEO.w}" height="${GEO.h}">` +
+    `<title>${esc(`Karte: ${E.titel}`)}</title>` +
+    `<style>${farben(f.hell, SEE.hell, RAND.hell)}@media (prefers-color-scheme:dark){${farben(f.dunkel, SEE.dunkel, RAND.dunkel)}}</style>` +
+    `<defs>${KANTONE.map((k) => `<path id="ka-${k}" d="${GEO.cantons[k].d}"/>`).join('')}${GEO.lakes.map((d, i) => `<path id="ka-see-${i}" d="${d}"/>`).join('')}</defs>` +
+    KANTONE.map((k) => `<use href="#ka-${k}" class="k${stufe[k]}"/>`).join('') +
+    GEO.lakes.map((_, i) => `<use href="#ka-see-${i}" class="see"/>`).join('') +
+    `</svg>\n`;
+}
+
 // Karte → Werkzeug der App, das dieselbe Frage mit den eigenen Angaben rechnet (C, Brückenstück 09.11.2026).
 // Die Umkehrung von KANTONSKARTE in src/components/ErklaerseiteLink.jsx (Wächter: atlasBruecke.test.js).
 // Leerwohnungen, Kinderzulage und Kita-Abzug haben kein eigenes Werkzeug: dort steht kein Weg.
@@ -168,7 +189,7 @@ export const LEGENDE = {
   steuer: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
   miete: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
   alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
-  sozialhilfe: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]',
+  sozialhilfe: 'Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]',
   el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
 };
 

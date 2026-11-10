@@ -20,7 +20,9 @@
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
   <meta name="rating" content="general">
-  <meta name="robots" content="index, follow">
+  <!-- Seit dem Umzug nach /app/ (Plan PR 2): die App selbst wird nicht indexiert. Was
+       Suchmaschinen finden sollen, steht auf der Website (/ und die Erklärseiten). -->
+  <meta name="robots" content="noindex, follow">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -90,7 +92,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Maloja Plana">
-  <link rel="canonical" href="https://malojaplana.ch/">
+  <link rel="canonical" href="https://malojaplana.ch/app/">
 
   <!-- ─── Kein hreflang auf der Startseite. Das ist Absicht, seit 21.09.2026. ───
        Hier standen fünf Zeilen auf ?lang=de/fr/it/en/rm. Sie waren inert und

@@ -1,14 +1,19 @@
 // ─── E18 · Alle Daten auf diesem Gerät löschen ────────────────────────────────
-// Was Maloja auf dem Gerät ablegt, liegt an zwei Orten:
+// Was Maloja auf dem Gerät ablegt, liegt an drei Orten:
 //   • localStorage: alle Schlüssel mit `or5_` (Angaben, Dokument-Liste, Erinnerungen,
 //     Kontakte, Merkliste, Tresor, Einstellungen, Sicherheits-Schnappschüsse).
 //   • IndexedDB: die Dateien der Dokumente und die automatischen Sicherungen
 //     (dazu die Namen aus der Zeit vor der Umbenennung, falls noch vorhanden).
+//   • Cache `maloja-geteilt` (Teilen-Empfang, utils/teilenEmpfang.js): Dateien, die
+//     per «Teilen an Maloja» oder «Datei hinzufügen» angekommen und noch nicht
+//     eingeordnet sind. Der Service Worker behält diesen Cache absichtlich über
+//     App-Updates (public/sw.js) — darum muss er hier ausdrücklich weg.
 // `storage.clear()` (utils/storage.js) leert nur localStorage — die Dokumente in
 // IndexedDB blieben liegen. Darum dieser eigene Weg.
 //
-// Nicht gelöscht: der Service-Worker-Cache. Er enthält nur die App selbst (HTML, JS,
-// CSS), keine Angaben — so bleibt Maloja nach dem Neustart auch offline nutzbar.
+// Nicht gelöscht: der App-Cache des Service Workers. Er enthält nur die App selbst
+// (HTML, JS, CSS), keine Angaben — so bleibt Maloja nach dem Neustart auch offline
+// nutzbar. Nur der Teilen-Cache oben enthält Angaben; er wird gelöscht.
 // Bewusst behalten: `or5_beta_access` — kein persönlicher Inhalt; ohne ihn stünde man
 // nach dem Neustart vor der Code-Wand.
 //
@@ -25,7 +30,11 @@
 // Im Beispiel (demo) wird nichts angefasst: die angezeigten Daten sind nicht die
 // eigenen, und «löschen» darf dort nie den echten Stand treffen (B-3).
 
+import { GETEILT_CACHE } from './teilenEmpfang.js';
+
 export const BEHALTEN = ['or5_beta_access'];
+// Caches mit persönlichem Inhalt (nicht der App-Cache).
+export const APP_CACHES = [GETEILT_CACHE];
 // Alt-Namen sind meist gar nicht vorhanden; ihr «Löschen» gelingt dann trotzdem.
 export const APP_DATENBANKEN = ['maloja-plana-documents', 'maloja-plana-backups', 'ordnung-ruhe-documents', 'ordnung-ruhe-backups'];
 
@@ -67,6 +76,7 @@ export async function alleDatenLoeschen({
   local = sicher(() => g.localStorage),
   session = sicher(() => g.sessionStorage),
   idb = sicher(() => g.indexedDB),
+  cacheSpeicher = sicher(() => g.caches),
 } = {}) {
   if (demo) return { geloescht: false, fehler: [] };
 
@@ -86,6 +96,13 @@ export async function alleDatenLoeschen({
   if (idb) {
     for (const name of APP_DATENBANKEN) {
       if (!(await dbLoeschen(idb, name))) fehler.push(name);
+    }
+  }
+
+  // 2b · Teilen-Cache (geteilte, noch nicht eingeordnete Dateien)
+  if (cacheSpeicher) {
+    for (const name of APP_CACHES) {
+      try { await cacheSpeicher.delete(name); } catch { fehler.push(name); }
     }
   }
 

@@ -17,6 +17,24 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 10.11.2026, 17:10 — `73caaf6e` ist LIVE: Website auf `/`, App unter `/app/`** (0.1.49-beta, gebaut 17:01:49, Deploy Stebler Studios). Überholt alle Stände darunter.
+> - Dazwischen live: `a1e0b59d` (14:48/14:53: UVG-Satz #817, Sozialhilfe 2025 #819, `.htaccess`-Abschrift #816). `deploy.sh` prüft die Freigabe-Marke seit #821 selbst.
+> - Stapel #776 #779 #790 #804 #809 als #823 zusammengeführt (Entscheid «heute ganz live» hob den 26.10.-Entscheid auf). Umzug belegt: lokal im Browser (alter SW weg, Angaben/IndexedDB/Teilen-Cache/Beta-Zugang bleiben), auf Stage mit iPhone, und live auf dem echten iPhone (Angaben da).
+> - Server-`.htaccess` von Hand: POST `^(app/)?teilen-empfang/?$` → 303 `/app/` (belegt). **Stage hat keine `.htaccess`** — dort immer `https://` öffnen, sonst lehnt die Code-Wand jeden Code ab (kein Web-Crypto ohne sichere Verbindung).
+> - Offen: a11y Plakettenkontrast + «KI-gemalt» · Video · Zugangscode in der FAQ · Postanschrift Impressum · Sozialberatung · Version/Tag.
+>
+> 🧾 **Nachtrag 10.11.2026, 13:25 — `346172d9` ist LIVE (0.1.49-beta, Version nicht erhöht), gebaut 13:22, Deploy Stebler Studios.** Überholt alle Stände darunter.
+> - Vorher Predeploy-Nachzug auf `ad40cd22` (21 Merges seit Marke `dff64ec7`): ein Blocker — «Alle Daten löschen» liess den
+>   Teilen-Cache `maloja-geteilt` (#782) stehen → behoben mit #813 (dazu DSE 5 Sprachen, Zug Wohnsitz/Arbeitsplatz + Vermögen je Kind).
+>   Marke auf `346172d9`. Stichprobe Sitze 2027 (26/26), ALQ Sept. 2026 (27/27), BAG-Prämien 2027 belegt.
+> - **Live-Gegenprobe 13:25:** `version.json` = `346172d9` · `index-DyYDPF9W.js` live = lokal (SHA-256 gleich) · `dist` gleich dem
+>   geprüften Build aus sauberer Kopie (ausser `.htaccess`, die `deploy.sh` absichtlich entfernt) · CSP/Header aktiv · neue Seiten
+>   (/kantonsatlas/, /politsystem/, /praemienverbilligung/<kanton>/, /fr/ /it/ /en/ /rm/) 200, Gegenprobe 404 · de-Bündel 4/4 neue Texte.
+> - ⚠️ `sauber: false` nur wegen einer nicht getrackten Datei unter `_handoffs/` im Haupt-Checkout (gehört nicht zum Build).
+> - **Nicht geprüft:** Konsole und Ansicht im Browser.
+> - Offen nach dem Deploy: UVG-Satz (`de.js` `additional`, UVV Art. 13) · Sozialhilfe 2025 (BFS 27.10.2026) · `.htaccess` POST
+>   `/teilen-empfang` · ⚠️-Liste in `stebler-studios/_handoffs/2026-11-09-predeploy-ampel.md` · Version/Tag klären (blieb 0.1.49).
+>
 > 🧾 **Nachtrag 09.11.2026, 11:50 — Predeploy auf `main` gelaufen, NICHT live.** Live weiter `4f37d580`.
 >
 > - **Auf main seit live (395 Commits, gemessen mit `scripts/stand-jetzt.sh` 11:10):** Fassung 9 vollständig
