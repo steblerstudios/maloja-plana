@@ -32,7 +32,7 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const titelStil = { fontWeight: weight.semi, color: palette.text, margin: space.md + 'px 0 ' + space.sm + 'px' };
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const hinweisStil = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
+  const eingabeStil = { minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px' };
 
   const feld = (i, key, label, hinweis, extra = {}) => {
     const id = 'kk-' + i + '-' + key;

@@ -211,7 +211,6 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
     border: '1px solid ' + palette.feldrand,
     background: palette.surface,
     color: palette.text,
-    boxSizing: 'border-box',
     fontSize: text.sm
   };
 
