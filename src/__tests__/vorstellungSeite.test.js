@@ -286,7 +286,7 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
 
   // Design-Durchgang 10.11.2026 (Stebler Studios «Ja, alle so», Befunde A–M), Brand Book §7e.
   it('A · eine Seitenfarbe: die Creme des Passbilds, auch Ausklang und Hero-Schleier; kein Granit-Grau mehr', () => {
-    const wurzel = stil.match(/:root\{([\s\S]*?)\n    \}/)[1];
+    const wurzel = stil.match(/:root\{([\s\S]*?)\n {4}\}/)[1];
     expect(wurzel).toContain('--bg:#FCF0E4;');
     expect(wurzel).toContain('--himmel:#FCF0E4;');
     expect(wurzel).toContain('--schleier:252,240,228;');
