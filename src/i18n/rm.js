@@ -369,14 +369,14 @@ export default {
   // TODO(rm): provisorischer DE-Fallback für neuerJob — sauberes Romanisch nachziehen.
   neuerJob: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    fristVorbei: 'Die gesetzliche Probezeit von einem Monat endete am {date}. Steht im Vertrag eine längere, gilt jene.',
+    fristVorbei: "Die gesetzliche Probezeit von einem Monat endete am {date}, ausser sie hat sich durch Krankheit oder Unfall verlängert. Steht im Vertrag eine längere, gilt jene.",
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    fristHinweis: 'Ohne andere Abrede endet die Probezeit nach einem Monat, am {date} (OR Art. 335b). Der Vertrag kann bis zu drei Monate vorsehen — dann gilt jenes Datum.',
+    fristHinweis: "Ohne andere Abrede endet die Probezeit nach einem Monat, am {date} (OR Art. 335b). Der Vertrag kann bis zu drei Monate vorsehen, dann gilt jenes Datum. Krankheits- und Unfalltage in der Probezeit verlängern sie.",
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     fristLabel: 'Erster Arbeitstag',
-    quelle: 'Quellen: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]] (geprüft im September 2026).',
-    title: 'Neuer Job',
-    intro: 'Ein neuer Job verändert mehr als nur den Lohn. Hier der ruhige Überblick, was dazugehört — Vertrag, Vorsorge, Versicherungen, Steuern, Fristen.',
+    quelle: "Quellen: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]], [[UVV Art. 13|https://www.fedlex.admin.ch/eli/cc/1983/38_38_38/de#art_13]] (geprüft im November 2026).",
+    title: "Neue Stelle",
+    intro: "Eine neue Stelle verändert mehr als den Lohn: Vertrag, Vorsorge, Versicherungen, Steuern und Fristen.",
     step1Title: '1 · Arbeitsvertrag prüfen & ablegen',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step1Text: { sie: 'Prüfen Sie Pensum, Lohn, Probezeit, Kündigungsfrist und Ferien. Legen Sie den Vertrag im Lebensordner ab — Sie brauchen ihn immer wieder.', du: 'Prüfe Pensum, Lohn, Probezeit, Kündigungsfrist und Ferien. Leg den Vertrag im Lebensordner ab — du brauchst ihn immer wieder.' },
@@ -389,7 +389,7 @@ export default {
     step3Title: '3 · Unfall & Krankentaggeld',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step3Text: { sie: 'Ab 8 Std./Woche sind Sie über den Arbeitgeber unfallversichert (UVG) — dann können Sie die Unfalldeckung in der Krankenkasse abwählen und sparen Prämie. Ob ein Krankentaggeld (KTG) besteht, steht im Arbeitsvertrag oder Personalreglement; zahlen Sie mit, sehen Sie den Abzug auf der Lohnabrechnung.', du: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht im Arbeitsvertrag oder Personalreglement; zahlst du mit, siehst du den Abzug auf der Lohnabrechnung.' },
+    step3Text: { sie: "Als angestellte Person sind Sie über die Stelle gegen Berufsunfälle versichert. Arbeiten Sie dort mindestens 8 Stunden pro Woche, auch gegen Unfälle in der Freizeit (UVV Art. 13). Dann können Sie die Unfalldeckung in der Krankenkasse abwählen und sparen Prämie. Ob ein Krankentaggeld (KTG) besteht, steht im Arbeitsvertrag oder Personalreglement; zahlen Sie mit, sehen Sie den Abzug auf der Lohnabrechnung.", du: "Als angestellte Person bist du über die Stelle gegen Berufsunfälle versichert. Arbeitest du dort mindestens 8 Stunden pro Woche, auch gegen Unfälle in der Freizeit (UVV Art. 13). Dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht im Arbeitsvertrag oder Personalreglement; zahlst du mit, siehst du den Abzug auf der Lohnabrechnung." },
     step3Link: 'Unfall oder Krankheit — was tun?',
     step4Title: '4 · Steuern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -398,12 +398,12 @@ export default {
     step4Link: 'Steuern berechnen',
     step5Title: '5 · Probezeit & Ferien',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step5Text: { sie: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notieren Sie sich das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).', du: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notier dir das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).' },
+    step5Text: { sie: "In der Probezeit kann der Vertrag mit sieben Tagen Frist gekündigt werden (OR Art. 335b). Notieren Sie sich das Ende. Sind Sie in der Probezeit krank oder verunfallt, verlängert sie sich um diese Tage. Ferienanspruch: mindestens 4 Wochen pro Jahr, bis 20 Jahre 5 Wochen.", du: "In der Probezeit kann der Vertrag mit sieben Tagen Frist gekündigt werden (OR Art. 335b). Notier dir das Ende. Bist du in der Probezeit krank oder verunfallt, verlängert sie sich um diese Tage. Ferienanspruch: mindestens 4 Wochen pro Jahr, bis 20 Jahre 5 Wochen." },
     step5Button: 'Promemoria «Fin da la temporada d’emprova» en il chalender ({date})',
     step5Done: 'Im Kalender notiert.',
     step5CalendarLink: 'Zum Kalender',
     reminderTitle: 'Probezeit-Ende prüfen',
-    reminderNotes: 'Während der Probezeit gilt eine kürzere Kündigungsfrist. Die genaue Dauer steht im Arbeitsvertrag (oft 1–3 Monate) — Datum anpassen.',
+    reminderNotes: "In der Probezeit gilt eine Kündigungsfrist von sieben Tagen. Die genaue Dauer steht im Arbeitsvertrag (oft 1 bis 3 Monate). Krankheits- oder Unfalltage in der Probezeit verlängern sie: Datum anpassen.",
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     footerProbe: { sie: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, passen Sie sie an.', du: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, pass sie an.' },
   },
@@ -412,31 +412,31 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     step1DateVorbei: { sie: 'Der späteste Tag war der {date}. Melden Sie sich jetzt sofort an — Taggeld gibt es ab dem Tag der Anmeldung, nicht rückwirkend (AVIG Art. 10).', du: 'Der späteste Tag war der {date}. Melde dich jetzt sofort an — Taggeld gibt es ab dem Tag der Anmeldung, nicht rückwirkend (AVIG Art. 10).' },
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    step2Vorbei: 'Die Deckung über den alten Arbeitgeber endete am {date}.',
+    step2Vorbei: "Die Unfalldeckung über die bisherige Stelle endete am {date}. Eine Abredeversicherung ist danach nicht mehr möglich (UVV Art. 8); bleibt der Einschluss in der Krankenkasse.",
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     step2Ohne: { sie: 'Tragen Sie oben das Ende des Arbeitsverhältnisses ein, dann erscheint hier das Datum.', du: 'Trag oben das Ende des Arbeitsverhältnisses ein, dann erscheint hier das Datum.' },
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
-    step2Hinweis: 'Die Deckung über den alten Arbeitgeber endet am {date} (UVG Art. 3).',
+    step2Hinweis: "Die Unfalldeckung über die bisherige Stelle endet am {date} (UVG Art. 3). Eine Abredeversicherung muss vorher abgeschlossen sein, spätestens am {date} (UVV Art. 8).",
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
     step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
     step1Button: 'Termin «Annunzia URC» en il chalender ({date})',
     reminderRavTitle: 'RAV-Anmeldung — spätestens heute',
-    quelle: 'Quellen: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (geprüft im September 2026).',
+    quelle: "Quellen: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIG Art. 30|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_30]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[AVIV Art. 45|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_45]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]], [[UVV Art. 8|https://www.fedlex.admin.ch/eli/cc/1983/38_38_38/de#art_8]] (geprüft im November 2026).",
     title: 'Stelle verloren — was tun?',
-    intro: 'Wenn die Stelle wegfällt, zählt jeder Tag. Hier der ruhige Überblick: zuerst die wichtigste Anmeldung, dann Versicherungen, Vorsorge und Unterlagen.',
+    intro: "Wenn die Stelle wegfällt, zählt jeder Tag. Zuerst die Anmeldung beim RAV, dann Versicherungen, Vorsorge und Unterlagen.",
     step1Title: '1 · Beim RAV anmelden — sofort',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step1Text: { sie: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag, für den Sie Taggeld beanspruchen, beim RAV an — online über arbeit.swiss oder persönlich (AVIG Art. 17, AVIV Art. 19). Schon während der Kündigungsfrist sollten Sie sich bewerben und die Bemühungen festhalten.', du: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melde dich darum spätestens am ersten Tag, für den du Taggeld beanspruchst, beim RAV an — online über arbeit.swiss oder persönlich (AVIG Art. 17, AVIV Art. 19). Schon während der Kündigungsfrist solltest du dich bewerben und die Bemühungen festhalten.' },
+    step1Text: { sie: "Taggeld gibt es erst ab dem Tag der Anmeldung, nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag, für den Sie Taggeld beanspruchen, beim RAV (Regionales Arbeitsvermittlungszentrum) an, online über arbeit.swiss oder persönlich (AVIG Art. 17). Bewerben Sie sich schon während der Kündigungsfrist und halten Sie die Bemühungen fest. Fehlen sie, gibt es Einstelltage, also Tage ohne Taggeld (AVIG Art. 30).", du: "Taggeld gibt es erst ab dem Tag der Anmeldung, nicht rückwirkend. Melde dich darum spätestens am ersten Tag, für den du Taggeld beanspruchst, beim RAV (Regionales Arbeitsvermittlungszentrum) an, online über arbeit.swiss oder persönlich (AVIG Art. 17). Bewirb dich schon während der Kündigungsfrist und halte die Bemühungen fest. Fehlen sie, gibt es Einstelltage, also Tage ohne Taggeld (AVIG Art. 30)." },
     step1Link: 'Taggeld abschätzen',
     step2Title: '2 · Versicherungen — die unsichtbare Lücke',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehen Sie danach Arbeitslosentaggeld, sind Sie über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehst du danach Arbeitslosentaggeld, bist du über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
+    step2Text: { sie: "Die Unfalldeckung über die bisherige Stelle endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehen Sie danach Taggeld, sind Sie über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst schliessen Sie den Unfall in der Krankenkasse ein oder schliessen vor dem Ende der Deckung eine Abredeversicherung ab. Die Grundversicherung läuft normal weiter.", du: "Die Unfalldeckung über die bisherige Stelle endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehst du danach Taggeld, bist du über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst schliesst du den Unfall in der Krankenkasse ein oder schliesst vor dem Ende der Deckung eine Abredeversicherung ab. Die Grundversicherung läuft normal weiter." },
     step2Button: 'Termin «Unfalldeckung» en il chalender ({date})',
     step2Done: 'Frist im Kalender gespeichert.',
     step2CalendarLink: 'Im Kalender ansehen',
-    reminderTitle: 'Unfall in Krankenkasse einschliessen — Deckung endet',
+    reminderTitle: "Unfalldeckung endet: Krankenkasse oder Abredeversicherung",
     step2LinkUk: 'Unfall oder Krankheit — was tun?',
     step2LinkKk: 'Krankenkasse ansehen',
     step3Title: '3 · Pensionskasse (Freizügigkeit)',
@@ -448,7 +448,7 @@ export default {
     step4Text: { sie: 'Verlangen Sie ein qualifiziertes Arbeitszeugnis. Sammeln Sie Kündigung, Lohnabrechnungen und Ihre Arbeitsbemühungen und legen Sie alles im Lebensordner ab.', du: 'Verlang ein qualifiziertes Arbeitszeugnis. Sammle Kündigung, Lohnabrechnungen und deine Arbeitsbemühungen und leg alles im Lebensordner ab.' },
     step4Link: 'Im Lebensordner ablegen',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    footerSperrzeit: { sie: 'Wenn Sie selbst kündigen oder die Kündigung verschuldet haben, kann das RAV Einstelltage verhängen — lassen Sie sich vorher beraten.', du: 'Wenn du selbst kündigst oder die Kündigung verschuldet hast, kann das RAV Einstelltage verhängen — lass dich vorher beraten.' },
+    footerSperrzeit: { sie: "Wer selbst kündigt oder die Kündigung verschuldet hat, wird in der Anspruchsberechtigung eingestellt: je nach Verschulden 1 bis 60 Tage ohne Taggeld. Wer ohne entschuldbaren Grund kündigt, ohne dass eine neue Stelle zugesichert ist, verschuldet schwer, das gibt 31 bis 60 Tage. Diese Einstelltage gehen von der Höchstzahl der Taggelder ab, und darüber verfügt die Arbeitslosenkasse (AVIG Art. 30, AVIV Art. 45). Lassen Sie sich vor einer eigenen Kündigung beraten.", du: "Wer selbst kündigt oder die Kündigung verschuldet hat, wird in der Anspruchsberechtigung eingestellt: je nach Verschulden 1 bis 60 Tage ohne Taggeld. Wer ohne entschuldbaren Grund kündigt, ohne dass eine neue Stelle zugesichert ist, verschuldet schwer, das gibt 31 bis 60 Tage. Diese Einstelltage gehen von der Höchstzahl der Taggelder ab, und darüber verfügt die Arbeitslosenkasse (AVIG Art. 30, AVIV Art. 45). Lass dich vor einer eigenen Kündigung beraten." },
   },
   // TODO(rm): provisorischer Fallback auf Deutsch — sauberes Romanisch nachziehen.
   // Bewusst kein erfundenes RM; RM-Sprechende verstehen DE. Übersetzung folgt im i18n-Durchgang.
@@ -753,7 +753,7 @@ export default {
   },
   selbstaendigkeit: {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    quelle: 'Quellen: [[AHV-Merkblatt 2.02|https://www.ahv-iv.ch/p/2.02.d]], [[UVG Art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_4]] (geprüft im September 2026).',
+    quelle: "Quellen: [[AHV-Merkblatt 2.02|https://www.ahv-iv.ch/p/2.02.d]], [[UVG Art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_4]], [[MWSTG Art. 10|https://www.fedlex.admin.ch/eli/cc/2009/615/de#art_10]] (geprüft im November 2026).",
     title: 'Daventar independent',
     intro: 'Il pass en la independenza porta libertad — e responsabladad che il patrun ha purtà avant. Bler na va betg pli automaticamain. Ina survista calma: status AVS, tip d’activitad, largias d’assicuranza e taglias.',
     step1Title: '1 · Laschar renconuscher tes status AVS',
@@ -769,12 +769,16 @@ export default {
     step2Text: { sie: 'Resta l’independenza in supplement sper in plaz (gudogn accessoric) u vegn ella Voss gudogn principal? Quai influenzeschia Voss contributs AVS, Vossa prevenziun e sche Vus stuais As assecurar cunter la perdita da gudogn. Sco gudogn principal croda la rait da segirezza dal patrun dal tut davent — e cunter dischoccupaziun (AD) n’essas Vus betg assicurà. Sche il gudogn resta stgars u irregular, na stais Vus betg senza sustegn: il stadi da vita «bass gudogn» rimna quai che As stat tuttina a disposiziun (reducziun da premias, contribuziun al fittanza, agid social cumplementar).', du: 'Resta l’independenza in supplement sper in plaz (gudogn accessoric) u vegn ella tes gudogn principal? Quai influenzeschia tes contributs AVS, tia prevenziun e sche ti stos t’assecurar cunter la perdita da gudogn. Sco gudogn principal croda la rait da segirezza dal patrun dal tut davent — e cunter dischoccupaziun (AD) n’es ti betg assicurà. Sche il gudogn resta stgars u irregular, na stas ti betg senza sustegn: il stadi da vita «bass gudogn» rimna quai che ta stat tuttina a disposiziun (reducziun da premias, contribuziun al fittanza, agid social cumplementar).' },
     step2LinkSituation: 'Guardar la situaziun «bass gudogn»',
     step3Title: '3 · Serrar las largias d’assicuranza',
-    step3Text: 'Sco independent n’es ti betg pli assicurà automaticamain cunter accidents (LAINF) e na pajas betg pli en ina cassa da pensiun (LPP). Includa l’accident en tia cassa da malsauns u assecurescha’t voluntarmain, pensa ad ina indemnisaziun da malsogna (IGM) e fabritgescha tia prevenziun cul pilaster 3a u la LPP facultativa.',
+    // TODO(rm): Gegenlese — Kapitel 5 (10.11.2026): Sie-Fassung aus den Vus-Formen der Nachbarsätze gebildet,
+    // Satz zur grossen Säule 3a neu — beides von einer Person gegenlesen lassen, die Romanisch schreibt.
+    step3Text: { sie: "Sco independent n’essas Vus betg pli assicurà automaticamain cunter accidents (LAINF) e na pajais betg pli en ina cassa da pensiun (LPP). Includai l’accident en Vossa cassa da malsauns u As assecurai voluntarmain, pensai ad ina indemnisaziun da malsogna (IGM) e fabritgai Vossa prevenziun cul pilaster 3a u la LPP facultativa. Senza cassa da pensiun pudais Vus pajar en il pilaster 3a fin 20 % dal gudogn, maximalmain {max3a} francs ({jahr3a}).", du: "Sco independent n’es ti betg pli assicurà automaticamain cunter accidents (LAINF) e na pajas betg pli en ina cassa da pensiun (LPP). Includa l’accident en tia cassa da malsauns u assecurescha’t voluntarmain, pensa ad ina indemnisaziun da malsogna (IGM) e fabritgescha tia prevenziun cul pilaster 3a u la LPP facultativa. Senza cassa da pensiun pos ti pajar en il pilaster 3a fin 20 % dal gudogn, maximalmain {max3a} francs ({jahr3a})." },
     step3LinkUk: 'Accident u malsogna — tge che conta',
     step3LinkVorsorge: 'Guardar la prevenziun',
-    step4Title: '4 · Metter da maint taglias & TVA',
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026)
+    step4Title: "4 · AHV-Beiträge, Steuern und Mehrwertsteuer zurücklegen",
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step4Text: { sie: 'Voss gudogn na vegn betg pli taxà a la funtauna — metti perquai da maint daners per la factura da taglia dapi l’entschatta (pajaments a quint). Da 100 000 francs da svieuta annuala vegnis Vus suttamess a la TVA. Ina contabilitad netta dapi l’emprim di spargna bler pli tard.', du: 'Tes gudogn na vegn betg pli taxà a la funtauna — metti perquai da maint daners per la factura da taglia dapi l’entschatta (pajaments a quint). Da 100 000 francs da svieuta annuala vegns ti suttamess a la TVA. Ina contabilitad netta dapi l’emprim di spargna bler pli tard.' },
+    // TODO(rm): provisorisch — Kapitel 5, deutscher Rückfall (10.11.2026): AHV-Akontobeiträge neu, alter Satz war fachlich falsch
+    step4Text: { sie: "Die AHV/IV/EO-Beiträge zahlen Sie selbst, als Akontobeiträge jedes Quartal an die Ausgleichskasse. Ab {grenze} Franken Jahreseinkommen sind es {satz} %, darunter weniger, mindestens aber {mindest} Franken im Jahr, dazu Verwaltungskosten. Wer zu spät zahlt, zahlt {zins} % Verzugszins im Jahr (AHV-Merkblatt 2.02, Stand {jahr}). Legen Sie auch für die Steuern von Anfang an Geld zurück: Sie werden nicht vom Lohn abgezogen, sondern in Raten oder mit der Schlussrechnung bezahlt. Mehrwertsteuerpflichtig werden Sie ab 100 000 Franken Umsatz im Jahr, im In- und Ausland zusammengezählt (MWSTG Art. 10). Eine saubere Buchhaltung von Tag eins erspart später viel.", du: "Die AHV/IV/EO-Beiträge zahlst du selbst, als Akontobeiträge jedes Quartal an die Ausgleichskasse. Ab {grenze} Franken Jahreseinkommen sind es {satz} %, darunter weniger, mindestens aber {mindest} Franken im Jahr, dazu Verwaltungskosten. Wer zu spät zahlt, zahlt {zins} % Verzugszins im Jahr (AHV-Merkblatt 2.02, Stand {jahr}). Leg auch für die Steuern von Anfang an Geld zurück: Sie werden nicht vom Lohn abgezogen, sondern in Raten oder mit der Schlussrechnung bezahlt. Mehrwertsteuerpflichtig wirst du ab 100 000 Franken Umsatz im Jahr, im In- und Ausland zusammengezählt (MWSTG Art. 10). Eine saubere Buchhaltung von Tag eins erspart später viel." },
     step4Link: 'Guardar las taglias',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Planisai Vossa prevenziun conscientamain — la largia senza cassa da pensiun As tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.', du: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.' },
@@ -894,7 +898,7 @@ export default {
     step2LinkIpv: 'Prämienverbilligung prüfen',
     step3Title: '3 · AHV, Arbeit und Quellensteuer',
     step3Text: { sie: 'Wer in der Schweiz wohnt oder arbeitet, ist in der AHV versichert (AHVG Art. 1a) und erhält eine AHV-Nummer (AHVG Art. 50c); einen Versicherungsausweis können Sie bei der Ausgleichskasse verlangen. Sind Sie nicht erwerbstätig, zahlen Sie ab dem 1. Januar nach dem 20. Geburtstag selbst Beiträge (AHVG Art. 3). Ohne Niederlassungsbewilligung (C) wird die Steuer auf dem Lohn meist direkt abgezogen — die Quellensteuer (DBG Art. 83); was dabei zu prüfen ist, zeigt der eigene Ablauf.', du: 'Wer in der Schweiz wohnt oder arbeitet, ist in der AHV versichert (AHVG Art. 1a) und erhält eine AHV-Nummer (AHVG Art. 50c); einen Versicherungsausweis kannst du bei der Ausgleichskasse verlangen. Bist du nicht erwerbstätig, zahlst du ab dem 1. Januar nach dem 20. Geburtstag selbst Beiträge (AHVG Art. 3). Ohne Niederlassungsbewilligung (C) wird die Steuer auf dem Lohn meist direkt abgezogen — die Quellensteuer (DBG Art. 83); was dabei zu prüfen ist, zeigt der eigene Ablauf.' },
-    step3LinkJob: 'Neuer Job: Vertrag, Pensionskasse, Versicherung',
+    step3LinkJob: 'Neue Stelle: Vertrag, Pensionskasse, Versicherung',
     step3LinkQst: 'Quellensteuer — prüfen, was abgezogen wird',
     step3LinkVorsorge: 'AHV und Vorsorge ansehen',
     step4Title: '4 · Führerausweis umtauschen',
@@ -1156,12 +1160,12 @@ export default {
   lehre: {
     title: 'Lehre beginnen — was dazugehört',
     intro: 'Eine Lehre ist mehr als eine erste Stelle: Sie hat einen eigenen Vertrag, eigene Ferienregeln und eine Probezeit, die anders läuft als bei einem Job. Hier der ruhige Überblick — vom Lehrvertrag bis zum Geld für die Ausbildung.',
-    abgrenzung: 'Keine Lehre, sondern eine Anstellung? Dann passt der Ablauf «Neuer Job».',
+    abgrenzung: 'Keine Lehre, sondern eine Anstellung? Dann passt der Ablauf «Neue Stelle».',
     step1Title: '1 · Lehrvertrag: schriftlich und vom Kanton genehmigt',
     step1Text: 'Ein Lehrvertrag gilt nur schriftlich; er regelt Art und Dauer der Ausbildung, den Lohn, die Probezeit, die Arbeitszeit und die Ferien (OR Art. 344a Abs. 1 und 2). Der Lehrbetrieb reicht den unterschriebenen Vertrag vor Lehrbeginn der kantonalen Behörde zur Genehmigung ein; die Genehmigung ist gebührenfrei (BBG Art. 14 Abs. 3, BBV Art. 8 Abs. 5). Verwendet wird das Vertragsformular des Kantons (BBV Art. 8 Abs. 6). Fehlt der Vertrag oder die Genehmigung, gelten die Regeln des Berufsbildungsgesetzes trotzdem (BBG Art. 14 Abs. 6).',
     step1Minderjaehrig: { sie: 'Sind Sie noch nicht 18, braucht der Vertrag die Zustimmung Ihrer gesetzlichen Vertretung — in der Regel der Eltern (ZGB Art. 19 Abs. 1).', du: 'Bist du noch nicht 18, braucht der Vertrag die Zustimmung deiner gesetzlichen Vertretung — in der Regel der Eltern (ZGB Art. 19 Abs. 1).' },
     step1Link: 'Lehrvertrag im Lebensordner ablegen',
-    step1LinkNeuerJob: 'Zum Ablauf Neuer Job',
+    step1LinkNeuerJob: 'Zum Ablauf Neue Stelle',
     step2Title: '2 · Probezeit: ein bis drei Monate',
     step2Text: { sie: 'Die Probezeit einer Lehre dauert mindestens einen und höchstens drei Monate; steht im Lehrvertrag keine, gelten drei Monate (OR Art. 344a Abs. 3). Sie beginnt mit dem ersten Tag der Lehre (BBV Art. 8 Abs. 3). Wie lange sie bei Ihnen dauert, steht in Ihrem Lehrvertrag. Während der Probezeit können beide Seiten mit sieben Tagen Frist kündigen; danach nennt das Gesetz nur die Auflösung aus wichtigen Gründen (OR Art. 346 Abs. 1 und 2). Ausnahmsweise kann die Probezeit vor ihrem Ablauf mit Zustimmung des Kantons auf höchstens sechs Monate verlängert werden (OR Art. 344a Abs. 4).', du: 'Die Probezeit einer Lehre dauert mindestens einen und höchstens drei Monate; steht im Lehrvertrag keine, gelten drei Monate (OR Art. 344a Abs. 3). Sie beginnt mit dem ersten Tag der Lehre (BBV Art. 8 Abs. 3). Wie lange sie bei dir dauert, steht in deinem Lehrvertrag. Während der Probezeit können beide Seiten mit sieben Tagen Frist kündigen; danach nennt das Gesetz nur die Auflösung aus wichtigen Gründen (OR Art. 346 Abs. 1 und 2). Ausnahmsweise kann die Probezeit vor ihrem Ablauf mit Zustimmung des Kantons auf höchstens sechs Monate verlängert werden (OR Art. 344a Abs. 4).' },
     step2Aufloesung: { sie: 'Wird der Lehrvertrag aufgelöst, muss der Lehrbetrieb sofort die kantonale Behörde und gegebenenfalls die Berufsfachschule benachrichtigen (BBG Art. 14 Abs. 4). Schliesst der Betrieb oder bildet er nicht mehr richtig aus, sorgt der Kanton nach Möglichkeit dafür, dass Sie die Lehre beenden können (BBG Art. 14 Abs. 5).', du: 'Wird der Lehrvertrag aufgelöst, muss der Lehrbetrieb sofort die kantonale Behörde und gegebenenfalls die Berufsfachschule benachrichtigen (BBG Art. 14 Abs. 4). Schliesst der Betrieb oder bildet er nicht mehr richtig aus, sorgt der Kanton nach Möglichkeit dafür, dass du die Lehre beenden kannst (BBG Art. 14 Abs. 5).' },
