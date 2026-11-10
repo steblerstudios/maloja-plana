@@ -90,7 +90,8 @@ describe('Vorstellungsseite: Die Reise (A–E)', () => {
   const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
 
   it('A · Eintritt: eigener Bildschirm mit Titel und Ring «Losgehen» zur ersten Kehre', () => {
-    const eintritt = html.match(/<div class="reise-eintritt">([\s\S]*?)<ol class="reise-stationen">/)[1];
+    const eintritt = html.match(/<div class="reise-eintritt">([\s\S]*?)<ol class="reise-stationen"/)[1];
+    expect(eintritt).toContain('KI-gemalt');
     expect(eintritt).toContain('<h2 id="t-weg">');
     expect(eintritt).toContain('<a class="reise-ring" href="#kehre-1">Losgehen</a>');
     expect(html).toContain('class="kehre-bild nacht an"');
@@ -103,7 +104,7 @@ describe('Vorstellungsseite: Die Reise (A–E)', () => {
   });
 
   it('C · jede Kehre hat «im Beispiel ansehen» und «Weiter»; jedes Weiter-Ziel gibt es', () => {
-    const weiter = [...html.matchAll(/<a class="weiter" href="#([^"]+)">/g)].map((m) => m[1]);
+    const weiter = [...html.matchAll(/<a class="weiter" href="#([^"]+)"/g)].map((m) => m[1]);
     expect(weiter).toEqual(['kehre-2', 'kehre-3', 'kehre-4', 'kehre-5', 'kehre-6', 'kehre-7', 'holen']);
     for (const ziel of weiter) expect(html).toContain(`id="${ziel}"`);
     KAPITEL.forEach((k, i) => expect(html).toContain(`<a href="${BEISPIEL}#/chapter/${i}">${k.name} im Beispiel ansehen</a>`));

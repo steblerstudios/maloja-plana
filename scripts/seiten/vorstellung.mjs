@@ -192,6 +192,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
        «Weiter» · D grosse Zahl, gepunkteter Weg mit Ort · E Bildwechsel wie ein Farbklecks, Wolken ziehen.
        Die Bühne klebt (sticky), Eintritt und Kehren ziehen darüber. Ohne Skript: alle Nägel am Stock,
        erstes Bild, kein Mitwandern. Bei «weniger Bewegung»: dieselben Wechsel, aber ohne Bewegung. */
+    .reise{ overflow-x:clip }  /* 100vw zählt die Scrollleiste mit; clip statt hidden, sonst klebt die Bühne nicht */
     .reise-bruecke{ position:relative; width:100vw; margin-left:calc(50% - 50vw) }
     .reise-buehne{ position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:#1B1A18 }
     .reise-bild, .reise-bild > *{ position:absolute; inset:0 }
@@ -212,9 +213,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       background:radial-gradient(38% 30% at 20% 40%, rgba(255,255,255,.55), transparent 70%),
                  radial-gradient(30% 24% at 62% 28%, rgba(255,255,255,.45), transparent 70%),
                  radial-gradient(26% 20% at 88% 55%, rgba(255,255,255,.4), transparent 70%) }
-    /* Lesbarkeit: der Text steht weiss auf dem Bild, darum rechts eine dunkle Schicht (mind. 55 % unter dem Text). */
+    /* Lesbarkeit: der Text steht weiss auf dem Bild, darum rechts eine dunkle Schicht (mind. 62 % unter dem Text). */
     .reise-buehne::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
-      background:linear-gradient(270deg, rgba(18,18,16,.68) 0%, rgba(18,18,16,.56) 44%, rgba(18,18,16,0) 62%),
+      background:linear-gradient(270deg, rgba(18,18,16,.68) 0%, rgba(18,18,16,.62) 44%, rgba(18,18,16,0) 66%),
                  linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%) }
     .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
     .reise-linie{ position:absolute; left:clamp(16px, 4vw, 56px); top:16vh; height:64vh; width:auto; aspect-ratio:60/600; overflow:visible }
@@ -223,7 +224,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-linie circle{ fill:#FBFBFA }
     .reise-linie .ort{ display:none } .js .reise-linie .ort{ display:block }
     .reise-linie .ort circle{ fill:var(--gold); stroke:#FBFBFA; stroke-width:3 }
-    .reise-linie .ort text{ fill:#FBFBFA; font-size:15px; font-weight:600; letter-spacing:.04em }
+    .reise-linie .ort text{ fill:#FBFBFA; font-size:15px; font-weight:600; letter-spacing:.04em; paint-order:stroke; stroke:rgba(20,20,18,.7); stroke-width:4px; stroke-linejoin:round }
     .reise-stock{ position:absolute; left:50%; top:0; height:100%; width:auto; aspect-ratio:100/900; overflow:visible;
       margin-left:calc(100vh * -100 / 900 / 2); margin-left:calc(100svh * -100 / 900 / 2);
       transform-origin:50% calc(var(--ny, .5) * 100%);
@@ -257,9 +258,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       padding:12vh clamp(16px, 5vw, 72px) 12vh calc(50% + clamp(56px, 7vw, 120px)) }
     .reise-text{ max-width:28rem; text-shadow:0 1px 14px rgba(0,0,0,.45) }
     .reise-text .reise-zahl{ font-size:clamp(72px, 10vw, 136px); line-height:.82; font-weight:600; letter-spacing:-0.04em; margin:0 0 14px -4px }
-    .reise-text .name{ display:block; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#E8E6E1; margin-bottom:8px }
+    .reise-text .name{ display:block; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#FBFBFA; margin-bottom:8px }
     .reise-text h3{ font-size:clamp(24px, 2.6vw, 32px); line-height:1.2; letter-spacing:-0.01em; margin-bottom:10px }
-    .reise-text p{ font-size:17px; color:#F2F0EC }
+    .reise-text p{ font-size:17px; color:#FBFBFA }
     .reise-pillen{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
     .reise-pillen a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:999px; text-decoration:none;
       font-size:15px; font-weight:600; color:#FBFBFA; border:1px solid rgba(251,251,250,.75); background:rgba(27,26,24,.38);
@@ -293,8 +294,8 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-linie{ display:none }
       .reise-station{ align-items:flex-end; padding:0 76px 9vh 16px }
       .reise-text .reise-zahl{ font-size:72px }
-      /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene halbdurchsichtige Fläche (55 %). */
-      .reise-text{ background:rgba(20,20,18,.55); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); padding:18px 18px 20px; border-radius:var(--radius-m) }
+      /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene halbdurchsichtige Fläche (62 %). */
+      .reise-text{ background:rgba(20,20,18,.62); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); padding:18px 18px 20px; border-radius:var(--radius-m) }
       .reise-text p{ font-size:16px }
     }
     @media (max-height:520px){
@@ -303,7 +304,8 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-eintritt, .reise-station{ min-height:auto; padding:24px 16px; background:var(--bg) }
       .reise-eintritt h2, .reise-eintritt .augenbraue, .reise-eintritt .unterzeile, .reise-hinweis, .reise-text .name, .reise-text p{ color:var(--text) }
       .reise-ring{ color:var(--text); border-color:var(--text) }
-      .reise-text{ text-shadow:none }
+      .reise-text{ text-shadow:none; background:none; -webkit-backdrop-filter:none; backdrop-filter:none; padding:0 }
+      html:not(.js) .reise-eintritt{ background:var(--bg) }
       .reise-pillen a{ color:var(--text); border-color:var(--text); background:none }
     }
     /* Ohne Skript gibt es keine Nacht-Bühne: der Eintritt bekommt dort selbst die dunkle Fläche. */
@@ -386,7 +388,7 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 function reiseStationen() {
   const n = KAPITEL.length;
   return KAPITEL.map((k, i) => {
-    const weiter = i + 1 < n ? `<a class="weiter" href="#kehre-${i + 2}">Weiter</a>` : '<a class="weiter" href="#holen">Weiter: App holen</a>';
+    const weiter = i + 1 < n ? `<a class="weiter" href="#kehre-${i + 2}" aria-label="Weiter zu Kehre ${i + 2}">Weiter</a>` : '<a class="weiter" href="#holen">Weiter: App holen</a>';
     return `          <li class="reise-station" id="kehre-${i + 1}">
             <div class="reise-text">
               <p class="reise-zahl" aria-hidden="true">${String(i + 1).padStart(2, '0')}</p>
@@ -601,8 +603,9 @@ ${KAPITEL.map((_, i) => i === 0
             <p class="unterzeile">In der App liegen Ihre sieben Kapitel als Stationen auf der Malojapass-Strasse. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. An jeder Kehre kommt ein Stocknagel an den Wanderstock.</p>
             <a class="reise-ring" href="#kehre-1">Losgehen</a>
             <p class="reise-hinweis" aria-hidden="true">oder scrollen</p>
+            <p class="unsichtbar">Die Bilder in diesem Abschnitt sind KI-gemalt, eine freie Darstellung.</p>
           </div>
-          <ol class="reise-stationen">
+          <ol class="reise-stationen" role="list">
 ${reiseStationen()}
           </ol>
         </div>
