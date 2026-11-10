@@ -187,5 +187,16 @@ siebenmal neu entschieden werden:
    Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
    Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
    (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
+   **Kapitel 6 · Behörden & Rechtliches** (10.11.): Bild [kapitel-6-behoerden.html](../design/kapitel-6-behoerden.html). Kapitelseite
+   und neun Abläufe (Bewilligung, Neu in der Schweiz, Einbürgerung, Wegzug, Asyl, Pass/ID, Führerausweis, Betreibungsauszug,
+   Dienst), Fachprüfung am Fedlex-Volltext (swiss-precision- und rechts-pruefer). Hoch: L1 Wegzug mit Ausländerausweis ohne
+   Abmeldefrist 14 Tage vor Ausreise und ohne «Bewilligung erlischt, C vorher aufrechterhalten» (VZAE Art. 15, AIG Art. 61) ·
+   L2 Asyl: Rechtsvertretung kann das Mandat bei Aussichtslosigkeit beenden, die Frist läuft weiter (AsylG Art. 102h). Mittel:
+   L3 Pass/ID überholt seit 1.11.2026 (Fingerabdrücke bei ID mit Chip, Notpass), L4 Einsprache Wehrpflichtersatz klingt nach
+   Arbeitstagen, L5 Quellensteuer-Rückforderung nur mit DBA, L6 EU/EFTA nicht unterschieden, L7 Jahre mit L/N/S zählen nicht
+   zur Einbürgerung, L8 «nicht mehr fahren» fehlt zweimal, L9 F-Flüchtlinge reisen anders, A1 freiwillige AHV 888 Fr. ab 2027,
+   A2 Erinnerung ab 75 ab Klick gerechnet. Gestaltung A Abläufe fehlen auf der Kapitelseite (7 von 9), B Überschriften 2 → 4,
+   C drei Einleitungen. Sprache S1–S7 (rm 146 Texte deutsch, «ruhiger Überblick» in allen neun Intros). Zweig
+   `feat/kapitel-6-behoerden` (von `main`), nur Befund, gebaut ist nichts.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
