@@ -1,16 +1,15 @@
 // Die Reise auf der Vorstellungsseite (Abschnitt #weg, Entwurf 10.11.2026, Brand Book §7e, Entscheid A–E).
 // Beim Scrollen: vor Kehre 1 steht die Nacht über dem Pass (Eintritt); je Kehre breitet sich das neue Bild wie ein
-// Farbklecks über dem alten aus, der Ort auf der Weglinie wandert mit, an den Wanderstock kommt je erreichter Kehre
-// ein Stocknagel, und solange der Text einer Kehre im Bild steht, fährt der Stock an den neuen Nagel heran.
+// Pinselstrich quer über das alte, der Ort auf der Weglinie wandert mit, an den Wanderstock kommt je erreichter Kehre
+// ein Stocknagel, und der Stock dreht sich um die eigene Achse, bis der neue Nagel vorn steht.
 // Ohne dieses Skript ist alles da (alle Nägel am Stock, erstes Bild, Eintritt mit eigener dunkler Fläche).
-// Bei «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, nur ohne Bewegung und ohne Heranfahren.
+// Bei «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, nur ohne Bewegung (der Stock springt statt zu drehen).
 // Eigene Datei, weil die CSP nur script-src 'self' erlaubt. Reines ES5, keine Abhängigkeiten.
 (function () {
   var bruecke = document.querySelector('.reise-bruecke');
   if (!bruecke) return;
   document.documentElement.classList.add('js');
   var buehne = bruecke.querySelector('.reise-buehne');
-  var stock = bruecke.querySelector('.reise-stock');
   var stationen = [].slice.call(bruecke.querySelectorAll('.reise-station'));
   var naegel = [].slice.call(bruecke.querySelectorAll('.nagel'));
   var punkte = [].slice.call(bruecke.querySelectorAll('.reise-linie circle[data-kehre]'));
@@ -60,14 +59,36 @@
       ort.setAttribute('transform', 'translate(' + punkte[hier].getAttribute('cx') + ' ' + punkte[hier].getAttribute('cy') + ')');
       if (ortText) ortText.textContent = namen[hier];
     }
-    // Heranfahren: solange der Text der Kehre gut im Bild steht, steht der neue Nagel gross in der Mitte.
-    if (stock && !ruhig.matches) {
-      var nagel = naegel[Math.max(0, hier)];
-      var ny = nagel ? (Number(nagel.getAttribute('data-y')) + 34) / 900 : 0.5;
-      stock.style.setProperty('--ny', ny.toFixed(3));
-      stock.style.setProperty('--nah', hier >= 0 && k > 0.12 && k < 0.7 ? '1' : '0');
-      buehne.style.setProperty('--k', k.toFixed(3));
-    }
+    if (!ruhig.matches) buehne.style.setProperty('--k', k.toFixed(3));
+    // Drehen: zu Beginn einer Kehre steht noch der vorige Nagel vorn; während der Text hereinkommt, dreht sich
+    // der Stock, bis der neue Nagel vorn steht («im Kreis angeschaut» wie bei Fuji, kein Zoom).
+    ziel = hier < 0 ? -SCHRITT : SCHRITT * (hier - 1 + Math.min(1, k / 0.4));
+    if (ruhig.matches) { winkel = hier < 0 ? 0 : SCHRITT * hier; drehen(); } else if (!laeuft) { laeuft = true; window.requestAnimationFrame(schritt); }
+  }
+
+  // Der Stock: Nägel rundum (je 1/7 Drehung), Maserung als feine Streifen. Vorne breit, seitlich schmal, hinten weg.
+  var SCHRITT = 2 * Math.PI / naegel.length, MITTE = 60, RADIUS = 22;
+  var dreher = [].slice.call(bruecke.querySelectorAll('.nagel-dreh'));
+  var streifen = [].slice.call(bruecke.querySelectorAll('.reise-stock .maser rect'));
+  var winkel = 0, ziel = 0, laeuft = false;
+  function drehen() {
+    dreher.forEach(function (g, i) {
+      var a = i * SCHRITT - winkel, c = Math.cos(a), x = MITTE + Math.sin(a) * RADIUS;
+      g.style.visibility = c > 0.02 ? '' : 'hidden';
+      g.setAttribute('transform', 'translate(' + x.toFixed(2) + ' 0) scale(' + Math.max(c, 0.02).toFixed(3) + ' 1) translate(' + (-MITTE) + ' 0)');
+    });
+    streifen.forEach(function (r, j) {
+      var a = j * Math.PI / 4 + 0.3 - winkel, c = Math.cos(a);
+      r.style.visibility = c > 0 ? '' : 'hidden';
+      r.setAttribute('x', (MITTE + Math.sin(a) * 20).toFixed(2));
+      r.setAttribute('width', (1.4 * Math.max(c, 0.05)).toFixed(2));
+    });
+  }
+  function schritt() {
+    var d = ziel - winkel;
+    winkel += Math.abs(d) < 0.002 ? d : d * 0.1;
+    drehen();
+    if (winkel !== ziel) window.requestAnimationFrame(schritt); else laeuft = false;
   }
 
   var geplant = false;

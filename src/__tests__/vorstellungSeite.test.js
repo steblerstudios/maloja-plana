@@ -84,23 +84,36 @@ describe('Vorstellungsseite: Inhalt', () => {
   });
 });
 
-// Die Reise «näher an Fuji» (Entscheid A–E, 10.11.2026, Brand Book §7e).
-describe('Vorstellungsseite: Die Reise (A–E)', () => {
+// Die Reise «näher an Fuji» (Entscheid A–E) und die Startseite als Ganzes (Entscheid A–F), 10.11.2026, Brand Book §7e.
+describe('Vorstellungsseite: Die Reise (A–F)', () => {
   const js = fs.readFileSync(path.join(WURZEL, 'website/reise.js'), 'utf8');
   const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+  const koerper = html.slice(html.indexOf('<body>'));
 
-  it('A · Eintritt: eigener Bildschirm mit Titel und Ring «Losgehen» zur ersten Kehre', () => {
-    const eintritt = html.match(/<div class="reise-eintritt">([\s\S]*?)<ol class="reise-stationen"/)[1];
-    expect(eintritt).toContain('KI-gemalt');
-    expect(eintritt).toContain('<h2 id="t-weg">');
-    expect(eintritt).toContain('<a class="reise-ring" href="#kehre-1">Losgehen</a>');
-    expect(html).toContain('class="kehre-bild nacht an"');
+  it('A/B · Hero liegt auf der Bühne der Reise: Passbild ist Bild 0, die Kehren folgen direkt, Situationen danach', () => {
+    const anfang = koerper.indexOf('class="reise-bruecke"');
+    expect(anfang).toBeGreaterThan(0);
+    expect(koerper.indexOf('<h1>')).toBeGreaterThan(anfang);
+    expect(koerper.indexOf('id="kehre-1"')).toBeGreaterThan(koerper.indexOf('<h1>'));
+    expect(koerper.indexOf('id="situationen"')).toBeGreaterThan(koerper.indexOf('id="kehre-7"'));
+    expect(html).toContain('class="kehre-bild pass-bild an" src="/vorstellung/landschaft.webp"');
+    expect(html).toContain('class="reise-buehne" aria-hidden="true" data-hier="-1"');
+    expect(html).toContain('<a class="knopf zweit pass-weiter" href="#kehre-1">');
+    expect(html).toMatch(/<h2 id="t-weg"[^>]*>[^<]+<\/h2>/);
+    expect(html).toMatch(/class="unsichtbar">[^<]*KI-gemalt/);
   });
 
   it('B · ohne Skript hängen alle sieben Stocknägel am Stock (ausblenden nur unter .js)', () => {
-    expect((html.match(/<g class="nagel" /g) || []).length).toBe(7);
+    expect((html.match(/<g class="nagel">/g) || []).length).toBe(7);
     expect(stil).toContain('.js .nagel{ opacity:0 }');
     expect(stil).not.toMatch(/(?<!\.js )\.nagel\{[^}]*opacity:0/);
+  });
+
+  it('C · Laptop und Telefon im Hero, beide mit Namen', () => {
+    expect(html).toContain('<div class="laptop" role="img" aria-label="Maloja Plana auf einem Laptop, im Beispiel mit erfundenen Daten.">');
+    expect(html).toContain('src="/vorstellung/app-computer.webp"');
+    expect(fs.existsSync(path.join(WURZEL, 'public/vorstellung/app-computer.webp'))).toBe(true);
+    expect(html).toContain('<div class="telefon" role="img" aria-label="Maloja Plana auf einem Telefon, im Beispiel mit erfundenen Daten.">');
   });
 
   it('C · jede Kehre hat «im Beispiel ansehen» und «Weiter»; jedes Weiter-Ziel gibt es', () => {
@@ -117,21 +130,66 @@ describe('Vorstellungsseite: Die Reise (A–E)', () => {
     });
   });
 
-  it('E · Bild 1 lädt sofort, Bilder 2–7 erst über das Skript (data-src)', () => {
-    expect(html).toContain('src="/vorstellung/kehre-1.webp"');
-    for (let n = 2; n <= 7; n++) {
+  it('D · der Stock dreht sich (Nägel rundum), er zoomt nicht', () => {
+    expect(js).toContain('var SCHRITT = 2 * Math.PI / naegel.length');
+    expect(js).toMatch(/if \(ruhig\.matches\) \{ winkel = /);
+    expect(stil).not.toMatch(/reise-stock\{[^}]*scale\(/);
+    expect(js).not.toContain('--nah');
+  });
+
+  it('E · Bild 0 lädt sofort, die Kehren-Bilder erst über das Skript (data-src)', () => {
+    for (let n = 1; n <= 7; n++) {
       expect(html).toContain(`data-src="/vorstellung/kehre-${n}.webp"`);
-      expect(html).not.toContain(`src="/vorstellung/kehre-${n}.webp"`.replace(/^/, ' '));
+      expect(html).not.toContain(` src="/vorstellung/kehre-${n}.webp"`);
     }
     expect(js).toContain("getAttribute('data-src')");
   });
 
-  it('weniger Bewegung: Klecks, Heranfahren, Wolken und Ring drehen nur bei no-preference', () => {
+  it('weniger Bewegung: Pinselstrich, Nagel und Wolken bewegen sich nur bei no-preference', () => {
     const bewegt = stil.match(/@media \(prefers-reduced-motion: no-preference\)\{([\s\S]*?)\n    \}\n/)[1];
-    for (const teil of ['mask-size 1.1s', 'animation:anschlagen', 'animation:ziehen', 'animation:kreisen', '.js .reise-stock{ transition:transform']) {
-      expect(bewegt).toContain(teil);
-    }
-    expect(stil).toMatch(/@media \(prefers-reduced-motion: reduce\)\{[\s\S]*?\.reise-stock\{ transform:none \}[\s\S]*?\.reise-wolken\{ display:none \}/);
+    for (const teil of ['mask-position 1.1s', 'animation:anschlagen', 'animation:ziehen']) expect(bewegt).toContain(teil);
+    expect(stil).toMatch(/@media \(prefers-reduced-motion: reduce\)\{[\s\S]*?\.reise-wolken\{ display:none \}/);
     expect(js).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
+  });
+});
+
+// F · Brand Book auf der Startseite (Knöpfe Fassung 9, Logo §4, Links §2, Icons §5), 10.11.2026.
+describe('Vorstellungsseite: Brand Book', () => {
+  const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+
+  it('genau ein Hauptknopf auf der Seite', () => {
+    expect((html.match(/class="knopf haupt"/g) || []).length).toBe(1);
+  });
+
+  it('Knöpfe und Auswahl mit 10 px Ecke, keine Pillen an Textknöpfen', () => {
+    expect(stil).toContain('--radius-knopf:10px');
+    expect(stil).toMatch(/\.knopf\{[^}]*border-radius:var\(--radius-knopf\)/);
+    expect(stil).toMatch(/\.reise-knoepfe a\{[^}]*border-radius:var\(--radius-knopf\)/);
+    expect(stil).toMatch(/\.lagen \.chips label\{[^}]*border-radius:var\(--radius-knopf\)/);
+    expect(stil).not.toContain('border-radius:999px');
+  });
+
+  it('Farben aus dem Brand Book: Sand #C4A06A, Schrift darauf #2A2620, Links sandDeep und unterstrichen', () => {
+    expect(stil).toContain('--sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30;');
+    expect(stil).toMatch(/\n    a\{ color:var\(--sand-tief\); text-decoration:underline;/);
+  });
+
+  it('Bildmarke auf heller Fläche einfarbig (Anthrazit)', () => {
+    const marke = html.match(/<a class="marke"[\s\S]*?<\/a>/)[0];
+    expect(marke).not.toMatch(/#7E9F8C|#8FB0A0|#C4A870/);
+    expect(stil).toMatch(/\.marke\{[^}]*color:#22211F/);
+  });
+
+  it('Kapitel-Zeichen sind die der App (erzeugt aus IconAbzeichen.jsx, nicht nachgezeichnet)', async () => {
+    const { KAPITEL_ZEICHEN } = await import('../../scripts/seiten/kapitel-zeichen.mjs');
+    const React = (await import('react')).default;
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { FamilienZeichen } = await import('../IconAbzeichen.jsx');
+    const { LEITFORM_KAPITEL } = await import('../config/seitenZeichen.js');
+    const app = CHAPTER_KEYS.map((k) => renderToStaticMarkup(React.createElement(FamilienZeichen, { leitform: LEITFORM_KAPITEL[k], formFarbe: 'currentColor' })));
+    // Die Masken-Ids zählen je Lauf hoch; verglichen wird die Zeichnung ohne Ids.
+    const ohneIds = (t) => t.replace(/(id="|url\(#)[a-z]+\d+/g, '$1#');
+    expect(KAPITEL_ZEICHEN.map(ohneIds)).toEqual(app.map(ohneIds));
+    KAPITEL_ZEICHEN.forEach((z) => expect(html).toContain(z));
   });
 });

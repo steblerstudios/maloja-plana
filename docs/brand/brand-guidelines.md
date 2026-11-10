@@ -303,25 +303,27 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
 
 ---
 
-### 7e. Die Reise auf der Startseite — Kehren, Wanderstock, Stocknägel *(Entwurf 10.11.2026, näher an Fuji: A–E)*
+### 7e. Die Reise auf der Startseite — Kehren, Wanderstock, Stocknägel *(Entwurf 10.11.2026, näher an Fuji: A–E, dann A–F)*
 
 Der Abschnitt «Ein Weg, Kehre für Kehre» auf malojaplana.ch/ (`scripts/seiten/vorstellung.mjs`, `website/reise.js`).
 Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur Prinzipien, keine fremden Bilder oder Code.
 
 | Regel | Wie |
 |---|---|
-| **Eintritt (A)** | die Reise beginnt mit einem eigenen ganzen Bildschirm: Nacht über dem Pass (Sterne, Umriss des Passes, eigene Form), weisser Titel, Ring «Losgehen» mit gepunktetem Aussenring, der sich langsam dreht |
-| **Bühne** | je Kehre ein eigenes gemaltes Bild, vom Talboden im Bergell über die Serpentinen bis zum Silsersee oben am Pass; randlos, klebt beim Scrollen. Zurzeit KI-gemalt (lockerer Aquarell-Gouache-Stil, Figma «Maloja Reise · Bilder») und so beschriftet; später echte Malerei. Bild 1 lädt sofort, die übrigen erst kurz vor ihrer Kehre |
-| **Bildwechsel (E)** | das neue Bild breitet sich wie ein **Farbklecks** von der Mitte über das alte aus (Maske, eigene Fleckform, 1,1 s); darüber ziehen leise Wolken |
-| **Kehre = Kapitel** | sieben Kehren in der Reihenfolge der App (`CHAPTER_KEYS`), Kapitelfarben aus `lebensbereiche.js` |
-| **Sammelobjekt (B)** | Wanderstock **gross in der Mitte**, mit Licht- und Schattenkante; je erreichter Kehre ein **Stocknagel** (Schild in der Kapitelfarbe mit der Nummer). Solange der Text einer Kehre im Bild steht, fährt der Stock an den neuen Nagel heran (×1,5, 0,9 s). Schweizer Brauch statt Brandstempel. Rückfall: Wanderpass |
-| **Text (C)** | weiss **direkt auf dem Bild**, rechts neben dem Stock; darunter eine dunkle Schicht, die unter dem Text mindestens 62 % deckt (Text und Kehren-Zeile reines Weiss #FBFBFA). Am Handy eigene halbdurchsichtige Fläche (62 %). Zwei Pillen: «… im Beispiel ansehen» und «Weiter» (zur nächsten Kehre, zuletzt «Weiter: App holen»), je mind. 44 px hoch |
+| **Anfang = Hero (A/B)** | Kopfzeile und Hero liegen auf dem Passbild, und dieses Bild ist zugleich Bild 0 der Reise-Bühne: dunkle Schrift auf heller Schicht, darunter folgen ohne Umweg die sieben Kehren. Am Handy liegt der Text ebenso auf dem Bild. Der Übergang heisst «Sieben Kapitel, Kehre für Kehre» (Nebenknopf). Die Situationen kommen nach der Reise. *(Bis 10.11. mittags: eigener Nacht-Bildschirm mit Ring «Losgehen» — abgelöst.)* |
+| **Geräte (C)** | im Hero ein Laptop mit der App am Computer und davor rechts ein Telefon mit der Bildfolge; beide «im Beispiel mit erfundenen Daten» |
+| **Bühne** | je Kehre ein eigenes gemaltes Bild, vom Talboden im Bergell über die Serpentinen bis zum Silsersee oben am Pass; randlos, klebt beim Scrollen. Zurzeit KI-gemalt (lockerer Aquarell-Gouache-Stil, Figma «Maloja Reise · Bilder») und so beschriftet; später echte Malerei. Das Passbild lädt sofort, die Kehren-Bilder erst kurz vor ihrer Kehre |
+| **Bildwechsel (E)** | das neue Bild kommt als **Pinselstrich**, der von links nach rechts quer übers Bild wischt (Maske mit ausgefranster Kante, eigene Form, 1,1 s, Kurve `cubic-bezier(.4,0,.2,1)`); darüber ziehen leise Wolken. Kein Wachsen aus der Mitte (wirkte wie Zoomen) |
+| **Kehre = Kapitel** | sieben Kehren in der Reihenfolge der App (`CHAPTER_KEYS`), Kapitelfarben aus `lebensbereiche.js`; an jeder Kehre das **Kapitel-Zeichen der App** (Leitform aus `seitenZeichen.js`, erzeugt aus `IconAbzeichen.jsx` nach `scripts/seiten/kapitel-zeichen.mjs`, nie nachgezeichnet) |
+| **Sammelobjekt (B/D)** | Wanderstock in der Mitte, mit Licht- und Schattenkante; je erreichter Kehre ein **Stocknagel** (Schild in der Kapitelfarbe mit der Nummer). Die Nägel sitzen **rundum** (je 1/7 Drehung): beim Scrollen **dreht sich der Stock um die eigene Achse**, bis der neue Nagel vorn steht — man schaut ihn im Kreis an. Kein Heranfahren, kein Zoom. Schweizer Brauch statt Brandstempel. Rückfall: Wanderpass |
+| **Text (C)** | weiss **direkt auf dem Bild**, rechts neben dem Stock; darunter eine dunkle Schicht, die unter dem Text mindestens 62 % deckt (Text und Kehren-Zeile reines Weiss #FBFBFA). Am Handy eigene halbdurchsichtige Fläche (62 %). Zwei Knöpfe in Nebenknopf-Form (leer, Rand, **10 px**, keine Pillen): «… im Beispiel ansehen» und «Weiter» (zur nächsten Kehre, zuletzt «Weiter: App holen»), auf der dunklen Bühne weiss statt sandDeep |
 | **Zahl (D)** | grosse Kehren-Zahl 01–07 weiss über dem Text, `aria-hidden`; die Information steht als Text «Kehre n von 7». **Keine Höhenangaben ohne Quelle** |
-| **Weglinie (D)** | links, gepunktet; der gegangene Teil durchgezogen, an der aktuellen Kehre ein goldener Ort mit dem Kapitelnamen |
-| **Bewegung** | Klecks, Heranfahren, Nagel «schlägt an» (0,6 s), Wolken und Ring nur ohne «weniger Bewegung»; mit «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, aber ohne Bewegung. Ohne Skript: alle Nägel am Stock, erstes Bild, Eintritt mit eigener dunkler Fläche. **Bewusste Ausnahme zu §8 (max. ~1.04):** das Heranfahren ist eine Kamerafahrt der Website-Bühne, keine Rückmelde-Animation; in der App gilt §8 unverändert |
+| **Weglinie (D)** | links, gepunktet; der gegangene Teil durchgezogen, an der aktuellen Kehre ein Ort in Sand mit dem Kapitelnamen |
+| **Bewegung** | Pinselstrich, Drehen, Nagel «schlägt an» (0,6 s), Wolken nur ohne «weniger Bewegung»; mit «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, der Stock springt statt zu drehen. Ohne Skript: helle Hero-Fläche, alle Nägel vorn, Passbild bleibt stehen. Keine Vergrösserung über §8 hinaus *(die Ausnahme ×1,5 vom 10.11. vormittags ist mit dem Drehen entfallen)* |
+| **Seite sonst (F)** | genau **ein Hauptknopf** (im Hero), alle übrigen Nebenknöpfe; Auswahl-Chips gewählt Sand gefüllt, 10 px; Links Gold (sandDeep) unterstrichen, auch im Fuss; Bildmarke in der Kopfzeile einfarbig Anthrazit (§4) |
 | **Kein Zwang** | Nägel sind Zeichen, keine Punkte; nichts wird gespeichert |
 
-Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Punkte A–E nach Skizze).
+Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Punkte A–E nach Skizze; danach «Ja, alles so» zu A–F: Hero und Reise vereint, Laptop + Telefon, Drehen statt Zoom, Pinselstrich quer, Brand Book auf der ganzen Seite).
 
 ## 8. Calm-UX-Prinzipien
 
