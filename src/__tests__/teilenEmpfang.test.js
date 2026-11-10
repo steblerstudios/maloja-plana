@@ -80,10 +80,11 @@ describe('Teilen-Empfang · Manifest und Service Worker sprechen dieselbe Sprach
 
   it('ohne aktiven Service Worker nimmt der Server die Datei nicht an, sondern schickt zur App (.htaccess-Abschrift)', () => {
     // Server-Regel von Hand gesetzt 10.11.2026, per curl belegt (POST → 303 /). Die Abschrift
-    // muss sie tragen, sonst ginge sie beim nächsten Abgleich verloren.
+    // muss sie tragen, sonst ginge sie beim nächsten Abgleich verloren. Seit dem Umzug der App
+    // nach /app/ (#776) heisst das Teilen-Ziel /app/teilen-empfang: beide Pfade → /app/.
     const ht = readFileSync(new URL('../../public/.htaccess', import.meta.url), 'utf8');
     const zeilen = ht.split('\n').filter((z) => !z.trim().startsWith('#'));
-    const i = zeilen.findIndex((z) => z.trim() === 'RewriteRule ^teilen-empfang/?$ / [R=303,L]');
+    const i = zeilen.findIndex((z) => z.trim() === 'RewriteRule ^(app/)?teilen-empfang/?$ /app/ [R=303,L]');
     expect(i).toBeGreaterThan(0);
     expect(zeilen[i - 1].trim()).toBe('RewriteCond %{REQUEST_METHOD} =POST');
     // Der Pfad der Regel ist derselbe, den Manifest und Service Worker benutzen.

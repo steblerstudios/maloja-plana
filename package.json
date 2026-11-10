@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/build-web.mjs",
+    "build:ios": "vite build --outDir dist-ios",
     "seiten": "node scripts/build-seiten.mjs",
     "preview": "vite preview",
     "lint": "eslint src",
@@ -16,7 +17,7 @@
   },
   "size-limit": [
     {
-      "path": "dist/assets/index-*.js",
+      "path": "dist/app/assets/index-*.js",
       "limit": "65 KB",
       "gzip": true
     }

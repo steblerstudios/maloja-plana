@@ -98,6 +98,8 @@ Belege für den Hoster: `deploy.sh` Z. 2 (SFTP-Deploy zu Infomaniak), `src/i18n/
 
 Wer an info@malojaplana.ch schreibt, gibt der Betreiberin E-Mail-Adresse, Inhalt der Nachricht und allfällige Anhänge. Bearbeitet werden sie, um zu antworten. Das Postfach liegt bei Infomaniak in der Schweiz. Die Korrespondenz wird so lange behalten, wie die Anfrage und übliche Nachfragen es brauchen, danach gelöscht; eine Weitergabe an Dritte findet nicht statt, ausser sie ist gesetzlich geschuldet. So steht es in der App (`legal.privacy.contact1`, seit #277). Eine feste Frist in Tagen ist nicht festgelegt.
 
+**Warteliste** *(ergänzt 09.11.2026, Entscheid Stebler Studios, Vorstellungsseite `scripts/seiten/vorstellung.mjs`)*: Wer über den Mail-Entwurf der Vorstellungsseite schreibt, um auf die Warteliste zu kommen, dessen Nachricht und E-Mail-Adresse werden nur zu diesem Zweck aufbewahrt. Die Betreiberin schreibt höchstens zweimal: wenn die Beta endet und, falls es dazu kommt, wenn Maloja Plana im App Store erscheint. Danach werden Nachricht und Adresse gelöscht, spätestens am 31. Dezember 2027, auch ohne App-Store-Fassung. Auf Wunsch umgehend; eine Antwort «abmelden» genügt. Keine andere Verwendung, kein Newsletter. Es gibt kein Formular und keinen Versanddienst: die Adressen bleiben im Postfach bei Infomaniak. Die beiden Nachrichten gehen einzeln oder in Bcc, nie mit sichtbaren Adressen, und nennen den Weg «abmelden». Ob Infomaniak gelöschte Mails noch eine Zeit in Sicherungen hält, ist **nicht geprüft**. Die Datenschutzerklärung **in der App** (`legal.privacy.contact1`) nennt die Warteliste nicht, weil die Liste nur auf der Website angeboten wird.
+
 ### 5.3 Keine weiteren Dritten
 
 Es gibt **keine** weiteren Datenempfänger:

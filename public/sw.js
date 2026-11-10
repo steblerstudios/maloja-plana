@@ -16,7 +16,11 @@
 // SW-Update erkannt. Online unkritisch, weil die App-Shell ('/') network-first
 // geladen wird; relevant nur für Offline-Nutzung/Cache-Aufräumen. Im Dev-Modus
 // bleibt der Platzhalter stehen (harmlos, wird nie deployt).
-const CACHE_NAME = 'maloja-plana-__BUILD_HASH__';
+// «app-» seit dem Umzug nach /app/ (Plan PR 2): Der Abschieds-Service-Worker unter /sw.js
+// räumt die Caches des alten Wurzel-SW («maloja-plana-<hash>») und muss diese hier stehen
+// lassen. Der Cache-Speicher gehört der ganzen Origin, nicht dem Ordner.
+const CACHE_PRAEFIX = 'maloja-plana-app-';
+const CACHE_NAME = CACHE_PRAEFIX + '__BUILD_HASH__';
 // Pfadneutral (Plan «App nach /app/», PR 1): Die App läuft unter `/` und unter `/app/`.
 // Alle eigenen Adressen hängen am Ordner, für den dieser Service Worker angemeldet ist
 // (registration.scope). Ohne Scope (Testumgebung, sehr alte Browser) gilt `/` wie bisher.
