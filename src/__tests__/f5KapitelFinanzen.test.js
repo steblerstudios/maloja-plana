@@ -179,9 +179,9 @@ describe('Nebenerwerb — die fünf Felder erst mit Nebenerwerb', () => {
     expect(nebenerwerbAngegeben({ sideIncome: 0 })).toBe(true);
   });
 
-  // 41 seit 04.11.2026: drei Rentenfelder (AHV, IV, Pensionskasse) neben dem IV-Bezug.
-  it('alle fünf Felder bleiben im Formular (alle 41 Felder bleiben)', () => {
-    expect(kapitel('finanzen').fields).toHaveLength(41);
+  // 41 seit 04.11.2026: drei Rentenfelder (AHV, IV, Pensionskasse) neben dem IV-Bezug. 42 seit 09.11.2026: Arbeitsort (workCanton, Kapitel 3 F1).
+  it('alle fünf Felder bleiben im Formular (alle 42 Felder bleiben)', () => {
+    expect(kapitel('finanzen').fields).toHaveLength(42);
     const html = render('finanzen', DEMO_DATA.finanzen, { anfangsOffen: 'alle' });
     for (const k of NEBENERWERB_FELDER) {
       const label = kapitel('finanzen').fields.find((f) => f.k === k).label;
@@ -202,7 +202,7 @@ describe('Weitere Bereiche anzeigen', () => {
   it('mit Daten: startet offen («Weniger anzeigen»), die Daten stehen da', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     expect(html).toContain('Weniger anzeigen');
-    expect(html).toContain('3. Säule A eingezahlt');
+    expect(html).toContain('Säule 3a eingezahlt');
   });
 
   it('eingeklappt mit Daten: der App-Hinweis steht beim Schalter', () => {

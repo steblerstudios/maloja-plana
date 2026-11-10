@@ -170,7 +170,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     einheit: { display: 'block', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid },
     td: { padding: '8px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '8px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
-    nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left', overflowWrap: 'anywhere' },
+    // Kapitel 4, Gestaltung B/C: Pfeil und Name bleiben zusammen, getrennt wird nur an Silben (hyphens),
+    // nie mitten im Wort («Gesundheitsv / ersicherung»); Tippfläche 44 px.
+    nameBtn: { background: 'none', border: 'none', padding: '4px 0', minHeight: '44px', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left', overflowWrap: 'normal', wordBreak: 'normal', hyphens: 'auto' },
   };
   // Betragsspalte: Kopf mit «CHF» darunter, damit die Zellen nur die Zahl tragen.
   const kopfBetrag = (key, label) => React.createElement('th', { key, style: { ...s.th, textAlign: 'right' } },
@@ -593,15 +595,18 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
               amount == null ? '–'
                 : onUpdateData ? React.createElement('button', {
                     type: 'button', 'aria-pressed': chosenVariant === variant,
+                    // Kapitel 4, Gestaltung A: die Handlung ist ansagbar, nicht nur eine Zahl.
+                    'aria-label': t('po.wunschkasseWaehlen', { kasse: ins.name, variante: variant === 'ohne' ? t('po.ohneUnfall') : (ageClass !== 'kind' ? t('po.mitUnfall') : t('po.thPremium')), betrag: zahlBetrag(amount) }),
                     onClick: () => {
                       const sel = chosenVariant === variant;
                       onUpdateData('versicherungen', 'targetInsurer', sel ? '' : ins.name);
                       onUpdateData('versicherungen', 'targetUvg', sel ? '' : variant);
                     },
                     style: {
+                      // Kapitel 4, Gestaltung A/C: sichtbar ein Knopf (Rand auch ungewählt), Tippfläche 44 px.
                       background: chosenVariant === variant ? palette.sand + '30' : 'none',
-                      border: '1px solid ' + (chosenVariant === variant ? palette.sand : 'transparent'),
-                      borderRadius: KNOPF_RADIUS, padding: '4px 8px', width: '100%', textAlign: 'right',
+                      border: '1px solid ' + (chosenVariant === variant ? palette.sand : palette.border),
+                      borderRadius: KNOPF_RADIUS, padding: '4px 8px', minHeight: '44px', width: '100%', textAlign: 'right',
                       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                       color: chosenVariant === variant ? palette.text : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
