@@ -180,3 +180,22 @@ describe('Gestaltung C · nichts doppelt', () => {
     expect(t('sections.notfall.provision')).not.toBe(t('notfallKapitel.vorsorgeTitel'));
   });
 });
+
+describe('Sprache · S1, S2, S5 im Kapitel', () => {
+  it('S5 kein «ruhiger Überblick» in den vier Abläufen, kein «Bleiben Sie ruhig» auf der Notfallkarte', () => {
+    for (const [lang, d] of Object.entries(SPRACHEN)) {
+      for (const k of ['unfallKrankheit', 'vorsorgeauftrag', 'iv', 'pflege']) {
+        expect(JSON.stringify(d[k].intro), lang + ' ' + k).not.toMatch(/ruhige|calme|tranquill|calm |calma/);
+      }
+      expect(JSON.stringify(d.notfallkarte.step2Text), lang).not.toMatch(/ruhig|calme|calma|calm\b|Stay calm|Resta calm/);
+    }
+  });
+  it('S2 Hausärztin oder Hausarzt, Arbeitgeberin oder Arbeitgeber', () => {
+    expect(t('chapters.notfall.fields.doctor')).toBe('Hausärztin oder Hausarzt');
+    expect(t('unfallKrankheit.step3Text')).toContain('Ihre Arbeitgeberin oder Ihren Arbeitgeber');
+    expect(t('unfallKrankheit.step2UnfallText')).not.toMatch(/\bdem Arbeitgeber\b|beim selben Arbeitgeber/);
+  });
+  it('S1 kein halber Satz in rm', () => {
+    expect(rm.vorsorgeauftrag.footerNote).not.toMatch(/^Quai è orientaziun/);
+  });
+});

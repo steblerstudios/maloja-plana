@@ -333,7 +333,7 @@ export default {
   unfallKrankheit: {
     quelle: 'Quellen: [[UVG Art. 45|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_45]], [[KVG Art. 8|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_8]] (geprüft im September 2026).',
     title: 'Unfall oder Krankheit — was tun?',
-    intro: 'Wenn etwas passiert, zählt zuerst die Hilfe — dann die Administration. Hier der ruhige Überblick: Notfall, wer zahlt, Arbeitsunfähigkeit, Belege.',
+    intro: 'Wenn etwas passiert, zählt zuerst die Hilfe — dann die Administration. Hier der Überblick: Notfall, wer zahlt, Arbeitsunfähigkeit, Belege.',
     step1Title: '1 · Im Notfall zuerst',
     step1Text: 'Bei ernster Gefahr sofort anrufen:',
     num_sani: 'Sanität (Ambulanz)',
@@ -348,7 +348,7 @@ export default {
     step2Intro: 'In der Schweiz hängt das davon ab, ob es ein Unfall oder eine Krankheit war:',
     step2UnfallTitle: 'Bei einem Unfall',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über den Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über den Arbeitgeber gegen Berufsunfälle versichert; arbeitest du beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
+    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über Ihre Arbeitgeberin oder Ihren Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie dort mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über deine Arbeitgeberin oder deinen Arbeitgeber gegen Berufsunfälle versichert; arbeitest du dort mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
     step2KrankheitTitle: 'Bei Krankheit',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step2KrankheitText: { sie: 'Über die Krankenkasse (Grundversicherung). Sie tragen Franchise und Selbstbehalt. Behandlungen und Rechnungen reichen Sie über Ihre Kasse ein.', du: 'Über die Krankenkasse (Grundversicherung). Du trägst Franchise und Selbstbehalt. Behandlungen und Rechnungen reichst du über deine Kasse ein.' },
@@ -357,7 +357,7 @@ export default {
     step3Title: { sie: '3 · Wenn Sie nicht arbeiten können', du: '3 · Wenn du nicht arbeiten kannst' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step3Text: { sie: 'Informieren Sie Ihren Arbeitgeber und holen Sie ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.', du: 'Informiere deinen Arbeitgeber und hol ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.' },
+    step3Text: { sie: 'Informieren Sie Ihre Arbeitgeberin oder Ihren Arbeitgeber und holen Sie ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.', du: 'Informiere deine Arbeitgeberin oder deinen Arbeitgeber und hol ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.' },
     step3Link: 'Versicherungen ansehen',
     step3LinkIv: 'Dauert es länger: Krankheit & IV',
     step4Title: '4 · Belege sammeln & ablegen',
@@ -490,7 +490,7 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]], [[AHVG Art. 43bis|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_43_bis]] (geprüft im September 2026 · Art. 42ter/43bis geprüft im Oktober 2026).',
     title: 'Tgirar confamigliars',
-    intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista calma: bonificaziun da renta, indemnisaziun, sgravi.',
+    intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step1Text: 'Eine Betreuungsgutschrift erhält, wer Verwandte betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — höchstens 30 km oder eine Stunde entfernt. Verwandte sind die auf- und absteigende Linie, etwa Eltern, Grosseltern, Kinder und Enkel, sowie Geschwister; gleichgestellt sind Ehefrau oder Ehemann, Schwiegereltern, Stiefkinder und eine Lebenspartnerin oder ein Lebenspartner nach fünf Jahren im gemeinsamen Haushalt. Die Gutschrift erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
@@ -566,7 +566,7 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]], [[IVG Art. 42|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42]], [[IVG Art. 48|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_48]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]], [[IVG Art. 57a|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_57_a]], [[IVG Art. 69|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_69]] (geprüft im September 2026 · Art. 42ter geprüft im Oktober 2026).',
     title: 'Malsogna & AI',
-    intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista calma, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
+    intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
     step1Title: '1 · Inabilitad da lavurar — salari & indemnisaziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'Laschai attestar l’inabilitad da lavurar dad in medi ed infurmai il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche Vus n’avais ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).', du: 'Lascha attestar l’inabilitad da lavurar dad in medi ed infurmescha il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche ti n’has ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).' },
@@ -949,7 +949,7 @@ export default {
     step6LinkBw: 'Fixar ils giavischs da sepultura',
     step4LinkPv: 'Far ina disposiziun da pazient en dumondas',
     title: 'Vorsorgeauftrag und Patientenverfügung',
-    intro: 'Niemand denkt gern daran, einmal nicht mehr selbst entscheiden zu können. Wer es heute ordnet, nimmt den Nächsten später viel ab — und bestimmt selbst, wer handelt und was medizinisch gelten soll. Hier der ruhige Überblick in fünf Schritten.',
+    intro: 'Niemand denkt gern daran, einmal nicht mehr selbst entscheiden zu können. Wer es heute ordnet, nimmt den Nächsten später viel ab — und bestimmt selbst, wer handelt und was medizinisch gelten soll. Hier der Überblick in fünf Schritten.',
     step1Title: '1 · Wer handelt, wenn nichts geregelt ist?',
     step1Text: { sie: 'Führen Sie mit der Person, mit der Sie verheiratet sind oder in eingetragener Partnerschaft leben, einen gemeinsamen Haushalt, oder leistet sie Ihnen regelmässig und persönlich Beistand, darf sie Sie von Gesetzes wegen vertreten, sofern kein Vorsorgeauftrag und keine entsprechende Beistandschaft besteht. Das gilt für den üblichen Unterhalt, die ordentliche Verwaltung von Einkommen und Vermögen und nötigenfalls die Post (ZGB Art. 374). Für ausserordentliche Vermögensgeschäfte braucht es die Zustimmung der Erwachsenenschutzbehörde (KESB). Für Paare ohne Trauschein gilt dieses Vertretungsrecht nicht; reicht die eigene Vorsorge nicht, ordnet die KESB wenn nötig eine Beistandschaft an (ZGB Art. 389, 390).', du: 'Führst du mit der Person, mit der du verheiratet bist oder in eingetragener Partnerschaft lebst, einen gemeinsamen Haushalt, oder leistet sie dir regelmässig und persönlich Beistand, darf sie dich von Gesetzes wegen vertreten, sofern kein Vorsorgeauftrag und keine entsprechende Beistandschaft besteht. Das gilt für den üblichen Unterhalt, die ordentliche Verwaltung von Einkommen und Vermögen und nötigenfalls die Post (ZGB Art. 374). Für ausserordentliche Vermögensgeschäfte braucht es die Zustimmung der Erwachsenenschutzbehörde (KESB). Für Paare ohne Trauschein gilt dieses Vertretungsrecht nicht; reicht die eigene Vorsorge nicht, ordnet die KESB wenn nötig eine Beistandschaft an (ZGB Art. 389, 390).' },
     step2Title: '2 · Der Vorsorgeauftrag — wer für mich handelt',
@@ -965,7 +965,7 @@ export default {
     step5LinkNotfall: 'Im Notfall-Kapitel festhalten',
     step5LinkPass: 'Notfallpass ansehen',
     step5LinkDossier: 'Notfall-Dossier für Angehörige',
-    footerNote: 'Quai è orientaziun, betg cussegl giuridic. Diese Dokumente sind persönlich; Vorlagen und Beratung bieten Fachstellen, Ärztinnen und Ärzte sowie Notariate. Dies ist Orientierung, keine Rechtsberatung; die Abläufe bei KESB und Zivilstandsamt unterscheiden sich je nach Kanton.',
+    footerNote: 'Diese Dokumente sind persönlich; Vorlagen und Beratung bieten Fachstellen, Ärztinnen und Ärzte sowie Notariate. Dies ist Orientierung, keine Rechtsberatung; die Abläufe bei KESB und Zivilstandsamt unterscheiden sich je nach Kanton.',
     quelle: 'Quellen: [[ZGB Art. 360|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_360]], [[ZGB Art. 361|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_361]], [[ZGB Art. 363|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_363]], [[ZGB Art. 370|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_370]], [[ZGB Art. 371|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_371]], [[ZGB Art. 372|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_372]], [[ZGB Art. 374|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_374]], [[ZGB Art. 378|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_378]], [[VVK Art. 6|https://www.fedlex.admin.ch/eli/cc/2007/101/de#art_6]] (geprüft im September 2026).',
   },
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
@@ -3834,7 +3834,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Note: { sie: 'Betg segir tge? Telefonai 144 — els As collieschan vinavant.', du: 'Betg segir tge? Telefonescha 144 — els ta collieschan vinavant.' },
     step2Title: 'Tge che ti dis',
-    step2Text: 'Resta calm. Di el en questa successiun:',
+    step2Text: 'Di el en questa successiun:',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     sayWhere: { sie: 'Nua essas Vus?', du: 'Nua es ti?' },
     sayWhereEmpty: 'di nua che ti es',
@@ -3851,7 +3851,7 @@ export default {
     locAccuracy: 'Precisiun ±{m} m',
     locMapLink: 'Avrir en l’app da cartas',
     locNotStored: 'Vegn tratg mo ussa e memorisà ennagliur.',
-    loc_denied: 'Access a la posiziun refusà — quai è ok. Di simplamain nua che ti es.',
+    loc_denied: 'Access a la posiziun refusà — quai è ok. Di nua che ti es.',
     loc_error: 'La posiziun na sa lascha betg determinar. Di simplamain nua che ti es.',
     loc_unsupported: 'Quest apparat na po betg determinar la posiziun qua. Di simplamain nua che ti es.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
