@@ -24,8 +24,8 @@
 //
 // «NOCH n ANGABEN NÖTIG»
 // `fehlend` ist die Liste der Angaben, ohne die das Ergebnis unvollständig ist — als stabile
-// Namen (z. B. 'bruttolohn'), nicht als Anzeige-Text. Die Anzeige nennt nur die Zahl; die Namen
-// bleiben für den späteren «Nächsten Schritt» (O7) im Feld.
+// Namen (z. B. 'bruttolohn'), nicht als Anzeige-Text. Seit Kapitel 5 (C, 10.11.2026) nennt die Anzeige
+// die Namen («Noch nötig: Beitragsmonate») und springt zum Feld, wenn data/angabeZiele.js es kennt.
 
 export const ERGEBNIS_ART = Object.freeze({
   BERECHNUNG: 'berechnung',

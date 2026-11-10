@@ -196,5 +196,12 @@ siebenmal neu entschieden werden:
    brutto, Kinder ab 18 nur in Ausbildung, A–C; L5–L7, A1 (Jahrestabelle `selbstaendigAhv.js`), A2, Teile von K;
    Überschriftenstufen; Sprache S2/S5/S6/S7 in den berührten Texten. rechts-pruefer mit Volltext eingearbeitet,
    9396 Tests grün. Offen: Sprung zum Feld (C), rm-Übersetzung (S1), übrige K-Punkte, AHV-Werte 2027 für Selbständige.
+   ✅ **10.11. Nachzug** (gleicher PR #814): C «Noch nötig: …» mit Sprung zum Feld (app-weit, `data/angabeZiele.js`,
+   5 Rechner); Lebenslauf: Geburtsdatum/Nationalität/Zivilstand abwählbar; «Drei Wege»; ALV-Randfälle (Wartetage nach
+   Jahresverdienst, 80 % nach vollem Taggeld ≤ 140 Fr.); Lohnbasis 6/12 Monate und 13. Monatslohn; Zwischenverdienst;
+   Sperrfrist verschiebt RAV-Datum; AHV je Kalenderjahr und 3a nach Aussteuerung; Quellensteuer genauer; S3/S4 in Lehre
+   und Ausgesteuert (de, en; rm-Rückfall nachgezogen). rechts-pruefer am Volltext eingearbeitet. Offen: Mindestlohn-Hinweis
+   «angenommen» (hängt an `arbeitsKanton` aus #802, noch nicht gemergt), Mindestlohn-Ausnahmen GE/TI/JU, S3 in fr/it,
+   rm-Übersetzung, AHV-Werte 2027 Selbständige.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

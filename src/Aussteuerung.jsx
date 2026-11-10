@@ -44,7 +44,8 @@ export const AussteuerungTeil = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step2LinkUk'), onClick: () => onNavigate('unfallkrankheit') })
     ),
     React.createElement(AblaufStep, { palette, title: t('aussteuerung.step3Title') },
-      React.createElement('p', { style: s.stepText }, t('aussteuerung.step3Text')),
+      // Kapitel 5, K (10.11.2026): vier Absätze (AHV, AHV je Kalenderjahr, Ehe/Pensionskasse, Säule 3a), \n\n im Text.
+      ...String(t('aussteuerung.step3Text')).split('\n\n').map((absatz, i) => React.createElement('p', { key: 'ahv' + i, style: i ? { ...s.stepText, marginTop: '8px' } : s.stepText }, absatz)),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step3Link'), onClick: () => onNavigate('vorsorge') })
     ),
     React.createElement(AblaufStep, { palette, title: t('aussteuerung.step4Title'), icon: 'ergaenzungsleistungen' },

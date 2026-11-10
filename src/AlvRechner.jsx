@@ -156,6 +156,9 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
       titel: t('alv.ravTitle'),
       inhalt: React.createElement(React.Fragment, null,
         React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: 0 } }, t('alv.ravBody')),
+        // Kapitel 5, K (10.11.2026): Zwischenverdienst (AVIG Art. 24).
+        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: space.md + 'px 0 ' + space.xs + 'px' } }, t('alv.zwischenverdienstTitel')),
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: 0 } }, t('alv.zwischenverdienst')),
         canton && onNavigate && React.createElement('button', {
           type: 'button', className: 'mp-link', onClick: () => onNavigate('direktlinks'),
           style: { ...linkStil(palette), display: 'flex', alignItems: 'center', width: '100%', minHeight: '44px', marginTop: space.xs + 'px', textAlign: 'left', fontSize: text.sm, fontWeight: weight.medium },
