@@ -145,10 +145,10 @@ export const LohnKlein = ({ palette, state, fillColor }) => {
     Array.from({ length: n }, (_, i) => {
       const x = 2 + i * seg + (i ? luecke / 2 : 0), w = seg - (i ? luecke / 2 : 0) - (i < n - 1 ? luecke / 2 : 0);
       return h('g', { key: i },
-        h('rect', { x, y: 16, width: w, height: 8, rx: 3, fill: palette.border }),
-        fuell(i) > 0 && h('rect', { x, y: 16, width: Math.max(2, w * fuell(i)), height: 8, rx: 3, fill: fillColor || palette.sand }));
+        h('rect', { x, y: 11, width: w, height: 18, rx: 5, fill: palette.border }),
+        fuell(i) > 0 && h('rect', { x, y: 11, width: Math.max(3, w * fuell(i)), height: 18, rx: 5, fill: fillColor || palette.sand }));
     }),
-    h('circle', { cx: 2 + 2 * seg, cy: 20, r: 5, fill: punkt, stroke: palette.surface, strokeWidth: 1.5 }));
+    h('circle', { cx: 2 + 2 * seg, cy: 20, r: 7, fill: punkt, stroke: palette.surface, strokeWidth: 2 }));
 };
 
 export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {

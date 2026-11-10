@@ -41,7 +41,7 @@ export const GaengeKlein = ({ palette, erledigt, total }) => {
   const w = 9.2, gap = 2.5, x0 = (60 - (total * w + (total - 1) * gap)) / 2;
   return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-gaenge': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
     Array.from({ length: total }, (_, i) => h('rect', {
-      key: i, x: x0 + i * (w + gap), y: 15, width: w, height: w, rx: 2,
+      key: i, x: x0 + i * (w + gap), y: 7, width: w, height: 26, rx: 2.5,
       fill: i < erledigt ? palette.sand : palette.surface, stroke: i < erledigt ? palette.sand : palette.mid, strokeWidth: 1.5,
     })));
 };

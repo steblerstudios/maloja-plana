@@ -40,10 +40,10 @@ export const RegionalBarometerKlein = ({ palette, comparison, userValue, fillCol
   const lage = lageZurRegion(userValue, regional);
   const punkt = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
   return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-barometer': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 16, width: 56, height: 8, rx: 4, fill: palette.border }),
-    userValue > 0 && h('rect', { x: 2, y: 16, width: Math.max(8, x(userValue) - 2), height: 8, rx: 4, fill: fillColor || palette.sky }),
-    h('line', { x1: x(national), y1: 10, x2: x(national), y2: 30, stroke: palette.text, strokeWidth: 2 }),
-    h('circle', { cx: x(regional), cy: 20, r: 5, fill: punkt, stroke: palette.surface, strokeWidth: 1.5 }),
+    h('rect', { x: 2, y: 11, width: 56, height: 18, rx: 6, fill: palette.border }),
+    userValue > 0 && h('rect', { x: 2, y: 11, width: Math.max(12, x(userValue) - 2), height: 18, rx: 6, fill: fillColor || palette.sky }),
+    h('line', { x1: x(national), y1: 4, x2: x(national), y2: 36, stroke: palette.text, strokeWidth: 2.5 }),
+    h('circle', { cx: x(regional), cy: 20, r: 7, fill: punkt, stroke: palette.surface, strokeWidth: 2 }),
   );
 };
 

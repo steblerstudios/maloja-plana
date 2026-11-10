@@ -71,9 +71,9 @@ export const DrittelBalkenKlein = ({ palette, r, fillColor }) => {
   const h = React.createElement;
   const breite = 56;
   return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-drittel': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 16, width: breite, height: 8, rx: 4, fill: palette.border }),
-    r.anteil != null && h('rect', { x: 2, y: 16, width: Math.max(8, Math.min(100, r.anteil) / 100 * breite), height: 8, rx: 4, fill: r.ueberDrittel ? palette.sand : (fillColor || palette.sage) }),
-    h('line', { x1: 2 + breite / 3, y1: 10, x2: 2 + breite / 3, y2: 30, stroke: palette.text, strokeWidth: 2 }),
+    h('rect', { x: 2, y: 11, width: breite, height: 18, rx: 6, fill: palette.border }),
+    r.anteil != null && h('rect', { x: 2, y: 11, width: Math.max(12, Math.min(100, r.anteil) / 100 * breite), height: 18, rx: 6, fill: r.ueberDrittel ? palette.sand : (fillColor || palette.sage) }),
+    h('line', { x1: 2 + breite / 3, y1: 4, x2: 2 + breite / 3, y2: 36, stroke: palette.text, strokeWidth: 2.5 }),
   );
 };
 
