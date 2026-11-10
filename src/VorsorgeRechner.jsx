@@ -17,7 +17,8 @@ import { zahl } from './utils/geld.js';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
-import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
+import { nettoZuBruttoRichtwert, fruehesterVorbezugMonate } from './data/lohnAbzuege.js';
+import { SAEULE3A_HOECHSTABZUG } from './data/saeule3a.js';
 import { ahvBezugAlterFuer, ahvKapitalImBild, fruehesterAhvBezugImBildMonate } from './utils/ahvZukunftsbild.js';
 import { ikHochrechnen, kuenftigeIkJahre } from './utils/ikHochrechnung.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
@@ -269,6 +270,17 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     });
   }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung, birthYear, birthMonth]);
 
+  // Säule 3a: höchstens der jährliche Höchstabzug (BVV 3 Art. 7 Abs. 1) — mit Pensionskasse der kleine,
+  // ohne der grosse, dort zudem höchstens 20 % des Erwerbseinkommens (Kapitel 4). Selbständige sind nicht
+  // obligatorisch BVG-versichert: dort zählt nur eine eingetragene Kasse oder ein Guthaben.
+  const selbstaendig = data.finanzen?.employmentType === 'freelance';
+  const hatPensionskasse = (!selbstaendig && !!(bvgResult && bvgResult.versichert)) || !!data.versicherungen?.bvgInsurer || Number(bvgGuthaben) > 0;
+  const saeule3aGrenze = hatPensionskasse
+    ? SAEULE3A_HOECHSTABZUG.mitPensionskasse
+    : (parsedEinkommen > 0 ? Math.min(SAEULE3A_HOECHSTABZUG.ohnePensionskasse, Math.round(parsedEinkommen * SAEULE3A_HOECHSTABZUG.satzOhnePensionskasse)) : SAEULE3A_HOECHSTABZUG.ohnePensionskasse);
+  const saeule3aJahr = Math.min(saeule3aAnnual, saeule3aGrenze);
+  const saeule3aGekappt = saeule3aAnnual > saeule3aGrenze;
+
   const projektion = useMemo(() => {
     if (!alter) return null;
     const bvgSerie = (bvgResult && bvgResult.jahresDetail || []).map(d => d.guthaben);
@@ -278,13 +290,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       bvgHeute: Number(bvgGuthaben) || 0,
       bvgSerie,
       s3aBalance: saeule3aBalance,
-      s3aAnnual: saeule3aAnnual,
+      s3aAnnual: saeule3aJahr,
       s3aRendite: Number(rendite) || 0,
       s3bBalance: Number(saeule3bInput) || 0,
       s3bAnnual: 0,
       s3bRendite: Number(rendite) || 0,
     });
-  }, [alter, parsedBezugAlter, bvgGuthaben, bvgResult, saeule3aBalance, saeule3aAnnual, saeule3bInput, rendite]);
+  }, [alter, parsedBezugAlter, bvgGuthaben, bvgResult, saeule3aBalance, saeule3aJahr, saeule3bInput, rendite]);
 
   // AHV fürs Zukunftsbild: auf durchgehende Beiträge bis zum Rücktritt projiziert
   // (angenommeneBeitragsjahre, beim Vorbezug ab Referenzalter neu berechnet), sonst würde die
@@ -562,7 +574,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               style: { background: 'none', border: 'none', padding: '4px 0', minHeight: '44px', color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } },
               t('vr.bruttoUebernehmen'))) }),
         field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(Math.min(beitragsjahreReferenzalter, volleDauer)), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
-        field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 63, max: 70 })
+        field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 58, max: 70,
+          sublabel: [
+            // Kapitel 4: Rücktritt vor dem frühesten Bezug → sagen, ab wann die AHV gerechnet ist.
+            ahvBezugAlter > parsedBezugAlter && t('vr.bezugAlterFrueh', { frueh: fmtAlterMonate(Math.round(ahvBezugAlter * 12)) }),
+            // Frauen 1961–1969: Vorbezug ab 62 möglich (AHVG Art. 40c), nicht gerechnet — immer dazu sagen.
+            fruehesterVorbezugMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear }) < refAlterMonate - 24 && t('vr.bezugAlterUebergang'),
+          ].filter(Boolean).join(' ') || undefined })
       ),
       React.createElement('div', { style: s.row },
         field(t('vr.erziehungsjahre'), erziehungsjahre, setErziehungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.erziehungsjahreHint') }),
@@ -853,6 +871,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // die der Rechner nicht abbildet — die Franken-Kürzung oben ist für sie zu hoch.
         ahvResult.vorbezugAufschub < 0 && data.basis?.gender === 'female' && birthYear >= 1961 && birthYear <= 1969
           && React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px' } }, t('vr.vorbezugFrauenUebergang')),
+        ahvResult.rentenzuschlag > 0 && React.createElement('div', { 'data-teil': 'rentenzuschlag', style: { fontSize: text.sm, color: palette.text, marginTop: space.xs + 'px', lineHeight: 1.5 } },
+          t('vr.rentenzuschlag', { betrag: fmt(ahvResult.rentenzuschlag) })
+            + (gutschriftTeilen || verheiratet ? ' ' + t('vr.rentenzuschlagSplitting') : '')),
         // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
         // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
         ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
@@ -888,6 +909,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', null, t('vr.koordinierterLohn') + ': CHF ' + fmt(bvgResult.koordinierterLohn)),
           React.createElement('div', null, t('vr.umwandlungssatz') + ': ' + bvgResult.umwandlungssatz + '% ' +
             ((Number(bvgUmwandlung) >= 1 && Number(bvgUmwandlung) <= 10) ? t('vr.umwandlungssatzEigenMarker') : t('vr.umwandlungssatzMindest'))),
+          // 6,8 % gilt nur im Referenzalter (BVG Art. 14 Abs. 2); vor dem Referenzalter ohne eigenen Satz sagen.
+          parsedBezugAlter < refAlterJahre && !(Number(bvgUmwandlung) >= 1 && Number(bvgUmwandlung) <= 10)
+            && React.createElement('div', { 'data-teil': 'uws-vor-referenzalter', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', lineHeight: 1.5 } },
+              t('vr.umwandlungssatzVorReferenzalter', { referenzalter: fmtAlterMonate(refAlterMonate) })),
           React.createElement('div', null, t('vr.mindestzins') + ': ' + bvgResult.zinssatz + '%')
         )
       ),
@@ -945,7 +970,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       (() => {
         const has3a = saeule3aBalance > 0 || saeule3aAnnual > 0;
         const yearsLeft = alter ? Math.max(0, parsedBezugAlter - alter) : 0;
-        const projected3a = saeule3aBalance + (saeule3aAnnual * yearsLeft);
+        const projected3a = saeule3aBalance + (saeule3aJahr * yearsLeft);
         if (!has3a) return React.createElement('div', { style: { ...s.section, color: palette.mid, marginTop: space.md + 'px' } },
           hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('vr.saeule3aHint'))
         );
@@ -953,8 +978,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: s.label }, t('vr.saeule3a')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.skyDeep } }, 'CHF ' + fmt(projected3a)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-            t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aAnnual) })
+            t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aJahr) })
           ),
+          saeule3aGekappt && React.createElement('div', { 'data-teil': 's3a-gekappt', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', lineHeight: 1.5 } },
+            t('vr.saeule3aGekappt', { max: fmt(saeule3aGrenze) })),
           ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { marginTop: space.sm + 'px', fontWeight: weight.semi, fontSize: text.sm } },
             t('vr.totalMitSaeule3a') + ': CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + '/' + t('vr.monat') + ' + CHF ' + fmt(projected3a) + ' ' + t('vr.saeule3a')
           )
@@ -1126,6 +1153,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ),
 
         // Disclaimer + amtlicher Rechner
+        // Kapitel 4, P9: Sperre nach einem Einkauf (BVG Art. 79b Abs. 3), gehört neben den Steuervergleich.
+        React.createElement('div', { 'data-teil': 'kb-einkauf', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbEinkaufSperre')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbDisclaimer')),
         React.createElement(ExternerLink, { t, href: 'https://swisstaxcalculator.estv.admin.ch/', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink')),
         React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource'), null, t))
