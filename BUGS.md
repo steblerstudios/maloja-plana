@@ -88,8 +88,10 @@ Datei; dafür hat das Studio einen eigenen Weg.
 ### Bugsuche 2026-11-09 (Lesedurchgänge über `main` `dff64ec7`, jeder Fund im Code gegengeprüft)
 
 **Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
-Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — **nicht gemergt, nicht
-live**. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
+Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — ~~nicht gemergt, nicht
+live~~ → **gemergt 10.11.2026, 01:23 (PR #800, `main` = `9b869714`), NICHT live** — «Behoben (Zweig)»
+unten heisst seither «in `main`, wartet auf den Deploy». Erst nach dem Deploy wandern die Zeilen
+nach «Zuletzt behoben», mit Bundle-Name und Uhrzeit. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
 zuerst. Danach auch **B-11, B-16, B-17 und B-18** behoben (siehe je dort). **Offen bleibt
 B-19** sowie die Text-Punkte aus den Fachprüfungen zu B-17/B-18. Rechner/Fachlogik: siehe Nachtrag unten.
 
