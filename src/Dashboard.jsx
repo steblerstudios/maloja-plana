@@ -37,7 +37,7 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = lazyMitTexten(() => import('./BergDetail.jsx'));
 // Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
-const INSTRUMENTE_JE_KAPITEL = { wohnen: ['wohnkosten', 'miete'], ausbildung: ['lohn', 'dienst', 'ferien', 'pensum'], finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'], behoerden: ['steuerfrist', 'gaenge'], notfall: ['bereit', 'franchise'] };
+const INSTRUMENTE_JE_KAPITEL = { basis: ['ausweis', 'referenz', 'grundordnung'], wohnen: ['wohnkosten', 'miete'], ausbildung: ['lohn', 'dienst', 'ferien', 'pensum'], finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'], behoerden: ['steuerfrist', 'gaenge'], notfall: ['bereit', 'franchise'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
 const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
@@ -321,7 +321,7 @@ const bergKleben = (el) => {
   return () => { ro.disconnect(); window.removeEventListener('resize', setzen); };
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte, hatDokumente = false }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte, hatDokumente = false, dokumente }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
@@ -576,7 +576,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         ],
         zusammenfassung: (key) => buildSnippet(key, data[key] || {}, data, t, lang),
         instrumentFuer: (key) => INSTRUMENTE_JE_KAPITEL[key] && React.createElement(React.Suspense, { fallback: null },
-          React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key] })),
+          React.createElement(InstrumentePanel, { palette, t, data, onNavigate, nur: INSTRUMENTE_JE_KAPITEL[key], dokumente, grundordnungStand: mvo })),
       })
     ),
     // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
