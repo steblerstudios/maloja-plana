@@ -41,7 +41,8 @@ export const suchTasteAnmelden = (oeffnen, fenster = window) => {
     let versuche = 0;
     const fassen = () => {
       const feld = doc.querySelector('[data-suchfeld]');
-      if (feld) { if (doc.activeElement !== feld) feld.focus(); return; }
+      // Ein früherer Begriff bleibt in der Suche stehen — markiert, damit Tippen ihn ersetzt.
+      if (feld) { if (doc.activeElement !== feld) feld.focus(); if (feld.select) feld.select(); return; }
       if (versuche++ < 60) fenster.requestAnimationFrame(fassen);
     };
     fenster.requestAnimationFrame(() => fenster.requestAnimationFrame(fassen));

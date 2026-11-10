@@ -59,7 +59,7 @@ describe('istSuchTaste', () => {
 const fenster = ({ dialog = false, feldAbBild = 0 } = {}) => {
   const zuhoerer = new Set(), bilder = [];
   let bild = 0, fokus = null;
-  const feld = { focus() { fokus = feld; } };
+  const feld = { markiert: false, focus() { fokus = feld; }, select() { feld.markiert = true; } };
   const document = {
     get activeElement() { return fokus; },
     querySelector: (sel) => (sel === '[aria-modal="true"]' ? (dialog ? {} : null)
@@ -87,6 +87,7 @@ describe('suchTasteAnmelden', () => {
     expect(e.defaultPrevented).toBe(true);
     f.bilderLaufen();
     expect(f.fokus).toBe(f.feld);
+    expect(f.feld.markiert).toBe(true); // ein früherer Begriff wird durch Tippen ersetzt
   });
   it('lädt die Suchansicht erst nach, wartet sie auf das Feld', () => {
     const f = fenster({ feldAbBild: 10 });
