@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { istSuchTaste, istEingabeFeld } from '../utils/suchTaste.js';
+import { istSuchTaste, istEingabeFeld, suchTasteAnmelden } from '../utils/suchTaste.js';
 
 const taste = (key, mehr = {}) => ({ key, metaKey: false, ctrlKey: false, shiftKey: false, altKey: false, target: { tagName: 'BODY' }, ...mehr });
 const feld = (tagName, extra = {}) => ({ tagName, ...extra });
@@ -55,18 +55,92 @@ describe('istSuchTaste', () => {
   });
 });
 
+// Ein Ersatz-Fenster: Zuhörer, Bilder (requestAnimationFrame) und Dokument von Hand.
+const fenster = ({ dialog = false, feldAbBild = 0 } = {}) => {
+  const zuhoerer = new Set(), bilder = [];
+  let bild = 0, fokus = null;
+  const feld = { focus() { fokus = feld; } };
+  const document = {
+    get activeElement() { return fokus; },
+    querySelector: (sel) => (sel === '[aria-modal="true"]' ? (dialog ? {} : null)
+      : sel === '[data-suchfeld]' ? (bild >= feldAbBild ? feld : null) : null),
+  };
+  return {
+    document, feld, zuhoerer,
+    get fokus() { return fokus; },
+    get anstehend() { return bilder.length; },
+    addEventListener: (_, f) => zuhoerer.add(f),
+    removeEventListener: (_, f) => zuhoerer.delete(f),
+    requestAnimationFrame: (f) => bilder.push(f),
+    druecke(e) { zuhoerer.forEach(f => f(e)); },
+    bilderLaufen(n = 100) { for (let i = 0; i < n && bilder.length; i++) { bild++; bilder.splice(0).forEach(f => f()); } },
+  };
+};
+const ereignis = (key, mehr) => ({ ...taste(key, mehr), defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } });
+
+describe('suchTasteAnmelden', () => {
+  it('«/» öffnet die Suche, verhindert das Zeichen und legt den Fokus ins Suchfeld', () => {
+    const f = fenster(); let offen = 0;
+    suchTasteAnmelden(() => { offen++; return true; }, f);
+    const e = ereignis('/'); f.druecke(e);
+    expect(offen).toBe(1);
+    expect(e.defaultPrevented).toBe(true);
+    f.bilderLaufen();
+    expect(f.fokus).toBe(f.feld);
+  });
+  it('lädt die Suchansicht erst nach, wartet sie auf das Feld', () => {
+    const f = fenster({ feldAbBild: 10 });
+    suchTasteAnmelden(() => true, f);
+    f.druecke(ereignis('k', { metaKey: true }));
+    f.bilderLaufen(5); expect(f.fokus).toBe(null);
+    f.bilderLaufen(); expect(f.fokus).toBe(f.feld);
+  });
+  it('gibt nach rund einer Sekunde auf, statt endlos zu suchen', () => {
+    const f = fenster({ feldAbBild: 1000 });
+    suchTasteAnmelden(() => true, f);
+    f.druecke(ereignis('/'));
+    f.bilderLaufen(500);
+    expect(f.fokus).toBe(null);
+    // Die Sache: es steht kein weiteres Bild mehr an. Am Fokus allein sähe man das nicht
+    // (Mutationsprobe: «endlos suchen» blieb mit der ersten Fassung grün).
+    expect(f.anstehend).toBe(0);
+  });
+  it('in der Einführung (oeffnen meldet false) bleibt «/» ein Zeichen', () => {
+    const f = fenster();
+    suchTasteAnmelden(() => false, f);
+    const e = ereignis('/'); f.druecke(e);
+    expect(e.defaultPrevented).toBe(false);
+  });
+  it('hinter einem offenen Dialog: nichts', () => {
+    const f = fenster({ dialog: true }); let offen = 0;
+    suchTasteAnmelden(() => { offen++; return true; }, f);
+    f.druecke(ereignis('/'));
+    expect(offen).toBe(0);
+  });
+  it('abmelden entfernt den Zuhörer', () => {
+    const f = fenster();
+    const ab = suchTasteAnmelden(() => true, f);
+    expect(f.zuhoerer.size).toBe(1);
+    ab();
+    expect(f.zuhoerer.size).toBe(0);
+  });
+});
+
 describe('Einbau', () => {
   const main = fs.readFileSync(path.join(__dirname, '..', 'main.jsx'), 'utf8');
   const suche = fs.readFileSync(path.join(__dirname, '..', 'SearchView.jsx'), 'utf8');
+  it('nachgeladen, nicht ins Startbündel gezogen (sonst über der 65-kB-Grenze)', () => {
+    expect(main).toMatch(/import\('\.\/utils\/suchTaste\.js'\)/);
+    expect(main).not.toMatch(/^import [^\n]*suchTaste/m);
+  });
   it('der Hook steht vor der Einführungs-Weiche (kein Hook hinter einem frühen return)', () => {
-    const hook = main.indexOf("window.addEventListener('keydown', onKey);\n    return () => window.removeEventListener('keydown', onKey);\n  }, []);");
+    const hook = main.indexOf("import('./utils/suchTaste.js')");
     const weiche = main.indexOf('if (!onboardingDone) {\n    return ');
     expect(hook).toBeGreaterThan(0);
     expect(weiche).toBeGreaterThan(hook);
   });
   it('das Suchfeld trägt die Marke, an der der Fokus landet', () => {
     expect(suche).toMatch(/'data-suchfeld': 'true'/);
-    expect(main).toMatch(/document\.querySelector\('\[data-suchfeld\]'\)/);
   });
   it('die Lupe nennt die Tasten für Vorleseprogramme', () => {
     expect(main).toMatch(/'aria-keyshortcuts': isMobile \? undefined : '\/ Control\+K Meta\+K'/);

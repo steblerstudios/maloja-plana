@@ -1,6 +1,11 @@
 // Suche per Taste (10.11.2026): «/» und ⌘K bzw. Strg+K öffnen die Lupe — wie in vielen
 // Werkzeugen am Desktop. Am Handy ohne Wirkung (keine Tastatur, kein Schaden).
 //
+// Diese Datei wird NACHGELADEN (main.jsx: import() nach dem ersten Zeichnen), nicht ins
+// Startbündel gezogen: eingebaut kostete sie 0,37 kB gzip und das Startbündel lag danach mit
+// 65,14 kB über seiner Grenze von 65 kB. Die Taste wirkt darum erst, wenn die Seite steht —
+// wer in der ersten Sekunde «/» drückt, tippt einfach nichts.
+//
 // Zwei Fallen, die diese Prüfung abfängt:
 // - «/» ist ein gewöhnliches Zeichen. Wer in einem Feld tippt («50/50», «Basel/Stadt»), darf
 //   nicht aus dem Feld gerissen werden. ⌘K/Strg+K dagegen tippt niemand als Text.
@@ -20,4 +25,27 @@ export const istSuchTaste = (e, { dialogOffen = false } = {}) => {
   // «/» nur ohne jede Zusatztaste und nie aus einem Eingabefeld heraus.
   if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !istEingabeFeld(e.target)) return true;
   return false;
+};
+
+// Hängt den Zuhörer an `fenster` (im Browser `window`). `oeffnen()` wechselt zur Suche und meldet
+// mit true, dass es das getan hat (in der Einführung meldet es false: dann bleibt die Taste, was
+// sie ist). Danach der Fokus ins Suchfeld: main.jsx legt ihn nach jedem Ansichtswechsel im
+// nächsten Bild auf <main>, und die Suchansicht lädt selbst nach. Darum zwei Bilder warten und
+// dann höchstens rund eine Sekunde (60 Bilder) nach dem Feld suchen. Gibt das Abmelden zurück.
+export const suchTasteAnmelden = (oeffnen, fenster = window) => {
+  const doc = fenster.document;
+  const onKey = (e) => {
+    if (!istSuchTaste(e, { dialogOffen: !!doc.querySelector('[aria-modal="true"]') })) return;
+    if (!oeffnen()) return;
+    e.preventDefault();
+    let versuche = 0;
+    const fassen = () => {
+      const feld = doc.querySelector('[data-suchfeld]');
+      if (feld) { if (doc.activeElement !== feld) feld.focus(); return; }
+      if (versuche++ < 60) fenster.requestAnimationFrame(fassen);
+    };
+    fenster.requestAnimationFrame(() => fenster.requestAnimationFrame(fassen));
+  };
+  fenster.addEventListener('keydown', onKey);
+  return () => fenster.removeEventListener('keydown', onKey);
 };

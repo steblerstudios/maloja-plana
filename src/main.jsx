@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE, RECHNER_KAPITEL } from './config/brotkrumePfade.js';
-import { istSuchTaste } from './utils/suchTaste.js';
 import { herkunftName, ablaufBereich, SCHLUSS_ZIELE } from './config/ansichtenRegister.js';
 import { LEBENSBEREICHE } from './data/lebensbereiche.js';
 import ReactDOM from 'react-dom/client';
@@ -1053,31 +1052,20 @@ const AppInner = ({ demo }) => {
   };
 
   // ─── Suche per Taste (10.11.2026) ────────────────────────
-  // «/» und ⌘K bzw. Strg+K öffnen die Lupe; wann eine Taste zählt, steht in utils/suchTaste.js.
-  // Der Fokus gehört danach ins Suchfeld, nicht auf <main>: hauptteilFokussieren legt ihn im
-  // nächsten Bild auf <main>, und die Suchansicht lädt nach. Darum zwei Bilder warten und dann
-  // höchstens rund eine Sekunde nach dem Feld suchen. Hier oben, vor der Einführungs-Weiche —
-  // ein Hook darf nicht hinter einem frühen return stehen. In der Einführung tut die Taste nichts.
+  // «/» und ⌘K bzw. Strg+K öffnen die Lupe. Zuhörer und Fokus stehen in utils/suchTaste.js, das
+  // NACHGELADEN wird (eingebaut lag das Startbündel über seiner Grenze). Hier nur das Öffnen —
+  // über eine Ref, damit der einmal angemeldete Zuhörer immer den aktuellen Stand sieht. Vor der
+  // Einführungs-Weiche, weil ein Hook nicht hinter einem frühen return stehen darf.
   const zurSuche = React.useRef(null);
   zurSuche.current = () => {
     if (!onboardingDone) return false;
     if (view !== 'search') handleNavigate('search');
-    let versuche = 0;
-    const fassen = () => {
-      const feld = document.querySelector('[data-suchfeld]');
-      if (feld) { if (document.activeElement !== feld) feld.focus(); return; }
-      if (versuche++ < 60) requestAnimationFrame(fassen);
-    };
-    requestAnimationFrame(() => requestAnimationFrame(fassen));
     return true;
   };
   useEffect(() => {
-    const onKey = (e) => {
-      if (!istSuchTaste(e, { dialogOffen: !!document.querySelector('[aria-modal="true"]') })) return;
-      if (zurSuche.current()) e.preventDefault();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    let abmelden = null, weg = false;
+    import('./utils/suchTaste.js').then((m) => { if (!weg) abmelden = m.suchTasteAnmelden(() => zurSuche.current()); }).catch(() => {});
+    return () => { weg = true; if (abmelden) abmelden(); };
   }, []);
 
   // ─── Onboarding gate ─────────────────────────────────────
