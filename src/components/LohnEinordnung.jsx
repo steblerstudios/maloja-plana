@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, radius, space, leading } from '../config/tokens.js';
+import { text, weight, radius, space, leading, INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { lohnBandState, lohnEinordnungErgebnis, lohnKette, lohnVergleichSperre, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
@@ -105,7 +105,9 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 
 // `embedded`: ohne eigene Karte rendern — für Orte, die schon in einer `palette.up`-Karte
 // sitzen (Finanz-Übersicht). Sonst läge Karte auf Karte und die Kante verschwände.
-export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {
+// Wo steht der Lohn — EINE Stelle für die Vorbedingungen (10.11.2026), genutzt vom Barometer unten und von der
+// Instrument-Kachel in der Kapitelzeile Arbeit. `vergleichbar` heisst: auch der grosse Balken zeigt eine Lage.
+export function lohnLage(data) {
   // Alter und Rentenalter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter,
   // im Rentenalter ohne ALV/PK). Eine Regel mit dem Netto-Richtwert (alterUndRentenalter).
   const { bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
@@ -123,6 +125,34 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     // vergleichbar gemacht, und der Mindestlohn-Boden sinkt um 12/13 (Jahres-Boden).
     dreizehnter: data?.finanzen?.dreizehnter,
   });
+  // Rente, Geschäftsgewinn oder Netto mit möglicher Quellensteuer: kein Balken, kein Urteil.
+  const sperre = state.show ? lohnVergleichSperre(data, rentenalter) : null;
+  const vergleichbar = !!(state.show && !sperre && state.basisKnown && state.hoursKnown && state.rel);
+  return { state, sperre, vergleichbar, bvgAlter, rentenalter, beitragsfrei };
+}
+
+// Lohn-Barometer klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): dieselben vier Zonen wie gross
+// (unter p10 · bis Median · bis p90 · darüber, gleich breit), Füllung bis zum Vergleichslohn, Punkt = Median
+// in der Farbe der Lage. Nur das Bild; die Zahl steht daneben.
+export const LohnKlein = ({ palette, state, fillColor }) => {
+  const h = React.createElement;
+  const { scaleMin, scaleMax, median, incomeVergleich, rel } = state;
+  const grenzen = [scaleMin, LOHN_REFERENZ.p10, median, LOHN_REFERENZ.p90, scaleMax];
+  const n = 4, seg = 56 / n, luecke = 1.5;
+  const fuell = (i) => { const a = grenzen[i], b = grenzen[i + 1]; return incomeVergleich >= b ? 1 : incomeVergleich <= a ? 0 : (incomeVergleich - a) / (b - a); };
+  const punkt = rel === 'above' ? palette.sage : rel === 'below' ? palette.gold : palette.mid;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-lohn': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    Array.from({ length: n }, (_, i) => {
+      const x = 2 + i * seg + (i ? luecke / 2 : 0), w = seg - (i ? luecke / 2 : 0) - (i < n - 1 ? luecke / 2 : 0);
+      return h('g', { key: i },
+        h('rect', { x, y: 16, width: w, height: 8, rx: 3, fill: palette.border }),
+        fuell(i) > 0 && h('rect', { x, y: 16, width: Math.max(2, w * fuell(i)), height: 8, rx: 3, fill: fillColor || palette.sand }));
+    }),
+    h('circle', { cx: 2 + 2 * seg, cy: 20, r: 5, fill: punkt, stroke: palette.surface, strokeWidth: 1.5 }));
+};
+
+export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {
+  const { state, sperre: lageSperre, bvgAlter, rentenalter, beitragsfrei } = lohnLage(data);
 
   // O3: die Art des Ergebnisses — Orientierung, dazu was dem Instrument noch fehlt. In allen drei
   // Zuständen (leer · nicht vergleichbar · Balken) dieselbe Zeile.
@@ -144,7 +174,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
   }
 
   // Rente, Geschäftsgewinn oder Netto mit möglicher Quellensteuer: kein Balken, kein Urteil, keine Mindestlohn-Warnung.
-  const sperre = lohnVergleichSperre(data, rentenalter);
+  const sperre = lageSperre;
   if (sperre) {
     return React.createElement('div', { style: card, 'data-teil': 'lohn-gesperrt' },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),

@@ -452,7 +452,14 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   bereit», Rechnung `bereitschaft` wie im Kapitel) und Franchise-Stand (Balken bis zur Franchise · «CHF 420» «von
   CHF 1’500» · «So viel der Franchise ist 2026 erreicht, nach erfassten Belegen», Rechnung `berechneFranchise` wie
   der Franchise-Tracker; Klick öffnet dessen Reiter). Ohne erfasste Franchise keine Zahl.
-  Offen: Basis, Ausbildung & Arbeit.
+  **Arbeit** (vier statt zwei, Stebler Studios «brauchen wir ja eh alles»): Lohn (kleines Lohn-Barometer · «−8 %» ·
+  «… im Vergleich zum Schweizer Median (BFS, Vollzeit, brutto)», Zahl nur, wenn auch der grosse Balken eine Lage
+  zeigt: `lohnLage`), Dienstjahre (Jahresringe · «7 Jahre» · gesetzliche Kündigungsfrist nach OR 335c, Probezeit 335b,
+  Lehrvertrag 344a/346 — am Fedlex-Volltext geprüft), Ferien (Sonne · «12 Tage» offen · Mindestanspruch OR 329a; neue
+  Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr · «42 Std.» · gemessen an 40 Std., der Rechenbasis
+  des Lohnvergleichs, ab 40 «Vollzeit»). Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
+  Lohn-Barometer; ein Klick dort springt zum Formular statt ins eigene Kapitel.
+  Offen: Basis.
   Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)

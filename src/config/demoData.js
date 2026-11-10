@@ -111,6 +111,8 @@ export const DEMO_DATA = {
     employmentStart: '2019-04-01',
     workPermit: 'swiss',
     workHoursPerWeek: '42',
+    ferienTageJahr: '25',
+    ferienTageBezogen: '13',
     languages: 'Deutsch, Englisch, Französisch',
   },
   behoerden: {
