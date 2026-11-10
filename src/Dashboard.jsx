@@ -42,6 +42,8 @@ const INSTRUMENTE_JE_KAPITEL = { finanzen: ['steuer', 'tank'], versicherungen: [
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
 const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
 const WerkzeugGruppen = lazyMitTexten(() => import('./components/WerkzeugGruppen.jsx'));
+// Die grosse Notgroschen-Zahl zuoberst (10.11.2026) — nachgeladen, das Startbündel ist voll.
+const NotgroschenZahl = lazyMitTexten(() => import('./components/NotgroschenZahl.jsx'));
 const InstrumentePanel = lazyMitTexten(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
 
 function fmtCHF(v) {
@@ -424,6 +426,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // A11y-Identität, nicht laute Fläche); die Aktion ist randlos, Fläche kommt erst
     // im Hover zurück; der Glance wird EINE ruhige tertiäre Zeile mit Dot-Separator.
     // data-tour: der Rundgang endet hier (Tester-Rückmeldung 24.09.: «ok und jetzt…?»).
+    React.createElement(React.Suspense, { fallback: null }, React.createElement(NotgroschenZahl, { palette, t, data, onNavigate })),
     React.createElement('div', {
       'data-tour': 'naechster-schritt',
       style: {

@@ -422,6 +422,13 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
+- **Eine Kernzahl zuoberst: der Notgroschen in Monaten** *(10.11.2026, Idee aus dem Abgleich mit
+  Nessie)*. Über «Was ist jetzt dran?» steht eine einzige Zahl: so viele Monate deckt der liquide
+  Notgroschen die Ausgaben. Eine Karte, keine Kachelreihe (siehe «Ruhige Listen statt KPI-Kacheln»).
+  Keine Ampelfarbe: Zahl in `text`, Rest in `mid`/`soft`. Ohne erfasste Ausgaben erscheint sie
+  nicht, und bei leerem Notgroschen steht keine grosse «0», sondern der leise Satz der Tankanzeige.
+  Dieselbe Rechnung wie die Tankanzeige (`data/reserveTank.js`). Quelle:
+  `src/components/NotgroschenZahl.jsx` (nachgeladen). Wächter: `src/components/__tests__/notgroschenZahl.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
 
