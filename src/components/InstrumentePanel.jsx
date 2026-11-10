@@ -15,6 +15,7 @@ import { LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../data/branchenLohn.js';
 import { wochenstundenUnplausibel } from '../data/lohnCheck.js';
 import { dienstLage } from '../utils/arbeitsverhaeltnis.js';
+import { bisReferenzalter } from '../utils/referenzalterAbstand.js';
 import { istLernend } from '../utils/anstellung.js';
 import { berechneFranchise } from '../data/kvgLeistungen.js';
 import { getRentComparison } from '../data/mietpreise.js';
@@ -85,6 +86,31 @@ const miniFerien = (palette, anteil) => {
     a > 0 && h('circle', { cx: 30, cy: 20, r: 9 * Math.sqrt(a), fill: palette.sand }));
 };
 
+// Referenzalter klein (10.11.2026): ein Lebensweg von der Geburt bis zum Referenzalter, Punkt = heute, Fahne am Ziel.
+const miniLebensweg = (palette, anteil) => {
+  const h = React.createElement;
+  const x = 4 + Math.max(0, Math.min(1, anteil)) * 46;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-referenz': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('line', { x1: 4, y1: 26, x2: 50, y2: 26, stroke: palette.border, strokeWidth: 4, strokeLinecap: 'round' }),
+    h('line', { x1: 4, y1: 26, x2: x, y2: 26, stroke: palette.sand, strokeWidth: 4, strokeLinecap: 'round' }),
+    h('line', { x1: 52, y1: 30, x2: 52, y2: 10, stroke: palette.text, strokeWidth: 1.8 }),
+    h('path', { d: 'M52 10 L59 13 L52 16 Z', fill: palette.text }),
+    h('circle', { cx: x, cy: 26, r: 4, fill: palette.surface, stroke: palette.text, strokeWidth: 2 }));
+};
+
+// Grundordnung klein (10.11.2026): eine Grundmauer, ein Stein je Grundordnungs-Angabe, gesetzte gefüllt. Nur das Bild.
+const miniGrundmauer = (palette, gesetzt, gesamt) => {
+  const h = React.createElement;
+  const proReihe = 5, reihen = Math.max(1, Math.ceil(gesamt / proReihe)), w = 9.6, hoch = 6, gap = 1.6;
+  const y0 = 20 - (reihen * hoch + (reihen - 1) * gap) / 2;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-grundordnung': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    Array.from({ length: gesamt }, (_, i) => {
+      const r = reihen - 1 - Math.floor(i / proReihe), c = i % proReihe, versatz = r % 2 ? w / 2 : 0;
+      return h('rect', { key: i, x: 2 + versatz + c * (w + gap) - (r % 2 ? w / 4 : 0), y: y0 + r * (hoch + gap), width: w, height: hoch, rx: 1,
+        fill: i < gesetzt ? palette.sand : palette.surface, stroke: i < gesetzt ? palette.sand : palette.mid, strokeWidth: 1 });
+    }));
+};
+
 // Der kleine Tank stand bis 10.11.2026 hier als eigene Zeichnung (miniGauge) — jetzt ReserveTank groesse 'klein'.
 
 // Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
@@ -131,7 +157,7 @@ const miniKreuz = (palette) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null }) => {
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, dokumente = [], grundordnungStand = null }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -246,6 +272,16 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const ferienBezogen = tageZahl(arbeit.ferienTageBezogen);
   const ferienOffen = ferienJahr > 0 && ferienBezogen != null ? Math.max(0, ferienJahr - ferienBezogen) : null;
 
+  // Basis (10.11.2026, Stebler Studios «alle drei»): Ausweis aus dem Lebensordner (Dokument type 'id' mit Ablaufdatum),
+  // Referenzalter aus dem Geburtsdatum (referenzalterMonate, AHV 21), Grundordnung wie die Fortschritts-Karte (grundordnung).
+  const ausweise = (Array.isArray(dokumente) ? dokumente : []).filter((d) => d && d.type === 'id' && /^\d{4}-\d{2}-\d{2}/.test(String(d.expiryDate || '')));
+  const ausweis = ausweise.map((d) => String(d.expiryDate).slice(0, 10)).sort()[0] || null;
+  const ausweisAb = ausweis ? fristAbstand(ausweis) : null;
+  const referenz = bisReferenzalter(data?.basis);
+  const refAlter = referenz ? (referenz.referenzMonate % 12
+    ? t('instrumente.referenzAlterMonate', { jahre: Math.floor(referenz.referenzMonate / 12), monate: referenz.referenzMonate % 12 })
+    : String(referenz.referenzMonate / 12)) : '';
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
@@ -354,6 +390,40 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       sub: setup,
       glyph: ferienJahr > 0 ? miniFerien(palette, ferienOffen != null ? ferienOffen / ferienJahr : 1) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'ausweis', name: t('instrumente.ausweis'),
+      ...(ausweisAb ? {
+        zahl: ausweisAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+          : { wert: String(ausweisAb.n), einheit: t('instrumente.' + ausweisAb.einheit + (ausweisAb.n === 1 ? 'Eins' : '')) },
+        satz: t(ausweisAb.vorbei ? 'instrumente.ausweisAbgelaufenSatz' : 'instrumente.ausweisSatz'),
+      } : {}),
+      sub: setup,
+      glyph: ausweisAb ? h(Kalenderblatt, { iso: ausweis, palette, locale: blattLocale, vorbei: ausweisAb.vorbei }) : null,
+      onClick: () => onNavigate('tresor'),
+    },
+    {
+      key: 'referenz', name: t('instrumente.referenz'),
+      ...(referenz && !referenz.erreicht ? {
+        zahl: referenz.jahre >= 1
+          ? { wert: String(referenz.jahre), einheit: t(referenz.jahre === 1 ? 'instrumente.jahrEins' : 'instrumente.jahre') }
+          : { wert: String(referenz.restMonate), einheit: t('instrumente.' + (referenz.restMonate === 1 ? 'monateEins' : 'monate')) },
+        satz: t('instrumente.referenzSatz', { alter: refAlter }),
+        mehr: data?.basis?.gender ? [] : [t('instrumente.referenzOhneGeschlecht')],
+      } : {}),
+      sub: referenz?.erreicht ? t('instrumente.referenzErreicht') : setup,
+      glyph: referenz && !referenz.erreicht ? miniLebensweg(palette, 1 - referenz.monate / referenz.referenzMonate) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('basis')),
+    },
+    {
+      key: 'grundordnung', name: t('instrumente.grundordnung'),
+      ...(grundordnungStand && grundordnungStand.total > 0 ? {
+        zahl: { wert: grundordnungStand.filled + '/' + grundordnungStand.total, einheit: '' },
+        satz: t('instrumente.grundordnungSatz'),
+      } : {}),
+      sub: setup,
+      glyph: grundordnungStand && grundordnungStand.total > 0 ? miniGrundmauer(palette, grundordnungStand.filled, grundordnungStand.total) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('basis')),
     },
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.

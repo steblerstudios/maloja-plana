@@ -459,7 +459,11 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr · «42 Std.» · gemessen an 40 Std., der Rechenbasis
   des Lohnvergleichs, ab 40 «Vollzeit»). Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
   Lohn-Barometer; ein Klick dort springt zum Formular statt ins eigene Kapitel.
-  Offen: Basis.
+  **Basis** (drei, Stebler Studios «alle drei»): Ausweis (Kalenderblatt des frühesten Ablaufdatums der Ausweis-
+  Dokumente im Lebensordner · «4 Jahre» · «So lange ist Ihr Ausweis noch gültig»; abgelaufen rot), Referenzalter
+  (Lebensweg · «30 Jahre» · «So lange bis zum AHV-Referenzalter (65)», Regel `referenzalterMonate`, AHV 21; ohne
+  Geschlecht Hinweis auf 65) und Grundordnung (Grundmauer · «15/15», dieselbe Zahl wie die Fortschritts-Karte).
+  **Damit haben alle sieben Lebensbereiche ihre Instrumente.**
   Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
