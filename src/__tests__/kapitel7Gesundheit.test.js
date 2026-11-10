@@ -16,6 +16,8 @@ import { vorlageHtml } from '../data/vorsorgeauftrag.js';
 import { KVGLeistungen } from '../KVGLeistungen.jsx';
 import { IvVerfahren } from '../IvVerfahren.jsx';
 import { PflegeAblauf } from '../PflegeAblauf.jsx';
+import { UnfallKrankheit } from '../UnfallKrankheit.jsx';
+import { stufen, ELTERN_TITEL } from '../config/brotkrumePfade.js';
 
 beforeEach(() => { globalThis.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} }; });
 const t = createT({ de }, 'de', 'sie');
@@ -140,4 +142,41 @@ describe('L7 · Kurzurlaub für Erwachsene zahlt der Arbeitgeber, nicht die EO (
 
 describe('Organspende · Mindestalter 16 (TxG Art. 8 Abs. 7)', () => {
   it('steht im Rechtsstand', () => { expect(t('organ.rechtsstand')).toContain('wer 16 Jahre alt ist (TxG Art. 8 Abs. 7)'); });
+});
+
+describe('Gestaltung A · Gesundheits-Seiten auf der Kapitelseite', () => {
+  const quelle = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
+  const fall = quelle.slice(quelle.indexOf("case 'notfall': return ["), quelle.indexOf('default: return [', quelle.indexOf("case 'notfall': return [")));
+  it('«Passend» nennt KVG-Leistungen, Scanner, Arztkoffer, Unfall, IV und Pflege in zwei Gruppen', () => {
+    for (const v of ['kvg', 'kk', 'gesundheit', 'unfallkrankheit', 'iv', 'pflege']) expect(fall, v).toContain("weg('" + v + "')");
+    expect(fall).toContain("P('gruppeKrankenkasse')");
+    expect(fall).toContain("P('gruppePassiert')");
+  });
+  it('der Arztkoffer hängt in der Brotkrume unter «Gesundheit»', () => {
+    expect(stufen('gesundheit').map((x) => x.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+    expect(t(ELTERN_TITEL.notfalleinstieg)).toBe('Gesundheit');
+  });
+});
+
+describe('Gestaltung B · Notrufnummern als Knöpfe', () => {
+  const h = renderToStaticMarkup(React.createElement(UnfallKrankheit, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+  it('jede Nummer ist mindestens 48 px hoch, 117 ist dabei', () => {
+    const tels = h.match(/<a href="tel:[^"]+"[^>]*>/g) || [];
+    expect(tels.map((a) => a.match(/tel:(\d+)/)[1])).toEqual(['144', '1414', '145', '117', '112']);
+    for (const a of tels) expect(a).toContain('min-height:48px');
+  });
+});
+
+describe('Gestaltung C · nichts doppelt', () => {
+  it('kein Kapitel-Intro mehr über der Zusammenfassung', () => {
+    for (const [lang, d] of Object.entries(SPRACHEN)) expect(d.chapters.notfall.intro, lang).toBeUndefined();
+  });
+  it('die Frage «Patientenverfügung vorhanden?» ist eingeklappt unter einer eigenen Frage', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../components/NotfallImKapitel.jsx'), 'utf8');
+    expect(q).toMatch(/h\('details', \{ 'data-teil': 'notfall-pv-antwort'/);
+    expect(t('notfallKapitel.pvSchonFrage')).toContain('zum Beispiel auf Papier');
+  });
+  it('der Abschnitt der Angaben heisst nicht ein zweites Mal «Vorsorge»', () => {
+    expect(t('sections.notfall.provision')).not.toBe(t('notfallKapitel.vorsorgeTitel'));
+  });
 });

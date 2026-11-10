@@ -2135,9 +2135,17 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum
       // Werkzeug. F7-K5-2 und F7-L1 (31.10.2026): der Ablauf «Vorsorgeauftrag & Patientenverfügung» kommt aus Behörden
       // hierher, Organspende bekommt hier ihren Eingang aus einem Kapitel.
+      // Kapitel 7, Gestaltung A (10.11.2026): Gesundheit hatte zwei Orte — die Seiten zu Krankenkasse, Unfall, IV
+      // und Pflege hingen nur am Arztkoffer, der seinerseits nicht zum Kapitel führte. Jetzt stehen sie hier, in
+      // zwei Gruppen wie die Familie im Kapitel Basis. Die Erklärseite Krankenkasse bleibt bei Versicherungen
+      // (Organigramm 07.11.2026, ZUM_VERSTEHEN); hier stehen nur Ziele in der App.
       case 'notfall': return [
         weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
         ablage('chapterView.passend.ablageDokumente'),
+        { key: 'gruppe-krankenkasse', ueberschrift: P('gruppeKrankenkasse') },
+        weg('kvg'), weg('kk'), weg('gesundheit'),
+        { key: 'gruppe-passiert', ueberschrift: P('gruppePassiert') },
+        weg('unfallkrankheit'), weg('iv'), weg('pflege'),
       ];
       default: return [
         // F7-L9 (01.11.2026): «Neue Stelle» und Stundenlohn hängen an Ausbildung & Arbeit, nicht mehr hier.

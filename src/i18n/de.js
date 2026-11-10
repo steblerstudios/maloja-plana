@@ -271,6 +271,7 @@ export default {
     num_sani: 'Sanität (Ambulanz)',
     num_rega: 'Rega (Luftrettung)',
     num_tox: 'Tox Info (Vergiftungen)',
+    num_polizei: 'Polizei',
     num_euro: 'Notruf (allgemein, auch aus dem Ausland)',
     step1Note: 'Diese App ist Orientierung, kein Ersatz für den Notruf.',
     step1Link: { sie: 'Sind Ihre Notfall-Angaben bereit?', du: 'Sind deine Notfall-Angaben bereit?' },
@@ -1310,7 +1311,7 @@ export default {
     versicherungen: { basic: 'Grundversicherung', occupational: 'Berufliche Vorsorge', additional: 'Weitere Versicherungen', property: 'Sach- & Reiseversicherungen', mobility: 'Mobilität', social: 'Sozialversicherung' },
     ausbildung: { education: 'Bildung', work: 'Arbeit', languages: 'Sprachen' },
     behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung' },
-    notfall: { contact: 'Notfallkontakt', medical: 'Medizinisches', care: 'Ärztliche Betreuung', provision: 'Vorsorge' },
+    notfall: { contact: 'Notfallkontakt', medical: 'Medizinisches', care: 'Ärztliche Betreuung', provision: 'Organspende & Verfügungen' },
   },
   sectionIntros: {
     basis: {
@@ -1769,7 +1770,6 @@ export default {
   arztkoffer: {
     title: 'Arztkoffer',
     subtitle: { sie: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.', du: 'Deine Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.' },
-    back: 'Zurück zur Übersicht',
     inVorbereitung: 'In Vorbereitung',
     inVorbereitungHint: 'Bald im Koffer',
     weitereWege: 'Weitere Wege:',
@@ -1818,6 +1818,7 @@ export default {
     portemonnaieSub: 'Zum Drucken, für unterwegs',
     portemonnaieLeer: 'Braucht zuerst Angaben unten',
     vorsorgeTitel: 'Vorsorge',
+    pvSchonFrage: 'Schon eine Patientenverfügung, zum Beispiel auf Papier?',
     zurueckVorsorge: 'Zurück zur Vorsorge',
     vorsorgeSatz: { sie: 'Was gilt, wenn Sie selbst nicht mehr entscheiden können.', du: 'Was gilt, wenn du selbst nicht mehr entscheiden kannst.' },
     geregelt: '{n} von {total} geregelt.',
@@ -2404,7 +2405,6 @@ export default {
       title: 'Gesundheit',
       short: 'Gesundheit',
       description: 'Gesundheit, Notfall und Verfügungen',
-      intro: { sie: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.', du: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für dich und deine Familie einen echten Unterschied machen.' },
       emptyState: { sie: 'Ihre Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.', du: 'Deine Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.' },
       emptyStateHint: 'Ein Kontakt mit Telefonnummer genügt als Anfang.',
       benefits: ['Notfallkarte', 'Vorsorge-Übersicht'],
@@ -2614,6 +2614,8 @@ export default {
       alleVersicherungenSub: "Prämien, Franchise, Region, IPV, Wechselfrist",
       ablageAusbildung: "Diplome ablegen",
       ablageDokumente: "Dokumente ablegen",
+      gruppeKrankenkasse: 'Krankenkasse & Leistungen',
+      gruppePassiert: 'Wenn es passiert',
       steuerfrist: "Steuerfrist & Steuererklärung",
       steuerfristSub: "Kapitel Behörden · Frist, Steuernummer, offene Erklärungen",
       // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf.

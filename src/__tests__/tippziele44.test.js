@@ -18,7 +18,8 @@ const STELLEN = [
   ['MerklisteView.jsx', 'tagKnopf: {', 'nach'],
   ['DocumentTresor.jsx', "'aria-pressed': aktiv", 'nach'],
   ['NotfallpassBlatt.jsx', 'knopf: {', 'nach'],
-  ['ArztkofferView.jsx', "t('arztkoffer.back')", 'vor'],
+  // ArztkofferView.jsx: der Knopf «Zurück zur Übersicht» entfiel mit der Brotkrume (Kapitel 7, 10.11.2026);
+  // deren 44 px prüft brotkrume.test.js.
   ['LegalView.jsx', "t('common.back')", 'vor'],
   ['NotfallDossier.jsx', "t('notfallpass.dossierVerweis')", 'vor'],
   // Fassung G (27.10.2026): «Ganzer Monat» und «Ganzes Jahr» teilen den Stil `aufklapp`.

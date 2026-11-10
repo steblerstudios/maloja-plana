@@ -339,6 +339,7 @@ export default {
     num_sani: 'Sanität (Ambulanz)',
     num_rega: 'Rega (Luftrettung)',
     num_tox: 'Tox Info (Vergiftungen)',
+    num_polizei: 'Polizei',
     num_euro: 'Notruf (allgemein, auch aus dem Ausland)',
     step1Note: 'Diese App ist Orientierung, kein Ersatz für den Notruf.',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -2598,7 +2599,6 @@ export default {
       short: 'Sanadad',
       description: 'Sanadad, urgenza e disposiziuns',
       // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-      intro: { sie: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas.", du: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas." },
       // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
       emptyState: { sie: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang.", du: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang." },
       emptyStateHint: "Contact d'urgenza e gruppa da sang — las infurmaziuns las pli impurtantas.",
@@ -4321,6 +4321,8 @@ export default {
       alleVersicherungenSub: "Premias, franschisa, regiun, RIP, termin da midada",
       ablageAusbildung: "Deponer ils diploms",
       ablageDokumente: "Deponer documents",
+      gruppeKrankenkasse: 'Krankenkasse & Leistungen',
+      gruppePassiert: 'Wenn es passiert',
       steuerfrist: "Termin & decleraziun da taglia",
       steuerfristSub: "Chapitel Autoritads · termin, numer da taglia, decleraziuns avertas",
       // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf — rm ungeprüft.
@@ -4515,7 +4517,6 @@ export default {
     title: 'Vossa valisch da sanadad',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     subtitle: { sie: 'Voss temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.', du: 'Tes temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.' },
-    back: 'Enavos a la survista',
     inVorbereitung: 'En preparaziun',
     inVorbereitungHint: 'Prest en la valisch',
     weitereWege: 'Auters vias:',
@@ -4566,6 +4567,7 @@ export default {
     portemonnaieSub: 'Per stampar, per prender cun sai',
     portemonnaieLeer: 'L’emprim endatar las indicaziuns sutvart',
     vorsorgeTitel: 'Prevenziun',
+    pvSchonFrage: 'Schon eine Patientenverfügung, zum Beispiel auf Papier?',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     zurueckVorsorge: 'Turnar a la prevenziun',
     vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
