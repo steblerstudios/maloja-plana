@@ -213,7 +213,7 @@ fr   k=dreizehnter type="select" label~495f05d6 options=2 optWerte~2bfd19fd optL
 fr   k=employer type="text" recommended=true naOk=true label~6383f82d
 fr   k=employerAddress type="textarea" naOk=true hint~31e5cf99 label~ff40e9e8
 fr   k=workCanton type="select" naOk=true hint~14cc83cd label~e6ae9040 options=26 optWerte~25f3960d optLabels~869f43a7
-fr   k=employmentType type="select" label~7947fb48 options=5 optWerte~2b10a5aa optLabels~519f2aa4
+fr   k=employmentType type="select" label~7947fb48 options=5 optWerte~2b10a5aa optLabels~27207a0b
 fr   k=startDate type="date" naOk=true label~f6a61ad7
 fr   k=familienzulagen type="currency" naOk=true hint~99129792 label~7af5a968
 fr   k=alimenteReceived type="currency" naOk=true hint~02d20698 label~5be3aecd
@@ -369,8 +369,8 @@ it   doc k=deposit label~cec0aaa4
 it kapitel=finanzen title~91a47720 short~91a47720 description~a48669fe felder=42 docs=3
 it   k=monthlyIncome type="currency" mvo=true section~8d4e2bde orientation~c8da23fe hint~7f55466c label~21f267cd sectionIntro~6abaa1bb
 it   k=sideIncome type="currency" hint~40e503ca label~70c1dae7
-it   k=sideEmployer type="text" hint~d333de51 label~d75262cf
-it   k=sideEmployerAddress type="textarea" hint~afb2e895 label~558b7450
+it   k=sideEmployer type="text" hint~d333de51 label~d13db761
+it   k=sideEmployerAddress type="textarea" hint~afb2e895 label~19df7f36
 it   k=sideHoursPerWeek type="text" hint~77b007ee label~6cd4bf20
 it   k=sideIncomeType type="select" label~50a7faa9 options=2 optWerte~808c757b optLabels~6d8e4ef5
 it   k=taxableIncome type="currency" hint~4dc061bb label~05a17e1b weitere=secondary

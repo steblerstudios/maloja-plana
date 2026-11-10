@@ -1,4 +1,3 @@
-// TODO(rm): Sinnfehler gegenüber DE (Sprach-Prüfung 10.11.2026) — vorläufig deutscher Text bis zur Gegenlese: gepaeck.w.betreibung, sozialhilfe.step4
 export default {
   // TODO(rm): Romanisch von Muttersprachler:in prüfen lassen (Rumantsch Grischun, provisorisch).
   a11y: {
@@ -4966,6 +4965,7 @@ export default {
     step1: 'Contactar il servetsch social da la vischnanca da domicil',
     step2: "Purtar tut las cumprovas d'entrada",
     step3: 'Avair pront il contract da locaziun e la polizza CM',
+    // TODO(rm): provisorisch — deutsch, weil die rm-Fassung LPP-Beiträge nannte, die DE nicht nennt (Sprach-Prüfung 10.11.2026)
     step4: 'Die Sozialhilfe übernimmt den AHV-Mindestbeitrag oft; bei grosser Härte kann er erlassen werden, dann zahlt der Wohnsitzkanton (AHVG Art. 10 Abs. 2, Art. 11 Abs. 2).',
     step5: 'Examinar la dumonda PC tar il post PC cumpetent', // TODO(rm)
     orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
