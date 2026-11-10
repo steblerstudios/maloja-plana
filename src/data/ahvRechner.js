@@ -230,8 +230,10 @@ export function berechneRentenzuschlag({ geschlecht, geburtsjahr, durchschnittli
   const minJahresrente = w.minRente * 12;
   const eink = Number(durchschnittlichesJahreseinkommen) || 0;
   const grund = eink <= 4 * minJahresrente ? 160 : eink <= 5 * minJahresrente ? 100 : 50;
-  const anteil = volleDauer > 0 ? Math.min(1, (Number(beitragsjahre) || 0) / volleDauer) : 1;
-  return Math.ceil(grund * (prozent / 100) * anteil);
+  // Ganzzahlig rechnen: 50 × 44 % × 25/25 ergäbe in Gleitkomma 22.000…01 und würde auf 23 aufgerundet.
+  const bj = volleDauer > 0 ? Math.min(Number(beitragsjahre) || 0, volleDauer) : 1;
+  const dauer = volleDauer > 0 ? volleDauer : 1;
+  return Math.ceil((grund * prozent * bj) / (100 * dauer) - 1e-9);
 }
 
 /**

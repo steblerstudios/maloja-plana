@@ -19,7 +19,7 @@ import { ahvBezugsalterFuerRechnung, ahvZukunftMonate, ikBeitragsjahreBisReferen
 import { SAEULE3A_HOECHSTABZUG } from './data/saeule3a.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
-import { nettoZuBruttoRichtwert } from './data/lohnAbzuege.js';
+import { nettoZuBruttoRichtwert, fruehesterVorbezugMonate } from './data/lohnAbzuege.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { hauptlohnMonate, dreizehnterStatus } from './utils/dreizehnter.js';
@@ -171,7 +171,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     if (beitragsjahreAngenommen) return angenommeneBeitragsjahreFuer(bezug, refAlterJahre);
     return Math.max(0, Math.min(beitragsjahreReferenzalter, volleDauer) - fehlendeJahreBisReferenzalter(bezug));
   };
-  const angenommeneBeitragsjahre = angenommeneBeitragsjahreFuer(parsedBezugAlter, refAlterJahre);
+  const angenommeneBeitragsjahre = angenommeneBeitragsjahreFuer(ahvBezugAlter, refAlterJahre);
   const parsedBeitragsjahre = beitragsjahreBeiBezug(ahvBezugAlter);
   // Statistische Lebenserwartung ab 65 (BFS, gerundet): Frauen ~88, Männer ~85,
   // sonst ~86. Vorbelegt aus dem hinterlegten Geschlecht, jederzeit anpassbar.
@@ -249,7 +249,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Säule 3a: höchstens der jährliche Höchstabzug (BVV 3 Art. 7 Abs. 1) — mit Pensionskasse der kleine,
   // ohne der grosse, dort zudem höchstens 20 % des Erwerbseinkommens. Mehr einzuzahlen ist nicht vorgesehen,
   // die Hochrechnung wäre sonst zu hoch (Kapitel 4).
-  const hatPensionskasse = !!(bvgResult && bvgResult.versichert) || !!data.versicherungen?.bvgInsurer || Number(bvgGuthaben) > 0;
+  // Selbständige sind nicht obligatorisch BVG-versichert: dort zählt nur eine eingetragene Kasse oder ein Guthaben.
+  const selbstaendig = data.finanzen?.employmentType === 'freelance';
+  const hatPensionskasse = (!selbstaendig && !!(bvgResult && bvgResult.versichert)) || !!data.versicherungen?.bvgInsurer || Number(bvgGuthaben) > 0;
   const saeule3aGrenze = hatPensionskasse
     ? SAEULE3A_HOECHSTABZUG.mitPensionskasse
     : (parsedEinkommen > 0 ? Math.min(SAEULE3A_HOECHSTABZUG.ohnePensionskasse, Math.round(parsedEinkommen * SAEULE3A_HOECHSTABZUG.satzOhnePensionskasse)) : SAEULE3A_HOECHSTABZUG.ohnePensionskasse);
@@ -383,11 +385,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Annahme-Zeile bei leeren Beitragsjahren; beim Vorbezug mit beiden Zählungen (bis zum Bezug
   // die Teilrente, ab dem Referenzalter die Neuberechnung, Merkblatt 3.04 Ziff. 4/5).
   const annahmeText = () => {
-    if (Math.round(parsedBezugAlter * 12) >= refAlterMonate) {
+    if (Math.round(ahvBezugAlter * 12) >= refAlterMonate) {
       return t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(refAlterMonate), jahre: Math.min(beitragsjahreReferenzalter, volleDauer) });
     }
     return t('vr.beitragsjahreAngenommenVorbezug', {
-      alter: fmtAlterMonate(Math.round(parsedBezugAlter * 12)),
+      alter: fmtAlterMonate(Math.round(ahvBezugAlter * 12)),
       jahre: angenommeneBeitragsjahre,
       referenzalter: fmtAlterMonate(refAlterMonate),
       jahreRef: ahvResult ? ahvResult.beitragsjahreReferenzalter : beitragsjahreReferenzalter,
@@ -540,8 +542,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               t('vr.bruttoUebernehmen'))) }),
         field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(Math.min(beitragsjahreReferenzalter, volleDauer)), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
         field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 58, max: 70,
-          sublabel: ahvBezugSpaeter ? t('vr.bezugAlterFrueh', { frueh: fmtAlterMonate(Math.round(ahvBezugAlter * 12)) })
-            : (data.basis?.gender === 'female' && birthYear >= 1961 && birthYear <= 1969 ? t('vr.bezugAlterUebergang') : undefined) })
+          sublabel: [
+            ahvBezugSpaeter && t('vr.bezugAlterFrueh', { frueh: fmtAlterMonate(Math.round(ahvBezugAlter * 12)) }),
+            // Frauen 1961–1969: Vorbezug ab 62 möglich (AHVG Art. 40c), nicht gerechnet — immer dazu sagen.
+            fruehesterVorbezugMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear }) < refAlterMonate - 24 && t('vr.bezugAlterUebergang'),
+          ].filter(Boolean).join(' ') || undefined })
       ),
       React.createElement('div', { style: s.row },
         field(t('vr.erziehungsjahre'), erziehungsjahre, setErziehungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.erziehungsjahreHint') }),
@@ -750,7 +755,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // sonst widerspräche der Szenariotext der (bereits korrekten) Prozentzahl aus
             // projektionAhv. Delta in Monaten, weil das Referenzalter der Übergangs-
             // generation krumm ist (z. B. 64 J 6 M) und „0,5 Jahre" unschön läse.
-            const ahvMin = 63;
+            // Frühester AHV-Bezug, mit dem die App rechnet (Referenzalter − 24 Monate, utils/ahvBezug.js).
+            const ahvMin = (refAlterMonate - 24) / 12;
             // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen — projektionAhv,
             // die Quelle der Prozentzahl unten, nutzt ebenfalls parsedBezugAlter; sonst
             // driften Szenario-Text und pct im krummen Referenzalter-Default auseinander.
@@ -762,14 +768,14 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               : String(nAbsM) + ' ' + t(nAbsM === 1 ? 'vr.szenarioMonat' : 'vr.szenarioMonate');
             const pctVal = projektionAhv ? projektionAhv.vorbezugAufschub : 0;
             const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
-            const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
+            const ahvBezug = fmtAlterMonate(Math.round(Math.max(ahvMin, Math.min(70, ahvBezugAlter)) * 12));
             const referenzalter = fmtAlterMonate(refAlterMonate);
             const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '4px' } }, txt);
             const rows = [];
             if (delta < 0) {
               rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer, referenzalter }), 'a'));
               rows.push(line(t('vr.zukunftSzenarioAhvFrueh', { alter: ahvBezug, pct }), 'b'));
-              if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret }), 'c'));
+              if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret, bis: fmtAlterMonate(refAlterMonate - 24) }), 'c'));
               rows.push(line(t('vr.zukunftSzenarioSaeulen'), 'd'));
             } else if (delta > 0) {
               rows.push(line(t('vr.zukunftSzenarioAufschub', { dauer, referenzalter }), 'a'));
@@ -827,7 +833,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ahvResult.vorbezugAufschub < 0 && data.basis?.gender === 'female' && birthYear >= 1961 && birthYear <= 1969
           && React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px' } }, t('vr.vorbezugFrauenUebergang')),
         ahvResult.rentenzuschlag > 0 && React.createElement('div', { 'data-teil': 'rentenzuschlag', style: { fontSize: text.sm, color: palette.text, marginTop: space.xs + 'px', lineHeight: 1.5 } },
-          t('vr.rentenzuschlag', { betrag: fmt(ahvResult.rentenzuschlag) })),
+          t('vr.rentenzuschlag', { betrag: fmt(ahvResult.rentenzuschlag) })
+            + (gutschriftTeilen || verheiratet ? ' ' + t('vr.rentenzuschlagSplitting') : '')),
         // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
         // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
         ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },

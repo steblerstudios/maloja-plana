@@ -80,6 +80,10 @@ describe('AHVG Art. 34bis · Rentenzuschlag Übergangsgeneration', () => {
   });
   it('bei unvollständiger Beitragsdauer anteilig (AHVV Art. 53quater Abs. 3)', () => {
     expect(z({ geburtsjahr: 1964, durchschnittlichesJahreseinkommen: 50000, beitragsjahre: 22 })).toBe(80);
+    expect(z({ geburtsjahr: 1964, durchschnittlichesJahreseinkommen: 50000, beitragsjahre: 40 })).toBe(146); // 145.45 aufgerundet
+  });
+  it('rundet ohne Gleitkomma-Rest auf (160 × 44 % × 25/44 = 40, nicht 41)', () => {
+    expect(z({ geburtsjahr: 1968, durchschnittlichesJahreseinkommen: 50000, beitragsjahre: 25 })).toBe(40);
   });
   it('nicht beim Vorbezug, nicht für Männer, nicht ausserhalb 1961–1969', () => {
     expect(z({ geburtsjahr: 1964, durchschnittlichesJahreseinkommen: 50000, vorbezug: true })).toBe(0);
@@ -90,6 +94,20 @@ describe('AHVG Art. 34bis · Rentenzuschlag Übergangsgeneration', () => {
     const r = (bezugAlter) => berechneAltersrente({ geburtsjahr: 1964, geschlecht: 'female', durchschnittlichesJahreseinkommen: 50000, beitragsjahre: 44, beitragsjahreReferenzalter: 44, bezugAlter, stichtag: '2026-06-01' });
     expect(r(65).rentenzuschlag).toBe(160);
     expect(r(63).rentenzuschlag).toBe(0);
+  });
+});
+
+describe('Texte nach der Fachprüfung (10.11.2026)', () => {
+  it('Frauen 1961–1969 sehen den Vorbezug ab 62 immer, auch neben dem Hinweis zum frühesten Bezug', () => {
+    expect(quelle).toMatch(/fruehesterVorbezugMonate\(\{ geschlecht: data\.basis\?\.gender, geburtsjahr: birthYear \}\) < refAlterMonate - 24 && t\('vr\.bezugAlterUebergang'\)/);
+  });
+  it('Szenario und Annahme rechnen mit dem AHV-Bezug, nicht fest mit 63', () => {
+    expect(quelle).not.toMatch(/const ahvMin = 63/);
+    expect(quelle).toMatch(/zukunftSzenarioBridge', \{ von: ret, bis:/);
+    expect(quelle).toMatch(/angenommeneBeitragsjahreFuer\(ahvBezugAlter, refAlterJahre\)/);
+  });
+  it('Selbständige gelten nicht automatisch als mit Pensionskasse', () => {
+    expect(quelle).toMatch(/\(!selbstaendig && !!\(bvgResult && bvgResult\.versichert\)\)/);
   });
 });
 
