@@ -12,7 +12,7 @@
   var buehne = bruecke.querySelector('.reise-buehne');
   var stationen = [].slice.call(bruecke.querySelectorAll('.reise-station'));
   var naegel = [].slice.call(bruecke.querySelectorAll('.nagel'));
-  var punkte = [].slice.call(bruecke.querySelectorAll('.reise-linie circle[data-kehre]'));
+  var punkte = [].slice.call(bruecke.querySelectorAll('.reise-linie .halt'));
   var ort = bruecke.querySelector('.reise-linie .ort');
   var ortText = ort && ort.querySelector('text');
   var gegangen = bruecke.querySelector('.reise-linie .gegangen');
@@ -50,13 +50,13 @@
     buehne.setAttribute('data-hier', String(hier));
     bildZeigen(hier + 1);
     naegel.forEach(function (n, i) { n.classList.toggle('dran', i <= hier); });
-    punkte.forEach(function (p, i) { p.setAttribute('r', i === hier ? 0 : 5); });
+    punkte.forEach(function (p, i) { p.classList.toggle('hier', i === hier); p.classList.toggle('gegangen', i < hier); });
     if (gegangen) {
       var anteil = hier < 0 ? 0 : (hier + 0.5) / stationen.length;
       gegangen.style.strokeDashoffset = String(100 - anteil * 100);
     }
     if (ort && hier >= 0 && punkte[hier]) {
-      ort.setAttribute('transform', 'translate(' + punkte[hier].getAttribute('cx') + ' ' + punkte[hier].getAttribute('cy') + ')');
+      ort.setAttribute('transform', 'translate(' + punkte[hier].getAttribute('data-x') + ' ' + punkte[hier].getAttribute('data-y') + ')');
       if (ortText) ortText.textContent = namen[hier];
     }
     if (!ruhig.matches) buehne.style.setProperty('--k', k.toFixed(3));
@@ -67,24 +67,14 @@
     leisteNeu(hier, h);
   }
 
-  // B/C · Die Leiste oben: «aus», solange der Hero zu sehen ist; «reise» während der Kehren (Ort + sieben Punkte);
-  // «seite» danach (Seiten-Links, der aktuelle Abschnitt mit aria-current). Ohne Skript gibt es sie nicht.
+  // C · Die Leiste oben erscheint erst nach der Reise (Seiten-Links, der aktuelle Abschnitt mit aria-current).
+  // Während der Reise zeigt die Weglinie links im Bild, wo man ist (Entscheid 10.11.); ohne Skript gibt es sie nicht.
   var leiste = document.querySelector('.leiste');
-  var anfang = document.querySelector('.reise-anfang');
-  var leistePunkte = leiste ? [].slice.call(leiste.querySelectorAll('.punkte span')) : [];
-  var leisteOrt = leiste && leiste.querySelector('.ort-text');
   var leisteLinks = leiste ? [].slice.call(leiste.querySelectorAll('.leiste-links a')) : [];
   function leisteNeu(hier, h) {
-    if (!leiste || !anfang) return;
-    var zustand = 'aus';
-    if (anfang.getBoundingClientRect().bottom <= 56) {
-      zustand = bruecke.getBoundingClientRect().bottom > h * 0.5 ? 'reise' : 'seite';
-    }
+    if (!leiste) return;
+    var zustand = bruecke.getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';
     if (leiste.getAttribute('data-zustand') !== zustand) leiste.setAttribute('data-zustand', zustand);
-    if (zustand === 'reise') {
-      if (leisteOrt) leisteOrt.textContent = hier < 0 ? 'Sieben Kapitel' : 'Kehre ' + (hier + 1) + ' von ' + stationen.length + ' · ' + namen[hier];
-      leistePunkte.forEach(function (p, i) { p.className = i < hier ? 'gegangen' : (i === hier ? 'hier' : ''); });
-    }
     // Aktueller Abschnitt: der letzte, dessen Anfang die obere Bildhälfte erreicht hat.
     var aktuell = null;
     leisteLinks.forEach(function (a) {
@@ -100,7 +90,13 @@
   var dreher = [].slice.call(bruecke.querySelectorAll('.nagel-dreh'));
   var streifen = [].slice.call(bruecke.querySelectorAll('.reise-stock .maser rect'));
   var winkel = 0, ziel = 0, laeuft = false;
+  var licht = bruecke.querySelector('.reise-stock .licht');
   function drehen() {
+    // B · Die Kamera kreist um den Stock (wie bei Fuji): zwischen zwei Nägeln wandert das Bild seitlich mit und das
+    // Licht gleitet über das Holz; steht ein Nagel vorn, ruht beides wieder in der Mitte.
+    var zwischen = winkel / SCHRITT - Math.round(winkel / SCHRITT); // -0.5 … 0.5
+    buehne.style.setProperty('--kamera', (zwischen * 2).toFixed(3));
+    if (licht) licht.setAttribute('x', (44 + zwischen * 16).toFixed(2));
     dreher.forEach(function (g, i) {
       var a = i * SCHRITT - winkel, c = Math.cos(a), x = MITTE + Math.sin(a) * RADIUS;
       g.style.visibility = c > 0.02 ? '' : 'hidden';

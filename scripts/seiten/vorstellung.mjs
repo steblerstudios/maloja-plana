@@ -80,7 +80,7 @@ const STIL = `
       --strasse:#E6E0D2; --strasse-saum:#D6CBB2;
       --gehaeuse:#1B1A18; --gehaeuse-rand:#3A3936; --insel:#0E0E0D; --schirm:#22211F;
       --radius-s:6px; --radius-m:12px;
-      --abstand-s:16px; --abstand-m:32px; --abstand-l:112px;
+      --abstand-s:16px; --abstand-m:32px; --abstand-l:96px;  /* 96 = 64 × 1.5, Kapitelstufe der Startseite (§7a B) */
 ${KAPITEL.map((k, i) => `      --k${i}:${k.farbe};`).join('\n')}
       --pinsel:${PINSEL};
       --sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30; --radius-knopf:10px;
@@ -113,7 +113,7 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
 
     /* Knöpfe (Brand Book «Knöpfe», Fassung 9): Hauptknopf gefüllt Sand, nur EINER je Seite (im Hero);
        Nebenknopf leer mit Rand und Schrift sandDeep; Ecke 10 px, keine Pillen; mind. 44 px hoch. */
-    .knopf{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:11px 22px;
+    .knopf{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:12px 24px;
       border-radius:var(--radius-knopf); font-weight:600; font-size:15px; text-decoration:none; border:1px solid transparent; line-height:1.3 }
     .knopf.haupt{ background:var(--sand); color:var(--auf-sand) }
     .knopf.haupt:hover{ color:var(--auf-sand); filter:brightness(1.05) }
@@ -142,9 +142,9 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .pass .fakten span::before{ content:"·"; margin-right:18px; color:var(--sand-tief) }
     .pass .fakten span:first-child::before{ content:none }
     .pass .beta{ font-size:14px; color:#3E4247; margin-top:10px }
-    .pass .knopf.zweit{ background:rgba(255,255,255,.55) }
+    .pass .knopf.zweit{ background:#FBFBFA }
     /* Übergang zur Reise: Nebenknopf (leer, Rand sandDeep) auf heller Fläche, damit er auch über dem Bild lesbar bleibt. */
-    .pass-weiter{ grid-column:1 / -1; justify-self:start; background:rgba(244,240,230,.85) }
+    .pass-weiter{ grid-column:1 / -1; justify-self:start }
     .pass-weiter::after{ content:"↓" / "" }
 
     /* C · Laptop und Telefon (10.11.2026): das Telefon steht vorn rechts vor dem Laptop. Bild am Computer aus dem
@@ -156,9 +156,9 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
       box-shadow:0 0 0 1px #3A3936, 0 28px 44px -26px rgba(30,28,24,.55) }
     .laptop .schirm{ aspect-ratio:16/10; overflow:hidden; border-radius:4px; background:#22211F }
     .laptop .schirm img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block }
-    .laptop .fuss{ position:relative; height:14px; margin:0 -6%; border-radius:2px 2px 14px 14px;
+    .laptop .sockel{ position:relative; height:14px; margin:0 -6%; border-radius:2px 2px 14px 14px;
       background:linear-gradient(#DCD8D0, #B6B1A7); box-shadow:0 10px 18px -12px rgba(30,28,24,.6) }
-    .laptop .fuss::before{ content:""; position:absolute; left:50%; top:0; width:18%; height:5px; margin-left:-9%; border-radius:0 0 6px 6px; background:#A8A39A }
+    .laptop .sockel::before{ content:""; position:absolute; left:50%; top:0; width:18%; height:5px; margin-left:-9%; border-radius:0 0 6px 6px; background:#A8A39A }
     .geraete .telefon{ position:absolute; right:0; bottom:0; width:clamp(110px, 13vw, 150px); padding:6px; border-radius:24px }
     .geraete .bildschirm{ border-radius:19px; --statusleiste:16px }
     .geraete .insel{ top:10px; width:40px; height:11px; border-radius:8px }
@@ -217,7 +217,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-bild, .reise-bild > *{ position:absolute; inset:0 }
     /* Bild 0 = Passbild (Hero), dann je Kehre ein eigenes Bild (KI-gemalt, Bergell → Silsersee); .an = aktuell, .vorher = voriges. */
     .reise-bild img{ width:100%; height:100%; object-fit:cover; object-position:45% 60%; display:block;
-      opacity:0; transform:scale(1.06) translateY(calc((var(--k, 0.5) - 0.5) * 3%)) }
+      opacity:0; transform:scale(1.12) translateX(calc(var(--kamera, 0) * -6%)) translateY(calc((var(--k, 0.5) - 0.5) * 3%)) }
     .reise-bild .pass-bild{ object-position:50% 78%; transform:none }
     .reise-bild .an{ opacity:1 }
     .js .reise-bild .vorher{ opacity:1; z-index:1 }
@@ -241,12 +241,13 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .js .reise-buehne[data-hier="-1"]::before{ opacity:1 } .js .reise-buehne[data-hier="-1"]::after{ opacity:0 }
     html:not(.js) .reise-anfang{ background:rgba(244,240,230,.93) }
     .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
-    .reise-linie{ position:absolute; left:clamp(16px, 4vw, 56px); top:16vh; height:64vh; width:auto; aspect-ratio:60/600; overflow:visible }
+    .reise-linie{ position:absolute; left:clamp(24px, 5vw, 64px); top:14vh; height:70vh; width:auto; aspect-ratio:60/600; overflow:visible }
     .reise-linie .weg{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:.1 9; opacity:.85 }
     .reise-linie .gegangen{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:100 100; stroke-dashoffset:var(--weg, 0) }
-    .reise-linie circle{ fill:#FBFBFA }
+    .reise-linie .halt circle{ fill:#FBFBFA; stroke:currentColor; stroke-width:2 }
+    .reise-linie .halt{ transform-box:fill-box; transform-origin:center }
     .reise-linie .ort{ display:none } .js .reise-linie .ort{ display:block }
-    .reise-linie .ort circle{ fill:var(--sand); stroke:#FBFBFA; stroke-width:3 }
+    .reise-linie .ort circle{ fill:none; stroke:var(--sand); stroke-width:3 }
     .reise-linie .ort text{ fill:#FBFBFA; font-size:15px; font-weight:600; letter-spacing:.04em; paint-order:stroke; stroke:rgba(20,20,18,.7); stroke-width:4px; stroke-linejoin:round }
     /* D · Der Stock dreht sich um die eigene Achse: das Skript verschiebt Nägel und Maserung je nach Drehwinkel
        (vorne breit, an der Seite schmal, hinten weg). Kein Heranfahren, kein Zoom. */
@@ -256,7 +257,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-stock .maser rect{ fill:#8E6C42; opacity:.5 }
     .reise-stock .riemen{ fill:#7A4A3A } .reise-stock .spitze{ fill:#5A5650 }
     .nagel{ transform-box:fill-box; transform-origin:50% 50% }
-    .nagel .schild{ fill:#FBFBFA; stroke-width:3 } .nagel .kopf{ fill:#E8E6E1; stroke:#5A5650; stroke-width:1 }
+    .nagel .schild > *{ fill:#FBFBFA; stroke:inherit; stroke-width:3.5 }
+    .nagel .unterschatten > *{ fill:rgba(0,0,0,.28) }
+    .nagel .woelbung > *{ fill:url(#woelbung); pointer-events:none } 
     /* Auf jedem Stocknagel das Kapitel-Zeichen der App in der Kapitelfarbe, auf heller Plakette mit farbigem Rand
        (wie ein emailliertes Stockschild). Weiss auf Farbe ginge nicht: der Fünfliber hat weisse Details. */
     .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
@@ -265,6 +268,8 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-quelle{ position:absolute; right:12px; bottom:8px; font-size:12px; color:#FBFBFA; text-shadow:0 1px 3px rgba(0,0,0,.7) }
     .reise-ablauf{ position:relative; z-index:5; margin-top:-100vh; margin-top:-100svh }
     .reise{ padding-top:0; color:#FBFBFA }
+    /* Ausklang: nach der letzten Kehre verläuft das Bild ruhig ins Papier der Seite, statt hart abzubrechen. */
+    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(0,0,0,0), var(--bg) 85%) }
     /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
     .reise-stationen{ list-style:none }
     .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
@@ -273,17 +278,16 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     /* Statt einer grossen Zahl steht gross das Kapitel-Zeichen der App (wie Fujis grosse Höhenzahl): in der Kapitelfarbe
        auf heller Plakette, Ecke 16 px (Karte, Brand Book §7a C). */
     .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; padding:14px; border-radius:16px; background:#FBFBFA; color:var(--farbe);
-      margin:0 0 18px; box-shadow:0 6px 20px rgba(0,0,0,.3) }
+      margin:0 0 16px }
     .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
     .reise-text .name{ display:block; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#FBFBFA; margin-bottom:8px }
     .reise-text h3{ font-size:clamp(24px, 2.6vw, 32px); line-height:1.2; letter-spacing:-0.01em; margin-bottom:10px }
     .reise-text p{ font-size:17px; color:#FBFBFA }
-    /* Knöpfe auf dem Bild: Nebenknopf-Form (leer, Rand, 10 px), auf der dunklen Bühne in Weiss statt sandDeep (sonst unter 3:1). */
+    /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FBFBFA, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
     .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
     .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
-      font-size:15px; font-weight:600; color:#FBFBFA; border:1px solid rgba(251,251,250,.85); background:rgba(27,26,24,.38);
-      -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); text-shadow:none }
-    .reise-knoepfe a:hover{ color:#FBFBFA; background:rgba(27,26,24,.6) }
+      font-size:15px; font-weight:600; color:#7A5F30; border:1px solid #7A5F30; background:#FBFBFA; text-shadow:none }
+    .reise-knoepfe a:hover{ color:#7A5F30; background:#F2EDE3 }
     .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px }
     .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px }
     @media (prefers-reduced-motion: no-preference){
@@ -309,8 +313,8 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-linie{ display:none }
       .reise-station{ align-items:center; padding:10vh 76px 10vh 16px }
       .reise-gross{ width:64px; padding:8px; border-radius:12px; margin-bottom:12px }
-      /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene halbdurchsichtige Fläche (62 %). */
-      .reise-text{ background:rgba(20,20,18,.62); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); padding:18px 18px 20px; border-radius:var(--radius-m) }
+      /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene dunkle Fläche (78 %, ohne Milchglas). */
+      .reise-text{ background:rgba(20,20,18,.78); padding:18px 18px 20px; border-radius:16px }
       .reise-text p{ font-size:16px }
     }
     @media (max-height:520px){
@@ -320,12 +324,12 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise{ color:var(--text) }
       .reise-station{ min-height:auto; padding:24px 16px; background:var(--bg) }
       .reise-text .name, .reise-text p{ color:var(--text) }
-      .reise-text{ text-shadow:none; background:none; -webkit-backdrop-filter:none; backdrop-filter:none; padding:0 }
+      .reise-text{ text-shadow:none; background:none; padding:0 }
       .reise-knoepfe a{ color:var(--text); border-color:var(--text); background:none }
     }
 
     /* ─── Blick in die App (Editorial) ────────────────────────────── */
-    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; margin-top:72px }
+    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:64px }
     .blick.umgekehrt .blick-bild{ order:2 }
     .blick .telefon{ width:250px; margin:0 auto }
     .blick-text .zahl{ font-size:13px; font-weight:600; color:var(--salbei-tief); letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px }
@@ -349,7 +353,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .liste p, .liste span{ font-size:15px; color:var(--leise) }
     .liste a{ font-weight:600 }
     .liste span{ display:block }
-    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:72px }
+    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
     .fragen p{ color:var(--leise) }
     .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
@@ -382,22 +386,16 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     /* B/C · Leiste: Papier mit Haarlinie (kein Milchglas), 56 px. Erscheinen 250 ms, Verschwinden ⅔ davon (§7a E). */
     .leiste{ position:fixed; z-index:8; top:0; left:0; right:0; background:#FBFBFA; color:#24262A; border-bottom:1px solid #E0DDD8;
       transform:translateY(-100%); visibility:hidden }
-    .leiste[data-zustand="reise"], .leiste[data-zustand="seite"]{ transform:none; visibility:visible }
+    .leiste[data-zustand="seite"]{ transform:none; visibility:visible }
     .leiste-innen{ display:flex; align-items:center; gap:20px; min-height:56px }
     .leiste .marke{ color:#22211F } .leiste .marke svg{ height:26px }
-    .leiste-ort{ display:flex; align-items:center; gap:14px; margin:0; font-size:14px; font-weight:600; color:#24262A }
-    .leiste .punkte{ display:flex; gap:6px }
-    .leiste .punkte span{ width:8px; height:8px; border-radius:50%; border:1.5px solid #7A5F30 }
-    .leiste .punkte .gegangen{ background:#C4A06A; border-color:#C4A06A }
-    .leiste .punkte .hier{ background:#7A5F30; border-color:#7A5F30; box-shadow:0 0 0 3px rgba(196,160,106,.35) }
     .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:14px }
     .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px }
     .leiste-links a:hover{ text-decoration:underline }
     .leiste-links a[aria-current="true"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
-    .leiste[data-zustand="seite"] .leiste-ort{ display:none }
     @media (prefers-reduced-motion: no-preference){
       .leiste{ transition:transform .15s cubic-bezier(.4,0,.2,1), visibility 0s linear .15s }
-      .leiste[data-zustand="reise"], .leiste[data-zustand="seite"]{ transition:transform .25s cubic-bezier(.4,0,.2,1) }
+      .leiste[data-zustand="seite"]{ transition:transform .25s cubic-bezier(.4,0,.2,1) }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -409,7 +407,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .liste{ grid-template-columns:1fr 1fr }
     }
     @media (max-width:760px){
-      :root{ --abstand-l:80px }
+      :root{ --abstand-l:64px }
       h2{ font-size:26px }
       .unterzeile{ font-size:16px }
       /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
@@ -420,7 +418,6 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
         border:1px solid rgba(36,38,42,.28); border-radius:var(--radius-knopf); background:rgba(251,251,250,.75); text-decoration:none }
       .leiste-links a[aria-current="true"]{ background:#C4A06A; border-color:#C4A06A; color:#2A2620; text-decoration:none }
       .leiste-innen{ flex-wrap:wrap; gap:6px 12px; padding-block:6px }
-      .leiste[data-zustand="reise"] .leiste-links{ display:none }
       .fuss-spalten{ grid-template-columns:1fr; gap:24px }
       .pass{ grid-template-columns:1fr; padding-top:136px; gap:28px; align-items:start }
       .pass h1{ font-size:32px }
@@ -473,12 +470,13 @@ export function reiseWegPunkte() {
 }
 function reiseLinie() {
   const d = `M${WEG[0].join(' ')} ` + WEG.slice(1).map((c) => `C${c.join(' ')}`).join(' ');
-  const punkte = reiseWegPunkte().map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="5" data-kehre="${i + 1}"/>`).join('');
+  // An jedem Halt das Kapitel-Zeichen auf heller Scheibe (Stebler Studios 10.11.: «die Icons kommen in die weisse Linie»).
+  const punkte = reiseWegPunkte().map(([x, y], i) => `<g class="halt" data-kehre="${i + 1}" data-x="${x}" data-y="${y}" transform="translate(${x} ${y})" style="color:var(--k${i})"><circle r="12"/>${zeichen(i, `weg${i + 1}`, 'x="-8.5" y="-8.5" width="17" height="17" ')}</g>`).join('');
   return `<svg class="reise-linie" viewBox="0 0 60 600" aria-hidden="true" focusable="false">
             <path class="weg" d="${d}"/>
             <path class="gegangen" d="${d}" pathLength="100"/>
             ${punkte}
-            <g class="ort"><circle r="9"/><text x="18" y="5"></text></g>
+            <g class="ort"><circle r="17"/><text x="26" y="5"></text></g>
           </svg>`;
 }
 
@@ -486,13 +484,34 @@ function reiseLinie() {
 // Stocknagel (Schild in der Kapitelfarbe, darauf das Kapitel-Zeichen der App). Die Nägel sitzen rundum verteilt (je 1/7 Drehung);
 // das Skript dreht den Stock so, dass der neue Nagel von hinten nach vorn kommt. Ohne Skript stehen alle vorne.
 export const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
+// D · Die Plaketten als Aufkleber, wie man sie an einen Wanderstock klebt: verschiedene Formen, leicht schräg,
+// weisser Rand, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund). Darauf das Kapitel-Zeichen der App.
+const STICKER = [
+  ['schild', -7], ['rund', 5], ['kreis', -3], ['schild', 8], ['oval', -6], ['rund', 4], ['kreis', -2],
+];
+function stickerForm(form, y) {
+  const m = y + 30;
+  if (form === 'kreis') return `<circle cx="60" cy="${m}" r="27"/>`;
+  if (form === 'oval') return `<ellipse cx="60" cy="${m}" rx="31" ry="25"/>`;
+  if (form === 'rund') return `<rect x="31" y="${y + 5}" width="58" height="50" rx="11"/>`;
+  return `<path d="M31 ${y + 2} h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/>`;
+}
 function reiseStock() {
   const naegel = KAPITEL.map((_, i) => {
     const y = NAGEL_Y[i];
-    return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><path class="schild" style="stroke:var(--k${i})" d="M30 ${y} h60 v26 c0 15 -13 25 -30 32 c-17 -7 -30 -17 -30 -32 z"/><g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="41" y="${y + 3}" width="38" height="38" `)}</g></g></g>`;
+    const [form, neigung] = STICKER[i];
+    const f = stickerForm(form, y);
+    return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><g transform="rotate(${neigung} 60 ${y + 30})">`
+      + `<g class="unterschatten" transform="translate(1.5 2.5)">${f}</g>`
+      + `<g class="schild" style="stroke:var(--k${i})">${f}</g>`
+      + `<g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="42" y="${y + 12}" width="36" height="36" `)}</g>`
+      + `<g class="woelbung">${f}</g></g></g></g>`;
   }).join('');
   const maser = [0, 1, 2, 3, 4, 5, 6, 7].map((j) => `<rect x="${(60 + Math.sin(j * Math.PI / 4 + 0.3) * 20).toFixed(1)}" y="8" width="1.4" height="664" rx=".7"/>`).join('');
   return `<svg class="reise-stock" viewBox="0 0 120 700" aria-hidden="true" focusable="false">
+            <defs><linearGradient id="woelbung" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#000" stop-opacity=".2"/><stop offset=".38" stop-color="#fff" stop-opacity=".22"/>
+              <stop offset=".62" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient></defs>
             <rect class="schatten" x="36" y="0" width="48" height="680" rx="24"/>
             <rect class="holz" x="36" y="0" width="40" height="680" rx="20"/>
             <g class="maser">${maser}</g>
@@ -588,12 +607,11 @@ ${json}
     </div>
   </header>
 
-  <!-- ═══ B/C · Leiste: fährt herein, sobald der Hero vorbei ist. Während der Reise «Kehre n von 7» mit sieben
-       Punkten, danach die Seiten-Links mit dem aktuellen Abschnitt. Ohne Skript erscheint sie nie. ═══ -->
+  <!-- ═══ C · Leiste: fährt nach der Reise herein, mit den Seiten-Links und dem aktuellen Abschnitt.
+       Während der Reise zeigt die Weglinie im Bild den Ort. Ohne Skript erscheint sie nie. ═══ -->
   <nav class="leiste" aria-label="Seite, Leiste" data-zustand="aus">
     <div class="rahmen leiste-innen">
       <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben">${MARKE}</a>
-      <p class="leiste-ort" aria-hidden="true"><span class="ort-text">Sieben Kapitel</span><span class="punkte">${KAPITEL.map(() => '<span></span>').join('')}</span></p>
       <div class="leiste-links">
         <a href="#weg">Kapitel</a>
         <a href="#situationen">Situationen</a>
@@ -636,7 +654,7 @@ ${KAPITEL.map((_, i) => `          <img class="kehre-bild" src="${LEER}" data-sr
               <div class="geraete-bild">
               <div class="laptop" role="img" aria-label="Maloja Plana auf einem Laptop, im Beispiel mit erfundenen Daten.">
                 <div class="deckel"><div class="schirm"><img src="/vorstellung/app-computer.webp" alt="" width="800" height="500"></div></div>
-                <div class="fuss" aria-hidden="true"></div>
+                <div class="sockel" aria-hidden="true"></div>
               </div>
               <div class="telefon" role="img" aria-label="Maloja Plana auf einem Telefon, im Beispiel mit erfundenen Daten.">
                 <div class="insel" aria-hidden="true"></div>
@@ -663,6 +681,7 @@ ${[1, 2, 3, 4, 5].map((n) => `                  <img src="${BILD(n)}" alt="" wid
 ${reiseStationen()}
           </ol>
         </section>
+        <div class="reise-ausklang" aria-hidden="true"></div>
       </div>
     </div>
 

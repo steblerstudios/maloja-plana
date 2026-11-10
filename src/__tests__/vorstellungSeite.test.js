@@ -129,10 +129,15 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     KAPITEL.forEach((k, i) => expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`));
   });
 
-  it('B · auf jedem Stocknagel steht das Kapitel-Zeichen statt einer Nummer', () => {
+  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen statt einer Nummer, leicht schräg', () => {
     const naegel = html.split('<g class="nagel">').slice(1).map((t) => t.split('<g class="nagel-dreh"')[0].split('</svg>\n')[0]);
     expect(naegel).toHaveLength(7);
-    for (const n of naegel) { expect(n).toMatch(/<g class="bild" style="color:var\(--k\d\)"><svg x="41"/); expect(n).not.toContain('<text x="60"'); }
+    for (const n of naegel) {
+      expect(n).toMatch(/^<g transform="rotate\(-?\d+ 60 \d+\)">/);
+      expect(n).toMatch(/<g class="bild" style="color:var\(--k\d\)"><svg x="42"/);
+      expect(n).toContain('<g class="woelbung">');
+      expect(n).not.toContain('<text x="60"');
+    }
   });
 
   it('jede Masken-Id der Kapitel-Zeichen kommt auf der Seite nur einmal vor', () => {
@@ -226,12 +231,25 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(handy).toMatch(/\.kopf nav a, \.leiste-links a\{[^}]*min-height:44px/);
   });
 
-  it('B/C · die Leiste kennt drei Zustände und erscheint ohne Skript nie', () => {
+  it('C · die Leiste erscheint erst nach der Reise (während der Reise zeigt die Weglinie den Ort) und ohne Skript nie', () => {
     expect(html).toContain('<nav class="leiste" aria-label="Seite, Leiste" data-zustand="aus">');
     expect(stil).toMatch(/\.leiste\{[^}]*visibility:hidden/);
-    for (const z of ["'aus'", "'reise'", "'seite'"]) expect(js).toContain(z);
-    expect((html.match(/<span class="punkte">((?:<span><\/span>)+)<\/span>/) || [])[1].match(/<span>/g)).toHaveLength(7);
+    expect(js).toContain("var zustand = bruecke.getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';");
+    expect(js).not.toContain("'reise'");
+    expect(html).not.toContain('class="leiste-ort"');
     expect(js).toContain("setAttribute('aria-current', 'true')");
+  });
+
+  it('C · auf der Weglinie sitzt an jedem Halt das Kapitel-Zeichen', () => {
+    const halte = html.match(/<g class="halt" /g) || [];
+    expect(halte).toHaveLength(7);
+    expect(html).toMatch(/<g class="halt" data-kehre="1" data-x="[\d.]+" data-y="[\d.]+" transform="translate\([\d.]+ [\d.]+\)" style="color:var\(--k0\)"><circle r="12"\/><svg x="-8.5"/);
+  });
+
+  it('B · Kamera: das Bild wandert beim Drehen seitlich mit, kein Milchglas auf der Seite', () => {
+    expect(stil).toContain('translateX(calc(var(--kamera, 0) * -6%))');
+    expect(js).toContain("buehne.style.setProperty('--kamera'");
+    expect(stil).not.toContain('backdrop-filter');
   });
 
   it('D/E · Fuss: Marke, Entdecken, Rechtliches, darunter die Vertrauenszeile; alle Links der Seite bleiben erreichbar', () => {
