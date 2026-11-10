@@ -12,7 +12,7 @@ Bauen von `scripts/seiten-figuren.mjs`, `scripts/seiten-vergleich.mjs` und `scri
 | `steuern.json` | Steuerbelastung im Hauptort bei 50/80/120 Tausend Fr., ledig, ohne Kinder und Konfession; tiefste und höchste Gemeinde bei 80'000 | ESTV Steuerbelastungsstatistik, Steuerjahr 2026, abgerufen 24.10.2026 |
 | `lohn_miete.json` | Medianlohn 2024/2022 der Grossregion (Vollzeit, brutto); Nettomiete 2024 im Kanton, 3 Zimmer mit Vertrauensintervall; `anteil` = Miete 3 Zimmer in % des Medianlohns | BFS LSE (T1_gr), BFS Strukturerhebung (T 09.03.03.01) |
 | `leerwohnungsziffer.json` | Leerwohnungsziffer 1.6.2026 und Vorjahr, Anzahl leerer Wohnungen | BFS Leerwohnungszählung, T 09.03.04.04 |
-| `sozialhilfe.json` | Sozialhilfequote 2024, 2023, 2015 | BFS Sozialhilfestatistik |
+| `sozialhilfe.json` | Sozialhilfequote 2025 (`q25`), 2024, 2023, 2015 — 2023/2024 in der vom BFS revidierten Fassung (LU 2024, AI 2023/2024, TI 2024 geändert); ab 2025 neue Methode | BFS Sozialhilfestatistik, PxWeb px-x-1304030000_121, publiziert 27.10.2026, abgerufen 10.11.2026 |
 | `el_quote.json` | EL-Quote zur AHV und IV, Dezember 2025 und Vorjahr | BSV Statistik der EL 2025 |
 | `arbeitslosenquote.json` | Arbeitslosenquote September 2026, Vorjahr, Schnitt 2025 | SECO, Lage auf dem Arbeitsmarkt |
 | `familienzulagen.json` | Kinder-, Ausbildungs- und Geburtszulagen 2026 | BSV, Arten und Ansätze der Familienzulagen 2026 |
