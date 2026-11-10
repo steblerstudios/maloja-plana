@@ -377,7 +377,8 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     // darunter stellte dieselbe Frage ein zweites Mal. Sie bleibt (für eine Verfügung auf Papier), aber aufgeklappt
     // nur auf Wunsch, unter einer eigenen Frage.
     h('details', { 'data-teil': 'notfall-pv-antwort', style: { marginTop: space.sm + 'px' } },
-      h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, color: palette.text } }, t('notfallKapitel.pvSchonFrage')),
+      // Ohne display:flex — sonst blendet der Browser das Aufklapp-Dreieck aus.
+      h('summary', { style: { cursor: 'pointer', minHeight: '44px', boxSizing: 'border-box', padding: '12px 0', fontSize: text.sm, color: palette.text } }, t('notfallKapitel.pvSchonFrage')),
       h('label', { htmlFor: 'mp-notfall-pv', style: { display: 'block', fontSize: text.sm, color: palette.text } }, feldName('notfall', 'patientenverfuegung')),
       h('select', {
         id: 'mp-notfall-pv', 'aria-describedby': 'mp-notfall-pv-hinweis', value: nf.patientenverfuegung || '', disabled: !!demoMode,

@@ -348,7 +348,7 @@ export default {
     step2Intro: 'In der Schweiz hängt das davon ab, ob es ein Unfall oder eine Krankheit war:',
     step2UnfallTitle: 'Bei einem Unfall',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über Ihre Arbeitgeberin oder Ihren Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie dort mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über deine Arbeitgeberin oder deinen Arbeitgeber gegen Berufsunfälle versichert; arbeitest du dort mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
+    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über Ihre Arbeitgeberin oder Ihren Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie bei derselben Arbeitgeberin oder demselben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über deine Arbeitgeberin oder deinen Arbeitgeber gegen Berufsunfälle versichert; arbeitest du bei derselben Arbeitgeberin oder demselben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
     step2KrankheitTitle: 'Bei Krankheit',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step2KrankheitText: { sie: 'Über die Krankenkasse (Grundversicherung). Sie tragen Franchise und Selbstbehalt. Behandlungen und Rechnungen reichen Sie über Ihre Kasse ein.', du: 'Über die Krankenkasse (Grundversicherung). Du trägst Franchise und Selbstbehalt. Behandlungen und Rechnungen reichst du über deine Kasse ein.' },
@@ -585,12 +585,19 @@ export default {
     step3Link: 'Examinar il dretg',
     stepHeTitle: '4 · Indemnisaziun d’impotenza',
     stepHeText: 'Tgi che dovra per motivs da sanadad permanentamain agid en il mintgadi, survegliaziun u accumpagnament, ha eventualmain dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ils posts AI dattan infurmaziuns.',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtTitle: '5 · Vorbescheid und Entscheid',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtText: { sie: 'Bevor die IV entscheidet, schickt sie einen Vorbescheid. Sind Sie nicht einverstanden, bringen Sie innert 30 Tagen Ihre Einwände vor (IVG Art. 57a). Gegen den Entscheid (Verfügung) gibt es bei der IV keine Einsprache: Sie erheben innert 30 Tagen direkt Beschwerde beim kantonalen Versicherungsgericht (IVG Art. 69, ATSG Art. 60). Das Verfahren kostet 200 bis 1000 Franken. Eine Beratungsstelle hilft beim Schreiben.', du: 'Bevor die IV entscheidet, schickt sie einen Vorbescheid. Bist du nicht einverstanden, bringst du innert 30 Tagen deine Einwände vor (IVG Art. 57a). Gegen den Entscheid (Verfügung) gibt es bei der IV keine Einsprache: Du erhebst innert 30 Tagen direkt Beschwerde beim kantonalen Versicherungsgericht (IVG Art. 69, ATSG Art. 60). Das Verfahren kostet 200 bis 1000 Franken. Eine Beratungsstelle hilft beim Schreiben.' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtLabel: 'Vorbescheid erhalten am',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtHinweis: { sie: 'Ihre Einwände müssen spätestens am {date} eingereicht sein (IVG Art. 57a Abs. 3).', du: 'Deine Einwände müssen spätestens am {date} eingereicht sein (IVG Art. 57a Abs. 3).' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtVorbei: { sie: 'Die Frist für Einwände endete am {date}. Fragen Sie sofort bei der IV-Stelle oder einer Beratungsstelle nach, was noch möglich ist.', du: 'Die Frist für Einwände endete am {date}. Frag sofort bei der IV-Stelle oder einer Beratungsstelle nach, was noch möglich ist.' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtButton: 'Frist «Einwände zum Vorbescheid» in den Kalender ({date})',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     stepRechtReminder: 'IV-Vorbescheid: Einwände einreichen (30 Tage)',
     step4Title: '6 · Sustegn & sgraventscha',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -965,7 +972,7 @@ export default {
     step5LinkNotfall: 'Im Notfall-Kapitel festhalten',
     step5LinkPass: 'Notfallpass ansehen',
     step5LinkDossier: 'Notfall-Dossier für Angehörige',
-    footerNote: 'Diese Dokumente sind persönlich; Vorlagen und Beratung bieten Fachstellen, Ärztinnen und Ärzte sowie Notariate. Dies ist Orientierung, keine Rechtsberatung; die Abläufe bei KESB und Zivilstandsamt unterscheiden sich je nach Kanton.',
+    footerNote: 'Quai è orientaziun, betg cussegl giuridic. Diese Dokumente sind persönlich; Vorlagen und Beratung bieten Fachstellen, Ärztinnen und Ärzte sowie Notariate. Dies ist Orientierung, keine Rechtsberatung; die Abläufe bei KESB und Zivilstandsamt unterscheiden sich je nach Kanton.',
     quelle: 'Quellen: [[ZGB Art. 360|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_360]], [[ZGB Art. 361|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_361]], [[ZGB Art. 363|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_363]], [[ZGB Art. 370|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_370]], [[ZGB Art. 371|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_371]], [[ZGB Art. 372|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_372]], [[ZGB Art. 374|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_374]], [[ZGB Art. 378|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_378]], [[VVK Art. 6|https://www.fedlex.admin.ch/eli/cc/2007/101/de#art_6]] (geprüft im September 2026).',
   },
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
@@ -4321,7 +4328,9 @@ export default {
       alleVersicherungenSub: "Premias, franschisa, regiun, RIP, termin da midada",
       ablageAusbildung: "Deponer ils diploms",
       ablageDokumente: "Deponer documents",
+      // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
       gruppeKrankenkasse: 'Krankenkasse & Leistungen',
+      // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
       gruppePassiert: 'Wenn es passiert',
       steuerfrist: "Termin & decleraziun da taglia",
       steuerfristSub: "Chapitel Autoritads · termin, numer da taglia, decleraziuns avertas",
@@ -4567,6 +4576,7 @@ export default {
     portemonnaieSub: 'Per stampar, per prender cun sai',
     portemonnaieLeer: 'L’emprim endatar las indicaziuns sutvart',
     vorsorgeTitel: 'Prevenziun',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     pvSchonFrage: 'Schon eine Patientenverfügung, zum Beispiel auf Papier?',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     zurueckVorsorge: 'Turnar a la prevenziun',
@@ -6195,9 +6205,13 @@ export default {
     spitexNote: 'Prestaziuns da tgira cun ordinaziun medicinala.',
     franchiseTitle: 'Franschisa & parteniment',
     franchiseExplain: { sie: 'La franschisa è Voss parteniment annual. Suenter pajais Vus 10% dals custs (max. CHF 700/onn).', du: 'La franschisa è Tes parteniment annual. Suenter pajas Ti 10% dals custs (max. CHF 700/onn).' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     personLabel: 'Versicherte Person',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     personErwachsen: 'Erwachsen (ab 19 Jahren)',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     personKind: 'Kind (bis 18 Jahre)',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
     franchiseUnbekannt: { sie: 'Die gespeicherte Franchise ({wert}) passt zu keiner Stufe. Bitte wählen Sie Ihre Franchise.', du: 'Die gespeicherte Franchise ({wert}) passt zu keiner Stufe. Bitte wähl deine Franchise.' },
     franchiseLabel: { sie: 'Vossa franschisa', du: 'Tia franschisa' },
     franchiseOptimizerLink: 'Vala ina autra franchisa la paina? Avrir l’optimader da franchisa',
