@@ -89,6 +89,18 @@ const PINSEL_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100
 const LEER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 
+// O · Die drei Geräte auf dem Blick (Papier): Punkte auf der Passstrasse in pass-blick-papier.svg
+// (viewBox 0 -240 1600 1000), umgerechnet in Prozent der Bildfläche. Von links nach rechts gelesen.
+const GERAETE = [
+  { name: 'iPhone und iPad', zeichen: 'telefon', x: '37.4%', y: '69.5%' },   // Strassenpunkt (599 | 455)
+  { name: 'Android', zeichen: 'telefon', x: '54.4%', y: '81.6%' },           // (870 | 576)
+  { name: 'Computer', zeichen: 'laptop', x: '79.9%', y: '57.2%' },           // (1278 | 332)
+];
+const GERAET_ZEICHEN = {
+  telefon: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/></svg>',
+  laptop: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="5" width="15" height="10.5" rx="1.4"/><path d="M2.5 18.5h19"/></svg>',
+};
+
 const STIL = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
@@ -266,7 +278,15 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
                  linear-gradient(90deg, rgba(var(--schleier),.94) 0%, rgba(var(--schleier),.86) 44%, rgba(var(--schleier),0) 70%) }
     .reise-buehne::after{
       background:linear-gradient(270deg, rgba(18,18,16,.68) 0%, rgba(18,18,16,.62) 44%, rgba(18,18,16,0) 66%),
+                 linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%);
+      background:linear-gradient(270deg, color-mix(in srgb, var(--ton) 74%, transparent) 0%, color-mix(in srgb, var(--ton) 74%, transparent) 46%, color-mix(in srgb, var(--ton) 0%, transparent) 66%),
                  linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%) }
+    /* P · Die dunkle Schicht trägt die Farbe der Kehre (Stebler Studios 10.11.2026): 30 % Kapitelfarbe im Dunkeln.
+       Unter dem Text 74 % statt 62 %, damit der weisse Text auch über einem weissen Bildteil mindestens 4,5:1 hat
+       (gerechnet für alle sieben Kapitel: mindestens 4,69:1, am knappsten Finanzen). Ohne color-mix gilt die Zeile davor.
+       --ton ist registriert, darum gleitet die Farbe beim Wechsel mit (nur ohne «weniger Bewegung»). */
+    @property --ton{ syntax:'<color>'; inherits:true; initial-value:#121210 }
+${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`).join('\n')}
     .js .reise-buehne[data-hier="-1"]::before{ opacity:1 } .js .reise-buehne[data-hier="-1"]::after{ opacity:0 }
     html:not(.js) .reise-anfang{ background:rgba(var(--schleier),.93) }
     .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
@@ -314,7 +334,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .pass-band{ position:relative; margin:64px 0 }
     .pass-band .quelle{ font-size:13px; color:var(--leise); padding-top:8px }
     /* Im dunklen Modus: die Papier-Linien (Tinte) hell umkehren, sonst verschwinden sie im dunklen Grund. */
-    @media (prefers-color-scheme: dark){ .pass-band img{ filter:invert(1) hue-rotate(180deg) brightness(.9) } }
+    @media (prefers-color-scheme: dark){ .pass-band img, .papier-linien{ filter:invert(1) hue-rotate(180deg) brightness(.9) } }
     /* G · Vor der Karte steht schon die Luft des Schlussabschnitts (96 px) — nicht noch einmal 96. */
     .pass-band-karte{ margin:0 }
     .pass-band-karte img{ aspect-ratio:280/130; object-fit:cover }
@@ -357,6 +377,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px }
     @media (prefers-reduced-motion: no-preference){
       .js .reise-buehne::before, .js .reise-buehne::after{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-buehne{ transition:--ton 1.1s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild img{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild .an{ transition:-webkit-mask-position 1.1s cubic-bezier(.4,0,.2,1), mask-position 1.1s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
@@ -373,14 +394,16 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     }
     @media (max-width:760px){
       .reise-buehne::before{ background:linear-gradient(180deg, rgba(var(--schleier),.95) 0%, rgba(var(--schleier),.9) 52%, rgba(var(--schleier),.35) 78%, rgba(var(--schleier),0) 92%) }
-      .reise-buehne::after{ background:linear-gradient(0deg, rgba(18,18,16,.74) 0%, rgba(18,18,16,.6) 40%, rgba(18,18,16,0) 70%) }
+      .reise-buehne::after{ background:linear-gradient(0deg, rgba(18,18,16,.74) 0%, rgba(18,18,16,.6) 40%, rgba(18,18,16,0) 70%);
+        background:linear-gradient(0deg, color-mix(in srgb, var(--ton) 74%, transparent) 0%, color-mix(in srgb, var(--ton) 60%, transparent) 40%, color-mix(in srgb, var(--ton) 0%, transparent) 70%) }
       /* D · Stock ein Stück über den rechten Rand, damit die Textfläche ihn nicht mehr überdeckt (vorher etwa 12 px) */
       .reise-stock{ left:auto; right:-30px; margin-left:0; height:86%; top:7% }
       .reise-linie{ display:none }
       .reise-station{ align-items:center; padding:10vh 84px 10vh 16px }
       .reise-gross{ width:64px; margin-bottom:12px }
       /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene dunkle Fläche (78 %, ohne Milchglas). */
-      .reise-text{ background:rgba(20,20,18,.78); padding:18px 18px 20px; border-radius:16px }
+      .reise-text{ background:rgba(20,20,18,.82); padding:18px 18px 20px; border-radius:16px;
+        background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent) }   /* P · in der Kapitelfarbe getönt, 82 %: mind. 5,88:1 */
       .reise-text p{ font-size:16px }
     }
     @media (max-height:520px){
@@ -405,7 +428,29 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .blick-text p{ color:var(--leise); font-size:16px; max-width:28em }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
-    .holen{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:var(--abstand-m) }
+    .holen{ margin-top:16px; max-width:640px }
+    /* O · Gerät wählen auf dem Blick: Punkt auf der Strasse, darüber die Wahl (Auswahl-Knopf: gewählt Sand gefüllt, 10 px,
+       44 px hoch). Nur die gewählte Anleitung steht da. */
+    .holen-wahl{ border:0; min-width:0; padding:0; margin:var(--abstand-m) 0 0 }
+    .holen-blick{ position:relative; margin:0 }
+    .holen-flaeche{ position:relative }
+    /* Die Wahl liegt als Ebene im Seitenverhältnis des Bildes darüber, damit --x/--y dieselben Prozente meinen. */
+    .geraet-wahl{ position:absolute; top:0; left:0; right:0; aspect-ratio:1600/1000; pointer-events:none }
+    .geraet-wahl label{ pointer-events:auto }
+    .holen-blick img{ display:block; width:100%; height:auto }
+    .holen-blick .quelle{ font-size:13px; color:var(--leise); padding-top:8px }
+    .geraet-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
+      background:#55685A; box-shadow:0 0 0 2px var(--bg) }
+    .geraet-wahl label{ position:absolute; left:var(--x); top:var(--y); transform:translate(-50%, calc(-100% - 14px)); display:inline-flex;
+      align-items:center; gap:8px; min-height:44px; padding:8px 16px; border:1px solid var(--sand-tief); border-radius:var(--radius-knopf);
+      background:var(--flaeche); color:var(--sand-tief); font-size:15px; font-weight:600; cursor:pointer; white-space:nowrap }
+    .geraet-wahl label::after{ content:""; position:absolute; left:50%; top:100%; height:8px; border-left:1.5px solid var(--sand-tief) }
+    .geraet-wahl svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round }
+    .holen .geraet{ display:none }
+${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:block }
+    #g${i + 1}:checked ~ .holen-blick [for=g${i + 1}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
+    #g${i + 1}:checked ~ .holen-blick .p${i + 1}{ box-shadow:0 0 0 2px var(--bg), 0 0 0 5px var(--sand) }
+    #g${i + 1}:focus-visible ~ .holen-blick [for=g${i + 1}]{ outline:2px solid var(--sand-tief); outline-offset:3px }`).join('\n')}
     .geraet{ background:var(--flaeche); border:1px solid var(--rand); border-radius:var(--radius-m); padding:26px 26px 22px }
     .geraet h3{ margin-bottom:14px }
     .geraet ol{ padding-left:20px; color:var(--leise); font-size:16px }
@@ -437,10 +482,25 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .fragen p{ color:var(--leise) }
     .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
 
-    .schluss{ text-align:center; padding:var(--abstand-l) 0 }
-    .schluss h2{ font-size:36px }
-    .schluss .unterzeile{ margin:0 auto }
-    .schluss .wege{ justify-content:center }
+    /* N · Schluss auf dem Pass von oben (Stebler Studios 10.11.2026). Die Karte bekommt oben links eine ruhige Fläche:
+       die Linien laufen dort aus, damit der Text liest. Die Knöpfe stehen rechts neben ihrem Punkt, ein kurzer Strich
+       verbindet sie. --x/--y: Punkt in der Karte (280:130), --xh: derselbe Punkt am Handy (4:3, mittig beschnitten). */
+    .schluss-karte{ padding-top:var(--abstand-l) }
+    .schluss-bild{ display:grid }
+    .schluss-bild > *{ grid-area:1 / 1 }   /* Text liegt auf der Karte; am Handy darüber */
+    .schluss-flaeche{ position:relative }
+    .schluss-bild img{ display:block; width:100%; height:auto; aspect-ratio:280/130; object-fit:cover;
+      -webkit-mask-image:radial-gradient(ellipse 46% 52% at 22% 14%, transparent 45%, #000 100%); mask-image:radial-gradient(ellipse 46% 52% at 22% 14%, transparent 45%, #000 100%) }
+    .schluss-text{ position:relative; z-index:1; align-self:start; width:100%; padding-top:clamp(16px, 4vw, 56px); pointer-events:none }
+    .schluss-text *{ pointer-events:auto }
+    .schluss-text h2{ font-size:36px; max-width:12em }
+    .schluss-text .unterzeile{ max-width:22em }
+    .schluss-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
+      background:#55685A; box-shadow:0 0 0 2px var(--bg) }
+    .knopf.am-punkt{ position:absolute; left:var(--x); top:var(--y); transform:translate(22px, -50%); background:var(--flaeche); white-space:nowrap }
+    .knopf.am-punkt:hover{ background:color-mix(in srgb, var(--sand) 14%, var(--flaeche)) }   /* deckend: darunter liegen Linien */
+    .am-punkt::before{ content:""; position:absolute; right:100%; top:50%; width:16px; border-top:1.5px solid var(--sand-tief) }
+    .schluss-karte .quelle{ font-size:13px; color:var(--leise); padding-top:8px }
 
     /* D/E · Fuss: heller Grund mit Haarlinie (kein dunkles Band), Bildmarke Anthrazit führt nach oben. */
     .fuss{ border-top:1px solid var(--rand); padding:48px 0 56px; font-size:15px; color:var(--leise) }
@@ -485,7 +545,12 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       /* K · Unter 960 px eine Spalte: daneben brach der Titel in vier Zeilen. Die Geräte stehen unter dem Text. */
       .pass{ grid-template-columns:1fr; gap:32px; padding-top:112px; align-items:start }
       .geraete{ justify-self:start }
-      .holen{ grid-template-columns:1fr 1fr }
+      /* N unter 960 px: Text über der Karte (daneben stiess er am Tablet an «App holen»), die Karte 4:3 mittig
+         beschnitten, die Knöpfe bleiben an ihren Punkten (--xh). */
+      .schluss-bild > *{ grid-area:auto }
+      .schluss-text{ padding-top:0; padding-bottom:16px }
+      .schluss-bild img{ aspect-ratio:4/3; -webkit-mask-image:none; mask-image:none }
+      .schluss-punkt, .am-punkt{ left:var(--xh) }
       .liste{ grid-template-columns:1fr 1fr }
     }
     @media (max-width:760px){
@@ -517,8 +582,12 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .blick .telefon{ width:220px; border-radius:40px; padding:9px }
       .blick .bildschirm{ border-radius:31px; --statusleiste:32px }
       .blick .insel{ top:17px; width:72px; height:20px }
-      .holen, .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
-      .schluss h2{ font-size:28px }
+      .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
+      /* O am Handy: Punkte bleiben im Bild, die Wahl steht als Zeile darunter (das Bild ist zu niedrig für Schilder). */
+      .geraet-wahl{ position:static; aspect-ratio:auto; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
+      .geraet-wahl label{ position:static; transform:none }
+      .geraet-wahl label::after{ content:none }
+      .schluss-text h2{ font-size:28px }
       footer a{ display:inline-block; padding:10px 2px }
     }`;
 
@@ -836,19 +905,28 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
       <p class="atlas-hinweis">Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage. Was davon für Sie gilt, zeigt die App Schritt für Schritt, mit Ihren Angaben, auf Ihrem Gerät.</p>
     </section>
 
-    <!-- ═══ D · Pass von der Seite auf Papier (Höhenlinien, 10.11.2026) ═══ -->
-    <figure class="pass-band pass-band-blick">
-      <img src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
-      <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
-    </figure>
-
     <!-- ═══ Holen ═══ -->
     <section id="holen" aria-labelledby="t-holen">
       <p class="augenbraue">Telefon, Tablet, Laptop</p>
       <h2 id="t-holen">Maloja Plana holen — in einer Minute.</h2>
       <p class="unterzeile">Maloja Plana lässt sich auf den Startbildschirm oder ins Dock legen. Danach öffnet es sich mit eigenem Symbol und in einem eigenen Fenster, wie eine App.</p>
-      <div class="holen">
-        <div class="geraet">
+      <!-- O · Drei Punkte auf der Passstrasse im Blick (Papier): Gerät wählen, darunter stehen nur dessen Schritte.
+           Ohne Skript, wie die Situationen; Pfeiltasten wechseln. Zeichen selbst gezeichnet, keine fremden Marken. -->
+      <fieldset class="holen-wahl">
+        <legend class="unsichtbar">Ihr Gerät</legend>
+${GERAETE.map((g, i) => `        <input type="radio" name="geraet" id="g${i + 1}" class="unsichtbar"${i === 0 ? ' checked' : ''}>`).join('\n')}
+        <figure class="holen-blick">
+          <div class="holen-flaeche">
+            <img class="papier-linien" src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+${GERAETE.map((g, i) => `            <span class="geraet-punkt p${i + 1}" style="--x:${g.x}; --y:${g.y}" aria-hidden="true"></span>`).join('\n')}
+          </div>
+          <div class="geraet-wahl">
+${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; --y:${g.y}">${GERAET_ZEICHEN[g.zeichen]}${esc(g.name)}</label>`).join('\n')}
+          </div>
+          <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+        </figure>
+        <div class="holen">
+        <div class="geraet t1">
           <h3>iPhone und iPad</h3>
           <ol>
             <li>Maloja Plana in Safari öffnen.</li>
@@ -858,7 +936,7 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
           </ol>
           <p class="klein">Auf dem iPhone sind die Angaben in Safari und auf dem Startbildschirm getrennt gespeichert. Öffnen Sie Maloja Plana darum von Anfang an über das Symbol.</p>
         </div>
-        <div class="geraet">
+        <div class="geraet t2">
           <h3>Android</h3>
           <ol>
             <li>Maloja Plana in Chrome öffnen.</li>
@@ -867,7 +945,7 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
             <li>Bestätigen.</li>
           </ol>
         </div>
-        <div class="geraet">
+        <div class="geraet t3">
           <h3>Laptop und Computer</h3>
           <ol>
             <li>Maloja Plana in Chrome oder Edge öffnen.</li>
@@ -876,7 +954,8 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
           </ol>
           <p class="klein"><strong>Mac mit Safari:</strong> im Menü «Ablage» auf «Zum Dock hinzufügen» (ab Safari 17). Firefox am Computer kann das nicht — dort bleibt ein Lesezeichen.</p>
         </div>
-      </div>
+        </div>
+      </fieldset>
       <div class="wege"><a class="knopf zweit" href="/app/">Maloja Plana öffnen</a></div>
       <p class="bald"><strong>Eine Fassung für den App Store ist geplant.</strong> Bis dahin funktioniert der Weg über den Startbildschirm auf Telefon, Tablet und Laptop.</p>
       <p class="bald" id="warteliste">Möchten Sie Bescheid bekommen? <a href="${WARTELISTE}">Per E-Mail auf die Warteliste</a>. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es sie gibt, wenn die Fassung für den App Store erscheint. Spätestens Ende 2027 löschen wir Ihre Adresse (<a href="/rechtliches/">Datenschutz</a>).</p>
@@ -920,21 +999,25 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
       </div>
     </section>
 
-    <div class="schluss">
-      <h2>Beginnen Sie mit einem kleinen Schritt.</h2>
-      <p class="unterzeile">Schauen Sie sich das Beispiel an, ohne etwas einzugeben.</p>
-      <div class="wege">
-        <a class="knopf zweit" href="${BEISPIEL}">Beispiel ansehen</a>
-        <a class="knopf zweit" href="#holen">App holen</a>
-      </div>
-    </div>
     </div>
 
-    <!-- ═══ B · Pass von oben auf Papier, vor dem Fuss (Höhenlinien, 10.11.2026) ═══ -->
-    <figure class="pass-band pass-band-karte">
-      <img src="/vorstellung/pass-karte-papier.svg" alt="" width="1400" height="650" loading="lazy" decoding="async">
-      <figcaption class="rahmen quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
-    </figure>
+    <!-- ═══ N · Schluss auf dem Pass von oben (Papier): «Beispiel ansehen» am Fuss der Kehren, wo der Weg beginnt,
+         «App holen» an der Passhöhe, wo man ankommt. Beide Punkte sind echt (Karte aus swissALTI3D und OpenStreetMap). ═══ -->
+    <section class="schluss-karte" aria-labelledby="t-schluss">
+      <div class="schluss-bild">
+        <div class="rahmen schluss-text">
+          <h2 id="t-schluss">Beginnen Sie mit einem kleinen Schritt.</h2>
+          <p class="unterzeile">Schauen Sie sich das Beispiel an, ohne etwas einzugeben.</p>
+        </div>
+        <div class="schluss-flaeche">
+          <img class="papier-linien" src="/vorstellung/pass-karte-papier.svg" alt="" width="1400" height="650" loading="lazy" decoding="async">
+          <span class="schluss-punkt" style="--x:43.6%; --y:76.5%; --xh:39.7%" aria-hidden="true"></span>
+          <a class="knopf zweit am-punkt" style="--x:43.6%; --y:76.5%; --xh:39.7%" href="${BEISPIEL}">Beispiel ansehen<span class="unsichtbar"> — hier unten beginnt der Weg</span></a>
+          <a class="knopf zweit am-punkt" style="--x:57.8%; --y:26.6%; --xh:62.6%" href="#holen">App holen<span class="unsichtbar"> — oben an der Passhöhe</span></a>
+        </div>
+      </div>
+      <p class="rahmen quelle">Höhen © swisstopo · Strasse © OpenStreetMap</p>
+    </section>
   </main>
 
   <!-- ═══ D/E · Fuss: Marke · Entdecken · Rechtliches, darunter die Vertrauenszeile ═══ -->

@@ -136,13 +136,13 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     expect(svg).not.toMatch(/<script|href=/);   // reines Bild, nichts Ausführbares, nichts Nachgeladenes
   });
 
-  it('Vier Höhenlinien-Bilder (10.11. abends): C+A nach Kehre 7, D vor «App holen», B vor dem Fuss, je mit Quelle', () => {
+  it('Vier Höhenlinien-Bilder (10.11. abends): C+A nach Kehre 7, D in «App holen» (O), B trägt den Schluss (N), je mit Quelle', () => {
     const lage = (f) => koerper.indexOf(`src="/vorstellung/${f}"`);
     expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
     expect(lage('pass-karte.svg')).toBeGreaterThan(lage('pass-blick.svg'));
-    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('id="atlas"'));
-    expect(koerper.indexOf('id="holen"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
-    expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('class="schluss"'));
+    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('id="t-holen"'));
+    expect(koerper.indexOf('class="holen"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
+    expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('id="t-schluss"'));
     expect(koerper.indexOf('<footer')).toBeGreaterThan(lage('pass-karte-papier.svg'));
     for (const f of ['pass-blick.svg', 'pass-blick-papier.svg', 'pass-karte-papier.svg']) {
       const svg = fs.readFileSync(path.join(WURZEL, 'public/vorstellung', f), 'utf8');
@@ -337,6 +337,35 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   it('K · unter 960 px steht der Hero in einer Spalte', () => {
     const tablet = stil.slice(stil.indexOf('@media (max-width:960px)'));
     expect(tablet.slice(0, tablet.indexOf('\n    }'))).toContain('.pass{ grid-template-columns:1fr;');
+  });
+
+  // Zweite Runde (Stebler Studios «Ja, N bis P so», 10.11.2026)
+  it('N · Schluss auf der Karte: «Beispiel ansehen» am Fuss der Kehren, «App holen» an der Passhöhe, deckend', () => {
+    const schluss = html.slice(html.indexOf('<section class="schluss-karte"'), html.indexOf('</section>', html.indexOf('<section class="schluss-karte"')));
+    expect(schluss).toMatch(/style="--x:43\.6%; --y:76\.5%; --xh:39\.7%" href="[^"]*">Beispiel ansehen/);
+    expect(schluss).toMatch(/style="--x:57\.8%; --y:26\.6%; --xh:62\.6%" href="#holen">App holen/);
+    expect(stil).toMatch(/\.knopf\.am-punkt\{[^}]*background:var\(--flaeche\)/);
+    expect(schluss).not.toContain('knopf haupt');   // ein Hauptknopf je Seite, und der steht im Hero
+    // Passhöhe in der Karte (viewBox 1 1 278 128) liegt bei 161,6 | 35,1 → 57,8 % | 26,6 %
+    const karte = fs.readFileSync(path.join(WURZEL, 'public/vorstellung/pass-karte-papier.svg'), 'utf8');
+    expect(karte).toContain('<circle cx="161.6" cy="35.1"');
+  });
+
+  it('O · App holen: drei Geräte als Auswahl auf dem Blick, nur die gewählte Anleitung sichtbar, ohne Skript', () => {
+    const holen = html.slice(html.indexOf('<section id="holen"'), html.indexOf('</section>', html.indexOf('<section id="holen"')));
+    expect(holen.match(/<input type="radio" name="geraet"/g)).toHaveLength(3);
+    expect(holen).toContain('<input type="radio" name="geraet" id="g1" class="unsichtbar" checked>');
+    for (const n of ['iPhone und iPad', 'Android', 'Computer']) expect(holen).toMatch(new RegExp(`<label for="g\\d"[^>]*><svg[^>]*>.*?</svg>${n}</label>`));
+    expect(stil).toContain('.holen .geraet{ display:none }');
+    for (const i of [1, 2, 3]) expect(stil).toContain(`#g${i}:checked ~ .holen .t${i}{ display:block }`);
+    expect(holen).not.toMatch(/apple|android-logo/i);
+  });
+
+  it('P · die Schicht neben dem Stock trägt die Kapitelfarbe, unter dem Text mindestens 74 %', () => {
+    expect(stil).toContain("@property --ton{ syntax:'<color>'; inherits:true; initial-value:#121210 }");
+    for (let i = 0; i < 7; i++) expect(stil).toContain(`.reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`);
+    expect(stil).toContain('color-mix(in srgb, var(--ton) 74%, transparent) 46%');
+    expect(handy).toContain('background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent)');
   });
 
   it('Browserleiste hell nach der Seitenfarbe, dunkel nach Granit', () => {
