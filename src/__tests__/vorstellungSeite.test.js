@@ -178,13 +178,15 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     KAPITEL.forEach((k, i) => expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`));
   });
 
-  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen statt einer Nummer, leicht schräg', () => {
+  it('B/D · jeder Stocknagel ist ein Aufkleber mit dem Kapitel-Zeichen, flach im Passbild-Stil (PROBE 10.11.: rund, gerade, ohne Schatten und Wölbung)', () => {
     const naegel = html.split('<g class="nagel">').slice(1).map((t) => t.split('<g class="nagel-dreh"')[0].split('</svg>\n')[0]);
     expect(naegel).toHaveLength(7);
     for (const n of naegel) {
-      expect(n).toMatch(/^<g transform="rotate\(-?\d+ 60 \d+\)">/);
+      expect(n).toMatch(/^<g transform="rotate\(0 60 \d+\)">/);
       expect(n).toMatch(/<g class="bild" style="color:var\(--k\d\)"><svg x="42"/);
-      expect(n).toContain('<g class="woelbung">');
+      expect(n).toMatch(/<g class="schild"[^>]*><circle /);
+      expect(n).not.toContain('woelbung');
+      expect(n).not.toContain('unterschatten');
       expect(n).not.toContain('<text x="60"');
     }
   });

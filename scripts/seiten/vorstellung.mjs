@@ -277,13 +277,12 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
        (vorne breit, an der Seite schmal, hinten weg). Kein Heranfahren, kein Zoom. */
     .reise-stock{ position:absolute; left:50%; top:0; height:100%; width:auto; aspect-ratio:120/700; overflow:visible;
       margin-left:calc(100vh * -120 / 700 / 2); margin-left:calc(100svh * -120 / 700 / 2) }
-    .reise-stock .holz{ fill:#CDA977 } .reise-stock .schatten{ fill:#A8855A } .reise-stock .licht{ fill:#E2C79C }
-    .reise-stock .maser rect{ fill:#8E6C42; opacity:.5 }
-    .reise-stock .riemen{ fill:#7A4A3A } .reise-stock .spitze{ fill:#5A5650 }
+    /* PROBE Passbild-Stil: zwei flache Töne wie die Hänge im Passbild, keine Maserung, kein Glanz */
+    .reise-stock .holz{ fill:#C9B48E } .reise-stock .schatten{ fill:#A8936E }
+    .reise-stock .riemen{ fill:#486054 } .reise-stock .spitze{ fill:#546C60 }
+    /* (Riemen und Spitze: oben in der Probe neu gesetzt) */
     .nagel{ transform-box:fill-box; transform-origin:50% 50% }
-    .nagel .schild > *{ fill:#FBFBFA; stroke:inherit; stroke-width:3.5 }
-    .nagel .unterschatten > *{ fill:rgba(0,0,0,.28) }
-    .nagel .woelbung > *{ fill:url(#woelbung); pointer-events:none } 
+    .nagel .schild > *{ fill:#FCF0E4; stroke:inherit; stroke-width:3 }
     /* Auf jedem Stocknagel das Kapitel-Zeichen der App in der Kapitelfarbe, auf heller Plakette mit farbigem Rand
        (wie ein emailliertes Stockschild). Weiss auf Farbe ginge nicht: der Fünfliber hat weisse Details. */
     .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
@@ -324,8 +323,8 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-text{ max-width:28rem; text-shadow:0 1px 14px rgba(0,0,0,.45) }
     /* Statt einer grossen Zahl steht gross das Kapitel-Zeichen der App (wie Fujis grosse Höhenzahl): in der Kapitelfarbe
        auf heller Plakette, Ecke 16 px (Karte, Brand Book §7a C). */
-    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; padding:14px; border-radius:16px; background:#FBFBFA; color:var(--farbe);
-      margin:0 0 16px }
+    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; color:var(--farbe); margin:0 0 16px;   /* PROBE: ohne Kachel, schmaler Papierrand ums Zeichen (sonst verschwindet Behörden-Grau im dunklen Bild) */
+      filter:drop-shadow(0 0 1px #FBFBFA) drop-shadow(0 0 1px #FBFBFA) drop-shadow(0 0 1px #FBFBFA) }
     .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
     .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
     .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
@@ -359,7 +358,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-stock{ left:auto; right:6px; margin-left:0; height:86%; top:7% }
       .reise-linie{ display:none }
       .reise-station{ align-items:center; padding:10vh 76px 10vh 16px }
-      .reise-gross{ width:64px; padding:8px; border-radius:12px; margin-bottom:12px }
+      .reise-gross{ width:64px; margin-bottom:12px }
       /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene dunkle Fläche (78 %, ohne Milchglas). */
       .reise-text{ background:rgba(20,20,18,.78); padding:18px 18px 20px; border-radius:16px }
       .reise-text p{ font-size:16px }
@@ -548,9 +547,8 @@ function reiseLinie() {
 const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
 // D · Die Plaketten als Aufkleber, wie man sie an einen Wanderstock klebt: verschiedene Formen, leicht schräg,
 // weisser Rand, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund). Darauf das Kapitel-Zeichen der App.
-const STICKER = [
-  ['schild', -7], ['rund', 5], ['kreis', -3], ['schild', 8], ['oval', -6], ['rund', 4], ['kreis', -2],
-];
+// PROBE Passbild-Stil (10.11. abends): alle gleich, rund, gerade — flach wie das Passbild, ohne Schatten und Wölbung.
+const STICKER = KAPITEL.map(() => ['kreis', 0]);
 function stickerForm(form, y) {
   const m = y + 30;
   if (form === 'kreis') return `<circle cx="60" cy="${m}" r="27"/>`;
@@ -564,20 +562,13 @@ function reiseStock() {
     const [form, neigung] = STICKER[i];
     const f = stickerForm(form, y);
     return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><g transform="rotate(${neigung} 60 ${y + 30})">`
-      + `<g class="unterschatten" transform="translate(1.5 2.5)">${f}</g>`
       + `<g class="schild" style="stroke:var(--k${i})">${f}</g>`
       + `<g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="42" y="${y + 12}" width="36" height="36" `)}</g>`
-      + `<g class="woelbung">${f}</g></g></g></g>`;
+      + `</g></g></g>`;
   }).join('');
-  const maser = [0, 1, 2, 3, 4, 5, 6, 7].map((j) => `<rect x="${(60 + Math.sin(j * Math.PI / 4 + 0.3) * 20).toFixed(1)}" y="8" width="1.4" height="664" rx=".7"/>`).join('');
   return `<svg class="reise-stock" viewBox="0 0 120 700" aria-hidden="true" focusable="false">
-            <defs><linearGradient id="woelbung" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stop-color="#000" stop-opacity=".2"/><stop offset=".38" stop-color="#fff" stop-opacity=".22"/>
-              <stop offset=".62" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient></defs>
             <rect class="schatten" x="36" y="0" width="48" height="680" rx="24"/>
             <rect class="holz" x="36" y="0" width="40" height="680" rx="20"/>
-            <g class="maser">${maser}</g>
-            <rect class="licht" x="44" y="10" width="7" height="660" rx="3.5"/>
             <path class="spitze" d="M46 678 h28 l-14 22 z"/>
             <rect class="riemen" x="30" y="24" width="60" height="42" rx="8"/>
             ${naegel}
