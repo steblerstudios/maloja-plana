@@ -74,7 +74,8 @@ describe('App pfadneutral: Service Worker folgt seinem Scope', () => {
 describe('App pfadneutral: keine festen Wurzel-Pfade im App-Code', () => {
   // Strings in JS schreibt Vite nicht um. Ein fester `/sw.js`, `/icon-…`, `/vendor/` oder
   // `/fonts/` bräche unter `/app/`. tokens.css und index.html schreibt Vite selbst um.
-  const MUSTER = /['"`]\/(sw\.js|icon-\d|vendor\/|fonts\/|theme-init\.js|manifest\.json)/;
+  // Seit PR 2 auch jede Datei mit Endung direkt unter der Wurzel ('/green-hosting-badge.png').
+  const MUSTER = /['"`]\/((sw\.js|icon-\d|vendor\/|fonts\/|theme-init\.js|manifest\.json)|[\w.-]+\.(png|svg|ico|json|woff2|js|webp)['"`])/;
   const dateien = [];
   const sammeln = (ordner) => {
     for (const name of readdirSync(ordner)) {

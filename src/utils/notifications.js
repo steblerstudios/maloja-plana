@@ -13,6 +13,16 @@ import { inDays } from './helpers.js';
 const BASIS = import.meta.env.BASE_URL || '/';
 const SW_PATH = BASIS + 'sw.js';
 
+// Meldet Service Worker ab, deren Scope genau die Wurzel der Origin ist. Angaben in
+// localStorage und IndexedDB bleiben unberührt. Gibt die Zahl der Abmeldungen zurück.
+export const altenWurzelSwAbmelden = async (sw = navigator.serviceWorker, ursprung = location.origin) => {
+  if (!sw || typeof sw.getRegistrations !== 'function') return 0;
+  const wurzel = ursprung + '/';
+  const alte = (await sw.getRegistrations()).filter((r) => r.scope === wurzel);
+  await Promise.all(alte.map((r) => r.unregister()));
+  return alte.length;
+};
+
 // ─── Service Worker Registration ───────────────────────────
 export const registerServiceWorker = async () => {
   if (!('serviceWorker' in navigator)) {
@@ -28,6 +38,11 @@ export const registerServiceWorker = async () => {
       updateViaCache: 'none',
     });
     console.info('[Notifications] SW registered:', registration.scope);
+
+    // Plan «App nach /app/», PR 2: Der Service Worker aus der Zeit vor dem Umzug hat den
+    // Scope `/` und würde die Website abfangen. Unter /app/ meldet die App ihn ab. (Wer
+    // zuerst die Wurzel öffnet, bekommt dafür den Abschieds-SW unter /sw.js.)
+    if (BASIS !== '/') altenWurzelSwAbmelden().catch(() => {});
 
     // K59: Was diese Seite vor der Kontrolle durch den Service Worker geladen hat
     // (Haupt-Skript, Stylesheet, Sprache), liegt sonst nicht im Offline-Speicher.

@@ -17,6 +17,12 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 10.11.2026, 17:10 — `73caaf6e` ist LIVE: Website auf `/`, App unter `/app/`** (0.1.49-beta, gebaut 17:01:49, Deploy Stebler Studios). Überholt alle Stände darunter.
+> - Dazwischen live: `a1e0b59d` (14:48/14:53: UVG-Satz #817, Sozialhilfe 2025 #819, `.htaccess`-Abschrift #816). `deploy.sh` prüft die Freigabe-Marke seit #821 selbst.
+> - Stapel #776 #779 #790 #804 #809 als #823 zusammengeführt (Entscheid «heute ganz live» hob den 26.10.-Entscheid auf). Umzug belegt: lokal im Browser (alter SW weg, Angaben/IndexedDB/Teilen-Cache/Beta-Zugang bleiben), auf Stage mit iPhone, und live auf dem echten iPhone (Angaben da).
+> - Server-`.htaccess` von Hand: POST `^(app/)?teilen-empfang/?$` → 303 `/app/` (belegt). **Stage hat keine `.htaccess`** — dort immer `https://` öffnen, sonst lehnt die Code-Wand jeden Code ab (kein Web-Crypto ohne sichere Verbindung).
+> - Offen: a11y Plakettenkontrast + «KI-gemalt» · Video · Zugangscode in der FAQ · Postanschrift Impressum · Sozialberatung · Version/Tag.
+>
 > 🧾 **Nachtrag 10.11.2026, 13:25 — `346172d9` ist LIVE (0.1.49-beta, Version nicht erhöht), gebaut 13:22, Deploy Stebler Studios.** Überholt alle Stände darunter.
 > - Vorher Predeploy-Nachzug auf `ad40cd22` (21 Merges seit Marke `dff64ec7`): ein Blocker — «Alle Daten löschen» liess den
 >   Teilen-Cache `maloja-geteilt` (#782) stehen → behoben mit #813 (dazu DSE 5 Sprachen, Zug Wohnsitz/Arbeitsplatz + Vermögen je Kind).
