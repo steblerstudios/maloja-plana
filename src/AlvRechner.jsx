@@ -117,7 +117,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   // B (Kapitel 5): die Ausnahmen zur Beitragszeit aufklappbar statt als langer Absatz vor dem Formular.
   const befreiung = React.createElement('details', { 'data-teil': 'befreiung', style: { margin: space.xs + 'px 0 0', maxWidth: '420px' } },
-    React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('alv.befreiungTitel')),
+    React.createElement('summary', { style: { cursor: 'pointer', display: 'list-item', minHeight: '44px', boxSizing: 'border-box', padding: '12px 0', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('alv.befreiungTitel')),
     React.createElement('p', { style: { ...hinweis, fontSize: text.sm, margin: '0 0 ' + space.xs + 'px' } }, t('alv.befreiungText')));
 
   const unter12Ergebnis = unter12 && React.createElement(React.Fragment, null,

@@ -49,7 +49,8 @@ export const AussteuerungTeil = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('aussteuerung.step4Title'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('aussteuerung.step4Text')),
-      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('aussteuerung.step4Uel')),
+      // Kapitel 5, S7 (10.11.2026): der Absatz war rund 1 600 Zeichen lang — in zwei Absätze geteilt (\n\n im Text).
+      ...String(t('aussteuerung.step4Uel')).split('\n\n').map((absatz, i) => React.createElement('p', { key: 'uel' + i, style: { ...s.stepText, marginTop: '8px' } }, absatz)),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step4LinkSoz'), onClick: () => onNavigate('sozialhilfe') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step4LinkIpv'), onClick: () => onNavigate('premium') })
     ),
