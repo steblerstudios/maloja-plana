@@ -187,5 +187,10 @@ siebenmal neu entschieden werden:
    Steuerrechner Fortbildung 10 000 statt 13 000, 3a unbegrenzt · F4 Sozialhilfe ohne Folgen für B/L/C · F5 «BVG übernommen»,
    Erbschafts-Satz. Dazu F6–F11, Gestaltung A–C + Felder < 44 px, Sprache S1–S7. ✅ **09.11.: alles wie empfohlen**
    (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-3-finanzen` (von `main`).
+   **Kapitel 5 · Ausbildung & Arbeit** (10.11.): Bild [kapitel-5-ausbildung.html](../design/kapitel-5-ausbildung.html). Hoch: L1
+   ALV-Rechner ohne Alter 400 statt 200 Taggelder (AVIG Art. 27 Abs. 5bis). Mittel: L2–L7 (Betrag ohne Beitragszeit, brutto,
+   Kinder ab 18, Einstelltage, Abredeversicherung-Frist), A1 AHV-Akonto für Selbständige, A2 Probezeit-Verlängerung. Gestaltung
+   A–C (Zahlen-Platzhalter, langer Absatz, «Noch eine Angabe nötig» ohne Namen), Sprache S1–S7. Stundenlohn mit #802 erledigt.
+   **Offen: Entscheid Stebler Studios.**
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
