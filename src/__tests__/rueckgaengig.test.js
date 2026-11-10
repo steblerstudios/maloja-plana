@@ -26,6 +26,8 @@ const { useRueckgaengig, wiederEinsetzen, nochEntfernt, RUECKGAENGIG_MS } = awai
 const { RueckgaengigMeldung } = await import('../components/RueckgaengigMeldung.jsx');
 
 const neu = () => { zustand.slots = []; zustand.effekte = []; };
+// Der Hook läuft hier bewusst ausserhalb einer Komponente — der Ersatz oben spielt sie nach.
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const render = () => { zustand.i = 0; return useRueckgaengig(); };
 
 describe('wiederEinsetzen', () => {
