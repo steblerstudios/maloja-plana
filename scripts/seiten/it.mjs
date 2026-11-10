@@ -166,7 +166,7 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'Il diritto che nessuno può perdere',
+        titel: 'Diritto all’aiuto in situazioni di bisogno', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Indipendentemente da tutto quanto precede, la <strong>Costituzione federale, articolo 12</strong>, sancisce il diritto all’aiuto in situazioni di bisogno: chi è nel bisogno e non è in grado di provvedere a sé stesso ha diritto d’essere aiutato e assistito e di ricevere i mezzi indispensabili per un’esistenza dignitosa.',
           'Questo diritto spetta a ogni persona in Svizzera. Non è la stessa cosa dell’aiuto sociale e copre meno — ma è il limite inferiore al di sotto del quale non si può scendere.',
@@ -227,7 +227,7 @@ export const SEITEN = [
         titel: 'Che cosa viene dedotto dal reddito',
         absaetze: [
           'Non viene tassato il salario, bensì il <strong>reddito imponibile</strong> — ossia ciò che resta dopo le deduzioni ammesse. Ne fanno parte, a seconda della situazione, le spese professionali, i contributi al pilastro 3a, le spese di malattia oltre una soglia, le deduzioni per figli e per la loro custodia e altre ancora.',
-          'Quali deduzioni siano ammesse e in quale misura differisce tra Confederazione e Cantone e tra i Cantoni. È proprio qui che si perde di più — non per indicazioni errate, bensì per deduzioni che nessuno ha iscritto.',
+          'Quali deduzioni siano ammesse e in quale misura differisce tra Confederazione e Cantone e tra i Cantoni. È spesso qui che si perde denaro — non per indicazioni errate, bensì per deduzioni che nessuno ha iscritto.',
         ],
       },
     ],

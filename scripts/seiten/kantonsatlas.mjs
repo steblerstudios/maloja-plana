@@ -22,8 +22,11 @@
 //   • Befunde (E3) als eigener Abschnitt, nur belegte (siehe BEFUNDE_ABSCHNITT).
 //
 // Regeln aus dem Atlas-Entscheid vom 24.10.2026: keine Rangliste, keine
-// Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler
+// Wertungsfarben. Jede Karte hat eine einzige Farbe in vier Stufen; dunkler (im dunklen Modus: heller)
 // heisst «höhere Zahl», nicht «besser» oder «schlechter».
+// Welche Farbe: die Frucht des Lebensbereichs (Brand Book, farb-und-daten-system.md Regel 3), seit
+// 09.11.2026. Ausnahme Steuern und Familie: Aprikose liegt auf Gold («finanziell enger»), Kirsche auf
+// Rosé (harte Schwelle); dort gilt Regel 1 vor Regel 3, die Karten nehmen Zwetschge (Behörden).
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { readFileSync } from 'node:fs';
@@ -39,6 +42,30 @@ const GEO = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.ur
 for (const k of KANTONE) if (!GEO.cantons[k]) throw new Error(`Kantonsatlas-Karte: ${k} fehlt in paths.json`);
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// ─── Farbe je Karte: die Frucht des Lebensbereichs ──────────────────────────
+// Vier Stufen je Frucht, gleicher Farbton, nach Leuchtdichte gleichmässig verteilt (Nachbarn hell
+// etwa 1,66 · 1,66 · 1,9, dunkel etwa 2,2 · 2,2 · 1,9). Stufe 3 der Heidelbeere ist --heidel.
+// Die Stufen der anderen Früchte haben dieselbe Leuchtdichte wie die der Heidelbeere, damit alle
+// Karten gleich gelesen werden. Wächter: src/__tests__/atlasStufenAbstand.test.js
+export const KARTEN_FRUCHT = {
+  praemie: 'heidelbeere', lastNachIpv: 'heidelbeere', // Versicherungen
+  miete: 'birne', leer: 'birne',                      // Wohnen
+  alq: 'haselnuss',                                   // Arbeit
+  el: 'traube',                                       // Vorsorge
+  sozialhilfe: 'zwetschge',                           // Behörden
+  steuer: 'zwetschge', kinderzulage: 'zwetschge', kita: 'zwetschge', // Ausnahme, siehe Kopf
+};
+export const FRUCHT_STUFEN = {
+  heidelbeere: { hell: ['#D3DEE9', '#98AFC4', '#6787A5', '#3D5A76'], dunkel: ['#2E3742', '#576A7D', '#86A6C2', '#D3E0EC'] },
+  birne:       { hell: ['#D6E0CA', '#A1B387', '#748C4B', '#4A5E1F'], dunkel: ['#2F391E', '#5C6E3B', '#90AC5D', '#D6E3C3'] },
+  haselnuss:   { hell: ['#E6DBCE', '#BEA98F', '#9C7F57', '#6D522D'], dunkel: ['#3F3426', '#78654A', '#BB9D73', '#E9DCCB'] },
+  traube:      { hell: ['#E0DBE8', '#B3A7C2', '#8D7CA2', '#605174'], dunkel: ['#393440', '#6E647B', '#AB9BC0', '#E2DCEB'] },
+  zwetschge:   { hell: ['#D9DDE2', '#A5ADB8', '#7A8593', '#4F5966'], dunkel: ['#32373D', '#616874', '#98A4B5', '#DADFE6'] },
+};
+const stufenVars = (s) => s.map((c, i) => `--k${i + 1}:${c}`).join('; ');
+const FRUCHT_CSS_HELL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `    .atlas .f-${f}{ ${stufenVars(s.hell)} }`).join('\n');
+const FRUCHT_CSS_DUNKEL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `      .atlas .f-${f}{ ${stufenVars(s.dunkel)} }`).join('\n');
 
 // ─── Stufen: vier gleich grosse Gruppen von Kantonen ────────────────────────
 // Nach dem Wert sortiert, in Viertel geteilt. Gleiche Werte bleiben in
@@ -64,6 +91,8 @@ export function stufen(key) {
 function karte(ctx, key, { legende, nachher = '' }) {
   ctx.abb += 1;
   const E = EBENEN[key];
+  const frucht = KARTEN_FRUCHT[key];
+  if (!FRUCHT_STUFEN[frucht]) throw new Error(`Kantonsatlas: Karte ${key} hat keine Frucht (KARTEN_FRUCHT)`);
   const { stufe, spannen } = stufen(key);
   const id = `karte-${key.toLowerCase()}`;
   const erste = !ctx.kartenDefs;
@@ -80,18 +109,18 @@ function karte(ctx, key, { legende, nachher = '' }) {
   const titel = `Karte: ${E.titel}`;
   const tiefK = KANTONE.find((k) => E.wert(k) === spannen[0].min);
   const hochK = KANTONE.find((k) => E.wert(k) === spannen[spannen.length - 1].max);
-  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von hell (tiefere Zahl) bis dunkel (höhere Zahl). Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
+  const beschreibung = `Die 26 Kantone, eingefärbt in ${spannen.length} Stufen nach ${E.titel} (${E.einheit}), von den tieferen zu den höheren Zahlen. Am tiefsten im Kanton ${de.cantons[tiefK]} mit ${E.fmt(spannen[0].min)}, am höchsten im Kanton ${de.cantons[hochK]} mit ${E.fmt(spannen[spannen.length - 1].max)}. Die Werte jedes Kantons stehen in der Tabelle bei der Karte.`;
   const svg = `<svg viewBox="0 0 ${GEO.w} ${GEO.h}" role="img" aria-labelledby="${id}-t ${id}-d" focusable="false">` +
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
   const schweiz = E.ch != null ? `Ganze Schweiz: ${E.fmt(E.ch)}` : '';
   return `
         <figure class="abb atlas" id="${id}">
-          <div class="abb-karte">
+          <div class="abb-karte f-${frucht}">
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
-            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', hell' : i === spannen.length - 1 ? ', dunkel' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
+            <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', tiefste Zahlen' : i === spannen.length - 1 ? ', höchste Zahlen' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
             ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
           <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
@@ -105,18 +134,39 @@ const werteTabelle = (tab, text) => `
           <summary>${text}</summary>${BLOECKE_VERGLEICH[`TAB:${tab}`]()}
         </details>`;
 
+// Legenden der Karten, die auch die App zeigt (scripts/app-verstehen.mjs, 09.11.2026): eine Quelle für
+// Jahr, Rahmung und Belege, damit Seite und App nie Verschiedenes sagen.
+export const LEGENDE = {
+  praemie: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+  lastNachIpv: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+  steuer: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
+  miete: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
+  alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
+  sozialhilfe: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]',
+  el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
+};
+
+// Stufenfarben je Frucht, hell und dunkel, mit der Farbe der Seen. Im dunklen Modus ist die höchste Stufe
+// die hellste. Aus FRUCHT_STUFEN erzeugt; auch die App liest sie (über scripts/app-verstehen.mjs), nicht
+// von Hand kopiert. Welche Frucht eine Karte trägt: KARTEN_FRUCHT.
+const SEE = { hell: '#F2F2F0', dunkel: '#22211F' };
+const alsSatz = (s, see) => ({ 1: s[0], 2: s[1], 3: s[2], 4: s[3], see });
+export const STUFEN_FARBEN = Object.fromEntries(Object.entries(FRUCHT_STUFEN).map(([f, s]) =>
+  [f, { hell: alsSatz(s.hell, SEE.hell), dunkel: alsSatz(s.dunkel, SEE.dunkel) }]));
+const cssStufen = (f) => `--k1:${f[1]}; --k2:${f[2]}; --k3:${f[3]}; --k4:${f[4]}; --k-see:${f.see}`;
+
 const BLOECKE_ATLAS = {
   'FIG:praemie': (ctx) => karte(ctx, 'praemie', {
-    legende: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
+    legende: LEGENDE.praemie,
     nachher: werteTabelle('vpraemie', 'Prämie je Kanton als Tabelle') }),
   'FIG:lastnachipv': (ctx) => karte(ctx, 'lastNachIpv', {
-    legende: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+    legende: LEGENDE.lastNachIpv,
     nachher: werteTabelle('vlast', 'Prämienlast vor und nach Verbilligung als Tabelle') }),
   'FIG:steuer': (ctx) => karte(ctx, 'steuer', {
-    legende: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
+    legende: LEGENDE.steuer,
     nachher: werteTabelle('vsteuer', 'Steuern je Kanton als Tabelle, mit der Spanne der Gemeinden') }),
   'FIG:miete': (ctx) => karte(ctx, 'miete', {
-    legende: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
+    legende: LEGENDE.miete,
     nachher: werteTabelle('vmiete', 'Miete je Kanton als Tabelle') }),
   'FIG:leer': (ctx) => karte(ctx, 'leer', {
     legende: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
@@ -128,12 +178,12 @@ const BLOECKE_ATLAS = {
     legende: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
     nachher: werteTabelle('vkita', 'Kita-Abzug je Kanton als Tabelle') }),
   'FIG:alq': (ctx) => karte(ctx, 'alq', {
-    legende: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
+    legende: LEGENDE.alq,
     nachher: werteTabelle('valq', 'Arbeitslosenquote je Kanton als Tabelle') }),
   'FIG:sozialhilfe': (ctx) => karte(ctx, 'sozialhilfe', {
-    legende: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]' }),
+    legende: LEGENDE.sozialhilfe }),
   'FIG:el': (ctx) => karte(ctx, 'el', {
-    legende: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
+    legende: LEGENDE.el,
     nachher: werteTabelle('vunterstuetzung', 'Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle') }),
 };
 
@@ -232,8 +282,8 @@ export const KANTONSATLAS = {
       id: 'lesen',
       titel: '1. Wie die Karten zu lesen sind',
       html: `
-        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren. Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
-        <p class="merke"><strong>Kurz gesagt:</strong> Dunkel heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
+        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Die Farbe einer Karte zeigt nur das Thema, wie in Maloja überall: Blau für Versicherungen, Grün für Wohnen, Braun für Arbeit, Violett für Vorsorge, Grau für das, was über ein Amt läuft. <span class="nur-hell">Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren.</span><span class="nur-dunkel">Im dunklen Modus sind die Kantone mit den tieferen Zahlen dunkel, die mit den höheren hell.</span> Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
+        <p class="merke"><strong>Kurz gesagt:</strong> <span class="nur-hell">Dunkel</span><span class="nur-dunkel">Hell</span> heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>`,
     },
     BRILLEN_ABSCHNITT,
@@ -316,10 +366,17 @@ export const KANTONSATLAS = {
   // Belegstellen der Karte stehen in der Legende jeder Abbildung, ausser der
   // Kartengrundlage: die gehört zu allen Karten und steht im ersten Abschnitt.
   stilZusatz: `
-    /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
-    :root{ --k1:#D3DEE9; --k2:#B3C4D6; --k3:#6787A5; --k4:#3D5A76; --k-see:#F2F2F0 }
+    /* ─── Kantonsatlas: je Karte die Frucht ihres Lebensbereichs, vier Stufen ─── */
+    /* :root trägt die Heidelbeere als Grundwert; jede Karte setzt ihre Frucht (KARTEN_FRUCHT). */
+    :root{ ${cssStufen(STUFEN_FARBEN.heidelbeere.hell)} }
+${FRUCHT_CSS_HELL}
+    /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
+       damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
+    .nur-dunkel{ display:none }
+    @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
-      :root{ --k1:#2E3742; --k2:#4A6380; --k3:#86A6C2; --k4:#C6D6E5; --k-see:#22211F }
+      :root{ ${cssStufen(STUFEN_FARBEN.heidelbeere.dunkel)} }
+${FRUCHT_CSS_DUNKEL}
     }
     .atlas .abb-bild svg{ max-height:420px }
     .atlas svg use{ stroke:var(--leise); stroke-width:.6 }

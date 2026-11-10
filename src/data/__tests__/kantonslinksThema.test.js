@@ -30,10 +30,10 @@ describe('Kantonale Links: Sozialdienst ist Sozialhilfe, nicht IPV', () => {
   }
 });
 
-// Benannte Ausnahme, keine weichere Regel: Diese Felder sind mit curl nicht messbar
-// (VS: jeder Pfad 404, im Browser am 09.11. «Wartungsarbeiten» · BL: Cloudflare-Schranke).
-// Ihr Prüfdatum ist `null`, bis jemand sie im Browser geprüft hat. Die Liste darf nur schrumpfen.
-const NICHT_GEPRUEFT = ['BL.ipv', 'VS.ipv', 'VS.sozialdienst'];
+// Benannte Ausnahme, keine weichere Regel: Felder, die mit curl nicht messbar sind, tragen `null`,
+// bis jemand sie im Browser geprüft hat. Die Liste darf nur schrumpfen. Seit 09.11.2026 abends
+// leer: VS war tagsüber in Wartung, BL.ipv war tot und zeigt jetzt auf die SVA BL.
+const NICHT_GEPRUEFT = [];
 
 describe('Kantonale Links: Prüfdatum je Link', () => {
   for (const k of KANTONE) {
@@ -53,6 +53,16 @@ describe('Kantonale Links: Prüfdatum je Link', () => {
       if ((CANTONAL_LINKS_GEPRUEFT[k] || {})[feld] === null) ohne.push(`${k}.${feld}`);
     }
     expect(ohne.sort()).toEqual([...NICHT_GEPRUEFT].sort());
+  });
+
+  it('kein ipv- oder sozialdienst-Link hängt an einer Jahreszahl', () => {
+    // Anlass 09.11.2026: GE und JU zeigten auf Seiten «…-2026». Ab Januar führen solche Links
+    // auf die Fristen und Gruppen des Vorjahres, ohne dass es jemand merkt.
+    for (const k of KANTONE) {
+      for (const feld of ['ipv', 'sozialdienst']) {
+        expect(CANTONAL_LINKS[k][feld], `${k}.${feld}`).not.toMatch(/(^|[^0-9])20[0-9]{2}([^0-9]|$)/);
+      }
+    }
   });
 
   it('das Prüfdatum liegt nicht in CANTONAL_LINKS selbst (die App zeigt jedes Feld dort als Link an)', () => {
