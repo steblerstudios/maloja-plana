@@ -33,7 +33,7 @@ describe('L1 · Wegzug mit Ausländerausweis', () => {
   it('nennt die Frist des Bundes, das Erlöschen und die C-Aufrechterhaltung vorher', () => {
     expect(text).toContain('spätestens 14 Tage vor der Ausreise ab (VZAE Art. 15)');
     expect(text).toContain('Mit der Abmeldung erlischt Ihre Bewilligung');
-    expect(text).toContain('nur auf Gesuch, das Sie vor der Abmeldung stellen (AIG Art. 61)');
+    expect(text).toContain('das Gesuch muss vor Ablauf von sechs Monaten beim Migrationsamt sein (VZAE Art. 79 Abs. 2)');
   });
   it('sagt nicht mehr, der Kanton regle die Frist für alle', () => {
     expect(text).not.toContain('das Bundesrecht verpflichtet die Kantone nur');
@@ -55,7 +55,7 @@ describe('L1 · Wegzug mit Ausländerausweis', () => {
 
 describe('L5 · Rückforderung der Quellensteuer nur mit Doppelbesteuerungsabkommen', () => {
   it('steht im Text und vor der Frist', () => {
-    expect(t('wegzug.step4Steuer')).toContain('Das gilt nur, wenn ein Doppelbesteuerungsabkommen');
+    expect(t('wegzug.step4Steuer')).toContain('Sie dort im Sinne dieses Abkommens ansässig sind (QStV Art. 19 Abs. 2 Bst. b)');
     expect(t('wegzug.fristRueckHinweis', { date: '1.1.2030' })).toMatch(/^Nur mit Doppelbesteuerungsabkommen:/);
   });
 });
@@ -129,6 +129,9 @@ describe('A2 · Kontrolluntersuchung ab 75 rechnet ab der letzten Untersuchung',
     const quelle = fs.readFileSync(path.resolve(__dirname, '../Fuehrerausweis.jsx'), 'utf8');
     expect(quelle).not.toContain('inDays(730)');
     expect(quelle).toMatch(/frist: \(d\) => plusMonate\(d, 24\)/);
+    // Blocker aus der Rechtsprüfung: der 75. Geburtstag ist kein Startpunkt für «zwei Jahre später».
+    expect(t('fuehrerausweis.kontrolleLabel')).not.toContain('75');
+    expect(t('fuehrerausweis.step3Text')).toContain('kurz nach dem 75. Geburtstag');
   });
 });
 

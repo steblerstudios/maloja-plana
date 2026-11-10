@@ -199,5 +199,15 @@ siebenmal neu entschieden werden:
    C drei Einleitungen. Sprache S1–S7 (rm 146 Texte deutsch, «ruhiger Überblick» in allen neun Intros). Zweig
    `feat/kapitel-6-behoerden` (von `main`), nur Befund, gebaut ist nichts.
    ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig.
+   ✅ **Gebaut** (Zweig `feat/kapitel-6-behoerden`): L1 Wegzug mit Ausländerausweis (Frist 14 Tage vor Ausreise aus
+   demselben Wegzugsdatum wie die AHV-Frist; Bewilligung erlischt, C-Gesuch innert sechs Monaten, VZAE Art. 79) · L2
+   Asyl-Mandat · L3 Ausweis nach VAwG 1.11.2026 · L4 30 Kalendertage · L5 DBA-Bedingung · L6 EU/EFTA, L-Grenze · L7
+   L/N/S · L8 «nicht mehr fahren» · L9 F-Flüchtlinge · A1 Jahrestabelle `data/freiwilligeAhv.js` (870/888) · A2
+   Kontrolluntersuchung ab der letzten Untersuchung · Gestaltung A (Abläufe unter «Passend», mit Pass/Alter gefiltert),
+   B (Stufe 3), C (Intro weg) · K: Steuerjahr bei verlängerter Frist, Betreibungsamt-Feld, Asyl-Quellen, KVV Bst. ebis,
+   DBG Art. 4, BZG Art. 41, OR 324b, Kontrollfahrt, BüG Art. 11 · S5 «ruhig» aus neun Intros, S6 Dokumentenablage.
+   rechts-pruefer am Volltext nach dem Bau eingearbeitet (Blocker: Kontrolluntersuchung nicht ab dem 75. Geburtstag
+   rechnen). Test `kapitel6Behoerden.test.js`. Offen: rm-Übersetzung (S1, auch L2 nur de/fr/it/en), S2 Maskulin in
+   unberührten Texten, S3 Gesetzesangaben ans Satzende, S4 Kürzel ausschreiben, Notpass-Zuschläge.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
