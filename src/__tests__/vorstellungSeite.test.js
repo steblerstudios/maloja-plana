@@ -378,20 +378,22 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   });
 
   // D (Stebler Studios 10.11.2026 spät, «ja D und E»): «Zum Nachlesen» steht auf dem hellen Blick nach Kehre 7.
-  it('D · Zum Nachlesen im hellen Blick wie «App holen»: Kopf auf dem Bild, je Erklärseite eine Wahl mit Kapitel-Zeichen auf der Strasse, darunter nur die gewählte', () => {
+  it('D · Zum Nachlesen im hellen Blick: Kopf auf dem Bild, je Thema (Kapitel) eine Wahl auf der Strasse, Tippen öffnet im Bild die Berichte des Themas', () => {
     const koerper = html.slice(html.indexOf('<body>'));
     const d = html.match(/<section id="nachlesen"[\s\S]*?<\/section>/)[0];
     expect(koerper.indexOf('id="nachlesen"')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
     expect(d).toMatch(/<figure class="bildwahl-blick">\s*<div class="bildwahl-kopf">[\s\S]*?<h2 id="t-nachlesen">Zum Nachlesen\.<\/h2>[\s\S]*?<\/div>\s*<div class="bildwahl-flaeche">\s*<img src="\/vorstellung\/pass-blick-papier\.svg"/);
-    const erwartet = { '/was-steht-mir-zu/': 5, '/praemienverbilligung/': 3, '/sozialhilfe/': 2, '/steuern/': 2, '/krankenkasse/': 3 };
-    Object.entries(erwartet).forEach(([ziel, k], n) => {
-      expect(d, ziel).toMatch(new RegExp(`<label for="n${n + 1}" style="--x:[\\d.]+%; --y:[\\d.]+%; --farbe:var\\(--k${k}\\)"><span class="zeichen" aria-hidden="true"><svg`));
-      expect(d, ziel).toContain(`<div class="bildwahl-tafel t${n + 1}"><h3>`);
-      expect(d, ziel).toContain(`<a href="${ziel}">Seite lesen`);
+    // Themen = Kapitel der App, Einordnung wie werkzeugRegister.js; jede Erklärseite der Website genau einmal
+    const themen = [[5, ['/was-steht-mir-zu/', '/politsystem/', '/kantone-im-vergleich/']], [3, ['/praemienverbilligung/', '/krankenkasse/']], [2, ['/steuern/', '/sozialhilfe/']]];
+    themen.forEach(([k, ziele], n) => {
+      expect(d).toMatch(new RegExp(`<label for="n${n + 1}" style="--x:[\\d.]+%; --y:[\\d.]+%; --farbe:var\\(--k${k}\\)"><span class="zeichen" aria-hidden="true"><svg`));
+      const pop = d.match(new RegExp(`<div class="bildwahl-pop t${n + 1}"[\\s\\S]*?<\\/ul><\\/div>`))[0];
+      for (const ziel of ziele) expect(pop, ziel).toContain(`<a href="${ziel}">`);
+      expect((pop.match(/<li>/g) || []).length).toBe(ziele.length);
     });
-    expect((d.match(/<input type="radio" name="nachlesen"/g) || []).length).toBe(5);
-    expect(stil).toMatch(/\.bildwahl-ebene label\{[^}]*min-height:44px/);
-    expect(stil).toContain('#n3:checked ~ .bildwahl-tafeln .t3{ display:block }');
+    expect((d.match(/<input type="radio" name="nachlesen"/g) || []).length).toBe(3);
+    expect(stil).toContain('#n2:checked ~ .bildwahl-blick .bildwahl-pop.t2{ display:block }');
+    expect(stil).toMatch(/\.bildwahl-pop a\{[^}]*min-height:44px/);
     expect(html).not.toContain('<h2>Zum Nachlesen</h2>');
     const fragen = html.slice(html.indexOf('<div class="fragen">'), html.indexOf('</section>', html.indexOf('<div class="fragen">')));
     expect(fragen).not.toContain('zeichen');
@@ -409,6 +411,9 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(e).not.toContain('class="zeichen"');   // Zeichen für die Versprechen: eigene Icon-Frage
     // Schrift auf Salbei nur auf Papier: die Fläche läuft oben aus, der Kopf beginnt 96 px darüber
     expect(stil).toMatch(/\.bildwahl-salbei \.bildwahl-flaeche\{ margin-top:96px; aspect-ratio:280\/130; background:#7E8F7B;/);
+    // der Text des gewählten Versprechens steht im Bild (in der Ebene), rechts auf der freien Seite der Karte
+    expect(e).toMatch(/<div class="bildwahl-ebene">[\s\S]*<div class="bildwahl-tafeln">[\s\S]*<\/div>\s*<\/div>\s*<figcaption/);
+    expect(stil).toMatch(/\.bildwahl-salbei \.bildwahl-tafeln\{ position:absolute; right:2%;/);
     expect((html.match(/id="t-vertrauen"/g) || []).length).toBe(1);
   });
 

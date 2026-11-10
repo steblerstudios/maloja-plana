@@ -95,12 +95,23 @@ const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 // Zum Nachlesen: je Erklärseite das Zeichen ihres Kapitels (Kapitel wie die App sie einordnet, werkzeugRegister.js:
 // Steuern und Sozialhilfe → Finanzen, Prämien → Versicherungen; «Was steht mir zu?» → Behörden: Bund, Kantone, Gemeinden).
 // Index wie CHAPTER_KEYS. Die häufigen Fragen bekommen bewusst keine Zeichen: keine ist ein Kapitel (ein Bild, eine Bedeutung).
-const NACHLESEN = [
-  ['/was-steht-mir-zu/', 'Was steht mir zu?', 'Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.', 5],
-  ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.', 3],
-  ['/sozialhilfe/', 'Sozialhilfe', 'Wer entscheidet und woraus sie sich zusammensetzt.', 2],
-  ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.', 2],
-  ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.', 3],
+// Zum Nachlesen (Stebler Studios 10.11.2026 spät: «zu jedem Thema gibt es sicher was zu lesen — antippen, dann ploppen
+// die Berichte auf»): je Thema = Kapitel der App (Einordnung wie werkzeugRegister.js) die Erklärseiten dazu. Die Sätze
+// stammen aus den Seiten selbst (meta description bzw. bisheriger Satz), keine neue Fachaussage. Index wie CHAPTER_KEYS.
+const THEMEN = [
+  { k: 5, x: '34.9%', y: '69.3%', berichte: [   // Behörden · Strassenpunkt (558 | 453)
+    ['/was-steht-mir-zu/', 'Was steht mir zu?', 'Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.'],
+    ['/politsystem/', 'Wie die Schweiz entscheidet', 'Wie in der Schweiz ein Gesetz entsteht und wo Sie mitreden.'],
+    ['/kantone-im-vergleich/', 'Kantone im Vergleich', 'Die Zahlen der 26 Kantone nebeneinander, mit Quelle und Stand, ohne Rangliste.'],
+  ] },
+  { k: 3, x: '54.6%', y: '71.5%', berichte: [   // Versicherungen · (874 | 475)
+    ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.'],
+    ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.'],
+  ] },
+  { k: 2, x: '75.9%', y: '84.9%', berichte: [   // Finanzen · (1215 | 609)
+    ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.'],
+    ['/sozialhilfe/', 'Sozialhilfe', 'Wer entscheidet und woraus sie sich zusammensetzt.'],
+  ] },
 ];
 
 // O · Die drei Geräte auf dem Blick (Salbei, seit 10.11. abends getauscht mit Papier; beide haben dieselbe Kamera und
@@ -110,17 +121,6 @@ const GERAETE = [
   { name: 'iPhone und iPad', zeichen: 'telefon', x: '37.4%', y: '69.5%' },   // Strassenpunkt (599 | 455)
   { name: 'Android', zeichen: 'telefon', x: '54.4%', y: '81.6%' },           // (870 | 576)
   { name: 'Computer', zeichen: 'laptop', x: '79.9%', y: '57.2%' },           // (1278 | 332)
-];
-// D · «Zum Nachlesen» im hellen Blick, gebaut wie «App holen» (Stebler Studios 10.11.2026 spät: «soll im Bild sein wie beim
-// iPhone-Android-Computer-Ding»): je Erklärseite ein Punkt auf der Passstrasse in pass-blick-papier.svg (viewBox 0 -240
-// 1600 1000, genau auf Pfadpunkten), darüber die Wahl mit kurzem Namen. Zwei Reihen, damit sich die Wahlen nicht berühren.
-// Reihenfolge wie NACHLESEN: Was steht mir zu?, Prämienverbilligung, Sozialhilfe, Steuern, Krankenkasse.
-const NACHLESEN_ORTE = [
-  { kurz: 'Was steht mir zu?', x: '34.9%', y: '69.3%' },     // (558 | 453)
-  { kurz: 'Prämienverbilligung', x: '54.6%', y: '71.5%' },   // (874 | 475)
-  { kurz: 'Sozialhilfe', x: '58.8%', y: '83.9%' },           // (941 | 599)
-  { kurz: 'Steuern', x: '75.9%', y: '84.9%' },               // (1215 | 609)
-  { kurz: 'Krankenkasse', x: '38.6%', y: '82.6%' },          // (618 | 586)
 ];
 // E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte, ebenso gebaut. Punkte auf der Passstrasse in
 // pass-karte.svg (viewBox 1 1 278 128); unten = Wahl unter dem Punkt (oben ist der Kopf). --xh: am Handy 4:3 beschnitten.
@@ -520,6 +520,9 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .nach-reise{ background:#FCF0E4 } .nach-reise > section{ padding:64px 0 0 }   /* deckend: sonst schimmert die Bühne durch */
     .bildwahl{ color:#24262A; --bg:#FCF0E4; --flaeche:#FFF8F0; --text:#24262A; --leise:#575B61; --sand-tief:#7A5F30 }
     .bildwahl fieldset{ border:0; min-width:0; margin:0 auto }
+    /* Die unsichtbaren Auswahlfelder liegen in der Bildmitte: oben im Abschnitt zog der Fokus die Seite beim Tippen
+       um rund 70 px hoch (im Browser gemessen). */
+    .bildwahl fieldset{ position:relative } .bildwahl fieldset > input.unsichtbar{ top:40% }
     .bildwahl h2, .bildwahl h3{ color:#24262A } .bildwahl .augenbraue, .bildwahl .unterzeile{ color:#575B61 }
     .bildwahl-blick{ position:relative; margin:0; display:grid }
     .bildwahl-blick > .bildwahl-kopf, .bildwahl-blick > .bildwahl-flaeche{ grid-area:1 / 1 }
@@ -548,15 +551,27 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .bildwahl-ebene .zeichen svg{ width:22px; height:22px; display:block }
     .bildwahl-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
       background:#55685A; box-shadow:0 0 0 2px #FCF0E4 }
+    /* D · Die Berichte eines Themas ploppen im Bild auf: Karte oben rechts über den Bergkämmen (Papier, Ecke 16, Haarlinie).
+       Über dem Thema selbst deckte sie den Titel zu (im Browser gesehen); welches Thema offen ist, zeigen Knopf und Sandring. */
+    .bildwahl-pop{ display:none; position:absolute; z-index:2; right:0; top:4%;
+      width:min(360px, 46vw); padding:18px 20px 8px; background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px; pointer-events:auto }
+    .bildwahl-pop h3{ font-size:16px; margin-bottom:4px }
+    .bildwahl-pop ul{ list-style:none; margin:0; padding:0 }
+    .bildwahl-pop li{ border-top:1px solid #E6DACB; padding:2px 0 10px } .bildwahl-pop li:first-child{ border-top:0 }
+    .bildwahl-pop a{ display:inline-flex; align-items:center; min-height:44px; color:#7A5F30; font-weight:600 }
+    .bildwahl-pop p{ font-size:15px; line-height:1.5; color:#575B61; margin-top:-6px }
+    /* E · Der Text des gewählten Versprechens steht im Bild, rechts auf der freien Seite der Karte (dort liegt keine Strasse). */
+    .bildwahl-salbei .bildwahl-tafeln{ position:absolute; right:2%; top:40%; width:min(340px, 34%); pointer-events:auto }
+    .bildwahl-salbei .bildwahl-tafel{ margin-top:0 }
     .bildwahl-tafel{ display:none; margin-top:24px; max-width:640px; padding:24px 26px 22px; background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px }
     .bildwahl-tafel h3{ margin-bottom:8px } .bildwahl-tafel p{ font-size:16px; line-height:1.6; color:#575B61 }
     .bildwahl-tafel a{ color:#7A5F30; font-weight:600; display:inline-flex; align-items:center; min-height:44px }
-${[1, 2, 3, 4, 5].map((i) => `    #n${i}:checked ~ .bildwahl-tafeln .t${i}{ display:block }
+${[1, 2, 3, 4, 5].map((i) => `    #n${i}:checked ~ .bildwahl-blick .bildwahl-pop.t${i}{ display:block }
     #n${i}:checked ~ .bildwahl-blick [for=n${i}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
     #n${i}:checked ~ .bildwahl-blick [for=n${i}] .zeichen{ color:var(--auf-sand) }
     #n${i}:checked ~ .bildwahl-blick .p${i}{ box-shadow:0 0 0 2px #FCF0E4, 0 0 0 5px var(--sand) }
     #n${i}:focus-visible ~ .bildwahl-blick [for=n${i}]{ outline:2px solid #7A5F30; outline-offset:3px }`).join('\n')}
-${[1, 2, 3, 4, 5].map((i) => `    #v${i}:checked ~ .bildwahl-tafeln .t${i}{ display:block }
+${[1, 2, 3, 4, 5].map((i) => `    #v${i}:checked ~ .bildwahl-blick .bildwahl-tafel.t${i}{ display:block }
     #v${i}:checked ~ .bildwahl-blick [for=v${i}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
     #v${i}:checked ~ .bildwahl-blick [for=v${i}] .zeichen{ color:var(--auf-sand) }
     #v${i}:checked ~ .bildwahl-blick .p${i}{ box-shadow:0 0 0 2px #FCF0E4, 0 0 0 5px var(--sand) }
@@ -573,6 +588,8 @@ ${[1, 2, 3, 4, 5].map((i) => `    #v${i}:checked ~ .bildwahl-tafeln .t${i}{ disp
       .bildwahl-ebene{ position:static; aspect-ratio:auto !important; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
       .bildwahl-ebene label{ position:static; transform:none !important }
       .bildwahl-ebene label::after{ content:none }
+      .bildwahl-pop{ position:static; transform:none; width:100%; margin-top:8px }
+      .bildwahl-salbei .bildwahl-tafeln{ position:static; width:100%; margin-top:8px }
     }
     @media (max-width:760px){
       .bildwahl-salbei .bildwahl-flaeche{ aspect-ratio:4/3 }
@@ -1018,25 +1035,23 @@ ${reiseStationen()}
         <section id="nachlesen" class="bildwahl bildwahl-papier" aria-labelledby="t-nachlesen">
           <fieldset class="rahmen">
             <legend class="unsichtbar">Erklärseite wählen</legend>
-${NACHLESEN.map((_, n) => `            <input type="radio" name="nachlesen" id="n${n + 1}" class="unsichtbar"${n === 0 ? ' checked' : ''}>`).join('\n')}
+${THEMEN.map((_, n) => `            <input type="radio" name="nachlesen" id="n${n + 1}" class="unsichtbar"${n === 0 ? ' checked' : ''}>`).join('\n')}
             <figure class="bildwahl-blick">
               <div class="bildwahl-kopf">
                 <p class="augenbraue">Oben angekommen</p>
                 <h2 id="t-nachlesen">Zum Nachlesen.</h2>
-                <p class="unterzeile">Fünf Erklärseiten, ohne Anmeldung und ohne App. Wählen Sie ein Thema.</p>
+                <p class="unterzeile">Zu jedem Thema Erklärseiten, ohne Anmeldung und ohne App. Tippen Sie auf ein Thema.</p>
               </div>
               <div class="bildwahl-flaeche">
                 <img src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
-${NACHLESEN_ORTE.map((o, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${o.x}; --y:${o.y}" aria-hidden="true"></span>`).join('\n')}
+${THEMEN.map((t, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${t.x}; --y:${t.y}" aria-hidden="true"></span>`).join('\n')}
               </div>
               <div class="bildwahl-ebene">
-${NACHLESEN.map(([, , , k], n) => `                <label for="n${n + 1}" style="--x:${NACHLESEN_ORTE[n].x}; --y:${NACHLESEN_ORTE[n].y}; --farbe:var(--k${k})"><span class="zeichen" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span>${esc(NACHLESEN_ORTE[n].kurz)}</label>`).join('\n')}
+${THEMEN.map((t, n) => `                <label for="n${n + 1}" style="--x:${t.x}; --y:${t.y}; --farbe:var(--k${t.k})"><span class="zeichen" aria-hidden="true">${zeichen(t.k, `lesen${n + 1}`)}</span>${esc(KAPITEL[t.k].name)}</label>`).join('\n')}
+${THEMEN.map((t, n) => `                <div class="bildwahl-pop t${n + 1}" style="--x:${t.x}; --y:${t.y}"><h3>${esc(KAPITEL[t.k].name)}: zum Nachlesen</h3><ul role="list">${t.berichte.map(([ziel, titel, satz]) => `<li><a href="${ziel}">${esc(titel)}</a><p>${esc(satz)}</p></li>`).join('')}</ul></div>`).join('\n')}
               </div>
               <figcaption class="quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
             </figure>
-            <div class="bildwahl-tafeln">
-${NACHLESEN.map(([ziel, titel, satz], n) => `              <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${esc(satz)}</p><a href="${ziel}">Seite lesen<span class="unsichtbar">: ${esc(titel)}</span>&nbsp;→</a></div>`).join('\n')}
-            </div>
           </fieldset>
         </section>
 
@@ -1059,12 +1074,12 @@ ${VERSPRECHEN_ORTE.map((o, n) => `                <span class="bildwahl-punkt p$
               </div>
               <div class="bildwahl-ebene">
 ${VERSPRECHEN.map(([titel], n) => `                <label for="v${n + 1}"${VERSPRECHEN_ORTE[n].unten ? ' class="unten"' : ''} style="--x:${VERSPRECHEN_ORTE[n].x}%; --y:${VERSPRECHEN_ORTE[n].y}%">${esc(titel)}</label>`).join('\n')}
+                <div class="bildwahl-tafeln">
+${VERSPRECHEN.map(([titel, text], n) => `                  <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${text}</p></div>`).join('\n')}
+                </div>
               </div>
               <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
             </figure>
-            <div class="bildwahl-tafeln">
-${VERSPRECHEN.map(([titel, text], n) => `              <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${text}</p></div>`).join('\n')}
-            </div>
           </fieldset>
         </section>
         </div>
