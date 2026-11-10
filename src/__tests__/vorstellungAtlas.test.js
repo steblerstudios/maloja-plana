@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { vorstellungBauen } from '../../scripts/seiten/vorstellung.mjs';
-import { BRILLEN } from '../../scripts/seiten/kantonsatlas.mjs';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { BRILLEN, KARTE_MASS, karteBild, stufen, KARTEN_FRUCHT, FRUCHT_STUFEN } from '../../scripts/seiten/kantonsatlas.mjs';
 
 // Kantonsatlas als Brückenstück, Teil B (Stebler Studios 09.11.2026, «Ja, A bis C bauen»): Die Website zeigt den
 // Atlas als eigenen Abschnitt; jede Brille führt gefiltert hinein (/kantonsatlas/#fuer-<id>, Teil A in #803).
@@ -35,6 +37,34 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
     expect(abschnitt.match(/<\/p><a href="\/kantonsatlas\/#fuer-/g)).toHaveLength(BRILLEN.length);
     // Der Link im Satz (Datenschutz) steht in einem <p> und wird nicht aufgebläht.
     expect(html).toMatch(/<p>[^<]*Keine Werbung[^<]*<a href="\/rechtliches\/">Datenschutz<\/a>/);
+  });
+
+  // Karte als eigenes Bild (Entscheid Stebler Studios 10.11.2026, Skizze A–C → C).
+  it('zeigt die Prämienkarte als eigenes Bild, das erst beim Hinscrollen lädt und in den Atlas führt', () => {
+    const fig = abschnitt.match(/<figure class="atlas-bild">[\s\S]*?<\/figure>/)[0];
+    expect(fig).toContain('<a href="/kantonsatlas/#karte-praemie"><img src="/kantonsatlas/karte-praemie.svg"');
+    expect(fig).toContain(`width="${KARTE_MASS.w}" height="${KARTE_MASS.h}"`);
+    expect(fig).toContain('loading="lazy"');
+    expect(fig).toMatch(/alt="Karte der 26 Kantone: [^"]+Kantonsatlas[^"]*"/);
+    // Nicht in die Seite eingebettet: die Seite bleibt leicht.
+    expect(html).not.toMatch(/<svg[^>]*viewBox="0 0 800 520"/);
+  });
+
+  it('das Bild trägt die Heidelbeere der Prämienkarte, hell und dunkel, und alle 26 Kantone', () => {
+    const svg = karteBild('praemie');
+    const { stufe } = stufen('praemie');
+    expect(KARTEN_FRUCHT.praemie).toBe('heidelbeere');
+    FRUCHT_STUFEN.heidelbeere.hell.forEach((c, i) => expect(svg).toContain(`.k${i + 1}{fill:${c}}`));
+    const dunkel = svg.slice(svg.indexOf('@media (prefers-color-scheme:dark)'));
+    FRUCHT_STUFEN.heidelbeere.dunkel.forEach((c, i) => expect(dunkel).toContain(`.k${i + 1}{fill:${c}}`));
+    expect(svg.match(/<use href="#ka-[A-Z]{2}" class="k[1-4]"\/>/g)).toHaveLength(26);
+    expect(svg).toContain(`<use href="#ka-ZH" class="k${stufe.ZH}"/>`);
+    expect(svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg"')).toBe(true);
+  });
+
+  it('die Bilddatei im Repo stimmt mit der Quelle überein', () => {
+    const datei = readFileSync(resolve(__dirname, '../../public/kantonsatlas/karte-praemie.svg'), 'utf8');
+    expect(datei).toBe(karteBild('praemie'));
   });
 
   it('verspricht nicht für jede Karte eine Rechnung (es gibt nicht zu jeder ein Werkzeug)', () => {

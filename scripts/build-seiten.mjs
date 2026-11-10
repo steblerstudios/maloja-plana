@@ -30,6 +30,7 @@ import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
 import { vorstellungBauen } from './seiten/vorstellung.mjs';
+import { karteBild } from './seiten/kantonsatlas.mjs';
 import { appBeispiel } from './seiten-ziele.mjs';
 import { KANTONSSEITEN, WEGE, KANTON_HINWEIS } from './seiten/praemienverbilligung-kantone.mjs';
 
@@ -1236,6 +1237,8 @@ const ausgaben = [
   // public/: public/ wird auch in den App-Ordner kopiert, und dort hat index.html die App.
   { ziel: resolve(WURZEL, 'website', 'index.html'), inhalt: vorstellungBauen(), name: '../website/index.html' },
   { ziel: resolve(WURZEL, 'public', 'sitemap.xml'), inhalt: sitemapBauen(), name: 'sitemap.xml' },
+  // Prämienkarte als eigenes Bild für den Atlas-Abschnitt der Vorstellungsseite (Entscheid 10.11.2026, C).
+  { ziel: resolve(WURZEL, 'public', 'kantonsatlas', 'karte-praemie.svg'), inhalt: karteBild('praemie'), name: 'kantonsatlas/karte-praemie.svg' },
 ];
 
 for (const { ziel, inhalt, name } of ausgaben) {

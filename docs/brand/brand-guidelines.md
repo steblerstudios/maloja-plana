@@ -308,6 +308,12 @@ aus der App zurück zur Karte. Drei Regeln:
   verspricht zu viel, wo die Karte eine Quote zeigt. Karten ohne Werkzeug versprechen nichts.
 - **Die Website zeigt den Atlas als eigenen Abschnitt** mit den vier Brillen als Wege hinein. In der App bleibt
   es beim Entscheid 24.10.2026: keine Atlas-Seite, die Karte steht im Werkzeug.
+- **Auf der Website eine Karte als eigenes Bild** *(10.11.2026, Stebler Studios, Skizze A–C → «C: als eigenes
+  Bild»)*: die Prämienkarte als Datei `/kantonsatlas/karte-praemie.svg` (gepackt etwa 13 kB, die Seite selbst
+  etwa 11,5 kB), mit `loading="lazy"`, Breite und Höhe am Bild. Tippen führt zur Karte im Atlas. Ein Bild erbt
+  kein CSS, darum stehen Frucht, Rand und dunkler Modus fest in der Datei, erzeugt aus derselben Quelle
+  (`karteBild` in `scripts/seiten/kantonsatlas.mjs`). Nicht in die Seite einbetten. Wächter:
+  `src/__tests__/vorstellungAtlas.test.js`.
 - Wächter: `src/__tests__/atlasBruecke.test.js`. Adressen in die App: eine Quelle, `scripts/seiten-ziele.mjs`.
 
 

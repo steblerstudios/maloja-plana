@@ -15,7 +15,7 @@
 // Nur Deutsch. Weitere Sprachen erst als eigene Seiten (Rechtsprüfung 26.10., UWG Art. 3 Abs. 1 lit. b).
 
 import { BASIS } from '../seiten-inhalt.mjs';
-import { BRILLEN } from './kantonsatlas.mjs';
+import { BRILLEN, KARTE_MASS } from './kantonsatlas.mjs';
 
 // Kantonsatlas als Brückenstück (Stebler Studios 09.11.2026, «Ja, A bis C bauen», Teil B): Die Website zeigt
 // den Atlas als eigenen Abschnitt; jede Brille führt gefiltert hinein (/kantonsatlas/#fuer-<id>, Teil A).
@@ -229,6 +229,12 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
     .bald, .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
     .bald strong{ color:var(--text) }
+    /* Atlas-Abschnitt: eine Karte als eigenes Bild (Entscheid 10.11.2026, C). Lädt erst beim Hinscrollen,
+       die Seite bleibt leicht; Breite und Höhe stehen am Bild, damit nichts springt. */
+    .atlas-bild{ margin-top:var(--abstand-m); max-width:640px }
+    .atlas-bild a{ display:block; border-radius:var(--radius-m) }
+    .atlas-bild img{ display:block; width:100%; height:auto }
+    .atlas-bild figcaption{ margin-top:8px; font-size:15px; color:var(--leise) }
 
     /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */
     .liste{ list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:28px 32px; margin-top:var(--abstand-m) }
@@ -489,6 +495,10 @@ ${stationen()}
       <p class="augenbraue">Kantonsatlas</p>
       <h2 id="t-atlas">Die Kantone auf der Karte.</h2>
       <p class="unterzeile">Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: ${ATLAS_KARTEN_WORT} Karten der 26 Kantone aus öffentlichen Statistiken, frei zugänglich und ohne Rangliste. Welche Karten wichtig sind, hängt von der Frage ab. Vier Beispiele:</p>
+      <figure class="atlas-bild">
+        <a href="/kantonsatlas/#karte-praemie"><img src="/kantonsatlas/karte-praemie.svg" width="${KARTE_MASS.w}" height="${KARTE_MASS.h}" loading="lazy" decoding="async" alt="Karte der 26 Kantone: mittlere Monatsprämie für Erwachsene 2027, in vier Stufen von tief bis hoch. Zur Karte im Kantonsatlas, mit den Werten jedes Kantons."></a>
+        <figcaption>Ein Beispiel: die mittlere Monatsprämie 2027. Werte und Quelle stehen im Kantonsatlas.</figcaption>
+      </figure>
       <ul class="liste">
 ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><a href="/kantonsatlas/#fuer-${b.id}">Karten für diese Frage<span class="unsichtbar">: ${esc(b.name)}</span></a></li>`).join('\n')}
       </ul>
