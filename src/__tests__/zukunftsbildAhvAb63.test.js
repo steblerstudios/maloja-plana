@@ -100,6 +100,15 @@ describe('Vorsorge-Rechner, Reiter AHV (B-19)', () => {
     expect(mit63).toContain('CHF 1’962 / Monat');
     expect(mit60).toBe(mit63);
   });
+
+  // Fachprüfung 10.11.2026: bei Eingabe 60 war in der Vergleichstabelle keine Zeile markiert.
+  it('Vergleichstabelle markiert bei Eingabe 60 die Zeile 63', () => {
+    reiter = 'vergleich';
+    bezugAlter = '60';
+    const html = zeichne(profil);
+    const markiert = [...html.matchAll(/<td style="[^"]*font-weight[^"]*">(\d+)<\/td>/g)].map((m) => m[1]);
+    expect(markiert).toEqual(['63']);
+  });
 });
 
 describe('Vorsorge-Rechner, Reiter Zukunft', () => {

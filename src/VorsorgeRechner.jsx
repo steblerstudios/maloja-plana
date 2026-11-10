@@ -910,16 +910,16 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('tbody', null,
           vorbezugVergleich.map(row =>
             React.createElement('tr', { key: row.bezugAlter },
-              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td }, row.bezugAlter),
+              React.createElement('td', { style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td }, row.bezugAlter),
               // Vorbezugszeilen: darunter die Rente ab dem Referenzalter (Neuberechnung) — derselbe
               // Wert wie im AHV-Block, sonst widerspräche die Tabelle dem Ergebnis.
               ...[['monatsrente', 'monatsrenteReferenzalter'], ['jahresrente', 'jahresrenteReferenzalter']].map(([feld, feldRef]) =>
-                React.createElement('td', { key: feld, style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
+                React.createElement('td', { key: feld, style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td },
                   'CHF ' + fmt(row[feld]),
                   row.anpassung < 0 && row[feldRef] !== row[feld] && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.normal } },
                     t('vr.abAlterKurz', { alter: fmtAlterMonate(refAlterMonate), betrag: fmt(row[feldRef]) }))
                 )),
-              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
+              React.createElement('td', { style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td },
                 row.anpassung === 0 ? '–' : (row.anpassung > 0 ? '+' : '') + row.anpassung.toFixed(1) + '%'
               )
             )
