@@ -136,6 +136,14 @@ export const haushaltsSaldo = (allData, kapitelBleibt) => {
   return b.bruttoDabei ? { brutto: true } : { brutto: false, rest };
 };
 
+// Ankunfts-Satz: nur beim ersten ausgefüllten Feld eines bisher leeren Kapitels, im selben
+// Kapitel (nicht beim blossen Wechsel) und nur einmal je Kapitel (or5_ankunft_<kapitel>).
+export const ankunftZeigen = (vorher, jetzt, schonGesehen) =>
+  !schonGesehen && vorher.key === jetzt.key && vorher.anzahl === 0 && jetzt.anzahl > 0;
+
+// «Weitere Bereiche»: offen, sobald einer Daten trägt; sonst wie zuletzt in diesem Kapitel.
+export const weitereBereicheAnfang = (hatDaten, gespeichert) => hatDaten || gespeichert === 'true';
+
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen, chapters, onSelectChapter, lang, onEnterSandbox }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
@@ -173,12 +181,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
   // Kapitelwechsel ohne Neuaufbau: die Regel gilt fürs neue Kapitel neu.
   useEffect(() => { setOffeneAbschnitte(abschnitteAnfang()); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Ein angefangener Upload gehört zum Kapitel, in dem er begann — sonst landete er mit dem
+  // Typ des alten Kapitels im neuen (Bugsuche 09.11.2026).
+  useEffect(() => {
+    setUploadFile(null);
+    setUploadType('');
+    setUploadExpiry('');
+    setUploadError('');
+    setUploadSuccess('');
+  }, [chapter.key]);
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => feldHatWert(data, f.k));
   const storageKey = 'or5_disclosure_' + chapter.key;
-  const [showSecondary, setShowSecondary] = useState(() => {
-    if (secondaryHasData) return true;
-    try { return localStorage.getItem(storageKey) === 'true'; } catch { return false; }
-  });
+  const gespeicherteWahl = () => { try { return localStorage.getItem(storageKey); } catch { return null; } };
+  const [showSecondary, setShowSecondary] = useState(() => weitereBereicheAnfang(secondaryHasData, gespeicherteWahl()));
+  // Kapitelwechsel ohne Neuaufbau: der Startwert gilt fürs neue Kapitel neu (Bugsuche B-15).
+  useEffect(() => { setShowSecondary(weitereBereicheAnfang(secondaryHasData, gespeicherteWahl())); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
   const toggleSecondary = () => {
     const next = !showSecondary;
     setShowSecondary(next);
@@ -1115,20 +1132,26 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
   const ankunftKey = 'or5_ankunft_' + chapter.key;
   const [showAnkunft, setShowAnkunft] = useState(false);
-  const prevFilledRef = useRef(filledCount);
+  const prevFilledRef = useRef({ key: chapter.key, anzahl: filledCount });
   useEffect(() => {
-    if (prevFilledRef.current === 0 && filledCount > 0) {
-      try {
-        if (!localStorage.getItem(ankunftKey)) {
-          localStorage.setItem(ankunftKey, Date.now().toString());
-          setShowAnkunft(true);
-          const timer = setTimeout(() => setShowAnkunft(false), 6000);
-          return () => clearTimeout(timer);
-        }
-      } catch {}
-    }
-    prevFilledRef.current = filledCount;
-  }, [filledCount, ankunftKey]);
+    const jetzt = { key: chapter.key, anzahl: filledCount };
+    try {
+      if (ankunftZeigen(prevFilledRef.current, jetzt, !!localStorage.getItem(ankunftKey))) {
+        localStorage.setItem(ankunftKey, Date.now().toString());
+        setShowAnkunft(true);
+      }
+    } catch {}
+    prevFilledRef.current = jetzt;
+  }, [filledCount, ankunftKey, chapter.key]);
+  // Der Timer hängt am Zeigen selbst: ein zweites Feld innerhalb von 6 s löscht ihn nicht mehr
+  // (vorher blieb der Satz dann stehen, Bugsuche B-13).
+  useEffect(() => {
+    if (!showAnkunft) return undefined;
+    const timer = setTimeout(() => setShowAnkunft(false), 6000);
+    return () => clearTimeout(timer);
+  }, [showAnkunft]);
+  // Der Satz gehört zum Kapitel, in dem er erschien.
+  useEffect(() => { setShowAnkunft(false); }, [chapter.key]);
 
   const CHECKLIST_STORAGE_KEY = 'or5_behoerden_checklist';
   const [checklistChecked, setChecklistChecked] = useState(() => {

@@ -15,11 +15,12 @@ import { giltAlsVerheiratet, warVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
-import { ahvBezugsalterFuerRechnung, ahvZukunftMonate, ikBeitragsjahreBisReferenzalter } from './utils/ahvBezug.js';
-import { SAEULE3A_HOECHSTABZUG } from './data/saeule3a.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { nettoZuBruttoRichtwert, fruehesterVorbezugMonate } from './data/lohnAbzuege.js';
+import { SAEULE3A_HOECHSTABZUG } from './data/saeule3a.js';
+import { ahvBezugAlterFuer, ahvKapitalImBild, fruehesterAhvBezugImBildMonate } from './utils/ahvZukunftsbild.js';
+import { ikHochrechnen, kuenftigeIkJahre } from './utils/ikHochrechnung.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
 import { alterUndRentenalter } from './utils/nettoAusProfil.js';
 import { hauptlohnMonate, dreizehnterStatus } from './utils/dreizehnter.js';
@@ -139,10 +140,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
   const parsedBezugAlter = Number(bezugAlter) || refAlterJahre;
-  // Rücktritt ≠ AHV-Bezug (Kapitel 4, B-18/B-19): Das Feld und der Regler tragen das Rücktrittsalter (ab 58),
-  // die AHV rechnet ab dem frühesten Vorbezug, den die App abbildet (utils/ahvBezug.js).
-  const ahvBezugAlter = ahvBezugsalterFuerRechnung(parsedBezugAlter, refAlterMonate);
-  const ahvBezugSpaeter = ahvBezugAlter > parsedBezugAlter;
+  // Das Feld «Bezugsalter» teilt seinen Wert mit dem Regler im Zukunftsbild (Rücktritt ab 58, wegen
+  // BVG/3a). Die AHV kommt nie vor dem frühesten Vorbezug, und bis dahin bleibt man beitragspflichtig
+  // → für die AHV gilt max(Rücktritt, frühester Bezug) — im AHV-Block wie im Zukunftsbild
+  // (Bugsuche B-18/B-19, utils/ahvZukunftsbild.js). BVG und 3a rechnen weiter mit dem Rücktritt.
+  const fruehesterAhvBezugMonate = fruehesterAhvBezugImBildMonate(refAlterMonate);
+  const ahvBezugAlter = ahvBezugAlterFuer(parsedBezugAlter, fruehesterAhvBezugMonate);
   // Leere Beitragsjahre (Audit B9): die Rente ab Bezug braucht die Jahre BIS zum Bezug, nicht
   // die bis heute — sonst stünde neben der bis zum Bezug hochgerechneten BVG eine AHV, die
   // mitten in der Erwerbszeit abgeschnitten ist (40 J., Ø 80'000: 20/44 statt 44/44). Annahme:
@@ -192,18 +195,36 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     [ikActive, ikEntries]
   );
 
-  const letztesIkJahr = ikEntries.reduce((m, e) => (e && e.typ !== IK_TYP.JUGEND && Number(e.jahr) > m ? Number(e.jahr) : m), 0);
-  const ikBjReferenzalter = ikResult
-    ? ikBeitragsjahreBisReferenzalter({ ikBeitragsjahre: ikResult.beitragsjahre, letztesIkJahr, geburtsjahr: birthYear || 1970, geburtsmonat: birthMonth, refAlterMonate, volleDauer })
-    : null;
+  // IK bis zum Referenzalter hochrechnen (Bugsuche B-17, Entscheid Stebler Studios 10.11.2026):
+  // die künftigen Jahre ab dem Jahr nach dem letzten IK-Jahr bis zum Referenzalter (dieselbe Annahme
+  // wie ohne IK), Einkommen gemischt (utils/ikHochrechnung.js). Ohne Geburtsjahr keine Hochrechnung.
+  const ikHoch = useMemo(() => {
+    if (!ikResult || !birthYear) return null;
+    // Bis zur vollen Beitragsdauer des Jahrgangs (Frauen der Übergangsgeneration 43, nicht 44 —
+    // Nachprüfung 10.11.2026).
+    const zukunftsJahre = kuenftigeIkJahre({ eintraege: ikEntries, geburtsjahr: birthYear, jahreBisReferenzalter: volleDauer });
+    return ikHochrechnen({ ik: ikResult, zukunftsJahre, einkommenHeute: parsedEinkommen, volleDauer });
+  }, [ikResult, ikEntries, birthYear, parsedEinkommen, volleDauer]);
+  // Erziehungsgutschriften mit IK: die grössere Zahl aus IK und Eingabefeld («Jahre mit Kindern unter
+  // 16» zählt auch künftige Jahre) — sonst fehlten jungen Eltern alle künftigen Gutschriften
+  // (Fachprüfung 10.11.2026, Art. 29sexies AHVG). Ebenso Betreuung.
+  const ikErziehung = ikResult ? Math.max(ikResult.erziehungsjahre, Number(erziehungsjahre) || 0) : 0;
+  const ikBetreuung = ikResult ? Math.max(ikResult.betreuungsjahre, Number(betreuungsjahre) || 0) : 0;
+  // Beitragsjahre bei Bezug aus den Jahren bis zum Referenzalter — dieselbe Zählung wie ohne IK.
+  const ikBeitragsjahreBei = (bezug) => (ikHoch
+    ? Math.max(0, Math.min(ikHoch.beitragsjahreReferenzalter, volleDauer) - fehlendeJahreBisReferenzalter(bezug))
+    : (ikResult ? ikResult.beitragsjahre : 0));
+  const ikBeitragsjahreBeiBezug = ikBeitragsjahreBei(ahvBezugAlter);
+  const ikEinkommen = ikHoch ? ikHoch.durchschnittlichesJahreseinkommen : (ikResult ? ikResult.durchschnittlichesJahreseinkommen : 0);
+  const ikReferenzalterJahre = ikHoch ? ikHoch.beitragsjahreReferenzalter : undefined;
 
   const ahvResult = useMemo(() => {
-    // Bei aktivem IK-Auszug ersetzt die echte Historie die Annahme (Einkommen/Beitragsjahre/Erziehung).
-    const eink = ikResult ? ikResult.durchschnittlichesJahreseinkommen : parsedEinkommen;
-    // Mit IK (B-17): die Jahre laut Auszug plus die bis zum Rentenbeginn noch kommenden — nicht nur die bis heute.
-    const bj = ikResult ? Math.max(0, ikBjReferenzalter - fehlendeJahreBisReferenzalter(ahvBezugAlter)) : parsedBeitragsjahre;
-    const erz = ikResult ? ikResult.erziehungsjahre : (Number(erziehungsjahre) || 0);
-    const betr = ikResult ? ikResult.betreuungsjahre : (Number(betreuungsjahre) || 0);
+    // Bei aktivem IK-Auszug ersetzt die echte Historie die Annahme (Einkommen/Beitragsjahre/Erziehung),
+    // hochgerechnet bis zum Referenzalter (B-17).
+    const eink = ikResult ? ikEinkommen : parsedEinkommen;
+    const bj = ikResult ? ikBeitragsjahreBeiBezug : parsedBeitragsjahre;
+    const erz = ikResult ? ikErziehung : (Number(erziehungsjahre) || 0);
+    const betr = ikResult ? ikBetreuung : (Number(betreuungsjahre) || 0);
     if (eink <= 0) return null;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
@@ -217,21 +238,24 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
-      beitragsjahreReferenzalter: ikResult ? ikBjReferenzalter : beitragsjahreReferenzalter,
+      beitragsjahreReferenzalter: ikResult ? ikReferenzalterJahre : beitragsjahreReferenzalter,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- fehlendeJahreBisReferenzalter hängt nur an den gelisteten Werten.
-  }, [ikResult, ikBjReferenzalter, parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, ahvBezugAlter, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [ikResult, ikEinkommen, ikBeitragsjahreBeiBezug, ikReferenzalterJahre, ikErziehung, ikBetreuung, parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, ahvBezugAlter, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   const vorbezugVergleich = useMemo(() => {
-    if (parsedEinkommen <= 0) return [];
-    const vergleich = (bj) => vergleicheVorbezugAufschub(parsedEinkommen, bj, data.basis?.gender, birthYear || 1970, birthMonth, beitragsjahreReferenzalter);
+    // Mit IK (hochgerechnet) dieselben Werte wie im AHV-Block (Fachprüfung B-17, 10.11.2026).
+    const eink = ikHoch ? ikEinkommen : parsedEinkommen;
+    const ref = ikHoch ? ikReferenzalterJahre : beitragsjahreReferenzalter;
+    const bjBei = ikHoch ? ikBeitragsjahreBei : beitragsjahreBeiBezug;
+    if (eink <= 0) return [];
+    const vergleich = (bj) => vergleicheVorbezugAufschub(eink, bj, data.basis?.gender, birthYear || 1970, birthMonth, ref);
     // Je Zeile dieselbe Zählung wie im AHV-Block für genau dieses Bezugsalter (Vorbezug → Teilrente
     // bis zum Referenzalter, dann alle Jahre bis zum Referenzalter) — nicht abhängig vom Regler, und
     // dieselbe Rente für dasselbe Alter auf beiden Stellen des Bildschirms.
-    return vergleich(beitragsjahreReferenzalter).map(zeile =>
-      vergleich(beitragsjahreBeiBezug(zeile.bezugAlter)).find(z => z.bezugAlter === zeile.bezugAlter));
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- beitragsjahreBeiBezug hängt nur an den gelisteten Werten.
-  }, [parsedEinkommen, beitragsjahre, beitragsjahreReferenzalter, volleDauer, refAlterJahre, refAlterMonate, data.basis?.gender, birthYear, birthMonth]);
+    return vergleich(ref).map(zeile =>
+      vergleich(bjBei(zeile.bezugAlter)).find(z => z.bezugAlter === zeile.bezugAlter));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- beitragsjahreBeiBezug/ikBeitragsjahreBei hängen nur an den gelisteten Werten.
+  }, [parsedEinkommen, ikHoch, ikEinkommen, ikReferenzalterJahre, beitragsjahre, beitragsjahreReferenzalter, volleDauer, refAlterJahre, refAlterMonate, data.basis?.gender, birthYear, birthMonth]);
 
   const bvgResult = useMemo(() => {
     if (parsedEinkommen <= 0 || !alter) return null;
@@ -247,9 +271,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung, birthYear, birthMonth]);
 
   // Säule 3a: höchstens der jährliche Höchstabzug (BVV 3 Art. 7 Abs. 1) — mit Pensionskasse der kleine,
-  // ohne der grosse, dort zudem höchstens 20 % des Erwerbseinkommens. Mehr einzuzahlen ist nicht vorgesehen,
-  // die Hochrechnung wäre sonst zu hoch (Kapitel 4).
-  // Selbständige sind nicht obligatorisch BVG-versichert: dort zählt nur eine eingetragene Kasse oder ein Guthaben.
+  // ohne der grosse, dort zudem höchstens 20 % des Erwerbseinkommens (Kapitel 4). Selbständige sind nicht
+  // obligatorisch BVG-versichert: dort zählt nur eine eingetragene Kasse oder ein Guthaben.
   const selbstaendig = data.finanzen?.employmentType === 'freelance';
   const hatPensionskasse = (!selbstaendig && !!(bvgResult && bvgResult.versichert)) || !!data.versicherungen?.bvgInsurer || Number(bvgGuthaben) > 0;
   const saeule3aGrenze = hatPensionskasse
@@ -278,24 +301,33 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // AHV fürs Zukunftsbild: auf durchgehende Beiträge bis zum Rücktritt projiziert
   // (angenommeneBeitragsjahre, beim Vorbezug ab Referenzalter neu berechnet), sonst würde die
   // AHV mit den heutigen Beitragsjahren stark unterschätzt. Eingetragene Beitragsjahre gehen vor.
+  // Das Zukunftsbild setzt das RÜCKTRITTSalter (Regler ab 58). Die AHV kommt nie vor dem frühesten
+  // Vorbezug, und bis dahin bleibt man beitragspflichtig → AHV wie bei Bezug am frühesten Tag
+  // (Bugsuche B-18, utils/ahvZukunftsbild.js) — dieselbe Grenze wie im AHV-Block (ahvBezugAlter, B-19).
+  const ahvBezugImBild = ahvBezugAlter;
+  // Mit IK (hochgerechnet, B-17) dieselben Werte wie im AHV-Block — vorher las das Bild den IK
+  // gar nicht, obwohl vr.zukunftIkAktiv sagt, es nutze die IK-Historie.
+  const mitIkImBild = !!ikHoch;
+  const beitragsjahreImBild = mitIkImBild ? ikBeitragsjahreBei(ahvBezugImBild) : beitragsjahreBeiBezug(ahvBezugImBild);
+  const einkommenImBild = mitIkImBild ? ikEinkommen : parsedEinkommen;
   const projektionAhv = useMemo(() => {
-    if (parsedEinkommen <= 0) return null;
-    const bj = parsedBeitragsjahre;
+    if (einkommenImBild <= 0) return null;
+    const bj = beitragsjahreImBild;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
       geburtsmonat: birthMonth,
       geschlecht: data.basis?.gender,
-      durchschnittlichesJahreseinkommen: parsedEinkommen,
+      durchschnittlichesJahreseinkommen: einkommenImBild,
       beitragsjahre: bj,
-      erziehungsjahre: Number(erziehungsjahre) || 0,
-      betreuungsjahre: Number(betreuungsjahre) || 0,
-      bezugAlter: ahvBezugAlter,
+      erziehungsjahre: mitIkImBild ? ikErziehung : (Number(erziehungsjahre) || 0),
+      betreuungsjahre: mitIkImBild ? ikBetreuung : (Number(betreuungsjahre) || 0),
+      bezugAlter: ahvBezugImBild,
       verheiratet,
       gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
-      beitragsjahreReferenzalter,
+      beitragsjahreReferenzalter: mitIkImBild ? ikReferenzalterJahre : beitragsjahreReferenzalter,
     });
-  }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, ahvBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [einkommenImBild, beitragsjahreImBild, mitIkImBild, ikErziehung, ikBetreuung, ikReferenzalterJahre, beitragsjahreReferenzalter, ahvBezugImBild, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   // Heutige AHV-Anwartschaft für den Startpunkt der AHV-Fläche im Zukunftsbild: nur die Jahre
   // bis heute (IK-Historie oder höchstens Alter − 21), Bezug im Referenzalter. Seit leere
@@ -386,6 +418,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Annahme-Zeile bei leeren Beitragsjahren; beim Vorbezug mit beiden Zählungen (bis zum Bezug
   // die Teilrente, ab dem Referenzalter die Neuberechnung, Merkblatt 3.04 Ziff. 4/5).
   const annahmeText = () => {
+    // AHV-Bezugsalter, nicht das Rücktrittsalter: «bis zum Bezug (60 Jahre)» gibt es nicht (B-19).
     if (Math.round(ahvBezugAlter * 12) >= refAlterMonate) {
       return t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(refAlterMonate), jahre: Math.min(beitragsjahreReferenzalter, volleDauer) });
     }
@@ -544,7 +577,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(Math.min(beitragsjahreReferenzalter, volleDauer)), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
         field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 58, max: 70,
           sublabel: [
-            ahvBezugSpaeter && t('vr.bezugAlterFrueh', { frueh: fmtAlterMonate(Math.round(ahvBezugAlter * 12)) }),
+            // Kapitel 4: Rücktritt vor dem frühesten Bezug → sagen, ab wann die AHV gerechnet ist.
+            ahvBezugAlter > parsedBezugAlter && t('vr.bezugAlterFrueh', { frueh: fmtAlterMonate(Math.round(ahvBezugAlter * 12)) }),
             // Frauen 1961–1969: Vorbezug ab 62 möglich (AHVG Art. 40c), nicht gerechnet — immer dazu sagen.
             fruehesterVorbezugMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear }) < refAlterMonate - 24 && t('vr.bezugAlterUebergang'),
           ].filter(Boolean).join(' ') || undefined })
@@ -584,14 +618,16 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // Monatsrente × Monate bis Alter 85). Wächst von heutiger Anwartschaft zur
         // projizierten bei Rücktritt, dann flach — die 1. Säule als sichtbares Fundament.
         // Beim Vorbezug: bis zum Referenzalter die Vorbezugsrente, danach die neu berechnete.
-        // Die AHV fliesst ab dem AHV-Bezug (frühestens 2 Jahre vor dem Referenzalter), nicht ab dem Rücktritt —
-        // sonst zählte ein Rücktritt mit 58 fünf Jahre AHV zu viel (B-18, AHVG Art. 40 Abs. 1).
-        const ahvMonate = ahvZukunftMonate({ ruecktritt: parsedBezugAlter, ahvBezug: ahvBezugAlter, refAlterJahre, lebenserwartung: parsedLE });
-        const ahvHorizonM = ahvMonate.horizont;
-        const ahvVorbezugM = ahvMonate.vorbezug;
-        const ahvCapRet = projektionAhv
-          ? projektionAhv.monatsrente * ahvVorbezugM + projektionAhv.monatsrenteReferenzalter * (ahvHorizonM - ahvVorbezugM)
-          : 0;
+        // Nie vor dem frühesten Vorbezug (Bugsuche B-18): vorher zählten bei Rücktritt 58 rund 84
+        // Monate Vorbezugsrente, und früher aufhören zeigte ein grösseres Fundament.
+        const ahvBild = ahvKapitalImBild({
+          ruecktrittJahre: parsedBezugAlter, fruehesterBezugMonate: fruehesterAhvBezugMonate, refAlterJahre,
+          lebenserwartung: parsedLE,
+          monatsrente: projektionAhv ? projektionAhv.monatsrente : 0,
+          monatsrenteReferenzalter: projektionAhv ? projektionAhv.monatsrenteReferenzalter : 0,
+        });
+        const ahvHorizonM = ahvBild.horizonM;
+        const ahvCapRet = projektionAhv ? ahvBild.kapital : 0;
         const ahvCapNow = (ahvHeute ? ahvHeute.monatsrente : 0) * ahvHorizonM;
         const ahvAt = (a) => a <= START ? ahvCapNow : (a >= ret ? ahvCapRet : ahvCapNow + (ahvCapRet - ahvCapNow) * (a - START) / Math.max(1, ret - START));
         // Stabile y-Skala (rundet auf, damit sie beim Ziehen nicht zappelt).
@@ -635,8 +671,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // AHV/BVG sind lebenslange Renten; 3a/3b sind Kapital, hier transparent auf
         // eine Monatsrente umgelegt (Kapital gleichmässig verteilt bis Alter 85).
         const drawdownMonate = Math.max(12, (parsedLE - ret) * 12);
-        // Rente ab Rücktritt: vor dem AHV-Bezug kommt noch keine AHV (die Lücke nennt der Szenariotext).
-        const ahvMonat = projektionAhv && ahvMonate.abRuecktritt ? projektionAhv.monatsrente : 0;
+        const ahvMonat = projektionAhv ? projektionAhv.monatsrente : 0;
         const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
         const s3aMonat = end.s3a > 0 ? end.s3a / drawdownMonate : 0;
         const s3bMonat = end.s3b > 0 ? end.s3b / drawdownMonate : 0;
@@ -750,17 +785,19 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           ),
           // Rücktritts-Szenario: übersetzt das gezogene Alter in Klartext und bleibt
           // dabei ehrlich zu den frühesten Bezugsaltern (AHV 63, BVG 58, 3a 60). Reine
-          // Erklärung — die AHV rechnet überall ab ahvBezugAlter (utils/ahvBezug.js).
+          // Erklärung — die AHV-Monatsrente oben ist bereits auf frühestens 63 gedeckelt.
           (() => {
             // Referenzalter geschlechts-/jahrgangsabhängig (AHV 21) — nicht pauschal 65,
             // sonst widerspräche der Szenariotext der (bereits korrekten) Prozentzahl aus
             // projektionAhv. Delta in Monaten, weil das Referenzalter der Übergangs-
             // generation krumm ist (z. B. 64 J 6 M) und „0,5 Jahre" unschön läse.
-            // Frühester AHV-Bezug, mit dem die App rechnet (Referenzalter − 24 Monate, utils/ahvBezug.js).
-            const ahvMin = (refAlterMonate - 24) / 12;
-            // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen — projektionAhv,
-            // die Quelle der Prozentzahl unten, nutzt ebenfalls parsedBezugAlter; sonst
-            // driften Szenario-Text und pct im krummen Referenzalter-Default auseinander.
+            // Dieselbe Grenze wie projektionAhv und die AHV-Fläche (utils/ahvZukunftsbild.js): 63,
+            // so wie es auch die Texte nennen. Frauen der Übergangsgeneration (ab 62) noch nicht
+            // abgebildet (D10, BUGS.md B-18).
+            const ahvMin = fruehesterAhvBezugMonate / 12;
+            // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen: es beschreibt den
+            // Rücktritt. projektionAhv rechnet mit max(Rücktritt, ahvMin) — ab dort dasselbe, so
+            // driften Szenario-Text und pct im krummen Referenzalter-Default nicht auseinander.
             const deltaMonate = Math.round((parsedBezugAlter - refAlterJahre) * 12);
             const nAbsM = Math.abs(deltaMonate);
             const delta = deltaMonate;
@@ -769,14 +806,14 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               : String(nAbsM) + ' ' + t(nAbsM === 1 ? 'vr.szenarioMonat' : 'vr.szenarioMonate');
             const pctVal = projektionAhv ? projektionAhv.vorbezugAufschub : 0;
             const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
-            const ahvBezug = fmtAlterMonate(Math.round(Math.max(ahvMin, Math.min(70, ahvBezugAlter)) * 12));
+            const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
             const referenzalter = fmtAlterMonate(refAlterMonate);
             const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '4px' } }, txt);
             const rows = [];
             if (delta < 0) {
               rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer, referenzalter }), 'a'));
               rows.push(line(t('vr.zukunftSzenarioAhvFrueh', { alter: ahvBezug, pct }), 'b'));
-              if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret, bis: fmtAlterMonate(refAlterMonate - 24) }), 'c'));
+              if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret }), 'c'));
               rows.push(line(t('vr.zukunftSzenarioSaeulen'), 'd'));
             } else if (delta > 0) {
               rows.push(line(t('vr.zukunftSzenarioAufschub', { dauer, referenzalter }), 'a'));
@@ -899,16 +936,16 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('tbody', null,
           vorbezugVergleich.map(row =>
             React.createElement('tr', { key: row.bezugAlter },
-              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td }, row.bezugAlter),
+              React.createElement('td', { style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td }, row.bezugAlter),
               // Vorbezugszeilen: darunter die Rente ab dem Referenzalter (Neuberechnung) — derselbe
               // Wert wie im AHV-Block, sonst widerspräche die Tabelle dem Ergebnis.
               ...[['monatsrente', 'monatsrenteReferenzalter'], ['jahresrente', 'jahresrenteReferenzalter']].map(([feld, feldRef]) =>
-                React.createElement('td', { key: feld, style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
+                React.createElement('td', { key: feld, style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td },
                   'CHF ' + fmt(row[feld]),
                   row.anpassung < 0 && row[feldRef] !== row[feld] && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.normal } },
                     t('vr.abAlterKurz', { alter: fmtAlterMonate(refAlterMonate), betrag: fmt(row[feldRef]) }))
                 )),
-              React.createElement('td', { style: row.bezugAlter === parsedBezugAlter ? s.tdActive : s.td },
+              React.createElement('td', { style: row.bezugAlter === ahvBezugAlter ? s.tdActive : s.td },
                 row.anpassung === 0 ? '–' : (row.anpassung > 0 ? '+' : '') + row.anpassung.toFixed(1) + '%'
               )
             )

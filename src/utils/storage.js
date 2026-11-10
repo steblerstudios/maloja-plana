@@ -141,10 +141,15 @@ export const idb = {
         savedAt: new Date().toISOString(),
       };
 
+      // Erfolg erst bei tx.oncomplete: put() merkt nur vor. Bei vollem Speicher bricht die
+      // Transaktion oft erst NACH req.onsuccess ab (QuotaExceededError) — dann fehlte die
+      // Datei, obwohl «gespeichert» gemeldet war (Bugsuche 09.11.2026, wie migrateFromOldDB).
       return new Promise((resolve, reject) => {
         const req = store.put(data);
-        req.onsuccess = () => resolve(id);
         req.onerror = () => reject(new Error('IDB save failed'));
+        tx.oncomplete = () => resolve(id);
+        tx.onabort = () => reject(tx.error || new Error('IDB save aborted'));
+        tx.onerror = () => reject(tx.error || new Error('IDB save failed'));
       });
     } catch (e) {
       console.error('IDB save error:', e.message);

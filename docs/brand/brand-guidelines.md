@@ -295,6 +295,21 @@ Stebler Studios, 09.11.2026: «Ja, so bauen». Bis dahin trugen alle Karten Heid
 - Quelle: `KARTEN_FRUCHT` und `FRUCHT_STUFEN` in `scripts/seiten/kantonsatlas.mjs`. Wächter:
   `src/__tests__/atlasStufenAbstand.test.js`.
 
+**Der Atlas als Brückenstück** *(09.11.2026, Stebler Studios «Ja, A bis C bauen»)*: Website → Atlas → App, und
+aus der App zurück zur Karte. Drei Regeln:
+
+- **Brillen sind Filter, ohne Skript.** Person · Firma · Kanton oder Gemeinde · Stiftung oder Verein, dazu «Alle
+  Karten» als Start. Jede Brille hat eine Adresse (`/kantonsatlas/#fuer-firma`), man kann sie verlinken. Nicht
+  passende Karten klappen auf eine Zeile mit «Karte zeigen» zu, **keine verschwindet**. Gewählt heisst Fläche
+  Heidelbeere + fett + «(gewählt)» für Screenreader. Kann ein Browser nicht filtern (`:has()`), gibt es keine
+  Knöpfe — kein Knopf, der nichts tut.
+- **Jede Karte mit Werkzeug führt in die App**: «Mit Ihren Angaben rechnen: ‹Werkzeug›», Ziel `/?beispiel#/…`
+  (ohne Code das Beispiel, mit Code die eigene App). Das Werkzeug wird beim Namen genannt; «Ihre eigene Lage»
+  verspricht zu viel, wo die Karte eine Quote zeigt. Karten ohne Werkzeug versprechen nichts.
+- **Die Website zeigt den Atlas als eigenen Abschnitt** mit den vier Brillen als Wege hinein. In der App bleibt
+  es beim Entscheid 24.10.2026: keine Atlas-Seite, die Karte steht im Werkzeug.
+- Wächter: `src/__tests__/atlasBruecke.test.js`. Adressen in die App: eine Quelle, `scripts/seiten-ziele.mjs`.
+
 
 ### Knöpfe (seit Fassung 9, 05.11.2026)
 
