@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { I18nContext } from '../i18n/index.js';
 import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
 import { ReserveTank } from './ReserveTank.jsx';
 import { wohnkostenRechnung, DrittelBalkenKlein, wohnkostenSatzKey } from './WohnkostenInstrument.jsx';
 import { RegionalBarometerKlein, lageZurRegion, mietVorbehalte } from './RegionalBarometer.jsx';
+import { Kalenderblatt } from './Kalenderblatt.jsx';
+import { GaengeKlein } from './BehoerdenInstrument.jsx';
+import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
@@ -12,6 +16,7 @@ import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
+import { fristAbstand } from '../utils/fristAbstand.js';
 import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
@@ -151,6 +156,19 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const mietLage = mietVergleich ? lageZurRegion(wohnR.netto, mietVergleich.regional) : null;
   const mietHinweise = mietVergleich ? mietVorbehalte(t, mietVergleich) : [];
 
+  // Sprache fürs Kalenderblatt (Monatsname) wie im Kapitel Behörden. useContext statt useT: Tests rendern ohne Provider.
+  const lang = useContext(I18nContext)?.lang || 'de';
+  const blattLocale = { de: 'de-CH', fr: 'fr-CH', it: 'it-CH', en: 'en-GB', rm: 'de-CH' }[lang] || 'de-CH';
+  // Behörden (10.11.2026): dieselben Regeln wie das Kapitel (BehoerdenInstrument, utils/behoerdenGaenge.js).
+  const bh = data?.behoerden || {};
+  const fristIso = bh.taxFilingDeadline ? String(bh.taxFilingDeadline).slice(0, 10) : null;
+  const fristVorbei = !!fristIso && steuerfristVorbei(bh, heute);
+  const fristAb = fristIso ? fristAbstand(fristIso) : null;
+  // Zahl nur, wenn die Frist noch kommt oder verpasst ist und noch etwas offen sein kann — eine erledigte alte Frist ist Geschichte.
+  const fristZeigen = fristAb && (!fristAb.vorbei || fristVorbei);
+  const erledigteGaenge = GAENGE.filter((g) => gangErledigt(g.id, gespeicherteHaken(), bh)).length;
+  const gaengeBegonnen = Object.keys(bh).length > 0;
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
@@ -162,6 +180,27 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       } : {}),
       glyph: miniKreuz(palette),
       onClick: () => onNavigate('praemien'),
+    },
+    {
+      key: 'steuerfrist', name: t('instrumente.steuerfrist'),
+      ...(fristZeigen ? {
+        zahl: fristAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+          : { wert: String(fristAb.n), einheit: t('instrumente.' + fristAb.einheit + (fristAb.n === 1 ? 'Eins' : '')) },
+        satz: t(fristVorbei ? 'instrumente.steuerfristVorbeiSatz' : 'instrumente.steuerfristSatz'),
+      } : {}),
+      sub: fristIso ? t('dashboard.glanceNoDeadline') : setup,
+      glyph: fristZeigen ? h(Kalenderblatt, { iso: fristIso, palette, locale: blattLocale, vorbei: fristVorbei }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')),
+    },
+    {
+      key: 'gaenge', name: t('instrumente.gaenge'),
+      ...(gaengeBegonnen ? {
+        zahl: { wert: erledigteGaenge + '/' + GAENGE.length, einheit: '' },
+        satz: t('instrumente.gaengeSatz'),
+      } : {}),
+      sub: setup,
+      glyph: h(GaengeKlein, { palette, erledigt: erledigteGaenge, total: GAENGE.length }),
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')),
     },
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
