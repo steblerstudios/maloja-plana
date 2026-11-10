@@ -420,14 +420,14 @@ it   k=kkZusatz type="text" placeholder~4dd9e6e3 label~3a2c1215
 it   k=kkZusatzPremium type="currency" label~a60820cc
 it   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~757bc421 orientation~47f63c40 hint~e8dbc795 label~4f42fb23 sectionIntro~d616286e
 it   k=bvgContribution type="currency" naVon="bvgInsurer" hint~96132c10 label~c53acec7
-it   k=bvgBalance type="currency" naVon="bvgInsurer" hint~be03c0fd label~e94f5d7c
+it   k=bvgBalance type="currency" naVon="bvgInsurer" hint~afcc5f15 label~e94f5d7c
 it   k=lifeInsurance type="select" label~3952c95e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=lifeInsurancePremium type="currency" label~3557e173 weitere=jahr
 it   k=freizuegigkeit type="text" placeholder~c98d4c38 label~2a79744a
 it   k=uvg type="select" section~fe0e343d orientation~f90d0cec label~4d2d8367 sectionIntro~d2a4df05 options=4 optWerte~7a7294d0 optLabels~6db95639
 it   k=uvgZusatz type="select" label~b10eabe1 options=2 optWerte~ed5d4f23 optLabels~b22e0a85
 it   k=uvgZusatzPremium type="currency" hint~f68bec3e label~40fd8b8e weitere=jahr
-it   k=ktg type="select" orientation~78e0b3a1 hint~f9d6b042 label~c6088672 options=3 optWerte~b282c309 optLabels~03bb27b0
+it   k=ktg type="select" orientation~78e0b3a1 hint~bccd109a label~c6088672 options=3 optWerte~b282c309 optLabels~03bb27b0
 it   k=liabilityInsurance type="select" orientation~28f88780 label~bd521a5e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=liabilityAmount type="currency" label~2bc08c79
 it   k=liabilityPremium type="currency" hint~139a0a3c label~ef80b8a3 weitere=jahr
