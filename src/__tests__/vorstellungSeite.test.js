@@ -367,6 +367,28 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(holen).not.toMatch(/apple|android-logo/i);
   });
 
+  it('O · der Kopf von «App holen» liegt auf dem Salbei-Blick, das Bild läuft oben aus; am Handy steht er darüber', () => {
+    const fig = html.slice(html.indexOf('<figure class="holen-blick">'), html.indexOf('</figure>', html.indexOf('<figure class="holen-blick">')));
+    expect(fig.indexOf('<h2 id="t-holen">')).toBeGreaterThan(-1);
+    expect(fig.indexOf('class="holen-kopf"')).toBeLessThan(fig.indexOf('class="holen-flaeche"'));
+    expect(stil).toContain('.holen-blick > .holen-kopf, .holen-blick > .holen-flaeche{ grid-area:1 / 1 }');
+    expect(stil).toMatch(/\.holen-blick img\{[^}]*mask-image:linear-gradient\(180deg, transparent 0%/);
+    expect(handy).toContain('.holen-blick > .holen-kopf, .holen-blick > .holen-flaeche{ grid-area:auto }');
+  });
+
+  it('Zum Nachlesen: jede Erklärseite trägt das Zeichen ihres Kapitels in der Kapitelfarbe, die Fragen keines', () => {
+    const lesen = html.slice(html.indexOf('<ul class="liste eins lesen">'), html.indexOf('</ul>', html.indexOf('<ul class="liste eins lesen">')));
+    const erwartet = { '/was-steht-mir-zu/': 5, '/praemienverbilligung/': 3, '/sozialhilfe/': 2, '/steuern/': 2, '/krankenkasse/': 3 };
+    for (const [ziel, k] of Object.entries(erwartet)) {
+      // je Listenpunkt für sich lesen (sonst läuft das Muster über den nächsten <li> hinweg)
+      const punkt = lesen.split('<li ').find((t) => t.includes(`<a href="${ziel}">`));
+      expect(punkt, ziel).toMatch(new RegExp(`^style="--farbe:var\\(--k${k}\\)"><span class="lesen-zeichen" aria-hidden="true"><svg`));
+    }
+    expect(stil).toContain('.liste .lesen-zeichen{ grid-row:1 / span 2; color:var(--farbe);');
+    const fragen = html.slice(html.indexOf('<div class="fragen">'), html.indexOf('</section>', html.indexOf('<div class="fragen">')));
+    expect(fragen).not.toContain('lesen-zeichen');
+  });
+
   it('P · die Schicht neben dem Stock trägt die Kapitelfarbe, unter dem Text mindestens 74 %', () => {
     expect(stil).toContain("@property --ton{ syntax:'<color>'; inherits:true; initial-value:#121210 }");
     for (let i = 0; i < 7; i++) expect(stil).toContain(`.reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`);

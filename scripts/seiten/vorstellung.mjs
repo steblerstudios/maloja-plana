@@ -89,6 +89,17 @@ const PINSEL_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100
 const LEER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 
+// Zum Nachlesen: je Erklärseite das Zeichen ihres Kapitels (Kapitel wie die App sie einordnet, werkzeugRegister.js:
+// Steuern und Sozialhilfe → Finanzen, Prämien → Versicherungen; «Was steht mir zu?» → Behörden: Bund, Kantone, Gemeinden).
+// Index wie CHAPTER_KEYS. Die häufigen Fragen bekommen bewusst keine Zeichen: keine ist ein Kapitel (ein Bild, eine Bedeutung).
+const NACHLESEN = [
+  ['/was-steht-mir-zu/', 'Was steht mir zu?', 'Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.', 5],
+  ['/praemienverbilligung/', 'Prämienverbilligung', 'Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.', 3],
+  ['/sozialhilfe/', 'Sozialhilfe', 'Wer entscheidet und woraus sie sich zusammensetzt.', 2],
+  ['/steuern/', 'Steuern', 'Warum derselbe Lohn je nach Wohnort anders besteuert wird.', 2],
+  ['/krankenkasse/', 'Warum die Krankenkasse so viel kostet', 'Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.', 3],
+];
+
 // O · Die drei Geräte auf dem Blick (Salbei, seit 10.11. abends getauscht mit Papier; beide haben dieselbe Kamera und
 // dieselbe Strasse): Punkte auf der Passstrasse in pass-blick.svg
 // (viewBox 0 -240 1600 1000), umgerechnet in Prozent der Bildfläche. Von links nach rechts gelesen.
@@ -434,13 +445,20 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .holen{ margin-top:16px; max-width:640px }
     /* O · Gerät wählen auf dem Blick: Punkt auf der Strasse, darüber die Wahl (Auswahl-Knopf: gewählt Sand gefüllt, 10 px,
        44 px hoch). Nur die gewählte Anleitung steht da. */
-    .holen-wahl{ border:0; min-width:0; padding:0; margin:var(--abstand-m) 0 0 }
-    .holen-blick{ position:relative; margin:0 }
+    .holen-wahl{ border:0; min-width:0; padding:0; margin:0 }
+    /* Der Kopf von «App holen» liegt auf dem Salbei-Blick (Stebler Studios 10.11. abends: «verschmelzen»): das Bild läuft
+       oben in die Seitenfarbe aus, der Text steht auf dem Auslauf; die Geräte-Punkte liegen alle tiefer (ab 57 %). */
+    .holen-blick{ position:relative; margin:0; display:grid }
+    .holen-blick > .holen-kopf, .holen-blick > .holen-flaeche{ grid-area:1 / 1 }
+    .holen-kopf{ position:relative; z-index:1; align-self:start; pointer-events:none }
+    .holen-kopf *{ pointer-events:auto }
+    .holen-blick > .quelle{ grid-row:2 }
     .holen-flaeche{ position:relative }
     /* Die Wahl liegt als Ebene im Seitenverhältnis des Bildes darüber, damit --x/--y dieselben Prozente meinen. */
     .geraet-wahl{ position:absolute; top:0; left:0; right:0; aspect-ratio:1600/1000; pointer-events:none }
     .geraet-wahl label{ pointer-events:auto }
-    .holen-blick img{ display:block; width:100%; height:auto }
+    .holen-blick img{ display:block; width:100%; height:auto;
+      -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.08) 22%, #000 46%); mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.08) 22%, #000 46%) }
     .holen-blick .quelle{ font-size:13px; color:var(--leise); padding-top:8px }
     .geraet-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
       background:#55685A; box-shadow:0 0 0 2px var(--bg) }
@@ -480,6 +498,11 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
        Links im Fliesstext (z. B. «Datenschutz» unter «Kein Tracking») bleiben unberührt. */
     .liste > li > a{ display:inline-block; padding:13px 0 }
     .liste span{ display:block }
+    /* Zum Nachlesen: links das Kapitel-Zeichen der Seite in der Kapitelfarbe (dekorativ, der Titel sagt es). */
+    .liste.lesen li{ display:grid; grid-template-columns:32px 1fr; column-gap:16px; align-items:start }
+    .liste.lesen li > *:not(.lesen-zeichen){ grid-column:2 }
+    .liste .lesen-zeichen{ grid-row:1 / span 2; color:var(--farbe); padding-top:10px }   /* .liste span färbt sonst grau */
+    .lesen-zeichen svg{ width:32px; height:32px; display:block }
     .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
     .fragen p{ color:var(--leise) }
@@ -587,6 +610,10 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
       /* O am Handy: Punkte bleiben im Bild, die Wahl steht als Zeile darunter (das Bild ist zu niedrig für Schilder). */
       .geraet-wahl{ position:static; aspect-ratio:auto; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
+      /* Am Handy ist das Bild zu niedrig für Text: der Kopf steht darüber, das Bild läuft oben weich aus. */
+      .holen-blick > .holen-kopf, .holen-blick > .holen-flaeche{ grid-area:auto }
+      .holen-blick > .quelle{ grid-row:auto }
+      .holen-blick img{ -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 30%); mask-image:linear-gradient(180deg, transparent 0%, #000 30%) }
       .geraet-wahl label{ position:static; transform:none }
       .geraet-wahl label::after{ content:none }
       .schluss-text h2{ font-size:28px }
@@ -918,15 +945,17 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
 
     <!-- ═══ Holen ═══ -->
     <section id="holen" aria-labelledby="t-holen">
-      <p class="augenbraue">Telefon, Tablet, Laptop</p>
-      <h2 id="t-holen">Maloja Plana holen — in einer Minute.</h2>
-      <p class="unterzeile">Maloja Plana lässt sich auf den Startbildschirm oder ins Dock legen. Danach öffnet es sich mit eigenem Symbol und in einem eigenen Fenster, wie eine App.</p>
       <!-- O · Drei Punkte auf der Passstrasse im Blick (Papier): Gerät wählen, darunter stehen nur dessen Schritte.
            Ohne Skript, wie die Situationen; Pfeiltasten wechseln. Zeichen selbst gezeichnet, keine fremden Marken. -->
       <fieldset class="holen-wahl">
         <legend class="unsichtbar">Ihr Gerät</legend>
 ${GERAETE.map((g, i) => `        <input type="radio" name="geraet" id="g${i + 1}" class="unsichtbar"${i === 0 ? ' checked' : ''}>`).join('\n')}
         <figure class="holen-blick">
+          <div class="holen-kopf">
+            <p class="augenbraue">Telefon, Tablet, Laptop</p>
+            <h2 id="t-holen">Maloja Plana holen — in einer Minute.</h2>
+            <p class="unterzeile">Maloja Plana lässt sich auf den Startbildschirm oder ins Dock legen. Danach öffnet es sich mit eigenem Symbol und in einem eigenen Fenster, wie eine App.</p>
+          </div>
           <div class="holen-flaeche">
             <img src="/vorstellung/pass-blick.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
 ${GERAETE.map((g, i) => `            <span class="geraet-punkt p${i + 1}" style="--x:${g.x}; --y:${g.y}" aria-hidden="true"></span>`).join('\n')}
@@ -989,12 +1018,8 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
     <section class="zweispaltig" aria-label="Nachlesen und häufige Fragen">
       <div>
         <h2>Zum Nachlesen</h2>
-        <ul class="liste eins">
-          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a><span>Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.</span></li>
-          <li><a href="/praemienverbilligung/">Prämienverbilligung</a><span>Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.</span></li>
-          <li><a href="/sozialhilfe/">Sozialhilfe</a><span>Wer entscheidet und woraus sie sich zusammensetzt.</span></li>
-          <li><a href="/steuern/">Steuern</a><span>Warum derselbe Lohn je nach Wohnort anders besteuert wird.</span></li>
-          <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a><span>Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.</span></li>
+        <ul class="liste eins lesen">
+${NACHLESEN.map(([ziel, titel, satz, k], n) => `          <li style="--farbe:var(--k${k})"><span class="lesen-zeichen" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span><a href="${ziel}">${esc(titel)}</a><span>${esc(satz)}</span></li>`).join('\n')}
         </ul>
       </div>
       <div class="fragen">

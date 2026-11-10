@@ -32,8 +32,10 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
   it('die Wege in den Atlas und «Zum Nachlesen» sind gross genug zum Tippen (44 px)', () => {
     expect(html).toContain('.liste > li > a{ display:inline-block; padding:13px 0 }');
     // Beide Listen tragen ihre Links direkt im Listenpunkt, sonst greift die Regel nicht.
-    const nachlesen = html.match(/<h2>Zum Nachlesen<\/h2>\s*<ul class="liste eins">[\s\S]*?<\/ul>/)[0];
-    expect(nachlesen.match(/<li><a href=/g)).toHaveLength(5);
+    const nachlesen = html.match(/<h2>Zum Nachlesen<\/h2>\s*<ul class="liste eins lesen">[\s\S]*?<\/ul>/)[0];
+    // Seit 10.11. abends steht vor dem Link das Kapitel-Zeichen; der Link bleibt direktes Kind des Listenpunkts.
+    expect(nachlesen.match(/<\/span><a href=/g)).toHaveLength(5);
+    expect(nachlesen).not.toMatch(/<span class="lesen-zeichen"[^>]*>(?:(?!<\/span>)[\s\S])*<a /);
     expect(abschnitt.match(/<\/p><a href="\/kantonsatlas\/#fuer-/g)).toHaveLength(BRILLEN.length);
     // Der Link im Satz (Datenschutz) steht in einem <p> und wird nicht aufgebläht.
     expect(html).toMatch(/<p>[^<]*Keine Werbung[^<]*<a href="\/rechtliches\/">Datenschutz<\/a>/);
