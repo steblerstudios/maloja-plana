@@ -92,8 +92,8 @@ Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — ~~ni
 live~~ → **gemergt 10.11.2026, 01:23 (PR #800, `main` = `9b869714`), NICHT live** — «Behoben (Zweig)»
 unten heisst seither «in `main`, wartet auf den Deploy». Erst nach dem Deploy wandern die Zeilen
 nach «Zuletzt behoben», mit Bundle-Name und Uhrzeit. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
-zuerst. Danach auch **B-11, B-16, B-17 und B-18** behoben (siehe je dort). **Offen bleibt
-B-19** sowie die Text-Punkte aus den Fachprüfungen zu B-17/B-18. Rechner/Fachlogik: siehe Nachtrag unten.
+zuerst. Danach auch **B-11, B-16, B-17 und B-18** behoben (siehe je dort), am 10.11. dazu
+**B-19**. **Offen bleiben** die Text-Punkte aus den Fachprüfungen zu B-17/B-18. Rechner/Fachlogik: siehe Nachtrag unten.
 
 - 2026-11-09 · **B-7** · **Dokument-Datei galt als gespeichert, bevor sie es war.**
   `idb.save` (`src/utils/storage.js`) löste bei `req.onsuccess` auf. Bei vollem Speicher bricht
@@ -184,6 +184,12 @@ gesetzliche Werte stimmen. Ein Fix hier ist Fachlogik → vorher `swiss-precisio
 - 2026-11-09 · **B-19** · Klein: Das Feld «Bezugsalter» sagt `min 63`, der Regler im Zukunftsbild
   setzt denselben Wert ab 58. Bei 60 rechnet die AHV wie 63, angezeigt bleibt 60. Eher
   Klarheitsfrage (Rücktritt ≠ AHV-Bezug) als Rechenfehler.
+  **Nachgemessen 10.11.2026: doch ein Rechenfehler** — bei Eingabe 60 zählte der AHV-Block 39
+  Beitragsjahre «bis zum Bezug (60 Jahre)» → 1 822 / ab 65 2 092 statt wie 63 → 1 962 / 2 070
+  (derselbe Fehler wie B-18). **Behoben** (Zweig `fix/bezugsalter-ahv-grenze`): AHV-Block,
+  Annahme-Text und Tabellen-Markierung nehmen `ahvBezugAlter` = max(Rücktritt, frühester Bezug);
+  BVG/3a bleiben beim Rücktritt. Test in `zukunftsbildAhvAb63.test.js`. `swiss-precision-pruefer`:
+  mergereif nach der Markierungs-Korrektur.
 
 Nicht als Bug geführt: die automatischen Sicherungen (`autoBackup.js`) werden angelegt, lassen
 sich in der App aber nicht zurückholen — fehlende Funktion, gehört in die Bau-Liste.

@@ -85,6 +85,32 @@ describe('Frauen der Übergangsgeneration (Fachprüfung 09.11.2026)', () => {
   });
 });
 
+// Bugsuche B-19 (10.11.2026): dasselbe im Reiter AHV. Das Feld «Bezugsalter» teilt seinen Wert
+// mit dem Regler im Zukunftsbild (ab 58). Bei 60 rechnete der AHV-Block mit 39 Beitragsjahren
+// «bis zum Bezug (60 Jahre)» → 1 822 / ab 65 2 092, statt wie bei 63 → 1 962 / 2 070.
+describe('Vorsorge-Rechner, Reiter AHV (B-19)', () => {
+  const ahvTeil = (html) => [(html.match(/CHF [0-9’]+ \/ Monat/g) || []).slice(0, 2).join(' | '),
+    (html.match(/Bis zum Bezug \([^)]*\) sind das \d+ Beitragsjahre/) || [''])[0]].join(' || ');
+  it('Bezugsalter 60 rechnet die AHV wie 63 — Beträge und Beitragsjahre', () => {
+    reiter = 'ahv';
+    bezugAlter = '63';
+    const mit63 = ahvTeil(zeichne(profil));
+    bezugAlter = '60';
+    const mit60 = ahvTeil(zeichne(profil));
+    expect(mit63).toContain('CHF 1’962 / Monat');
+    expect(mit60).toBe(mit63);
+  });
+
+  // Fachprüfung 10.11.2026: bei Eingabe 60 war in der Vergleichstabelle keine Zeile markiert.
+  it('Vergleichstabelle markiert bei Eingabe 60 die Zeile 63', () => {
+    reiter = 'vergleich';
+    bezugAlter = '60';
+    const html = zeichne(profil);
+    const markiert = [...html.matchAll(/<td style="[^"]*font-weight[^"]*">(\d+)<\/td>/g)].map((m) => m[1]);
+    expect(markiert).toEqual(['63']);
+  });
+});
+
 describe('Vorsorge-Rechner, Reiter Zukunft', () => {
   it('Rücktritt mit 58 zeigt dieselbe AHV wie Bezug mit 63', () => {
     bezugAlter = '63';
