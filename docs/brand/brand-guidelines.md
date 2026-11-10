@@ -430,7 +430,14 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   Notgroschen die Ausgaben. **Keine eigene Karte zuoberst** — ein Zwischenstand mit Karte über «Was ist
   jetzt dran?» ist wieder entfernt; die Zahl gehört zu ihrem Instrument. Keine Ampelfarbe; bei leerem
   Notgroschen keine grosse «0». Dieselbe Rechnung wie die Tankanzeige (`data/reserveTank.js`).
-  Offen: dasselbe System (Bild · grosse Zahl · Satz) für Netz-Schild, Franchise-Kreuz und Steuer-Säule.
+- **Alle Instrumente: Bild · grosse Zahl · ein Satz** *(10.11.2026, Skizze; Stebler Studios «ja super genau so»)*.
+  In der Kapitelzeile zeigt jedes Instrument unter dem Bild seine Zahl gross (`2xl`) und darunter einen Satz,
+  was sie bedeutet. Der Name tritt dann zurück (bleibt im `title` und im `aria-label`). Steuer-Säule
+  «≈ CHF 8’431» · «So viel Einkommenssteuer im Jahr, grob geschätzt», ihre Hinweise (Bund, Annahmen, Frist)
+  bleiben klein darunter; Reserve-Tank «4.7 Monate» · «So lange reicht Ihr Notgroschen»; Netz-Schild
+  «8/8» · «So viel Ihrer Absicherung ist eingetragen»; Franchise-Kreuz «CHF 2’500» · «Eher diese Franchise».
+  Beträge laufen über `betrag()`, damit der Sichtschutz greift. Ohne Zahl (nicht eingerichtet, Quellensteuer,
+  leerer Notgroschen) bleibt die Kachel wie bisher: Name und kleiner Satz.
   Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)

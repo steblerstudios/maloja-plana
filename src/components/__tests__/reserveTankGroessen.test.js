@@ -52,3 +52,26 @@ describe('Kapitelzeile Finanzen: die Monate gross (Stebler Studios 10.11.2026)',
     expect(quelle('../../Dashboard.jsx')).not.toMatch(/NotgroschenZahl/);
   });
 });
+
+describe('Alle Instrumente: Bild · grosse Zahl · ein Satz (Skizze 10.11.2026, «ja super genau so»)', () => {
+  const panel = quelle('../InstrumentePanel.jsx');
+  it('jedes der vier Instrumente kennt Zahl und Satz', () => {
+    for (const key of ['tacho', 'steuer', 'tank', 'schild']) {
+      const block = panel.slice(panel.indexOf("key: '" + key + "'"), panel.indexOf("key: '" + key + "'") + 900);
+      expect(block, key).toMatch(/zahl:/);
+      expect(block, key).toMatch(/satz:/);
+    }
+  });
+  it('Beträge über betrag(), damit der Sichtschutz greift', () => {
+    expect(panel).toMatch(/zahl: \{ wert: chfBetrag\(vorschlag\.franchise\)/);
+    expect(panel).toMatch(/wert: '≈ ' \+ chfBetrag\(steuerGanz\.total\)/);
+  });
+  it('Steuer behält ihre Hinweise (Davon Bund, Annahmen, Frist) klein darunter und im aria-label', () => {
+    expect(panel).toMatch(/mehr: steuerSaetze\.slice\(1\)/);
+    expect(panel).toMatch(/tile\.mehr\.join\(' '\)/);
+  });
+  it('Satz ersetzt den Namen nur, wenn eine Zahl steht; der Name bleibt im title', () => {
+    expect(panel).toContain("? h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, tile.satz)");
+    expect(panel).toMatch(/title: tile\.name/);
+  });
+});
