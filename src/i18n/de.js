@@ -6452,7 +6452,7 @@ export default {
         // Die Überschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
         // Im Budget gibt es keine Nachbarzeile, die sie auffängt — dort war das rote „!“ der
         // einzige Träger der Aussage (Predeploy-Runde 8, zweite Batterie).
-        thresholdBreachedLine: { sie: 'Ihre Miete übersteigt einen Drittel Ihres Einkommens.', du: 'Deine Miete übersteigt einen Drittel deines Einkommens.' },
+        thresholdBreachedLine: { sie: 'Ihre Wohnkosten übersteigen einen Drittel Ihres Einkommens.', du: 'Deine Wohnkosten übersteigen einen Drittel deines Einkommens.' },
         // ⚠️ `www.` ist Pflicht: die nackte Domain bfs.admin.ch ist als HTTPS-Ziel tot
         // (Connection refused) — in Runde 8 belegt.
         source: 'Quelle: [[BFS|www.bfs.admin.ch]], Mietpreis-Strukturerhebung {year} · Nettomiete, ohne Nebenkosten',

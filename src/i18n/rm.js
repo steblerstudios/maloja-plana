@@ -5885,7 +5885,7 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
         userEqual: { sie: 'Vossa fittanza è circa en la media da Vossa regiun.', du: 'Tia fittanza è circa en la media da tia regiun.' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
-        thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
+        thresholdBreachedLine: { sie: 'Voss custs d’abitar surpassan in terz da Vossa entrada.', du: 'Tes custs d’abitar surpassan in terz da tia entrada.' }, // TODO(rm): Gegenlese
         source: 'Funtauna: [[UST|www.bfs.admin.ch]], enquista structurala davart ils tschains {year} · tschains net, senza cuosts secundars',
         // rm ungeprüft F6
         vergleichZimmer: 'Cumparà cun abitaziuns da {n} stanzas.',

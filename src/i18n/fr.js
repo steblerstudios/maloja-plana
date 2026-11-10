@@ -6373,7 +6373,7 @@ export default {
         userBelow: { sie: 'Votre loyer se situe environ {pct} % en dessous de la moyenne de votre région.', du: 'Ton loyer se situe environ {pct} % en dessous de la moyenne de ta région.' },
         userEqual: { sie: 'Votre loyer est proche de la moyenne de votre région.', du: 'Ton loyer est proche de la moyenne de ta région.' },
         structural: 'C\'est surtout structurel — dans les villes et régions prisées, le terrain et les logements sont plus rares et plus chers. La moyenne suisse y est souvent introuvable.',
-        thresholdBreachedLine: { sie: 'Votre loyer dépasse un tiers de vos revenus.', du: 'Ton loyer dépasse un tiers de tes revenus.' },
+        thresholdBreachedLine: { sie: 'Vos frais de logement dépassent un tiers de vos revenus.', du: 'Tes frais de logement dépassent un tiers de tes revenus.' },
         source: 'Source : [[OFS|www.bfs.admin.ch]], enquête de structure sur les loyers {year} · loyer net, hors charges',
         vergleichZimmer: 'Comparé aux logements de {n} pièces.',
         vergleichAb6: 'Comparé aux logements de 6 pièces ou plus.',
