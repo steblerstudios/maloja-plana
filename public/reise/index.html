@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Skript nur als Datei von der eigenen Adresse (script-src 'self'). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten. Quelle: scripts/seiten/reise.mjs · Generator: scripts/build-seiten.mjs -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, follow">
+  <meta name="author" content="Stebler Studios">
+  <title>Die Reise — Maloja Plana</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2'); font-weight:700; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
+    :root{ --bg:#F2F2F0; --flaeche:#FAFAF8; --text:#24262A; --leise:#5D5F63;
+           --sand:#C4A06A; --sandTief:#7A5C2E; --aufSand:#24262A; --salbei:#5A7868; --rose:#B87070; --roseTief:#8F4A4A;
+           --berg:#E4E1D8; --bergRand:#CFCABD; --wegOffen:#9A978E;
+           --anzeige:'Hanken Grotesk',system-ui,sans-serif; --lese:'Lexend',system-ui,sans-serif }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2B2A26; --text:#E6E3DC; --leise:#B7B3AA; --sandTief:#D9BB8A; --salbei:#7E9F8C;
+             --roseTief:#E0A3A3; --berg:#33312C; --bergRand:#4A473F; --wegOffen:#77746C }
+    }
+    *{ box-sizing:border-box }
+    html{ scroll-behavior:smooth }
+    @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto } }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:var(--lese); font-size:16px; line-height:1.5 }
+    a{ color:var(--sandTief) }
+    a:focus-visible, summary:focus-visible{ outline:3px solid var(--sand); outline-offset:3px; border-radius:6px }
+    .kopf{ position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--bergRand) }
+    .entwurf{ font-size:13px; color:var(--leise); text-align:center; padding:6px 16px; border-bottom:1px solid var(--bergRand) }
+    .etappen{ display:flex; gap:4px; justify-content:center; list-style:none; margin:0; padding:4px 16px; overflow-x:auto }
+    .etappen a{ display:flex; align-items:center; gap:6px; text-decoration:none; color:var(--leise); font-size:13px; padding:6px 8px; min-height:44px; border-radius:8px }
+    .etappen .punkt{ width:14px; height:14px; border-radius:50%; border:1.5px dashed var(--wegOffen); flex:none }
+    .etappen a.erreicht{ color:var(--text) }
+    .etappen a.erreicht .punkt{ background:var(--sand); border:1.5px solid var(--sandTief) }
+    .etappen a[aria-current]{ background:var(--flaeche) }
+    .notfall{ position:fixed; right:16px; bottom:16px; z-index:6; display:inline-flex; align-items:center; gap:8px;
+      background:var(--flaeche); color:var(--roseTief); border:1.5px solid var(--rose); border-radius:999px;
+      padding:10px 16px; font-size:15px; text-decoration:none; min-height:44px }
+    .tal{ min-height:calc(100vh - 100px); display:flex; flex-direction:column; justify-content:center; max-width:1100px; margin:0 auto; padding:48px 16px }
+    .marke{ font-size:13px; letter-spacing:.08em; color:var(--leise); margin:0 0 16px }
+    h1{ font-family:var(--anzeige); font-weight:700; font-size:clamp(40px,8vw,88px); line-height:1; margin:0 0 24px; max-width:12ch }
+    .tal p{ max-width:34rem; margin:0 0 16px }
+    .los{ font-size:14px; color:var(--leise) }
+    .reise{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; max-width:1100px; margin:0 auto; padding:0 16px }
+    .bild{ position:sticky; top:110px; height:calc(100vh - 126px); display:flex; align-items:center; justify-content:center }
+    .bild svg{ width:100%; max-height:100% }
+    .texte{ padding-bottom:16vh }
+    .station{ min-height:88vh; display:flex; flex-direction:column; justify-content:center; max-width:34rem; scroll-margin-top:110px }
+    .zahl{ font-family:var(--anzeige); font-weight:700; font-size:clamp(72px,11vw,128px); line-height:.9; color:var(--bergRand); margin:0 }
+    .station.erreicht .zahl{ color:var(--sand) }
+    h2{ font-family:var(--anzeige); font-weight:700; font-size:32px; line-height:1.15; margin:8px 0 12px }
+    .station p{ margin:0 0 12px; max-width:65ch }
+    .stempel-zeile{ font-size:13px; color:var(--leise) }
+    .hoehe{ font-family:var(--anzeige); font-weight:700; font-size:clamp(56px,9vw,104px); line-height:.95; margin:0 }
+    .hoehe small{ font-size:.35em; letter-spacing:.04em; color:var(--leise) }
+    .knopf{ display:inline-block; background:var(--sand); color:var(--aufSand); border-radius:12px; padding:14px 22px; text-decoration:none; min-height:44px; margin-top:8px }
+    .fuss{ max-width:1100px; margin:0 auto; padding:32px 16px 96px; border-top:1px solid var(--bergRand); font-size:14px; color:var(--leise) }
+    .js #weg{ stroke-dasharray:1; stroke-dashoffset:1 }
+    .st circle{ fill:var(--flaeche); stroke:var(--wegOffen); stroke-width:1.5; stroke-dasharray:3 3 }
+    .st path{ stroke:var(--aufSand); stroke-width:2.2; fill:none; opacity:0 }
+    .st.erreicht circle{ fill:var(--sand); stroke:var(--sandTief); stroke-dasharray:none; stroke-width:2.5 }
+    .st.erreicht path{ opacity:1 }
+    @media (prefers-reduced-motion: no-preference){
+      .stempel{ transform-box:fill-box; transform-origin:center }
+      .st.erreicht .stempel{ animation:einbrennen .5s cubic-bezier(.2,.8,.2,1) }
+      @keyframes einbrennen{ 0%{ transform:scale(1.7); opacity:.15 } 60%{ transform:scale(.94); opacity:1 } 100%{ transform:scale(1) } }
+    }
+    @media (max-width:767px){
+      .etappen .name{ display:none }
+      .reise{ grid-template-columns:1fr; gap:0 }
+      .bild{ top:96px; height:30vh; background:var(--bg); z-index:2; border-bottom:1px solid var(--bergRand); margin:0 -16px; padding:6px 0 }
+      .station{ min-height:58vh; justify-content:flex-start; padding-top:24px; scroll-margin-top:calc(96px + 30vh) }
+      h2{ font-size:26px }
+      .zahl{ font-size:64px }
+    }
+  </style>
+</head>
+<body>
+  <header class="kopf">
+    <p class="entwurf">Entwurf · noch nicht verlinkt</p>
+    <nav aria-label="Etappen">
+      <ol class="etappen">
+        <li><a href="#basis"><span class="punkt"></span><span class="name">Grundlagen</span></a></li>
+        <li><a href="#wohnen"><span class="punkt"></span><span class="name">Wohnen</span></a></li>
+        <li><a href="#finanzen"><span class="punkt"></span><span class="name">Finanzen</span></a></li>
+        <li><a href="#versicherungen"><span class="punkt"></span><span class="name">Versicherungen</span></a></li>
+        <li><a href="#ausbildung"><span class="punkt"></span><span class="name">Ausbildung</span></a></li>
+        <li><a href="#behoerden"><span class="punkt"></span><span class="name">Behörden</span></a></li>
+        <li><a href="#pass"><span class="punkt"></span><span class="name">Pass</span></a></li>
+      </ol>
+    </nav>
+  </header>
+  <a class="notfall" href="/?beispiel#/chapter/6">
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></svg>
+    Notfall
+  </a>
+  <section class="tal" aria-labelledby="titel">
+    <p class="marke">MALOJA PLANA</p>
+    <h1 id="titel">Ein Weg durch Ihr Leben in der Schweiz.</h1>
+    <p>6 Stationen bis zum Pass. An jeder sehen Sie, wobei Maloja hilft.</p>
+    <p class="los">Scrollen, um loszugehen.</p>
+  </section>
+  <main class="reise">
+    <div class="bild" aria-hidden="true">
+      <svg viewBox="0 0 400 700" focusable="false">
+        <polygon points="20,690 140,50 210,150 310,30 390,690" fill="var(--berg)" stroke="var(--bergRand)" stroke-width="1"/>
+        <path d="M200 660 L310 590 L90 500 L300 410 L120 320 L290 240 L150 190 L210 150" fill="none" stroke="var(--wegOffen)" stroke-width="2" stroke-dasharray="6 6"/>
+        <path id="weg" d="M200 660 L310 590 L90 500 L300 410 L120 320 L290 240 L150 190 L210 150" pathLength="1" fill="none" stroke="var(--sand)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="200" cy="660" r="6" fill="var(--salbei)"/>
+        <g class="st"><g class="stempel"><circle cx="310" cy="590" r="14"/><path d="M303 590l5 5 9-10"/></g></g><g class="st"><g class="stempel"><circle cx="90" cy="500" r="14"/><path d="M83 500l5 5 9-10"/></g></g><g class="st"><g class="stempel"><circle cx="300" cy="410" r="14"/><path d="M293 410l5 5 9-10"/></g></g><g class="st"><g class="stempel"><circle cx="120" cy="320" r="14"/><path d="M113 320l5 5 9-10"/></g></g><g class="st"><g class="stempel"><circle cx="290" cy="240" r="14"/><path d="M283 240l5 5 9-10"/></g></g><g class="st"><g class="stempel"><circle cx="150" cy="190" r="14"/><path d="M143 190l5 5 9-10"/></g></g><g class="st"><g class="stempel"><circle cx="210" cy="150" r="16"/><path d="M203 150l5 5 9-10"/></g></g>
+      </svg>
+    </div>
+    <div class="texte">
+      <section class="station" id="basis" aria-labelledby="t-basis">
+        <p class="zahl" aria-hidden="true">01</p>
+        <h2 id="t-basis">Grundlagen</h2>
+        <p>Name, Kontakt, wer zum Haushalt gehört. Das Fundament, auf dem alles andere aufbaut.</p>
+        <p><a href="/?beispiel#/chapter/0">Grundlagen im Beispiel ansehen</a></p>
+        <p class="stempel-zeile">Station 1 von 6</p>
+      </section>
+      <section class="station" id="wohnen" aria-labelledby="t-wohnen">
+        <p class="zahl" aria-hidden="true">02</p>
+        <h2 id="t-wohnen">Wohnen</h2>
+        <p>Adresse, Mietkosten, Vermieterschaft. Und beim Umzug die Schritte in der richtigen Reihenfolge.</p>
+        <p><a href="/?beispiel#/chapter/1">Wohnen im Beispiel ansehen</a></p>
+        <p class="stempel-zeile">Station 2 von 6</p>
+      </section>
+      <section class="station" id="finanzen" aria-labelledby="t-finanzen">
+        <p class="zahl" aria-hidden="true">03</p>
+        <h2 id="t-finanzen">Finanzen</h2>
+        <p>Einkommen, Monatsausgaben, Sparen. Ein Budget, das zu Ihrem Alltag passt.</p>
+        <p><a href="/?beispiel#/chapter/2">Finanzen im Beispiel ansehen</a></p>
+        <p class="stempel-zeile">Station 3 von 6</p>
+      </section>
+      <section class="station" id="versicherungen" aria-labelledby="t-versicherungen">
+        <p class="zahl" aria-hidden="true">04</p>
+        <h2 id="t-versicherungen">Versicherungen</h2>
+        <p>Grundversicherung, Vorsorge, weitere Versicherungen. Und was Ihnen zustehen könnte.</p>
+        <p><a href="/?beispiel#/chapter/3">Versicherungen im Beispiel ansehen</a></p>
+        <p class="stempel-zeile">Station 4 von 6</p>
+      </section>
+      <section class="station" id="ausbildung" aria-labelledby="t-ausbildung">
+        <p class="zahl" aria-hidden="true">05</p>
+        <h2 id="t-ausbildung">Ausbildung</h2>
+        <p>Abschlüsse, Lebenslauf, Weiterbildung. Was Sie gelernt haben, an einem Ort.</p>
+        <p><a href="/?beispiel#/chapter/4">Ausbildung im Beispiel ansehen</a></p>
+        <p class="stempel-zeile">Station 5 von 6</p>
+      </section>
+      <section class="station" id="behoerden" aria-labelledby="t-behoerden">
+        <p class="zahl" aria-hidden="true">06</p>
+        <h2 id="t-behoerden">Behörden</h2>
+        <p>Steuern, Bewilligungen, Briefe an Ämter. Mit Fristen, die nicht untergehen.</p>
+        <p><a href="/?beispiel#/chapter/5">Behörden im Beispiel ansehen</a></p>
+        <p class="stempel-zeile">Station 6 von 6</p>
+      </section>
+      <section class="station" id="pass" aria-labelledby="t-pass">
+        <p class="hoehe">1815 m <small>ü. M.</small></p>
+        <h2 id="t-pass">Auf dem Malojapass.</h2>
+        <p>Von hier sehen Sie alles. Schauen Sie sich Maloja mit Beispieldaten an, ohne etwas einzugeben.</p>
+        <p><a class="knopf" href="/?beispiel#/dashboard">Beispiel ansehen</a></p>
+      </section>
+    </div>
+  </main>
+  <footer class="fuss">
+    <p>Maloja Plana dient der Orientierung und ersetzt keine Beratung. <a href="/rechtliches/">Impressum und Datenschutz</a></p>
+  </footer>
+  <script src="/reise/reise.js"></script>
+</body>
+</html>

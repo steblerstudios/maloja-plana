@@ -127,6 +127,9 @@ const OHNE_UNTERSTRICH_ERLAUBT = {
   'a.weg': 'Knopfform mit Rand, Fläche und Pfeil, 44 px hoch, Form statt Farbe',
   // Kantonsatlas, Brillen als Filter (Brückenstück 09.11.2026): Knopfreihe in nav.brillen-wahl.
   '.brillen-wahl a': 'Knopfform (Pille mit Rand und Fläche), 44 px hoch, in nav; gewählt zusätzlich fett',
+  // Die Reise (/reise/, Entwurf 10.11.2026).
+  '.etappen a': 'Etappen-Leiste in nav, jeder Eintrag ein Link mit Stations-Punkt, 44 px hoch; aktuelle Etappe mit Fläche',
+  '.notfall': 'festes Notfall-Schild: Pille mit Rand, Fläche und Kreuz-Symbol, 44 px hoch, Form statt Farbe',
 };
 
 describe('Links im Text sind nicht nur an der Farbe erkennbar (WCAG 1.4.1)', () => {

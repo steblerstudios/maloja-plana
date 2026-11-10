@@ -30,6 +30,7 @@ import { HINTERGRUND } from './seiten/hintergrund.mjs';
 import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, bewegtGemeinsam, praemieBuehneSvg } from './seiten-figuren.mjs';
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
 import { appAnsicht } from './seiten-ziele.mjs';
+import { reiseAusgaben } from './seiten/reise.mjs';
 import { KANTONSSEITEN, WEGE, KANTON_HINWEIS } from './seiten/praemienverbilligung-kantone.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
@@ -1185,6 +1186,10 @@ const bewegtDatei = (pfad, inhalt) => ({
   name: `krankenkasse/bewegt/${pfad}`,
 });
 for (const [pfad, inhalt] of Object.entries(bewegtGemeinsam())) seitenAusgaben.push(bewegtDatei(pfad, inhalt));
+// Die Reise (/reise/): Entwurf, noindex, nicht in der Sitemap. Skript als eigene Datei, daher script-src 'self'.
+for (const a of reiseAusgaben({ csp: CSP.replace("default-src 'none';", "default-src 'none'; script-src 'self';") })) {
+  seitenAusgaben.push({ ziel: resolve(WURZEL, 'public', ...a.pfad.split('/')), inhalt: a.inhalt, name: a.pfad });
+}
 for (const name of Object.keys(BEWEGT)) {
   seitenAusgaben.push(bewegtDatei(`${name}/index.html`, bewegtSeiteBauen(name)));
   const { figur } = bewegtSkripte(name);
