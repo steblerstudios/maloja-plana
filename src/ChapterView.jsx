@@ -78,6 +78,9 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
 const LohnImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.LohnImKapitel })));
+// Arbeit im Kapitel (10.11.2026, Stebler Studios «… und auch wo wir sehen mit dem Lohn-Barometer»): Dienstjahre,
+// Ferien und Pensum direkt unter dem Barometer — dieselben Kacheln wie in der Übersicht.
+const ArbeitInstrumente = React.lazy(() => import('./components/InstrumentePanel.jsx').then((m) => ({ default: m.InstrumentePanel })));
 const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
 const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
 
@@ -2272,6 +2275,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     chapter.key === 'ausbildung' && allData && React.createElement(React.Suspense, { key: 'ausbildung-oben', fallback: null },
       React.createElement('div', { 'data-teil': 'ausbildung-lohn', style: { marginBottom: space.lg + 'px' } },
         React.createElement(LohnImKapitel, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, onNavigate })
+      ),
+      React.createElement('div', { 'data-teil': 'ausbildung-instrumente', style: { marginBottom: space.lg + 'px' } },
+        React.createElement(ArbeitInstrumente, { palette, t: tr, data: { ...allData, ausbildung: data }, onNavigate: (ziel, idx) => {
+          // Im eigenen Kapitel führt die Kachel zum Bereich Arbeit im Formular (Stellenantritt, darunter Wochenstunden
+          // und Ferien) — kein Klick ins Leere. Alle drei Kacheln zeigen dorthin.
+          if (ziel === 'chapter') {
+            // Formular: das Eingabefeld; im schreibgeschützten Beispiel stehen die Angaben als Liste (angaben-liste).
+            const feld = document.getElementById('ausbildung-employmentStart');
+            if (feld) { feld.scrollIntoView({ block: 'center' }); feld.focus({ preventScroll: true }); return; }
+            document.querySelector('[data-teil="angaben-liste"]')?.scrollIntoView({ block: 'start' });
+            return;
+          }
+          onNavigate && onNavigate(ziel, idx);
+        }, nur: ['dienst', 'ferien', 'pensum'] })
       ),
       React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
     ),

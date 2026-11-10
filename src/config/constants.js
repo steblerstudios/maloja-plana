@@ -403,6 +403,10 @@ export function getChapters(t) {
         { k: 'employmentStart', type: 'date', naOk: true },
         { k: 'workPermit', type: 'select', sel: 1, orientation: or(t, 'bewilligung_b') },
         { k: 'workHoursPerWeek', type: 'text', naOk: true },
+        // Ferien (10.11.2026, Stebler Studios «Ferien mit neuem Feld»): Anspruch und im laufenden Jahr bezogen —
+        // für die Instrument-Kachel «Ferien» (offene Tage). Bezogen gilt fürs laufende Jahr und wird im Januar neu erfasst.
+        { k: 'ferienTageJahr', type: 'text', naOk: true },
+        { k: 'ferienTageBezogen', type: 'text', naOk: true },
         { k: 'languages', type: 'textarea', sec: 'languages' },
       ],
       docs: [
@@ -485,7 +489,7 @@ export const FIELD_KEYS = {
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'residenceType', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'wfgWohnung'],
   finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'kkZusatzPremium', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'lifeInsurancePremium', 'freizuegigkeit', 'uvg', 'uvgZusatz', 'uvgZusatzPremium', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
-  ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'branche', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
+  ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'branche', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'ferienTageJahr', 'ferienTageBezogen', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],
 };

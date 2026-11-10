@@ -10,6 +10,12 @@ import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
 import { bereitschaft, BereitRingKlein } from './NotfallImKapitel.jsx';
+import { lohnLage, LohnKlein } from './LohnEinordnung.jsx';
+import { LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../data/branchenLohn.js';
+import { wochenstundenUnplausibel } from '../data/lohnCheck.js';
+import { dienstLage } from '../utils/arbeitsverhaeltnis.js';
+import { istLernend } from '../utils/anstellung.js';
 import { berechneFranchise } from '../data/kvgLeistungen.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
@@ -44,6 +50,39 @@ const miniFranchise = (palette, anteil) => {
     h('rect', { x: 2, y: 16, width: 54, height: 8, rx: 4, fill: palette.border }),
     anteil > 0 && h('rect', { x: 2, y: 16, width: Math.max(8, Math.min(1, anteil) * 54), height: 8, rx: 4, fill: palette.sky }),
     h('line', { x1: 57, y1: 10, x2: 57, y2: 30, stroke: palette.text, strokeWidth: 2 }));
+};
+
+// Dienstjahre klein (10.11.2026): Jahresringe wie im Baum — ein Ring je Dienstjahr, höchstens sechs. Nur das Bild.
+const miniJahresringe = (palette, jahre) => {
+  const h = React.createElement;
+  const n = Math.max(1, Math.min(6, jahre + 1));
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-dienst': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    Array.from({ length: n }, (_, i) => h('circle', { key: i, cx: 30, cy: 20, r: 3 + i * 3, fill: i === 0 ? palette.sand : 'none', stroke: palette.sand, strokeWidth: 1.5 })));
+};
+
+// Pensum klein (10.11.2026): Viertelkreis-Uhr, gefüllt im Verhältnis zur Vollzeit-Basis des Lohnvergleichs. Nur das Bild.
+const miniPensum = (palette, anteil) => {
+  const h = React.createElement;
+  const a = Math.max(0, Math.min(1, anteil));
+  const w = a * 2 * Math.PI, x = 30 + 15 * Math.sin(w), y = 20 - 15 * Math.cos(w);
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-pensum': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('circle', { cx: 30, cy: 20, r: 15, fill: palette.border }),
+    a >= 1 ? h('circle', { cx: 30, cy: 20, r: 15, fill: palette.sand })
+      : a > 0 && h('path', { d: 'M30 20 L30 5 A15 15 0 ' + (a > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: palette.sand }));
+};
+
+// Ferien klein (10.11.2026): Sonne mit Strahlen, gefüllt im Verhältnis der offenen Tage zum Anspruch. Nur das Bild.
+const miniFerien = (palette, anteil) => {
+  const h = React.createElement;
+  const a = Math.max(0, Math.min(1, anteil));
+  const strahlen = Array.from({ length: 8 }, (_, i) => {
+    const w = i * Math.PI / 4, c = Math.cos(w), sn = Math.sin(w);
+    return h('line', { key: 's' + i, x1: 30 + 13 * c, y1: 20 + 13 * sn, x2: 30 + 17 * c, y2: 20 + 17 * sn, stroke: palette.sand, strokeWidth: 1.8, strokeLinecap: 'round' });
+  });
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-ferien': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    ...strahlen,
+    h('circle', { cx: 30, cy: 20, r: 9, fill: palette.border }),
+    a > 0 && h('circle', { cx: 30, cy: 20, r: 9 * Math.sqrt(a), fill: palette.sand }));
 };
 
 // Der kleine Tank stand bis 10.11.2026 hier als eigene Zeichnung (miniGauge) — jetzt ReserveTank groesse 'klein'.
@@ -186,6 +225,27 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const frJahr = new Date().getFullYear();
   const frStand = eigeneFr != null ? berechneFranchise(eigeneFr, gesundheitskostenBisher(data)) : null;
 
+  // Arbeit (10.11.2026): dieselbe Lage wie das Lohn-Barometer (lohnLage) — Zahl nur, wenn auch der Balken eine Lage zeigt.
+  const lohn = lohnLage(data);
+  const ls = lohn.state;
+  const lohnVorzeichen = ls.delta > 0 ? '+' : ls.delta < 0 ? '−' : '';
+  const lohnHinweise = lohn.vergleichbar ? [
+    ls.geschaetzt ? t('instrumente.lohnGeschaetzt') : null,
+    ls.partTime ? t('lohnEinordnung.fulltimeNote') : null,
+    ls.mlBreached ? t('instrumente.lohnUnterMindestlohn') : null,
+  ].filter(Boolean) : [];
+
+  // Arbeit — Dienstjahre (OR 335b/335c, utils/arbeitsverhaeltnis.js) und Pensum (Wochenstunden wie das Lohn-Barometer).
+  const arbeit = data?.ausbildung || {};
+  const dienst = dienstLage(arbeit.employmentStart);
+  const stunden = Number(String(arbeit.workHoursPerWeek ?? '').replace(',', '.'));
+  const stundenOk = stunden > 0 && !wochenstundenUnplausibel(stunden);
+  // Ferien (neue Felder 10.11.2026): Anspruch pro Jahr und im laufenden Jahr bezogen.
+  const tageZahl = (v) => { const n = Number(String(v ?? '').replace(',', '.').trim()); return String(v ?? '').trim() !== '' && Number.isFinite(n) && n >= 0 ? n : null; };
+  const ferienJahr = tageZahl(arbeit.ferienTageJahr);
+  const ferienBezogen = tageZahl(arbeit.ferienTageBezogen);
+  const ferienOffen = ferienJahr > 0 && ferienBezogen != null ? Math.max(0, ferienJahr - ferienBezogen) : null;
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
@@ -238,6 +298,62 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       sub: setup,
       glyph: frStand ? miniFranchise(palette, frStand.franchise > 0 ? frStand.franchiseVerbraucht / frStand.franchise : 0) : null,
       onClick: () => onNavigate('kvg', undefined, 'franchise'),
+    },
+    {
+      key: 'lohn', name: t('instrumente.lohn'),
+      ...(lohn.vergleichbar ? {
+        zahl: { wert: (ls.rel === 'near' ? '≈ ' : '') + (ls.pct === 0 ? '' : lohnVorzeichen) + ls.pct + ' %', einheit: '' },
+        satz: t('instrumente.lohnSatz', { jahr: LOHN_REFERENZ.jahr }),
+        mehr: lohnHinweise,
+      } : {}),
+      sub: lohn.sperre ? t('instrumente.lohnKeinVergleich') : setup,
+      glyph: lohn.vergleichbar ? h(LohnKlein, { palette, state: ls, fillColor: bereichFillColor('arbeit', palette.bg === DARK_PALETTE.bg) || palette.sand }) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'dienst', name: t('instrumente.dienst'),
+      ...(dienst ? {
+        zahl: dienst.jahre >= 1
+          ? { wert: String(dienst.jahre), einheit: t(dienst.jahre === 1 ? 'instrumente.jahrEins' : 'instrumente.jahre') }
+          : { wert: String(dienst.monate), einheit: t('instrumente.' + (dienst.monate === 1 ? 'monateEins' : 'monate')) },
+        satz: arbeit.employer ? t('instrumente.dienstSatzBei', { employer: String(arbeit.employer) }) : t('instrumente.dienstSatz'),
+        // Fachprüfung 10.11.2026: Lehrvertrag hat eigene Regeln (OR 344a, 346); eine vertraglich längere Probezeit
+        // (bis 3 Monate, OR 335b Abs. 2) braucht in Monat 2 und 3 einen Hinweis.
+        mehr: istLernend(data?.finanzen) ? [t('instrumente.dienstLehre')]
+          : dienst.inProbezeit ? [t('instrumente.dienstProbezeit')]
+          : [t(dienst.kuendigungsfristMonate === 1 ? 'instrumente.dienstFristEins' : 'instrumente.dienstFrist', { n: dienst.kuendigungsfristMonate }),
+            ...(dienst.monate < 3 ? [t('instrumente.dienstProbezeitLaenger')] : [])],
+      } : {}),
+      sub: setup,
+      glyph: dienst ? miniJahresringe(palette, dienst.jahre) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'pensum', name: t('instrumente.pensum'),
+      ...(stundenOk ? {
+        zahl: { wert: zahl(stunden, { hoechstens: 1 }), einheit: t('instrumente.stunden') },
+        satz: t('instrumente.pensumSatz'),
+        // Fachprüfung 10.11.2026: 40 Std. ist die Rechenbasis des Lohnvergleichs (BFS), nicht «die» Vollzeit — ab 100 % «Vollzeit».
+        mehr: [stunden >= LSE_VOLLZEIT_STUNDEN_WOCHE
+          ? t('instrumente.pensumVollzeit', { basis: LSE_VOLLZEIT_STUNDEN_WOCHE })
+          : t('instrumente.pensumAnteil', { pct: Math.round(stunden / LSE_VOLLZEIT_STUNDEN_WOCHE * 100), basis: LSE_VOLLZEIT_STUNDEN_WOCHE })],
+      } : {}),
+      sub: setup,
+      glyph: stundenOk ? miniPensum(palette, stunden / LSE_VOLLZEIT_STUNDEN_WOCHE) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
+    },
+    {
+      key: 'ferien', name: t('instrumente.ferien'),
+      ...(ferienJahr > 0 ? {
+        zahl: ferienOffen != null
+          ? { wert: zahl(ferienOffen, { hoechstens: 1 }), einheit: t(ferienOffen === 1 ? 'instrumente.tageEins' : 'instrumente.tage') }
+          : { wert: zahl(ferienJahr, { hoechstens: 1 }), einheit: t('instrumente.tage') },
+        satz: t(ferienOffen != null ? 'instrumente.ferienOffenSatz' : 'instrumente.ferienJahrSatz'),
+        mehr: [t('instrumente.ferienMinimum')],
+      } : {}),
+      sub: setup,
+      glyph: ferienJahr > 0 ? miniFerien(palette, ferienOffen != null ? ferienOffen / ferienJahr : 1) : null,
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
