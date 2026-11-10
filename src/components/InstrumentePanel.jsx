@@ -48,9 +48,9 @@ import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESS
 const miniFranchise = (palette, anteil) => {
   const h = React.createElement;
   return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-franchise': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 16, width: 54, height: 8, rx: 4, fill: palette.border }),
-    anteil > 0 && h('rect', { x: 2, y: 16, width: Math.max(8, Math.min(1, anteil) * 54), height: 8, rx: 4, fill: palette.sky }),
-    h('line', { x1: 57, y1: 10, x2: 57, y2: 30, stroke: palette.text, strokeWidth: 2 }));
+    h('rect', { x: 2, y: 11, width: 54, height: 18, rx: 6, fill: palette.border }),
+    anteil > 0 && h('rect', { x: 2, y: 11, width: Math.max(12, Math.min(1, anteil) * 54), height: 18, rx: 6, fill: palette.sky }),
+    h('line', { x1: 57, y1: 4, x2: 57, y2: 36, stroke: palette.text, strokeWidth: 2.5 }));
 };
 
 // Dienstjahre klein (10.11.2026): Jahresringe wie im Baum — ein Ring je Dienstjahr, höchstens sechs. Nur das Bild.
@@ -89,19 +89,19 @@ const miniFerien = (palette, anteil) => {
 // Referenzalter klein (10.11.2026): ein Lebensweg von der Geburt bis zum Referenzalter, Punkt = heute, Fahne am Ziel.
 const miniLebensweg = (palette, anteil) => {
   const h = React.createElement;
-  const x = 4 + Math.max(0, Math.min(1, anteil)) * 46;
+  const x = 5 + Math.max(0, Math.min(1, anteil)) * 44;
   return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-referenz': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('line', { x1: 4, y1: 26, x2: 50, y2: 26, stroke: palette.border, strokeWidth: 4, strokeLinecap: 'round' }),
-    h('line', { x1: 4, y1: 26, x2: x, y2: 26, stroke: palette.sand, strokeWidth: 4, strokeLinecap: 'round' }),
-    h('line', { x1: 52, y1: 30, x2: 52, y2: 10, stroke: palette.text, strokeWidth: 1.8 }),
-    h('path', { d: 'M52 10 L59 13 L52 16 Z', fill: palette.text }),
-    h('circle', { cx: x, cy: 26, r: 4, fill: palette.surface, stroke: palette.text, strokeWidth: 2 }));
+    h('line', { x1: 5, y1: 27, x2: 49, y2: 27, stroke: palette.border, strokeWidth: 9, strokeLinecap: 'round' }),
+    h('line', { x1: 5, y1: 27, x2: x, y2: 27, stroke: palette.sand, strokeWidth: 9, strokeLinecap: 'round' }),
+    h('line', { x1: 54, y1: 33, x2: 54, y2: 4, stroke: palette.text, strokeWidth: 2.2 }),
+    h('path', { d: 'M54 4 L60 8 L54 12 Z', fill: palette.text }),
+    h('circle', { cx: x, cy: 27, r: 6, fill: palette.surface, stroke: palette.text, strokeWidth: 2.5 }));
 };
 
 // Grundordnung klein (10.11.2026): eine Grundmauer, ein Stein je Grundordnungs-Angabe, gesetzte gefüllt. Nur das Bild.
 const miniGrundmauer = (palette, gesetzt, gesamt) => {
   const h = React.createElement;
-  const proReihe = 5, reihen = Math.max(1, Math.ceil(gesamt / proReihe)), w = 9.6, hoch = 6, gap = 1.6;
+  const proReihe = 5, reihen = Math.max(1, Math.ceil(gesamt / proReihe)), w = 9.6, hoch = 9, gap = 2;
   const y0 = 20 - (reihen * hoch + (reihen - 1) * gap) / 2;
   return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-grundordnung': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
     Array.from({ length: gesamt }, (_, i) => {
