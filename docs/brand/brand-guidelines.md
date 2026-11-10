@@ -444,7 +444,11 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   eine Faustregel») und Miete im Vergleich (kleines Barometer · «−5 %» · «… Schnitt Ihrer Region (BFS 2024)»
   · Zimmerzahl und Unsicherheiten wie im Kapitel). Dieselben Rechnungen wie gross im Kapitel Wohnen
   (`wohnkostenRechnung`, `lageZurRegion`, `mietVorbehalte`). Bei Wohneigentum kein Mietvergleich.
-  Offen: Basis, Ausbildung & Arbeit, Behörden, Gesundheit.
+  **Behörden:** Steuerfrist (Kalenderblatt, das feste Zeichen für Fristen, schon 64 px · «5 Monate» ·
+  «So lange bis zur Steuerfrist»; verpasst und noch offen: rotes Blatt, «… vorbei»; eingereicht und vorbei:
+  keine Zahl) und Behördengänge (ein Kästchen je Gang · «1/5» · «So viele Behördengänge sind erledigt»).
+  Dieselben Regeln wie im Kapitel (`fristAbstand`, `steuerfristVorbei`, `gangErledigt`).
+  Offen: Basis, Ausbildung & Arbeit, Gesundheit.
   Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)

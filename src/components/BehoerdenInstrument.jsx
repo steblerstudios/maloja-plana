@@ -1,6 +1,7 @@
 import React from 'react';
-import { text, weight, radius, space, leading } from '../config/tokens.js';
+import { text, weight, radius, space, leading, INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { steuerfristVorbei } from '../utils/steuerfrist.js';
+import { fristAbstand } from '../utils/fristAbstand.js';
 import { auswahlLabel } from '../utils/auswahlLabel.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { zahl } from '../utils/geld.js';
@@ -24,13 +25,25 @@ import { GAENGE, offeneErklaerungen, erledigtesSteuerjahr, gangErledigt } from '
 import { linkStil } from './PrimaryButton.jsx';
 import { Kalenderblatt } from './Kalenderblatt.jsx';
 
+// Abstand aus utils/steuerfrist.js (fristAbstand) — dieselbe Regel wie die Instrument-Kachel. Texte wie bisher.
 const relativ = (tr, iso) => {
-  const diffDays = Math.round((new Date(iso).getTime() - Date.now()) / 86400000);
-  if (diffDays === 0) return tr('behördenStatus.today');
-  if (diffDays > 0 && diffDays < 60) return tr('behördenStatus.inDays').replace('{n}', diffDays);
-  if (diffDays >= 60) return tr('behördenStatus.inMonths').replace('{n}', Math.round(diffDays / 30));
-  if (diffDays > -60) return tr('behördenStatus.agoDays').replace('{n}', Math.abs(diffDays));
-  return tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
+  const a = fristAbstand(iso);
+  if (!a) return '';
+  if (a.tage === 0) return tr('behördenStatus.today');
+  const k = a.vorbei ? (a.einheit === 'tage' ? 'behördenStatus.agoDays' : 'behördenStatus.ago') : (a.einheit === 'tage' ? 'behördenStatus.inDays' : 'behördenStatus.inMonths');
+  return tr(k).replace('{n}', a.n);
+};
+
+// Die Behördengänge klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): ein Kästchen je Gang,
+// erledigte gefüllt. Nur das Bild; die Zahl «1/5» steht daneben.
+export const GaengeKlein = ({ palette, erledigt, total }) => {
+  const h = React.createElement;
+  const w = 9.2, gap = 2.5, x0 = (60 - (total * w + (total - 1) * gap)) / 2;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-gaenge': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    Array.from({ length: total }, (_, i) => h('rect', {
+      key: i, x: x0 + i * (w + gap), y: 15, width: w, height: w, rx: 2,
+      fill: i < erledigt ? palette.sand : palette.surface, stroke: i < erledigt ? palette.sand : palette.mid, strokeWidth: 1.5,
+    })));
 };
 
 export const BehoerdenInstrument = ({ palette, t: tr, behoerden, onNavigate, checked = {}, onToggle, lang = 'de', allData }) => {

@@ -32,3 +32,8 @@ export const erledigtesSteuerjahr = (behoerden, heute = new Date()) => {
 // Erledigt: eigener Haken; sonst bei «Steuererklärung eingereicht» der Vorschlag aus «0 offen» — mit Steuerjahr.
 export const gangErledigt = (id, checked, behoerden, heute) =>
   checked[id] !== undefined ? !!checked[id] : (id === 'steuererklaerung' && erledigtesSteuerjahr(behoerden, heute) != null);
+
+// Gespeicherte Haken der Behördengänge (wie Dashboard und Kapitel). Blockierter Speicher → keine Haken.
+export const gespeicherteHaken = () => {
+  try { return JSON.parse(localStorage.getItem('or5_behoerden_checklist') || '{}') || {}; } catch { return {}; }
+};
