@@ -424,17 +424,14 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
 - **Bedingte Sektionen** statt leerer Zahlen-Rechner (z.B. Alimente klappt ohne Kinder ein,
   bleibt aber erkundbar) — ehrliche Orientierung vor Schein-Präzision.
 - **Wert vor der Hürde zeigen:** Trust/Nutzen vor dem Gate (BetaGate-Intro, Demo-Modus).
-- **Eine Kernzahl zuoberst: der Reserve-Tank mit den Monaten** *(10.11.2026, Idee aus dem Abgleich
-  mit Nessie; Stebler Studios: «gleiches System wie das Netz-Schild, die grosse Zahl mit in die Logik
-  einbauen»)*. Über «Was ist jetzt dran?» steht **kein neues Zeichen, sondern der Tank** als Spiegel
-  (§7b): klein (64 px), daneben gross die Monate, die der liquide Notgroschen die Ausgaben deckt. Es
-  ist derselbe kleine Tank wie in der Kapitelzeile Finanzen (`ReserveTank groesse: 'klein'`), mit
-  derselben Rechnung (`data/reserveTank.js`). **Auch in der Kapitelzeile Finanzen** stehen die Monate
-  gross unter dem Tank, eine Stufe leiser (`2xl` statt `3xl` zuoberst; Stebler Studios: «Ja, auch dort»).
-  Eine Karte, keine Kachelreihe (siehe «Ruhige Listen
-  statt KPI-Kacheln»). Keine Ampelfarbe. Ohne erfasste Ausgaben erscheint sie nicht, und bei leerem
-  Notgroschen steht keine grosse «0», sondern der leise Satz der Tankanzeige. Quelle:
-  `src/components/NotgroschenZahl.jsx` (nachgeladen). Wächter: `src/components/__tests__/notgroschenZahl.test.js`.
+- **Die Monate gross beim Reserve-Tank** *(10.11.2026, Idee aus dem Abgleich mit Nessie; Stebler Studios:
+  «gleiches System wie das Netz-Schild» und «soll lieber runter zur Tankanzeige»)*. In der Kapitelzeile
+  Finanzen steht unter dem kleinen Tank die Zahl gross (`2xl`): so viele Monate deckt der liquide
+  Notgroschen die Ausgaben. **Keine eigene Karte zuoberst** — ein Zwischenstand mit Karte über «Was ist
+  jetzt dran?» ist wieder entfernt; die Zahl gehört zu ihrem Instrument. Keine Ampelfarbe; bei leerem
+  Notgroschen keine grosse «0». Dieselbe Rechnung wie die Tankanzeige (`data/reserveTank.js`).
+  Offen: dasselbe System (Bild · grosse Zahl · Satz) für Netz-Schild, Franchise-Kreuz und Steuer-Säule.
+  Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
 
