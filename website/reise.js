@@ -82,7 +82,7 @@
       var el = ziel && ziel.charAt(0) === '#' ? document.querySelector(ziel) : null;
       if (el && el.getBoundingClientRect().top <= h * 0.4) aktuell = a;
     });
-    leisteLinks.forEach(function (a) { if (a === aktuell) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    leisteLinks.forEach(function (a) { if (a === aktuell) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
   }
 
   // Der Stock: Nägel rundum (je 1/7 Drehung), Maserung als feine Streifen. Vorne breit, seitlich schmal, hinten weg.

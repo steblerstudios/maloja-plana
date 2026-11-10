@@ -220,6 +220,14 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(html).toContain('<main id="inhalt" tabindex="-1">');
   });
 
+  it('a11y-Prüfung 10.11.: Navs eindeutig benannt, Leiste bei kurzem Bildschirm weg, keine unsichtbare Checkbox bei weniger Bewegung', () => {
+    expect(html).toContain('<nav aria-label="Hauptmenü">');
+    expect(html).toContain('aria-label="Abschnitte dieser Seite"');
+    const kurz = stil.slice(stil.indexOf('@media (max-height:520px)'));
+    expect(kurz.slice(0, kurz.indexOf('\n    }'))).toContain('.leiste{ display:none }');
+    expect(stil).toContain('.schalter, #anhalten{ display:none }');
+  });
+
   it('Browserleiste hell und dunkel nach Granit', () => {
     expect(html).toContain('<meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">');
     expect(html).toContain('<meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">');
@@ -232,12 +240,12 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   });
 
   it('C · die Leiste erscheint erst nach der Reise (während der Reise zeigt die Weglinie den Ort) und ohne Skript nie', () => {
-    expect(html).toContain('<nav class="leiste" aria-label="Seite, Leiste" data-zustand="aus">');
+    expect(html).toContain('<nav class="leiste" aria-label="Abschnitte dieser Seite" data-zustand="aus">');
     expect(stil).toMatch(/\.leiste\{[^}]*visibility:hidden/);
     expect(js).toContain("var zustand = bruecke.getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';");
     expect(js).not.toContain("'reise'");
     expect(html).not.toContain('class="leiste-ort"');
-    expect(js).toContain("setAttribute('aria-current', 'true')");
+    expect(js).toContain("setAttribute('aria-current', 'location')");
   });
 
   it('C · auf der Weglinie sitzt an jedem Halt das Kapitel-Zeichen', () => {
@@ -262,5 +270,23 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   it('die Sprachen im Fuss sind die der App (SUPPORTED in src/i18n/index.js)', () => {
     const i18n = fs.readFileSync(path.join(WURZEL, 'src/i18n/index.js'), 'utf8');
     expect(i18n).toMatch(/const SUPPORTED = \['en', 'de', 'fr', 'it', 'rm'\];/);
+  });
+});
+
+// Schrift nach Brand Book §3 (Titel Hanken Grotesk, Skala aus tokens.js), nach polygrafin-Prüfung 10.11.2026.
+describe('Vorstellungsseite: Schrift', () => {
+  const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+  it('Titel in Hanken Grotesk, lokal geladen (600/700), Text in Lexend', () => {
+    expect(stil).toContain("font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2')");
+    expect(stil).toMatch(/h1, h2, h3\{ font-family:'Hanken Grotesk','Lexend'/);
+    expect(fs.existsSync(path.join(WURZEL, 'public/fonts/hanken-grotesk-latin-700-normal.woff2'))).toBe(true);
+  });
+  it('Schriftgrössen nur aus der Skala (13 · 15 · 16 · 19 · 23 · 28 · 36), ausser h1 48 und den Zeichen im SVG', () => {
+    const erlaubt = new Set([13, 15, 16, 19, 23, 28, 36, 48, 32, 38]); // 32/38: h1 am Handy/Tablet
+    const groessen = [...stil.matchAll(/font-size:(\d+)px/g)].map((m) => Number(m[1]));
+    expect(groessen.filter((g) => !erlaubt.has(g))).toEqual([]);
+  });
+  it('keine Versalien-Etiketten mehr', () => {
+    expect(stil).not.toContain('text-transform:uppercase');
   });
 });

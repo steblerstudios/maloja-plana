@@ -71,9 +71,11 @@ const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 const STIL = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2'); font-weight:700; font-display:swap }
     *{ margin:0; padding:0; box-sizing:border-box }
     :root{
-      --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
+      --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;  /* dunkler als vorher (#6A6E74): Kleintext liest sich ruhiger */
       --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C; --salbei-tief:#4A6657;
       --auf-gold:#24262A;
       --himmel:#F4F0E6;                 /* Himmel der Landschaft — der Einstieg bleibt immer hell */
@@ -104,11 +106,14 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     a:hover{ text-decoration-thickness:2px }
     :focus-visible{ outline:2px solid var(--sand-tief); outline-offset:3px }
     .unsichtbar{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap }
-    .augenbraue{ font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--leise); margin-bottom:12px }
-    h2{ font-size:34px; line-height:1.2; font-weight:600; letter-spacing:-0.015em; margin-bottom:14px }
-    h3{ font-size:18px; font-weight:600; margin-bottom:4px; line-height:1.35 }
+    /* Schrift nach Brand Book §3: Titel in Hanken Grotesk (600/700), alles andere Lexend; Grössen aus der Skala
+       13 · 15 · 16 · 19 · 23 · 28 · 36 (tokens.js). Einzige grössere Stufe: der h1 im Hero mit 48. */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif }
+    .augenbraue{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
+    h2{ font-size:36px; line-height:1.2; font-weight:700; letter-spacing:-0.015em; margin-bottom:14px }
+    h3{ font-size:19px; font-weight:600; margin-bottom:4px; line-height:1.35 }
     p{ margin-bottom:12px } p:last-child{ margin-bottom:0 }
-    .unterzeile{ color:var(--leise); font-size:18px; max-width:34em }
+    .unterzeile{ color:var(--leise); font-size:19px; max-width:34em }
     section{ padding:var(--abstand-l) 0 0 }
 
     /* Knöpfe (Brand Book «Knöpfe», Fassung 9): Hauptknopf gefüllt Sand, nur EINER je Seite (im Hero);
@@ -127,21 +132,21 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .marke{ display:flex; align-items:center; gap:10px; padding-block:9px; font-weight:600; font-size:16px; text-decoration:none; color:#22211F }
     .marke:hover{ color:#22211F }
     .marke svg{ height:28px; width:auto }
-    .kopf nav{ display:flex; gap:22px; font-size:14px }
+    .kopf nav{ display:flex; gap:22px; font-size:15px }
     .kopf nav a{ text-decoration:none; padding-block:10px; color:#24262A }
     .kopf nav a:hover{ text-decoration:underline }
     .reise-anfang{ position:relative; z-index:5 }
     .pass{ min-height:100vh; min-height:100svh; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center;
       padding-top:96px; padding-bottom:6vh; color:#24262A; --text:#24262A; --leise:#4E5258; --sand-tief:#7A5F30 }
-    .pass h1{ font-size:48px; line-height:1.1; font-weight:600; letter-spacing:-0.025em }
+    .pass h1{ font-size:48px; line-height:1.1; font-weight:700; letter-spacing:-0.025em }
     .pass h1 span{ display:block }
     @media (min-width:961px){ .pass h1 span{ white-space:nowrap } }
-    .pass h1 .zweite{ font-weight:400 }
+    .pass h1 .zweite{ font-weight:600; color:#4E5258 }
     .pass .vorspann{ font-size:19px; max-width:28em; margin-top:22px; color:#3E4247 }
-    .pass .fakten{ display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:20px; font-size:14px; color:#24262A }
+    .pass .fakten{ display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:20px; font-size:15px; color:#24262A }
     .pass .fakten span::before{ content:"·"; margin-right:18px; color:var(--sand-tief) }
     .pass .fakten span:first-child::before{ content:none }
-    .pass .beta{ font-size:14px; color:#3E4247; margin-top:10px }
+    .pass .beta{ font-size:15px; color:#3E4247; margin-top:10px }
     .pass .knopf.zweit{ background:#FBFBFA }
     /* Übergang zur Reise: Nebenknopf (leer, Rand sandDeep) auf heller Fläche, damit er auch über dem Bild lesbar bleibt. */
     .pass-weiter{ grid-column:1 / -1; justify-self:start }
@@ -197,7 +202,7 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .lagen .chips label:hover{ border-color:var(--sand-tief) }
     .tafel{ display:none; margin-top:28px; padding:36px 40px; background:var(--flaeche); border:1px solid var(--rand);
       border-radius:var(--radius-m); max-width:760px }
-    .tafel p.gross{ font-size:22px; line-height:1.45; margin-bottom:18px; color:var(--text) }
+    .tafel p.gross{ font-size:23px; line-height:1.45; margin-bottom:18px; color:var(--text) }
     .tafel a{ font-weight:600 }
 ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ display:block }
     #l${i + 1}:checked ~ .chips [for=l${i + 1}]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
@@ -265,7 +270,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
     .js .reise-buehne[data-hier="-1"] .reise-stock, .js .reise-buehne[data-hier="-1"] .reise-linie,
     .js .reise-buehne[data-hier="-1"] .reise-wolken, .js .reise-buehne[data-hier="-1"] .reise-quelle{ opacity:0 }
-    .reise-quelle{ position:absolute; right:12px; bottom:8px; font-size:12px; color:#FBFBFA; text-shadow:0 1px 3px rgba(0,0,0,.7) }
+    .reise-quelle{ position:absolute; right:12px; bottom:10px; font-size:13px; color:#FBFBFA; background:rgba(20,20,18,.72); padding:2px 8px; border-radius:6px }
     .reise-ablauf{ position:relative; z-index:5; margin-top:-100vh; margin-top:-100svh }
     .reise{ padding-top:0; color:#FBFBFA }
     /* Ausklang: nach der letzten Kehre verläuft das Bild ruhig ins Papier der Seite, statt hart abzubrechen. */
@@ -280,9 +285,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; padding:14px; border-radius:16px; background:#FBFBFA; color:var(--farbe);
       margin:0 0 16px }
     .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
-    .reise-text .name{ display:block; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#FBFBFA; margin-bottom:8px }
-    .reise-text h3{ font-size:clamp(24px, 2.6vw, 32px); line-height:1.2; letter-spacing:-0.01em; margin-bottom:10px }
-    .reise-text p{ font-size:17px; color:#FBFBFA }
+    .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
+    .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
+    .reise-text p{ font-size:19px; line-height:1.55; color:#FBFBFA }
     /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FBFBFA, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
     .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
     .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
@@ -326,50 +331,52 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-text .name, .reise-text p{ color:var(--text) }
       .reise-text{ text-shadow:none; background:none; padding:0 }
       .reise-knoepfe a{ color:var(--text); border-color:var(--text); background:none }
+      .reise-knoepfe a:focus-visible{ outline-color:var(--sand-tief) }
+      .leiste{ display:none }
     }
 
     /* ─── Blick in die App (Editorial) ────────────────────────────── */
     .blick{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:64px }
     .blick.umgekehrt .blick-bild{ order:2 }
     .blick .telefon{ width:250px; margin:0 auto }
-    .blick-text .zahl{ font-size:13px; font-weight:600; color:var(--salbei-tief); letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px }
-    .blick-text h3{ font-size:28px; line-height:1.25; margin-bottom:12px; letter-spacing:-0.01em }
-    .blick-text p{ color:var(--leise); font-size:17px; max-width:28em }
+    .blick-text .zahl{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
+    .blick-text h3{ font-size:28px; line-height:1.25; font-weight:700; margin-bottom:12px; letter-spacing:-0.01em }
+    .blick-text p{ color:var(--leise); font-size:16px; max-width:28em }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:var(--abstand-m) }
     .geraet{ background:var(--flaeche); border:1px solid var(--rand); border-radius:var(--radius-m); padding:26px 26px 22px }
     .geraet h3{ margin-bottom:14px }
-    .geraet ol{ padding-left:20px; color:var(--leise); font-size:15px }
+    .geraet ol{ padding-left:20px; color:var(--leise); font-size:16px }
     .geraet li{ margin-bottom:8px; padding-left:4px }
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
-    .bald{ margin-top:20px; font-size:15px; color:var(--leise) }
+    .bald{ margin-top:24px; font-size:16px; color:var(--leise) }
     .bald strong{ color:var(--text) }
 
     /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */
     .liste{ list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:28px 32px; margin-top:var(--abstand-m) }
     .liste.eins{ grid-template-columns:1fr }
     .liste li{ border-top:1px solid var(--rand); padding-top:14px }
-    .liste p, .liste span{ font-size:15px; color:var(--leise) }
+    .liste p, .liste span{ font-size:16px; color:var(--leise) }
     .liste a{ font-weight:600 }
     .liste span{ display:block }
     .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
     .fragen p{ color:var(--leise) }
-    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
 
     .schluss{ text-align:center; padding:var(--abstand-l) 0 }
-    .schluss h2{ font-size:40px }
+    .schluss h2{ font-size:36px }
     .schluss .unterzeile{ margin:0 auto }
     .schluss .wege{ justify-content:center }
 
     /* D/E · Fuss: heller Grund mit Haarlinie (kein dunkles Band), Bildmarke Anthrazit führt nach oben. */
-    .fuss{ border-top:1px solid var(--rand); padding:48px 0 56px; font-size:14px; color:var(--leise) }
+    .fuss{ border-top:1px solid var(--rand); padding:48px 0 56px; font-size:15px; color:var(--leise) }
     .fuss a{ color:var(--sand-tief) }
     .fuss p{ margin-bottom:8px }
     .fuss-spalten{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px }
     .fuss .marke{ color:var(--text); margin-bottom:8px } .fuss .marke:hover{ color:var(--text) }
-    .fuss-titel{ font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text) }
+    .fuss-titel{ font-size:15px; font-weight:600; color:var(--text) }
     .fuss ul{ list-style:none } .fuss li a{ display:inline-block; padding:6px 0 }
     .fuss-zeile{ margin-top:32px; padding-top:16px; border-top:1px solid var(--rand); font-size:13px }
     .fuss .vertrauen{ display:flex; flex-wrap:wrap; gap:4px 16px; color:var(--text) }
@@ -389,17 +396,17 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .leiste[data-zustand="seite"]{ transform:none; visibility:visible }
     .leiste-innen{ display:flex; align-items:center; gap:20px; min-height:56px }
     .leiste .marke{ color:#22211F } .leiste .marke svg{ height:26px }
-    .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:14px }
+    .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:15px }
     .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px }
     .leiste-links a:hover{ text-decoration:underline }
-    .leiste-links a[aria-current="true"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
+    .leiste-links a[aria-current="location"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
     @media (prefers-reduced-motion: no-preference){
       .leiste{ transition:transform .15s cubic-bezier(.4,0,.2,1), visibility 0s linear .15s }
       .leiste[data-zustand="seite"]{ transition:transform .25s cubic-bezier(.4,0,.2,1) }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter{ display:none }
+      .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter, #anhalten{ display:none }
     }
     @media (max-width:960px){
       .pass h1{ font-size:38px }
@@ -408,20 +415,22 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     }
     @media (max-width:760px){
       :root{ --abstand-l:64px }
-      h2{ font-size:26px }
+      h2{ font-size:28px }
       .unterzeile{ font-size:16px }
       /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
       .kopf{ flex-wrap:wrap; row-gap:4px }
-      .kopf nav, .leiste-links{ width:100%; gap:8px; overflow-x:auto; scrollbar-width:none;
+      html{ scroll-padding-top:120px }
+      .kopf nav, .leiste-links{ width:100%; gap:8px; overflow-x:auto; scrollbar-width:none; padding:4px 18% 4px 4px;
         -webkit-mask-image:linear-gradient(90deg, #000 82%, transparent); mask-image:linear-gradient(90deg, #000 82%, transparent) }
       .kopf nav a, .leiste-links a{ flex:none; display:inline-flex; align-items:center; min-height:44px; padding:0 14px;
         border:1px solid rgba(36,38,42,.28); border-radius:var(--radius-knopf); background:rgba(251,251,250,.75); text-decoration:none }
-      .leiste-links a[aria-current="true"]{ background:#C4A06A; border-color:#C4A06A; color:#2A2620; text-decoration:none }
+      .kopf nav a:focus-visible, .leiste-links a:focus-visible{ outline-offset:-3px }
+      .leiste-links a[aria-current="location"]{ background:#C4A06A; border-color:#C4A06A; color:#2A2620; text-decoration:none }
       .leiste-innen{ flex-wrap:wrap; gap:6px 12px; padding-block:6px }
       .fuss-spalten{ grid-template-columns:1fr; gap:24px }
       .pass{ grid-template-columns:1fr; padding-top:136px; gap:28px; align-items:start }
       .pass h1{ font-size:32px }
-      .pass .vorspann{ font-size:17px }
+      .pass .vorspann{ font-size:16px }
       .geraete{ justify-self:stretch; max-width:none }
       .geraete .telefon{ width:96px; padding:5px; border-radius:18px }
       .geraete .bildschirm{ border-radius:14px; --statusleiste:12px }
@@ -598,7 +607,7 @@ ${json}
         ${MARKE}
         Maloja&nbsp;Plana
       </a>
-      <nav aria-label="Seite">
+      <nav aria-label="Hauptmenü">
         <a href="#weg">Kapitel</a>
         <a href="#situationen">Situationen</a>
         <a href="#holen">App holen</a>
@@ -609,7 +618,7 @@ ${json}
 
   <!-- ═══ C · Leiste: fährt nach der Reise herein, mit den Seiten-Links und dem aktuellen Abschnitt.
        Während der Reise zeigt die Weglinie im Bild den Ort. Ohne Skript erscheint sie nie. ═══ -->
-  <nav class="leiste" aria-label="Seite, Leiste" data-zustand="aus">
+  <nav class="leiste" aria-label="Abschnitte dieser Seite" data-zustand="aus">
     <div class="rahmen leiste-innen">
       <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben">${MARKE}</a>
       <div class="leiste-links">
@@ -632,7 +641,7 @@ ${KAPITEL.map((_, i) => `          <img class="kehre-bild" src="${LEER}" data-sr
         <div class="reise-wolken"></div>
         ${reiseLinie()}
         ${reiseStock()}
-        <span class="reise-quelle">Bild: KI-gemalt, freie Darstellung</span>
+        <span class="reise-quelle">KI-gemalt</span>
       </div>
 
       <div class="reise-ablauf">
@@ -676,7 +685,7 @@ ${[1, 2, 3, 4, 5].map((n) => `                  <img src="${BILD(n)}" alt="" wid
         <!-- ═══ Die Reise: Kehre für Kehre auf den Malojapass ═══ -->
         <section id="weg" class="reise" aria-labelledby="t-weg">
           <h2 id="t-weg" class="unsichtbar">Sieben Kapitel: ein Weg, Kehre für Kehre</h2>
-          <p class="unsichtbar">In der App liegen Ihre sieben Kapitel als Stationen auf der Malojapass-Strasse. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. An jeder Kehre kommt ein Stocknagel an den Wanderstock. Die Bilder in diesem Abschnitt sind KI-gemalt, eine freie Darstellung.</p>
+          <p class="unsichtbar">Die App hat sieben Kapitel. Diese Seite zeigt sie als Weg auf den Malojapass, eine Kehre je Kapitel. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. Die Bilder in diesem Abschnitt sind KI-gemalt, eine freie Darstellung.</p>
           <ol class="reise-stationen" role="list">
 ${reiseStationen()}
           </ol>
@@ -850,6 +859,7 @@ ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p clas
       </div>
       <div class="fuss-zeile">
         <p class="vertrauen"><span>Ohne Konto</span><span>Ohne Werbung</span><span>Ihre Angaben bleiben auf dem Gerät</span></p>
+        <p>Die Bilder der Reise sind KI-gemalt, eine freie Darstellung des Malojapasses.</p>
         <p>Diese Seite gibt es auf Deutsch. Die App lässt sich auch auf Englisch, Französisch, Italienisch und Rätoromanisch einstellen.</p>
         <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
       </div>
