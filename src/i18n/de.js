@@ -6732,6 +6732,15 @@ export default {
     zukunftSzenarioAhvAufschub: 'AHV-Aufschub bis {alter}: {pct} lebenslang.',
     zukunftSzenarioBridge: { sie: 'Die Jahre von {von} bis 63 überbrücken Sie ohne AHV — etwa aus BVG-Rente oder 3a-Kapital.', du: 'Die Jahre von {von} bis 63 überbrückst du ohne AHV — etwa aus BVG-Rente oder 3a-Kapital.' },
     zukunftIkHochgerechnet: { sie: 'Bis zum Referenzalter hochgerechnet: {jahre} Beitragsjahre, Ø CHF {eink} — die künftigen Jahre mit Ihrem heutigen Einkommen.', du: 'Bis zum Referenzalter hochgerechnet: {jahre} Beitragsjahre, Ø CHF {eink} — die künftigen Jahre mit deinem heutigen Einkommen.' },
+    // Quelle zum Beitrags-Satz (nachgeschlagen 10.11.2026, Fassung Fedlex «Stand 1.1.2026»):
+    // AHVG Art. 3 Abs. 1bis – Beitragspflicht der Nichterwerbstätigen «dauert bis zum Ende des Monats,
+    //   in dem die Nichterwerbstätigen das Referenzalter nach Artikel 21 Absatz 1 erreichen».
+    // AHVV Art. 28 Abs. 1 – «Die Beiträge der Nichterwerbstätigen, für die nicht der jährliche
+    //   Mindestbeitrag … vorgesehen ist, bemessen sich aufgrund ihres Vermögens und ihres Renteneinkommens.»
+    // Merkblatt 2.03 (Informationsstelle AHV/IV, Stand 1.1.2026), Ziff. 4: «Die Berechnung der Beiträge …
+    //   basiert auf dem Vermögen und dem 20-fachen jährlichen Renteneinkommen.»
+    // Nicht im Satz (bewusst vereinfacht): Befreiung bei erwerbstätigem Ehegatten mit doppeltem
+    // Mindestbeitrag (AHVG Art. 3 Abs. 3), Mindestbeitrag bei EL/Sozialhilfe (AHVV Art. 28 Abs. 6, AHVG Art. 10 Abs. 2 Bst. b).
     zukunftAhvAnnahme: { sie: 'Annahme: Sie beziehen die AHV zum frühestmöglichen Zeitpunkt und zahlen bis zum Referenzalter Beiträge als nichterwerbstätige Person. Diese Beiträge richten sich nach Vermögen und Renteneinkommen; die Schätzung rechnet vereinfacht mit dem bisherigen Einkommen weiter.', du: 'Annahme: Du beziehst die AHV zum frühestmöglichen Zeitpunkt und zahlst bis zum Referenzalter Beiträge als nichterwerbstätige Person. Diese Beiträge richten sich nach Vermögen und Renteneinkommen; die Schätzung rechnet vereinfacht mit dem bisherigen Einkommen weiter.' },
     zukunftSzenarioSaeulen: { sie: 'BVG-Rente ist ab 58 möglich, 3a-Kapital ab 60 — je nach Reglement Ihrer Pensionskasse.', du: 'BVG-Rente ist ab 58 möglich, 3a-Kapital ab 60 — je nach Reglement deiner Pensionskasse.' },
     zukunftSzenarioWeiter: { sie: 'BVG und 3a wachsen weiter, solange Sie einzahlen (3a längstens bis 70).', du: 'BVG und 3a wachsen weiter, solange du einzahlst (3a längstens bis 70).' },
