@@ -7,6 +7,7 @@ import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, space, radius, fontFamily, fontFamilyDisplay, ease, duration, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
+import { useFremdeListe } from './hooks/useFremdeListe.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { anspruchSignaleListe } from './data/anspruchSignale.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -14,13 +15,14 @@ import { ZielHinweis } from './components/ExternerLink.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
+import { kachelZeichenFarbe } from './utils/lebensbereichFruechte.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
 import { festeFristen } from './utils/festeFristen.js';
 import { naechsterTermin, bisHeuteWeiter, INTERVALLE } from './utils/wiederholung.js';
 import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 import { laufendeAblaeufe, bandFarbe, bandImFenster, fensterStart, fensterTage, ABLAEUFE_MIT_STAND } from './utils/laufendeAblaeufe.js';
-import landschaft from './assets/berge/landschaft.webp?url';
+import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx';
 import { MerklisteView } from './MerklisteView.jsx';
 import { knopfStil, linkStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
@@ -35,6 +37,15 @@ const daysBetween = (a, b) => {
 // `new Date().toISOString()` — zwischen Mitternacht und 1/2 Uhr ist das in UTC noch
 // gestern: eine heute fällige Frist galt als morgen, eine gestrige als heute.
 const todayISO = () => inDays(0);
+
+// Tage bis zum nächsten jährlichen Stichtag 'MM-DD' (heute zählt als 0). Bis 09.11.2026
+// zielte die KK-Vorlage aufs 30.11. des LAUFENDEN Jahres: am 30.11. kam daraus 30.12.
+// (0 || 30), ab 1.12. ein Datum in der Vergangenheit (Bugsuche 09.11.2026).
+export const tageBisNaechstem = (heuteISO, mmtt) => {
+  const jahr = Number(heuteISO.slice(0, 4));
+  const diesesJahr = daysBetween(heuteISO, jahr + '-' + mmtt);
+  return diesesJahr >= 0 ? diesesJahr : daysBetween(heuteISO, (jahr + 1) + '-' + mmtt);
+};
 
 // Wiederholungen nach Kalender (utils/wiederholung.js): bis 26.10.2026 feste Tageszahlen (30 / 365)
 // und das Ergebnis in UTC — Termine wanderten, nachts kam der Vortag heraus.
@@ -59,7 +70,7 @@ const TEMPLATES = (t) => [
   { title: t('calendar.templates.integrationCourse'), category: 'education', recurrence: 'weekly', daysFromNow: 7 },
   { title: t('calendar.templates.vaccinations'), category: 'health', recurrence: 'yearly', daysFromNow: 180, coverage: t('calendar.coverage.vaccinations') },
   { title: t('calendar.templates.medicationRefill'), category: 'health', recurrence: 'quarterly', daysFromNow: 60, coverage: t('calendar.coverage.medication') },
-  { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', daysFromNow: daysBetween(todayISO(), new Date().getFullYear() + '-11-30') },
+  { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', daysFromNow: tageBisNaechstem(todayISO(), '11-30') },
 ];
 
 // Icon keys mapping to IconSystem — used for category display
@@ -136,6 +147,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // Orten, gleicher Zustand. Gespeichert wird nur bei einer Änderung, nie im Beispiel.
   const [todos, setTodos] = useState(() => (vorlaeufig ? [] : loadTodos()));
   const aendereTodos = (fn) => setTodos(prev => { const neu = fn(prev); if (!vorlaeufig) saveTodos(neu); return neu; });
+  // Änderungen aus einem anderen Tab übernehmen, statt sie bei der nächsten Änderung zu überschreiben.
+  useFremdeListe('or5_reminders', loadReminders, setReminders, !vorlaeufig);
+  useFremdeListe('or5_merkliste', loadTodos, setTodos, !vorlaeufig);
   const [eigenerReiter, setEigenerReiter] = useState(wahl);
   const offen = (onReiter ? wahl : eigenerReiter) === 'merkliste' ? 'merkliste' : 'ansicht';
   const zeigeReiter = onReiter || setEigenerReiter;
@@ -191,7 +205,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   };
 
   const addFromTemplate = (template) => {
-    const dueDate = inDays(template.daysFromNow || 30); // lokal, wie todayISO
+    const dueDate = inDays(template.daysFromNow ?? 30); // lokal, wie todayISO; 0 Tage = heute
     const reminder = {
       id: Date.now().toString() + '_' + Math.random().toString(36).slice(2, 8),
       title: template.title,
@@ -245,7 +259,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
 
   const inputStyle = {
     width: '100%', padding: '12px 12px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.up,
+    border: '1px solid ' + palette.feldrand, background: palette.up,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
     fontFamily: fontFamily, marginBottom: '12px'
   };
@@ -275,15 +289,15 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           React.createElement(Kalenderblatt, { iso, palette, locale: LOCALE, vorbei: !done && iso < today, klein: true }))
         : React.createElement('div', { 'aria-hidden': 'true', style: { width: '48px', flexShrink: 0, textAlign: 'center', color: palette.text, fontVariantNumeric: 'tabular-nums' } },
           React.createElement('div', { style: { fontFamily: fontFamilyDisplay, fontSize: '20px', fontWeight: weight.bold, lineHeight: 1 } }, d ? d.getDate() : ''),
-          React.createElement('div', { style: { fontSize: '11px', color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.soft } }, d ? d.toLocaleDateString(LOCALE, { month: 'short' }) : '')
         ),
-      React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: farbe + '2E', boxShadow: 'inset 0 0 0 1px ' + farbe + '4D', color: farbe } },
+      React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: farbe + '2E', boxShadow: 'inset 0 0 0 1px ' + farbe + '4D', color: kachelZeichenFarbe(farbe, palette) } },
         React.createElement(Icon, { name: icon, size: 16 })),
       React.createElement('div', { style: { flex: 1, minWidth: 0 } },
         isJustDone && React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '2px', animation: 'mp-check-pop ' + duration.slow + 'ms ' + ease + ' forwards' } }, hinweisZeichen('check'), t('calendar.nicelyDone')),
         React.createElement('div', { style: { fontSize: text.sm, color: done ? palette.soft : palette.text, textDecoration: done ? 'line-through' : 'none', overflowWrap: 'break-word', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel),
         // «Termin · Fällig in 3 Tagen · aus dem Ablauf Umzug» ruhig wie im Entwurf; nur die Art etwas heller.
-        React.createElement('div', { style: { fontSize: '12px', color: palette.soft, marginTop: '1px', lineHeight: leading.normal } },
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '1px', lineHeight: leading.normal } },
           React.createElement('span', { style: { color: palette.mid } }, artName), ' · ', React.createElement('span', { style: { color: dueColor } }, wann), herkunft ? ' · ' + herkunft : null),
         // Ohne Haken-Knopf steht das Datum sonst nur in der ausgeblendeten Spalte: Screenreader hörten es nie.
         !onToggle && d ? React.createElement('span', { style: visuallyHiddenStyle }, datumLang(iso)) : null,
@@ -415,12 +429,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // darunter Kachel, Titel und Untertitel. Keine Karte mehr um die Seite (Entwurf G).
   return React.createElement('div', { 'data-seite': 'was-ansteht', style: { maxWidth: '720px' } },
     React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '112px', margin: '0 -24px', overflow: 'hidden' } },
-        React.createElement('div', { style: { position: 'absolute', inset: 0, backgroundImage: 'url(' + landschaft + ')', backgroundSize: 'cover', backgroundPosition: 'center 72%', opacity: 0.5 } }),
-        React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + palette.sage + '38 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
-      ),
+      React.createElement(Landschaftsband, { palette, grund: palette.sage + '38' }),
       React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
-        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 12px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
+        React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
             type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
             style: { ...linkStil(palette), fontSize: text.sm, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
@@ -546,7 +557,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             style: {
               position: 'absolute', top: 0, height: '26px', left: (lage.von * 46) + 'px', width: ((lage.bis - lage.von + 1) * 46) + 'px', boxSizing: 'border-box',
               borderRadius: [r(!lage.weiterLinks), r(!lage.weiterRechts), r(!lage.weiterRechts), r(!lage.weiterLinks)].join(' '),
-              display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: '12px', fontWeight: weight.medium, whiteSpace: 'nowrap', overflow: 'hidden',
+              display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: text.xs, fontWeight: weight.medium, whiteSpace: 'nowrap', overflow: 'hidden',
               // Bandfarbe so gesetzt, dass die Schrift in der Grundfarbe 4.5:1 hält (utils/laufendeAblaeufe.js).
               color: palette.bg, background: bandFarbe(a.bereich, palette),
             },
@@ -586,7 +597,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
                 'aria-pressed': iso === selDate, 'aria-label': tagAria(iso),
                 style: tagKnopf, onClick: () => tagAntippen(iso),
               },
-                React.createElement('span', { style: { fontSize: '10.5px', color: d === 1 ? palette.text : palette.soft, fontWeight: d === 1 ? weight.medium : weight.normal } },
+                React.createElement('span', { style: { fontSize: text.xs, color: d === 1 ? palette.text : palette.soft, fontWeight: d === 1 ? weight.medium : weight.normal } },
                   d === 1 ? dt.toLocaleDateString(LOCALE, { month: 'short' }).replace('.', '') : dt.toLocaleDateString(LOCALE, { weekday: 'short' })),
                 tagZahl(d, isToday, iso === selDate),
                 markenReihe(iso)
@@ -594,7 +605,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
             })),
           ...baender
         ),
-        React.createElement('div', { 'data-legende': 'true', style: { display: 'flex', flexWrap: 'wrap', gap: '4px 16px', fontSize: '12px', color: palette.soft, margin: '8px 0 0', alignItems: 'center' } },
+        React.createElement('div', { 'data-legende': 'true', style: { display: 'flex', flexWrap: 'wrap', gap: '4px 16px', fontSize: text.xs, color: palette.soft, margin: '8px 0 0', alignItems: 'center' } },
           ...legende.map(([art, bereich]) => React.createElement('span', { key: art, style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } },
             React.createElement(ArtMarke, { art, farbe: bereichZeichenFarbe(bereich, palette), palette }), art === 'aufgabe' ? t('calendar.aufgabe') : t('calendar.legende.' + art))),
           React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, React.createElement(ArtMarke, { art: 'frist', erledigt: true, farbe: palette.soft, palette }), t('calendar.legende.erledigt')),
@@ -604,7 +615,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         React.createElement('details', { style: { marginTop: '12px' }, open: verteilen ? true : undefined, onToggle: aufklappSchalter('monat') },
           React.createElement('summary', { className: 'mp-summary', style: aufklapp }, t('calendar.ganzerMonat'), React.createElement('span', { 'aria-hidden': 'true' }, offenIn.monat || verteilen ? '−' : '+')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px', textAlign: 'center' } },
-            ...wdNames.map((w, i) => React.createElement('div', { key: 'w' + i, style: { fontSize: '11px', color: palette.soft, padding: '4px 0' } }, w)),
+            ...wdNames.map((w, i) => React.createElement('div', { key: 'w' + i, style: { fontSize: text.xs, color: palette.soft, padding: '4px 0' } }, w)),
             ...cells.map((d, i) => {
               if (d === null) return React.createElement('div', { key: 'b' + i });
               const iso = isoOf(d), isToday = iso === today;
@@ -840,7 +851,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         )
       ),
       ...ohneTag.map(m => React.createElement('div', { key: m.id, style: { display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 0', borderBottom: '1px solid ' + palette.border } },
-        (() => { const f = bereichZeichenFarbe(merkpunktBereich(m.link), palette); return React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: f + '2E', boxShadow: 'inset 0 0 0 1px ' + f + '4D', color: f } }, React.createElement(Icon, { name: merkpunktZeichen(m.link), size: 16 })); })(),
+        (() => { const f = bereichZeichenFarbe(merkpunktBereich(m.link), palette); return React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: f + '2E', boxShadow: 'inset 0 0 0 1px ' + f + '4D', color: kachelZeichenFarbe(f, palette) } }, React.createElement(Icon, { name: merkpunktZeichen(m.link), size: 16 })); })(),
         React.createElement('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, color: palette.text } }, m.text),
         React.createElement('button', {
           type: 'button', 'aria-pressed': verteilen === m.id, style: { ...knopfRuhig, background: verteilen === m.id ? palette.sand + '30' : 'transparent' },

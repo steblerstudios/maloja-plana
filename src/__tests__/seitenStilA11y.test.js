@@ -123,6 +123,10 @@ const OHNE_UNTERSTRICH_ERLAUBT = {
   // Hängt an der leisen Beschreibung (<span>) darunter: ohne sie wäre nur das Gewicht übrig.
   '.weiter a': 'Liste, in der jeder Eintrag ein Link ist, halbfett; Hover unterstreicht',
   'nav.inhalt a': 'Inhaltsverzeichnis in nav, jeder Eintrag ein Link; Hover unterstreicht',
+  // Drei-Schichten-Probe 09.11.2026 (/krankenkasse/): Weg-Knöpfe in nav.wege.
+  'a.weg': 'Knopfform mit Rand, Fläche und Pfeil, 44 px hoch, Form statt Farbe',
+  // Kantonsatlas, Brillen als Filter (Brückenstück 09.11.2026): Knopfreihe in nav.brillen-wahl.
+  '.brillen-wahl a': 'Knopfform (Pille mit Rand und Fläche), 44 px hoch, in nav; gewählt zusätzlich fett',
 };
 
 describe('Links im Text sind nicht nur an der Farbe erkennbar (WCAG 1.4.1)', () => {

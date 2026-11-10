@@ -147,7 +147,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: '18px', height: '18px', borderRadius: '50%',
             background: on ? palette.onSand : palette.border + '55',
-            color: on ? palette.sand : palette.mid, fontSize: '11px', fontWeight: weight.semi, flexShrink: 0,
+            color: on ? palette.sand : palette.mid, fontSize: text.xs, fontWeight: weight.semi, flexShrink: 0,
           }
         }, String(s.n)),
         t('anspruchCheck.stepWord') + ' ' + s.n + ' · ' + s.label

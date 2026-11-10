@@ -37,7 +37,7 @@ export const WerkzeugGruppen = ({ palette, t, simpleView, onNavigate, onSelectCh
       ),
       React.createElement('div', null,
         React.createElement('div', { style: { fontWeight: simpleView ? weight.semi : weight.medium, fontSize: simpleView ? text.body : text.sm } }, tool.label),
-        (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
+        (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
       )
     );
   };

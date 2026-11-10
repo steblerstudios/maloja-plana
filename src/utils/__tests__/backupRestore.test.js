@@ -4,7 +4,10 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 const idbMap = new Map();
 vi.mock('../storage.js', () => ({
   idb: {
-    save: (id, dataUrl) => { idbMap.set(String(id), { file: dataUrl }); return Promise.resolve(); },
+    save: (id, dataUrl) => {
+      if (globalThis.__idbSpeichernScheitert) return Promise.reject(new Error('Speicher voll'));
+      idbMap.set(String(id), { file: dataUrl }); return Promise.resolve();
+    },
     get: (id) => Promise.resolve(idbMap.has(String(id)) ? idbMap.get(String(id)) : null),
     delete: (id) => { idbMap.delete(String(id)); return Promise.resolve(); },
     getAllKeys: () => Promise.resolve([...idbMap.keys()]),
@@ -225,5 +228,60 @@ describe('Schnappschuss: leere Bereiche und Auto-Sicherung (K61)', () => {
     expect(src).toContain("import { createPreRestoreSnapshot } from './prerestore.js'");
     expect(src).toMatch(/try \{\s*createPreRestoreSnapshot\(\);\s*\} catch/);
     expect(src).not.toContain("localStorage.setItem('or5_data_prerestore'");
+  });
+});
+
+// Bugsuche 09.11.2026, B-11 · Wiederherstellen ganz oder gar nicht.
+// Vorher schrieb applyBackup or5_data zuerst; scheiterte danach or5_docs am Speicher, waren die
+// Angaben ersetzt, die Dokumente alt — und die Meldung sagte nur «fehlgeschlagen».
+describe('restoreBackup — scheitert mitten im Schreiben (B-11)', () => {
+  let map;
+  const voll = () => { const e = new Error('Speicher voll'); e.name = 'QuotaExceededError'; return e; };
+  beforeEach(() => {
+    map = installLocalStorageMock();
+    idbMap.clear();
+    seed();
+  });
+
+  it('scheitert or5_docs: alle Bereiche bleiben auf dem alten Stand', async () => {
+    const echt = localStorage.setItem;
+    localStorage.setItem = (k, v) => { if (k === 'or5_docs') throw voll(); echt(k, v); };
+    const r = await restoreBackup(gut());
+    expect(r.success).toBe(false);
+    expect(r.restored).toEqual([]);
+    expect(JSON.parse(map.get('or5_data'))).toEqual(VORHER);
+    expect(JSON.parse(map.get('or5_docs'))).toEqual([{ id: 'alt', type: 'id' }]);
+    expect(JSON.parse(map.get('or5_merkliste'))).toEqual([{ id: 'm0', text: 'vorher' }]);
+  });
+
+  it('scheitert die Merkliste (zuletzt): auch Angaben und Dokumente zurück', async () => {
+    const echt = localStorage.setItem;
+    localStorage.setItem = (k, v) => { if (k === 'or5_merkliste') throw voll(); echt(k, v); };
+    const r = await restoreBackup(gut());
+    expect(r.success).toBe(false);
+    expect(JSON.parse(map.get('or5_data'))).toEqual(VORHER);
+    expect(JSON.parse(map.get('or5_docs'))).toEqual([{ id: 'alt', type: 'id' }]);
+  });
+
+  it('ein Bereich, der vorher fehlte, wird beim Zurücksetzen wieder entfernt', async () => {
+    map.delete('or5_merkliste');
+    const echt = localStorage.setItem;
+    localStorage.setItem = (k, v) => { if (k === 'or5_lang') throw voll(); echt(k, v); };
+    const b = { ...gut(), meta: { lang: 'fr' } };
+    const r = await restoreBackup(b);
+    expect(r.success).toBe(false);
+    expect(map.has('or5_merkliste')).toBe(false);
+  });
+
+  it('die Dateien kommen zuerst — scheitert eine Datei, bleiben alle Listen alt', async () => {
+    globalThis.__idbSpeichernScheitert = true;
+    try {
+      const r = await restoreBackup(gut());
+      expect(r.success).toBe(false);
+      expect(JSON.parse(map.get('or5_data'))).toEqual(VORHER);
+      expect(JSON.parse(map.get('or5_merkliste'))).toEqual([{ id: 'm0', text: 'vorher' }]);
+    } finally {
+      globalThis.__idbSpeichernScheitert = false;
+    }
   });
 });

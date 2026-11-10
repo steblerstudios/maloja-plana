@@ -150,7 +150,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: f ? (palette.sageDeep || palette.sage) : palette.mid } }, IconFn ? IconFn() : null),
       React.createElement('div', { style: { minWidth: 0, flex: 1 } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, l.label),
-        React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
+        React.createElement('div', { style: { fontSize: text.xs, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
           f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
             : (l.key === 'soz' && sozPegel) ? sozPegel.detail : (l.key === 'ipv' && ipvLage) ? ipvLage : l.sub,
           l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.skyDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
@@ -160,7 +160,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       !f && l.key === 'soz' && sozPegel && (() => {
         const max = Math.max(sozPegel.bedarf, sozPegel.einkommen, 1);
         return React.createElement('div', { style: { flexShrink: 0, width: '116px', textAlign: 'right' } },
-          React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
             t('pegel.bedarf') + ' ≈ ' + betrag(Math.round(sozPegel.bedarf))),
           React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '4px', borderRadius: radius.full + 'px', background: palette.up } },
             React.createElement('div', { style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: radius.full + 'px' } }),
@@ -192,7 +192,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       },
         React.createElement('span', { style: { minWidth: 0 } },
           React.createElement('span', { style: { ...linkStil(palette), display: 'block', fontSize: text.sm, fontWeight: weight.medium } }, t('instrumente.kompass')),
-          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } },
+          React.createElement('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid } },
             kompass.state === 'found'
               ? (anzahlGefunden === 1 ? t('instrumente.kompassFoundOne') : t('instrumente.kompassFound', { n: anzahlGefunden }))
               : kompass.state === 'none' ? t('instrumente.kompassNone') : t('instrumente.setup'))),
@@ -216,7 +216,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     ),
     React.createElement('div', { style: { borderBottom: '1px solid ' + palette.border + '55' } }, leistungen.map(row)),
     React.createElement('div', {
-      style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm, lineHeight: leading.relaxed }
+      style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: leading.relaxed }
     }, erfasst ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome')),
     React.createElement('button', {
       type: 'button', className: 'mp-link', 'data-teil': 'kompass-weg', onClick: () => onNavigate('situationen'),

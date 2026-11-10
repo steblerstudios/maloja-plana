@@ -20,7 +20,7 @@ const lies = (pfad) => fs.readFileSync(path.resolve(process.cwd(), 'public', pfa
 const html = lies('kantonsatlas');
 const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 const KARTEN = ['praemie', 'lastNachIpv', 'steuer', 'miete', 'leer', 'kinderzulage', 'kita', 'alq', 'sozialhilfe', 'el'];
-const karte = (key) => html.match(new RegExp(`<figure class="abb atlas" id="karte-${key.toLowerCase()}">[\\s\\S]*?</figure>`))[0];
+const karte = (key) => html.match(new RegExp(`<figure class="abb atlas" id="karte-${key.toLowerCase()}"[^>]*>[\\s\\S]*?</figure>`))[0];
 
 describe('/kantonsatlas/', () => {
   it('steht in der Liste der Hintergrundseiten', () => {
@@ -143,9 +143,9 @@ describe('/kantonsatlas/', () => {
     });
 
     it('jede Brille führt nur zu Karten, die es auf der Seite gibt', () => {
-      const ids = new Set([...html.matchAll(/<figure class="abb atlas" id="(karte-[a-z]+)">/g)].map((m) => m[1]));
+      const ids = new Set([...html.matchAll(/<figure class="abb atlas" id="(karte-[a-z]+)"[^>]*>/g)].map((m) => m[1]));
       for (const b of BRILLEN) {
-        const block = html.match(new RegExp(`<section class="brille" aria-labelledby="brille-${b.id}">[\\s\\S]*?</section>`))[0];
+        const block = html.match(new RegExp(`<section class="brille"[^>]*aria-labelledby="brille-${b.id}">[\\s\\S]*?</section>`))[0];
         const ziele = [...block.matchAll(/href="#(karte-[a-z]+)"/g)].map((m) => m[1]);
         expect(ziele.length, b.id).toBe(b.karten.length);
         for (const z of ziele) expect(ids, `${b.id} → ${z}`).toContain(z);

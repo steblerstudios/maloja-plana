@@ -39,6 +39,43 @@ const ASSETS = BASIS + 'assets/';
 // Unbedenklich: die Dateien sind nach Inhalt benannt bzw. nur von hier.
 const TREFFER = { ignoreVary: true };
 
+// ─── Teilen-Empfang (Web Share Target, manifest.json → share_target) ───
+// Eine über «Teilen …» geschickte Datei kommt als POST an <BASIS>teilen-empfang. Sie wird
+// NUR auf diesem Gerät in einen eigenen Cache gelegt und wartet in der Dokumentablage,
+// bis die Person sie selbst einordnet oder verwirft — nichts wird automatisch abgelegt,
+// nichts geht ins Netz. Gleiche Namen wie src/utils/teilenEmpfang.js (Wächter-Test).
+const GETEILT_CACHE = 'maloja-geteilt';
+const GETEILT_ORDNER = 'geteilt/';
+const NAME_KOPF = 'X-Maloja-Dateiname';
+const MAX_GETEILT_BYTES = 20 * 1024 * 1024;
+const MAX_GETEILT_DATEIEN = 10;
+const TEILEN_PFAD = BASIS + 'teilen-empfang';
+
+const geteiltAblegen = async (request) => {
+  try {
+    const formular = await request.formData();
+    const dateien = formular
+      .getAll('datei')
+      .filter((d) => d && typeof d === 'object' && typeof d.size === 'number' && d.size > 0 && d.size <= MAX_GETEILT_BYTES)
+      .slice(0, MAX_GETEILT_DATEIEN);
+    if (dateien.length) {
+      const cache = await caches.open(GETEILT_CACHE);
+      const zeit = Date.now();
+      await Promise.all(dateien.map((datei, i) => cache.put(
+        BASIS + GETEILT_ORDNER + zeit + '-' + String(i).padStart(2, '0'),
+        new Response(datei, { headers: {
+          'Content-Type': datei.type || 'application/octet-stream',
+          [NAME_KOPF]: encodeURIComponent(datei.name || 'Datei'),
+        } })
+      )));
+    }
+  } catch (e) {
+    /* unlesbares Formular: die Ablage öffnet trotzdem, nur ohne neue Datei */
+  }
+  // Volle Adresse: Response.redirect verlangt sie nicht in jedem Browser gleich streng.
+  return Response.redirect(new URL(BASIS + '#/tresor', self.location.origin).href, 303);
+};
+
 // K59 (gemessen 17.09.2026): Beim ersten Besuch lädt der Browser Haupt-Skript,
 // Stylesheet und Sprachdatei, BEVOR dieser Service Worker die Seite kontrolliert —
 // sie landeten nie im Cache, und offline blieb die Seite leer. Darum:
@@ -116,7 +153,9 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((names) => {
       return Promise.all(
         names
-          .filter((name) => name !== CACHE_NAME)
+          // Der Eingang geteilter Dateien überlebt jedes Update — sonst wäre eine
+          // geteilte, noch nicht eingeordnete Datei nach einem Deploy still weg.
+          .filter((name) => name !== CACHE_NAME && name !== GETEILT_CACHE)
           .map((name) => caches.delete(name))
       );
     })
@@ -128,9 +167,13 @@ self.addEventListener('activate', (event) => {
 // Hashed assets (JS/CSS in /assets/): cache-first (immutable)
 // Everything else: network-first with offline fallback
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  if (event.request.method === 'POST' && url.origin === self.location.origin && url.pathname === TEILEN_PFAD) {
+    event.respondWith(geteiltAblegen(event.request));
+    return;
+  }
   if (event.request.method !== 'GET') return;
 
-  const url = new URL(event.request.url);
   // Nur Anfragen an den eigenen Server anfassen — Fremdes geht am Cache vorbei
   // direkt ans Netz (Sicherheitsprüfung 25.09.2026). Die CSP lässt heute ohnehin
   // nur 'self' zu; das hier hält auch, falls sie je gelockert wird.
