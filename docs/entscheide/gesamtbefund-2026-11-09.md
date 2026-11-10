@@ -206,5 +206,8 @@ siebenmal neu entschieden werden:
    ✅ **10.11. Nachzug 2**: S3 in fr/it (Lehre, Ausgesteuert), Geburtsdatum TT.MM.JJJJ im Lebenslauf. AHV 2027 für
    Selbständige nur teilweise belegt (AHVV Art. 21: Skala bis 61 500; Art. 28: AHV-Mindestbeitrag 444), Gesamt-
    Mindestbeitrag AHV+IV+EO nicht → bleibt ohne Eintrag. Weiter offen: Mindestlohn «angenommen» (#802), GE/TI/JU, rm.
+   ✅ **10.11. Nachzug 3**: Mindestlohn-Ausnahmen an BS MiLoG § 2 und NE LEmpl Art. 32a–e gelesen. «Lehre, Praktikum,
+   unter 18 ausgenommen» galt nicht überall (BS: unter 18 nur Ferienjob; NE: per Staatsrat, Erlass nicht gefunden) →
+   `lohnCheck.ausnahmen` sagt jetzt «jeder Kanton legt fest», mit belegten Beispielen. Offen: NE-Erlass, #802, rm.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.

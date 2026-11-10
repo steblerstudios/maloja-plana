@@ -112,6 +112,15 @@ function nichtBelegt(kanton, ml, heute) {
 // er würde Leute beschuldigen, die korrekt zahlen. Der Befund selbst formuliert darum
 // vorsichtig und nennt die Ausnahmen (`lohnCheck.ausnahmen`).
 //
+// Nachtrag Kapitel 5 (10.11.2026), am Volltext gelesen: Die Ausnahmen sind NICHT in allen fünf Kantonen gleich.
+//  · BS MiLoG § 2 Abs. 2 (SG 812.200, Stand 1.7.2022): Praktika bis 6 (bzw. 12) Monate, unter 18 NUR Schülerinnen und
+//    Schüler im Ferienjob, Lernende, Familienmitglieder, Au-pairs, Abruf bis 70 Std./Jahr, Integrationsprogramme,
+//    allgemeinverbindlicher GAV/NAV mit Mindestlöhnen, Arbeit überwiegend im Ausland.
+//  · NE LEmpl (RSN 813.10, État au 1.1.2026): Art. 32cbis nimmt nur Kleinstlöhne ohne AHV-Pflicht aus; Art. 32c lässt
+//    den Staatsrat Ausnahmen «dans un contexte de formation ou d'intégration professionnelle» festlegen — dieser
+//    Erlass ist NICHT gelesen (in RSN 813.100–813.110 nicht gefunden).
+// Darum sagt `lohnCheck.ausnahmen` seither nur noch: jeder Kanton legt die Ausnahmen selbst fest, mit Beispielen.
+//
 // Zum Wieder-Einschalten nötig: Sektor + Status erfassen (Lehre/Praktikum/unter 18/GAV/
 // Landwirtschaft/Ferienjob), GE-Sätze differenzieren, je Satz ein amtlicher Beleg.
 // Dann hier auf `true` — der Brief-Code selbst ist gebaut, geprüft und getestet.

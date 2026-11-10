@@ -3301,7 +3301,7 @@ export default {
   },
   lohnCheck: {
     unterMindestlohn: { sie: 'Remarque : Votre salaire (CHF {lohnStunde}/h) semble inférieur au salaire minimum légal du canton {kanton} (CHF {mindestStunde}/h, état {jahr}). {ausnahmen} {stelleSatz}', du: 'Remarque : Ton salaire (CHF {lohnStunde}/h) semble inférieur au salaire minimum légal du canton {kanton} (CHF {mindestStunde}/h, état {jahr}). {ausnahmen} {stelleSatz}' },
-    ausnahmen: 'Le salaire minimum ne s’applique toutefois pas à tout le monde : l’apprentissage, les stages et les moins de 18 ans en sont exclus, et dans certains cantons également les branches couvertes par une convention collective, l’agriculture et les jobs d’été.',
+    ausnahmen: 'Le salaire minimum ne s’applique toutefois pas à tout le monde. Chaque canton fixe lui-même les exceptions, par exemple pour les apprentis, les stages, les jobs de vacances des jeunes ou les branches couvertes par une convention collective, et certains cantons prévoient des taux plus bas, par exemple dans l’agriculture.',
     stelleSatz: { sie: 'Si rien de tout cela ne s’applique, vous pouvez vous adresser à l’organe compétent : {stelle}.', du: 'Si rien de tout cela ne s’applique, tu peux t’adresser à l’organe compétent : {stelle}.' },
     stelleSatzNeutral: { sie: 'Si rien de tout cela ne s’applique, vous pouvez vous adresser à l’autorité cantonale compétente.', du: 'Si rien de tout cela ne s’applique, tu peux t’adresser à l’autorité cantonale compétente.' },
     keinMindestlohn: { sie: 'Votre canton n\'a pas de salaire minimum légal.', du: 'Ton canton n\'a pas de salaire minimum légal.' },

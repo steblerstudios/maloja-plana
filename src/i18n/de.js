@@ -3335,7 +3335,9 @@ export default {
     // falsch — und der Satz führte bis Runde 8 zu einem Brief an den Arbeitgeber.
     // Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
     unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} {stelleSatz}', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} {stelleSatz}' },
-    ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle: Lehre, Praktikum und Personen unter 18 Jahren sind ausgenommen, in einzelnen Kantonen auch Branchen mit einem Gesamtarbeitsvertrag, die Landwirtschaft und Ferienjobs.',
+    // Kapitel 5, K (10.11.2026): nicht mehr «Lehre, Praktikum und unter 18 sind ausgenommen» — das gilt nicht in allen
+    // fünf Kantonen (BS MiLoG § 2: unter 18 nur im Ferienjob; NE LEmpl Art. 32c: Ausnahmen per Staatsrat). Siehe data/lohnCheck.js.
+    ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle. Die Ausnahmen legt jeder Kanton selbst fest, etwa für Lernende, Praktika, Ferienjobs von Jugendlichen oder Branchen mit einem Gesamtarbeitsvertrag, und manche Kantone kennen tiefere Sätze, etwa in der Landwirtschaft.',
     // Fallback, wenn der Kanton keine benannte Kontrollstelle hat (JU: kein Inspektorat —
     // der Weg führt dort übers Arbeitsgericht). Nie eine Stelle erfinden.
     // Name nach Doppelpunkt, wie im Brief (Swiss-Precision-Prüfung 19.10.2026): eingesetzt ohne Artikel

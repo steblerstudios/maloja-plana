@@ -3302,7 +3302,7 @@ export default {
   },
   lohnCheck: {
     unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) appears to be below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr, as of {jahr}). {ausnahmen} {stelleSatz}',
-    ausnahmen: 'The minimum wage does not apply to everyone: apprenticeships, internships and people under 18 are exempt, and in some cantons also sectors with a collective agreement, agriculture and student holiday jobs.',
+    ausnahmen: 'The minimum wage does not apply to everyone, though. Each canton sets its own exceptions, for example for apprentices, internships, young people’s holiday jobs or sectors with a collective agreement, and some cantons have lower rates, for example in agriculture.',
     stelleSatz: 'If none of these apply, you can contact the competent body: {stelle}.',
     stelleSatzNeutral: 'If none of these apply, you can contact the competent cantonal authority.',
     keinMindestlohn: 'Your canton does not have a legal minimum wage.',

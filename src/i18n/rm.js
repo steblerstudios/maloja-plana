@@ -4767,7 +4767,8 @@ export default {
   lohnCheck: {
     // TODO(rm): Gegenlese Muttersprachler:in
     unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}" },
-    ausnahmen: 'Il salari minimal na vala dentant betg per tuts: emprendissadi, pratica ed uffants sut 18 onns èn exclus, ed en tscherts chantuns era branschas cun in contract collectiv, l’agricultura e lavurs da vacanzas.',
+    // TODO(rm): provisorisch — deutscher Rückfall (Kapitel 5, 10.11.2026); die frühere rm-Fassung behauptete Ausnahmen, die nicht in allen Kantonen gelten.
+    ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle. Die Ausnahmen legt jeder Kanton selbst fest, etwa für Lernende, Praktika, Ferienjobs von Jugendlichen oder Branchen mit einem Gesamtarbeitsvertrag, und manche Kantone kennen tiefere Sätze, etwa in der Landwirtschaft.',
     stelleSatz: { sie: 'Sche nagut da quai na vala, pudais Vus contactar l’organ cumpetent: {stelle}.', du: 'Sche nagut da quai na vala, pos ti contactar l’organ cumpetent: {stelle}.' }, // TODO(rm): Gegenlese Muttersprachler:in
     stelleSatzNeutral: { sie: 'Sche nagut da quai na vala, pudais Vus contactar l’organ chantunal cumpetent.', du: 'Sche nagut da quai na vala, pos ti contactar l’organ chantunal cumpetent.' }, // TODO(rm): Gegenlese Muttersprachler:in
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
