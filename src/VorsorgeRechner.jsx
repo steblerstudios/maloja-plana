@@ -795,6 +795,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer, referenzalter }), 'a'));
               rows.push(line(t('vr.zukunftSzenarioAhvFrueh', { alter: ahvBezug, pct }), 'b'));
               if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret }), 'c'));
+              // Die Annahmen hinter der AHV bei Rücktritt vor dem frühesten Bezug (Fachprüfung B-18).
+              if (ret < ahvMin) rows.push(line(t('vr.zukunftAhvAnnahme'), 'c2'));
               rows.push(line(t('vr.zukunftSzenarioSaeulen'), 'd'));
             } else if (delta > 0) {
               rows.push(line(t('vr.zukunftSzenarioAufschub', { dauer, referenzalter }), 'a'));
@@ -1007,7 +1009,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           ? React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.xs + 'px', flexWrap: 'wrap' } },
               React.createElement('span', { style: { color: palette.sage } }, hinweisZeichen('check', 10)),
               React.createElement('span', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
-                t('vr.zukunftIkAktiv', { jahre: ikResult.beitragsjahre, eink: fmt(ikResult.durchschnittlichesJahreseinkommen) }))
+                t('vr.zukunftIkAktiv', { jahre: ikResult.beitragsjahre, eink: fmt(ikResult.durchschnittlichesJahreseinkommen) }),
+                // Mit Hochrechnung (B-17) zusätzlich die Werte, mit denen das Bild wirklich rechnet.
+                ikHoch && ikHoch.zukunftsJahre > 0 ? ' ' + t('vr.zukunftIkHochgerechnet', { jahre: ikHoch.beitragsjahreReferenzalter, eink: fmt(ikHoch.durchschnittlichesJahreseinkommen) }) : null)
             )
           : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftIkInaktiv')),
         React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },

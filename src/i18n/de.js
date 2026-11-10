@@ -6731,6 +6731,8 @@ export default {
     zukunftSzenarioAhvFrueh: 'AHV bei Bezug ab {alter}: {pct} lebenslang (frühestens ab 63 beziehbar).',
     zukunftSzenarioAhvAufschub: 'AHV-Aufschub bis {alter}: {pct} lebenslang.',
     zukunftSzenarioBridge: { sie: 'Die Jahre von {von} bis 63 überbrücken Sie ohne AHV — etwa aus BVG-Rente oder 3a-Kapital.', du: 'Die Jahre von {von} bis 63 überbrückst du ohne AHV — etwa aus BVG-Rente oder 3a-Kapital.' },
+    zukunftIkHochgerechnet: { sie: 'Bis zum Referenzalter hochgerechnet: {jahre} Beitragsjahre, Ø CHF {eink} — die künftigen Jahre mit Ihrem heutigen Einkommen.', du: 'Bis zum Referenzalter hochgerechnet: {jahre} Beitragsjahre, Ø CHF {eink} — die künftigen Jahre mit deinem heutigen Einkommen.' },
+    zukunftAhvAnnahme: { sie: 'Annahme: Sie beziehen die AHV zum frühestmöglichen Zeitpunkt und zahlen bis zum Referenzalter Beiträge als nichterwerbstätige Person. Diese Beiträge richten sich nach Vermögen und Renteneinkommen; die Schätzung rechnet vereinfacht mit dem bisherigen Einkommen weiter.', du: 'Annahme: Du beziehst die AHV zum frühestmöglichen Zeitpunkt und zahlst bis zum Referenzalter Beiträge als nichterwerbstätige Person. Diese Beiträge richten sich nach Vermögen und Renteneinkommen; die Schätzung rechnet vereinfacht mit dem bisherigen Einkommen weiter.' },
     zukunftSzenarioSaeulen: { sie: 'BVG-Rente ist ab 58 möglich, 3a-Kapital ab 60 — je nach Reglement Ihrer Pensionskasse.', du: 'BVG-Rente ist ab 58 möglich, 3a-Kapital ab 60 — je nach Reglement deiner Pensionskasse.' },
     zukunftSzenarioWeiter: { sie: 'BVG und 3a wachsen weiter, solange Sie einzahlen (3a längstens bis 70).', du: 'BVG und 3a wachsen weiter, solange du einzahlst (3a längstens bis 70).' },
     szenarioJahr: 'Jahr',

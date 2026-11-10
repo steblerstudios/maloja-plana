@@ -6643,6 +6643,8 @@ export default {
     zukunftSzenarioAhvFrueh: 'AHV drawn from {alter}: {pct} for life (earliest possible at 63).',
     zukunftSzenarioAhvAufschub: 'AHV deferred to {alter}: {pct} for life.',
     zukunftSzenarioBridge: 'The years from {von} to 63 you bridge without AHV — e.g. from your BVG pension or pillar 3a capital.',
+    zukunftIkHochgerechnet: 'Projected to the reference age: {jahre} contribution years, avg CHF {eink} — future years at your current income.',
+    zukunftAhvAnnahme: 'Assumption: you draw AHV at the earliest possible date and pay contributions as a person not gainfully employed until the reference age. These depend on assets and pension income; for simplicity the estimate keeps using your previous income.',
     zukunftSzenarioSaeulen: 'A BVG pension is possible from 58, pillar 3a capital from 60 — depending on your pension fund’s rules.',
     zukunftSzenarioWeiter: 'BVG and pillar 3a keep growing as long as you pay in (3a until age 70 at the latest).',
     szenarioJahr: 'year',
