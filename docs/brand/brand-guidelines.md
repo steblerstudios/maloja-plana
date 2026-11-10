@@ -429,7 +429,9 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   einbauen»)*. Über «Was ist jetzt dran?» steht **kein neues Zeichen, sondern der Tank** als Spiegel
   (§7b): klein (64 px), daneben gross die Monate, die der liquide Notgroschen die Ausgaben deckt. Es
   ist derselbe kleine Tank wie in der Kapitelzeile Finanzen (`ReserveTank groesse: 'klein'`), mit
-  derselben Rechnung (`data/reserveTank.js`). Eine Karte, keine Kachelreihe (siehe «Ruhige Listen
+  derselben Rechnung (`data/reserveTank.js`). **Auch in der Kapitelzeile Finanzen** stehen die Monate
+  gross unter dem Tank, eine Stufe leiser (`2xl` statt `3xl` zuoberst; Stebler Studios: «Ja, auch dort»).
+  Eine Karte, keine Kachelreihe (siehe «Ruhige Listen
   statt KPI-Kacheln»). Keine Ampelfarbe. Ohne erfasste Ausgaben erscheint sie nicht, und bei leerem
   Notgroschen steht keine grosse «0», sondern der leise Satz der Tankanzeige. Quelle:
   `src/components/NotgroschenZahl.jsx` (nachgeladen). Wächter: `src/components/__tests__/notgroschenZahl.test.js`.

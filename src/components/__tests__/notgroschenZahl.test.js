@@ -62,3 +62,15 @@ describe('ReserveTank: ein Zeichen, zwei Grössen', () => {
     expect(panel).not.toMatch(/const miniGauge/);
   });
 });
+
+describe('Kapitelzeile Finanzen: die Monate auch dort gross (Stebler Studios 10.11.2026, «Ja, auch dort»)', () => {
+  const panel = quelle('../InstrumentePanel.jsx');
+  it('Tank-Kachel trägt die Zahl, eine Stufe unter der Karte zuoberst', () => {
+    expect(panel).toMatch(/zahl: tank\.mode === 'months' && tank\.level !== 'empty'/);
+    expect(panel).toMatch(/'data-instrument-zahl'[\s\S]{0,200}fontSize: text\['2xl'\]/);
+    expect(quelle('../NotgroschenZahl.jsx')).toMatch(/fontSize: text\['3xl'\]/);
+  });
+  it('mit Zahl kein doppelter kleiner Satz', () => {
+    expect(panel).toMatch(/!tile\.zahl && h\('div'/);
+  });
+});

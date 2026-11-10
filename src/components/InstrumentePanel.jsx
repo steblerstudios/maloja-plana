@@ -157,6 +157,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
     {
       key: 'tank', name: t('instrumente.tank'),
+      // Seit 10.11.2026 die Monate gross (wie zuoberst auf der Übersicht), statt «4.7 Monate Reserve» klein.
+      zahl: tank.mode === 'months' && tank.level !== 'empty'
+        ? { wert: zahl(tank.months, { hoechstens: 1 }), einheit: t(tank.months === 1 ? 'dashboard.notgroschenMonat' : 'dashboard.notgroschenMonate') } : null,
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
       glyph: h(ReserveTank, { palette, t, savings: tank.savings, monthlyExpenses: tank.monthlyExpenses || 0, groesse: 'klein' }),
       onClick: () => onNavigate('finanzuebersicht'),
@@ -202,8 +205,13 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       },
         // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
         h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
+        // Grosse Zahl (10.11.2026, zuerst beim Tank): eine Stufe unter der Karte zuoberst (2xl statt 3xl),
+        // damit dort die lauteste Stelle bleibt. Mit Zahl entfällt der kleine Satz — er sagte dasselbe.
+        tile.zahl && h('div', { 'data-instrument-zahl': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px' } },
+          h('span', { style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, tile.zahl.wert),
+          h('span', { style: { fontSize: text.sm, color: palette.mid } }, tile.zahl.einheit)),
         h('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, tile.name),
-        h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
+        !tile.zahl && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, tile.sub)
       ))
     )
   );
