@@ -8,7 +8,7 @@
 //                                                    # Bytes je 20-Zeilen-Block
 //   node scripts/bundle-posten.mjs --datei config/constants.js --zeilen
 //                                                    # die teuersten Original-Zeilen
-//   node scripts/bundle-posten.mjs --js dist/assets/ChapterView-*.js
+//   node scripts/bundle-posten.mjs --js dist/app/assets/ChapterView-*.js
 //                                                    # ein anderer Chunk
 //
 // Warum das hier liegt:
@@ -54,9 +54,9 @@ const zielDatei = opt('--datei');
 const top = Number(opt('--top', '25'));
 let jsPfad = opt('--js');
 
-// Ohne --js die Startdatei suchen (dist/assets/index-*.js)
+// Ohne --js die Startdatei suchen (dist/app/assets/index-*.js)
 if (!jsPfad) {
-  const ordner = 'dist/assets';
+  const ordner = 'dist/app/assets';
   let kandidaten;
   try {
     kandidaten = readdirSync(ordner).filter((f) => /^index-.*\.js$/.test(f));
@@ -73,7 +73,7 @@ if (!jsPfad) {
   jsPfad = join(ordner, kandidaten[0]);
 }
 
-// Glob wie dist/assets/ChapterView-*.js selbst auflösen (die Hashes kennt niemand)
+// Glob wie dist/app/assets/ChapterView-*.js selbst auflösen (die Hashes kennt niemand)
 if (jsPfad.includes('*')) {
   const ordner = dirname(jsPfad);
   const muster = new RegExp('^' + basename(jsPfad).replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');

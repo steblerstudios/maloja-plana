@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
+import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
@@ -29,8 +31,8 @@ export const LINK_TARGETS = [
   { view: 'direktlinks', label: 'nav.direktlinks' },
 ];
 
-// «Entfernt · Rückgängig» bleibt rund fünf Sekunden stehen (Entscheid C, §15).
-const RUECKGAENGIG_MS = 5000;
+// «Entfernt · Rückgängig» bleibt rund fünf Sekunden stehen (Entscheid C, §15) —
+// seit 10.11.2026 als gemeinsamer Baustein (hooks/useRueckgaengig.js), den alle Lösch-Listen teilen.
 
 // Seit 27.10.2026 (F7-L10, docs/entscheide/seiten-buendeln.md §2 H) keine eigene Seite mehr, sondern der
 // Reiter «Merkliste» in «Was ansteht» (CalendarReminders.jsx). Dort führt der Kalender die Liste:
@@ -48,8 +50,7 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
   const [newText, setNewText] = useState('');
   const [newLink, setNewLink] = useState('');
   const [tagOffen, setTagOffen] = useState(null); // id des Punkts, dessen Tag-Feld offen ist
-  const [entfernt, setEntfernt] = useState(null); // { item, index } für «Rückgängig»
-  const timer = useRef(null);
+  const { entfernt, merke, rueckgaengig: zurueck } = useRueckgaengig();
 
   useEffect(() => {
     if (vorlaeufig) return;
@@ -57,8 +58,6 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
   }, [eigene, vorlaeufig, punkte]);
   // Änderungen aus einem anderen Tab übernehmen, statt sie beim nächsten Abhaken zu überschreiben.
   useFremdeListe('or5_merkliste', loadTodos, setEigene, !punkte && !vorlaeufig);
-
-  useEffect(() => () => clearTimeout(timer.current), []);
 
   const LOCALE = t('calendar.locale');
   const datumKurz = (iso) => {
@@ -80,19 +79,11 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
   const remove = (id) => {
     const index = items.findIndex(i => i.id === id);
     if (index < 0) return;
-    setEntfernt({ item: items[index], index });
+    merke({ item: items[index], index, text: items[index].text });
     setItems(prev => prev.filter(i => i.id !== id));
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => setEntfernt(null), RUECKGAENGIG_MS);
   };
   // Der Eintrag kommt an dieselbe Stelle zurück.
-  const rueckgaengig = () => {
-    if (!entfernt) return;
-    const { item, index } = entfernt;
-    setItems(prev => { const neu = [...prev]; neu.splice(Math.min(index, neu.length), 0, item); return neu; });
-    setEntfernt(null);
-    clearTimeout(timer.current);
-  };
+  const rueckgaengig = () => zurueck(({ item, index }) => setItems(prev => wiederEinsetzen(prev, item, index)));
   const labelFor = (view) => {
     const tgt = LINK_TARGETS.find(x => x.view === view);
     return tgt ? t(tgt.label) : view;
@@ -124,8 +115,6 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.feldrand, borderRadius: radius.full + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     erledigtAm: { fontSize: text.xs, color: palette.mid },
     del: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, minWidth: '44px', minHeight: '44px', background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
-    meldung: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', fontSize: text.sm, color: palette.text },
-    rueckBtn: knopfStil(palette, 'neben'),
   };
 
   const tagSteuerung = (i) => {
@@ -207,12 +196,7 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     ),
 
     // «Entfernt · Rückgängig»: sofort weg, ein Tipp holt den Eintrag an dieselbe Stelle zurück.
-    React.createElement('div', { role: 'status', 'aria-live': 'polite' },
-      entfernt && React.createElement('div', { style: s.meldung },
-        React.createElement('span', { style: { minWidth: 0, color: palette.text } }, t('merkliste.entfernt') + ' · ' + entfernt.item.text),
-        React.createElement('button', { type: 'button', style: s.rueckBtn, onClick: rueckgaengig }, t('calendar.undo'))
-      )
-    )
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, items), onRueckgaengig: rueckgaengig })
   );
 };
 

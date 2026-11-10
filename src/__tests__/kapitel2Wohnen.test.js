@@ -18,12 +18,14 @@ const rechner = (canton, wohnen = {}, monthlyIncome = 2500) => renderToStaticMar
 }));
 
 describe('W2 · weitere Voraussetzungen beim Mietbeiträge-Ergebnis', () => {
-  it('Zug: Titel, Wohnsitz 3 Jahre, Vermögen 144 000, Zimmerregel', () => {
+  // Predeploy-Nachzug 10.11.: WFG ZG § 7 Abs. 1 lit. b «Wohnsitz oder Arbeitsplatz»; Vermögen +16'900 je Kind.
+  it('Zug: Titel, Wohnsitz ODER Arbeitsplatz 3 Jahre, Vermögen 144 000 + je Kind, Zimmerregel', () => {
     const html = rechner('ZG', { wfgWohnung: 'ja' });
     expect(html).toContain('mietzinsView.result_likely');
     expect(html).toContain('mietzinsView.vorausTitel');
-    expect(html).toContain('mietzinsView.vorausWohnsitz(3)');
-    expect(html).toMatch(/mietzinsView\.vorausVermoegen\(144.000\)/);
+    expect(html).toContain('mietzinsView.vorausWohnsitzOderArbeit(3)');
+    expect(html).not.toContain('mietzinsView.vorausWohnsitz(3)');
+    expect(html).toMatch(/mietzinsView\.vorausVermoegenJeKind\(144.000\|144.000\|16.900\)/);
     expect(html).toContain('mietzinsView.vorausZimmerZG');
     expect(html).not.toContain('vorausZimmerZGZuViel');
   });
@@ -31,6 +33,14 @@ describe('W2 · weitere Voraussetzungen beim Mietbeiträge-Ergebnis', () => {
   it('Zug: erfasste Zimmer über Personen + 2 werden als Hinweis genannt', () => {
     const html = rechner('ZG', { wfgWohnung: 'ja', rooms: '4' });
     expect(html).toContain('mietzinsView.vorausZimmerZGZuViel(4|1)');
+  });
+
+  it('Zug mit zwei Kindern: Vermögensgrenze 144 000 + 2 × 16 900 = 177 800', () => {
+    const html = renderToStaticMarkup(React.createElement(MietzinsOrientierung, {
+      palette, t,
+      data: { basis: { canton: 'ZG', maritalStatus: 'single', household: { adults: 1, children: [{ age: 4 }, { age: 7 }] } }, finanzen: { monthlyIncome: 2500, dreizehnter: 'no' }, wohnen: { rentAmount: 1200, wfgWohnung: 'ja' } },
+    }));
+    expect(html).toMatch(/mietzinsView\.vorausVermoegenJeKind\(177.800\|144.000\|16.900\)/);
   });
 
   it('Basel-Stadt: Wohnsitz 2 Jahre und Mindestmiete', () => {
@@ -48,7 +58,7 @@ describe('W2 · weitere Voraussetzungen beim Mietbeiträge-Ergebnis', () => {
   });
 
   it('jeder neue Schlüssel hat einen deutschen Text', () => {
-    for (const k of ['vorausTitel', 'vorausWohnsitz', 'vorausWohnsitzGE', 'vorausVermoegen', 'vorausMindestmieteBS', 'vorausZimmerZG', 'vorausZimmerZGZuViel']) {
+    for (const k of ['vorausTitel', 'vorausWohnsitz', 'vorausWohnsitzGE', 'vorausVermoegen', 'vorausWohnsitzOderArbeit', 'vorausVermoegenJeKind', 'vorausMindestmieteBS', 'vorausZimmerZG', 'vorausZimmerZGZuViel']) {
       expect(de.mietzinsView[k], k).toBeTruthy();
     }
   });

@@ -2,6 +2,8 @@ import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
+import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 const LEVELS = ['native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1'];
 
@@ -10,7 +12,14 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
 
   const addLang = () => onChange([...list, { name: '', level: 'B1' }]);
   const updateLang = (idx, patch) => onChange(list.map((d, i) => i === idx ? { ...d, ...patch } : d));
-  const removeLang = (idx) => onChange(list.filter((_, i) => i !== idx));
+  // Sofort weg, «Entfernt · Rückgängig» legt die Sprache zurück (10.11.2026); leere Zeilen ohne Meldung.
+  const { entfernt, merke, rueckgaengig: zurueck } = useRueckgaengig();
+  const removeLang = (idx) => {
+    const lang = list[idx];
+    if (lang && lang.name) merke({ item: lang, index: idx, text: lang.name });
+    onChange(list.filter((_, i) => i !== idx));
+  };
+  const langZurueck = () => zurueck(({ item, index }) => onChange(wiederEinsetzen(list, item, index)));
 
   const inputStyle = {
     width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
@@ -60,6 +69,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
         }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
       )
     ),
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, list), onRueckgaengig: langZurueck }),
     React.createElement('button', {
       onClick: addLang,
       style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }
