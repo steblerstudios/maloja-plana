@@ -308,7 +308,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Données dans l’application',
         absaetze: [
-          'Ce que vous saisissez dans Maloja Plana reste <strong>sur votre appareil</strong> (localStorage et IndexedDB dans le navigateur). Il n’y a pas de compte, pas de connexion et aucune transmission à l’éditrice ou à des tiers. Qui veut effacer les données les efface sur l’appareil — il n’existe pas de seconde copie ailleurs.',
+          'Ce que vous saisissez dans Maloja Plana reste <strong>sur votre appareil</strong> (localStorage, IndexedDB et, pour les fichiers partagés, le cache du navigateur). Il n’y a pas de compte, pas de connexion et aucune transmission à l’éditrice ou à des tiers. Qui veut effacer les données les efface sur l’appareil — il n’existe pas de seconde copie ailleurs.',
           'Les données sensibles (santé, aide sociale, convictions) sont elles aussi enregistrées uniquement en local par l’application. Les copies de sauvegarde automatiques dans le navigateur ne sont pas chiffrées.',
           'Comme rien n’est transmis, l’éditrice ne peut pas non plus renseigner sur vos saisies : elle ne les a jamais vues. La version détaillée avec tous les droits selon la LPD figure dans l’application sous « Confidentialité & Mentions légales ».',
         ],

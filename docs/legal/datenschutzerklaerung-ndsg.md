@@ -28,7 +28,7 @@ Maloja Plana ist ein Open-Source-Projekt. Die Nutzung der App ist kostenlos; fü
 
 Maloja Plana ist eine **Local-First-Webanwendung**. Das bedeutet:
 
-- Alle persönlichen Daten werden **ausschliesslich auf Deinem Gerät** gespeichert (im Browser-localStorage und in der IndexedDB).
+- Alle persönlichen Daten werden **ausschliesslich auf Deinem Gerät** gespeichert (im Browser-localStorage, in der IndexedDB und — für geteilte, noch nicht eingeordnete Dateien — im Cache des Browsers).
 - Es gibt **keinen Server, kein Backend und keine Cloud**, die Deine Daten empfängt oder verarbeitet.
 - Es gibt **kein Benutzerkonto** und keine Registrierung.
 - Nach dem ersten Laden funktioniert die Anwendung **auch offline** — in der Regel in den Bereichen, die schon einmal geöffnet wurden.
@@ -53,6 +53,7 @@ Die folgenden Daten werden ausschliesslich in Deinem Browser gespeichert:
 | Erinnerungen und Fristen | localStorage (`or5_reminders`) | Fristenverwaltung |
 | Automatische Backups (Schnappschüsse der Angaben, Dokumente samt Dateien, Erinnerungen, Kontakte und Merkliste) | IndexedDB (`maloja-plana-backups`) | Datensicherung; entstehen beim Start der App, höchstens einer je 12 Stunden, die letzten 5 bleiben (`src/utils/autoBackup.js` Z. 14–15 und 114–166, `src/main.jsx` Z. 586–592); **nicht verschlüsselt** (Bau-Liste K34) |
 | Sicherheitskopien vor einer Wiederherstellung | localStorage (`or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date`) | Rückgängig-Möglichkeit nach einem Backup-Import; werden nicht automatisch gelöscht, wohl aber mit «Alle Daten auf diesem Gerät löschen» (7.2) |
+| Geteilte Dateien, noch nicht eingeordnet (über «Teilen an Maloja» oder «Datei hinzufügen») | Browser-Cache (`maloja-geteilt`, Service Worker) | Eingang der Dokumentablage; bleibt bis zum Ablegen oder Verwerfen, übersteht App-Updates, wird mit «Alle Daten auf diesem Gerät löschen» (7.2) gelöscht (`src/utils/datenLoeschen.js`); **nicht verschlüsselt** |
 | Beta-Zugang | localStorage (`or5_beta_access`) | Zugangsschranke während der Beta (nur UI-Hürde, keine Verschlüsselung) |
 | Einstellungen (Sprache, Theme, Onboarding) | localStorage (`or5_lang`, `or5_theme`, `or5_onboarding_done`) | App-Konfiguration |
 
@@ -130,9 +131,10 @@ Du kannst Deine Daten jederzeit löschen:
 
 **Was «Alle Daten auf diesem Gerät löschen» entfernt** (`src/utils/datenLoeschen.js`, aufgerufen aus `src/components/DatenLoeschen.jsx`, eingebunden in `src/SettingsView.jsx` Z. 72):
 - alle localStorage- und sessionStorage-Schlüssel mit dem Präfix `or5_` (Abschnitt 3), ausser `or5_beta_access` (`datenLoeschen.js` Z. 22, 29–37) — damit auch die Sicherheitskopien `or5_*_prerestore`, den Migrations-Schnappschuss und einen eingerichteten Tresor;
-- die IndexedDB-Datenbanken `maloja-plana-documents` und `maloja-plana-backups` samt den Altnamen `ordnung-ruhe-documents` / `ordnung-ruhe-backups` (`datenLoeschen.js` Z. 24), also die Dateiinhalte der Dokumente und die automatischen Backups.
+- die IndexedDB-Datenbanken `maloja-plana-documents` und `maloja-plana-backups` samt den Altnamen `ordnung-ruhe-documents` / `ordnung-ruhe-backups` (`datenLoeschen.js` Z. 24), also die Dateiinhalte der Dokumente und die automatischen Backups;
+- den Browser-Cache `maloja-geteilt` mit geteilten, noch nicht eingeordneten Dateien (`datenLoeschen.js`, `APP_CACHES`). Bis zum Predeploy-Nachzug vom 10.11.2026 blieb er stehen, obwohl dieser Abschnitt «alles auf einmal» versprach (Teilen-Empfang seit PR #782).
 
-Nicht entfernt werden: der Beta-Zugang `or5_beta_access` (kein persönlicher Inhalt; ohne ihn stünde die Zugangsschranke nach dem Neustart wieder da), der Cache des Service Workers (enthält nur die App-Dateien, keine Angaben) sowie heruntergeladene Export- und Backup-Dateien, die ausserhalb des Browsers liegen. Vor dem Löschen zeigt die App, was gelöscht wird, und bietet den Weg zur bestehenden Sicherung an; gelöscht wird erst nach einer zweiten, ausdrücklichen Bestätigung. Danach startet die App neu, wie beim ersten Aufruf. Im Beispiel-Modus ist der Knopf ausgeschaltet, die eigenen Daten bleiben dort unberührt (`datenLoeschen.js` Z. 57). Die Löschung wirkt nur in dem Browser und auf dem Gerät, auf dem sie ausgelöst wird.
+Nicht entfernt werden: der Beta-Zugang `or5_beta_access` (kein persönlicher Inhalt; ohne ihn stünde die Zugangsschranke nach dem Neustart wieder da), der App-Cache des Service Workers (enthält nur die App-Dateien, keine Angaben) sowie heruntergeladene Export- und Backup-Dateien, die ausserhalb des Browsers liegen. Vor dem Löschen zeigt die App, was gelöscht wird, und bietet den Weg zur bestehenden Sicherung an; gelöscht wird erst nach einer zweiten, ausdrücklichen Bestätigung. Danach startet die App neu, wie beim ersten Aufruf. Im Beispiel-Modus ist der Knopf ausgeschaltet, die eigenen Daten bleiben dort unberührt (`datenLoeschen.js` Z. 57). Die Löschung wirkt nur in dem Browser und auf dem Gerät, auf dem sie ausgelöst wird.
 
 Bis zum 16.09.2026 stand hier, eine Funktion «alle Daten zurücksetzen» sei geplant, aber nicht gebaut, und der Weg über die Browser-Einstellungen sei der einzige, um alle Daten auf einmal zu entfernen. `storage.clear()` in `src/utils/storage.js` Z. 37–45 hat weiterhin keinen Aufrufer; der neue Löschweg nutzt ihn bewusst nicht, weil er nur localStorage leert und die Dokumente in IndexedDB liegen liesse.
 
@@ -227,3 +229,4 @@ Abschnitt 3 (Export-Satz und Speichernamen-Beleg): auf Code-Stand `main` 8399deb
 Abschnitt 7.2 und 8 (Löschweg «Alle Daten auf diesem Gerät löschen», Bau-Liste E18): auf den Stand des Zweigs `feat/e17-e18-trifft-nicht-zu-loeschweg` gebracht (seit PR #174 auf `main`), nicht juristisch geprüft.
 Kopf-Datum, Abschnitte 3, 7.1, 7.3 und 8 (Verschlüsselung als Voreinstellung E10, Schnappschüsse K34, «trifft nicht zu» E17): auf Code-Stand `main` 3500330 gebracht (Bau-Liste K39), nicht juristisch geprüft.
 Abschnitte 5.1 (Log-Frist, Auftragsbearbeitung), 5.2 neu (E-Mail-Korrespondenz) und 7.4 (Rechte bei E-Mails): an die App-Texte `legal.privacy.hosting1`/`contact1` angeglichen, 24.09.2026 (Deploy-Gate 0.1.40-beta), nicht juristisch geprüft.
+Abschnitte 2, 3 und 7.2 (Teilen-Cache `maloja-geteilt` als dritter Speicherort, wird mitgelöscht): auf den Stand des Zweigs `fix/teilen-loeschen-zug` gebracht, 10.11.2026 (Predeploy-Nachzug), nicht juristisch geprüft.

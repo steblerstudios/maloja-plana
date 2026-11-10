@@ -300,7 +300,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Dati nell’applicazione',
         absaetze: [
-          'Quanto lei registra in Maloja Plana resta <strong>sul suo dispositivo</strong> (localStorage e IndexedDB nel browser). Non vi è alcun account, alcuna registrazione e alcuna trasmissione alla fornitrice o a terzi. Chi vuole cancellare i dati li cancella sul dispositivo — non esiste una seconda copia altrove.',
+          'Quanto lei registra in Maloja Plana resta <strong>sul suo dispositivo</strong> (localStorage, IndexedDB e, per i file condivisi, la cache del browser). Non vi è alcun account, alcuna registrazione e alcuna trasmissione alla fornitrice o a terzi. Chi vuole cancellare i dati li cancella sul dispositivo — non esiste una seconda copia altrove.',
           'Anche i dati degni di particolare protezione (salute, aiuto sociale, convinzioni) vengono memorizzati dall’applicazione solo localmente. Le copie di sicurezza automatiche nel browser non sono cifrate.',
           'Poiché nulla viene trasmesso, la fornitrice non può nemmeno fornire informazioni sulle sue immissioni: non le ha mai viste. La versione dettagliata con tutti i diritti secondo la LPD figura nell’applicazione sotto «Privacy & Note legali».',
         ],

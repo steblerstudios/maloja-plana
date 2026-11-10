@@ -2689,7 +2689,7 @@ export default {
       responsible4: 'What you enter in the app stays on your device — it never reaches us. The Swiss nDSG still applies to us as the operator of this website: technical data arises at the host when the page is requested, and we process emails sent to info@malojaplana.ch in order to reply.',
       responsible5: 'For the application, this version here in the app is the binding one; for malojaplana.ch and the explanatory pages, the page malojaplana.ch/rechtliches applies. The working copies in the public source code (docs/legal) are drafts and a record of provenance, not the binding version.',
       localTitle: 'Local data storage',
-      local1: 'Maloja Plana is a local-first web application. All personal data is stored exclusively on your device — in your browser\'s localStorage and IndexedDB.',
+      local1: 'Maloja Plana is a local-first web application. All personal data is stored exclusively on your device — in your browser\'s localStorage and IndexedDB; shared files not yet filed are kept in the browser cache.',
       local2: 'No data is transmitted to any server, cloud service, or third party. There is no user account and no registration.',
       local3: 'After the first load, the application also works offline — as a rule in the sections that have been opened at least once.',
       dataTitle: 'What data is stored locally?',
