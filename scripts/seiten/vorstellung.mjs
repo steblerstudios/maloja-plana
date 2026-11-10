@@ -36,6 +36,14 @@ const WARTELISTE_TEXT = 'Bitte nehmen Sie mich auf die Warteliste.\n\n'
 export const WARTELISTE = 'mailto:info@malojaplana.ch?subject=' + encodeURIComponent(WARTELISTE_BETREFF)
   + '&amp;body=' + encodeURIComponent(WARTELISTE_TEXT);
 
+import { KAPITEL_ZEICHEN } from './kapitel-zeichen.mjs';
+
+// Ein Kapitel-Zeichen der App, mehrfach auf derselben Seite: Masken-Ids je Ort eindeutig machen,
+// dazu Lage und Grösse für das Einsetzen in ein anderes SVG (Stocknagel).
+const zeichen = (i, ort, attr = '') => KAPITEL_ZEICHEN[i]
+  .replace(/(id="|url\(#)([a-zA-Z]+\d+)/g, `$1${ort}-$2`)
+  .replace('<svg ', `<svg ${attr}`);
+
 export const VORSTELLUNG = {
   titel: 'Maloja Plana — Schweizer Lebensordner',
   beschreibung: 'Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.',
@@ -69,30 +77,39 @@ const BILD = (n) => `/vorstellung/app-${n}.webp`;
 
 const CSP = "default-src 'none'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'";
 
-const MARKE = '<svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="#7E9F8C"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="#C4A870"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="#7E9F8C"/></svg>';
+// Bildmarke einfarbig: auf heller Fläche Anthrazit (Brand Book §4, «Farbe nach Fläche»); Farbe über .marke.
+const MARKE = '<svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>';
 
-const WEG = 'M50 0 C50 25 42 25 42 50 C42 100 58 100 58 150 C58 200 42 200 42 250 C42 300 58 300 58 350 C58 400 42 400 42 450 C42 500 58 500 58 550 C58 600 42 600 42 650 C42 675 50 675 50 700';
+// Die Reise · E: Bildwechsel wie ein Pinselstrich, der quer übers Bild wischt (Maske mit ausgefranster Kante, eigene
+// Form, nicht von Fuji). Die Maske ist dreimal so breit wie das Bild und wandert von rechts nach links; als data:-SVG,
+// das erlaubt die CSP (img-src data:).
+const PINSEL_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" preserveAspectRatio="none"><path d="M0 0H150C146 6 157 11 149 19C142 27 156 33 150 43C145 52 158 58 151 68C145 78 156 86 150 100H0Z"/><circle cx="159" cy="15" r="2.4"/><circle cx="166" cy="38" r="1.6"/><circle cx="161" cy="61" r="2.8"/><circle cx="170" cy="80" r="1.4"/><circle cx="157" cy="92" r="1.8"/></svg>';
+// Bilder 2–7 lädt das Skript erst kurz vor ihrer Kehre (die Bühne klebt, darum griffe loading="lazy" für alle zugleich).
+// Ohne Skript ist nur Bild 1 zu sehen, die übrigen werden dann gar nicht geladen.
+const LEER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 
 const STIL = `
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
     @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2'); font-weight:700; font-display:swap }
     *{ margin:0; padding:0; box-sizing:border-box }
     :root{
-      --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
-      --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C; --salbei-tief:#4A6657;
-      --auf-gold:#24262A;
+      --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;  /* dunkler als vorher (#6A6E74): Kleintext liest sich ruhiger */
+      --rand:#E0DDD8;
       --himmel:#F4F0E6;                 /* Himmel der Landschaft — der Einstieg bleibt immer hell */
-      --strasse:#E6E0D2; --strasse-saum:#D6CBB2;
       --gehaeuse:#1B1A18; --gehaeuse-rand:#3A3936; --insel:#0E0E0D; --schirm:#22211F;
-      --radius-s:6px; --radius-m:12px;
-      --abstand-s:16px; --abstand-m:32px; --abstand-l:112px;
+      --radius-m:12px;
+      --abstand-m:32px; --abstand-l:96px;  /* 96 = 64 × 1.5, Kapitelstufe der Startseite (§7a B) */
 ${KAPITEL.map((k, i) => `      --k${i}:${k.farbe};`).join('\n')}
+      --pinsel:${PINSEL};
+      --sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30; --radius-knopf:10px;
     }
     @media (prefers-color-scheme: dark){
       :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
-             --rand:#3A3936; --salbei:#8FB09C; --salbei-tief:#8FB09C;
-             --strasse:#34332F; --strasse-saum:#4A463D;
-             --gehaeuse:#33322F; --gehaeuse-rand:#4A4945;
+             --rand:#3A3936;
+             --gehaeuse:#33322F; --gehaeuse-rand:#4A4945; --sand-tief:#C4A06A;
 ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
       html{ color-scheme:dark }
     }
@@ -102,56 +119,74 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
       font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
     .rahmen{ max-width:1040px; margin:0 auto; padding:0 24px }
-    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
-    a:hover{ color:var(--salbei-tief) }
-    :focus-visible{ outline:2px solid var(--salbei-tief); outline-offset:3px }
+    /* Links: Gold (sandDeep), immer unterstrichen, beim Überfahren dicker, die Farbe bleibt (Brand Book §2). */
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    a:hover{ text-decoration-thickness:2px }
+    :focus-visible{ outline:2px solid var(--sand-tief); outline-offset:3px }
     .unsichtbar{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap }
-    .augenbraue{ font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--salbei-tief); margin-bottom:12px }
-    h2{ font-size:34px; line-height:1.2; font-weight:600; letter-spacing:-0.015em; margin-bottom:14px }
-    h3{ font-size:18px; font-weight:600; margin-bottom:4px; line-height:1.35 }
+    /* Schrift nach Brand Book §3: Titel in Hanken Grotesk (600/700), alles andere Lexend; Grössen aus der Skala
+       13 · 15 · 16 · 19 · 23 · 28 · 36 (tokens.js). Einzige grössere Stufe: der h1 im Hero mit 48. */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif }
+    .augenbraue{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
+    h2{ font-size:36px; line-height:1.2; font-weight:700; letter-spacing:-0.015em; margin-bottom:14px }
+    h3{ font-size:19px; font-weight:600; margin-bottom:4px; line-height:1.35 }
     p{ margin-bottom:12px } p:last-child{ margin-bottom:0 }
-    .unterzeile{ color:var(--leise); font-size:18px; max-width:34em }
+    .unterzeile{ color:var(--leise); font-size:19px; max-width:34em }
     section{ padding:var(--abstand-l) 0 0 }
 
-    .knopf{ display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:var(--radius-s); font-weight:600;
-      font-size:15px; text-decoration:none; border:1px solid transparent; line-height:1.3 }
-    .knopf.haupt{ background:var(--gold); color:var(--auf-gold) }
-    .knopf.haupt:hover{ color:var(--auf-gold); filter:brightness(1.05) }
-    .knopf.zweit{ border-color:currentColor; color:var(--text) }
-    .knopf.zweit:hover{ color:var(--salbei-tief) }
+    /* Knöpfe (Brand Book «Knöpfe», Fassung 9): Hauptknopf gefüllt Sand, nur EINER je Seite (im Hero);
+       Nebenknopf leer mit Rand und Schrift sandDeep; Ecke 10 px, keine Pillen; mind. 44 px hoch. */
+    .knopf{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:12px 24px;
+      border-radius:var(--radius-knopf); font-weight:600; font-size:15px; text-decoration:none; border:1px solid transparent; line-height:1.3 }
+    .knopf.haupt{ background:var(--sand); color:var(--auf-sand) }
+    .knopf.haupt:hover{ color:var(--auf-sand); filter:brightness(1.05) }
+    .knopf.zweit{ border-color:var(--sand-tief); color:var(--sand-tief); background:transparent }
+    .knopf.zweit:hover{ background:color-mix(in srgb, var(--sand) 14%, transparent) }
     .wege{ display:flex; flex-wrap:wrap; gap:12px; margin-top:var(--abstand-m) }
 
-    /* ─── Einstieg: die Pass-Landschaft ───────────────────────────── */
-    .pass{ position:relative; min-height:min(100vh, 900px); background:var(--himmel); color:#24262A; overflow:hidden;
-      --text:#24262A; --leise:#5C6066; --salbei-tief:#4A6657 }
-    .pass .landschaft{ position:absolute; inset:auto 0 0 0; height:72%; }
-    .pass .landschaft img{ width:100%; height:100%; object-fit:cover; object-position:50% 70%; display:block }
-    .pass .landschaft::before{ content:""; position:absolute; inset:0; pointer-events:none;
-      background:
-        linear-gradient(var(--himmel) 0%, var(--himmel) 6%, rgba(244,240,230,0) 38%),
-        linear-gradient(90deg, rgba(244,240,230,.94) 0%, rgba(244,240,230,.88) 45%, rgba(244,240,230,0) 72%) }  /* Vorspann reicht bei 1920 px bis 51 % */
-    .pass .landschaft::after{ content:""; position:absolute; inset:auto 0 0 0; height:22%;
-      background:linear-gradient(transparent, var(--bg)) }
-    .pass header{ position:relative; z-index:2; padding:24px 0; display:flex; align-items:center; justify-content:space-between; gap:16px }
-    .marke{ display:flex; align-items:center; gap:10px; padding-block:9px; font-weight:600; font-size:16px; text-decoration:none }
+    /* ─── Kopf und Hero: liegen auf dem Passbild, das zugleich die erste Bühne der Reise ist (A/B, 10.11.2026) ─── */
+    .kopf-leiste{ position:absolute; z-index:7; top:0; left:0; right:0 }
+    .kopf{ padding-top:20px; padding-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:16px }
+    .marke{ display:flex; align-items:center; gap:10px; padding-block:9px; font-weight:600; font-size:16px; text-decoration:none; color:#22211F }
+    .marke:hover{ color:#22211F }
     .marke svg{ height:28px; width:auto }
-    .pass nav.oben{ display:flex; gap:22px; font-size:14px }
-    .pass nav.oben a{ text-decoration:none; padding-block:10px; color:#3E4247 }
-    .pass nav.oben a:hover{ text-decoration:underline }
-    .pass .inhalt{ position:relative; z-index:2; display:grid; grid-template-columns:1.7fr 1fr; gap:32px; align-items:start; padding-top:40px }
-    .pass h1{ font-size:48px; line-height:1.1; font-weight:600; letter-spacing:-0.025em }
+    .kopf nav{ display:flex; gap:22px; font-size:15px }
+    .kopf nav a{ text-decoration:none; padding-block:10px; color:#24262A }
+    .kopf nav a:hover{ text-decoration:underline }
+    .reise-anfang{ position:relative; z-index:5 }
+    .pass{ min-height:100vh; min-height:100svh; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center;
+      padding-top:96px; padding-bottom:6vh; color:#24262A; --text:#24262A; --leise:#4E5258; --sand-tief:#7A5F30 }
+    .pass h1{ font-size:48px; line-height:1.1; font-weight:700; letter-spacing:-0.025em }
     .pass h1 span{ display:block }
     @media (min-width:961px){ .pass h1 span{ white-space:nowrap } }
-    .pass h1 .zweite{ font-weight:400 }
+    .pass h1 .zweite{ font-weight:600; color:#4E5258 }
     .pass .vorspann{ font-size:19px; max-width:28em; margin-top:22px; color:#3E4247 }
-    .pass .fakten{ display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:20px; font-size:14px; color:#24262A;
-      background:rgba(244,240,230,.85); padding:4px 14px; border-radius:20px; width:fit-content }
-    .pass .fakten span::before{ content:"·"; margin-right:18px; color:var(--gold) }
+    .pass .fakten{ display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:20px; font-size:15px; color:#24262A }
+    .pass .fakten span::before{ content:"·"; margin-right:18px; color:var(--sand-tief) }
     .pass .fakten span:first-child::before{ content:none }
-    .pass .beta{ font-size:14px; color:#3E4247; margin-top:10px }
-    .pass .knopf.zweit{ background:rgba(255,255,255,.55); border-color:#24262A; color:#24262A }
+    .pass .beta{ font-size:15px; color:#3E4247; margin-top:10px }
+    .pass .knopf.zweit{ background:#FBFBFA }
+    /* Übergang zur Reise: Nebenknopf (leer, Rand sandDeep) auf heller Fläche, damit er auch über dem Bild lesbar bleibt. */
+    .pass-weiter{ grid-column:1 / -1; justify-self:start }
+    .pass-weiter::after{ content:"↓" / "" }
 
-    /* Telefon mit Bildfolge — steht auf der Landschaft */
+    /* C · Laptop und Telefon (10.11.2026): das Telefon steht vorn rechts vor dem Laptop. Bild am Computer aus dem
+       Beispiel (public/vorstellung/app-computer.webp), das Telefon zeigt weiter die Bildfolge. */
+    .geraete{ position:relative; width:100%; max-width:560px; justify-self:end; align-items:flex-start; padding:0 }
+    .geraete-bild{ position:relative; width:100%; padding-bottom:4% }
+    .laptop{ position:relative; width:88%; margin-bottom:6px }
+    .laptop .deckel{ background:#1B1A18; border-radius:14px 14px 4px 4px; padding:10px 10px 12px;
+      box-shadow:0 0 0 1px #3A3936, 0 28px 44px -26px rgba(30,28,24,.55) }
+    .laptop .schirm{ aspect-ratio:16/10; overflow:hidden; border-radius:4px; background:#22211F }
+    .laptop .schirm img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block }
+    .laptop .sockel{ position:relative; height:14px; margin:0 -6%; border-radius:2px 2px 14px 14px;
+      background:linear-gradient(#DCD8D0, #B6B1A7); box-shadow:0 10px 18px -12px rgba(30,28,24,.6) }
+    .laptop .sockel::before{ content:""; position:absolute; left:50%; top:0; width:18%; height:5px; margin-left:-9%; border-radius:0 0 6px 6px; background:#A8A39A }
+    .geraete .telefon{ position:absolute; right:0; bottom:0; width:clamp(110px, 13vw, 150px); padding:6px; border-radius:24px }
+    .geraete .bildschirm{ border-radius:19px; --statusleiste:16px }
+    .geraete .insel{ top:10px; width:40px; height:11px; border-radius:8px }
+    .geraete .unter-telefon{ margin-top:14px }
+    /* Telefon mit Bildfolge */
     .buehne{ display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px }
     .telefon{ position:relative; width:280px; aspect-ratio:480/1040; padding:11px;
       background:var(--gehaeuse); border-radius:46px;
@@ -170,75 +205,172 @@ ${KAPITEL.map((k, i) => `             --k${i}:${k.dunkel};`).join('\n')} }
     .folge img:nth-child(4){ animation-delay:16.5s }
     .folge img:nth-child(5){ animation-delay:22.5s }
     @keyframes wechsel{ 0%{opacity:0} 6%{opacity:1} 20%{opacity:1} 26%{opacity:0} 100%{opacity:0} }
-    #anhalten:checked ~ .telefon .folge img, .buehne:hover .folge img{ animation-play-state:paused }
+    #anhalten:checked ~ .geraete-bild .folge img, .buehne:hover .folge img{ animation-play-state:paused }
     .unter-telefon{ display:flex; flex-wrap:wrap; justify-content:center; gap:4px 14px; margin-top:14px;
       font-size:13px; color:#3E4247; text-align:center; background:rgba(244,240,230,.82); padding:4px 12px; border-radius:20px }
     .schalter{ cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:10px 2px; margin:-10px 0 }
     #anhalten:checked ~ .unter-telefon .schalter::before{ content:"✓ " / "" }
-    #anhalten:focus-visible ~ .unter-telefon .schalter{ outline:2px solid #4A6657; outline-offset:3px }
+    #anhalten:focus-visible ~ .unter-telefon .schalter{ outline:2px solid var(--sand-tief); outline-offset:3px }
 
     /* ─── Lebenssituationen (Radio-Reiter, ohne Skript) ───────────── */
     .lagen .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--abstand-m) }
     .lagen fieldset{ border:0; min-width:0; padding:0; margin:0 }
-    .lagen .chips label{ cursor:pointer; padding:11px 18px; border:1px solid var(--leise); border-radius:999px;
+    .lagen .chips label{ cursor:pointer; padding:11px 18px; border:1px solid var(--leise); border-radius:var(--radius-knopf);
       background:var(--flaeche); font-size:15px; color:var(--text); transition:background .2s, border-color .2s }
-    .lagen .chips label:hover{ border-color:var(--salbei) }
+    .lagen .chips label:hover{ border-color:var(--sand-tief) }
     .tafel{ display:none; margin-top:28px; padding:36px 40px; background:var(--flaeche); border:1px solid var(--rand);
       border-radius:var(--radius-m); max-width:760px }
-    .tafel p.gross{ font-size:22px; line-height:1.45; margin-bottom:18px; color:var(--text) }
+    .tafel p.gross{ font-size:23px; line-height:1.45; margin-bottom:18px; color:var(--text) }
     .tafel a{ font-weight:600 }
 ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ display:block }
-    #l${i + 1}:checked ~ .chips [for=l${i + 1}]{ background:var(--text); color:var(--bg); border-color:var(--text) }
+    #l${i + 1}:checked ~ .chips [for=l${i + 1}]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
     #l${i + 1}:checked ~ .chips [for=l${i + 1}]::before{ content:"✓ " / "" }
-    #l${i + 1}:focus-visible ~ .chips [for=l${i + 1}]{ outline:2px solid var(--salbei-tief); outline-offset:3px }`).join('\n')}
+    #l${i + 1}:focus-visible ~ .chips [for=l${i + 1}]{ outline:2px solid var(--sand-tief); outline-offset:3px }`).join('\n')}
 
-    /* ─── Der Weg über den Pass: sieben Lebensbereiche als Stationen ─ */
-    .weg{ position:relative; height:1120px; margin-top:var(--abstand-m) }
-    .stationen{ list-style:none }
-    .weg svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible }
-    .weg .bahn{ fill:none; stroke:var(--strasse); stroke-width:30; stroke-linecap:round; vector-effect:non-scaling-stroke }
-    .weg .saum{ fill:none; stroke:var(--strasse-saum); stroke-width:34; stroke-linecap:round; vector-effect:non-scaling-stroke }
-    .weg .mitte{ fill:none; stroke:var(--gold); stroke-width:2; stroke-dasharray:7 9; vector-effect:non-scaling-stroke; opacity:.8 }
-    .weg .begangen{ fill:none; stroke:var(--gold); stroke-width:4; stroke-linecap:round; vector-effect:non-scaling-stroke;
-      stroke-dasharray:1; stroke-dashoffset:0 }
-    .station{ position:absolute; left:0; right:0; top:calc(var(--y) * 1%); transform:translateY(-50%) }
-    .station .punkt{ position:absolute; left:calc(var(--x) * 1%); top:50%; transform:translate(-50%,-50%);
-      width:22px; height:22px; border-radius:50%; background:var(--farbe); box-shadow:0 0 0 5px var(--bg), 0 0 0 7px var(--farbe);
-      border:2px solid color-mix(in srgb, var(--farbe) 50%, var(--text)) }  /* Rand ≥3:1 auch bei Gold (a11y 09.11.) */
-    .station .text{ position:absolute; top:50%; transform:translateY(-50%); width:38% }
-    .station.links .text{ left:0; text-align:right }
-    .station.rechts .text{ right:0 }
-    /* Kapitelfarben sind Flächenfarben; für Text mit der Schriftfarbe gemischt. 50 % statt 65 %:
-       Gold (Finanzen) kam hell mit 65 % nur auf 3,72:1, mit 50 % auf 4,94:1 (a11y-Prüfung 09.11.2026). */
-    .station .name{ display:inline-block; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
-      color:color-mix(in srgb, var(--farbe) 50%, var(--text)); margin-bottom:4px }
-    .station p{ color:var(--leise); font-size:15px }
-    .station h3{ font-size:20px }
-    @supports (animation-timeline: view()){
-      @media (prefers-reduced-motion: no-preference){
-        .weg .begangen{ stroke-dashoffset:1; animation:begehen linear both; animation-timeline:view(); animation-range:entry 30% exit 70% }
-        .station .text, .station .punkt{ animation:auftauchen linear both; animation-timeline:view(); animation-range:entry 10% entry 60% }
-      }
+    /* ─── Die Reise: Kehre für Kehre auf den Malojapass (Brand Book §7e, Entwurf 10.11.2026) ───
+       Richtung «Stationen sammeln» (Fuji-Prinzipien). Seit Entscheid A–F (10.11.): die Bühne beginnt schon im
+       Hero — Bild 0 ist das Passbild unter Kopf und Hero, darüber eine helle Schicht; ab Kehre 1 wechselt das
+       Bild per Pinselstrich, die helle Schicht weicht der dunklen, und Stock und Weg erscheinen.
+       B Wanderstock in der Mitte mit Aufklebern, die Kamera kreist um ihn · C Text weiss auf dem Bild, Knöpfe
+       «Beispiel» und «Weiter» · D grosses Kapitel-Zeichen, gepunkteter Weg mit Zeichen · E Pinselstrich quer übers Bild, Wolken.
+       Ohne Skript: helle Hero-Fläche, dunkle Schicht für die Kehren, alle Nägel, Bild 0 bleibt stehen.
+       Bei «weniger Bewegung»: dieselben Wechsel, aber ohne Bewegung. */
+    .reise-bruecke{ position:relative; overflow-x:clip }
+    .reise-buehne{ position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:var(--himmel) }
+    .reise-bild, .reise-bild > *{ position:absolute; inset:0 }
+    /* Bild 0 = Passbild (Hero), dann je Kehre ein eigenes Bild (KI-gemalt, Bergell → Silsersee); .an = aktuell, .vorher = voriges. */
+    .reise-bild img{ width:100%; height:100%; object-fit:cover; object-position:45% 60%; display:block;
+      opacity:0; transform:scale(1.12) translateX(calc(var(--kamera, 0) * -6%)) translateY(calc((var(--k, 0.5) - 0.5) * 3%)) }
+    .reise-bild .pass-bild{ object-position:50% 78%; transform:none }
+    .reise-bild .an{ opacity:1 }
+    .js .reise-bild .vorher{ opacity:1; z-index:1 }
+    .js .reise-bild > *{ -webkit-mask-image:var(--pinsel); mask-image:var(--pinsel); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      -webkit-mask-size:300% 100%; mask-size:300% 100%; -webkit-mask-position:100% 0; mask-position:100% 0 }
+    .js .reise-bild .an{ z-index:2; -webkit-mask-position:0 0; mask-position:0 0 }
+    .js .reise-bild .vorher{ -webkit-mask-image:none; mask-image:none }
+    .reise-wolken{ position:absolute; inset:0 -40% 45% -40%; pointer-events:none; opacity:.35;
+      background:radial-gradient(38% 30% at 20% 40%, rgba(255,255,255,.55), transparent 70%),
+                 radial-gradient(30% 24% at 62% 28%, rgba(255,255,255,.45), transparent 70%),
+                 radial-gradient(26% 20% at 88% 55%, rgba(255,255,255,.4), transparent 70%) }
+    /* Zwei Schichten für die Lesbarkeit: hell links/oben unter dem Hero (dunkle Schrift), dunkel rechts unter
+       den Kehren (weisse Schrift, mind. 62 % unter dem Text). Das Skript schaltet über data-hier um. */
+    .reise-buehne::before, .reise-buehne::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none }
+    .reise-buehne::before{ opacity:0;
+      background:linear-gradient(180deg, rgba(244,240,230,.92) 0%, rgba(244,240,230,.4) 24%, rgba(244,240,230,0) 42%),
+                 linear-gradient(90deg, rgba(244,240,230,.94) 0%, rgba(244,240,230,.86) 44%, rgba(244,240,230,0) 70%) }
+    .reise-buehne::after{
+      background:linear-gradient(270deg, rgba(18,18,16,.68) 0%, rgba(18,18,16,.62) 44%, rgba(18,18,16,0) 66%),
+                 linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%) }
+    .js .reise-buehne[data-hier="-1"]::before{ opacity:1 } .js .reise-buehne[data-hier="-1"]::after{ opacity:0 }
+    html:not(.js) .reise-anfang{ background:rgba(244,240,230,.93) }
+    .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
+    .reise-linie{ position:absolute; left:clamp(24px, 5vw, 64px); top:14vh; height:70vh; width:auto; aspect-ratio:60/600; overflow:visible }
+    .reise-linie .weg{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:.1 9; opacity:.85 }
+    .reise-linie .gegangen{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:100 100; stroke-dashoffset:100 }
+    .reise-linie .halt circle{ fill:#FBFBFA; stroke:currentColor; stroke-width:2 }
+    .reise-linie .halt.gegangen circle{ stroke-width:3 }
+    .reise-linie .halt{ transform-box:fill-box; transform-origin:center }
+    .reise-linie .ort{ display:none } .js .reise-linie .ort{ display:block }
+    .reise-linie .ort circle{ fill:none; stroke:var(--sand); stroke-width:3 }
+    .reise-linie .ort text{ fill:#FBFBFA; font-size:15px; font-weight:600; letter-spacing:.04em; paint-order:stroke; stroke:rgba(20,20,18,.7); stroke-width:4px; stroke-linejoin:round }
+    /* D · Der Stock dreht sich um die eigene Achse: das Skript verschiebt Nägel und Maserung je nach Drehwinkel
+       (vorne breit, an der Seite schmal, hinten weg). Kein Heranfahren, kein Zoom. */
+    .reise-stock{ position:absolute; left:50%; top:0; height:100%; width:auto; aspect-ratio:120/700; overflow:visible;
+      margin-left:calc(100vh * -120 / 700 / 2); margin-left:calc(100svh * -120 / 700 / 2) }
+    .reise-stock .holz{ fill:#CDA977 } .reise-stock .schatten{ fill:#A8855A } .reise-stock .licht{ fill:#E2C79C }
+    .reise-stock .maser rect{ fill:#8E6C42; opacity:.5 }
+    .reise-stock .riemen{ fill:#7A4A3A } .reise-stock .spitze{ fill:#5A5650 }
+    .nagel{ transform-box:fill-box; transform-origin:50% 50% }
+    .nagel .schild > *{ fill:#FBFBFA; stroke:inherit; stroke-width:3.5 }
+    .nagel .unterschatten > *{ fill:rgba(0,0,0,.28) }
+    .nagel .woelbung > *{ fill:url(#woelbung); pointer-events:none } 
+    /* Auf jedem Stocknagel das Kapitel-Zeichen der App in der Kapitelfarbe, auf heller Plakette mit farbigem Rand
+       (wie ein emailliertes Stockschild). Weiss auf Farbe ginge nicht: der Fünfliber hat weisse Details. */
+    .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
+    .js .reise-buehne[data-hier="-1"] .reise-stock, .js .reise-buehne[data-hier="-1"] .reise-linie,
+    .js .reise-buehne[data-hier="-1"] .reise-wolken, .js .reise-buehne[data-hier="-1"] .reise-quelle{ opacity:0 }
+    .reise-quelle{ position:absolute; right:12px; bottom:10px; font-size:13px; color:#FBFBFA; background:rgba(20,20,18,.72); padding:2px 8px; border-radius:6px }
+    .reise-ablauf{ position:relative; z-index:5; margin-top:-100vh; margin-top:-100svh }
+    .reise{ padding-top:0; color:#FBFBFA }
+    /* Ausklang: nach der letzten Kehre verläuft das Bild ruhig ins Papier der Seite, statt hart abzubrechen. */
+    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(0,0,0,0), var(--bg) 85%) }
+    /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
+    .reise-stationen{ list-style:none }
+    .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
+      padding:12vh clamp(16px, 5vw, 72px) 12vh calc(50% + clamp(56px, 7vw, 120px)) }
+    .reise-text{ max-width:28rem; text-shadow:0 1px 14px rgba(0,0,0,.45) }
+    /* Statt einer grossen Zahl steht gross das Kapitel-Zeichen der App (wie Fujis grosse Höhenzahl): in der Kapitelfarbe
+       auf heller Plakette, Ecke 16 px (Karte, Brand Book §7a C). */
+    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; padding:14px; border-radius:16px; background:#FBFBFA; color:var(--farbe);
+      margin:0 0 16px }
+    .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
+    .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
+    .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
+    .reise-text p{ font-size:19px; line-height:1.55; color:#FBFBFA }
+    /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FBFBFA, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
+    .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
+    .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
+      font-size:15px; font-weight:600; color:#7A5F30; border:1px solid #7A5F30; background:#FBFBFA; text-shadow:none }
+    .reise-knoepfe a:hover{ color:#7A5F30; background:#F2EDE3 }
+    .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px }
+    .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px }
+    @media (prefers-reduced-motion: no-preference){
+      .js .reise-buehne::before, .js .reise-buehne::after{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-bild img{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-bild .an{ transition:-webkit-mask-position 1.1s cubic-bezier(.4,0,.2,1), mask-position 1.1s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-linie .gegangen{ transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-linie .ort{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .nagel.dran{ animation:anschlagen .6s cubic-bezier(.2,.8,.2,1) }
+      @keyframes anschlagen{ 0%{ transform:translateY(-14px) scale(1.15); opacity:0 } 65%{ transform:translateY(2px) scale(.97); opacity:1 } 100%{ transform:none } }
+      .reise-wolken{ animation:ziehen 80s linear infinite alternate }
+      @keyframes ziehen{ from{ transform:translateX(-12%) } to{ transform:translateX(12%) } }
     }
-    @keyframes begehen{ to{ stroke-dashoffset:0 } }
-    @keyframes auftauchen{ from{ opacity:0; translate:0 18px } to{ opacity:1; translate:0 0 } }
+    @media (prefers-reduced-motion: reduce){
+      .reise-bild img{ transform:none }
+      .reise-wolken{ display:none }
+    }
+    @media (max-width:760px){
+      .reise-buehne::before{ background:linear-gradient(180deg, rgba(244,240,230,.95) 0%, rgba(244,240,230,.9) 52%, rgba(244,240,230,.35) 78%, rgba(244,240,230,0) 92%) }
+      .reise-buehne::after{ background:linear-gradient(0deg, rgba(18,18,16,.74) 0%, rgba(18,18,16,.6) 40%, rgba(18,18,16,0) 70%) }
+      .reise-stock{ left:auto; right:6px; margin-left:0; height:86%; top:7% }
+      .reise-linie{ display:none }
+      .reise-station{ align-items:center; padding:10vh 76px 10vh 16px }
+      .reise-gross{ width:64px; padding:8px; border-radius:12px; margin-bottom:12px }
+      /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene dunkle Fläche (78 %, ohne Milchglas). */
+      .reise-text{ background:rgba(20,20,18,.78); padding:18px 18px 20px; border-radius:16px }
+      .reise-text p{ font-size:16px }
+    }
+    @media (max-height:520px){
+      .reise-buehne{ position:relative; height:70vh }
+      .reise-ablauf{ margin-top:0 }
+      .reise-anfang{ background:var(--bg) }
+      .reise{ color:var(--text) }
+      .reise-station{ min-height:auto; padding:24px 16px; background:var(--bg) }
+      .reise-text .name, .reise-text p{ color:var(--text) }
+      .reise-text{ text-shadow:none; background:none; padding:0 }
+      .reise-knoepfe a{ color:var(--text); border-color:var(--text); background:none }
+      .reise-knoepfe a:focus-visible{ outline-color:var(--sand-tief) }
+      .leiste{ display:none }
+    }
 
     /* ─── Blick in die App (Editorial) ────────────────────────────── */
-    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; margin-top:72px }
+    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:64px }
     .blick.umgekehrt .blick-bild{ order:2 }
     .blick .telefon{ width:250px; margin:0 auto }
-    .blick-text .zahl{ font-size:13px; font-weight:600; color:var(--salbei-tief); letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px }
-    .blick-text h3{ font-size:28px; line-height:1.25; margin-bottom:12px; letter-spacing:-0.01em }
-    .blick-text p{ color:var(--leise); font-size:17px; max-width:28em }
+    .blick-text .zahl{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
+    .blick-text h3{ font-size:28px; line-height:1.25; font-weight:700; margin-bottom:12px; letter-spacing:-0.01em }
+    .blick-text p{ color:var(--leise); font-size:16px; max-width:28em }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:var(--abstand-m) }
     .geraet{ background:var(--flaeche); border:1px solid var(--rand); border-radius:var(--radius-m); padding:26px 26px 22px }
     .geraet h3{ margin-bottom:14px }
-    .geraet ol{ padding-left:20px; color:var(--leise); font-size:15px }
+    .geraet ol{ padding-left:20px; color:var(--leise); font-size:16px }
     .geraet li{ margin-bottom:8px; padding-left:4px }
     .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
-    .bald, .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
+    .bald{ margin-top:24px; font-size:16px; color:var(--leise) }
+    .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
     .bald strong{ color:var(--text) }
     /* Atlas-Abschnitt: eine Karte als eigenes Bild (Entscheid 10.11.2026, C). Lädt erst beim Hinscrollen,
        die Seite bleibt leicht; Breite und Höhe stehen am Bild, damit nichts springt. */
@@ -251,29 +383,60 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .liste{ list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:28px 32px; margin-top:var(--abstand-m) }
     .liste.eins{ grid-template-columns:1fr }
     .liste li{ border-top:1px solid var(--rand); padding-top:14px }
-    .liste p, .liste span{ font-size:15px; color:var(--leise) }
+    .liste p, .liste span{ font-size:16px; color:var(--leise) }
     .liste a{ font-weight:600 }
     /* Ein Link, der allein im Listenpunkt steht («Karten für diese Frage», «Zum Nachlesen»), ist ein eigener Weg,
        kein Link im Satz — 44 px wie jedes Bedienelement (Brand Book §7a, Regel I; gemessen bei 375 px: vorher 19 px).
        Links im Fliesstext (z. B. «Datenschutz» unter «Kein Tracking») bleiben unberührt. */
     .liste > li > a{ display:inline-block; padding:13px 0 }
     .liste span{ display:block }
-    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:72px }
+    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
     .fragen p{ color:var(--leise) }
-    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
 
     .schluss{ text-align:center; padding:var(--abstand-l) 0 }
-    .schluss h2{ font-size:40px }
+    .schluss h2{ font-size:36px }
     .schluss .unterzeile{ margin:0 auto }
     .schluss .wege{ justify-content:center }
 
-    footer{ border-top:1px solid var(--rand); padding:28px 0 56px; font-size:13px; color:var(--leise) }
-    footer a{ color:var(--leise) }
-    footer p{ margin-bottom:6px }
+    /* D/E · Fuss: heller Grund mit Haarlinie (kein dunkles Band), Bildmarke Anthrazit führt nach oben. */
+    .fuss{ border-top:1px solid var(--rand); padding:48px 0 56px; font-size:15px; color:var(--leise) }
+    .fuss a{ color:var(--sand-tief) }
+    .fuss p{ margin-bottom:8px }
+    .fuss-spalten{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px }
+    .fuss .marke{ color:var(--text); margin-bottom:8px } .fuss .marke:hover{ color:var(--text) }
+    .fuss-titel{ font-size:15px; font-weight:600; color:var(--text) }
+    .fuss ul{ list-style:none } .fuss li a{ display:inline-block; padding:6px 0 }
+    .fuss-zeile{ margin-top:32px; padding-top:16px; border-top:1px solid var(--rand); font-size:13px }
+    .fuss .vertrauen{ display:flex; flex-wrap:wrap; gap:4px 16px; color:var(--text) }
+    .fuss .vertrauen span::before{ content:"·"; margin-right:16px; color:var(--sand-tief) }
+    .fuss .vertrauen span:first-child::before{ content:none }
+
+    /* Zum Inhalt springen (wie in der App, .mp-skip-link): erst beim Fokus sichtbar. */
+    .sprung{ position:absolute; z-index:20; left:16px; top:-80px; padding:10px 16px; border-radius:var(--radius-knopf);
+      background:#FBFBFA; color:#24262A; font-weight:600 }
+    .sprung:focus{ top:12px }
+    main:focus{ outline:none }
+    html{ scroll-padding-top:64px }  /* Sprungziele landen unter der Leiste */
+
+    /* B/C · Leiste: Papier mit Haarlinie (kein Milchglas), 56 px. Erscheinen 250 ms, Verschwinden ⅔ davon (§7a E). */
+    .leiste{ position:fixed; z-index:8; top:0; left:0; right:0; background:#FBFBFA; color:#24262A; border-bottom:1px solid #E0DDD8;
+      transform:translateY(-100%); visibility:hidden }
+    .leiste[data-zustand="seite"]{ transform:none; visibility:visible }
+    .leiste-innen{ display:flex; align-items:center; gap:20px; min-height:56px }
+    .leiste .marke{ color:#22211F } .leiste .marke svg{ height:26px }
+    .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:15px }
+    .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px }
+    .leiste-links a:hover{ text-decoration:underline }
+    .leiste-links a[aria-current="location"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
+    @media (prefers-reduced-motion: no-preference){
+      .leiste{ transition:transform .15s cubic-bezier(.4,0,.2,1), visibility 0s linear .15s }
+      .leiste[data-zustand="seite"]{ transition:transform .25s cubic-bezier(.4,0,.2,1) }
+    }
 
     @media (prefers-reduced-motion: reduce){
-      .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter{ display:none }
+      .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter, #anhalten{ display:none }
     }
     @media (max-width:960px){
       .pass h1{ font-size:38px }
@@ -281,27 +444,29 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .liste{ grid-template-columns:1fr 1fr }
     }
     @media (max-width:760px){
-      :root{ --abstand-l:80px }
-      h2{ font-size:26px }
+      :root{ --abstand-l:64px }
+      h2{ font-size:28px }
       .unterzeile{ font-size:16px }
-      .pass{ min-height:auto }
-      .pass nav.oben{ display:none }
-      .pass .inhalt{ grid-template-columns:1fr; padding-top:8px; gap:0 }
+      /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
+      .kopf{ flex-wrap:wrap; row-gap:4px }
+      html{ scroll-padding-top:120px }
+      .kopf nav, .leiste-links{ width:100%; gap:8px; overflow-x:auto; scrollbar-width:none; padding:4px 18% 4px 4px;
+        -webkit-mask-image:linear-gradient(90deg, #000 82%, transparent); mask-image:linear-gradient(90deg, #000 82%, transparent) }
+      .kopf nav a, .leiste-links a{ flex:none; display:inline-flex; align-items:center; min-height:44px; padding:0 14px;
+        border:1px solid rgba(36,38,42,.28); border-radius:var(--radius-knopf); background:rgba(251,251,250,.75); text-decoration:none }
+      .kopf nav a:focus-visible, .leiste-links a:focus-visible{ outline-offset:-3px }
+      .leiste-links a[aria-current="location"]{ background:#C4A06A; border-color:#C4A06A; color:#2A2620; text-decoration:none }
+      .leiste-innen{ flex-wrap:wrap; gap:6px 12px; padding-block:6px }
+      .fuss-spalten{ grid-template-columns:1fr; gap:24px }
+      .pass{ grid-template-columns:1fr; padding-top:136px; gap:28px; align-items:start }
       .pass h1{ font-size:32px }
-      .pass .vorspann{ font-size:17px }
-      .pass .landschaft{ position:relative; height:300px; margin-top:24px }
-      .pass .buehne{ display:none }
+      .pass .vorspann{ font-size:16px }
+      .geraete{ justify-self:stretch; max-width:none }
+      .geraete .telefon{ width:96px; padding:5px; border-radius:18px }
+      .geraete .bildschirm{ border-radius:14px; --statusleiste:12px }
+      .geraete .insel{ top:8px; width:30px; height:8px }
       .tafel{ padding:24px }
       .tafel p.gross{ font-size:19px }
-      .weg{ height:auto; padding-left:52px }
-      .weg svg{ display:none }
-      .weg::before{ content:""; position:absolute; left:12px; top:0; bottom:0; width:18px; border-radius:9px;
-        background:var(--strasse); box-shadow:0 0 0 2px var(--strasse-saum) }
-      .weg::after{ content:""; position:absolute; left:20px; top:12px; bottom:12px; width:2px;
-        background:repeating-linear-gradient(var(--gold) 0 7px, transparent 7px 16px) }
-      .station{ position:relative; top:auto; transform:none; padding:18px 0 }
-      .station .punkt{ left:-31px; top:30px }
-      .station .text, .station.links .text, .station.rechts .text{ position:static; transform:none; width:auto; text-align:left }
       .blick, .blick.umgekehrt{ grid-template-columns:1fr; gap:28px; margin-top:56px }
       .blick.umgekehrt .blick-bild{ order:0 }
       .blick .telefon{ width:220px; border-radius:40px; padding:9px }
@@ -314,15 +479,86 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function stationen() {
+// Die Reise: eine Station je Kapitel. Das Beispiel öffnet direkt im Kapitel (Index wie CHAPTER_KEYS).
+// «Weiter» springt zur nächsten Kehre, von der letzten zu «App holen».
+function reiseStationen() {
   const n = KAPITEL.length;
   return KAPITEL.map((k, i) => {
-    const seite = i % 2 === 0 ? 'links' : 'rechts';
-    const x = i % 2 === 0 ? 42 : 58;
-    const y = (((i + 0.5) / n) * 100).toFixed(2);
-    return `        <li class="station ${seite}" style="--x:${x}; --y:${y}; --farbe:var(--k${i})"><span class="punkt" aria-hidden="true"></span>
-          <div class="text"><span class="name">${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p></div></li>`;
+    const weiter = i + 1 < n ? `<a class="weiter" href="#kehre-${i + 2}" aria-label="Weiter zu Kehre ${i + 2}">Weiter</a>` : '<a class="weiter" href="#holen">Weiter: App holen</a>';
+    return `          <li class="reise-station" id="kehre-${i + 1}" style="--farbe:var(--k${i})">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true">${zeichen(i, `gross${i + 1}`)}</div>
+              <span class="name">Kehre ${i + 1} von ${n} · ${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p>
+              <p class="reise-knoepfe"><a href="${BEISPIEL}#/chapter/${i}">${esc(k.name)} im Beispiel ansehen</a>${weiter}</p>
+            </div></li>`;
   }).join('\n');
+}
+
+// D · Weglinie links: gepunktet, der gegangene Teil durchgezogen, ein Punkt je Kehre (unten = Kehre 1)
+// und ein Ort-Zeichen mit Namen, das das Skript an die aktuelle Kehre setzt.
+const WEG = [[30, 600], [10, 560, 50, 520, 22, 470], [4, 430, 54, 390, 40, 345], [28, 305, 6, 280, 22, 220], [34, 175, 56, 150, 40, 95], [28, 55, 34, 25, 30, 0]];
+function wegPunkt(t) {
+  const seg = Math.min(WEG.length - 2, Math.floor(t)), u = t - seg;
+  const p0 = WEG[seg].slice(-2), [x1, y1, x2, y2, x3, y3] = WEG[seg + 1];
+  const b = (a, c, d, e) => (1 - u) ** 3 * a + 3 * (1 - u) ** 2 * u * c + 3 * (1 - u) * u ** 2 * d + u ** 3 * e;
+  return [b(p0[0], x1, x2, x3), b(p0[1], y1, y2, y3)].map((v) => Math.round(v * 10) / 10);
+}
+function reiseWegPunkte() {
+  const n = KAPITEL.length;
+  return KAPITEL.map((_, i) => wegPunkt(((i + 0.5) / n) * (WEG.length - 1)));
+}
+function reiseLinie() {
+  const d = `M${WEG[0].join(' ')} ` + WEG.slice(1).map((c) => `C${c.join(' ')}`).join(' ');
+  // An jedem Halt das Kapitel-Zeichen auf heller Scheibe (Stebler Studios 10.11.: «die Icons kommen in die weisse Linie»).
+  const punkte = reiseWegPunkte().map(([x, y], i) => `<g class="halt" data-kehre="${i + 1}" data-x="${x}" data-y="${y}" transform="translate(${x} ${y})" style="color:var(--k${i})"><circle r="12"/>${zeichen(i, `weg${i + 1}`, 'x="-8.5" y="-8.5" width="17" height="17" ')}</g>`).join('');
+  return `<svg class="reise-linie" viewBox="0 0 60 600" aria-hidden="true" focusable="false">
+            <path class="weg" d="${d}"/>
+            <path class="gegangen" d="${d}" pathLength="100"/>
+            ${punkte}
+            <g class="ort"><circle r="17"/><text x="26" y="5"></text></g>
+          </svg>`;
+}
+
+// B/D · Der Wanderstock in der Mitte: Holz mit Licht- und Schattenkante, Riemen oben, Spitze unten; je Kehre ein
+// Stocknagel (Schild in der Kapitelfarbe, darauf das Kapitel-Zeichen der App). Die Nägel sitzen rundum verteilt (je 1/7 Drehung);
+// das Skript dreht den Stock so, dass der neue Nagel von hinten nach vorn kommt. Ohne Skript stehen alle vorne.
+const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
+// D · Die Plaketten als Aufkleber, wie man sie an einen Wanderstock klebt: verschiedene Formen, leicht schräg,
+// weisser Rand, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund). Darauf das Kapitel-Zeichen der App.
+const STICKER = [
+  ['schild', -7], ['rund', 5], ['kreis', -3], ['schild', 8], ['oval', -6], ['rund', 4], ['kreis', -2],
+];
+function stickerForm(form, y) {
+  const m = y + 30;
+  if (form === 'kreis') return `<circle cx="60" cy="${m}" r="27"/>`;
+  if (form === 'oval') return `<ellipse cx="60" cy="${m}" rx="31" ry="25"/>`;
+  if (form === 'rund') return `<rect x="31" y="${y + 5}" width="58" height="50" rx="11"/>`;
+  return `<path d="M31 ${y + 2} h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/>`;
+}
+function reiseStock() {
+  const naegel = KAPITEL.map((_, i) => {
+    const y = NAGEL_Y[i];
+    const [form, neigung] = STICKER[i];
+    const f = stickerForm(form, y);
+    return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><g transform="rotate(${neigung} 60 ${y + 30})">`
+      + `<g class="unterschatten" transform="translate(1.5 2.5)">${f}</g>`
+      + `<g class="schild" style="stroke:var(--k${i})">${f}</g>`
+      + `<g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="42" y="${y + 12}" width="36" height="36" `)}</g>`
+      + `<g class="woelbung">${f}</g></g></g></g>`;
+  }).join('');
+  const maser = [0, 1, 2, 3, 4, 5, 6, 7].map((j) => `<rect x="${(60 + Math.sin(j * Math.PI / 4 + 0.3) * 20).toFixed(1)}" y="8" width="1.4" height="664" rx=".7"/>`).join('');
+  return `<svg class="reise-stock" viewBox="0 0 120 700" aria-hidden="true" focusable="false">
+            <defs><linearGradient id="woelbung" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#000" stop-opacity=".2"/><stop offset=".38" stop-color="#fff" stop-opacity=".22"/>
+              <stop offset=".62" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient></defs>
+            <rect class="schatten" x="36" y="0" width="48" height="680" rx="24"/>
+            <rect class="holz" x="36" y="0" width="40" height="680" rx="20"/>
+            <g class="maser">${maser}</g>
+            <rect class="licht" x="44" y="10" width="7" height="660" rx="3.5"/>
+            <path class="spitze" d="M46 678 h28 l-14 22 z"/>
+            <rect class="riemen" x="30" y="24" width="60" height="42" rx="8"/>
+            ${naegel}
+          </svg>`;
 }
 
 function ld() {
@@ -361,7 +597,9 @@ export function vorstellungBauen() {
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Stebler Studios">
-  <meta name="theme-color" content="#F4F0E6">
+  <!-- Browserleiste je Farbschema (Granit, Brand Book §2) -->
+  <meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">
   <title>${esc(VORSTELLUNG.titel)}</title>
   <meta name="description" content="${esc(VORSTELLUNG.beschreibung)}">
   <link rel="canonical" href="${BASIS}/">
@@ -390,56 +628,103 @@ ${json}
   </style>
 </head>
 <body>
+  <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
-  <!-- ═══ Einstieg ═══ -->
-  <div class="pass">
-    <div class="rahmen">
-      <header>
-        <a class="marke" href="/" aria-label="Maloja Plana, Start">
-          ${MARKE}
-          Maloja&nbsp;Plana
-        </a>
-        <nav class="oben" aria-label="Seite">
-          <a href="#situationen">Situationen</a>
-          <a href="#weg">Kapitel</a>
-          <a href="#holen">App holen</a>
-          <a href="/app/">Öffnen</a>
-        </nav>
-      </header>
+  <!-- ═══ Kopf: liegt auf dem Passbild ═══ -->
+  <header class="kopf-leiste">
+    <div class="rahmen kopf">
+      <a class="marke" href="/" aria-label="Maloja Plana, Start">
+        ${MARKE}
+        Maloja&nbsp;Plana
+      </a>
+      <nav aria-label="Hauptmenü">
+        <a href="#weg">Kapitel</a>
+        <a href="#situationen">Situationen</a>
+        <a href="#holen">App holen</a>
+        <a href="/app/">Öffnen</a>
+      </nav>
+    </div>
+  </header>
 
-      <div class="inhalt">
-        <div>
-          <h1><span>Verstehen, was zusteht.</span><span class="zweite">Ordnen, was ansteht.</span></h1>
-          <p class="vorspann">Ein Schweizer Lebensordner für Steuern, Prämienverbilligung, Vorsorge und Notfall — auf Ihrem Telefon oder Laptop, in mehreren Sprachen, ohne dass Ihre Angaben das Gerät verlassen.</p>
-          <div class="wege">
-            <a class="knopf haupt" href="${BEISPIEL}">Beispiel ansehen</a>
-            <a class="knopf zweit" href="#holen">App holen</a>
-          </div>
-          <p class="fakten"><span>Kostenlos</span><span>Ohne Konto</span><span>Ohne Werbung</span><span>Quelloffen</span></p>
-          <p class="beta">Zurzeit in geschlossener Beta — das Beispiel steht ohne Code offen. Einen Code gibt es per <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Zugangscode">E-Mail</a>.</p>
-        </div>
-
-        <figure class="buehne">
-          <input type="checkbox" id="anhalten" class="unsichtbar">
-          <div class="telefon" role="img" aria-label="Maloja Plana auf einem Telefon, im Beispiel mit erfundenen Daten.">
-            <div class="insel" aria-hidden="true"></div>
-            <div class="bildschirm folge" aria-hidden="true">
-${[1, 2, 3, 4, 5].map((n) => `              <img src="${BILD(n)}" alt="" width="480" height="1040"${n > 1 ? ' loading="lazy"' : ''}>`).join('\n')}
-            </div>
-          </div>
-          <figcaption class="unter-telefon">
-            <span>Beispiel mit erfundenen Daten</span>
-            <label class="schalter" for="anhalten">Bildfolge anhalten</label>
-          </figcaption>
-        </figure>
+  <!-- ═══ C · Leiste: fährt nach der Reise herein, mit den Seiten-Links und dem aktuellen Abschnitt.
+       Während der Reise zeigt die Weglinie im Bild den Ort. Ohne Skript erscheint sie nie. ═══ -->
+  <nav class="leiste" aria-label="Abschnitte dieser Seite" data-zustand="aus">
+    <div class="rahmen leiste-innen">
+      <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben">${MARKE}</a>
+      <div class="leiste-links">
+        <a href="#weg">Kapitel</a>
+        <a href="#situationen">Situationen</a>
+        <a href="#holen">App holen</a>
+        <a href="/app/">Öffnen</a>
       </div>
     </div>
-    <div class="landschaft" aria-hidden="true">
-      <img src="/vorstellung/landschaft.webp" alt="" width="1482" height="1062">
-    </div>
-  </div>
+  </nav>
 
-  <main class="rahmen">
+  <main id="inhalt" tabindex="-1">
+    <!-- ═══ Hero und Reise: eine Bühne. Das Passbild unter dem Hero ist Bild 0, darauf folgen die Kehren. ═══ -->
+    <div class="reise-bruecke">
+      <div class="reise-buehne" aria-hidden="true" data-hier="-1">
+        <div class="reise-bild">
+          <img class="kehre-bild pass-bild an" src="/vorstellung/landschaft.webp" alt="" width="1482" height="1062" decoding="async">
+${KAPITEL.map((_, i) => `          <img class="kehre-bild" src="${LEER}" data-src="/vorstellung/kehre-${i + 1}.webp" alt="" width="1280" height="853" decoding="async">`).join('\n')}
+        </div>
+        <div class="reise-wolken"></div>
+        ${reiseLinie()}
+        ${reiseStock()}
+        <span class="reise-quelle">KI-gemalt</span>
+      </div>
+
+      <div class="reise-ablauf">
+        <div class="reise-anfang">
+          <div class="rahmen pass">
+            <div>
+              <h1><span>Verstehen, was zusteht.</span><span class="zweite">Ordnen, was ansteht.</span></h1>
+              <p class="vorspann">Ein Schweizer Lebensordner für Steuern, Prämienverbilligung, Vorsorge und Notfall — auf Ihrem Telefon oder Laptop, in mehreren Sprachen, ohne dass Ihre Angaben das Gerät verlassen.</p>
+              <div class="wege">
+                <a class="knopf haupt" href="${BEISPIEL}">Beispiel ansehen</a>
+                <a class="knopf zweit" href="#holen">App holen</a>
+              </div>
+              <p class="fakten"><span>Kostenlos</span><span>Ohne Konto</span><span>Ohne Werbung</span><span>Quelloffen</span></p>
+              <p class="beta">Zurzeit in geschlossener Beta — das Beispiel steht ohne Code offen. Einen Code gibt es per <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Zugangscode">E-Mail</a>.</p>
+            </div>
+
+            <figure class="buehne geraete">
+              <input type="checkbox" id="anhalten" class="unsichtbar">
+              <div class="geraete-bild">
+              <div class="laptop" role="img" aria-label="Maloja Plana auf einem Laptop, im Beispiel mit erfundenen Daten.">
+                <div class="deckel"><div class="schirm"><img src="/vorstellung/app-computer.webp" alt="" width="800" height="500"></div></div>
+                <div class="sockel" aria-hidden="true"></div>
+              </div>
+              <div class="telefon" role="img" aria-label="Maloja Plana auf einem Telefon, im Beispiel mit erfundenen Daten.">
+                <div class="insel" aria-hidden="true"></div>
+                <div class="bildschirm folge" aria-hidden="true">
+${[1, 2, 3, 4, 5].map((n) => `                  <img src="${BILD(n)}" alt="" width="480" height="1040"${n > 1 ? ' loading="lazy"' : ''}>`).join('\n')}
+                </div>
+              </div>
+              </div>
+              <figcaption class="unter-telefon">
+                <span>Beispiel mit erfundenen Daten</span>
+                <label class="schalter" for="anhalten">Bildfolge anhalten</label>
+              </figcaption>
+            </figure>
+
+            <a class="knopf zweit pass-weiter" href="#kehre-1">Sieben Kapitel, Kehre für Kehre</a>
+          </div>
+        </div>
+
+        <!-- ═══ Die Reise: Kehre für Kehre auf den Malojapass ═══ -->
+        <section id="weg" class="reise" aria-labelledby="t-weg">
+          <h2 id="t-weg" class="unsichtbar">Sieben Kapitel: ein Weg, Kehre für Kehre</h2>
+          <p class="unsichtbar">Die App hat sieben Kapitel. Diese Seite zeigt sie als Weg auf den Malojapass, eine Kehre je Kapitel. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. Die Bilder in diesem Abschnitt sind KI-gemalt, eine freie Darstellung.</p>
+          <ol class="reise-stationen" role="list">
+${reiseStationen()}
+          </ol>
+        </section>
+        <div class="reise-ausklang" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="rahmen">
 
     <!-- ═══ Lebenssituationen ═══ -->
     <section id="situationen" class="lagen" aria-labelledby="t-lagen">
@@ -457,25 +742,6 @@ ${SITUATIONEN.map(([titel], i) => `        <label for="l${i + 1}">${esc(titel)}<
 ${SITUATIONEN.map(([, text], i) => `        <div class="tafel t${i + 1}"><p class="gross">${esc(text)}</p><a href="${BEISPIEL}#/situationen">Im Beispiel ansehen →</a></div>`).join('\n')}
       </div>
       </fieldset>
-    </section>
-
-    <!-- ═══ Der Weg über den Pass ═══ -->
-    <section id="weg" aria-labelledby="t-weg">
-      <p class="augenbraue">Sieben Kapitel</p>
-      <h2 id="t-weg">Ein Weg, Kehre für Kehre.</h2>
-      <p class="unterzeile">In der App liegen Ihre sieben Kapitel als Stationen auf der Malojapass-Strasse. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter.</p>
-
-      <div class="weg">
-        <svg viewBox="0 0 100 700" preserveAspectRatio="none" aria-hidden="true">
-          <path class="saum" d="${WEG}"/>
-          <path class="bahn" d="${WEG}"/>
-          <path class="mitte" d="${WEG}"/>
-          <path class="begangen" pathLength="1" d="${WEG}"/>
-        </svg>
-        <ol class="stationen">
-${stationen()}
-        </ol>
-      </div>
     </section>
 
     <!-- ═══ Blick in die App ═══ -->
@@ -552,7 +818,7 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
           <p class="klein"><strong>Mac mit Safari:</strong> im Menü «Ablage» auf «Zum Dock hinzufügen» (ab Safari 17). Firefox am Computer kann das nicht — dort bleibt ein Lesezeichen.</p>
         </div>
       </div>
-      <div class="wege"><a class="knopf haupt" href="/app/">Maloja Plana öffnen</a></div>
+      <div class="wege"><a class="knopf zweit" href="/app/">Maloja Plana öffnen</a></div>
       <p class="bald"><strong>Eine Fassung für den App Store ist geplant.</strong> Bis dahin funktioniert der Weg über den Startbildschirm auf Telefon, Tablet und Laptop.</p>
       <p class="bald" id="warteliste">Möchten Sie Bescheid bekommen? <a href="${WARTELISTE}">Per E-Mail auf die Warteliste</a>. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es sie gibt, wenn die Fassung für den App Store erscheint. Spätestens Ende 2027 löschen wir Ihre Adresse (<a href="/rechtliches/">Datenschutz</a>).</p>
     </section>
@@ -599,23 +865,54 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
       <h2>Beginnen Sie mit einem kleinen Schritt.</h2>
       <p class="unterzeile">Schauen Sie sich das Beispiel an, ohne etwas einzugeben.</p>
       <div class="wege">
-        <a class="knopf haupt" href="${BEISPIEL}">Beispiel ansehen</a>
+        <a class="knopf zweit" href="${BEISPIEL}">Beispiel ansehen</a>
         <a class="knopf zweit" href="#holen">App holen</a>
       </div>
     </div>
+    </div>
   </main>
 
-  <footer>
+  <!-- ═══ D/E · Fuss: Marke · Entdecken · Rechtliches, darunter die Vertrauenszeile ═══ -->
+  <footer class="fuss">
     <div class="rahmen">
-      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
-      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
-      <p>Quelloffen unter <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
-      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
-      <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
-      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> ·
-      <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></p>
+      <div class="fuss-spalten">
+        <div class="fuss-marke">
+          <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben">${MARKE}Maloja&nbsp;Plana</a>
+          <p>Ein Schweizer Lebensordner. Ein Projekt von Stebler Studios, Basel.</p>
+          <p><a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+        </div>
+        <nav aria-labelledby="f-entdecken">
+          <p class="fuss-titel" id="f-entdecken">Entdecken</p>
+          <ul>
+            <li><a href="${BEISPIEL}">Beispiel ansehen</a></li>
+            <li><a href="#weg">Die sieben Kapitel</a></li>
+            <li><a href="#holen">App holen</a></li>
+            <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+            <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+            <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+            <li><a href="/steuern/">Steuern</a></li>
+            <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-recht">
+          <p class="fuss-titel" id="f-recht">Rechtliches</p>
+          <ul>
+            <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+            <li><a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">Quelloffen unter AGPL-3.0</a></li>
+            <li><a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></li>
+            <li><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="fuss-zeile">
+        <p class="vertrauen"><span>Ohne Konto</span><span>Ohne Werbung</span><span>Ihre Angaben bleiben auf dem Gerät</span></p>
+        <p>Die Bilder der Reise sind KI-gemalt, eine freie Darstellung des Malojapasses.</p>
+        <p>Diese Seite gibt es auf Deutsch. Die App lässt sich auch auf Englisch, Französisch, Italienisch und Rätoromanisch (noch provisorisch) einstellen.</p>
+        <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
+      </div>
     </div>
   </footer>
+  <script src="/reise.js" defer></script>
 </body>
 </html>
 `;

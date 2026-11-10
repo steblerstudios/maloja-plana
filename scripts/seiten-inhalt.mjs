@@ -694,7 +694,7 @@ export const SONDERSEITEN = [
       {
         titel: 'Datenschutz auf diesen Seiten',
         absaetze: [
-          'Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Skripte, keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Es gibt kein Tracking, keine Analyse und keine Werbung.',
+          'Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Skripte, keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Die Startseite lädt zusätzlich eigene kleine Skripte vom selben Server: eines leitet alte App-Adressen nach /app/ weiter, eines bewegt die Bilder der Reise. Sie setzen keine Cookies und senden keine Daten. Es gibt kein Tracking, keine Analyse und keine Werbung.',
           'Beim Abruf fallen dennoch technische Daten beim Hoster an — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genf, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung und die Betriebssicherheit technisch notwendig. Infomaniak handelt dabei als Auftragsbearbeiterin (Art. 9 nDSG). Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026).',
           'Weitere Empfänger gibt es nicht: keine Analyse-Dienste, keine Social-Media-Einbindungen, keine Weitergabe und kein Verkauf von Daten.',
         ],

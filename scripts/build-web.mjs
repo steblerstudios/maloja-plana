@@ -35,6 +35,7 @@ export const NUR_APP = ['sw.js', 'manifest.json', 'theme-init.js', 'vendor'];
 export const WEBSITE = [
   ['index.html', 'index.html'],
   ['weiterleitung.js', 'weiterleitung.js'],
+  ['reise.js', 'reise.js'],
   ['sw-abschied.js', 'sw.js'],
 ];
 
