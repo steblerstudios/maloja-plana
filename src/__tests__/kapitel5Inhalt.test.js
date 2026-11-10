@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { probezeitEnde } from '../NeuerJob.jsx';
+import { berechneTaggeld } from '../data/alvRechner.js';
 import { selbstAhvWerte, SELBST_AHV_JE_JAHR } from '../data/selbstaendigAhv.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -32,7 +33,8 @@ describe('K · Probezeit-Ende (OR Art. 335b Abs. 1)', () => {
 describe('A2 · Probezeit: sieben Tage Frist, Verlängerung bei Krankheit und Unfall (OR Art. 335b Abs. 3)', () => {
   it('Text und Erinnerung nennen beides', () => {
     expect(tDe('neuerJob.step5Text')).toMatch(/sieben Tagen/);
-    expect(tDe('neuerJob.step5Text')).toMatch(/krank oder verunfallt, verlängert sie sich/);
+    expect(tDe('neuerJob.step5Text')).toMatch(/krank, verunfallt oder im Militär- oder Zivildienst, verlängert sie sich/);
+    expect(tDe('neuerJob.step5Text')).toMatch(/sofern der Vertrag nichts anderes vorsieht/);
     expect(tDe('neuerJob.reminderNotes')).toMatch(/verlängern/);
   });
   it('K · «ab 8 Stunden» meint die Freizeit (UVV Art. 13), Berufsunfall immer', () => {
@@ -47,11 +49,13 @@ describe('L5–L7 · Stelle verloren', () => {
     const s = tDe('stelleVerloren.footerSperrzeit');
     expect(s).toMatch(/31 bis 60 Tage/);
     expect(s).toMatch(/Höchstzahl der Taggelder ab/);
-    expect(s).toMatch(/verfügt die Arbeitslosenkasse \(AVIG Art\. 30, AVIV Art\. 45\)/);
+    expect(s).toMatch(/verfügt die Arbeitslosenkasse \(AVIG Art\. 30, AVIV Art\. 44 und 45\)/);
+    // rechts-pruefer 10.11.: nicht jede eigene Kündigung — Ausnahme Unzumutbarkeit (AVIV Art. 44 Abs. 1 Bst. b).
+    expect(s).toMatch(/nicht zuzumuten/);
     expect(s).not.toMatch(/kann das RAV/);
   });
   it('L6: fehlende Arbeitsbemühungen → Einstelltage', () => {
-    expect(tDe('stelleVerloren.step1Text')).toMatch(/Fehlen sie, gibt es Einstelltage/);
+    expect(tDe('stelleVerloren.step1Text')).toMatch(/Fehlen sie oder reichen sie nicht, gibt es Einstelltage/);
   });
   it('L7: Abredeversicherung vor dem Ende der Deckung, mit Datum (UVV Art. 8)', () => {
     const s = tDe('stelleVerloren.step2Hinweis', { date: '01.03.2027' });
@@ -76,6 +80,19 @@ describe('A1 · Selbständig: AHV-Akontobeiträge (AHV-Merkblatt 2.02, Stand 1.1
     expect(s).toMatch(/5 % Verzugszins/);
     expect(s).toMatch(/Stand 2026/);
     expect(s).not.toMatch(/an der Quelle/);
-    expect(s).toMatch(/im In- und Ausland zusammengezählt \(MWSTG Art\. 10\)/);
+    expect(s).toMatch(/steuerbarem Umsatz im Jahr, im In- und Ausland zusammengezählt, ohne von der Steuer ausgenommene Leistungen \(MWSTG Art\. 10\)/);
+    expect(s).toMatch(/Nebenerwerb bis 2 500 Franken im Jahr gibt es Beiträge nur auf Wunsch/);
+  });
+});
+
+describe('L1 · Spanne ohne Alter aus den Beitragsmonaten (AVIG Art. 27, rechts-pruefer 10.11.2026)', () => {
+  it('12–17 Monate höchstens 260, 18–21 höchstens 400, ab 22 bis 520', () => {
+    expect(berechneTaggeld({ versicherterVerdienst: 6000, beitragsmonate: 14, alter: null }).anspruchSpanne).toEqual({ min: 200, max: 260 });
+    expect(berechneTaggeld({ versicherterVerdienst: 6000, beitragsmonate: 20, alter: null }).anspruchSpanne).toEqual({ min: 200, max: 400 });
+    expect(berechneTaggeld({ versicherterVerdienst: 6000, beitragsmonate: 24, alter: null }).anspruchSpanne).toEqual({ min: 200, max: 520 });
+  });
+  it('Befreite: Pauschalansatz statt Lohn, kein «Pauschalbetrag» (AVIG Art. 23 Abs. 2, AVIV Art. 41)', () => {
+    expect(tDe('alv.unter12')).toMatch(/Pauschalansatz/);
+    expect(tDe('alv.befreiungText')).toMatch(/Pauschalansatz statt des Lohns/);
   });
 });

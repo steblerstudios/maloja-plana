@@ -111,7 +111,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
           React.createElement(ErgebnisZeile, { palette, label: t('alv.wartetageLabel'), wert: t('alv.wartetageValue', { n: result.wartetage }) }),
           result.anspruchstage != null && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchValue', { n: result.anspruchstage, m: Math.round(result.anspruchstage / ALV_PARAMS.taggelderProMonat) }) }),
           // L1: Beitragszeit reicht, das Alter fehlt → die Spanne, keine erfundene Zahl.
-          result.anspruchstageOffen && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchOffenAlter') })
+          result.anspruchstageOffen && React.createElement(ErgebnisZeile, { palette, label: t('alv.anspruchLabel'), wert: t('alv.anspruchOffenAlter', result.anspruchSpanne) })
         ))
     : React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.normal, margin: 0 } }, t('alv.noAnspruch')));
 
@@ -126,6 +126,8 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const vorbehalt = !unter12 && result && result.anspruch && React.createElement(React.Fragment, null,
     result.anspruchstage == null && !result.anspruchstageOffen && React.createElement('p', { style: fussText }, t('alv.anspruchLabel') + ': ' + t('alv.anspruchUnklar')),
+    // AVIV Art. 41b: in den letzten vier Jahren vor dem Referenzalter 120 Taggelder mehr — nicht gerechnet, gesagt.
+    alter != null && alter >= 60 && React.createElement('p', { style: fussText }, t('alv.vorRentenalter')),
     result.gedeckelt && React.createElement('p', { style: fussText }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
     // Werte 2027 (26.10.2026): Grenzbetrag 80 % fürs laufende Jahr nicht belegt → sagen, nicht still rechnen.
     !ALV_PARAMS.satz80Belegt && React.createElement('p', { style: fussText }, t('alv.satz80NichtBelegt', { jahr: ALV_PARAMS.satz80Jahr, laufend: new Date().getFullYear(), betrag: ALV_PARAMS.satz80Schwelle })),

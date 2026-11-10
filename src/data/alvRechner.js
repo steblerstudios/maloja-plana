@@ -113,6 +113,9 @@ export function berechneTaggeld({ versicherterVerdienst, hatKinder, ivGrad40, be
     anspruchstage: bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }),
     // Beitragszeit reicht, aber ohne Alter steht die Höchstzahl nicht fest (200 bis 520 Taggelder).
     anspruchstageOffen: beitragsmonate >= 12 && bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }) == null,
+    // Spanne ohne Alter, aus den Beitragsmonaten (rechts-pruefer 10.11.2026): 520 gibt es erst ab 22 Monaten,
+    // bei 12–17 höchstens 260, bei 18–21 höchstens 400 — das Alter entscheidet dort nur über 200 (AVIG Art. 27).
+    anspruchSpanne: beitragsmonate >= 12 ? { min: 200, max: beitragsmonate >= 22 ? 520 : beitragsmonate >= 18 ? 400 : 260 } : null,
   };
 }
 
