@@ -74,10 +74,13 @@
   // C · Die Leiste oben erscheint erst nach der Reise (Seiten-Links, der aktuelle Abschnitt mit aria-current).
   // Während der Reise zeigt die Weglinie links im Bild, wo man ist (Entscheid 10.11.); ohne Skript gibt es sie nicht.
   var leiste = document.querySelector('.leiste');
+  var ausklang = bruecke.querySelector('.reise-ausklang');
   var leisteLinks = leiste ? [].slice.call(leiste.querySelectorAll('.leiste-links a')) : [];
   function leisteNeu(hier, h) {
     if (!leiste) return;
-    var zustand = bruecke.getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';
+    // Seit D/E (10.11.2026 spät) liegen «Zum Nachlesen» und «Was Sie eingeben» noch in der Brücke: massgebend ist das
+    // Ende der Reise (der Ausklang), nicht das Ende der Brücke — sonst käme die Leiste erst nach diesen Abschnitten.
+    var zustand = (ausklang || bruecke).getBoundingClientRect().bottom <= h * 0.5 ? 'seite' : 'aus';
     if (leiste.getAttribute('data-zustand') !== zustand) leiste.setAttribute('data-zustand', zustand);
     // Aktueller Abschnitt: der letzte, dessen Anfang die obere Bildhälfte erreicht hat.
     var aktuell = null;

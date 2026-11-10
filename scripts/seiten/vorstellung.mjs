@@ -111,6 +111,24 @@ const GERAETE = [
   { name: 'Android', zeichen: 'telefon', x: '54.4%', y: '81.6%' },           // (870 | 576)
   { name: 'Computer', zeichen: 'laptop', x: '79.9%', y: '57.2%' },           // (1278 | 332)
 ];
+// D · «Zum Nachlesen» auf dem hellen Blick (Stebler Studios 10.11.2026 spät, «ja D und E»): je Erklärseite ein Ort auf der
+// Passstrasse in pass-blick-papier.svg (viewBox 0 -240 1600 1000, Pfadpunkte genau getroffen), Reihenfolge wie NACHLESEN.
+const NACHLESEN_ORTE = [
+  ['34.9%', '69.3%'],   // (558 | 453)
+  ['47.6%', '67.9%'],   // (761 | 439)
+  ['58.8%', '83.9%'],   // (941 | 599)
+  ['75.9%', '84.9%'],   // (1215 | 609)
+  ['38.6%', '82.6%'],   // (618 | 586)
+];
+// E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte. Fünfte Kachel neu: Grün gehostet, als Angabe des
+// Anbieters (wie in der App, de.js sustain2/sustainSource). Zeichen bewusst noch keine — eigene Icon-Frage (10.11.2026).
+const VERSPRECHEN = [
+  ['Kein Konto', 'Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.'],
+  ['Nur auf diesem Gerät', 'Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.'],
+  ['Kein Tracking', 'Keine Werbung, keine Analyse-Dienste. Der Hoster speichert beim Abruf kurz technische Zugriffsdaten (<a href="/rechtliches/">Datenschutz</a>).'],
+  ['Quelloffen', 'Der Quellcode ist öffentlich einsehbar.'],
+  ['Grün gehostet', 'Bei Infomaniak in Genf: Rechenzentren in der Schweiz, nach <a href="https://www.infomaniak.com/en/ecology">Angaben des Anbieters</a> mit erneuerbarem Strom betrieben.'],
+];
 const GERAET_ZEICHEN = {
   telefon: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/></svg>',
   laptop: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="5" width="15" height="10.5" rx="1.4"/><path d="M2.5 18.5h19"/></svg>',
@@ -369,23 +387,20 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     /* G · Vor der Karte steht schon die Luft des Schlussabschnitts (96 px) — nicht noch einmal 96. */
     .pass-band-karte{ margin:0 }
     .pass-band-karte img{ aspect-ratio:280/130; object-fit:cover }
-    .pass-karte{ position:relative; background:#7E8F7B; color:#F6F2E8 }
     /* F · Die Karte auf Inhaltsbreite (vorher randlos 1280 px und mehr); das Salbei bleibt randlos, die Linien laufen
        an den Seiten weich aus statt mit harter Kante. */
     .pass-karte-bild{ position:relative; aspect-ratio:280/130; max-width:1040px; margin:0 auto;
       -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent) }
     .pass-karte-bild img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }
-    .pass-karte .hoehe{ position:absolute; left:57.7%; top:27%; margin:-10px 0 0 14px; font-size:16px; font-weight:600; letter-spacing:.02em;
-      text-shadow:0 0 6px rgba(85,104,90,.9) }
-    .pass-karte figcaption{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px; padding-top:12px; font-size:15px }
-    .pass-karte .quelle{ font-size:13px; opacity:.85 }
+    .vertrauen-karte .hoehe{ position:absolute; left:57.7%; top:27%; margin:-10px 0 0 14px; font-size:16px; font-weight:600; letter-spacing:.02em;
+      color:#F6F2E8; text-shadow:0 0 6px rgba(85,104,90,.9) }
     .pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)); background:linear-gradient(in oklab, #7E8F7B, var(--bg)) }
     /* Seit dem Tausch (Papier-Blick nach Kehre 7) endet der Blick in Creme: weich ins Salbei der Karte, keine Kante. */
     .pass-karte-anfang{ height:16vh; background:linear-gradient(#FCF0E4, #7E8F7B); background:linear-gradient(in oklab, #FCF0E4, #7E8F7B) }
     @media (max-width:760px){
       .pass-karte-bild{ aspect-ratio:4/3 }
       .pass-karte-bild{ -webkit-mask-image:none; mask-image:none }
-      .pass-karte .hoehe{ left:62.5% }   /* gleicher Punkt bei 4:3, object-fit:cover um die Mitte (Rechnung im Brand Book §7e) */
+      .vertrauen-karte .hoehe{ left:62.5% }   /* gleicher Punkt bei 4:3, object-fit:cover um die Mitte (Rechnung im Brand Book §7e) */
     }
     /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
     .reise-stationen{ list-style:none }
@@ -501,6 +516,53 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       }
     }
 
+    /* ─── D · Zum Nachlesen auf dem hellen Blick (Stebler Studios 10.11.2026 spät, «ja D und E») ───
+       Je Erklärseite das Zeichen ihres Kapitels auf der Passstrasse (NACHLESEN_ORTE). Tippen klappt eine kleine Karte auf:
+       <details name="nachlesen"> — immer nur eine offen, ohne Skript, mit Tastatur bedienbar. Scheibe wie an der Weglinie,
+       Rand und Zeichen tiefer gemischt (65 % Farbe in Anthrazit), damit sie 3:1 gegen Creme halten. Blick und Kopf sind
+       immer hell (Creme fest), darum Schrift fest dunkel, auch im dunklen Modus. */
+    .js .reise-ablauf .nach-reise{ pointer-events:auto }
+    /* deckend: sonst schimmert zwischen den Abschnitten die klebende Bühne der Reise durch (im Browser gesehen) */
+    .nach-reise{ background:#FCF0E4 } .nach-reise > section{ padding-bottom:0 } .vertrauen-karte{ padding-top:0 }
+    .nachlesen-blick{ color:#24262A; padding-top:64px }
+    .nachlesen-kopf h2{ color:#24262A } .nachlesen-kopf .augenbraue, .nachlesen-kopf .unterzeile{ color:#575B61 }
+    .nachlesen-flaeche{ position:relative }
+    .nachlesen-flaeche > img{ display:block; width:100%; height:auto }
+    .nachlesen-wahl{ position:absolute; top:0; left:0; right:0; aspect-ratio:1600/1000; list-style:none; margin:0; padding:0; pointer-events:none }
+    .nachlesen-wahl li{ position:absolute; left:var(--x); top:var(--y); pointer-events:auto }
+    .nachlesen-wahl details{ position:relative }
+    .nachlesen-wahl summary{ list-style:none; cursor:pointer; display:block; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50% }
+    .nachlesen-wahl summary::-webkit-details-marker{ display:none }
+    .nachlesen-wahl .scheibe{ display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:#FCF0E4;
+      border:2.5px solid color-mix(in oklab, var(--farbe) 65%, #24262A); color:color-mix(in oklab, var(--farbe) 65%, #24262A) }
+    .nachlesen-wahl .scheibe svg{ width:26px; height:26px; display:block }
+    .nachlesen-wahl summary:hover .scheibe, .nachlesen-wahl details[open] .scheibe{ border-width:3.5px }
+    .nachlesen-wahl summary:focus-visible{ outline:2px solid #7A5F30; outline-offset:3px }
+    .nachlesen-wahl .name{ position:absolute; left:50%; top:calc(100% + 6px); transform:translateX(-50%); white-space:nowrap; font-size:15px;
+      font-weight:600; color:#24262A; background:#FCF0E4; padding:0 6px; border-radius:6px }
+    .nachlesen-wahl details[open] .name{ visibility:hidden }
+    .nachlesen-wahl .karte{ position:absolute; z-index:2; left:0; bottom:calc(100% + 30px); transform:translateX(-50%); width:280px; padding:16px 18px;
+      background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px; color:#24262A }
+    .nachlesen-wahl .karte p{ font-size:16px; line-height:1.5; color:#24262A; margin-bottom:8px }
+    .nachlesen-wahl .karte a{ color:#7A5F30; font-weight:600; display:inline-flex; align-items:center; min-height:44px }
+    .nachlesen-blick .quelle{ font-size:13px; color:#575B61; padding-top:8px; padding-bottom:16px }
+
+    /* ─── E · «Was Sie eingeben, bleibt bei Ihnen» auf der Karte von oben (Salbei) ───
+       Kopf als Papier-Fläche oben links auf der Karte, die fünf Versprechen als Papier-Kacheln über dem unteren Rand.
+       Salbei trägt keinen Fliesstext (Weiss 3,4:1, Anthrazit 4,4:1) — Schrift nur auf Papier. Zeichen noch keine
+       (eigene Icon-Frage, Stebler Studios 10.11.2026). */
+    .vertrauen-salbei{ background:#7E8F7B; padding-bottom:24px }
+    .vertrauen-flaeche{ position:relative }
+    .vertrauen-flaeche .pass-karte-bild{ width:100% }   /* in der Spalte (≤ 960 px) schrumpfte sie sonst auf null */
+    .vertrauen-kopf{ position:absolute; left:24px; top:16px; max-width:440px; padding:20px 24px; background:#FFF8F0; border-radius:16px; color:#24262A }
+    .vertrauen-kopf h2{ color:#24262A; margin-bottom:8px } .vertrauen-kopf .augenbraue, .vertrauen-kopf .unterzeile{ color:#575B61 }
+    .versprechen{ position:relative; list-style:none; margin:-56px 0 0; padding:0; display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:12px }
+    .versprechen li{ background:#FFF8F0; border-radius:16px; padding:16px 16px 18px; color:#24262A }
+    .versprechen h3{ font-size:16px; margin-bottom:6px; color:#24262A }
+    .versprechen p{ font-size:15px; line-height:1.5; color:#575B61 }
+    .versprechen a{ color:#7A5F30 }
+    .vertrauen-salbei .quelle{ font-size:13px; color:#121210; padding-top:12px }   /* 5,45:1 auf Salbei */
+
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ margin-top:16px; max-width:640px }
     /* O · Gerät wählen auf dem Blick: Punkt auf der Strasse, darüber die Wahl (Auswahl-Knopf: gewählt Sand gefüllt, 10 px,
@@ -559,11 +621,6 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
     .liste > li > a{ display:inline-block; padding:13px 0 }
     .liste span{ display:block }
     /* Zum Nachlesen: links das Kapitel-Zeichen der Seite in der Kapitelfarbe (dekorativ, der Titel sagt es). */
-    .liste.lesen li{ display:grid; grid-template-columns:32px 1fr; column-gap:16px; align-items:start }
-    .liste.lesen li > *:not(.lesen-zeichen){ grid-column:2 }
-    .liste .lesen-zeichen{ grid-row:1 / span 2; color:var(--farbe); padding-top:10px }   /* .liste span färbt sonst grau */
-    .lesen-zeichen svg{ width:32px; height:32px; display:block }
-    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
     .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
     .fragen p{ color:var(--leise) }
     .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
@@ -627,6 +684,19 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter, #anhalten{ display:none }
     }
     @media (max-width:960px){
+      /* D · bis 960 px (Tablet und Handy) zu eng für Namen im Bild: die Erklärseiten stehen als Liste darunter, aufklappbar wie im Bild */
+      .nachlesen-blick{ padding-top:48px }
+      .nachlesen-wahl{ position:static; aspect-ratio:auto; display:grid; gap:8px; padding:16px 16px 0 }
+      .nachlesen-wahl li{ position:static }
+      .nachlesen-wahl summary{ width:auto; height:auto; margin:0; border-radius:var(--radius-knopf); display:flex; align-items:center; gap:12px;
+        min-height:52px; padding:4px 14px 4px 4px; background:#FFF8F0; border:1px solid #E6DACB }
+      .nachlesen-wahl .scheibe{ width:40px; height:40px; flex:none } .nachlesen-wahl .scheibe svg{ width:22px; height:22px }
+      .nachlesen-wahl .name{ position:static; transform:none; background:none; padding:0; white-space:normal }
+      .nachlesen-wahl details[open] .name{ visibility:visible }
+      .nachlesen-wahl .karte{ position:static; transform:none; width:auto; margin-top:4px; border-radius:var(--radius-knopf) }
+      .vertrauen-flaeche{ display:flex; flex-direction:column }
+      .vertrauen-kopf{ position:static; order:-1; max-width:none; margin-bottom:16px }
+      .versprechen{ margin-top:16px; grid-template-columns:repeat(2, minmax(0, 1fr)) }
       .pass h1{ font-size:38px }
       /* K · Unter 960 px eine Spalte: daneben brach der Titel in vier Zeilen. Die Geräte stehen unter dem Text. */
       .pass{ grid-template-columns:1fr; gap:32px; padding-top:112px; align-items:start }
@@ -642,6 +712,11 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
     }
     @media (max-width:760px){
       :root{ --abstand-l:64px }
+      /* E · am Handy Kopf und Kacheln untereinander, die Karte dazwischen */
+      .vertrauen-kopf{ position:static; max-width:none; margin-bottom:16px }
+      .vertrauen-flaeche{ display:flex; flex-direction:column }
+      .vertrauen-kopf{ order:-1 }
+      .versprechen{ margin-top:16px; grid-template-columns:1fr }
       h2{ font-size:28px }
       .unterzeile{ font-size:16px }
       /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
@@ -669,7 +744,7 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .lagen-telefon .telefon{ width:180px; margin:0 auto; padding:8px; border-radius:34px }
       .lagen-telefon .bildschirm{ border-radius:27px; --statusleiste:28px }
       .lagen-telefon .insel{ top:15px; width:60px; height:17px }
-      .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
+      .liste{ grid-template-columns:1fr; gap:20px }
       /* O am Handy: Punkte bleiben im Bild, die Wahl steht als Zeile darunter (das Bild ist zu niedrig für Schilder). */
       .geraet-wahl{ position:static; aspect-ratio:auto; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
       /* Am Handy ist das Bild zu niedrig für Text: der Kopf steht darüber, das Bild läuft oben weich aus. */
@@ -938,21 +1013,47 @@ ${reiseStationen()}
           </ol>
         </section>
         <div class="reise-ausklang" aria-hidden="true"></div>
-        <figure class="pass-blick">
-          <img src="/vorstellung/pass-blick-papier.svg" alt="Der Blick von der Passhöhe über die Kehren ins Bergell hinunter, in Höhenlinien, mit der Passstrasse." width="1600" height="1000" loading="lazy" decoding="async">
-        </figure>
-        <div class="pass-karte-anfang" aria-hidden="true"></div>
-        <figure class="pass-karte">
-          <div class="pass-karte-bild">
-            <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
-            <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
+        <div class="nach-reise">
+        <!-- ═══ D · Zum Nachlesen auf dem hellen Blick: Zeichen im Bild, Tippen klappt eine kleine Karte auf
+             (<details name> — immer nur eine offen, ohne Skript). Am Handy als Liste unter dem Bild. ═══ -->
+        <section id="nachlesen" class="pass-blick nachlesen-blick" aria-labelledby="t-nachlesen">
+          <div class="rahmen nachlesen-kopf">
+            <p class="augenbraue">Oben angekommen</p>
+            <h2 id="t-nachlesen">Zum Nachlesen.</h2>
+            <p class="unterzeile">Fünf Erklärseiten, ohne Anmeldung und ohne App. Tippen Sie auf ein Zeichen.</p>
           </div>
-          <figcaption class="rahmen">
-            <span>Oben angekommen: der Blick über die Kehren ins Bergell, und derselbe Weg von oben.</span>
-            <span class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</span>
-          </figcaption>
-        </figure>
-        <div class="pass-karte-ende" aria-hidden="true"></div>
+          <div class="nachlesen-flaeche">
+            <img src="/vorstellung/pass-blick-papier.svg" alt="Der Blick von der Passhöhe über die Kehren ins Bergell hinunter, in Höhenlinien, mit der Passstrasse." width="1600" height="1000" loading="lazy" decoding="async">
+            <ul class="nachlesen-wahl" role="list">
+${NACHLESEN.map(([ziel, titel, satz, k], n) => `              <li style="--x:${NACHLESEN_ORTE[n][0]}; --y:${NACHLESEN_ORTE[n][1]}; --farbe:var(--k${k})"><details name="nachlesen"><summary><span class="scheibe" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span><span class="name">${esc(titel)}</span></summary><div class="karte"><p>${esc(satz)}</p><a href="${ziel}">Seite lesen<span class="unsichtbar">: ${esc(titel)}</span>&nbsp;→</a></div></details></li>`).join('\n')}
+            </ul>
+          </div>
+          <p class="rahmen quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © OpenStreetMap</p>
+        </section>
+
+        <!-- ═══ E · «Was Sie eingeben, bleibt bei Ihnen» auf der Karte von oben (Salbei). Schrift nur auf Papier. ═══ -->
+        <section id="vertrauen" class="vertrauen-karte" aria-labelledby="t-vertrauen">
+          <div class="pass-karte-anfang" aria-hidden="true"></div>
+          <div class="vertrauen-salbei">
+            <div class="rahmen vertrauen-flaeche">
+              <div class="pass-karte-bild">
+                <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
+                <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
+              </div>
+              <div class="vertrauen-kopf">
+                <p class="augenbraue">Ihre Angaben</p>
+                <h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>
+                <p class="unterzeile">Die Rechnungen laufen in Ihrem Browser. Was Sie eingeben, wird nicht an einen Server geschickt.</p>
+              </div>
+              <ul class="versprechen" role="list">
+${VERSPRECHEN.map(([titel, text]) => `                <li><h3>${esc(titel)}</h3><p>${text}</p></li>`).join('\n')}
+              </ul>
+              <p class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</p>
+            </div>
+          </div>
+          <div class="pass-karte-ende" aria-hidden="true"></div>
+        </section>
+        </div>
       </div>
     </div>
 
@@ -1057,28 +1158,10 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
     </section>
 
     <!-- ═══ Vertrauen ═══ -->
-    <section aria-labelledby="t-vertrauen">
-      <p class="augenbraue">Ihre Angaben</p>
-      <h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>
-      <p class="unterzeile">Die Rechnungen laufen in Ihrem Browser. Was Sie eingeben, wird nicht an einen Server geschickt.</p>
-      <ul class="liste">
-        <li><h3>Kein Konto</h3><p>Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.</p></li>
-        <li><h3>Nur auf diesem Gerät</h3><p>Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.</p></li>
-        <li><h3>Kein Tracking</h3><p>Keine Werbung, keine Analyse-Dienste. Der Hoster speichert beim Abruf kurz technische Zugriffsdaten (<a href="/rechtliches/">Datenschutz</a>).</p></li>
-        <li><h3>Quelloffen</h3><p>Der Quellcode ist öffentlich einsehbar.</p></li>
-      </ul>
-    </section>
-
-    <!-- ═══ Nachlesen + Fragen ═══ -->
-    <section class="zweispaltig" aria-label="Nachlesen und häufige Fragen">
-      <div>
-        <h2>Zum Nachlesen</h2>
-        <ul class="liste eins lesen">
-${NACHLESEN.map(([ziel, titel, satz, k], n) => `          <li style="--farbe:var(--k${k})"><span class="lesen-zeichen" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span><a href="${ziel}">${esc(titel)}</a><span>${esc(satz)}</span></li>`).join('\n')}
-        </ul>
-      </div>
+    <!-- ═══ Häufige Fragen (Zum Nachlesen steht seit D auf dem hellen Blick nach der Reise) ═══ -->
+    <section class="fragen-abschnitt" aria-labelledby="t-fragen">
       <div class="fragen">
-        <h2>Häufige Fragen</h2>
+        <h2 id="t-fragen">Häufige Fragen</h2>
         <h3>Warum brauche ich einen Zugangscode?</h3>
         <p>Maloja Plana ist noch in einer geschlossenen Beta. Das Beispiel geht ohne Code — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p>Einen Code bekommen Sie per E-Mail: schreiben Sie an <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Zugangscode">info@malojaplana.ch</a>.</p>
