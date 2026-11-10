@@ -17,10 +17,14 @@
 // Annahme wie ohne IK (utils/beitragsjahreAnnahme.js). Fachprüfung 10.11.2026: vorher zählte die
 // Rechnung «bis heute» als Alter − 21 und legte bei vollständigem IK ein Jahr doppelt dazu.
 // Gezählt wird ab dem letzten Jahr, nicht nach Anzahl Einträgen — Lücken bleiben Lücken.
-export const kuenftigeIkJahre = ({ eintraege, geburtsjahr, jahreBisReferenzalter }) => {
+// Nachprüfung 10.11.2026: endet der IK früh (z. B. mit 30, Auslandsjahre nicht erfasst), sind die
+// Jahre bis zum Vorjahr Vergangenheit, also Lücken — gezählt wird frühestens ab dem laufenden Jahr.
+// `jahreBisReferenzalter` = volle Beitragsdauer des Jahrgangs (Frauen der Übergangsgeneration 43).
+export const kuenftigeIkJahre = ({ eintraege, geburtsjahr, jahreBisReferenzalter, jetztJahr = new Date().getFullYear() }) => {
   const jahre = (Array.isArray(eintraege) ? eintraege : []).map((e) => Number(e && e.jahr)).filter(Number.isFinite);
   if (!jahre.length || !geburtsjahr) return 0;
-  const abgedeckt = Math.max(...jahre) - geburtsjahr - 20; // Jahre 21 … letztes IK-Jahr
+  const bisJahr = Math.max(Math.max(...jahre), jetztJahr - 1);
+  const abgedeckt = bisJahr - geburtsjahr - 20; // Jahre 21 … letztes IK-Jahr bzw. Vorjahr
   return Math.max(0, jahreBisReferenzalter - Math.max(0, abgedeckt));
 };
 

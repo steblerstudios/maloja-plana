@@ -77,6 +77,28 @@ describe('kuenftigeIkJahre', () => {
     const eintraege = vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter: 39, aktuellesEinkommen: 80000 });
     expect(kuenftigeIkJahre({ eintraege, geburtsjahr, jahreBisReferenzalter: 44 })).toBe(25);
   });
+  // Nachprüfung 10.11.2026: vergangene, nicht erfasste Jahre sind Lücken, keine Zukunft.
+  it('IK endet mit 30 (Auslandsjahre nicht erfasst): Jahre 31 bis heute bleiben Lücken', async () => {
+    const { kuenftigeIkJahre } = await import('../utils/ikHochrechnung.js');
+    const jetztJahr = geburtsjahr + 40;
+    const eintraege = vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter: 30, aktuellesEinkommen: 80000 });
+    // abgedeckt bis zum Vorjahr (Alter 39) → 19 Jahre → 25 künftige, nicht 34
+    expect(kuenftigeIkJahre({ eintraege, geburtsjahr, jahreBisReferenzalter: 44, jetztJahr })).toBe(25);
+  });
+  it('Frau JG 1962 (volle Dauer 43), IK bis 2025 mit Lücke: keine künftigen Jahre mehr', async () => {
+    const { kuenftigeIkJahre } = await import('../utils/ikHochrechnung.js');
+    const { volleBeitragsdauer } = await import('../data/ahvRechner.js');
+    const volle = volleBeitragsdauer({ geburtsjahr: 1962, geburtsmonat: 1, geschlecht: 'female' });
+    const eintraege = vorbelegeIKAuszug({ geburtsjahr: 1962, aktuellesAlter: 63, aktuellesEinkommen: 80000 })
+      .map((e, i) => (i === 3 ? { ...e, typ: 'luecke' } : e));
+    expect(kuenftigeIkJahre({ eintraege, geburtsjahr: 1962, jahreBisReferenzalter: volle, jetztJahr: 2026 })).toBe(0);
+  });
+  it('der Rechner rechnet bis zur vollen Beitragsdauer des Jahrgangs, nicht pauschal 44', async () => {
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const src = fs.readFileSync(path.join(__dirname, '..', 'VorsorgeRechner.jsx'), 'utf8');
+    expect(src).toMatch(/kuenftigeIkJahre\(\{[^}]*jahreBisReferenzalter: volleDauer[^}]*\}\)/);
+  });
   it('mit Lücken im IK: die Lücken zählen nicht als künftige Jahre', async () => {
     const { kuenftigeIkJahre } = await import('../utils/ikHochrechnung.js');
     const eintraege = vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter: 40, aktuellesEinkommen: 80000 })

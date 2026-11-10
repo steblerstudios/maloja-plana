@@ -193,9 +193,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // wie ohne IK), Einkommen gemischt (utils/ikHochrechnung.js). Ohne Geburtsjahr keine Hochrechnung.
   const ikHoch = useMemo(() => {
     if (!ikResult || !birthYear) return null;
-    const zukunftsJahre = kuenftigeIkJahre({ eintraege: ikEntries, geburtsjahr: birthYear, jahreBisReferenzalter: angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre) });
+    // Bis zur vollen Beitragsdauer des Jahrgangs (Frauen der Übergangsgeneration 43, nicht 44 —
+    // Nachprüfung 10.11.2026).
+    const zukunftsJahre = kuenftigeIkJahre({ eintraege: ikEntries, geburtsjahr: birthYear, jahreBisReferenzalter: volleDauer });
     return ikHochrechnen({ ik: ikResult, zukunftsJahre, einkommenHeute: parsedEinkommen, volleDauer });
-  }, [ikResult, ikEntries, birthYear, refAlterJahre, parsedEinkommen, volleDauer]);
+  }, [ikResult, ikEntries, birthYear, parsedEinkommen, volleDauer]);
   // Erziehungsgutschriften mit IK: die grössere Zahl aus IK und Eingabefeld («Jahre mit Kindern unter
   // 16» zählt auch künftige Jahre) — sonst fehlten jungen Eltern alle künftigen Gutschriften
   // (Fachprüfung 10.11.2026, Art. 29sexies AHVG). Ebenso Betreuung.
