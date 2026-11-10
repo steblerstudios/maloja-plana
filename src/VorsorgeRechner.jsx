@@ -1112,6 +1112,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ),
 
         // Disclaimer + amtlicher Rechner
+        // Kapitel 4, P9: Sperre nach einem Einkauf (BVG Art. 79b Abs. 3), gehört neben den Steuervergleich.
+        React.createElement('div', { 'data-teil': 'kb-einkauf', style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbEinkaufSperre')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbDisclaimer')),
         React.createElement(ExternerLink, { t, href: 'https://swisstaxcalculator.estv.admin.ch/', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink')),
         React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource'), null, t))

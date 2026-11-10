@@ -6769,6 +6769,7 @@ export default {
     kbStaffelResult: 'CHF {total} invece di CHF {einmal} — risparmio di circa CHF {ersparnis}.',
     kbStaffelNone: 'Per questo importo lo scaglionamento aiuta poco.',
     kbStaffelHint: "Poiché la tariffa è progressiva, ripartire il prelievo su più anni fiscali riduce l'imposta — ad es. con più conti 3a, oppure prelevando 2° pilastro e 3a in anni diversi. Limiti: di regola sono utili solo pochi conti, e alcuni cantoni sommano i prelievi dello stesso anno (anche quelli del coniuge).",
+    kbEinkaufSperre: { sie: 'Se ha effettuato un riscatto nella cassa pensioni, le prestazioni che ne risultano non possono essere prelevate in forma di capitale nei tre anni successivi (art. 79b cpv. 3 LPP).', du: 'Se hai effettuato un riscatto nella cassa pensioni, le prestazioni che ne risultano non possono essere prelevate in forma di capitale nei tre anni successivi (art. 79b cpv. 3 LPP).' },
     kbDisclaimer: "Orientamento approssimativo, non un calcolo vincolante. Fa fede il calcolatore fiscale ufficiale del cantone.",
     kbOfficialLink: 'Calcolatore fiscale ufficiale AFC',
     kbSource: "Parte federale esatta secondo [[LIFD art. 38|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it]] (un quinto della tariffa). Valori cantonali: confronto finpension dell'imposta sui prelievi di capitale 2026, capoluogo, approssimativo. Stato 2026.",

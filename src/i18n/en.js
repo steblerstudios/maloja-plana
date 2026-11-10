@@ -6785,6 +6785,7 @@ export default {
     kbStaffelResult: 'CHF {total} instead of CHF {einmal} — saving about CHF {ersparnis}.',
     kbStaffelNone: 'For this amount, staggering barely helps.',
     kbStaffelHint: 'Because the tariff is progressive, splitting the withdrawal over several tax years lowers the tax — e.g. via several 3a accounts, or by taking the 2nd pillar and 3a in different years. Limits: usually only a few accounts make sense, and some cantons add up withdrawals made in the same year (including a spouse\'s).',
+    kbEinkaufSperre: 'If you made a buy-in to your pension fund, the resulting benefits may not be withdrawn as a lump sum within the next three years (Art. 79b para. 3 BVG).',
     kbDisclaimer: 'Rough orientation, not a binding calculation. The official cantonal tax calculator is authoritative.',
     kbOfficialLink: 'Official FTA tax calculator',
     kbSource: 'Federal part exact per [[Federal Direct Tax Act Art. 38|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de]] (one fifth of the tariff). Cantonal figures: finpension capital-withdrawal tax comparison 2026, cantonal capital, approximate. As of 2026.',

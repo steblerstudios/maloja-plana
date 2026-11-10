@@ -6874,6 +6874,7 @@ export default {
     kbStaffelResult: 'CHF {total} statt CHF {einmal} — Ersparnis rund CHF {ersparnis}.',
     kbStaffelNone: 'Bei diesem Betrag bringt die Staffelung kaum etwas.',
     kbStaffelHint: 'Weil der Tarif progressiv ist, senkt das Aufteilen des Bezugs auf mehrere Steuerjahre die Steuer — etwa über mehrere 3a-Konten oder 2. Säule und 3a in verschiedenen Jahren. Grenzen: meist sind nur wenige Konten sinnvoll, und einzelne Kantone zählen Bezüge desselben Jahres (auch die des Ehepartners) zusammen.',
+    kbEinkaufSperre: { sie: 'Haben Sie sich in die Pensionskasse eingekauft, dürfen Sie die Leistungen daraus in den nächsten drei Jahren nicht als Kapital beziehen (BVG Art. 79b Abs. 3).', du: 'Hast du dich in die Pensionskasse eingekauft, darfst du die Leistungen daraus in den nächsten drei Jahren nicht als Kapital beziehen (BVG Art. 79b Abs. 3).' },
     kbDisclaimer: 'Grobe Orientierung, keine verbindliche Berechnung. Massgebend ist der amtliche Steuerrechner des Kantons.',
     kbOfficialLink: 'Amtlicher ESTV-Steuerrechner',
     kbSource: 'Bund exakt nach [[DBG Art. 38|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de]] (ein Fünftel des Tarifs). Kantonswerte: finpension Kapitalbezugssteuer-Vergleich 2026, Hauptort, approximativ. Stand 2026.',

@@ -7878,6 +7878,7 @@ export default {
     kbStaffelResult: 'CHF {total} enstagl da CHF {einmal} — spargn da var CHF {ersparnis}.',
     kbStaffelNone: 'Per quest import gida la repartiziun bunamain nagut.',
     kbStaffelHint: 'Perquai che la tariffa è progressiva, reducescha la repartiziun dal prelevament sur plirs onns da taglia la taglia — p. ex. cun plirs contos 3a, u cun prelevar la 2. colonna e la 3a en onns differents. Limitas: per ordinari èn mo paucs contos senmisads, e singuls chantuns quintan ensemen ils prelevaments dal medem onn (er quels dal conjugal).',
+    kbEinkaufSperre: { sie: 'Sche Vus avais fatg ina cumpra en la cassa da pensiun, na dastgais Vus betg retrair las prestaziuns che resultan da quai durant ils proxims trais onns sco chapital (art. 79b al. 3 LPP).', du: 'Sche ti has fatg ina cumpra en la cassa da pensiun, na dastgas ti betg retrair las prestaziuns che resultan da quai durant ils proxims trais onns sco chapital (art. 79b al. 3 LPP).' },
     kbDisclaimer: 'Orientaziun grossa, nagin quint obligatoric. Decisiv è il quntader da taglias uffizial dal chantun.',
     kbOfficialLink: 'Quntader da taglias uffizial da l\'AFC',
     kbSource: 'Part federala exacta tenor [[LIFD art. 38|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de]] (in tschintgavel da la tariffa). Valurs chantunalas: cumparegliaziun finpension da la taglia sin prelevaments da chapital 2026, chapoluog, approximativ. Stadi 2026.',

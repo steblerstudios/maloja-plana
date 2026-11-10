@@ -6784,6 +6784,7 @@ export default {
     kbStaffelResult: "CHF {total} au lieu de CHF {einmal} — économie d'environ CHF {ersparnis}.",
     kbStaffelNone: "Pour ce montant, l'échelonnement n'apporte presque rien.",
     kbStaffelHint: "Comme le barème est progressif, répartir le retrait sur plusieurs années fiscales réduit l'impôt — p. ex. via plusieurs comptes 3a, ou en retirant le 2e pilier et le 3a des années différentes. Limites : en général seuls quelques comptes sont utiles, et certains cantons additionnent les retraits de la même année (y compris ceux du conjoint).",
+    kbEinkaufSperre: { sie: 'Si vous avez effectué un rachat dans la caisse de pension, les prestations qui en résultent ne peuvent pas être retirées sous forme de capital durant les trois années suivantes (art. 79b, al. 3, LPP).', du: 'Si tu as effectué un rachat dans la caisse de pension, les prestations qui en résultent ne peuvent pas être retirées sous forme de capital durant les trois années suivantes (art. 79b, al. 3, LPP).' },
     kbDisclaimer: "Orientation approximative, pas un calcul contraignant. Le calculateur fiscal officiel du canton fait foi.",
     kbOfficialLink: "Calculateur fiscal officiel de l'AFC",
     kbSource: "Part fédérale exacte selon [[LIFD art. 38|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr]] (un cinquième du barème). Valeurs cantonales : comparaison finpension de l'impôt sur les retraits en capital 2026, chef-lieu, approximatif. État 2026.",
