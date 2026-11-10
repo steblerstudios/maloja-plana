@@ -140,8 +140,7 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
   it('Vier Höhenlinien-Bilder: nach Kehre 7 Blick Papier + Karte Salbei, Blick Salbei in «App holen» (O, getauscht 10.11. abends), Karte Papier trägt den Schluss (N)', () => {
     const lage = (f) => koerper.indexOf(`src="/vorstellung/${f}"`);
     expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
-    expect(koerper.indexOf('class="pass-karte-anfang"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
-    expect(lage('pass-karte.svg')).toBeGreaterThan(koerper.indexOf('class="pass-karte-anfang"'));
+    expect(lage('pass-karte.svg')).toBeGreaterThan(lage('pass-blick-papier.svg'));   // D (Nachlesen) vor E (Vertrauen)
     expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('id="t-holen"'));
     expect(koerper.indexOf('class="holen"')).toBeGreaterThan(lage('pass-blick.svg'));
     expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('id="t-schluss"'));
@@ -320,7 +319,8 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   });
 
   it('F/G · die Karte von oben steht auf Inhaltsbreite, vor der Papier-Karte keine doppelte Luft', () => {
-    expect(stil).toMatch(/\.pass-karte-bild\{[^}]*max-width:1040px; margin:0 auto;/);
+    // seit D/E steht die Karte von oben in E im Inhaltsrahmen (.rahmen, höchstens 1040 px)
+    expect(html).toMatch(/<section id="vertrauen" class="bildwahl bildwahl-salbei"[^>]*>\s*<fieldset class="rahmen">/);
     expect(stil).toContain('.pass-band-karte{ margin:0 }');
   });
 
@@ -378,35 +378,37 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   });
 
   // D (Stebler Studios 10.11.2026 spät, «ja D und E»): «Zum Nachlesen» steht auf dem hellen Blick nach Kehre 7.
-  it('D · Zum Nachlesen auf dem hellen Blick: je Erklärseite das Zeichen ihres Kapitels, Tippen klappt eine Karte auf (eine zugleich)', () => {
+  it('D · Zum Nachlesen im hellen Blick wie «App holen»: Kopf auf dem Bild, je Erklärseite eine Wahl mit Kapitel-Zeichen auf der Strasse, darunter nur die gewählte', () => {
     const koerper = html.slice(html.indexOf('<body>'));
     const d = html.match(/<section id="nachlesen"[\s\S]*?<\/section>/)[0];
     expect(koerper.indexOf('id="nachlesen"')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
-    expect(d).toContain('src="/vorstellung/pass-blick-papier.svg"');
+    expect(d).toMatch(/<figure class="bildwahl-blick">\s*<div class="bildwahl-kopf">[\s\S]*?<h2 id="t-nachlesen">Zum Nachlesen\.<\/h2>[\s\S]*?<\/div>\s*<div class="bildwahl-flaeche">\s*<img src="\/vorstellung\/pass-blick-papier\.svg"/);
     const erwartet = { '/was-steht-mir-zu/': 5, '/praemienverbilligung/': 3, '/sozialhilfe/': 2, '/steuern/': 2, '/krankenkasse/': 3 };
-    for (const [ziel, k] of Object.entries(erwartet)) {
-      const punkt = d.split('<li ').find((t) => t.includes(`<a href="${ziel}">`));
-      expect(punkt, ziel).toMatch(new RegExp(`--farbe:var\\(--k${k}\\)"><details name="nachlesen"><summary><span class="scheibe" aria-hidden="true"><svg`));
-    }
-    expect((d.match(/<details name="nachlesen">/g) || []).length).toBe(5);
-    expect(stil).toMatch(/\.nachlesen-wahl \.karte a\{[^}]*min-height:44px/);
-    expect(stil).toMatch(/\.nachlesen-wahl summary\{[^}]*width:44px; height:44px/);
+    Object.entries(erwartet).forEach(([ziel, k], n) => {
+      expect(d, ziel).toMatch(new RegExp(`<label for="n${n + 1}" style="--x:[\\d.]+%; --y:[\\d.]+%; --farbe:var\\(--k${k}\\)"><span class="zeichen" aria-hidden="true"><svg`));
+      expect(d, ziel).toContain(`<div class="bildwahl-tafel t${n + 1}"><h3>`);
+      expect(d, ziel).toContain(`<a href="${ziel}">Seite lesen`);
+    });
+    expect((d.match(/<input type="radio" name="nachlesen"/g) || []).length).toBe(5);
+    expect(stil).toMatch(/\.bildwahl-ebene label\{[^}]*min-height:44px/);
+    expect(stil).toContain('#n3:checked ~ .bildwahl-tafeln .t3{ display:block }');
     expect(html).not.toContain('<h2>Zum Nachlesen</h2>');
     const fragen = html.slice(html.indexOf('<div class="fragen">'), html.indexOf('</section>', html.indexOf('<div class="fragen">')));
-    expect(fragen).not.toContain('scheibe');
+    expect(fragen).not.toContain('zeichen');
   });
 
-  it('E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte, fünf Versprechen, Grün gehostet mit Quelle, Schrift nur auf Papier', () => {
+  it('E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte wie «App holen»: Kopf auf dem Auslauf, fünf Versprechen als Wahl, Grün gehostet mit Quelle', () => {
     const koerper = html.slice(html.indexOf('<body>'));
     const e = html.match(/<section id="vertrauen"[\s\S]*?<\/section>/)[0];
     expect(koerper.indexOf('id="vertrauen"')).toBeGreaterThan(koerper.indexOf('id="nachlesen"'));
     expect(koerper.indexOf('id="situationen"')).toBeGreaterThan(koerper.indexOf('id="vertrauen"'));
-    expect(e).toContain('src="/vorstellung/pass-karte.svg"');
-    expect(e).toContain('<h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>');
-    expect((e.match(/<li><h3>/g) || []).length).toBe(5);
+    expect(e).toMatch(/<div class="bildwahl-kopf">[\s\S]*?<h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen\.<\/h2>[\s\S]*?<\/div>\s*<div class="bildwahl-flaeche">\s*<img src="\/vorstellung\/pass-karte\.svg"/);
+    expect((e.match(/<input type="radio" name="versprechen"/g) || []).length).toBe(5);
+    expect((e.match(/<label for="v\d"/g) || []).length).toBe(5);
     expect(e).toMatch(/<h3>Grün gehostet<\/h3><p>[^<]*nach <a href="https:\/\/www\.infomaniak\.com\/en\/ecology">Angaben des Anbieters<\/a>/);
-    expect(stil).toMatch(/\.versprechen li\{ background:#FFF8F0;/);
-    expect(stil).toMatch(/\.vertrauen-kopf\{[^}]*background:#FFF8F0/);
+    expect(e).not.toContain('class="zeichen"');   // Zeichen für die Versprechen: eigene Icon-Frage
+    // Schrift auf Salbei nur auf Papier: die Fläche läuft oben aus, der Kopf beginnt 96 px darüber
+    expect(stil).toMatch(/\.bildwahl-salbei \.bildwahl-flaeche\{ margin-top:96px; aspect-ratio:280\/130; background:#7E8F7B;/);
     expect((html.match(/id="t-vertrauen"/g) || []).length).toBe(1);
   });
 
@@ -504,9 +506,10 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(stil).toMatch(/@keyframes leise-ein\{ from\{ opacity:0; transform:translateY\(16px\) \} to\{ opacity:1; transform:none \} \}/);
   });
 
-  it('Oklab: Übergänge Creme ↔ Salbei ohne graue Mitte, mit sRGB-Rückfall davor', () => {
-    expect(stil).toContain('.pass-karte-anfang{ height:16vh; background:linear-gradient(#FCF0E4, #7E8F7B); background:linear-gradient(in oklab, #FCF0E4, #7E8F7B) }');
-    expect(stil).toContain('.pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)); background:linear-gradient(in oklab, #7E8F7B, var(--bg)) }');
+  it('Oklab: die getönte Schicht mischt in Oklab; die Salbei-Karte läuft per Maske aus (keine Farbmischung, keine graue Mitte)', () => {
+    expect(stil).toContain('color-mix(in oklab, var(--ton) 74%, transparent) 46%');
+    expect(stil).not.toContain('.pass-karte-anfang{');
+    expect(stil).toMatch(/\.bildwahl-salbei \.bildwahl-flaeche\{[^}]*mask-image:linear-gradient\(180deg, transparent 0%/);
   });
 
   it('B · Kamera: das Bild wandert beim Drehen seitlich mit, kein Milchglas auf der Seite', () => {

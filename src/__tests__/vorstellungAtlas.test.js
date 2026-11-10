@@ -33,8 +33,8 @@ describe('Vorstellungsseite: Abschnitt Kantonsatlas', () => {
   it('die Wege in den Atlas und «Zum Nachlesen» sind gross genug zum Tippen (44 px)', () => {
     expect(html).toContain('.liste > li > a{ display:inline-block; padding:13px 0 }');
     // «Zum Nachlesen» steht seit D (10.11.2026 spät) auf dem hellen Blick: Zeichen 44 px, Link in der Karte 44 px hoch.
-    expect(html).toMatch(/\.nachlesen-wahl summary\{[^}]*width:44px; height:44px/);
-    expect(html).toMatch(/\.nachlesen-wahl \.karte a\{[^}]*min-height:44px/);
+    expect(html).toMatch(/\.bildwahl-ebene label\{[^}]*min-height:44px/);
+    expect(html).toMatch(/\.bildwahl-tafel a\{[^}]*min-height:44px/);
     expect(abschnitt.match(/<\/p><a href="\/kantonsatlas\/#fuer-/g)).toHaveLength(BRILLEN.length);
     // Der Link im Satz (Datenschutz) steht in einem <p> und wird nicht aufgebläht.
     expect(html).toMatch(/<p>[^<]*Keine Werbung[^<]*<a href="\/rechtliches\/">Datenschutz<\/a>/);

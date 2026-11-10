@@ -111,17 +111,27 @@ const GERAETE = [
   { name: 'Android', zeichen: 'telefon', x: '54.4%', y: '81.6%' },           // (870 | 576)
   { name: 'Computer', zeichen: 'laptop', x: '79.9%', y: '57.2%' },           // (1278 | 332)
 ];
-// D · «Zum Nachlesen» auf dem hellen Blick (Stebler Studios 10.11.2026 spät, «ja D und E»): je Erklärseite ein Ort auf der
-// Passstrasse in pass-blick-papier.svg (viewBox 0 -240 1600 1000, Pfadpunkte genau getroffen), Reihenfolge wie NACHLESEN.
+// D · «Zum Nachlesen» im hellen Blick, gebaut wie «App holen» (Stebler Studios 10.11.2026 spät: «soll im Bild sein wie beim
+// iPhone-Android-Computer-Ding»): je Erklärseite ein Punkt auf der Passstrasse in pass-blick-papier.svg (viewBox 0 -240
+// 1600 1000, genau auf Pfadpunkten), darüber die Wahl mit kurzem Namen. Zwei Reihen, damit sich die Wahlen nicht berühren.
+// Reihenfolge wie NACHLESEN: Was steht mir zu?, Prämienverbilligung, Sozialhilfe, Steuern, Krankenkasse.
 const NACHLESEN_ORTE = [
-  ['34.9%', '69.3%'],   // (558 | 453)
-  ['47.6%', '67.9%'],   // (761 | 439)
-  ['58.8%', '83.9%'],   // (941 | 599)
-  ['75.9%', '84.9%'],   // (1215 | 609)
-  ['38.6%', '82.6%'],   // (618 | 586)
+  { kurz: 'Was steht mir zu?', x: '34.9%', y: '69.3%' },     // (558 | 453)
+  { kurz: 'Prämienverbilligung', x: '54.6%', y: '71.5%' },   // (874 | 475)
+  { kurz: 'Sozialhilfe', x: '58.8%', y: '83.9%' },           // (941 | 599)
+  { kurz: 'Steuern', x: '75.9%', y: '84.9%' },               // (1215 | 609)
+  { kurz: 'Krankenkasse', x: '38.6%', y: '82.6%' },          // (618 | 586)
 ];
-// E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte. Fünfte Kachel neu: Grün gehostet, als Angabe des
-// Anbieters (wie in der App, de.js sustain2/sustainSource). Zeichen bewusst noch keine — eigene Icon-Frage (10.11.2026).
+// E · «Was Sie eingeben, bleibt bei Ihnen» auf der Salbei-Karte, ebenso gebaut. Punkte auf der Passstrasse in
+// pass-karte.svg (viewBox 1 1 278 128); unten = Wahl unter dem Punkt (oben ist der Kopf). --xh: am Handy 4:3 beschnitten.
+const VERSPRECHEN_ORTE = [
+  { x: 55.0, y: 49.6 },                 // (153.8 | 64.5) Aufstieg — Kein Konto
+  { x: 42.6, y: 68.2 },                 // (119.3 | 88.3) Kehren — Nur auf diesem Gerät
+  { x: 6.5, y: 73.4 },                  // (19 | 95) Bogen links — Kein Tracking
+  { x: 57.8, y: 26.6 },                 // (161.6 | 35.1) Passhöhe — Quelloffen
+  { x: 47.9, y: 74.4, unten: true },    // (134.1 | 96.2) Kehren unten — Grün gehostet
+];
+const handyX = (x) => `${(((x - 19.3) / 61.4) * 100).toFixed(1)}%`;   // 4:3 mittig beschnitten (sichtbar 61,4 % ab 19,3 %)
 const VERSPRECHEN = [
   ['Kein Konto', 'Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.'],
   ['Nur auf diesem Gerät', 'Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.'],
@@ -387,21 +397,6 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     /* G · Vor der Karte steht schon die Luft des Schlussabschnitts (96 px) — nicht noch einmal 96. */
     .pass-band-karte{ margin:0 }
     .pass-band-karte img{ aspect-ratio:280/130; object-fit:cover }
-    /* F · Die Karte auf Inhaltsbreite (vorher randlos 1280 px und mehr); das Salbei bleibt randlos, die Linien laufen
-       an den Seiten weich aus statt mit harter Kante. */
-    .pass-karte-bild{ position:relative; aspect-ratio:280/130; max-width:1040px; margin:0 auto;
-      -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent) }
-    .pass-karte-bild img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }
-    .vertrauen-karte .hoehe{ position:absolute; left:57.7%; top:27%; margin:-10px 0 0 14px; font-size:16px; font-weight:600; letter-spacing:.02em;
-      color:#F6F2E8; text-shadow:0 0 6px rgba(85,104,90,.9) }
-    .pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)); background:linear-gradient(in oklab, #7E8F7B, var(--bg)) }
-    /* Seit dem Tausch (Papier-Blick nach Kehre 7) endet der Blick in Creme: weich ins Salbei der Karte, keine Kante. */
-    .pass-karte-anfang{ height:16vh; background:linear-gradient(#FCF0E4, #7E8F7B); background:linear-gradient(in oklab, #FCF0E4, #7E8F7B) }
-    @media (max-width:760px){
-      .pass-karte-bild{ aspect-ratio:4/3 }
-      .pass-karte-bild{ -webkit-mask-image:none; mask-image:none }
-      .vertrauen-karte .hoehe{ left:62.5% }   /* gleicher Punkt bei 4:3, object-fit:cover um die Mitte (Rechnung im Brand Book §7e) */
-    }
     /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
     .reise-stationen{ list-style:none }
     .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
@@ -516,52 +511,74 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       }
     }
 
-    /* ─── D · Zum Nachlesen auf dem hellen Blick (Stebler Studios 10.11.2026 spät, «ja D und E») ───
-       Je Erklärseite das Zeichen ihres Kapitels auf der Passstrasse (NACHLESEN_ORTE). Tippen klappt eine kleine Karte auf:
-       <details name="nachlesen"> — immer nur eine offen, ohne Skript, mit Tastatur bedienbar. Scheibe wie an der Weglinie,
-       Rand und Zeichen tiefer gemischt (65 % Farbe in Anthrazit), damit sie 3:1 gegen Creme halten. Blick und Kopf sind
-       immer hell (Creme fest), darum Schrift fest dunkel, auch im dunklen Modus. */
+    /* ─── D/E · Zwei Höhenbilder nach Kehre 7, gebaut wie «App holen» (Stebler Studios 10.11.2026 spät: «soll im Bild
+       sein wie beim iPhone-Android-Computer-Ding», «wie unten Beispiel und App holen»). Kopf auf dem Auslauf des Bildes in
+       die Seitenfarbe, Wahl als Auswahl-Knöpfe auf echten Punkten der Strasse (gewählt Sand gefüllt, 10 px, 44 px hoch),
+       darunter nur die gewählte Tafel. Ohne Skript. Hell fest (Creme), darum Schrift fest dunkel, auch im dunklen Modus.
+       D: heller Blick (Papier), Wahl mit Kapitel-Zeichen. E: Karte von oben (Salbei), Wahl ohne Zeichen (eigene Icon-Frage). */
     .js .reise-ablauf .nach-reise{ pointer-events:auto }
-    /* deckend: sonst schimmert zwischen den Abschnitten die klebende Bühne der Reise durch (im Browser gesehen) */
-    .nach-reise{ background:#FCF0E4 } .nach-reise > section{ padding-bottom:0 } .vertrauen-karte{ padding-top:0 }
-    .nachlesen-blick{ color:#24262A; padding-top:64px }
-    .nachlesen-kopf h2{ color:#24262A } .nachlesen-kopf .augenbraue, .nachlesen-kopf .unterzeile{ color:#575B61 }
-    .nachlesen-flaeche{ position:relative }
-    .nachlesen-flaeche > img{ display:block; width:100%; height:auto }
-    .nachlesen-wahl{ position:absolute; top:0; left:0; right:0; aspect-ratio:1600/1000; list-style:none; margin:0; padding:0; pointer-events:none }
-    .nachlesen-wahl li{ position:absolute; left:var(--x); top:var(--y); pointer-events:auto }
-    .nachlesen-wahl details{ position:relative }
-    .nachlesen-wahl summary{ list-style:none; cursor:pointer; display:block; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50% }
-    .nachlesen-wahl summary::-webkit-details-marker{ display:none }
-    .nachlesen-wahl .scheibe{ display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:#FCF0E4;
-      border:2.5px solid color-mix(in oklab, var(--farbe) 65%, #24262A); color:color-mix(in oklab, var(--farbe) 65%, #24262A) }
-    .nachlesen-wahl .scheibe svg{ width:26px; height:26px; display:block }
-    .nachlesen-wahl summary:hover .scheibe, .nachlesen-wahl details[open] .scheibe{ border-width:3.5px }
-    .nachlesen-wahl summary:focus-visible{ outline:2px solid #7A5F30; outline-offset:3px }
-    .nachlesen-wahl .name{ position:absolute; left:50%; top:calc(100% + 6px); transform:translateX(-50%); white-space:nowrap; font-size:15px;
-      font-weight:600; color:#24262A; background:#FCF0E4; padding:0 6px; border-radius:6px }
-    .nachlesen-wahl details[open] .name{ visibility:hidden }
-    .nachlesen-wahl .karte{ position:absolute; z-index:2; left:0; bottom:calc(100% + 30px); transform:translateX(-50%); width:280px; padding:16px 18px;
-      background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px; color:#24262A }
-    .nachlesen-wahl .karte p{ font-size:16px; line-height:1.5; color:#24262A; margin-bottom:8px }
-    .nachlesen-wahl .karte a{ color:#7A5F30; font-weight:600; display:inline-flex; align-items:center; min-height:44px }
-    .nachlesen-blick .quelle{ font-size:13px; color:#575B61; padding-top:8px; padding-bottom:16px }
+    .nach-reise{ background:#FCF0E4 } .nach-reise > section{ padding:64px 0 0 }   /* deckend: sonst schimmert die Bühne durch */
+    .bildwahl{ color:#24262A; --bg:#FCF0E4; --flaeche:#FFF8F0; --text:#24262A; --leise:#575B61; --sand-tief:#7A5F30 }
+    .bildwahl fieldset{ border:0; min-width:0; margin:0 auto }
+    .bildwahl h2, .bildwahl h3{ color:#24262A } .bildwahl .augenbraue, .bildwahl .unterzeile{ color:#575B61 }
+    .bildwahl-blick{ position:relative; margin:0; display:grid }
+    .bildwahl-blick > .bildwahl-kopf, .bildwahl-blick > .bildwahl-flaeche{ grid-area:1 / 1 }
+    .bildwahl-kopf{ position:relative; z-index:1; align-self:start; max-width:30rem; pointer-events:none }
+    .bildwahl-kopf *{ pointer-events:auto }
+    .bildwahl-blick > .quelle{ grid-row:2; font-size:13px; color:#575B61; padding-top:8px }
+    .bildwahl-flaeche{ position:relative }
+    .bildwahl-papier .bildwahl-flaeche img{ display:block; width:100%; height:auto;
+      -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.08) 22%, #000 46%); mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.08) 22%, #000 46%) }
+    /* E: Die Karte hat keinen eigenen Grund — die Fläche trägt das Salbei und läuft oben und unten in die Seitenfarbe aus. */
+    /* Die Karte beginnt 96 px tiefer als der Kopf: so steht der Untertitel auf Creme, nicht auf den Linien (im Browser gesehen). */
+    .bildwahl-salbei .bildwahl-flaeche{ margin-top:96px; aspect-ratio:280/130; background:#7E8F7B;
+      -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.1) 18%, #000 42%, #000 88%, transparent 100%);
+      mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.1) 18%, #000 42%, #000 88%, transparent 100%) }
+    .bildwahl-salbei .bildwahl-flaeche img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block }
+    .bildwahl-salbei .hoehe{ position:absolute; left:57.8%; top:26.6%; margin:-10px 0 0 14px; font-size:16px; font-weight:600; color:#F6F2E8;
+      text-shadow:0 0 6px rgba(85,104,90,.9); white-space:nowrap }
+    .bildwahl-ebene{ position:absolute; top:0; left:0; right:0; pointer-events:none }
+    .bildwahl-papier .bildwahl-ebene{ aspect-ratio:1600/1000 } .bildwahl-salbei .bildwahl-ebene{ top:96px; aspect-ratio:280/130 }
+    .bildwahl-ebene label{ pointer-events:auto; position:absolute; left:var(--x); top:var(--y); transform:translate(-50%, calc(-100% - 14px));
+      display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 16px; border:1px solid #7A5F30; border-radius:var(--radius-knopf);
+      background:#FFF8F0; color:#7A5F30; font-size:15px; font-weight:600; cursor:pointer; white-space:nowrap }
+    .bildwahl-ebene label::after{ content:""; position:absolute; left:50%; top:100%; height:8px; border-left:1.5px solid #7A5F30 }
+    .bildwahl-ebene label.unten{ transform:translate(-50%, 14px) } .bildwahl-ebene label.unten::after{ top:auto; bottom:100% }
+    .bildwahl-ebene .zeichen{ display:inline-grid; color:color-mix(in oklab, var(--farbe) 65%, #24262A) }
+    .bildwahl-ebene .zeichen svg{ width:22px; height:22px; display:block }
+    .bildwahl-punkt{ position:absolute; left:var(--x); top:var(--y); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
+      background:#55685A; box-shadow:0 0 0 2px #FCF0E4 }
+    .bildwahl-tafel{ display:none; margin-top:24px; max-width:640px; padding:24px 26px 22px; background:#FFF8F0; border:1px solid #E6DACB; border-radius:16px }
+    .bildwahl-tafel h3{ margin-bottom:8px } .bildwahl-tafel p{ font-size:16px; line-height:1.6; color:#575B61 }
+    .bildwahl-tafel a{ color:#7A5F30; font-weight:600; display:inline-flex; align-items:center; min-height:44px }
+${[1, 2, 3, 4, 5].map((i) => `    #n${i}:checked ~ .bildwahl-tafeln .t${i}{ display:block }
+    #n${i}:checked ~ .bildwahl-blick [for=n${i}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
+    #n${i}:checked ~ .bildwahl-blick [for=n${i}] .zeichen{ color:var(--auf-sand) }
+    #n${i}:checked ~ .bildwahl-blick .p${i}{ box-shadow:0 0 0 2px #FCF0E4, 0 0 0 5px var(--sand) }
+    #n${i}:focus-visible ~ .bildwahl-blick [for=n${i}]{ outline:2px solid #7A5F30; outline-offset:3px }`).join('\n')}
+${[1, 2, 3, 4, 5].map((i) => `    #v${i}:checked ~ .bildwahl-tafeln .t${i}{ display:block }
+    #v${i}:checked ~ .bildwahl-blick [for=v${i}]{ background:var(--sand); border-color:var(--sand); color:var(--auf-sand) }
+    #v${i}:checked ~ .bildwahl-blick [for=v${i}] .zeichen{ color:var(--auf-sand) }
+    #v${i}:checked ~ .bildwahl-blick .p${i}{ box-shadow:0 0 0 2px #FCF0E4, 0 0 0 5px var(--sand) }
+    #v${i}:focus-visible ~ .bildwahl-blick [for=v${i}]{ outline:2px solid #7A5F30; outline-offset:3px }`).join('\n')}
 
-    /* ─── E · «Was Sie eingeben, bleibt bei Ihnen» auf der Karte von oben (Salbei) ───
-       Kopf als Papier-Fläche oben links auf der Karte, die fünf Versprechen als Papier-Kacheln über dem unteren Rand.
-       Salbei trägt keinen Fliesstext (Weiss 3,4:1, Anthrazit 4,4:1) — Schrift nur auf Papier. Zeichen noch keine
-       (eigene Icon-Frage, Stebler Studios 10.11.2026). */
-    .vertrauen-salbei{ background:#7E8F7B; padding-bottom:24px }
-    .vertrauen-flaeche{ position:relative }
-    .vertrauen-flaeche .pass-karte-bild{ width:100% }   /* in der Spalte (≤ 960 px) schrumpfte sie sonst auf null */
-    .vertrauen-kopf{ position:absolute; left:24px; top:16px; max-width:440px; padding:20px 24px; background:#FFF8F0; border-radius:16px; color:#24262A }
-    .vertrauen-kopf h2{ color:#24262A; margin-bottom:8px } .vertrauen-kopf .augenbraue, .vertrauen-kopf .unterzeile{ color:#575B61 }
-    .versprechen{ position:relative; list-style:none; margin:-56px 0 0; padding:0; display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:12px }
-    .versprechen li{ background:#FFF8F0; border-radius:16px; padding:16px 16px 18px; color:#24262A }
-    .versprechen h3{ font-size:16px; margin-bottom:6px; color:#24262A }
-    .versprechen p{ font-size:15px; line-height:1.5; color:#575B61 }
-    .versprechen a{ color:#7A5F30 }
-    .vertrauen-salbei .quelle{ font-size:13px; color:#121210; padding-top:12px }   /* 5,45:1 auf Salbei */
+    /* Bis 900 px stehen die Wahlen als Zeile unter dem Bild (wie «App holen» am Handy): im Bild berührten sie sich sonst.
+       Kopf über dem Bild, die Punkte bleiben im Bild, der gewählte trägt den Sandring. */
+    @media (max-width:900px){
+      .bildwahl-blick > .bildwahl-kopf, .bildwahl-blick > .bildwahl-flaeche{ grid-area:auto }
+      .bildwahl-blick > .quelle{ grid-row:auto }
+      .bildwahl-kopf{ max-width:none; margin-bottom:8px }
+      .bildwahl-salbei .bildwahl-flaeche{ margin-top:0 }
+      .bildwahl-papier .bildwahl-flaeche img{ -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 30%); mask-image:linear-gradient(180deg, transparent 0%, #000 30%) }
+      .bildwahl-ebene{ position:static; aspect-ratio:auto !important; display:flex; flex-wrap:wrap; gap:8px; margin-top:12px }
+      .bildwahl-ebene label{ position:static; transform:none !important }
+      .bildwahl-ebene label::after{ content:none }
+    }
+    @media (max-width:760px){
+      .bildwahl-salbei .bildwahl-flaeche{ aspect-ratio:4/3 }
+      .bildwahl-salbei .bildwahl-punkt{ left:var(--xh) }
+      .bildwahl-salbei .hoehe{ left:auto; right:37.4%; margin:-10px 14px 0 0 }   /* links vom Punkt, rechts wurde es abgeschnitten */
+    }
 
     /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
     .holen{ margin-top:16px; max-width:640px }
@@ -684,19 +701,6 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter, #anhalten{ display:none }
     }
     @media (max-width:960px){
-      /* D · bis 960 px (Tablet und Handy) zu eng für Namen im Bild: die Erklärseiten stehen als Liste darunter, aufklappbar wie im Bild */
-      .nachlesen-blick{ padding-top:48px }
-      .nachlesen-wahl{ position:static; aspect-ratio:auto; display:grid; gap:8px; padding:16px 16px 0 }
-      .nachlesen-wahl li{ position:static }
-      .nachlesen-wahl summary{ width:auto; height:auto; margin:0; border-radius:var(--radius-knopf); display:flex; align-items:center; gap:12px;
-        min-height:52px; padding:4px 14px 4px 4px; background:#FFF8F0; border:1px solid #E6DACB }
-      .nachlesen-wahl .scheibe{ width:40px; height:40px; flex:none } .nachlesen-wahl .scheibe svg{ width:22px; height:22px }
-      .nachlesen-wahl .name{ position:static; transform:none; background:none; padding:0; white-space:normal }
-      .nachlesen-wahl details[open] .name{ visibility:visible }
-      .nachlesen-wahl .karte{ position:static; transform:none; width:auto; margin-top:4px; border-radius:var(--radius-knopf) }
-      .vertrauen-flaeche{ display:flex; flex-direction:column }
-      .vertrauen-kopf{ position:static; order:-1; max-width:none; margin-bottom:16px }
-      .versprechen{ margin-top:16px; grid-template-columns:repeat(2, minmax(0, 1fr)) }
       .pass h1{ font-size:38px }
       /* K · Unter 960 px eine Spalte: daneben brach der Titel in vier Zeilen. Die Geräte stehen unter dem Text. */
       .pass{ grid-template-columns:1fr; gap:32px; padding-top:112px; align-items:start }
@@ -712,11 +716,6 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
     }
     @media (max-width:760px){
       :root{ --abstand-l:64px }
-      /* E · am Handy Kopf und Kacheln untereinander, die Karte dazwischen */
-      .vertrauen-kopf{ position:static; max-width:none; margin-bottom:16px }
-      .vertrauen-flaeche{ display:flex; flex-direction:column }
-      .vertrauen-kopf{ order:-1 }
-      .versprechen{ margin-top:16px; grid-template-columns:1fr }
       h2{ font-size:28px }
       .unterzeile{ font-size:16px }
       /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
@@ -1014,44 +1013,59 @@ ${reiseStationen()}
         </section>
         <div class="reise-ausklang" aria-hidden="true"></div>
         <div class="nach-reise">
-        <!-- ═══ D · Zum Nachlesen auf dem hellen Blick: Zeichen im Bild, Tippen klappt eine kleine Karte auf
-             (<details name> — immer nur eine offen, ohne Skript). Am Handy als Liste unter dem Bild. ═══ -->
-        <section id="nachlesen" class="pass-blick nachlesen-blick" aria-labelledby="t-nachlesen">
-          <div class="rahmen nachlesen-kopf">
-            <p class="augenbraue">Oben angekommen</p>
-            <h2 id="t-nachlesen">Zum Nachlesen.</h2>
-            <p class="unterzeile">Fünf Erklärseiten, ohne Anmeldung und ohne App. Tippen Sie auf ein Zeichen.</p>
-          </div>
-          <div class="nachlesen-flaeche">
-            <img src="/vorstellung/pass-blick-papier.svg" alt="Der Blick von der Passhöhe über die Kehren ins Bergell hinunter, in Höhenlinien, mit der Passstrasse." width="1600" height="1000" loading="lazy" decoding="async">
-            <ul class="nachlesen-wahl" role="list">
-${NACHLESEN.map(([ziel, titel, satz, k], n) => `              <li style="--x:${NACHLESEN_ORTE[n][0]}; --y:${NACHLESEN_ORTE[n][1]}; --farbe:var(--k${k})"><details name="nachlesen"><summary><span class="scheibe" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span><span class="name">${esc(titel)}</span></summary><div class="karte"><p>${esc(satz)}</p><a href="${ziel}">Seite lesen<span class="unsichtbar">: ${esc(titel)}</span>&nbsp;→</a></div></details></li>`).join('\n')}
-            </ul>
-          </div>
-          <p class="rahmen quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © OpenStreetMap</p>
+        <!-- ═══ D · Zum Nachlesen im hellen Blick, gebaut wie «App holen»: Kopf auf dem Bild, Wahl auf der Strasse,
+             darunter nur die gewählte Seite. Ohne Skript (Auswahlfelder), Pfeiltasten wechseln. ═══ -->
+        <section id="nachlesen" class="bildwahl bildwahl-papier" aria-labelledby="t-nachlesen">
+          <fieldset class="rahmen">
+            <legend class="unsichtbar">Erklärseite wählen</legend>
+${NACHLESEN.map((_, n) => `            <input type="radio" name="nachlesen" id="n${n + 1}" class="unsichtbar"${n === 0 ? ' checked' : ''}>`).join('\n')}
+            <figure class="bildwahl-blick">
+              <div class="bildwahl-kopf">
+                <p class="augenbraue">Oben angekommen</p>
+                <h2 id="t-nachlesen">Zum Nachlesen.</h2>
+                <p class="unterzeile">Fünf Erklärseiten, ohne Anmeldung und ohne App. Wählen Sie ein Thema.</p>
+              </div>
+              <div class="bildwahl-flaeche">
+                <img src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+${NACHLESEN_ORTE.map((o, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${o.x}; --y:${o.y}" aria-hidden="true"></span>`).join('\n')}
+              </div>
+              <div class="bildwahl-ebene">
+${NACHLESEN.map(([, , , k], n) => `                <label for="n${n + 1}" style="--x:${NACHLESEN_ORTE[n].x}; --y:${NACHLESEN_ORTE[n].y}; --farbe:var(--k${k})"><span class="zeichen" aria-hidden="true">${zeichen(k, `lesen${n + 1}`)}</span>${esc(NACHLESEN_ORTE[n].kurz)}</label>`).join('\n')}
+              </div>
+              <figcaption class="quelle">Der Blick von der Passhöhe über die Kehren ins Bergell · Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+            </figure>
+            <div class="bildwahl-tafeln">
+${NACHLESEN.map(([ziel, titel, satz], n) => `              <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${esc(satz)}</p><a href="${ziel}">Seite lesen<span class="unsichtbar">: ${esc(titel)}</span>&nbsp;→</a></div>`).join('\n')}
+            </div>
+          </fieldset>
         </section>
 
-        <!-- ═══ E · «Was Sie eingeben, bleibt bei Ihnen» auf der Karte von oben (Salbei). Schrift nur auf Papier. ═══ -->
-        <section id="vertrauen" class="vertrauen-karte" aria-labelledby="t-vertrauen">
-          <div class="pass-karte-anfang" aria-hidden="true"></div>
-          <div class="vertrauen-salbei">
-            <div class="rahmen vertrauen-flaeche">
-              <div class="pass-karte-bild">
-                <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
-                <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
-              </div>
-              <div class="vertrauen-kopf">
+        <!-- ═══ E · «Was Sie eingeben, bleibt bei Ihnen» auf der Karte von oben (Salbei), ebenso gebaut: der Kopf steht auf
+             dem Auslauf der Karte in die Seitenfarbe, die fünf Versprechen als Wahl auf der Strasse, darunter das gewählte. ═══ -->
+        <section id="vertrauen" class="bildwahl bildwahl-salbei" aria-labelledby="t-vertrauen">
+          <fieldset class="rahmen">
+            <legend class="unsichtbar">Versprechen wählen</legend>
+${VERSPRECHEN.map((_, n) => `            <input type="radio" name="versprechen" id="v${n + 1}" class="unsichtbar"${n === 0 ? ' checked' : ''}>`).join('\n')}
+            <figure class="bildwahl-blick">
+              <div class="bildwahl-kopf">
                 <p class="augenbraue">Ihre Angaben</p>
                 <h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>
                 <p class="unterzeile">Die Rechnungen laufen in Ihrem Browser. Was Sie eingeben, wird nicht an einen Server geschickt.</p>
               </div>
-              <ul class="versprechen" role="list">
-${VERSPRECHEN.map(([titel, text]) => `                <li><h3>${esc(titel)}</h3><p>${text}</p></li>`).join('\n')}
-              </ul>
-              <p class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</p>
+              <div class="bildwahl-flaeche">
+                <img src="/vorstellung/pass-karte.svg" alt="" width="1400" height="650" loading="lazy" decoding="async">
+                <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
+${VERSPRECHEN_ORTE.map((o, n) => `                <span class="bildwahl-punkt p${n + 1}" style="--x:${o.x}%; --y:${o.y}%; --xh:${handyX(o.x)}" aria-hidden="true"></span>`).join('\n')}
+              </div>
+              <div class="bildwahl-ebene">
+${VERSPRECHEN.map(([titel], n) => `                <label for="v${n + 1}"${VERSPRECHEN_ORTE[n].unten ? ' class="unten"' : ''} style="--x:${VERSPRECHEN_ORTE[n].x}%; --y:${VERSPRECHEN_ORTE[n].y}%">${esc(titel)}</label>`).join('\n')}
+              </div>
+              <figcaption class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+            </figure>
+            <div class="bildwahl-tafeln">
+${VERSPRECHEN.map(([titel, text], n) => `              <div class="bildwahl-tafel t${n + 1}"><h3>${esc(titel)}</h3><p>${text}</p></div>`).join('\n')}
             </div>
-          </div>
-          <div class="pass-karte-ende" aria-hidden="true"></div>
+          </fieldset>
         </section>
         </div>
       </div>
