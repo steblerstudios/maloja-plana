@@ -6296,6 +6296,7 @@ export default {
     reserveCheckLink: 'Reserve in the "Finances" chapter',
     franchiseOptSource: 'Source: [[KVG Art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · coinsurance 10% / max. CHF 700 (adults), CHF 350 (children).',
     pickFranchiseHint: 'Tap a deductible to compare insurers at that level.',
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag}: choose as preferred insurer',
     chooseByPrice: 'Tap a price (with/without accident) to set the insurer as your target.',
     unfallLabel: 'Accident cover',
     mitUnfall: 'With accident',

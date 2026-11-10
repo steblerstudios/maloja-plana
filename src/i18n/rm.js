@@ -5788,6 +5788,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     pickFranchiseHint: { sie: 'Tutgai ina franchisa per cumparegliar las cassas a quel nivel.', du: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag}: tscherner sco cassa giavischada',
     chooseByPrice: { sie: 'Tutgai in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.', du: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.' },
     unfallLabel: 'Cuvrida d’accident',
     mitUnfall: 'Cun accident',

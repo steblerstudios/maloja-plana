@@ -6295,6 +6295,7 @@ export default {
     reserveCheckLink: 'Réserve dans le chapitre « Finances »',
     franchiseOptSource: 'Source : [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr]] · quote-part 10% / max. CHF 700 (adultes), CHF 350 (enfants).',
     pickFranchiseHint: { sie: 'Touchez une franchise pour comparer les caisses à ce niveau.', du: 'Touche une franchise pour comparer les caisses à ce niveau.' },
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag} : choisir comme caisse souhaitée',
     chooseByPrice: { sie: 'Touchez un prix (avec/sans accident) pour définir la caisse comme caisse souhaitée.', du: 'Touche un prix (avec/sans accident) pour définir la caisse comme caisse souhaitée.' },
     unfallLabel: 'Couverture accidents',
     mitUnfall: 'Avec accident',

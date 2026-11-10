@@ -316,7 +316,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.lg + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
     sublabel: { color: palette.mid, fontSize: text.xs, marginTop: '2px' },
-    input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    // Kapitel 4, Gestaltung D: Tippfläche 44 px wie in den anderen Rechnern.
+    input: { width: '140px', minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     row: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.lg + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },
@@ -507,7 +508,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Die Zukunftsgrafik ist das Instrument des Reiters (F7-R3) und steht unter der Live-Region. Rechnung unverändert.
   const angabenGemeinsam = React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
-        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: vorschlagUebernommen ? t('vr.bruttoUebernommen') : nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint'),
+        field(t('vr.einkommen'), einkommen, setEinkommen, { sublabel: vorschlagUebernommen ? t('vr.bruttoUebernommen') : nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint'),
           extra: bruttoVorschlag > 0 && !String(einkommen).trim() && React.createElement('div', { 'data-vr-vorschlag': '', style: { ...s.sublabel, maxWidth: '260px', marginTop: space.xs + 'px' } },
             t('vr.bruttoVorschlag', { betrag: zahl(bruttoVorschlag), netto: zahl(Number(data.finanzen.monthlyIncome)) }), ' ',
             vorschlagOhneDreizehnten ? t('vr.bruttoVorschlagOhneDreizehnten') + ' ' : '',
@@ -527,7 +528,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           optionen: [{ wert: false, label: t('common.no') }, { wert: true, label: t('common.yes') }],
           wert: verheiratet, onWahl: setVerheiratet,
         }),
-        verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000', sublabel: partnerNettoImProfil ? t('vr.partnerNettoHint') : undefined })
+        verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { sublabel: partnerNettoImProfil ? t('vr.partnerNettoHint') : undefined })
       )
     );
 
@@ -913,7 +914,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const angabenJeReiter = {
     bvg: React.createElement('div', { style: { ...s.section, display: 'flex', gap: space.md, flexWrap: 'wrap' } },
         field(t('vr.bvgGuthaben'), bvgGuthaben, setBvgGuthaben, { placeholder: '0', sublabel: t('vr.bvgGuthabenHint') }),
-        field(t('vr.umwandlungssatzEigen'), bvgUmwandlung, setBvgUmwandlung, { placeholder: '6.8', sublabel: t('vr.umwandlungssatzHint'), width: '110px', min: 1, max: 10 })
+        field(t('vr.umwandlungssatzEigen'), bvgUmwandlung, setBvgUmwandlung, { sublabel: t('vr.umwandlungssatzHint'), width: '110px', min: 1, max: 10 })
       ),
     zukunft: React.createElement('div', { style: s.section },
         React.createElement('div', { style: s.row },

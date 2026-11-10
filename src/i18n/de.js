@@ -6367,6 +6367,7 @@ export default {
     reserveCheckLink: 'Reserve im Kapitel «Finanzen & Geld»',
     franchiseOptSource: 'Quelle: [[KVG Art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · Selbstbehalt 10% / max. CHF 700 (Erw.), CHF 350 (Kind).',
     pickFranchiseHint: { sie: 'Tippen Sie eine Franchise, um die Kassen damit zu vergleichen.', du: 'Tippe eine Franchise, um die Kassen damit zu vergleichen.' },
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag}: als Wunschkasse wählen',
     chooseByPrice: { sie: 'Tippen Sie einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.', du: 'Tippe einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.' },
     unfallLabel: 'Unfalldeckung',
     mitUnfall: 'Mit Unfall',

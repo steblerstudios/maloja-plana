@@ -6270,6 +6270,7 @@ export default {
     reserveCheckLink: 'Riserva nel capitolo «Finanze»',
     franchiseOptSource: 'Fonte: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it]] · aliquota 10% / max. CHF 700 (adulti), CHF 350 (bambini).',
     pickFranchiseHint: { sie: 'Tocchi una franchigia per confrontare le casse a quel livello.', du: 'Tocca una franchigia per confrontare le casse a quel livello.' },
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag}: scegliere come cassa desiderata',
     chooseByPrice: { sie: 'Tocchi un prezzo (con/senza infortuni) per impostare la cassa come desiderata.', du: 'Tocca un prezzo (con/senza infortuni) per impostare la cassa come desiderata.' },
     unfallLabel: 'Copertura infortuni',
     mitUnfall: 'Con infortuni',
