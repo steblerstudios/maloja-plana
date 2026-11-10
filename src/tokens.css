@@ -199,6 +199,14 @@ button, [role="button"], summary {
   font-variant-emoji: text;
 }
 
+/* Knöpfe und Felder erben die Schrift. Browser geben button/input/select/textarea
+   eine eigene Schrift (meist Arial) statt der Seitenschrift — gemessen 09.11.2026 auf
+   zehn Seiten (Kapitel-Knöpfe, Steuerrechner-Felder, Reiter «Angaben | Dokumente»).
+   Inline gesetzte fontFamily geht weiterhin vor. Kapitel 1, Befund C. */
+button, input, select, textarea {
+  font-family: inherit;
+}
+
 /* ─── Focus styles (accessibility) ──────────────────────── */
 :focus-visible {
   outline: 2px solid var(--mp-focus);

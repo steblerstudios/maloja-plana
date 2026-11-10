@@ -44,6 +44,12 @@ export const KRANKENKASSE = {
   // public/.htaccess; scripts/check-deploy.sh prüft das, sobald eingebettet wird.
   // false = nur der Link, ohne Rahmen.
   bewegtEinbetten: false,
+  // Drei Schichten je Frage (Probe 09.11.2026): A `bild` zuerst, B `kurz` als
+  // ein Satz, C der bisherige Text in `html` aufklappbar, D `wege` zu
+  // verwandten Fragen und Seiten. `kurz` ist jeweils ein Satz, der wörtlich
+  // schon im gegengelesenen Text steht — keine neue Aussage.
+  schichten: true,
+  // Stil der drei Schichten: STIL_SCHICHTEN in scripts/build-seiten.mjs.
   // Eigene Hinweise statt der Rahmentexte der Erklärseiten: jene sagen «nennt
   // bewusst keine Beträge», das wäre hier falsch.
   hinweis:
@@ -51,7 +57,7 @@ export const KRANKENKASSE = {
   vorbehalt:
     'Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts-, Versicherungs- oder Finanzberatung</strong>. Anders als die übrigen Erklärseiten nennt sie Zahlen, damit sich das System verstehen lässt. Es sind Durchschnitte mit dem oben genannten Stand, und sie ändern jedes Jahr. Massgebend sind der Gesetzestext, die eigene Police, die eigene Kasse und die zuständige Stelle.',
   vorspann:
-    'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende nur eines: das, was aus dem Topf herausging, geteilt durch alle, die einzahlen.',
+    'Die Krankenkasse ist ein grosser gemeinsamer Topf. Alle zahlen jeden Monat ein, und wer krank wird, bekommt die Behandlung daraus bezahlt. Die Prämie ist am Ende vor allem eines: das, was der Topf im nächsten Jahr voraussichtlich braucht, verteilt auf alle, die einzahlen.',
   inhaltsverzeichnis: true,
   kicker: 'Krankenkasse erklärt',
   inhaltTitel: 'Acht Fragen',
@@ -59,23 +65,27 @@ export const KRANKENKASSE = {
     {
       id: 'topf',
       titel: '1. Warum ein gemeinsamer Topf?',
+      bild: '<!--FIG:dorf-->',
+      kurz: 'Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen.',
+      wege: [{ href: '#querfinanzierung', text: 'Wer zahlt für wen?' }],
       html: `
         <p>Stellen Sie sich ein Dorf mit 100 Menschen vor. Niemand weiss, wen es dieses Jahr trifft. Eine Krebstherapie kann mehr kosten, als eine Familie je sparen könnte. Allein wäre das nicht zu bezahlen. Zu hundert schon.</p>
         <p>Das Bild zeigt dieses Dorf mit echten Zahlen. Jedes Haus ist ein Mensch, die Höhe ist, was 2024 für diese Person über die Grundversicherung abgerechnet wurde. Der Kantonsanteil am Spital ist nicht dabei.</p>
-<!--FIG:dorf-->
 <!--TAB:dorf-->
         <p class="merke"><strong>Das Wichtigste auf dieser Seite:</strong> Die 61 Menschen, die am wenigsten kosten, brauchen zusammen rund 11 % des Geldes oder weniger. Die 5 Teuersten brauchen mindestens 27 %, vermutlich deutlich mehr. [[q:efind]] Der Topf funktioniert nur, weil die vielen Gesunden die wenigen Schwerkranken tragen. Und nächstes Jahr können auch Sie zu den wenigen gehören.</p>`,
     },
     {
       id: 'querfinanzierung',
       titel: '2. Wer zahlt für wen? Die Querfinanzierung',
+      bild: '<!--FIG:alter-->',
+      kurz: 'Die einen zahlen mehr ein, als sie brauchen, und andere bekommen mehr heraus, als sie einzahlen. Das ist kein Fehler.',
+      wege: [{ href: '/praemienverbilligung/', text: 'Prämienverbilligung' }, { href: '#nachbar', text: 'Warum zahlen andere weniger?' }],
       html: `
         <p>«Querfinanzierung» heisst: Die einen zahlen mehr ein, als sie brauchen, und andere bekommen mehr heraus, als sie einzahlen. Das ist kein Fehler. Es ist der Sinn der Sache. In der Grundversicherung gibt es vier solche Ströme.</p>
         <h3>Von Gesund zu Krank</h3>
         <p>Das ist der Grundgedanke. Die Kasse darf niemanden ablehnen und von Kranken keine höhere Prämie verlangen. [[q:kvg]]</p>
         <h3>Von Jung zu Alt</h3>
-        <p>Ab 26 zahlen bei gleicher Kasse, gleichem Modell, gleicher Franchise, gleicher Unfalldeckung und gleicher Region alle dieselbe Prämie, egal wie alt. Die Kosten sind aber überhaupt nicht gleich:</p>
-<!--FIG:alter-->
+        <p>Ab 26 zahlen bei gleicher Kasse, gleichem Modell, gleicher Franchise, gleicher Unfalldeckung und gleicher Region alle dieselbe Prämie, egal wie alt. Die Kosten sind aber überhaupt nicht gleich, wie die Abbildung oben zeigt.</p>
         <p>Eine Person zwischen 26 und 30 kostete die Kasse 2024 im Schnitt {{alter.jung}} Franken, eine zwischen 81 und 85 schon {{alter.alt}} Franken, also fast siebenmal so viel. [[q:efind]] Im Schnitt aller ab 26 waren es {{alter.schnitt}} Franken. Bis 60 liegt man darunter, ab 61 darüber. Über das ganze Leben gleicht sich das teilweise aus: Heute Junge sind später selbst die Alten.</p>
         <h3>Von Reich zu Arm</h3>
         <p>Die Prämie selbst kennt keinen Reichtum: Sie ist pro Kopf gleich, ob jemand 40'000 oder 400'000 Franken verdient. Der Ausgleich läuft über die Steuern. Bund und Kantone verbilligten 2023 die Prämien von knapp 2,5 Millionen Menschen mit rund 5,9 Milliarden Franken. [[q:statkv]] Und bei stationären Behandlungen in Listenspitälern zahlt der Wohnkanton aus Steuern mindestens 55 % der Vergütung. [[q:kvg]]</p>
@@ -85,11 +95,13 @@ export const KRANKENKASSE = {
     {
       id: 'franchise',
       titel: '3. Warum gibt es Franchise und Selbstbehalt?',
+      bild: '<!--FIG:kostenteil-->',
+      kurz: 'Je höher die Franchise, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab. Danach zahlen Sie {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr; der Spitalbeitrag und gewisse Medikamente liegen ausserhalb dieses Dachs. [[q:kvg]]',
+      wege: [{ href: '#nachbar', text: 'Warum zahlen andere weniger?' }],
       html: `
         <p>Stellen Sie sich ein Buffet vor, bei dem alle schon bezahlt haben. Wer schon bezahlt hat, nimmt eher mehr. Die Kostenbeteiligung soll genau das bremsen. Sie hat laut Bundesrat zwei Ziele: Kleinigkeiten nicht über die Versicherung laufen zu lassen und die Eigenverantwortung zu stärken. Laut Bundesrat wirkt das auch: Steigt die Kostenbeteiligung für alle, sinken die Leistungskosten. [[q:franchiseBericht]]</p>
         <p><strong>Franchise:</strong> Der Betrag, den Sie jedes Jahr zuerst selbst zahlen. Erwachsene wählen zwischen {{franchise.min}} und {{franchise.max}} Franken. [[q:kvg]] Je höher, desto tiefer die Prämie, denn Sie nehmen dem Topf etwas ab.</p>
-        <p><strong>Selbstbehalt:</strong> Danach zahlen Sie noch {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr. Das ist der Schutz: Der Selbstbehalt hat ein Dach. Zusammen mit der Franchise zahlen Sie im Jahr höchstens {{dach.min}} bis {{dach.max}} Franken, je nach gewählter Franchise. [[q:kvg]] Im Bild ist das eine Treppe: steil bis zur Franchise, danach flach, und ab dem Dach bleibt sie gleich hoch.</p>
-<!--FIG:kostenteil-->
+        <p><strong>Selbstbehalt:</strong> Danach zahlen Sie noch {{selbstbehalt.satz}} % jeder Rechnung, bis höchstens {{selbstbehalt.max}} Franken im Jahr. Das ist der Schutz: Der Selbstbehalt hat ein Dach. Zusammen mit der Franchise zahlen Sie im Jahr höchstens {{dach.min}} bis {{dach.max}} Franken, je nach gewählter Franchise. [[q:kvg]] Im Bild oben ist das eine Treppe: steil bis zur Franchise, danach flach, und ab dem Dach bleibt sie gleich hoch.</p>
         <p>Das ist die Grundregel. Zwei Dinge liegen ausserhalb: 15 Franken je Spitaltag (nicht für Kinder, junge Erwachsene in Ausbildung und bei Mutterschaft), und bei gewissen Medikamenten, für die es günstigere Alternativen gibt, 40 statt 10 % Selbstbehalt, der nur zum Teil ans Dach zählt. Für Kinder gilt keine ordentliche Franchise (wählbar sind tiefe Stufen) und die Hälfte des Dachs, also {{selbstbehalt.kinder}} Franken. Die Pflege im Heim hat eigene Regeln. [[q:kvg]]</p>
         <p>Das hat Folgen, die man im Alltag merkt. Von den 26- bis 30-Jährigen bekamen 2024 rund 64 von 100 im ganzen Jahr keinen Franken von der Kasse. Bei 28 davon lag der Kasse gar keine Rechnung vor, bei 36 blieb alles innerhalb der eigenen Kostenbeteiligung. Prämien zahlten sie trotzdem. Über alle Altersgruppen waren es 37 von 100. [[q:efind]]</p>
         <p>Und der Haken: Die Bremse wirkt bei allen gleich stark in Franken, aber nicht gleich stark im Leben. 500 Franken sind für manche ein Abendessen, für andere ein Monatsbudget. In einer Befragung von 2023 gaben 18,8 % der Erwachsenen an, in den zwölf Monaten davor trotz eines gesundheitlichen Problems aus Kostengründen nicht zum Arzt gegangen zu sein. [[q:ihp]] Die Befragung sagt allerdings nicht, ob das aus Not oder freiwillig geschah. Auch der Bundesrat hält fest: Wird eine Behandlung aufgeschoben, können später deutlich höhere Kosten entstehen. [[q:franchiseBericht]] Und hohe Franchisen wählen vor allem Menschen, die ohnehin wenig Kosten erwarten.</p>`,
@@ -97,6 +109,21 @@ export const KRANKENKASSE = {
     {
       id: 'preise',
       titel: '4. Woher kommen die Preise?',
+      // Dieselben sechs Werte wie die Tabelle in C (BAG, Leistungen 2025).
+      bild: `<figure class="kern" aria-labelledby="stab-preise">
+        <p class="unter" id="stab-preise">Was die Grundversicherung 2025 je Person und Monat bezahlte, vor Abzug der Kostenbeteiligung, Franken</p>
+        <ul class="stab" role="list">
+          <li><span>Arzt ambulant</span><i style="width:100%" aria-hidden="true"></i><b>93</b></li>
+          <li><span>Medikamente</span><i style="width:96%" aria-hidden="true"></i><b>89</b></li>
+          <li><span>Spital stationär</span><i style="width:81%" aria-hidden="true"></i><b>75</b></li>
+          <li><span>Spital ambulant</span><i style="width:60%" aria-hidden="true"></i><b>56</b></li>
+          <li><span>Pflegeheime</span><i style="width:23%" aria-hidden="true"></i><b>21</b></li>
+          <li><span>Labor, Physio, Spitex, Hilfsmittel, Übriges</span><i style="width:83%" aria-hidden="true"></i><b>77</b></li>
+        </ul>
+        <p class="unter">Zusammen 411 Franken (gerundet). Beim Spital stationär nur der Kassenanteil; der Kanton zahlt mindestens 55 % dazu. [[q:leistungen2025]]</p>
+      </figure>`,
+      kurz: 'Preise werden ausgehandelt oder vom Staat festgelegt. Es gilt immer: <strong>Kosten = Preis mal Menge.</strong>',
+      wege: [{ href: '#problem', text: 'Wo liegt das Problem?' }],
       html: `
         <p>Im Laden sieht man den Preis und entscheidet. Beim Arzt nicht. Man kennt den Preis nicht, kann schlecht vergleichen, und oft entscheidet jemand anderes, was nötig ist. Darum gibt es keinen freien Markt. Preise werden ausgehandelt oder vom Staat festgelegt. [[q:leistungen2025]]</p>
         <div class="tabelle"><table>
@@ -115,6 +142,9 @@ export const KRANKENKASSE = {
     {
       id: 'praemie',
       titel: '5. Wie wird daraus die Prämie?',
+      bild: '<!--FIG:praemie-->',
+      kurz: 'Die Prämie ist hoch, weil die Behandlungen viel kosten, nicht wegen der Verwaltung: Die Verwaltung kostet 4,6 % der Prämien. [[q:kennzahlen]]',
+      wege: [{ href: '#nachbar', text: 'Warum zahlen andere weniger?' }, { href: '#problem', text: 'Wo liegt das Problem?' }],
       html: `
         <p>So setzt sich die Prämie zusammen. Jede Kasse rechnet für jede Region und Altersgruppe wie mit einem Rezept. Hier mit den echten Zahlen von 2025, pro Person und Monat: [[q:leistungen2025]]</p>
         <div class="tabelle"><table>
@@ -127,19 +157,20 @@ export const KRANKENKASSE = {
         </table></div>
         <p class="leise">Bei der einzelnen Kasse kommt der Risikoausgleich dazu, als Zuschlag oder als Abzug. Über alle Kassen hebt er sich auf. [[q:kvgorg]]</p>
         <p>Das ist eine Schätzung fürs nächste Jahr, denn die Prämie muss im Voraus feststehen. Die Kassen reichen ihre Rechnung beim BAG ein. Das BAG lehnt ab, wenn die Prämie die Kosten nicht deckt, zu weit darüber liegt oder zu viel Reserve aufbaut. Verdienen darf die Kasse an der Grundversicherung nichts: Das Geld darf nur für die Grundversicherung verwendet werden, Überschüsse bleiben dort, etwa in den Reserven. [[q:kvg]]</p>
-        <p>Das nächste Bild zeigt das als Messaufbau. Der Stapel sind die Kosten, der Sockel der eigene Anteil, und der Taster liest oben die Prämie ab. Der Stapel wächst jedes Jahr, also steigt auch der Taster.</p>
-<!--FIG:praemie-->
+        <p>Das Bild oben zeigt das als Messaufbau. Der Stapel sind die Kosten, der Sockel der eigene Anteil, und der Taster liest oben die Prämie ab. Der Stapel wächst jedes Jahr, also steigt auch der Taster.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Die Verwaltung kostet nur 16 Franken im Monat, 4,6 % der Prämien. [[q:kennzahlen]] Sie ist nicht der Grund, warum die Prämie steigt. Die Prämie ist hoch, weil die Behandlungen viel kosten. Wer die Prämie senken will, muss die Kosten senken.</p>
 <!--TAB:mittel-->`,
     },
     {
       id: 'nachbar',
       titel: '6. Warum zahlen andere weniger?',
+      bild: '<!--FIG:kantone-->',
+      kurz: 'Die Prämie hängt davon ab, wo Sie wohnen, wie alt Sie sind, bei welcher Kasse Sie sind und was Sie selbst an Risiko und Wahlfreiheit eintauschen. Der Gesundheitszustand zählt dabei nicht. [[q:kvg]]',
+      wege: [{ href: '/kantone-im-vergleich/', text: 'Kantone im Vergleich' }, { href: '/kantonsatlas/', text: 'Kantonsatlas' }, { href: '#franchise', text: 'Franchise und Selbstbehalt' }],
       html: `
         <p>Die mittlere Prämie von {{mittel.gesamtFr}} Franken zahlt fast niemand genau. Das BAG zählt für {{jahr}} über 200'000 verschiedene Prämien. [[q:bag2027]] Welche davon die eigene ist, hängt von sieben Dingen ab.</p>
         <h3>Der Kanton</h3>
-        <p>Die Kasse muss die Prämien nach den Kosten im Kanton abstufen. Massgebend ist, wo Sie wohnen, nicht wo Sie arbeiten oder sich behandeln lassen. [[q:kvg]] Erwachsene zahlen {{jahr}} im Schnitt in {{kanton.tiefName}} {{kanton.tief}} Franken, in {{kanton.hochName}} {{kanton.hoch}} Franken, also fast das Doppelte. [[q:praemienKantone]]</p>
-<!--FIG:kantone-->
+        <p>Die Kasse muss die Prämien nach den Kosten im Kanton abstufen. Massgebend ist, wo Sie wohnen, nicht wo Sie arbeiten oder sich behandeln lassen. [[q:kvg]] Erwachsene zahlen {{jahr}} im Schnitt in {{kanton.tiefName}} {{kanton.tief}} Franken, in {{kanton.hochName}} {{kanton.hoch}} Franken, also fast das Doppelte. [[q:praemienKantone]] Die Abbildung oben stellt Prämie und Kosten je Kanton nebeneinander.</p>
 <!--TAB:kantone-->
         <p>Der Vergleich zeigt: Die Prämie folgt den Kosten im Kanton sehr eng. Über alle 26 Kantone laufen die beiden Zahlen fast im Gleichschritt. Teure Prämie heisst also vor allem: Dort fallen pro Person höhere Kosten an. Das ist so gewollt, denn die Prämien müssen die Kosten im Kanton decken. Ob dort zu viel behandelt wird oder die Menschen mehr Pflege brauchen, zeigt diese Zahl nicht. Der Kanton Zug fällt auf: Er kostet mehr als Appenzell Innerrhoden, hat aber die tiefere Prämie; der Grund liess sich nicht belegen.</p>
         <p>Warum die Kosten verschieden sind, ist nicht abschliessend geklärt. Ältere Studien deuten darauf hin, dass die Menge der Behandlungen mehr erklärt als deren Preis, und dass in Kantonen mit mehr Ärztinnen und Ärzten mehr Leistungen bezogen werden. Beim Alter ist das Bild nicht einheitlich: Eine Studie konnte den Einfluss nicht belegen, andere fanden ihn. Auch Armut, Arbeitslosigkeit und Invalidität spielen eine Rolle. [[q:zhaw]] [[q:obsan]]</p>
@@ -169,6 +200,12 @@ export const KRANKENKASSE = {
     {
       id: 'problem',
       titel: '7. Wo liegt das Problem?',
+      bild: `<figure class="kern">
+        <p class="zahl">16 bis 19 %</p>
+        <p class="unter">der Kosten wären laut einer Schätzung im Auftrag des BAG vermeidbar, für 2016 waren das 7 bis 8 Milliarden Franken. Die Forschenden warnen: Ganz erreichen lässt sich das kaum. [[q:infras]]</p>
+      </figure>`,
+      kurz: 'Die Bevölkerung wird älter, und es gibt Therapien, die es früher nicht gab. Dazu kommen aber Gründe, die nicht sein müssten.',
+      wege: [{ href: '/politsystem/', text: 'Politik erklärt' }, { href: '#aenderungen', text: 'Was ändert sich?' }],
       html: `
         <p>Zuerst das, was kein Fehler ist. Die Bevölkerung wird älter, und es gibt Therapien, die es früher nicht gab. Das kostet Geld, und das ist gut so. Das BAG nennt beides als Gründe. [[q:bag2027]] Dazu kommen aber Gründe, die nicht sein müssten.</p>
         <p>Eine Studie im Auftrag des BAG schätzte, dass 16 bis 19 % der Kosten vermeidbar wären, für 2016 waren das 7 bis 8 Milliarden Franken. Auf die heutige Prämie umgelegt wären das grob {{vermeidbar.tief}} bis {{vermeidbar.hoch}} Franken im Monat. Die Forschenden warnen selbst: Ganz erreichen lässt sich das kaum. [[q:infras]] Sie nennen drei Hauptursachen: zu viel Menge, zu hohe Preise, schlechte Abläufe. Dahinter stecken vor allem diese Mechanismen.</p>
@@ -190,11 +227,18 @@ export const KRANKENKASSE = {
     {
       id: 'aenderungen',
       titel: '8. Was ändert sich?',
+      bild: `<ol class="zeit kern" role="list" aria-label="Was sich wann ändert">
+        <li><span class="jahr">2026</span><span class="was">TARDOC ersetzt TARMED [[q:tardoc]]</span></li>
+        <li><span class="jahr">2028</span><span class="was">EFAS: ambulant und stationär nach demselben Schlüssel [[q:kvg]]</span></li>
+        <li><span class="jahr">2032</span><span class="was">Die Pflege kommt zu EFAS dazu</span></li>
+      </ol>`,
+      kurz: 'Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Wer für sich selbst gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. [[q:kvg]]',
+      wege: [{ href: '/praemienverbilligung/', text: 'Prämienverbilligung' }, { href: '/was-steht-mir-zu/', text: 'Was steht mir zu?' }],
       html: `
-        <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst.</p>
+        <p><strong>Seit 2026, TARDOC:</strong> Die neue Preisliste für ambulante Behandlungen hat am 1. Januar 2026 TARMED abgelöst. [[q:tardoc]]</p>
         <p><strong>2028, EFAS:</strong> Ambulant und stationär werden nach demselben Schlüssel finanziert. Die Kantone übernehmen ab 2028 einen Anteil an den Kosten nach Abzug der Kostenbeteiligung, den jeder Kanton selbst festlegt, aber mit einem Mindestsatz: 2028 je nach Kanton mindestens 21,3 bis 28,5 %, ab 2031 meist mindestens 24,5 %. Den Rest tragen die Prämien. 2032 kommt die Pflege dazu, dann beträgt der Kantonsanteil mindestens 26,9 %. Die Preise selbst ändern sich dadurch nicht. [[q:kvg]]</p>
         <p><strong>Mindestfranchise:</strong> Das Parlament hat es verlangt, der Bundesrat schlägt 400 statt 300 Franken vor. Das war im März 2026 in der Vernehmlassung und ist umstritten: Die einen erwarten weniger Bagatellbesuche, die anderen sehen eine Last für Chronischkranke und Menschen mit wenig Geld. Ein Datum für das Inkrafttreten nannte die Mitteilung vom 13.03.2026 nicht. [[q:mindestfranchise]]</p>
-        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Wer gemahnte Prämien oder Kostenbeteiligungen offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht. [[q:kvg]] Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes. [[q:priminfo]]</p>
+        <p><strong>Für Sie:</strong> Nach der Mitteilung der neuen Prämie kann man die Kasse auf den 1. Januar wechseln. Die Kündigung muss dann spätestens am 30. November bei der bisherigen Kasse eingegangen sein. Am sichersten kündigt man erst, wenn die neue Kasse die Aufnahme bestätigt hat. Ohne Prämienmitteilung gilt eine längere Frist. Wer gemahnte Prämien, Kostenbeteiligungen, Verzugszinsen oder Betreibungskosten offen hat, kann nur wechseln, wenn sie bis Ende der Kündigungsfrist vollständig bezahlt bei der Kasse eingetroffen sind. Ausstände nur für die Kinder hindern den eigenen Wechsel nicht. [[q:kvg]] Die Leistungen bleiben gleich. Vergleichen geht auf dem Prämienrechner des Bundes. [[q:priminfo]]</p>
         <p>Ob Sie Anspruch auf eine Verbilligung der Prämie haben, steht auf der Seite <a href="/praemienverbilligung/">Prämienverbilligung</a>.</p>`,
     },
   ],
@@ -228,6 +272,7 @@ export const KRANKENKASSE = {
     { key: 'franchiseBericht', herausgeber: 'Bundesrat', titel: 'Bericht zur Franchise', url: 'https://www.parlament.ch/centers/eparl/curia/2013/20133250/Bericht%20BR%20D.pdf', belegt: 'Zweck und Wirkung der Kostenbeteiligung, Folgen aufgeschobener Behandlung', amtlich: true },
     { key: 'mindestfranchise', herausgeber: 'Bundesrat', titel: 'Vernehmlassung zur Erhöhung der Mindestfranchise', datum: '13.03.2026', url: 'https://www.bag.admin.ch/de/newnsb/XwGuCzuLkCYzd1V5uKSav', belegt: 'Vorschlag 400 statt 300 Franken', amtlich: true },
     { key: 'kvg', herausgeber: 'Systematische Sammlung des Bundesrechts, SR 832.10', titel: 'Bundesgesetz über die Krankenversicherung (KVG)', url: 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de', belegt: 'Art. 7 (Wechsel), 8 und 10 (Unfalldeckung), 49a (Kantonsanteil Spital), 61 und 62 (Prämien, Regionen, Rabatte), 64 und 64a (Kostenbeteiligung, Ausstände); EFAS: AS 2025 107. Weitere Stellen unten.', amtlich: true },
+    { key: 'tardoc', herausgeber: 'Bundesamt für Gesundheit', titel: 'TARDOC und Ambulante Pauschalen – das neue Tarifsystem', datum: 'abgerufen 09.11.2026; Genehmigung durch den Bundesrat am 30.04.2025', url: 'https://www.bag.admin.ch/de/tardoc-und-ambulante-pauschalen', belegt: 'TARDOC und Ambulante Pauschalen ersetzen TARMED seit dem 1. Januar 2026', amtlich: true },
     { key: 'priminfo', herausgeber: 'Bundesamt für Gesundheit', titel: 'Prämienrechner (Priminfo)', url: 'https://www.priminfo.admin.ch/de/praemien', belegt: 'die eigene Prämie vergleichen', amtlich: true },
   ],
   // Eigener Satz statt RAHMEN.quellenLeise: jener nennt die SKOS, die hier nicht
@@ -236,7 +281,7 @@ export const KRANKENKASSE = {
   quellenHinweis:
     'Maloja Plana steht mit diesen Stellen in keiner Verbindung; die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Die weiteren Quellen sind keine Behörden: Interpharma und santésuisse vertreten Branchen. Die Studie zu den Effizienzpotenzialen haben WIG/ZHAW und INFRAS im Auftrag des BAG erstellt.',
   // Gesetzesstellen ohne eigenen Link (Fedlex rendert clientseitig, siehe
-  // seiten-inhalt.mjs). Am Volltext geprüft am 04.11.2026 (rechts-pruefer, über den Fedlex-SPARQL-Endpunkt): KVG Stand 1.7.2026, KVV/KLV 1.8.2026, UVG/UVV und SR 832.106 1.1.2026, AS 2026 483, AS 2025 107.
+  // seiten-inhalt.mjs). Am Volltext geprüft am 04.11.2026 (rechts-pruefer, über den Fedlex-SPARQL-Endpunkt): KVG Stand 1.7.2026, KVV/KLV 1.8.2026 (KVG Art. 7 Abs. 2, 64a Abs. 6 und KVV Art. 105l für den Kassenwechsel am 09.11.2026 erneut am Volltext nachgelesen), UVG/UVV und SR 832.106 1.1.2026, AS 2026 483, AS 2025 107.
   gesetze: 'KVG Art. 64a; KVV Art. 11, 91a, 91b, 93, 95, 101, 103 bis 104a, 105l; KLV Art. 38a; KVAG Art. 2, 5, 16, 17; EDI-Verordnung über die Prämienregionen SR 832.106, Stand 1.1.2027; UVG Art. 8; UVV Art. 13.',
   eigeneRechnungen: [
     'Dorf: Die BAG-Anteile sind auf 100 Menschen gerundet, die Säulen stehen auf der Mitte ihrer Stufe. Die 11 % und 27 % sind harte Grenzen, gerechnet mit den oberen beziehungsweise unteren Stufenrändern und dem BAG-Mittel von 4\'634 Franken; die wahre Spanne für die fünf Teuersten liegt grob zwischen 27 und 64 %, je nach Rundung der BAG-Anteile.',

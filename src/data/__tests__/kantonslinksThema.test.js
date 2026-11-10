@@ -1,0 +1,73 @@
+// Wächter: Der kantonale Link «Sozialdienst» führt zur Sozialhilfe, nicht zur
+// Prämienverbilligung. Anlass 09.11.2026: Bei BE, GE, VD und ZG zeigte
+// `sozialdienst` auf eine IPV-Seite, bei BE und ZG sogar auf dieselbe Adresse
+// wie `ipv`. Wer in der App «Sozialdienst» antippte, landete bei der IPV.
+//
+// Dazu: Jeder `ipv`- und `sozialdienst`-Link trägt ein Prüfdatum
+// (CANTONAL_LINKS_GEPRUEFT), damit sichtbar bleibt, wie alt die Prüfung ist.
+import { describe, it, expect } from 'vitest';
+import { CANTONAL_LINKS, CANTONAL_LINKS_GEPRUEFT } from '../direktLinks.js';
+
+const KANTONE = ['ZH', 'BE', 'LU', 'UR', 'SZ', 'OW', 'NW', 'GL', 'ZG', 'FR', 'SO', 'BS', 'BL',
+  'SH', 'AR', 'AI', 'SG', 'GR', 'AG', 'TG', 'TI', 'VD', 'VS', 'NE', 'GE', 'JU'];
+
+// Wörter, die eine Adresse als IPV-Seite ausweisen, in den vier Amtssprachen.
+const IPV_MERKMAL = /praemienverbilligung|prämienverbilligung|pr%c3%a4mienverbilligung|subside|reduction-des-primes|riduzione|ripam|\/pv\.html|-ipv|\/ipv/i;
+
+describe('Kantonale Links: Sozialdienst ist Sozialhilfe, nicht IPV', () => {
+  it('alle 26 Kantone sind erfasst', () => {
+    expect(Object.keys(CANTONAL_LINKS).sort()).toEqual([...KANTONE].sort());
+  });
+
+  for (const k of KANTONE) {
+    it(`${k}: sozialdienst ist nicht dieselbe Adresse wie ipv`, () => {
+      expect(CANTONAL_LINKS[k].sozialdienst).not.toBe(CANTONAL_LINKS[k].ipv);
+    });
+
+    it(`${k}: sozialdienst trägt kein IPV-Merkmal in der Adresse`, () => {
+      expect(CANTONAL_LINKS[k].sozialdienst).not.toMatch(IPV_MERKMAL);
+    });
+  }
+});
+
+// Benannte Ausnahme, keine weichere Regel: Felder, die mit curl nicht messbar sind, tragen `null`,
+// bis jemand sie im Browser geprüft hat. Die Liste darf nur schrumpfen. Seit 09.11.2026 abends
+// leer: VS war tagsüber in Wartung, BL.ipv war tot und zeigt jetzt auf die SVA BL.
+const NICHT_GEPRUEFT = [];
+
+describe('Kantonale Links: Prüfdatum je Link', () => {
+  for (const k of KANTONE) {
+    it(`${k}: ipv und sozialdienst haben ein Prüfdatum`, () => {
+      const g = CANTONAL_LINKS_GEPRUEFT[k];
+      expect(g, `${k} fehlt in CANTONAL_LINKS_GEPRUEFT`).toBeDefined();
+      for (const feld of ['ipv', 'sozialdienst']) {
+        if (NICHT_GEPRUEFT.includes(`${k}.${feld}`)) expect(g[feld], `${k}.${feld}`).toBeNull();
+        else expect(g[feld], `${k}.${feld}`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      }
+    });
+  }
+
+  it('genau die benannten Ausnahmen sind ohne Prüfdatum', () => {
+    const ohne = [];
+    for (const k of KANTONE) for (const feld of ['ipv', 'sozialdienst']) {
+      if ((CANTONAL_LINKS_GEPRUEFT[k] || {})[feld] === null) ohne.push(`${k}.${feld}`);
+    }
+    expect(ohne.sort()).toEqual([...NICHT_GEPRUEFT].sort());
+  });
+
+  it('kein ipv- oder sozialdienst-Link hängt an einer Jahreszahl', () => {
+    // Anlass 09.11.2026: GE und JU zeigten auf Seiten «…-2026». Ab Januar führen solche Links
+    // auf die Fristen und Gruppen des Vorjahres, ohne dass es jemand merkt.
+    for (const k of KANTONE) {
+      for (const feld of ['ipv', 'sozialdienst']) {
+        expect(CANTONAL_LINKS[k][feld], `${k}.${feld}`).not.toMatch(/(^|[^0-9])20[0-9]{2}([^0-9]|$)/);
+      }
+    }
+  });
+
+  it('das Prüfdatum liegt nicht in CANTONAL_LINKS selbst (die App zeigt jedes Feld dort als Link an)', () => {
+    for (const k of KANTONE) {
+      for (const v of Object.values(CANTONAL_LINKS[k])) expect(v).toMatch(/^https:\/\//);
+    }
+  });
+});

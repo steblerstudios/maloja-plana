@@ -273,7 +273,7 @@ const BetaFeedback = ({ palette, t }) => {
         rows: 3,
         style: {
           width: '100%', padding: space.sm + 'px', fontSize: text.sm, fontFamily: 'inherit',
-          border: '1px solid ' + palette.border, borderRadius: radius.md,
+          border: '1px solid ' + palette.feldrand, borderRadius: radius.md,
           background: palette.surface, color: palette.text, resize: 'vertical',
           boxSizing: 'border-box',
         }
@@ -655,7 +655,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       },
         React.createElement('span', { style: { minWidth: 0 } },
           React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('nav.rucksack')),
-          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } }, t('gepaeck.unpack'))),
+          React.createElement('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, t('gepaeck.unpack'))),
         miniRucksack(palette));
       return React.createElement('div', {
       'data-tour': 'anspruch',
@@ -672,7 +672,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           React.createElement(PanelTitle, { palette, style: { margin: 0, letterSpacing: '-0.2px' } }, t('dashboard.anspruchTitle')),
           React.createElement('div', {
             // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
-            style: { fontSize: text.xs - 1, color: palette.sageDeep, marginTop: '2px' }
+            style: { fontSize: text.xs, color: palette.sageDeep, marginTop: '2px' }
           }, t('dashboard.highlightPrivacy'))),
         rucksackKnopf
       ),
@@ -724,7 +724,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
               React.createElement('div', { style: { fontSize: item.primary ? text.body : text.sm, fontWeight: item.primary ? weight.semi : weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
             )
           );
         };

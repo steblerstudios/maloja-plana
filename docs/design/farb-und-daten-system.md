@@ -78,6 +78,34 @@ Reiter), `bereichFillColor(key, isDark)` für Balken-Füllungen (siehe Regel 3a)
 | `versicherungen` | Heidelbeere (≈ sky) | Prämien-Orientierung, KK-Last |
 | `finanzen` | Aprikose (≈ gold) | Finanz-Übersicht gesamt |
 
+## Karten — Kantonsatlas
+
+*Seit 09.11.2026 (Stebler Studios: «Ja, so bauen»). Bis dahin trugen alle zehn Karten Heidelbeere —
+auch Steuern, Miete und Arbeitslosigkeit, obwohl Blau «Versicherungen» heisst (Regel 1 verletzt).*
+
+Eine Karte zeigt **Reife** (wie viel) mit der Farbe ihrer **Identität** (welcher Bereich): eine Frucht,
+vier Stufen. Keine Zustandsfarbe, keine Rangliste.
+
+| Karte | Frucht | Warum |
+|---|---|---|
+| Prämie Erwachsene · Last nach Verbilligung | Heidelbeere | Versicherungen |
+| Miete 3 Zimmer · Leerwohnungsziffer | Birne | Wohnen |
+| Arbeitslosenquote | Haselnuss | Arbeit |
+| Ergänzungsleistungen | Traube | Vorsorge |
+| Sozialhilfe | Zwetschge | Behörden (Sozialdienst) |
+| Steuern 80'000 · Kita-Abzug · Kinderzulage | Zwetschge | **Ausnahme:** Aprikose ≈ Gold (Regel 2), Kirsche ≈ Rosé (nur «!»). Regel 1 vor Regel 3; Steuern und Abzug laufen übers Steueramt, die Zulage über die Ausgleichskasse |
+
+**Die Stufen** haben bei jeder Frucht dieselbe Leuchtdichte wie die Heidelbeere (Stufe 3 = `--heidel`), so
+werden alle Karten gleich gelesen. Nachbarn hell 1,66 · 1,66 · 1,91, dunkel etwa 2,2 · 2,2 · 1,9.
+**3:1 je Nachbarpaar geht nicht:** drei Abstände à 3:1 ergäben 27:1, mehr als Weiss zu Schwarz (21:1).
+1.4.11 bleibt erfüllt, weil Titel, Legende und Tabelle jeden Wert als Text tragen. Vorher lagen hell
+Stufe 1 und 2 bei 1,31:1.
+
+Quelle: `KARTEN_FRUCHT`, `FRUCHT_STUFEN` in `scripts/seiten/kantonsatlas.mjs`. Wächter:
+`src/__tests__/atlasStufenAbstand.test.js` (≥ 1,6:1, Abstände ausgeglichen, jede Karte mit Frucht,
+nie Aprikose oder Kirsche). ⚠️ Die App-Karten (`src/data/kantonskarten.js`, #780) übernehmen das erst,
+wenn #780 nachgeführt ist.
+
 ## Das „!" — der einzige Ort für Rosé
 
 Rosé ist in der ganzen App **für harte Schwellen reserviert**. Nur so bleibt es lesbar;

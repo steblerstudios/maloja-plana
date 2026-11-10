@@ -3,6 +3,7 @@
 Kopie aus dem **Maloja-Kantonsatlas** (Unterprojekt von Maloja Plana, liegt neben diesem Repo,
 eigene Karte mit 15 Ebenen). Hier liegt nur, was die öffentlichen Seiten brauchen. Gelesen beim
 Bauen von `scripts/seiten-figuren.mjs`, `scripts/seiten-vergleich.mjs` und `scripts/seiten/kantonsatlas.mjs`, nicht im App-Bündel.
+**Seit 09.11.2026 (Variante C):** `scripts/app-verstehen.mjs` erzeugt daraus `src/data/kantonskarten.js` (Pfade, Stufen und Werte von zwei Karten). Die App lädt sie erst, wenn jemand im Werkzeug «auf der Karte» aufklappt, nie im Startbündel. Nach jeder Änderung hier: `node scripts/app-verstehen.mjs` (der Test `verstehenImWerkzeug.test.js` wird sonst rot).
 
 | Datei | Inhalt | Quelle |
 |---|---|---|

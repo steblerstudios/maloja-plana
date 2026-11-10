@@ -179,7 +179,10 @@
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
   </style>
 </head>
 <body>
@@ -208,7 +211,7 @@
 
         <h2>Ce qui est déduit du revenu</h2>
         <p>Ce n’est pas le salaire qui est imposé, mais le <strong>revenu imposable</strong> — donc ce qui reste après les déductions admises. En font partie, selon la situation, les frais professionnels, les cotisations au pilier 3a, les frais de maladie au-delà d’un seuil, les déductions pour enfants et pour leur garde, et d’autres encore.</p>
-        <p>Quelles déductions sont admises et dans quelle mesure, cela diffère entre la Confédération et le canton, et entre les cantons. C’est précisément là que le plus se perd — non pas par de fausses indications, mais par des déductions que personne n’a inscrites.</p>
+        <p>Quelles déductions sont admises et dans quelle mesure, cela diffère entre la Confédération et le canton, et entre les cantons. C’est souvent là que de l’argent se perd — non pas par de fausses indications, mais par des déductions que personne n’a inscrites.</p>
 
       <h2>Questions fréquentes</h2>
         <h3>Pourquoi est-ce que je paie autrement que quelqu’un du canton voisin ?</h3>

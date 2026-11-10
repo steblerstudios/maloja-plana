@@ -7,6 +7,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { UnterlagenWege } from './components/UnterlagenWege.jsx';
 import { knopfStil, auswahlStil, KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 import { Kalenderblatt, blattDatum } from './components/Kalenderblatt.jsx';
+import { GeteiltEingang } from './components/GeteiltEingang.jsx';
 
 // Fassung 5 (Entscheid 23.10.2026, VERGLEICH.md «Dokumentenablage · entschieden»):
 // leer = ruhiges Bild + «Was oft zuerst hineingehört»; mit Inhalt = «{n} Dokumente»,
@@ -110,7 +111,8 @@ export const DocumentTresor = ({
   onOpenChapter,
   initialTab,
   isDarkMode,
-  onNavigate
+  onNavigate,
+  onAddShared,
 }) => {
   const [activeTab, setActiveTab] = useState(initialTab || 'all');
   // Ast-Farbe pro Kapitel — dieselbe Sprache wie der Lebensbaum.
@@ -166,7 +168,7 @@ export const DocumentTresor = ({
 
   const feld = {
     width: '100%', padding: '0 ' + space.sm + 'px', minHeight: '44px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.surface,
+    border: '1px solid ' + palette.feldrand, background: palette.surface,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm, font: 'inherit',
   };
 
@@ -300,6 +302,9 @@ export const DocumentTresor = ({
   },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('tresor.title')),
     satz && React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 0 ' + space.lg + 'px' } }, satz),
+
+    // Über «Teilen …» angekommene Dateien warten hier, bis sie eingeordnet oder verworfen sind.
+    onAddShared && React.createElement(GeteiltEingang, { palette, t, chapters: chapterList, onAblegen: onAddShared }),
 
     !hatInhalt
       // Leer: ruhiges Bild, Titel und Satz der App.

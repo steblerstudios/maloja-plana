@@ -5,6 +5,7 @@ import path from 'node:path';
 import { SEITEN, SONDERSEITEN, QUELLEN, BASIS, GEPRUEFT } from '../../scripts/seiten-inhalt.mjs';
 import { SPRACHEN } from '../../scripts/seiten-sprachen.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
+import { KANTONSSEITEN } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Öffentliche Erklärseiten · Entscheid Stebler Studios 20.09.2026
@@ -306,9 +307,11 @@ describe('Öffentliche Erklärseiten', () => {
       // src/__tests__/erklaerseitenSprachen.test.js.
       // Seit 04.11.2026 kommen die Hintergrundseiten dazu — nur Deutsch, also
       // einmal (src/__tests__/hintergrundSeiten.test.js).
+      // Seit 09.11.2026 die Kantonsseiten — ebenfalls nur Deutsch, also einmal
+      // (src/__tests__/kantonsseiten.test.js).
       const freie = SPRACHEN.filter((s) => s.freigegeben).length;
       expect((xml.match(/<loc>/g) || []).length)
-        .toBe((SEITEN.length + SONDERSEITEN.length) * freie + HINTERGRUND.length + 1);
+        .toBe((SEITEN.length + SONDERSEITEN.length) * freie + HINTERGRUND.length + KANTONSSEITEN.length + 1);
     });
   });
 

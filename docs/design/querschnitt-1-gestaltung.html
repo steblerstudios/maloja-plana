@@ -1,0 +1,119 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Querschnitt 1 Gestaltung</title><style>
+@font-face{font-family:Lexend;src:url('../../public/fonts/lexend-latin-400-normal.woff2') format('woff2');font-weight:400}
+@font-face{font-family:Lexend;src:url('../../public/fonts/lexend-latin-600-normal.woff2') format('woff2');font-weight:600}
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--line:#e5e0d6;--gold:#B08A3E;--gruen:#5A7868;--rot:#B0524C}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a18;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--line:#44423d;--gold:#D6B46A;--gruen:#8DB09B;--rot:#D98A84}}
+body{font:14px/1.45 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:1150px}
+h1{font-weight:600;font-size:20px;margin:0 0 4px}h2{font-weight:600;font-size:17px;margin:32px 0 6px}p{color:var(--soft);margin:4px 0}
+.reihe{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}@media(max-width:860px){.reihe{grid-template-columns:1fr}}
+.var{background:var(--card);border-radius:12px;padding:10px 12px;border:2px solid transparent}.var.emp{border-color:var(--gold)}
+.kopf{font-weight:600;margin-bottom:6px}.kopf i{font-style:normal;color:var(--gold);font-size:12px;margin-left:6px}
+.urteil{font-size:12.5px;margin-top:8px;color:var(--soft)}.ok{color:var(--gruen)}.no{color:var(--rot)}
+.box{background:var(--card);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin:14px 0}
+code{font-size:12px}
+/* Maloja-Paletten aus src/config/constants.js */
+.h{--m-bg:#F2F2F0;--m-surface:#FAFAF8;--m-up:#ECECEA;--m-border:#DCDAD6;--m-text:#24262A;--m-mid:#5E6167;--m-sage:#5A7868}
+.d{--m-bg:#22211F;--m-surface:#2B2A26;--m-up:#343330;--m-border:#423F39;--m-text:#E6E3DC;--m-mid:#9CA0A6;--m-sage:#7E9F8C}
+.paar{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.handy{position:relative;height:190px;overflow:hidden;border-radius:12px;background:var(--m-bg);color:var(--m-text);font-family:Lexend,system-ui;font-size:15px;border:1px solid var(--line)}
+.handy .inhalt{position:absolute;inset:0;padding:22px 10px 0}
+.handy .inhalt div{background:var(--m-surface);border-radius:8px;padding:8px;margin-bottom:6px;font-size:13px}
+.handy .inhalt .farbe{background:var(--m-sage);color:#fff}
+.kopfzeile{position:absolute;left:0;right:0;top:0;height:40px;display:flex;align-items:center;padding:0 10px;font-weight:600;font-size:15px;z-index:2}
+.leiste{position:absolute;left:0;right:0;bottom:0;height:44px;display:flex;justify-content:space-evenly;align-items:center;font-size:12px;z-index:2}
+.glas{background:color-mix(in srgb,var(--m-surface) 95%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.glas.k{border-bottom:1px solid color-mix(in srgb,var(--m-border) 53%,transparent)}.glas.l{border-top:1px solid color-mix(in srgb,var(--m-border) 53%,transparent);box-shadow:none}
+.deck{background:var(--m-surface)}.deck.k{border-bottom:1px solid var(--m-border)}.deck.l{border-top:1px solid var(--m-border)}
+.schatten{background:var(--m-surface);box-shadow:0 2px 8px rgba(0,0,0,.14)}
+.lbl{font-size:11px;color:var(--soft);text-align:center;margin-top:2px}
+/* Schrift */
+.probe{background:var(--m-surface);color:var(--m-text);font-family:Lexend,system-ui;border-radius:10px;padding:10px;border:1px solid var(--line)}
+.wtage{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;color:var(--m-mid);margin:6px 0}
+.faecher{display:flex;justify-content:space-around;margin-top:8px}
+.faecher span{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--m-mid)}
+.faecher b{width:30px;height:30px;border-radius:50%;border:1px solid var(--m-sage);display:block}
+/* Feld */
+.karte{background:var(--m-surface);color:var(--m-text);font-family:Lexend,system-ui;border-radius:10px;padding:10px 12px;border:1px solid var(--line)}
+.karte label{display:block;font-size:15px;margin:6px 0 4px}
+.feld{height:40px;border-radius:6px;background:var(--m-up);border:1px solid var(--m-border);padding:0 10px;display:flex;align-items:center;font-size:15px;color:var(--m-mid)}
+.h .feld.neu{border-color:#808286}.d .feld.neu{border-color:#80838A}
+.h .feld.mid{border-color:#5E6167}.d .feld.mid{border-color:#9CA0A6}
+.feld.fokus{outline:2px solid var(--m-sage);outline-offset:2px}
+.zahl{font-size:11.5px;color:var(--soft);margin-top:4px}
+</style>
+
+<h1>Querschnitt 1 · Gestaltung: Glas, Mindestschrift, Feldränder</h1>
+<p>Stand 09.11.2026, <code>main</code> <code>b8bdea43</code>. Aus dem <a href="../entscheide/gesamtbefund-2026-11-09.md">Gesamtbefund</a>, Befunde G5, G6 und G7. Jede Probe ist zweimal gezeigt: links hell, rechts dunkel, mit den echten Farben aus <code>constants.js</code> und der Schrift Lexend. Je Frage stehen drei Varianten, die gelb umrandete ist meine Empfehlung. Das ist nur ein Bild, gebaut ist nichts.</p>
+
+<div class=box><b>Die Regel, aus der alles folgt:</b> Maloja ist aus Material gebaut, nicht aus Effekten. Eine Fläche ist <b>Papier</b>, also deckend, oder <b>Granit</b>, also der Grund. Getrennt wird mit einer Haarlinie, nicht mit Unschärfe oder Schatten. Schrift folgt der Skala, und nichts ist kleiner als ihr kleinster Schritt. Was man bedienen kann, muss man sehen können (WCAG 1.4.11, Rand mindestens 3:1).</div>
+
+<h2>A · Milchglas in Kopfzeile, Leiste und Band (G6)</h2>
+<p>Heute: Kopfzeile und untere Leiste haben 95 % Deckkraft, 12 px Unschärfe und Schatten (<code>main.jsx:366, 1286</code>). Das Band oben in Ablauf, Kapitel und Kalender ist dreimal kopiert und hat dabei zwei verschiedene Deckkräfte bekommen (<code>B8</code> und <code>E6</code>). Die Leiste trägt zudem einen Kunstgriff gegen das Zittern beim Scrollen auf iOS (<code>translateZ(0)</code>). Dieses Zittern kommt vom Weichzeichner.</p>
+<div class=reihe>
+ <div class=var><div class=kopf>Heute · Milchglas</div>
+  <div class=paar>
+   <div class=h><div class=handy><div class="kopfzeile glas k">Maloja Plana</div><div class=inhalt><div class=farbe>Kapitel Finanzen</div><div>Monatsbudget · CHF 4 200</div><div>Steuern 2026</div><div>Kreditkarte</div></div><div class="leiste glas l"><span>Start</span><span>Rucksack</span><span>Menü</span></div></div><div class=lbl>hell</div></div>
+   <div class=d><div class=handy><div class="kopfzeile glas k">Maloja Plana</div><div class=inhalt><div class=farbe>Kapitel Finanzen</div><div>Monatsbudget · CHF 4 200</div><div>Steuern 2026</div><div>Kreditkarte</div></div><div class="leiste glas l"><span>Start</span><span>Rucksack</span><span>Menü</span></div></div><div class=lbl>dunkel</div></div>
+  </div>
+  <div class=urteil>Ehrlich gesagt: Bei 95 % Deckkraft sieht man das Glas kaum. Der Unterschied liegt deshalb weniger im Bild als in der Bauweise. <span class=no>Es ist ein Effekt, den sonst nichts in Maloja trägt</span>, er kostet beim Scrollen Rechenleistung, und genau er braucht den Kunstgriff gegen das Zittern. Im Band ist er sichtbarer (Deckkraft <code>B8</code> = 72 %).</div></div>
+ <div class="var emp"><div class=kopf>A-A · Papier mit Haarlinie <i>Empfehlung</i></div>
+  <div class=paar>
+   <div class=h><div class=handy><div class="kopfzeile deck k">Maloja Plana</div><div class=inhalt><div class=farbe>Kapitel Finanzen</div><div>Monatsbudget · CHF 4 200</div><div>Steuern 2026</div><div>Kreditkarte</div></div><div class="leiste deck l"><span>Start</span><span>Rucksack</span><span>Menü</span></div></div><div class=lbl>hell</div></div>
+   <div class=d><div class=handy><div class="kopfzeile deck k">Maloja Plana</div><div class=inhalt><div class=farbe>Kapitel Finanzen</div><div>Monatsbudget · CHF 4 200</div><div>Steuern 2026</div><div>Kreditkarte</div></div><div class="leiste deck l"><span>Start</span><span>Rucksack</span><span>Menü</span></div></div><div class=lbl>dunkel</div></div>
+  </div>
+  <div class=urteil><span class=ok>Deckend <code>surface</code> mit einer vollen Haarlinie <code>border</code>, ohne Unschärfe und ohne Schatten.</span> Das ist dieselbe Bauform wie bei jeder Karte. Das Band bekommt <b>ein</b> gemeinsames Bauteil mit einer Pille aus Papier, statt drei Kopien. Der Kunstgriff gegen das Zittern kann weg.</div></div>
+ <div class=var><div class=kopf>A-B · Papier mit Schatten</div>
+  <div class=paar>
+   <div class=h><div class=handy><div class="kopfzeile schatten">Maloja Plana</div><div class=inhalt><div class=farbe>Kapitel Finanzen</div><div>Monatsbudget · CHF 4 200</div><div>Steuern 2026</div><div>Kreditkarte</div></div><div class="leiste schatten"><span>Start</span><span>Rucksack</span><span>Menü</span></div></div><div class=lbl>hell</div></div>
+   <div class=d><div class=handy><div class="kopfzeile schatten">Maloja Plana</div><div class=inhalt><div class=farbe>Kapitel Finanzen</div><div>Monatsbudget · CHF 4 200</div><div>Steuern 2026</div><div>Kreditkarte</div></div><div class="leiste schatten"><span>Start</span><span>Rucksack</span><span>Menü</span></div></div><div class=lbl>dunkel</div></div>
+  </div>
+  <div class=urteil>Deckend, aber die Leisten schweben. Im Dunkelmodus ist der Schatten kaum zu sehen, also <span class=no>trennt er dort nicht</span>. Eine dritte Art von Kante neben Haarlinie und Karte.</div></div>
+</div>
+
+<h2>B · Mindestschrift (G7)</h2>
+<p>Heute: Der kleinste Schritt der Skala ist <code>text.xs</code> = 13 px (<code>tokens.js:27</code>). Im Code stehen rund 80 Grössen darunter, in etwa 30 Dateien. In HTML sind das zum Beispiel die Beschriftung des Fächers unter «+» (10 px, <code>main.jsx:362</code>), die Wochentage im Kalender (11 px) und Hinweise im Arztkoffer. Gut die Hälfte steckt aber in <b>Grafiken</b> (Franchise-Kreuz 13×, Vorsorge-Rechner 11×, Pegel, Gauge). Dort ist «10» eine Einheit des Zeichenfeldes und keine echte Pixelgrösse. Wie gross sie wirklich erscheint, hängt davon ab, wie breit die Grafik dargestellt wird.</p>
+<div class=reihe>
+ <div class=var><div class=kopf>Heute</div>
+  <div class=paar>
+   <div class=h><div class=probe><div class=wtage style="font-size:11px"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div class=faecher style="font-size:10px"><span><b></b>Kalender</span><span><b></b>Unterlagen</span><span><b></b>Briefe</span></div></div><div class=lbl>hell · 11 px / 10 px</div></div>
+   <div class=d><div class=probe><div class=wtage style="font-size:11px"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div class=faecher style="font-size:10px"><span><b></b>Kalender</span><span><b></b>Unterlagen</span><span><b></b>Briefe</span></div></div><div class=lbl>dunkel</div></div>
+  </div>
+  <div class=urteil><span class=no>Am Handy für sehschwache und ältere Menschen zu klein</span>, also gerade für die Gruppe, für die es die Vorlese-Funktion gibt.</div></div>
+ <div class="var emp"><div class=kopf>B-A · Boden 13 px, Grafiken am Bild messen <i>Empfehlung</i></div>
+  <div class=paar>
+   <div class=h><div class=probe><div class=wtage style="font-size:13px"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div class=faecher style="font-size:13px"><span><b></b>Kalender</span><span><b></b>Unterlagen</span><span><b></b>Briefe</span></div></div><div class=lbl>hell · 13 px</div></div>
+   <div class=d><div class=probe><div class=wtage style="font-size:13px"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div class=faecher style="font-size:13px"><span><b></b>Kalender</span><span><b></b>Unterlagen</span><span><b></b>Briefe</span></div></div><div class=lbl>dunkel</div></div>
+  </div>
+  <div class=urteil><span class=ok>In HTML wird alles unter 13 zu <code>text.xs</code></span>, ebenso <code>text.xs - 1</code>. Ein Wächter-Test verbietet Rohwerte unter 13. Grafiken werden einzeln bei 375 px gemessen: Ist die Beschriftung kleiner als 13 px, wird sie grösser gesetzt oder auf weniger Marken reduziert. Sieben Wochentage zu 13 px passen in 375 px.</div></div>
+ <div class=var><div class=kopf>B-B · Boden 12 px</div>
+  <div class=paar>
+   <div class=h><div class=probe><div class=wtage style="font-size:12px"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div class=faecher style="font-size:12px"><span><b></b>Kalender</span><span><b></b>Unterlagen</span><span><b></b>Briefe</span></div></div><div class=lbl>hell · 12 px</div></div>
+   <div class=d><div class=probe><div class=wtage style="font-size:12px"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div class=faecher style="font-size:12px"><span><b></b>Kalender</span><span><b></b>Unterlagen</span><span><b></b>Briefe</span></div></div><div class=lbl>dunkel</div></div>
+  </div>
+  <div class=urteil>Bedeutet weniger Umbau, braucht aber <span class=no>einen Wert neben der Skala</span>. Man hätte dann 12 und 13 nebeneinander, also genau die Drift, die der Befund D6 beschreibt.</div></div>
+</div>
+
+<h2>C · Ränder der Eingabefelder (G5)</h2>
+<p>Heute: Ein Feld ist <code>up</code> mit Rand <code>border</code>. Im Hellmodus hat dieser Rand 1,18:1 gegen das Feld und 1,34:1 gegen die Karte, im Dunkelmodus 1,20:1. Gefordert sind 3:1 (WCAG 1.4.11). Die Haarlinien zwischen Karten und Zeilen sind davon nicht betroffen, sie sind Schmuck und kein Bedienelement.</p>
+<div class=reihe>
+ <div class=var><div class=kopf>Heute · <code>border</code></div>
+  <div class=paar>
+   <div class=h><div class=karte><label>Vorname</label><div class=feld>z. B. Maria</div><label>Gemeinde</label><div class=feld></div></div><div class=zahl>1,18 (Feld) · 1,34 (Karte)</div></div>
+   <div class=d><div class=karte><label>Vorname</label><div class=feld>z. B. Maria</div><label>Gemeinde</label><div class=feld></div></div><div class=zahl>1,20 · 1,37</div></div>
+  </div>
+  <div class=urteil><span class=no>Das leere Feld «Gemeinde» ist kaum als Feld zu erkennen.</span></div></div>
+ <div class="var emp"><div class=kopf>C-A · eigener Feldrand-Token <i>Empfehlung</i></div>
+  <div class=paar>
+   <div class=h><div class=karte><label>Vorname</label><div class="feld neu">z. B. Maria</div><label>Gemeinde</label><div class="feld neu fokus"></div></div><div class=zahl>#808286 · 3,25 (Feld) · 3,68 (Karte)</div></div>
+   <div class=d><div class=karte><label>Vorname</label><div class="feld neu">z. B. Maria</div><label>Gemeinde</label><div class="feld neu fokus"></div></div><div class=zahl>#80838A · 3,33 · 3,78</div></div>
+  </div>
+  <div class=urteil><span class=ok>Neuer Token <code>palette.feldrand</code>, nur für Eingabefelder, Auswahlfelder und Kästchen.</span> Er ist gerade so stark, wie die Regel verlangt, und sicher über 3:1. Er liegt sichtbar heller als der Text <code>mid</code>, also bleibt die Rangfolge Text vor Rand. Der Fokusring (sage, zweites Feld) bleibt wie er ist.</div></div>
+ <div class=var><div class=kopf>C-B · Rand in <code>mid</code></div>
+  <div class=paar>
+   <div class=h><div class=karte><label>Vorname</label><div class="feld mid">z. B. Maria</div><label>Gemeinde</label><div class="feld mid"></div></div><div class=zahl>5,25 · 5,94</div></div>
+   <div class=d><div class=karte><label>Vorname</label><div class="feld mid">z. B. Maria</div><label>Gemeinde</label><div class="feld mid"></div></div><div class=zahl>4,81 · 5,47</div></div>
+  </div>
+  <div class=urteil>Ohne neuen Token, aber <span class=no>der Rand ist so dunkel wie der Hinweistext</span>. Die Formulare werden schwer, und ein Formular mit zwölf Feldern wirkt wie ein Gitter.</div></div>
+</div>
+
+<div class=box><b>Wenn A-A, B-A und C-A gelten, kommen sie in einen Zweig:</b> ein gemeinsames Band-Bauteil, Kopf und Leiste deckend, <code>feldrand</code> in beiden Paletten und alle Felder darauf umgestellt, Schrift unter 13 px auf <code>text.xs</code>, dazu zwei Wächter-Tests (kein <code>backdropFilter</code>, keine Rohschrift unter 13). Die Grafiken kommen einzeln danach, mit Messung bei 375 px. Auf das Startbündel (1 kB Luft) wirkt das kaum, weil Code wegfällt und kaum neuer dazukommt. Das Brand Book §7a wird im selben Zweig nachgeführt.</div>

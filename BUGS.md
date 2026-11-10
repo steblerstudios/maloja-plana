@@ -85,6 +85,115 @@ Datei; dafür hat das Studio einen eigenen Weg.
   ableiten. Test-Vorschlag: kein rm-Wert darf wörtlich gleich dem fr-Wert sein, ausser auf einer
   begründeten Ausnahmeliste.
 
+### Bugsuche 2026-11-09 (Lesedurchgänge über `main` `dff64ec7`, jeder Fund im Code gegengeprüft)
+
+**Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
+Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — ~~nicht gemergt, nicht
+live~~ → **gemergt 10.11.2026, 01:23 (PR #800, `main` = `9b869714`), NICHT live** — «Behoben (Zweig)»
+unten heisst seither «in `main`, wartet auf den Deploy». Erst nach dem Deploy wandern die Zeilen
+nach «Zuletzt behoben», mit Bundle-Name und Uhrzeit. Am selben Abend auf demselben Zweig dazu **B-12 bis B-15** behoben, ebenso mit rotem Test
+zuerst. Danach auch **B-11, B-16, B-17 und B-18** behoben (siehe je dort), am 10.11. dazu
+**B-19**. **Offen bleiben** die Text-Punkte aus den Fachprüfungen zu B-17/B-18. Rechner/Fachlogik: siehe Nachtrag unten.
+
+- 2026-11-09 · **B-7** · **Dokument-Datei galt als gespeichert, bevor sie es war.**
+  `idb.save` (`src/utils/storage.js`) löste bei `req.onsuccess` auf. Bei vollem Speicher bricht
+  die Transaktion oft erst danach ab (QuotaExceededError) → «gespeichert», Eintrag in der Liste,
+  Datei fehlt. Trifft auch die Einmal-Verschiebung alter Inline-Dateien (`main.jsx`), danach
+  überschreibt `setDocuments(metaDocs)` die einzige Kopie. Fix: Erfolg erst bei `tx.oncomplete`.
+  Test `dokumentSpeichernAbschluss.test.js`.
+- 2026-11-09 · **B-8** · **Zwei Tabs überschrieben sich bei Merkliste und Kalender.** K116 schützt
+  nur `or5_data`/`or5_docs`; beide Listen schrieben bei jeder Änderung den Stand vom Öffnen.
+  Nachstellen: Tab A Merkliste offen, Tab B «merken», in Tab A abhaken → Punkt aus B weg.
+  Fix: `hooks/useFremdeListe.js` lädt die Liste neu, wenn ein anderer Tab sie ändert.
+  Test `fremdeListeTabs.test.js`.
+- 2026-11-09 · **B-9** · **Vorlage «Krankenkasse wechseln» ab 30.11. auf falschem Datum.** Gezählt
+  wurde bis zum 30.11. des laufenden Jahres: am 30.11. → 30.12. (`0 || 30`), ab 1.12. ein
+  vergangenes Datum. Fix: `tageBisNaechstem(heute, '11-30')`, `?? 30`. Test `kkWechselStichtag.test.js`.
+- 2026-11-09 · **B-10** · **Angefangener Upload rutschte ins nächste Kapitel.** `ChapterView` wird
+  beim Wechsel nicht neu aufgebaut; Datei, Typ und Datum blieben stehen, das Dokument landete mit
+  dem Typ des alten Kapitels im neuen. Fix: Effekt auf `chapter.key` leert das Formular.
+  Test `kapitelwechselUpload.test.js`.
+- 2026-11-09 · **B-11** · **Wiederherstellen kann halb gelingen.** `applyBackup`
+  (`utils/backupCrypto.js`) schreibt `or5_data` zuerst; scheitert danach eine Datei am Speicher,
+  sind die Angaben ersetzt, die Dokumente alt — die Meldung sagt nur «fehlgeschlagen».
+  Fix: ganz oder gar nicht — zuerst die Dateien, dann alle Listen; scheitert eines, werden die in
+  diesem Lauf geschriebenen Schlüssel zurückgesetzt (wie `createPreRestoreSnapshot`). Tests in
+  `utils/__tests__/backupRestore.test.js` («scheitert mitten im Schreiben»). *Behoben (Zweig).*
+  Schon geschriebene Dateien bleiben in IndexedDB liegen (ohne Eintrag unsichtbar).
+- 2026-11-09 · **B-12** · **Merkliste meldete «gespeichert» auch bei vollem Speicher.**
+  `addTodo` (`utils/merkliste.js`) wertete die Rückgabe von `saveTodos` nicht aus. Fix: Rückgabe
+  `null` bei Fehlschlag, wie `addReminder`. Test `merklisteSpeicherVoll.test.js`. *Behoben (Zweig).*
+  Eine eigene Fehlermeldung am Knopf fehlt weiter (bräuchte Texte in 5 Sprachen) — der Knopf
+  bleibt dann einfach ohne Häkchen, wie beim Kalender.
+- 2026-11-09 · **B-13** · **Ankunfts-Satz blieb stehen.** `ChapterView.jsx`, Effekt um
+  `prevFilledRef`: zweites Feld innerhalb von 6 s → Timer gelöscht, Satz blieb, wanderte beim
+  Kapitelwechsel mit. Fix: `ankunftZeigen()`, Timer an `showAnkunft`, Kapitelwechsel blendet aus.
+  Test `ankunftSatz.test.js`. *Behoben (Zweig).*
+- 2026-11-09 · **B-14** · **Ort fehlte vor dem Datum** in Fristerstreckung Steuern, Kassenwechsel
+  und KK-Reklamation (`briefGenerator.js`). Fix: `city` aus «Wohnen». Test
+  `briefOrtVorDatum.test.js`. *Behoben (Zweig).*
+- 2026-11-09 · **B-15** · **«Weitere Bereiche» übernahm den Zustand des vorigen Kapitels**
+  (`ChapterView.jsx`, `showSecondary` nur beim ersten Aufbau gelesen). Fix: Effekt auf
+  `chapter.key` mit `weitereBereicheAnfang()`. Test `weitereBereicheJeKapitel.test.js`.
+  *Behoben (Zweig).*
+- 2026-11-09 · **B-16** · Klein: `.ics` faltet Zeilen über 75 Byte nicht (`utils/icsExport.js`),
+  gedruckte Briefe und Dossiers tragen immer `lang="de"`. Fix: Faltung nach UTF-8-Bytes + CRLF
+  am Ende (Test `icsZeilenFalten.test.js`); `utils/htmlSprache.js` liest die Sprache aus dem
+  Übersetzer des Dokuments (Test `dokumentSprache.test.js`). *Behoben (Zweig).*
+
+**Nachtrag Rechner/Fachlogik (09.11.2026 abends, auf `fix/bugsuche-top4` gelesen, im Code
+gegengeprüft, im Browser nicht nachgestellt).** Geprüft wurde nur die innere Logik, nicht ob
+gesetzliche Werte stimmen. Ein Fix hier ist Fachlogik → vorher `swiss-precision-pruefer`.
+
+- 2026-11-09 · **B-17** · **Mit IK-Auszug zählt die AHV nur die Beitragsjahre bis heute.**
+  `VorsorgeRechner.jsx` (`ahvResult`): mit IK geht `ikResult.beitragsjahre` als Beitragsjahre ein,
+  `beitragsjahreReferenzalter` wird `undefined`. Ohne IK werden die Jahre bis zum Bezug angenommen
+  (Kommentar Audit B9). Widerspruch im selben Rechner: beim Vorbezug schlägt
+  `berechneAltersrente` (`data/ahvRechner.js`) dann `floor(vorbezugMonate/12)` Jahre drauf, beim
+  Bezug im Referenzalter keine. Gemeldetes Beispiel (vom Lesedurchgang mit Node gerechnet): Mann,
+  40, IK 20 Jahre à 80 000 → Bezug 65 «fehlend 24», Bezug 63 «fehlend 22». Dazu liest
+  `projektionAhv` den IK gar nicht, obwohl der Zukunft-Reiter `vr.zukunftIkAktiv` sagt, die
+  Projektion nutze die IK-Historie. ~~Offen ist auch der Fachentscheid~~ → **Entscheid Stebler
+  Studios 10.11.2026: hochrechnen.** **Behoben (Zweig):** `utils/ikHochrechnung.js` — künftige Jahre
+  ab dem laufenden Jahr bzw. nach dem letzten IK-Jahr bis zur vollen Beitragsdauer des Jahrgangs,
+  Einkommen gemischt (IK-Summe + heutiges Einkommen je künftigem Jahr), Lücken der Vergangenheit
+  bleiben; dieselbe Zählung bei Bezug, Vorbezug, Vergleichstabelle und Zukunftsbild; Erziehung/
+  Betreuung = grössere Zahl aus IK und Eingabefeld. Test `ikHochrechnung.test.js`. Zwei Runden
+  `swiss-precision-pruefer`: (1) ein Jahr doppelt gezählt, Tabelle ohne IK, künftige Erziehungsjahre
+  fehlten; (2) früh endender IK zählte Vergangenheit als Zukunft, 44 statt 43 bei der
+  Übergangsgeneration — alles korrigiert. **Offen:** `vr.zukunftIkAktiv` nennt die IK-Rohwerte,
+  nicht die hochgerechneten (neuer Satz in 5 Sprachen nach Lektüre); kein Aufwertungsfaktor
+  (Art. 30 AHVG) — war vorher in `berechneIKAuszug` schon so, eher zu tief; die Vergleichstabelle
+  kennt keine Erziehungsgutschriften (vorbestehend, mit und ohne IK).
+- 2026-11-09 · **B-18** · **Zukunftsbild rechnet AHV ab dem Rücktritt, auch vor 63.**
+  `VorsorgeRechner.jsx` (Zukunftsgrafik): der Regler geht ab 58, `ahvVorbezugM =
+  (Referenzalter − Rücktritt) × 12` → bei 58 rund 84 Monate AHV-Vorbezugsrente ab 58. Der
+  Kommentar daneben sagt «auf frühestens 63 gedeckelt» — gedeckelt ist nur der Kürzungssatz, nicht
+  die Bezugsdauer. Folge: früher aufhören zeigt ein grösseres AHV-Fundament. Erwartet: AHV erst
+  ab `max(Rücktritt, 63)`.
+  **Behoben (Zweig):** `utils/ahvZukunftsbild.js` — AHV-Bezug im Bild = max(Rücktritt, Referenzalter
+  − 24 Monate, 63), Beitragsjahre bis dahin; Text-Grenze aus derselben Quelle. Test
+  `zukunftsbildAhvAb63.test.js` (Mann 58 = 63; Frau JG 1964/1962). Fachprüfung
+  `swiss-precision-pruefer` 09.11.: erster Stand nahm für Frauen JG 1961–1969 62 (36 Monate Rente,
+  Kürzung für 24) → korrigiert. **Offen aus der Fachprüfung:** (a) Annahmen im Text nennen —
+  «AHV am frühesten Termin bezogen» und «Beiträge als Nichterwerbstätige bezahlt» (AHVG Art. 3,
+  AHVV Art. 28; das Bild rechnet für die Jahre nach dem Rücktritt weiter mit dem Erwerbseinkommen,
+  die Rente ist dann eher zu hoch) — braucht Texte in 5 Sprachen; (b) Vorbezug ab 62 für Frauen
+  der Übergangsgeneration erst mit ihren Kürzungssätzen (D10). Quellen vom Prüfer aus dem Code
+  und Wissen, Wortlaut nicht nachgeschlagen.
+- 2026-11-09 · **B-19** · Klein: Das Feld «Bezugsalter» sagt `min 63`, der Regler im Zukunftsbild
+  setzt denselben Wert ab 58. Bei 60 rechnet die AHV wie 63, angezeigt bleibt 60. Eher
+  Klarheitsfrage (Rücktritt ≠ AHV-Bezug) als Rechenfehler.
+  **Nachgemessen 10.11.2026: doch ein Rechenfehler** — bei Eingabe 60 zählte der AHV-Block 39
+  Beitragsjahre «bis zum Bezug (60 Jahre)» → 1 822 / ab 65 2 092 statt wie 63 → 1 962 / 2 070
+  (derselbe Fehler wie B-18). **Behoben** (Zweig `fix/bezugsalter-ahv-grenze`): AHV-Block,
+  Annahme-Text und Tabellen-Markierung nehmen `ahvBezugAlter` = max(Rücktritt, frühester Bezug);
+  BVG/3a bleiben beim Rücktritt. Test in `zukunftsbildAhvAb63.test.js`. `swiss-precision-pruefer`:
+  mergereif nach der Markierungs-Korrektur.
+
+Nicht als Bug geführt: die automatischen Sicherungen (`autoBackup.js`) werden angelegt, lassen
+sich in der App aber nicht zurückholen — fehlende Funktion, gehört in die Bau-Liste.
+
 ## Geprüft — kein offener Bug (2026-07-08)
 
 Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich: keiner ist ein Bug. Festgehalten, damit sie nicht als Phantome wiederkommen.

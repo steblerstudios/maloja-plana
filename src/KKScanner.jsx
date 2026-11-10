@@ -170,7 +170,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
 
   const inputStyle = {
     width: '100%', padding: space.sm, marginBottom: '12px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
+    border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
   // Ein Hauptknopf (PrimaryButton: Speichern, Übernehmen), alles andere ruhig im Umriss

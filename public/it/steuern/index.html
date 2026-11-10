@@ -179,7 +179,10 @@
       margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     /* Nach der Freigabe: nur noch die Angabe, welche Fassung gilt. Leise. */
     .verbindlich{ margin-bottom:20px; font-size:14px; color:var(--leise) }
-    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+    /* Kantonsliste auf der Hauptseite: zweispaltig, solange Platz ist (24 Einträge). */
+    ul.kantone{ columns:2; column-gap:32px }
+    ul.kantone li{ break-inside:avoid }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } ul.kantone{ columns:1 } }
   </style>
 </head>
 <body>
@@ -208,7 +211,7 @@
 
         <h2>Che cosa viene dedotto dal reddito</h2>
         <p>Non viene tassato il salario, bensì il <strong>reddito imponibile</strong> — ossia ciò che resta dopo le deduzioni ammesse. Ne fanno parte, a seconda della situazione, le spese professionali, i contributi al pilastro 3a, le spese di malattia oltre una soglia, le deduzioni per figli e per la loro custodia e altre ancora.</p>
-        <p>Quali deduzioni siano ammesse e in quale misura differisce tra Confederazione e Cantone e tra i Cantoni. È proprio qui che si perde di più — non per indicazioni errate, bensì per deduzioni che nessuno ha iscritto.</p>
+        <p>Quali deduzioni siano ammesse e in quale misura differisce tra Confederazione e Cantone e tra i Cantoni. È spesso qui che si perde denaro — non per indicazioni errate, bensì per deduzioni che nessuno ha iscritto.</p>
 
       <h2>Domande frequenti</h2>
         <h3>Perché pago diversamente da qualcuno del Cantone vicino?</h3>
