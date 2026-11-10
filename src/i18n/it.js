@@ -201,7 +201,7 @@ export default {
     policeLink: 'Archivia la polizza',
     footerFrist: { sie: 'Il termine di disdetta è nella Sua polizza — può differire dalla regola generale.', du: 'Il termine di disdetta è nella tua polizza — può differire dalla regola generale.' },
     reminderTitle: 'Disdire l\'assicurazione complementare — termine',
-    reminderNotes: 'Disdetta ordinaria della complementare (spesso 3 mesi prima della fine dell’anno, deve quindi essere pervenuta). Prima della fine del terzo anno di contratto solo se la polizza lo prevede. Disdire solo dopo l’ammissione da parte della nuova complementare.',
+    reminderNotes: { sie: 'Disdetta ordinaria della complementare (spesso 3 mesi prima della fine dell’anno, deve quindi essere pervenuta). Prima della fine del terzo anno di contratto solo se la polizza lo prevede. Disdica solo dopo l’ammissione da parte della nuova complementare. Verifichi il termine esatto nella polizza.', du: 'Disdetta ordinaria della complementare (spesso 3 mesi prima della fine dell’anno, deve quindi essere pervenuta). Prima della fine del terzo anno di contratto solo se la polizza lo prevede. Disdici solo dopo l’ammissione da parte della nuova complementare. Verifica il termine esatto nella polizza.' },
   },
   umzug: {
     fristVorbei: { sie: 'I 14 giorni sono terminati il {date}. Si annunci comunque subito — il comune le dirà che cosa vale.', du: 'I 14 giorni sono terminati il {date}. Annunciati comunque subito — il comune ti dirà che cosa vale.' },

@@ -201,7 +201,7 @@ export default {
     policeLink: 'Classer la police',
     footerFrist: { sie: 'Le délai de résiliation figure dans votre police — il peut différer de la règle générale.', du: 'Le délai de résiliation figure dans ta police — il peut différer de la règle générale.' },
     reminderTitle: 'Résilier l\'assurance complémentaire — délai',
-    reminderNotes: 'Résiliation ordinaire de la complémentaire (souvent 3 mois avant la fin de l’année, elle doit alors être parvenue). Avant la fin de la troisième année de contrat, seulement si la police le permet. Ne résilier qu’après l’admission par la nouvelle complémentaire.',
+    reminderNotes: { sie: 'Résiliation ordinaire de la complémentaire (souvent 3 mois avant la fin de l’année, elle doit alors être parvenue). Avant la fin de la troisième année de contrat, seulement si la police le permet. Ne résiliez qu’après votre admission par la nouvelle complémentaire. Vérifiez le délai exact dans la police.', du: 'Résiliation ordinaire de la complémentaire (souvent 3 mois avant la fin de l’année, elle doit alors être parvenue). Avant la fin de la troisième année de contrat, seulement si la police le permet. Ne résilie qu’après ton admission par la nouvelle complémentaire. Vérifie le délai exact dans la police.' },
   },
   umzug: {
     fristVorbei: { sie: 'Les 14 jours ont pris fin le {date}. Annoncez-vous quand même tout de suite — la commune dira ce qui s’applique.', du: 'Les 14 jours ont pris fin le {date}. Annonce-toi quand même tout de suite — la commune dira ce qui s’applique.' },
