@@ -34,21 +34,22 @@ de   k=buildingsInsurance type="currency" label~1da85b29 weitere=jahr+secondary
 de   doc k=lease label~2292b1c9
 de   doc k=insurance label~68f53ecd
 de   doc k=deposit label~715b7117
-de kapitel=finanzen title~815ac648 short~93e7cfca description~eaac6bbb felder=41 docs=3
+de kapitel=finanzen title~815ac648 short~93e7cfca description~eaac6bbb felder=42 docs=3
 de   k=monthlyIncome type="currency" mvo=true section~983ce564 orientation~e7644eb3 hint~093f4df9 label~b34ce9dc sectionIntro~886ab738
 de   k=sideIncome type="currency" hint~88a04524 label~396916f9
-de   k=sideEmployer type="text" hint~ee7f4af3 label~cc5f9c0c
-de   k=sideEmployerAddress type="textarea" hint~cdc1af9a label~d235684e
+de   k=sideEmployer type="text" hint~ee7f4af3 label~79a18ac5
+de   k=sideEmployerAddress type="textarea" hint~cdc1af9a label~b7b9f35c
 de   k=sideHoursPerWeek type="text" hint~b7f23e3e label~c99c1444
 de   k=sideIncomeType type="select" label~f0699779 options=2 optWerte~808c757b optLabels~b5fa5c35
 de   k=taxableIncome type="currency" hint~7b79b5cc label~c170169c weitere=secondary
 de   k=incomeType type="select" label~e67c1e1a options=2 optWerte~808c757b optLabels~b5fa5c35
 de   k=dreizehnter type="select" label~64231a85 options=2 optWerte~2bfd19fd optLabels~b50f42dc
-de   k=employer type="text" recommended=true naOk=true label~29d7414b
-de   k=employerAddress type="textarea" naOk=true hint~496988cf label~902f77eb
-de   k=employmentType type="select" label~691027ce options=5 optWerte~2b10a5aa optLabels~186992de
+de   k=employer type="text" recommended=true naOk=true label~3ea518c4
+de   k=employerAddress type="textarea" naOk=true hint~f469fbae label~6d94731f
+de   k=workCanton type="select" naOk=true hint~7aac077d label~2f8f7d04 options=26 optWerte~25f3960d optLabels~5a274633
+de   k=employmentType type="select" label~691027ce options=5 optWerte~2b10a5aa optLabels~4ea00c15
 de   k=startDate type="date" naOk=true label~19564dc6
-de   k=familienzulagen type="currency" naOk=true hint~31eda2a4 label~0fe6842d
+de   k=familienzulagen type="currency" naOk=true hint~fd1027f0 label~0fe6842d
 de   k=alimenteReceived type="currency" naOk=true hint~7b19adf2 label~32f358ea
 de   k=monthlyTax type="currency" section~7fbd78d9 orientation~f084a402 hint~31f01489 label~ed272dd3 sectionIntro~fff57679
 de   k=groceries type="currency" hint~7ade268d label~df1e6174 weitere=itemized
@@ -67,8 +68,8 @@ de   k=creditCard type="select" section~7004241c label~8ea90c21 sectionIntro~bd8
 de   k=creditCardLimit type="currency" hint~5ee0b1e3 label~28250706
 de   k=creditCardBalance type="currency" hint~fc7b50e6 label~338fa8d7
 de   k=loans type="currency" label~922e1b38
-de   k=pension3a type="currency" section~7074ad60 orientation~3f1dd2e3 label~1bb6f7a8 sectionIntro~f42320a6 weitere=jahr+secondary
-de   k=pension3aBalance type="currency" hint~3bb19401 label~f70878b7 weitere=secondary
+de   k=pension3a type="currency" section~7074ad60 orientation~3f1dd2e3 label~4a6daf40 sectionIntro~f42320a6 weitere=jahr+secondary
+de   k=pension3aBalance type="currency" hint~3bb19401 label~50bc55bf weitere=secondary
 de   k=ivBezug type="select" naOk=true hint~d33f6ee9 label~3eacc357 options=3 optWerte~2def05cf optLabels~dde47ad8 weitere=secondary
 de   k=ahvRente type="currency" hint~3d72b523 label~f95e0dc2 weitere=secondary
 de   k=ivRente type="currency" hint~4d1c8155 label~3a18d93a weitere=secondary
@@ -199,21 +200,22 @@ fr   k=buildingsInsurance type="currency" label~6459c42d weitere=jahr+secondary
 fr   doc k=lease label~238fa6cd
 fr   doc k=insurance label~41e8ca5d
 fr   doc k=deposit label~ed3bed98
-fr kapitel=finanzen title~791c82da short~791c82da description~05cec89d felder=41 docs=3
+fr kapitel=finanzen title~791c82da short~791c82da description~05cec89d felder=42 docs=3
 fr   k=monthlyIncome type="currency" mvo=true section~f604eb7d orientation~f95f04a5 hint~4627cacd label~4b56cc07 sectionIntro~4bea5a92
 fr   k=sideIncome type="currency" hint~a20fe93d label~b416eb33
-fr   k=sideEmployer type="text" hint~cb7c499b label~c28597bb
-fr   k=sideEmployerAddress type="textarea" hint~485299de label~a14229f0
+fr   k=sideEmployer type="text" hint~cb7c499b label~645d1d83
+fr   k=sideEmployerAddress type="textarea" hint~485299de label~d2b8c5ba
 fr   k=sideHoursPerWeek type="text" hint~4082e040 label~1f7018fc
 fr   k=sideIncomeType type="select" label~83b49dbb options=2 optWerte~808c757b optLabels~db37ac7c
 fr   k=taxableIncome type="currency" hint~d5faa8d7 label~729a2e1d weitere=secondary
 fr   k=incomeType type="select" label~0e0a9629 options=2 optWerte~808c757b optLabels~db37ac7c
 fr   k=dreizehnter type="select" label~495f05d6 options=2 optWerte~2bfd19fd optLabels~b74e5823
-fr   k=employer type="text" recommended=true naOk=true label~375760d9
-fr   k=employerAddress type="textarea" naOk=true hint~30fe80dc label~1cbb3c6e
-fr   k=employmentType type="select" label~7947fb48 options=5 optWerte~2b10a5aa optLabels~5d79a280
+fr   k=employer type="text" recommended=true naOk=true label~6383f82d
+fr   k=employerAddress type="textarea" naOk=true hint~31e5cf99 label~ff40e9e8
+fr   k=workCanton type="select" naOk=true hint~14cc83cd label~e6ae9040 options=26 optWerte~25f3960d optLabels~869f43a7
+fr   k=employmentType type="select" label~7947fb48 options=5 optWerte~2b10a5aa optLabels~27207a0b
 fr   k=startDate type="date" naOk=true label~f6a61ad7
-fr   k=familienzulagen type="currency" naOk=true hint~f882de7a label~7af5a968
+fr   k=familienzulagen type="currency" naOk=true hint~99129792 label~7af5a968
 fr   k=alimenteReceived type="currency" naOk=true hint~02d20698 label~5be3aecd
 fr   k=monthlyTax type="currency" section~4c69a239 orientation~21720dae hint~4254ea11 label~0dedd722 sectionIntro~d2db756c
 fr   k=groceries type="currency" hint~b3cc4ce6 label~839ae437 weitere=itemized
@@ -364,21 +366,22 @@ it   k=buildingsInsurance type="currency" label~27f53152 weitere=jahr+secondary
 it   doc k=lease label~88f43a54
 it   doc k=insurance label~77be3d69
 it   doc k=deposit label~cec0aaa4
-it kapitel=finanzen title~91a47720 short~91a47720 description~a48669fe felder=41 docs=3
+it kapitel=finanzen title~91a47720 short~91a47720 description~a48669fe felder=42 docs=3
 it   k=monthlyIncome type="currency" mvo=true section~8d4e2bde orientation~c8da23fe hint~7f55466c label~21f267cd sectionIntro~6abaa1bb
 it   k=sideIncome type="currency" hint~40e503ca label~70c1dae7
-it   k=sideEmployer type="text" hint~d333de51 label~d2e01f32
-it   k=sideEmployerAddress type="textarea" hint~afb2e895 label~be5711bf
+it   k=sideEmployer type="text" hint~d333de51 label~d13db761
+it   k=sideEmployerAddress type="textarea" hint~afb2e895 label~19df7f36
 it   k=sideHoursPerWeek type="text" hint~77b007ee label~6cd4bf20
 it   k=sideIncomeType type="select" label~50a7faa9 options=2 optWerte~808c757b optLabels~6d8e4ef5
 it   k=taxableIncome type="currency" hint~4dc061bb label~05a17e1b weitere=secondary
 it   k=incomeType type="select" label~91124d77 options=2 optWerte~808c757b optLabels~6d8e4ef5
 it   k=dreizehnter type="select" label~25a780ec options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
-it   k=employer type="text" recommended=true naOk=true label~b93da698
-it   k=employerAddress type="textarea" naOk=true hint~24eee765 label~4f9570c9
-it   k=employmentType type="select" label~f63135dc options=5 optWerte~2b10a5aa optLabels~6092f2bc
+it   k=employer type="text" recommended=true naOk=true label~300d5ef9
+it   k=employerAddress type="textarea" naOk=true hint~763bf164 label~4394a8ae
+it   k=workCanton type="select" naOk=true hint~b3707aa4 label~d040e19a options=26 optWerte~25f3960d optLabels~cf4927a4
+it   k=employmentType type="select" label~f63135dc options=5 optWerte~2b10a5aa optLabels~a0212761
 it   k=startDate type="date" naOk=true label~5e6e6a52
-it   k=familienzulagen type="currency" naOk=true hint~baac8f25 label~f0b71c86
+it   k=familienzulagen type="currency" naOk=true hint~dbb61686 label~f0b71c86
 it   k=alimenteReceived type="currency" naOk=true hint~e7e8ab21 label~a6991b52
 it   k=monthlyTax type="currency" section~9c18be66 orientation~2ae09d08 hint~5490cdd5 label~4f663ec5 sectionIntro~f973474b
 it   k=groceries type="currency" hint~19dc01fc label~d30b8455 weitere=itemized
@@ -529,7 +532,7 @@ en   k=buildingsInsurance type="currency" label~1fb7fab3 weitere=jahr+secondary
 en   doc k=lease label~d8ed1503
 en   doc k=insurance label~bf4c7bdf
 en   doc k=deposit label~1b93b614
-en kapitel=finanzen title~791c82da short~791c82da description~02b69f63 felder=41 docs=3
+en kapitel=finanzen title~791c82da short~791c82da description~02b69f63 felder=42 docs=3
 en   k=monthlyIncome type="currency" mvo=true section~c129d37e orientation~4ee67b0e hint~31e117fa label~3be3d7af sectionIntro~70c1e37d
 en   k=sideIncome type="currency" hint~0cfe05fd label~4a6a2a7f
 en   k=sideEmployer type="text" hint~34ffcd3d label~1c9f26c2
@@ -541,7 +544,8 @@ en   k=incomeType type="select" label~90d6fcba options=2 optWerte~808c757b optLa
 en   k=dreizehnter type="select" label~981c932c options=2 optWerte~2bfd19fd optLabels~ea0983bd
 en   k=employer type="text" recommended=true naOk=true label~a9dd48a4
 en   k=employerAddress type="textarea" naOk=true hint~2c162a45 label~85dee87c
-en   k=employmentType type="select" label~6aed03e1 options=5 optWerte~2b10a5aa optLabels~e2b49a55
+en   k=workCanton type="select" naOk=true hint~3d6900ec label~4474c1fc options=26 optWerte~25f3960d optLabels~b651dc64
+en   k=employmentType type="select" label~6aed03e1 options=5 optWerte~2b10a5aa optLabels~6df205d7
 en   k=startDate type="date" naOk=true label~44faa00d
 en   k=familienzulagen type="currency" naOk=true hint~56db33e7 label~b9f292ff
 en   k=alimenteReceived type="currency" naOk=true hint~3a7419da label~39087ca0
@@ -694,7 +698,7 @@ rm   k=buildingsInsurance type="currency" label~f5fd0b3d weitere=jahr+secondary
 rm   doc k=lease label~979d8b95
 rm   doc k=insurance label~d41a893d
 rm   doc k=deposit label~86bb601e
-rm kapitel=finanzen title~49686d10 short~b0f0f7cd description~3497eb10 felder=41 docs=3
+rm kapitel=finanzen title~49686d10 short~b0f0f7cd description~3497eb10 felder=42 docs=3
 rm   k=monthlyIncome type="currency" mvo=true section~49e53544 orientation~0e46c773 hint~31a8010b label~6cefbb57 sectionIntro~1bba8649
 rm   k=sideIncome type="currency" hint~18739de3 label~845dbcee
 rm   k=sideEmployer type="text" hint~84a4df84 label~c5d6aeaa
@@ -706,6 +710,7 @@ rm   k=incomeType type="select" label~146bcd0e options=2 optWerte~808c757b optLa
 rm   k=dreizehnter type="select" label~52c28702 options=2 optWerte~2bfd19fd optLabels~1534032f
 rm   k=employer type="text" recommended=true naOk=true label~ae80e17b
 rm   k=employerAddress type="textarea" naOk=true hint~c961f130 label~3b999ae7
+rm   k=workCanton type="select" naOk=true hint~7aac077d label~2f8f7d04 options=26 optWerte~25f3960d optLabels~635a07c4
 rm   k=employmentType type="select" label~979ec471 options=5 optWerte~2b10a5aa optLabels~ebc18f49
 rm   k=startDate type="date" naOk=true label~60fff5d7
 rm   k=familienzulagen type="currency" naOk=true hint~9175bb32 label~5fd44950

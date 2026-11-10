@@ -339,7 +339,7 @@ describe('Einordnung im gerenderten Text', () => {
 
   it('OR 324a Abs. 4: Schriftform, NAV oder GAV; Zürich/Winterthur ohne unbelegtes Urteil und Datum', () => {
     const txt = seite({ art: 'befristet', betrag: '25', kanton: 'ZH' });
-    expect(txt).toContain('sofern nicht schriftlich, in einem Normal- oder Gesamtarbeitsvertrag eine mindestens gleichwertige Regelung getroffen ist (OR Art. 324a Abs. 4)');
+    expect(txt).toContain('Das gilt nicht, wenn schriftlich, in einem Normal- oder Gesamtarbeitsvertrag eine mindestens gleichwertige Regelung getroffen ist (OR Art. 324a Abs. 4)');
     // Fachprüfung 18.10.2026: Urteil und Inkrafttreten im Repo nicht belegt → nur Verweis an die Stadt.
     expect(txt).toContain('Ob und ab wann er gilt, weiss die Stadt.');
     expect(txt).not.toContain('2C_28/2025');
