@@ -1,5 +1,5 @@
 // Erzeugt public/vorstellung/pass-karte.svg (Probe A1 Salbei) aus Höhenraster + Strasse.
-// Aufruf: node karte.mjs <maloja-hoehen.json> <strasse.json> <ausgabe.svg>
+// Aufruf: node karte.mjs <maloja-hoehen.json> <strasse.json> <ausgabe.svg> [salbei|papier]
 /* global process, console */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { contours } from 'd3-contour';
@@ -7,7 +7,11 @@ import { geoPath } from 'd3-geo';
 import { line, curveCatmullRom } from 'd3-shape';
 import { range, min, max } from 'd3-array';
 
-const [hoehenDatei, strassenDatei, aus] = process.argv.slice(2);
+const [hoehenDatei, strassenDatei, aus, stil = 'salbei'] = process.argv.slice(2);
+// A1 Salbei (Linien Papier, Strasse hell mit Tannengrün-Rand) · A2 Papier (Linien Tinte, Strasse Tannengrün)
+const FARBE = stil === 'papier'
+  ? { linie: '#2B2A26', deck: '.6', rand: null, strasse: '#55685A', punkt: '#F6F2E8' }
+  : { linie: '#F6F2E8', deck: '.55', rand: '#55685A', strasse: '#ECE7D8', punkt: '#55685A' };
 const d = JSON.parse(readFileSync(hoehenDatei, 'utf8'));
 const wege = JSON.parse(readFileSync(strassenDatei, 'utf8'));
 
@@ -42,15 +46,15 @@ for (const w of wege) for (const [c, r] of w) {
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="1 1 ${W - 2} ${H - 2}" preserveAspectRatio="xMidYMid slice">
 <!-- Malojapass von oben. Höhenlinien alle 20 m (100 m kräftig) aus swissALTI3D 2023 © swisstopo, 10-m-Raster;
      Passstrasse (Hauptstrasse 3) © OpenStreetMap-Mitwirkende, ODbL. Erzeugt 10.11.2026, Passhöhe ${Math.round(top.v)} m. -->
-<g fill="none" stroke="#F6F2E8" stroke-opacity=".55" vector-effect="non-scaling-stroke">
+<g fill="none" stroke="${FARBE.linie}" stroke-opacity="${FARBE.deck}" vector-effect="non-scaling-stroke">
 <path stroke-width=".5" vector-effect="non-scaling-stroke" d="${duenn.join('')}"/>
 <path stroke-width="1.1" vector-effect="non-scaling-stroke" d="${kraeftig.join('')}"/>
 </g>
 <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path stroke="#55685A" stroke-width="6" vector-effect="non-scaling-stroke" d="${strasse.join('')}"/>
-<path stroke="#ECE7D8" stroke-width="3.5" vector-effect="non-scaling-stroke" d="${strasse.join('')}"/>
+${FARBE.rand ? `<path stroke="${FARBE.rand}" stroke-width="6" vector-effect="non-scaling-stroke" d="${strasse.join('')}"/>` : ''}
+<path stroke="${FARBE.strasse}" stroke-width="3.5" vector-effect="non-scaling-stroke" d="${strasse.join('')}"/>
 </g>
-<circle cx="${top.c.toFixed(1)}" cy="${top.r.toFixed(1)}" r="1.6" fill="#ECE7D8" stroke="#55685A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<circle cx="${top.c.toFixed(1)}" cy="${top.r.toFixed(1)}" r="1.6" fill="${FARBE.strasse}" stroke="${FARBE.punkt}" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
 writeFileSync(aus, svg);

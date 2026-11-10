@@ -296,7 +296,15 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     /* Seit 10.11.2026 (Probe A1 «Salbei»): der Ausklang verläuft in das Salbei der Hänge, darunter liegt derselbe
        Pass von oben — echte Höhenlinien (swissALTI3D) und die echte Passstrasse mit ihren Kehren (OpenStreetMap).
        Die gemalten Kehren und die wirklichen finden so zusammen. Erst danach geht es ins Papier der Seite. */
-    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(126,143,123,0), #7E8F7B 85%) }
+    /* Seit 10.11. abends vier Höhenlinien-Bilder: C (Blick, Salbei) + A (Karte, Salbei) nach Kehre 7, D (Blick, Papier)
+       vor «App holen», B (Karte, Papier) vor dem Fuss. Der Ausklang verläuft darum ins Creme des Himmels von C. */
+    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(252,240,228,0), #FCF0E4 85%) }
+    .pass-blick{ background:#FCF0E4 }
+    .pass-blick img, .pass-band img{ display:block; width:100%; height:auto }
+    .pass-band{ position:relative; margin:64px 0 }
+    .pass-band .quelle{ font-size:13px; color:var(--leise); padding-top:8px }
+    .pass-band-karte{ margin:96px 0 0 }
+    .pass-band-karte img{ aspect-ratio:280/130; object-fit:cover }
     .pass-karte{ position:relative; background:#7E8F7B; color:#F6F2E8 }
     .pass-karte-bild{ position:relative; aspect-ratio:280/130 }
     .pass-karte-bild img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block }
@@ -736,13 +744,16 @@ ${reiseStationen()}
           </ol>
         </section>
         <div class="reise-ausklang" aria-hidden="true"></div>
+        <figure class="pass-blick">
+          <img src="/vorstellung/pass-blick.svg" alt="Der Malojapass von der Seite gesehen, in Höhenlinien: vorne der Pass, dahinter der Piz da la Margna." width="1600" height="760" loading="lazy" decoding="async">
+        </figure>
         <figure class="pass-karte">
           <div class="pass-karte-bild">
             <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
             <span class="hoehe" aria-hidden="true">Passhöhe 1815&nbsp;m</span>
           </div>
           <figcaption class="rahmen">
-            <span>Oben angekommen: derselbe Weg von oben, mit den wirklichen Kehren.</span>
+            <span>Oben angekommen: der Blick zur Margna, und derselbe Weg von oben mit den wirklichen Kehren.</span>
             <span class="quelle">Höhen © swisstopo · Strasse © OpenStreetMap</span>
           </figcaption>
         </figure>
@@ -808,6 +819,12 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
       <div class="wege"><a class="knopf zweit" href="/kantonsatlas/">Alle ${ATLAS_KARTEN_WORT} Karten ansehen</a></div>
       <p class="atlas-hinweis">Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage. Was davon für Sie gilt, zeigt die App Schritt für Schritt, mit Ihren Angaben, auf Ihrem Gerät.</p>
     </section>
+
+    <!-- ═══ D · Pass von der Seite auf Papier (Höhenlinien, 10.11.2026) ═══ -->
+    <figure class="pass-band pass-band-blick">
+      <img src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="760" loading="lazy" decoding="async">
+      <figcaption class="quelle">Höhen © swisstopo</figcaption>
+    </figure>
 
     <!-- ═══ Holen ═══ -->
     <section id="holen" aria-labelledby="t-holen">
@@ -896,6 +913,12 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
       </div>
     </div>
     </div>
+
+    <!-- ═══ B · Pass von oben auf Papier, vor dem Fuss (Höhenlinien, 10.11.2026) ═══ -->
+    <figure class="pass-band pass-band-karte">
+      <img src="/vorstellung/pass-karte-papier.svg" alt="" width="1400" height="650" loading="lazy" decoding="async">
+      <figcaption class="rahmen quelle">Höhen © swisstopo · Strasse © OpenStreetMap</figcaption>
+    </figure>
   </main>
 
   <!-- ═══ D/E · Fuss: Marke · Entdecken · Rechtliches, darunter die Vertrauenszeile ═══ -->

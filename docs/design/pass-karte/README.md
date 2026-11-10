@@ -21,6 +21,13 @@ im Browser wird nichts gerechnet. Die Rohdaten liegen nicht im Repo (75 MB), sie
 4. In einem Ordner mit `d3-contour@4.0.2 d3-geo@3.1.1 d3-shape@3.2.0 d3-array@3.2.4` (nicht im Repo, bewusst):
    `node karte.mjs maloja-hoehen.json strasse.json public/vorstellung/pass-karte.svg`
 
+5. `node karte.mjs … public/vorstellung/pass-karte-papier.svg papier` — B, dieselbe Karte auf Papier.
+6. Blick von der Seite (C, D): weiter Ausschnitt, 60 Kacheln LV95 E 2768–2777 / N 1138–1143 (75 MB),
+   `python3 -I raster-weit.py <kachelordner> hoehen-weit.json` (20 m, höchster Punkt muss bei 2776240/1139320
+   liegen = Piz da la Margna), dann
+   `node schraeg.mjs hoehen-weit.json salbei public/vorstellung/pass-blick.svg 2770300 1143700 3500 2775800 1139300 2200 55`
+   und dasselbe mit `papier` → `pass-blick-papier.svg`. Kamera ausserhalb des Datenblocks lässt vorne Gelände fehlen.
+
 Gegenprobe beim Erzeugen: der höchste Strassenpunkt muss **1815 m** ergeben (amtliche Passhöhe). Weicht er ab,
 stimmen Ausschnitt oder Umrechnung nicht — dann nicht ausliefern. Ändert sich der Punkt im Bild, das Etikett
 «Passhöhe» in `scripts/seiten/vorstellung.mjs` nachziehen (`.pass-karte .hoehe`, 57,7 % / 27 %, Handy 62,5 %).
