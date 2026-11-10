@@ -7,7 +7,7 @@ import { CHAPTER_KEYS } from '../config/constants.js';
 import { RECHNER_KAPITEL } from '../config/brotkrumePfade.js';
 import { ansichtIkon } from '../config/ansichtenRegister.js';
 import { chapterColor } from '../data/lebensbereiche.js';
-import { kontrast, lesbareFarbe } from '../utils/lebensbereichFruechte.js';
+import { kontrast, kachelZeichenFarbe } from '../utils/lebensbereichFruechte.js';
 import { linkStil, auswahlStil } from './PrimaryButton.jsx';
 import { Belege } from './Belege.jsx';
 
@@ -32,7 +32,7 @@ const zeichenFarbe = (palette, kapitel) => {
   try {
     const dunkel = kontrast(palette.bg, '#FFFFFF') > kontrast(palette.bg, '#000000');
     const farbe = chapterColor(kapitel, dunkel);
-    return farbe ? { flaeche: farbe, zeichen: lesbareFarbe(farbe, palette.bg, dunkel, 3) } : null;
+    return farbe ? { flaeche: farbe, zeichen: kachelZeichenFarbe(farbe, palette) } : null;
   } catch { return null; }
 };
 

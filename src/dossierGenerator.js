@@ -37,6 +37,7 @@ const saeule3aOhneGeburtsdatum = (data, sozialhilfe) => !vermoegensFelder(data.f
 import { organListe } from './utils/organspende.js';
 import { rentenMonat } from './utils/unterstuetzungseinheit.js';
 import { hausarztName, hausarztTelefon, weitereAerzteAusListe } from './utils/hausarzt.js';
+import { htmlSprache } from './utils/htmlSprache.js';
 
 
 // ─── Druckfarben (K53) ────────────────────────────────────
@@ -295,7 +296,7 @@ export function generateLebensmappe(data, chapters, t, documents) {
   ` : '';
 
   return `<!DOCTYPE html>
-<html lang="de">
+<html lang="${htmlSprache(t)}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -676,7 +677,7 @@ export function generateNotfallDossier(data, chapters, t) {
     `).join('');
 
   return `<!DOCTYPE html>
-<html lang="de">
+<html lang="${htmlSprache(t)}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1265,7 +1266,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     `).join('');
 
   return `<!DOCTYPE html>
-<html lang="de">
+<html lang="${htmlSprache(t)}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

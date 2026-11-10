@@ -11,7 +11,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
+import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
 import { merkpunktSichern } from './utils/merkliste.js';
 import { ipvErinnerung, erinnerungLiegtSchon } from './data/ipvErinnerung.js';
@@ -196,7 +196,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     React.createElement('select', {
       value: verfJahr,
       onChange: (e) => setVerfJahr(e.target.value),
-      style: { padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+      style: { padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
     },
       React.createElement('option', { value: String(laufendesJahr) }, String(laufendesJahr)),
       React.createElement('option', { value: String(laufendesJahr + 1) }, String(laufendesJahr + 1))
@@ -355,7 +355,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         'aria-describedby': feld.id + '-hinweis',
         onBlur: (e) => uebernehmen(feld, e.target.value),
         onKeyDown: (e) => { if (e.key === 'Enter') uebernehmen(feld, e.target.value); },
-        style: { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
+        style: { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
       }),
       React.createElement('button', {
         type: 'button',
@@ -389,7 +389,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
                   value: '',
                   onChange: (e) => { if (e.target.value) onUpdateData('basis', 'canton', e.target.value); },
                   'aria-describedby': 'ipv-kanton-hinweis',
-                  style: { padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
+                  style: { padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
                 },
                   React.createElement('option', { value: '' }, t('common.select')),
                   CANTON_CODES.map((c) => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
@@ -462,7 +462,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           onChange: (e) => onUpdateData('finanzen', 'monthlyIncome', e.target.value),
           'aria-label': t('premium.enterIncome'),
           placeholder: '0',
-          style: { width: '140px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
+          style: { width: '140px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
         }),
         React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + t('common.perMonth'))
       )
@@ -613,6 +613,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     aufklappZeile(t('dl.mirrorTitle'),
       React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv', ohneRahmen: true })),
     // D1 (06.11.2026): zur öffentlichen Erklärseite «Prämienverbilligung: wer Anspruch hat».
+    // C (09.11.2026): Prämienlast nach Verbilligung auf der Karte, der eigene Kanton markiert.
+    React.createElement(VerstehenImWerkzeug, { palette, t, view: 'premium', kanton: canton }),
     React.createElement(ErklaerseiteLink, { palette, t, view: 'premium' }),
 
     // ── Ihr IPV-Weg ───────────────────────────────────────────────────────

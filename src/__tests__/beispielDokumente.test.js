@@ -28,15 +28,22 @@ const erfolg = (wert) => {
 const fakeIndexedDB = {
   open(name) {
     dbNamen.add(name);
-    const store = {
-      put: (eintrag) => { dateien.set(eintrag.id, eintrag.file); return erfolg(eintrag.id); },
+    // Wie echtes IndexedDB: nach dem Request schliesst die Transaktion ab (tx.oncomplete).
+    // idb.save meldet erst dann Erfolg (Bugsuche 09.11.2026).
+    const storeFuer = (tx) => ({
+      put: (eintrag) => {
+        dateien.set(eintrag.id, eintrag.file);
+        const req = erfolg(eintrag.id);
+        Promise.resolve().then(() => Promise.resolve()).then(() => tx.oncomplete && tx.oncomplete());
+        return req;
+      },
       get: (id) => erfolg(dateien.has(id) ? { id, file: dateien.get(id) } : null),
       delete: (id) => { dateien.delete(id); return erfolg(undefined); },
-    };
+    });
     const db = {
       version: 1,
       objectStoreNames: { contains: () => true },
-      transaction: () => ({ objectStore: () => store }),
+      transaction: () => { const tx = {}; tx.objectStore = () => storeFuer(tx); return tx; },
       close: () => {},
     };
     return erfolg(db);

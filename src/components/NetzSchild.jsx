@@ -3,7 +3,8 @@ import { bereichsTon, kontrast, mischeHex } from '../utils/lebensbereichFruechte
 import { netzSchildTeile, teilWinkel, fuellung, SCHILD_KERN } from '../data/netzSchild.js';
 import { HAUSRAT_PFLICHT } from '../data/hausratPflicht.js';
 import { shieldPath } from './shieldShape.js';
-import { text, weight, space, leading } from '../config/tokens.js';
+import { text, weight, space, leading, INSTRUMENT_GROESSE } from '../config/tokens.js';
+import { linkStil } from './PrimaryButton.jsx';
 import { hinweisZeichen } from '../IconSystem.jsx';
 import { zahl, betrag } from '../utils/geld.js';
 
@@ -14,6 +15,15 @@ import { zahl, betrag } from '../utils/geld.js';
 // Der Stand steht nie nur im Bild: Grösse der Füllung + Liste mit ✓/○ und Wort darunter (a11y).
 
 const B = 340, H = 330;
+// Mindestschrift 13 px bei der grossen Breite (Brand Book «Instrumente»): 13 × Bildbreite im viewBox / gross.
+const SCHRIFT_IM_BILD = Math.ceil((13 * B / INSTRUMENT_GROESSE.gross) * 10) / 10;
+// Wörter im Bild: bei Leerzeichen zwei Zeilen; zu lange Einzelwörter an ihrer Trennstelle (nur die Grafik — Listen und
+// Vorlesetext behalten das ganze Wort). Neue Sprache oder neues Wort: der Wächter misst, ob es ins Feld passt.
+const TRENNSTELLEN = { Krankenkasse: 'Kranken-|kasse' };
+export const schildZeilen = (wort) => (TRENNSTELLEN[wort] || wort.split(' ').join('|')).split('|');
+// Breite eines Felds auf Höhe der Wörter (5 Teile = 72°, Radius 96) und geschätzte Wortbreite, beide im viewBox.
+export const SCHILD_FELD_BREITE = 2 * 96 * Math.sin(Math.PI / 5);
+export const wortBreite = (z) => z.length * 0.58 * SCHRIFT_IM_BILD;
 const CX = B / 2, TOP = 6, HGT = 318;
 const CY = TOP + 0.43 * HGT; // Mitte der Teile: über der halben Höhe, weil das Schild oben breiter ist
 const SCHILD = shieldPath(CX, TOP, 300, HGT);
@@ -43,7 +53,10 @@ export const betragText = (b, t) => [
   b.name,
 ].filter(Boolean).join(' · ');
 
-export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stunden, employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter }) => {
+// groesse (Stebler Studios 09.11.2026, Brand Book «Instrumente»): gross = Zuhause im Kapitel (Satz + Liste) ·
+// mittel = Spiegel auf Werkzeug-Seiten (Bild, Satz, Weg ins Kapitel über onZuhause) · klein = Spiegel Startseite
+// (nur das Bild, ohne Wörter in den Teilen — bei 64 px unlesbar, im Browser gesehen).
+export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stunden, employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter, groesse = 'gross', onZuhause }) => {
   const v = versicherungen || {};
   const { teile, offen, teilweise, st } = netzSchildTeile(v, { employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, vorBvgMindestalter, finanzen, kanton });
   if (!st.touched || !teile.length) return null;
@@ -68,20 +81,22 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
   const stand = (p) => (p.n ? t('netzSchild.vonN', { n: p.erreicht, total: p.n }) : t('netzSchild.nichtEingetragen'));
   const aria = t('netzSchild.aria') + ' ' + teile.map((p) => kurz(p) + ': ' + stand(p)).join('; ') + '.';
   // Stufen-Linien je Teil: der Kern und jede Zwischenstufe, in Schildform, nur im eigenen Keil.
+  // Eigene IDs je Grösse: zwei Schilde auf einer Seite teilen sich sonst Clip-Pfade und Muster.
+  const id = (name) => 'ns-' + groesse + '-' + name;
   const linien = (p) => [SCHILD_KERN, ...Array.from({ length: p.n - 1 }, (_, k) => fuellung({ erreicht: k + 1, n: p.n }))];
 
-  const bild = h('svg', { viewBox: `0 0 ${B} ${H}`, width: '100%', role: 'img', 'aria-label': aria, style: { maxWidth: '300px', height: 'auto', display: 'block', margin: '0 auto' } },
+  const bild = h('svg', { viewBox: `0 0 ${B} ${H}`, width: '100%', role: 'img', 'aria-label': aria, style: { maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', display: 'block', margin: '0 auto' } },
     h('defs', null,
-      h('clipPath', { id: 'ns-schild' }, h('path', { d: SCHILD })),
-      teile.map((p, i) => h('clipPath', { key: p.key, id: 'ns-keil-' + p.key }, h('polygon', { points: keil(winkel(i), breite) }))),
+      h('clipPath', { id: id('schild') }, h('path', { d: SCHILD })),
+      teile.map((p, i) => h('clipPath', { key: p.key, id: id('keil-' + p.key) }, h('polygon', { points: keil(winkel(i), breite) }))),
       // Weit gesetzt: Das Muster schrumpft mit dem Kern (SCHILD_KERN).
-      h('pattern', { id: 'ns-offen', width: 22, height: 22, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
+      h('pattern', { id: id('offen'), width: 22, height: 22, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' },
         h('line', { x1: 0, y1: 0, x2: 0, y2: 22, stroke: palette.text, strokeOpacity: 0.55, strokeWidth: 6 }))),
-    h('g', { clipPath: 'url(#ns-schild)' },
+    h('g', { clipPath: 'url(#' + id('schild') + ')' },
       h('path', { d: SCHILD, fill: palette.up }),
-      teile.map((p) => h('g', { key: p.key, clipPath: 'url(#ns-keil-' + p.key + ')' },
+      teile.map((p) => h('g', { key: p.key, clipPath: 'url(#' + id('keil-' + p.key) + ')' },
         h('path', { 'data-teil': p.key, 'data-erreicht': p.erreicht + '/' + p.n, d: SCHILD, transform: skaliert(fuellung(p)), fill: farbe(p), fillOpacity: dichte(p) }),
-        offenTeil(p) && h('path', { 'data-offen': p.key, d: SCHILD, transform: skaliert(fuellung(p)), fill: 'url(#ns-offen)' }),
+        offenTeil(p) && h('path', { 'data-offen': p.key, d: SCHILD, transform: skaliert(fuellung(p)), fill: 'url(#' + id('offen') + ')' }),
         linien(p).map((s) => h('path', { key: s, d: SCHILD, fill: 'none', stroke: palette.mid, strokeOpacity: 0.35, strokeWidth: 1, vectorEffect: 'non-scaling-stroke', transform: skaliert(s) })))),
       // Fugen zwischen den Teilen, in der Farbe des Grunds.
       teile.map((p, i) => {
@@ -91,12 +106,18 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
       h('circle', { cx: CX, cy: CY, r: 6, fill: palette.surface })),
     h('path', { d: SCHILD, fill: 'none', stroke: palette.border, strokeWidth: 1.5 }),
     // Namen im Teil; auf vollem Salbei hell, sonst dunkel (wie im Schutzschild, a11y Abnahme F6).
-    teile.map((p, i) => {
+    // Nur gross: bei 128 px wären sie ~6 px (09.11. gemessen). Grösse aus der Bildbreite, damit sie 13 px ergibt.
+    groesse === 'gross' && teile.map((p, i) => {
       const g = (winkel(i) % 360 + 360) % 360;
-      const [x, y] = punkt(g, Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96);
-      return h('text', { key: p.key, 'aria-hidden': true, x, y, textAnchor: 'middle', dominantBaseline: 'central',
+      // Zwei Wörter («Caisse maladie», «Cassa malati») auf zwei Zeilen, ein zu langes Wort an seiner Trennstelle
+      // (09.11.: «Krankenkasse» passte bei 13 px nicht in sein Feld). Wächter: alle 5 Sprachen passen (instrumenteZuhauseSpiegel).
+      const zeilen = schildZeilen(kurz(p));
+      const r = Math.abs(g - 90) < 20 ? 118 : Math.abs(g - 270) < 1 ? 92 : 96;
+      const [x, y] = punkt(g, r);
+      return h('text', { key: p.key, 'aria-hidden': true, x, y: y - (zeilen.length - 1) * SCHRIFT_IM_BILD * 0.55, textAnchor: 'middle', dominantBaseline: 'central',
         // Kontur in der Grundfarbe: auf halbdichtem Salbei reichte der Kontrast dunkel nicht (a11y-Prüfung 01.11.2026).
-        style: { fontSize: '15px', fontWeight: weight.semi, fill: schriftHell(p) ? palette.surface : palette.text, ...(schriftHell(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } }, kurz(p));
+        style: { fontSize: SCHRIFT_IM_BILD + 'px', fontWeight: weight.semi, fill: schriftHell(p) ? palette.surface : palette.text, ...(schriftHell(p) ? {} : { stroke: palette.up, strokeWidth: 3, strokeLinejoin: 'round', paintOrder: 'stroke' }) } },
+        zeilen.map((z, k) => h('tspan', { key: k, x, dy: k === 0 ? 0 : SCHRIFT_IM_BILD * 1.1 }, z)));
     }));
 
   const artText = (x) => x.art === 'kantonPflicht' ? t('netzSchild.art.kantonPflicht', { kanton: String(kanton || '').toUpperCase() }) : t('netzSchild.art.' + x.art);
@@ -122,16 +143,24 @@ export const NetzSchild = ({ palette, t, versicherungen, finanzen, kanton, stund
 
   // Die Marke erklärt die Schraffur im Bild; das Wort steht im Satz daneben.
   const offenMarke = offen.length > 0 && h('svg', { 'aria-hidden': true, 'data-teil': 'netz-schild-offen-marke', viewBox: '0 0 44 44', width: 14, height: 14, style: { verticalAlign: '-2px', marginRight: '8px' } },
-    h('rect', { width: 44, height: 44, fill: palette.sand, fillOpacity: 0.5 }), h('rect', { width: 44, height: 44, fill: 'url(#ns-offen)' }));
+    h('rect', { width: 44, height: 44, fill: palette.sand, fillOpacity: 0.5 }), h('rect', { width: 44, height: 44, fill: 'url(#' + id('offen') + ')' }));
   const satz = [
     offen.length && t('netzSchild.nochOffen', { liste: offen.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
     teilweise.length && t('netzSchild.teilweise', { liste: teilweise.map((k) => t('netzSchild.kurz.' + k)).join(', ') }),
   ].filter(Boolean).join(' ') || t('netzSchild.ganz');
 
-  return h('div', { 'data-schild': 'netz', style: { marginBottom: space.sm + 'px' } },
+  if (groesse === 'klein') return h('div', { 'data-schild': 'netz', 'data-groesse': 'klein' }, bild);
+  const satzZeile = h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } }, offenMarke, satz);
+  if (groesse === 'mittel') return h('div', { 'data-schild': 'netz', 'data-groesse': 'mittel', style: { marginBottom: space.sm + 'px' } },
+    bild, satzZeile,
+    onZuhause && h('div', { style: { textAlign: 'center' } },
+      h('button', { type: 'button', onClick: onZuhause, style: { ...linkStil(palette), minHeight: '44px', fontSize: text.sm } },
+        t('ablauf.kapitelLink', { name: t('chapters.versicherungen.title') }))));
+
+  return h('div', { 'data-schild': 'netz', 'data-groesse': 'gross', style: { marginBottom: space.sm + 'px' } },
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px 0' } }, t('netzSchild.intro')),
     bild,
-    h('p', { 'data-teil': 'netz-schild-satz', style: { fontSize: text.sm, color: palette.text, textAlign: 'center', margin: space.sm + 'px 0' } }, offenMarke, satz),
+    satzZeile,
     // F7-K3-4 (Stebler Studios 01.11.2026): Das Schild ist die Antwort, die lange Liste liegt eingeklappt darunter.
     h('details', { 'data-teil': 'netz-schild-liste', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
       // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).

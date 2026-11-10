@@ -905,6 +905,11 @@ wird — darum zeigt die App weiter keinen Betrag, nennt aber jetzt Frist und St
 (`sva_onlinecalculator.js`) antwortet bei `einkommen − obergrenze >= 0` mit «NEIN», also schon bei
 genau 31'000. Die App rechnet jetzt ebenso («ab der Grenze kein Anspruch»). Bitte bestätigen, dass die
 Verfügung so rechnet. (Vorher: «Wir rechnen ‹bis und mit›».)
+⟨ergänzt 09.11.2026, PR #801⟩ Ihre Seite «Häufige Anliegen – kurz erklärt» sagt dagegen: «Die Obergrenze
+des massgebenden Jahreseinkommens darf nicht überschritten werden» — genau 31'000 wäre danach noch
+Anspruch. Rechner und Seite widersprechen sich also genau auf der Grenze. **Die App rechnet dort seit
+09.11.2026 nicht mehr**: weder Betrag noch «kein Anspruch», sondern ein Hinweis, bei Ihnen nachzufragen.
+Knapp darüber bleibt «kein Anspruch». Bitte sagen Sie uns, was genau auf der Grenze gilt.
 
 **Stand:** BL ist für 2026 gebaut (Entwurfs-PR, K31). Ab 01.01.2027 zeigt die App für BL keinen
 Betrag mehr, bis die Richtprämien 2027 eingearbeitet sind.

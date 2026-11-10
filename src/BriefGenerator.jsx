@@ -115,7 +115,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
   const labelStil = { display: 'block', fontSize: textTokens.sm, color: palette.text, fontWeight: weight.medium, marginBottom: space.xs };
   const inputStil = {
     width: '100%', boxSizing: 'border-box', padding: '12px 12px', borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.surface, color: palette.text,
+    border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text,
     fontSize: textTokens.sm, fontFamily: 'inherit',
   };
   const zeile = { display: 'flex', alignItems: 'center', gap: '12px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
