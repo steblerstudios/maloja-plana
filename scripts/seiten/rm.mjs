@@ -179,7 +179,7 @@ export const SEITEN = [
         ],
       },
       {
-        titel: 'Il dretg che nagin na po perder',
+        titel: 'Dretg d’agid en situaziuns da basegn', // Randtitel BV Art. 12 (Fedlex, Fassung 3.3.2024); vorher absolut, vgl. BGE 130 I 71 E. 4.3 und 6
         absaetze: [
           'Independentamain da tut quai survart stat en la <strong>Constituziun federala, artitgel 12</strong>, il dretg da survegnir agid en situaziuns d’basegn: tgi che vegn en basegn e n’è betg abel da procurar per sasez, ha il dretg da vegnir agidà ed assistì e da survegnir ils meds ch’èn indispensabels per ina existenza degna da l’uman.',
           'Quest dretg tutga a mintga persuna en Svizra. El n’è betg il medem sco l’agid social e cuvra damain — ma el è il limit il pli bass sut il qual ins na dastga betg ir.',
@@ -240,7 +240,7 @@ export const SEITEN = [
         titel: 'Tge che vegn deducì da l’entrada',
         absaetze: [
           'Taxà na vegn betg il salari, mabain l’<strong>entrada taxabla</strong> — pia quai che resta suenter las deducziuns admessas. Vi da quai tutgan tenor la situaziun expensas professiunalas, contribuziuns al pitgel 3a, custs da malsagna sur ina limita, deducziuns per uffants e per lur tgira ed ulteriuras.',
-          'Tge deducziuns ch’èn admessas ed en tge dimensiun differeschia tranter la Confederaziun ed il chantun e tranter ils chantuns. Precis qua va il pli bler a perder — betg tras indicaziuns faussas, mabain tras deducziuns che nagin n’ha inscrit.',
+          'Tge deducziuns ch’èn admessas ed en tge dimensiun differeschia tranter la Confederaziun ed il chantun e tranter ils chantuns. Savens va qua daners a perder — betg tras indicaziuns faussas, mabain tras deducziuns che nagin n’ha inscrit.',
         ],
       },
     ],

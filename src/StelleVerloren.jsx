@@ -39,7 +39,7 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
       React.createElement('label', { htmlFor: 'rav-ende', style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t('stelleVerloren.step1DateLabel')),
       React.createElement('input', {
         id: 'rav-ende', type: 'date', value: ende, onChange: (e) => setEnde(e.target.value),
-        style: { padding: '12px 12px', borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+        style: { padding: '12px 12px', borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
       }),
       rav && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } }, t(ravVorbei ? 'stelleVerloren.step1DateVorbei' : 'stelleVerloren.step1DateHint', { date: formatDE(rav) })),
       rav && !ravVorbei && React.createElement(FristButton, {

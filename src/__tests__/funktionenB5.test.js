@@ -101,3 +101,17 @@ describe('B5c · Kalender mit Abzeichen', () => {
     expect(lies('AblaufSchale.jsx')).toMatch(/const zeichen = React\.createElement\(Icon, \{ name: 'calendar', size: 16 \}\);/);
   });
 });
+
+// Sackmesser geschlossen halb aufgeklappt (Stebler Studios 09.11.2026, «Ja, halb aufgeklappt»).
+describe('Sackmesser · geschlossen halb aufgeklappt', () => {
+  it('geschlossen bleibt die Klinge halb draussen (gedreht, nicht ausgeblendet); offen ganz', () => {
+    const main = lies('main.jsx');
+    expect(main).toMatch(/const SACKMESSER_HALB = 'rotate\(22\.5deg\)';/);
+    expect(main).toMatch(/transform: open \? 'rotate\(0deg\)' : SACKMESSER_HALB/);
+    const klinge = main.match(/const klinge = \{[^}]*\}/)[0];
+    expect(klinge).not.toMatch(/opacity|scale/);
+  });
+  it('das zweite Werkzeug erscheint nur offen', () => {
+    expect(lies('main.jsx')).toMatch(/const zweites = \{[\s\S]*?transform: open \? 'scale\(1\)' : 'scale\(0\.02\)', opacity: open \? 1 : 0/);
+  });
+});

@@ -36,10 +36,33 @@ export const KANTONE_IM_VERGLEICH = {
   vorspann:
     'Wer in der Schweiz umzieht, wechselt oft mehr als die Wohnung. Prämie, Steuern, Miete und die Hilfe, die es gibt, hängen vom Kanton ab. Diese Seite stellt die Zahlen der 26 Kantone nebeneinander, damit sichtbar wird, wie gross die Unterschiede sind. Sie bewertet die Kantone nicht.',
   inhaltsverzeichnis: true,
+  // Drei Schichten (Brand Book §8, 09.11.2026): zuerst ein Punktstreifen je
+  // Zahl (scripts/seiten-vergleich.mjs, streifen), dann ein Satz aus dem
+  // gegengelesenen Text, die Tabellen aufklappbar, Wege.
+  schichten: true,
+  stilZusatz: `
+    .streifen{ margin:0 0 20px }
+    .streifen-titel{ font-size:15px; font-weight:600; margin:0 0 8px }
+    .streifen-achse{ position:relative; height:24px; margin:0 8px }
+    .streifen-achse::before{ content:""; position:absolute; left:0; right:0; top:11px; height:2px; background:var(--rand) }
+    .streifen-achse i{ position:absolute; top:6px; width:12px; height:12px; margin-left:-6px; box-sizing:border-box; border-radius:50%; border:1.5px solid var(--heidel); background:var(--flaeche) }
+    .streifen-achse b{ position:absolute; top:0; height:24px; width:2px; margin-left:-1px; background:var(--text) }
+    .streifen-ende{ display:flex; justify-content:space-between; gap:12px; margin:6px 0 0; font-size:13px; color:var(--leise) }
+    .streifen-ende span:last-child{ text-align:right }
+    .streifen-ch{ position:relative; height:18px; margin:0 8px; font-size:13px; color:var(--leise) }
+    .streifen-ch span{ position:absolute; transform:translateX(-50%); white-space:nowrap }
+    .streifen-ende strong{ color:var(--text); font-weight:600 }
+    .streifen-legende{ margin:4px 0 0; font-size:13px }
+    .streifen-legende i{ display:inline-block; width:10px; height:10px; box-sizing:border-box; border-radius:50%; border:1.5px solid var(--heidel); vertical-align:middle }
+    .streifen-legende b{ display:inline-block; width:2px; height:12px; background:var(--text); vertical-align:middle; margin-left:6px }
+    @media (forced-colors:active){ .streifen-achse b, .streifen-legende b, .streifen-achse::before{ background:CanvasText; forced-color-adjust:none } }`,
   abschnitte: [
     {
       id: 'praemie-einkommen',
       titel: '1. Wie schwer wiegt die Prämie?',
+      bild: '<!--FIG:spraemie-->',
+      kurz: 'Die mittlere Prämie für Erwachsene liegt {{jahr}} je nach Kanton zwischen {{v.praemie.tief}} und {{v.praemie.hoch}} Franken; wie schwer sie wiegt, hängt auch vom Einkommen ab. [[q:praemienKantone]]',
+      wege: [{ href: '/krankenkasse/', text: 'Krankenkasse erklärt' }, { href: '/praemienverbilligung/', text: 'Prämienverbilligung' }],
       html: `
         <p>Die mittlere Prämie für Erwachsene liegt {{jahr}} zwischen {{v.praemie.tief}} Franken {{v.praemie.tiefName}} und {{v.praemie.hoch}} Franken {{v.praemie.hochName}}, in der ganzen Schweiz bei {{v.praemie.ch}} Franken. [[q:praemienKantone]] Kantonale Massnahmen, die die Prämie selbst senken, sind in diesen Zahlen nicht getrennt ausgewiesen. Warum das so ist, erklärt die Seite <a href="/krankenkasse/">Krankenkasse erklärt</a>.</p>
 <!--TAB:vpraemie-->
@@ -51,6 +74,9 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'steuern',
       titel: '2. Wie viel bleibt nach den Steuern?',
+      bild: '<!--FIG:ssteuer-->',
+      kurz: 'Ein Beispiel für eine einzige Lebenslage: ledig, ohne Kinder, ohne Konfession, 80\'000 Franken Bruttolohn, Steuern an Bund, Kanton und Gemeinde im Kantonshauptort, Steuerjahr 2026. In anderen Gemeinden desselben Kantons sieht es anders aus. [[q:estvSteuerrechner]]',
+      wege: [{ href: '/steuern/', text: 'Steuern' }],
       html: `
         <p>Bei 80'000 Franken Bruttolohn zahlt eine ledige Person ohne Kinder und ohne Konfession im Kantonshauptort zwischen {{v.steuer.tief}} des Lohns {{v.steuer.tiefName}} und {{v.steuer.hoch}} {{v.steuer.hochName}} an Bund, Kanton und Gemeinde. [[q:estvSteuerrechner]] Auch innerhalb eines Kantons zählt die Gemeinde; die Spalte «Gemeinden im Kanton» zeigt die Spanne von der tiefsten zur höchsten Belastung.</p>
 <!--TAB:vsteuer-->
@@ -59,6 +85,9 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'wohnen',
       titel: '3. Was kostet das Wohnen?',
+      bild: '<!--FIG:swohnen-->',
+      kurz: 'Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen {{v.mieteAnteil.tief}} und {{v.mieteAnteil.hoch}} eines Vollzeit-Medianlohns (brutto) der Grossregion. Wer Teilzeit arbeitet oder mit dem Nettolohn rechnet, kommt auf mehr. [[q:bfsMiete]] [[q:bfsLse]]',
+      wege: [{ href: '#nebeneinander', text: 'Alle Zahlen nebeneinander' }, { href: '/kantonsatlas/', text: 'Kantonsatlas' }],
       html: `
         <p>Eine 3-Zimmer-Wohnung kostete 2024 im Durchschnitt zwischen {{v.miete.tief}} Franken im Monat {{v.miete.tiefName}} und {{v.miete.hoch}} Franken {{v.miete.hochName}}, in der ganzen Schweiz {{v.miete.ch}} Franken. [[q:bfsMiete]] Gemessen am Medianlohn der Region sind das zwischen {{v.mieteAnteil.tief}} und {{v.mieteAnteil.hoch}}. [[q:bfsLse]]</p>
 <!--TAB:vmiete-->
@@ -70,6 +99,9 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'unterstuetzung',
       titel: '4. Wie viele beziehen Unterstützung?',
+      bild: '<!--FIG:sunterstuetzung-->',
+      kurz: 'Die Quoten zeigen, wer bezieht, nicht, wer Anspruch hätte.',
+      wege: [{ href: '/sozialhilfe/', text: 'Sozialhilfe' }, { href: '/was-steht-mir-zu/', text: 'Was steht mir zu?' }],
       html: `
         <p>Die Sozialhilfequote zeigt, wie viele Menschen im Jahr wirtschaftliche Sozialhilfe bezogen haben. Sie lag 2024 zwischen {{v.sozialhilfe.tief}} {{v.sozialhilfe.tiefName}} und {{v.sozialhilfe.hoch}} {{v.sozialhilfe.hochName}}, in der ganzen Schweiz bei {{v.sozialhilfe.ch}}. [[q:bfsSozialhilfe]]</p>
         <p>Ergänzungsleistungen (EL) helfen, wenn AHV- oder IV-Rente und eigenes Einkommen die Lebenskosten nicht decken. Im Dezember 2025 bezogen sie zwischen {{v.el.tief}} der Menschen mit Altersrente {{v.el.tiefName}} und {{v.el.hoch}} {{v.el.hochName}}. [[q:bsvEl]]</p>
@@ -79,6 +111,9 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'familie',
       titel: '5. Was bekommen Familien?',
+      bild: '<!--FIG:sfamilie-->',
+      kurz: 'Die Kinderzulage beträgt 2026 in allen Kantonen mindestens {{v.kinderzulage.tief}} Franken im Monat, das gesetzliche Minimum. [[q:bsvFamz]] Die Grafik zeigt den ersten Ansatz; viele Kantone zahlen für ältere Kinder oder ab dem dritten Kind mehr.',
+      wege: [{ href: '/was-steht-mir-zu/', text: 'Was steht mir zu?' }],
       html: `
         <p>Die Kinderzulage beträgt 2026 in allen Kantonen mindestens {{v.kinderzulage.tief}} Franken im Monat, das gesetzliche Minimum nach dem Familienzulagengesetz. Den höchsten ersten Ansatz gibt es {{v.kinderzulage.hochName}}: {{v.kinderzulage.hoch}} Franken. [[q:bsvFamz]] Viele Kantone zahlen ab einem bestimmten Alter oder ab dem dritten Kind mehr, und in der Landwirtschaft gelten eigene Ansätze; die Tabelle zeigt den ersten Ansatz.</p>
 <!--TAB:vfamilie-->
@@ -89,6 +124,9 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'arbeit',
       titel: '6. Wie viele sind als arbeitslos gemeldet?',
+      bild: '<!--FIG:salq-->',
+      kurz: 'Die Quote zählt Menschen, die beim RAV als arbeitslos gemeldet sind. Wer keine Stelle hat, aber nicht gemeldet ist, fehlt.',
+      wege: [{ href: '#zusammenhaenge', text: 'Was zusammenhängt' }],
       html: `
         <p>Im September 2026 waren zwischen {{v.alq.tief}} der Erwerbspersonen {{v.alq.tiefName}} und {{v.alq.hoch}} {{v.alq.hochName}} als arbeitslos gemeldet, in der ganzen Schweiz {{v.alq.ch}}. [[q:seco]]</p>
 <!--TAB:valq-->
@@ -97,6 +135,9 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'nebeneinander',
       titel: '7. Alle Zahlen nebeneinander',
+      bild: '<!--FIG:salle-->',
+      kurz: 'Eine tiefe Zahl ist nicht besser und eine hohe nicht schlechter, hinter jeder stehen eigene Kosten, Löhne und Entscheide.',
+      wege: [{ href: '/kantonsatlas/', text: 'Als Karten im Kantonsatlas' }, { href: '#zusammenhaenge', text: 'Was zusammenhängt' }],
       html: `
         <p>Eine Auswahl der Zahlen aller Kantone in einer Tabelle, alphabetisch. Auf dem Handy lässt sie sich waagrecht verschieben; die Spalte mit dem Kanton bleibt stehen. Als Karten zeigt dieselben Zahlen der <a href="/kantonsatlas/">Kantonsatlas</a>.</p>
 <!--TAB:nebeneinander-->`,
@@ -104,9 +145,11 @@ export const KANTONE_IM_VERGLEICH = {
     {
       id: 'zusammenhaenge',
       titel: '8. Was zusammenhängt',
+      bild: '<!--TAB:zusammenhang-->',
+      kurz: 'Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen.',
+      wege: [{ href: '#nebeneinander', text: 'Alle Zahlen nebeneinander' }],
       html: `
-        <p>Legt man die Zahlen nebeneinander, fällt auf, dass manche zusammen steigen und fallen. Die Tabelle zeigt das als Korrelation über die 26 Kantone. Als Kontrolle ist auch die Rangfolge gerechnet; sagen beide Rechnungen Verschiedenes, steht die schwächere Stufe.</p>
-<!--TAB:zusammenhang-->
+        <p>Legt man die Zahlen nebeneinander, fällt auf, dass manche zusammen steigen und fallen. Die Tabelle oben zeigt das als Korrelation über die 26 Kantone. Als Kontrolle ist auch die Rangfolge gerechnet; sagen beide Rechnungen Verschiedenes, steht die schwächere Stufe.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> Ein Zusammenhang ist keine Erklärung, und er gilt für Kantone, nicht für Menschen. Dass Kantone mit höherer Prämie meist auch mehr Sozialhilfe haben, heisst nicht, dass Menschen mit hoher Prämie eher Sozialhilfe beziehen. Oft haben dieselben Kantone bei mehreren Zahlen hohe Werte, und dahinter können ganz andere Gründe liegen: Sprachregion, Alter der Bevölkerung, Wohnungsmarkt, Arbeitsplätze, Regeln. Jeder Kanton zählt einmal, egal wie viele Menschen dort leben. Was die Zahlen zeigen, ist ein Anlass zum Fragen, nicht die Antwort.</p>`,
     },
   ],

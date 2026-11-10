@@ -283,7 +283,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
   const inputStyle = {
     width: '100%', padding: space.sm, marginBottom: space.sm, borderRadius: radius.md,
-    border: '1px solid ' + palette.border, background: palette.surface,
+    border: '1px solid ' + palette.feldrand, background: palette.surface,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 

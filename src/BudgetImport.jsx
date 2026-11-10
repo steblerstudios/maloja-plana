@@ -49,7 +49,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
   };
 
   const inputStyle = {
-    width: '100%', padding: space.sm, borderRadius: radius.md, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
+    width: '100%', padding: space.sm, borderRadius: radius.md, border: '1px solid ' + palette.feldrand, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
   // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.

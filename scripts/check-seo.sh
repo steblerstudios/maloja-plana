@@ -109,6 +109,24 @@ for seite in was-steht-mir-zu praemienverbilligung sozialhilfe steuern rechtlich
 done
 done
 
+# Kantonsseiten /praemienverbilligung/<kanton>/ (seit 09.11.2026): nur Deutsch,
+# indexierbar, also mit eigenem canonical und in der Sitemap. Die Liste kommt aus
+# dem Build-Ordner selbst — welche Kantone es gibt, steht nur im Generator.
+for datei in "$DIR"/praemienverbilligung/*/index.html; do
+  [ -f "$datei" ] || continue
+  pfad="${datei#"$DIR"/}"; pfad="${pfad%/index.html}"
+  if ! grep -q "rel=\"canonical\" href=\"https://malojaplana.ch/$pfad/\"" "$datei"; then
+    echo "  ✗ /$pfad/ ohne eigenen canonical"; fail=$((fail + 1)); continue
+  fi
+  if ! grep -q 'content="index, follow"' "$datei"; then
+    echo "  ✗ /$pfad/ nicht indexierbar"; fail=$((fail + 1)); continue
+  fi
+  if ! grep -q "<loc>https://malojaplana.ch/$pfad/</loc>" "$DIR/sitemap.xml" 2>/dev/null; then
+    echo "  ✗ /$pfad/ fehlt in der sitemap.xml"; fail=$((fail + 1)); continue
+  fi
+  echo "  ✓ Kantonsseite /$pfad/ (canonical, indexierbar, in Sitemap)"
+done
+
 # ── Weich: Warnung, kein Abbruch (Feinschliff / mehrsprachige App) ──
 soft() { # soft "<beschreibung>" "<grep-muster>"
   if printf '%s' "$html" | grep -qE "$2"; then

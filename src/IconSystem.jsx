@@ -300,10 +300,10 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // ═══════════════════════════════════════════════════════════════
 // 🛑 Nicht jedes Icon hier hat schon einen Einsatz — und das ist kein toter Code.
 // Stand 24.09.2026 ohne Verwendung, aber gestaltetes Marken-Vokabular aus
-// docs/brand/icon-dictionary.md: `kalenderUhr` (Bahnhofsuhr, geplant für
-// Frist/Zeit), `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
-// `exportTool` (Sackmesser-Gestalt), `delete`, `filter` (Trichter).
+// docs/brand/icon-dictionary.md: `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
+// `delete`, `filter` (Trichter).
 // Stebler Studios hat entschieden: behalten. Nur auf Zuruf entfernen.
+// (09.11.2026: `kalenderUhr` und `exportTool` standen hier auch; mit B5a aufgelöst.)
 zeichenErgaenzen({
   schulden: _schulden,
   steuern: _steuern,
@@ -335,8 +335,13 @@ zeichenErgaenzen({
   tag: _tag,
   paw: _paw,
   palette: _palette,
-  basisFamilie: _basisFamilie,
-  helm: _helm,
+  // Erst beim Zeichnen nachschlagen, nicht beim Eintragen: IconKern lädt IconMuenzen.jsx beim
+  // Start nach, und dieser Import hier holt dieselbe Datei fest. Je nach Reihenfolge ist sie beim
+  // Eintragen erst halb ausgewertet, `_basisFamilie`/`_helm` sind dann noch `undefined`. Dann
+  // fiel CI 09.11.2026 zweimal mit «fn is not a function» in iconsVersteckt.test.js. Wächter:
+  // zeichenErgaenzen weist Nicht-Funktionen mit Namen ab.
+  basisFamilie: () => _basisFamilie(),
+  helm: () => _helm(),
 });
 
 // Lebensereignisse (Gruppe E, Icon-Plan Schritt 7b): ein Zeichen je Ereignis, dasselbe im

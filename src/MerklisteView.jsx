@@ -4,6 +4,7 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
+import { useFremdeListe } from './hooks/useFremdeListe.js';
 import { loadTodos, saveTodos, merkpunktBauen, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 
@@ -54,6 +55,8 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     if (vorlaeufig) return;
     if (!punkte) saveTodos(eigene);
   }, [eigene, vorlaeufig, punkte]);
+  // Änderungen aus einem anderen Tab übernehmen, statt sie beim nächsten Abhaken zu überschreiben.
+  useFremdeListe('or5_merkliste', loadTodos, setEigene, !punkte && !vorlaeufig);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
@@ -102,8 +105,8 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     card: { maxWidth: '680px', paddingTop: space.md + 'px' },
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.6, marginBottom: space.lg + 'px', maxWidth: '520px' },
     addRow: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', alignItems: 'center', marginBottom: space.lg + 'px' },
-    input: { flex: '1 1 320px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
-    select: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', cursor: 'pointer' },
+    input: { flex: '1 1 320px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
+    select: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', cursor: 'pointer' },
     addBtn: knopfStil(palette, 'haupt'),
     sectionTitle: { fontFamily: 'inherit', fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, margin: space.md + 'px 0 ' + space.sm + 'px' },
     row: { display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
@@ -118,7 +121,7 @@ export const MerklisteView = ({ palette, t, onNavigate, punkte, aendere }) => {
     unter: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.normal },
     tagZeile: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', marginBottom: '4px' },
     tagKnopf: { ...knopfStil(palette, 'neben'), padding: '4px 12px', minHeight: '44px', fontSize: text.xs },
-    tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.border, borderRadius: radius.full + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
+    tagFeld: { padding: '4px 8px', fontSize: text.xs, border: '1px solid ' + palette.feldrand, borderRadius: radius.full + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     erledigtAm: { fontSize: text.xs, color: palette.mid },
     del: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, minWidth: '44px', minHeight: '44px', background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
     meldung: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', marginTop: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', fontSize: text.sm, color: palette.text },

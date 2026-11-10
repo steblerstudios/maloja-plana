@@ -4,6 +4,7 @@ import path from 'node:path';
 import { GEPRUEFT, inhaltFuer, QUELLEN, quelleFuer, BASIS } from '../../scripts/seiten-inhalt.mjs';
 import { SPRACHEN, RAHMEN, SPRACHNAME } from '../../scripts/seiten-sprachen.mjs';
 import { HINTERGRUND } from '../../scripts/seiten/hintergrund.mjs';
+import { KANTONSSEITEN } from '../../scripts/seiten/praemienverbilligung-kantone.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Die Erklärseiten in fünf Sprachen · seit 21.09.2026
@@ -152,7 +153,8 @@ describe('Erklärseiten in fünf Sprachen', () => {
       // + die Hintergrundseiten: nur Deutsch, Deutsch ist freigegeben. Dass sie
       // keine Sprach-Alternativen tragen, prüft hintergrundSeiten.test.js.
       expect(SPRACHEN.find((s) => s.code === 'de').freigegeben).toBe(true);
-      expect((xml.match(/<loc>/g) || []).length).toBe(erwartet + HINTERGRUND.length);
+      // + die Kantonsseiten (seit 09.11.2026): ebenfalls nur Deutsch.
+      expect((xml.match(/<loc>/g) || []).length).toBe(erwartet + HINTERGRUND.length + KANTONSSEITEN.length);
     });
 
     it('hreflang nennt keine Sprache, die nicht freigegeben ist', () => {

@@ -55,7 +55,7 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
       expect(Object.keys(KANTONSKARTE).sort()).toEqual(WERKZEUGE.map(([, v]) => v).sort());
       for (const ziel of Object.values(KANTONSKARTE)) {
         expect(ziel, ziel).toMatch(/^\/kantonsatlas\/#karte-[a-z]+$/);
-        expect(atlas, ziel).toContain(`<figure class="abb atlas" id="${ziel.split('#')[1]}">`);
+        expect(atlas, ziel).toMatch(new RegExp(`<figure class="abb atlas" id="${ziel.split('#')[1]}"[^>]*>`));
       }
     });
 
@@ -86,7 +86,7 @@ describe('Werkzeuge verlinken ihre Erklärseite', () => {
   // C-A (07.11.2026): «Zum Verstehen» und «Auf der Karte» am Ende der Kapitelseiten, nach dem Organigramm.
   describe('Kapitelseiten: Zum Verstehen und Auf der Karte', () => {
     const atlas = fs.readFileSync(path.resolve(process.cwd(), 'public', 'kantonsatlas', 'index.html'), 'utf8');
-    const kopf = (anker) => (atlas.match(new RegExp(`<figure class="abb atlas" id="${anker}">[\\s\\S]*?<p class="abb-kopf"[^>]*><span>[^<]*</span><span>([^<]*)</span>`)) || [])[1];
+    const kopf = (anker) => (atlas.match(new RegExp(`<figure class="abb atlas" id="${anker}"[^>]*>[\\s\\S]*?<p class="abb-kopf"[^>]*><span>[^<]*</span><span>([^<]*)</span>`)) || [])[1];
 
     it('fünf Kapitel, Behörden und Gesundheit ohne Zeile', () => {
       expect(Object.keys(ZUM_VERSTEHEN).sort()).toEqual(['ausbildung', 'basis', 'finanzen', 'versicherungen', 'wohnen']);
