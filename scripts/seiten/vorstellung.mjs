@@ -89,7 +89,8 @@ const PINSEL_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100
 const LEER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 const PINSEL = `url("data:image/svg+xml,${encodeURIComponent(PINSEL_SVG)}")`;
 
-// O · Die drei Geräte auf dem Blick (Papier): Punkte auf der Passstrasse in pass-blick-papier.svg
+// O · Die drei Geräte auf dem Blick (Salbei, seit 10.11. abends getauscht mit Papier; beide haben dieselbe Kamera und
+// dieselbe Strasse): Punkte auf der Passstrasse in pass-blick.svg
 // (viewBox 0 -240 1600 1000), umgerechnet in Prozent der Bildfläche. Von links nach rechts gelesen.
 const GERAETE = [
   { name: 'iPhone und iPad', zeichen: 'telefon', x: '37.4%', y: '69.5%' },   // Strassenpunkt (599 | 455)
@@ -349,6 +350,8 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     .pass-karte figcaption{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px; padding-top:12px; font-size:15px }
     .pass-karte .quelle{ font-size:13px; opacity:.85 }
     .pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)) }
+    /* Seit dem Tausch (Papier-Blick nach Kehre 7) endet der Blick in Creme: weich ins Salbei der Karte, keine Kante. */
+    .pass-karte-anfang{ height:16vh; background:linear-gradient(#FCF0E4, #7E8F7B) }
     @media (max-width:760px){
       .pass-karte-bild{ aspect-ratio:4/3 }
       .pass-karte-bild{ -webkit-mask-image:none; mask-image:none }
@@ -545,12 +548,11 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       /* K · Unter 960 px eine Spalte: daneben brach der Titel in vier Zeilen. Die Geräte stehen unter dem Text. */
       .pass{ grid-template-columns:1fr; gap:32px; padding-top:112px; align-items:start }
       .geraete{ justify-self:start }
-      /* N unter 960 px: Text über der Karte (daneben stiess er am Tablet an «App holen»), die Karte 4:3 mittig
-         beschnitten, die Knöpfe bleiben an ihren Punkten (--xh). */
-      .schluss-bild > *{ grid-area:auto }
-      .schluss-text{ padding-top:0; padding-bottom:16px }
-      .schluss-bild img{ aspect-ratio:4/3; -webkit-mask-image:none; mask-image:none }
-      .schluss-punkt, .am-punkt{ left:var(--xh) }
+      /* N unter 960 px: der Text bleibt auf den Linien (Stebler Studios 10.11. abends), die Karte wird 4:3 mittig
+         beschnitten, damit er neben «App holen» Platz hat; die Knöpfe bleiben an ihren Punkten (--xh). */
+      .schluss-bild img{ aspect-ratio:4/3 }
+      .schluss-text h2{ max-width:11em }
+      .schluss-punkt, .knopf.am-punkt{ left:var(--xh) }
       .liste{ grid-template-columns:1fr 1fr }
     }
     @media (max-width:760px){
@@ -588,6 +590,14 @@ ${GERAETE.map((_, i) => `    #g${i + 1}:checked ~ .holen .t${i + 1}{ display:blo
       .geraet-wahl label{ position:static; transform:none }
       .geraet-wahl label::after{ content:none }
       .schluss-text h2{ font-size:28px }
+      /* N am Handy: Karte hochkant 3:5 (mittig beschnitten, --xp), Text links oben auf der ruhigen Fläche,
+         «App holen» über seinem Punkt — rechts daneben ist kein Platz. */
+      .schluss-bild img{ aspect-ratio:3/5;
+        -webkit-mask-image:radial-gradient(ellipse 72% 34% at 28% 14%, transparent 55%, #000 100%); mask-image:radial-gradient(ellipse 72% 34% at 28% 14%, transparent 55%, #000 100%) }
+      .schluss-text h2, .schluss-text .unterzeile{ max-width:62% }
+      .schluss-punkt, .knopf.am-punkt{ left:var(--xp) }
+      .knopf.am-punkt.oben{ transform:translate(-50%, calc(-100% - 22px)) }
+      .knopf.am-punkt.oben::before{ right:auto; left:50%; top:100%; width:0; height:16px; border-top:0; border-left:1.5px solid var(--sand-tief) }
       footer a{ display:inline-block; padding:10px 2px }
     }`;
 
@@ -830,8 +840,9 @@ ${reiseStationen()}
         </section>
         <div class="reise-ausklang" aria-hidden="true"></div>
         <figure class="pass-blick">
-          <img src="/vorstellung/pass-blick.svg" alt="Der Blick von der Passhöhe über die Kehren ins Bergell hinunter, in Höhenlinien, mit der Passstrasse." width="1600" height="1000" loading="lazy" decoding="async">
+          <img src="/vorstellung/pass-blick-papier.svg" alt="Der Blick von der Passhöhe über die Kehren ins Bergell hinunter, in Höhenlinien, mit der Passstrasse." width="1600" height="1000" loading="lazy" decoding="async">
         </figure>
+        <div class="pass-karte-anfang" aria-hidden="true"></div>
         <figure class="pass-karte">
           <div class="pass-karte-bild">
             <img src="/vorstellung/pass-karte.svg" alt="Karte des Malojapasses von oben: Höhenlinien und die Passstrasse, die in engen Kehren aus dem Bergell zur Passhöhe hinaufführt." width="1400" height="650" loading="lazy" decoding="async">
@@ -917,7 +928,7 @@ ${BRILLEN.map((b) => `        <li><h3>${esc(b.name)}</h3><p>${esc(b.frage)}</p><
 ${GERAETE.map((g, i) => `        <input type="radio" name="geraet" id="g${i + 1}" class="unsichtbar"${i === 0 ? ' checked' : ''}>`).join('\n')}
         <figure class="holen-blick">
           <div class="holen-flaeche">
-            <img class="papier-linien" src="/vorstellung/pass-blick-papier.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+            <img src="/vorstellung/pass-blick.svg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
 ${GERAETE.map((g, i) => `            <span class="geraet-punkt p${i + 1}" style="--x:${g.x}; --y:${g.y}" aria-hidden="true"></span>`).join('\n')}
           </div>
           <div class="geraet-wahl">
@@ -1011,9 +1022,9 @@ ${GERAETE.map((g, i) => `            <label for="g${i + 1}" style="--x:${g.x}; -
         </div>
         <div class="schluss-flaeche">
           <img class="papier-linien" src="/vorstellung/pass-karte-papier.svg" alt="" width="1400" height="650" loading="lazy" decoding="async">
-          <span class="schluss-punkt" style="--x:43.6%; --y:76.5%; --xh:39.7%" aria-hidden="true"></span>
-          <a class="knopf zweit am-punkt" style="--x:43.6%; --y:76.5%; --xh:39.7%" href="${BEISPIEL}">Beispiel ansehen<span class="unsichtbar"> — hier unten beginnt der Weg</span></a>
-          <a class="knopf zweit am-punkt" style="--x:57.8%; --y:26.6%; --xh:62.6%" href="#holen">App holen<span class="unsichtbar"> — oben an der Passhöhe</span></a>
+          <span class="schluss-punkt" style="--x:43.6%; --y:76.5%; --xh:39.7%; --xp:27%" aria-hidden="true"></span>
+          <a class="knopf zweit am-punkt" style="--x:43.6%; --y:76.5%; --xh:39.7%; --xp:27%" href="${BEISPIEL}">Beispiel ansehen<span class="unsichtbar"> — hier unten beginnt der Weg</span></a>
+          <a class="knopf zweit am-punkt oben" style="--x:57.8%; --y:26.6%; --xh:62.6%; --xp:78%" href="#holen">App holen<span class="unsichtbar"> — oben an der Passhöhe</span></a>
         </div>
       </div>
       <p class="rahmen quelle">Höhen © swisstopo · Strasse © OpenStreetMap</p>

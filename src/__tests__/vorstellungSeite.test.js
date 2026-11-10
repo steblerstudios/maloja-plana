@@ -136,12 +136,13 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     expect(svg).not.toMatch(/<script|href=/);   // reines Bild, nichts Ausführbares, nichts Nachgeladenes
   });
 
-  it('Vier Höhenlinien-Bilder (10.11. abends): C+A nach Kehre 7, D in «App holen» (O), B trägt den Schluss (N), je mit Quelle', () => {
+  it('Vier Höhenlinien-Bilder: nach Kehre 7 Blick Papier + Karte Salbei, Blick Salbei in «App holen» (O, getauscht 10.11. abends), Karte Papier trägt den Schluss (N)', () => {
     const lage = (f) => koerper.indexOf(`src="/vorstellung/${f}"`);
-    expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
-    expect(lage('pass-karte.svg')).toBeGreaterThan(lage('pass-blick.svg'));
-    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('id="t-holen"'));
-    expect(koerper.indexOf('class="holen"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
+    expect(lage('pass-blick-papier.svg')).toBeGreaterThan(koerper.indexOf('class="reise-ausklang"'));
+    expect(koerper.indexOf('class="pass-karte-anfang"')).toBeGreaterThan(lage('pass-blick-papier.svg'));
+    expect(lage('pass-karte.svg')).toBeGreaterThan(koerper.indexOf('class="pass-karte-anfang"'));
+    expect(lage('pass-blick.svg')).toBeGreaterThan(koerper.indexOf('id="t-holen"'));
+    expect(koerper.indexOf('class="holen"')).toBeGreaterThan(lage('pass-blick.svg'));
     expect(lage('pass-karte-papier.svg')).toBeGreaterThan(koerper.indexOf('id="t-schluss"'));
     expect(koerper.indexOf('<footer')).toBeGreaterThan(lage('pass-karte-papier.svg'));
     for (const f of ['pass-blick.svg', 'pass-blick-papier.svg', 'pass-karte-papier.svg']) {
@@ -342,10 +343,15 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   // Zweite Runde (Stebler Studios «Ja, N bis P so», 10.11.2026)
   it('N · Schluss auf der Karte: «Beispiel ansehen» am Fuss der Kehren, «App holen» an der Passhöhe, deckend', () => {
     const schluss = html.slice(html.indexOf('<section class="schluss-karte"'), html.indexOf('</section>', html.indexOf('<section class="schluss-karte"')));
-    expect(schluss).toMatch(/style="--x:43\.6%; --y:76\.5%; --xh:39\.7%" href="[^"]*">Beispiel ansehen/);
-    expect(schluss).toMatch(/style="--x:57\.8%; --y:26\.6%; --xh:62\.6%" href="#holen">App holen/);
+    expect(schluss).toMatch(/style="--x:43\.6%; --y:76\.5%; --xh:39\.7%; --xp:27%" href="[^"]*">Beispiel ansehen/);
+    expect(schluss).toMatch(/style="--x:57\.8%; --y:26\.6%; --xh:62\.6%; --xp:78%" href="#holen">App holen/);
     expect(stil).toMatch(/\.knopf\.am-punkt\{[^}]*background:var\(--flaeche\)/);
     expect(schluss).not.toContain('knopf haupt');   // ein Hauptknopf je Seite, und der steht im Hero
+    // Der Text steht auf allen Breiten auf den Linien (Stebler Studios 10.11. abends): nie aus dem Raster gelöst
+    expect(stil).not.toMatch(/\.schluss-bild > \*\{ grid-area:auto \}/);
+    expect(handy).toContain('.schluss-punkt, .knopf.am-punkt{ left:var(--xp) }');
+    expect(handy).toContain('.schluss-bild img{ aspect-ratio:3/5;');
+    expect(schluss).toMatch(/class="knopf zweit am-punkt oben" style="[^"]*--xp:78%"/);
     // Passhöhe in der Karte (viewBox 1 1 278 128) liegt bei 161,6 | 35,1 → 57,8 % | 26,6 %
     const karte = fs.readFileSync(path.join(WURZEL, 'public/vorstellung/pass-karte-papier.svg'), 'utf8');
     expect(karte).toContain('<circle cx="161.6" cy="35.1"');
@@ -366,6 +372,15 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     for (let i = 0; i < 7; i++) expect(stil).toContain(`.reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`);
     expect(stil).toContain('color-mix(in srgb, var(--ton) 74%, transparent) 46%');
     expect(handy).toContain('background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent)');
+  });
+
+  // Das Brand Book wird im selben Zweig nachgeführt (10.11.: ein Skript brach ab, die Zeilen N–P fehlten unbemerkt).
+  it('Brand Book §7e beschreibt Seitenfarbe, App holen (O), Schluss (N) und die Schicht in der Kapitelfarbe (P)', () => {
+    const buch = fs.readFileSync(path.join(WURZEL, 'docs/brand/brand-guidelines.md'), 'utf8');
+    const e = buch.slice(buch.indexOf('### 7e.'), buch.indexOf('## 8.'));
+    for (const zeile of ['| **Seitenfarbe** |', '| **App holen (O)** |', '| **Schluss (N)** |']) expect(e).toContain(zeile);
+    expect(e).toContain('**in der Farbe der Kehre**');
+    expect(e).toContain('`#FCF0E4`');
   });
 
   it('Browserleiste hell nach der Seitenfarbe, dunkel nach Granit', () => {
