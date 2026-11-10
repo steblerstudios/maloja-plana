@@ -1675,6 +1675,8 @@ export default {
     open: 'Avrir',
     edit: 'Modifitgar',
     delete: 'Allontanar',
+    entfernt: 'Allontanà',
+    rueckgaengig: 'Revocar',
     pickDate: 'Tscherner ina data',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',

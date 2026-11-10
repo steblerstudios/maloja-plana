@@ -1379,6 +1379,8 @@ export default {
     open: 'Ouvrir',
     edit: 'Modifier',
     delete: 'Retirer',
+    entfernt: 'Retiré',
+    rueckgaengig: 'Annuler',
     pickDate: 'Choisir une date',
     simpleView: 'Vue simplifiée',
     grayscale: 'Niveaux de gris',

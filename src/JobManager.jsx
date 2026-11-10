@@ -2,13 +2,24 @@ import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { knopfStil } from './components/PrimaryButton.jsx';
+import { useRueckgaengig, wiederEinsetzen } from './hooks/useRueckgaengig.js';
+import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 export const JobManager = ({ palette, t, jobs, onChange }) => {
   const list = Array.isArray(jobs) ? jobs : [];
 
   const addJob = () => onChange([...list, { employer: '', jobTitle: '', pensum: '', period: '' }]);
   const updateJob = (idx, patch) => onChange(list.map((d, i) => i === idx ? { ...d, ...patch } : d));
-  const removeJob = (idx) => onChange(list.filter((_, i) => i !== idx));
+  // Sofort weg, «Entfernt · Rückgängig» legt die Stelle zurück (10.11.2026); leere Zeilen ohne Meldung.
+  const { entfernt, merke, rueckgaengig: zurueck } = useRueckgaengig();
+  const removeJob = (idx) => {
+    const job = list[idx];
+    if (job && (job.employer || job.jobTitle || job.pensum || job.period)) {
+      merke({ item: job, index: idx, text: job.employer || job.jobTitle || t('jobs.label', { nr: idx + 1 }) });
+    }
+    onChange(list.filter((_, i) => i !== idx));
+  };
+  const jobZurueck = () => zurueck(({ item, index }) => onChange(wiederEinsetzen(list, item, index)));
 
   const inputStyle = {
     width: '100%', padding: (space.ms) + 'px ' + space.sm + 'px',
@@ -35,7 +46,8 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
           React.createElement('button', {
             onClick: () => removeJob(idx),
             'aria-label': t('common.delete'),
-            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minHeight: '24px' }
+            // 44 × 44 Tippfläche wie bei den Sprachen (M4) — vorher 24 hoch.
+            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 8px', minWidth: '44px', minHeight: '44px' }
           }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         ),
         React.createElement('div', { style: { marginBottom: space.sm } },
@@ -82,6 +94,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
         )
       )
     ),
+    React.createElement(RueckgaengigMeldung, { palette, t, entfernt, onRueckgaengig: jobZurueck }),
     React.createElement('button', {
       onClick: addJob,
       style: { ...knopfStil(palette, 'neben'), alignSelf: 'flex-start' }
