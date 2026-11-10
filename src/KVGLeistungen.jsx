@@ -149,7 +149,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                 max: inDays(0),
                 onChange: (e) => { const v = e.target.value; setLastVisit(v); saveVorsorgeDate(item.key, v); setReminderSaved(false); },
                 style: {
-                  fontSize: text.xs, padding: '4px 8px', border: '1px solid ' + palette.border,
+                  fontSize: text.xs, padding: '4px 8px', border: '1px solid ' + palette.feldrand,
                   borderRadius: radius.full, fontFamily: 'inherit', color: palette.text,
                   background: 'transparent',
                 }
@@ -475,7 +475,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           onChange: (e) => setFranchise(Number(e.target.value)),
           style: {
             width: '100%', padding: space.sm, borderRadius: radius.md,
-            border: '1px solid ' + palette.border, background: palette.surface,
+            border: '1px solid ' + palette.feldrand, background: palette.surface,
             color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
             appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px',
             cursor: 'pointer',
@@ -524,7 +524,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           onChange: (e) => setNewDatum(e.target.value),
           style: {
             flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.md,
-            border: '1px solid ' + palette.border, background: palette.surface,
+            border: '1px solid ' + palette.feldrand, background: palette.surface,
             color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box',
           }
         }),
@@ -537,7 +537,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           placeholder: t('kvg.belegBetrag'),
           style: {
             flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.md,
-            border: '1px solid ' + palette.border, background: palette.surface,
+            border: '1px solid ' + palette.feldrand, background: palette.surface,
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           }
         })
@@ -563,7 +563,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         onChange: (e) => setNewFrist(e.target.value),
         style: {
           width: '100%', padding: space.sm, borderRadius: radius.md,
-          border: '1px solid ' + palette.border, background: palette.surface,
+          border: '1px solid ' + palette.feldrand, background: palette.surface,
           color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
           boxSizing: 'border-box', marginBottom: '8px',
         }
@@ -591,7 +591,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           placeholder: t('kvg.taxpunkte'),
           style: {
             flex: '1 1 0', minWidth: 0, padding: '8px 8px', borderRadius: radius.md,
-            border: '1px solid ' + palette.border, background: palette.up,
+            border: '1px solid ' + palette.feldrand, background: palette.up,
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           }
         }),
@@ -635,7 +635,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
           placeholder: 'CHF',
           style: {
             width: '100%', padding: '8px 8px', borderRadius: radius.md,
-            border: '1px solid ' + palette.border, background: palette.up,
+            border: '1px solid ' + palette.feldrand, background: palette.up,
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box', marginBottom: '8px',
           }
         }),
@@ -852,7 +852,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
         placeholder: '0',
         style: {
           width: '100%', padding: space.sm, borderRadius: radius.md,
-          border: '1px solid ' + palette.border, background: palette.surface,
+          border: '1px solid ' + palette.feldrand, background: palette.surface,
           color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           marginBottom: '12px',
         }
@@ -869,7 +869,7 @@ const RechnungTab = ({ palette, t, data, form }) => {
           onChange: (e) => setSelCanton(e.target.value),
           style: {
             width: '100%', padding: space.sm, borderRadius: radius.md,
-            border: '1px solid ' + palette.border, background: palette.surface,
+            border: '1px solid ' + palette.feldrand, background: palette.surface,
             color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
             appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px',
             cursor: 'pointer',

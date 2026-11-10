@@ -15,11 +15,12 @@ export const VorlesenButton = ({ text, speak, size = 14, color, style = {}, labe
       border: 'none',
       cursor: 'pointer',
       padding: '2px',
-      // Tap-Target ≥24px (WCAG 2.5.8): Icon bleibt klein/subtil, aber die Trefferfläche
-      // erreicht die AA-Mindestgrösse — wichtig, da genau die vorlese-bedürftige Gruppe
-      // auf sichere Antippbarkeit angewiesen ist.
-      minWidth: '24px',
-      minHeight: '24px',
+      // Trefferfläche 44 × 44 wie jede Tippfläche in Maloja (Querschnitt 2, 09.11.2026; vorher 24) —
+      // gerade die vorlese-bedürftige Gruppe braucht sie. Der negative Rand hält das Icon klein und die
+      // Zeile gleich hoch: die Fläche wächst unsichtbar um 10 px je Seite.
+      minWidth: '44px',
+      minHeight: '44px',
+      margin: '-10px',
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',

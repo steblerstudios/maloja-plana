@@ -3,7 +3,7 @@ import { calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdIn
 import { rueckerstattungsFreibetrag } from './data/sozialhilfeRechner.js';
 import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { ErklaerseiteLink } from './components/ErklaerseiteLink.jsx';
+import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -44,6 +44,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const stelle = React.createElement(OfficialLinkBox, { palette, t, data, ids: 'sozialhilfe', cantonalKey: 'sozialdienst', alsZeilen: true });
   const wege = React.createElement(React.Fragment, null,
     // D1 (06.11.2026): zur öffentlichen Erklärseite «Sozialhilfe in der Schweiz».
+    React.createElement(VerstehenImWerkzeug, { palette, t, view: 'sozialhilfe', kanton: canton }),
     React.createElement(ErklaerseiteLink, { palette, t, view: 'sozialhilfe' }),
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
@@ -119,7 +120,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
             type: 'number', inputMode: 'numeric', min: '0', value: erbschaft,
             onChange: (e) => setErbschaft(e.target.value),
             placeholder: '0',
-            style: { width: '160px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
+            style: { width: '160px', padding: '8px 12px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
           }),
           (Number(erbschaft) || 0) > 0 && React.createElement('div', {
             style: { marginTop: space.sm, padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.md, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, lineHeight: leading.relaxed },

@@ -68,5 +68,18 @@
       "icons": [{ "src": "app-icon.svg", "sizes": "any" }]
     }
   ],
+  "share_target": {
+    "action": "./teilen-empfang",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "datei",
+          "accept": ["application/pdf", ".pdf", "image/*"]
+        }
+      ]
+    }
+  },
   "prefer_related_applications": false
 }

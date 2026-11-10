@@ -17,6 +17,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle, nennbareKontrollstelle } from './data/lohnRechtsstellen.js';
 import { escapeHtml as esc } from './utils/helpers.js';
+import { htmlSprache } from './utils/htmlSprache.js';
 import { zahl } from './utils/geld.js';
 import { plusTage, heuteIso } from './utils/fristen.js';
 
@@ -350,6 +351,7 @@ function getTaxExtensionFields(data, t) {
     recipient: recipientPlaceholder(t),
     taxYear: year - 1,
     canton: data.basis?.canton || data.wohnen?.canton || '',
+    city: data.wohnen?.city || '', // «Ort, Datum» (Bugsuche B-14)
     filled: {
       name: !!getFullName(data.basis),
       address: !!data.wohnen?.address,
@@ -365,6 +367,7 @@ function getInsuranceSwitchFields(data, t) {
     // Bewusst NICHT kkCardNumber (Versichertenkarten-Nr. ≠ Policennummer) — sonst stünde
     // im ausgehenden Kündigungsbrief eine falsche Referenz. Ohne echtes Policennummer-Feld leer.
     policyNumber: data.versicherungen?.policyNumber || '',
+    city: data.wohnen?.city || '', // «Ort, Datum» (Bugsuche B-14)
     filled: {
       name: !!getFullName(data.basis),
       insurer: !!data.versicherungen?.kkInsurer,
@@ -407,7 +410,7 @@ const LETTER_CSS = `
 
 function wrapLetter(content, t) {
   return `<!DOCTYPE html>
-<html lang="de">
+<html lang="${htmlSprache(t)}">
 <head><meta charset="utf-8"><title>${esc(t('briefe.title'))}</title>
 <style>${LETTER_CSS}</style></head>
 <body>${content}</body></html>`;
@@ -530,6 +533,7 @@ function getKkReklamationFields(data, t) {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
     insurer: data.versicherungen?.kkInsurer || '',
+    city: data.wohnen?.city || '', // «Ort, Datum» (Bugsuche B-14)
     filled: {
       name: !!getFullName(data.basis),
       insurer: !!data.versicherungen?.kkInsurer,
@@ -540,6 +544,7 @@ function getKkReklamationFields(data, t) {
 function generateKkReklamation(data, t, options = {}) {
   const f = getKkReklamationFields(data, t);
   const dateStr = today();
+  const cityDate = f.city ? `${esc(f.city)}, ${dateStr}` : dateStr;
   // Klartext für t()-Interpolation (wird im ${esc(t(...))} einmal escaped) — kein
   // fillHint-HTML, das sonst als Tag-Text im Brief erschiene.
   const insurerLine = f.insurer || t('briefe.fillIn');
@@ -577,7 +582,7 @@ function generateKkReklamation(data, t, options = {}) {
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
     <div class="recipient">${f.insurer ? esc(f.insurer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + f.recipient + '</div>'}</div>
-    <div class="date-line">${dateStr}</div>
+    <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.kkReklamation.subject'))}</div>
     <div class="body-text">
       <p>${esc(t('briefe.kkReklamation.salutation'))}</p>
