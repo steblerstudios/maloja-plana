@@ -7256,6 +7256,8 @@ export default {
     vorausWohnsitz: 'Wohnsitz im Kanton seit mindestens {jahre} Jahren.', // TODO(rm): übersetzen
     vorausWohnsitzGE: 'Wohnsitz im Kanton während mindestens {jahre} Jahren ohne Unterbruch in den letzten fünf Jahren.', // TODO(rm): übersetzen
     vorausVermoegen: 'Reinvermögen höchstens CHF {betrag}.', // TODO(rm): übersetzen
+    vorausWohnsitzOderArbeit: 'Wohnsitz oder Arbeitsplatz im Kanton seit mindestens {jahre} Jahren.', // TODO(rm): übersetzen
+    vorausVermoegenJeKind: 'Reinvermögen höchstens CHF {betrag} (CHF {basis} und CHF {jeKind} je Kind).', // TODO(rm): übersetzen
     vorausMindestmieteBS: 'Die Miete muss je nach Zimmerzahl eine Mindesthöhe erreichen; darunter gibt es keinen Beitrag. Die Werte stehen im Merkblatt des Kantons.', // TODO(rm): übersetzen
     vorausZimmerZG: 'Die Wohnung hat höchstens zwei Zimmer mehr, als Personen darin wohnen.', // TODO(rm): übersetzen
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' }, // TODO(rm): übersetzen

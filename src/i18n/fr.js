@@ -5256,6 +5256,8 @@ export default {
     vorausWohnsitz: 'Domicile dans le canton depuis au moins {jahre} ans.',
     vorausWohnsitzGE: 'Domicile dans le canton pendant au moins {jahre} ans sans interruption au cours des cinq dernières années.',
     vorausVermoegen: 'Fortune nette de CHF {betrag} au plus.',
+    vorausWohnsitzOderArbeit: 'Domicile ou lieu de travail dans le canton depuis au moins {jahre} ans.',
+    vorausVermoegenJeKind: 'Fortune nette de CHF {betrag} au plus (CHF {basis} et CHF {jeKind} par enfant).',
     vorausMindestmieteBS: 'Le loyer doit atteindre un montant minimal selon le nombre de pièces ; en dessous, aucune aide n’est versée. Les valeurs figurent dans la notice du canton.',
     vorausZimmerZG: 'Le logement compte au plus deux pièces de plus que le nombre de personnes qui y vivent.',
     vorausZimmerZGZuViel: { sie: 'Votre logement compte {zimmer} pièces pour {personen} personnes. Zoug ne soutient que les logements comptant au plus deux pièces de plus que de personnes.', du: 'Ton logement compte {zimmer} pièces pour {personen} personnes. Zoug ne soutient que les logements comptant au plus deux pièces de plus que de personnes.' },

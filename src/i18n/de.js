@@ -5311,6 +5311,8 @@ export default {
     vorausWohnsitz: 'Wohnsitz im Kanton seit mindestens {jahre} Jahren.',
     vorausWohnsitzGE: 'Wohnsitz im Kanton während mindestens {jahre} Jahren ohne Unterbruch in den letzten fünf Jahren.',
     vorausVermoegen: 'Reinvermögen höchstens CHF {betrag}.',
+    vorausWohnsitzOderArbeit: 'Wohnsitz oder Arbeitsplatz im Kanton seit mindestens {jahre} Jahren.',
+    vorausVermoegenJeKind: 'Reinvermögen höchstens CHF {betrag} (CHF {basis} und CHF {jeKind} je Kind).',
     vorausMindestmieteBS: 'Die Miete muss je nach Zimmerzahl eine Mindesthöhe erreichen; darunter gibt es keinen Beitrag. Die Werte stehen im Merkblatt des Kantons.',
     vorausZimmerZG: 'Die Wohnung hat höchstens zwei Zimmer mehr, als Personen darin wohnen.',
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' },

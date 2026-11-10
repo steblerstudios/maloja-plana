@@ -5230,6 +5230,8 @@ export default {
     vorausWohnsitz: 'Domicilio nel cantone da almeno {jahre} anni.',
     vorausWohnsitzGE: 'Domicilio nel cantone per almeno {jahre} anni senza interruzione negli ultimi cinque anni.',
     vorausVermoegen: 'Sostanza netta al massimo CHF {betrag}.',
+    vorausWohnsitzOderArbeit: 'Domicilio o luogo di lavoro nel cantone da almeno {jahre} anni.',
+    vorausVermoegenJeKind: 'Sostanza netta al massimo CHF {betrag} (CHF {basis} e CHF {jeKind} per figlio o figlia).',
     vorausMindestmieteBS: 'L’affitto deve raggiungere un importo minimo a seconda del numero di locali; al di sotto non è versato alcun sussidio. I valori figurano nel promemoria del Cantone.',
     vorausZimmerZG: 'L’abitazione ha al massimo due locali in più delle persone che vi abitano.',
     vorausZimmerZGZuViel: { sie: 'La Sua abitazione ha {zimmer} locali per {personen} persone. Zugo sostiene solo abitazioni con al massimo due locali in più delle persone.', du: 'La tua abitazione ha {zimmer} locali per {personen} persone. Zugo sostiene solo abitazioni con al massimo due locali in più delle persone.' },

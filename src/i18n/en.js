@@ -5329,6 +5329,8 @@ export default {
     vorausWohnsitz: 'Resident in the canton for at least {jahre} years.',
     vorausWohnsitzGE: 'Resident in the canton for at least {jahre} years without interruption within the last five years.',
     vorausVermoegen: 'Net assets of at most CHF {betrag}.',
+    vorausWohnsitzOderArbeit: 'Resident or working in the canton for at least {jahre} years.',
+    vorausVermoegenJeKind: 'Net assets of at most CHF {betrag} (CHF {basis} plus CHF {jeKind} per child).',
     vorausMindestmieteBS: 'Depending on the number of rooms, the rent must reach a minimum amount; below it there is no subsidy. The values are in the canton’s information sheet.',
     vorausZimmerZG: 'The flat has at most two rooms more than the number of people living in it.',
     vorausZimmerZGZuViel: 'Your flat has {zimmer} rooms for {personen} people. Zug only supports flats with at most two rooms more than people.',
