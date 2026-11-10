@@ -7718,10 +7718,10 @@ export default {
     zukunftSzenarioFrueh: 'Pensiun anticipada: {dauer} avant la vegliadetgna da referenza ({referenzalter}).',
     zukunftSzenarioReferenz: 'Pensiun ordinara a la vegliadetgna da referenza ({referenzalter}) — AVS cumpletta, senza reducziun u supplement.',
     zukunftSzenarioAufschub: 'Spustament: {dauer} sur la vegliadetgna da referenza ({referenzalter}) ora.',
-    zukunftSzenarioAhvFrueh: 'AVS retratga a partir da {alter}: {pct}, la reducziun resta per vita.',
+    zukunftSzenarioAhvFrueh: 'AVS retratga a partir da {alter} onns: {pct} durant l’entira vita (il pli baud a partir da 63 onns).',
     zukunftSzenarioAhvAufschub: 'AVS spustada fin {alter} onns: {pct} durant l’entira vita.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    zukunftSzenarioBridge: { sie: 'Ils onns da {von} fin {bis} surpassais Vus senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.', du: 'Ils onns da {von} fin {bis} surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.' },
+    zukunftSzenarioBridge: { sie: 'Ils onns da {von} fin 63 surpassais Vus senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.', du: 'Ils onns da {von} fin 63 surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioSaeulen: { sie: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da Vossa cassa da pensiun.', du: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da tia cassa da pensiun.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

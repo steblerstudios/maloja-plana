@@ -9,7 +9,7 @@ import ErklaerFigurKlein from '../components/ErklaerFigurKlein.jsx';
 import { KARTEN, KARTE_GEO, STUFEN_FARBEN } from '../data/kantonskarten.js';
 import { ERKLAERFIGUREN } from '../data/erklaerfiguren.js';
 import { erzeugeKarten, erzeugeFiguren, svgVerstoesse } from '../../scripts/app-verstehen.mjs';
-import { STUFEN_FARBEN as ATLAS_FARBEN, LEGENDE } from '../../scripts/seiten/kantonsatlas.mjs';
+import { STUFEN_FARBEN as ATLAS_FARBEN, LEGENDE, KARTEN_FRUCHT } from '../../scripts/seiten/kantonsatlas.mjs';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import { LIGHT_PALETTE, DARK_PALETTE } from '../config/constants.js';
@@ -32,7 +32,10 @@ describe('Erzeugte Daten sind frisch (eine Quelle mit den öffentlichen Seiten)'
     expect(quelle('data/erklaerfiguren.js')).toBe(erzeugeFiguren());
   });
   it('Stufenfarben und Legenden sind die des Atlas, nicht abgeschrieben', () => {
-    expect(STUFEN_FARBEN).toEqual(ATLAS_FARBEN);
+    for (const [k, K] of Object.entries(KARTEN)) {
+      expect(K.frucht, k).toBe(KARTEN_FRUCHT[k]);
+      expect(STUFEN_FARBEN[K.frucht], k).toEqual(ATLAS_FARBEN[K.frucht]);
+    }
     expect(quelle('components/KantonsKarteKlein.jsx')).not.toMatch(/#[0-9A-Fa-f]{6}/);
     for (const [k, K] of Object.entries(KARTEN)) expect(LEGENDE[k], k).toContain(K.legende);
   });
@@ -144,9 +147,10 @@ describe('Die Karte (C)', () => {
   it('dunkler Modus: dunkle Stufen des Atlas und der passende Satz', () => {
     const hell = karte(P, 'praemie', 'BE');
     const dunkel = karte(DARK_PALETTE, 'praemie', 'BE');
-    expect(hell).toContain(STUFEN_FARBEN.hell[4]);
-    expect(dunkel).toContain(STUFEN_FARBEN.dunkel[4]);
-    expect(dunkel).not.toContain(STUFEN_FARBEN.hell[4]);
+    const satz = STUFEN_FARBEN[KARTEN.praemie.frucht];
+    expect(hell).toContain(satz.hell[4]);
+    expect(dunkel).toContain(satz.dunkel[4]);
+    expect(dunkel).not.toContain(satz.hell[4]);
     expect(hell).toContain(t('erklaerseite.stufenHinweis'));
     expect(dunkel).toContain(t('erklaerseite.stufenHinweisDunkel'));
     expect(dunkel).not.toContain(t('erklaerseite.stufenHinweis'));
@@ -279,7 +283,19 @@ describe('Erst beim Aufklappen geladen', () => {
     }
   });
 
-  it.each([['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium']])('%s zeigt den Block', (datei, view) => {
-    expect(quelle(datei)).toMatch(new RegExp(`VerstehenImWerkzeug, \\{ palette, t, view: '${view}', kanton:`));
+  // Ausgeweitet 09.11.2026 abends: jedes Werkzeug mit einer Karte in VERSTEHEN zeigt den Block, mit seinem Kanton.
+  const WERKZEUGE = [['PraemienOrientierung.jsx', 'praemien'], ['PremiumSubsidy.jsx', 'premium'], ['TaxCalculator.jsx', 'tax'],
+    ['MietzinsOrientierung.jsx', 'mietzins'], ['AlvRechner.jsx', 'alv'], ['SozialhilfeView.jsx', 'sozialhilfe'], ['Ergaenzungsleistungen.jsx', 'ergaenzungsleistungen']];
+  it('jede Ansicht in VERSTEHEN hat ein Werkzeug, und umgekehrt', () => {
+    expect(WERKZEUGE.map(([, v]) => v).sort()).toEqual(Object.keys(VERSTEHEN).sort());
+  });
+  it.each(WERKZEUGE)('%s zeigt den Block mit Kanton', (datei, view) => {
+    expect(quelle(datei)).toMatch(new RegExp(`VerstehenImWerkzeug, \\{ palette, t, view: '${view}', kanton: [^}]+\\}`));
+  });
+  it.each(Object.entries(VERSTEHEN))('%s: Karte gerendert, Legende und Quelle dabei', (view, v) => {
+    const html = karte(P, v.karte, 'BE');
+    expect(html, view).toContain('data-eigen="ja"');
+    expect(html, view).toContain(KARTEN[v.karte].legende.slice(0, 40).replace(/'/g, '&#x27;'));
+    expect(KARTEN[v.karte].quellen.length, view).toBeGreaterThan(0);
   });
 });
