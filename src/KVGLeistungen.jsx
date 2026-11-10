@@ -19,6 +19,8 @@ import { heuteIso } from './utils/fristen.js';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
+import { useRueckgaengig, wiederEinsetzen, nochEntfernt } from './hooks/useRueckgaengig.js';
+import { RueckgaengigMeldung } from './components/RueckgaengigMeldung.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -349,10 +351,19 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
     setNewNichtGedeckt(''); setNgOpen(false);
     setNewEingereicht(false);
   };
+  // Sofort weg, «Entfernt · Rückgängig» legt den Beleg an dieselbe Stelle zurück (10.11.2026).
+  // Zurückgelegt wird in die Liste von DANN (`belege` beim Tipp), nicht in die beim Löschen.
+  const { entfernt, merke, rueckgaengig: zurueck } = useRueckgaengig();
   const removeBeleg = (id) => {
     if (!onUpdateData) return;
+    const index = belege.findIndex(b => b.id === id);
+    if (index >= 0) {
+      const b = belege[index];
+      merke({ item: b, index, text: [fmtDatum(b.datum), betrag(Number(b.betrag) || 0, { hoechstens: 2 })].filter(Boolean).join(', ') });
+    }
     onUpdateData('versicherungen', 'kkBelege', belege.filter(b => b.id !== id));
   };
+  const belegZurueck = () => zurueck(({ item, index }) => onUpdateData && onUpdateData('versicherungen', 'kkBelege', wiederEinsetzen(belege, item, index)));
   // Zweite Dimension: bei der KK eingereicht? (ruhiger Haken, keine falsche Dringlichkeit)
   const toggleEingereicht = (id) => {
     if (!onUpdateData) return;
@@ -717,6 +728,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                           style: {
                             background: 'none', border: 'none', color: palette.mid, cursor: 'pointer',
                             fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                            // 44 × 44 Tippfläche (M4) — vorher so gross wie das Zeichen selbst.
+                            minWidth: '44px', minHeight: '44px', margin: '-12px -12px -12px 0',
                           }
                         }, '×')
                   )
@@ -778,6 +791,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
               React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(kosten, { hoechstens: 2 }))
             )
           ),
+      // Ausserhalb der Liste: nach dem letzten Beleg steht dort «keine Belege», die Meldung bleibt.
+      React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, belege), onRueckgaengig: belegZurueck }),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: '12px', paddingTop: '12px', borderTop: '1px solid ' + palette.border }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.belegRueckwirkend')))

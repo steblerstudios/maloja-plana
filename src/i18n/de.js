@@ -1380,6 +1380,8 @@ export default {
     open: 'Öffnen',
     edit: 'Bearbeiten',
     delete: 'Entfernen',
+    entfernt: 'Entfernt',
+    rueckgaengig: 'Rückgängig',
     pickDate: 'Datum wählen',
     simpleView: 'Einfache Ansicht',
     grayscale: 'Schwarzweiss',
