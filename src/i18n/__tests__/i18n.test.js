@@ -99,7 +99,8 @@ describe('hreflang auf der Startseite (index.html)', () => {
 
   it('der canonical der Startseite ist statisch und sprachlos', () => {
     // Die Bedingung, aus der alles andere folgt.
-    expect(canonical).toBe('https://malojaplana.ch/');
+    // Seit dem Umzug nach /app/ (Plan PR 2) zeigt er auf /app/ — weiter statisch, ohne Sprache.
+    expect(canonical).toBe('https://malojaplana.ch/app/');
     expect(canonical).not.toContain('lang=');
   });
 

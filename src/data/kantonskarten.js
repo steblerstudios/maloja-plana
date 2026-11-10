@@ -798,10 +798,10 @@ export const KARTEN = {
   "einheit": "% der Bevölkerung",
   "anker": "karte-sozialhilfe",
   "frucht": "zwetschge",
-  "legende": "Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog.",
+  "legende": "Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe bezog.",
   "quellen": [
    {
-    "text": "Bundesamt für Statistik, Sozialhilfestatistik: wirtschaftliche Sozialhilfe, 2024, publiziert 15.12.2025",
+    "text": "Bundesamt für Statistik, Sozialhilfestatistik: wirtschaftliche Sozialhilfe, 2025, publiziert 27.10.2026",
     "url": "https://www.bfs.admin.ch/bfs/de/home/statistiken/soziale-sicherheit/sozialhilfe/sozialhilfebeziehende/wirtschaftliche-sozialhilfe.html"
    }
   ],
@@ -813,49 +813,49 @@ export const KARTEN = {
    },
    {
     "s": 2,
-    "text": "1,5 % bis 1,9 %"
+    "text": "1,5 % bis 2,0 %"
    },
    {
     "s": 3,
-    "text": "2,0 % bis 3,4 %"
+    "text": "2,1 % bis 3,3 %"
    },
    {
     "s": 4,
-    "text": "3,6 % bis 6,7 %"
+    "text": "3,4 % bis 7,6 %"
    }
   ],
   "werte": {
    "AG": {
     "s": 2,
-    "text": "1,6 %"
+    "text": "1,5 %"
    },
    "AR": {
     "s": 2,
-    "text": "1,9 %"
+    "text": "2,0 %"
    },
    "AI": {
     "s": 1,
-    "text": "0,9 %"
+    "text": "1,2 %"
    },
    "BL": {
     "s": 3,
-    "text": "2,4 %"
+    "text": "2,5 %"
    },
    "BS": {
     "s": 4,
-    "text": "4,7 %"
+    "text": "4,8 %"
    },
    "BE": {
     "s": 4,
-    "text": "3,6 %"
+    "text": "3,4 %"
    },
    "FR": {
-    "s": 3,
+    "s": 2,
     "text": "2,0 %"
    },
    "GE": {
     "s": 4,
-    "text": "6,7 %"
+    "text": "7,6 %"
    },
    "GL": {
     "s": 2,
@@ -863,11 +863,11 @@ export const KARTEN = {
    },
    "GR": {
     "s": 1,
-    "text": "1,0 %"
+    "text": "1,2 %"
    },
    "JU": {
     "s": 4,
-    "text": "3,9 %"
+    "text": "4,2 %"
    },
    "LU": {
     "s": 3,
@@ -875,7 +875,7 @@ export const KARTEN = {
    },
    "NE": {
     "s": 4,
-    "text": "5,7 %"
+    "text": "5,9 %"
    },
    "NW": {
     "s": 1,
@@ -887,7 +887,7 @@ export const KARTEN = {
    },
    "SH": {
     "s": 3,
-    "text": "2,8 %"
+    "text": "2,7 %"
    },
    "SZ": {
     "s": 1,
@@ -895,19 +895,19 @@ export const KARTEN = {
    },
    "SO": {
     "s": 3,
-    "text": "3,4 %"
+    "text": "3,3 %"
    },
    "SG": {
     "s": 2,
-    "text": "1,8 %"
+    "text": "2,0 %"
    },
    "TI": {
     "s": 3,
-    "text": "2,8 %"
+    "text": "2,7 %"
    },
    "TG": {
     "s": 1,
-    "text": "1,1 %"
+    "text": "1,2 %"
    },
    "UR": {
     "s": 1,
@@ -915,11 +915,11 @@ export const KARTEN = {
    },
    "VD": {
     "s": 4,
-    "text": "4,2 %"
+    "text": "4,3 %"
    },
    "VS": {
     "s": 2,
-    "text": "1,9 %"
+    "text": "1,7 %"
    },
    "ZG": {
     "s": 1,

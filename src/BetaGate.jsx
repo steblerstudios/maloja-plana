@@ -37,8 +37,20 @@ const ruhigerKnopf = {
   cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
 };
 
+// Was das Handy beim Tippen «verschönert», zurück in die schlichten Zeichen: Gedankenstriche
+// und Minuszeichen → «-», typografische Apostrophe/Anführungszeichen → «'» bzw. «"». Sonst
+// passt der Fingerabdruck nicht, obwohl der richtige Code getippt wurde (iPhone-Test 10.11.2026).
+export function codeNormalisieren(value) {
+  return String(value)
+    .replace(/[\u2010-\u2015\u2212]/g, '-')
+    .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
+    .replace(/[\u201C\u201D\u201E\u2033]/g, '"')
+    .trim()
+    .toLowerCase();
+}
+
 async function matchesBetaCode(value) {
-  const normalized = value.trim().toLowerCase();
+  const normalized = codeNormalisieren(value);
   if (!normalized) return false;
   try {
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(normalized));
@@ -206,6 +218,9 @@ export const BetaGate = ({ children }) => {
       }, t('beta.gateMessage')),
       React.createElement('input', {
         type: 'text',
+        // Ein Code ist kein Satz: keine Autokorrektur, kein Grossbuchstabe, keine Vorschläge
+        // (iPhone-Safari ersetzte sonst Wörter und Striche — «Code ungültig» trotz richtigem Code).
+        autoComplete: 'off', autoCorrect: 'off', autoCapitalize: 'none', spellCheck: false,
         value: input,
         onChange: (e) => { setInput(e.target.value); setError(false); },
         placeholder: t('beta.codePlaceholder'), 'aria-label': t('beta.codePlaceholder'),

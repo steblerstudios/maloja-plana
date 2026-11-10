@@ -14,14 +14,16 @@ BASE="${1:-https://malojaplana.ch}"
 BASE="${BASE%/}"
 echo "→ Prüfe Deploy auf $BASE"
 
-index="$(curl -fsS --max-time 20 "$BASE/")" || { echo "✗ index.html nicht erreichbar"; exit 1; }
+# Seit dem Umzug (Plan «App nach /app/», PR 2) liegt die App unter /app/.
+APP="$BASE/app"
+index="$(curl -fsS --max-time 20 "$APP/")" || { echo "✗ /app/index.html nicht erreichbar"; exit 1; }
 
 # Direkt referenzierte Assets aus index.html (script/link)
 assets="$(printf '%s' "$index" | grep -oE 'assets/[a-zA-Z0-9._-]+\.(js|css)' || true)"
 
 # Dynamisch importierte Chunks aus dem Haupt-Bundle (Vite-Hash: name-XXXXXXXX.js)
 for a in $(printf '%s\n' "$assets" | grep -E 'assets/index-.*\.js' | sort -u); do
-  js="$(curl -fsS --max-time 20 "$BASE/$a" || true)"
+  js="$(curl -fsS --max-time 20 "$APP/$a" || true)"
   more="$(printf '%s' "$js" | grep -oE '[a-zA-Z0-9._-]+-[a-zA-Z0-9]{8}\.js' | sed 's#^#assets/#' || true)"
   assets="$assets
 $more"
@@ -32,7 +34,7 @@ uniq_assets="$(printf '%s\n' "$assets" | sed '/^$/d' | sort -u)"
 missing=""
 count=0
 for a in $uniq_assets; do
-  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$BASE/$a")"
+  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$APP/$a")"
   count=$((count + 1))
   if [ "$code" = "200" ]; then
     echo "  ✓ $a"
@@ -42,12 +44,12 @@ for a in $uniq_assets; do
   fi
 done
 
-swver="$(curl -fsS --max-time 20 "$BASE/sw.js" | grep -oE 'v[0-9]+' | head -1 || true)"
+swver="$(curl -fsS --max-time 20 "$APP/sw.js" | grep -oE 'v[0-9]+' | head -1 || true)"
 echo "→ Service Worker: ${swver:-unbekannt}  ·  $count Assets geprüft"
 
 if [ -n "$missing" ]; then
   echo "✗ Fehlende/fehlerhafte Assets:$missing"
-  echo "  → FTP-Upload unvollständig. Den dist/assets-Ordner vollständig neu hochladen."
+  echo "  → FTP-Upload unvollständig. Den Ordner dist/app/assets vollständig neu hochladen."
   exit 1
 fi
 echo "✓ Alle referenzierten Assets erreichbar."

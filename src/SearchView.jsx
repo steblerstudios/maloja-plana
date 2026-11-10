@@ -47,6 +47,8 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'search', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('search.title')),
     React.createElement('input', {
       style: s.input, type: 'search', value: query, autoFocus: true,
+      // Ziel der Suche per Taste (main.jsx, utils/suchTaste.js): dorthin holt «/» den Fokus.
+      'data-suchfeld': 'true',
       onChange: e => setQuery(e.target.value),
       placeholder: t('search.placeholder'),
       'aria-label': t('search.placeholder'),

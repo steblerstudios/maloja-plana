@@ -9,6 +9,8 @@
 //     Stand (so bleiben Sprache und «Einfache Ansicht» der Code-Wand erhalten).
 //   • IndexedDB: open/deleteDatabase werfen — Dokumente, Backups und Migrationen
 //     laufen in ihre vorhandenen Fehler-Pfade, statt etwas anzulegen oder zu löschen.
+//   • CacheStorage: delete wirft — «Alle Daten löschen» trifft so nie den echten
+//     Teilen-Cache (geteilte Dateien, utils/teilenEmpfang.js).
 //
 // Die App beendet die Demo mit einem Neuladen der Seite — dann verfällt der Schirm
 // samt Überlagerung mit dem Arbeitsspeicher. Die zurückgegebene Funktion hebt ihn
@@ -41,6 +43,7 @@ export function demoVerlassen(ort, verlauf) {
 export function speicherAbschirmen(
   storageProto = typeof Storage !== 'undefined' ? Storage.prototype : null,
   idbProto = typeof IDBFactory !== 'undefined' ? IDBFactory.prototype : null,
+  cacheProto = typeof CacheStorage !== 'undefined' ? CacheStorage.prototype : null,
 ) {
   const rueckbau = [];
   const ersetze = (proto, name, bauen) => {
@@ -70,6 +73,10 @@ export function speicherAbschirmen(
     const sperre = () => function () { throw new Error(DEMO_FEHLER); };
     ersetze(idbProto, 'open', sperre);
     ersetze(idbProto, 'deleteDatabase', sperre);
+  }
+
+  if (cacheProto) {
+    ersetze(cacheProto, 'delete', () => function () { return Promise.reject(new Error(DEMO_FEHLER)); });
   }
 
   // Rückbau in umgekehrter Reihenfolge; ein zweiter Aufruf ist wirkungslos.
