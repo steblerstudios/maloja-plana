@@ -41,7 +41,7 @@ import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import { Landschaftsband, pfadPilleStil } from './components/Landschaftsband.jsx';
 import { mindestlohnNichtAnwendbar, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
-import { nichtberufsunfallStatus } from './utils/anstellung.js';
+import { nichtberufsunfallStatus } from './utils/nichtberufsunfall.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 import { ZumVerstehen } from './components/ErklaerseiteLink.jsx';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der

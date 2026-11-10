@@ -1,6 +1,6 @@
 import React from 'react';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
-import { nichtberufsunfallStatus } from '../utils/anstellung.js';
+import { nichtberufsunfallStatus } from '../utils/nichtberufsunfall.js';
 
 // UVG-Hinweis: Angestellte mit mindestens 8 Std./Woche bei einer Arbeitgeberin sind auch in der Freizeit
 // unfallversichert (UVV Art. 13) und können die Unfalldeckung bei der Krankenkasse ruhen lassen (KVG Art. 8).
