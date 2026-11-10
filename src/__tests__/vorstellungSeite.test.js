@@ -123,11 +123,21 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     KAPITEL.forEach((k, i) => expect(html).toContain(`<a href="${BEISPIEL}#/chapter/${i}">${k.name} im Beispiel ansehen</a>`));
   });
 
-  it('D · die Zahl ist nur Bild (aria-hidden), «Kehre n von 7» steht als Text', () => {
-    KAPITEL.forEach((k, i) => {
-      expect(html).toContain(`<p class="reise-zahl" aria-hidden="true">0${i + 1}</p>`);
-      expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`);
-    });
+  it('D · gross steht das Kapitel-Zeichen (nur Bild, aria-hidden), «Kehre n von 7» steht als Text; keine grosse Zahl mehr', () => {
+    expect((html.match(/<div class="reise-gross" aria-hidden="true"><svg /g) || []).length).toBe(7);
+    expect(html).not.toContain('class="reise-zahl"');
+    KAPITEL.forEach((k, i) => expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`));
+  });
+
+  it('B · auf jedem Stocknagel steht das Kapitel-Zeichen statt einer Nummer', () => {
+    const naegel = html.split('<g class="nagel">').slice(1).map((t) => t.split('<g class="nagel-dreh"')[0].split('</svg>\n')[0]);
+    expect(naegel).toHaveLength(7);
+    for (const n of naegel) { expect(n).toMatch(/<g class="bild" style="color:var\(--k\d\)"><svg x="41"/); expect(n).not.toContain('<text x="60"'); }
+  });
+
+  it('jede Masken-Id der Kapitel-Zeichen kommt auf der Seite nur einmal vor', () => {
+    const ids = [...html.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]);
+    expect(ids.length).toBe(new Set(ids).size);
   });
 
   it('D · der Stock dreht sich (Nägel rundum), er zoomt nicht', () => {
@@ -188,8 +198,8 @@ describe('Vorstellungsseite: Brand Book', () => {
     const { LEITFORM_KAPITEL } = await import('../config/seitenZeichen.js');
     const app = CHAPTER_KEYS.map((k) => renderToStaticMarkup(React.createElement(FamilienZeichen, { leitform: LEITFORM_KAPITEL[k], formFarbe: 'currentColor' })));
     // Die Masken-Ids zählen je Lauf hoch; verglichen wird die Zeichnung ohne Ids.
-    const ohneIds = (t) => t.replace(/(id="|url\(#)[a-z]+\d+/g, '$1#');
+    const ohneIds = (t) => t.replace(/(id="|url\(#)[a-zA-Z0-9-]+/g, '$1#');
     expect(KAPITEL_ZEICHEN.map(ohneIds)).toEqual(app.map(ohneIds));
-    KAPITEL_ZEICHEN.forEach((z) => expect(html).toContain(z));
+    KAPITEL_ZEICHEN.forEach((z) => expect(ohneIds(html)).toContain(ohneIds(z).replace('<svg ', '')));
   });
 });

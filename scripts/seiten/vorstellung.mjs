@@ -17,6 +17,12 @@
 import { BASIS } from '../seiten-inhalt.mjs';
 import { KAPITEL_ZEICHEN } from './kapitel-zeichen.mjs';
 
+// Ein Kapitel-Zeichen der App, mehrfach auf derselben Seite: Masken-Ids je Ort eindeutig machen,
+// dazu Lage und Grösse für das Einsetzen in ein anderes SVG (Stocknagel).
+const zeichen = (i, ort, attr = '') => KAPITEL_ZEICHEN[i]
+  .replace(/(id="|url\(#)([a-zA-Z]+\d+)/g, `$1${ort}-$2`)
+  .replace('<svg ', `<svg ${attr}`);
+
 export const VORSTELLUNG = {
   titel: 'Maloja Plana — Schweizer Lebensordner',
   beschreibung: 'Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.',
@@ -250,8 +256,9 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-stock .maser rect{ fill:#8E6C42; opacity:.5 }
     .reise-stock .riemen{ fill:#7A4A3A } .reise-stock .spitze{ fill:#5A5650 }
     .nagel{ transform-box:fill-box; transform-origin:50% 50% }
-    .nagel .schild{ stroke:#FBFBFA; stroke-width:2.5 } .nagel .kopf{ fill:#E8E6E1; stroke:#5A5650; stroke-width:1 }
-    .nagel text{ fill:#FBFBFA; font-size:20px; font-weight:600; text-anchor:middle }
+    .nagel .schild{ fill:#FBFBFA; stroke-width:3 } .nagel .kopf{ fill:#E8E6E1; stroke:#5A5650; stroke-width:1 }
+    /* Auf jedem Stocknagel das Kapitel-Zeichen der App in der Kapitelfarbe, auf heller Plakette mit farbigem Rand
+       (wie ein emailliertes Stockschild). Weiss auf Farbe ginge nicht: der Fünfliber hat weisse Details. */
     .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
     .js .reise-buehne[data-hier="-1"] .reise-stock, .js .reise-buehne[data-hier="-1"] .reise-linie,
     .js .reise-buehne[data-hier="-1"] .reise-wolken, .js .reise-buehne[data-hier="-1"] .reise-quelle{ opacity:0 }
@@ -263,12 +270,12 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
     .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
       padding:12vh clamp(16px, 5vw, 72px) 12vh calc(50% + clamp(56px, 7vw, 120px)) }
     .reise-text{ max-width:28rem; text-shadow:0 1px 14px rgba(0,0,0,.45) }
-    .reise-text .reise-zahl{ font-size:clamp(72px, 10vw, 136px); line-height:.82; font-weight:600; letter-spacing:-0.04em; margin:0 0 14px -4px }
-    .reise-text .name{ display:flex; align-items:center; gap:10px; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#FBFBFA; margin-bottom:8px }
-    /* Das Kapitel-Zeichen der App (scripts/seiten/kapitel-zeichen.mjs), auf heller Scheibe in der Kapitelfarbe. */
-    .reise-text .zeichen{ flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:var(--radius-knopf);
-      background:#FBFBFA; color:var(--farbe); box-shadow:0 2px 8px rgba(0,0,0,.25) }
-    .reise-text .zeichen svg{ width:26px; height:26px }
+    /* Statt einer grossen Zahl steht gross das Kapitel-Zeichen der App (wie Fujis grosse Höhenzahl): in der Kapitelfarbe
+       auf heller Plakette, Ecke 16 px (Karte, Brand Book §7a C). */
+    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; padding:14px; border-radius:16px; background:#FBFBFA; color:var(--farbe);
+      margin:0 0 18px; box-shadow:0 6px 20px rgba(0,0,0,.3) }
+    .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
+    .reise-text .name{ display:block; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#FBFBFA; margin-bottom:8px }
     .reise-text h3{ font-size:clamp(24px, 2.6vw, 32px); line-height:1.2; letter-spacing:-0.01em; margin-bottom:10px }
     .reise-text p{ font-size:17px; color:#FBFBFA }
     /* Knöpfe auf dem Bild: Nebenknopf-Form (leer, Rand, 10 px), auf der dunklen Bühne in Weiss statt sandDeep (sonst unter 3:1). */
@@ -301,7 +308,7 @@ ${SITUATIONEN.map((_, i) => `    #l${i + 1}:checked ~ .tafeln .t${i + 1}{ displa
       .reise-stock{ left:auto; right:6px; margin-left:0; height:86%; top:7% }
       .reise-linie{ display:none }
       .reise-station{ align-items:flex-end; padding:0 76px 9vh 16px }
-      .reise-text .reise-zahl{ font-size:72px }
+      .reise-gross{ width:64px; padding:8px; border-radius:12px; margin-bottom:12px }
       /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene halbdurchsichtige Fläche (62 %). */
       .reise-text{ background:rgba(20,20,18,.62); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); padding:18px 18px 20px; border-radius:var(--radius-m) }
       .reise-text p{ font-size:16px }
@@ -398,8 +405,8 @@ function reiseStationen() {
     const weiter = i + 1 < n ? `<a class="weiter" href="#kehre-${i + 2}" aria-label="Weiter zu Kehre ${i + 2}">Weiter</a>` : '<a class="weiter" href="#holen">Weiter: App holen</a>';
     return `          <li class="reise-station" id="kehre-${i + 1}" style="--farbe:var(--k${i})">
             <div class="reise-text">
-              <p class="reise-zahl" aria-hidden="true">${String(i + 1).padStart(2, '0')}</p>
-              <span class="name"><span class="zeichen" aria-hidden="true">${KAPITEL_ZEICHEN[i]}</span>Kehre ${i + 1} von ${n} · ${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p>
+              <div class="reise-gross" aria-hidden="true">${zeichen(i, `gross${i + 1}`)}</div>
+              <span class="name">Kehre ${i + 1} von ${n} · ${esc(k.name)}</span><h3>${esc(k.titel)}</h3><p>${esc(k.text)}</p>
               <p class="reise-knoepfe"><a href="${BEISPIEL}#/chapter/${i}">${esc(k.name)} im Beispiel ansehen</a>${weiter}</p>
             </div></li>`;
   }).join('\n');
@@ -430,13 +437,13 @@ function reiseLinie() {
 }
 
 // B/D · Der Wanderstock in der Mitte: Holz mit Licht- und Schattenkante, Riemen oben, Spitze unten; je Kehre ein
-// Stocknagel (Schild in der Kapitelfarbe, mit der Nummer der Kehre). Die Nägel sitzen rundum verteilt (je 1/7 Drehung);
+// Stocknagel (Schild in der Kapitelfarbe, darauf das Kapitel-Zeichen der App). Die Nägel sitzen rundum verteilt (je 1/7 Drehung);
 // das Skript dreht den Stock so, dass der neue Nagel von hinten nach vorn kommt. Ohne Skript stehen alle vorne.
 export const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
 function reiseStock() {
   const naegel = KAPITEL.map((_, i) => {
     const y = NAGEL_Y[i];
-    return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><path class="schild" style="fill:var(--k${i})" d="M30 ${y} h60 v26 c0 15 -13 25 -30 32 c-17 -7 -30 -17 -30 -32 z"/><circle class="kopf" cx="60" cy="${y + 8}" r="3.2"/><text x="60" y="${y + 40}">${i + 1}</text></g></g>`;
+    return `<g class="nagel-dreh" data-kehre="${i + 1}"><g class="nagel"><path class="schild" style="stroke:var(--k${i})" d="M30 ${y} h60 v26 c0 15 -13 25 -30 32 c-17 -7 -30 -17 -30 -32 z"/><g class="bild" style="color:var(--k${i})">${zeichen(i, `nagel${i + 1}`, `x="41" y="${y + 3}" width="38" height="38" `)}</g></g></g>`;
   }).join('');
   const maser = [0, 1, 2, 3, 4, 5, 6, 7].map((j) => `<rect x="${(60 + Math.sin(j * Math.PI / 4 + 0.3) * 20).toFixed(1)}" y="8" width="1.4" height="664" rx=".7"/>`).join('');
   return `<svg class="reise-stock" viewBox="0 0 120 700" aria-hidden="true" focusable="false">
