@@ -3,7 +3,7 @@ import { springeZuAnker } from '../utils/hashRouter.js';
 import { ExternerLink } from './ExternerLink.jsx';
 import { knopfStil, linkStil } from './PrimaryButton.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
-import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { text, weight, leading, space, radius, visuallyHiddenStyle, INSTRUMENT_GROESSE } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 
@@ -87,6 +87,17 @@ export const bereitschaft = (data) => {
     .filter((f) => !angabeBereit(d, f))
     .map((f) => ({ ...f, lagen: SCENARIOS.filter((s) => s.fields.some((x) => x.chapter === f.chapter && x.k === f.k)).map((s) => s.key) }));
   return { erledigt: NOTFALL_ANGABEN.length - fehlend.length, gesamt: NOTFALL_ANGABEN.length, fehlend };
+};
+
+// Die Bereitschaft klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): ein Ring, der sich nach
+// erledigt/gesamt füllt, in der Notfall-Farbe wie der Balken im Kapitel. Nur das Bild; «19/20» steht daneben.
+export const BereitRingKlein = ({ palette, erledigt, gesamt }) => {
+  const h = React.createElement;
+  const r = 14, u = 2 * Math.PI * r, anteil = gesamt > 0 ? Math.min(1, erledigt / gesamt) : 0;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-bereit': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('circle', { cx: 30, cy: 20, r, fill: 'none', stroke: palette.border, strokeWidth: 5 }),
+    anteil > 0 && h('circle', { cx: 30, cy: 20, r, fill: 'none', stroke: palette.roseDeep || palette.rose, strokeWidth: 5, strokeLinecap: 'round',
+      strokeDasharray: (anteil * u).toFixed(2) + ' ' + u.toFixed(2), transform: 'rotate(-90 30 20)' }));
 };
 
 // Vorsorge: geregelt ist, was entschieden ist. Organspende: jede Wahl ausser «Noch nicht entschieden»;

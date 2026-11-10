@@ -9,6 +9,8 @@ import { RegionalBarometerKlein, lageZurRegion, mietVorbehalte } from './Regiona
 import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
+import { bereitschaft, BereitRingKlein } from './NotfallImKapitel.jsx';
+import { berechneFranchise } from '../data/kvgLeistungen.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
@@ -34,6 +36,15 @@ import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESS
 // Instrument eine eigene Form: Kreuz · Säule · Tacho (Reserve) · Schild.
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
+
+// Franchise-Stand klein (10.11.2026): Balken bis zur Franchise, Strich am Ende = Franchise erreicht. Nur das Bild.
+const miniFranchise = (palette, anteil) => {
+  const h = React.createElement;
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-franchise': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('rect', { x: 2, y: 16, width: 54, height: 8, rx: 4, fill: palette.border }),
+    anteil > 0 && h('rect', { x: 2, y: 16, width: Math.max(8, Math.min(1, anteil) * 54), height: 8, rx: 4, fill: palette.sky }),
+    h('line', { x1: 57, y1: 10, x2: 57, y2: 30, stroke: palette.text, strokeWidth: 2 }));
+};
 
 // Der kleine Tank stand bis 10.11.2026 hier als eigene Zeichnung (miniGauge) — jetzt ReserveTank groesse 'klein'.
 
@@ -169,6 +180,12 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const erledigteGaenge = GAENGE.filter((g) => gangErledigt(g.id, gespeicherteHaken(), bh)).length;
   const gaengeBegonnen = Object.keys(bh).length > 0;
 
+  // Gesundheit (10.11.2026): Bereitschaft wie das Kapitel Notfall, Franchise-Stand wie die KVG-Seite (Reiter Franchise).
+  const bereit = bereitschaft(data);
+  const eigeneFr = parseFranchise(data?.versicherungen?.franchise);
+  const frJahr = new Date().getFullYear();
+  const frStand = eigeneFr != null ? berechneFranchise(eigeneFr, gesundheitskostenBisher(data)) : null;
+
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
@@ -201,6 +218,26 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       sub: setup,
       glyph: h(GaengeKlein, { palette, erledigt: erledigteGaenge, total: GAENGE.length }),
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')),
+    },
+    {
+      key: 'bereit', name: t('instrumente.bereit'),
+      zahl: { wert: bereit.erledigt + '/' + bereit.gesamt, einheit: '' },
+      satz: t('instrumente.bereitSatz'),
+      sub: setup,
+      glyph: h(BereitRingKlein, { palette, erledigt: bereit.erledigt, gesamt: bereit.gesamt }),
+      onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('notfall')),
+    },
+    {
+      key: 'franchise', name: t('instrumente.franchise'),
+      ...(frStand ? {
+        zahl: frStand.franchiseOffen > 0
+          ? { wert: chfBetrag(frStand.franchiseVerbraucht), einheit: t('instrumente.franchiseVon', { franchise: zahl(frStand.franchise) }) }
+          : { wert: chfBetrag(frStand.franchise), einheit: '' },
+        satz: t(frStand.franchiseOffen > 0 ? 'instrumente.franchiseSatz' : 'instrumente.franchiseErreichtSatz', { jahr: frJahr }),
+      } : {}),
+      sub: setup,
+      glyph: frStand ? miniFranchise(palette, frStand.franchise > 0 ? frStand.franchiseVerbraucht / frStand.franchise : 0) : null,
+      onClick: () => onNavigate('kvg', undefined, 'franchise'),
     },
     {
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.

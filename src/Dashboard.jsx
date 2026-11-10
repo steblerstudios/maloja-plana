@@ -37,7 +37,7 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = lazyMitTexten(() => import('./BergDetail.jsx'));
 // Welches Instrument in welcher Kapitel-Zeile steht (F7-D10). Das Franchise-Kreuz bleibt, solange F7-K3-2 zurückgestellt ist.
-const INSTRUMENTE_JE_KAPITEL = { wohnen: ['wohnkosten', 'miete'], finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'], behoerden: ['steuerfrist', 'gaenge'] };
+const INSTRUMENTE_JE_KAPITEL = { wohnen: ['wohnkosten', 'miete'], finanzen: ['steuer', 'tank'], versicherungen: ['schild', 'tacho'], behoerden: ['steuerfrist', 'gaenge'], notfall: ['bereit', 'franchise'] };
 // Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
 // liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
 const QuickCheck = lazyMitTexten(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
