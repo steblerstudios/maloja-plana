@@ -448,7 +448,11 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   «So lange bis zur Steuerfrist»; verpasst und noch offen: rotes Blatt, «… vorbei»; eingereicht und vorbei:
   keine Zahl) und Behördengänge (ein Kästchen je Gang · «1/5» · «So viele Behördengänge sind erledigt»).
   Dieselben Regeln wie im Kapitel (`fristAbstand`, `steuerfristVorbei`, `gangErledigt`).
-  Offen: Basis, Ausbildung & Arbeit, Gesundheit.
+  **Gesundheit:** Bereit für den Ernstfall (Ring in der Notfall-Farbe · «19/20» · «So viele Notfall-Angaben sind
+  bereit», Rechnung `bereitschaft` wie im Kapitel) und Franchise-Stand (Balken bis zur Franchise · «CHF 420» «von
+  CHF 1’500» · «So viel der Franchise ist 2026 erreicht, nach erfassten Belegen», Rechnung `berechneFranchise` wie
+  der Franchise-Tracker; Klick öffnet dessen Reiter). Ohne erfasste Franchise keine Zahl.
+  Offen: Basis, Ausbildung & Arbeit.
   Wächter: `src/components/__tests__/reserveTankGroessen.test.js`.
 
 ### Drei Schichten: erst sehen, dann lesen (seit 09.11.2026)
