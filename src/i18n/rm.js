@@ -7726,6 +7726,10 @@ export default {
     zukunftSzenarioAhvAufschub: 'AVS spustada fin {alter} onns: {pct} durant l’entira vita.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioBridge: { sie: 'Ils onns da {von} fin 63 surpassais Vus senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.', du: 'Ils onns da {von} fin 63 surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.' },
+    // TODO(rm): provisorisch — Gegenlese (Bugsuche-Texte 10.11.2026)
+    zukunftIkHochgerechnet: { sie: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF {eink} — ils onns futurs cun Vossas entradas actualas.', du: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF {eink} — ils onns futurs cun tias entradas actualas.' },
+    // TODO(rm): provisorisch — Gegenlese (Bugsuche-Texte 10.11.2026)
+    zukunftAhvAnnahme: { sie: 'Supposiziun: Vus retragais l’AVS uschè baud sco pussaivel e pajais fin a la vegliadetgna da referenza contribuziuns sco persuna senza activitad da gudogn. Questas contribuziuns dependan da la facultad e da las entradas da renta; l’estimaziun quinta simplifitgadamain vinavant cun las entradas da fin ussa.', du: 'Supposiziun: Ti retiras l’AVS uschè baud sco pussaivel e pajas fin a la vegliadetgna da referenza contribuziuns sco persuna senza activitad da gudogn. Questas contribuziuns dependan da la facultad e da las entradas da renta; l’estimaziun quinta simplifitgadamain vinavant cun las entradas da fin ussa.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioSaeulen: { sie: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da Vossa cassa da pensiun.', du: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da tia cassa da pensiun.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
