@@ -32,7 +32,10 @@ export default function KantonsKarteKlein({ palette, t, karte, kanton, alterskla
   // Im dunklen Modus dreht der Atlas die Helligkeit: die höchste Stufe ist die hellste. Der Satz unter
   // der Karte muss das mitsagen (Durchsicht im Browser 09.11.2026: er sagte «dunkler» auch im dunklen Modus).
   const dunkel = palette.bg === DARK_PALETTE.bg;
-  const farben = dunkel ? STUFEN_FARBEN.dunkel : STUFEN_FARBEN.hell;
+  // Jede Karte trägt die Frucht ihres Lebensbereichs (Brand Book §7c), wie auf /kantonsatlas/.
+  const satz = STUFEN_FARBEN[K.frucht];
+  if (!satz) return null;
+  const farben = dunkel ? satz.dunkel : satz.hell;
   const eigen = kanton && K.werte[kanton] ? kanton : null;
   const name = eigen ? getCantonName(eigen, t) : '';
   const beschreibung = eigen

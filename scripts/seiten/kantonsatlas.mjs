@@ -22,8 +22,11 @@
 //   • Befunde (E3) als eigener Abschnitt, nur belegte (siehe BEFUNDE_ABSCHNITT).
 //
 // Regeln aus dem Atlas-Entscheid vom 24.10.2026: keine Rangliste, keine
-// Wertungsfarben. Alle Karten haben eine einzige Farbe in vier Stufen; dunkler (im dunklen Modus: heller)
+// Wertungsfarben. Jede Karte hat eine einzige Farbe in vier Stufen; dunkler (im dunklen Modus: heller)
 // heisst «höhere Zahl», nicht «besser» oder «schlechter».
+// Welche Farbe: die Frucht des Lebensbereichs (Brand Book, farb-und-daten-system.md Regel 3), seit
+// 09.11.2026. Ausnahme Steuern und Familie: Aprikose liegt auf Gold («finanziell enger»), Kirsche auf
+// Rosé (harte Schwelle); dort gilt Regel 1 vor Regel 3, die Karten nehmen Zwetschge (Behörden).
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { readFileSync } from 'node:fs';
@@ -34,11 +37,36 @@ import { EBENEN, KANTONE, BLOECKE_VERGLEICH, KITA_NICHT_VERGLICHEN } from '../se
 import { KANTONE_IM_VERGLEICH } from './kantone-im-vergleich.mjs';
 import { zahlen as zahlenKrankenkasse } from '../seiten-figuren.mjs';
 import { vergleichZahlen } from '../seiten-vergleich.mjs';
+import { appBeispiel } from '../seiten-ziele.mjs';
 
 const GEO = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'daten', 'kantonsatlas', 'paths.json'), 'utf8'));
 for (const k of KANTONE) if (!GEO.cantons[k]) throw new Error(`Kantonsatlas-Karte: ${k} fehlt in paths.json`);
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// ─── Farbe je Karte: die Frucht des Lebensbereichs ──────────────────────────
+// Vier Stufen je Frucht, gleicher Farbton, nach Leuchtdichte gleichmässig verteilt (Nachbarn hell
+// etwa 1,66 · 1,66 · 1,9, dunkel etwa 2,2 · 2,2 · 1,9). Stufe 3 der Heidelbeere ist --heidel.
+// Die Stufen der anderen Früchte haben dieselbe Leuchtdichte wie die der Heidelbeere, damit alle
+// Karten gleich gelesen werden. Wächter: src/__tests__/atlasStufenAbstand.test.js
+export const KARTEN_FRUCHT = {
+  praemie: 'heidelbeere', lastNachIpv: 'heidelbeere', // Versicherungen
+  miete: 'birne', leer: 'birne',                      // Wohnen
+  alq: 'haselnuss',                                   // Arbeit
+  el: 'traube',                                       // Vorsorge
+  sozialhilfe: 'zwetschge',                           // Behörden
+  steuer: 'zwetschge', kinderzulage: 'zwetschge', kita: 'zwetschge', // Ausnahme, siehe Kopf
+};
+export const FRUCHT_STUFEN = {
+  heidelbeere: { hell: ['#D3DEE9', '#98AFC4', '#6787A5', '#3D5A76'], dunkel: ['#2E3742', '#576A7D', '#86A6C2', '#D3E0EC'] },
+  birne:       { hell: ['#D6E0CA', '#A1B387', '#748C4B', '#4A5E1F'], dunkel: ['#2F391E', '#5C6E3B', '#90AC5D', '#D6E3C3'] },
+  haselnuss:   { hell: ['#E6DBCE', '#BEA98F', '#9C7F57', '#6D522D'], dunkel: ['#3F3426', '#78654A', '#BB9D73', '#E9DCCB'] },
+  traube:      { hell: ['#E0DBE8', '#B3A7C2', '#8D7CA2', '#605174'], dunkel: ['#393440', '#6E647B', '#AB9BC0', '#E2DCEB'] },
+  zwetschge:   { hell: ['#D9DDE2', '#A5ADB8', '#7A8593', '#4F5966'], dunkel: ['#32373D', '#616874', '#98A4B5', '#DADFE6'] },
+};
+const stufenVars = (s) => s.map((c, i) => `--k${i + 1}:${c}`).join('; ');
+const FRUCHT_CSS_HELL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `    .atlas .f-${f}{ ${stufenVars(s.hell)} }`).join('\n');
+const FRUCHT_CSS_DUNKEL = Object.entries(FRUCHT_STUFEN).map(([f, s]) => `      .atlas .f-${f}{ ${stufenVars(s.dunkel)} }`).join('\n');
 
 // ─── Stufen: vier gleich grosse Gruppen von Kantonen ────────────────────────
 // Nach dem Wert sortiert, in Viertel geteilt. Gleiche Werte bleiben in
@@ -64,6 +92,8 @@ export function stufen(key) {
 function karte(ctx, key, { legende, nachher = '' }) {
   ctx.abb += 1;
   const E = EBENEN[key];
+  const frucht = KARTEN_FRUCHT[key];
+  if (!FRUCHT_STUFEN[frucht]) throw new Error(`Kantonsatlas: Karte ${key} hat keine Frucht (KARTEN_FRUCHT)`);
   const { stufe, spannen } = stufen(key);
   const id = `karte-${key.toLowerCase()}`;
   const erste = !ctx.kartenDefs;
@@ -85,18 +115,43 @@ function karte(ctx, key, { legende, nachher = '' }) {
     `<title id="${id}-t">${esc(titel)}</title><desc id="${id}-d">${esc(beschreibung)}</desc>${defs}${flaechen}${seen}</svg>`;
   // Einheit über der Legende, damit die Spannen nicht ohne Mass dastehen.
   const schweiz = E.ch != null ? `Ganze Schweiz: ${E.fmt(E.ch)}` : '';
+  // Brillen als Filter (A, Brückenstück 09.11.2026): Welche Brillen diese Karte zeigen, steht an der figure.
+  // Ist eine andere Brille gewählt, klappt die Karte auf eine Zeile zu; «Karte zeigen» springt zu ihr und
+  // hebt damit den Filter auf (ohne Skript, nur :target).
+  const brillen = BRILLEN.filter((b) => b.karten.includes(key));
+  const zu = `
+          <p class="atlas-zu">${esc(E.titel)}: zugeklappt, gehört nicht zur gewählten Brille. <a href="#${id}">Karte zeigen<span class="sr-only">: ${esc(E.titel)}</span></a></p>`;
+  // Weg in die App (C): zum Werkzeug, das mit den eigenen Angaben rechnet. Nur wo es eines gibt.
+  // ?beispiel: ohne Zugangscode öffnet sich das Beispiel direkt (BetaGate), mit Zugang die eigene App.
+  // Wortlaut nach der Copy-Prüfung 09.11.2026: das Werkzeug beim Namen, keine «eigene Lage» versprechen.
+  const W = KARTE_WERKZEUG[key];
+  const weiter = W ? `
+          <p class="atlas-weiter"><a href="${appBeispiel(W.view)}">Mit Ihren Angaben rechnen: ${esc(W.name)}</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>` : '';
   return `
-        <figure class="abb atlas" id="${id}">
-          <div class="abb-karte">
+        <figure class="abb atlas" id="${id}" data-brillen="${brillen.map((b) => b.id).join(' ')}">${zu}
+          <div class="abb-karte f-${frucht}">
             <p class="abb-kopf" aria-hidden="true"><span>Abb. ${ctx.abb}</span><span>${esc(E.titel)}</span></p>
             <div class="abb-bild">${svg}</div>
             <p class="atlas-einheit">${esc(E.einheit)}</p>
             <ul class="atlas-legende" role="list">${spannen.map((s, i) => `<li><i class="k${s.s}" aria-hidden="true"></i><span class="sr-only">Stufe ${i + 1} von ${spannen.length}${i === 0 ? ', tiefste Zahlen' : i === spannen.length - 1 ? ', höchste Zahlen' : ''}: </span>${spanne(s)}</li>`).join('')}</ul>
             ${schweiz ? `<p class="abb-fuss"><span class="abb-wert">${schweiz}</span></p>` : ''}
           </div>
-          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${nachher}
+          <figcaption><strong>Abb. ${ctx.abb}.</strong> ${legende}</figcaption>${weiter}${nachher}
         </figure>`;
 }
+
+// Karte → Werkzeug der App, das dieselbe Frage mit den eigenen Angaben rechnet (C, Brückenstück 09.11.2026).
+// Die Umkehrung von KANTONSKARTE in src/components/ErklaerseiteLink.jsx (Wächter: atlasBruecke.test.js).
+// Leerwohnungen, Kinderzulage und Kita-Abzug haben kein eigenes Werkzeug: dort steht kein Weg.
+export const KARTE_WERKZEUG = {
+  praemie: { view: 'praemien', name: 'Prämie und Franchise' },
+  lastNachIpv: { view: 'premium', name: 'Prämienverbilligung' },
+  steuer: { view: 'tax', name: 'Steuern' },
+  miete: { view: 'mietzins', name: 'Mietbeiträge' },
+  alq: { view: 'alv', name: 'Arbeitslosentaggeld' },
+  sozialhilfe: { view: 'sozialhilfe', name: 'Sozialhilfe' },
+  el: { view: 'ergaenzungsleistungen', name: 'Ergänzungsleistungen' },
+};
 
 // Die Werte zu einer Karte: dieselbe Tabelle wie auf /kantone-im-vergleich/,
 // zugeklappt, damit die Karten auf dem Handy nahe beieinander stehen.
@@ -110,14 +165,20 @@ const werteTabelle = (tab, text) => `
 export const LEGENDE = {
   praemie: 'Mittlere Monatsprämie für Erwachsene 2027, mit allen Franchisen und Modellen. [[q:praemienKantone]]',
   lastNachIpv: 'Prämienlast einer unverheirateten Person mit Medianeinkommen nach der durchschnittlichen Verbilligung im Kanton, gerechnet mit der Prämie 2026, dem Einkommen 2022 und der Verbilligung 2025. Ein Rechenwert über alle Versicherten, nicht die Last einer bestimmten Person. [[q:estvStatistik]] [[q:bagOkp]]',
+  steuer: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
+  miete: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
+  alq: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
+  sozialhilfe: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]',
+  el: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
 };
 
-// Stufenfarben (Heidelbeere), hell und dunkel. Im dunklen Modus ist die höchste Stufe die hellste.
-// Auch die App liest sie (über scripts/app-verstehen.mjs), nicht von Hand kopiert.
-export const STUFEN_FARBEN = {
-  hell: { 1: '#D3DEE9', 2: '#B3C4D6', 3: '#6787A5', 4: '#3D5A76', see: '#F2F2F0' },
-  dunkel: { 1: '#2E3742', 2: '#4A6380', 3: '#86A6C2', 4: '#C6D6E5', see: '#22211F' },
-};
+// Stufenfarben je Frucht, hell und dunkel, mit der Farbe der Seen. Im dunklen Modus ist die höchste Stufe
+// die hellste. Aus FRUCHT_STUFEN erzeugt; auch die App liest sie (über scripts/app-verstehen.mjs), nicht
+// von Hand kopiert. Welche Frucht eine Karte trägt: KARTEN_FRUCHT.
+const SEE = { hell: '#F2F2F0', dunkel: '#22211F' };
+const alsSatz = (s, see) => ({ 1: s[0], 2: s[1], 3: s[2], 4: s[3], see });
+export const STUFEN_FARBEN = Object.fromEntries(Object.entries(FRUCHT_STUFEN).map(([f, s]) =>
+  [f, { hell: alsSatz(s.hell, SEE.hell), dunkel: alsSatz(s.dunkel, SEE.dunkel) }]));
 const cssStufen = (f) => `--k1:${f[1]}; --k2:${f[2]}; --k3:${f[3]}; --k4:${f[4]}; --k-see:${f.see}`;
 
 const BLOECKE_ATLAS = {
@@ -128,10 +189,10 @@ const BLOECKE_ATLAS = {
     legende: LEGENDE.lastNachIpv,
     nachher: werteTabelle('vlast', 'Prämienlast vor und nach Verbilligung als Tabelle') }),
   'FIG:steuer': (ctx) => karte(ctx, 'steuer', {
-    legende: 'Steuern an Bund, Kanton und Gemeinde im Kantonshauptort bei 80\'000 Franken Bruttolohn, ledig, ohne Kinder und ohne Konfession, Steuerjahr 2026. [[q:estvSteuerrechner]]',
+    legende: LEGENDE.steuer,
     nachher: werteTabelle('vsteuer', 'Steuern je Kanton als Tabelle, mit der Spanne der Gemeinden') }),
   'FIG:miete': (ctx) => karte(ctx, 'miete', {
-    legende: 'Durchschnittliche Nettomiete einer 3-Zimmer-Wohnung 2024, über alle vermieteten Wohnungen, auch langjährige Verträge. [[q:bfsMiete]]',
+    legende: LEGENDE.miete,
     nachher: werteTabelle('vmiete', 'Miete je Kanton als Tabelle') }),
   'FIG:leer': (ctx) => karte(ctx, 'leer', {
     legende: 'Leerwohnungsziffer am 1. Juni 2026: Anteil der Wohnungen und Einfamilienhäuser, die leer stehen und zur Miete oder zum Kauf angeboten sind. [[q:bfsLeer]]',
@@ -143,12 +204,12 @@ const BLOECKE_ATLAS = {
     legende: `Höchster Steuerabzug für die Betreuung von Kindern durch Dritte, Steuerjahr 2026, je Kind. Für ${KITA_NICHT_VERGLICHEN.map((k) => de.cantons[k]).join(' und ')} ist nur der Wert 2025 ausgewiesen; dort ist der Abzug auf die Elternbeiträge an die Betreuung begrenzt, die Zahl ist also kein fester Höchstbetrag. [[q:estvKantonsblaetter]] [[q:estvDrittbetreuung]]`,
     nachher: werteTabelle('vkita', 'Kita-Abzug je Kanton als Tabelle') }),
   'FIG:alq': (ctx) => karte(ctx, 'alq', {
-    legende: 'Anteil der Erwerbspersonen, die im September 2026 beim RAV als arbeitslos gemeldet waren. [[q:seco]]',
+    legende: LEGENDE.alq,
     nachher: werteTabelle('valq', 'Arbeitslosenquote je Kanton als Tabelle') }),
   'FIG:sozialhilfe': (ctx) => karte(ctx, 'sozialhilfe', {
-    legende: 'Anteil der Bevölkerung, der 2024 wirtschaftliche Sozialhilfe bezog. [[q:bfsSozialhilfe]]' }),
+    legende: LEGENDE.sozialhilfe }),
   'FIG:el': (ctx) => karte(ctx, 'el', {
-    legende: 'Anteil der Menschen mit Altersrente, die im Dezember 2025 Ergänzungsleistungen (EL) bezogen. [[q:bsvEl]]',
+    legende: LEGENDE.el,
     nachher: werteTabelle('vunterstuetzung', 'Sozialhilfe und Ergänzungsleistungen je Kanton als Tabelle') }),
 };
 
@@ -210,13 +271,63 @@ export const BRILLEN = [
     karten: ['sozialhilfe', 'el', 'alq', 'lastNachIpv'] },
 ];
 
+// ─── Brillen als Filter, ohne Skript (A, Brückenstück 09.11.2026) ────────────
+// Jede Brille hat eine eigene Adresse (#fuer-firma …), damit man sie verlinken und teilen kann, auch von der
+// Startseite aus. Gewählt ist, was im Adressfeld steht (:target): Die Karten der Brille bleiben offen, die
+// übrigen klappen auf eine Zeile zu. «Karte zeigen» und «Alle Karten» ändern die Adresse und heben den Filter
+// auf. Ohne :has() (ältere Browser) bleiben einfach alle Karten offen. Die Seite hat kein Skript (CSP).
+const BRILLEN_CSS = [
+  // Ohne :has() kann die Seite nicht filtern: dann gibt es weder Knöpfe noch den Satz dazu, die Brillen bleiben
+  // Wegweiser wie vor dem 09.11.2026 (a11y- und Copy-Prüfung: kein Knopf, der nichts tut).
+  '    .brillen-wahl, .nur-mit-filter, .brillen-status, .gewaehlt{ display:none }',
+  '    .atlas-zu{ display:none; margin:0; padding:12px 16px; border:1px dashed var(--rand); border-radius:16px; color:var(--leise); font-size:15px }',
+  '    .atlas-zu a, .brillen-status a{ display:inline-block; padding:10px 0; color:var(--heidel-text) }',
+  '    @supports selector(:has(*)){',
+  '    .nur-mit-filter{ display:inline }',
+  '    .brillen-wahl{ display:block; margin:14px 0 6px }',
+  '    .brillen-wahl ul{ list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:8px }',
+  // Rand in --leise: trägt 3:1 gegen den Grund (1.4.11), --rand hätte 1,2:1.
+  '    .brillen-wahl a{ display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border:1px solid var(--leise); border-radius:999px; font-size:15px; color:var(--heidel-text); text-decoration:none; background:var(--flaeche) }',
+  '    .brillen-wahl a:hover{ border-color:var(--heidel-text) }',
+  '    .brillen-wahl a:focus-visible{ outline:2px solid var(--text); outline-offset:2px }',
+  // Der Statussatz ist das Sprungziel: er wird beim Wählen zuerst gelesen (a11y-Prüfung, Soll 2).
+  '    .brillen-status{ font-size:15px; scroll-margin-top:24px }',
+  '    .brillen-status:target{ display:block }',
+  '    .brillen-status:focus{ outline:none }',
+  // Gewählt: Rand und Grund in Heidelbeere, fett und «(gewählt)» für Screenreader (nicht nur Farbe).
+  '    body:not(:has(.brillen-status:target)) .brillen-wahl .wahl-alle,',
+  ...BRILLEN.map((b, i) => `    body:has(#fuer-${b.id}:target) .brillen-wahl a[href="#fuer-${b.id}"]${i < BRILLEN.length - 1 ? ',' : ''}`),
+  '      { border-color:var(--heidel-text); background:var(--heidel-hauch); color:var(--text); font-weight:600 }',
+  '    body:not(:has(.brillen-status:target)) .wahl-alle .gewaehlt,',
+  ...BRILLEN.map((b, i) => `    body:has(#fuer-${b.id}:target) a[href="#fuer-${b.id}"] .gewaehlt${i < BRILLEN.length - 1 ? ',' : ''}`),
+  '      { display:inline }',
+  ...BRILLEN.flatMap((b) => [
+    `    body:has(#fuer-${b.id}:target) .brille:not([data-brille="${b.id}"]){ display:none }`,
+    `    body:has(#fuer-${b.id}:target) .atlas:not([data-brillen~="${b.id}"]) > :not(.atlas-zu){ display:none }`,
+    `    body:has(#fuer-${b.id}:target) .atlas:not([data-brillen~="${b.id}"]) > .atlas-zu{ display:block }`,
+  ]),
+  '    }',
+  // Weg in die App unter der Karte (C).
+  '    .atlas-weiter{ margin:10px 0 0; font-size:15px }',
+  // Eigenständiger Weg, kein Link im Fliesstext: 44 px hoch wie jedes Bedienelement.
+  '    .atlas-weiter a{ display:inline-block; padding:11px 0; color:var(--heidel-text); font-weight:600; text-underline-offset:3px }',
+  '    .atlas-weiter span{ color:var(--leise); margin-left:6px }',
+].join('\n');
+
 const BRILLEN_ABSCHNITT = {
   id: 'brillen',
   titel: '2. Vier Brillen: wer welche Karten braucht',
   html: `
-        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person fragt, was der Wohnort für sie bedeutet. Eine Firma schaut auf den Standort ihrer Mitarbeitenden. Die Karten selbst sind für alle dieselben und frei zugänglich. Wir ordnen sie hier aus vier Blickwinkeln, als «Brillen»: Jede stellt eine Frage und nennt die Karten, mit denen Sie beginnen können.</p>
+        <p>Je nachdem, wer fragt, zählen andere Karten. Eine Person fragt, was der Wohnort für sie bedeutet. Eine Firma schaut auf den Standort ihrer Mitarbeitenden. Die Karten selbst sind für alle dieselben und frei zugänglich. Wir ordnen sie hier aus vier Blickwinkeln, als «Brillen».<span class="nur-mit-filter"> Wählen Sie eine: Deren Karten bleiben offen, die übrigen klappen zu. Keine Karte verschwindet.</span></p>
+${BRILLEN.map((b) => `        <p class="brillen-status" id="fuer-${b.id}" tabindex="-1">Gewählt: Brille «${b.name}». ${b.karten.length} von ${Object.keys(KARTEN_FRUCHT).length} Karten sind offen, die übrigen zugeklappt. <a href="#brillen">Alle Karten zeigen</a></p>`).join('\n')}
+        <nav class="brillen-wahl" aria-label="Karten nach Brille zeigen">
+          <ul role="list">
+            <li><a href="#brillen" class="wahl-alle">Alle Karten<span class="gewaehlt sr-only"> (gewählt)</span></a></li>
+${BRILLEN.map((b) => `            <li><a href="#fuer-${b.id}">${b.name}<span class="gewaehlt sr-only"> (gewählt)</span></a></li>`).join('\n')}
+          </ul>
+        </nav>
         <div class="brillen">
-${BRILLEN.map((b) => `          <section class="brille" aria-labelledby="brille-${b.id}">
+${BRILLEN.map((b) => `          <section class="brille" data-brille="${b.id}" aria-labelledby="brille-${b.id}">
             <h3 id="brille-${b.id}">${b.name}: ${b.frage}</h3>
             <p>${b.text}</p>
             <ul role="list">${b.karten.map((k) => `<li><a href="#karte-${k.toLowerCase()}">${EBENEN[k].titel}</a></li>`).join('')}</ul>
@@ -247,7 +358,7 @@ export const KANTONSATLAS = {
       id: 'lesen',
       titel: '1. Wie die Karten zu lesen sind',
       html: `
-        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. <span class="nur-hell">Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren.</span><span class="nur-dunkel">Im dunklen Modus sind die Kantone mit den tieferen Zahlen dunkel, die mit den höheren hell.</span> Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
+        <p>Jede Karte teilt die 26 Kantone nach ihrer Zahl in vier etwa gleich grosse Gruppen. Die Farbe einer Karte zeigt nur das Thema, wie in Maloja überall: Blau für Versicherungen, Grün für Wohnen, Braun für Arbeit, Violett für Vorsorge, Grau für das, was über ein Amt läuft. <span class="nur-hell">Hell sind die Kantone mit den tieferen Zahlen, dunkel die mit den höheren.</span><span class="nur-dunkel">Im dunklen Modus sind die Kantone mit den tieferen Zahlen dunkel, die mit den höheren hell.</span> Unter der Karte steht, welche Spanne jede Stufe umfasst; die Werte jedes Kantons stehen in einer aufklappbaren Tabelle bei der Karte. Nahe an einer Stufengrenze können fast gleiche Werte verschieden gefärbt sein.</p>
         <p class="merke"><strong>Kurz gesagt:</strong> <span class="nur-hell">Dunkel</span><span class="nur-dunkel">Hell</span> heisst «höhere Zahl», nicht «besser» oder «schlechter». Eine hohe Miete kann mit hohen Löhnen zusammengehen, eine tiefe Quote damit, dass eine Leistung wenig bekannt ist. Was hinter den Unterschieden steckt, zeigen die Karten nicht.</p>
         <p>Dieselben Zahlen stehen auf der Seite <a href="/kantone-im-vergleich/">Kantone im Vergleich</a> im Text und nebeneinander, dort auch mit ihren Zusammenhängen.</p>`,
     },
@@ -331,14 +442,17 @@ export const KANTONSATLAS = {
   // Belegstellen der Karte stehen in der Legende jeder Abbildung, ausser der
   // Kartengrundlage: die gehört zu allen Karten und steht im ersten Abschnitt.
   stilZusatz: `
-    /* ─── Kantonsatlas: eine Farbe (Heidelbeere) in vier Stufen ─────────── */
-    :root{ ${cssStufen(STUFEN_FARBEN.hell)} }
+    /* ─── Kantonsatlas: je Karte die Frucht ihres Lebensbereichs, vier Stufen ─── */
+    /* :root trägt die Heidelbeere als Grundwert; jede Karte setzt ihre Frucht (KARTEN_FRUCHT). */
+    :root{ ${cssStufen(STUFEN_FARBEN.heidelbeere.hell)} }
+${FRUCHT_CSS_HELL}
     /* Lesart folgt dem Modus: im dunklen Modus ist die höchste Stufe die hellste. Versteckt per display,
        damit Vorlese-Programme jeden Satz genau einmal lesen (Befund 09.11.2026, aus der App-Karte #780). */
     .nur-dunkel{ display:none }
     @media (prefers-color-scheme: dark){ .nur-hell{ display:none } .nur-dunkel{ display:inline } }
     @media (prefers-color-scheme: dark){
-      :root{ ${cssStufen(STUFEN_FARBEN.dunkel)} }
+      :root{ ${cssStufen(STUFEN_FARBEN.heidelbeere.dunkel)} }
+${FRUCHT_CSS_DUNKEL}
     }
     .atlas .abb-bild svg{ max-height:420px }
     .atlas svg use{ stroke:var(--leise); stroke-width:.6 }
@@ -369,6 +483,7 @@ export const KANTONSATLAS = {
     .brille li a{ display:inline-block; padding:4px 10px; border:1px solid var(--rand); border-radius:999px; font-size:14px; color:var(--heidel-text); text-underline-offset:3px }
     .brille li a:hover{ border-color:var(--heidel-text) }
     .brille li a:focus-visible{ outline:2px solid var(--text); outline-offset:2px }
+${BRILLEN_CSS}
     .atlas-werte summary:focus-visible{ outline:2px solid var(--text); outline-offset:2px }`,
 };
 

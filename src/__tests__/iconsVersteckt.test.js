@@ -48,3 +48,27 @@ describe('Zeichen aus dem Register sind versteckt', () => {
     expect(html).toMatch(/<svg[^>]*aria-hidden="true"[^>]*>.*HELVETIA/);
   });
 });
+
+describe('Register ergänzen: Ladereihenfolge', () => {
+  it('eine Nicht-Funktion wird beim Eintragen mit Namen abgewiesen, nicht erst beim Zeichnen', async () => {
+    const { zeichenErgaenzen } = await import('../IconKern.jsx');
+    expect(() => zeichenErgaenzen({ zzHalbGeladen: undefined })).toThrow(/zzHalbGeladen/);
+    expect(Icons.zzHalbGeladen).toBeUndefined();
+  });
+
+  it('die Zeichen aus IconMuenzen.jsx sind Hüllen, die erst beim Zeichnen nachschlagen', async () => {
+    // Quelltext statt Laufzeit: die Reihenfolge, in der es schiefging, lässt sich im Test nicht
+    // erzwingen (lokal 0 von 25 Läufen rot). Geprüft wird darum, dass kein importierter Wert aus
+    // IconMuenzen.jsx direkt ins Register geht.
+    const fs = await import('node:fs');
+    const { fileURLToPath } = await import('node:url');
+    const quelle = fs.readFileSync(fileURLToPath(new URL('../IconSystem.jsx', import.meta.url)), 'utf8');
+    const kopf = quelle.match(/import \{([^}]*)\} from '\.\/IconMuenzen\.jsx'/);
+    expect(kopf).not.toBeNull();
+    const lokal = kopf[1].split(',').map((s) => s.trim().split(/\s+as\s+/).pop()).filter(Boolean);
+    expect(lokal.length).toBeGreaterThan(0);
+    for (const name of lokal) {
+      expect(quelle, name).not.toMatch(new RegExp(`:\\s*${name}\\s*,`));
+    }
+  });
+});

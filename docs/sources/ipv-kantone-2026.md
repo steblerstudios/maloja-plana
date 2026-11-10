@@ -2609,6 +2609,9 @@ Liegenschaften und Unterhaltsbeiträge (§ 9 Abs. 1 lit. a/c).
   **kein Anspruch** (vorher 2'736).
 - ⟨korrigiert⟩ Obergrenze: «bei 31'000 → 2'193.50» war gegen den amtlichen Rechner der SVA (`math >= 0` →
   «NEIN»). Jetzt «ab der Grenze kein Anspruch» — Frage 22.4 um Bestätigung.
+  ⟨überholt 09.11.2026, PR #801⟩ Genau auf der Grenze widerspricht die SVA-Seite «Häufige Anliegen»
+  («darf nicht überschritten werden») dem Rechner. Seither genau auf der Grenze `orientierung('blGenauAufGrenze')`
+  (kein Betrag, kein «kein Anspruch»), darüber weiter «kein Anspruch». Verglichen wird in ganzen Franken.
 - Freibeträge zusätzlich belegt: StG BL § 50 Abs. 1 lit. a/b (180'000 / 90'000). Schulden (Reinvermögen)
   als bewusst nicht gebaut benannt.
 - Texte: «kein Anspruch» nennt die Veranlagung {basisjahr} (Näherung an der Klippe); Gesuchsfrist
