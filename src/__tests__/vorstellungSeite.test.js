@@ -180,7 +180,7 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
   });
 
   it('weniger Bewegung: Pinselstrich, Nagel und Wolken bewegen sich nur bei no-preference', () => {
-    const bewegt = stil.match(/@media \(prefers-reduced-motion: no-preference\)\{([\s\S]*?)\n    \}\n/)[1];
+    const bewegt = stil.match(/@media \(prefers-reduced-motion: no-preference\)\{([\s\S]*?)\n {4}\}\n/)[1];
     for (const teil of ['mask-position 1.1s', 'animation:anschlagen', 'animation:ziehen']) expect(bewegt).toContain(teil);
     expect(stil).toMatch(/@media \(prefers-reduced-motion: reduce\)\{[\s\S]*?\.reise-wolken\{ display:none \}/);
     expect(js).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
@@ -205,7 +205,7 @@ describe('Vorstellungsseite: Brand Book', () => {
 
   it('Farben aus dem Brand Book: Sand #C4A06A, Schrift darauf #2A2620, Links sandDeep und unterstrichen', () => {
     expect(stil).toContain('--sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30;');
-    expect(stil).toMatch(/\n    a\{ color:var\(--sand-tief\); text-decoration:underline;/);
+    expect(stil).toMatch(/\n {4}a\{ color:var\(--sand-tief\); text-decoration:underline;/);
   });
 
   it('Bildmarke auf heller Fläche einfarbig (Anthrazit)', () => {
