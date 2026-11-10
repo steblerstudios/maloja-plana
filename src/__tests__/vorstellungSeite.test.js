@@ -83,3 +83,54 @@ describe('Vorstellungsseite: Inhalt', () => {
     expect(html).not.toMatch(/Sozialberatung|#beratung|\[Name\]|class="platzhalter"/i);
   });
 });
+
+// Die Reise «näher an Fuji» (Entscheid A–E, 10.11.2026, Brand Book §7e).
+describe('Vorstellungsseite: Die Reise (A–E)', () => {
+  const js = fs.readFileSync(path.join(WURZEL, 'website/reise.js'), 'utf8');
+  const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+
+  it('A · Eintritt: eigener Bildschirm mit Titel und Ring «Losgehen» zur ersten Kehre', () => {
+    const eintritt = html.match(/<div class="reise-eintritt">([\s\S]*?)<ol class="reise-stationen">/)[1];
+    expect(eintritt).toContain('<h2 id="t-weg">');
+    expect(eintritt).toContain('<a class="reise-ring" href="#kehre-1">Losgehen</a>');
+    expect(html).toContain('class="kehre-bild nacht an"');
+  });
+
+  it('B · ohne Skript hängen alle sieben Stocknägel am Stock (ausblenden nur unter .js)', () => {
+    expect((html.match(/<g class="nagel" /g) || []).length).toBe(7);
+    expect(stil).toContain('.js .nagel{ opacity:0 }');
+    expect(stil).not.toMatch(/(?<!\.js )\.nagel\{[^}]*opacity:0/);
+  });
+
+  it('C · jede Kehre hat «im Beispiel ansehen» und «Weiter»; jedes Weiter-Ziel gibt es', () => {
+    const weiter = [...html.matchAll(/<a class="weiter" href="#([^"]+)">/g)].map((m) => m[1]);
+    expect(weiter).toEqual(['kehre-2', 'kehre-3', 'kehre-4', 'kehre-5', 'kehre-6', 'kehre-7', 'holen']);
+    for (const ziel of weiter) expect(html).toContain(`id="${ziel}"`);
+    KAPITEL.forEach((k, i) => expect(html).toContain(`<a href="${BEISPIEL}#/chapter/${i}">${k.name} im Beispiel ansehen</a>`));
+  });
+
+  it('D · die Zahl ist nur Bild (aria-hidden), «Kehre n von 7» steht als Text', () => {
+    KAPITEL.forEach((k, i) => {
+      expect(html).toContain(`<p class="reise-zahl" aria-hidden="true">0${i + 1}</p>`);
+      expect(html).toContain(`Kehre ${i + 1} von 7 · ${k.name}`);
+    });
+  });
+
+  it('E · Bild 1 lädt sofort, Bilder 2–7 erst über das Skript (data-src)', () => {
+    expect(html).toContain('src="/vorstellung/kehre-1.webp"');
+    for (let n = 2; n <= 7; n++) {
+      expect(html).toContain(`data-src="/vorstellung/kehre-${n}.webp"`);
+      expect(html).not.toContain(`src="/vorstellung/kehre-${n}.webp"`.replace(/^/, ' '));
+    }
+    expect(js).toContain("getAttribute('data-src')");
+  });
+
+  it('weniger Bewegung: Klecks, Heranfahren, Wolken und Ring drehen nur bei no-preference', () => {
+    const bewegt = stil.match(/@media \(prefers-reduced-motion: no-preference\)\{([\s\S]*?)\n    \}\n/)[1];
+    for (const teil of ['mask-size 1.1s', 'animation:anschlagen', 'animation:ziehen', 'animation:kreisen', '.js .reise-stock{ transition:transform']) {
+      expect(bewegt).toContain(teil);
+    }
+    expect(stil).toMatch(/@media \(prefers-reduced-motion: reduce\)\{[\s\S]*?\.reise-stock\{ transform:none \}[\s\S]*?\.reise-wolken\{ display:none \}/);
+    expect(js).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
+  });
+});

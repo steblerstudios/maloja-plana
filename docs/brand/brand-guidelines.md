@@ -303,20 +303,25 @@ Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E)
 
 ---
 
-### 7e. Die Reise auf der Startseite — Kehren, Wanderstock, Stocknägel *(Entwurf 10.11.2026)*
+### 7e. Die Reise auf der Startseite — Kehren, Wanderstock, Stocknägel *(Entwurf 10.11.2026, näher an Fuji: A–E)*
 
 Der Abschnitt «Ein Weg, Kehre für Kehre» auf malojaplana.ch/ (`scripts/seiten/vorstellung.mjs`, `website/reise.js`).
 Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur Prinzipien, keine fremden Bilder oder Code.
 
 | Regel | Wie |
 |---|---|
-| **Bühne** | je Kehre ein eigenes gemaltes Bild, vom Talboden im Bergell über die Serpentinen bis zum Silsersee oben am Pass; randlos, klebt beim Scrollen, wechselt mit Überblendung. Zurzeit KI-gemalt (lockerer Aquarell-Gouache-Stil, Figma «Maloja Reise · Bilder») und so beschriftet; später echte Malerei |
+| **Eintritt (A)** | die Reise beginnt mit einem eigenen ganzen Bildschirm: Nacht über dem Pass (Sterne, Umriss des Passes, eigene Form), weisser Titel, Ring «Losgehen» mit gepunktetem Aussenring, der sich langsam dreht |
+| **Bühne** | je Kehre ein eigenes gemaltes Bild, vom Talboden im Bergell über die Serpentinen bis zum Silsersee oben am Pass; randlos, klebt beim Scrollen. Zurzeit KI-gemalt (lockerer Aquarell-Gouache-Stil, Figma «Maloja Reise · Bilder») und so beschriftet; später echte Malerei. Bild 1 lädt sofort, die übrigen erst kurz vor ihrer Kehre |
+| **Bildwechsel (E)** | das neue Bild breitet sich wie ein **Farbklecks** von der Mitte über das alte aus (Maske, eigene Fleckform, 1,1 s); darüber ziehen leise Wolken |
 | **Kehre = Kapitel** | sieben Kehren in der Reihenfolge der App (`CHAPTER_KEYS`), Kapitelfarben aus `lebensbereiche.js` |
-| **Sammelobjekt** | Wanderstock; je erreichter Kehre ein **Stocknagel** (Schild in der Kapitelfarbe). Schweizer Brauch statt Brandstempel. Rückfall: Wanderpass |
-| **Zahl** | grosse Kehren-Zahl 01–07 weiss auf dem Bild, `aria-hidden`; die Information steht als Text «Kehre n von 7» |
-| **Weglinie** | dünne weisse Schlangenlinie links, Punkt der aktuellen Kehre in Gold |
-| **Bewegung** | Bild blendet je Kehre über (0,9 s) und wandert leicht mit, Nagel «schlägt an» (0,55 s) — nur ohne «weniger Bewegung»; ohne Skript sind alle Nägel da |
+| **Sammelobjekt (B)** | Wanderstock **gross in der Mitte**, mit Licht- und Schattenkante; je erreichter Kehre ein **Stocknagel** (Schild in der Kapitelfarbe mit der Nummer). Solange der Text einer Kehre im Bild steht, fährt der Stock an den neuen Nagel heran (×1,5, 0,9 s). Schweizer Brauch statt Brandstempel. Rückfall: Wanderpass |
+| **Text (C)** | weiss **direkt auf dem Bild**, rechts neben dem Stock; darunter eine dunkle Schicht, die unter dem Text mindestens 55 % deckt. Am Handy eigene halbdurchsichtige Fläche (55 %). Zwei Pillen: «… im Beispiel ansehen» und «Weiter» (zur nächsten Kehre, zuletzt «Weiter: App holen»), je mind. 44 px hoch |
+| **Zahl (D)** | grosse Kehren-Zahl 01–07 weiss über dem Text, `aria-hidden`; die Information steht als Text «Kehre n von 7». **Keine Höhenangaben ohne Quelle** |
+| **Weglinie (D)** | links, gepunktet; der gegangene Teil durchgezogen, an der aktuellen Kehre ein goldener Ort mit dem Kapitelnamen |
+| **Bewegung** | Klecks, Heranfahren, Nagel «schlägt an» (0,6 s), Wolken und Ring nur ohne «weniger Bewegung»; mit «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, aber ohne Bewegung. Ohne Skript: alle Nägel am Stock, erstes Bild, Eintritt mit eigener dunkler Fläche. **Bewusste Ausnahme zu §8 (max. ~1.04):** das Heranfahren ist eine Kamerafahrt der Website-Bühne, keine Rückmelde-Animation; in der App gilt §8 unverändert |
 | **Kein Zwang** | Nägel sind Zeichen, keine Punkte; nichts wird gespeichert |
+
+Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Punkte A–E nach Skizze).
 
 ## 8. Calm-UX-Prinzipien
 
