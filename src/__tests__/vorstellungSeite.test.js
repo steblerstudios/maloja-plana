@@ -170,7 +170,7 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
     const weiter = [...html.matchAll(/<a class="weiter" href="#([^"]+)"/g)].map((m) => m[1]);
     expect(weiter).toEqual(['kehre-2', 'kehre-3', 'kehre-4', 'kehre-5', 'kehre-6', 'kehre-7', 'holen']);
     for (const ziel of weiter) expect(html).toContain(`id="${ziel}"`);
-    KAPITEL.forEach((k, i) => expect(html).toContain(`<a href="${BEISPIEL}#/chapter/${i}">${k.name} im Beispiel ansehen</a>`));
+    KAPITEL.forEach((k, i) => expect(html).toContain(`<a class="beispiel" href="${BEISPIEL}#/chapter/${i}">${k.name} im Beispiel ansehen</a>`));
   });
 
   it('D · gross steht das Kapitel-Zeichen (nur Bild, aria-hidden), «Kehre n von 7» steht als Text; keine grosse Zahl mehr', () => {
@@ -214,7 +214,7 @@ describe('Vorstellungsseite: Die Reise (A–F)', () => {
 
   it('weniger Bewegung: Pinselstrich, Nagel und Wolken bewegen sich nur bei no-preference', () => {
     const bewegt = stil.match(/@media \(prefers-reduced-motion: no-preference\)\{([\s\S]*?)\n {4}\}\n/)[1];
-    for (const teil of ['mask-position 1.1s', 'animation:anschlagen', 'animation:ziehen']) expect(bewegt).toContain(teil);
+    for (const teil of ['mask-position .9s', 'animation:anschlagen', 'animation:ziehen']) expect(bewegt).toContain(teil);
     expect(stil).toMatch(/@media \(prefers-reduced-motion: reduce\)\{[\s\S]*?\.reise-wolken\{ display:none \}/);
     expect(js).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
   });
@@ -391,16 +391,16 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
 
   it('P · die Schicht neben dem Stock trägt die Kapitelfarbe, unter dem Text mindestens 74 %', () => {
     expect(stil).toContain("@property --ton{ syntax:'<color>'; inherits:true; initial-value:#121210 }");
-    for (let i = 0; i < 7; i++) expect(stil).toContain(`.reise-buehne[data-hier="${i}"]{ --ton:color-mix(in srgb, var(--k${i}) 30%, #121210) }`);
-    expect(stil).toContain('color-mix(in srgb, var(--ton) 74%, transparent) 46%');
-    expect(handy).toContain('background:color-mix(in srgb, color-mix(in srgb, var(--farbe) 30%, #121210) 82%, transparent)');
+    for (let i = 0; i < 7; i++) expect(stil).toContain(`.reise-buehne[data-hier="${i}"]{ --ton:color-mix(in oklab, var(--k${i}) 30%, #121210) }`);
+    expect(stil).toContain('color-mix(in oklab, var(--ton) 74%, transparent) 46%');
+    expect(handy).toContain('background:color-mix(in oklab, color-mix(in oklab, var(--farbe) 30%, #121210) 82%, transparent)');
   });
 
   // Das Brand Book wird im selben Zweig nachgeführt (10.11.: ein Skript brach ab, die Zeilen N–P fehlten unbemerkt).
   it('Brand Book §7e beschreibt Seitenfarbe, App holen (O), Schluss (N) und die Schicht in der Kapitelfarbe (P)', () => {
     const buch = fs.readFileSync(path.join(WURZEL, 'docs/brand/brand-guidelines.md'), 'utf8');
     const e = buch.slice(buch.indexOf('### 7e.'), buch.indexOf('## 8.'));
-    for (const zeile of ['| **Seitenfarbe** |', '| **App holen (O)** |', '| **Schluss (N)** |', '| **Telefon an der Kehre (A)**', '| **Situationen mit Telefon (C/D)**']) expect(e).toContain(zeile);
+    for (const zeile of ['| **Seitenfarbe** |', '| **App holen (O)** |', '| **Schluss (N)** |', '| **Telefon an der Kehre (A)**', '| **Situationen mit Telefon (C/D)**', '| **Ausweg (B)**', '| **Einblenden nach der Reise (D)**']) expect(e).toContain(zeile);
     expect(e).toContain('**in der Farbe der Kehre**');
     expect(e).toContain('`#FCF0E4`');
   });
@@ -412,9 +412,12 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(kehre(7)).toMatch(/<div class="reise-telefon"><div class="telefon" role="img" aria-label="Kapitel Gesundheit im Beispiel, mit erfundenen Daten">[\s\S]*?<img src="\/vorstellung\/app-5\.webp"/);
     expect(kehre(7).indexOf('class="reise-telefon"')).toBeLessThan(kehre(7).indexOf('class="reise-text"'));
     for (const n of [1, 2, 3, 4, 5, 6]) expect(kehre(n), `Kehre ${n}`).not.toContain('reise-telefon');
-    expect(stil).toMatch(/\.reise-telefon\{ position:absolute; left:27%; top:50%/);
-    expect(handy).toMatch(/\.reise-telefon\{ position:static; transform:none \}/);
-    expect(handy).toMatch(/\.reise-station\.mit-telefon\{ flex-direction:column/);
+    // Vorbilder 10.11.2026 (A2/A3): ab 1100 px gross und unten angeschnitten, darunter nur der Ausschnitt in der Textfläche
+    expect(stil).toMatch(/\.reise-telefon\{ --breite:clamp\(260px, 28vw, 380px\); position:absolute; left:27%; bottom:0;[^}]*overflow:hidden \}/);
+    expect(stil).toMatch(/@media \(max-width:1099px\)\{\s*\.reise-telefon\{ display:none \}\s*\.reise-ausschnitt\{ display:block \}/);
+    expect(kehre(7)).toMatch(/<div class="reise-text">\s*<div class="reise-ausschnitt" role="img" aria-label="Ausschnitt aus dem Kapitel Gesundheit im Beispiel, mit erfundenen Daten"><img src="\/vorstellung\/app-5\.webp"/);
+    expect(stil).toMatch(/\.reise-ausschnitt img\{[^}]*width:360px/);
+    expect(stil).not.toMatch(/\.reise-telefon \.telefon\{ width:96px/);
   });
 
   it('C/D · «Was steht mir zu?» steht neben der Auswahl der Situationen, mit dem Satz zum Gerät; «Ein Blick hinein» ist weg', () => {
@@ -425,7 +428,7 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
     expect(html).not.toContain('t-blick');
     expect(html).not.toContain('<p class="augenbraue">Ein Blick hinein</p>');   // im Stil-Kommentar steht der Name als Historie
     expect(stil).not.toMatch(/\.blick[\s.{-]/);
-    expect(html.match(/app-5\.webp/g)).toHaveLength(2);   // Bildfolge im Hero + Kehre 7
+    expect(html.match(/app-5\.webp/g)).toHaveLength(3);   // Bildfolge im Hero + Kehre 7 (Telefon und Ausschnitt)
   });
 
   it('Browserleiste hell nach der Seitenfarbe, dunkel nach Granit', () => {
@@ -451,7 +454,38 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   it('C · auf der Weglinie sitzt an jedem Halt das Kapitel-Zeichen', () => {
     const halte = html.match(/<g class="halt" /g) || [];
     expect(halte).toHaveLength(7);
-    expect(html).toMatch(/<g class="halt" data-kehre="1" data-x="[\d.]+" data-y="[\d.]+" transform="translate\([\d.]+ [\d.]+\)" style="color:var\(--k0\)"><circle r="12"\/><svg x="-8.5"/);
+    expect(html).toMatch(/<g class="halt" data-kehre="1" data-x="[\d.]+" data-y="[\d.]+" transform="translate\([\d.]+ [\d.]+\)" style="color:var\(--k0\)"><circle class="treffer" r="22"\/><circle r="12"\/><svg x="-8.5"/);
+  });
+
+  // Vorbilder 10.11.2026 (Stebler Studios «A, B, C, D so»), stebler-studios/analysen/maloja-startseite-vorbilder-2026-11-10.md
+  it('B · Ausweg: jeder Halt führt zu seiner Kehre (nicht fokussierbar), «Reise überspringen» klebt während der Reise', () => {
+    for (let n = 1; n <= 7; n++) expect(html).toContain(`<a class="halt-ziel" href="#kehre-${n}" tabindex="-1"><g class="halt" data-kehre="${n}"`);
+    const weg = html.match(/<section id="weg"[\s\S]*?<ol class="reise-stationen"/)[0];
+    expect(weg).toContain('<a class="reise-ueberspringen" href="#situationen">Reise überspringen</a>');
+    expect(html).toContain('id="situationen"');
+    expect(stil).toMatch(/\.reise-ueberspringen\{ position:sticky;[^}]*min-height:44px/);
+    expect(stil).toContain('.js .reise-ablauf{ pointer-events:none }');
+    expect(stil).toContain('.js .reise-anfang, .js .reise-ablauf .reise-text, .js .reise-ablauf .reise-telefon, .reise-ueberspringen{ pointer-events:auto }');
+  });
+
+  it('C · in der Reise keine Papier-Knöpfe: Link und leises «Weiter», weiss und unterstrichen, 44 px', () => {
+    const regel = stil.match(/\.reise-knoepfe a\{[^}]*\}/)[0];
+    expect(regel).toContain('color:#FBFBFA');
+    expect(regel).toContain('text-decoration:underline');
+    expect(regel).toContain('min-height:44px');
+    expect(regel).not.toMatch(/background|border:/);
+    const reise = html.match(/<ol class="reise-stationen"[\s\S]*?<\/ol>/)[0];
+    expect(reise).not.toContain('class="knopf');
+  });
+
+  it('D · Abschnitte nach der Reise kommen an den Scroll gebunden herein, nur mit Unterstützung und ohne «weniger Bewegung»', () => {
+    expect(stil).toMatch(/@supports \(\(animation-timeline: view\(\)\) and \(animation-range: 0% 100%\)\)\{\s*@media \(prefers-reduced-motion: no-preference\)\{\s*:is\(main, \.rahmen\) > section :is\(\.augenbraue, h2, h2 \+ \.unterzeile\)\{[^\n]*\n\s*animation:leise-ein linear both; animation-timeline:view\(\); animation-range:entry 0% cover 25% \}/);
+    expect(stil).toMatch(/@keyframes leise-ein\{ from\{ opacity:0; transform:translateY\(16px\) \} to\{ opacity:1; transform:none \} \}/);
+  });
+
+  it('Oklab: Übergänge Creme ↔ Salbei ohne graue Mitte, mit sRGB-Rückfall davor', () => {
+    expect(stil).toContain('.pass-karte-anfang{ height:16vh; background:linear-gradient(#FCF0E4, #7E8F7B); background:linear-gradient(in oklab, #FCF0E4, #7E8F7B) }');
+    expect(stil).toContain('.pass-karte-ende{ height:16vh; background:linear-gradient(#7E8F7B, var(--bg)); background:linear-gradient(in oklab, #7E8F7B, var(--bg)) }');
   });
 
   it('B · Kamera: das Bild wandert beim Drehen seitlich mit, kein Milchglas auf der Seite', () => {
