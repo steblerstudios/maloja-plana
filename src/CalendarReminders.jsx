@@ -16,7 +16,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 import { kachelZeichenFarbe } from './utils/lebensbereichFruechte.js';
-import { werktagAmOderDavor } from './utils/fristen.js';
+import { werktagAmOderDavor, plusTage } from './utils/fristen.js';
 import { festeFristen } from './utils/festeFristen.js';
 import { naechsterTermin, bisHeuteWeiter, INTERVALLE } from './utils/wiederholung.js';
 import { Jahreskreis } from './components/Jahreskreis.jsx';
@@ -60,19 +60,31 @@ const nextDueFrom = (lastVisit, recurrence) => {
   return naechsterTermin(lastVisit, INTERVALLE[recurrence] ? recurrence : 'yearly') || '';
 };
 
+// Gruppe B L5 (11.11.2026): Erinnerung zehn Tage vor dem letzten Werktag im November — die Kündigung muss dann
+// schon bei der Kasse sein (KVG Art. 7 Abs. 2). Nach der Frist die des nächsten Jahres.
+export const kkWechselErinnerung = (heute) => {
+  const j = Number(heute.slice(0, 4));
+  let frist = werktagAmOderDavor(j + '-11-30');
+  if (heute > frist) frist = werktagAmOderDavor((j + 1) + '-11-30');
+  const erinnerung = plusTage(frist, -10);
+  return erinnerung < heute ? heute : erinnerung;
+};
+
 // Pre-built templates for Swiss life
-const TEMPLATES = (t) => [
+// Gruppe B L4 + K (11.11.2026): Steuerfrist und Bewilligung nie aus dem Klickdatum. Die Steuerfrist kommt aus den
+// Angaben (Kapitel Behörden); fehlt sie, öffnet die Vorlage das Formular mit leerem Datum. Die Bewilligung ebenso.
+const TEMPLATES = (t, data) => [
   { title: t('calendar.templates.doctorYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 30, coverage: t('calendar.coverage.doctor') },
   { title: t('calendar.templates.dentistYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 60, coverage: t('calendar.coverage.dentist') },
   { title: t('calendar.templates.gynYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 90, coverage: t('calendar.coverage.gyn') },
-  { title: t('calendar.templates.taxDeadline'), category: 'finance', recurrence: 'yearly', daysFromNow: 120 },
+  { title: t('calendar.templates.taxDeadline'), category: 'finance', recurrence: 'yearly', festesDatum: data?.behoerden?.taxFilingDeadline >= todayISO() ? data.behoerden.taxFilingDeadline : null, ohneDatum: !(data?.behoerden?.taxFilingDeadline >= todayISO()) },
   { title: t('calendar.templates.insuranceRenewal'), category: 'insurance', recurrence: 'yearly', daysFromNow: 180 },
-  { title: t('calendar.templates.permitRenewal'), category: 'admin', recurrence: 'yearly', daysFromNow: 365 },
+  { title: t('calendar.templates.permitRenewal'), category: 'admin', recurrence: 'once', ohneDatum: true },
   { title: t('calendar.templates.ravAppointment'), category: 'admin', recurrence: 'monthly', daysFromNow: 14 },
   { title: t('calendar.templates.integrationCourse'), category: 'education', recurrence: 'weekly', daysFromNow: 7 },
   { title: t('calendar.templates.vaccinations'), category: 'health', recurrence: 'yearly', daysFromNow: 180, coverage: t('calendar.coverage.vaccinations') },
   { title: t('calendar.templates.medicationRefill'), category: 'health', recurrence: 'quarterly', daysFromNow: 60, coverage: t('calendar.coverage.medication') },
-  { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', daysFromNow: tageBisNaechstem(todayISO(), '11-30') },
+  { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', festesDatum: kkWechselErinnerung(todayISO()) },
 ];
 
 // Icon keys mapping to IconSystem — used for category display
@@ -207,7 +219,13 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   };
 
   const addFromTemplate = (template) => {
-    const dueDate = inDays(template.daysFromNow ?? 30); // lokal, wie todayISO; 0 Tage = heute
+    if (template.ohneDatum) {
+      // Ohne belegtes Datum: ins Formular, das Datum trägt die Person selbst ein (Gruppe B L4).
+      setNewTitle(template.title); setNewCategory(template.category); setNewRecurrence(template.recurrence);
+      setNewNotes(template.coverage || ''); setNewDate(''); setView('add');
+      return;
+    }
+    const dueDate = template.festesDatum || inDays(template.daysFromNow ?? 30); // lokal, wie todayISO; 0 Tage = heute
     const reminder = {
       id: Date.now().toString() + '_' + Math.random().toString(36).slice(2, 8),
       title: template.title,
@@ -789,7 +807,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         }, aufklappZeichen(showTemplates), t('calendar.templates.title')),
 
         showTemplates && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginTop: space.sm } },
-          TEMPLATES(t).map((tmpl, idx) =>
+          TEMPLATES(t, data).map((tmpl, idx) =>
             React.createElement('button', {
               key: idx,
               onClick: () => addFromTemplate(tmpl),

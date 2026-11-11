@@ -5281,6 +5281,11 @@ export default {
       body1: 'cun quai As rog jau amicaivlamain per ina prolungaziun dal termin per la consegna da mia decleraziun da taglia {year}.',
       body2: "Jau dovr il temp supplementar per metter ensemen tut ils documents necessaris. Jau As engraziel per Vossa chapientscha.",
       closing: 'Cun salids amicaivels',
+      // TODO(rm): provisorisch — deutsch, Gruppe B K (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor dem Versand',
+        text: 'Die Verlängerung vor Ablauf der Frist beantragen. Viele Kantone bieten dafür ein Online-Formular an, manche verlangen eine Gebühr — beim kantonalen Steueramt nachsehen.',
+      },
     },
     insuranceSwitch: {
       title: 'Midada da cassa da malsauns',

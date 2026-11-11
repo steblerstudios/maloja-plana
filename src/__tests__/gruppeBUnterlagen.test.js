@@ -76,3 +76,44 @@ describe('L2: Kassenwechsel-Brief nennt das Jahr, nach der Frist das nächste', 
     expect(quelle('BriefGenerator.jsx')).toMatch(/selected === 'insuranceSwitch'[\s\S]{0,200}kvgKuendigungsTermin\(heuteIso\(\)\)/);
   });
 });
+
+// ─── L4–L8 und Kleines ───
+describe('L4/L5: Kalender-Vorlagen nie aus dem Klickdatum', () => {
+  it('L5 Kassenwechsel: zehn Tage vor dem letzten Werktag im November, danach nächstes Jahr', async () => {
+    const { kkWechselErinnerung } = await import('../CalendarReminders.jsx');
+    expect(kkWechselErinnerung('2026-11-11')).toBe('2026-11-20');
+    expect(kkWechselErinnerung('2026-11-25')).toBe('2026-11-25'); // Erinnerungsdatum vorbei, Frist nicht: heute
+    expect(kkWechselErinnerung('2026-12-01')).toBe('2027-11-20');
+    expect(kkWechselErinnerung('2030-01-10')).toBe('2030-11-19'); // 30.11.2030 Samstag → Frist 29.11.
+  });
+  it('L4 Steuerfrist aus den Angaben, sonst ins Formular ohne Datum; Bewilligung ohne Datum', () => {
+    const s = quelle('CalendarReminders.jsx');
+    expect(s).toMatch(/taxDeadline'\), category: 'finance', recurrence: 'yearly', festesDatum: data\?\.behoerden\?\.taxFilingDeadline/);
+    expect(s).toMatch(/permitRenewal'\), category: 'admin', recurrence: 'once', ohneDatum: true/);
+    expect(s).toMatch(/if \(template\.ohneDatum\) \{[\s\S]{0,300}setNewDate\(''\); setView\('add'\)/);
+    expect(s).not.toMatch(/taxDeadline'\)[^\n]*daysFromNow/);
+  });
+});
+
+describe('L6–L8 und Kleines', () => {
+  it('L6 Rechnung beanstanden: Verfügung verlangen (ATSG Art. 49, 51)', () => {
+    expect(de.briefe.kkReklamation.body3).toMatch(/anfechtbare Verfügung \(Art\. 49 Abs\. 1 und 51 Abs\. 2 ATSG\)/);
+    expect(quelle('briefGenerator.js')).toMatch(/legalRef: 'ATSG Art\. 49, 51'/);
+  });
+  it('L7 Ablage: kein «sicher» ohne Tresor-Sperre', () => {
+    expect(de.tresor.noDocumentsHint.sie).not.toMatch(/sicher\b/);
+    expect(de.tresor.noDocumentsHint.sie).toMatch(/Tresor-Sperre zusätzlich verschlüsselt/);
+  });
+  it('L8 Organspende: kein Register als Antragsstelle; Links korrigiert', async () => {
+    const s = quelle('data/direktLinks.js');
+    expect(s).not.toMatch(/Organspende-Register/);
+    expect(s).not.toMatch(/ge\.ch\/tax\/|taxme\.ch|Kantonale AHV-Zweigstelle|ältere Arbeitslose ab 60/);
+  });
+  it('Lohnmahnung: Gericht am Arbeitsort oder am Sitz des Arbeitgebers (ZPO Art. 34)', () => {
+    expect(de.briefe.unpaidWage.legalNote).toMatch(/am Arbeitsort oder am Sitz des Arbeitgebers/);
+  });
+  it('Lebensmappe und Behörden-Dossier nennen die persönlichen Angaben', () => {
+    expect(de.lebensmappe.footerPrivacy).toMatch(/AHV-Nummer/);
+    expect(de.behoerdenDossier.footerPrivacy).toMatch(/AHV-Nummer/);
+  });
+});

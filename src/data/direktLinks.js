@@ -36,7 +36,8 @@ export const DIREKTLINKS = [
     name: { de: 'Ergänzungsleistungen (EL)', en: 'Supplementary benefits', fr: 'Prestations complémentaires (PC)' },
     beschreibung: { de: 'Zusätzliche Leistungen wenn AHV/IV-Rente nicht reicht', en: 'Additional benefits when OASI/DI pension is insufficient', fr: 'Prestations supplémentaires si la rente AVS/AI ne suffit pas' },
     url: 'https://www.ahv-iv.ch/p/5.01.d',
-    antragsstelle: { de: 'Kantonale AHV-Zweigstelle', en: 'Cantonal OASI branch', fr: 'Agence cantonale AVS' },
+    // Gruppe B K (11.11.2026): EL-Stelle, nicht die kommunale AHV-Zweigstelle (ELG Art. 21 Abs. 2), wie bei der ÜL.
+    antragsstelle: { de: 'EL-Stelle des Wohnkantons', en: 'Supplementary-benefits office of your canton', fr: 'Organe PC du canton de domicile' },
   },
   {
     id: 'prosenectute',
@@ -58,8 +59,9 @@ export const DIREKTLINKS = [
     id: 'ueberbrueckungsleistungen',
     kategorie: 'arbeit',
     name: { de: 'Überbrückungsleistungen (ÜL)', en: 'Bridge benefits', fr: 'Prestations transitoires' },
-    beschreibung: { de: 'Für ältere Arbeitslose ab 60 Jahren', en: 'For older unemployed persons from age 60', fr: 'Pour les chômeurs âgés dès 60 ans' },
-    url: 'https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/uela.html',
+    // Gruppe B K (11.11.2026): ÜLG Art. 3 — ausgesteuert frühestens im Monat des 60. Geburtstags, nicht «arbeitslos ab 60».
+    beschreibung: { de: 'Für Personen, die mit 60 oder später ausgesteuert werden', en: 'For people whose unemployment benefits run out at 60 or later', fr: 'Pour les personnes arrivées en fin de droits à 60 ans ou plus' },
+    url: 'https://www.bsv.admin.ch/de/uel',
     // ÜLG Art. 19: zuständig sind die EL-Stellen des Wohnkantons (ELG Art. 21 Abs. 2),
     // nicht die AHV-Zweigstelle (Fachprüfung 24.09.2026).
     antragsstelle: { de: 'EL-Stelle des Wohnkantons', en: 'Supplementary-benefits office of your canton', fr: 'Organe PC du canton de domicile' },
@@ -113,7 +115,8 @@ export const DIREKTLINKS = [
     beschreibung: { de: 'Obligatorische Krankenversicherung kündigen und wechseln', en: 'Cancel and switch mandatory health insurance', fr: 'Résilier et changer d\'assurance maladie obligatoire' },
     url: 'https://www.ch.ch/de/gesundheit/krankenkasse/krankenkasse-abschliessen--wechseln-oder-kundigen/',
     urlPriminfo: 'https://www.priminfo.admin.ch/de/praemien',
-    antragsstelle: { de: 'Neue Krankenkasse', en: 'New health insurer', fr: 'Nouvelle caisse maladie' },
+    // Gruppe B K (11.11.2026): die Kündigung geht an die bisherige Kasse (KVG Art. 7), die Anmeldung an die neue.
+    antragsstelle: { de: 'Kündigung: bisherige Kasse · Anmeldung: neue Kasse', en: 'Cancellation: current insurer · Sign-up: new insurer', fr: 'Résiliation : caisse actuelle · Affiliation : nouvelle caisse' },
   },
   {
     id: 'steuern',
@@ -127,9 +130,10 @@ export const DIREKTLINKS = [
     id: 'organspende',
     kategorie: 'gesundheit',
     name: { de: 'Organspende', en: 'Organ donation', fr: 'Don d\'organes' },
-    beschreibung: { de: 'Erklärung zur Organspende abgeben', en: 'Declare organ donation preference', fr: 'Déclarer sa volonté en matière de don d\'organes' },
+    beschreibung: { de: 'Entscheid zur Organspende festhalten', en: 'Record your organ donation decision', fr: 'Consigner sa décision sur le don d\'organes' },
     url: 'https://www.leben-ist-teilen.ch/',
-    antragsstelle: { de: 'Organspende-Register', en: 'Organ donation register', fr: 'Registre de don d\'organes' },
+    // Gruppe B L8 (11.11.2026): ein nationales Register gibt es noch nicht (laut Seite vss. ab 2. Halbjahr 2027).
+    antragsstelle: { de: 'Spendekarte oder Patientenverfügung, mit den Angehörigen besprechen', en: 'Donor card or advance directive, discussed with your family', fr: 'Carte de donneur ou directives anticipées, à discuter avec les proches' },
   },
   {
     id: 'iv',
@@ -236,7 +240,7 @@ export const CANTONAL_LINKS = {
     ipv: 'https://www.zh.ch/de/gesundheit/praemienverbilligung_krankenversicherung.html',
   },
   BE: {
-    steuererklaerung: 'https://www.taxme.ch/',
+    steuererklaerung: 'https://www.sv.fin.be.ch/',
     // Bis 09.11.2026 stand hier die IPV-Seite (identisch mit `ipv`). Sozialhilfe = GSI, Amt für Integration und Soziales.
     sozialdienst: 'https://www.gsi.be.ch/de/start/themen/soziales/sozialhilfe.html',
     ipv: 'https://www.asv.dij.be.ch/de/start/themen/pv.html',
@@ -252,7 +256,7 @@ export const CANTONAL_LINKS = {
     ipv: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungen/praemienverbilligung',
   },
   GE: {
-    steuererklaerung: 'https://ge.ch/tax/',
+    steuererklaerung: 'https://www.ge.ch/remplir-ma-declaration-impot-tant-que-particulier',
     // Bis 09.11.2026 stand hier eine IPV-Seite (subside). Die Sozialhilfe führt das Hospice général (öffentlich-rechtliche Anstalt des Kantons).
     sozialdienst: 'https://www.hospicegeneral.ch/obtenir-de-laide/',
     // Bis 09.11.2026 die Antragsseite «…-2026»: an ein Jahr gebunden. Die allgemeine Seite ohne Jahr

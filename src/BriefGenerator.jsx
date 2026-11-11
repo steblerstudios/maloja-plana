@@ -115,6 +115,9 @@ function lebensereignisHinweis(selected, a, palette, t, data) {
       tm.nachFrist && t(k + 'semester'), t(k + 'anmelden'), t(k + 'ausstaende'),
     ], 'calendar');
   }
+  if (selected === 'taxExtension') {
+    return hinweisBox(palette, t('briefe.taxExtension.hinweis.title'), [t('briefe.taxExtension.hinweis.text')]);
+  }
   if (selected === 'workReference') {
     return hinweisBox(palette, t('briefe.workReference.title'), [t('briefe.workReference.hinweis')]);
   }

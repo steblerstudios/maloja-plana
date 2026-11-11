@@ -194,7 +194,8 @@ export function getLetterTemplates(t, data) {
       title: t('briefe.kkReklamation.title'),
       description: t('briefe.kkReklamation.description'),
       icon: 'health',
-      legalRef: 'ATSG Art. 52',
+      // Gruppe B L6 (11.11.2026): erst eine Verfügung (ATSG Art. 49, 51), dann die Einsprache (Art. 52).
+      legalRef: 'ATSG Art. 49, 51',
       chapter: 'versicherungen',
     },
     {
