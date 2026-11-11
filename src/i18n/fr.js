@@ -3040,7 +3040,7 @@ export default {
     sortByUpload: 'Par date',
     sortByName: 'Nom (A-Z)',
     noDocuments: { sie: 'Votre classeur est prêt', du: 'Ton classeur est prêt' },
-    noDocumentsHint: { sie: 'Dès que vous importez un document dans un chapitre, il apparaîtra ici — uniquement sur votre appareil ; avec le verrouillage du coffre, il est en plus chiffré.', du: 'Dès que tu importes un document dans un chapitre, il apparaîtra ici — uniquement sur ton appareil ; avec le verrouillage du coffre, il est en plus chiffré.' },
+    noDocumentsHint: { sie: 'Ajoutez un document ci-dessus ou dans le chapitre correspondant. Il apparaîtra ici — uniquement sur votre appareil ; avec le verrouillage du coffre, il est en plus chiffré.', du: 'Ajoute un document ci-dessus ou dans le chapitre correspondant. Il apparaîtra ici — uniquement sur ton appareil ; avec le verrouillage du coffre, il est en plus chiffré.' },
     expired: 'Expiré',
     expiryDate: 'Échéance : {date}',
     uploadedInfo: 'Importé : {date} · {size}',
@@ -3668,6 +3668,7 @@ export default {
   },
 
   briefe: {
+    formTitel: 'Lettre : {name}',
     title: 'Modèles de lettres',
     intro: { sie: 'Lettres types suisses, pré-remplies avec vos données. Veuillez vérifier et adapter avant envoi.', du: 'Lettres types suisses, pré-remplies avec tes données. Vérifie et adapte avant envoi.' },
     backToUnterlagen: 'Retour à Mes documents',
@@ -5299,6 +5300,7 @@ export default {
     vorausZimmerZGZuViel: { sie: 'Votre logement compte {zimmer} pièces pour {personen} personnes. Zoug ne soutient que les logements comptant au plus deux pièces de plus que de personnes.', du: 'Ton logement compte {zimmer} pièces pour {personen} personnes. Zoug ne soutient que les logements comptant au plus deux pièces de plus que de personnes.' },
   },
   calendar: {
+    reiterTermine: 'Rendez-vous',
     nicelyDone: 'Fait',
     aufgabe: 'Tâche',
     ausMerkliste: 'de l’aide-mémoire',

@@ -117,3 +117,25 @@ describe('L6–L8 und Kleines', () => {
     expect(de.behoerdenDossier.footerPrivacy).toMatch(/AHV-Nummer/);
   });
 });
+
+describe('Gestaltung A, C, D (B Bücherregal: nicht gebaut, zum Besprechen)', () => {
+  it('A: auch die eigene Wahl per Karte springt zum Formular; über dem Formular steht der Name des Briefs', () => {
+    const s = quelle('BriefGenerator.jsx');
+    expect(s).toMatch(/setSprung\(\(n\) => n \+ 1\)/);
+    expect(s).toMatch(/\}, \[initialTemplate, sprung\]\);/);
+    expect(s).toMatch(/'aria-pressed': selected === tmpl\.key/);
+    expect(s).toMatch(/id: 'brief-form-titel'/);
+    expect(de.briefe.formTitel).toBe('Brief: {name}');
+  });
+  it('C: Was ansteht nicht breiter als die Seite (−20 px wie das Seitenpolster), Löschen am Eintrag, Reiter «Termine»', () => {
+    const s = quelle('CalendarReminders.jsx');
+    expect(s).not.toMatch(/margin: '(4px|0) -24px 2px'/);
+    expect(s).toMatch(/onDelete: \(\) => deleteReminder\(r\.id\)/);
+    expect(s).not.toMatch(/t\('calendar\.loeschHinweis'\)/);
+    expect(de.calendar.reiterTermine).toBe('Termine');
+  });
+  it('D: Ablage-Titel trennt «Dokumenten-ablage», ein Satz für beide Wege', () => {
+    expect(de.tresor.title).toBe('Dokumenten­ablage');
+    expect(de.tresor.noDocumentsHint.sie).toMatch(/^Fügen Sie oben oder im passenden Kapitel ein Dokument hinzu\./);
+  });
+});

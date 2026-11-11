@@ -294,7 +294,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // der runde Abhak-Kreis. Löschen wie im Entwurf nicht in der Liste, sondern im Tagespanel (Tag oben antippen).
   const ablaufName = (name) => { const a = ABLAEUFE_MIT_STAND.find(x => x.name === name); return a ? t(a.titelKey) : name; };
   const leiseKnopf = { minWidth: '44px', minHeight: '44px', display: 'grid', placeItems: 'center', background: 'none', border: 'none', borderRadius: radius.full, cursor: 'pointer', padding: 0, flexShrink: 0, fontFamily: 'inherit' };
-  const zeile = ({ key, iso, art, bereich, icon, titel, herkunft, wann, done, isJustDone, onToggle, toggleLabel, extra }) => {
+  const zeile = ({ key, iso, art, bereich, icon, titel, herkunft, wann, done, isJustDone, onToggle, toggleLabel, onDelete, extra }) => {
     const farbe = bereichZeichenFarbe(bereich, palette);
     // Überfällig = Rot (Farbrollen Fassung 9, 05.11.2026; vorher bewusst nie rot, Entwurf G). Das Wort «überfällig» steht daneben.
     const dueColor = !done && iso && iso < today ? palette.roseDeep : palette.soft;
@@ -328,6 +328,10 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         !onToggle && d ? React.createElement('span', { style: visuallyHiddenStyle }, datumLang(iso)) : null,
         extra
       ),
+      // Gruppe B Gestaltung C (11.11.2026): Löschen am Eintrag, mit Rückgängig — vorher nur über den Tagesstreifen
+      // (Entwurf G, 27.10.2026), der Weg stand bloss als Satz unter der Liste.
+      onDelete && React.createElement('button', { type: 'button', 'aria-label': t('common.delete') + ': ' + titel, onClick: onDelete, style: { ...leiseKnopf, color: palette.mid } },
+        React.createElement(Icon, { name: 'kreuz', size: 12 })),
       onToggle && React.createElement('button', { type: 'button', 'aria-label': toggleLabel + ': ' + titel + (d ? ', ' + datumLang(iso) : ''), onClick: onToggle, style: leiseKnopf },
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', borderRadius: radius.full, display: 'grid', placeItems: 'center', boxSizing: 'border-box', border: '2px solid ' + (done ? palette.sage : palette.mid), background: done ? palette.sage : 'none', color: palette.bg } },
           done ? React.createElement(Icon, { name: 'check', size: 12 }) : null)),
@@ -351,6 +355,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     herkunft: [r.ablauf && t('calendar.ausAblauf', { name: ablaufName(r.ablauf) }), r.recurrence && r.recurrence !== 'once' && t('calendar.' + r.recurrence)].filter(Boolean).join(' · '),
     wann: r.done ? t('calendar.completed') : getDueLabel(r.dueDate), done: r.done, isJustDone: justCompleted === r.id,
     onToggle: () => toggleDone(r.id), toggleLabel: r.done ? t('calendar.undo') : t('calendar.markDone'),
+    onDelete: () => deleteReminder(r.id),
     extra: [
       r.coverageThisYear && React.createElement('div', { key: 'dk', style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', fontStyle: 'italic' } }, t('calendar.coverageThisYear.cardPrefix') + ': ' + t('calendar.coverageThisYear.' + r.coverageThisYear)),
       r.notes && React.createElement('div', { key: 'nz', style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', fontStyle: 'italic' } }, r.notes),
@@ -454,7 +459,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
   // darunter Kachel, Titel und Untertitel. Keine Karte mehr um die Seite (Entwurf G).
   return React.createElement('div', { 'data-seite': 'was-ansteht', style: { maxWidth: '720px' } },
     React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement(Landschaftsband, { palette, grund: palette.sage + '38' }),
+      // Gestaltung C: −20 px wie das Seitenpolster (main), sonst ragte das Band 4 px hinaus und die Seite liess sich schieben.
+      React.createElement(Landschaftsband, { palette, grund: palette.sage + '38', margin: '0 -20px' }),
       React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
         React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
@@ -478,7 +484,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
       REITER.map((k) => React.createElement('button', {
         key: k, type: 'button', role: 'tab', id: 'mp-reiter-' + k, 'aria-selected': offen === k, 'aria-controls': 'mp-reiter-' + k + '-teil',
         tabIndex: offen === k ? 0 : -1, style: reiter(offen === k), onClick: () => zeigeReiter(k),
-      }, t(k === 'merkliste' ? 'nav.merkliste' : 'nav.wasAnsteht')))
+      }, t(k === 'merkliste' ? 'nav.merkliste' : 'calendar.reiterTermine')))
     ),
 
     offen === 'merkliste'
@@ -603,7 +609,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
           // «Heute» springt nur im Monat: Auswahl wie die Monatsknöpfe, kein Gold (E2, 06.11.2026).
           React.createElement('button', { type: 'button', style: { ...auswahlStil(palette, false), minHeight: '44px', padding: '0 12px', fontSize: text.sm, marginLeft: 'auto' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
-        React.createElement('div', { 'data-monatsknoepfe': 'true', ref: monateRef, style: { display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none', margin: '4px -24px 2px', padding: '4px 24px' } },
+        React.createElement('div', { 'data-monatsknoepfe': 'true', ref: monateRef, style: { display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none', margin: '4px -20px 2px', padding: '4px 20px' } },
           ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
             key: m, type: 'button', 'aria-pressed': m === calMonth, 'aria-label': monatJahr(calYear, m) + (proMonat[m] ? ' · ' + proMonat[m] : ''),
             style: pille(m === calMonth), onClick: () => { setCalMonth(m); setSelDate(null); },
@@ -612,7 +618,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
         // Tagesleiste und Bänder im selben Wisch-Bereich, bis an den Rand (Entwurf: margin 0 -20px).
         React.createElement('div', {
           ref: leisteRef, role: 'group', 'aria-label': monatJahr(calYear, calMonth),
-          style: { overflowX: 'auto', scrollbarWidth: 'none', margin: '0 -24px 2px', padding: '4px 24px', outline: verteilen ? '1px dashed ' + palette.sand : 'none', outlineOffset: '-2px' },
+          style: { overflowX: 'auto', scrollbarWidth: 'none', margin: '0 -20px 2px', padding: '4px 20px', outline: verteilen ? '1px dashed ' + palette.sand : 'none', outlineOffset: '-2px' },
         },
           React.createElement('div', { style: { display: 'flex', width: (fenster.length * 46) + 'px' } },
             ...fenster.map(iso => {
@@ -709,7 +715,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel, reit
     ),
     // Ruhiger Hinweis, wo gelöscht wird (Stebler Studios 27.10.2026): seit Entwurf G nicht mehr als × in der
     // Liste, sondern im Tagespanel. Nur, wenn es etwas zu löschen gibt.
-    upcoming.length + completed.length > 0 && React.createElement('p', { 'data-loesch-hinweis': 'true', style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal } }, t('calendar.loeschHinweis')),
+    // Gestaltung C: gelöscht wird jetzt am Eintrag; hier steht die Rückgängig-Meldung (im Tagespanel steht ihre eigene).
+    !selDate && React.createElement(RueckgaengigMeldung, { palette, t, entfernt: nochEntfernt(entfernt, reminders), onRueckgaengig: reminderZurueck }),
     React.createElement('button', {
       type: 'button', 'aria-expanded': view === 'add',
       // Öffnet nur das Formular, hält noch nichts fest → Nebenknopf. Gold gefüllt ist erst

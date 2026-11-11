@@ -5207,6 +5207,8 @@ export default {
   },
 
   briefe: {
+    // TODO(rm): Gegenlese — Gruppe B Gestaltung A (11.11.2026)
+    formTitel: 'Brev: {name}',
     title: 'Models da brev',
     intro: { sie: 'Models svizzers da brevs, precumplenids cun Vossas datas. Avant il spediziun controllar e adattar per plaschair.', du: 'Models svizzers da brevs, precumplenids cun Tes datas. Avant il spediziun controllar e adattar per plaschair.' },
     backToUnterlagen: 'Enavos tar Mes documents',
@@ -7313,6 +7315,8 @@ export default {
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' }, // TODO(rm): übersetzen
   },
   calendar: {
+    // TODO(rm): Gegenlese — Gruppe B Gestaltung C (11.11.2026)
+    reiterTermine: 'Termins',
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     nicelyDone: 'Fatg',
     // rm ungeprüft F5

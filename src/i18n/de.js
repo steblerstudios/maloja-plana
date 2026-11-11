@@ -3037,7 +3037,7 @@ export default {
   tresor: {
 
     gueltig: 'gültig',
-    title: 'Dokumentenablage',
+    title: 'Dokumenten\u00ADablage', // Gruppe B D: weiche Trennung, sonst «Dokumen-tenablage» auf dem Handy
     geteilt: {
       titel: 'Noch nicht eingeordnet ({count})',
       satz: { sie: 'Diese Dateien liegen nur auf diesem Gerät. Wählen Sie, wohin sie gehören.', du: 'Diese Dateien liegen nur auf diesem Gerät. Wähle, wohin sie gehören.' },
@@ -3058,7 +3058,7 @@ export default {
     sortByUpload: 'Nach Datum',
     sortByName: 'Name (A-Z)',
     noDocuments: { sie: 'Hier ist Platz für Ihre Unterlagen', du: 'Hier ist Platz für deine Unterlagen' },
-    noDocumentsHint: { sie: 'Sobald Sie ein Dokument in einem Kapitel hochladen, erscheint es hier — nur auf Ihrem Gerät; mit der Tresor-Sperre zusätzlich verschlüsselt.', du: 'Sobald du ein Dokument in einem Kapitel hochlädst, erscheint es hier — nur auf deinem Gerät; mit der Tresor-Sperre zusätzlich verschlüsselt.' },
+    noDocumentsHint: { sie: 'Fügen Sie oben oder im passenden Kapitel ein Dokument hinzu. Es erscheint hier — nur auf Ihrem Gerät; mit der Tresor-Sperre zusätzlich verschlüsselt.', du: 'Füge oben oder im passenden Kapitel ein Dokument hinzu. Es erscheint hier — nur auf deinem Gerät; mit der Tresor-Sperre zusätzlich verschlüsselt.' },
     expired: 'Abgelaufen',
     expiryDate: 'Frist: {date}',
     uploadedInfo: 'Hochgeladen: {date} · {size}',
@@ -3712,6 +3712,7 @@ export default {
   },
 
   briefe: {
+    formTitel: 'Brief: {name}',
     title: 'Briefvorlagen',
     intro: { sie: 'Schweizer Musterbriefe, vorausgefüllt mit Ihren Daten. Vor dem Versand bitte prüfen und anpassen.', du: 'Schweizer Musterbriefe, vorausgefüllt mit deinen Daten. Vor dem Versand bitte prüfen und anpassen.' },
     backToUnterlagen: 'Zurück zu Meine Unterlagen',
@@ -5357,6 +5358,7 @@ export default {
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' },
   },
   calendar: {
+    reiterTermine: 'Termine',
     nicelyDone: 'Erledigt',
     aufgabe: 'Aufgabe',
     ausMerkliste: 'aus der Merkliste',

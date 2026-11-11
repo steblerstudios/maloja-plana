@@ -234,8 +234,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   // `handleNavigate` im nächsten Frame noch ganz nach oben scrollt. Eigene Wahl per Karte
   // springt NICHT — dort hat die Person selbst geklickt und sieht, was aufgeht.
   const formAnfangRef = useRef(null);
+  // Gruppe B Gestaltung A (11.11.2026): auch die eigene Wahl per Karte springt — auf dem Handy stand das Formular
+  // rund 3700 px unter der Liste, und nach dem Antippen geschah sichtbar nichts. Bis dahin sprang nur die Vorwahl.
+  const [sprung, setSprung] = useState(0);
   useEffect(() => {
-    if (!initialTemplate) return undefined;
+    if (!initialTemplate && !sprung) return undefined;
     let id2;
     const id1 = requestAnimationFrame(() => {
       id2 = requestAnimationFrame(() => {
@@ -247,12 +250,12 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
         // Deploy-Gate 27.09.2026 (a11y): der Fokus folgt dem Sprung — sonst begann ein
         // Screenreader weiter oben bei der Vorlagen-Liste.
-        const hinweis = document.getElementById('brief-hinweis');
+        const hinweis = document.getElementById('brief-hinweis') || document.getElementById('brief-form-titel');
         if (hinweis) hinweis.focus({ preventScroll: true });
       });
     });
     return () => { cancelAnimationFrame(id1); if (id2) cancelAnimationFrame(id2); };
-  }, [initialTemplate]);
+  }, [initialTemplate, sprung]);
 
   // Vorlagenwechsel setzt die Anstellungs-Wahl zurück — sonst trüge ein neuer Brief
   // stillschweigend die Wahl des vorherigen.
@@ -330,7 +333,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); setSprung((n) => n + 1); },
+        'aria-pressed': selected === tmpl.key,
         style: {
           padding: '16px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           // Fassung 9: gewählt in Sand (Auswahl), nicht mehr Salbei; Rundung KNOPF_RADIUS.
@@ -361,6 +365,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Sprungziel für die Vorwahl aus einem Ablauf (siehe `formAnfangRef`). Der Abstand zur
     // klebenden Kopfzeile kommt aus tokens.css (wie in Lebenssituationen).
     React.createElement('div', { ref: formAnfangRef, 'aria-hidden': 'true', style: { scrollMarginTop: 'var(--mp-sprungabstand)' } }),
+    // Gestaltung A: über dem Formular steht, zu welchem Brief es gehört — Sprungziel für den Fokus.
+    selected && React.createElement('h3', {
+      id: 'brief-form-titel', tabIndex: -1,
+      style: { fontSize: textTokens.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px', outline: 'none' },
+    }, t('briefe.formTitel', { name: (templates.find((x) => x.key === selected) || {}).title || '' })),
 
     // Anstellungs-Auswahl — erscheint NUR, wenn wirklich ein Nebenerwerb erfasst ist.
     // Wer einen Job hat, sieht hier nichts: kein Klick für die Mehrheit. Die Wahl steuert

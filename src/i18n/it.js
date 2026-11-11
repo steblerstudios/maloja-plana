@@ -3041,7 +3041,7 @@ export default {
     sortByUpload: 'Per data',
     sortByName: 'Nome (A-Z)',
     noDocuments: { sie: 'Il Suo raccoglitore è pronto', du: 'Il tuo raccoglitore è pronto' },
-    noDocumentsHint: { sie: 'Quando carica un documento in un capitolo, apparirà qui — solo sul Suo dispositivo; con il blocco della cassaforte è anche cifrato.', du: 'Quando carichi un documento in un capitolo, apparirà qui — solo sul tuo dispositivo; con il blocco della cassaforte è anche cifrato.' },
+    noDocumentsHint: { sie: 'Aggiunga un documento qui sopra o nel capitolo corrispondente. Apparirà qui — solo sul Suo dispositivo; con il blocco della cassaforte è anche cifrato.', du: 'Aggiungi un documento qui sopra o nel capitolo corrispondente. Apparirà qui — solo sul tuo dispositivo; con il blocco della cassaforte è anche cifrato.' },
     expired: 'Scaduto',
     expiryDate: 'Scadenza: {date}',
     uploadedInfo: 'Caricato: {date} · {size}',
@@ -3669,6 +3669,7 @@ export default {
   },
 
   briefe: {
+    formTitel: 'Lettera: {name}',
     title: 'Modelli di lettere',
     intro: { sie: 'Lettere tipo svizzere, precompilate con i Suoi dati. Verifichi e adatti prima dell\'invio.', du: 'Lettere tipo svizzere, precompilate con i tuoi dati. Verifica e adatta prima dell\'invio.' },
     backToUnterlagen: 'Torna a I miei documenti',
@@ -5273,6 +5274,7 @@ export default {
     vorausZimmerZGZuViel: { sie: 'La Sua abitazione ha {zimmer} locali per {personen} persone. Zugo sostiene solo abitazioni con al massimo due locali in più delle persone.', du: 'La tua abitazione ha {zimmer} locali per {personen} persone. Zugo sostiene solo abitazioni con al massimo due locali in più delle persone.' },
   },
   calendar: {
+    reiterTermine: 'Appuntamenti',
     nicelyDone: 'Fatto',
     aufgabe: 'Compito',
     ausMerkliste: 'dal promemoria',

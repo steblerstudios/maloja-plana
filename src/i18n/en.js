@@ -3041,7 +3041,7 @@ export default {
     sortByUpload: 'By date',
     sortByName: 'Name (A-Z)',
     noDocuments: 'Your folder is ready',
-    noDocumentsHint: 'When you upload a document in any chapter, it will appear here — only on your device; with the vault lock it is also encrypted.',
+    noDocumentsHint: 'Add a document above or in the matching chapter. It will appear here — only on your device; with the vault lock it is also encrypted.',
     expired: 'Expired',
     expiryDate: 'Expires: {date}',
     uploadedInfo: 'Uploaded: {date} · {size}',
@@ -3669,6 +3669,7 @@ export default {
   },
 
   briefe: {
+    formTitel: 'Letter: {name}',
     title: 'Letter templates',
     intro: 'Swiss template letters, pre-filled with your data. Please review and adjust before sending.',
     backToUnterlagen: 'Back to My Documents',
@@ -5372,6 +5373,7 @@ export default {
     vorausZimmerZGZuViel: 'Your flat has {zimmer} rooms for {personen} people. Zug only supports flats with at most two rooms more than people.',
   },
   calendar: {
+    reiterTermine: 'Dates',
     nicelyDone: 'Done',
     aufgabe: 'Task',
     ausMerkliste: 'from your checklist',
