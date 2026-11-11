@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RechnerForm, Einzelwahl } from './components/RechnerForm.jsx';
 import { hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
-import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
+import { text, weight, space, radius, leading } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
 import { erinnerungSichern, loadReminders } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
@@ -17,6 +17,7 @@ import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 import { belegeImJahr } from './data/franchiseTacho.js';
+import { FranchiseThermometer } from './components/FranchiseThermometer.jsx';
 import { knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { Kalenderblatt } from './components/Kalenderblatt.jsx';
 import { ansichtName } from './config/ansichtenRegister.js';
@@ -387,22 +388,6 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
       ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.skyDeep, icon: 'info' }
       : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.skyDeep, icon: 'info' };
 
-  const barStyle = (_value, _max, _color) => ({
-    height: '8px',
-    background: palette.border,
-    borderRadius: radius.xs,
-    overflow: 'hidden',
-    marginBottom: '4px',
-  });
-
-  const barFill = (value, max, color) => ({
-    height: '100%',
-    width: (max > 0 ? Math.min(100, (value / max) * 100) : 0) + '%',
-    background: color,
-    borderRadius: radius.xs,
-    transition: `width ${duration.slow}ms ${ease}`,
-  });
-
   // Form X: der Stand der Franchise zuerst (sobald etwas erfasst ist), dann Franchise und Belege als «Ihre Angaben»,
   // die Belege je Jahr darunter.
   return form({
@@ -418,34 +403,17 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
         }
       }, hinweisZeichen(statusMsg.icon), statusMsg.text),
 
-      React.createElement('div', { style: { marginBottom: '16px' } },
-        React.createElement('div', {
-          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
-        },
-          React.createElement('span', { style: { color: palette.mid } }, t('kvg.franchiseUsed')),
-          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.franchiseVerbraucht, { hoechstens: 2 }))
-        ),
-        React.createElement('div', { style: barStyle() },
-          React.createElement('div', { style: barFill(result.franchiseVerbraucht, result.franchise, palette.sand) })
-        ),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 }))
-      ),
-
-      React.createElement('div', { style: { marginBottom: '16px' } },
-        React.createElement('div', {
-          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
-        },
-          React.createElement('span', { style: { color: palette.mid } }, t('kvg.selbstbehalt')),
-          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.selbstbehalt))
-        ),
-        React.createElement('div', { style: barStyle() },
-          React.createElement('div', { style: barFill(result.selbstbehalt, result.selbstbehaltMax, palette.sage || '#5a7a5a') })
-        ),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
+      // Franchise-Stand als Fieberthermometer, mittel 128 (Stebler Studios 11.11.2026; Koffer-Logik Gesundheit).
+      // Regel «Zahl» (§10): das Bild, darunter EINE Hauptzahl gross (verbrauchte Franchise), Franken klein darunter.
+      // Ersetzt die zwei 8-px-Balken (Franchise sand, Selbstbehalt sage).
+      React.createElement('div', { 'data-teil': 'franchise-thermometer', style: { marginBottom: '16px' } },
+        React.createElement(FranchiseThermometer, { palette, stand: result, groesse: 'mittel' }),
+        React.createElement('div', { 'data-instrument-zahl': 'franchise', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums', marginTop: space.xs } },
+          betrag(result.franchiseVerbraucht, { hoechstens: 2 })),
+        React.createElement('div', { 'data-teil': 'franchise-franken', style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
+          t('kvg.franchiseUsed') + ' · ' + t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 })),
+        React.createElement('div', { 'data-teil': 'selbstbehalt-franken', style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
+          t('kvg.selbstbehalt') + ': ' + betrag(result.selbstbehalt) + ' · ' + t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
       ),
 
       React.createElement('div', {
