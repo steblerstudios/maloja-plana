@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { istSuchTaste, istEingabeFeld, suchTasteAnmelden } from '../utils/suchTaste.js';
+import { istSuchTaste, istEingabeFeld, suchTasteAnmelden, slashAn, slashSetzen, SLASH_SCHLUESSEL } from '../utils/suchTaste.js';
 
 const taste = (key, mehr = {}) => ({ key, metaKey: false, ctrlKey: false, shiftKey: false, altKey: false, target: { tagName: 'BODY' }, ...mehr });
 const feld = (tagName, extra = {}) => ({ tagName, ...extra });
@@ -145,5 +145,59 @@ describe('Einbau', () => {
   });
   it('die Lupe nennt die Tasten für Vorleseprogramme', () => {
     expect(main).toMatch(/'aria-keyshortcuts': isMobile \? undefined : '\/ Control\+K Meta\+K'/);
+  });
+});
+
+// WCAG 2.1.4 (Entscheid Stebler Studios 11.11.2026): «/» lässt sich abschalten, ⌘K/Strg+K bleiben.
+describe('«/» abschaltbar', () => {
+  const speicher = (wert) => {
+    const m = new Map(wert == null ? [] : [['or5_suchtaste', wert]]);
+    return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)) };
+  };
+
+  it('Standard: an — auch ohne Speicher', () => {
+    expect(slashAn(speicher(null))).toBe(true);
+    expect(slashAn(undefined)).toBe(true);
+    expect(slashAn({ getItem: () => { throw new Error('gesperrt'); } })).toBe(true);
+  });
+
+  it('aus- und wieder einschalten wird gemerkt', () => {
+    const s = speicher(null);
+    slashSetzen(false, s); expect(slashAn(s)).toBe(false);
+    slashSetzen(true, s); expect(slashAn(s)).toBe(true);
+  });
+
+  it('abgeschaltet: «/» öffnet nichts, ⌘K und Strg+K weiter', () => {
+    expect(istSuchTaste(taste('/'), { slash: false })).toBe(false);
+    expect(istSuchTaste(taste('k', { metaKey: true }), { slash: false })).toBe(true);
+    expect(istSuchTaste(taste('k', { ctrlKey: true }), { slash: false })).toBe(true);
+  });
+
+  it('der Zuhörer liest den Schalter bei jedem Tastendruck', () => {
+    const f = fenster();
+    f.localStorage = speicher('0');
+    let offen = 0;
+    suchTasteAnmelden(() => { offen++; return true; }, f);
+    const e = ereignis('/'); f.druecke(e);
+    expect(offen).toBe(0);
+    expect(e.defaultPrevented).toBe(false);
+    f.localStorage.setItem('or5_suchtaste', '1');
+    f.druecke(ereignis('/'));
+    expect(offen).toBe(1);
+  });
+
+  it('der Schalter steht in den Einstellungen unter Barrierefreiheit, in allen Sprachen', async () => {
+    const quelle = fs.readFileSync(path.join(__dirname, '..', 'SettingsView.jsx'), 'utf8');
+    expect(quelle).toMatch(/g\.key === 'a11y' \? \{ \.\.\.g, controls: \[\.\.\.g\.controls, slashKnopf\] \}/);
+    expect(quelle).toContain("'aria-pressed': slash");
+    // Die Einstellungs-Seite liest und schreibt denselben Schlüssel, ohne suchTaste.js zu importieren
+    // (der Import kostete Platz im Startbündel, Vorlade-Liste).
+    expect(SLASH_SCHLUESSEL).toBe('or5_suchtaste');
+    expect(quelle.match(/'or5_suchtaste'/g)).toHaveLength(2);
+    expect(quelle).not.toMatch(/from '\.\/utils\/suchTaste\.js'/);
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const t = (await import(`../i18n/${l}.js`)).default;
+      expect(t.search.tasteSchalter, l).toMatch(/\//);
+    }
   });
 });

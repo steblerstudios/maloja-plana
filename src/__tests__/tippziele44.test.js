@@ -46,7 +46,8 @@ describe('Tippziele ≥ 44 px an den Stellen aus dem Seitenrundgang', () => {
   it('Kalender: Erledigt- und Löschen-Knopf je 44 × 44', () => {
     const src = quelle('CalendarReminders.jsx');
     expect(src).toMatch(/const leiseKnopf = \{ minWidth: '44px', minHeight: '44px'/);
-    expect(src.match(/style: leiseKnopf \}|style: \{ \.\.\.leiseKnopf,/g)).toHaveLength(2);
+    // Gruppe B C (11.11.2026): dazu das × am Eintrag — drei Knöpfe im selben 44-px-Stil.
+    expect(src.match(/style: leiseKnopf \}|style: \{ \.\.\.leiseKnopf,/g)).toHaveLength(3);
   });
 
   it('Schublade «Ansicht & Sprache»: Schliessen 44 × 44 statt 24', () => {

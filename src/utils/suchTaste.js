@@ -12,18 +12,30 @@
 // - Ein offener Dialog (Einstellungen, Tour, Menü-Schublade, Daten löschen) hält den Fokus mit
 //   Absicht fest (useFocusTrap). Die Suche öffnet sich dann nicht dahinter.
 
+// WCAG 2.1.4 (Entscheid Stebler Studios 11.11.2026): «/» ist ein Kürzel aus einer einzigen Taste. Wer per
+// Sprache steuert, löst es sonst aus Versehen aus. Darum lässt es sich in den Einstellungen abschalten
+// (Barrierefreiheit). ⌘K/Strg+K bleiben immer — mit Zusatztaste gilt die Regel nicht. Im Gerät gespeichert
+// wie die anderen Schalter (or5_…), Standard: an. Gelesen bei jedem Tastendruck, damit der Schalter sofort wirkt.
+export const SLASH_SCHLUESSEL = 'or5_suchtaste';
+export const slashAn = (speicher = globalThis.localStorage) => {
+  try { return speicher?.getItem(SLASH_SCHLUESSEL) !== '0'; } catch { return true; }
+};
+export const slashSetzen = (an, speicher = globalThis.localStorage) => {
+  try { speicher?.setItem(SLASH_SCHLUESSEL, an ? '1' : '0'); } catch { /* ohne Speicher: bleibt beim Standard */ }
+};
+
 const FELD_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
 
 export const istEingabeFeld = (el) =>
   !!el && (FELD_TAGS.has(el.tagName) || el.isContentEditable === true);
 
-export const istSuchTaste = (e, { dialogOffen = false } = {}) => {
+export const istSuchTaste = (e, { dialogOffen = false, slash = true } = {}) => {
   if (!e || e.defaultPrevented || e.isComposing || dialogOffen) return false;
   const k = typeof e.key === 'string' ? e.key.toLowerCase() : '';
   // ⌘K (Mac) oder Strg+K — ohne Umschalt/Alt, die belegen andere Programme.
   if (k === 'k' && (e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey) return true;
   // «/» nur ohne jede Zusatztaste und nie aus einem Eingabefeld heraus.
-  if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !istEingabeFeld(e.target)) return true;
+  if (slash && e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !istEingabeFeld(e.target)) return true;
   return false;
 };
 
@@ -35,7 +47,7 @@ export const istSuchTaste = (e, { dialogOffen = false } = {}) => {
 export const suchTasteAnmelden = (oeffnen, fenster = window) => {
   const doc = fenster.document;
   const onKey = (e) => {
-    if (!istSuchTaste(e, { dialogOffen: !!doc.querySelector('[aria-modal="true"]') })) return;
+    if (!istSuchTaste(e, { dialogOffen: !!doc.querySelector('[aria-modal="true"]'), slash: slashAn(fenster.localStorage) })) return;
     if (!oeffnen()) return;
     e.preventDefault();
     let versuche = 0;
