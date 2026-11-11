@@ -1,9 +1,9 @@
 import React from 'react';
-import { schildState } from '../data/schutzschild.js';
-import { shieldPath } from './shieldShape.js';
-import { text, weight, space, radius, leading } from '../config/tokens.js';
-import { hinweisZeichen } from '../IconSystem.jsx';
-import { zahl } from '../utils/geld.js';
+import { schildState } from '../../data/schutzschild.js';
+import { shieldPath } from '../shieldShape.js';
+import { text, weight, space, radius, leading } from '../../config/tokens.js';
+import { hinweisZeichen } from '../../IconSystem.jsx';
+import { zahl } from '../../utils/geld.js';
 
 // Versicherungs-Schutzschild: zwei Wappen nebeneinander — „Pflicht" (gesetzlich)
 // und „Empfohlen" (freiwillig). Jedes füllt sich nach seinem Deckungsgrad, mit

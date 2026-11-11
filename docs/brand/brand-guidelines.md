@@ -368,6 +368,10 @@ schon laden, also kein neuer Baustein. Farbe überall Arbeit/Haselnuss (`bereich
 
 Der Ersatz-Balken zeigt bewusst **keinen Median**: Der Lohn im Rechner ist nicht auf Vollzeit umgerechnet und wäre
 dort nicht vergleichbar. Die Uhr ist für den Stundenlohn **nicht** frei, sie steht fürs Pensum (ein Bild, eine Bedeutung).
+- **Versicherungen, 11.11.2026 — erst die Rechnung:** die KK-Last (Prämie ÷ Monatseinkommen) rechnet nur
+  `kkLastAnteil` (`src/KKLastCard.jsx`); Karte, Spiegel in Finanzen und Kapitel rufen sie (B-R4, Wächter
+  `kkLastAnteil.test.js`). Der Weg ins Kapitel folgt `CHAPTER_KEYS`, nie einer festen Zahl. Das alte Schild liegt
+  in `components/_archiv/` mit `_WAS-IST-DAS.md`; `data/schutzschild.js` rechnet weiter.
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.

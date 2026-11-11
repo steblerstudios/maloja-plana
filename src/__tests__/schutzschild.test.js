@@ -86,7 +86,7 @@ describe('schildState: BVG-Pflicht bei Nettolohn unter der Schwelle ist offen', 
   it('Schutzschild zeigt den Hinweis mit der Schwelle', async () => {
     const React = (await import('react')).default;
     const { renderToStaticMarkup } = await import('react-dom/server');
-    const { Schutzschild } = await import('../components/Schutzschild.jsx');
+    const { Schutzschild } = await import('../components/_archiv/Schutzschild.jsx');
     const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
     const t = (k, p) => (p ? k + '(' + Object.values(p).join('|') + ')' : k);
     const html = (lohnBasis) => renderToStaticMarkup(React.createElement(Schutzschild, { palette, t, versicherungen: { kkInsurer: 'CSS' }, ...unter, lohnBasis }));
