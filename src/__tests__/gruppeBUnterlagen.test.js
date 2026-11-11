@@ -130,12 +130,14 @@ describe('Gestaltung A, C, D (B Bücherregal: nicht gebaut, zum Besprechen)', ()
   it('C: Was ansteht nicht breiter als die Seite (−20 px wie das Seitenpolster), Löschen am Eintrag, Reiter «Termine»', () => {
     const s = quelle('CalendarReminders.jsx');
     expect(s).not.toMatch(/margin: '(4px|0) -24px 2px'/);
+    expect(s).toMatch(/Landschaftsband, \{ palette, grund: palette\.sage \+ '38', margin: '0 -20px' \}/);
     expect(s).toMatch(/onDelete: \(\) => deleteReminder\(r\.id\)/);
     expect(s).not.toMatch(/t\('calendar\.loeschHinweis'\)/);
     expect(de.calendar.reiterTermine).toBe('Termine');
   });
   it('D: Ablage-Titel trennt «Dokumenten-ablage», ein Satz für beide Wege', () => {
     expect(de.tresor.title).toBe('Dokumenten­ablage');
+    expect(quelle('DocumentTresor.jsx')).toMatch(/hyphens: 'manual', WebkitHyphens: 'manual' \} \}, t\('tresor\.title'\)\)/);
     expect(de.tresor.noDocumentsHint.sie).toMatch(/^Fügen Sie oben oder im passenden Kapitel ein Dokument hinzu\./);
   });
 });
