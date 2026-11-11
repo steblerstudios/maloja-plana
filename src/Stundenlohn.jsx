@@ -35,7 +35,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const titelStil = { fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px' };
   const labelStil = { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' };
   const hinweisStil = { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
-  const eingabeStil = { padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px', boxSizing: 'border-box' };
+  const eingabeStil = { minHeight: '44px', boxSizing: 'border-box', padding: '8px 12px', fontSize: text.sm, border: '1px solid ' + palette.feldrand, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', width: '100%', maxWidth: '220px' };
   const absatz = { margin: space.sm + 'px 0 0', color: palette.text, lineHeight: leading.normal };
   const raster = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0 ' + space.md + 'px' };
 
@@ -129,7 +129,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData, onNavigate }) => {
     ? (['keinGesetz', 'keinKanton', 'jahrNichtBelegt'].includes(Object.values(r.befunde)[0].status) ? [Object.keys(r.befunde)[0]] : Object.keys(r.befunde))
     : [];
 
-  const unterTitel = (id, inhalt) => React.createElement('h4', { id, style: { ...titelStil, fontSize: text.sm, margin: space.md + 'px 0 ' + space.sm + 'px' } }, inhalt);
+  const unterTitel = (id, inhalt) => React.createElement('h3', { id, style: { ...titelStil, fontSize: text.sm, margin: space.md + 'px 0 ' + space.sm + 'px' } }, inhalt);
   // «x von n»: die Angaben, die für jede Anstellung gelten (bedingte Rückfragen zählen nicht mit).
   const kernAngaben = ['art', 'kanton', 'betrag', 'wochenstunden', 'ferienForm', 'ferienWochen', 'feiertag', 'dreizehnter'];
   const erfasst = kernAngaben.filter((k) => String(e[k] ?? '').trim() !== '').length;

@@ -115,7 +115,8 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
   const kkLast = () => anteil != null && h('div', { 'data-teil': 'kk-last', style: { margin: space.xs + 'px 0 ' + space.sm + 'px 18px', padding: space.sm + 'px', background: palette.up, borderRadius: radius.md } },
     // In der Übersicht steht die KK-Last direkt unter dem Seitentitel (h2) — darum h3 (A11y-Prüfung).
-    h(uebersicht ? 'h3' : 'h4', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('kkLast.title')),
+    // Kapitel 4: auf der Kapitelseite folgt das Instrument direkt auf die Kapitelüberschrift (h2) → h3, nicht h4.
+    h('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('kkLast.title')),
     h('div', { 'aria-hidden': 'true', 'data-teil': 'kk-last-balken', style: { position: 'relative', height: '8px', margin: space.sm + 'px 0', borderRadius: radius.full, background: palette.surface } },
       h('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (anteil / skala) * 100) + '%', background: ton, borderRadius: radius.full } }),
       h('div', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (VERGLEICHSMARKE / skala) * 100 + '%', width: '2px', background: palette.text } })
@@ -174,7 +175,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     ja(v.autoInsurance) && Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
 
   const schild = !uebersicht && h(React.Fragment, null,
-    schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
+    schildDa && h('h3', { style: hatGeld ? kapH : { ...kapH, marginTop: 0 } }, t('instrumente.schild')),
     // Netz-Schild statt der zwei kleinen Schilde und des Spinnennetzes (F7-K3-6, 27.10.2026).
     h(NetzSchild, { palette, t, versicherungen: v, finanzen: daten.finanzen, kanton: daten.basis?.canton, stunden: daten.ausbildung?.workHoursPerWeek, ...schildOptionen(daten) }));
 
@@ -189,7 +190,7 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     schild,
 
     !uebersicht && franchiseOpt && h(React.Fragment, null,
-      h('h4', { style: kapH }, t('instrumente.tacho')),
+      h('h3', { style: kapH }, t('instrumente.tacho')),
       // F7-K3-2 (Stebler Studios 01.11.2026: «kombi von a b c»): oben Empfehlung und bisher, die Grafik aufklappbar, darunter die Übersicht.
       vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.body, fontWeight: weight.medium, color: palette.text, lineHeight: leading.normal } }, vorschlagSatz),
       h('p', { 'data-teil': 'franchise-bisher', style: { margin: '2px 0 0', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } },

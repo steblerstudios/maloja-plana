@@ -29,6 +29,7 @@ import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
 import { knopfStil, linkStil, KNOPF_RADIUS } from './PrimaryButton.jsx';
+import { belegeImJahr } from '../data/franchiseTacho.js';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -128,14 +129,13 @@ export const finanzWerte = (data, t) => {
 
   // Slice B: bezahlte KK-Belege dieses Jahres als Gesundheitskosten spiegeln
   // (Crosslink KVG-Tracker → Finanzen, kein zweites Eingeben). Offene separat.
+  // Seit 11.11.2026 aus belegeImJahr (eine Rechnung für alle Orte, Instrumente-Matrix B-R3). Hier die Grösse
+  // «Ausgaben»: gedeckter Betrag + nicht gedeckter Anteil; als Forderung übernommene offene Belege stehen im
+  // Schuldenmanager und zählen nicht ein zweites Mal. Nicht dieselbe Zahl wie «an die Franchise» (Kachel, KVG-Reiter).
   const currentYear = new Date().getFullYear();
-  const kkBelege = Array.isArray(data.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
-  const belegeThisYear = kkBelege.filter(b => !b.datum || String(b.datum).slice(0, 4) === String(currentYear));
-  // Reale Gesundheitsausgabe = gedeckter Betrag + nicht-gedeckter Anteil.
-  const belegTotal = (b) => (Number(b.betrag) || 0) + (Number(b.nichtGedeckt) || 0);
-  const gesundheitskosten = belegeThisYear.filter(b => b.status !== 'offen').reduce((s, b) => s + belegTotal(b), 0);
-  // Als Forderung übernommene Belege (forderungId) stehen im Schuldenmanager — hier nicht ein zweites Mal.
-  const gesundheitskostenOffen = belegeThisYear.filter(b => b.status === 'offen' && !b.forderungId).reduce((s, b) => s + belegTotal(b), 0);
+  const { ausgaben } = belegeImJahr(data, currentYear);
+  const gesundheitsausgaben = ausgaben.bezahlt;
+  const gesundheitsausgabenOffen = ausgaben.offen;
 
   // Vermögen (Wertschriften + übriges Vermögen + Ersparnisse) — Steuerwert, ohne gebundenes 3a
   const savingsAccount = Number(data.finanzen?.savingsAccount || 0);
@@ -151,7 +151,7 @@ export const finanzWerte = (data, t) => {
     sozialhilfe, ipv, ipvAbzug: ipvAbzugWert, ipvFristVorbei, ipvVerfuegung, ipvOhneJahr, el,
     ipvRuht: hatAusweisFNS(data),
     taxResult, steuerOhneZahl, kantonsSchaetzung, kantonal, annahmen, annahmenSatz, steuerAngabeSatz,
-    currentYear, gesundheitskosten, gesundheitskostenOffen, hasGesundheitskosten: (gesundheitskosten + gesundheitskostenOffen) > 0,
+    currentYear, gesundheitsausgaben, gesundheitsausgabenOffen, hasGesundheitsausgaben: (gesundheitsausgaben + gesundheitsausgabenOffen) > 0,
     savingsAccount, totalAssets, hasAssets: totalAssets > 0,
     totalExpenses: budget.totalExpenses, totalIncome: budget.income, freeAmount: budget.remaining,
     hasExpenses: budget.totalExpenses > 0,
@@ -213,8 +213,8 @@ export const druckAbschnitte = (t, w) => {
     zeilen.push({ label: t('finanzUebersicht.assets'), html: '<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(w.totalAssets) + '</td></tr>' });
   }
 
-  if (w.gesundheitskosten > 0) {
-    zeilen.push({ label: t('finanzUebersicht.healthCosts'), html: '<tr><td>' + t('finanzUebersicht.healthCosts') + '</td><td class="r">' + fmt(w.gesundheitskosten) + ' ' + t('common.perYear') + '</td></tr>' });
+  if (w.gesundheitsausgaben > 0) {
+    zeilen.push({ label: t('finanzUebersicht.healthCosts'), html: '<tr><td>' + t('finanzUebersicht.healthCosts') + '</td><td class="r">' + fmt(w.gesundheitsausgaben) + ' ' + t('common.perYear') + '</td></tr>' });
   }
 
   abschnitte.push({ titel: t('finanzUebersicht.title'), zeilen });
@@ -551,13 +551,13 @@ export const vermoegenKarte = ({ palette, t, onNavigate, w }) =>
   });
 
 export const gesundheitKarte = ({ palette, t, onNavigate, w }) =>
-  w.hasGesundheitskosten && React.createElement(StatusCard, {
+  w.hasGesundheitsausgaben && React.createElement(StatusCard, {
     palette, icon: 'health',
     title: t('finanzUebersicht.healthCosts'),
-    status: formatCHF(w.gesundheitskosten),
+    status: formatCHF(w.gesundheitsausgaben),
     statusColor: palette.text,
     detail: t('finanzUebersicht.healthCostsDetail', { year: w.currentYear })
-      + (w.gesundheitskostenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(w.gesundheitskostenOffen) }) : ''),
+      + (w.gesundheitsausgabenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(w.gesundheitsausgabenOffen) }) : ''),
     onClick: () => onNavigate('kvg', undefined, 'franchise'),
   });
 

@@ -30,6 +30,7 @@ import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
+import { FranchiseThermometer } from './FranchiseThermometer.jsx';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
 import { PanelTitle } from './Heading.jsx';
@@ -44,14 +45,8 @@ import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESS
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
 
-// Franchise-Stand klein (10.11.2026): Balken bis zur Franchise, Strich am Ende = Franchise erreicht. Nur das Bild.
-const miniFranchise = (palette, anteil) => {
-  const h = React.createElement;
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-franchise': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 11, width: 54, height: 18, rx: 6, fill: palette.border }),
-    anteil > 0 && h('rect', { x: 2, y: 11, width: Math.max(12, Math.min(1, anteil) * 54), height: 18, rx: 6, fill: palette.sky }),
-    h('line', { x1: 57, y1: 4, x2: 57, y2: 36, stroke: palette.text, strokeWidth: 2.5 }));
-};
+// Franchise-Stand klein: seit 11.11.2026 das Fieberthermometer (components/FranchiseThermometer.jsx), ein Bauteil
+// für 64 / 128 / 256 — keine eigene Kleinzeichnung mehr.
 
 // Dienstjahre klein (10.11.2026): Jahresringe wie im Baum — ein Ring je Dienstjahr, höchstens sechs. Nur das Bild.
 const miniJahresringe = (palette, jahre) => {
@@ -332,7 +327,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         satz: t(frStand.franchiseOffen > 0 ? 'instrumente.franchiseSatz' : 'instrumente.franchiseErreichtSatz', { jahr: frJahr }),
       } : {}),
       sub: setup,
-      glyph: frStand ? miniFranchise(palette, frStand.franchise > 0 ? frStand.franchiseVerbraucht / frStand.franchise : 0) : null,
+      glyph: frStand ? h(FranchiseThermometer, { palette, stand: frStand, groesse: 'klein' }) : null,
       onClick: () => onNavigate('kvg', undefined, 'franchise'),
     },
     {

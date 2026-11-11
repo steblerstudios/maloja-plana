@@ -8,6 +8,7 @@ import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { zahl } from '../utils/geld.js';
+import { arbeitsKanton } from '../data/lohnCheck.js';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
 // Encoding: docs/design/farb-und-daten-system.md
@@ -115,7 +116,8 @@ export function lohnLage(data) {
     rentenalter,
     beitragsfrei,
     income: data?.finanzen?.monthlyIncome,
-    canton: data?.basis?.canton,
+    // Mindestlohn und Lohnregion am Arbeitsort (Kapitel 3 F1), leer = Wohnkanton.
+    canton: arbeitsKanton(data).kanton,
     hoursPerWeek: data?.ausbildung?.workHoursPerWeek,
     // Bei Brutto direkt; bei Netto schätzt lohnBandState das Brutto (AHV/ALV + PK nach Alter)
     // und markiert es als «geschätzt» — die Mindestlohn-Warnung bleibt echtem Brutto vorbehalten.
