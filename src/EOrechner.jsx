@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { vergleicheEOLeistungen, eoErgebnis, EO_PARAMS, eoWerte } from './data/eoRechner.js';
-import { RechnerForm, ErgebnisZahl } from './components/RechnerForm.jsx';
+import { vergleicheEOLeistungen, eoErgebnis, eoErsatzAnteil, EO_PARAMS, eoWerte } from './data/eoRechner.js';
+import { RechnerForm, ErgebnisZahl, ErsatzBalken } from './components/RechnerForm.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -47,6 +47,8 @@ export const EOrechner = ({ palette, t, data, onNavigate }) => {
 
   const ergebnis = result && React.createElement(React.Fragment, null,
     React.createElement(ErgebnisZahl, { palette, label: t('eo.taggeld'), wert: 'CHF ' + fmt(result.mutterschaft.taggeld) + ' / ' + t('eo.tag') }),
+    // Bild G (11.11.2026): das Taggeld füllt den bisherigen Tageslohn bis zu seiner Stelle, der Rest fällt weg.
+    React.createElement(ErsatzBalken, { palette, anteil: eoErsatzAnteil(parsedEinkommen, result.mutterschaft), labelErsatz: t('eo.bildErsatz'), labelLohn: t('eo.bildLohn') }),
     React.createElement('p', { style: { ...s.fuss, marginTop: space.xs + 'px' } },
       t('eo.entschaedigungssatz') + ': ' + EO_PARAMS.entschaedigungssatz + '% · ' +
       t('eo.maximum') + ': CHF ' + fmt(EO_PARAMS.maxTaggeld) + '/' + t('eo.tag')),

@@ -11,7 +11,7 @@ describe('bestimmeSatz', () => {
   it('80 % bei Unterhaltspflicht', () => {
     expect(bestimmeSatz({ versicherterVerdienst: 8000, hatKinder: true, ivGrad40: false })).toBe(0.8);
   });
-  it('80 % bei vers. Verdienst ≤ 3797', () => {
+  it('80 % bei vers. Verdienst 3797 (volles Taggeld ≤ 140 Fr., Grenze 3 797.50 in kapitel5Nachzug.test.js)', () => {
     expect(bestimmeSatz({ versicherterVerdienst: 3797, hatKinder: false, ivGrad40: false })).toBe(0.8);
     expect(bestimmeSatz({ versicherterVerdienst: 3500, hatKinder: false, ivGrad40: false })).toBe(0.8);
   });

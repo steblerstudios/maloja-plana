@@ -1,10 +1,16 @@
 // CV/Resume Generator for Switzerland — i18n-aware
 import { getFullName } from './config/constants.js';
-import { escapeHtml } from './utils/helpers.js';
+import { escapeHtml, formatDE } from './utils/helpers.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
 
-export const generateCVTemplate = (data, t) => {
+// Kapitel 5, K (10.11.2026): Geburtsdatum, Nationalität und Zivilstand sind im Lebenslauf freiwillig — die
+// Person wählt sie ab (`persoenlich`, Standard: alle drei an, wie bisher). Abgewählt bleibt das Feld leer und
+// steht weder im Druck noch in der HTML-Datei. Das JSON Resume enthält sie ohnehin nicht.
+export const PERSOENLICH_FELDER = Object.freeze(['dateOfBirth', 'nationality', 'maritalStatus']);
+const geburtsdatum = (v) => (/^\d{4}-\d{2}-\d{2}$/.test(String(v || '')) ? formatDE(v) : v || '');
+export const generateCVTemplate = (data, t, persoenlich = {}) => {
+  const mit = (feld) => persoenlich[feld] !== false;
   return {
     header: {
       name: getFullName(data.basis) || (t ? t('cv.name') : 'Name'),
@@ -14,10 +20,11 @@ export const generateCVTemplate = (data, t) => {
       city: (data.wohnen?.postalCode || '') + ' ' + (data.wohnen?.city || '')
     },
     personal: {
-      dateOfBirth: data.basis?.dateOfBirth || '',
-      nationality: auswahlLabel('basis', 'nationality', data.basis?.nationality, t),
+      // Schweizer Schreibweise 15.03.1992 statt ISO 1992-03-15; ein anders erfasster Wert bleibt, wie er ist.
+      dateOfBirth: mit('dateOfBirth') ? geburtsdatum(data.basis?.dateOfBirth) : '',
+      nationality: mit('nationality') ? auswahlLabel('basis', 'nationality', data.basis?.nationality, t) : '',
       // Der Lebenslauf zeigt den Text der Sprache, nicht den gespeicherten Schlüssel («married»).
-      maritalStatus: zivilstandLabel(data.basis?.maritalStatus, t)
+      maritalStatus: mit('maritalStatus') ? zivilstandLabel(data.basis?.maritalStatus, t) : ''
     },
     experience: {
       current: {
@@ -64,6 +71,11 @@ export const generateCVHTML = (cvData, t) => {
   const labelDob = t ? t('cv.labelDob') : 'Date of birth';
   const labelNationality = t ? t('cv.labelNationality') : 'Nationality';
   const labelMaritalStatus = t ? t('cv.labelMaritalStatus') : 'Marital status';
+  // Nur ausgefüllte (und nicht abgewählte) Angaben — keine leere Zeile «Geburtsdatum:».
+  const pers = cvData.personal || {};
+  const persoenlichZeilen = [[labelDob, pers.dateOfBirth], [labelNationality, pers.nationality], [labelMaritalStatus, pers.maritalStatus]]
+    .filter(([, wert]) => wert && String(wert).trim())
+    .map(([label, wert]) => `<strong>${label}:</strong> ${escapeHtml(wert)}`);
   const labelHighest = t ? t('cv.labelHighest') : 'Highest qualification';
   const labelSchool = t ? t('cv.labelSchool') : 'School/University';
   const labelEfz = t ? t('cv.labelEfz') : 'EFZ/Designation';
@@ -106,14 +118,12 @@ export const generateCVHTML = (cvData, t) => {
     </div>
   </div>
 
-  <div class="section">
+  ${persoenlichZeilen.length ? `<div class="section">
     <h2>${labelPersonal}</h2>
     <div class="entry-text">
-      <strong>${labelDob}:</strong> ${escapeHtml(cvData.personal.dateOfBirth)}<br>
-      <strong>${labelNationality}:</strong> ${escapeHtml(cvData.personal.nationality)}<br>
-      <strong>${labelMaritalStatus}:</strong> ${escapeHtml(cvData.personal.maritalStatus)}
+      ${persoenlichZeilen.join('<br>\n      ')}
     </div>
-  </div>
+  </div>` : ''}
 
   <div class="section">
     <h2>${labelExperience}</h2>

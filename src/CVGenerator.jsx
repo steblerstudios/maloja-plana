@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { generateCVTemplate, generateCVHTML, generateJSONResume, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
+import { generateCVTemplate, PERSOENLICH_FELDER, generateCVHTML, generateJSONResume, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { LebenslaufBlatt, lebenslaufInhalt } from './components/LebenslaufVorschau.jsx';
-import { text, radius , space } from './config/tokens.js';
+import { text, radius, space, weight } from './config/tokens.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { ZielHinweis } from './components/ExternerLink.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
@@ -15,12 +15,17 @@ import PrimaryButton, { knopfStil, linkStil } from './components/PrimaryButton.j
 // JSON klein unter «Weitere Formate». Vorher eine Datenmaske mit drei gleich lauten Knöpfen.
 export const CVGenerator = ({ palette, t, data, onNavigate }) => {
   // Export-Vorschau (K20): null | 'druck' | 'html' | 'json' — erst zeigen, was im Dokument steht. Das Blatt zeigt
-  // weniger als der Druck (Geburtsdatum, Nationalität, Zivilstand): darum auch vor dem Drucken.
+  // weniger als der Druck (Geburtsdatum, Nationalität, Zivilstand — abwählbar, s. u.): darum auch vor dem Drucken.
   const [vorschau, setVorschau] = useState(null);
   const [alsDatei, setAlsDatei] = useState(false);
   const zweitKnopf = knopfStil(palette, 'neben');
 
-  const cv = generateCVTemplate(data, t);
+  // Kapitel 5, K: Geburtsdatum, Nationalität, Zivilstand sind freiwillig — abwählbar, Standard an (wie bisher).
+  const [persoenlich, setPersoenlich] = useState({});
+  const cv = generateCVTemplate(data, t, persoenlich);
+  const vorhanden = generateCVTemplate(data, t).personal;
+  const wahlFelder = PERSOENLICH_FELDER.filter((f) => vorhanden[f] && String(vorhanden[f]).trim());
+  const wahlLabel = { dateOfBirth: 'cv.labelDob', nationality: 'cv.labelNationality', maritalStatus: 'cv.labelMaritalStatus' };
   const inhalt = lebenslaufInhalt(t, data.ausbildung, data);
 
   // Aus dem App-Fenster drucken (die CSP sperrt Inline-Handler im Druckfenster), wie beim Flyer.
@@ -53,6 +58,15 @@ export const CVGenerator = ({ palette, t, data, onNavigate }) => {
 
     inhalt && React.createElement(React.Fragment, null,
       React.createElement(LebenslaufBlatt, { palette, inhalt, ebene: 3 }),
+      wahlFelder.length > 0 && React.createElement('fieldset', { 'data-teil': 'persoenlich-wahl', style: { border: 0, padding: 0, margin: space.md + 'px 0 0' } },
+        React.createElement('legend', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, padding: 0, marginBottom: '2px' } }, t('cv.persoenlichTitel')),
+        React.createElement('p', { id: 'cv-persoenlich-hinweis', style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, t('cv.persoenlichHinweis')),
+        wahlFelder.map((f) => React.createElement('label', { key: f, htmlFor: 'cv-mit-' + f, style: { display: 'flex', alignItems: 'center', gap: '8px', minHeight: '44px', fontSize: text.sm, color: palette.text, cursor: 'pointer' } },
+          React.createElement('input', {
+            id: 'cv-mit-' + f, type: 'checkbox', checked: persoenlich[f] !== false, 'aria-describedby': 'cv-persoenlich-hinweis',
+            onChange: (ev) => setPersoenlich((alt) => ({ ...alt, [f]: ev.target.checked })),
+          }),
+          t(wahlLabel[f]) + ': ' + vorhanden[f]))),
       React.createElement(PrimaryButton, {
         palette, onClick: () => setVorschau('druck'),
         style: { width: '100%', minHeight: '44px', margin: space.md + 'px 0 ' + space.xs + 'px' },

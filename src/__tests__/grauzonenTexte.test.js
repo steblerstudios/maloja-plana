@@ -13,7 +13,8 @@ const fassungen = (v) => (typeof v === 'string' ? [v] : [v.sie, v.du]);
 describe('ALV unter 12 Beitragsmonaten — die Befreiung nach AVIG Art. 14 Abs. 2 wird genannt', () => {
   for (const [lang, tr] of Object.entries(SPRACHEN)) {
     it(lang, () => {
-      const satz = tr.alv.anspruchUnklar;
+      // Kapitel 5, B (10.11.2026): die Ausnahmen stehen im aufklappbaren Teil «Weniger als 12 Monate gearbeitet?».
+      const satz = tr.alv.befreiungText;
       expect(satz).toMatch(/\b90\b/);  // höchstens 90 Taggelder (AVIG Art. 27 Abs. 4)
       expect(satz).toMatch(/14/);      // Art. 14 Abs. 2
     });
