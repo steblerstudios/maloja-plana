@@ -29,24 +29,6 @@ export const mietVorbehalte = (t, comparison, { imKapitel } = {}) => {
 // Skala wie im grossen Barometer: etwas Luft nach oben, auf 50 gerundet.
 const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, national, userValue > 0 ? userValue : 0) * 1.15) / 50) * 50 || 50;
 
-// Das Barometer klein (64 px, Brand Book §7b «Spiegel Startseite»): nur das Bild — Füllung = eigener
-// Wert, Punkt = Region, Strich = Schweizer Schnitt. Keine Wörter, die Zahl steht daneben.
-export const RegionalBarometerKlein = ({ palette, comparison, userValue, fillColor }) => {
-  if (!comparison) return null;
-  const h = React.createElement;
-  const { regional, national } = comparison;
-  const max = skala(regional, national, userValue);
-  const x = (v) => 2 + Math.max(0, Math.min(1, v / max)) * 56;
-  const lage = lageZurRegion(userValue, regional);
-  const punkt = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-barometer': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 11, width: 56, height: 18, rx: 6, fill: palette.border }),
-    userValue > 0 && h('rect', { x: 2, y: 11, width: Math.max(12, x(userValue) - 2), height: 18, rx: 6, fill: fillColor || palette.sky }),
-    h('line', { x1: x(national), y1: 4, x2: x(national), y2: 36, stroke: palette.text, strokeWidth: 2.5 }),
-    h('circle', { cx: x(regional), cy: 20, r: 7, fill: punkt, stroke: palette.surface, strokeWidth: 2 }),
-  );
-};
-
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
 //   • Punkt    = Regions-Durchschnitt
@@ -334,6 +316,27 @@ function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, nation
     ),
   );
 }
+
+// Die Häuserzeile klein (64 px, Brand Book §7b «Spiegel Startseite»; Stebler Studios 11.11.2026 «Kacheln 64
+// Wohnen»): dieselben drei Häuser wie im Kapitel — Ihr Haus gefüllt, die Region mit Dach in der Farbe Ihrer
+// Lage (lageZurRegion, wie der Punkt), die Schweiz gestrichelt. Ohne Drittel-Linie: das Drittel trägt die
+// Nachbarkachel (Drittel-Haus). Keine Wörter, die Zahl steht daneben. Ersetzt das kleine Barometer.
+export const HaeuserzeileKlein = ({ palette, comparison, userValue, fillColor }) => {
+  if (!comparison) return null;
+  const h = React.createElement;
+  const { regional, national } = comparison;
+  const max = skala(regional, national, userValue);
+  const oben = (v) => BODEN - Math.max(4, Math.min(1, v / max) * HOEHE);
+  const lage = lageZurRegion(userValue, regional);
+  const dach = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
+  const fuell = fillColor || palette.sky;
+  return h('svg', { viewBox: '0 0 120 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-klein', style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', overflow: 'visible' } },
+    hausForm(HAUS_X.schweiz, oben(national), { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
+    hausForm(HAUS_X.region, oben(regional), { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dach, stroke: palette.surface, strokeWidth: 1 }),
+    userValue > 0 && hausForm(HAUS_X.sie, oben(userValue), { fill: fuell }, { fill: fuell }),
+    h('line', { x1: 0, x2: 120, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
+  );
+};
 
 // Zwei Häuser (Budget, Gruppe «Wohnen», 11.11.2026, Stebler Studios «Richtwert als Häuserzeile»): Ihre
 // Wohnkosten gegen den BFS-Richtwert eines vergleichbaren Haushalts. Dieselben Marken wie die Häuserzeile:

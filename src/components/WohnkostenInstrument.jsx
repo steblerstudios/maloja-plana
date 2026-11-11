@@ -75,18 +75,6 @@ const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrut
   : r.mitPartner ? 'wohnenInstrument.anteilEigen' : 'wohnenInstrument.anteil';
 const satzKey = (r) => r.mitPartner ? 'wohnenInstrument.mitPartner' : r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel';
 
-// Der Drittel-Balken klein (64 px, Brand Book §7b «Spiegel Startseite», 10.11.2026): nur das Bild —
-// Füllung = Anteil der Wohnkosten am Einkommen, Strich = ein Drittel. Dieselbe Rechnung wie gross.
-export const DrittelBalkenKlein = ({ palette, r, fillColor }) => {
-  const h = React.createElement;
-  const breite = 56;
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-drittel': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 11, width: breite, height: 18, rx: 6, fill: palette.border }),
-    r.anteil != null && h('rect', { x: 2, y: 11, width: Math.max(12, Math.min(100, r.anteil) / 100 * breite), height: 18, rx: 6, fill: r.ueberDrittel ? palette.sand : (fillColor || palette.sage) }),
-    h('line', { x1: 2 + breite / 3, y1: 4, x2: 2 + breite / 3, y2: 36, stroke: palette.text, strokeWidth: 2.5 }),
-  );
-};
-
 // Kurzer Satz für die Instrument-Kachel: wessen Einkommen gemeint ist (dieselben Fälle wie anteilKey).
 export const wohnkostenSatzKey = (r) => r.brutto ? (r.ganzBrutto ? 'instrumente.wohnkostenSatzBrutto' : 'instrumente.wohnkostenSatzTeilsBrutto')
   : r.mitPartner ? 'instrumente.wohnkostenSatzEigen' : 'instrumente.wohnkostenSatz';

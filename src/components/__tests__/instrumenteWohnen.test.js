@@ -6,8 +6,8 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { lageZurRegion, RegionalBarometerKlein, mietVorbehalte } from '../RegionalBarometer.jsx';
-import { DrittelBalkenKlein, wohnkostenSatzKey } from '../WohnkostenInstrument.jsx';
+import { lageZurRegion, HaeuserzeileKlein, mietVorbehalte } from '../RegionalBarometer.jsx';
+import { DrittelHaus, wohnkostenSatzKey } from '../WohnkostenInstrument.jsx';
 
 const palette = { surface: '#fff', border: '#ccc', text: '#111', mid: '#444', soft: '#777', sand: '#c90', sage: '#6a6', gold: '#b80', sky: '#69c' };
 const t = (k, p) => k + (p ? JSON.stringify(p) : '');
@@ -28,18 +28,32 @@ describe('lageZurRegion: eine Rechnung für Barometer und Kachel', () => {
   });
 });
 
-describe('kleine Bilder: 64 px, keine Wörter', () => {
-  it('Drittel-Balken', () => {
-    const html = renderToStaticMarkup(React.createElement(DrittelBalkenKlein, { palette, r: { anteil: 30, ueberDrittel: false } }));
-    expect(html).toContain('data-drittel="klein"');
+describe('kleine Bilder: 64 px, keine Wörter, dasselbe Bild wie im Kapitel', () => {
+  // Stebler Studios 11.11.2026 («Kacheln 64 Wohnen»): die Kachel zeigt das Drittel-Haus und die Häuserzeile
+  // klein, nicht mehr Balken und Barometer — ein Bild, eine Bedeutung (Brand Book §7b).
+  it('Drittel-Haus klein', () => {
+    const html = renderToStaticMarkup(React.createElement(DrittelHaus, { palette, anteil: 30, ueberDrittel: false, fuell: '#9a6', groesse: 'klein' }));
+    expect(html).toContain('data-teil="drittel-haus"');
     expect(html).toContain('max-width:64px');
     expect(html).not.toMatch(/<text/);
   });
-  it('Miet-Barometer', () => {
-    const html = renderToStaticMarkup(React.createElement(RegionalBarometerKlein, { palette, comparison: { regional: 1732, national: 1446 }, userValue: 1650 }));
-    expect(html).toContain('data-barometer="klein"');
+  it('Häuserzeile klein: Sie gefüllt, Region mit Dach in der Lage-Farbe, Schweiz gestrichelt', () => {
+    const html = renderToStaticMarkup(React.createElement(HaeuserzeileKlein, { palette, comparison: { regional: 1732, national: 1446 }, userValue: 1900, fillColor: '#9a6' }));
+    expect(html).toContain('data-form="haeuser-klein"');
     expect(html).toContain('max-width:64px');
     expect(html).not.toMatch(/<text/);
+    expect(html).toContain('fill="#9a6"');
+    expect(html).toContain('fill="#b80"'); // über der Region: Dach gold, wie der Punkt im Barometer
+    expect(html).toContain('stroke-dasharray="3 2"');
+  });
+  it('ohne Vergleich: kein Bild', () => {
+    expect(renderToStaticMarkup(React.createElement(HaeuserzeileKlein, { palette, comparison: null, userValue: 1900 }))).toBe('');
+  });
+  it('die Kacheln nutzen genau diese Bilder', () => {
+    const panel = quelle('../InstrumentePanel.jsx');
+    expect(panel).toMatch(/h\(DrittelHaus, \{[^}]*groesse: 'klein'/);
+    expect(panel).toMatch(/h\(HaeuserzeileKlein, \{/);
+    expect(panel).not.toMatch(/DrittelBalkenKlein|RegionalBarometerKlein/);
   });
 });
 
