@@ -197,5 +197,27 @@ siebenmal neu entschieden werden:
    swiss-precision-pruefer am Volltext, Blocker behoben) · Inhalt, Gestaltung, Sprache → Entwurfs-PR #812, gestapelt auf #806
    (rechts-pruefer, fünf Sätze nachgeschärft). Zusammen 9301 Tests grün. Zwei Gestaltungs-Fehlbefunde im Blatt berichtigt.
    Offen: Lektüre fr/it/en, rm, Zuschlag in der 13. Rente (BSV), Witwen-Satz nach EGMR, Absätze teilen (S4).
+5. **Die übrigen Seiten** (11.11.), im selben Verfahren wie die Kapitel. Inventar aus `ansichtenRegister.js`,
+   `werkzeugRegister.js`, den `view === '…'`-Zweigen in `main.jsx`, den Umleitungen in `hashRouter.js` und `public/`;
+   abgezogen, was die Blätter zu Kapitel 1–7 abdecken. Fünf Gruppen, Reihenfolge A → E. ✅ **11.11.: so** (Stebler
+   Studios: «Ja, mit A anfangen»).
+   A Einstieg & Orientierung (Übersicht, Menü, Suche, «Was steht mir zu?», Schnellcheck, Rucksack, Obstgarten,
+   Onboarding, Rundgang, Hinweis fällige Erinnerungen) · B Ordnen & Unterlagen (Ablage, Was ansteht, Merkliste,
+   Unterlagen drucken mit drei Dossiers, Briefe, Behördenlinks) · C Einstellungen & Vertrauen (Einstellungen mit
+   Benachrichtigungen, Datensicherung, Rechtliches in der App, Beta-Tor, Sperrbildschirm, App installieren, Teilen/Flyer)
+   · D Fachseiten ausserhalb der Kapitel (Stipendien in der App; Erklärseiten Was steht mir zu, Sozialhilfe, Steuern,
+   Prämienverbilligung-Übersicht, Kantone im Vergleich, Krankenkasse «bewegt»; Nachprüfung Kantonsatlas, Politsystem)
+   · E Website & Rahmen (Startseite, Sprach-Startseiten, Rechtliches statisch, 404, Wartung). Nicht dabei: die
+   übersetzten Erklärseiten (Übersetzungs-Prüfung #692) und die 26 IPV-Kantonsseiten (separat geprüft).
+   **Gruppe A · Einstieg & Orientierung** (11.11.): Bild [gruppe-a-einstieg.html](../design/gruppe-a-einstieg.html).
+   Gut: Datenschutz-Aussagen stimmen am Code, drei klare Hinweise auf «Was steht mir zu?». Hoch: L1 Sozialhilfe-Karten
+   und -Weg «ein Recht, kein Entgegenkommen» ohne Hinweis auf die Folgen für die Bewilligung B/L/C (AIG Art. 62 Abs. 1
+   Bst. e, 63 Abs. 1 Bst. c, Fassung 1.11.2026). Mittel: L2 IPV ruht für F/N/S bei Sozialhilfe (AsylG Art. 82a Abs. 7)
+   nur im Schnellcheck Schritt 1 gesagt, L3 Familien-EL ohne Wohnsitzdauer, L4 EL ohne Karenzfrist und Vermögen, L5 Reka
+   (Alleinerziehende, keine Anreise), L6 «was Ihnen zusteht» im Onboarding, L7 Schnellcheck Schritt 3 ohne Hinweis, L8
+   «sicher ablegen», L9 AHV-Mindestbeitrag nur bis 25. Gestaltung A fünf Eingänge zu «Was steht mir zu?» und drei
+   IPV-Sätze, B vier Ordnungen (Kapitel, Werkzeug-Gruppen, Rucksack, Obstgarten) mit verschiedenen Zahlen, C zwei
+   Fortschrittszahlen (62 % / 72 %), D drei Ebenen auf dem ersten Bildschirm. Sprache S1–S7. Onboarding nur am Code
+   (Beta-Tor). Zweig `befund/gruppe-a-einstieg` (von `main`), nur Befund, gebaut ist nichts.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
