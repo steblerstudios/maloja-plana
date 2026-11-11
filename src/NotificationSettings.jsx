@@ -76,29 +76,35 @@ export const NotificationSettings = ({ palette, t }) => {
     React.createElement('p', { id: BENACHRICHTIGUNGEN_ANKER + '-was', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, margin: '0 0 ' + space.md + 'px 0' } },
       t('notifications.nurBeimOeffnen')),
 
-    isGranted
-      // Erlaubt: nur noch der eine Schalter (B). Zustand als Wort, role="switch".
-      ? React.createElement('div', {
-        style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px', padding: space.xs + 'px 0', borderTop: '1px solid ' + palette.border + '55', borderBottom: '1px solid ' + palette.border + '55' },
+    // Noch nicht erlaubt, blockiert oder nicht möglich: eine ruhige Statuszeile mit Wort und dem Weg.
+    !isGranted && React.createElement('div', {
+      style: { padding: space.md + 'px', borderRadius: radius.md, background: palette.up, border: '1px solid ' + palette.border, marginBottom: space.sm + 'px' },
+    },
+      React.createElement('div', {
+        id: BENACHRICHTIGUNGEN_ANKER + '-status',
+        ref: statusRef, tabIndex: -1, role: 'status',
+        style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, outline: 'none' },
       },
-        React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('notifications.overdueReminders')),
-        React.createElement(Schalter, { palette, t, an: ueberfaelligAn, onChange: setUeberfaellig, label: t('notifications.overdueReminders'), beschreibungId: BENACHRICHTIGUNGEN_ANKER + '-was' })
-      )
-      // Noch nicht erlaubt, blockiert oder nicht möglich: eine ruhige Statuszeile mit Wort, kein leerer Schalter.
-      : React.createElement('div', {
-        style: { padding: space.md + 'px', borderRadius: radius.md, background: palette.up, border: '1px solid ' + palette.border },
-      },
-        React.createElement('div', {
-          ref: statusRef, tabIndex: -1, role: 'status',
-          style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, outline: 'none' },
-        },
-          React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: '50%', flexShrink: 0, background: isDenied ? palette.rose : palette.sky } }),
-          statusText
-        ),
-        !isDenied && isSupported && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
-          React.createElement(PrimaryButton, { palette, onClick: handleRequestPermission }, t('notifications.enable'))),
-        isDenied && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.xs + 'px 0 0 0' } }, t('notifications.blockedHint'))
+        React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: '50%', flexShrink: 0, background: isDenied ? palette.rose : palette.sky } }),
+        statusText
       ),
+      !isDenied && isSupported && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+        React.createElement(PrimaryButton, { palette, onClick: handleRequestPermission }, t('notifications.enable'))),
+      isDenied && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.xs + 'px 0 0 0' } }, t('notifications.blockedHint'))
+    ),
+
+    // Der eine Schalter (B), Zustand als Wort, role="switch". Ohne Erlaubnis gesperrt; die Statuszeile
+    // darüber sagt warum (aria-describedby).
+    React.createElement('div', {
+      style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px', padding: space.xs + 'px 0', borderTop: '1px solid ' + palette.border + '55', borderBottom: '1px solid ' + palette.border + '55' },
+    },
+      React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('notifications.overdueReminders')),
+      React.createElement(Schalter, {
+        palette, t, an: ueberfaelligAn && isGranted, onChange: setUeberfaellig, label: t('notifications.overdueReminders'),
+        disabled: !isGranted,
+        beschreibungId: isGranted ? BENACHRICHTIGUNGEN_ANKER + '-was' : BENACHRICHTIGUNGEN_ANKER + '-status',
+      })
+    ),
 
     // Datenschutz einmal, klein (B).
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 0 0', lineHeight: 1.5 } },

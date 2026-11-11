@@ -6128,6 +6128,8 @@ export default {
     gateMessage: { sie: 'Cette application est en bêta fermée. Veuillez entrer le code d\'accès.', du: 'Cette application est en bêta fermée. Entre le code d\'accès.' },
     codePlaceholder: 'Code d\'accès',
     codeWrong: 'Ce code n\'est pas valide.',
+    keinCode: { sie: 'Pas encore de code ? Sur la liste d\'attente, vous saurez quand la bêta se termine.', du: 'Pas encore de code ? Sur la liste d\'attente, tu sauras quand la bêta se termine.' },
+    wartelisteLink: 'Vers la liste d\'attente',
     enter: 'Ouvrir',
     demoEnter: 'Essayer sans code',
     demoHint: 'Démo — rien n\'est enregistré.',

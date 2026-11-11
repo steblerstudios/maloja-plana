@@ -6199,6 +6199,8 @@ export default {
     codePlaceholder: 'Zugangscode',
     legalLink: 'Datenschutz & Rechtliches',
     codeWrong: 'Dieser Code ist leider nicht gültig.',
+    keinCode: { sie: 'Noch keinen Code? Auf der Warteliste erfahren Sie, wenn die Beta endet.', du: 'Noch keinen Code? Auf der Warteliste erfährst du, wenn die Beta endet.' },
+    wartelisteLink: 'Zur Warteliste',
     enter: 'Öffnen',
     demoEnter: 'Ohne Code ausprobieren',
     demoHint: 'Demo — nichts wird gespeichert.',

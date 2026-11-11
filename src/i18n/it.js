@@ -6103,6 +6103,8 @@ export default {
     legalLink: 'Privacy e note legali',
     codePlaceholder: 'Codice di accesso',
     codeWrong: 'Questo codice non è valido.',
+    keinCode: { sie: 'Non ha ancora un codice? Sulla lista d\'attesa saprà quando finisce la beta.', du: 'Non hai ancora un codice? Sulla lista d\'attesa saprai quando finisce la beta.' },
+    wartelisteLink: 'Alla lista d\'attesa',
     enter: 'Apri',
     demoEnter: 'Provare senza codice',
     demoHint: 'Demo — non viene salvato nulla.',

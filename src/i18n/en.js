@@ -6129,6 +6129,8 @@ export default {
     gateMessage: 'This app is in closed beta. Please enter the access code.',
     codePlaceholder: 'Access code',
     codeWrong: 'This code is not valid.',
+    keinCode: 'No code yet? Join the waiting list to hear when the beta ends.',
+    wartelisteLink: 'Go to the waiting list',
     enter: 'Open',
     demoEnter: 'Try without a code',
     demoHint: 'Demo — nothing is saved.',

@@ -2935,6 +2935,10 @@ export default {
     gateMessage: { sie: "Questa app sa chatta en la beta serrada. Endatai per plaschair il code d'access.", du: "Questa app sa chatta en la beta serrada. Endatescha per plaschair il code d'access." },
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    keinCode: { sie: 'Noch keinen Code? Auf der Warteliste erfahren Sie, wenn die Beta endet.', du: 'Noch keinen Code? Auf der Warteliste erfährst du, wenn die Beta endet.' },
+  // TODO(rm): provisorisch — deutsch, Gruppe C (11.11.2026), Übersetzung offen
+    wartelisteLink: 'Zur Warteliste',
     enter: 'Avrir',
     // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
     demoEnter: 'Empruvar senza code',
