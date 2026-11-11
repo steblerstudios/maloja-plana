@@ -23,7 +23,9 @@ const t = (k) => { const v = hol(de, k); return v && typeof v === 'object' ? v.s
 // F7-S2 (27.10.2026): Lebensmappe, Behörden- und Notfall-Dossier sind eine Seite «Unterlagen drucken» (drucken).
 const ANSICHTEN = { drucken: 'UnterlagenDrucken.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx', praemien: 'PraemienOrientierung.jsx',
   // F7-S10 (27.10.2026): die drei Vorsorge-Formulare unter «Notfall» (Stufe → Block Vorsorge).
-  patientenverfuegung: 'Patientenverfuegung.jsx', bestattung: 'Bestattung.jsx', organ: 'OrganDonation.jsx' };
+  patientenverfuegung: 'Patientenverfuegung.jsx', bestattung: 'Bestattung.jsx', organ: 'OrganDonation.jsx',
+  // Kapitel 7, Gestaltung A (10.11.2026): der Arztkoffer unter «Gesundheit».
+  gesundheit: 'ArztkofferView.jsx' };
 // Diese Formulare haben AM SCHLUSS bewusst einen zweiten Weg zur Eltern-Stufe: «Zurück zur Vorsorge» nach
 // Vorschau bzw. Speichern (F7-S10, Entscheid Stebler Studios 27.10.2026 — vorher Sackgassen). Kein Zurück-Knopf
 // oben neben der Brotkrume; der bleibt verboten (zurueckZeichen).

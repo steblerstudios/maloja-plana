@@ -241,6 +241,40 @@ siebenmal neu entschieden werden:
    rechts-pruefer am Volltext nach dem Bau eingearbeitet (Blocker: Kontrolluntersuchung nicht ab dem 75. Geburtstag
    rechnen). Test `kapitel6Behoerden.test.js`. Offen: rm-Übersetzung (S1, auch L2 nur de/fr/it/en), S2 Maskulin in
    unberührten Texten, S3 Gesetzesangaben ans Satzende, S4 Kürzel ausschreiben, Notpass-Zuschläge.
+   **Kapitel 7 · Gesundheit** (10.11.): Bild [kapitel-7-gesundheit.html](../design/kapitel-7-gesundheit.html). Kapitelseite
+   und dreizehn Seiten (Notfallkarte, Notfallpass, Arztkoffer, Vorsorgeauftrag & Patientenverfügung, Patientenverfügung
+   erstellen, Bestattungswünsche, Organspende, KVG-Leistungen, Kassenkarten-Scanner, Unfall oder Krankheit, Krankheit & IV,
+   Angehörige pflegen, Erklärseite Krankenkasse), Fachprüfung am Fedlex-Volltext (rechts- und swiss-precision-pruefer).
+   Gut: Form des Vorsorgeauftrags richtig, Patientenverfügung richtig, Organspende richtig (erweiterte Zustimmungslösung
+   gilt bis zur Widerspruchslösung, laut BAG vss. 1. Halbjahr 2028), ZGB 360–381 ab 1.1.2027 unverändert. Hoch: L1 die
+   Vorsorgeauftrag-Vorlage druckt Linien für Ort, Datum und Unterschrift, ein unterschriebener Ausdruck ist ungültig
+   (ZGB Art. 361 Abs. 2). Mittel: L2 Ehegatten-Vertretung nur «im gemeinsamen Haushalt» (Art. 374: auch regelmässiger
+   Beistand; nur ohne Vorsorgeauftrag/Beistandschaft), L3 Patientenverfügung in der Psychiatrie nur zu berücksichtigen
+   (Art. 380, 433), L4 freie Spitalwahl (KVG Art. 41 Abs. 1bis), L5 «Franchise ist Ihr Selbstbehalt», Kinder 350, L6 IV
+   ohne Rechtsweg (Vorbescheid 30 Tage, Beschwerde statt Einsprache), L7 Kurzurlaub OR 329h unter «EO», L8 Mutterschaft
+   (KVG Art. 64 Abs. 7 Bst. a ganze Schwangerschaft), L9 «ab jetzt 100 %» trotz Spitalbeitrag, L10 Franchise-Rechner nur
+   für Erwachsene. Gestaltung A Gesundheit hat zwei Orte (Kapitelseite zeigt nur den Notfall, KVG/IV/Pflege/Unfall hängen
+   am Arztkoffer), B Notrufnummern als 19-px-Textlinks, C Doppeltes (drei Einleitungen, Patientenverfügung zweimal,
+   «Vorsorge» zweimal). Sprache S1–S7 (rm Unfall-Seite ganz deutsch, Notfallkarte ohne rm-Sie-Formen, «Bleiben Sie ruhig»).
+   Zweig `feat/kapitel-7-gesundheit` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig, auf `main` nachgezogen.
+   ✅ **Gebaut** (Zweig `feat/kapitel-7-gesundheit`): L1 Vorlage ohne Unterschriftslinien (Satz «von Hand auf die
+   Abschrift») · KVG L4 Listenspital auch ausserkantonal, L5 Franchise ≠ Selbstbehalt, Kinder 350, L8 Mutterschaft ganze
+   Schwangerschaft, L9 kein «100 %» (CHF 15 je Spitaltag, nicht für Kinder), L10 Rechner Kind/Erwachsen (Stufen 0–600,
+   Höchstbetrag 350, unbekannte Werte genannt) · L2 Art. 374, Art. 378-Reihe, L3 Art. 380 (urteilsunfähig) / 433 · L6
+   IV-Schritt «Vorbescheid und Entscheid» mit Frist ab Erhalt + 30 Tage (EreignisFrist, eingeschriebener Brief Art. 38
+   Abs. 2bis), Beschwerde statt Einsprache · L7 OR 329h · K: handlungsfähig (Art. 360, 398), Art. 367, Personenkreis
+   Betreuungsgutschrift (inkl. eingetragene Partnerschaft, ATSG 13a), Organspende ab 16, Psychotherapie seit Juli 2022,
+   Impf-Referenzdokument 1.7.2026, KLV 12e, SIWF · Gestaltung A (Passend in zwei Gruppen, Arztkoffer unter «Gesundheit»),
+   B (Notruf-Knöpfe 48 px, 117), C (Intro weg, PV-Frage eingeklappt, «Organspende & Verfügungen») · S1 rm-Marken, S2,
+   S5, S6 (Elternstufe «Gesundheit»). rechts-pruefer nach dem Bau eingearbeitet (Blocker: Art. 378 Ziff. 1 nennt zuerst
+   die in der Patientenverfügung ODER im Vorsorgeauftrag bezeichnete Person). Test `kapitel7Gesundheit.test.js`,
+   Startbündel unverändert 64 995 / 65 000 Bytes (wie `main`). Offen: rm-Übersetzung (u. a. sieben Sie-Formen der
+   Notfallkarte), S3 Gesetzesangaben ans Satzende, S4 Kürzel, S7 Fachwörter, Kapitelseite-Kleines (Testament im Block
+   «Vorsorge», «1 von 5» neben «19 von 20», Szenario «Behördengang»), Arztkoffer-Platzhalter «In Vorbereitung» bewusst
+   belassen (Ehrlichkeitsregel im Code), Erklärseite Krankenkasse bleibt bei Versicherungen (Organigramm 07.11.),
+   Altersgrenze Kind «18» nach Jahrgang (KVV Art. 91 Abs. 3) nicht am Volltext belegt, Notrufnummern und
+   Medikamentenpreise an der Quelle.
 5. **Die übrigen Seiten** (11.11.), im selben Verfahren wie die Kapitel. Inventar aus `ansichtenRegister.js`,
    `werkzeugRegister.js`, den `view === '…'`-Zweigen in `main.jsx`, den Umleitungen in `hashRouter.js` und `public/`;
    abgezogen, was die Blätter zu Kapitel 1–7 abdecken. Fünf Gruppen, Reihenfolge A → E. ✅ **11.11.: so** (Stebler

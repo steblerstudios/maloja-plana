@@ -339,12 +339,13 @@ export default {
   unfallKrankheit: {
     quelle: 'Quellen: [[UVG Art. 45|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_45]], [[KVG Art. 8|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_8]] (geprüft im September 2026).',
     title: 'Unfall oder Krankheit — was tun?',
-    intro: 'Wenn etwas passiert, zählt zuerst die Hilfe — dann die Administration. Hier der ruhige Überblick: Notfall, wer zahlt, Arbeitsunfähigkeit, Belege.',
+    intro: 'Wenn etwas passiert, zählt zuerst die Hilfe — dann die Administration. Hier der Überblick: Notfall, wer zahlt, Arbeitsunfähigkeit, Belege.',
     step1Title: '1 · Im Notfall zuerst',
     step1Text: 'Bei ernster Gefahr sofort anrufen:',
     num_sani: 'Sanität (Ambulanz)',
     num_rega: 'Rega (Luftrettung)',
     num_tox: 'Tox Info (Vergiftungen)',
+    num_polizei: 'Polizei',
     num_euro: 'Notruf (allgemein, auch aus dem Ausland)',
     step1Note: 'Diese App ist Orientierung, kein Ersatz für den Notruf.',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -353,7 +354,7 @@ export default {
     step2Intro: 'In der Schweiz hängt das davon ab, ob es ein Unfall oder eine Krankheit war:',
     step2UnfallTitle: 'Bei einem Unfall',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über den Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1). Ausnahme: Wer arbeitslos ist und Arbeitslosenentschädigung bezieht oder die Voraussetzungen dafür erfüllt, ist obligatorisch bei der Suva gegen Unfall versichert (UVG Art. 1a Abs. 1 Bst. b, Art. 66 Abs. 3bis). Diese Deckung endet mit dem 31. Tag nach dem letzten Anspruch oder Bezug (UVG Art. 3 Abs. 2) — dann den Unfall wieder in der Krankenkasse einschliessen.', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über den Arbeitgeber gegen Berufsunfälle versichert; arbeitest du beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1). Ausnahme: Wer arbeitslos ist und Arbeitslosenentschädigung bezieht oder die Voraussetzungen dafür erfüllt, ist obligatorisch bei der Suva gegen Unfall versichert (UVG Art. 1a Abs. 1 Bst. b, Art. 66 Abs. 3bis). Diese Deckung endet mit dem 31. Tag nach dem letzten Anspruch oder Bezug (UVG Art. 3 Abs. 2) — dann den Unfall wieder in der Krankenkasse einschliessen.' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
+    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über Ihre Arbeitgeberin oder Ihren Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie bei derselben Arbeitgeberin oder demselben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1). Ausnahme: Wer arbeitslos ist und Arbeitslosenentschädigung bezieht oder die Voraussetzungen dafür erfüllt, ist obligatorisch bei der Suva gegen Unfall versichert (UVG Art. 1a Abs. 1 Bst. b, Art. 66 Abs. 3bis). Diese Deckung endet mit dem 31. Tag nach dem letzten Anspruch oder Bezug (UVG Art. 3 Abs. 2) — dann den Unfall wieder in der Krankenkasse einschliessen.', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über deine Arbeitgeberin oder deinen Arbeitgeber gegen Berufsunfälle versichert; arbeitest du bei derselben Arbeitgeberin oder demselben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dort, die Meldung an die Unfallversicherung (z. B. Suva) macht die Arbeitgeberin oder der Arbeitgeber. Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über die Arbeitsstelle versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1). Ausnahme: Wer arbeitslos ist und Arbeitslosenentschädigung bezieht oder die Voraussetzungen dafür erfüllt, ist obligatorisch bei der Suva gegen Unfall versichert (UVG Art. 1a Abs. 1 Bst. b, Art. 66 Abs. 3bis). Diese Deckung endet mit dem 31. Tag nach dem letzten Anspruch oder Bezug (UVG Art. 3 Abs. 2) — dann den Unfall wieder in der Krankenkasse einschliessen.' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
     step2KrankheitTitle: 'Bei Krankheit',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step2KrankheitText: { sie: 'Über die Krankenkasse (Grundversicherung). Sie tragen Franchise und Selbstbehalt. Behandlungen und Rechnungen reichen Sie über Ihre Kasse ein.', du: 'Über die Krankenkasse (Grundversicherung). Du trägst Franchise und Selbstbehalt. Behandlungen und Rechnungen reichst du über deine Kasse ein.' },
@@ -362,7 +363,7 @@ export default {
     step3Title: { sie: '3 · Wenn Sie nicht arbeiten können', du: '3 · Wenn du nicht arbeiten kannst' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step3Text: { sie: 'Informieren Sie Ihren Arbeitgeber und holen Sie ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.', du: 'Informiere deinen Arbeitgeber und hol ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.' },
+    step3Text: { sie: 'Informieren Sie Ihre Arbeitgeberin oder Ihren Arbeitgeber und holen Sie ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.', du: 'Informiere deine Arbeitgeberin oder deinen Arbeitgeber und hol ein Arztzeugnis — ab wann es nötig ist, regeln Arbeitsvertrag, Personalreglement oder GAV. Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.' },
     step3Link: 'Versicherungen ansehen',
     step3LinkIv: 'Dauert es länger: Krankheit & IV',
     step4Title: '4 · Belege sammeln & ablegen',
@@ -497,10 +498,10 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]], [[AHVG Art. 43bis|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_43_bis]] (geprüft im September 2026 · Art. 42ter/43bis geprüft im Oktober 2026).',
     title: 'Tgirar confamigliars',
-    intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista calma: bonificaziun da renta, indemnisaziun, sgravi.',
+    intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step1Text: 'Wer nahe Angehörige betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — höchstens 30 km oder eine Stunde entfernt —, hat Anspruch auf eine Betreuungsgutschrift. Sie erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
+    step1Text: 'Eine Betreuungsgutschrift erhält, wer Verwandte betreut, die eine Hilflosenentschädigung (AHV, IV, Unfall- oder Militärversicherung) beziehen und leicht erreichbar sind — höchstens 30 km oder eine Stunde entfernt. Verwandte sind die auf- und absteigende Linie, etwa Eltern, Grosseltern, Kinder und Enkel, sowie Geschwister; gleichgestellt sind Ehefrau oder Ehemann, eingetragene Partnerin oder eingetragener Partner, Schwiegereltern, Stiefkinder und eine Lebenspartnerin oder ein Lebenspartner nach fünf Jahren ununterbrochen im gemeinsamen Haushalt (ATSG Art. 13a). Die Gutschrift erhöht die spätere AHV-Rente, gleich hoch wie die Erziehungsgutschrift (AHVG Art. 29septies, AHVV Art. 52g). Jedes Jahr bei der Ausgleichskasse am Wohnsitz der betreuten Person anmelden; nach fünf Jahren verfällt der Anspruch für das betreffende Jahr.',
     step1Link: 'Endatar en il calculatur da prevenziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     stepLohnTitle: { sie: '2 · Laschar indemnisar Voss stgaffiment', du: '2 · Laschar indemnisar tes stgaffiment' },
@@ -520,7 +521,7 @@ export default {
       extLink: { sie: 'Chattar ina organisaziun Spitex en Vossa regiun', du: 'Chattar ina organisaziun Spitex en tia regiun' },
     },
     step2Title: '3 · Indemnisaziun d’assistenza (IPG)',
-    step2Text: 'Tgirar in uffant grevamain malsaun u blessà dat dretg ad ina vacanza d’assistenza pajada, indemnisada tras las indemnisaziuns per perdita da gudogn (IPG). Er curtas vacanzas per confamigliars creschids èn pussaivlas.',
+    step2Text: 'Tgirar in uffant grevamain malsaun u blessà dat dretg ad ina vacanza d’assistenza pajada, indemnisada tras las indemnisaziuns per perdita da gudogn (IPG).',
     step2Link: 'Vesair l’indemnisaziun per perdita da gudogn (IPG)',
     step3Title: '4 · Indemnisaziun d’impotenza da la persuna tgirada',
     step3Text: 'Sche la persuna tgirada dovra regularmain agid en il mintgadi, po ella avair dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ella gida a finanziar la tgira necessaria.',
@@ -571,9 +572,9 @@ export default {
   },
   iv: {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]], [[IVG Art. 42|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42]], [[IVG Art. 48|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_48]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]] (geprüft im September 2026 · Art. 42ter geprüft im Oktober 2026).',
+    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]], [[IVG Art. 42|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42]], [[IVG Art. 48|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_48]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]], [[IVG Art. 57a|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_57_a]], [[IVG Art. 69|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_69]] (geprüft im September 2026 · Art. 42ter geprüft im Oktober 2026).',
     title: 'Malsogna & AI',
-    intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista calma, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
+    intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
     step1Title: '1 · Inabilitad da lavurar — salari & indemnisaziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'Laschai attestar l’inabilitad da lavurar dad in medi ed infurmai il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche Vus n’avais ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).', du: 'Lascha attestar l’inabilitad da lavurar dad in medi ed infurmescha il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche ti n’has ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).' },
@@ -592,7 +593,21 @@ export default {
     step3Link: 'Examinar il dretg',
     stepHeTitle: '4 · Indemnisaziun d’impotenza',
     stepHeText: 'Tgi che dovra per motivs da sanadad permanentamain agid en il mintgadi, survegliaziun u accumpagnament, ha eventualmain dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ils posts AI dattan infurmaziuns.',
-    step4Title: '5 · Sustegn & sgraventscha',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtTitle: '5 · Vorbescheid und Entscheid',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtText: { sie: 'Bevor die IV entscheidet, schickt sie einen Vorbescheid. Sind Sie nicht einverstanden, bringen Sie innert 30 Tagen Ihre Einwände vor (IVG Art. 57a). Gegen den Entscheid (Verfügung) gibt es bei der IV keine Einsprache: Sie erheben innert 30 Tagen direkt Beschwerde beim kantonalen Versicherungsgericht (IVG Art. 69, ATSG Art. 60). Das Gericht legt Kosten von 200 bis 1000 Franken fest; bei knappen Mitteln ist ein unentgeltlicher Rechtsbeistand möglich (IVG Art. 69 Abs. 1bis, ATSG Art. 61). Eine Beratungsstelle hilft beim Schreiben.', du: 'Bevor die IV entscheidet, schickt sie einen Vorbescheid. Bist du nicht einverstanden, bringst du innert 30 Tagen deine Einwände vor (IVG Art. 57a). Gegen den Entscheid (Verfügung) gibt es bei der IV keine Einsprache: Du erhebst innert 30 Tagen direkt Beschwerde beim kantonalen Versicherungsgericht (IVG Art. 69, ATSG Art. 60). Das Gericht legt Kosten von 200 bis 1000 Franken fest; bei knappen Mitteln ist ein unentgeltlicher Rechtsbeistand möglich (IVG Art. 69 Abs. 1bis, ATSG Art. 61). Eine Beratungsstelle hilft beim Schreiben.' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtLabel: 'Vorbescheid erhalten am',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtHinweis: { sie: 'Ihre Einwände müssen spätestens am {date} eingereicht sein (IVG Art. 57a Abs. 3). Kam der Vorbescheid eingeschrieben und haben Sie ihn erst später abgeholt, zählt der 7. Tag nach dem ersten Zustellversuch als Erhalt (ATSG Art. 38 Abs. 2bis) — geben Sie dann dieses Datum ein.', du: 'Deine Einwände müssen spätestens am {date} eingereicht sein (IVG Art. 57a Abs. 3). Kam der Vorbescheid eingeschrieben und hast du ihn erst später abgeholt, zählt der 7. Tag nach dem ersten Zustellversuch als Erhalt (ATSG Art. 38 Abs. 2bis) — gib dann dieses Datum ein.' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtVorbei: { sie: 'Nach unserer Rechnung endete die Frist für Einwände am {date}. Wegen Feiertagen oder Gerichtsferien kann sie länger laufen. Fragen Sie sofort bei der IV-Stelle oder einer Beratungsstelle nach, was noch möglich ist.', du: 'Nach unserer Rechnung endete die Frist für Einwände am {date}. Wegen Feiertagen oder Gerichtsferien kann sie länger laufen. Frag sofort bei der IV-Stelle oder einer Beratungsstelle nach, was noch möglich ist.' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtButton: 'Frist «Einwände zum Vorbescheid» in den Kalender ({date})',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    stepRechtReminder: 'IV-Vorbescheid: Einwände einreichen (30 Tage)',
+    step4Title: '6 · Sustegn & sgraventscha',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step4Text: { sie: 'Vus na stuais betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) As accumpognan tras la procedura AI. Pensai era al mandat preventiv ed a las directivas dal pazient, uschè ditg che Vus pudais decider sez — quai prenda squetsch per pli tard.', du: 'Ti na stos betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) t’accumpognan tras la procedura AI. Pensa era al mandat preventiv ed a las directivas dal pazient, uschè ditg che ti pos decider sez — quai prenda squetsch per pli tard.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -960,9 +975,9 @@ export default {
     step6LinkBw: 'Fixar ils giavischs da sepultura',
     step4LinkPv: 'Far ina disposiziun da pazient en dumondas',
     title: 'Vorsorgeauftrag und Patientenverfügung',
-    intro: 'Niemand denkt gern daran, einmal nicht mehr selbst entscheiden zu können. Wer es heute ordnet, nimmt den Nächsten später viel ab — und bestimmt selbst, wer handelt und was medizinisch gelten soll. Hier der ruhige Überblick in fünf Schritten.',
+    intro: 'Niemand denkt gern daran, einmal nicht mehr selbst entscheiden zu können. Wer es heute ordnet, nimmt den Nächsten später viel ab — und bestimmt selbst, wer handelt und was medizinisch gelten soll. Hier der Überblick in fünf Schritten.',
     step1Title: '1 · Wer handelt, wenn nichts geregelt ist?',
-    step1Text: { sie: 'Leben Sie verheiratet oder in eingetragener Partnerschaft im gemeinsamen Haushalt, darf Ihr Ehegatte bzw. Ihre eingetragene Partnerin oder Ihr eingetragener Partner Sie von Gesetzes wegen vertreten — für den üblichen Unterhalt, die ordentliche Verwaltung von Einkommen und Vermögen und nötigenfalls die Post (ZGB Art. 374). Für ausserordentliche Vermögensgeschäfte braucht es die Zustimmung der Erwachsenenschutzbehörde (KESB). Für Paare ohne Trauschein gilt dieses Vertretungsrecht nicht; reicht die eigene Vorsorge nicht, ordnet die KESB wenn nötig eine Beistandschaft an (ZGB Art. 389, 390).', du: 'Lebst du verheiratet oder in eingetragener Partnerschaft im gemeinsamen Haushalt, darf dein Ehegatte bzw. deine eingetragene Partnerin oder dein eingetragener Partner dich von Gesetzes wegen vertreten — für den üblichen Unterhalt, die ordentliche Verwaltung von Einkommen und Vermögen und nötigenfalls die Post (ZGB Art. 374). Für ausserordentliche Vermögensgeschäfte braucht es die Zustimmung der Erwachsenenschutzbehörde (KESB). Für Paare ohne Trauschein gilt dieses Vertretungsrecht nicht; reicht die eigene Vorsorge nicht, ordnet die KESB wenn nötig eine Beistandschaft an (ZGB Art. 389, 390).' },
+    step1Text: { sie: 'Führen Sie mit der Person, mit der Sie verheiratet sind oder in eingetragener Partnerschaft leben, einen gemeinsamen Haushalt, oder leistet sie Ihnen regelmässig und persönlich Beistand, darf sie Sie von Gesetzes wegen vertreten, sofern kein Vorsorgeauftrag und keine entsprechende Beistandschaft besteht. Das gilt für den üblichen Unterhalt, die ordentliche Verwaltung von Einkommen und Vermögen und nötigenfalls die Post (ZGB Art. 374). Für ausserordentliche Vermögensgeschäfte braucht es die Zustimmung der Erwachsenenschutzbehörde (KESB). Für Paare ohne Trauschein gilt dieses Vertretungsrecht nicht; reicht die eigene Vorsorge nicht, ordnet die KESB wenn nötig eine Beistandschaft an (ZGB Art. 389, 390).', du: 'Führst du mit der Person, mit der du verheiratet bist oder in eingetragener Partnerschaft lebst, einen gemeinsamen Haushalt, oder leistet sie dir regelmässig und persönlich Beistand, darf sie dich von Gesetzes wegen vertreten, sofern kein Vorsorgeauftrag und keine entsprechende Beistandschaft besteht. Das gilt für den üblichen Unterhalt, die ordentliche Verwaltung von Einkommen und Vermögen und nötigenfalls die Post (ZGB Art. 374). Für ausserordentliche Vermögensgeschäfte braucht es die Zustimmung der Erwachsenenschutzbehörde (KESB). Für Paare ohne Trauschein gilt dieses Vertretungsrecht nicht; reicht die eigene Vorsorge nicht, ordnet die KESB wenn nötig eine Beistandschaft an (ZGB Art. 389, 390).' },
     step2Title: '2 · Der Vorsorgeauftrag — wer für mich handelt',
     step2Text: { sie: 'Mit einem Vorsorgeauftrag beauftragen Sie eine Person oder Organisation, im Fall Ihrer Urteilsunfähigkeit für Sie zu sorgen: für Ihre Person, Ihr Vermögen oder die Vertretung im Rechtsverkehr; Sie können Weisungen geben und eine Ersatzperson bestimmen (ZGB Art. 360). Errichten können Sie ihn, solange Sie handlungsfähig sind: ganz von Hand geschrieben, datiert und unterzeichnet — von Anfang bis Ende — oder öffentlich beurkundet (ZGB Art. 361). Widerrufen können Sie ihn jederzeit in einer dieser Formen oder indem Sie die Urkunde vernichten (ZGB Art. 362).', du: 'Mit einem Vorsorgeauftrag beauftragst du eine Person oder Organisation, im Fall deiner Urteilsunfähigkeit für dich zu sorgen: für deine Person, dein Vermögen oder die Vertretung im Rechtsverkehr; du kannst Weisungen geben und eine Ersatzperson bestimmen (ZGB Art. 360). Errichten kannst du ihn, solange du handlungsfähig bist: ganz von Hand geschrieben, datiert und unterzeichnet — von Anfang bis Ende — oder öffentlich beurkundet (ZGB Art. 361). Widerrufen kannst du ihn jederzeit in einer dieser Formen oder indem du die Urkunde vernichtest (ZGB Art. 362).' },
     step2Warn: 'Ein am Computer geschriebener und nur unterschriebener Vorsorgeauftrag erfüllt die Form nicht — nur ganz von Hand oder öffentlich beurkundet (ZGB Art. 361).',
@@ -970,7 +985,7 @@ export default {
     step3Title: '3 · Auffindbar machen',
     step3Text: { sie: 'Auf Antrag trägt das Zivilstandsamt ein, dass Sie einen Vorsorgeauftrag errichtet haben und wo er liegt (ZGB Art. 361 Abs. 3). Wird eine Person urteilsunfähig, erkundigt sich die KESB dort, prüft den Auftrag und händigt der beauftragten Person eine Urkunde über ihre Befugnisse aus (ZGB Art. 363). Sagen Sie der beauftragten Person, dass es den Auftrag gibt und wo er liegt.', du: 'Auf Antrag trägt das Zivilstandsamt ein, dass du einen Vorsorgeauftrag errichtet hast und wo er liegt (ZGB Art. 361 Abs. 3). Wird eine Person urteilsunfähig, erkundigt sich die KESB dort, prüft den Auftrag und händigt der beauftragten Person eine Urkunde über ihre Befugnisse aus (ZGB Art. 363). Sag der beauftragten Person, dass es den Auftrag gibt und wo er liegt.' },
     step4Title: '4 · Die Patientenverfügung — was medizinisch gelten soll',
-    step4Text: { sie: 'In einer Patientenverfügung legen Sie fest, welchen medizinischen Massnahmen Sie zustimmen oder nicht, und Sie können eine Person bestimmen, die dann mit der Ärztin oder dem Arzt entscheidet (ZGB Art. 370). Sie muss schriftlich, datiert und unterzeichnet sein — von Hand schreiben müssen Sie sie nicht, eine Vorlage genügt (ZGB Art. 371). Die Ärztin oder der Arzt folgt ihr, ausser sie verstösst gegen das Gesetz oder es bestehen begründete Zweifel an Ihrem Willen (ZGB Art. 372). Ohne Patientenverfügung entscheiden der Reihe nach bestimmte nahe Personen — auch wer mit Ihnen im gemeinsamen Haushalt lebt und Ihnen regelmässig und persönlich beisteht (ZGB Art. 378).', du: 'In einer Patientenverfügung legst du fest, welchen medizinischen Massnahmen du zustimmst oder nicht, und du kannst eine Person bestimmen, die dann mit der Ärztin oder dem Arzt entscheidet (ZGB Art. 370). Sie muss schriftlich, datiert und unterzeichnet sein — von Hand schreiben musst du sie nicht, eine Vorlage genügt (ZGB Art. 371). Die Ärztin oder der Arzt folgt ihr, ausser sie verstösst gegen das Gesetz oder es bestehen begründete Zweifel an deinem Willen (ZGB Art. 372). Ohne Patientenverfügung entscheiden der Reihe nach bestimmte nahe Personen — auch wer mit dir im gemeinsamen Haushalt lebt und dir regelmässig und persönlich beisteht (ZGB Art. 378).' },
+    step4Text: { sie: 'In einer Patientenverfügung legen Sie fest, welchen medizinischen Massnahmen Sie zustimmen oder nicht, und Sie können eine Person bestimmen, die dann mit der Ärztin oder dem Arzt entscheidet (ZGB Art. 370). Sie muss schriftlich, datiert und unterzeichnet sein — von Hand schreiben müssen Sie sie nicht, eine Vorlage genügt (ZGB Art. 371). Die Ärztin oder der Arzt folgt ihr, ausser sie verstösst gegen das Gesetz oder es bestehen begründete Zweifel an Ihrem Willen (ZGB Art. 372). Fehlt eine Patientenverfügung oder sagt sie zu einer Frage nichts, entscheidet der Reihe nach: die in der Patientenverfügung oder im Vorsorgeauftrag bezeichnete Person, eine Beiständin oder ein Beistand mit Vertretungsrecht bei medizinischen Massnahmen, dann nahe Personen — auch wer mit Ihnen im gemeinsamen Haushalt lebt und Ihnen regelmässig und persönlich beisteht. Sie entscheiden nach Ihrem mutmasslichen Willen und Ihren Interessen (ZGB Art. 378).', du: 'In einer Patientenverfügung legst du fest, welchen medizinischen Massnahmen du zustimmst oder nicht, und du kannst eine Person bestimmen, die dann mit der Ärztin oder dem Arzt entscheidet (ZGB Art. 370). Sie muss schriftlich, datiert und unterzeichnet sein — von Hand schreiben musst du sie nicht, eine Vorlage genügt (ZGB Art. 371). Die Ärztin oder der Arzt folgt ihr, ausser sie verstösst gegen das Gesetz oder es bestehen begründete Zweifel an deinem Willen (ZGB Art. 372). Fehlt eine Patientenverfügung oder sagt sie zu einer Frage nichts, entscheidet der Reihe nach: die in der Patientenverfügung oder im Vorsorgeauftrag bezeichnete Person, eine Beiständin oder ein Beistand mit Vertretungsrecht bei medizinischen Massnahmen, dann nahe Personen — auch wer mit dir im gemeinsamen Haushalt lebt und dir regelmässig und persönlich beisteht. Sie entscheiden nach deinem mutmasslichen Willen und deinen Interessen (ZGB Art. 378).' },
     step5Title: '5 · Hinweis auf die Karte, Kopie ins Dossier',
     step5Text: { sie: 'Dass es eine Patientenverfügung gibt und wo sie liegt, können Sie auf Ihrer Krankenkassen-Versichertenkarte eintragen lassen (ZGB Art. 371 Abs. 2; VVK Art. 6); wer solche Einträge vornehmen kann, ist dazu aber nicht verpflichtet. Ein Hinweis im Notfallpass und bei Ihren Nächsten hilft zusätzlich. Halten Sie in Maloja fest, dass beide Dokumente bestehen und wo sie liegen.', du: 'Dass es eine Patientenverfügung gibt und wo sie liegt, kannst du auf deiner Krankenkassen-Versichertenkarte eintragen lassen (ZGB Art. 371 Abs. 2; VVK Art. 6); wer solche Einträge vornehmen kann, ist dazu aber nicht verpflichtet. Ein Hinweis im Notfallpass und bei deinen Nächsten hilft zusätzlich. Halte in Maloja fest, dass beide Dokumente bestehen und wo sie liegen.' },
     step5LinkNotfall: 'Im Notfall-Kapitel festhalten',
@@ -2615,7 +2630,6 @@ export default {
       short: 'Sanadad',
       description: 'Sanadad, urgenza e disposiziuns',
       // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
-      intro: { sie: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas.", du: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas." },
       // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
       emptyState: { sie: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang.", du: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang." },
       emptyStateHint: "Contact d'urgenza e gruppa da sang — las infurmaziuns las pli impurtantas.",
@@ -3851,7 +3865,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Note: { sie: 'Betg segir tge? Telefonai 144 — els As collieschan vinavant.', du: 'Betg segir tge? Telefonescha 144 — els ta collieschan vinavant.' },
     step2Title: 'Tge che ti dis',
-    step2Text: 'Resta calm. Di el en questa successiun:',
+    step2Text: 'Di el en questa successiun:',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     sayWhere: { sie: 'Nua essas Vus?', du: 'Nua es ti?' },
     sayWhereEmpty: 'di nua che ti es',
@@ -3868,7 +3882,7 @@ export default {
     locAccuracy: 'Precisiun ±{m} m',
     locMapLink: 'Avrir en l’app da cartas',
     locNotStored: 'Vegn tratg mo ussa e memorisà ennagliur.',
-    loc_denied: 'Access a la posiziun refusà — quai è ok. Di simplamain nua che ti es.',
+    loc_denied: 'Access a la posiziun refusà — quai è ok. Di nua che ti es.',
     loc_error: 'La posiziun na sa lascha betg determinar. Di simplamain nua che ti es.',
     loc_unsupported: 'Quest apparat na po betg determinar la posiziun qua. Di simplamain nua che ti es.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -4338,6 +4352,10 @@ export default {
       alleVersicherungenSub: "Premias, franschisa, regiun, RIP, termin da midada",
       ablageAusbildung: "Deponer ils diploms",
       ablageDokumente: "Deponer documents",
+      // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+      gruppeKrankenkasse: 'Krankenkasse & Leistungen',
+      // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+      gruppePassiert: 'Wenn es passiert',
       steuerfrist: "Termin & decleraziun da taglia",
       steuerfristSub: "Chapitel Autoritads · termin, numer da taglia, decleraziuns avertas",
       // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf — rm ungeprüft.
@@ -4536,7 +4554,6 @@ export default {
     title: 'Vossa valisch da sanadad',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     subtitle: { sie: 'Voss temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.', du: 'Tes temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.' },
-    back: 'Enavos a la survista',
     inVorbereitung: 'En preparaziun',
     inVorbereitungHint: 'Prest en la valisch',
     weitereWege: 'Auters vias:',
@@ -4587,6 +4604,8 @@ export default {
     portemonnaieSub: 'Per stampar, per prender cun sai',
     portemonnaieLeer: 'L’emprim endatar las indicaziuns sutvart',
     vorsorgeTitel: 'Prevenziun',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    pvSchonFrage: 'Schon eine Patientenverfügung, zum Beispiel auf Papier?',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     zurueckVorsorge: 'Turnar a la prevenziun',
     vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
@@ -6165,7 +6184,7 @@ export default {
     impfungenDetail1: 'Vaccinaziuns da basa (uffants): difteria, tetanus, tuss chanina, poliomielitis, Hib, hepatitis B, pneumococs, ravglia-uraglias-rubeola, meningococs e varikellas.',
     impfungenDetail2: 'Giuvenils: HPV (11–14 onns, recuperaziun fin 26) e revaccinaziun dTpa. Creschids: revaccinaziuns regularas cunter difteria/tetanus (tuss chanina ina giada cun 25).',
     impfungenDetail3: 'L’assicuranza da basa cuvra las vaccinaziuns recumandadas; la franschisa e la participaziun usitadas valan (excepziun: HPV en programs chantunals).',
-    impfungenDetailQuelle: 'Funtauna: plan da vaccinaziun svizzer 2025 (UFSP / CFV).',
+    impfungenDetailQuelle: 'Funtauna: plan da vaccinaziun svizzer (UFSP / CFV).',
     checkup: 'Check-up general',
     checkupNote: 'Controllas da sanadad da rutina senza sintoms na èn betg cupridas.',
     augenarzt: "Oculist (rutina)",
@@ -6212,8 +6231,8 @@ export default {
     ergo: 'Ergoterapia',
     ergoNote: 'Cupida cun ordinaziun medicinala.',
     psycho: 'Psicoterapia',
-    psychoNote: 'Dapi 2023 era tar psicoterapeuts psicologics (model da prescripziun).',
-    psychoModell: 'Model da prescripziun dapi 2023',
+    psychoNote: 'Dapi 2022 era tar psicoterapeuts psicologics (model da prescripziun).',
+    psychoModell: 'Model da prescripziun dapi 2022',
     chiropraktik: 'Chiropratica',
     chiropraktikNote: 'Accessibla directamain senza transferiment.',
     akupunktur: 'Acupunctura',
@@ -6247,6 +6266,14 @@ export default {
     spitexNote: 'Prestaziuns da tgira cun ordinaziun medicinala.',
     franchiseTitle: 'Franschisa & parteniment',
     franchiseExplain: { sie: 'La franschisa è Voss parteniment annual. Suenter pajais Vus 10% dals custs (max. CHF 700/onn).', du: 'La franschisa è Tes parteniment annual. Suenter pajas Ti 10% dals custs (max. CHF 700/onn).' },
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    personLabel: 'Versicherte Person',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    personErwachsen: 'Erwachsen (ab dem Jahr, in dem man 19 wird)',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    personKind: 'Kind (bis Ende des Jahres, in dem es 18 wird)',
+    // TODO(rm): provisorisch — deutsch, Kapitel 7 (10.11.2026)
+    franchiseUnbekannt: { sie: 'Die gespeicherte Franchise ({wert}) passt zu keiner Stufe. Bitte wählen Sie Ihre Franchise.', du: 'Die gespeicherte Franchise ({wert}) passt zu keiner Stufe. Bitte wähl deine Franchise.' },
     franchiseLabel: { sie: 'Vossa franschisa', du: 'Tia franschisa' },
     franchiseOptimizerLink: 'Vala ina autra franchisa la paina? Avrir l’optimader da franchisa',
     costsLabel: 'Custs da medi fin uss quest onn',
@@ -6258,7 +6285,7 @@ export default {
     eigenanteil: { sie: 'Vossa part', du: 'Tia part' },
     selbstbehaltDone: 'Parteniment exhaustà — dapi ussa paja la cassa 100%.',
     statusInFranchise: { sie: 'Anc en la franschisa: fin a CHF {offen} dapli pajais Vus tut sez — silsuenter cumenza il parteniment da 10%.', du: 'Anc en la franschisa: fin a CHF {offen} dapli pajas Ti tut sez — silsuenter cumenza il parteniment da 10%.' },
-    statusInSelbstbehalt: { sie: 'Franschisa cuntanschida. Dapi ussa pajais Vus 10% — anc CHF {sbOffen} fin al maximum dal parteniment, lura paja la cassa tut.', du: 'Franschisa cuntanschida. Dapi ussa pajas Ti 10% — anc CHF {sbOffen} fin al maximum dal parteniment, lura paja la cassa tut.' },
+    statusInSelbstbehalt: { sie: 'Franschisa cuntanschida. Dapi ussa pajais Vus 10% — anc CHF {sbOffen} fin al maximum dal parteniment.', du: 'Franschisa cuntanschida. Dapi ussa pajas Ti 10% — anc CHF {sbOffen} fin al maximum dal parteniment.' },
     verbrauchSaved: 'Memorisà per {year}.',
     belegSection: 'Registrar in quint',
     belegHint: { sie: 'Mintga quint pajà quinta l\'emprim a Vossa franschisa, lura a Voss parteniment.', du: 'Mintga quint pajà quinta l\'emprim a Tia franschisa, lura a Tes parteniment.' },
@@ -6966,8 +6993,7 @@ export default {
       entschaedigung_angemessen: 'La persuna incumbensada survegn in’indemnisaziun adequata.',
       ersetzt: 'Questa incumbensa preventiva remplazza tut las pli veglias.',
       ergaenzt: 'Questa incumbensa preventiva cumplettescha mia incumbensa dals {datum}.',
-      ortDatum: 'Lieu, data',
-      unterschrift: 'Suttascripziun',
+      handschrift: { sie: 'Ort, Datum und Unterschrift setzen Sie von Hand auf Ihre Abschrift, nicht auf dieses Blatt.', du: 'Ort, Datum und Unterschrift setzt du von Hand auf deine Abschrift, nicht auf dieses Blatt.' },
       rolle_beauftragt: 'Persuna incumbensada',
       rolle_ersatz: 'Persuna substituta',
     },
