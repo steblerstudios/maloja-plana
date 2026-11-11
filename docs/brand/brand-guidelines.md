@@ -301,6 +301,17 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   - Das **Partner-Haus ist geteilt** (E): ein feiner Strich nach den Netto-Einnahmen, darunter «Sie | Partner/in».
   - Nach Grösse: **gross** A–E, **mittel** A + B + C, **klein** A + B. Schrift im Bild nur gross, bei 256 px genau
     13 px (Regel H). Wächter: `drittelHausAusbau.test.js`.
+  **Mietbeiträge als Szene** (11.11.2026, Stebler Studios: «im Haus weiter füllen, gestrichelt, Behörden-Farbe» und
+  «Ja, so bauen»):
+  - Im Drittel-Haus steht der mögliche Beitrag **oben in der Füllung, schraffiert und gestrichelt in Zwetschge**
+    (Behörden). Er gilt immer als «bis zu», mit dem kantonalen Höchstbetrag, gross und mittel.
+  - Daneben das **Glas der IPV** (`Pegel`, `nurGlas`) für Einkommen gegen Grenze, nur wo die Grenze eine Zahl ist.
+    Dieselbe Frage bekommt dieselbe Form, also kein neues Haus.
+  - Das **Schild «möglich»** steht nur, wenn das Einkommen unter der Grenze liegt. Es sagt nie «Anspruch».
+  - Darunter die **Kachelkarte** der 26 Kantone (Matrix §5, C3): gefüllt heisst Programm erfasst, leer heisst
+    unklar, nie «gibt es nicht».
+  - Eine Rechnung: `mietzinsEinschaetzung`. Kapitel Wohnen gross, Werkzeug «Mietzins» mittel. Wächter:
+    `wohnenMietzinsSzene.test.js`.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.
