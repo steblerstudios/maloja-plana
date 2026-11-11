@@ -1,0 +1,69 @@
+{
+  "_zweck": "Brand Book §7f (Formenlehre). Jedes Instrument der Kapitelzeile nennt Frage-Art, Form, Rechnung und Zuhause. Wächter: src/__tests__/instrumenteFormenlehre.test.js. Nur Doku + Test, nicht im App-Bündel.",
+  "formen": {
+    "teile": "teile-bild",
+    "anteil": "ring",
+    "vorrat": "gefaess",
+    "verbrauch": "balken-endstrich",
+    "lage": "barometer",
+    "termin": "kalenderblatt",
+    "dauer": "weg-marke",
+    "zusammensetzung": "gestapelter-balken",
+    "entscheid": "kreuz",
+    "richtung": "kompass",
+    "ort": "karte"
+  },
+  "bereichsbilder": {
+    "teile": ["netz-schild", "grundmauer", "akten"],
+    "anteil": ["drittel-haus"],
+    "lage": ["haeuserzeile"],
+    "vorrat": ["tank", "glas"]
+  },
+  "instrumente": {
+    "ausweis":      { "kapitel": "basis",          "frage": "termin",          "form": "kalenderblatt",      "rechnung": "src/utils/fristAbstand.js#fristAbstand",            "zuhause": null },
+    "referenz":     { "kapitel": "basis",          "frage": "dauer",           "form": "weg-marke",          "rechnung": "src/utils/referenzalterAbstand.js#bisReferenzalter", "zuhause": null },
+    "grundordnung": { "kapitel": "basis",          "frage": "teile",           "form": "grundmauer",         "rechnung": "src/utils/vollstaendigkeit.js#grundordnung",         "zuhause": null },
+    "wohnkosten":   { "kapitel": "wohnen",         "frage": "anteil",          "form": "drittel-haus",       "rechnung": "src/data/wohnkosten.js#wohnkostenRechnung",          "zuhause": "wohnen" },
+    "miete":        { "kapitel": "wohnen",         "frage": "lage",            "form": "haeuserzeile",       "rechnung": "src/components/RegionalBarometer.jsx#lageZurRegion", "zuhause": "wohnen" },
+    "lohn":         { "kapitel": "ausbildung",     "frage": "lage",            "form": "barometer",          "rechnung": "src/components/LohnEinordnung.jsx#lohnLage",         "zuhause": "ausbildung" },
+    "dienst":       { "kapitel": "ausbildung",     "frage": "dauer",           "form": "jahresringe",        "rechnung": "src/utils/arbeitsverhaeltnis.js#dienstLage",         "zuhause": null },
+    "ferien":       { "kapitel": "ausbildung",     "frage": "verbrauch",       "form": "sonne",              "rechnung": null,                                                 "zuhause": null },
+    "pensum":       { "kapitel": "ausbildung",     "frage": "anteil",          "form": "uhr",                "rechnung": null,                                                 "zuhause": null },
+    "steuer":       { "kapitel": "finanzen",       "frage": "zusammensetzung", "form": "saeule",             "rechnung": "src/data/kantonaleSteuerdaten.js#steuernFuerProfil", "zuhause": null },
+    "tank":         { "kapitel": "finanzen",       "frage": "vorrat",          "form": "tank",               "rechnung": "src/data/reserveTank.js#reserveTankState",           "zuhause": "finanzen" },
+    "schild":       { "kapitel": "versicherungen", "frage": "teile",           "form": "netz-schild",        "rechnung": "src/data/netzSchild.js#netzSchildTeile",             "zuhause": "versicherungen" },
+    "tacho":        { "kapitel": "versicherungen", "frage": "entscheid",       "form": "mini-kreuz",         "rechnung": "src/data/franchiseTacho.js#franchiseVorschlag",      "zuhause": "versicherungen" },
+    "steuerfrist":  { "kapitel": "behoerden",      "frage": "termin",          "form": "kalenderblatt",      "rechnung": "src/utils/steuerfrist.js#steuerfristVorbei",         "zuhause": "behoerden" },
+    "gaenge":       { "kapitel": "behoerden",      "frage": "teile",           "form": "akten",              "rechnung": "src/utils/behoerdenGaenge.js#gangErledigt",          "zuhause": null },
+    "bereit":       { "kapitel": "notfall",        "frage": "anteil",          "form": "ring",               "rechnung": "src/components/NotfallImKapitel.jsx#bereitschaft",   "zuhause": "notfall" },
+    "franchise":    { "kapitel": "notfall",        "frage": "verbrauch",       "form": "balken-endstrich",   "rechnung": "src/data/kvgLeistungen.js#berechneFranchise",        "zuhause": null }
+  },
+  "_offen": "Sperrklinke: diese Listen dürfen nur kürzer werden. Wer eine Abweichung behebt, streicht sie hier; der Wächter wird rot, wenn eine neue dazukommt.",
+  "offen": {
+    "formAbweichung": {
+      "dienst": "Dauer als Jahresringe statt Weg mit Marke (Matrix §6 Regel 2)",
+      "ferien": "Verbrauch als Sonne (Symbol, nicht Mass)",
+      "pensum": "Anteil als Uhr statt Ring",
+      "steuer": "B-F4: Säule trägt zwei Bedeutungen; Steuer-Bild in Arbeit (Skizzen A–C, 11.11.2026)",
+      "tacho": "B-F5: Mini-Kreuz ohne Daten; Spiegel soll ein Barometer «Ihre Kosten» werden"
+    },
+    "ohneRechnung": {
+      "ferien": "inline in InstrumentePanel.jsx (tageZahl)",
+      "pensum": "inline in InstrumentePanel.jsx (Stunden ÷ LSE-Vollzeit)"
+    },
+    "zuhauseAnderesBild": {
+      "bereit": "B-F1: Kachel Ring, Kapitel Notfall Balken"
+    },
+    "ohneZuhause": {
+      "ausweis": "Zuhause Basis fehlt (Matrix §4c)",
+      "referenz": "Zuhause Basis fehlt",
+      "grundordnung": "Zuhause Basis fehlt",
+      "dienst": "im Kapitel nur die 64-px-Kachel",
+      "ferien": "im Kapitel nur die 64-px-Kachel",
+      "pensum": "im Kapitel nur die 64-px-Kachel",
+      "steuer": "Kapitel Finanzen: nur Text-Karte (Steuer-Bild in Arbeit)",
+      "gaenge": "Zuhause Behörden-Gänge fehlt",
+      "franchise": "Franchise-Stand ohne Zuhause"
+    }
+  }
+}
