@@ -227,7 +227,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '8px' } },
         React.createElement(RegionalBarometer, {
           palette, t, comparison: rentComparison,
-          userValue: budget.expenses.rent || null, kind: 'rent',
+          userValue: budget.expenses.rent || null, kind: 'rent', form: 'haeuser',
           fillColor: bereichFillColor('wohnen', isDarkMode),
           // Drittel-Faustregel als Betrag — aus der EINEN Rechnung wie Kapitel Wohnen und Mietzins
           // (data/wohnkosten.js, seit 11.11.2026): alle Wohnkosten ÷ eigene Einnahmen, mit Partner/in
