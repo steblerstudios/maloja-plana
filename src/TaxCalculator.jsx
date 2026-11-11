@@ -10,6 +10,8 @@ import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS, WEITERBILDUNG_MAX 
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, tarifvergleichGrund, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
 import { SAEULE3A_MAX, saeule3aGrenzePerson } from './data/saeule3a.js';
 import { istSelbstaendig } from './utils/anstellung.js';
+import { jahreslohnAusProfil } from './utils/jahreslohnAusProfil.js';
+import { bvgKoordinationsabzug } from './data/lohnAbzuege.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
@@ -83,6 +85,27 @@ export const steuerAnsageText = (t, teile) => teile.length
   ? t('tax.ansageHinweis', { teile: teile.map((k) => t(TEIL_TEXT[k])).join(', ') })
   : t('tax.ansageZahlen');
 
+// Säule-3a-Grenze einer Person im Steuer-Rechner (BVV 3 Art. 7 Abs. 1) — als eigene Funktion, damit sie mit
+// echten Profilen getestet werden kann (saeule3aGrenzePerson.test.js).
+export const steuer3aGrenzePerson = (data, steuerjahr) => {
+  const selbstaendig = istSelbstaendig(data?.finanzen);
+  // Angestellte unter der BVG-Eintrittsschwelle gehören keiner Pensionskasse an (BVG Art. 2 Abs. 1): für sie gilt
+  // ebenfalls 20 % des Erwerbseinkommens (BVV 3 Art. 7 Abs. 1 Bst. b), nicht der kleine Betrag (Fachprüfung
+  // 11.11.2026). Nur mit bekanntem Bruttolohn; ohne ihn bleibt es beim kleinen Betrag. Der Nebenerwerb zählt hier
+  // nicht mit — die Grenze fällt damit eher tiefer aus, nie zu hoch. Eine eingetragene Kasse geht immer vor.
+  const lohnAngestellt = selbstaendig ? 0 : Number(jahreslohnAusProfil(data?.finanzen)) || 0;
+  const unterBvgSchwelle = lohnAngestellt > 0 && !bvgKoordinationsabzug(lohnAngestellt, steuerjahr).versichert;
+  const hatPensionskasse = !!data?.versicherungen?.bvgInsurer || (!selbstaendig && !unterBvgSchwelle);
+  return saeule3aGrenzePerson({
+    steuerjahr,
+    hatPensionskasse,
+    erwerbseinkommen: hatPensionskasse ? undefined : (unterBvgSchwelle ? lohnAngestellt : undefined),
+    // Ohne Einkommen → der grosse Betrag als oberste Grenze. Bewusst nicht der Hauptlohn: bei Selbständigen
+    // zählt das ganze Erwerbseinkommen (auch Nebenerwerb), und ×13 passt dort nicht (Fachprüfung 11.11.2026).
+    // Mit Einkommen rechnet der Vorsorge-Rechner, wo es eingetragen wird.
+  }) ?? SAEULE3A_MAX;
+};
+
 export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, vorlaeufig }) => {
   const isMobile = useIsMobile();
   const hh = getHouseholdInfo(data);
@@ -94,15 +117,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
   // selbständig heisst «Selbstständig» oder «Freiberuflich», eine eingetragene Pensionskasse gibt den kleinen Betrag.
   // Das Jahr hängt am Tarif dieses Rechners (STEUER_DATA_VERSION), nicht am Kalender: der Höchstabzug
   // wechselt mit, wenn die Werte 2027 eingesetzt werden, und nicht schon am 1.1.
-  const selbstaendig = istSelbstaendig(data.finanzen);
-  const hatPensionskasse = !selbstaendig || !!data.versicherungen?.bvgInsurer;
-  const max3aPerson = saeule3aGrenzePerson({
-    steuerjahr: Number(STEUER_DATA_VERSION),
-    hatPensionskasse,
-    // Ohne Einkommen → der grosse Betrag als oberste Grenze. Bewusst nicht der Hauptlohn: bei Selbständigen
-    // zählt das ganze Erwerbseinkommen (auch Nebenerwerb), und ×13 passt dort nicht (Fachprüfung 11.11.2026).
-    // Mit Einkommen rechnet der Vorsorge-Rechner, wo es eingetragen wird.
-  }) ?? SAEULE3A_MAX;
+  const max3aPerson = steuer3aGrenzePerson(data, Number(STEUER_DATA_VERSION));
   const max3a = max3aPerson * (giltAlsVerheiratet(data.basis?.maritalStatus) ? 2 : 1);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0 },
