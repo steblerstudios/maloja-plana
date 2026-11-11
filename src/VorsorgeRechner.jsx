@@ -18,7 +18,8 @@ import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './util
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 import { knopfStil, linkStil } from './components/PrimaryButton.jsx';
 import { nettoZuBruttoRichtwert, fruehesterVorbezugMonate } from './data/lohnAbzuege.js';
-import { SAEULE3A_HOECHSTABZUG } from './data/saeule3a.js';
+import { SAEULE3A_HOECHSTABZUG, saeule3aGrenzePerson } from './data/saeule3a.js';
+import { istSelbstaendig } from './utils/anstellung.js';
 import { ahvBezugAlterFuer, ahvKapitalImBild, fruehesterAhvBezugImBildMonate } from './utils/ahvZukunftsbild.js';
 import { ikHochrechnen, kuenftigeIkJahre } from './utils/ikHochrechnung.js';
 import { lohnVergleichSperre } from './data/lohnEinordnung.js';
@@ -273,11 +274,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Säule 3a: höchstens der jährliche Höchstabzug (BVV 3 Art. 7 Abs. 1) — mit Pensionskasse der kleine,
   // ohne der grosse, dort zudem höchstens 20 % des Erwerbseinkommens (Kapitel 4). Selbständige sind nicht
   // obligatorisch BVG-versichert: dort zählt nur eine eingetragene Kasse oder ein Guthaben.
-  const selbstaendig = data.finanzen?.employmentType === 'freelance';
+  const selbstaendig = istSelbstaendig(data.finanzen);
   const hatPensionskasse = (!selbstaendig && !!(bvgResult && bvgResult.versichert)) || !!data.versicherungen?.bvgInsurer || Number(bvgGuthaben) > 0;
-  const saeule3aGrenze = hatPensionskasse
-    ? SAEULE3A_HOECHSTABZUG.mitPensionskasse
-    : (parsedEinkommen > 0 ? Math.min(SAEULE3A_HOECHSTABZUG.ohnePensionskasse, Math.round(parsedEinkommen * SAEULE3A_HOECHSTABZUG.satzOhnePensionskasse)) : SAEULE3A_HOECHSTABZUG.ohnePensionskasse);
+  const saeule3aGrenze = saeule3aGrenzePerson({ steuerjahr: SAEULE3A_HOECHSTABZUG.steuerjahr, hatPensionskasse, erwerbseinkommen: parsedEinkommen });
   const saeule3aJahr = Math.min(saeule3aAnnual, saeule3aGrenze);
   const saeule3aGekappt = saeule3aAnnual > saeule3aGrenze;
 

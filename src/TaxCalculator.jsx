@@ -8,7 +8,9 @@ import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, tarifvergleichGrund, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
-import { SAEULE3A_MAX, saeule3aMaximum, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR } from './data/saeule3a.js';
+import { SAEULE3A_MAX, saeule3aGrenzePerson } from './data/saeule3a.js';
+import { istSelbstaendig } from './utils/anstellung.js';
+import { jahreslohnAusProfil } from './utils/jahreslohnAusProfil.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { ErklaerseiteLink, VerstehenImWerkzeug } from './components/ErklaerseiteLink.jsx';
@@ -89,8 +91,17 @@ export const TaxCalculator = ({ palette, t, data, onSave, onImport, onNavigate, 
   // (BVV 3 Art. 7 Abs. 1, pro Person; Selbständige ohne Pensionskasse bis 36 288; im Profil Verheiratete
   // dürfen den Betrag beider eintragen) und Weiterbildung (DBG Art. 33 Abs. 1 Bst. j: 13 000). Sonst
   // `hilfe`: ein Richtwert für die Eingabe, ausdrücklich keine Gesetzesgrenze (vorher «Max»).
-  const selbstaendig = data.finanzen?.employmentType === 'selfEmployed';
-  const max3aPerson = selbstaendig ? SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[2026].ohnePensionskasse : (saeule3aMaximum(2026) ?? SAEULE3A_MAX);
+  // Vortor 10.11.2026: eine Regel mit dem Vorsorge-Rechner (`saeule3aGrenzePerson`, inkl. 20 % ohne 2. Säule);
+  // selbständig heisst «Selbstständig» oder «Freiberuflich», eine eingetragene Pensionskasse gibt den kleinen Betrag.
+  // Das Jahr hängt am Tarif dieses Rechners (STEUER_DATA_VERSION), nicht am Kalender: der Höchstabzug
+  // wechselt mit, wenn die Werte 2027 eingesetzt werden, und nicht schon am 1.1.
+  const selbstaendig = istSelbstaendig(data.finanzen);
+  const hatPensionskasse = !selbstaendig || !!data.versicherungen?.bvgInsurer;
+  const max3aPerson = saeule3aGrenzePerson({
+    steuerjahr: Number(STEUER_DATA_VERSION),
+    hatPensionskasse,
+    erwerbseinkommen: Number(jahreslohnAusProfil(data.finanzen)) || 0,
+  }) ?? SAEULE3A_MAX;
   const max3a = max3aPerson * (giltAlsVerheiratet(data.basis?.maritalStatus) ? 2 : 1);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0 },
