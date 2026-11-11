@@ -29,24 +29,6 @@ export const mietVorbehalte = (t, comparison, { imKapitel } = {}) => {
 // Skala wie im grossen Barometer: etwas Luft nach oben, auf 50 gerundet.
 const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, national, userValue > 0 ? userValue : 0) * 1.15) / 50) * 50 || 50;
 
-// Das Barometer klein (64 px, Brand Book §7b «Spiegel Startseite»): nur das Bild — Füllung = eigener
-// Wert, Punkt = Region, Strich = Schweizer Schnitt. Keine Wörter, die Zahl steht daneben.
-export const RegionalBarometerKlein = ({ palette, comparison, userValue, fillColor }) => {
-  if (!comparison) return null;
-  const h = React.createElement;
-  const { regional, national } = comparison;
-  const max = skala(regional, national, userValue);
-  const x = (v) => 2 + Math.max(0, Math.min(1, v / max)) * 56;
-  const lage = lageZurRegion(userValue, regional);
-  const punkt = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-barometer': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('rect', { x: 2, y: 11, width: 56, height: 18, rx: 6, fill: palette.border }),
-    userValue > 0 && h('rect', { x: 2, y: 11, width: Math.max(12, x(userValue) - 2), height: 18, rx: 6, fill: fillColor || palette.sky }),
-    h('line', { x1: x(national), y1: 4, x2: x(national), y2: 36, stroke: palette.text, strokeWidth: 2.5 }),
-    h('circle', { cx: x(regional), cy: 20, r: 7, fill: punkt, stroke: palette.surface, strokeWidth: 2 }),
-  );
-};
-
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
 //   • Punkt    = Regions-Durchschnitt
@@ -75,7 +57,12 @@ export const RegionalBarometerKlein = ({ palette, comparison, userValue, fillCol
 // `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Stebler Studios 25.10.2026 «Barometer
 // ruhiger»). Ohne die strukturelle Erklärung, und der Zimmer-Hinweis zeigt auf das Feld unten im
 // Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {
+// `form` (optional, 11.11.2026, Stebler Studios «A und B kombiniert»): 'haeuser' zeichnet dieselben Marken
+// als Häuserzeile — Ihr Haus gefüllt (= Füllung), Haus der Region mit farbigem Dach (= Punkt), Schweiz
+// gestrichelt (= Strich), das Drittel als Linie quer über die Strasse mit «!» (= Schwelle). Höhe = Betrag.
+// Nur für die Miete (Wohnen); Lohn und Prämie bleiben Balken. Texte, Vorlesetext, Farben und Rechnung
+// sind dieselben — nur das Bild wechselt. `maxBreite`: Instrument-Grösse (Brand Book §7b), Standard mittel.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year, roomKey } = comparison;
   const ns = 'po.regionalCompare.';
@@ -161,6 +148,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', fontSize: text.sm },
     }, t(k + 'title')),
 
+    form === 'haeuser' ? haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite }) :
     // Balken: Füllung (eigener Wert) + Punkt (Region) + Strich (Schweizer Schnitt)
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
@@ -230,11 +218,11 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // Strich verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
       // liest man den Strich leicht als „meinen Wert" statt als Referenz.
       React.createElement('span', { style: { whiteSpace: 'nowrap' } },
-        React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }),
+        React.createElement(LegendenMarke, { form: form === 'haeuser' ? 'hausStrich' : 'strich', color: form === 'haeuser' ? palette.mid : palette.text, palette }),
         t(ns + 'nationalVal', { amount: zahl(national) })),
       // Punkt in der Grafik-Farbe des Punkts, Label in der lesbaren Deep-Variante.
       React.createElement('span', { style: { color: dotTextColor, whiteSpace: 'nowrap' } },
-        React.createElement(LegendenMarke, { form: 'punkt', color: dotColor, palette }),
+        React.createElement(LegendenMarke, { form: form === 'haeuser' ? 'hausDach' : 'punkt', color: dotColor, palette }),
         t(ns + 'regionalVal', { amount: zahl(regional) })),
     ),
     hasUser && React.createElement('div', {
@@ -242,7 +230,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     },
       // Füllung in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
       // klar ist: die FÜLLUNG ist dein Wert, der Strich ist der Schweizer Schnitt.
-      React.createElement(LegendenMarke, { form: 'fuellung', color: barFill, palette }),
+      React.createElement(LegendenMarke, { form: form === 'haeuser' ? 'haus' : 'fuellung', color: barFill, palette }),
       userText
     ),
 
@@ -289,6 +277,85 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },
     }, renderSource(t(k + 'source', { year }), null, t)),
+  );
+};
+
+
+// Häuserzeile (Wohnen): drei Häuser auf einer Strasse, Höhe = Betrag auf derselben Skala wie der Balken.
+// Rein Bild — die Aussage steht im aria-Label des Rahmens und in den Zeilen darunter.
+const HAUS_B = 28;
+const HAUS_X = { sie: 6, region: 44, schweiz: 82 };
+const BODEN = 84;
+const HOEHE = 58;
+const DACH = 12;
+const STRICH = { vectorEffect: 'non-scaling-stroke' };
+// Ein Haus: Körper ab `y` bis zum Boden, Dach darüber.
+const hausForm = (x, y, koerper, dach) => React.createElement('g', null,
+  React.createElement('rect', { x, y, width: HAUS_B, height: BODEN - y, ...koerper, ...STRICH }),
+  React.createElement('path', { d: 'M' + (x - 3) + ' ' + y + 'L' + (x + HAUS_B / 2) + ' ' + (y - DACH) + 'L' + (x + HAUS_B + 3) + ' ' + y + 'Z', ...dach, ...STRICH }),
+);
+function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite }) {
+  const h = React.createElement;
+  const oben = (v) => BODEN - Math.max(4, (pct(v) / 100) * HOEHE);
+  const strich = STRICH;
+  const haus = (x, v, koerper, dach) => hausForm(x, oben(v), koerper, dach);
+  const linieY = hasThreshold ? BODEN - (pct(thresholdValue) / 100) * HOEHE : null;
+  const schwelleFarbe = thresholdBreached ? palette.roseDeep : palette.text;
+  return h('div', { role: 'img', 'aria-label': ariaLabel, 'data-form': 'haeuser', style: { marginBottom: space.sm + 'px' } },
+    h('svg', { viewBox: '0 0 132 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', style: { display: 'block', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', height: 'auto', overflow: 'visible' } },
+      // Schweiz: gestrichelt, neutral (= Strich)
+      haus(HAUS_X.schweiz, national, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
+      // Region: Umriss, Dach in der Farbe des Punkts (= Ihre Lage zur Region)
+      haus(HAUS_X.region, regional, { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dotColor, stroke: palette.surface, strokeWidth: 1 }),
+      // Sie: gefüllt (= Füllung)
+      hasUser && haus(HAUS_X.sie, userValue, { fill: barFill }, { fill: barFill }),
+      h('line', { x1: 0, x2: 120, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...strich }),
+      // Drittel: Linie quer über die Strasse, «!» am Ende — rose nur, wenn Ihr Haus darüber ragt
+      hasThreshold && h('line', { 'data-teil': 'drittel-linie', x1: 0, x2: 120, y1: linieY, y2: linieY, stroke: schwelleFarbe, strokeWidth: 1.5, strokeDasharray: '5 3', ...strich }),
+      hasThreshold && h('text', { x: 128, y: linieY + 5, textAnchor: 'middle', fontSize: 15, fontWeight: 700, fill: schwelleFarbe }, '!'),
+    ),
+  );
+}
+
+// Die Häuserzeile klein (64 px, Brand Book §7b «Spiegel Startseite»; Stebler Studios 11.11.2026 «Kacheln 64
+// Wohnen»): dieselben drei Häuser wie im Kapitel — Ihr Haus gefüllt, die Region mit Dach in der Farbe Ihrer
+// Lage (lageZurRegion, wie der Punkt), die Schweiz gestrichelt. Ohne Drittel-Linie: das Drittel trägt die
+// Nachbarkachel (Drittel-Haus). Keine Wörter, die Zahl steht daneben. Ersetzt das kleine Barometer.
+export const HaeuserzeileKlein = ({ palette, comparison, userValue, fillColor }) => {
+  if (!comparison) return null;
+  const h = React.createElement;
+  const { regional, national } = comparison;
+  const max = skala(regional, national, userValue);
+  const oben = (v) => BODEN - Math.max(4, Math.min(1, v / max) * HOEHE);
+  const lage = lageZurRegion(userValue, regional);
+  const dach = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
+  const fuell = fillColor || palette.sky;
+  return h('svg', { viewBox: '2 12 114 74', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-klein', style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', overflow: 'visible' } },
+    hausForm(HAUS_X.schweiz, oben(national), { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
+    hausForm(HAUS_X.region, oben(regional), { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dach, stroke: palette.surface, strokeWidth: 1 }),
+    userValue > 0 && hausForm(HAUS_X.sie, oben(userValue), { fill: fuell }, { fill: fuell }),
+    h('line', { x1: 2, x2: 116, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
+  );
+};
+
+// Zwei Häuser (Budget, Gruppe «Wohnen», 11.11.2026, Stebler Studios «Richtwert als Häuserzeile»): Ihre
+// Wohnkosten gegen den BFS-Richtwert eines vergleichbaren Haushalts. Dieselben Marken wie die Häuserzeile:
+// Ihr Haus gefüllt (= Füllung), das Vergleichshaus mit Dach in der Farbe Ihrer Lage (gold = Sie darüber,
+// salbei = darunter, ±2 % neutral — wie der Punkt). Rein Bild (aria-hidden): Betrag und Richtwert stehen im
+// Text daneben. Keine neue Aussage — der Richtwert-Satz mit Quelle bleibt.
+export function lageFarbe(palette, wert, vergleich) {
+  if (!(wert > 0) || !(vergleich > 0)) return palette.mid;
+  return wert > vergleich * 1.02 ? palette.gold : wert < vergleich * 0.98 ? palette.sage : palette.mid;
+}
+export const HaeuserVergleich = ({ palette, sie, vergleich, fuell, maxBreite }) => {
+  if (!(sie > 0) || !(vergleich > 0)) return null;
+  const h = React.createElement;
+  const skala = Math.max(sie, vergleich) * 1.15;
+  const oben = (v) => BODEN - Math.max(4, (v / skala) * HOEHE);
+  return h('svg', { viewBox: '0 0 84 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-vergleich', style: { display: 'block', maxWidth: (maxBreite || INSTRUMENT_GROESSE.klein) + 'px', height: 'auto', overflow: 'visible' } },
+    hausForm(HAUS_X.region, oben(vergleich), { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: lageFarbe(palette, sie, vergleich), stroke: palette.surface, strokeWidth: 1 }),
+    hausForm(HAUS_X.sie, oben(sie), { fill: fuell }, { fill: fuell }),
+    h('line', { x1: 0, x2: 82, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
   );
 };
 

@@ -1,0 +1,81 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Kapitel 4 Versicherungen</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--line:#e5e0d6;--gold:#B08A3E;--rot:#C0392B}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a18;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--line:#44423d;--gold:#D6B46A}}
+body{font:15px/1.5 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:980px}
+h1{font-size:21px;margin:0 0 6px}h2{font-size:18px;margin:32px 0 8px}h3{font-size:16px;margin:20px 0 6px}p{margin:4px 0 10px}.leise{color:var(--soft)}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;overflow:hidden;font-size:14px}
+td,th{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+tr.hoch td:first-child{border-left:4px solid var(--rot)}
+.box{background:var(--card);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin:12px 0}
+.paar{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:16px;align-items:start;margin-bottom:20px}@media(max-width:700px){.paar{grid-template-columns:1fr}}
+.bild{position:relative}.bild img{width:100%;display:block;border-radius:12px}
+.kasten{position:absolute;border:3px solid var(--rot);border-radius:8px}
+.kasten b{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:var(--rot);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+.erkl{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 10px}
+.erkl .l{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--rot);color:#fff;align-items:center;justify-content:center;margin-right:6px;font-weight:600;font-size:13px}
+code{font-size:13px}
+</style>
+<h1>Kapitel 4 · Versicherungen &amp; Vorsorge</h1>
+<p class=leise>Durchgang 09.11.2026. Acht Seiten: Kapitelseite Versicherungen, Versicherungs-Übersicht, Prämienverbilligung (allgemeiner Teil; die Kantonsseiten sind heute separat geprüft), Krankenkasse wechseln (mit Zusatzversicherung), Krankenkasse zum ersten Mal, Vorsorge-Rechner, Pensionierung, Ergänzungsleistungen. Im Browser gemessen (375 px, Beispiel «Maria Muster, Zürich»), Fachprüfung in zwei Teilen mit Netz (Fedlex-Volltexte KVG, KVV, VVG, UVG, UVV, ATSG, AHVG, ELG, BVG; priminfo-FAQ des BAG; AHV-Merkblätter 3.01 und 3.04), Rechnungen mit Node gegen den Rechner-Code, Textprüfung über 1086 Texte. Kernstellen von Hand gegengelesen (UVV Art. 13, KVG Art. 8, AHVG Art. 34bis, Vorsorge-Rechner Zeile 557). Gebaut ist nichts.</p>
+<p><b>Gut:</b> Kündigungsfrist 30.11. mit Werktag-Regel, Sonderkündigungsrecht, Franchisestufen und Selbstbehalt, Franchise-Vorschlag nach dem 30.11., Zusatzversicherung nach VVG, AHV-Skala 44 für 2026 und 2027, 13. AHV-Rente, Vorbezugs- und Aufschubsätze, BVG-Grenzwerte 2026 und die EL-Schwellen stimmen am Gesetzestext. Alle Texte haben ein Gegenstück in allen fünf Sprachen, Sie und du sind sauber getrennt.</p>
+
+<h2>Inhalt: was jemanden falsch handeln lassen kann</h2>
+<table><thead><tr><th>#</th><th>Seite</th><th>Befund</th><th>Empfehlung</th></tr></thead><tbody>
+<tr class=hoch><td>V1</td><td>Kapitelseite, Versicherungs-Übersicht</td><td>Allen Angestellten wird geraten, die <b>Unfalldeckung bei der Krankenkasse abzuwählen</b>. Ob sie mindestens 8 Stunden pro Woche bei einer Arbeitgeberin arbeiten, prüft die App nicht (<code>UvgHinweis.jsx</code> fragt nur «angestellt?»). Wer weniger arbeitet, ist in der Freizeit nicht unfallversichert und hat nach dem Abwählen eine Lücke. (UVV Art. 13 Abs. 1, KVG Art. 8 Abs. 1, gelesen)</td><td>Rat nur mit Bedingung «mindestens 8 Std./Woche bei einer Arbeitgeberin». Dazu: bei Stellenende Unfall wieder einschliessen, Deckung endet am 31. Tag, Abredeversicherung bis 6 Monate (UVG Art. 3).</td></tr>
+<tr class=hoch><td>P1</td><td>Vorsorge-Rechner</td><td><b>Mit IK-Auszug sinkt die AHV-Rente auf rund die Hälfte</b> (bekannt als B-17). Gezählt werden nur die Beitragsjahre bis heute, nicht die bis zur Pension. Beispiel Mann, 40, IK 20 Jahre à 80 000: Rente 1 081 statt 2 379. Der Text verspricht beim Einschalten eine «genauere Schätzung».</td><td>Zu den IK-Jahren die erwarteten Jahre bis zum Referenzalter dazurechnen, wie ohne IK. Mit rotem Test zuerst.</td></tr>
+<tr class=hoch><td>P2</td><td>Vorsorge-Rechner, Zukunftsbild</td><td><b>AHV fliesst ab dem Rücktritt, auch mit 58</b> (B-18). Bei Rücktritt 58 zählt die Grafik fünf Jahre AHV zu viel, rund 104 000 Franken. Frühester Bezug ist 63 (AHVG Art. 40 Abs. 1). Der Text daneben sagt «58–63 ohne AHV» und widerspricht der Grafik.</td><td>AHV erst ab dem frühestmöglichen Bezug zählen, Lücke bis dahin sichtbar.</td></tr>
+<tr class=hoch><td>P3</td><td>Vorsorge-Rechner</td><td><b>Früher beziehen ergibt ab 65 eine höhere Rente</b> (B-19). Das Feld «Bezugsalter» nimmt 60 oder 58 an; ohne eingetragene Beitragsjahre rechnet es dann ab 65 mit 2 092 bzw. 2 107 statt 2 070. Ein falsches Entscheidungssignal.</td><td>Bezugsalter in der Rechnung auf den frühesten Vorbezug begrenzen und das sagen.</td></tr>
+<tr class=hoch><td>P4</td><td>Vorsorge-Rechner</td><td>Der <b>Rentenzuschlag für Frauen der Jahrgänge 1961–1969</b> fehlt (160/100/50 Franken pro Monat, lebenslang, entfällt beim Vorbezug). Der Vorbezug sieht deshalb günstiger aus, als er ist. (AHVG Art. 34bis, gelesen; Merkblatt 3.04)</td><td>Zuschlag rechnen; mindestens beim Vorbezug-Hinweis nennen.</td></tr>
+<tr><td>V2</td><td>Krankenkasse wechseln</td><td>«Wechseln können Sie nur, wenn Sie keine offenen Prämien haben. Offene Beträge zuerst begleichen.» Wer das liest, kündigt vielleicht nicht bis 30.11. Die Kündigung gilt, wenn das Gemahnte bis Ende der Kündigungsfrist bezahlt ist. (KVG Art. 64a Abs. 6, KVV Art. 105l; Prüfer, nicht von Hand gelesen)</td><td>«Trotzdem bis 30.11. kündigen; der Wechsel gilt, wenn alles Gemahnte bis 31.12. bezahlt ist.»</td></tr>
+<tr><td>V3</td><td>Versicherungs-Übersicht</td><td>«Im schlechtesten Jahr bis zu CHF …» klingt wie eine feste Grenze. Der Spitalbeitrag von 15 Franken pro Tag kommt dazu, ohne Obergrenze. (KVG Art. 64 Abs. 5, KVV Art. 104)</td><td>Spitalbeitrag nennen.</td></tr>
+<tr><td>V4</td><td>Zusatzversicherung wechseln</td><td>«3 Monate aufs Jahresende» und eine Erinnerung jedes Jahr am 30.9. Gesetzlich kündbar ist der Vertrag erst auf Ende des dritten Jahres; die Kündigung muss eingegangen sein. (VVG Art. 35a)</td><td>«In den ersten drei Jahren nur, wenn die Police es erlaubt. Bis 30.9. eingegangen.»</td></tr>
+<tr><td>V5</td><td>Krankenkasse zum ersten Mal</td><td>Ausländische Personen sind ab der <b>Anmeldung bei der Gemeinde</b> versichert, nicht ab dem ersten Tag; mit L-Bewilligung unter 3 Monaten gilt die Pflicht ab Einreise. (KVV Art. 7, Art. 1 Abs. 2)</td><td>Zwei Sätze ergänzen.</td></tr>
+<tr><td>P5</td><td>Vorsorge-Rechner, Pensionierung</td><td>Frühester Vorbezug ist fest 63. Frauen der Jahrgänge 1961–1969 können mit 62 vorbeziehen; die Funktion dafür gibt es im Code, sie wird nicht benutzt. (Merkblatt 3.04)</td><td>Einbinden.</td></tr>
+<tr><td>P6</td><td>Pensionierung</td><td>Die Erinnerung kommt 180 Tage vor dem Referenzalter. Ein Vorbezug geht nicht rückwirkend; wer auf die Erinnerung wartet, verliert Monate. (AHVG Art. 40 Abs. 1)</td><td>Satz ergänzen; beim Vorbezug die Erinnerung vor das Wunschdatum legen.</td></tr>
+<tr><td>P7</td><td>Vorsorge-Rechner (Pensionskasse)</td><td>Umwandlungssatz 6,8 % für jedes Alter von 58 bis 70. Gesetzlich gilt er nur fürs Referenzalter; davor ist die Rente zu hoch. (BVG Art. 14 Abs. 2)</td><td>Vor 65: Hinweis «Ihre Kasse kürzt den Satz», eigenen Satz eintragen lassen.</td></tr>
+<tr><td>P8</td><td>Ergänzungsleistungen</td><td>«Ohne AHV- oder IV-Leistung ist die Sozialhilfe zuständig» ist zu absolut: EL gibt es auch, wenn nur die Mindestbeitragsdauer fehlt. (ELG Art. 4 Bst. b, d)</td><td>«in der Regel» und die Ausnahme.</td></tr>
+<tr><td>P9</td><td>Vorsorge-Rechner, Kapitalbezug</td><td>Die 3-Jahres-Sperre nach einem Einkauf fehlt neben dem Steuervergleich. (BVG Art. 79b Abs. 3)</td><td>Ein Satz.</td></tr>
+<tr><td>K</td><td>verschiedene</td><td>Kleiner: Einschreiben im Postfach gilt erst beim Abholen · Prämienzuschlag bei später Anmeldung «muss», 30–50 %, nicht «kann» · Franchise gilt nicht bei Mutterschaft · zweiter Wechseltermin 30.6. fehlt · Erinnerung 30.11.2030 fällt auf einen Samstag (ungetestet) · Kapital: nur ein Viertel gesetzlich garantiert, Zustimmung Ehegatte · IK-Einkommen ohne Aufwertung · 3a-Einzahlung im Rechner unbegrenzt · Frist für den Aufschub · Freizügigkeit «nach 6 Monaten» (FZG prüfen) · BVG-Mindestzins 2027 nachtragen · fehlende Quellen bei Schuldensperre, 8-Stunden-Regel, junge Erwachsene.</td><td>Ergänzen oder belegen.</td></tr>
+</tbody></table>
+
+<h2>Gestaltung</h2>
+<h3>Versicherungs-Übersicht · «Alle Kassen vergleichen»</h3>
+<div class=paar>
+ <div class=bild><img src="kapitel-4/praemien.jpg" alt="Prämientabelle auf dem Handy">
+  <div class=kasten style="left:11%;top:21.5%;width:78%;height:10%"><b>A</b></div>
+  <div class=kasten style="left:13%;top:64%;width:31%;height:21.5%"><b>B</b></div>
+  <div class=kasten style="left:49%;top:59.5%;width:40%;height:30%"><b>C</b></div></div>
+ <div>
+  <div class=erkl><span class=l>A</span><b>Versteckte Handlung.</b> «Tippen Sie einen Preis, um die Kasse als Wunschkasse zu wählen»: Die Zahl ist ein Knopf, sieht aber aus wie Text. → Ein sichtbarer Knopf «Als Wunschkasse wählen» in der aufgeklappten Kasse; die Preise bleiben Zahlen.</div>
+  <div class=erkl><span class=l>B</span><b>Kassenname bricht schlecht.</b> Der Pfeil steht allein in der Zeile («&gt; / Sumiswalder»), lange Namen brechen mitten im Wort («Gesundheitsv / ersicherung»). → Pfeil und Name zusammenhalten, nur an Wortgrenzen umbrechen.</div>
+  <div class=erkl><span class=l>C</span><b>Kleine Tippflächen.</b> Preis-Knöpfe 29 px, Kassenname 19 px hoch. → Ganze Zeile 44 px antippbar (mit A erledigt sich das zum grossen Teil).</div>
+ </div>
+</div>
+<h3>Vorsorge-Rechner</h3>
+<div class=paar>
+ <div class=bild><img src="kapitel-4/vorsorge.jpg" alt="Vorsorge-Rechner auf dem Handy">
+  <div class=kasten style="left:9%;top:58%;width:39%;height:5.5%"><b>D</b></div></div>
+ <div>
+  <div class=erkl><span class=l>D</span><b>Beispielzahl sieht aus wie eine Eingabe.</b> Das Einkommensfeld ist leer, zeigt aber grau «80000»; dasselbe bei Partner-Einkommen «60000» und Umwandlungssatz «6.8». Oben steht kein Ergebnis, und man weiss nicht, warum. → Kein Zahlen-Platzhalter, stattdessen «z. B. 80 000» im Hinweis darunter. Dazu: alle Felder des Rechners 38 px → 44 px.</div>
+  <div class=erkl><b>Dazu, auf anderen Seiten:</b> <s>Prämienverbilligung: die Überschrift liest Vorlese-Programmen «5 FR. 2026 Prämienverbilligung» vor, weil der Stempel im Titel steht → Stempel aus der Überschrift nehmen; Knopf «Vorlesen» 24 px → 44.</s> <b>Fehlbefund, berichtigt 10.11.:</b> Der Stempel liegt in einem <code>aria-hidden</code>-Element und wird nicht vorgelesen (gemessen war mit <code>innerText</code>, nicht im Barrierebaum). Der Vorlese-Knopf ist auf <code>main</code> seit Querschnitt 2 schon 44 px; gemessen war auf dem älteren Server von Kapitel 2. Kapitelseite: Überschrift springt von Stufe 2 auf 4 («Ihre Krankenkassenkosten») → Stufe 3. Schon in Arbeit und hier nicht doppelt: Arial in einzelnen Feldern (#781), Grafik-Beschriftungen 11 px (Querschnitt 1, #770), die ⓘ-Knöpfe mit 31–35 px (app-weit).</div>
+ </div>
+</div>
+
+<h2>Sprache</h2>
+<table><thead><tr><th>#</th><th>Befund</th><th>Empfehlung</th></tr></thead><tbody>
+<tr><td>S1</td><td>Generisches Maskulin: «Arbeitgeber» in 9 Texten, Feldoption «Über Arbeitgeber», «Einkommen Partner», «Ehepartner», «eine Witwe auch ohne Kinder».</td><td>«Arbeitgeberin oder Arbeitgeber», Feldoption «Über die Anstellung», «Einkommen der Partnerin oder des Partners», «Witwen- und Witwerrente».</td></tr>
+<tr><td>S2</td><td>Gesetzesangaben mitten im Satz (61 Stellen; ein Satz mit drei IVG-Artikeln).</td><td>Wie Kapitel 1–3: in die Quellenzeile.</td></tr>
+<tr><td>S3</td><td>Kürzel als Name der Sache: «Was passiert mit Ihrem BVG bei Jobwechsel?», «BVG-Guthaben» (31 Texte), KVG/VVG/KTG in Knöpfen, IK und PK unerklärt.</td><td>«Pensionskasse», «Pensionskassen-Guthaben»; Knöpfe ohne Kürzel; «Beitragskonto (IK)» beim ersten Mal.</td></tr>
+<tr><td>S4</td><td>Absätze bis 91 Wörter, vor allem Ergänzungsleistungen und Pensionierung.</td><td>Teilen; EL-Schwellen als kurze Liste.</td></tr>
+<tr><td>S5</td><td>Beschwichtigen und Werten: «Hier der ruhige Überblick» (2×), «Ein ruhiger Weg in vier Schritten», «ohne Scheu», «Kurz innehalten»; «das kann die Kosten deutlich senken» (hängt vom Kanton ab).</td><td>Durch die Sache ersetzen («Vier Schritte: vergleichen, wählen, kündigen, Frist notieren»); «deutlich» streichen.</td></tr>
+<tr><td>S6</td><td>Mehrere Namen: Prämienverbilligung / «Verbilligung» / IPV; Kasse / Krankenkasse / Versicherer; AHV-Altersrente / AHV-Rente / Rente; «3. Säule» neben «Säule 3a».</td><td>Je ein Name: Prämienverbilligung, Krankenkasse, AHV-Rente, Säule 3a.</td></tr>
+<tr><td>S7</td><td>Holprig: «Kündigen Sie sie nie vorschnell mit — prüfen Sie sie zuerst.»</td><td>«Kündigen Sie die Zusatzversicherung nicht mit — prüfen Sie sie zuerst.»</td></tr>
+<tr><td>S8</td><td>Englisch: deutsche Gesetzeskürzel (KVG 17×), «EL» als Kürzel, «franchise» neben «deductible», «premium subsidy» neben «premium reduction», «Basic insurance has a duty to accept».</td><td>Ein Begriff je Sache («deductible», «premium reduction»); «no insurer may turn you down».</td></tr>
+<tr><td>S9</td><td>fr/it klein: «caisse-maladie» und «caisse maladie» gemischt; it «assicurato·a da bambino»; RIP, PC unerklärt.</td><td>Eine Schreibweise; «da bambina o bambino»; Kürzel ausschreiben.</td></tr>
+<tr><td>S10</td><td>Rätoromanisch: 150 Texte dieses Kapitels sind wörtlich Deutsch (Krankenkasse wechseln 42 von 60, EL 31 von 42). Fünf Texte ohne Sie-Fassung.</td><td><b>Nicht in diesem Zweig:</b> rm braucht eine Person, die Romanisch schreibt. Die fünf Sie-Fassungen gehen mit.</td></tr>
+</tbody></table>
+
+<div class=box><b>Vorschlag:</b> alles wie empfohlen, in <b>zwei Zweigen</b> von <code>main</code>:<br>
+1. <b>Vorsorge-Rechner rechnet richtig</b> (P1–P5, P7, 3a-Grenze): Rechenlogik, je mit rotem Test zuerst, danach der swiss-precision-pruefer. B-17 bis B-19 stehen bisher nur in der Bugliste von #800 und werden hier behoben.<br>
+2. <b>Inhalt, Gestaltung, Sprache</b> (V1–V5, P6, P8, P9, K, A–D, S1–S9). Jeder neue Fachsatz vor «fertig» durch den rechts-pruefer am Volltext.<br>
+Rätoromanisch (S10) bleibt offen. Achtung Überschneidung: #780 «Verstehen im Werkzeug» (Pilot Versicherungen) ist offen und berührt dieselben Seiten; wer zuerst gemergt wird, löst bei der anderen einen Nachzug aus.</div>

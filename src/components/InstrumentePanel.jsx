@@ -4,8 +4,8 @@ import { schildOptionen } from '../data/schutzschild.js';
 import { netzSchildTeile } from '../data/netzSchild.js';
 import { NetzSchild } from './NetzSchild.jsx';
 import { ReserveTank } from './ReserveTank.jsx';
-import { wohnkostenRechnung, DrittelBalkenKlein, wohnkostenSatzKey } from './WohnkostenInstrument.jsx';
-import { RegionalBarometerKlein, lageZurRegion, mietVorbehalte } from './RegionalBarometer.jsx';
+import { wohnkostenRechnung, DrittelHaus, wohnkostenSatzKey } from './WohnkostenInstrument.jsx';
+import { HaeuserzeileKlein, lageZurRegion, mietVorbehalte } from './RegionalBarometer.jsx';
 import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
@@ -460,7 +460,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         mehr: [t('instrumente.wohnkostenDrittel')],
       } : {}),
       sub: wohnR.kosten > 0 ? t('instrumente.wohnkostenOhneEinkommen') : setup,
-      glyph: wohnR.kosten > 0 ? h(DrittelBalkenKlein, { palette, r: wohnR, fillColor: wohnFarbe }) : null,
+      glyph: wohnR.kosten > 0 ? h(DrittelHaus, { palette, anteil: wohnR.anteil, ueberDrittel: wohnR.ueberDrittel, mitPartner: wohnR.mitPartner, fuell: wohnFarbe, groesse: 'klein' }) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
     },
     {
@@ -471,7 +471,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         mehr: mietHinweise,
       } : {}),
       sub: wohnR.eigentum ? t('instrumente.mieteEigentum') : setup,
-      glyph: mietVergleich ? h(RegionalBarometerKlein, { palette, comparison: mietVergleich, userValue: wohnR.netto, fillColor: wohnFarbe }) : null,
+      glyph: mietVergleich ? h(HaeuserzeileKlein, { palette, comparison: mietVergleich, userValue: wohnR.netto, fillColor: wohnFarbe }) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
     },
     {

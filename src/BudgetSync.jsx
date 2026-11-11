@@ -8,10 +8,11 @@ import { calculateSozialhilfe } from './config/cantonalData.js';
 import { getRegionalComparison } from './data/praemienRegionen.js';
 import { getRentComparison } from './data/mietpreise.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
-import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { RegionalBarometer, HaeuserVergleich } from './components/RegionalBarometer.jsx';
+import { wohnkostenRechnung, drittelGrenzeMiete, DrittelHaus } from './components/WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
 import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
-import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
+import { text, weight, shadow, radius , leading , space, INSTRUMENT_GROESSE } from './config/tokens.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
@@ -40,10 +41,13 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   // Export-Vorschau (K20): erst zeigen, was im Budget-Bericht steht, dann herunterladen.
   const [berichtVorschau, setBerichtVorschau] = useState(false);
 
+  // Wohnkosten aus der einen Rechnung (data/wohnkosten.js): Drittel-Haus in der Gruppe «Wohnen» und der
+  // Wohn-Hinweis unten folgen derselben Regel wie Kapitel Wohnen und Mietzins (11.11.2026).
+  const wohn = useMemo(() => wohnkostenRechnung(data?.wohnen, data), [data]);
   useEffect(() => {
-    const synced = calculateMonthlyBudget(data, t);
+    const synced = calculateMonthlyBudget(data, t, { ueberDrittel: wohn.ueberDrittel && !wohn.mitPartner });
     setBudget(synced);
-  }, [data, t]);
+  }, [data, t, wohn]);
 
   // Regional-KK: Prämie der Wohngemeinde vs. Schweizer Schnitt (BAG) — neben dem
   // BFS-Ausgaben-Richtwert eine zweite, klar gekennzeichnete KK-Tatsache.
@@ -159,8 +163,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
   const infoLabel = (key, label) => React.createElement('button', {
     type: 'button', onClick: () => toggleInfo(key), 'aria-expanded': openInfo.has(key),
     style: {
-      background: 'none', border: 'none', padding: 0, font: 'inherit', color: 'inherit',
-      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'baseline', gap: '4px'
+      // Kapitel 3 Gestaltung B (09.11.2026): Tippfläche 44 px, ohne die Zeile höher zu machen (Rand ±10 px).
+      background: 'none', border: 'none', padding: '10px 0', margin: '-10px 0', minHeight: '44px', font: 'inherit', color: 'inherit',
+      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'center', gap: '4px'
     }
   },
     React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
@@ -203,7 +208,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         info ? infoLabel(item.key, item.label) : React.createElement('span', null, item.label),
         isEmpty
           ? React.createElement('span', { style: emptyValueStyle }, '—')
-          : React.createElement('span', null, formatCHF(item.value * mult))
+          : React.createElement('span', { style: { whiteSpace: 'nowrap', flexShrink: 0 } }, formatCHF(item.value * mult))
       ),
       open && bm && renderBenchmarkLine(bm, item.key),
       open && trend && renderTrendLine(trend, item.key),
@@ -225,10 +230,13 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '8px' } },
         React.createElement(RegionalBarometer, {
           palette, t, comparison: rentComparison,
-          userValue: budget.expenses.rent || null, kind: 'rent',
+          userValue: budget.expenses.rent || null, kind: 'rent', form: 'haeuser',
           fillColor: bereichFillColor('wohnen', isDarkMode),
-          // Drittel-Faustregel als Betrag — nur mit Einkommen bestimmbar, nie geraten.
-          thresholdValue: budget.income > 0 ? Math.round(budget.income / 3) : 0,
+          // Drittel-Faustregel als Betrag — aus der EINEN Rechnung wie Kapitel Wohnen und Mietzins
+          // (data/wohnkosten.js, seit 11.11.2026): alle Wohnkosten ÷ eigene Einnahmen, mit Partner/in
+          // kein Urteil, ohne Einkommen keine Marke. Bis dahin hier Haushaltseinkommen ÷ 3.
+          // Die Miete hier ist dieselbe Zahl (`monatsAusgaben` liest wohnen.rentAmount).
+          thresholdValue: drittelGrenzeMiete(wohn),
           // Das Budget hat keine Nachbarzeile → die Überschreitung braucht hier den
           // sichtbaren Satz (in MietVergleich trägt ihn `rentShareGuide`).
           showThresholdText: true,
@@ -258,15 +266,30 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
         info ? infoLabel(group.key, groupLabel) : React.createElement('span', null, groupLabel),
-        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm } },
+        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm, flexShrink: 0 } },
           group.total > 0
-            ? React.createElement('span', null, formatCHF(group.total * mult))
+            // Gestaltung C: der Betrag bricht nie um («CHF / 609»), der Name darf zweizeilig werden.
+            ? React.createElement('span', { style: { whiteSpace: 'nowrap' } }, formatCHF(group.total * mult))
             : React.createElement('span', { style: emptyValueStyle }, '—'),
           pct && React.createElement('span', {
             style: { fontSize: text.sm, color: palette.soft, fontWeight: weight.normal, minWidth: '28px', textAlign: 'right' }
           }, pct)
         )
       ),
+      // Wohnen: das Drittel-Haus (Spiegel Werkzeug, mittel 128), aufgeklappt. Ohne Partner/in ist der Anteil
+      // derselbe wie die Prozentzahl daneben (Haushaltseinkommen = eigene Einnahmen); mit Partner/in rechnet das
+      // Budget den Haushalt, das Haus nur das eigene Einkommen — dann kein Haus, keine zweite Zahl (11.11.2026).
+      open && group.key === 'housing' && wohn.anteil != null && !wohn.mitPartner && React.createElement('div', {
+        'data-teil': 'budget-drittel-haus', style: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-end', padding: '4px 0 ' + space.sm + 'px' },
+      },
+        React.createElement('div', { style: { width: INSTRUMENT_GROESSE.mittel + 'px', flexShrink: 0 } },
+          React.createElement(DrittelHaus, { palette, anteil: wohn.anteil, ueberDrittel: wohn.ueberDrittel, mitPartner: false, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'mittel' })),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+          t(wohn.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel'))
+      ),
+      // Wohnen: Ihre Wohnkosten gegen den BFS-Richtwert als zwei Häuser (11.11.2026), darunter der Richtwert-Satz.
+      open && group.key === 'housing' && groupBm && React.createElement('div', { 'data-teil': 'budget-richtwert-haeuser', style: { width: INSTRUMENT_GROESSE.klein + 'px', padding: '4px 0' } },
+        React.createElement(HaeuserVergleich, { palette, sie: group.total, vergleich: groupBm, fuell: bereichFillColor('wohnen', isDarkMode) })),
       // BFS group-level benchmark (e.g. Housing, Mobility) — only when expanded
       open && groupBm && renderBenchmarkLine(groupBm, group.key, true),
       // BFS group-level price trend since the index base (e.g. Housing +14%)

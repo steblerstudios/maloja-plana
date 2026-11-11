@@ -297,6 +297,8 @@ export function getChapters(t) {
         { k: 'dreizehnter', type: 'select', sel: 1 },
         { k: 'employer', type: 'text', recommended: true, naOk: true },
         { k: 'employerAddress', type: 'textarea', hint: 1, naOk: true },
+        // Arbeitsort für den Mindestlohn (Kapitel 3 F1): leer = Wohnkanton.
+        { k: 'workCanton', type: 'select', options: cantonOptions(t), hint: 1, naOk: true },
         { k: 'employmentType', type: 'select', sel: 1 },
         { k: 'startDate', type: 'date', naOk: true },
         // Ohne Kinder trifft es nicht zu (Fachprüfung Muster M2, 25.10.2026) — wie die Alimente.
@@ -487,7 +489,7 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'residenceType', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'wfgWohnung'],
-  finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
+  finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'workCanton', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'kkZusatzPremium', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'lifeInsurancePremium', 'freizuegigkeit', 'uvg', 'uvgZusatz', 'uvgZusatzPremium', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'branche', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'ferienTageJahr', 'ferienTageBezogen', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
