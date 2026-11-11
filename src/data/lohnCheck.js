@@ -126,6 +126,14 @@ function nichtBelegt(kanton, ml, heute) {
 // Dann hier auf `true` — der Brief-Code selbst ist gebaut, geprüft und getestet.
 export const WAGECLAIM_BEREIT = false;
 
+// Kapitel 3 F1 (09.11.2026): Der kantonale Mindestlohn gilt am ARBEITSORT, nicht am Wohnort (bs.ch:
+// «gewöhnlicher Arbeitsort im Kanton»; ge.ch, ne.ch gleich). Erfasst ist er im Feld finanzen.workCanton;
+// leer = Annahme Wohnkanton, und die Ansicht sagt das.
+export function arbeitsKanton(allData) {
+  const w = allData?.finanzen?.workCanton;
+  return { kanton: w || allData?.basis?.canton || null, angenommen: !w };
+}
+
 export function kantonHatMindestlohn(kanton) {
   return KANTONE_MIT_MINDESTLOHN.includes(kanton);
 }

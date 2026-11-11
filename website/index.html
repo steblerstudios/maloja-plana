@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Wie die Erklärseiten, dazu genau ein eigenes Skript: /weiterleitung.js. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten/vorstellung.mjs
+       Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <!-- Alte App-Links (/#/…, ?lang=, ?beispiel) und die installierte App gehen nach /app/. Synchron, vor dem ersten Bild. -->
+  <script src="/weiterleitung.js"></script>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <!-- Browserleiste je Farbschema (Granit, Brand Book §2) -->
+  <meta name="theme-color" content="#F2F2F0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#22211F" media="(prefers-color-scheme: dark)">
+  <title>Maloja Plana — Schweizer Lebensordner</title>
+  <meta name="description" content="Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.">
+  <link rel="canonical" href="https://malojaplana.ch/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Maloja Plana — Schweizer Lebensordner">
+  <meta property="og:description" content="Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.">
+  <meta property="og:url" content="https://malojaplana.ch/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:image:alt" content="Maloja Plana — Schweizer Lebensordner">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Maloja Plana — Schweizer Lebensordner">
+  <meta name="twitter:description" content="Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://malojaplana.ch/#org",
+        "name": "Stebler Studios",
+        "url": "https://malojaplana.ch/",
+        "email": "info@malojaplana.ch",
+        "sameAs": [
+          "https://github.com/steblerstudios"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://malojaplana.ch/#website",
+        "name": "Maloja Plana",
+        "alternateName": [
+          "Maloja Plana Lebensordner",
+          "Schweizer Lebensordner"
+        ],
+        "url": "https://malojaplana.ch/",
+        "inLanguage": "de",
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://malojaplana.ch/#app",
+        "name": "Maloja Plana",
+        "url": "https://malojaplana.ch/app/",
+        "description": "Steuern, Prämienverbilligung, Vorsorge und Notfallkarte an einem Ort. Kostenlos, ohne Konto — was Sie eingeben, bleibt auf Ihrem Gerät.",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "CHF"
+        },
+        "isAccessibleForFree": true,
+        "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+        "sameAs": [
+          "https://github.com/steblerstudios/maloja-plana"
+        ],
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2'); font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2'); font-weight:600; font-display:swap }
+    @font-face{ font-family:'Hanken Grotesk'; src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2'); font-weight:700; font-display:swap }
+    *{ margin:0; padding:0; box-sizing:border-box }
+    :root{
+      --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#575B61;  /* dunkler als vorher (#6A6E74): Kleintext liest sich ruhiger */
+      --rand:#E0DDD8;
+      --himmel:#F4F0E6;                 /* Himmel der Landschaft — der Einstieg bleibt immer hell */
+      --gehaeuse:#1B1A18; --gehaeuse-rand:#3A3936; --insel:#0E0E0D; --schirm:#22211F;
+      --radius-m:12px;
+      --abstand-m:32px; --abstand-l:96px;  /* 96 = 64 × 1.5, Kapitelstufe der Startseite (§7a B) */
+      --k0:#5A7868;
+      --k1:#6C8343;
+      --k2:#C4A870;
+      --k3:#6787A5;
+      --k4:#8A6D4B;
+      --k5:#5A6472;
+      --k6:#C67A4A;
+      --pinsel:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20100%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%200H150C146%206%20157%2011%20149%2019C142%2027%20156%2033%20150%2043C145%2052%20158%2058%20151%2068C145%2078%20156%2086%20150%20100H0Z%22%2F%3E%3Ccircle%20cx%3D%22159%22%20cy%3D%2215%22%20r%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%22166%22%20cy%3D%2238%22%20r%3D%221.6%22%2F%3E%3Ccircle%20cx%3D%22161%22%20cy%3D%2261%22%20r%3D%222.8%22%2F%3E%3Ccircle%20cx%3D%22170%22%20cy%3D%2280%22%20r%3D%221.4%22%2F%3E%3Ccircle%20cx%3D%22157%22%20cy%3D%2292%22%20r%3D%221.8%22%2F%3E%3C%2Fsvg%3E");
+      --sand:#C4A06A; --auf-sand:#2A2620; --sand-tief:#7A5F30; --radius-knopf:10px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936;
+             --gehaeuse:#33322F; --gehaeuse-rand:#4A4945; --sand-tief:#C4A06A;
+             --k0:#7E9F8C;
+             --k1:#9DBA6A;
+             --k2:#D2B77E;
+             --k3:#86A6C2;
+             --k4:#A98A64;
+             --k5:#7C8798;
+             --k6:#D98F5C; }
+      html{ color-scheme:dark }
+    }
+    html{ scroll-behavior:smooth }
+    @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto } }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:1040px; margin:0 auto; padding:0 24px }
+    /* Links: Gold (sandDeep), immer unterstrichen, beim Überfahren dicker, die Farbe bleibt (Brand Book §2). */
+    a{ color:var(--sand-tief); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px }
+    a:hover{ text-decoration-thickness:2px }
+    :focus-visible{ outline:2px solid var(--sand-tief); outline-offset:3px }
+    .unsichtbar{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap }
+    /* Schrift nach Brand Book §3: Titel in Hanken Grotesk (600/700), alles andere Lexend; Grössen aus der Skala
+       13 · 15 · 16 · 19 · 23 · 28 · 36 (tokens.js). Einzige grössere Stufe: der h1 im Hero mit 48. */
+    h1, h2, h3{ font-family:'Hanken Grotesk','Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif }
+    .augenbraue{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
+    h2{ font-size:36px; line-height:1.2; font-weight:700; letter-spacing:-0.015em; margin-bottom:14px }
+    h3{ font-size:19px; font-weight:600; margin-bottom:4px; line-height:1.35 }
+    p{ margin-bottom:12px } p:last-child{ margin-bottom:0 }
+    .unterzeile{ color:var(--leise); font-size:19px; max-width:34em }
+    section{ padding:var(--abstand-l) 0 0 }
+
+    /* Knöpfe (Brand Book «Knöpfe», Fassung 9): Hauptknopf gefüllt Sand, nur EINER je Seite (im Hero);
+       Nebenknopf leer mit Rand und Schrift sandDeep; Ecke 10 px, keine Pillen; mind. 44 px hoch. */
+    .knopf{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:12px 24px;
+      border-radius:var(--radius-knopf); font-weight:600; font-size:15px; text-decoration:none; border:1px solid transparent; line-height:1.3 }
+    .knopf.haupt{ background:var(--sand); color:var(--auf-sand) }
+    .knopf.haupt:hover{ color:var(--auf-sand); filter:brightness(1.05) }
+    .knopf.zweit{ border-color:var(--sand-tief); color:var(--sand-tief); background:transparent }
+    .knopf.zweit:hover{ background:color-mix(in srgb, var(--sand) 14%, transparent) }
+    .wege{ display:flex; flex-wrap:wrap; gap:12px; margin-top:var(--abstand-m) }
+
+    /* ─── Kopf und Hero: liegen auf dem Passbild, das zugleich die erste Bühne der Reise ist (A/B, 10.11.2026) ─── */
+    .kopf-leiste{ position:absolute; z-index:7; top:0; left:0; right:0 }
+    .kopf{ padding-top:20px; padding-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:16px }
+    .marke{ display:flex; align-items:center; gap:10px; padding-block:9px; font-weight:600; font-size:16px; text-decoration:none; color:#22211F }
+    .marke:hover{ color:#22211F }
+    .marke svg{ height:28px; width:auto }
+    .kopf nav{ display:flex; gap:22px; font-size:15px }
+    .kopf nav a{ text-decoration:none; padding-block:10px; color:#24262A; display:inline-flex; align-items:center; min-height:44px }
+    .kopf nav a:hover{ text-decoration:underline }
+    .reise-anfang{ position:relative; z-index:5 }
+    .pass{ min-height:100vh; min-height:100svh; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center;
+      padding-top:96px; padding-bottom:6vh; color:#24262A; --text:#24262A; --leise:#4E5258; --sand-tief:#7A5F30 }
+    .pass h1{ font-size:48px; line-height:1.1; font-weight:700; letter-spacing:-0.025em }
+    .pass h1 span{ display:block }
+    @media (min-width:961px){ .pass h1 span{ white-space:nowrap } }
+    .pass h1 .zweite{ font-weight:600; color:#4E5258 }
+    .pass .vorspann{ font-size:19px; max-width:28em; margin-top:22px; color:#3E4247 }
+    .pass .fakten{ display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:20px; font-size:15px; color:#24262A }
+    .pass .fakten span::before{ content:"·"; margin-right:18px; color:var(--sand-tief) }
+    .pass .fakten span:first-child::before{ content:none }
+    .pass .beta{ font-size:15px; color:#3E4247; margin-top:10px }
+    .pass .knopf.zweit{ background:#FBFBFA }
+    /* Übergang zur Reise: Nebenknopf (leer, Rand sandDeep) auf heller Fläche, damit er auch über dem Bild lesbar bleibt. */
+    .pass-weiter{ grid-column:1 / -1; justify-self:start }
+    .pass-weiter::after{ content:"↓" / "" }
+
+    /* C · Laptop und Telefon (10.11.2026): das Telefon steht vorn rechts vor dem Laptop. Bild am Computer aus dem
+       Beispiel (public/vorstellung/app-computer.webp), das Telefon zeigt weiter die Bildfolge. */
+    .geraete{ position:relative; width:100%; max-width:560px; justify-self:end; align-items:flex-start; padding:0 }
+    .geraete-bild{ position:relative; width:100%; padding-bottom:4% }
+    .laptop{ position:relative; width:88%; margin-bottom:6px }
+    .laptop .deckel{ background:#1B1A18; border-radius:14px 14px 4px 4px; padding:10px 10px 12px;
+      box-shadow:0 0 0 1px #3A3936, 0 28px 44px -26px rgba(30,28,24,.55) }
+    .laptop .schirm{ aspect-ratio:16/10; overflow:hidden; border-radius:4px; background:#22211F }
+    .laptop .schirm img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block }
+    .laptop .sockel{ position:relative; height:14px; margin:0 -6%; border-radius:2px 2px 14px 14px;
+      background:linear-gradient(#DCD8D0, #B6B1A7); box-shadow:0 10px 18px -12px rgba(30,28,24,.6) }
+    .laptop .sockel::before{ content:""; position:absolute; left:50%; top:0; width:18%; height:5px; margin-left:-9%; border-radius:0 0 6px 6px; background:#A8A39A }
+    .geraete .telefon{ position:absolute; right:0; bottom:0; width:clamp(110px, 13vw, 150px); padding:6px; border-radius:24px }
+    .geraete .bildschirm{ border-radius:19px; --statusleiste:16px }
+    .geraete .insel{ top:10px; width:40px; height:11px; border-radius:8px }
+    .geraete .unter-telefon{ margin-top:14px }
+    /* Telefon mit Bildfolge */
+    .buehne{ display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px }
+    .telefon{ position:relative; width:280px; aspect-ratio:480/1040; padding:11px;
+      background:var(--gehaeuse); border-radius:46px;
+      box-shadow:0 0 0 1px var(--gehaeuse-rand), 0 24px 40px -24px rgba(30,28,24,.5) }
+    .pass .telefon{ --gehaeuse:#1B1A18; --gehaeuse-rand:#3A3936 }
+    .insel{ position:absolute; z-index:3; top:20px; left:50%; transform:translateX(-50%);
+      width:84px; height:24px; border-radius:14px; background:var(--insel) }
+    .bildschirm{ position:relative; width:100%; height:100%; border-radius:36px; overflow:hidden;
+      background:var(--schirm); --statusleiste:38px }
+    .bildschirm img{ position:absolute; top:var(--statusleiste); left:0; width:100%;
+      height:calc(100% - var(--statusleiste)); object-fit:cover; object-position:top; display:block }
+    .folge img{ opacity:0; animation:wechsel 30s infinite }
+    .folge img:nth-child(1){ animation-delay:-1.5s }
+    .folge img:nth-child(2){ animation-delay:4.5s }
+    .folge img:nth-child(3){ animation-delay:10.5s }
+    .folge img:nth-child(4){ animation-delay:16.5s }
+    .folge img:nth-child(5){ animation-delay:22.5s }
+    @keyframes wechsel{ 0%{opacity:0} 6%{opacity:1} 20%{opacity:1} 26%{opacity:0} 100%{opacity:0} }
+    #anhalten:checked ~ .geraete-bild .folge img, .buehne:hover .folge img{ animation-play-state:paused }
+    .unter-telefon{ display:flex; flex-wrap:wrap; justify-content:center; gap:4px 14px; margin-top:14px;
+      font-size:13px; color:#3E4247; text-align:center; background:rgba(244,240,230,.82); padding:4px 12px; border-radius:20px }
+    .schalter{ cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:10px 2px; margin:-10px 0 }
+    #anhalten:checked ~ .unter-telefon .schalter::before{ content:"✓ " / "" }
+    #anhalten:focus-visible ~ .unter-telefon .schalter{ outline:2px solid var(--sand-tief); outline-offset:3px }
+
+    /* ─── Lebenssituationen (Radio-Reiter, ohne Skript) ───────────── */
+    .lagen .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--abstand-m) }
+    .lagen fieldset{ border:0; min-width:0; padding:0; margin:0 }
+    .lagen .chips label{ cursor:pointer; padding:11px 18px; border:1px solid var(--leise); border-radius:var(--radius-knopf);
+      background:var(--flaeche); font-size:15px; color:var(--text); transition:background .2s, border-color .2s }
+    .lagen .chips label:hover{ border-color:var(--sand-tief) }
+    .tafel{ display:none; margin-top:28px; padding:36px 40px; background:var(--flaeche); border:1px solid var(--rand);
+      border-radius:var(--radius-m); max-width:760px }
+    .tafel p.gross{ font-size:23px; line-height:1.45; margin-bottom:18px; color:var(--text) }
+    .tafel a{ font-weight:600 }
+    #l1:checked ~ .tafeln .t1{ display:block }
+    #l1:checked ~ .chips [for=l1]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
+    #l1:checked ~ .chips [for=l1]::before{ content:"✓ " / "" }
+    #l1:focus-visible ~ .chips [for=l1]{ outline:2px solid var(--sand-tief); outline-offset:3px }
+    #l2:checked ~ .tafeln .t2{ display:block }
+    #l2:checked ~ .chips [for=l2]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
+    #l2:checked ~ .chips [for=l2]::before{ content:"✓ " / "" }
+    #l2:focus-visible ~ .chips [for=l2]{ outline:2px solid var(--sand-tief); outline-offset:3px }
+    #l3:checked ~ .tafeln .t3{ display:block }
+    #l3:checked ~ .chips [for=l3]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
+    #l3:checked ~ .chips [for=l3]::before{ content:"✓ " / "" }
+    #l3:focus-visible ~ .chips [for=l3]{ outline:2px solid var(--sand-tief); outline-offset:3px }
+    #l4:checked ~ .tafeln .t4{ display:block }
+    #l4:checked ~ .chips [for=l4]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
+    #l4:checked ~ .chips [for=l4]::before{ content:"✓ " / "" }
+    #l4:focus-visible ~ .chips [for=l4]{ outline:2px solid var(--sand-tief); outline-offset:3px }
+    #l5:checked ~ .tafeln .t5{ display:block }
+    #l5:checked ~ .chips [for=l5]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
+    #l5:checked ~ .chips [for=l5]::before{ content:"✓ " / "" }
+    #l5:focus-visible ~ .chips [for=l5]{ outline:2px solid var(--sand-tief); outline-offset:3px }
+    #l6:checked ~ .tafeln .t6{ display:block }
+    #l6:checked ~ .chips [for=l6]{ background:var(--sand); color:var(--auf-sand); border-color:var(--sand) }
+    #l6:checked ~ .chips [for=l6]::before{ content:"✓ " / "" }
+    #l6:focus-visible ~ .chips [for=l6]{ outline:2px solid var(--sand-tief); outline-offset:3px }
+
+    /* ─── Die Reise: Kehre für Kehre auf den Malojapass (Brand Book §7e, Entwurf 10.11.2026) ───
+       Richtung «Stationen sammeln» (Fuji-Prinzipien). Seit Entscheid A–F (10.11.): die Bühne beginnt schon im
+       Hero — Bild 0 ist das Passbild unter Kopf und Hero, darüber eine helle Schicht; ab Kehre 1 wechselt das
+       Bild per Pinselstrich, die helle Schicht weicht der dunklen, und Stock und Weg erscheinen.
+       B Wanderstock in der Mitte mit Aufklebern, die Kamera kreist um ihn · C Text weiss auf dem Bild, Knöpfe
+       «Beispiel» und «Weiter» · D grosses Kapitel-Zeichen, gepunkteter Weg mit Zeichen · E Pinselstrich quer übers Bild, Wolken.
+       Ohne Skript: helle Hero-Fläche, dunkle Schicht für die Kehren, alle Nägel, Bild 0 bleibt stehen.
+       Bei «weniger Bewegung»: dieselben Wechsel, aber ohne Bewegung. */
+    .reise-bruecke{ position:relative; overflow-x:clip }
+    .reise-buehne{ position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:var(--himmel) }
+    .reise-bild, .reise-bild > *{ position:absolute; inset:0 }
+    /* Bild 0 = Passbild (Hero), dann je Kehre ein eigenes Bild (KI-gemalt, Bergell → Silsersee); .an = aktuell, .vorher = voriges. */
+    .reise-bild img{ width:100%; height:100%; object-fit:cover; object-position:45% 60%; display:block;
+      opacity:0; transform:scale(1.12) translateX(calc(var(--kamera, 0) * -6%)) translateY(calc((var(--k, 0.5) - 0.5) * 3%)) }
+    .reise-bild .pass-bild{ object-position:50% 78%; transform:none }
+    .reise-bild .an{ opacity:1 }
+    .js .reise-bild .vorher{ opacity:1; z-index:1 }
+    .js .reise-bild > *{ -webkit-mask-image:var(--pinsel); mask-image:var(--pinsel); -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      -webkit-mask-size:300% 100%; mask-size:300% 100%; -webkit-mask-position:100% 0; mask-position:100% 0 }
+    .js .reise-bild .an{ z-index:2; -webkit-mask-position:0 0; mask-position:0 0 }
+    .js .reise-bild .vorher{ -webkit-mask-image:none; mask-image:none }
+    .reise-wolken{ position:absolute; inset:0 -40% 45% -40%; pointer-events:none; opacity:.35;
+      background:radial-gradient(38% 30% at 20% 40%, rgba(255,255,255,.55), transparent 70%),
+                 radial-gradient(30% 24% at 62% 28%, rgba(255,255,255,.45), transparent 70%),
+                 radial-gradient(26% 20% at 88% 55%, rgba(255,255,255,.4), transparent 70%) }
+    /* Zwei Schichten für die Lesbarkeit: hell links/oben unter dem Hero (dunkle Schrift), dunkel rechts unter
+       den Kehren (weisse Schrift, mind. 62 % unter dem Text). Das Skript schaltet über data-hier um. */
+    .reise-buehne::before, .reise-buehne::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none }
+    .reise-buehne::before{ opacity:0;
+      background:linear-gradient(180deg, rgba(244,240,230,.92) 0%, rgba(244,240,230,.4) 24%, rgba(244,240,230,0) 42%),
+                 linear-gradient(90deg, rgba(244,240,230,.94) 0%, rgba(244,240,230,.86) 44%, rgba(244,240,230,0) 70%) }
+    .reise-buehne::after{
+      background:linear-gradient(270deg, rgba(18,18,16,.68) 0%, rgba(18,18,16,.62) 44%, rgba(18,18,16,0) 66%),
+                 linear-gradient(90deg, rgba(18,18,16,.32) 0%, rgba(18,18,16,0) 22%) }
+    .js .reise-buehne[data-hier="-1"]::before{ opacity:1 } .js .reise-buehne[data-hier="-1"]::after{ opacity:0 }
+    html:not(.js) .reise-anfang{ background:rgba(244,240,230,.93) }
+    .reise-wolken{ z-index:3 } .reise-linie, .reise-stock, .reise-quelle{ z-index:4 }
+    .reise-linie{ position:absolute; left:clamp(24px, 5vw, 64px); top:14vh; height:70vh; width:auto; aspect-ratio:60/600; overflow:visible }
+    .reise-linie .weg{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:.1 9; opacity:.85 }
+    .reise-linie .gegangen{ fill:none; stroke:#FBFBFA; stroke-width:2.4; stroke-linecap:round; stroke-dasharray:100 100; stroke-dashoffset:100 }
+    .reise-linie .halt circle{ fill:#FBFBFA; stroke:currentColor; stroke-width:2 }
+    .reise-linie .halt.gegangen circle{ stroke-width:3 }
+    .reise-linie .halt{ transform-box:fill-box; transform-origin:center }
+    .reise-linie .ort{ display:none } .js .reise-linie .ort{ display:block }
+    .reise-linie .ort circle{ fill:none; stroke:var(--sand); stroke-width:3 }
+    .reise-linie .ort text{ fill:#FBFBFA; font-size:15px; font-weight:600; letter-spacing:.04em; paint-order:stroke; stroke:rgba(20,20,18,.7); stroke-width:4px; stroke-linejoin:round }
+    /* D · Der Stock dreht sich um die eigene Achse: das Skript verschiebt Nägel und Maserung je nach Drehwinkel
+       (vorne breit, an der Seite schmal, hinten weg). Kein Heranfahren, kein Zoom. */
+    .reise-stock{ position:absolute; left:50%; top:0; height:100%; width:auto; aspect-ratio:120/700; overflow:visible;
+      margin-left:calc(100vh * -120 / 700 / 2); margin-left:calc(100svh * -120 / 700 / 2) }
+    .reise-stock .holz{ fill:#CDA977 } .reise-stock .schatten{ fill:#A8855A } .reise-stock .licht{ fill:#E2C79C }
+    .reise-stock .maser rect{ fill:#8E6C42; opacity:.5 }
+    .reise-stock .riemen{ fill:#7A4A3A } .reise-stock .spitze{ fill:#5A5650 }
+    .nagel{ transform-box:fill-box; transform-origin:50% 50% }
+    .nagel .schild > *{ fill:#FBFBFA; stroke:inherit; stroke-width:3.5 }
+    .nagel .unterschatten > *{ fill:rgba(0,0,0,.28) }
+    .nagel .woelbung > *{ fill:url(#woelbung); pointer-events:none } 
+    /* Auf jedem Stocknagel das Kapitel-Zeichen der App in der Kapitelfarbe, auf heller Plakette mit farbigem Rand
+       (wie ein emailliertes Stockschild). Weiss auf Farbe ginge nicht: der Fünfliber hat weisse Details. */
+    .js .nagel{ opacity:0 } .js .nagel.dran{ opacity:1 }
+    .js .reise-buehne[data-hier="-1"] .reise-stock, .js .reise-buehne[data-hier="-1"] .reise-linie,
+    .js .reise-buehne[data-hier="-1"] .reise-wolken, .js .reise-buehne[data-hier="-1"] .reise-quelle{ opacity:0 }
+    .reise-quelle{ position:absolute; right:12px; bottom:10px; font-size:13px; color:#FBFBFA; background:rgba(20,20,18,.72); padding:2px 8px; border-radius:6px }
+    .reise-ablauf{ position:relative; z-index:5; margin-top:-100vh; margin-top:-100svh }
+    .reise{ padding-top:0; color:#FBFBFA }
+    /* Ausklang: nach der letzten Kehre verläuft das Bild ruhig ins Papier der Seite, statt hart abzubrechen. */
+    .reise-ausklang{ height:45vh; background:linear-gradient(rgba(0,0,0,0), var(--bg) 85%) }
+    /* B–D · Kehre: Zahl und Text rechts neben dem Stock */
+    .reise-stationen{ list-style:none }
+    .reise-station{ min-height:100vh; min-height:100svh; display:flex; align-items:center;
+      padding:12vh clamp(16px, 5vw, 72px) 12vh calc(50% + clamp(56px, 7vw, 120px)) }
+    .reise-text{ max-width:28rem; text-shadow:0 1px 14px rgba(0,0,0,.45) }
+    /* Statt einer grossen Zahl steht gross das Kapitel-Zeichen der App (wie Fujis grosse Höhenzahl): in der Kapitelfarbe
+       auf heller Plakette, Ecke 16 px (Karte, Brand Book §7a C). */
+    .reise-gross{ width:clamp(84px, 9vw, 120px); aspect-ratio:1; padding:14px; border-radius:16px; background:#FBFBFA; color:var(--farbe);
+      margin:0 0 16px }
+    .reise-gross svg{ width:100%; height:auto; aspect-ratio:1; display:block }
+    .reise-text .name{ display:block; font-size:15px; font-weight:600; color:#FBFBFA; margin-bottom:6px }
+    .reise-text h3{ font-size:clamp(23px, 2.4vw, 28px); line-height:1.2; font-weight:700; letter-spacing:-0.01em; margin-bottom:10px }
+    .reise-text p{ font-size:19px; line-height:1.55; color:#FBFBFA }
+    /* Knöpfe auf dem Bild: Nebenknopf auf Papier (deckend #FBFBFA, Schrift und Rand sandDeep, 10 px). Kein Milchglas (§7e). */
+    .reise-knoepfe{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px }
+    .reise-knoepfe a{ display:inline-flex; align-items:center; min-height:44px; padding:10px 20px; border-radius:var(--radius-knopf); text-decoration:none;
+      font-size:15px; font-weight:600; color:#7A5F30; border:1px solid #7A5F30; background:#FBFBFA; text-shadow:none }
+    .reise-knoepfe a:hover{ color:#7A5F30; background:#F2EDE3 }
+    .reise-knoepfe a:focus-visible{ outline:2px solid #FBFBFA; outline-offset:3px; box-shadow:0 0 0 5px #24262A }
+    .reise-knoepfe .weiter::after{ content:"↓" / ""; margin-left:8px }
+    @media (prefers-reduced-motion: no-preference){
+      .js .reise-buehne::before, .js .reise-buehne::after{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-bild img{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-bild .an{ transition:-webkit-mask-position 1.1s cubic-bezier(.4,0,.2,1), mask-position 1.1s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-linie .gegangen{ transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-linie .ort{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
+      .js .nagel.dran{ animation:anschlagen .6s cubic-bezier(.2,.8,.2,1) }
+      @keyframes anschlagen{ 0%{ transform:translateY(-14px) scale(1.15); opacity:0 } 65%{ transform:translateY(2px) scale(.97); opacity:1 } 100%{ transform:none } }
+      .reise-wolken{ animation:ziehen 80s linear infinite alternate }
+      @keyframes ziehen{ from{ transform:translateX(-12%) } to{ transform:translateX(12%) } }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .reise-bild img{ transform:none }
+      .reise-wolken{ display:none }
+    }
+    @media (max-width:760px){
+      .reise-buehne::before{ background:linear-gradient(180deg, rgba(244,240,230,.95) 0%, rgba(244,240,230,.9) 52%, rgba(244,240,230,.35) 78%, rgba(244,240,230,0) 92%) }
+      .reise-buehne::after{ background:linear-gradient(0deg, rgba(18,18,16,.74) 0%, rgba(18,18,16,.6) 40%, rgba(18,18,16,0) 70%) }
+      .reise-stock{ left:auto; right:6px; margin-left:0; height:86%; top:7% }
+      .reise-linie{ display:none }
+      .reise-station{ align-items:center; padding:10vh 76px 10vh 16px }
+      .reise-gross{ width:64px; padding:8px; border-radius:12px; margin-bottom:12px }
+      /* Am Handy wandert der Text durchs ganze Bild, auch über hellen Himmel: darum eine eigene dunkle Fläche (78 %, ohne Milchglas). */
+      .reise-text{ background:rgba(20,20,18,.78); padding:18px 18px 20px; border-radius:16px }
+      .reise-text p{ font-size:16px }
+    }
+    @media (max-height:520px){
+      .reise-buehne{ position:relative; height:70vh }
+      .reise-ablauf{ margin-top:0 }
+      .reise-anfang{ background:var(--bg) }
+      .reise{ color:var(--text) }
+      .reise-station{ min-height:auto; padding:24px 16px; background:var(--bg) }
+      .reise-text .name, .reise-text p{ color:var(--text) }
+      .reise-text{ text-shadow:none; background:none; padding:0 }
+      .reise-knoepfe a{ color:var(--text); border-color:var(--text); background:none }
+      .reise-knoepfe a:focus-visible{ outline-color:var(--sand-tief) }
+      .leiste{ display:none }
+    }
+
+    /* ─── Blick in die App (Editorial) ────────────────────────────── */
+    .blick{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:64px }
+    .blick.umgekehrt .blick-bild{ order:2 }
+    .blick .telefon{ width:250px; margin:0 auto }
+    .blick-text .zahl{ font-size:15px; font-weight:600; color:var(--leise); margin-bottom:8px }
+    .blick-text h3{ font-size:28px; line-height:1.25; font-weight:700; margin-bottom:12px; letter-spacing:-0.01em }
+    .blick-text p{ color:var(--leise); font-size:16px; max-width:28em }
+
+    /* ─── Holen: auf den Startbildschirm ──────────────────────────── */
+    .holen{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:var(--abstand-m) }
+    .geraet{ background:var(--flaeche); border:1px solid var(--rand); border-radius:var(--radius-m); padding:26px 26px 22px }
+    .geraet h3{ margin-bottom:14px }
+    .geraet ol{ padding-left:20px; color:var(--leise); font-size:16px }
+    .geraet li{ margin-bottom:8px; padding-left:4px }
+    .geraet .klein{ font-size:13px; color:var(--leise); margin-top:12px; border-top:1px solid var(--rand); padding-top:12px }
+    .bald{ margin-top:24px; font-size:16px; color:var(--leise) }
+    .atlas-hinweis{ margin-top:20px; font-size:15px; color:var(--leise) }
+    .bald strong{ color:var(--text) }
+    /* Atlas-Abschnitt: eine Karte als eigenes Bild (Entscheid 10.11.2026, C). Lädt erst beim Hinscrollen,
+       die Seite bleibt leicht; Breite und Höhe stehen am Bild, damit nichts springt. */
+    .atlas-bild{ margin-top:var(--abstand-m); max-width:640px }
+    .atlas-bild a{ display:block; border-radius:var(--radius-m) }
+    .atlas-bild img{ display:block; width:100%; height:auto }
+    .atlas-bild figcaption{ margin-top:8px; font-size:15px; color:var(--leise) }
+
+    /* ─── Vertrauen, Nachlesen, Fragen ────────────────────────────── */
+    .liste{ list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:28px 32px; margin-top:var(--abstand-m) }
+    .liste.eins{ grid-template-columns:1fr }
+    .liste li{ border-top:1px solid var(--rand); padding-top:14px }
+    .liste p, .liste span{ font-size:16px; color:var(--leise) }
+    .liste a{ font-weight:600 }
+    /* Ein Link, der allein im Listenpunkt steht («Karten für diese Frage», «Zum Nachlesen»), ist ein eigener Weg,
+       kein Link im Satz — 44 px wie jedes Bedienelement (Brand Book §7a, Regel I; gemessen bei 375 px: vorher 19 px).
+       Links im Fliesstext (z. B. «Datenschutz» unter «Kein Tracking») bleiben unberührt. */
+    .liste > li > a{ display:inline-block; padding:13px 0 }
+    .liste span{ display:block }
+    .zweispaltig{ display:grid; grid-template-columns:1fr 1fr; gap:64px }
+    .fragen h3{ margin-top:24px } .fragen h3:first-of-type{ margin-top:0 }
+    .fragen p{ color:var(--leise) }
+    .vorbehalt{ font-size:15px; color:var(--leise); border-left:2px solid var(--rand); padding-left:14px; margin-top:var(--abstand-m) }
+
+    .schluss{ text-align:center; padding:var(--abstand-l) 0 }
+    .schluss h2{ font-size:36px }
+    .schluss .unterzeile{ margin:0 auto }
+    .schluss .wege{ justify-content:center }
+
+    /* D/E · Fuss: heller Grund mit Haarlinie (kein dunkles Band), Bildmarke Anthrazit führt nach oben. */
+    .fuss{ border-top:1px solid var(--rand); padding:48px 0 56px; font-size:15px; color:var(--leise) }
+    .fuss a{ color:var(--sand-tief) }
+    .fuss p{ margin-bottom:8px }
+    .fuss-spalten{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px }
+    .fuss .marke{ color:var(--text); margin-bottom:8px } .fuss .marke:hover{ color:var(--text) }
+    .fuss-titel{ font-size:15px; font-weight:600; color:var(--text) }
+    .fuss ul{ list-style:none } .fuss li a{ display:inline-block; padding:6px 0 }
+    .fuss-zeile{ margin-top:32px; padding-top:16px; border-top:1px solid var(--rand); font-size:13px }
+    .fuss .vertrauen{ display:flex; flex-wrap:wrap; gap:4px 16px; color:var(--text) }
+    .fuss .vertrauen span::before{ content:"·"; margin-right:16px; color:var(--sand-tief) }
+    .fuss .vertrauen span:first-child::before{ content:none }
+
+    /* Zum Inhalt springen (wie in der App, .mp-skip-link): erst beim Fokus sichtbar. */
+    .sprung{ position:absolute; z-index:20; left:16px; top:-80px; padding:10px 16px; border-radius:var(--radius-knopf);
+      background:#FBFBFA; color:#24262A; font-weight:600 }
+    .sprung:focus{ top:12px }
+    main:focus{ outline:none }
+    html{ scroll-padding-top:64px }  /* Sprungziele landen unter der Leiste */
+
+    /* B/C · Leiste: Papier mit Haarlinie (kein Milchglas), 56 px. Erscheinen 250 ms, Verschwinden ⅔ davon (§7a E). */
+    .leiste{ position:fixed; z-index:8; top:0; left:0; right:0; background:#FBFBFA; color:#24262A; border-bottom:1px solid #E0DDD8;
+      transform:translateY(-100%); visibility:hidden }
+    .leiste[data-zustand="seite"]{ transform:none; visibility:visible }
+    .leiste-innen{ display:flex; align-items:center; gap:20px; min-height:56px }
+    .leiste .marke{ color:#22211F } .leiste .marke svg{ height:26px }
+    .leiste-links{ display:flex; gap:20px; margin-left:auto; font-size:15px }
+    .leiste-links a{ color:#24262A; text-decoration:none; padding-block:10px; display:inline-flex; align-items:center; min-height:44px }
+    .leiste-links a:hover{ text-decoration:underline }
+    .leiste-links a[aria-current="location"]{ text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px }
+    @media (prefers-reduced-motion: no-preference){
+      .leiste{ transition:transform .15s cubic-bezier(.4,0,.2,1), visibility 0s linear .15s }
+      .leiste[data-zustand="seite"]{ transition:transform .25s cubic-bezier(.4,0,.2,1) }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .folge img{ animation:none } .folge img:first-child{ opacity:1 } .schalter, #anhalten{ display:none }
+    }
+    @media (max-width:960px){
+      .pass h1{ font-size:38px }
+      .holen{ grid-template-columns:1fr 1fr }
+      .liste{ grid-template-columns:1fr 1fr }
+    }
+    @media (max-width:760px){
+      :root{ --abstand-l:64px }
+      h2{ font-size:28px }
+      .unterzeile{ font-size:16px }
+      /* A · am Handy eine wischbare Reiter-Zeile statt nichts; am Rand ein leiser Verlauf «da geht es weiter». */
+      .kopf{ flex-wrap:wrap; row-gap:4px }
+      html{ scroll-padding-top:120px }
+      .kopf nav, .leiste-links{ width:100%; gap:8px; overflow-x:auto; scrollbar-width:none; padding:4px 18% 4px 4px;
+        -webkit-mask-image:linear-gradient(90deg, #000 82%, transparent); mask-image:linear-gradient(90deg, #000 82%, transparent) }
+      .kopf nav a, .leiste-links a{ flex:none; display:inline-flex; align-items:center; min-height:44px; padding:0 14px;
+        border:1px solid rgba(36,38,42,.28); border-radius:var(--radius-knopf); background:rgba(251,251,250,.75); text-decoration:none }
+      .kopf nav a:focus-visible, .leiste-links a:focus-visible{ outline-offset:-3px }
+      .leiste-links a[aria-current="location"]{ background:#C4A06A; border-color:#C4A06A; color:#2A2620; text-decoration:none }
+      .leiste-innen{ flex-wrap:wrap; gap:6px 12px; padding-block:6px }
+      .fuss-spalten{ grid-template-columns:1fr; gap:24px }
+      .pass{ grid-template-columns:1fr; padding-top:136px; gap:28px; align-items:start }
+      .pass h1{ font-size:32px }
+      .pass .vorspann{ font-size:16px }
+      .geraete{ justify-self:stretch; max-width:none }
+      .geraete .telefon{ width:96px; padding:5px; border-radius:18px }
+      .geraete .bildschirm{ border-radius:14px; --statusleiste:12px }
+      .geraete .insel{ top:8px; width:30px; height:8px }
+      .tafel{ padding:24px }
+      .tafel p.gross{ font-size:19px }
+      .blick, .blick.umgekehrt{ grid-template-columns:1fr; gap:28px; margin-top:56px }
+      .blick.umgekehrt .blick-bild{ order:0 }
+      .blick .telefon{ width:220px; border-radius:40px; padding:9px }
+      .blick .bildschirm{ border-radius:31px; --statusleiste:32px }
+      .blick .insel{ top:17px; width:72px; height:20px }
+      .holen, .liste, .zweispaltig{ grid-template-columns:1fr; gap:20px }
+      .schluss h2{ font-size:28px }
+      footer a{ display:inline-block; padding:10px 2px }
+    }
+  </style>
+</head>
+<body>
+  <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+  <!-- ═══ Kopf: liegt auf dem Passbild ═══ -->
+  <header class="kopf-leiste">
+    <div class="rahmen kopf">
+      <a class="marke" href="/" aria-label="Maloja Plana, Start">
+        <svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>
+        Maloja&nbsp;Plana
+      </a>
+      <nav aria-label="Hauptmenü">
+        <a href="#weg">Kapitel</a>
+        <a href="#situationen">Situationen</a>
+        <a href="#holen">App holen</a>
+        <a href="/app/">Öffnen</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ C · Leiste: fährt nach der Reise herein, mit den Seiten-Links und dem aktuellen Abschnitt.
+       Während der Reise zeigt die Weglinie im Bild den Ort. Ohne Skript erscheint sie nie. ═══ -->
+  <nav class="leiste" aria-label="Abschnitte dieser Seite" data-zustand="aus">
+    <div class="rahmen leiste-innen">
+      <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg></a>
+      <div class="leiste-links">
+        <a href="#weg">Kapitel</a>
+        <a href="#situationen">Situationen</a>
+        <a href="#holen">App holen</a>
+        <a href="/app/">Öffnen</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="inhalt" tabindex="-1">
+    <!-- ═══ Hero und Reise: eine Bühne. Das Passbild unter dem Hero ist Bild 0, darauf folgen die Kehren. ═══ -->
+    <div class="reise-bruecke">
+      <div class="reise-buehne" aria-hidden="true" data-hier="-1">
+        <div class="reise-bild">
+          <img class="kehre-bild pass-bild an" src="/vorstellung/landschaft.webp" alt="" width="1482" height="1062" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-1.webp" alt="" width="1280" height="853" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-2.webp" alt="" width="1280" height="853" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-3.webp" alt="" width="1280" height="853" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-4.webp" alt="" width="1280" height="853" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-5.webp" alt="" width="1280" height="853" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-6.webp" alt="" width="1280" height="853" decoding="async">
+          <img class="kehre-bild" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/vorstellung/kehre-7.webp" alt="" width="1280" height="853" decoding="async">
+        </div>
+        <div class="reise-wolken"></div>
+        <svg class="reise-linie" viewBox="0 0 60 600" aria-hidden="true" focusable="false">
+            <path class="weg" d="M30 600 C10 560 50 520 22 470 C4 430 54 390 40 345 C28 305 6 280 22 220 C34 175 56 150 40 95 C28 55 34 25 30 0"/>
+            <path class="gegangen" d="M30 600 C10 560 50 520 22 470 C4 430 54 390 40 345 C28 305 6 280 22 220 C34 175 56 150 40 95 C28 55 34 25 30 0" pathLength="100"/>
+            <g class="halt" data-kehre="1" data-x="25.7" data-y="556.7" transform="translate(25.7 556.7)" style="color:var(--k0)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="weg1-leitform1"><rect x="1.5" y="4.5" width="21" height="15" rx="2" fill="#fff"></rect><rect x="3.6" y="8.6" width="6.4" height="8.2" rx="0.6" fill="#000"></rect><circle cx="6.8" cy="11.4" r="1.6" fill="#fff"></circle><path d="M4.3 16.8 Q6.8 13.1 9.3 16.8 Z" fill="#fff"></path><path d="M11.8 9.6 H18.6 M11.8 11.6 H20.2 M11.8 13.6 H17" fill="none" stroke-width="0.9" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="18.2" y="13.4" width="2.6" height="2" rx="0.4" opacity="0.75" fill="#000"></rect><path d="M3 5.8 H6" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#weg1-leitform1)"></rect></svg></g></svg></g><g class="halt" data-kehre="2" data-x="19.1" data-y="461.4" transform="translate(19.1 461.4)" style="color:var(--k1)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true" focusable="false" x="0" y="0"><path d="M 0.5 12 L 12 2.5 L 23.5 12 Z"></path><line x1="1.5" y1="11.8" x2="22.5" y2="11.8" stroke="white" stroke-width="0.2" opacity="0.12"></line><rect x="17" y="4.5" width="2" height="4.5"></rect><rect x="16.5" y="4" width="3" height="0.8" rx="0.2"></rect><path d="M 18 4 Q 17.5 3 18.2 2.2" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.4"></path><rect x="4" y="12" width="16" height="10"></rect><rect x="3.5" y="21.5" width="17" height="0.7" rx="0.1" fill="currentColor"></rect><line x1="4" y1="14" x2="20" y2="14" stroke="white" stroke-width="0.2" opacity="0.12"></line><line x1="4" y1="16.5" x2="20" y2="16.5" stroke="white" stroke-width="0.2" opacity="0.12"></line><line x1="4" y1="19" x2="20" y2="19" stroke="white" stroke-width="0.2" opacity="0.1"></line><rect x="10" y="7" width="4" height="3" rx="0.3" fill="white"></rect><path d="M 10 7.3 Q 12 5.8 14 7.3" fill="white"></path><line x1="12" y1="5.8" x2="12" y2="10" stroke="currentColor" stroke-width="0.4"></line><line x1="10" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="0.4"></line><path d="M 8 10.5 Q 10 11.2 12 10.5 Q 14 11.2 16 10.5" fill="none" stroke="white" stroke-width="0.25" opacity="0.2"></path><path d="M 4 12 L 3 12 L 4 11" fill="none" stroke="currentColor" stroke-width="0.4"></path><path d="M 20 12 L 21 12 L 20 11" fill="none" stroke="currentColor" stroke-width="0.4"></path><line x1="4" y1="15.5" x2="20" y2="15.5" stroke="white" stroke-width="0.7"></line><line x1="4.5" y1="12.5" x2="4.5" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="9.3" y1="12.5" x2="9.3" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="14.7" y1="12.5" x2="14.7" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="19.5" y1="12.5" x2="19.5" y2="15.5" stroke="white" stroke-width="0.4"></line><path d="M 4.5 12.5 L 9.3 15.5 M 9.3 12.5 L 4.5 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><path d="M 9.3 12.5 L 14.7 15.5 M 14.7 12.5 L 9.3 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><path d="M 14.7 12.5 L 19.5 15.5 M 19.5 12.5 L 14.7 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><rect x="5" y="15.8" width="4" height="0.7" rx="0.15" fill="white" opacity="0.25"></rect><rect x="15" y="15.8" width="4" height="0.7" rx="0.15" fill="white" opacity="0.25"></rect><circle cx="6" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="7" cy="15.5" r="0.4" fill="white" opacity="0.2"></circle><circle cx="8" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="16" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="17" cy="15.5" r="0.4" fill="white" opacity="0.2"></circle><circle cx="18" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><rect x="5.2" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="6.4" y="17.2" width="3" height="2.8" rx="0.2" fill="white"></rect><rect x="9.6" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="13.4" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="14.6" y="17.2" width="3" height="2.8" rx="0.2" fill="white"></rect><rect x="17.8" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><line x1="7.9" y1="17.2" x2="7.9" y2="20" stroke="currentColor" stroke-width="0.3"></line><line x1="16.1" y1="17.2" x2="16.1" y2="20" stroke="currentColor" stroke-width="0.3"></line><line x1="6.4" y1="18.6" x2="9.4" y2="18.6" stroke="currentColor" stroke-width="0.2"></line><line x1="14.6" y1="18.6" x2="17.6" y2="18.6" stroke="currentColor" stroke-width="0.2"></line><rect x="6.2" y="20" width="3.6" height="0.3" rx="0.1" fill="white" opacity="0.3"></rect><rect x="14.4" y="20" width="3.6" height="0.3" rx="0.1" fill="white" opacity="0.3"></rect><rect x="10.5" y="17.5" width="3" height="4.5" rx="0.3" fill="white"></rect><path d="M 10.5 17.8 Q 12 16.5 13.5 17.8" fill="white"></path><line x1="12" y1="17" x2="12" y2="22" stroke="currentColor" stroke-width="0.2" opacity="0.3"></line><circle cx="12.8" cy="20" r="0.3" fill="currentColor"></circle><rect x="10" y="21.5" width="4" height="0.5" rx="0.1" fill="white" opacity="0.2"></rect></svg></g></svg></g><g class="halt" data-kehre="3" data-x="41.5" data-y="373.3" transform="translate(41.5 373.3)" style="color:var(--k2)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 48 48" fill="currentColor" x="0" y="0" width="24" height="24"><circle cx="24" cy="24" r="23"></circle><circle cx="24" cy="24" r="22.2" fill="none" stroke="white" stroke-width="0.5" opacity="0.25"></circle><circle cx="24" cy="24" r="21.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"></circle><circle cx="24" cy="24" r="20.5" fill="none" stroke="white" stroke-width="0.8" stroke-dasharray="0.15 1.5" stroke-linecap="round" opacity="0.9"></circle><text x="24" y="13" text-anchor="middle" font-size="6" font-weight="bold" fill="white" style="font-family:Georgia, serif" letter-spacing="1">5 FR.</text><path d="M 19 15 L 29 15 L 29 23.5 Q 29 28 24 31 Q 19 28 19 23.5 Z" fill="white"></path><path d="M 20.2 16.2 L 27.8 16.2 L 27.8 23 Q 27.8 26.5 24 29 Q 20.2 26.5 20.2 23 Z" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.25"></path><rect x="22.8" y="17.5" width="2.4" height="9" rx="0.3" fill="currentColor"></rect><rect x="20.5" y="20.5" width="7" height="2.5" rx="0.3" fill="currentColor"></rect><path d="M 23 38 Q 19 35 14.5 28 Q 10.5 22 9 14 Q 8.5 12 10 11" fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round" opacity="0.85"></path><path d="M 9.5 12 Q 8 10.5 7.5 10.5 Q 7.5 12.5 9.5 12 Z" fill="white" opacity="0.7"></path><path d="M 9.5 12 Q 11 10.5 12 10 Q 11.5 12.2 9.5 12 Z" fill="white" opacity="0.7"></path><path d="M 9 14.5 Q 6.8 13 5.5 13 Q 6.5 15.2 9 14.5 Z" fill="white" opacity="0.8"></path><path d="M 9 14.5 Q 11 12.5 12.5 12.2 Q 11 14.8 9 14.5 Z" fill="white" opacity="0.8"></path><path d="M 9.3 17.5 Q 7 15.8 5.8 16 Q 7.2 18.2 9.3 17.5 Z" fill="white" opacity="0.85"></path><path d="M 9.3 17.5 Q 11.5 15.2 13 15.2 Q 11.2 17.5 9.3 17.5 Z" fill="white" opacity="0.85"></path><path d="M 10 20.5 Q 7 18.5 5.5 18.8 Q 7.5 21 10 20.5 Z" fill="white" opacity="0.85"></path><path d="M 10 20.5 Q 12.5 18 14.2 18 Q 12.2 20.5 10 20.5 Z" fill="white" opacity="0.85"></path><path d="M 11.5 24 Q 8.5 21.8 6.5 22.2 Q 9 24.5 11.5 24 Z" fill="white" opacity="0.85"></path><path d="M 11.5 24 Q 14 21.5 16 21.5 Q 13.8 24 11.5 24 Z" fill="white" opacity="0.85"></path><path d="M 13.5 27.5 Q 10.5 25.5 8.5 26 Q 11 28 13.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 13.5 27.5 Q 16 25 18 25.2 Q 15.8 27.5 13.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 16 31 Q 13 29 11 29.2 Q 13.5 31.5 16 31 Z" fill="white" opacity="0.8"></path><path d="M 16 31 Q 18.5 28.5 20.5 28.8 Q 18.2 31 16 31 Z" fill="white" opacity="0.8"></path><path d="M 19 34.5 Q 16 32.5 14.5 33 Q 16.8 35 19 34.5 Z" fill="white" opacity="0.75"></path><path d="M 19 34.5 Q 21.2 32.5 22.5 32.8 Q 20.8 34.5 19 34.5 Z" fill="white" opacity="0.75"></path><circle cx="9.2" cy="13.2" r="0.7" fill="white" opacity="0.55"></circle><circle cx="8.5" cy="13.8" r="0.55" fill="white" opacity="0.45"></circle><circle cx="9" cy="16" r="0.75" fill="white" opacity="0.6"></circle><circle cx="8.2" cy="16.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="9.6" cy="16.6" r="0.55" fill="white" opacity="0.45"></circle><circle cx="9.5" cy="19" r="0.75" fill="white" opacity="0.6"></circle><circle cx="8.7" cy="19.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="10.3" cy="19.5" r="0.55" fill="white" opacity="0.45"></circle><circle cx="10.5" cy="22" r="0.75" fill="white" opacity="0.6"></circle><circle cx="9.7" cy="22.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="12.5" cy="25.8" r="0.7" fill="white" opacity="0.55"></circle><circle cx="11.8" cy="26.3" r="0.55" fill="white" opacity="0.45"></circle><circle cx="14.5" cy="29.2" r="0.65" fill="white" opacity="0.5"></circle><circle cx="17" cy="32.8" r="0.55" fill="white" opacity="0.45"></circle><path d="M 25 38 Q 29 35 33.5 28 Q 37.5 22 39 14 Q 39.5 12 38 11" fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round" opacity="0.85"></path><path d="M 38.5 12 Q 40 10.5 40.5 10.5 Q 40.5 12.5 38.5 12 Z" fill="white" opacity="0.7"></path><path d="M 38.5 12 Q 37 10.5 36 10 Q 36.5 12.2 38.5 12 Z" fill="white" opacity="0.7"></path><path d="M 39 14.5 Q 41.2 13 42.5 13 Q 41.5 15.2 39 14.5 Z" fill="white" opacity="0.8"></path><path d="M 39 14.5 Q 37 12.5 35.5 12.2 Q 37 14.8 39 14.5 Z" fill="white" opacity="0.8"></path><path d="M 38.7 17.5 Q 41 15.8 42.2 16 Q 40.8 18.2 38.7 17.5 Z" fill="white" opacity="0.85"></path><path d="M 38.7 17.5 Q 36.5 15.2 35 15.2 Q 36.8 17.5 38.7 17.5 Z" fill="white" opacity="0.85"></path><path d="M 38 20.5 Q 41 18.5 42.5 18.8 Q 40.5 21 38 20.5 Z" fill="white" opacity="0.85"></path><path d="M 38 20.5 Q 35.5 18 33.8 18 Q 35.8 20.5 38 20.5 Z" fill="white" opacity="0.85"></path><path d="M 36.5 24 Q 39.5 21.8 41.5 22.2 Q 39 24.5 36.5 24 Z" fill="white" opacity="0.85"></path><path d="M 36.5 24 Q 34 21.5 32 21.5 Q 34.2 24 36.5 24 Z" fill="white" opacity="0.85"></path><path d="M 34.5 27.5 Q 37.5 25.5 39.5 26 Q 37 28 34.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 34.5 27.5 Q 32 25 30 25.2 Q 32.2 27.5 34.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 32 31 Q 35 29 37 29.2 Q 34.5 31.5 32 31 Z" fill="white" opacity="0.8"></path><path d="M 32 31 Q 29.5 28.5 27.5 28.8 Q 29.8 31 32 31 Z" fill="white" opacity="0.8"></path><path d="M 29 34.5 Q 32 32.5 33.5 33 Q 31.2 35 29 34.5 Z" fill="white" opacity="0.75"></path><path d="M 29 34.5 Q 26.8 32.5 25.5 32.8 Q 27.2 34.5 29 34.5 Z" fill="white" opacity="0.75"></path><circle cx="38.8" cy="13.2" r="0.7" fill="white" opacity="0.55"></circle><circle cx="39.5" cy="13.8" r="0.55" fill="white" opacity="0.45"></circle><circle cx="39" cy="16" r="0.75" fill="white" opacity="0.6"></circle><circle cx="39.8" cy="16.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="38.4" cy="16.6" r="0.55" fill="white" opacity="0.45"></circle><circle cx="38.5" cy="19" r="0.75" fill="white" opacity="0.6"></circle><circle cx="39.3" cy="19.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="37.7" cy="19.5" r="0.55" fill="white" opacity="0.45"></circle><circle cx="37.5" cy="22" r="0.75" fill="white" opacity="0.6"></circle><circle cx="38.3" cy="22.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="35.5" cy="25.8" r="0.7" fill="white" opacity="0.55"></circle><circle cx="36.2" cy="26.3" r="0.55" fill="white" opacity="0.45"></circle><circle cx="33.5" cy="29.2" r="0.65" fill="white" opacity="0.5"></circle><circle cx="31" cy="32.8" r="0.55" fill="white" opacity="0.45"></circle><path d="M 22 38.5 L 24 37 L 26 38.5 L 24 40 Z" fill="white" opacity="0.8"></path><path d="M 22 38.5 Q 19.5 39.5 17.5 38 Q 16 37 16.5 35.5" fill="none" stroke="white" stroke-width="0.9" stroke-linecap="round" opacity="0.7"></path><path d="M 22 39.2 Q 19.5 40.5 17.8 39 Q 16.5 38 17 36.5" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" opacity="0.45"></path><path d="M 26 38.5 Q 28.5 39.5 30.5 38 Q 32 37 31.5 35.5" fill="none" stroke="white" stroke-width="0.9" stroke-linecap="round" opacity="0.7"></path><path d="M 26 39.2 Q 28.5 40.5 30.2 39 Q 31.5 38 31 36.5" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" opacity="0.45"></path><text x="24" y="43.5" text-anchor="middle" font-size="4.2" fill="white" style="font-family:Georgia, serif" letter-spacing="0.8">2026</text><circle cx="16" cy="42.5" r="0.45" fill="white" opacity="0.35"></circle><circle cx="32" cy="42.5" r="0.45" fill="white" opacity="0.35"></circle></svg></g></svg></g><g class="halt" data-kehre="4" data-x="20.5" data-y="290" transform="translate(20.5 290)" style="color:var(--k3)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="weg4-leitform2"><path d="M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z" fill="#fff"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(22.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(67.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(112.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(157.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(202.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(247.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(292.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(337.5)" fill="#000"></path><circle cx="12" cy="12.5" r="2.13" fill="#000"></circle><circle cx="12" cy="11.8" r="0.55" fill="#fff"></circle><circle cx="11.35" cy="12.9" r="0.55" fill="#fff"></circle><circle cx="12.65" cy="12.9" r="0.55" fill="#fff"></circle></mask><rect width="24" height="24" fill="currentColor" mask="url(#weg4-leitform2)"></rect></svg></g></svg></g><g class="halt" data-kehre="5" data-x="30.6" data-y="193.3" transform="translate(30.6 193.3)" style="color:var(--k4)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="weg5-leitform3"><path d="M12 3.2 L23 8.4 L12 13.6 L1 8.4 Z" fill="#fff"></path><path d="M5.4 10.8 V15.4 C5.4 17.6 8.5 19 12 19 C15.5 19 18.6 17.6 18.6 15.4 V10.8 L12 13.9 Z" fill="#fff"></path><path d="M12 8.4 L20.4 9.6 V15" fill="none" stroke-width="0.8" stroke="#fff"></path><path d="M19.6 15 H21.2 L21.7 18.6 H19.1 Z" fill="#fff"></path><circle cx="12" cy="8.4" r="0.95" fill="#fff"></circle><path d="M5.6 12.3 Q12 15.5 18.4 12.3" fill="none" stroke-width="0.6" opacity="0.55" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><path d="M19.7 16.7 V18.3 M20.4 16.7 V18.3 M21.1 16.7 V18.3" fill="none" stroke-width="0.3" opacity="0.65" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><circle cx="12" cy="8.4" r="0.4" opacity="0.6" fill="#000"></circle></mask><rect width="24" height="24" fill="currentColor" mask="url(#weg5-leitform3)"></rect></svg></g></svg></g><g class="halt" data-kehre="6" data-x="42.9" data-y="106.3" transform="translate(42.9 106.3)" style="color:var(--k5)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 48 48" fill="currentColor" x="0" y="0" width="24" height="24"><line x1="12" y1="1" x2="14" y2="42" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"></line><path d="M 12 1 Q 10.5 3.5 11.3 6 L 12 3.5 L 12.7 6 Q 13.5 3.5 12 1 Z" fill="currentColor"></path><ellipse cx="22" cy="7" rx="3" ry="3.2" fill="currentColor"></ellipse><path d="M 19.5 4.2 Q 19 5 18.8 6 Q 18.3 6.8 18 7.5 Q 17.8 8 18.2 8.6 Q 18.5 9.2 19.2 9.6 L 20 9.8" fill="currentColor"></path><path d="M 19.2 6.3 Q 19.7 6 20.3 6.3 Q 19.7 6.6 19.2 6.3 Z" fill="white" opacity="0.25"></path><circle cx="18.3" cy="7.8" r="0.15" fill="white" opacity="0.1"></circle><path d="M 18.3 8.5 Q 18.6 8.3 18.9 8.5" fill="none" stroke="white" stroke-width="0.15" opacity="0.12"></path><path d="M 19.5 4.2 Q 21 3.2 23.5 3.8 Q 25 4.2 25 5.5 Q 25.5 6.5 25 8" fill="currentColor"></path><ellipse cx="25.2" cy="6" rx="1.8" ry="1.6" fill="currentColor"></ellipse><path d="M 24 5.5 Q 25 5 26 5.5 Q 26 6.5 25 7" fill="none" stroke="white" stroke-width="0.2" opacity="0.15"></path><line x1="18.5" y1="4.2" x2="17.5" y2="2.5" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="19.5" y1="3.8" x2="18.8" y2="1.5" stroke="currentColor" stroke-width="0.65" stroke-linecap="round"></line><line x1="20.5" y1="3.5" x2="20.2" y2="0.8" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="21.5" y1="3.3" x2="21.5" y2="0.3" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"></line><line x1="22.5" y1="3.5" x2="23" y2="0.8" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="23.5" y1="3.8" x2="24.2" y2="1.5" stroke="currentColor" stroke-width="0.65" stroke-linecap="round"></line><line x1="24.5" y1="4.2" x2="25.5" y2="2.5" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><path d="M 18 4.8 Q 21.5 3 25 4.5" fill="none" stroke="currentColor" stroke-width="1"></path><path d="M 19.5 9.8 C 19.2 11.0 19.3 12.5 19.6 14.0 Q 19.9 15.0 20.5 15.2 L 22.0 15.0 C 22.3 14.0 22.2 11.5 21.8 9.8 Q 21.0 9.4 19.5 9.8 Z" fill="currentColor"></path><path d="M 19.0 15.0 Q 20.8 15.8 22.5 15.0" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.22"></path><path d="M 19.8 11.5 Q 20.8 11.8 21.8 11.5" fill="none" stroke="white" stroke-width="0.18" opacity="0.18"></path><path d="M 16.5 15 Q 19.5 14.5 22.5 15 Q 25.5 15.5 26.5 17.5 Q 26.5 19 25.5 20 Q 24.5 21.5 24 23 Q 23 24 23.5 26 Q 24.5 29 25.5 32 Q 27 36 28.5 39.5 L 30 42 L 10.5 42 L 12 39.5 Q 13.5 36 14.5 32 Q 15.5 29 16 26 Q 16.5 24 16 23 Q 15.5 21.5 14.8 20 Q 14 19 14 17.5 Q 14 15.5 16.5 15 Z" fill="currentColor"></path><path d="M 24 15.5 Q 22 17 20 19 Q 18 22 17 25 Q 16 28 15 32 Q 14 36 12 42" fill="none" stroke="white" stroke-width="0.6" opacity="0.3"></path><path d="M 25 16 Q 23 18 21 20 Q 19 23 18 26 Q 17 29 16 33 Q 15 37 13.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.15"></path><path d="M 16.5 15 Q 15.5 15.5 15 16" fill="none" stroke="white" stroke-width="0.2" opacity="0.15"></path><path d="M 16.5 17 Q 18.5 18.5 20.5 18" fill="none" stroke="white" stroke-width="0.25" opacity="0.2"></path><path d="M 15.5 23 Q 20 24 24.5 23" fill="none" stroke="white" stroke-width="0.7" opacity="0.35"></path><rect x="19.2" y="22.6" width="1.5" height="1" rx="0.2" fill="white" opacity="0.25"></rect><path d="M 16.5 26 Q 15 31 13.5 36 Q 12.5 39 11.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 19 25.5 Q 18 31 17 36 Q 16.5 39 15.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 21 25.5 Q 20.5 31 20 36 Q 19.5 39 19.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 23 26 Q 23 31 23 36 Q 23 39 23.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 25.5 27 Q 26 32 26.5 37 Q 27 39 27.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.15"></path><path d="M 11.5 41.5 Q 20 42.5 29 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.12"></path><path d="M 16 16 Q 15 18 14.5 20 Q 14 22 13.5 23.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><ellipse cx="13.5" cy="24" rx="1.1" ry="1.3" fill="currentColor"></ellipse><path d="M 24 16 Q 26.5 17.5 28.5 20 Q 31 23 33 26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M 23.5 15.2 Q 25 15 25.8 16 Q 26 17 25 17 Q 24 16 23.5 15.5 Z" fill="currentColor"></path><ellipse cx="33.2" cy="26.5" rx="1.1" ry="0.8" fill="currentColor"></ellipse><path d="M 31 27 L 39 27 L 39 34 Q 39 38 35 40 Q 31 38 31 34 Z" fill="currentColor"></path><path d="M 32 28.2 L 38 28.2 L 38 33.5 Q 38 36.5 35 38.5 Q 32 36.5 32 33.5 Z" fill="none" stroke="white" stroke-width="0.3" opacity="0.25"></path><rect x="34" y="29" width="2" height="7" rx="0.2" fill="white"></rect><rect x="32.5" y="31" width="5" height="2.5" rx="0.2" fill="white"></rect><path d="M 15 41.5 Q 13.5 41.2 12 41.5 L 11.5 42.5 L 16 42.5 Z" fill="currentColor"></path><path d="M 23.5 41.5 Q 25 41.2 26 41.5 L 26.5 42.5 L 23 42.5 Z" fill="currentColor"></path><path d="M 13 42 L 14.5 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.25"></path><path d="M 24.5 42 L 25.5 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.25"></path><rect x="9" y="42.5" width="24" height="0.8" rx="0.2" fill="currentColor"></rect><rect x="7" y="43.3" width="28" height="1.2" rx="0.2" fill="currentColor"></rect><text x="21" y="47.5" text-anchor="middle" font-size="3.2" font-weight="bold" fill="currentColor" style="font-family:Georgia, serif" letter-spacing="1.5">HELVETIA</text></svg></g></svg></g><g class="halt" data-kehre="7" data-x="31.7" data-y="28.9" transform="translate(31.7 28.9)" style="color:var(--k6)"><circle r="12"/><svg x="-8.5" y="-8.5" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="weg7-leitform4"><rect x="2" y="7.6" width="20" height="13.4" rx="2.6" fill="#fff"></rect><path d="M8.6 7.6 V5.6 A1.6 1.6 0 0 1 10.2 4 H13.8 A1.6 1.6 0 0 1 15.4 5.6 V7.6" fill="none" stroke-width="1.6" stroke="#fff"></path><rect x="10.3" y="3.3" width="3.4" height="1.5" rx="0.7" fill="#fff"></rect><path d="M2.3 10.6 H21.7" fill="none" stroke-width="0.7" opacity="0.9" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="4.8" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><rect x="17.3" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><path d="M12 12.4 v6.4 M8.8 15.6 h6.4" fill="none" stroke-width="2.6" stroke="#000"></path><path d="M2.6 18.4 L4.4 20.4 M21.4 18.4 L19.6 20.4" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#weg7-leitform4)"></rect></svg></g></svg></g>
+            <g class="ort"><circle r="17"/><text x="26" y="5"></text></g>
+          </svg>
+        <svg class="reise-stock" viewBox="0 0 120 700" aria-hidden="true" focusable="false">
+            <defs><linearGradient id="woelbung" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#000" stop-opacity=".2"/><stop offset=".38" stop-color="#fff" stop-opacity=".22"/>
+              <stop offset=".62" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient></defs>
+            <rect class="schatten" x="36" y="0" width="48" height="680" rx="24"/>
+            <rect class="holz" x="36" y="0" width="40" height="680" rx="20"/>
+            <g class="maser"><rect x="65.9" y="8" width="1.4" height="664" rx=".7"/><rect x="77.7" y="8" width="1.4" height="664" rx=".7"/><rect x="79.1" y="8" width="1.4" height="664" rx=".7"/><rect x="69.3" y="8" width="1.4" height="664" rx=".7"/><rect x="54.1" y="8" width="1.4" height="664" rx=".7"/><rect x="42.3" y="8" width="1.4" height="664" rx=".7"/><rect x="40.9" y="8" width="1.4" height="664" rx=".7"/><rect x="50.7" y="8" width="1.4" height="664" rx=".7"/></g>
+            <rect class="licht" x="44" y="10" width="7" height="660" rx="3.5"/>
+            <path class="spitze" d="M46 678 h28 l-14 22 z"/>
+            <rect class="riemen" x="30" y="24" width="60" height="42" rx="8"/>
+            <g class="nagel-dreh" data-kehre="1"><g class="nagel"><g transform="rotate(-7 60 620)"><g class="unterschatten" transform="translate(1.5 2.5)"><path d="M31 592 h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/></g><g class="schild" style="stroke:var(--k0)"><path d="M31 592 h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/></g><g class="bild" style="color:var(--k0)"><svg x="42" y="602" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="nagel1-leitform1"><rect x="1.5" y="4.5" width="21" height="15" rx="2" fill="#fff"></rect><rect x="3.6" y="8.6" width="6.4" height="8.2" rx="0.6" fill="#000"></rect><circle cx="6.8" cy="11.4" r="1.6" fill="#fff"></circle><path d="M4.3 16.8 Q6.8 13.1 9.3 16.8 Z" fill="#fff"></path><path d="M11.8 9.6 H18.6 M11.8 11.6 H20.2 M11.8 13.6 H17" fill="none" stroke-width="0.9" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="18.2" y="13.4" width="2.6" height="2" rx="0.4" opacity="0.75" fill="#000"></rect><path d="M3 5.8 H6" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#nagel1-leitform1)"></rect></svg></g></svg></g><g class="woelbung"><path d="M31 592 h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/></g></g></g></g><g class="nagel-dreh" data-kehre="2"><g class="nagel"><g transform="rotate(5 60 538)"><g class="unterschatten" transform="translate(1.5 2.5)"><rect x="31" y="513" width="58" height="50" rx="11"/></g><g class="schild" style="stroke:var(--k1)"><rect x="31" y="513" width="58" height="50" rx="11"/></g><g class="bild" style="color:var(--k1)"><svg x="42" y="520" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true" focusable="false" x="0" y="0"><path d="M 0.5 12 L 12 2.5 L 23.5 12 Z"></path><line x1="1.5" y1="11.8" x2="22.5" y2="11.8" stroke="white" stroke-width="0.2" opacity="0.12"></line><rect x="17" y="4.5" width="2" height="4.5"></rect><rect x="16.5" y="4" width="3" height="0.8" rx="0.2"></rect><path d="M 18 4 Q 17.5 3 18.2 2.2" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.4"></path><rect x="4" y="12" width="16" height="10"></rect><rect x="3.5" y="21.5" width="17" height="0.7" rx="0.1" fill="currentColor"></rect><line x1="4" y1="14" x2="20" y2="14" stroke="white" stroke-width="0.2" opacity="0.12"></line><line x1="4" y1="16.5" x2="20" y2="16.5" stroke="white" stroke-width="0.2" opacity="0.12"></line><line x1="4" y1="19" x2="20" y2="19" stroke="white" stroke-width="0.2" opacity="0.1"></line><rect x="10" y="7" width="4" height="3" rx="0.3" fill="white"></rect><path d="M 10 7.3 Q 12 5.8 14 7.3" fill="white"></path><line x1="12" y1="5.8" x2="12" y2="10" stroke="currentColor" stroke-width="0.4"></line><line x1="10" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="0.4"></line><path d="M 8 10.5 Q 10 11.2 12 10.5 Q 14 11.2 16 10.5" fill="none" stroke="white" stroke-width="0.25" opacity="0.2"></path><path d="M 4 12 L 3 12 L 4 11" fill="none" stroke="currentColor" stroke-width="0.4"></path><path d="M 20 12 L 21 12 L 20 11" fill="none" stroke="currentColor" stroke-width="0.4"></path><line x1="4" y1="15.5" x2="20" y2="15.5" stroke="white" stroke-width="0.7"></line><line x1="4.5" y1="12.5" x2="4.5" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="9.3" y1="12.5" x2="9.3" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="14.7" y1="12.5" x2="14.7" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="19.5" y1="12.5" x2="19.5" y2="15.5" stroke="white" stroke-width="0.4"></line><path d="M 4.5 12.5 L 9.3 15.5 M 9.3 12.5 L 4.5 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><path d="M 9.3 12.5 L 14.7 15.5 M 14.7 12.5 L 9.3 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><path d="M 14.7 12.5 L 19.5 15.5 M 19.5 12.5 L 14.7 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><rect x="5" y="15.8" width="4" height="0.7" rx="0.15" fill="white" opacity="0.25"></rect><rect x="15" y="15.8" width="4" height="0.7" rx="0.15" fill="white" opacity="0.25"></rect><circle cx="6" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="7" cy="15.5" r="0.4" fill="white" opacity="0.2"></circle><circle cx="8" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="16" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="17" cy="15.5" r="0.4" fill="white" opacity="0.2"></circle><circle cx="18" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><rect x="5.2" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="6.4" y="17.2" width="3" height="2.8" rx="0.2" fill="white"></rect><rect x="9.6" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="13.4" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="14.6" y="17.2" width="3" height="2.8" rx="0.2" fill="white"></rect><rect x="17.8" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><line x1="7.9" y1="17.2" x2="7.9" y2="20" stroke="currentColor" stroke-width="0.3"></line><line x1="16.1" y1="17.2" x2="16.1" y2="20" stroke="currentColor" stroke-width="0.3"></line><line x1="6.4" y1="18.6" x2="9.4" y2="18.6" stroke="currentColor" stroke-width="0.2"></line><line x1="14.6" y1="18.6" x2="17.6" y2="18.6" stroke="currentColor" stroke-width="0.2"></line><rect x="6.2" y="20" width="3.6" height="0.3" rx="0.1" fill="white" opacity="0.3"></rect><rect x="14.4" y="20" width="3.6" height="0.3" rx="0.1" fill="white" opacity="0.3"></rect><rect x="10.5" y="17.5" width="3" height="4.5" rx="0.3" fill="white"></rect><path d="M 10.5 17.8 Q 12 16.5 13.5 17.8" fill="white"></path><line x1="12" y1="17" x2="12" y2="22" stroke="currentColor" stroke-width="0.2" opacity="0.3"></line><circle cx="12.8" cy="20" r="0.3" fill="currentColor"></circle><rect x="10" y="21.5" width="4" height="0.5" rx="0.1" fill="white" opacity="0.2"></rect></svg></g></svg></g><g class="woelbung"><rect x="31" y="513" width="58" height="50" rx="11"/></g></g></g></g><g class="nagel-dreh" data-kehre="3"><g class="nagel"><g transform="rotate(-3 60 456)"><g class="unterschatten" transform="translate(1.5 2.5)"><circle cx="60" cy="456" r="27"/></g><g class="schild" style="stroke:var(--k2)"><circle cx="60" cy="456" r="27"/></g><g class="bild" style="color:var(--k2)"><svg x="42" y="438" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 48 48" fill="currentColor" x="0" y="0" width="24" height="24"><circle cx="24" cy="24" r="23"></circle><circle cx="24" cy="24" r="22.2" fill="none" stroke="white" stroke-width="0.5" opacity="0.25"></circle><circle cx="24" cy="24" r="21.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"></circle><circle cx="24" cy="24" r="20.5" fill="none" stroke="white" stroke-width="0.8" stroke-dasharray="0.15 1.5" stroke-linecap="round" opacity="0.9"></circle><text x="24" y="13" text-anchor="middle" font-size="6" font-weight="bold" fill="white" style="font-family:Georgia, serif" letter-spacing="1">5 FR.</text><path d="M 19 15 L 29 15 L 29 23.5 Q 29 28 24 31 Q 19 28 19 23.5 Z" fill="white"></path><path d="M 20.2 16.2 L 27.8 16.2 L 27.8 23 Q 27.8 26.5 24 29 Q 20.2 26.5 20.2 23 Z" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.25"></path><rect x="22.8" y="17.5" width="2.4" height="9" rx="0.3" fill="currentColor"></rect><rect x="20.5" y="20.5" width="7" height="2.5" rx="0.3" fill="currentColor"></rect><path d="M 23 38 Q 19 35 14.5 28 Q 10.5 22 9 14 Q 8.5 12 10 11" fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round" opacity="0.85"></path><path d="M 9.5 12 Q 8 10.5 7.5 10.5 Q 7.5 12.5 9.5 12 Z" fill="white" opacity="0.7"></path><path d="M 9.5 12 Q 11 10.5 12 10 Q 11.5 12.2 9.5 12 Z" fill="white" opacity="0.7"></path><path d="M 9 14.5 Q 6.8 13 5.5 13 Q 6.5 15.2 9 14.5 Z" fill="white" opacity="0.8"></path><path d="M 9 14.5 Q 11 12.5 12.5 12.2 Q 11 14.8 9 14.5 Z" fill="white" opacity="0.8"></path><path d="M 9.3 17.5 Q 7 15.8 5.8 16 Q 7.2 18.2 9.3 17.5 Z" fill="white" opacity="0.85"></path><path d="M 9.3 17.5 Q 11.5 15.2 13 15.2 Q 11.2 17.5 9.3 17.5 Z" fill="white" opacity="0.85"></path><path d="M 10 20.5 Q 7 18.5 5.5 18.8 Q 7.5 21 10 20.5 Z" fill="white" opacity="0.85"></path><path d="M 10 20.5 Q 12.5 18 14.2 18 Q 12.2 20.5 10 20.5 Z" fill="white" opacity="0.85"></path><path d="M 11.5 24 Q 8.5 21.8 6.5 22.2 Q 9 24.5 11.5 24 Z" fill="white" opacity="0.85"></path><path d="M 11.5 24 Q 14 21.5 16 21.5 Q 13.8 24 11.5 24 Z" fill="white" opacity="0.85"></path><path d="M 13.5 27.5 Q 10.5 25.5 8.5 26 Q 11 28 13.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 13.5 27.5 Q 16 25 18 25.2 Q 15.8 27.5 13.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 16 31 Q 13 29 11 29.2 Q 13.5 31.5 16 31 Z" fill="white" opacity="0.8"></path><path d="M 16 31 Q 18.5 28.5 20.5 28.8 Q 18.2 31 16 31 Z" fill="white" opacity="0.8"></path><path d="M 19 34.5 Q 16 32.5 14.5 33 Q 16.8 35 19 34.5 Z" fill="white" opacity="0.75"></path><path d="M 19 34.5 Q 21.2 32.5 22.5 32.8 Q 20.8 34.5 19 34.5 Z" fill="white" opacity="0.75"></path><circle cx="9.2" cy="13.2" r="0.7" fill="white" opacity="0.55"></circle><circle cx="8.5" cy="13.8" r="0.55" fill="white" opacity="0.45"></circle><circle cx="9" cy="16" r="0.75" fill="white" opacity="0.6"></circle><circle cx="8.2" cy="16.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="9.6" cy="16.6" r="0.55" fill="white" opacity="0.45"></circle><circle cx="9.5" cy="19" r="0.75" fill="white" opacity="0.6"></circle><circle cx="8.7" cy="19.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="10.3" cy="19.5" r="0.55" fill="white" opacity="0.45"></circle><circle cx="10.5" cy="22" r="0.75" fill="white" opacity="0.6"></circle><circle cx="9.7" cy="22.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="12.5" cy="25.8" r="0.7" fill="white" opacity="0.55"></circle><circle cx="11.8" cy="26.3" r="0.55" fill="white" opacity="0.45"></circle><circle cx="14.5" cy="29.2" r="0.65" fill="white" opacity="0.5"></circle><circle cx="17" cy="32.8" r="0.55" fill="white" opacity="0.45"></circle><path d="M 25 38 Q 29 35 33.5 28 Q 37.5 22 39 14 Q 39.5 12 38 11" fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round" opacity="0.85"></path><path d="M 38.5 12 Q 40 10.5 40.5 10.5 Q 40.5 12.5 38.5 12 Z" fill="white" opacity="0.7"></path><path d="M 38.5 12 Q 37 10.5 36 10 Q 36.5 12.2 38.5 12 Z" fill="white" opacity="0.7"></path><path d="M 39 14.5 Q 41.2 13 42.5 13 Q 41.5 15.2 39 14.5 Z" fill="white" opacity="0.8"></path><path d="M 39 14.5 Q 37 12.5 35.5 12.2 Q 37 14.8 39 14.5 Z" fill="white" opacity="0.8"></path><path d="M 38.7 17.5 Q 41 15.8 42.2 16 Q 40.8 18.2 38.7 17.5 Z" fill="white" opacity="0.85"></path><path d="M 38.7 17.5 Q 36.5 15.2 35 15.2 Q 36.8 17.5 38.7 17.5 Z" fill="white" opacity="0.85"></path><path d="M 38 20.5 Q 41 18.5 42.5 18.8 Q 40.5 21 38 20.5 Z" fill="white" opacity="0.85"></path><path d="M 38 20.5 Q 35.5 18 33.8 18 Q 35.8 20.5 38 20.5 Z" fill="white" opacity="0.85"></path><path d="M 36.5 24 Q 39.5 21.8 41.5 22.2 Q 39 24.5 36.5 24 Z" fill="white" opacity="0.85"></path><path d="M 36.5 24 Q 34 21.5 32 21.5 Q 34.2 24 36.5 24 Z" fill="white" opacity="0.85"></path><path d="M 34.5 27.5 Q 37.5 25.5 39.5 26 Q 37 28 34.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 34.5 27.5 Q 32 25 30 25.2 Q 32.2 27.5 34.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 32 31 Q 35 29 37 29.2 Q 34.5 31.5 32 31 Z" fill="white" opacity="0.8"></path><path d="M 32 31 Q 29.5 28.5 27.5 28.8 Q 29.8 31 32 31 Z" fill="white" opacity="0.8"></path><path d="M 29 34.5 Q 32 32.5 33.5 33 Q 31.2 35 29 34.5 Z" fill="white" opacity="0.75"></path><path d="M 29 34.5 Q 26.8 32.5 25.5 32.8 Q 27.2 34.5 29 34.5 Z" fill="white" opacity="0.75"></path><circle cx="38.8" cy="13.2" r="0.7" fill="white" opacity="0.55"></circle><circle cx="39.5" cy="13.8" r="0.55" fill="white" opacity="0.45"></circle><circle cx="39" cy="16" r="0.75" fill="white" opacity="0.6"></circle><circle cx="39.8" cy="16.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="38.4" cy="16.6" r="0.55" fill="white" opacity="0.45"></circle><circle cx="38.5" cy="19" r="0.75" fill="white" opacity="0.6"></circle><circle cx="39.3" cy="19.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="37.7" cy="19.5" r="0.55" fill="white" opacity="0.45"></circle><circle cx="37.5" cy="22" r="0.75" fill="white" opacity="0.6"></circle><circle cx="38.3" cy="22.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="35.5" cy="25.8" r="0.7" fill="white" opacity="0.55"></circle><circle cx="36.2" cy="26.3" r="0.55" fill="white" opacity="0.45"></circle><circle cx="33.5" cy="29.2" r="0.65" fill="white" opacity="0.5"></circle><circle cx="31" cy="32.8" r="0.55" fill="white" opacity="0.45"></circle><path d="M 22 38.5 L 24 37 L 26 38.5 L 24 40 Z" fill="white" opacity="0.8"></path><path d="M 22 38.5 Q 19.5 39.5 17.5 38 Q 16 37 16.5 35.5" fill="none" stroke="white" stroke-width="0.9" stroke-linecap="round" opacity="0.7"></path><path d="M 22 39.2 Q 19.5 40.5 17.8 39 Q 16.5 38 17 36.5" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" opacity="0.45"></path><path d="M 26 38.5 Q 28.5 39.5 30.5 38 Q 32 37 31.5 35.5" fill="none" stroke="white" stroke-width="0.9" stroke-linecap="round" opacity="0.7"></path><path d="M 26 39.2 Q 28.5 40.5 30.2 39 Q 31.5 38 31 36.5" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" opacity="0.45"></path><text x="24" y="43.5" text-anchor="middle" font-size="4.2" fill="white" style="font-family:Georgia, serif" letter-spacing="0.8">2026</text><circle cx="16" cy="42.5" r="0.45" fill="white" opacity="0.35"></circle><circle cx="32" cy="42.5" r="0.45" fill="white" opacity="0.35"></circle></svg></g></svg></g><g class="woelbung"><circle cx="60" cy="456" r="27"/></g></g></g></g><g class="nagel-dreh" data-kehre="4"><g class="nagel"><g transform="rotate(8 60 374)"><g class="unterschatten" transform="translate(1.5 2.5)"><path d="M31 346 h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/></g><g class="schild" style="stroke:var(--k3)"><path d="M31 346 h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/></g><g class="bild" style="color:var(--k3)"><svg x="42" y="356" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="nagel4-leitform2"><path d="M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z" fill="#fff"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(22.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(67.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(112.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(157.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(202.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(247.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(292.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(337.5)" fill="#000"></path><circle cx="12" cy="12.5" r="2.13" fill="#000"></circle><circle cx="12" cy="11.8" r="0.55" fill="#fff"></circle><circle cx="11.35" cy="12.9" r="0.55" fill="#fff"></circle><circle cx="12.65" cy="12.9" r="0.55" fill="#fff"></circle></mask><rect width="24" height="24" fill="currentColor" mask="url(#nagel4-leitform2)"></rect></svg></g></svg></g><g class="woelbung"><path d="M31 346 h58 v25 c0 15 -13 25 -29 31 c-16 -6 -29 -16 -29 -31 z"/></g></g></g></g><g class="nagel-dreh" data-kehre="5"><g class="nagel"><g transform="rotate(-6 60 292)"><g class="unterschatten" transform="translate(1.5 2.5)"><ellipse cx="60" cy="292" rx="31" ry="25"/></g><g class="schild" style="stroke:var(--k4)"><ellipse cx="60" cy="292" rx="31" ry="25"/></g><g class="bild" style="color:var(--k4)"><svg x="42" y="274" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="nagel5-leitform3"><path d="M12 3.2 L23 8.4 L12 13.6 L1 8.4 Z" fill="#fff"></path><path d="M5.4 10.8 V15.4 C5.4 17.6 8.5 19 12 19 C15.5 19 18.6 17.6 18.6 15.4 V10.8 L12 13.9 Z" fill="#fff"></path><path d="M12 8.4 L20.4 9.6 V15" fill="none" stroke-width="0.8" stroke="#fff"></path><path d="M19.6 15 H21.2 L21.7 18.6 H19.1 Z" fill="#fff"></path><circle cx="12" cy="8.4" r="0.95" fill="#fff"></circle><path d="M5.6 12.3 Q12 15.5 18.4 12.3" fill="none" stroke-width="0.6" opacity="0.55" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><path d="M19.7 16.7 V18.3 M20.4 16.7 V18.3 M21.1 16.7 V18.3" fill="none" stroke-width="0.3" opacity="0.65" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><circle cx="12" cy="8.4" r="0.4" opacity="0.6" fill="#000"></circle></mask><rect width="24" height="24" fill="currentColor" mask="url(#nagel5-leitform3)"></rect></svg></g></svg></g><g class="woelbung"><ellipse cx="60" cy="292" rx="31" ry="25"/></g></g></g></g><g class="nagel-dreh" data-kehre="6"><g class="nagel"><g transform="rotate(4 60 210)"><g class="unterschatten" transform="translate(1.5 2.5)"><rect x="31" y="185" width="58" height="50" rx="11"/></g><g class="schild" style="stroke:var(--k5)"><rect x="31" y="185" width="58" height="50" rx="11"/></g><g class="bild" style="color:var(--k5)"><svg x="42" y="192" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 48 48" fill="currentColor" x="0" y="0" width="24" height="24"><line x1="12" y1="1" x2="14" y2="42" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"></line><path d="M 12 1 Q 10.5 3.5 11.3 6 L 12 3.5 L 12.7 6 Q 13.5 3.5 12 1 Z" fill="currentColor"></path><ellipse cx="22" cy="7" rx="3" ry="3.2" fill="currentColor"></ellipse><path d="M 19.5 4.2 Q 19 5 18.8 6 Q 18.3 6.8 18 7.5 Q 17.8 8 18.2 8.6 Q 18.5 9.2 19.2 9.6 L 20 9.8" fill="currentColor"></path><path d="M 19.2 6.3 Q 19.7 6 20.3 6.3 Q 19.7 6.6 19.2 6.3 Z" fill="white" opacity="0.25"></path><circle cx="18.3" cy="7.8" r="0.15" fill="white" opacity="0.1"></circle><path d="M 18.3 8.5 Q 18.6 8.3 18.9 8.5" fill="none" stroke="white" stroke-width="0.15" opacity="0.12"></path><path d="M 19.5 4.2 Q 21 3.2 23.5 3.8 Q 25 4.2 25 5.5 Q 25.5 6.5 25 8" fill="currentColor"></path><ellipse cx="25.2" cy="6" rx="1.8" ry="1.6" fill="currentColor"></ellipse><path d="M 24 5.5 Q 25 5 26 5.5 Q 26 6.5 25 7" fill="none" stroke="white" stroke-width="0.2" opacity="0.15"></path><line x1="18.5" y1="4.2" x2="17.5" y2="2.5" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="19.5" y1="3.8" x2="18.8" y2="1.5" stroke="currentColor" stroke-width="0.65" stroke-linecap="round"></line><line x1="20.5" y1="3.5" x2="20.2" y2="0.8" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="21.5" y1="3.3" x2="21.5" y2="0.3" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"></line><line x1="22.5" y1="3.5" x2="23" y2="0.8" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="23.5" y1="3.8" x2="24.2" y2="1.5" stroke="currentColor" stroke-width="0.65" stroke-linecap="round"></line><line x1="24.5" y1="4.2" x2="25.5" y2="2.5" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><path d="M 18 4.8 Q 21.5 3 25 4.5" fill="none" stroke="currentColor" stroke-width="1"></path><path d="M 19.5 9.8 C 19.2 11.0 19.3 12.5 19.6 14.0 Q 19.9 15.0 20.5 15.2 L 22.0 15.0 C 22.3 14.0 22.2 11.5 21.8 9.8 Q 21.0 9.4 19.5 9.8 Z" fill="currentColor"></path><path d="M 19.0 15.0 Q 20.8 15.8 22.5 15.0" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.22"></path><path d="M 19.8 11.5 Q 20.8 11.8 21.8 11.5" fill="none" stroke="white" stroke-width="0.18" opacity="0.18"></path><path d="M 16.5 15 Q 19.5 14.5 22.5 15 Q 25.5 15.5 26.5 17.5 Q 26.5 19 25.5 20 Q 24.5 21.5 24 23 Q 23 24 23.5 26 Q 24.5 29 25.5 32 Q 27 36 28.5 39.5 L 30 42 L 10.5 42 L 12 39.5 Q 13.5 36 14.5 32 Q 15.5 29 16 26 Q 16.5 24 16 23 Q 15.5 21.5 14.8 20 Q 14 19 14 17.5 Q 14 15.5 16.5 15 Z" fill="currentColor"></path><path d="M 24 15.5 Q 22 17 20 19 Q 18 22 17 25 Q 16 28 15 32 Q 14 36 12 42" fill="none" stroke="white" stroke-width="0.6" opacity="0.3"></path><path d="M 25 16 Q 23 18 21 20 Q 19 23 18 26 Q 17 29 16 33 Q 15 37 13.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.15"></path><path d="M 16.5 15 Q 15.5 15.5 15 16" fill="none" stroke="white" stroke-width="0.2" opacity="0.15"></path><path d="M 16.5 17 Q 18.5 18.5 20.5 18" fill="none" stroke="white" stroke-width="0.25" opacity="0.2"></path><path d="M 15.5 23 Q 20 24 24.5 23" fill="none" stroke="white" stroke-width="0.7" opacity="0.35"></path><rect x="19.2" y="22.6" width="1.5" height="1" rx="0.2" fill="white" opacity="0.25"></rect><path d="M 16.5 26 Q 15 31 13.5 36 Q 12.5 39 11.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 19 25.5 Q 18 31 17 36 Q 16.5 39 15.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 21 25.5 Q 20.5 31 20 36 Q 19.5 39 19.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 23 26 Q 23 31 23 36 Q 23 39 23.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 25.5 27 Q 26 32 26.5 37 Q 27 39 27.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.15"></path><path d="M 11.5 41.5 Q 20 42.5 29 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.12"></path><path d="M 16 16 Q 15 18 14.5 20 Q 14 22 13.5 23.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><ellipse cx="13.5" cy="24" rx="1.1" ry="1.3" fill="currentColor"></ellipse><path d="M 24 16 Q 26.5 17.5 28.5 20 Q 31 23 33 26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M 23.5 15.2 Q 25 15 25.8 16 Q 26 17 25 17 Q 24 16 23.5 15.5 Z" fill="currentColor"></path><ellipse cx="33.2" cy="26.5" rx="1.1" ry="0.8" fill="currentColor"></ellipse><path d="M 31 27 L 39 27 L 39 34 Q 39 38 35 40 Q 31 38 31 34 Z" fill="currentColor"></path><path d="M 32 28.2 L 38 28.2 L 38 33.5 Q 38 36.5 35 38.5 Q 32 36.5 32 33.5 Z" fill="none" stroke="white" stroke-width="0.3" opacity="0.25"></path><rect x="34" y="29" width="2" height="7" rx="0.2" fill="white"></rect><rect x="32.5" y="31" width="5" height="2.5" rx="0.2" fill="white"></rect><path d="M 15 41.5 Q 13.5 41.2 12 41.5 L 11.5 42.5 L 16 42.5 Z" fill="currentColor"></path><path d="M 23.5 41.5 Q 25 41.2 26 41.5 L 26.5 42.5 L 23 42.5 Z" fill="currentColor"></path><path d="M 13 42 L 14.5 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.25"></path><path d="M 24.5 42 L 25.5 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.25"></path><rect x="9" y="42.5" width="24" height="0.8" rx="0.2" fill="currentColor"></rect><rect x="7" y="43.3" width="28" height="1.2" rx="0.2" fill="currentColor"></rect><text x="21" y="47.5" text-anchor="middle" font-size="3.2" font-weight="bold" fill="currentColor" style="font-family:Georgia, serif" letter-spacing="1.5">HELVETIA</text></svg></g></svg></g><g class="woelbung"><rect x="31" y="185" width="58" height="50" rx="11"/></g></g></g></g><g class="nagel-dreh" data-kehre="7"><g class="nagel"><g transform="rotate(-2 60 128)"><g class="unterschatten" transform="translate(1.5 2.5)"><circle cx="60" cy="128" r="27"/></g><g class="schild" style="stroke:var(--k6)"><circle cx="60" cy="128" r="27"/></g><g class="bild" style="color:var(--k6)"><svg x="42" y="110" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="nagel7-leitform4"><rect x="2" y="7.6" width="20" height="13.4" rx="2.6" fill="#fff"></rect><path d="M8.6 7.6 V5.6 A1.6 1.6 0 0 1 10.2 4 H13.8 A1.6 1.6 0 0 1 15.4 5.6 V7.6" fill="none" stroke-width="1.6" stroke="#fff"></path><rect x="10.3" y="3.3" width="3.4" height="1.5" rx="0.7" fill="#fff"></rect><path d="M2.3 10.6 H21.7" fill="none" stroke-width="0.7" opacity="0.9" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="4.8" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><rect x="17.3" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><path d="M12 12.4 v6.4 M8.8 15.6 h6.4" fill="none" stroke-width="2.6" stroke="#000"></path><path d="M2.6 18.4 L4.4 20.4 M21.4 18.4 L19.6 20.4" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#nagel7-leitform4)"></rect></svg></g></svg></g><g class="woelbung"><circle cx="60" cy="128" r="27"/></g></g></g></g>
+          </svg>
+        <span class="reise-quelle">KI-gemalt</span>
+      </div>
+
+      <div class="reise-ablauf">
+        <div class="reise-anfang">
+          <div class="rahmen pass">
+            <div>
+              <h1><span>Verstehen, was zusteht.</span><span class="zweite">Ordnen, was ansteht.</span></h1>
+              <p class="vorspann">Ein Schweizer Lebensordner für Steuern, Prämienverbilligung, Vorsorge und Notfall — auf Ihrem Telefon oder Laptop, in mehreren Sprachen, ohne dass Ihre Angaben das Gerät verlassen.</p>
+              <div class="wege">
+                <a class="knopf haupt" href="/app/?beispiel">Beispiel ansehen</a>
+                <a class="knopf zweit" href="#holen">App holen</a>
+              </div>
+              <p class="fakten"><span>Kostenlos</span><span>Ohne Konto</span><span>Ohne Werbung</span><span>Quelloffen</span></p>
+              <p class="beta">Zurzeit in geschlossener Beta — das Beispiel steht ohne Code offen. Einen Code gibt es per <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Zugangscode">E-Mail</a>.</p>
+            </div>
+
+            <figure class="buehne geraete">
+              <input type="checkbox" id="anhalten" class="unsichtbar">
+              <div class="geraete-bild">
+              <div class="laptop" role="img" aria-label="Maloja Plana auf einem Laptop, im Beispiel mit erfundenen Daten.">
+                <div class="deckel"><div class="schirm"><img src="/vorstellung/app-computer.webp" alt="" width="800" height="500"></div></div>
+                <div class="sockel" aria-hidden="true"></div>
+              </div>
+              <div class="telefon" role="img" aria-label="Maloja Plana auf einem Telefon, im Beispiel mit erfundenen Daten.">
+                <div class="insel" aria-hidden="true"></div>
+                <div class="bildschirm folge" aria-hidden="true">
+                  <img src="/vorstellung/app-1.webp" alt="" width="480" height="1040">
+                  <img src="/vorstellung/app-2.webp" alt="" width="480" height="1040" loading="lazy">
+                  <img src="/vorstellung/app-3.webp" alt="" width="480" height="1040" loading="lazy">
+                  <img src="/vorstellung/app-4.webp" alt="" width="480" height="1040" loading="lazy">
+                  <img src="/vorstellung/app-5.webp" alt="" width="480" height="1040" loading="lazy">
+                </div>
+              </div>
+              </div>
+              <figcaption class="unter-telefon">
+                <span>Beispiel mit erfundenen Daten</span>
+                <label class="schalter" for="anhalten">Bildfolge anhalten</label>
+              </figcaption>
+            </figure>
+
+            <a class="knopf zweit pass-weiter" href="#kehre-1">Sieben Kapitel, Kehre für Kehre</a>
+          </div>
+        </div>
+
+        <!-- ═══ Die Reise: Kehre für Kehre auf den Malojapass ═══ -->
+        <section id="weg" class="reise" aria-labelledby="t-weg">
+          <h2 id="t-weg" class="unsichtbar">Sieben Kapitel: ein Weg, Kehre für Kehre</h2>
+          <p class="unsichtbar">Die App hat sieben Kapitel. Diese Seite zeigt sie als Weg auf den Malojapass, eine Kehre je Kapitel. Sie beginnen, wo Sie wollen, und gehen in Ihrem Tempo weiter. Die Bilder in diesem Abschnitt sind KI-gemalt, eine freie Darstellung.</p>
+          <ol class="reise-stationen" role="list">
+          <li class="reise-station" id="kehre-1" style="--farbe:var(--k0)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="gross1-leitform1"><rect x="1.5" y="4.5" width="21" height="15" rx="2" fill="#fff"></rect><rect x="3.6" y="8.6" width="6.4" height="8.2" rx="0.6" fill="#000"></rect><circle cx="6.8" cy="11.4" r="1.6" fill="#fff"></circle><path d="M4.3 16.8 Q6.8 13.1 9.3 16.8 Z" fill="#fff"></path><path d="M11.8 9.6 H18.6 M11.8 11.6 H20.2 M11.8 13.6 H17" fill="none" stroke-width="0.9" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="18.2" y="13.4" width="2.6" height="2" rx="0.4" opacity="0.75" fill="#000"></rect><path d="M3 5.8 H6" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#gross1-leitform1)"></rect></svg></g></svg></div>
+              <span class="name">Kehre 1 von 7 · Basis</span><h3>Was überall gebraucht wird</h3><p>Ihre Angaben einmal erfasst — und dort zur Hand, wo sie wieder gefragt sind.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/0">Basis im Beispiel ansehen</a><a class="weiter" href="#kehre-2" aria-label="Weiter zu Kehre 2">Weiter</a></p>
+            </div></li>
+          <li class="reise-station" id="kehre-2" style="--farbe:var(--k1)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true" focusable="false" x="0" y="0"><path d="M 0.5 12 L 12 2.5 L 23.5 12 Z"></path><line x1="1.5" y1="11.8" x2="22.5" y2="11.8" stroke="white" stroke-width="0.2" opacity="0.12"></line><rect x="17" y="4.5" width="2" height="4.5"></rect><rect x="16.5" y="4" width="3" height="0.8" rx="0.2"></rect><path d="M 18 4 Q 17.5 3 18.2 2.2" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.4"></path><rect x="4" y="12" width="16" height="10"></rect><rect x="3.5" y="21.5" width="17" height="0.7" rx="0.1" fill="currentColor"></rect><line x1="4" y1="14" x2="20" y2="14" stroke="white" stroke-width="0.2" opacity="0.12"></line><line x1="4" y1="16.5" x2="20" y2="16.5" stroke="white" stroke-width="0.2" opacity="0.12"></line><line x1="4" y1="19" x2="20" y2="19" stroke="white" stroke-width="0.2" opacity="0.1"></line><rect x="10" y="7" width="4" height="3" rx="0.3" fill="white"></rect><path d="M 10 7.3 Q 12 5.8 14 7.3" fill="white"></path><line x1="12" y1="5.8" x2="12" y2="10" stroke="currentColor" stroke-width="0.4"></line><line x1="10" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="0.4"></line><path d="M 8 10.5 Q 10 11.2 12 10.5 Q 14 11.2 16 10.5" fill="none" stroke="white" stroke-width="0.25" opacity="0.2"></path><path d="M 4 12 L 3 12 L 4 11" fill="none" stroke="currentColor" stroke-width="0.4"></path><path d="M 20 12 L 21 12 L 20 11" fill="none" stroke="currentColor" stroke-width="0.4"></path><line x1="4" y1="15.5" x2="20" y2="15.5" stroke="white" stroke-width="0.7"></line><line x1="4.5" y1="12.5" x2="4.5" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="9.3" y1="12.5" x2="9.3" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="14.7" y1="12.5" x2="14.7" y2="15.5" stroke="white" stroke-width="0.4"></line><line x1="19.5" y1="12.5" x2="19.5" y2="15.5" stroke="white" stroke-width="0.4"></line><path d="M 4.5 12.5 L 9.3 15.5 M 9.3 12.5 L 4.5 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><path d="M 9.3 12.5 L 14.7 15.5 M 14.7 12.5 L 9.3 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><path d="M 14.7 12.5 L 19.5 15.5 M 19.5 12.5 L 14.7 15.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.4"></path><rect x="5" y="15.8" width="4" height="0.7" rx="0.15" fill="white" opacity="0.25"></rect><rect x="15" y="15.8" width="4" height="0.7" rx="0.15" fill="white" opacity="0.25"></rect><circle cx="6" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="7" cy="15.5" r="0.4" fill="white" opacity="0.2"></circle><circle cx="8" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="16" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><circle cx="17" cy="15.5" r="0.4" fill="white" opacity="0.2"></circle><circle cx="18" cy="15.6" r="0.35" fill="white" opacity="0.18"></circle><rect x="5.2" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="6.4" y="17.2" width="3" height="2.8" rx="0.2" fill="white"></rect><rect x="9.6" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="13.4" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><rect x="14.6" y="17.2" width="3" height="2.8" rx="0.2" fill="white"></rect><rect x="17.8" y="17.2" width="1" height="2.8" rx="0.1" fill="white" opacity="0.4"></rect><line x1="7.9" y1="17.2" x2="7.9" y2="20" stroke="currentColor" stroke-width="0.3"></line><line x1="16.1" y1="17.2" x2="16.1" y2="20" stroke="currentColor" stroke-width="0.3"></line><line x1="6.4" y1="18.6" x2="9.4" y2="18.6" stroke="currentColor" stroke-width="0.2"></line><line x1="14.6" y1="18.6" x2="17.6" y2="18.6" stroke="currentColor" stroke-width="0.2"></line><rect x="6.2" y="20" width="3.6" height="0.3" rx="0.1" fill="white" opacity="0.3"></rect><rect x="14.4" y="20" width="3.6" height="0.3" rx="0.1" fill="white" opacity="0.3"></rect><rect x="10.5" y="17.5" width="3" height="4.5" rx="0.3" fill="white"></rect><path d="M 10.5 17.8 Q 12 16.5 13.5 17.8" fill="white"></path><line x1="12" y1="17" x2="12" y2="22" stroke="currentColor" stroke-width="0.2" opacity="0.3"></line><circle cx="12.8" cy="20" r="0.3" fill="currentColor"></circle><rect x="10" y="21.5" width="4" height="0.5" rx="0.1" fill="white" opacity="0.2"></rect></svg></g></svg></div>
+              <span class="name">Kehre 2 von 7 · Wohnen</span><h3>Miete, Umzug, Adresse</h3><p>Was zum Wohnen gehört, an einem Ort — auch wenn sich etwas ändert.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/1">Wohnen im Beispiel ansehen</a><a class="weiter" href="#kehre-3" aria-label="Weiter zu Kehre 3">Weiter</a></p>
+            </div></li>
+          <li class="reise-station" id="kehre-3" style="--farbe:var(--k2)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 48 48" fill="currentColor" x="0" y="0" width="24" height="24"><circle cx="24" cy="24" r="23"></circle><circle cx="24" cy="24" r="22.2" fill="none" stroke="white" stroke-width="0.5" opacity="0.25"></circle><circle cx="24" cy="24" r="21.5" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"></circle><circle cx="24" cy="24" r="20.5" fill="none" stroke="white" stroke-width="0.8" stroke-dasharray="0.15 1.5" stroke-linecap="round" opacity="0.9"></circle><text x="24" y="13" text-anchor="middle" font-size="6" font-weight="bold" fill="white" style="font-family:Georgia, serif" letter-spacing="1">5 FR.</text><path d="M 19 15 L 29 15 L 29 23.5 Q 29 28 24 31 Q 19 28 19 23.5 Z" fill="white"></path><path d="M 20.2 16.2 L 27.8 16.2 L 27.8 23 Q 27.8 26.5 24 29 Q 20.2 26.5 20.2 23 Z" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.25"></path><rect x="22.8" y="17.5" width="2.4" height="9" rx="0.3" fill="currentColor"></rect><rect x="20.5" y="20.5" width="7" height="2.5" rx="0.3" fill="currentColor"></rect><path d="M 23 38 Q 19 35 14.5 28 Q 10.5 22 9 14 Q 8.5 12 10 11" fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round" opacity="0.85"></path><path d="M 9.5 12 Q 8 10.5 7.5 10.5 Q 7.5 12.5 9.5 12 Z" fill="white" opacity="0.7"></path><path d="M 9.5 12 Q 11 10.5 12 10 Q 11.5 12.2 9.5 12 Z" fill="white" opacity="0.7"></path><path d="M 9 14.5 Q 6.8 13 5.5 13 Q 6.5 15.2 9 14.5 Z" fill="white" opacity="0.8"></path><path d="M 9 14.5 Q 11 12.5 12.5 12.2 Q 11 14.8 9 14.5 Z" fill="white" opacity="0.8"></path><path d="M 9.3 17.5 Q 7 15.8 5.8 16 Q 7.2 18.2 9.3 17.5 Z" fill="white" opacity="0.85"></path><path d="M 9.3 17.5 Q 11.5 15.2 13 15.2 Q 11.2 17.5 9.3 17.5 Z" fill="white" opacity="0.85"></path><path d="M 10 20.5 Q 7 18.5 5.5 18.8 Q 7.5 21 10 20.5 Z" fill="white" opacity="0.85"></path><path d="M 10 20.5 Q 12.5 18 14.2 18 Q 12.2 20.5 10 20.5 Z" fill="white" opacity="0.85"></path><path d="M 11.5 24 Q 8.5 21.8 6.5 22.2 Q 9 24.5 11.5 24 Z" fill="white" opacity="0.85"></path><path d="M 11.5 24 Q 14 21.5 16 21.5 Q 13.8 24 11.5 24 Z" fill="white" opacity="0.85"></path><path d="M 13.5 27.5 Q 10.5 25.5 8.5 26 Q 11 28 13.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 13.5 27.5 Q 16 25 18 25.2 Q 15.8 27.5 13.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 16 31 Q 13 29 11 29.2 Q 13.5 31.5 16 31 Z" fill="white" opacity="0.8"></path><path d="M 16 31 Q 18.5 28.5 20.5 28.8 Q 18.2 31 16 31 Z" fill="white" opacity="0.8"></path><path d="M 19 34.5 Q 16 32.5 14.5 33 Q 16.8 35 19 34.5 Z" fill="white" opacity="0.75"></path><path d="M 19 34.5 Q 21.2 32.5 22.5 32.8 Q 20.8 34.5 19 34.5 Z" fill="white" opacity="0.75"></path><circle cx="9.2" cy="13.2" r="0.7" fill="white" opacity="0.55"></circle><circle cx="8.5" cy="13.8" r="0.55" fill="white" opacity="0.45"></circle><circle cx="9" cy="16" r="0.75" fill="white" opacity="0.6"></circle><circle cx="8.2" cy="16.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="9.6" cy="16.6" r="0.55" fill="white" opacity="0.45"></circle><circle cx="9.5" cy="19" r="0.75" fill="white" opacity="0.6"></circle><circle cx="8.7" cy="19.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="10.3" cy="19.5" r="0.55" fill="white" opacity="0.45"></circle><circle cx="10.5" cy="22" r="0.75" fill="white" opacity="0.6"></circle><circle cx="9.7" cy="22.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="12.5" cy="25.8" r="0.7" fill="white" opacity="0.55"></circle><circle cx="11.8" cy="26.3" r="0.55" fill="white" opacity="0.45"></circle><circle cx="14.5" cy="29.2" r="0.65" fill="white" opacity="0.5"></circle><circle cx="17" cy="32.8" r="0.55" fill="white" opacity="0.45"></circle><path d="M 25 38 Q 29 35 33.5 28 Q 37.5 22 39 14 Q 39.5 12 38 11" fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round" opacity="0.85"></path><path d="M 38.5 12 Q 40 10.5 40.5 10.5 Q 40.5 12.5 38.5 12 Z" fill="white" opacity="0.7"></path><path d="M 38.5 12 Q 37 10.5 36 10 Q 36.5 12.2 38.5 12 Z" fill="white" opacity="0.7"></path><path d="M 39 14.5 Q 41.2 13 42.5 13 Q 41.5 15.2 39 14.5 Z" fill="white" opacity="0.8"></path><path d="M 39 14.5 Q 37 12.5 35.5 12.2 Q 37 14.8 39 14.5 Z" fill="white" opacity="0.8"></path><path d="M 38.7 17.5 Q 41 15.8 42.2 16 Q 40.8 18.2 38.7 17.5 Z" fill="white" opacity="0.85"></path><path d="M 38.7 17.5 Q 36.5 15.2 35 15.2 Q 36.8 17.5 38.7 17.5 Z" fill="white" opacity="0.85"></path><path d="M 38 20.5 Q 41 18.5 42.5 18.8 Q 40.5 21 38 20.5 Z" fill="white" opacity="0.85"></path><path d="M 38 20.5 Q 35.5 18 33.8 18 Q 35.8 20.5 38 20.5 Z" fill="white" opacity="0.85"></path><path d="M 36.5 24 Q 39.5 21.8 41.5 22.2 Q 39 24.5 36.5 24 Z" fill="white" opacity="0.85"></path><path d="M 36.5 24 Q 34 21.5 32 21.5 Q 34.2 24 36.5 24 Z" fill="white" opacity="0.85"></path><path d="M 34.5 27.5 Q 37.5 25.5 39.5 26 Q 37 28 34.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 34.5 27.5 Q 32 25 30 25.2 Q 32.2 27.5 34.5 27.5 Z" fill="white" opacity="0.85"></path><path d="M 32 31 Q 35 29 37 29.2 Q 34.5 31.5 32 31 Z" fill="white" opacity="0.8"></path><path d="M 32 31 Q 29.5 28.5 27.5 28.8 Q 29.8 31 32 31 Z" fill="white" opacity="0.8"></path><path d="M 29 34.5 Q 32 32.5 33.5 33 Q 31.2 35 29 34.5 Z" fill="white" opacity="0.75"></path><path d="M 29 34.5 Q 26.8 32.5 25.5 32.8 Q 27.2 34.5 29 34.5 Z" fill="white" opacity="0.75"></path><circle cx="38.8" cy="13.2" r="0.7" fill="white" opacity="0.55"></circle><circle cx="39.5" cy="13.8" r="0.55" fill="white" opacity="0.45"></circle><circle cx="39" cy="16" r="0.75" fill="white" opacity="0.6"></circle><circle cx="39.8" cy="16.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="38.4" cy="16.6" r="0.55" fill="white" opacity="0.45"></circle><circle cx="38.5" cy="19" r="0.75" fill="white" opacity="0.6"></circle><circle cx="39.3" cy="19.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="37.7" cy="19.5" r="0.55" fill="white" opacity="0.45"></circle><circle cx="37.5" cy="22" r="0.75" fill="white" opacity="0.6"></circle><circle cx="38.3" cy="22.6" r="0.6" fill="white" opacity="0.5"></circle><circle cx="35.5" cy="25.8" r="0.7" fill="white" opacity="0.55"></circle><circle cx="36.2" cy="26.3" r="0.55" fill="white" opacity="0.45"></circle><circle cx="33.5" cy="29.2" r="0.65" fill="white" opacity="0.5"></circle><circle cx="31" cy="32.8" r="0.55" fill="white" opacity="0.45"></circle><path d="M 22 38.5 L 24 37 L 26 38.5 L 24 40 Z" fill="white" opacity="0.8"></path><path d="M 22 38.5 Q 19.5 39.5 17.5 38 Q 16 37 16.5 35.5" fill="none" stroke="white" stroke-width="0.9" stroke-linecap="round" opacity="0.7"></path><path d="M 22 39.2 Q 19.5 40.5 17.8 39 Q 16.5 38 17 36.5" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" opacity="0.45"></path><path d="M 26 38.5 Q 28.5 39.5 30.5 38 Q 32 37 31.5 35.5" fill="none" stroke="white" stroke-width="0.9" stroke-linecap="round" opacity="0.7"></path><path d="M 26 39.2 Q 28.5 40.5 30.2 39 Q 31.5 38 31 36.5" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" opacity="0.45"></path><text x="24" y="43.5" text-anchor="middle" font-size="4.2" fill="white" style="font-family:Georgia, serif" letter-spacing="0.8">2026</text><circle cx="16" cy="42.5" r="0.45" fill="white" opacity="0.35"></circle><circle cx="32" cy="42.5" r="0.45" fill="white" opacity="0.35"></circle></svg></g></svg></div>
+              <span class="name">Kehre 3 von 7 · Finanzen</span><h3>Einkommen und Steuern</h3><p>Eine grobe Steuer-Einschätzung und Richtwerte fürs Budget — als Orientierung, nicht als Kontrolle.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/2">Finanzen im Beispiel ansehen</a><a class="weiter" href="#kehre-4" aria-label="Weiter zu Kehre 4">Weiter</a></p>
+            </div></li>
+          <li class="reise-station" id="kehre-4" style="--farbe:var(--k3)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="gross4-leitform2"><path d="M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z" fill="#fff"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(22.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(67.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(112.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(157.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(202.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(247.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(292.5)" fill="#000"></path><path d="M0 -1.4 Q2 -3.4 0 -6.4 Q-2 -3.4 0 -1.4 Z" transform="translate(12 12.5) scale(1.12) rotate(337.5)" fill="#000"></path><circle cx="12" cy="12.5" r="2.13" fill="#000"></circle><circle cx="12" cy="11.8" r="0.55" fill="#fff"></circle><circle cx="11.35" cy="12.9" r="0.55" fill="#fff"></circle><circle cx="12.65" cy="12.9" r="0.55" fill="#fff"></circle></mask><rect width="24" height="24" fill="currentColor" mask="url(#gross4-leitform2)"></rect></svg></g></svg></div>
+              <span class="name">Kehre 4 von 7 · Versicherungen</span><h3>Krankenkasse und Vorsorge</h3><p>Franchise, Prämienverbilligung, AHV und Pensionskasse — ohne Fachsprache erklärt.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/3">Versicherungen im Beispiel ansehen</a><a class="weiter" href="#kehre-5" aria-label="Weiter zu Kehre 5">Weiter</a></p>
+            </div></li>
+          <li class="reise-station" id="kehre-5" style="--farbe:var(--k4)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="gross5-leitform3"><path d="M12 3.2 L23 8.4 L12 13.6 L1 8.4 Z" fill="#fff"></path><path d="M5.4 10.8 V15.4 C5.4 17.6 8.5 19 12 19 C15.5 19 18.6 17.6 18.6 15.4 V10.8 L12 13.9 Z" fill="#fff"></path><path d="M12 8.4 L20.4 9.6 V15" fill="none" stroke-width="0.8" stroke="#fff"></path><path d="M19.6 15 H21.2 L21.7 18.6 H19.1 Z" fill="#fff"></path><circle cx="12" cy="8.4" r="0.95" fill="#fff"></circle><path d="M5.6 12.3 Q12 15.5 18.4 12.3" fill="none" stroke-width="0.6" opacity="0.55" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><path d="M19.7 16.7 V18.3 M20.4 16.7 V18.3 M21.1 16.7 V18.3" fill="none" stroke-width="0.3" opacity="0.65" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><circle cx="12" cy="8.4" r="0.4" opacity="0.6" fill="#000"></circle></mask><rect width="24" height="24" fill="currentColor" mask="url(#gross5-leitform3)"></rect></svg></g></svg></div>
+              <span class="name">Kehre 5 von 7 · Ausbildung</span><h3>Ausbildung und Arbeit</h3><p>Abschlüsse, Lebenslauf und Arbeitsstelle geordnet — für die nächste Bewerbung.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/4">Ausbildung im Beispiel ansehen</a><a class="weiter" href="#kehre-6" aria-label="Weiter zu Kehre 6">Weiter</a></p>
+            </div></li>
+          <li class="reise-station" id="kehre-6" style="--farbe:var(--k5)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 48 48" fill="currentColor" x="0" y="0" width="24" height="24"><line x1="12" y1="1" x2="14" y2="42" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"></line><path d="M 12 1 Q 10.5 3.5 11.3 6 L 12 3.5 L 12.7 6 Q 13.5 3.5 12 1 Z" fill="currentColor"></path><ellipse cx="22" cy="7" rx="3" ry="3.2" fill="currentColor"></ellipse><path d="M 19.5 4.2 Q 19 5 18.8 6 Q 18.3 6.8 18 7.5 Q 17.8 8 18.2 8.6 Q 18.5 9.2 19.2 9.6 L 20 9.8" fill="currentColor"></path><path d="M 19.2 6.3 Q 19.7 6 20.3 6.3 Q 19.7 6.6 19.2 6.3 Z" fill="white" opacity="0.25"></path><circle cx="18.3" cy="7.8" r="0.15" fill="white" opacity="0.1"></circle><path d="M 18.3 8.5 Q 18.6 8.3 18.9 8.5" fill="none" stroke="white" stroke-width="0.15" opacity="0.12"></path><path d="M 19.5 4.2 Q 21 3.2 23.5 3.8 Q 25 4.2 25 5.5 Q 25.5 6.5 25 8" fill="currentColor"></path><ellipse cx="25.2" cy="6" rx="1.8" ry="1.6" fill="currentColor"></ellipse><path d="M 24 5.5 Q 25 5 26 5.5 Q 26 6.5 25 7" fill="none" stroke="white" stroke-width="0.2" opacity="0.15"></path><line x1="18.5" y1="4.2" x2="17.5" y2="2.5" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="19.5" y1="3.8" x2="18.8" y2="1.5" stroke="currentColor" stroke-width="0.65" stroke-linecap="round"></line><line x1="20.5" y1="3.5" x2="20.2" y2="0.8" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="21.5" y1="3.3" x2="21.5" y2="0.3" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"></line><line x1="22.5" y1="3.5" x2="23" y2="0.8" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><line x1="23.5" y1="3.8" x2="24.2" y2="1.5" stroke="currentColor" stroke-width="0.65" stroke-linecap="round"></line><line x1="24.5" y1="4.2" x2="25.5" y2="2.5" stroke="currentColor" stroke-width="0.6" stroke-linecap="round"></line><path d="M 18 4.8 Q 21.5 3 25 4.5" fill="none" stroke="currentColor" stroke-width="1"></path><path d="M 19.5 9.8 C 19.2 11.0 19.3 12.5 19.6 14.0 Q 19.9 15.0 20.5 15.2 L 22.0 15.0 C 22.3 14.0 22.2 11.5 21.8 9.8 Q 21.0 9.4 19.5 9.8 Z" fill="currentColor"></path><path d="M 19.0 15.0 Q 20.8 15.8 22.5 15.0" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.22"></path><path d="M 19.8 11.5 Q 20.8 11.8 21.8 11.5" fill="none" stroke="white" stroke-width="0.18" opacity="0.18"></path><path d="M 16.5 15 Q 19.5 14.5 22.5 15 Q 25.5 15.5 26.5 17.5 Q 26.5 19 25.5 20 Q 24.5 21.5 24 23 Q 23 24 23.5 26 Q 24.5 29 25.5 32 Q 27 36 28.5 39.5 L 30 42 L 10.5 42 L 12 39.5 Q 13.5 36 14.5 32 Q 15.5 29 16 26 Q 16.5 24 16 23 Q 15.5 21.5 14.8 20 Q 14 19 14 17.5 Q 14 15.5 16.5 15 Z" fill="currentColor"></path><path d="M 24 15.5 Q 22 17 20 19 Q 18 22 17 25 Q 16 28 15 32 Q 14 36 12 42" fill="none" stroke="white" stroke-width="0.6" opacity="0.3"></path><path d="M 25 16 Q 23 18 21 20 Q 19 23 18 26 Q 17 29 16 33 Q 15 37 13.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.15"></path><path d="M 16.5 15 Q 15.5 15.5 15 16" fill="none" stroke="white" stroke-width="0.2" opacity="0.15"></path><path d="M 16.5 17 Q 18.5 18.5 20.5 18" fill="none" stroke="white" stroke-width="0.25" opacity="0.2"></path><path d="M 15.5 23 Q 20 24 24.5 23" fill="none" stroke="white" stroke-width="0.7" opacity="0.35"></path><rect x="19.2" y="22.6" width="1.5" height="1" rx="0.2" fill="white" opacity="0.25"></rect><path d="M 16.5 26 Q 15 31 13.5 36 Q 12.5 39 11.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 19 25.5 Q 18 31 17 36 Q 16.5 39 15.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 21 25.5 Q 20.5 31 20 36 Q 19.5 39 19.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 23 26 Q 23 31 23 36 Q 23 39 23.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.18"></path><path d="M 25.5 27 Q 26 32 26.5 37 Q 27 39 27.5 42" fill="none" stroke="white" stroke-width="0.25" opacity="0.15"></path><path d="M 11.5 41.5 Q 20 42.5 29 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.12"></path><path d="M 16 16 Q 15 18 14.5 20 Q 14 22 13.5 23.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><ellipse cx="13.5" cy="24" rx="1.1" ry="1.3" fill="currentColor"></ellipse><path d="M 24 16 Q 26.5 17.5 28.5 20 Q 31 23 33 26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M 23.5 15.2 Q 25 15 25.8 16 Q 26 17 25 17 Q 24 16 23.5 15.5 Z" fill="currentColor"></path><ellipse cx="33.2" cy="26.5" rx="1.1" ry="0.8" fill="currentColor"></ellipse><path d="M 31 27 L 39 27 L 39 34 Q 39 38 35 40 Q 31 38 31 34 Z" fill="currentColor"></path><path d="M 32 28.2 L 38 28.2 L 38 33.5 Q 38 36.5 35 38.5 Q 32 36.5 32 33.5 Z" fill="none" stroke="white" stroke-width="0.3" opacity="0.25"></path><rect x="34" y="29" width="2" height="7" rx="0.2" fill="white"></rect><rect x="32.5" y="31" width="5" height="2.5" rx="0.2" fill="white"></rect><path d="M 15 41.5 Q 13.5 41.2 12 41.5 L 11.5 42.5 L 16 42.5 Z" fill="currentColor"></path><path d="M 23.5 41.5 Q 25 41.2 26 41.5 L 26.5 42.5 L 23 42.5 Z" fill="currentColor"></path><path d="M 13 42 L 14.5 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.25"></path><path d="M 24.5 42 L 25.5 41.5" fill="none" stroke="white" stroke-width="0.2" opacity="0.25"></path><rect x="9" y="42.5" width="24" height="0.8" rx="0.2" fill="currentColor"></rect><rect x="7" y="43.3" width="28" height="1.2" rx="0.2" fill="currentColor"></rect><text x="21" y="47.5" text-anchor="middle" font-size="3.2" font-weight="bold" fill="currentColor" style="font-family:Georgia, serif" letter-spacing="1.5">HELVETIA</text></svg></g></svg></div>
+              <span class="name">Kehre 6 von 7 · Behörden</span><h3>Briefe und Fristen</h3><p>Schreiben an Ämter vorbereiten und Fristen im Blick behalten.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/5">Behörden im Beispiel ansehen</a><a class="weiter" href="#kehre-7" aria-label="Weiter zu Kehre 7">Weiter</a></p>
+            </div></li>
+          <li class="reise-station" id="kehre-7" style="--farbe:var(--k6)">
+            <div class="reise-text">
+              <div class="reise-gross" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g style="color:currentColor"><svg viewBox="0 0 24 24" x="0" y="0" width="24" height="24"><mask id="gross7-leitform4"><rect x="2" y="7.6" width="20" height="13.4" rx="2.6" fill="#fff"></rect><path d="M8.6 7.6 V5.6 A1.6 1.6 0 0 1 10.2 4 H13.8 A1.6 1.6 0 0 1 15.4 5.6 V7.6" fill="none" stroke-width="1.6" stroke="#fff"></path><rect x="10.3" y="3.3" width="3.4" height="1.5" rx="0.7" fill="#fff"></rect><path d="M2.3 10.6 H21.7" fill="none" stroke-width="0.7" opacity="0.9" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path><rect x="4.8" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><rect x="17.3" y="9.5" width="1.9" height="2.1" rx="0.35" opacity="0.8" fill="#000"></rect><path d="M12 12.4 v6.4 M8.8 15.6 h6.4" fill="none" stroke-width="2.6" stroke="#000"></path><path d="M2.6 18.4 L4.4 20.4 M21.4 18.4 L19.6 20.4" fill="none" stroke-width="0.5" opacity="0.5" stroke-linecap="round" stroke-linejoin="round" stroke="#000"></path></mask><rect width="24" height="24" fill="currentColor" mask="url(#gross7-leitform4)"></rect></svg></g></svg></div>
+              <span class="name">Kehre 7 von 7 · Gesundheit</span><h3>Gesundheit und Ernstfall</h3><p>Notfallkarte, Kontaktperson und Verfügungen — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
+              <p class="reise-knoepfe"><a href="/app/?beispiel#/chapter/6">Gesundheit im Beispiel ansehen</a><a class="weiter" href="#holen">Weiter: App holen</a></p>
+            </div></li>
+          </ol>
+        </section>
+        <div class="reise-ausklang" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="rahmen">
+
+    <!-- ═══ Lebenssituationen ═══ -->
+    <section id="situationen" class="lagen" aria-labelledby="t-lagen">
+      <p class="augenbraue">Wo Sie gerade stehen</p>
+      <h2 id="t-lagen">Was ist bei Ihnen gerade los?</h2>
+      <p class="unterzeile">Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer Situation. Wählen Sie, was passt.</p>
+
+      <fieldset>
+      <legend class="unsichtbar">Ihre Situation</legend>
+      <input type="radio" name="lage" id="l1" class="unsichtbar" checked>
+      <input type="radio" name="lage" id="l2" class="unsichtbar">
+      <input type="radio" name="lage" id="l3" class="unsichtbar">
+      <input type="radio" name="lage" id="l4" class="unsichtbar">
+      <input type="radio" name="lage" id="l5" class="unsichtbar">
+      <input type="radio" name="lage" id="l6" class="unsichtbar">
+      <div class="chips">
+        <label for="l1">Wenn das Geld knapp ist</label>
+        <label for="l2">Kinder allein grossziehen</label>
+        <label for="l3">Mit Beeinträchtigung oder chronischer Krankheit</label>
+        <label for="l4">Angehörige pflegen</label>
+        <label for="l5">Neu in der Schweiz</label>
+        <label for="l6">In Ausbildung</label>
+      </div>
+      <div class="tafeln">
+        <div class="tafel t1"><p class="gross">Unterstützung wird oft nicht bezogen, weil man nicht weiss, dass es sie gibt. Maloja zeigt, was in Ihrem Kanton infrage kommen kann — von der Prämienverbilligung bis zur Sozialhilfe — und bei welcher Stelle Sie fragen können.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
+        <div class="tafel t2"><p class="gross">Neben dem Alltag bleibt wenig Zeit für Formulare. Maloja ordnet, was für Sie und Ihre Kinder infrage kommen kann, und hält Fristen an einem Ort.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
+        <div class="tafel t3"><p class="gross">Versicherungen, Leistungen und Unterlagen werden schnell viel. Maloja hält sie zusammen und erklärt die Zusammenhänge in verständlicher Sprache.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
+        <div class="tafel t4"><p class="gross">Wer Angehörige pflegt, organisiert vieles für zwei. Maloja hilft, Angaben, Kontakte und Vorsorge für den Ernstfall bereitzuhalten.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
+        <div class="tafel t5"><p class="gross">Krankenkasse, AHV, Aufenthaltsbewilligung — vieles ist hier anders geregelt. Maloja erklärt die Schweizer Begriffe und zeigt die nächsten Schritte.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
+        <div class="tafel t6"><p class="gross">Krankenkasse, Prämienverbilligung, die erste Steuererklärung: Maloja zeigt, was in der Ausbildung wichtig wird.</p><a href="/app/?beispiel#/situationen">Im Beispiel ansehen →</a></div>
+      </div>
+      </fieldset>
+    </section>
+
+    <!-- ═══ Blick in die App ═══ -->
+    <section aria-labelledby="t-blick">
+      <p class="augenbraue">Ein Blick hinein</p>
+      <h2 id="t-blick">So fühlt sich Ordnung an.</h2>
+
+      <div class="blick">
+        <div class="blick-bild"><div class="telefon" role="img" aria-label="Ansicht «Was steht mir zu?» im Beispiel"><div class="insel"></div><div class="bildschirm"><img src="/vorstellung/app-3.webp" alt="" width="480" height="1040" loading="lazy"></div></div></div>
+        <div class="blick-text">
+          <p class="zahl">Was steht mir zu?</p>
+          <h3>Ihre Situation, nicht ein Formular.</h3>
+          <p>Sie wählen, was auf Sie zutrifft. Das bleibt auf Ihrem Gerät und dient nur dazu, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung.</p>
+        </div>
+      </div>
+      <div class="blick umgekehrt">
+        <div class="blick-bild"><div class="telefon" role="img" aria-label="Gesundheit und Notfall im Beispiel"><div class="insel"></div><div class="bildschirm"><img src="/vorstellung/app-5.webp" alt="" width="480" height="1040" loading="lazy"></div></div></div>
+        <div class="blick-text">
+          <p class="zahl">Gesundheit</p>
+          <h3>Wenn es darauf ankommt, liegt alles bereit.</h3>
+          <p>Kontaktperson, Hausarzt, wichtige Hinweise — und eine Karte mit dem, was Sie bei einem Notruf sagen, zum Vorlesen.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Kantonsatlas: das Brückenstück zwischen Website und App ═══ -->
+    <section id="atlas" aria-labelledby="t-atlas">
+      <p class="augenbraue">Kantonsatlas</p>
+      <h2 id="t-atlas">Die Kantone auf der Karte.</h2>
+      <p class="unterzeile">Prämie, Steuern, Miete, Familie, Arbeit und Unterstützung: zehn Karten der 26 Kantone aus öffentlichen Statistiken, frei zugänglich und ohne Rangliste. Welche Karten wichtig sind, hängt von der Frage ab. Vier Beispiele:</p>
+      <figure class="atlas-bild">
+        <a href="/kantonsatlas/#karte-praemie"><img src="/kantonsatlas/karte-praemie.svg" width="800" height="520" loading="lazy" decoding="async" alt="Karte der 26 Kantone: mittlere Monatsprämie für Erwachsene 2027, in vier Stufen von tief bis hoch. Zur Karte im Kantonsatlas, mit den Werten jedes Kantons."></a>
+        <figcaption>Ein Beispiel: die mittlere Monatsprämie 2027. Werte und Quelle stehen im Kantonsatlas.</figcaption>
+      </figure>
+      <ul class="liste">
+        <li><h3>Person</h3><p>Was bedeutet der Wohnkanton für mich?</p><a href="/kantonsatlas/#fuer-person">Karten für diese Frage<span class="unsichtbar">: Person</span></a></li>
+        <li><h3>Firma</h3><p>Wie sieht es für die Mitarbeitenden am Standort aus?</p><a href="/kantonsatlas/#fuer-firma">Karten für diese Frage<span class="unsichtbar">: Firma</span></a></li>
+        <li><h3>Kanton oder Gemeinde</h3><p>Wie schwer wiegt die Prämie, wie häufig ist Unterstützung?</p><a href="/kantonsatlas/#fuer-kanton">Karten für diese Frage<span class="unsichtbar">: Kanton oder Gemeinde</span></a></li>
+        <li><h3>Stiftung oder Verein</h3><p>Wo beziehen viele Menschen Unterstützung?</p><a href="/kantonsatlas/#fuer-stiftung">Karten für diese Frage<span class="unsichtbar">: Stiftung oder Verein</span></a></li>
+      </ul>
+      <div class="wege"><a class="knopf zweit" href="/kantonsatlas/">Alle zehn Karten ansehen</a></div>
+      <p class="atlas-hinweis">Die Karten zeigen Durchschnitte je Kanton, nicht Ihre eigene Lage. Was davon für Sie gilt, zeigt die App Schritt für Schritt, mit Ihren Angaben, auf Ihrem Gerät.</p>
+    </section>
+
+    <!-- ═══ Holen ═══ -->
+    <section id="holen" aria-labelledby="t-holen">
+      <p class="augenbraue">Telefon, Tablet, Laptop</p>
+      <h2 id="t-holen">Maloja Plana holen — in einer Minute.</h2>
+      <p class="unterzeile">Maloja Plana lässt sich auf den Startbildschirm oder ins Dock legen. Danach öffnet es sich mit eigenem Symbol und in einem eigenen Fenster, wie eine App.</p>
+      <div class="holen">
+        <div class="geraet">
+          <h3>iPhone und iPad</h3>
+          <ol>
+            <li>Maloja Plana in Safari öffnen.</li>
+            <li>Unten auf das Teilen-Zeichen tippen — das Quadrat mit dem Pfeil nach oben.</li>
+            <li>«Zum Home-Bildschirm» wählen.</li>
+            <li>Oben rechts auf «Hinzufügen» tippen.</li>
+          </ol>
+          <p class="klein">Auf dem iPhone sind die Angaben in Safari und auf dem Startbildschirm getrennt gespeichert. Öffnen Sie Maloja Plana darum von Anfang an über das Symbol.</p>
+        </div>
+        <div class="geraet">
+          <h3>Android</h3>
+          <ol>
+            <li>Maloja Plana in Chrome öffnen.</li>
+            <li>Oben rechts auf die drei Punkte tippen.</li>
+            <li>«App installieren» wählen — je nach Version «Zum Startbildschirm hinzufügen».</li>
+            <li>Bestätigen.</li>
+          </ol>
+        </div>
+        <div class="geraet">
+          <h3>Laptop und Computer</h3>
+          <ol>
+            <li>Maloja Plana in Chrome oder Edge öffnen.</li>
+            <li>Rechts in der Adresszeile auf das Installieren-Zeichen klicken — ein kleiner Bildschirm mit einem Pfeil.</li>
+            <li>Bestätigen. Maloja Plana liegt danach bei Ihren Programmen.</li>
+          </ol>
+          <p class="klein"><strong>Mac mit Safari:</strong> im Menü «Ablage» auf «Zum Dock hinzufügen» (ab Safari 17). Firefox am Computer kann das nicht — dort bleibt ein Lesezeichen.</p>
+        </div>
+      </div>
+      <div class="wege"><a class="knopf zweit" href="/app/">Maloja Plana öffnen</a></div>
+      <p class="bald"><strong>Eine Fassung für den App Store ist geplant.</strong> Bis dahin funktioniert der Weg über den Startbildschirm auf Telefon, Tablet und Laptop.</p>
+      <p class="bald" id="warteliste">Möchten Sie Bescheid bekommen? <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Warteliste&amp;body=Bitte%20nehmen%20Sie%20mich%20auf%20die%20Warteliste.%0A%0ASie%20schreiben%20mir%20h%C3%B6chstens%20zweimal%3A%20wenn%20die%20Beta%20endet%20und%2C%20falls%20es%20dazu%20kommt%2C%20wenn%20es%20Maloja%20Plana%20im%20App%20Store%20gibt.%20Danach%2C%20sp%C3%A4testens%20Ende%202027%2C%20wird%20meine%20Adresse%20gel%C3%B6scht.%20Abmelden%20geht%20jederzeit%20mit%20einer%20Antwort%20%C2%ABabmelden%C2%BB.">Per E-Mail auf die Warteliste</a>. Wir schreiben Ihnen höchstens zweimal: wenn die Beta endet und, falls es sie gibt, wenn die Fassung für den App Store erscheint. Spätestens Ende 2027 löschen wir Ihre Adresse (<a href="/rechtliches/">Datenschutz</a>).</p>
+    </section>
+
+    <!-- ═══ Vertrauen ═══ -->
+    <section aria-labelledby="t-vertrauen">
+      <p class="augenbraue">Ihre Angaben</p>
+      <h2 id="t-vertrauen">Was Sie eingeben, bleibt bei Ihnen.</h2>
+      <p class="unterzeile">Die Rechnungen laufen in Ihrem Browser. Was Sie eingeben, wird nicht an einen Server geschickt.</p>
+      <ul class="liste">
+        <li><h3>Kein Konto</h3><p>Keine Anmeldung. Der Zugangscode der Beta wird nur auf Ihrem Gerät geprüft.</p></li>
+        <li><h3>Nur auf diesem Gerät</h3><p>Im Speicher Ihres Browsers — nicht bei uns und nicht bei Dritten.</p></li>
+        <li><h3>Kein Tracking</h3><p>Keine Werbung, keine Analyse-Dienste. Der Hoster speichert beim Abruf kurz technische Zugriffsdaten (<a href="/rechtliches/">Datenschutz</a>).</p></li>
+        <li><h3>Quelloffen</h3><p>Der Quellcode ist öffentlich einsehbar.</p></li>
+      </ul>
+    </section>
+
+    <!-- ═══ Nachlesen + Fragen ═══ -->
+    <section class="zweispaltig" aria-label="Nachlesen und häufige Fragen">
+      <div>
+        <h2>Zum Nachlesen</h2>
+        <ul class="liste eins">
+          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a><span>Warum Unterstützung auf Bund, Kantone und Gemeinden verteilt ist.</span></li>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung</a><span>Ein Beitrag an die Krankenkassenprämie — was das für Sie bedeutet.</span></li>
+          <li><a href="/sozialhilfe/">Sozialhilfe</a><span>Wer entscheidet und woraus sie sich zusammensetzt.</span></li>
+          <li><a href="/steuern/">Steuern</a><span>Warum derselbe Lohn je nach Wohnort anders besteuert wird.</span></li>
+          <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a><span>Gemeinsamer Topf, Franchise und Prämie — Schritt für Schritt.</span></li>
+        </ul>
+      </div>
+      <div class="fragen">
+        <h2>Häufige Fragen</h2>
+        <h3>Warum brauche ich einen Zugangscode?</h3>
+        <p>Maloja Plana ist noch in einer geschlossenen Beta. Das Beispiel geht ohne Code — mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p>Einen Code bekommen Sie per E-Mail: schreiben Sie an <a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Zugangscode">info@malojaplana.ch</a>.</p>
+        <h3>Was passiert, wenn ich das Gerät wechsle?</h3>
+        <p>Ihre Angaben liegen nur in dem Browser, in dem Sie sie eingegeben haben. Für einen Wechsel oder als Vorsorge können Sie eine Sicherung als Datei speichern und später wieder einlesen.</p>
+        <h3>Ersetzt die App eine Beratung?</h3>
+        <p>Nein. Die App gibt Orientierung. Massgebend ist immer die Auskunft oder Verfügung der zuständigen Stelle.</p>
+        <p class="vorbehalt">Die App ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>.</p>
+      </div>
+    </section>
+
+    <div class="schluss">
+      <h2>Beginnen Sie mit einem kleinen Schritt.</h2>
+      <p class="unterzeile">Schauen Sie sich das Beispiel an, ohne etwas einzugeben.</p>
+      <div class="wege">
+        <a class="knopf zweit" href="/app/?beispiel">Beispiel ansehen</a>
+        <a class="knopf zweit" href="#holen">App holen</a>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <!-- ═══ D/E · Fuss: Marke · Entdecken · Rechtliches, darunter die Vertrauenszeile ═══ -->
+  <footer class="fuss">
+    <div class="rahmen">
+      <div class="fuss-spalten">
+        <div class="fuss-marke">
+          <a class="marke" href="#inhalt" aria-label="Maloja Plana, nach oben"><svg viewBox="0 0 500 540" aria-hidden="true"><path d="M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z" fill="currentColor"/><path d="M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z" fill="currentColor"/><path d="M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z" fill="currentColor"/></svg>Maloja&nbsp;Plana</a>
+          <p>Ein Schweizer Lebensordner. Ein Projekt von Stebler Studios, Basel.</p>
+          <p><a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+        </div>
+        <nav aria-labelledby="f-entdecken">
+          <p class="fuss-titel" id="f-entdecken">Entdecken</p>
+          <ul>
+            <li><a href="/app/?beispiel">Beispiel ansehen</a></li>
+            <li><a href="#weg">Die sieben Kapitel</a></li>
+            <li><a href="#holen">App holen</a></li>
+            <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+            <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+            <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+            <li><a href="/steuern/">Steuern</a></li>
+            <li><a href="/krankenkasse/">Warum die Krankenkasse so viel kostet</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-recht">
+          <p class="fuss-titel" id="f-recht">Rechtliches</p>
+          <ul>
+            <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+            <li><a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">Quelloffen unter AGPL-3.0</a></li>
+            <li><a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></li>
+            <li><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Problem%20melden">Problem melden</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="fuss-zeile">
+        <p class="vertrauen"><span>Ohne Konto</span><span>Ohne Werbung</span><span>Ihre Angaben bleiben auf dem Gerät</span></p>
+        <p>Die Bilder der Reise sind KI-gemalt, eine freie Darstellung des Malojapasses.</p>
+        <p>Diese Seite gibt es auf Deutsch. Die App lässt sich auch auf Englisch, Französisch, Italienisch und Rätoromanisch (noch provisorisch) einstellen.</p>
+        <p>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung. Massgebend ist die zuständige Stelle.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/reise.js" defer></script>
+</body>
+</html>

@@ -70,7 +70,7 @@ export const FAMILIEN_EL_KINDER_UNTER = { TI: 15, VD: 16, SO: 6, GE: 25 };
 // Alter eines Kindes, nur wenn es bekannt ist: aus dem Geburtsdatum, sonst aus einer
 // eingetragenen Zahl über 0. «0» ohne Geburtsdatum ist der Vorgabewert eines neu angelegten
 // Kindes (ChapterView) und heisst darum «unbekannt», nicht «Säugling».
-function bekanntesAlter(kind, heute) {
+export function bekanntesAlter(kind, heute) {
   // Datum selbst zerlegen: new Date('JJJJ-MM-TT') liest UTC, die Vergleiche unten rechnen lokal.
   const m = typeof kind?.birthDate === 'string' ? /^(\d{4})-(\d{2})-(\d{2})/.exec(kind.birthDate) : null;
   if (m) {
@@ -92,5 +92,16 @@ export function familienELPasstZumKindesalter(canton, children, heute = new Date
   return children.some((k) => {
     const alter = bekanntesAlter(k, heute);
     return alter === null || alter < grenze;
+  });
+}
+
+// Gruppe A K (11.11.2026): Mutterschaftsbeihilfe gibt es nur in den ersten Monaten nach der Geburt (ZG, FR, SG: bis zum
+// ersten Geburtstag; GR in der Regel 10, höchstens 15 Monate). Die Karte erscheint darum nur, wenn ein Kind unter zwei
+// Jahre alt ist oder sein Alter unbekannt ist — ohne Kinderliste wie bisher (auch eine Schwangerschaft zeigt sie so).
+export function kleinkindUnterZweiJahren(children, heute = new Date()) {
+  if (!Array.isArray(children) || children.length === 0) return true;
+  return children.some((k) => {
+    const alter = bekanntesAlter(k, heute);
+    return alter === null || alter < 2;
   });
 }

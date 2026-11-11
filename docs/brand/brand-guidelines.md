@@ -308,6 +308,12 @@ aus der App zurück zur Karte. Drei Regeln:
   verspricht zu viel, wo die Karte eine Quote zeigt. Karten ohne Werkzeug versprechen nichts.
 - **Die Website zeigt den Atlas als eigenen Abschnitt** mit den vier Brillen als Wege hinein. In der App bleibt
   es beim Entscheid 24.10.2026: keine Atlas-Seite, die Karte steht im Werkzeug.
+- **Auf der Website eine Karte als eigenes Bild** *(10.11.2026, Stebler Studios, Skizze A–C → «C: als eigenes
+  Bild»)*: die Prämienkarte als Datei `/kantonsatlas/karte-praemie.svg` (gepackt etwa 13 kB, die Seite selbst
+  etwa 11,5 kB), mit `loading="lazy"`, Breite und Höhe am Bild. Tippen führt zur Karte im Atlas. Ein Bild erbt
+  kein CSS, darum stehen Frucht, Rand und dunkler Modus fest in der Datei, erzeugt aus derselben Quelle
+  (`karteBild` in `scripts/seiten/kantonsatlas.mjs`). Nicht in die Seite einbetten. Wächter:
+  `src/__tests__/vorstellungAtlas.test.js`.
 - Wächter: `src/__tests__/atlasBruecke.test.js`. Adressen in die App: eine Quelle, `scripts/seiten-ziele.mjs`.
 
 
@@ -337,6 +343,15 @@ Wächter: `src/__tests__/knopfarten.test.js`.
   Ansicht springen («Heute» im Kalender), sind **Auswahl**. Wächter: `knopfarten.test.js`
   («Öffner sind nie Hauptknopf»). Herleitung: `docs/design/gesamtbild-2026-11/GESAMTBILD.md` §3b.
 - Kleine × zum Löschen in Listen bleiben graue Symbole mit Ansage (`aria-label`).
+  Ihre Tippfläche ist trotzdem 44 × 44 (Polster um das Zeichen, nicht ein grösseres Zeichen).
+- **Löschen fragt nie, es lässt sich zurücknehmen** (10.11.2026): Der Eintrag ist sofort weg,
+  darunter steht «Entfernt · ‹Name›» mit dem Nebenknopf «Rückgängig», der ihn an dieselbe Stelle
+  zurücklegt. Die Meldung hat keine Zeitgrenze (seit 11.11.2026, WCAG 2.2.1; vorher fünf Sekunden): Sie
+  bleibt bis zum nächsten Löschen oder Ansichtswechsel. Nach «Rückgängig» bleibt der Fokus in der Meldung. Kein «Wirklich löschen?», keine Browser-Dialoge. Leere Eingabezeilen
+  gehen ohne Meldung. Baustein: `hooks/useRueckgaengig.js` + `components/RueckgaengigMeldung.jsx`;
+  Wächter: `rueckgaengig.test.js` (Liste aller Lösch-Listen — eine neue gehört dort hinein).
+  Ausgenommen sind ganze Bestände (Daten löschen, Sicherung zurückspielen): die haben ihren eigenen,
+  ausdrücklichen Weg.
 
 Entschieden von Stebler Studios am 05.11.2026 (Knopf-Inventur, 20 Entscheide, «setze alle
 Empfehlungen um und beachte die Rundungen der Knöpfe»).
@@ -365,6 +380,33 @@ Wächter: `src/__tests__/kalenderblatt.test.js`, `src/__tests__/fristenBlau.test
 Entschieden von Stebler Studios am 06.11.2026 («Ja, E so», nach Skizzen A–E).
 
 ---
+
+### 7e. Die Reise auf der Startseite — Kehren, Wanderstock, Stocknägel *(Entwurf 10.11.2026, näher an Fuji: A–E, dann A–F)*
+
+Der Abschnitt «Ein Weg, Kehre für Kehre» auf malojaplana.ch/ (`scripts/seiten/vorstellung.mjs`, `website/reise.js`).
+Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur Prinzipien, keine fremden Bilder oder Code.
+
+| Regel | Wie |
+|---|---|
+| **Anfang = Hero (A/B)** | Kopfzeile und Hero liegen auf dem Passbild, und dieses Bild ist zugleich Bild 0 der Reise-Bühne: dunkle Schrift auf heller Schicht, darunter folgen ohne Umweg die sieben Kehren. Am Handy liegt der Text ebenso auf dem Bild. Der Übergang heisst «Sieben Kapitel, Kehre für Kehre» (Nebenknopf). Die Situationen kommen nach der Reise. *(Bis 10.11. mittags: eigener Nacht-Bildschirm mit Ring «Losgehen» — abgelöst.)* |
+| **Geräte (C)** | im Hero ein Laptop mit der App am Computer und davor rechts ein Telefon mit der Bildfolge; beide «im Beispiel mit erfundenen Daten» |
+| **Bühne** | je Kehre ein eigenes gemaltes Bild, vom Talboden im Bergell über die Serpentinen bis zum Silsersee oben am Pass; randlos, klebt beim Scrollen. Zurzeit KI-gemalt (lockerer Aquarell-Gouache-Stil, Figma «Maloja Reise · Bilder») und so beschriftet; später echte Malerei. Das Passbild lädt sofort, die Kehren-Bilder erst kurz vor ihrer Kehre |
+| **Bildwechsel (E)** | das neue Bild kommt als **Pinselstrich**, der von links nach rechts quer übers Bild wischt (Maske mit ausgefranster Kante, eigene Form, 1,1 s, Kurve `cubic-bezier(.4,0,.2,1)`); darüber ziehen leise Wolken. Kein Wachsen aus der Mitte (wirkte wie Zoomen) |
+| **Kehre = Kapitel** | sieben Kehren in der Reihenfolge der App (`CHAPTER_KEYS`), Kapitelfarben aus `lebensbereiche.js`; an jeder Kehre das **Kapitel-Zeichen der App** (Leitform aus `seitenZeichen.js`, erzeugt aus `IconAbzeichen.jsx` nach `scripts/seiten/kapitel-zeichen.mjs`, nie nachgezeichnet) |
+| **Sammelobjekt (B/D)** | Wanderstock in der Mitte, mit Licht- und Schattenkante; je erreichter Kehre ein **Aufkleber**, wie man sie an einen Wanderstock klebt: Formen wechseln (Schild, Rechteck mit runden Ecken, Kreis, Oval), je leicht schräg (bis ±8°), weisser Grund mit Rand in der Kapitelfarbe, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund); darauf das **Kapitel-Zeichen der App**. Die Aufkleber sitzen **rundum** (je 1/7 Drehung) |
+| **Text (C)** | weiss **direkt auf dem Bild**, rechts neben dem Stock; darunter eine dunkle Schicht, die unter dem Text mindestens 62 % deckt (Text und Kehren-Zeile reines Weiss #FBFBFA). Am Handy eigene dunkle Fläche 78 % **ohne Milchglas**. Zwei Nebenknöpfe auf **Papier** (deckend `#FBFBFA`, Schrift und Rand sandDeep, **10 px**, keine Pillen): «… im Beispiel ansehen» und «Weiter» (zur nächsten Kehre, zuletzt «Weiter: App holen») |
+| **Grosses Zeichen (D)** | statt einer grossen Zahl steht gross das **Kapitel-Zeichen** über dem Text: helle Plakette, Ecke 16 px, Zeichen in der Kapitelfarbe, `aria-hidden`; die Information steht als Text «Kehre n von 7». *(Bis 10.11. mittags: grosse Zahl 01–07 — doppelte sich mit «Kehre n von 7».)* **Keine Höhenangaben ohne Quelle** |
+| **Weglinie (D)** | links im Bild, gepunktet, der gegangene Teil durchgezogen; an jedem Halt das **Kapitel-Zeichen** auf heller Scheibe mit Rand in der Kapitelfarbe, die aktuelle Kehre mit Ring in Sand und dem Kapitelnamen. Sie ist während der Reise die einzige Ortsangabe (keine Leiste oben) |
+| **Bewegung** | Pinselstrich, Nagel «schlägt an» (0,6 s) und Wolken nur ohne «weniger Bewegung». **Die Kamera kreist um den Stock** (wie bei Fuji die Perspektive, nicht der Stock allein): zwischen zwei Aufklebern wandert das Bild seitlich mit (bis 6 %) und das Licht gleitet übers Holz; steht ein Aufkleber vorn, ruht beides. Mit «weniger Bewegung» wechseln Bild, Aufkleber und Ort genauso, ohne Kamerafahrt. Ohne Skript: helle Hero-Fläche, alle Aufkleber vorn, Passbild bleibt stehen. Keine Vergrösserung über §8 hinaus |
+| **Seite sonst (F)** | genau **ein Hauptknopf** (im Hero), alle übrigen Nebenknöpfe; Auswahl-Chips gewählt Sand gefüllt, 10 px; Links Gold (sandDeep) unterstrichen, auch im Fuss; Bildmarke in der Kopfzeile einfarbig Anthrazit (§4) |
+| **Kopf (A)** | liegt auf dem Passbild und scrollt mit weg. Am Handy wird die Navigation zur **wischbaren Zeile** (Knöpfe 44 px, 10 px, leiser Verlauf am rechten Rand), sie verschwindet nie. Erster Link: «Zum Inhalt springen». Browserleiste je Farbschema (`#F2F2F0` / `#22211F`) |
+| **Leiste (C)** | erscheint erst **nach der Reise**: Papier `#FBFBFA` mit Haarlinie, 56 px, **kein Milchglas**, Seiten-Links mit dem aktuellen Abschnitt (unterstrichen, am Handy Sand gefüllt). Erscheinen 250 ms, Verschwinden 150 ms (§7a E); ohne Skript gibt es sie nicht. *(Bis 10.11. nachmittags auch während der Reise mit «Kehre n von 7» und Punkten — abgelöst, die Weglinie zeigt den Ort.)* |
+| **Fuss (D/E)** | heller Grund mit Haarlinie (kein dunkles Band), drei Spalten: **Marke** (Bildmarke Anthrazit, führt nach oben, ein Satz, Mail) · **Entdecken** (Beispiel, Kapitel, App holen, Erklärseiten) · **Rechtliches** (Impressum/Datenschutz/Haftung, AGPL, Quellcode, Problem melden). Darunter die Vertrauenszeile «Ohne Konto · Ohne Werbung · Ihre Angaben bleiben auf dem Gerät», die Sprachen der App und der Vorbehalt. Vorbild: Fuss von Healing & Balance und der Erklärseiten. *(Die Erklärseiten haben noch ihren eigenen Fuss aus `build-seiten.mjs`; eine gemeinsame Quelle ist ein späterer Schritt.)* |
+| **Ausklang und Abstände** | nach der letzten Kehre verläuft das Bild auf 45 % der Bildhöhe ins Papier der Seite (kein harter Schnitt). Abschnitte der Startseite 96 px (= 64 × 1.5, Kapitelstufe nach §7a B), am Handy 64; Spalten 64 |
+| **Schrift (Startseite)** | wie §3: **Titel in Hanken Grotesk** (h2/h3 700/600), alles andere Lexend; Grössen nur aus der Skala 13 · 15 · 16 · 19 · 23 · 28 · 36, einzige Ausnahme der h1 im Hero (48, Tablet 38, Handy 32). Keine Versalien-Etiketten (wirken wie SaaS-«Eyebrows»), Etiketten 15 px normal. Kleintext mindestens 15, Fliesstext 16; Zweitfarbe hell `#575B61`. KI-Bilder am Bild nur «KI-gemalt», der ganze Satz im Fuss. Wächter `vorstellungSeite.test.js` («Schrift») |
+| **Kein Zwang** | Nägel sind Zeichen, keine Punkte; nichts wird gespeichert |
+
+Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Punkte A–E nach Skizze; danach «Ja, alles so» zu A–F: Hero und Reise vereint, Laptop + Telefon, Drehen statt Zoom, Pinselstrich quer, Brand Book auf der ganzen Seite; dann «Alle, A bis E» zu Kopf, Leiste und Fuss nach der Durchsicht der eigenen Projekte, `stebler-studios/analysen/maloja-startseite-abschauen-2026-11-10.md`).
 
 ## 8. Calm-UX-Prinzipien
 

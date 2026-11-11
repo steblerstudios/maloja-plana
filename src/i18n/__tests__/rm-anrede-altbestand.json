@@ -2,8 +2,6 @@
  "lebenszustaende.rentnerin.frage",
  "bewilligung.step2Text",
  "fuehrerausweis.step1Text",
- "pensionierung.step2Text",
- "kkErst.step3Text",
  "anspruchCheck.resultEmptySituation",
  "budgetImport.selectCsvOrExcel",
  "onboarding.needsSubtitle",
@@ -18,8 +16,5 @@
  "notfallkarte.loc_error",
  "notfallkarte.loc_unsupported",
  "notfallkarte.step3Text",
- "po.reserveCheck_none",
- "gepaeck.intro",
- "vr.intlIntro",
- "vr.zukunftRenteKapitalHinweis"
+ "gepaeck.intro"
 ]

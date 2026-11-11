@@ -87,7 +87,8 @@ Datei; dafür hat das Studio einen eigenen Weg.
 
 ### Bugsuche 2026-11-09 (Lesedurchgänge über `main` `dff64ec7`, jeder Fund im Code gegengeprüft)
 
-**Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6). B-7 bis B-10 sind auf
+**Alle unten: im Code belegt, im Browser nicht nachgestellt** (wie B-6) — *Ausnahme seit
+10.11.2026: B-17 bis B-19 im Browser angesehen, siehe «Browser-Kontrolle» am Ende des Abschnitts.* B-7 bis B-10 sind auf
 Zweig `fix/bugsuche-top4` behoben, je mit Test, der vor dem Fix rot war — ~~nicht gemergt, nicht
 live~~ → **gemergt 10.11.2026, 01:23 (PR #800, `main` = `9b869714`), NICHT live** — «Behoben (Zweig)»
 unten heisst seither «in `main`, wartet auf den Deploy». Erst nach dem Deploy wandern die Zeilen
@@ -190,6 +191,24 @@ gesetzliche Werte stimmen. Ein Fix hier ist Fachlogik → vorher `swiss-precisio
   Annahme-Text und Tabellen-Markierung nehmen `ahvBezugAlter` = max(Rücktritt, frühester Bezug);
   BVG/3a bleiben beim Rücktritt. Test in `zukunftsbildAhvAb63.test.js`. `swiss-precision-pruefer`:
   mergereif nach der Markierungs-Korrektur.
+
+**Browser-Kontrolle 10.11.2026, ~11:30, `main` `ad40cd22`** (Vite-Vorschau, eigener Arbeitsbaum,
+Testprofil wie in `zukunftsbildAhvAb63.test.js`: Mann, 40, BS, brutto 80 000 mit 13. Monatslohn).
+Nur der Vorsorge-Rechner, nur B-17/B-18/B-19; B-7 bis B-16 im Browser weiter nicht nachgestellt.
+- **B-19** · Reiter AHV, Bezugsalter von Hand 60 eingetippt → CHF 1 962 / ab 65 CHF 2 070,
+  «Bis zum Bezug (63 Jahre) … 42 Beitragsjahre» — gleich wie Eingabe 63. Gegenprobe 64 → 2 167 /
+  2 221, das Feld reagiert also. ✅
+- **B-19** · Reiter Vergleich: nur Zeile 63 fett markiert. ✅
+- **B-18** · Reiter Zukunft, Regler 58: AHV 1 962 / ab 65 2 070; AHV-Fläche im Bild endet bei rund
+  544 000 = 1 962 × 24 + 2 070 × 240 (Bezug ab 63, nicht ab 58). Text: «Die Jahre von 58 bis 63
+  überbrücken Sie ohne AHV». ✅
+- **B-17** · IK «Aus meinen Daten vorausfüllen» (2007–2026, 20 Jahre, Ø 80 000) und «für die
+  Rentenschätzung verwenden» → weiterhin 1 962 / 2 070, «95.5 % (42/44 Jahre) · aus IK-Auszug»;
+  im Zukunftsbild ebenso. Der Satz dort nennt noch die IK-Rohwerte («20 Beitragsjahre») — das
+  ergänzt Entwurfs-PR #811. ✅
+- Konsole ohne Fehler (nur Schrift-Vorlade-Warnungen des Service Workers im Dev-Server). Hell- und
+  Dunkelmodus angesehen, lesbar. Klein, nicht neu: der Reglergriff überdeckt die Beschriftung
+  «Bezugsalter 58».
 
 Nicht als Bug geführt: die automatischen Sicherungen (`autoBackup.js`) werden angelegt, lassen
 sich in der App aber nicht zurückholen — fehlende Funktion, gehört in die Bau-Liste.
