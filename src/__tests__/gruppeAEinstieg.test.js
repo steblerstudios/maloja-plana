@@ -32,6 +32,7 @@ const knapp = (workPermit) => ({
   finanzen: { ...DEMO_DATA.finanzen, monthlyIncome: 1200, incomeType: 'netto', savingsAccount: '0' },
   wohnen: { ...DEMO_DATA.wohnen, rentAmount: 1400 },
   ausbildung: { ...DEMO_DATA.ausbildung, workPermit },
+  basis: { ...DEMO_DATA.basis, nationality: workPermit === 'swiss' ? 'swiss' : 'other' },
 });
 
 const zeichne = (data) => renderToStaticMarkup(React.createElement(Lebenssituationen, { palette: LIGHT_PALETTE, t, data, onNavigate: () => {} }));
@@ -41,6 +42,14 @@ describe('Hilfsfunktion: wer den Hinweis bekommt', () => {
     expect(ohneSchweizerPass({ ausbildung: { workPermit: 'swiss' } })).toBe(false);
     for (const p of ['b', 'c', 'l', 'g', 'f', 'n', 's', '', undefined]) expect(ohneSchweizerPass({ ausbildung: { workPermit: p } })).toBe(true);
     expect(ohneSchweizerPass(undefined)).toBe(true);
+  });
+  it('welcher Satz: B/C/L/ohne Angabe → Bewilligung, F → eigener Satz, N/S/G → keiner (AIG 62/63 gilt nur für AIG-Bewilligungen)', async () => {
+    const { sozHinweisSchluessel } = await import('../data/ausweis.js');
+    const mit = (workPermit, nationality) => ({ ausbildung: { workPermit }, basis: { nationality } });
+    for (const p of ['b', 'c', 'l', '']) expect(sozHinweisSchluessel(mit(p))).toBe('wasStehtMirZu.sozBewilligung');
+    expect(sozHinweisSchluessel(mit('f'))).toBe('wasStehtMirZu.sozBewilligungF');
+    for (const p of ['n', 's', 'g', 'swiss']) expect(sozHinweisSchluessel(mit(p))).toBe(null);
+    expect(sozHinweisSchluessel(mit('', 'swiss'))).toBe(null);
   });
   it('der Satz ist derselbe wie auf der Sozialhilfe-Seite (Kapitel 3)', () => {
     expect(de.sozialhilfe.intro.sie).toContain(satz);
@@ -65,8 +74,8 @@ describe('L1: Sozialhilfe-Weg mit Hinweis auf die Bewilligung', () => {
     expect(z(knapp('swiss'))).not.toContain(satz);
   });
   it('Schritt 3 und die Leistungsliste der Übersicht hängen den Satz an den Sozialhilfe-Weg', () => {
-    expect(quelle('AnspruchCheck.jsx')).toMatch(/b\.key === 'soz'\) && ohneSchweizerPass\(probe\) && hinweis\('soz-bewilligung'/);
-    expect(quelle('components/Leistungsliste.jsx')).toMatch(/ohneSchweizerPass\(probe\) \? ' ' \+ t\('wasStehtMirZu\.sozBewilligung'\)/);
+    expect(quelle('AnspruchCheck.jsx')).toMatch(/b\.key === 'soz'\) && sozHinweisSchluessel\(probe\) && hinweis\('soz-bewilligung'/);
+    expect(quelle('components/Leistungsliste.jsx')).toMatch(/sozHinweisSchluessel\(probe\) \? ' ' \+ t\(sozHinweisSchluessel\(probe\)\)/);
   });
 });
 
@@ -123,7 +132,7 @@ describe('L3–L9: Voraussetzungen stehen im Text', () => {
   });
   it('L5 Reka: Alleinerziehende, keine Anreise, keine KulturLegi, nur mit Kindern', async () => {
     const tx = lz.tiefesEinkommen.berechtigungen.rekaFerien.text;
-    expect(tx).toMatch(/Alleinerziehenden/);
+    expect(tx).toMatch(/Alleinerziehende/);
     expect(tx).not.toMatch(/Alleinstehend|Anreise|KulturLegi/);
     const { LEBENSZUSTAENDE } = await import('../data/lebenszustaende.js');
     const reka = LEBENSZUSTAENDE.find((z) => z.key === 'tiefesEinkommen').berechtigungen.find((b) => b.key === 'rekaFerien');
@@ -138,7 +147,7 @@ describe('L3–L9: Voraussetzungen stehen im Text', () => {
     expect(de.nav.sub.tresor).not.toMatch(/sicher/i);
   });
   it('L9 AHV-Mindestbeitrag nur bis 25 (AHVG Art. 10 Abs. 2 Bst. a)', () => {
-    expect(lz.inAusbildung.berechtigungen.ahv.text).toMatch(/bis zum Jahr, in dem sie 25 werden/);
+    expect(lz.inAusbildung.berechtigungen.ahv.text).toMatch(/bis Ende des Jahres, in dem sie 25 werden/);
   });
   it('die Sätze gibt es in fr, it, en ebenso (keine Lücke)', async () => {
     for (const l of alleSprachen) {
@@ -162,14 +171,15 @@ describe('Kleines', () => {
   it('Obstgarten: es sind drei Bäumchen, die später kommen', () => {
     expect(de.obstgarten.legend).toMatch(/drei jüngsten/);
   });
-  it('Mutterschaftsbeihilfe nur mit einem Kind unter einem Jahr oder unbekanntem Alter', async () => {
-    const { kleinkindUnterEinemJahr } = await import('../data/familienEL.js');
+  it('Mutterschaftsbeihilfe nur mit einem Kind unter zwei Jahren oder unbekanntem Alter', async () => {
+    const { kleinkindUnterZweiJahren } = await import('../data/familienEL.js');
     const heute = new Date(2026, 10, 11);
-    expect(kleinkindUnterEinemJahr([{ birthDate: '2026-03-01' }], heute)).toBe(true);
-    expect(kleinkindUnterEinemJahr([{ birthDate: '2020-03-01' }], heute)).toBe(false);
-    expect(kleinkindUnterEinemJahr([{ age: 0 }], heute)).toBe(true);
-    expect(kleinkindUnterEinemJahr([], heute)).toBe(true);
-    expect(quelle('Lebenssituationen.jsx')).toMatch(/!b\.mutterschaftsbeihilfe \|\| kleinkindUnterEinemJahr\(/);
+    expect(kleinkindUnterZweiJahren([{ birthDate: '2026-03-01' }], heute)).toBe(true);
+    expect(kleinkindUnterZweiJahren([{ birthDate: '2025-02-01' }], heute)).toBe(true); // GR: bis 15 Monate
+    expect(kleinkindUnterZweiJahren([{ birthDate: '2020-03-01' }], heute)).toBe(false);
+    expect(kleinkindUnterZweiJahren([{ age: 0 }], heute)).toBe(true);
+    expect(kleinkindUnterZweiJahren([], heute)).toBe(true);
+    expect(quelle('Lebenssituationen.jsx')).toMatch(/!b\.mutterschaftsbeihilfe \|\| kleinkindUnterZweiJahren\(/);
   });
   it('«Stand» der Lebenslagen ist nicht älter als das laufende Jahr (rot ab 1.1.2027 ohne Durchgang)', async () => {
     const { LEBENSZUSTAENDE } = await import('../data/lebenszustaende.js');

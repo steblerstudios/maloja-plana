@@ -9,7 +9,7 @@ import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 import { zurueckZeichen } from './IconSystem.jsx';
 import { PanelTitle } from './components/Heading.jsx';
-import { hatAusweisFNS, ohneSchweizerPass } from './data/ausweis.js';
+import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
 // Anspruch-Check, geführt (#4.4.2 „Brücke"): webt die zwei bestehenden Checks zu
 // EINEM Fluss — Schritt 1 = Zahlen (Schnellcheck), Schritt 2 = Lebenslage
@@ -119,7 +119,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       // Gruppe A L2: IPV ruht für F/N/S bei Sozialhilfe (AsylG Art. 82a Abs. 7) — wie Schritt 1.
       incomeBenefits.some((b) => b.key === 'ipv') && hatAusweisFNS(probe) && hinweis('ipv-ruht', t('ipv.ruhtMitSozialhilfe')),
       // Gruppe A L1: Sozialhilfe ohne Schweizer Pass — Folgen für die Bewilligung (AIG Art. 62, 63).
-      incomeBenefits.some((b) => b.key === 'soz') && ohneSchweizerPass(probe) && hinweis('soz-bewilligung', t('wasStehtMirZu.sozBewilligung')),
+      incomeBenefits.some((b) => b.key === 'soz') && sozHinweisSchluessel(probe) && hinweis('soz-bewilligung', t(sozHinweisSchluessel(probe))),
 
       sectionHeader(t('anspruchCheck.resultSituationHeader')),
       chosen.length

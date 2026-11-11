@@ -12,13 +12,13 @@ import { aufklappZeichen } from './IconSystem.jsx';
 import { betrag } from './utils/geld.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
-import { getFamilienEL, familienELPasstZumKindesalter, kleinkindUnterEinemJahr } from './data/familienEL.js';
+import { getFamilienEL, familienELPasstZumKindesalter, kleinkindUnterZweiJahren } from './data/familienEL.js';
 import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { linkStil, auswahlStil } from './components/PrimaryButton.jsx';
-import { hatAusweisFNS, ohneSchweizerPass } from './data/ausweis.js';
+import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 
 // ─── Lebenslagen (Auswahl) ─────────────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
@@ -173,7 +173,7 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
           // Mutterschaftsbeihilfe: gleiches kanton-bewusste Muster.
           .filter((b) => !b.mutterschaftsbeihilfe || getMutterschaftsbeihilfe(userCanton).has)
           // … und nur in den ersten Monaten nach der Geburt (Gruppe A K, 11.11.2026).
-          .filter((b) => !b.mutterschaftsbeihilfe || kleinkindUnterEinemJahr(data?.basis?.household?.children))
+          .filter((b) => !b.mutterschaftsbeihilfe || kleinkindUnterZweiJahren(data?.basis?.household?.children))
           .map((b) => {
           // Familien-EL / Mutterschaftsbeihilfe tragen keine statische URL — sie kommt kanton-abhängig dazu.
           const felUrl = b.familienEL ? getFamilienEL(userCanton).url : null;
@@ -203,10 +203,10 @@ export const LebenslagenAuswahl = ({ palette, t, data, onNavigate }) => {
               style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }
             }, t(baseKey + '.text')),
             // Gruppe A L1: Sozialhilfe ohne Schweizer Pass — Folgen für die Bewilligung (AIG Art. 62, 63).
-            b.key === 'sozialhilfe' && ohneSchweizerPass(data) && React.createElement('div', {
+            b.key === 'sozialhilfe' && sozHinweisSchluessel(data) && React.createElement('div', {
               key: 'bewilligung', 'data-hinweis': 'soz-bewilligung',
               style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.relaxed }
-            }, t('wasStehtMirZu.sozBewilligung')),
+            }, t(sozHinweisSchluessel(data))),
             React.createElement('div', {
               key: 'quelle',
               style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' }
@@ -370,7 +370,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       ipvTeil && hatAusweisFNS(data) && h('p', { style: s.fuss, 'data-hinweis': 'ipv-ruht' }, t('ipv.ruhtMitSozialhilfe')),
       h('p', { style: s.satz }, satz),
       // Gruppe A L1: Sozialhilfe als Weg — ohne Schweizer Pass mit dem Hinweis auf die Bewilligung.
-      w.wege.some((x) => x.key === 'soz') && ohneSchweizerPass(data) && h('p', { style: s.fuss, 'data-hinweis': 'soz-bewilligung' }, t('wasStehtMirZu.sozBewilligung')),
+      w.wege.some((x) => x.key === 'soz') && sozHinweisSchluessel(data) && h('p', { style: s.fuss, 'data-hinweis': 'soz-bewilligung' }, t(sozHinweisSchluessel(data))),
       w.ipvSubsumed && w.ipvAmount > 0 && h('p', { style: s.fuss }, t('schnellcheck.ipvSubsumed', { amount: fmt(w.ipvAmount) }))),
     // Wege zu den Rechnern — ausserhalb der Live-Region, damit sie nicht bei jeder Eingabe vorgelesen werden.
     w.wege.length > 0 && erfasst && canton && h('div', { style: { marginTop: space.xs + 'px' } },

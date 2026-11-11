@@ -95,13 +95,13 @@ export function familienELPasstZumKindesalter(canton, children, heute = new Date
   });
 }
 
-// Gruppe A K (11.11.2026): Mutterschaftsbeihilfe gibt es nur in den ersten Monaten nach der Geburt (ZG, FR: höchstens
-// 12 Monate; GR in der Regel 10, höchstens 15). Die Karte erscheint darum nur, wenn ein Kind unter einem Jahr alt ist
-// oder sein Alter unbekannt ist — ohne Kinderliste wie bisher.
-export function kleinkindUnterEinemJahr(children, heute = new Date()) {
+// Gruppe A K (11.11.2026): Mutterschaftsbeihilfe gibt es nur in den ersten Monaten nach der Geburt (ZG, FR, SG: bis zum
+// ersten Geburtstag; GR in der Regel 10, höchstens 15 Monate). Die Karte erscheint darum nur, wenn ein Kind unter zwei
+// Jahre alt ist oder sein Alter unbekannt ist — ohne Kinderliste wie bisher (auch eine Schwangerschaft zeigt sie so).
+export function kleinkindUnterZweiJahren(children, heute = new Date()) {
   if (!Array.isArray(children) || children.length === 0) return true;
   return children.some((k) => {
     const alter = bekanntesAlter(k, heute);
-    return alter === null || alter < 1;
+    return alter === null || alter < 2;
   });
 }

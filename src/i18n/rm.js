@@ -61,7 +61,7 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — Vossa KulturLegi chantunala mussa tge che vala tar Vus.', du: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' } },
         // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Die Reka-Stiftung ermöglicht Familien mit minderjährigen Kindern und Alleinerziehenden mit knappem Budget eine Ferienwoche in einer Reka-Ferienwohnung oder Jugendherberge, für einen Beitrag von 200 Franken.' },
+        rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Familien mit minderjährigen Kindern und knappem Budget verbringen eine Ferienwoche in einer Reka-Ferienwohnung oder Jugendherberge für einen Solidaritätsbeitrag von 200 Franken; für Alleinerziehende gibt es eigene günstige Ferienwochen.' },
       },
     },
     alleinerziehend: {
@@ -93,7 +93,7 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.' } },
         // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Das ist ein Recht, kein Entgegenkommen.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Decken die IV-Rente oder die Hilflosenentschädigung zusammen mit dem übrigen Einkommen die Lebenskosten nicht, stocken EL auf, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Das ist ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
         serafe: { titel: 'Exoneraziun da la taxa da radio/televisiun', text: 'Tgi che survegn prestaziuns cumplementaras (PC) è exonerà da la taxa SERAFE sin dumonda — recuperabel retroactivamain.' },
@@ -139,7 +139,7 @@ export default {
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
         franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
         // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
-        ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen bis zum Jahr, in dem sie 25 werden, den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
+        ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen bis Ende des Jahres, in dem sie 25 werden, den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
         waisenrente: { titel: 'Renta d’orfen en furmaziun', text: 'Sch’in genitur è mort, cuntinuescha la renta d’orfen durant la furmaziun — fin 25 onns. I va facilmain emblidà ch’ella na finescha betg simplamain cun 18.' },
       },
     },
@@ -4437,6 +4437,8 @@ export default {
     ergebnisMehrere: 'Cun questas indicaziuns sa mussan vias pussaivlas: {wege}.',
     // TODO(rm): provisorisch — deutsch, Gruppe A L1 (11.11.2026), Übersetzung offen
     sozBewilligung: { sie: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.', du: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lass dich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.' },
+    // TODO(rm): provisorisch — deutsch, Gruppe A rechts-pruefer (11.11.2026), Übersetzung offen
+    sozBewilligungF: { sie: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann Ihre Lage einschätzen.', du: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann deine Lage einschätzen.' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     markeNetto: 'Net {betrag} / mais',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)

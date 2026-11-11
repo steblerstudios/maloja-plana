@@ -224,6 +224,13 @@ siebenmal neu entschieden werden:
    können)»). Gebaut im selben Zweig: L1 Satz zur Bewilligung an allen Sozialhilfe-Karten und -Wegen (ohne Schweizer
    Pass), L2 «IPV ruht» für F/N/S, L3–L9, das Kleine, S1–S7, D (Startbildschirm-Karte erst nach dem Rundgang,
    «Frühe Version» als Zeile). Test `gruppeAEinstieg.test.js`, Startbündel 64 979 / 65 000 Bytes.
+   rechts-pruefer nach dem Bau eingearbeitet. **Blocker:** der Satz zur Bewilligung erschien auch bei N und S, für die
+   AIG Art. 62/63 nicht gilt (keine AIG-Bewilligung; Widerruf S nach AsylG Art. 78 ohne Sozialhilfe), und bei F in
+   falscher Form → N, S, G ohne Satz, F mit eigenem Satz (Familiennachzug AIG Art. 85c Abs. 1 Bst. c, Bewilligung
+   Art. 84 Abs. 5), Nationalität «Schweiz» schliesst aus. Nachgeschärft: SERAFE en, AHV «bis Ende des Jahres»,
+   Familienzulagen ATSG Art. 24 (fünf Jahre) und ohne EL, Mutterschaftsbeihilfe «teils» und Kind unter zwei Jahren,
+   EL bei Beeinträchtigung mit IV-Rente oder Hilflosenentschädigung, Reka 200 Franken nur Familienferien,
+   `kompassIdle`. Vorgemerkt: S-Ausweise mit Anspruch auf Bewilligung ab März 2027 (AsylG Art. 74 Abs. 2).
    **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
    Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
 

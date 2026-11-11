@@ -7,7 +7,7 @@ import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { Pegel } from './components/Pegel.jsx';
 import { PraemienBeleg } from './components/PraemienBeleg.jsx';
-import { hatAusweisFNS, ohneSchweizerPass } from './data/ausweis.js';
+import { hatAusweisFNS, sozHinweisSchluessel } from './data/ausweis.js';
 import { sozialhilfePegelState } from './data/pegel.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './components/EinkommenFeld.jsx';
 import { praemienBelegState } from './data/praemienBeleg.js';
@@ -86,7 +86,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         + (w.ohneFreibetrag ? ' · ' + t('pegel.ohneFreibetrag') : '')
         + (w.hinweise?.length ? ' · ' + t('pegel.rechnungOffen') : ''))
         // Gruppe A L1: ohne Schweizer Pass Folgen für die Bewilligung (AIG Art. 62, 63) — auch beim Weg ohne Betrag.
-        + (ohneSchweizerPass(data) ? ' ' + t('wasStehtMirZu.sozBewilligung') : ''),
+        + (sozHinweisSchluessel(data) ? ' ' + t(sozHinweisSchluessel(data)) : ''),
     } : {
       // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
       key: 'el', view: 'ergaenzungsleistungen', color: palette.mid, textColor: palette.mid,
