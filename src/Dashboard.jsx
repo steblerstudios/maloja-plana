@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
-import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { SecondaryButton, knopfStil, linkStil, auswahlStil } from './components/PrimaryButton.jsx';
 import { getCantonName } from './config/kantonPLZ.js';
@@ -122,9 +122,8 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
     'data-alpha-banner': true,
     style: {
-      padding: '12px 16px', marginBottom: '24px', borderRadius: radius.lg,
-      background: palette.up, border: '1px solid ' + palette.border + '88',
-      boxShadow: shadow.sm,
+      // Gruppe A D (11.11.2026): eine ruhige Zeile, keine Karte über dem Bild.
+      padding: '4px 0', marginBottom: '24px',
     }
   },
     React.createElement('div', {
