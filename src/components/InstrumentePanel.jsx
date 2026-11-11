@@ -26,7 +26,7 @@ import { steuerfristVorbei } from '../utils/steuerfrist.js';
 import { fristAbstand } from '../utils/fristAbstand.js';
 import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
-import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
+import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
@@ -36,8 +36,8 @@ import { text, weight, space, radius, leading, duration, ease, INSTRUMENT_GROESS
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
 // Instrument als Mini-Glyph + Peilung + Ort zeigt und in die Detailansicht führt.
 // Live wo es günstig/robust ist (Schild, Tankanzeige, Steuer-Säule — reine Zustands-
-// Funktionen). Das Franchise-Kreuz braucht die Prämien-Pipeline → hier bewusst nur
-// Einstieg statt eines erfundenen Standes (Ehrlichkeit). Seit 25.09.2026 hat jedes
+// Funktionen). Das Franchise-Kreuz braucht die Prämien-Pipeline (im Hintergrund geladen); bis sie da
+// ist, kein Bild statt eines erfundenen Standes (Ehrlichkeit, seit 11.11.2026 mit echten Kurven). Seit 25.09.2026 hat jedes
 // Instrument eine eigene Form: Kreuz · Säule · Tacho (Reserve) · Schild.
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
@@ -159,17 +159,21 @@ const miniSaeule = (palette, t, { betragJahr, verheiratet, bundAnteil, titelText
   );
 };
 
-// Mini-Kreuz — Spiegel des Franchise-Kreuzes (PraemienOrientierung): zwei Linien, die sich
-// kreuzen (hohe Franchise sky, tiefe sand, wie dort). Bewusst ohne Strich für die eigenen
-// Kosten — die Prämien-Pipeline läuft hier nicht, also kein erfundener Stand.
-const miniKreuz = (palette) => {
+// Franchise-Kreuz klein (B-F5, Stebler Studios 11.11.2026: «kreuz sollte kachel mit daten sein»): dieselbe Rechnung
+// wie das Kreuz im Werkzeug (kreuzState) — tiefe Franchise sand, hohe sky, wie dort; der Strich «bisher» steht bei
+// den eigenen Kosten. Ohne geladene Prämien (st.show false) kein Bild: kein erfundener Stand. Nur das Bild, ohne Wörter.
+export const KreuzKlein = ({ palette, st }) => {
+  if (!st || !st.show || !st.kurve || st.kurve.length < 2) return null;
   const h = React.createElement;
-  return h('svg', { viewBox: '0 0 64 44', width: '100%', style: { height: 'auto', display: 'block' }, 'aria-hidden': true },
-    h('line', { x1: 4, x2: 60, y1: 40.5, y2: 40.5, stroke: palette.border, strokeWidth: 1 }),
-    h('polyline', { points: '6,28 34,15 58,15', fill: 'none', stroke: palette.sand, strokeWidth: 2.5, strokeLinejoin: 'round' }),
-    h('polyline', { points: '6,35 40,11 58,7', fill: 'none', stroke: palette.sky, strokeWidth: 2.5, strokeLinejoin: 'round' }),
-    h('rect', { x: 55, y: 12, width: 6, height: 6, fill: palette.sand }),
-    h('circle', { cx: 58, cy: 7, r: 3, fill: palette.sky })
+  const x = (c) => 4 + (Math.min(c, st.scaleMax) / st.scaleMax) * 52;
+  const span = st.yMax - st.yMin || 1;
+  const y = (v) => 36 - ((v - st.yMin) / span) * 32;
+  const linie = (k) => st.kurve.map((p) => x(p.c).toFixed(1) + ',' + y(p[k]).toFixed(1)).join(' ');
+  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-kreuz': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
+    h('line', { x1: 4, x2: 56, y1: 38.5, y2: 38.5, stroke: palette.border, strokeWidth: 1 }),
+    h('polyline', { 'data-linie': 'tief', points: linie('tief'), fill: 'none', stroke: palette.sand, strokeWidth: 3, strokeLinejoin: 'round', strokeLinecap: 'round' }),
+    h('polyline', { 'data-linie': 'hoch', points: linie('hoch'), fill: 'none', stroke: palette.sky, strokeWidth: 3, strokeLinejoin: 'round', strokeLinecap: 'round' }),
+    st.costs > 0 && h('line', { 'data-teil': 'kreuz-bisher', x1: x(st.costs).toFixed(1), x2: x(st.costs).toFixed(1), y1: 1, y2: 39, stroke: palette.text, strokeWidth: 2.5 })
   );
 };
 
@@ -178,7 +182,8 @@ const miniKreuz = (palette) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, zuhause = false, dokumente = [], grundordnungStand = null }) => {
+// `jetzt`: nur für Tests (Wechselzeit); sonst heute.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, zuhause = false, dokumente = [], grundordnungStand = null, jetzt = null }) => {
   // Zuhause (Kapitel Arbeit, 11.11.2026): die Arbeit-Bilder gross 256, je eine ganze Zeile. Nur diese drei kennen die Grösse.
   const arbeitGroesse = zuhause ? 'gross' : 'klein';
   // Farbe = Lebensbereich Arbeit (Haselnuss), wie das Lohn-Barometer; vorher Sand (Stebler Studios 11.11.: «andere farb»).
@@ -230,6 +235,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     eigeneFranchise: parseFranchise(data?.versicherungen?.franchise),
     ersparnisse: data?.finanzen?.savingsAccount,
   }) : { art: 'offen' };
+  // Das Bild der Kachel aus derselben Rechnung wie das Kreuz im Werkzeug (B-F5).
+  const kreuzKleinSt = franchiseOpt ? kreuzState(franchiseOpt, gesundheitskostenBisher(data), new Date(), parseFranchise(data?.versicherungen?.franchise)) : null;
+  const kreuzKlein = kreuzKleinSt && kreuzKleinSt.show ? kreuzKleinSt : null;
   // Immer als Schätzung und mit dem Prämienjahr (Rechts-Prüfung 25.09.2026). Seit 26.10.2026 ist das in der
   // Wechselzeit (Ende September bis 31.12.) das Folgejahr — franchiseLaden.js rechnet dann mit dessen Prämien.
   const kreuzSub = vorschlag.art === 'passt' ? t(vorschlag.polster ? 'instrumente.kreuzPasstPolster' : 'instrumente.kreuzPasst')
@@ -265,6 +273,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const fristIso = bh.taxFilingDeadline ? String(bh.taxFilingDeadline).slice(0, 10) : null;
   const fristVorbei = !!fristIso && steuerfristVorbei(bh, heute);
   const fristAb = fristIso ? fristAbstand(fristIso) : null;
+  // Versicherungen (11.11.2026): Wechselfrist der Krankenkasse als Kalenderblatt, nur in der Wechselzeit (kvgWechselfrist).
+  const wechsel = kvgWechselfrist(jetzt || new Date());
+  const wechselAb = wechsel.zeigen ? fristAbstand(wechsel.iso, (jetzt || new Date()).getTime()) : null;
   // Zahl nur, wenn die Frist noch kommt oder verpasst ist und noch etwas offen sein kann — eine erledigte alte Frist ist Geschichte.
   const fristZeigen = fristAb && (!fristAb.vorbei || fristVorbei);
   const erledigteGaenge = GAENGE.filter((g) => gangErledigt(g.id, gespeicherteHaken(), bh)).length;
@@ -311,9 +322,19 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         satz: vorschlag.art === 'passt' ? kreuzSub
           : t(vorschlag.polster ? 'instrumente.kreuzWechselPolsterKurz' : 'instrumente.kreuzWechselKurz', { jahr: franchiseOpt?.praemienJahr || '' }),
       } : {}),
-      glyph: miniKreuz(palette),
+      glyph: kreuzKlein ? h(KreuzKlein, { palette, st: kreuzKlein }) : null,
       onClick: () => onNavigate('praemien'),
     },
+    // Nur in der Wechselzeit eine Kachel; sonst fehlt sie ganz (kein Druck ohne Anlass).
+    ...(wechselAb ? [{
+      key: 'wechselfrist', name: t('instrumente.wechselfrist'),
+      zahl: wechselAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+        : { wert: String(wechselAb.n), einheit: t('instrumente.' + wechselAb.einheit + (wechselAb.n === 1 ? 'Eins' : '')) },
+      satz: t('instrumente.wechselfristSatz'),
+      sub: t('instrumente.wechselfristSatz'),
+      glyph: h(Kalenderblatt, { iso: wechsel.iso, palette, locale: blattLocale }),
+      onClick: () => onNavigate('kvgwechsel'),
+    }] : []),
     {
       key: 'steuerfrist', name: t('instrumente.steuerfrist'),
       ...(fristZeigen ? {
