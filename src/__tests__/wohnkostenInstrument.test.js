@@ -151,9 +151,9 @@ describe('Kapitel Wohnen · Anzeige', () => {
 
 // Fachprüfung (Swiss-Precision) 24.10.2026, eingearbeitet.
 describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
-  it('Partner/in: «eigenen Einkommens» und kein «Mehr als ein Drittel», die Miete gilt für den Haushalt', () => {
+  it('Partner/in und weitere Erwachsene: «eigenen Einkommens» und kein «Mehr als ein Drittel», die Miete gilt für den Haushalt', () => {
     const p = profil({ monthlyIncome: '4000' });
-    p.basis = { ...p.basis, maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '4000' } };
+    p.basis = { ...p.basis, maritalStatus: 'married', household: { adults: 3, children: [], partnerIncome: '4000' } };
     const r = wohnkostenRechnung(p.wohnen, p);
     expect(r.mitPartner).toBe(true);
     expect(r.einkommen).toBe(4000);
@@ -161,6 +161,17 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(html).toContain('wohnenInstrument.anteilEigen');
     expect(html).toContain('wohnenInstrument.mitPartner');
     expect(html).not.toContain('wohnenInstrument.mehrAlsDrittel');
+  });
+
+  it('Partner-Haus (11.11.2026): zwei Erwachsene, beide netto: «Ihres Haushalts», mit Urteil', () => {
+    const p = profil({ monthlyIncome: '4000' });
+    p.basis = { ...p.basis, maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '4000' } };
+    const r = wohnkostenRechnung(p.wohnen, p);
+    expect(r.haushalt).toBe(true);
+    expect(r.einkommen).toBe(8000);
+    const html = render(p.wohnen, p);
+    expect(html).toContain('wohnenInstrument.anteilHaushalt');
+    expect(html).not.toContain('wohnenInstrument.mitPartner');
   });
 
   it('nur der Nebenerwerb brutto: «teils brutto», nicht «des Bruttoeinkommens»', () => {

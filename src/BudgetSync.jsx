@@ -276,14 +276,15 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
           }, pct)
         )
       ),
-      // Wohnen: das Drittel-Haus (Spiegel Werkzeug, mittel 128), aufgeklappt. Ohne Partner/in ist der Anteil
-      // derselbe wie die Prozentzahl daneben (Haushaltseinkommen = eigene Einnahmen); mit Partner/in rechnet das
-      // Budget den Haushalt, das Haus nur das eigene Einkommen — dann kein Haus, keine zweite Zahl (11.11.2026).
+      // Wohnen: das Drittel-Haus (Spiegel Werkzeug, mittel 128), aufgeklappt. Der Anteil ist derselbe wie die
+      // Prozentzahl daneben: allein (Haushalt = eigene Einnahmen) und seit dem Partner-Haus (11.11.2026) auch mit
+      // Partner/in, zwei Erwachsenen, netto (beide rechnen haushaltsEinnahmen). Wo das Haus ohne Urteil bleibt
+      // (`mitPartner`: weitere Erwachsene, brutto, Feld leer), kein Haus — sonst stünden zwei Zahlen da.
       open && group.key === 'housing' && wohn.anteil != null && !wohn.mitPartner && React.createElement('div', {
         'data-teil': 'budget-drittel-haus', style: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-end', padding: '4px 0 ' + space.sm + 'px' },
       },
         React.createElement('div', { style: { width: INSTRUMENT_GROESSE.mittel + 'px', flexShrink: 0 } },
-          React.createElement(DrittelHaus, { palette, anteil: wohn.anteil, ueberDrittel: wohn.ueberDrittel, mitPartner: false, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'mittel' })),
+          React.createElement(DrittelHaus, { palette, anteil: wohn.anteil, ueberDrittel: wohn.ueberDrittel, mitPartner: false, brutto: wohn.brutto, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'mittel' })),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
           t(wohn.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel'))
       ),
