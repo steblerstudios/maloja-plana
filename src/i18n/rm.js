@@ -1686,6 +1686,7 @@ export default {
     entfernt: 'Allontanà',
     rueckgaengig: 'Revocar',
     pickDate: 'Tscherner ina data',
+    betraegeVerbergen: 'Zuppar ils imports',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
     colorBlind: 'Modus daltonic',

@@ -439,6 +439,8 @@ const _feldstecher = () => React.createElement('svg', { viewBox: '0 0 24 24', fi
   React.createElement('path', { d: 'M10.6 14.2h2.8' }),
   React.createElement('path', { d: 'M4.2 13l1.6-6.5a1.6 1.6 0 0 1 3.1.3l.4 4.6M19.8 13l-1.6-6.5a1.6 1.6 0 0 0-3.1.3l-.4 4.6' }));
 const _plus = _linie('M12 5 V19 M5 12 H19');
+// Auge = Sichtschutz «Beträge verbergen» (Kopfzeile, 10.11.2026); Zustand trägt aria-pressed, nicht ein zweites Zeichen.
+const _auge = _linie('M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z M9 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0');
 const _quittung = _linie('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15');
 
 // Kopfzeile und Barrierefreiheits-Leiste (Schritt 3): bis 06.11.2026 von Hand in main.jsx.
@@ -546,6 +548,7 @@ const _iconFactories = {
   feldstecher: _feldstecher,
   plus: _plus,
   quittung: _quittung,
+  auge: _auge,
 
   // Kopfzeile und Barrierefreiheit (Schritt 3)
   settings: _settings,

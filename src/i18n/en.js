@@ -1383,6 +1383,7 @@ export default {
     entfernt: 'Removed',
     rueckgaengig: 'Undo',
     pickDate: 'Pick a date',
+    betraegeVerbergen: 'Hide amounts',
     simpleView: 'Simple view',
     grayscale: 'Grayscale',
     colorBlind: 'Colour-blind mode',

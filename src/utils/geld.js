@@ -32,12 +32,25 @@ export function zahl(n, { stellen, hoechstens } = {}) {
   return (negativ ? MINUS : '') + gruppieren(ganz) + (rest ? '.' + rest : '');
 }
 
-// betrag(-1234)                 → "− CHF 1’234"
-// betrag(12.5, { stellen: 2 })  → "CHF 12.50"
-export function betrag(n, optionen = {}) {
+// betragEcht(-1234)                 → "− CHF 1’234"
+// betragEcht(12.5, { stellen: 2 })  → "CHF 12.50"
+// Immer der wahre Betrag — für alles, was die App verlässt (Export, Dossier).
+export function betragEcht(n, optionen = {}) {
   const x = Number(n);
   if (n === null || n === undefined || !Number.isFinite(x)) return '–';
   const z = zahl(Math.abs(x), optionen);
   const negativ = x < 0 && z !== '0' && !/^0(\.0+)?$/.test(z);
   return (negativ ? MINUS + ' ' : '') + 'CHF ' + z;
+}
+
+// Sichtschutz «Beträge verbergen» (Kopfzeile, seit 10.11.2026, Idee aus dem Nessie-Abgleich):
+// Solange <html data-betraege="aus"> gesetzt ist, zeigt der Bildschirm «CHF ···» statt der Zahl.
+// Nur die Anzeige — gespeichert, gerechnet und exportiert wird weiter mit dem wahren Wert
+// (Exporte nehmen betragEcht). Gesetzt von public/theme-init.js und vom Schalter in main.jsx,
+// jeweils VOR dem Rendern, darum genügt hier ein Blick aufs Attribut.
+export const betraegeVerborgen = () => typeof document !== 'undefined' && document.documentElement.dataset.betraege === 'aus';
+
+export function betrag(n, optionen) {
+  const echt = betragEcht(n, optionen);
+  return echt !== '–' && betraegeVerborgen() ? 'CHF ···' : echt;
 }

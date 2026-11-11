@@ -1383,6 +1383,7 @@ export default {
     entfernt: 'Rimosso',
     rueckgaengig: 'Annulla',
     pickDate: 'Scegli una data',
+    betraegeVerbergen: 'Nascondere gli importi',
     simpleView: 'Vista semplice',
     grayscale: 'Scala di grigi',
     colorBlind: 'Modalità daltonici',

@@ -1388,6 +1388,7 @@ export default {
     entfernt: 'Entfernt',
     rueckgaengig: 'Rückgängig',
     pickDate: 'Datum wählen',
+    betraegeVerbergen: 'Beträge verbergen',
     simpleView: 'Einfache Ansicht',
     grayscale: 'Schwarzweiss',
     colorBlind: 'Farbenblind-Modus',
