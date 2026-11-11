@@ -620,6 +620,9 @@ describe('Vorstellungsseite: Motion (A–D, Hero)', () => {
     expect((html.match(/<circle class="schein" r="19"\/>/g) || [])).toHaveLength(7);
     for (let i = 0; i < 7; i++) expect(html).toContain(`style="color:var(--k${i}); --n:${i}"`);
     expect(js).toContain('var oben = hier === stationen.length - 1;');
+    // Ausklang erst, wenn der Text von Kehre 7 oben hinaus ist (vorher: Abschnitt bei 85 % → weiss auf hellem See)
+    expect(js).toContain("(letzte.querySelector('.reise-text') || letzte).getBoundingClientRect().bottom <= h * 0.15");
+    expect(stil).toContain('.js .reise-buehne[data-ende] .reise-luft{ opacity:0 }');
     expect(bewegt).toContain('.js .reise-buehne[data-oben] .halt .schein{ animation:aufscheinen .4s');
     expect(bewegt).toContain('animation-delay:calc(var(--n) * .15s)');
   });

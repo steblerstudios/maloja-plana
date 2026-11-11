@@ -402,11 +402,12 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
     /* A · Motion 11.11.2026 («Stardust»): setzt sich ein Aufkleber, rieseln ein paar Sandkörner von ihm ab und ein
        Lichtring in Creme scheint kurz auf (Vorbild Fuji: der Stempel leuchtet, ohne zu wachsen). Ruhend unsichtbar. */
     .nagel .schein{ fill:none; stroke:#FCF0E4; stroke-width:2.5; opacity:0 }
-    .nagel .staub circle{ fill:#E8D7AE; opacity:0; transform-box:fill-box }
+    .nagel .staub circle{ fill:#FCF0E4; opacity:0; transform-box:fill-box }
     /* C · Motion 11.11.2026: der Titel jeder Kehre setzt sich Buchstabe für Buchstabe. Das Skript teilt ihn nur ohne
        «weniger Bewegung» auf; vorgelesen wird der ganze Titel (unsichtbare Kopie), die Buchstaben sind aria-hidden. */
     .reise-text h3 .wort{ display:inline-block; white-space:nowrap }
     .js .reise-text h3.setzen .z{ opacity:0 } .js .reise-text h3.setzen.gesetzt .z{ opacity:1 }
+    .js .reise-buehne[data-ende] .reise-luft{ opacity:0 }   /* B · mit dem Ausklang geht auch die Luft */
     .js .reise-buehne[data-hier="-1"] .reise-stock, .js .reise-buehne[data-hier="-1"] .reise-linie,
     .js .reise-buehne[data-hier="-1"] .reise-wolken, .js .reise-buehne[data-hier="-1"] .reise-quelle{ opacity:0 }
     /* B · Nach der letzten Kehre gehen Stock, Weglinie und Bildhinweis mit dem Bild weg, statt über dem Ausklang zu schweben. */
@@ -485,7 +486,7 @@ ${KAPITEL.map((_, i) => `    .reise-buehne[data-hier="${i}"]{ --ton:color-mix(in
       .js .reise-buehne{ transition:--ton .9s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild img{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-bild .an{ transition:-webkit-mask-position .9s cubic-bezier(.4,0,.2,1), mask-position .9s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1) }
-      .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
+      .js .reise-stock, .js .reise-linie, .js .reise-wolken, .js .reise-quelle, .js .reise-luft{ transition:opacity .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-linie .gegangen{ transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1) }
       .js .reise-linie .ort{ transition:transform .6s cubic-bezier(.4,0,.2,1) }
       .js .nagel.dran{ animation:anschlagen .6s cubic-bezier(.2,.8,.2,1) }
@@ -898,9 +899,10 @@ const NAGEL_Y = KAPITEL.map((_, i) => 590 - i * 82);
 // weisser Rand, darunter ein Schatten, darüber eine Wölbung (das Holz ist rund). Darauf das Kapitel-Zeichen der App.
 // M · Passbild-Stil (Stebler Studios 10.11.2026): alle gleich, rund, gerade — flach wie das Passbild, ohne Schatten und Wölbung.
 const STICKER = KAPITEL.map(() => ['kreis', 0]);
-// A · Motion 11.11.2026: sechs Sandkörner am unteren Rand jedes Aufklebers (dx, dy ab Mitte, Radius, Fallweg in px).
-// Fest gesetzt, nicht zufällig: die erzeugte Seite muss bei jedem Bauen gleich bleiben.
-const STAUB = [[-17, 22, 2.2, 22], [-8, 27, 1.6, 30], [-1, 28, 2.4, 18], [7, 27, 1.8, 34], [15, 23, 2, 26], [21, 16, 1.5, 20]];
+// A · Motion 11.11.2026: sechs Körner am seitlichen Rand jedes Aufklebers (dx, dy ab Mitte, Radius, Fallweg in px).
+// Seitlich, damit sie neben dem Stock vor dem dunklen Bild fallen — auf dem Holz sah man Sand auf Sand nicht (im
+// Browser gesehen). Fest gesetzt, nicht zufällig: die erzeugte Seite muss bei jedem Bauen gleich bleiben.
+const STAUB = [[-31, 6, 2.4, 26], [-27, 15, 1.8, 34], [-34, 18, 2.2, 20], [30, 8, 2.2, 30], [27, 16, 2.6, 22], [34, 20, 1.8, 36]];
 
 // B · Motion 11.11.2026: die Teilchen in der Luft, drei Schichten (Gold, Hell, Schnee). Lage, Grösse und Tempo aus
 // einem festen Startwert gerechnet (gleiche Seite bei jedem Bauen). Negative Verzögerung: von Anfang an verteilt.

@@ -76,7 +76,9 @@
     buehne.setAttribute('data-hier', String(hier));
     // B · Ist der Text der letzten Kehre oben hinaus, gehen Stock und Weglinie mit dem Bild weg (Ausklang).
     var letzte = stationen[stationen.length - 1];
-    var ende = !!letzte && letzte.getBoundingClientRect().bottom <= h * 0.85;
+    // Massgebend ist der Text (11.11.2026, im Browser gesehen): mit dem Ende des Abschnitts bei 85 % ging die dunkle
+    // Schicht schon weg, während der weisse Text von Kehre 7 noch mitten auf dem hellen See stand.
+    var ende = !!letzte && (letzte.querySelector('.reise-text') || letzte).getBoundingClientRect().bottom <= h * 0.15;
     if (ende !== buehne.hasAttribute('data-ende')) { if (ende) buehne.setAttribute('data-ende', ''); else buehne.removeAttribute('data-ende'); }
     bildZeigen(hier + 1);
     naegel.forEach(function (n, i) { n.classList.toggle('dran', i <= hier); });
