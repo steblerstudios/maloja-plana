@@ -5119,6 +5119,8 @@ export default {
   // Einheitstexte ohne Anrede (wie kreditkarteView). Quellen je Aussage in der Klammer; wo das
   // Repo keine Quelle hat, steht eine Frage statt einer Rechtslage.
   stundenlohnView: {
+    bildSie: 'Stundenlohn',
+    bildMindest: 'Mindestlohn',
     title: 'Was steht mir im Stundenlohn zu?',
     intro: 'Für Arbeit im Stundenlohn: der Lohn aufgeteilt in Grundlohn, Ferien und weitere Zuschläge, der Grundlohn verglichen mit dem kantonalen Mindestlohn, dazu die Schwellen für Pensionskasse und Unfallversicherung. Gerechnet nur mit den Angaben hier — was nur der Vertrag beantwortet, bleibt als Frage stehen.',
     anstellungTitel: 'Anstellung',
@@ -6883,6 +6885,8 @@ export default {
   },
 
   eo: {
+    bildErsatz: 'Taggeld',
+    bildLohn: 'bisheriger Tageslohn',
     title: 'Erwerbsersatz (EO)',
     einkommen: 'Jahreseinkommen brutto (CHF)',
     einkommenHint: 'Letztes Jahreseinkommen vor Ereignis',
@@ -7086,6 +7090,9 @@ export default {
     pathsLink: 'Berufsabschluss für Erwachsene',
   },
   alv: {
+    bildErsatz: 'Taggelder im Monat',
+    bildLohn: 'bisheriger Lohn',
+    bildMonate: 'Bis zu {n} Monate · ein Blatt je Monat',
     title: "Arbeitslosenentschädigung",
     intro: { sie: "Eine Orientierung, was Ihnen bei Arbeitslosigkeit als Taggeld zustehen könnte. Verbindlich rechnet das RAV bzw. Ihre Arbeitslosenkasse.", du: "Eine Orientierung, was dir bei Arbeitslosigkeit als Taggeld zustehen könnte. Verbindlich rechnet das RAV bzw. deine Arbeitslosenkasse." },
     bruttolohn: "Bisheriger Bruttolohn pro Monat (CHF)",

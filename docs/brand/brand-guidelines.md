@@ -269,6 +269,20 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
 
+**Bilder in den Arbeit-Rechnern** *(11.11.2026, Skizzen A–H; Stebler Studios «wie lang b stundenlohn b», «noten sind ein
+cooler anfang … lohn barometer», «Haselnuss reicht»)*. Bauteile in `components/RechnerForm.jsx`, die alle drei Rechner
+schon laden, also kein neuer Baustein. Farbe überall Arbeit/Haselnuss (`bereichFillColor('arbeit')`). Wächter:
+`src/__tests__/arbeitRechnerBilder.test.js`.
+
+| Frage | Bild | Rechnung | Ort |
+|---|---|---|---|
+| Wie viel vom Lohn? | **Ersatz-Balken** im Stil des Lohn-Barometers: der Ersatz füllt bis zu seiner Stelle, der Rest «fällt weg» hell, gestrichelter Strich = bisheriger Lohn | `alvErsatzAnteil`, `eoErsatzAnteil` (über dem Höchstbetrag unter dem Satz) | ALV, EO (Mutterschaft) |
+| Wie lange? | **Kalenderblätter**, eines je Monat, das letzte teilweise; höchstens 24 | `alvBezugMonate` (Taggelder ÷ 21,7, AVIV Art. 40a); ohne Alter nur die Spanne, **kein Bild** | ALV |
+| Reicht mein Stundenlohn? | **Münzstapel** Stundenlohn gegen Mindestlohn, stetig hoch (nicht auf ganze Münzen gerundet), Strich auf Höhe des Mindestlohns | `stundenlohnRechnen` (`befunde[…].mindestStunde`) | Stundenlohn, nur mit belegtem Mindestlohn |
+
+Der Ersatz-Balken zeigt bewusst **keinen Median**: Der Lohn im Rechner ist nicht auf Vollzeit umgerechnet und wäre
+dort nicht vergleichbar. Die Uhr ist für den Stundenlohn **nicht** frei, sie steht fürs Pensum (ein Bild, eine Bedeutung).
+
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
 

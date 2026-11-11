@@ -5134,6 +5134,8 @@ export default {
   },
   // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
   stundenlohnView: {
+    bildSie: 'Hourly wage',
+    bildMindest: 'Minimum wage',
     title: 'Hourly wage: what am I owed?',
     intro: 'For work paid by the hour: the wage split into base pay, holidays and other supplements, the base pay compared with the cantonal minimum wage, plus the thresholds for the pension fund and accident insurance. Calculated only from the details entered here — anything only the contract can answer stays open as a question.',
     anstellungTitel: 'Employment',
@@ -6798,6 +6800,8 @@ export default {
   },
 
   eo: {
+    bildErsatz: 'Daily allowance',
+    bildLohn: 'previous daily wage',
     title: 'Income Compensation (EO)',
     einkommen: 'Gross annual income (CHF)',
     einkommenHint: 'Last annual income before the event',
@@ -7103,6 +7107,9 @@ export default {
     disclaimer: "The content is for orientation only. It does not replace individual legal or financial advice. Please check details with the relevant office.",
   },
   alv: {
+    bildErsatz: 'Daily allowances per month',
+    bildLohn: 'previous wage',
+    bildMonate: 'Up to {n} months · one sheet per month',
     title: "Unemployment benefit",
     intro: "A rough orientation of what you might receive as a daily allowance if you lose your job. The binding calculation is done by the RAV and your unemployment fund.",
     bruttolohn: "Previous gross salary per month (CHF)",

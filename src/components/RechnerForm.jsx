@@ -3,10 +3,10 @@ import { PageTitle } from './Heading.jsx';
 import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { Icon } from '../IconSystem.jsx';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
-import { CHAPTER_KEYS } from '../config/constants.js';
+import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
 import { RECHNER_KAPITEL } from '../config/brotkrumePfade.js';
 import { ansichtIkon } from '../config/ansichtenRegister.js';
-import { chapterColor } from '../data/lebensbereiche.js';
+import { chapterColor, bereichFillColor } from '../data/lebensbereiche.js';
 import { kontrast, kachelZeichenFarbe } from '../utils/lebensbereichFruechte.js';
 import { linkStil, auswahlStil } from './PrimaryButton.jsx';
 import { Belege } from './Belege.jsx';
@@ -210,6 +210,77 @@ export const Tabs = ({ palette, id, label, liste, aktiv, onWahl, children }) => 
     ),
     React.createElement('div', { role: 'tabpanel', id: id + '-panel', 'aria-labelledby': id + '-tab-' + aktiv, tabIndex: 0 }, children)
   );
+};
+
+// ─── Bilder der Arbeit-Rechner (Stebler Studios 11.11.2026, Skizzen A–H) ─────────────────────────────────────────
+// Hier statt in einer eigenen Datei: alle drei Rechner (ALV, EO, Stundenlohn) laden RechnerForm schon, so entsteht
+// kein neuer Baustein. Farbe = Lebensbereich Arbeit (Haselnuss), wie das Lohn-Barometer. Nur Bild (aria-hidden);
+// die Zahlen stehen daneben im Ergebnis. Ohne Zahl kein Bild (kein erfundener Stand).
+const arbeitFarbe = (palette) => bereichFillColor('arbeit', palette.bg === DARK_PALETTE.bg) || palette.sand;
+const bildText = (palette) => ({ fontSize: text.xs, color: palette.mid, lineHeight: leading.normal });
+
+// G · Wie viel vom Lohn? Der Balken ist der bisherige Lohn; der Ersatz füllt ihn bis zu seiner Stelle, der Rest
+// «fällt weg» (hell). `anteil` aus alvErsatzAnteil / eoErsatzAnteil.
+export const ErsatzBalken = ({ palette, anteil, labelErsatz, labelLohn }) => {
+  if (anteil == null || !Number.isFinite(anteil)) return null;
+  const h = React.createElement;
+  const a = Math.max(0, Math.min(1, anteil));
+  const breite = Number((a * 100).toFixed(1));
+  const farbe = arbeitFarbe(palette);
+  return h('div', { 'data-bild': 'ersatz', style: { maxWidth: '256px', margin: space.sm + 'px 0' } },
+    h('svg', { viewBox: '0 0 100 14', width: '100%', 'aria-hidden': true, 'data-ersatz-anteil': String(Math.round(a * 100) / 100), style: { display: 'block', height: 'auto', overflow: 'visible' } },
+      h('rect', { x: 0, y: 2, width: 100, height: 10, rx: 5, fill: palette.border }),
+      h('rect', { 'data-teil': 'faellt-weg', x: breite, y: 2, width: Number((100 - breite).toFixed(1)), height: 10, fill: farbe, fillOpacity: 0.28 }),
+      h('rect', { 'data-teil': 'ersatz', x: 0, y: 2, width: breite, height: 10, rx: 5, fill: farbe }),
+      h('line', { x1: breite, y1: 0, x2: breite, y2: 14, stroke: palette.text, strokeWidth: 0.8 }),
+      h('line', { x1: 100, y1: 0, x2: 100, y2: 14, stroke: palette.text, strokeWidth: 0.6, strokeDasharray: '1.5 1' })),
+    (labelErsatz || labelLohn) && h('div', { style: { ...bildText(palette), display: 'flex', justifyContent: 'space-between', gap: space.xs + 'px' } },
+      h('span', null, labelErsatz), h('span', null, labelLohn)));
+};
+
+// Wie lange? Ein Kalenderblatt je Monat, das letzte nur so weit gefüllt, wie der Monat reicht. Höchstens 24 Blätter.
+export const Kalenderblaetter = ({ palette, monate, label }) => {
+  if (!(monate > 0)) return null;
+  const h = React.createElement;
+  const n = Math.min(24, Math.ceil(monate - 1e-9));
+  const voll = Math.min(n, Math.floor(monate + 1e-9));
+  const farbe = arbeitFarbe(palette);
+  const jeZeile = 12, w = 14, g = 4;
+  const zeilen = Math.ceil(n / jeZeile);
+  const blaetter = Array.from({ length: n }, (_, i) => {
+    const x = (i % jeZeile) * (w + g), y = Math.floor(i / jeZeile) * (w + g);
+    const teil = i < voll ? 1 : monate - voll;
+    return h('g', { key: i, 'data-blatt': i + 1, 'data-voll': i < voll ? 'ja' : 'teil' },
+      h('rect', { x, y, width: w, height: w, rx: 2, fill: palette.border }),
+      teil > 0 && h('rect', { x, y: y + w * (1 - teil), width: w, height: w * teil, rx: 2, fill: farbe }),
+      h('rect', { x, y, width: w, height: 3, rx: 1, fill: palette.text, fillOpacity: 0.55 }));
+  });
+  return h('div', { 'data-bild': 'kalenderblaetter', style: { maxWidth: '256px', margin: space.sm + 'px 0' } },
+    h('svg', { viewBox: '0 0 ' + (jeZeile * (w + g) - g) + ' ' + (zeilen * (w + g) - g), width: '100%', 'aria-hidden': true, style: { display: 'block', height: 'auto' } }, ...blaetter),
+    label && h('div', { style: { ...bildText(palette), marginTop: '4px' } }, label));
+};
+
+// Stundenlohn gegen Mindestlohn: zwei Münzstapel, so hoch wie die Beträge (stetig, nicht auf ganze Münzen gerundet —
+// knapp darunter muss sichtbar darunter sein), ein Strich auf der Höhe des Mindestlohns. Ohne Mindestlohn kein Bild.
+export const MuenzStapel = ({ palette, sie, mindest, labelSie, labelMindest }) => {
+  if (!(sie > 0) || !(mindest > 0)) return null;
+  const h = React.createElement;
+  const farbe = arbeitFarbe(palette);
+  const boden = 96, hoechst = 80;
+  const massstab = hoechst / Math.max(sie, mindest);
+  const hs = sie * massstab, hm = mindest * massstab;
+  const muenzen = (x, hoehe, voll) => {
+    const kinder = [h('rect', { key: 'k', x, y: boden - hoehe, width: 26, height: hoehe, rx: 3, fill: voll ? farbe : 'none', stroke: voll ? 'none' : palette.mid, strokeWidth: 1, strokeDasharray: voll ? undefined : '2 2' })];
+    for (let y = boden - 5; y > boden - hoehe + 1; y -= 5) kinder.push(h('line', { key: 'l' + y, x1: x, y1: y, x2: x + 26, y2: y, stroke: voll ? palette.surface : palette.border, strokeWidth: 0.8, strokeOpacity: 0.7 }));
+    return kinder;
+  };
+  return h('div', { 'data-bild': 'muenzen', style: { maxWidth: '128px', margin: space.sm + 'px 0' } },
+    h('svg', { viewBox: '0 0 80 100', width: '100%', 'aria-hidden': true, style: { display: 'block', height: 'auto', overflow: 'visible' } },
+      h('g', { 'data-stapel': 'sie', 'data-hoehe': String(Math.round(hs * 100) / 100) }, ...muenzen(8, hs, true)),
+      h('g', { 'data-stapel': 'mindest', 'data-hoehe': String(Math.round(hm * 100) / 100) }, ...muenzen(46, hm, false)),
+      h('line', { 'data-strich': 'mindestlohn', x1: 2, y1: boden - hm, x2: 78, y2: boden - hm, stroke: palette.text, strokeWidth: 1.4 })),
+    (labelSie || labelMindest) && h('div', { style: { ...bildText(palette), display: 'flex', justifyContent: 'space-between' } },
+      h('span', null, labelSie), h('span', null, labelMindest)));
 };
 
 export default RechnerForm;
