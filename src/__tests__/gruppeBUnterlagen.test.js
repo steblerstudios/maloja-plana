@@ -141,3 +141,27 @@ describe('Gestaltung A, C, D (B Bücherregal: nicht gebaut, zum Besprechen)', ()
     expect(de.tresor.noDocumentsHint.sie).toMatch(/^Fügen Sie oben oder im passenden Kapitel ein Dokument hinzu\./);
   });
 });
+
+describe('Sprache S1–S7 (Schlüssel der B-Seiten)', () => {
+  it('S1: jede Behördenlink-Angabe hat Italienisch (kein Rückfall auf Deutsch)', () => {
+    const s = quelle('data/direktLinks.js');
+    const ohneIt = [...s.matchAll(/\{ de: '(?:[^'\\]|\\.)*', en: '(?:[^'\\]|\\.)*', fr: '(?:[^'\\]|\\.)*'(?!, it:)/g)];
+    expect(ohneIt.length).toBe(0);
+  });
+  it('S6: kein «sofort beraten», keine Belehrung im Hinweis', () => {
+    const s = JSON.stringify(de.briefe);
+    expect(s).not.toMatch(/sofort beraten|Sie verantworten den Brief|Du verantwortest den Brief/);
+    expect(de.briefe.disclaimer.sie).toMatch(/Bitte prüfen Sie den Brief vor dem Versand\./);
+  });
+  it('S5: Gläubigerin oder Gläubiger; Ehegattin, Ehegatte', () => {
+    expect(de.briefe.installmentRequest.hinweis.budget.sie).toMatch(/^Die Gläubigerin oder der Gläubiger muss nicht zustimmen\./);
+    expect(de.briefe.leaseTermination.legalNote).toMatch(/Zustimmung der Ehegattin, des Ehegatten/);
+  });
+  it('S7: der lange Satz zur Einmischung in die Erbschaft ist geteilt, der Inhalt bleibt (ZGB Art. 571 Abs. 2)', () => {
+    const tx = de.briefe.deathNotice.erbe.text;
+    expect(tx).toMatch(/kann sie nicht mehr ausschlagen \(ZGB Art\. 571 Abs\. 2\)\. Dazu zählen/);
+    expect(tx).toMatch(/zum Beispiel/);
+    expect(tx).toMatch(/blosse Verwaltung/);
+    expect(tx).toMatch(/Schulden aus dem Nachlass bezahlen, Forderungen anerkennen/);
+  });
+});

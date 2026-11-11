@@ -323,8 +323,8 @@ describe('Sie/Du — Hinweise folgen der Anrede, der Brief bleibt «Sie» an die
   it('Hinweise unterscheiden sich', () => {
     expect(t('briefe.workReference.hinweis')).toMatch(/können Sie/);
     expect(tDu('briefe.workReference.hinweis')).toMatch(/kannst du/);
-    expect(t('briefe.debtObjection.frist.vorbei')).toMatch(/Fragen Sie sofort/);
-    expect(tDu('briefe.debtObjection.frist.vorbei')).toMatch(/Frag sofort/);
+    expect(t('briefe.debtObjection.frist.vorbei')).toMatch(/Fragen Sie so bald wie möglich/);  // Gruppe B S6 (11.11.2026): «sofort» → «so bald wie möglich»
+    expect(tDu('briefe.debtObjection.frist.vorbei')).toMatch(/Frag so bald wie möglich/);
   });
   it.each(NEU)('%s: Brieftext identisch bei Sie und Du', (key) => {
     const a = generateLetter(key, person, t, { angaben: { einschaetzung: 'x' } });

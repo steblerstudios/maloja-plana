@@ -3677,7 +3677,7 @@ export default {
     showPreview: 'Aperçu',
     hidePreview: 'Masquer l\'aperçu',
     printLetter: 'Imprimer / PDF',
-    disclaimer: { sie: 'Ces modèles sont une aide à l’orientation, pas un conseil juridique. La lettre est sous votre responsabilité — vérifiez-la avant l’envoi. Dans les cas sensibles : envoi recommandé, et un service spécialisé en cas de doute.', du: 'Ces modèles sont une aide à l’orientation, pas un conseil juridique. La lettre est sous ta responsabilité — vérifie-la avant l’envoi. Dans les cas sensibles : envoi recommandé, et un service spécialisé en cas de doute.' },
+    disclaimer: { sie: 'Ces modèles sont une aide à l’orientation, pas un conseil juridique. Merci de vérifier la lettre avant l’envoi. Dans les cas sensibles : envoi recommandé, et un service spécialisé en cas de doute.', du: 'Ces modèles sont une aide à l’orientation, pas un conseil juridique. Merci de vérifier la lettre avant l’envoi. Dans les cas sensibles : envoi recommandé, et un service spécialisé en cas de doute.' },
     dataNote: { sie: 'Vos données enregistrées sont insérées automatiquement. Les informations manquantes sont signalées.', du: 'Tes données enregistrées sont insérées automatiquement. Les informations manquantes sont signalées.' },
     afterPrint: {
       title: 'Lettre créée — et maintenant ?',
@@ -3718,7 +3718,7 @@ export default {
       body1: 'Par la présente, je résilie le contrat de bail pour l\'appartement mentionné ci-dessus, dans les délais légaux, pour la prochaine échéance possible.',
       body2: 'Objet loué : {address}',
       body3: 'Je vous prie de bien vouloir me confirmer la réception de cette résiliation par écrit et de convenir d\'un rendez-vous pour l\'état des lieux.',
-      closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
+      closing: 'Meilleures salutations',
       legalNote: 'Remarque : La résiliation du bail doit être faite par écrit selon CO art. 266l al. 1. Si le logement est celui de la famille, la résiliation requiert le consentement exprès du conjoint ou du partenaire enregistré (CO art. 266m). Veuillez respecter les délais contractuels.',
       zustimmungTitel: 'Consentement à la résiliation du logement de la famille (CO art. 266m)',
       zustimmungText: 'Si le logement est celui de la famille, je consens expressément à cette résiliation en tant qu’épouse, époux, partenaire enregistrée ou partenaire enregistré.',
@@ -3736,7 +3736,7 @@ export default {
       salutation: 'Madame, Monsieur,',
       body1: 'Par la présente, je sollicite une prolongation du délai pour le dépôt de ma déclaration d\'impôts {year}.',
       body2: 'J\'ai besoin de temps supplémentaire pour rassembler tous les documents nécessaires. Je vous remercie de votre compréhension.',
-      closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
+      closing: 'Meilleures salutations',
       hinweis: {
         title: 'Avant l’envoi',
         text: 'Demander la prolongation avant l’échéance du délai. De nombreux cantons proposent un formulaire en ligne, certains perçoivent un émolument — vérifier auprès de l’administration fiscale cantonale.',
@@ -3750,7 +3750,7 @@ export default {
       body1: 'Par la présente, je résilie mon assurance obligatoire des soins auprès de {insurer}, avec effet au 31 décembre {jahr}.',
       policyRef: 'Numéro de police : {number}',
       body2: 'Je vous prie de bien vouloir me faire parvenir une confirmation écrite de la résiliation.',
-      closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
+      closing: 'Meilleures salutations',
       legalNote: 'Remarque : La résiliation de l\'assurance de base pour la fin de l\'année doit parvenir à l\'assureur au plus tard le dernier jour ouvrable de novembre selon LAMal art. 7 al. 2 (après communication de la nouvelle prime). L’ancienne assurance ne prend fin que lorsque la nouvelle caisse a annoncé l’affiliation (LAMal art. 7 al. 5). Envoi recommandé conseillé.',
       hinweis: {
         title: 'Avant de résilier',
@@ -3876,11 +3876,11 @@ export default {
         title: 'Deux délais',
         einsprache: { sie: 'L’opposition doit parvenir par écrit à l’employeur au plus tard avant la fin du délai de congé (CO art. 336b al. 1). Envoyez-la tôt et en recommandé.', du: 'L’opposition doit parvenir par écrit à l’employeur au plus tard avant la fin du délai de congé (CO art. 336b al. 1). Envoie-la tôt et en recommandé.' },
         einspracheDatum: 'Fin selon la saisie : {date} — l’opposition doit parvenir à l’employeur au plus tard ce jour-là, de préférence bien avant.',
-        einspracheVorbei: { sie: 'Fin selon la saisie : {date} — selon notre calcul, ce jour est passé. Une opposition arriverait donc peut-être trop tard (CO art. 336b al. 1). Faites-vous conseiller immédiatement avant d’envoyer quoi que ce soit.', du: 'Fin selon la saisie : {date} — selon notre calcul, ce jour est passé. Une opposition arriverait donc peut-être trop tard (CO art. 336b al. 1). Fais-toi conseiller immédiatement avant d’envoyer quoi que ce soit.' },
+        einspracheVorbei: { sie: 'Fin selon la saisie : {date} — selon notre calcul, ce jour est passé. Une opposition arriverait donc peut-être trop tard (CO art. 336b al. 1). Faites-vous conseiller dès que possible avant d’envoyer quoi que ce soit.', du: 'Fin selon la saisie : {date} — selon notre calcul, ce jour est passé. Une opposition arriverait donc peut-être trop tard (CO art. 336b al. 1). Fais-toi conseiller dès que possible avant d’envoyer quoi que ce soit.' },
         klage: 'Si les parties ne s’entendent pas sur le maintien des rapports de travail, une action doit être ouverte dans les 180 jours à compter de la fin du contrat, sinon le droit à l’indemnité est périmé (CO art. 336b al. 2). L’action est déjà pendante dès le dépôt de la requête de conciliation (CPC art. 62 al. 1).',
         klageDatum: 'Dernier jour selon notre calcul : {date}. Si la fin est reportée (par exemple pour cause de maladie, CO art. 336c), le délai est plus tardif — nous calculons volontairement sans prolongation. Si le congé a été donné pendant une maladie, un accident ou une grossesse, il peut même être nul (CO art. 336c al. 2) — mieux vaut alors se faire conseiller.',
-        klageVorbei: { sie: 'Selon notre calcul, le dernier jour était le {date}. Le délai pour agir en justice est donc peut-être échu (CO art. 336b al. 2). Faites-vous conseiller immédiatement.', du: 'Selon notre calcul, le dernier jour était le {date}. Le délai pour agir en justice est donc peut-être échu (CO art. 336b al. 2). Fais-toi conseiller immédiatement.' },
-        klageNurMitEinsprache: 'L’action en indemnité suppose que l’opposition soit parvenue à temps à l’employeur (CO art. 336b al. 1). Si elle a été manquée, cette date n’aide plus — mieux vaut se faire conseiller immédiatement.',
+        klageVorbei: { sie: 'Selon notre calcul, le dernier jour était le {date}. Le délai pour agir en justice est donc peut-être échu (CO art. 336b al. 2). Faites-vous conseiller dès que possible.', du: 'Selon notre calcul, le dernier jour était le {date}. Le délai pour agir en justice est donc peut-être échu (CO art. 336b al. 2). Fais-toi conseiller dès que possible.' },
+        klageNurMitEinsprache: 'L’action en indemnité suppose que l’opposition soit parvenue à temps à l’employeur (CO art. 336b al. 1). Si elle a été manquée, cette date n’aide plus — mieux vaut se faire conseiller dès que possible.',
         fristlos: 'En cas de licenciement immédiat, d’autres règles s’appliquent — mieux vaut alors se faire conseiller d’abord.',
         beratung: 'Des conseils sont proposés par les syndicats, les services de consultation juridique et l’autorité de conciliation en matière de droit du travail du canton.',
       },
@@ -3918,7 +3918,7 @@ export default {
         post: { sie: 'Par écrit, il suffit que la lettre soit remise à la Poste suisse au plus tard le dernier jour du délai (LP art. 31, CPC art. 143 al. 1). Envoyez-la en recommandé — le récépissé est votre preuve.', du: 'Par écrit, il suffit que la lettre soit remise à la Poste suisse au plus tard le dernier jour du délai (LP art. 31, CPC art. 143 al. 1). Envoie-la en recommandé — le récépissé est ta preuve.' },
         sprache: { sie: 'Rédigez l’opposition dans une langue officielle de l’office des poursuites. Si la lettre est dans une autre langue, demandez d’abord à l’office s’il l’accepte — ou formez l’opposition oralement.', du: 'Rédige l’opposition dans une langue officielle de l’office des poursuites. Si la lettre est dans une autre langue, demande d’abord à l’office s’il l’accepte — ou forme l’opposition oralement.' },
         datum: 'Dernier jour selon notre calcul : {date}. Week-end, jours fériés et féries de poursuite peuvent prolonger le délai — nous calculons volontairement sans ; plus tôt n’est jamais faux.',
-        vorbei: { sie: 'Selon notre calcul, le délai a peut-être expiré le {date}. Un week-end, des jours fériés ou des féries de poursuite peuvent l’avoir prolongé. Renseignez-vous immédiatement auprès de l’office des poursuites et, dans le doute, formez tout de même opposition.', du: 'Selon notre calcul, le délai a peut-être expiré le {date}. Un week-end, des jours fériés ou des féries de poursuite peuvent l’avoir prolongé. Renseigne-toi immédiatement auprès de l’office des poursuites et, dans le doute, forme tout de même opposition.' },
+        vorbei: { sie: 'Selon notre calcul, le délai a peut-être expiré le {date}. Un week-end, des jours fériés ou des féries de poursuite peuvent l’avoir prolongé. Renseignez-vous dès que possible auprès de l’office des poursuites et, dans le doute, formez tout de même opposition.', du: 'Selon notre calcul, le délai a peut-être expiré le {date}. Un week-end, des jours fériés ou des féries de poursuite peuvent l’avoir prolongé. Renseigne-toi dès que possible auprès de l’office des poursuites et, dans le doute, forme tout de même opposition.' },
         ohne: { sie: 'Indiquez ci-dessous le jour de la notification, et nous afficherons le dernier jour du délai.', du: 'Indique ci-dessous le jour de la notification, et nous afficherons le dernier jour du délai.' },
       },
       recipient: '[Office des poursuites — l’adresse figure sur le commandement de payer]',
@@ -5321,7 +5321,7 @@ export default {
     jetztTagAntippen: { sie: 'Touchez maintenant un jour ci-dessus.', du: 'Touche maintenant un jour ci-dessus.' },
     anspruchTitle: { sie: 'Peut-être pour vous', du: 'Peut-être pour toi' },
     anspruchIntro: { sie: 'D’après vos données — sans obligation, juste une piste à explorer.', du: 'D’après tes données — sans obligation, juste une piste à explorer.' },
-    upcoming: 'A venir',
+    upcoming: 'À venir',
     overdue: 'Échu',
     completed: 'Terminé',
     addReminder: 'Ajouter un rappel',
@@ -5411,7 +5411,7 @@ export default {
     disclaimer: { sie: 'Ces rappels sont donnés à titre informatif uniquement. Veuillez contacter l\'autorité compétente ou un professionnel de santé pour des informations officielles.', du: 'Ces rappels sont donnés à titre informatif uniquement. Contacte l\'autorité compétente ou un professionnel de santé pour des informations officielles.' },
     stats: {
       total: 'Total des rappels',
-      upcoming: 'A venir',
+      upcoming: 'À venir',
       done: 'Terminés',
     },
   },
@@ -5510,7 +5510,7 @@ export default {
     dossier: {
       lebensmappe: {
         title: 'Dossier de vie',
-        description: { sie: 'Votre aperçu personnel complet. Tous les chapitres en un coup d\'oeil.', du: 'Ton aperçu personnel complet. Tous les chapitres en un coup d\'oeil.' },
+        description: { sie: 'Votre aperçu personnel complet. Tous les chapitres en un coup d’œil.', du: 'Ton aperçu personnel complet. Tous les chapitres en un coup d’œil.' },
         status: 'Disponible dans une prochaine version.',
       },
       notfall: {
@@ -5531,7 +5531,7 @@ export default {
       description: { sie: 'Sauvegarder ou restaurer vos données localement.', du: 'Sauvegarder ou restaurer tes données localement.' },
       action: 'Ouvrir la sauvegarde',
     },
-    note: { sie: 'Tous les documents restent sur votre appareil. Rien n\'est téléchargé.', du: 'Tous les documents restent sur ton appareil. Rien n\'est téléchargé.' },
+    note: { sie: 'Tous les documents restent sur votre appareil. Rien n’est envoyé.', du: 'Tous les documents restent sur ton appareil. Rien n’est envoyé.' },
   },
 
   backup: {
@@ -5734,7 +5734,7 @@ export default {
 
   lebensmappe: {
     title: 'Dossier de vie',
-    subtitle: { sie: 'Votre aperçu personnel — les informations principales en un coup d\'oeil.', du: 'Ton aperçu personnel — les informations principales en un coup d\'oeil.' },
+    subtitle: { sie: 'Votre aperçu personnel — les informations principales en un coup d’œil.', du: 'Ton aperçu personnel — les informations principales en un coup d’œil.' },
     // F8-P3 (05.11.2026): Gesundheitsdaten gehören ins Notfall-Dossier, die Mappe sagt, wo sie stehen.
     gesundheitLabel: 'Santé',
     gesundheitHinweis: 'Le groupe sanguin, les allergies, les médicaments et les maladies figurent dans le dossier d’urgence.',
