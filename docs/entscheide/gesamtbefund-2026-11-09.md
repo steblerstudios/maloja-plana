@@ -214,6 +214,11 @@ siebenmal neu entschieden werden:
    B Benachrichtigungen lang und Schalter kaum sichtbar, C auf der Sicherungsseite ist der unsichere Weg am lautesten,
    D Beta-Tor hell im Dunkelmodus und ohne Weg zum Code. Sprache S1–S10. Rechtsartikel (nDSG Art. 25, 28; UWG Art. 3
    Abs. 1 Bst. s) nicht am Fedlex-Volltext geprüft; Impressum-Anschrift bleibt offen und unverändert. Zweig
-   `befund/gruppe-c-vertrauen` (von `main`), nur Befund, gebaut ist nichts.
+   `befund/gruppe-c-vertrauen` (von `main`), Entwurfs-PR #846.
+   ✅ **11.11.: Sprache, Inhalt und Gestaltung** (Stebler Studios: «hier sprache inhalt und gestaltung»), dazu beim
+   Beta-Tor «Zeile raus, Code wechseln». Gebaut im selben Zweig: L1–L8 und das Kleine, S1–S10, Gestaltung A–D, die
+   Doku-Zeile mit dem alten Code entfernt. Den neuen Code wählt Stebler Studios; im Repo steht nur sein Fingerabdruck.
+   **Notiert, nicht gebaut:** T1 Teilen-Empfang (erst am echten Android-Teilen messen), T3 Runden der Ableitung
+   (neues Dateiformat), T4 Kleines; Impressum-Anschrift bleibt offen.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
