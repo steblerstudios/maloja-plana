@@ -484,7 +484,7 @@ describe('Vorstellungsseite: Kopf, Leiste, Fuss', () => {
   it('C · auf der Weglinie sitzt an jedem Halt das Kapitel-Zeichen', () => {
     const halte = html.match(/<g class="halt" /g) || [];
     expect(halte).toHaveLength(7);
-    expect(html).toMatch(/<g class="halt" data-kehre="1" data-x="[\d.]+" data-y="[\d.]+" transform="translate\([\d.]+ [\d.]+\)" style="color:var\(--k0\)"><circle class="treffer" r="22"\/><circle r="12"\/><svg x="-8.5"/);
+    expect(html).toMatch(/<g class="halt" data-kehre="1" data-x="[\d.]+" data-y="[\d.]+" transform="translate\([\d.]+ [\d.]+\)" style="color:var\(--k0\); --n:0"><circle class="treffer" r="22"\/><circle class="schein" r="19"\/><circle r="12"\/><svg x="-8.5"/);
   });
 
   // Vorbilder 10.11.2026 (Stebler Studios «A, B, C, D so»), stebler-studios/analysen/maloja-startseite-vorbilder-2026-11-10.md
@@ -553,5 +553,80 @@ describe('Vorstellungsseite: Schrift', () => {
   });
   it('keine Versalien-Etiketten mehr', () => {
     expect(stil).not.toContain('text-transform:uppercase');
+  });
+});
+
+// Motion 11.11.2026 (Stebler Studios «Alle vier, A–D»), stebler-studios/analysen/maloja-startseite-motion-2026-11-11.md.
+// Vorbild Fuji nur im Prinzip; Zeiten aus §7a E, nur transform und opacity, «weniger Bewegung» = Endzustand.
+describe('Vorstellungsseite: Motion (A–D, Hero)', () => {
+  const js = fs.readFileSync(path.join(WURZEL, 'website/reise.js'), 'utf8');
+  const stil = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+  const bewegt = stil.match(/@media \(prefers-reduced-motion: no-preference\)\{([\s\S]*?)\n {4}\}\n/)[1];
+  const ruhig = stil.match(/@media \(prefers-reduced-motion: reduce\)\{\n {6}\.reise-bild img[\s\S]*?\n {4}\}/)[0];
+  const ohneBewegt = stil.replace(bewegt, '');
+
+  it('Zeiten der Bewegung nur aus §7a E (150 · 250 · 400 · 600 · Bühne 900); einzige Schleifen Wolken und Teilchen', () => {
+    const erlaubt = new Set(['.15s', '.25s', '.4s', '.6s', '.9s']);
+    const zeilen = bewegt.split('\n').filter((z) => /(animation|transition)(-duration)?:/.test(z));
+    for (const z of zeilen) {
+      for (const [, wert] of z.matchAll(/(?:animation|transition)(?:-duration)?:([^;}]*)/g)) {
+        const dauer = wert.match(/(?<![\d.])\d*\.?\d+m?s\b/);
+        if (!dauer || /ziehen 80s|var\(--t\)/.test(wert)) continue;
+        expect(erlaubt, `Zeit ${dauer[0]} in «${z.trim()}»`).toContain(dauer[0]);
+      }
+    }
+    for (const kf of ['rieseln', 'aufscheinen', 'schweben', 'auftritt']) {
+      const k = bewegt.match(new RegExp(`@keyframes ${kf}\\{([^\\n]*)`))[1];
+      expect(k, kf).not.toMatch(/scale\(|width|height|top:|left:/);
+    }
+  });
+
+  it('A · Stardust: jeder Aufkleber trägt einen Lichtring und sechs Sandkörner, bewegt nur ohne «weniger Bewegung»', () => {
+    const naegel = html.split('<g class="nagel">').slice(1);
+    expect(naegel).toHaveLength(7);
+    for (const n of naegel) {
+      expect(n).toMatch(/<circle class="schein" cx="60" cy="\d+" r="35"\/>/);
+      expect((n.split('<g class="staub">')[1].split('</g>')[0].match(/<circle /g) || [])).toHaveLength(6);
+    }
+    expect(bewegt).toContain('.js .nagel.dran .staub circle{ animation:rieseln');
+    expect(bewegt).toContain('.js .nagel.dran .schein{ animation:aufscheinen');
+    expect(ohneBewegt).not.toMatch(/animation:(rieseln|aufscheinen)/);
+    expect(stil).toMatch(/\.nagel \.schein\{[^}]*opacity:0/);
+  });
+
+  it('B · Luft: drei Schichten (Gold Kehre 1–3, Hell 4–6, Schnee 7), fest erzeugt, ohne Skript und bei weniger Bewegung weg', () => {
+    const luft = html.match(/<div class="reise-luft" aria-hidden="true">([\s\S]*?)<\/div><\/div>/)[0];
+    expect(luft).toMatch(/<div class="gold">/); expect(luft).toMatch(/<div class="hell">/); expect(luft).toMatch(/<div class="schnee">/);
+    expect(luft.match(/<i /g).length).toBeLessThanOrEqual(60);
+    expect(vorstellungBauen()).toBe(html);   // gleiche Seite bei jedem Bauen (kein Math.random in der Quelle)
+    expect(stil).toContain('.js .reise-buehne[data-hier="6"] .schnee{ opacity:1 }');
+    expect(stil).toMatch(/\[data-hier="0"\], \[data-hier="1"\], \[data-hier="2"\]\) \.gold/);
+    expect(stil).toContain('html:not(.js) .reise-luft{ display:none }');
+    expect(ruhig).toContain('.reise-luft{ display:none }');
+    expect(bewegt).toContain('.reise-luft i{ animation:schweben');
+    expect(ohneBewegt).not.toContain('animation:schweben');
+  });
+
+  it('C · Titel setzen sich nur ohne «weniger Bewegung»; vorgelesen wird der ganze Titel, Streuung höchstens 250 ms', () => {
+    expect(js).toContain('if (!ruhig.matches) titel.forEach(setzbar);');
+    expect(js).toContain("vorlesen.className = 'unsichtbar'");
+    expect(js).toContain("bild.setAttribute('aria-hidden', 'true')");
+    expect(js).toContain('* 150 + Math.random() * 100');
+    expect(stil).toContain('.js .reise-text h3.setzen .z{ opacity:0 }');   // nur was das Skript aufgeteilt hat, ist verborgen
+    expect(bewegt).toContain('.js .reise-text h3.setzen.gesetzt .z{ transition:opacity .4s');
+  });
+
+  it('D · oben angekommen leuchtet der Weg einmal von unten nach oben, 150 ms je Halt', () => {
+    expect((html.match(/<circle class="schein" r="19"\/>/g) || [])).toHaveLength(7);
+    for (let i = 0; i < 7; i++) expect(html).toContain(`style="color:var(--k${i}); --n:${i}"`);
+    expect(js).toContain('var oben = hier === stationen.length - 1;');
+    expect(bewegt).toContain('.js .reise-buehne[data-oben] .halt .schein{ animation:aufscheinen .4s');
+    expect(bewegt).toContain('animation-delay:calc(var(--n) * .15s)');
+  });
+
+  it('Hero gestaffelt (Fuji: Aufforderung zuletzt), nur ohne «weniger Bewegung», Hauptknopf nicht verborgen ohne Animation', () => {
+    expect(bewegt).toMatch(/\.pass h1 > span, [^{]*\.pass-weiter\{ animation:auftritt \.4s/);
+    expect(bewegt).toContain('.pass .fakten, .pass .beta, .pass-weiter{ animation-delay:.6s }');
+    expect(ohneBewegt).not.toContain('animation:auftritt');
   });
 });

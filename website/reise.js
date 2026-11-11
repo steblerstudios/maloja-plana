@@ -2,6 +2,8 @@
 // Beim Scrollen: vor Kehre 1 steht das Passbild des Hero (Bild 0); je Kehre wischt das neue Bild wie ein
 // Pinselstrich quer über das alte, der Ort auf der Weglinie wandert mit, an den Wanderstock kommt je erreichter Kehre
 // ein Stocknagel, und der Stock dreht sich um die eigene Achse, bis der neue Nagel vorn steht.
+// Motion 11.11.2026 (A–D): der Titel jeder Kehre setzt sich Buchstabe für Buchstabe (C), an der letzten Kehre leuchtet
+// der Weg auf (D, data-oben). Staub am Aufkleber (A) und Luft (B) sind reines CSS über data-hier und .dran.
 // Ohne dieses Skript ist alles da (alle Aufkleber am Stock, Passbild, Hero mit eigener heller Fläche).
 // Bei «weniger Bewegung» wechseln Bild, Nägel und Ort genauso, nur ohne Bewegung (der Stock springt statt zu drehen).
 // Eigene Datei, weil die CSP nur script-src 'self' erlaubt. Reines ES5, keine Abhängigkeiten.
@@ -20,6 +22,30 @@
   var namen = stationen.map(function (s) { var n = s.querySelector('.name'); return n ? n.textContent.split('·').pop().trim() : ''; });
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
   var bisher = null;
+
+  // C · Motion 11.11.2026: der Titel jeder Kehre setzt sich Buchstabe für Buchstabe (Vorbild Fuji, nur das Prinzip).
+  // Nur ohne «weniger Bewegung». Vorgelesen wird eine unsichtbare Kopie des ganzen Titels, die Buchstaben sind
+  // aria-hidden; Wörter bleiben zusammen (kein Umbruch mitten im Wort). Streuung höchstens 250 ms: die Reihenfolge
+  // gibt 0–150 ms, dazu ein Zufall von 0–100 ms, damit es sich setzt wie Staub und nicht tippt wie eine Maschine.
+  var titel = [].slice.call(bruecke.querySelectorAll('.reise-text h3'));
+  function setzbar(h) {
+    var text = h.textContent, n = text.replace(/\s/g, '').length, z = 0;
+    var vorlesen = document.createElement('span'); vorlesen.className = 'unsichtbar'; vorlesen.textContent = text;
+    var bild = document.createElement('span'); bild.setAttribute('aria-hidden', 'true');
+    text.split(/(\s+)/).forEach(function (teil) {
+      if (!teil) return;
+      if (/^\s+$/.test(teil)) { bild.appendChild(document.createTextNode(' ')); return; }
+      var wort = document.createElement('span'); wort.className = 'wort';
+      for (var i = 0; i < teil.length; i++) {
+        var b = document.createElement('span'); b.className = 'z'; b.textContent = teil.charAt(i);
+        b.style.setProperty('--v', String(Math.round(z / Math.max(1, n - 1) * 150 + Math.random() * 100)));
+        wort.appendChild(b); z++;
+      }
+      bild.appendChild(wort);
+    });
+    h.textContent = ''; h.appendChild(vorlesen); h.appendChild(bild); h.classList.add('setzen');
+  }
+  if (!ruhig.matches) titel.forEach(setzbar);
 
   function bildZeigen(nr) {
     if (nr === bisher) return;
@@ -54,6 +80,11 @@
     if (ende !== buehne.hasAttribute('data-ende')) { if (ende) buehne.setAttribute('data-ende', ''); else buehne.removeAttribute('data-ende'); }
     bildZeigen(hier + 1);
     naegel.forEach(function (n, i) { n.classList.toggle('dran', i <= hier); });
+    // C · ein Titel setzt sich, wenn seine Kehre erreicht ist; zurückgescrollt bleibt er stehen, darüber wird er wieder frei.
+    titel.forEach(function (t, i) { if (i === hier) t.classList.add('gesetzt'); else if (i > hier) t.classList.remove('gesetzt'); });
+    // D · oben angekommen (letzte Kehre): der Weg leuchtet einmal von unten nach oben auf, je Ankunft einmal.
+    var oben = hier === stationen.length - 1;
+    if (oben !== buehne.hasAttribute('data-oben')) { if (oben) buehne.setAttribute('data-oben', ''); else buehne.removeAttribute('data-oben'); }
     punkte.forEach(function (p, i) { p.classList.toggle('hier', i === hier); p.classList.toggle('gegangen', i < hier); });
     if (gegangen) {
       var anteil = hier < 0 ? 0 : (hier + 0.5) / stationen.length;
