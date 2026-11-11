@@ -56,7 +56,7 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
     }, t('mietzinsView.compareTitle')),
 
     rentComparison && React.createElement(RegionalBarometer, {
-      palette, t, comparison: rentComparison, userValue: nettoMiete, kind: 'rent',
+      palette, t, comparison: rentComparison, userValue: nettoMiete, kind: 'rent', form: 'haeuser',
       // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
       fillColor: bereichFillColor('wohnen', isDarkMode),
       thresholdValue: drittelGrenzeMiete(r),
