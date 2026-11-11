@@ -6,6 +6,7 @@ import { groupSettingsControls, alsSchalter, zeilenLabelKey } from './settingsGr
 import { DatenLoeschen, letzteSicherungDatum } from './components/DatenLoeschen.jsx';
 import { NotificationSettings } from './NotificationSettings.jsx';
 import { Schalter } from './components/Schalter.jsx';
+import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
 
 // Zentraler Einstellungen-Bereich: bündelt die App-Bedienelemente mit
 // beschrifteten Zeilen (zugänglicher als die reinen Icon-Knöpfe in der
@@ -30,12 +31,33 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
     cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
   };
 
-  const groups = groupSettingsControls(list);
+  // «/» öffnet die Suche — abschaltbar (WCAG 2.1.4, Entscheid Stebler Studios 11.11.2026). Steht nur hier und nicht
+  // in der Schublade: deren Knöpfe kommen aus main.jsx, und das Startbündel hat keinen Platz mehr. Wer am Gerät
+  // eine Tastatur hat, findet die Seite. Gleiches Aussehen wie die übrigen Schalter (main.jsx `ctrlBtn`).
+  // Schlüssel und Regel wie `slashAn`/`slashSetzen` in utils/suchTaste.js (suchTaste.test.js hält beide gleich).
+  // Bewusst nicht importiert: der Import setzte suchTaste.js auf die Vorlade-Liste im Startbündel.
+  const [slash, setSlash] = React.useState(() => { try { return localStorage.getItem('or5_suchtaste') !== '0'; } catch { return true; } });
+  const slashKnopf = React.createElement('button', {
+    key: 'slashsearch', type: 'button',
+    'aria-label': t('search.tasteSchalter'), 'aria-pressed': slash, title: t('search.tasteSchalter'),
+    onClick: () => setSlash((an) => { try { localStorage.setItem('or5_suchtaste', an ? '0' : '1'); } catch { /* ohne Speicher */ } return !an; }),
+    style: {
+      padding: '8px 8px', minHeight: '44px', minWidth: '44px', lineHeight: 1,
+      background: slash ? palette.sand + '30' : 'transparent',
+      color: slash ? palette.text : palette.mid,
+      border: '1px solid ' + (slash ? palette.sand : palette.border),
+      borderRadius: KNOPF_RADIUS, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
+    },
+  }, React.createElement('span', { 'aria-hidden': 'true' }, '/'));
+
+  const groups = groupSettingsControls(list)
+    .map((g) => (g.key === 'a11y' ? { ...g, controls: [...g.controls, slashKnopf] } : g));
+  const EIGENE_LABELS = { slashsearch: 'search.tasteSchalter' };
 
   // Eine beschriftete Zeile pro Bedienelement (barrierefreier als die reine Icon-Reihe).
   const renderRow = (ctrl, i, rows) => {
     const schalter = alsSchalter(ctrl);
-    const labelKey = zeilenLabelKey(ctrl, !!schalter);
+    const labelKey = zeilenLabelKey(ctrl, !!schalter) || EIGENE_LABELS[ctrl.key];
     const label = labelKey ? t(labelKey) : ctrl.key;
     return React.createElement('div', {
       key: ctrl.key || i,

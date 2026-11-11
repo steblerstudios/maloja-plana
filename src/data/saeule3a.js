@@ -98,6 +98,22 @@ export const SAEULE3A_HOECHSTABZUG = {
 // `saeule3aMaximum(bemessungsjahr)` verwenden.
 export const SAEULE3A_MAX = SAEULE3A_HOECHSTABZUG.mitPensionskasse;
 
+// Die Grenze EINER Person nach BVV 3 Art. 7 Abs. 1 — eine Regel für Steuer- und Vorsorge-Rechner
+// (vorher je eigene Fassung: der Vorsorge-Rechner erkannte nur «Freiberuflich», der Steuer-Rechner nur
+// «Selbstständig» als selbständig, und dem Steuer-Rechner fehlten die 20 %; Vortor 10.11.2026).
+// - mit 2. Säule (Bst. a): der kleine Betrag;
+// - ohne 2. Säule (Bst. b): 20 % des Erwerbseinkommens, höchstens der grosse Betrag. Ist das
+//   Erwerbseinkommen nicht bekannt, bleibt nur der grosse Betrag als oberste mögliche Grenze.
+// `null` für ein Steuerjahr ohne belegte Werte — keine geratene Zahl (wie `saeule3aMaximum`).
+export function saeule3aGrenzePerson({ steuerjahr, hatPensionskasse, erwerbseinkommen }) {
+  const werte = SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[steuerjahr];
+  if (!werte) return null;
+  if (hatPensionskasse) return werte.mitPensionskasse;
+  const e = Number(erwerbseinkommen);
+  if (!Number.isFinite(e) || e <= 0) return werte.ohnePensionskasse;
+  return Math.min(werte.ohnePensionskasse, Math.round(e * SAEULE3A_HOECHSTABZUG.satzOhnePensionskasse));
+}
+
 // ─── Einzahlungen nach Kalenderjahr ───────────────────────────────────────────
 //
 // 🛑 WARUM DAS HIER STEHT UND NICHT IM TRACKER (Befund 23.09.2026).
