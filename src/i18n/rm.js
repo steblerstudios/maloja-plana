@@ -5208,6 +5208,8 @@ export default {
   },
 
   briefe: {
+    // TODO(rm): Gegenlese — Gruppe B Gestaltung A (11.11.2026)
+    formTitel: 'Brev: {name}',
     title: 'Models da brev',
     intro: { sie: 'Models svizzers da brevs, precumplenids cun Vossas datas. Avant il spediziun controllar e adattar per plaschair.', du: 'Models svizzers da brevs, precumplenids cun Tes datas. Avant il spediziun controllar e adattar per plaschair.' },
     backToUnterlagen: 'Enavos tar Mes documents',
@@ -5261,6 +5263,18 @@ export default {
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung des Ehegatten bzw. der eingetragenen Partnerin oder des eingetragenen Partners (OR Art. 266m). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it; OR-266m-Satz deutscher Rückfall nach Fachkorrektur 25.09.2026)
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungTitel: 'Zustimmung zur Kündigung der Familienwohnung (OR Art. 266m)',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungText: 'Ich stimme dieser Kündigung als Ehegattin, Ehegatte, eingetragene Partnerin oder eingetragener Partner ausdrücklich zu (OR Art. 266m).',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungUnterschrift: 'Name, Ort, Datum und Unterschrift',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor dem Versand',
+        zustimmung: { sie: 'Sind Sie verheiratet oder leben Sie in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).', du: 'Bist du verheiratet oder lebst du in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).' },
+        form: 'Von Hand unterschreiben (OR Art. 266l Abs. 1, Art. 14 Abs. 1) und eingeschrieben senden. Die Kündigung muss vor Beginn der Kündigungsfrist bei der Vermieterschaft sein (Frist: OR Art. 266c, oder länger laut Vertrag).',
+      },
     },
     taxExtension: {
       title: 'Prolungaziun dal termin da taglia',
@@ -5270,17 +5284,31 @@ export default {
       body1: 'cun quai As rog jau amicaivlamain per ina prolungaziun dal termin per la consegna da mia decleraziun da taglia {year}.',
       body2: "Jau dovr il temp supplementar per metter ensemen tut ils documents necessaris. Jau As engraziel per Vossa chapientscha.",
       closing: 'Cun salids amicaivels',
+      // TODO(rm): provisorisch — deutsch, Gruppe B K (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor dem Versand',
+        text: 'Die Verlängerung vor Ablauf der Frist beantragen. Viele Kantone bieten dafür ein Online-Formular an, die Verlängerung kann Gebühren kosten — beim kantonalen Steueramt nachsehen.',
+      },
     },
     insuranceSwitch: {
       title: 'Midada da cassa da malsauns',
       description: "Disditga da l'assicuranza da basa obligatorica per midar a fin d'onn.",
       subject: "Disditga da l'assicuranza obligatorica da las tgiras da malsauns (OKP)",
       salutation: 'Stimadas dunnas e stimads signurs,',
-      body1: "cun quai disdi jau mia assicuranza obligatorica da las tgiras da malsauns tar {insurer} per ils 31 da december da l'onn current.",
+      body1: "cun quai disdi jau mia assicuranza obligatorica da las tgiras da malsauns tar {insurer} per ils 31 da december {jahr}.",
       policyRef: 'Numer da polizza: {number}',
       body2: 'Jau As rog da ma trametter ina conferma scritta da la disditga.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: La disditga da l'assicuranza da basa per la fin da l'onn sto tenor LAMal art. 7 al. 2 arrivar tar l'assicurader il pli tard ils 30 da november. Recumandà: trametter per posta recumandada.", // TODO(rm): Gegenlese Muttersprache (al. 2 + Einschreiben ergänzt 15.09.2026)
+        // TODO(rm): provisorisch — deutsch, Gruppe B L2/L3 (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor der Kündigung',
+        frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen (KVG Art. 7 Abs. 2).',
+        nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen. Sie können auch bis zur Prämienmitteilung im Herbst warten.',
+        semester: 'Im Grundmodell mit ordentlicher Franchise (Erwachsene 300 Franken, Kinder keine) ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Mit Hausarzt-, HMO- oder Telmed-Modell, Bonusversicherung oder wählbarer Franchise nur auf Ende Jahr (KVV Art. 94 Abs. 2, 100 Abs. 3).',
+        anmelden: 'Zuerst bei der neuen Kasse anmelden: Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5).',
+        ausstaende: 'Sind Prämien, Kostenbeteiligungen, Verzugszinse oder Betreibungskosten offen, ist ein Wechsel nur möglich, wenn alles bis zum Ablauf der Kündigungsfrist bezahlt ist (KVG Art. 64a Abs. 6, KVV Art. 105l).',
+      },
     },
     kkReklamation: {
       title: 'Cassa da malsauns: contestar in quint',
@@ -7289,6 +7317,8 @@ export default {
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' }, // TODO(rm): übersetzen
   },
   calendar: {
+    // TODO(rm): Gegenlese — Gruppe B Gestaltung C (11.11.2026)
+    reiterTermine: 'Termins',
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     nicelyDone: 'Fatg',
     // rm ungeprüft F5

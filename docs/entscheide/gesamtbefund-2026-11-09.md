@@ -231,7 +231,43 @@ siebenmal neu entschieden werden:
    Familienzulagen ATSG Art. 24 (fünf Jahre) und ohne EL, Mutterschaftsbeihilfe «teils» und Kind unter zwei Jahren,
    EL bei Beeinträchtigung mit IV-Rente oder Hilflosenentschädigung, Reka 200 Franken nur Familienferien,
    `kompassIdle`. Vorgemerkt: S-Ausweise mit Anspruch auf Bewilligung ab März 2027 (AsylG Art. 74 Abs. 2).
+   Entwurfs-PR #845.
+   **Gruppe B · Ordnen & Unterlagen** (11.11.): Bild [gruppe-b-unterlagen.html](../design/gruppe-b-unterlagen.html).
+   Ablage, Was ansteht, Merkliste, Unterlagen drucken (Lebensmappe, Behörden-, Notfall-Dossier), 13 Briefvorlagen,
+   Offizielle Links. Gut: Rechtsvorschlag, Einsprache gegen die Kündigung, Mahnung, Todesfall wörtlich am Gesetz; keine
+   erfundenen Aufbewahrungsfristen; 127 Links, keiner tot. Hoch: L1 Mietkündigung ohne Zustimmung des Ehegatten bzw. der
+   eingetragenen Partnerin oder des Partners bei der Familienwohnung — ohne sie nichtig (OR Art. 266m, 266o); der Hinweis
+   wird beim Drucken ausgeblendet. Mittel: L2 Kassenwechsel-Brief kündigt ab 1.12. auf einen unmöglichen Termin
+   (KVG Art. 7 Abs. 2) — vor dem 1. Dezember bauen, L3 Ausstände und Art. 7 Abs. 5 fehlen, L4 Kalender-Vorlage
+   «Steuererklärung Frist» auf heute + 120 Tage, L5 Kassen-Vorlage ohne Werktag, L6 «Rechnung beanstanden» ohne
+   Verfügung (ATSG Art. 49, 51), L7 «sicher» in der Ablage, L8 Organspende-Register gibt es noch nicht. Gestaltung A
+   Brief antippen: nichts geschieht (Formular 3700 px tiefer), B Bücherregal mit senkrechter Schrift, Kantonslinks erst
+   bei 1250 px, C Was ansteht 4 px zu breit, Löschen über den Tagesstreifen, D Ablage-Titel bricht falsch. Sprache S1–S7
+   (it-Links deutsch). Frage zu den Herzensempfehlungen. Zweig `befund/gruppe-b-unterlagen`, gestapelt auf #845, nur
+   Befund, gebaut ist nichts.
+   ✅ **11.11.: alles ausser dem Bücherregal** (Stebler Studios: «alles so bauen bis aufs bücherregal das müssen wir
+   nochbesprechen»). Gebaut im selben Zweig: L1 zweite Unterschrift «Zustimmung … (OR Art. 266m)» je nach Zivilstand,
+   L2 Kassenwechsel nennt das Jahr und springt nach der Frist aufs nächste, L3–L8, Kleines, Gestaltung A (Brief antippen
+   springt zum Formular), C (375 px, Löschen am Eintrag mit Rückgängig — ändert Entwurf G vom 27.10., Reiter «Termine»),
+   D («Dokumenten-ablage»), Sprache S1–S7 (it-Links, Grussformeln, «so früh wie möglich»). rechts-pruefer nach dem Bau:
+   **Blocker** — der Ablage-Satz versprach eine Tresor-Sperre, die nicht eingebaut ist → «im Browser-Speicher
+   unverschlüsselt»; dazu sieben Nachschärfungen. Test `gruppeBUnterlagen.test.js`. **Zum Besprechen:** Bücherregal (B).
+   Nebenbefund: Landschaftsband der Kapitelseiten −24 px, vermutlich 4 px Überbreite.
    **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
    Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
+   **Restrunde 11.11. abends** (Entscheidblatt mit Handy-Bildern 375 px vom gebauten Stand `c7bffc56`:
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). ⏸️ **Gruppen A, B, C, D, E: nach dem nächsten
+   Deploy** (Stebler Studios: «halte diese situation zu erst mal so fest … und dann kommen wir nach dem nächsten deploy
+   wieder auf dieses dokument zurück und können entscheiden»). Empfohlen und dort wieder aufzunehmen — A: ein Eingang zu
+   «Was steht mir zu?» und ein IPV-Satz aus `ipvAnzeige`; vier Ordnungen nur angleichen (Neuordnung nach Kapiteln
+   später, eigener Entscheid); eine Fortschrittszahl aus `gesamtVollstaendigkeit`; Suchwörter erst nach dem einen
+   Eingang, wenn das Startbündel Platz hat. B: Bücherregal mit «Ihr Kanton» zuerst und liegender Schrift; Löschen am
+   Eintrag (Änderung von Entwurf G) bestätigen; «Nexter» ohne Link, bis die richtige Adresse da ist —
+   `crewz.io/de/nexter/` heisst heute (gemessen 11.11.) «Roved – das Trinkspiel für unvergessliche Abende».
+   ✅ **Quer: «Alle drei wie empfohlen».** Q1 Landschaftsband der Kapitelseiten `margin: '0 -20px'` wie main
+   (gemessen vorher 379 px, nachher alle sieben Kapitel 375 px). Q2 Wächter: `activateTresor` wird nirgends
+   aufgerufen, und kein Satz zur Ablage sagt in einer der fünf Sprachen Verschlüsselung zu (Erlaubnisliste der
+   gelesenen Sätze). Test `querBandTresor.test.js`, Mutationsprobe beider Teile rot aus dem richtigen Grund. Q3 Test
+   «Stand der Lebenslagen» (`gruppeAEinstieg.test.js`) bleibt: er wird am 1.1.2027 rot, das ist der Wecker; Nachprüfung 16.12.2026.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
