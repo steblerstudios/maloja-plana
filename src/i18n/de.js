@@ -3387,6 +3387,7 @@ export default {
     otherDeductions: 'Sonstige Abzüge',
     // Kapitel 3 F3: nur gesetzliche Grenzen, Eingaben darüber werden gekappt.
     grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr {jahr})',
+    hinweis3aOhnePk: 'Lohn unter der BVG-Eintrittsschwelle: Ohne Pensionskasse zählen höchstens 20 % des Lohns, hier rund {betrag} (BVV 3 Art. 7 Abs. 1 Bst. b). Mit Pensionskasse gilt der Betrag oben; die Kasse dann bei den Versicherungen eintragen.',
     grenze_education: 'Bei der direkten Bundessteuer höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren). Die Kantone haben eigene Höchstbeträge',
     gekappt: 'Für die Schätzung auf {max} begrenzt.',
     calculation: 'Berechnung',

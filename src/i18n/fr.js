@@ -3344,6 +3344,7 @@ export default {
     education: 'Frais de formation',
     otherDeductions: 'Autres déductions',
     grenze_pension3a: 'Au maximum {max} selon la loi (pilier 3a, année fiscale {jahr})',
+    hinweis3aOhnePk: 'Salaire sous le seuil d’entrée LPP : sans caisse de pension, au maximum 20 % du salaire, ici environ {betrag} (OPP 3 art. 7 al. 1 let. b). Avec une caisse de pension, le montant ci-dessus s’applique ; inscrire alors la caisse dans les assurances.',
     grenze_education: 'Impôt fédéral direct : au maximum {max}, sous conditions (premier diplôme du degré secondaire II ou dès 20 ans). Les cantons ont leurs propres plafonds',
     gekappt: 'Limité à {max} pour l’estimation.',
     calculation: 'Calcul',

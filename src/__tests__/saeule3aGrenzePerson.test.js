@@ -69,30 +69,41 @@ describe('istSelbstaendig — eine Regel für alle Rechner', () => {
   });
 });
 
-// Fachprüfung 11.11.2026: Angestellte unter der BVG-Eintrittsschwelle (BVG Art. 2 Abs. 1, 2026: «mehr als» 22 680)
-// gehören keiner Pensionskasse an → 20 % des Lohns (BVV 3 Art. 7 Abs. 1 Bst. b), nicht der kleine Betrag.
-describe('steuer3aGrenzePerson — der Steuer-Rechner mit echten Profilen', async () => {
-  const { steuer3aGrenzePerson } = await import('../TaxCalculator.jsx');
+// Angestellte unter der BVG-Eintrittsschwelle (BVG Art. 2 Abs. 1, 2026: «mehr als» 22 680) ohne Pensionskasse
+// dürfen höchstens 20 % des Lohns abziehen (BVV 3 Art. 7 Abs. 1 Bst. b). Entscheid Stebler Studios 11.11.2026 (#868):
+// HINWEISEN statt kappen — viele Kassen versichern schon unter der Schwelle; eine Kappung wäre für sie zu tief.
+describe('Steuer-Rechner mit echten Profilen: Grenze und Hinweis', async () => {
+  const { steuer3aGrenzePerson, steuer3aHinweisOhnePk } = await import('../TaxCalculator.jsx');
   const profil = (finanzen, versicherungen = {}) => ({ finanzen, versicherungen });
+  const unter = profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 1500 });
 
-  it('angestellt unter der Schwelle (18 000 brutto): 20 % = 3 600', () => {
-    expect(steuer3aGrenzePerson(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 1500 }), 2026)).toBe(3600);
+  it('angestellt unter der Schwelle: Grenze bleibt der kleine Betrag (nie zu tief)', () => {
+    expect(steuer3aGrenzePerson(unter, 2026)).toBe(W26.mitPensionskasse);
   });
-  it('genau an der Schwelle (22 680) ist noch nicht versichert: 20 % = 4 536', () => {
-    expect(steuer3aGrenzePerson(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 1890 }), 2026)).toBe(4536);
+  it('… und der Hinweis nennt 20 % des Lohns (18 000 → 3 600)', () => {
+    expect(steuer3aHinweisOhnePk(unter, 2026)).toBe(3600);
   });
-  it('angestellt über der Schwelle: der kleine Betrag', () => {
+  it('genau an der Schwelle (22 680) ist noch nicht versichert: Hinweis 4 536', () => {
+    expect(steuer3aHinweisOhnePk(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 1890 }), 2026)).toBe(4536);
+  });
+  it('kein Hinweis: über der Schwelle, Lohn netto oder leer, Kasse eingetragen, selbständig', () => {
+    expect(steuer3aHinweisOhnePk(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 6000 }), 2026)).toBeNull();
+    expect(steuer3aHinweisOhnePk(profil({ employmentType: 'employed', incomeType: 'netto', monthlyIncome: 1500 }), 2026)).toBeNull();
+    expect(steuer3aHinweisOhnePk(profil({ employmentType: 'employed' }), 2026)).toBeNull();
+    expect(steuer3aHinweisOhnePk(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 1500 }, { bvgInsurer: 'Kasse X' }), 2026)).toBeNull();
+    expect(steuer3aHinweisOhnePk(profil({ employmentType: 'selfEmployed', incomeType: 'brutto', monthlyIncome: 1500 }), 2026)).toBeNull();
+  });
+  it('Grenzen sonst wie bisher: angestellt klein, selbständig ohne Kasse gross, mit Kasse klein', () => {
     expect(steuer3aGrenzePerson(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 6000 }), 2026)).toBe(W26.mitPensionskasse);
-  });
-  it('angestellt, Lohn netto oder leer: wie bisher der kleine Betrag', () => {
-    expect(steuer3aGrenzePerson(profil({ employmentType: 'employed', incomeType: 'netto', monthlyIncome: 1500 }), 2026)).toBe(W26.mitPensionskasse);
-    expect(steuer3aGrenzePerson(profil({ employmentType: 'employed' }), 2026)).toBe(W26.mitPensionskasse);
-  });
-  it('eine eingetragene Kasse geht immer vor', () => {
-    expect(steuer3aGrenzePerson(profil({ employmentType: 'employed', incomeType: 'brutto', monthlyIncome: 1500 }, { bvgInsurer: 'Kasse X' }), 2026)).toBe(W26.mitPensionskasse);
+    expect(steuer3aGrenzePerson(profil({ employmentType: 'selfEmployed' }), 2026)).toBe(W26.ohnePensionskasse);
     expect(steuer3aGrenzePerson(profil({ employmentType: 'freelance' }, { bvgInsurer: 'Kasse X' }), 2026)).toBe(W26.mitPensionskasse);
   });
-  it('selbständig ohne Kasse: der grosse Betrag als oberste Grenze', () => {
-    expect(steuer3aGrenzePerson(profil({ employmentType: 'selfEmployed', incomeType: 'brutto', monthlyIncome: 1500 }), 2026)).toBe(W26.ohnePensionskasse);
+  it('der Hinweis steht unter dem 3a-Feld, in allen Sprachen mit {betrag}', async () => {
+    const quelle = readFileSync(fileURLToPath(new URL('../TaxCalculator.jsx', import.meta.url)), 'utf8');
+    expect(quelle).toMatch(/ded\.key === 'pension3a' && hinweis3aOhnePk != null/);
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const t = (await import(`../i18n/${l}.js`)).default;
+      expect(t.tax.hinweis3aOhnePk, l).toContain('{betrag}');
+    }
   });
 });

@@ -3345,6 +3345,7 @@ export default {
     education: 'Education costs',
     otherDeductions: 'Other deductions',
     grenze_pension3a: 'Legal maximum {max} (pillar 3a, tax year {jahr})',
+    hinweis3aOhnePk: 'Salary below the BVG entry threshold: without a pension fund, at most 20% of the salary counts, here about {betrag} (BVV 3 Art. 7 para. 1 let. b). With a pension fund, the amount above applies; then enter the fund under insurance.',
     grenze_education: 'Direct federal tax: at most {max}, subject to conditions (first upper-secondary qualification or from age 20). Cantons set their own maximums',
     gekappt: 'Limited to {max} for the estimate.',
     calculation: 'Calculation',
