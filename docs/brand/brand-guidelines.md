@@ -311,7 +311,10 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   - Daneben das **Glas der IPV** (`Pegel`, `nurGlas`) für Einkommen gegen Grenze, nur wo die Grenze eine Zahl ist.
     Dieselbe Frage bekommt dieselbe Form, also kein neues Haus.
   - Die **Tonne ist grau gefüllt** (Behörden-Zwetschge, `Pegel` mit `fuellFarbe`). Stebler Studios: «grau gefüllt».
-  - **«möglich» ist ein Knopf mit Zeichen** (Nebenknopf, Zeichen des Werkzeugs «Mietzins»). Im Kapitel führt er ins
+  - **«möglich» ist ein Wegweiser, der ganz der Knopf ist**: Pfosten und Pfeil-Schild in `skyDeep` (Blau =
+    informieren), darauf das Zeichen des Werkzeugs «Mietzins» und «möglich: Mietbeiträge prüfen». Stebler Studios
+    11.11.2026: «die Kombo von dem jetzt und dem vorher». Das Schild ist ein Bild hinter einem rechteckigen Knopf,
+    damit der Fokusring sichtbar bleibt. Im Kapitel führt er ins
     Werkzeug, im Werkzeug zur kantonalen Stelle. Er steht nur, wenn das Einkommen unter der Grenze liegt, und sagt nie
     «Anspruch».
   - Darunter die **Kachelkarte** der 26 Kantone, **jeder Kanton ein kleines Haus** (Matrix §5, C3; Stebler Studios:

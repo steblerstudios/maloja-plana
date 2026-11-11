@@ -285,15 +285,30 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
     }));
 };
 
-// «möglich» als Knopf mit Zeichen (Stebler Studios 11.11.2026, «ein CTA mit Icon und Verlinkung»): im Kapitel führt er
-// ins Werkzeug «Mietzins», im Werkzeug zur kantonalen Stelle. Erscheint nur unter der Grenze; sagt nie «Anspruch».
+// «möglich» als Wegweiser, der ganz der Knopf ist (Stebler Studios 11.11.2026: «die Kombo von dem jetzt und dem vorher»):
+// Pfosten und Pfeil-Schild vom ersten Entwurf, Zeichen und Link vom Knopf. Im Kapitel ins Werkzeug «Mietzins», im
+// Werkzeug zur kantonalen Stelle. Nur unter der Grenze; sagt nie «Anspruch». Das Schild ist ein Bild hinter dem Knopf,
+// der Knopf selbst bleibt rechteckig — so bleibt der Fokusring sichtbar. Blau = informieren; Schrift in der Flächenfarbe
+// (hell 5.4:1 auf skyDeep, dunkel umgekehrt).
 const MoeglichKnopf = ({ palette, t, onNavigate, url }) => {
   const h = React.createElement;
-  const stil = { ...knopfStil(palette, 'neben'), textDecoration: 'none', animation: 'fadeIn ' + duration.slow + 'ms ' + ease };
-  const inhalt = [h(Icon, { key: 'i', name: ansichtIkon('mietzins'), size: 18 }), h('span', { key: 't' }, onNavigate ? t('mietzinsSzene.cta') : t('mietzins.linkCanton'))];
-  if (onNavigate) return h('button', { type: 'button', 'data-teil': 'mietzins-cta', onClick: () => onNavigate('mietzins'), style: stil }, inhalt);
-  if (url) return h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', style: stil }, inhalt);
-  return null;
+  const stil = {
+    position: 'relative', display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px',
+    padding: '0 ' + (space.lg + space.xs) + 'px 0 ' + space.ms + 'px', border: 'none', background: 'none', cursor: 'pointer',
+    fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi, color: palette.surface, textDecoration: 'none',
+  };
+  const schild = h('svg', { 'aria-hidden': 'true', viewBox: '0 0 100 44', preserveAspectRatio: 'none', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0 } },
+    h('path', { d: 'M0 0H92L100 22L92 44H0Z', fill: palette.skyDeep }));
+  const inhalt = [schild,
+    h(Icon, { key: 'i', name: ansichtIkon('mietzins'), size: 18, style: { position: 'relative', zIndex: 1 } }),
+    h('span', { key: 't', style: { position: 'relative', zIndex: 1 } }, t(onNavigate ? 'mietzinsSzene.cta' : 'mietzinsSzene.ctaStelle'))];
+  const knopf = onNavigate
+    ? h('button', { type: 'button', 'data-teil': 'mietzins-cta', onClick: () => onNavigate('mietzins'), style: stil }, inhalt)
+    : url ? h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', style: stil }, inhalt) : null;
+  if (!knopf) return null;
+  return h('div', { 'data-teil': 'mietzins-wegweiser', style: { display: 'inline-flex', flexDirection: 'column', animation: 'fadeIn ' + duration.slow + 'ms ' + ease } },
+    knopf,
+    h('span', { 'aria-hidden': 'true', style: { width: '2px', height: space.lg + 'px', marginLeft: space.lg + 'px', background: palette.text } }));
 };
 
 export const MietzinsSzene = ({ palette, t, data, isDarkMode, onNavigate, kanton: kantonVorgabe, groesse = 'gross', mitHaus = false, ohneSatz = false }) => {

@@ -75,6 +75,7 @@ describe('Szene je Zustand', () => {
   });
 });
 
+const werkzeugText = () => szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
 describe('Stebler Studios 11.11.2026: Häuser, grau, Knopf', () => {
   it('jeder Kanton ist ein kleines Haus', () => {
     expect((szene(profil('ZH')).match(/data-form="haus"/g) || []).length).toBe(26);
@@ -90,7 +91,10 @@ describe('Stebler Studios 11.11.2026: Häuser, grau, Knopf', () => {
     const kapitel = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }), { onNavigate: (v) => ziele.push(v) });
     expect(kapitel).toMatch(/<button type="button" data-teil="mietzins-cta"/);
     expect(kapitel).toContain(t('mietzinsSzene.cta'));
-    expect(kapitel).toMatch(/data-teil="mietzins-cta"[^>]*><span aria-hidden="true" role="img"[^>]*><svg/); // das Zeichen ist wirklich da
+    expect(kapitel).toMatch(/data-teil="mietzins-cta"[^>]*><svg aria-hidden="true"[^>]*><path d="M0 0H92L100 22L92 44H0Z"/); // das Pfeil-Schild
+    expect(kapitel).toMatch(/<span aria-hidden="true" role="img"[^>]*><svg/); // das Zeichen ist wirklich da
+    expect(kapitel).toContain('data-teil="mietzins-wegweiser"');
+    expect(werkzeugText()).toContain(t('mietzinsSzene.ctaStelle')); // das Zeichen ist wirklich da
     const werkzeug = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
     expect(werkzeug).toMatch(/<a [^>]*href="https:\/\/zg\.ch[^"]*"[^>]*data-teil="mietzins-cta"|<a [^>]*data-teil="mietzins-cta"[^>]*href="https:\/\/zg\.ch/);
     expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/onClick: \(\) => onNavigate\('mietzins'\)/);
