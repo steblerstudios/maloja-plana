@@ -55,12 +55,13 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite deines Kantons nennt sie.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — Vossa KulturLegi chantunala mussa tge che vala tar Vus.', du: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' } },
-        rekaFerien: { titel: 'Vacanzas Reka per 200.–', text: 'Cun la KulturLegi pussibilitescha la Fundaziun Reka a famiglias e persunas sulettas pertutgadas da la povradad ina emna da vacanzas per circa 200 francs — abitaziun e viadi cun il traffic public inclus.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Familien mit minderjährigen Kindern und knappem Budget verbringen eine Ferienwoche in einer Reka-Ferienwohnung oder Jugendherberge für einen Solidaritätsbeitrag von 200 Franken; für Alleinerziehende gibt es eigene günstige Ferienwochen.' },
       },
     },
     alleinerziehend: {
@@ -75,7 +76,7 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite deines Kantons nennt sie.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
@@ -91,7 +92,8 @@ export default {
         iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
         // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.' } },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Decken die IV-Rente oder die Hilflosenentschädigung zusammen mit dem übrigen Einkommen die Lebenskosten nicht, stocken EL auf, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Das ist ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
         serafe: { titel: 'Exoneraziun da la taxa da radio/televisiun', text: 'Tgi che survegn prestaziuns cumplementaras (PC) è exonerà da la taxa SERAFE sin dumonda — recuperabel retroactivamain.' },
@@ -136,7 +138,8 @@ export default {
         stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: { sie: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor Vossa entrada e quella da Voss geniturs, cun termins d’annunzia.', du: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' } },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
         franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
-        ahv: { titel: 'Contribuziuns AVS & largias', text: 'Dapi l’onn suenter ils 20 onns èn ils contribuziuns AVS debitas era senza lavur — students senza activitad pajan il contribut minimal. Onns che mancan reduceschan la renta futura.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen bis Ende des Jahres, in dem sie 25 werden, den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
         waisenrente: { titel: 'Renta d’orfen en furmaziun', text: 'Sch’in genitur è mort, cuntinuescha la renta d’orfen durant la furmaziun — fin 25 onns. I va facilmain emblidà ch’ella na finescha betg simplamain cun 18.' },
       },
     },
@@ -158,7 +161,8 @@ export default {
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella. In dretg, betg carezza.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC.' },
         steuern: { titel: 'Deducziuns en la vegliadetgna', text: 'Cuosts da malsogna, tgira ed impediment pon vegnir deducids da l’entrada taxabla — igl è utigl da tegnair las quittanzas durant l’onn.' },
@@ -204,7 +208,8 @@ export default {
       intro: 'Suenter la mort d’in genitur han ils uffants dretgs clers che van facilmain a perder en in temp grev — ina renta d’orfen, e sustegn cumplementar sch’ella na tanscha betg.',
       berechtigungen: {
         waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun.' },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta d’orfen na cuvra betg ils cuosts da viver, pon las PC cumplettar — era per uffants e giuvenils en furmaziun. In dretg, betg carezza.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Ein Recht, kein Entgegenkommen.' },
         stipendien: { titel: 'Stipendis', text: 'Ultra da la renta d’orfen pon stipendis chantunals sustegnair ina furmaziun u studi — controllar en parallel, cun agens termins.' },
         steuern: { titel: 'Facilitaziun fiscala', text: 'Il genitur survivent po far valair la tarifa parentala e las deducziuns per uffants; era tscherts cuosts en connex cun la mort pon sbassar la taglia.' },
       },
@@ -213,7 +218,7 @@ export default {
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',
-    intro: 'Die Zusatzversicherung ist getrennt von der Grundversicherung — eigene Regeln, eigene Fristen. Ein ruhiger Weg in vier Schritten.',
+    intro: 'Die Zusatzversicherung ist getrennt von der Grundversicherung — eigene Regeln, eigene Fristen. Vier Schritte: prüfen, Aufnahme abwarten, kündigen, Frist notieren.',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step1Title: { sie: '1 · Welche Zusatz haben Sie?', du: '1 · Welche Zusatz hast du?' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -240,7 +245,7 @@ export default {
     step3Link: 'Zu den Briefvorlagen',
     step4Title: '4 · Frist sichern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step4Text: { sie: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfen Sie die genaue Frist in Ihrer Police.', du: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfe die genaue Frist in deiner Police.' },
+    step4Text: { sie: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende; die Kündigung muss dann bis Ende September {year} eingegangen sein. Vor Ende des dritten Vertragsjahres geht das nur, wenn Ihre Police es erlaubt (VVG Art. 35a). Prüfen Sie die genaue Frist in Ihrer Police.', du: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende; die Kündigung muss dann bis Ende September {year} eingegangen sein. Vor Ende des dritten Vertragsjahres geht das nur, wenn deine Police es erlaubt (VVG Art. 35a). Prüfe die genaue Frist in deiner Police.' },
     step4Button: 'Termin «Desdir l’assicuranza supplementara» en il chalender ({date})',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
@@ -249,7 +254,7 @@ export default {
     footerFrist: { sie: 'Die Kündigungsfrist steht in Ihrer Police — sie kann von der Faustregel abweichen.', du: 'Die Kündigungsfrist steht in deiner Police — sie kann von der Faustregel abweichen.' },
     reminderTitle: 'Zusatzversicherung kündigen — Frist',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    reminderNotes: { sie: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung Sie aufgenommen hat. Genaue Frist in der Police prüfen.', du: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung dich aufgenommen hat. Genaue Frist in der Police prüfen.' },
+    reminderNotes: { sie: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende, muss dann eingegangen sein). Vor Ende des dritten Vertragsjahres nur, wenn die Police es erlaubt. Erst kündigen, wenn die neue Zusatzversicherung Sie aufgenommen hat. Genaue Frist in der Police prüfen.', du: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende, muss dann eingegangen sein). Vor Ende des dritten Vertragsjahres nur, wenn die Police es erlaubt. Erst kündigen, wenn die neue Zusatzversicherung dich aufgenommen hat. Genaue Frist in der Police prüfen.' },
   },
   // TODO(rm): provisorischer DE-Fallback für umzug — sauberes Romanisch nachziehen.
   umzug: {
@@ -347,7 +352,7 @@ export default {
     step2Intro: 'In der Schweiz hängt das davon ab, ob es ein Unfall oder eine Krankheit war:',
     step2UnfallTitle: 'Bei einem Unfall',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über den Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über den Arbeitgeber gegen Berufsunfälle versichert; arbeitest du beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1).' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
+    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Als angestellte Person sind Sie über den Arbeitgeber gegen Berufsunfälle versichert; arbeiten Sie beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melden Sie den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1). Ausnahme: Wer arbeitslos ist und Arbeitslosenentschädigung bezieht oder die Voraussetzungen dafür erfüllt, ist obligatorisch bei der Suva gegen Unfall versichert (UVG Art. 1a Abs. 1 Bst. b, Art. 66 Abs. 3bis). Diese Deckung endet mit dem 31. Tag nach dem letzten Anspruch oder Bezug (UVG Art. 3 Abs. 2) — dann den Unfall wieder in der Krankenkasse einschliessen.', du: 'Über die Unfallversicherung (UVG). Als angestellte Person bist du über den Arbeitgeber gegen Berufsunfälle versichert; arbeitest du beim selben Arbeitgeber mindestens 8 Std./Woche, auch in der Freizeit (UVV Art. 13 Abs. 1) — melde den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Unter 8 Std. gilt der Arbeitsweg als Berufsunfall, Unfälle in der Freizeit sind dann nicht obligatorisch über den Arbeitgeber versichert (UVV Art. 13 Abs. 2; UVG Art. 8 Abs. 2). Für Freizeitunfälle unter 8 Std. sowie für Selbständige und Nicht-Erwerbstätige deckt die Krankenkasse den Unfall — die Unfalldeckung dort darum nicht sistieren (KVG Art. 8 Abs. 1). Ausnahme: Wer arbeitslos ist und Arbeitslosenentschädigung bezieht oder die Voraussetzungen dafür erfüllt, ist obligatorisch bei der Suva gegen Unfall versichert (UVG Art. 1a Abs. 1 Bst. b, Art. 66 Abs. 3bis). Diese Deckung endet mit dem 31. Tag nach dem letzten Anspruch oder Bezug (UVG Art. 3 Abs. 2) — dann den Unfall wieder in der Krankenkasse einschliessen.' }, // TODO(rm): übersetzen (UVV Art. 13, 10.11.)
     step2KrankheitTitle: 'Bei Krankheit',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step2KrankheitText: { sie: 'Über die Krankenkasse (Grundversicherung). Sie tragen Franchise und Selbstbehalt. Behandlungen und Rechnungen reichen Sie über Ihre Kasse ein.', du: 'Über die Krankenkasse (Grundversicherung). Du trägst Franchise und Selbstbehalt. Behandlungen und Rechnungen reichst du über deine Kasse ein.' },
@@ -971,24 +976,24 @@ export default {
     title: 'Ergänzungsleistungen beantragen',
     intro: 'Reichen AHV- oder IV-Rente und Einkommen nicht für den Lebensbedarf, ergänzen die Ergänzungsleistungen (EL) sie. Sie sind ein gesetzlicher Anspruch, kein Entgegenkommen. Wichtig ist vor allem eines: EL gibt es in der Regel erst ab dem Monat der Anmeldung — früh anmelden lohnt sich.',
     step1Title: '1 · Kommen EL in Frage?',
-    step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld, das seit mindestens sechs Monaten ununterbrochen läuft —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist die Sozialhilfe der Wohngemeinde zuständig.',
+    step1Text: 'EL setzen eine Leistung der AHV oder IV voraus — etwa eine Alters-, Hinterlassenen- oder IV-Rente, eine Hilflosenentschädigung der IV oder ein IV-Taggeld, das seit mindestens sechs Monaten ununterbrochen läuft —, dazu Wohnsitz und gewöhnlichen Aufenthalt in der Schweiz (ELG Art. 4). Wer sich länger als drei Monate am Stück oder im Kalenderjahr insgesamt im Ausland aufhält, unterbricht den Aufenthalt. Ausländerinnen und Ausländer müssen in der Regel zehn Jahre ununterbrochen hier gelebt haben, Flüchtlinge und Staatenlose fünf Jahre (ELG Art. 5). Ohne AHV- oder IV-Leistung ist in der Regel die Sozialhilfe der Wohngemeinde zuständig. Ausnahme: Wer nur wegen fehlender Mindestbeitragsdauer keine AHV- oder IV-Rente hat, kann trotzdem EL bekommen (ELG Art. 4 Abs. 1 Bst. b und d).',
     step1LinkAnspruch: 'Ansprüche in Ruhe prüfen',
     step1LinkSozialhilfe: 'Ohne AHV/IV-Rente: Sozialhilfe verstehen',
     step1Nichtbezug: 'Nicht alle, denen EL zustehen, melden sich an. Eine Studie im Auftrag des Bundes (2025) nennt aus der Fachliteratur als häufige Gründe: Man versteht nicht, wie die EL funktionieren, es fehlt an Unterstützung, oder die Anmeldung ist aufwendig. Eine Studie zu Sozialleistungen in Basel-Stadt, darunter die EL, fand zusätzlich Scham und Unsicherheit, auch bei Menschen, die von ihrem Anspruch wussten. Beide Studien betreffen die EL zur AHV. Wer unsicher ist, fragt bei der EL-Stelle nach: Dafür ist sie da.',
     step2Title: '2 · Vermögen: die Schwelle',
-    step2Text: { sie: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente (ELG Art. 9a, Stand 2026); eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit. Vermögen, auf das Sie verzichtet haben — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).', du: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente (ELG Art. 9a, Stand 2026); eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit. Vermögen, auf das du verzichtet hast — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).' },
+    step2Text: { sie: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente; eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit (ELG Art. 9a, Stand 2026). Vermögen, auf das Sie verzichtet haben — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).', du: 'Anspruch hat nur, wessen Reinvermögen unter der Vermögensschwelle liegt: 100 000 Franken für Alleinstehende, 200 000 Franken für Ehepaare, 50 000 Franken für rentenberechtigte Waisen und Kinder mit Kinderrente; eine selbst bewohnte eigene Liegenschaft zählt dabei nicht mit (ELG Art. 9a, Stand 2026). Vermögen, auf das du verzichtet hast — etwa durch eine Schenkung —, wird mitgezählt (ELG Art. 11a). Wie hoch die EL ist, rechnet die EL-Stelle: Sie deckt die Lücke zwischen anerkannten Ausgaben und anrechenbaren Einnahmen (ELG Art. 9).' },
     step3Title: '3 · Anmelden — beim Wohnkanton, so früh wie möglich',
-    step3Text: { sie: 'Zuständig ist der Kanton, in dem Sie Wohnsitz haben; welche Stelle die Anmeldung entgegennimmt, bestimmt der Kanton — z. B. die kantonale Ausgleichskasse, nie aber die Sozialhilfebehörde (ELG Art. 21). Der Anspruch beginnt mit dem Monat, in dem Sie die Anmeldung einreichen (ELG Art. 12) — wer im laufenden Monat noch einreicht, verliert keinen Monat. Über die Anmeldung soll in der Regel innert 90 Tagen entschieden werden; sonst gibt es unter Umständen Vorschüsse (ELV Art. 21).', du: 'Zuständig ist der Kanton, in dem du Wohnsitz hast; welche Stelle die Anmeldung entgegennimmt, bestimmt der Kanton — z. B. die kantonale Ausgleichskasse, nie aber die Sozialhilfebehörde (ELG Art. 21). Der Anspruch beginnt mit dem Monat, in dem du die Anmeldung einreichst (ELG Art. 12) — wer im laufenden Monat noch einreicht, verliert keinen Monat. Über die Anmeldung soll in der Regel innert 90 Tagen entschieden werden; sonst gibt es unter Umständen Vorschüsse (ELV Art. 21).' },
+    step3Text: { sie: 'Zuständig ist der Kanton, in dem Sie Wohnsitz haben; welche Stelle die Anmeldung entgegennimmt, bestimmt der Kanton — z. B. die kantonale Ausgleichskasse, nie aber die Sozialhilfebehörde (ELG Art. 21). Der Anspruch beginnt mit dem Monat, in dem Sie die Anmeldung einreichen; wer im laufenden Monat noch einreicht, verliert keinen Monat (ELG Art. 12). Über die Anmeldung soll in der Regel innert 90 Tagen entschieden werden; sonst gibt es unter Umständen Vorschüsse (ELV Art. 21).', du: 'Zuständig ist der Kanton, in dem du Wohnsitz hast; welche Stelle die Anmeldung entgegennimmt, bestimmt der Kanton — z. B. die kantonale Ausgleichskasse, nie aber die Sozialhilfebehörde (ELG Art. 21). Der Anspruch beginnt mit dem Monat, in dem du die Anmeldung einreichst; wer im laufenden Monat noch einreicht, verliert keinen Monat (ELG Art. 12). Über die Anmeldung soll in der Regel innert 90 Tagen entschieden werden; sonst gibt es unter Umständen Vorschüsse (ELV Art. 21).' },
     fristLabel: 'Verfügung über die AHV- oder IV-Rente (oder deren Änderung) erhalten am — bei einem Einschreiben: der Tag der Abholungseinladung',
     fristHinweis: { sie: 'Melden Sie sich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem Sie die Rente angemeldet haben — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.', du: 'Melde dich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem du die Rente angemeldet hast — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.' },
-    fristVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.' },
+    fristVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung, darum am besten noch diesen Monat (ELG Art. 12).', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung, darum am besten noch diesen Monat (ELG Art. 12).' },
     step3Button: 'Termin «EL rückwirkend anmelden» en il chalender ({date})',
     step3Done: 'Frist im Kalender gespeichert.',
     step3CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Ergänzungsleistungen — Anmeldung innert 6 Monaten nach Rentenverfügung',
     heimLabel: 'Eintritt ins Heim oder Spital am',
     heimHinweis: { sie: 'Melden Sie sich bis am {date} an, dann besteht der Anspruch ab dem Monat des Eintritts (ELG Art. 12 Abs. 2).', du: 'Melde dich bis am {date} an, dann besteht der Anspruch ab dem Monat des Eintritts (ELG Art. 12 Abs. 2).' },
-    heimVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.' },
+    heimVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung, darum am besten noch diesen Monat (ELG Art. 12).', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung, darum am besten noch diesen Monat (ELG Art. 12).' },
     heimButton: 'Termin «EL nach Heimeintritt» en il chalender ({date})',
     heimReminderTitle: 'Ergänzungsleistungen — Anmeldung innert 6 Monaten nach Heim- oder Spitaleintritt',
     step3LinkPension: 'Zum Ablauf Pensionierung',
@@ -1374,7 +1379,7 @@ export default {
     reminderTitle: 'Far opposiziun — termin da 10 dis',
     step2Title: '2 · È la pretensiun correcta?',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step2Text: { sie: 'Sche la pretensiun è fundada, pudais Vus pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, faschais Vus opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegnai la survista da las pretensiuns avertas.', du: 'Sche la pretensiun è fundada, pos ti pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, fas ti opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegna la survista da las pretensiuns avertas.' },
+    step2Text: {"sie": "Ist die Forderung berechtigt, können Sie zahlen oder mit der Gläubigerseite eine Ratenzahlung vereinbaren — das ist oft möglich. Ist sie ganz oder teilweise unberechtigt, erheben Sie Rechtsvorschlag; bestreiten Sie nur einen Teil, nennen Sie den bestrittenen Betrag (SchKG Art. 74 Abs. 2). Danach muss die Gläubigerseite handeln, um die Betreibung fortzusetzen. Liegt eine unterschriebene Schuldanerkennung vor, kann sie beim Gericht die provisorische Rechtsöffnung verlangen (SchKG Art. 82); erteilt das Gericht sie, müssen Sie innert 20 Tagen nach dem Entscheid selbst klagen (Aberkennungsklage, SchKG Art. 83 Abs. 2), wenn Sie die Forderung weiter bestreiten. Bei Forderungen von Behörden und aus der Grundversicherung der Krankenkasse genügt oft eine Verfügung: Die Stelle hebt den Rechtsvorschlag damit selbst auf, oder das Gericht erteilt gestützt darauf die definitive Rechtsöffnung (SchKG Art. 79, 80). Wer die Verfügung bestreitet, muss rechtzeitig Einsprache oder Beschwerde erheben. Erheben Sie keinen Rechtsvorschlag, kann die Gläubigerseite frühestens 20 Tage nach der Zustellung des Zahlungsbefehls die Fortsetzung verlangen (SchKG Art. 88 Abs. 1); dann folgt in der Regel die Pfändung (wer im Handelsregister eingetragen ist, erhält meist eine Konkursandrohung). Wer zahlt, bittet die Gläubigerseite am besten, die Betreibung zurückzuziehen — sonst bleibt sie im Register sichtbar. Behalten Sie den Überblick über offene Forderungen.", "du": "Ist die Forderung berechtigt, kannst du zahlen oder mit der Gläubigerseite eine Ratenzahlung vereinbaren — das ist oft möglich. Ist sie ganz oder teilweise unberechtigt, erhebst du Rechtsvorschlag; bestreitest du nur einen Teil, nenn den bestrittenen Betrag (SchKG Art. 74 Abs. 2). Danach muss die Gläubigerseite handeln, um die Betreibung fortzusetzen. Liegt eine unterschriebene Schuldanerkennung vor, kann sie beim Gericht die provisorische Rechtsöffnung verlangen (SchKG Art. 82); erteilt das Gericht sie, musst du innert 20 Tagen nach dem Entscheid selbst klagen (Aberkennungsklage, SchKG Art. 83 Abs. 2), wenn du die Forderung weiter bestreitest. Bei Forderungen von Behörden und aus der Grundversicherung der Krankenkasse genügt oft eine Verfügung: Die Stelle hebt den Rechtsvorschlag damit selbst auf, oder das Gericht erteilt gestützt darauf die definitive Rechtsöffnung (SchKG Art. 79, 80). Wer die Verfügung bestreitet, muss rechtzeitig Einsprache oder Beschwerde erheben. Erhebst du keinen Rechtsvorschlag, kann die Gläubigerseite frühestens 20 Tage nach der Zustellung des Zahlungsbefehls die Fortsetzung verlangen (SchKG Art. 88 Abs. 1); dann folgt in der Regel die Pfändung (wer im Handelsregister eingetragen ist, erhält meist eine Konkursandrohung). Wer zahlt, bittet die Gläubigerseite am besten, die Betreibung zurückzuziehen — sonst bleibt sie im Register sichtbar. Behalte den Überblick über offene Forderungen."}, // TODO(rm): Sinnfehler in der rm-Fassung (Sprach-Prüfung 10.11.2026), deutsch bis zur Gegenlese
     step2Link: 'Ordinar las debitas',
     step2LinkMahnung: 'Anc nagin cumond da pajament, pir in’admoniziun? Admoniziun retschavida', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     step3Title: '3 · Proteger il budget & tschertgar cussegl',
@@ -1395,18 +1400,18 @@ export default {
     step1Title: '1 · Dumandar la renta AVS',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step1Text: { sie: 'Die AHV-Rente kommt nicht automatisch — Sie müssen sie bei Ihrer Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist möglich, kürzt die Rente aber lebenslang.', du: 'Die AHV-Rente kommt nicht automatisch — du musst sie bei deiner Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist möglich, kürzt die Rente aber lebenslang.' },
+    step1Text: { sie: 'Die AHV-Rente kommt nicht automatisch — Sie müssen sie bei Ihrer Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist ab 63 möglich, für Frauen der Jahrgänge 1961 bis 1969 ab 62, und kürzt die Rente in der Regel lebenslang. Er gilt nur für die Zukunft: Melden Sie ihn spätestens im Monat vor dem gewünschten Beginn an, rückwirkend geht es nicht (AHVG Art. 40, Merkblatt 3.04). Einen Aufschub erklären Sie innert eines Jahres nach Erreichen des Referenzalters mit dem amtlichen Formular (AHVV Art. 55quater, Merkblatt 3.04).', du: 'Die AHV-Rente kommt nicht automatisch — du musst sie bei deiner Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist ab 63 möglich, für Frauen der Jahrgänge 1961 bis 1969 ab 62, und kürzt die Rente in der Regel lebenslang. Er gilt nur für die Zukunft: Melde ihn spätestens im Monat vor dem gewünschten Beginn an, rückwirkend geht es nicht (AHVG Art. 40, Merkblatt 3.04). Einen Aufschub erklärst du innert eines Jahres nach Erreichen des Referenzalters mit dem amtlichen Formular (AHVV Art. 55quater, Merkblatt 3.04).' },
     step1Button: 'Termin «S’annunziar a l’AVS» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Dumandar la renta AVS — a temp avant il pensiunament',
     step1Link: 'Guardar la prevenziun',
     step2Title: '2 · Cassa da pensiun: renta u chapital',
-    step2Text: 'Per tes avair da la cassa da pensiun tscherndas ti tranter ina renta per la vita, in retrair dal chapital u ina maschaida. La decisiun è definitiva ed impurtanta fiscalmain — e savens da dumandar mais ordavant. Lascha ta cussegliar baud.',
+    step2Text: { sie: 'Per Voss avair da la cassa da pensiun tschernais Vus tranter renta e chapital. Tenor lescha pudais Vus pretender in quart sco chapital; dapli u tut mo, sche il reglament da Vossa cassa prevesa quai. Il reglament po fixar in termin d’annunzia per mintga retratga da chapital; controllai el baud. Sche Vus essas maridà u vivais en in partenadi registrà, dovra il retrair dal chapital il consentiment en scrit (BVG Art. 37, 37a). La decisiun è definitiva ed impurtanta fiscalmain. Laschai As cussegliar baud.', du: 'Per tes avair da la cassa da pensiun tscherndas ti tranter renta e chapital. Tenor lescha pos ti pretender in quart sco chapital; dapli u tut mo, sche il reglament da tia cassa prevesa quai. Il reglament po fixar in termin d’annunzia per mintga retratga da chapital; controllescha el baud. Sche ti es maridà u vivas en in partenadi registrà, dovra il retrair dal chapital il consentiment en scrit (BVG Art. 37, 37a). La decisiun è definitiva ed impurtanta fiscalmain. Lascha ta cussegliar baud.' },
     step2Link: 'Guardar la prevenziun',
     step3Title: '3 · Retrair il 3. pilaster',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step3Text: 'Das Guthaben der Säule 3a wird mit dem Referenzalter fällig; beziehen lässt es sich frühestens fünf Jahre vorher, bei weiterer Erwerbstätigkeit bis fünf Jahre später (BVV 3 Art. 3). Kapitalbezüge werden je Steuerjahr besteuert, bei Verheirateten zusammen (DBG Art. 9, 38) — mehrere Konten in verschiedenen Jahren zu beziehen kann darum Steuern sparen. Die kantonale Praxis vorher beim Steueramt prüfen.',
+    step3Text: 'Das Guthaben der Säule 3a wird mit dem Referenzalter fällig; beziehen lässt es sich frühestens fünf Jahre vorher, bei weiterer Erwerbstätigkeit bis fünf Jahre später (BVV 3 Art. 3). Kapitalbezüge werden je Steuerjahr besteuert, bei Verheirateten zusammen; mehrere Konten in verschiedenen Jahren zu beziehen kann darum Steuern sparen (DBG Art. 9, 38). Die kantonale Praxis vorher beim Steueramt prüfen.',
     step3Link: 'Guardar la prevenziun',
     step4Title: '4 · Verifitgar las prestaziuns cumplementaras',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -1435,10 +1440,10 @@ export default {
     title: 'Cassa da malsauns per l’emprima giada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    intro: { sie: 'Neu in der Schweiz? Die Grundversicherung ist Pflicht — Sie haben drei Monate Zeit und freie Wahl (KVG Art. 3). Waren Sie schon als Kind versichert, läuft Ihre Versicherung einfach weiter; eine neue Frist gibt es nicht, wechseln können Sie zu den üblichen Terminen. Hier der ruhige Überblick: zuerst die Frist, dann Kasse, Franchise und eine mögliche Verbilligung.', du: 'Neu in der Schweiz? Die Grundversicherung ist Pflicht — du hast drei Monate Zeit und freie Wahl (KVG Art. 3). Warst du schon als Kind versichert, läuft deine Versicherung einfach weiter; eine neue Frist gibt es nicht, wechseln kannst du zu den üblichen Terminen. Hier der ruhige Überblick: zuerst die Frist, dann Kasse, Franchise und eine mögliche Verbilligung.' },
+    intro: { sie: 'Neu in der Schweiz? Die Grundversicherung ist Pflicht — Sie haben drei Monate Zeit und freie Wahl (KVG Art. 3). Waren Sie schon als Kind versichert, läuft Ihre Versicherung einfach weiter; eine neue Frist gibt es nicht, wechseln können Sie zu den üblichen Terminen. Die Schritte: zuerst die Frist, dann Krankenkasse, Franchise und eine mögliche Prämienverbilligung.', du: 'Neu in der Schweiz? Die Grundversicherung ist Pflicht — du hast drei Monate Zeit und freie Wahl (KVG Art. 3). Warst du schon als Kind versichert, läuft deine Versicherung einfach weiter; eine neue Frist gibt es nicht, wechseln kannst du zu den üblichen Terminen. Die Schritte: zuerst die Frist, dann Krankenkasse, Franchise und eine mögliche Prämienverbilligung.' },
     step1Title: '1 · S’assicurar entaifer 3 mais',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step1Text: { sie: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche Vus As annunziais a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche Vus emblidais il termin, vegn attribuida ina cassa, cun eventuals supplements.', du: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche ti t’annunzias a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche ti emblidas il termin, vegn attribuida ina cassa, cun eventuals supplements.' },
+    step1Text: { sie: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche Vus faschais l’assicuranza a temp, vala la cuvretga retroactivamain: dapi l’arrivada; per persunas estras cun ina permissiun dapi l’annunzia tar la vischnanca, ed ils trais mais quintan a partir da questa annunzia. Cun ina permissiun da curta durada sut trais mais ed ina plazza da lavur vala l’obligaziun dapi l’entrada en Svizra, auter che cun ina protecziun equivalenta per tractaments en Svizra. Tgi che fa l’assicuranza memia tard, è assicurà pir a partir da quel mument. Sch’il retard n’è betg perstgisabel, vegn vitiers in supplement da premia da 30 fin 50 pertschient, per la dubla durada dal retard, maximalmain tschintg onns; damain en ina situaziun da basegn, e nagin sche l’agid social paja las premias (KVG Art. 3 und 5, KVV Art. 7 und 8).', du: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche ti fas l’assicuranza a temp, vala la cuvretga retroactivamain: dapi l’arrivada; per persunas estras cun ina permissiun dapi l’annunzia tar la vischnanca, ed ils trais mais quintan a partir da questa annunzia. Cun ina permissiun da curta durada sut trais mais ed ina plazza da lavur vala l’obligaziun dapi l’entrada en Svizra, auter che cun ina protecziun equivalenta per tractaments en Svizra. Tgi che fa l’assicuranza memia tard, è assicurà pir a partir da quel mument. Sch’il retard n’è betg perstgisabel, vegn vitiers in supplement da premia da 30 fin 50 pertschient, per la dubla durada dal retard, maximalmain tschintg onns; damain en ina situaziun da basegn, e nagin sche l’agid social paja las premias (KVG Art. 3 und 5, KVV Art. 7 und 8).' },
     step1Button: 'Termin «Far l’assicuranza» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
@@ -1448,7 +1453,7 @@ export default {
     step2Text: { sie: 'L’assicuranza da basa è tenor lescha la medema dapertut — las prestaziuns èn identicas, mo la premia ed il servetsch sa differenzieschan. Vus avais libra tscherna, e nagina cassa dastga As refusar per l’assicuranza da basa (obligaziun d’admissiun).', du: 'L’assicuranza da basa è tenor lescha la medema dapertut — las prestaziuns èn identicas, mo la premia ed il servetsch sa differenzieschan. Ti has libra tscherna, e nagina cassa dastga ta refusar per l’assicuranza da basa (obligaziun d’admissiun).' },
     step2Link: 'Cumparar las premias',
     step3Title: '3 · Franchisa e cuvretga d’accidents',
-    step3Text: 'Tscherna tia franchisa (pli auta = premia pli bassa, ma dapli a tia donda en cas da malsogna). Sche ti lavuras main che 8 uras l’emna tar il medem patrun, u na lavuras betg, stos ti includer l’accident en tia assicuranza da malsauns.',
+    step3Text: { sie: 'Tschernai Vus Vossa franchisa (pli auta = premia pli bassa, ma dapli custs agens en cas da malsogna). Sche Vus lavurais main che 8 uras l’emna tar la medema patruna u il medem patrun, u essas Vus independent·a u senza plazza e senza daners da di da l’assicuranza da dischoccupaziun, stuais Vus includer l’accident en Vossa assicuranza da malsauns (UVV Art. 13, KVG Art. 8).', du: 'Tscherna tia franchisa (pli auta = premia pli bassa, ma dapli custs agens en cas da malsogna). Sche ti lavuras main che 8 uras l’emna tar la medema patruna u il medem patrun, u es ti independent·a u senza plazza e senza daners da di da l’assicuranza da dischoccupaziun, stos ti includer l’accident en tia assicuranza da malsauns (UVV Art. 13, KVG Art. 8).' },
     step3LinkFranchise: 'Cumparar las franchisas',
     step3LinkUk: 'Accident u malsogna — tge che conta',
     step4Title: '4 · Verifitgar la reducziun da premias',
@@ -1496,19 +1501,19 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-    checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
+    checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Passt der Wechsel wirklich?',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     checkPoint2: { sie: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu Ihrem Alltag?', du: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    checkPoint3: { sie: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündigen Sie sie nie vorschnell mit — prüfen Sie sie zuerst.', du: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige sie nie vorschnell mit — prüfe sie zuerst.' },
+    checkPoint3: { sie: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündigen Sie die Zusatzversicherung nicht mit — prüfen Sie sie zuerst.', du: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige die Zusatzversicherung nicht mit — prüfe sie zuerst.' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     checkZusatzLink: 'Zusatzversicherung zuerst prüfen',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     title: 'Krankenkasse wechseln',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    intro: { sie: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Sie müssen nichts auf einmal entscheiden.', du: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Du musst nichts auf einmal entscheiden.' },
+    intro: { sie: 'Vier Schritte: vergleichen, neue Kasse wählen, kündigen, Frist notieren. Sie müssen nichts auf einmal entscheiden.', du: 'Vier Schritte: vergleichen, neue Kasse wählen, kündigen, Frist notieren. Du musst nichts auf einmal entscheiden.' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step1Title: '1 · Lohnt sich der Wechsel?',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -1545,7 +1550,7 @@ export default {
     step4Title: '4 · Frist sichern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step4Text: { sie: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Leg dir die Frist in den Kalender.' },
+    step4Text: { sie: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor. Ein Einschreiben, das bei der Post zur Abholung liegt, gilt erst beim Abholen als eingegangen: Schicken Sie die Kündigung darum früh genug ab und legen Sie sich die Frist in den Kalender (KVG Art. 7 Abs. 2; BAG, priminfo.admin.ch).', du: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor. Ein Einschreiben, das bei der Post zur Abholung liegt, gilt erst beim Abholen als eingegangen: Schick die Kündigung darum früh genug ab und leg dir die Frist in den Kalender (KVG Art. 7 Abs. 2; BAG, priminfo.admin.ch).' },
     step4Button: 'Termin «Desdir la cassa da malsauns» en il chalender ({date})',
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step4Done: 'Im Kalender notiert.',
@@ -1559,7 +1564,7 @@ export default {
     reminderNotes: 'Kündigung der Grundversicherung nach der Prämienmitteilung: Eingang bis 30.11. (KVG Art. 7 Abs. 2). Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    specialRight: { sie: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie können Sie mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie kannst du mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.' },
+    specialRight: { sie: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie können Sie mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt, auch bei Sparmodellen oder höherer Franchise (KVG Art. 7 Abs. 2).', du: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie kannst du mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt, auch bei Sparmodellen oder höherer Franchise (KVG Art. 7 Abs. 2).' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     chosen: 'Gewählt',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -1575,7 +1580,7 @@ export default {
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     path3bCaveat: { sie: 'Nicht jede Kasse übernimmt das zuverlässig — lassen Sie sich die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.', du: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    debtNote: { sie: 'Wechseln können Sie nur, wenn Sie bei Ihrer aktuellen Kasse keine offenen Prämien oder Ausstände haben — sonst kann sie den Wechsel blockieren. Offene Beträge zuerst begleichen.', du: 'Wechseln kannst du nur, wenn du bei deiner aktuellen Kasse keine offenen Prämien oder Ausstände hast — sonst kann sie den Wechsel blockieren. Offene Beträge zuerst begleichen.' },
+    debtNote: { sie: 'Offene Prämien verhindern die Kündigung nicht: Kündigen Sie trotzdem fristgerecht. Wirksam wird sie aber nur, wenn alles, was Ihnen bis einen Monat vor Ablauf der Kündigungsfrist gemahnt wurde, bis zum Ablauf der Frist bei der Kasse eingetroffen ist; bei einem Wechsel auf den 1. Januar also bis 31. Dezember. Säumig sind Sie erst ab der Mahnung; Beträge aus der Zeit vor dem 18. Geburtstag zählen nicht (KVG Art. 64a, KVV Art. 105l).', du: 'Offene Prämien verhindern die Kündigung nicht: Kündige trotzdem fristgerecht. Wirksam wird sie aber nur, wenn alles, was dir bis einen Monat vor Ablauf der Kündigungsfrist gemahnt wurde, bis zum Ablauf der Frist bei der Kasse eingetroffen ist; bei einem Wechsel auf den 1. Januar also bis 31. Dezember. Säumig bist du erst ab der Mahnung; Beträge aus der Zeit vor dem 18. Geburtstag zählen nicht (KVG Art. 64a, KVV Art. 105l).' },
   },
   sections: {
     basis: { person: 'Persuna', contact: 'Contact', family: 'Famiglia' },
@@ -1686,6 +1691,9 @@ export default {
     open: 'Avrir',
     edit: 'Modifitgar',
     delete: 'Allontanar',
+    entfernt: 'Allontanà',
+    rueckgaengig: 'Revocar',
+    zurueckgeholt: 'Zurückgeholt', // TODO(rm): übersetzen
     pickDate: 'Tscherner ina data',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
@@ -2374,6 +2382,7 @@ export default {
         incomeType: { label: "Tip d'entrada", options: { netto: 'Net (quai che jau retschaiv)', brutto: 'Brut (avant deducziuns)' } },
         dreizehnter: { label: '13avel salari mensil?', options: { no: 'Na', yes: 'Gea' } },
         employer: 'Patrun',
+        workCanton: 'Arbeitsort (Kanton)', // TODO(rm): übersetzen
         employerAddress: 'Adressa dal patrun',
         employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', apprentice: 'En emprendissadi', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
         startDate: 'Cumenzament dal lavur',
@@ -2416,6 +2425,7 @@ export default {
         sideEmployerAddress: 'Per il chau da brev — via, NPA e lieu, sco sin il certificat da salari.',
         sideHoursPerWeek: 'Necessari per la controlla dal salari minimal da l’activitad accessorica: senza uras na po nagin salari per ura vegnir calculà.',
         employerAddress: 'Per brevs al patrun — via, NPA e lieu.',
+        workCanton: { sie: 'Für den Mindestlohn zählt der Kanton, in dem Sie arbeiten. Leer bedeutet: Ihr Wohnkanton.', du: 'Für den Mindestlohn zählt der Kanton, in dem du arbeitest. Leer bedeutet: dein Wohnkanton.' }, // TODO(rm): übersetzen
         taxableIncome: 'Entrada taxabla da la decleraziun da taglia (per onn, suenter deducziuns). Mo per orientaziun — po alimentar il quintader da taglia.',
         familienzulagen: "Incl. supplements d'uffants e supplements da furmaziun. Sche las allocaziuns èn gia cuntegnidas en la paja endatada, betg endatar nagut qua, uschiglio dumbran ellas dubel.", // TODO(rm): provisorisch
         monthlyTax: 'Stimà u tenor quint da taglia.',
@@ -2477,10 +2487,10 @@ export default {
         bvgInsurer: 'Cassa da pensiun',
         bvgBalance: 'Avair LPP actual CHF',
         // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
-        uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
+        uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Tras l’engaschament', private: 'Privat', none: 'Nagina' } },
         uvgZusatz: { label: 'Assicuranza supplementara d’accident', options: { yes: 'Gea', no: 'Na / nunenconuschent' } }, // TODO(rm): provisorisch
         uvgZusatzPremium: "Premia supplementara d’accident CHF/onn", // TODO(rm): provisorisch — Gegenlese (F7-K3-6, 31.10.2026)
-        ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
+        ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Tras l’engaschament', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
         liabilityPremium: "Premia responsabladad civila CHF/onn",
@@ -4436,6 +4446,10 @@ export default {
     ergebnisEiner: 'Cun questas indicaziuns sa mussa ina via pussaivla: {weg}.',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     ergebnisMehrere: 'Cun questas indicaziuns sa mussan vias pussaivlas: {wege}.',
+    // TODO(rm): provisorisch — deutsch, Gruppe A L1 (11.11.2026), Übersetzung offen
+    sozBewilligung: { sie: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.', du: 'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lass dich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.' },
+    // TODO(rm): provisorisch — deutsch, Gruppe A rechts-pruefer (11.11.2026), Übersetzung offen
+    sozBewilligungF: { sie: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann Ihre Lage einschätzen.', du: 'Mit Ausweis F kann der Bezug von Sozialhilfe ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren; eine Beratungsstelle kann deine Lage einschätzen.' },
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     markeNetto: 'Net {betrag} / mais',
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
@@ -4783,6 +4797,7 @@ export default {
     dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
     jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
+    arbeitsortAnnahme: { sie: 'Geprüft für den Kanton {kanton}, in dem Sie wohnen. Massgebend ist der Arbeitsort — arbeiten Sie in einem anderen Kanton, tragen Sie ihn im Feld «Arbeitsort (Kanton)» ein.', du: 'Geprüft für den Kanton {kanton}, in dem du wohnst. Massgebend ist der Arbeitsort — arbeitest du in einem anderen Kanton, trag ihn im Feld «Arbeitsort (Kanton)» ein.' }, // TODO(rm): übersetzen
   },
 
 
@@ -4845,7 +4860,7 @@ export default {
     ahvBeitrag: { sie: "L'AVS assicurescha Vossa renta. Sco persuna emploiada pajais Vus la mesadad da la contribuziun, deducida directamain dal salari — l'autra mesadad paja il patrun. Persunas independentas e persunas senza activitad da gudogn pajan per regla sezzas lur contribuziun.", du: "L'AVS assicurescha tia renta. Sco persuna emploiada pajas ti la mesadad da la contribuziun, deducida directamain dal salari — l'autra mesadad paja il patrun. Persunas independentas e persunas senza activitad da gudogn pajan per regla sezzas lur contribuziun." }, // Fachprüfung 25.10.2026 — rm ungeprüft
     bvg: { sie: 'Vossa cassa da pensiun vegn finanzada communablamain da Vus e da Voss patrun. Ella procura che Vus survegnis pli che mo la renta AVS.', du: 'Tia cassa da pensiun vegn finanzada communablamain da Tai e da Tes patrun. Ella procura che Ti survegns pli che mo la renta AVS.' },
     kvg: { sie: "En Svizra è ina assicuranza da basa tar ina cassa da malsauns obligatorica. Vus tschernais Vossa cassa da malsauns e Voss model sez.", du: "En Svizra è ina assicuranza da basa tar ina cassa da malsauns obligatorica. Ti tschernas Tia cassa da malsauns e Tes model sez." },
-    franchise: { sie: "La franschischa è l'import che Vus portais sez per onn, avant che Vossa cassa da malsauns surpiglia prestaziuns. Pli auta franschischa = premia pli bassa.", du: "La franschischa è l'import che Ti portas sez per onn, avant che Tia cassa da malsauns surpiglia prestaziuns. Pli auta franschischa = premia pli bassa." },
+    franchise: { sie: 'La franschischa è l’import che Vus portais sez per onn, avant che Vossa cassa da malsauns surpiglia prestaziuns. Per prestaziuns en cas da maternitad e per tscherts programs da scuvrida baud da la Confederaziun u dals chantuns na vala ella betg (KVG Art. 64). Pli auta franschischa = premia pli bassa.', du: 'La franschischa è l’import che Ti portas sez per onn, avant che Tia cassa da malsauns surpiglia prestaziuns. Per prestaziuns en cas da maternitad e per tscherts programs da scuvrida baud da la Confederaziun u dals chantuns na vala ella betg (KVG Art. 64). Pli auta franschischa = premia pli bassa.' },
     // TODO(rm): Gegenlese — «8h» gilt pro Arbeitgeber (UVV Art. 13), Satz zu Selbständigen fehlt (07.11.2026)
     uvg: { sie: "Voss patrun As assicurescha cunter accidents da professiun (obligatoric). A partir da 8h/emna essas Vus era assicurà cunter accidents betg professiunals.", du: "Tes patrun T'assicurescha cunter accidents da professiun (obligatoric). A partir da 8h/emna es Ti era assicurà cunter accidents betg professiunals." },
     // TODO(rm): provisorisch — deutscher Rückfall, Gegenlese (Versicherungen C5, 07.11.2026)
@@ -4939,7 +4954,7 @@ export default {
   sozialhilfe: {
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026)
     title: 'Agid social',
-    intro: { sie: "Questa survista As gida d'ordinar meglier il sustegn pussaivel. La segirezza sociala fa part da la Svizra — ella stat a disposiziun a persunas en situaziuns difficultusas.", du: "Questa survista Ta gida d'ordinar meglier il sustegn pussaivel. La segirezza sociala fa part da la Svizra — ella stat a disposiziun a persunas en situaziuns difficultusas." },
+    intro: {"sie": "Diese Übersicht hilft Ihnen, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu. Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.", "du": "Diese Übersicht hilft dir, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu. Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für die Aufenthaltsbewilligung haben; lass dich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten."}, // TODO(rm): Sinnfehler in der rm-Fassung (Sprach-Prüfung 10.11.2026), deutsch bis zur Gegenlese
     householdSize: 'Grondezza dal ménaschi: {count} persuna(s)',
     enterCanton: 'Per plaschair endatar il chantun per la calculaziun chantunalas.',
     weeklyResidence: 'Dimora settimanala',
@@ -4970,7 +4985,8 @@ export default {
     step1: 'Contactar il servetsch social da la vischnanca da domicil',
     step2: "Purtar tut las cumprovas d'entrada",
     step3: 'Avair pront il contract da locaziun e la polizza CM',
-    step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
+    // TODO(rm): provisorisch — deutsch, weil die rm-Fassung LPP-Beiträge nannte, die DE nicht nennt (Sprach-Prüfung 10.11.2026)
+    step4: 'Die Sozialhilfe übernimmt den AHV-Mindestbeitrag oft; bei grosser Härte kann er erlassen werden, dann zahlt der Wohnsitzkanton (AHVG Art. 10 Abs. 2, Art. 11 Abs. 2).',
     step5: 'Examinar la dumonda PC tar il post PC cumpetent', // TODO(rm)
     orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
@@ -5000,7 +5016,7 @@ export default {
     erwerbsunkostenNichtEingerechnet: 'Custs supplementars per la lavur (sco mangiar ordaifer u il viadi a la lavur) n’èn betg quintads. Els augmentan il basegn.',
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: { sie: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche Vus arrivais tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).", du: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda)." },
-    repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",
+    repaymentInheritance: "In der Regel zählt der tatsächliche Vermögenszuwachs. Wer eine Erbschaft ausschlägt, damit sie nicht an Gläubiger geht, riskiert Folgen: Ist man überschuldet, können Gläubiger die Ausschlagung innert sechs Monaten anfechten (ZGB Art. 578), und die Sozialhilfe kann einen Verzicht auf Vermögen anrechnen. Vorher beraten lassen.", // TODO(rm): Sinnfehler in der rm-Fassung (Sprach-Prüfung 10.11.2026), deutsch bis zur Gegenlese
     repaymentFreibetrag: "I vegn pretendì enavos mo quai che surpassa ina franchisa (chantun Turitg: 30'000 per ina persuna, 50'000 per pèrs, plus 15'000 per uffant minoren). Quai variescha tenor il chantun.",
     repaymentVaries: "Il termin e las cundiziuns varieschan tenor il chantun (per regla 10–15 onns). Tscherts chantuns renunzian al rembursament en cas da paupertad.",
     repaymentAdvice: { sie: "Infurmai Vus tar il servetsch social da Vossa vischnanca davart las reglas valentas en Voss chantun.", du: "Infurmescha Tai tar il servetsch social da Tia vischnanca davart las reglas valentas en Tes chantun." },
@@ -5010,6 +5026,8 @@ export default {
     repaymentRechnerOver: { sie: "Radund {ueber} fissan sur la franchisa ({freibetrag}). Questa part pudess vegnir pretendida enavos — al pli tant sco Vus avais retschavì da l'agid social, e tenor il chantun.", du: "Radund {ueber} fissan sur la franchisa ({freibetrag}). Questa part pudess vegnir pretendida enavos — al pli tant sco ti has retschavì da l'agid social, e tenor il chantun." },
     repaymentRechnerUnder: "Quai fiss sut la franchisa ({freibetrag}) — lura na fiss per regla nagut da rembursar.",
     repaymentRechnerHint: { sie: "Orientaziun cun las franchisas turitgaisas. Variescha tenor il chantun — en cas da dubi, infurmai Vus tar il servetsch social da Vossa vischnanca.", du: "Orientaziun cun las franchisas turitgaisas. Variescha tenor il chantun — en cas da dubi, infurmescha tai tar il servetsch social da tia vischnanca." },
+    repaymentNurZH: { sie: 'Eine Zahl rechnet Maloja nur mit den Zürcher Freibeträgen. Ob und wie viel {kanton} zurückfordert, regelt der Kanton — fragen Sie beim Sozialdienst Ihrer Gemeinde.', du: 'Eine Zahl rechnet Maloja nur mit den Zürcher Freibeträgen. Ob und wie viel {kanton} zurückfordert, regelt der Kanton — frag beim Sozialdienst deiner Gemeinde.' }, // TODO(rm): übersetzen
+    repaymentKantonOffen: { sie: 'Ihr Kanton', du: 'dein Kanton' }, // TODO(rm): übersetzen
   },
 
   tax: {
@@ -5036,6 +5054,9 @@ export default {
     maintenance: 'Prestaziuns alimentaras',
     education: 'Furmaziun supplementara',
     otherDeductions: 'Autras deducziuns',
+    grenze_pension3a: 'Gesetzlich höchstens {max} (Säule 3a, Steuerjahr {jahr})', // TODO(rm): übersetzen
+    grenze_education: 'Bei der direkten Bundessteuer höchstens {max}, unter Voraussetzungen (erster Abschluss auf Sekundarstufe II oder ab 20 Jahren). Die Kantone haben eigene Höchstbeträge', // TODO(rm): übersetzen
+    gekappt: 'Für die Schätzung auf {max} begrenzt.', // TODO(rm): übersetzen
     calculation: 'Calculaziun',
     taxableIncome: 'Entrada imponibla',
     estimatedTax: 'Taglientas stimadas',
@@ -5090,7 +5111,7 @@ export default {
     // R4 (16.09.2026): Steuer-Annahmen — Rentner/Selbständige, Partnereinkommen offen, 13. Monatslohn
     // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
     // TODO(rm): provisorisch — Gegenlese (Quellensteuer-Sperre, 01.11.2026)
-    ohneZahlQuellensteuer: { sie: "Nagina stimaziun: senza permissiun C è la taglia a la funtauna pussaivla. Lura deducia il patrun la taglia directamain dal salari (DBG art. 83, 88). Ella na vala betg, sche Vus vivais en lètg betg separà u en partenadi registrà e Vus u l’autra persuna ha il dretg da burgais svizzer u la permissiun C (DBG art. 83 al. 2, art. 9 al. 1bis). Quai na po Maloja betg savair. A partir da 120 000 francs salari brut per onn suonda ina taxaziun ordinaria posteriura (DBG art. 89, QStV art. 9). Era ina dumonda è pussaivla, fin ils 31 da mars da l’onn suandant. Ella na po betg vegnir retratga (DBG art. 89a, QStV art. 10). Orientaziun, nagin cussegl fiscal. Decisiva è l’administraziun chantunala da taglia.", du: "Nagina stimaziun: senza permissiun C è la taglia a la funtauna pussaivla. Lura deducia il patrun la taglia directamain dal salari (DBG art. 83, 88). Ella na vala betg, sche ti vivas en lètg betg separà u en partenadi registrà e ti u l’autra persuna ha il dretg da burgais svizzer u la permissiun C (DBG art. 83 al. 2, art. 9 al. 1bis). Quai na po Maloja betg savair. A partir da 120 000 francs salari brut per onn suonda ina taxaziun ordinaria posteriura (DBG art. 89, QStV art. 9). Era ina dumonda è pussaivla, fin ils 31 da mars da l’onn suandant. Ella na po betg vegnir retratga (DBG art. 89a, QStV art. 10). Orientaziun, nagin cussegl fiscal. Decisiva è l’administraziun chantunala da taglia." },
+    ohneZahlQuellensteuer: {"sie": "Keine Schätzung: Ohne Bewilligung C ist Quellensteuer möglich. Dann zieht die Arbeitgeberin oder der Arbeitgeber die Steuer direkt vom Lohn ab (DBG Art. 83, 88). Sie gilt nicht, wenn Sie in ungetrennter Ehe oder eingetragener Partnerschaft leben und Sie oder die andere Person das Schweizer Bürgerrecht oder die Bewilligung C hat (DBG Art. 83 Abs. 2, Art. 9 Abs. 1bis). Das kann Maloja nicht erkennen. Ab 120 000 Franken Bruttoeinkommen im Jahr (einschliesslich Taggelder; bei Ehepaaren genügt es, wenn eine Person es erreicht) folgt eine nachträgliche ordentliche Veranlagung (DBG Art. 89, QStV Art. 9). Auch ein Antrag ist möglich, bis 31. März des Folgejahres. Er ist endgültig und lässt sich nicht zurückziehen (DBG Art. 89a, QStV Art. 10). Er gilt auch für Ihre Ehepartnerin oder Ihren Ehepartner (DBG Art. 89a Abs. 2). Orientierung, keine Steuerberatung. Verbindlich ist die kantonale Steuerverwaltung.", "du": "Keine Schätzung: Ohne Bewilligung C ist Quellensteuer möglich. Dann zieht die Arbeitgeberin oder der Arbeitgeber die Steuer direkt vom Lohn ab (DBG Art. 83, 88). Sie gilt nicht, wenn du in ungetrennter Ehe oder eingetragener Partnerschaft lebst und du oder die andere Person das Schweizer Bürgerrecht oder die Bewilligung C hat (DBG Art. 83 Abs. 2, Art. 9 Abs. 1bis). Das kann Maloja nicht erkennen. Ab 120 000 Franken Bruttoeinkommen im Jahr (einschliesslich Taggelder; bei Ehepaaren genügt es, wenn eine Person es erreicht) folgt eine nachträgliche ordentliche Veranlagung (DBG Art. 89, QStV Art. 9). Auch ein Antrag ist möglich, bis 31. März des Folgejahres. Er ist endgültig und lässt sich nicht zurückziehen (DBG Art. 89a, QStV Art. 10). Er gilt auch für deine Ehepartnerin oder deinen Ehepartner (DBG Art. 89a Abs. 2). Orientierung, keine Steuerberatung. Verbindlich ist die kantonale Steuerverwaltung."}, // TODO(rm): Sinnfehler in der rm-Fassung (Sprach-Prüfung 10.11.2026), deutsch bis zur Gegenlese
     ohneZahlQuellensteuerG: "Nagina stimaziun: cun la permissiun G è la taglia a la funtauna pussaivla (DBG art. 91). Tge che vala dependa era dal pajais da domicil (QStV art. 1). Orientaziun, nagin cussegl fiscal. Decisiva è l’administraziun chantunala da taglia.",
     ohneZahlErwerbsartDirekt: "Per chantun e vischnanca na mussa Maloja qua nagina stimaziun: la tabella è mesirada per persunas empluadas. La taglia federala quinta cun la valur endatada.",
     ohneZahlRente: { sie: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", du: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import." }, // TODO(rm): provisorisch
@@ -5197,6 +5218,8 @@ export default {
   },
 
   briefe: {
+    // TODO(rm): Gegenlese — Gruppe B Gestaltung A (11.11.2026)
+    formTitel: 'Brev: {name}',
     title: 'Models da brev',
     intro: { sie: 'Models svizzers da brevs, precumplenids cun Vossas datas. Avant il spediziun controllar e adattar per plaschair.', du: 'Models svizzers da brevs, precumplenids cun Tes datas. Avant il spediziun controllar e adattar per plaschair.' },
     backToUnterlagen: 'Enavos tar Mes documents',
@@ -5250,6 +5273,18 @@ export default {
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung des Ehegatten bzw. der eingetragenen Partnerin oder des eingetragenen Partners (OR Art. 266m). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it; OR-266m-Satz deutscher Rückfall nach Fachkorrektur 25.09.2026)
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungTitel: 'Zustimmung zur Kündigung der Familienwohnung (OR Art. 266m)',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungText: 'Ich stimme dieser Kündigung als Ehegattin, Ehegatte, eingetragene Partnerin oder eingetragener Partner ausdrücklich zu (OR Art. 266m).',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungUnterschrift: 'Name, Ort, Datum und Unterschrift',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor dem Versand',
+        zustimmung: { sie: 'Sind Sie verheiratet oder leben Sie in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).', du: 'Bist du verheiratet oder lebst du in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).' },
+        form: 'Von Hand unterschreiben (OR Art. 266l Abs. 1, Art. 14 Abs. 1) und eingeschrieben senden. Die Kündigung muss vor Beginn der Kündigungsfrist bei der Vermieterschaft sein (Frist: OR Art. 266c, oder länger laut Vertrag).',
+      },
     },
     taxExtension: {
       title: 'Prolungaziun dal termin da taglia',
@@ -5259,17 +5294,31 @@ export default {
       body1: 'cun quai As rog jau amicaivlamain per ina prolungaziun dal termin per la consegna da mia decleraziun da taglia {year}.',
       body2: "Jau dovr il temp supplementar per metter ensemen tut ils documents necessaris. Jau As engraziel per Vossa chapientscha.",
       closing: 'Cun salids amicaivels',
+      // TODO(rm): provisorisch — deutsch, Gruppe B K (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor dem Versand',
+        text: 'Die Verlängerung vor Ablauf der Frist beantragen. Viele Kantone bieten dafür ein Online-Formular an, die Verlängerung kann Gebühren kosten — beim kantonalen Steueramt nachsehen.',
+      },
     },
     insuranceSwitch: {
       title: 'Midada da cassa da malsauns',
       description: "Disditga da l'assicuranza da basa obligatorica per midar a fin d'onn.",
       subject: "Disditga da l'assicuranza obligatorica da las tgiras da malsauns (OKP)",
       salutation: 'Stimadas dunnas e stimads signurs,',
-      body1: "cun quai disdi jau mia assicuranza obligatorica da las tgiras da malsauns tar {insurer} per ils 31 da december da l'onn current.",
+      body1: "cun quai disdi jau mia assicuranza obligatorica da las tgiras da malsauns tar {insurer} per ils 31 da december {jahr}.",
       policyRef: 'Numer da polizza: {number}',
       body2: 'Jau As rog da ma trametter ina conferma scritta da la disditga.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: La disditga da l'assicuranza da basa per la fin da l'onn sto tenor LAMal art. 7 al. 2 arrivar tar l'assicurader il pli tard ils 30 da november. Recumandà: trametter per posta recumandada.", // TODO(rm): Gegenlese Muttersprache (al. 2 + Einschreiben ergänzt 15.09.2026)
+        // TODO(rm): provisorisch — deutsch, Gruppe B L2/L3 (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor der Kündigung',
+        frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen (KVG Art. 7 Abs. 2).',
+        nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen. Sie können auch bis zur Prämienmitteilung im Herbst warten.',
+        semester: 'Im Grundmodell mit ordentlicher Franchise (Erwachsene 300 Franken, Kinder keine) ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Mit Hausarzt-, HMO- oder Telmed-Modell, Bonusversicherung oder wählbarer Franchise nur auf Ende Jahr (KVV Art. 94 Abs. 2, 100 Abs. 3).',
+        anmelden: 'Zuerst bei der neuen Kasse anmelden: Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5).',
+        ausstaende: 'Sind Prämien, Kostenbeteiligungen, Verzugszinse oder Betreibungskosten offen, ist ein Wechsel nur möglich, wenn alles bis zum Ablauf der Kündigungsfrist bezahlt ist (KVG Art. 64a Abs. 6, KVV Art. 105l).',
+      },
     },
     kkReklamation: {
       title: 'Cassa da malsauns: contestar in quint',
@@ -5679,33 +5728,33 @@ export default {
       alter: 'Alter',
       kkErfasst: 'Krankenkasse: {name}',
       kkOffen: 'Keine Krankenkasse eingetragen — für alle mit Wohnsitz in der Schweiz Pflicht (KVG Art. 3).',
-      ktgArbeitgeber: 'Krankentaggeld über den Arbeitgeber eingetragen.',
+      ktgArbeitgeber: 'Krankentaggeld über die Anstellung eingetragen.',
       ktgErfasst: 'Krankentaggeld eingetragen.',
-      ktgNicht: 'Lohnausfall bei Krankheit (Krankentaggeld): nichts eingetragen. Das KVG verlangt keine Taggeldversicherung (Art. 1a Abs. 1: freiwillig), ein Arbeitsvertrag oder GAV kann eine vorsehen. Angestellte erhalten bei Krankheit ohne eigenes Verschulden für eine beschränkte Zeit Lohn, wenn die Anstellung mehr als drei Monate gedauert hat oder dafür eingegangen ist (OR Art. 324a).',
-      uvgArbeitgeber: 'Unfallversicherung über den Arbeitgeber.',
+      ktgNicht: 'Lohnausfall bei Krankheit (Krankentaggeld): nichts eingetragen. Das KVG verlangt keine Taggeldversicherung, ein Arbeitsvertrag oder GAV kann eine vorsehen (KVG Art. 1a Abs. 1: freiwillig). Angestellte erhalten bei Krankheit ohne eigenes Verschulden für eine beschränkte Zeit Lohn, wenn die Anstellung mehr als drei Monate gedauert hat oder dafür eingegangen ist (OR Art. 324a).',
+      uvgArbeitgeber: 'Unfallversicherung über die Anstellung.',
       uvgErfasst: 'Unfallversicherung eingetragen.',
       uvgOffen: 'Unfallversicherung noch nicht eingetragen — für Angestellte obligatorisch (UVG Art. 1a).',
-      unfallKk: 'Über die Krankenkasse, soweit keine Unfallversicherung aufkommt (KVG Art. 1a Abs. 2 lit. b): Behandlungskosten, kein Lohnersatz.',
+      unfallKk: 'Über die Krankenkasse, soweit keine Unfallversicherung aufkommt: Behandlungskosten, kein Lohnersatz (KVG Art. 1a Abs. 2 lit. b).',
       unfallOhneKk: 'Weder Krankenkasse noch Unfallversicherung eingetragen.',
       uvgFreiwillig: 'Selbständige können sich freiwillig gegen Unfall versichern (UVG Art. 4).',
-      iv: 'IV: Versichert ist, wer in der AHV versichert ist (IVG Art. 1b). Eine ordentliche Rente setzt mindestens drei Beitragsjahre voraus (IVG Art. 36); ausserordentliche Renten richten sich nach eigenen Regeln (IVG Art. 39).',
+      iv: 'IV: Versichert ist, wer in der AHV versichert ist (IVG Art. 1b). Eine ordentliche Rente setzt mindestens drei Beitragsjahre voraus; ausserordentliche Renten richten sich nach eigenen Regeln (IVG Art. 36, 39).',
       ivRente: 'Mit der Altersrente endet der Anspruch auf eine IV-Rente (IVG Art. 30).',
-      ahvHinterlassene: 'AHV: Witwen- oder Witwerrente, wenn bei der Verwitwung Kinder da sind (AHVG Art. 23); eine Witwe auch ohne Kinder, wenn sie dann mindestens 45 Jahre alt und mindestens fünf Jahre verheiratet war (AHVG Art. 24); Waisenrente für Kinder (AHVG Art. 25).',
-      ahvAlter: 'AHV: Altersrente ab dem Referenzalter (AHVG Art. 21); ob als Voll- oder Teilrente, hängt von den Beitragsjahren ab (AHVG Art. 29).',
+      ahvHinterlassene: 'AHV: Witwen- oder Witwerrente, wenn bei der Verwitwung Kinder da sind; eine Witwe auch ohne Kinder, wenn sie dann mindestens 45 Jahre alt und mindestens fünf Jahre verheiratet war; Waisenrente für Kinder (AHVG Art. 23, 24, 25).',
+      ahvAlter: 'AHV: Altersrente ab dem Referenzalter; ob als Voll- oder Teilrente, hängt von den Beitragsjahren ab (AHVG Art. 21, 29).',
       pkErfasst: 'Pensionskasse: {name}',
       pkErfasstOhneName: 'Pensionskasse eingetragen.',
       pkSelbst: 'Pensionskasse: für Selbständige freiwillig (BVG Art. 4).',
       pkMindestalter: 'Pensionskasse: obligatorisch erst ab dem 1. Januar nach dem 17. Geburtstag (BVG Art. 7).',
       pkAltersparen: 'Pensionskasse: Alterssparen erst ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7).',
-      pkOffen: 'Pensionskasse noch nicht eingetragen — bei einem Arbeitgeber mit diesem Lohn in der Regel obligatorisch (BVG Art. 2, 7).',
+      pkOffen: 'Pensionskasse noch nicht eingetragen — bei einer Arbeitgeberin oder einem Arbeitgeber mit diesem Lohn in der Regel obligatorisch (BVG Art. 2, 7).',
       pkUnklar: 'Pensionskasse: Ob sie obligatorisch ist, hängt vom Bruttolohn ab (BVG Art. 7).',
       pkUnterSchwelle: 'Pensionskasse: beim eingetragenen Lohn nicht obligatorisch (BVG Art. 7).',
       pkJeNachArbeit: 'Pensionskasse: obligatorisch für Angestellte mit einem Jahreslohn über der Eintrittsschwelle (BVG Art. 2, 7).',
       leben: 'Lebensversicherung eingetragen.',
       saeule3a: 'Säule 3a eingetragen.',
       pkGuthaben: 'Eingetragen ist nur ein Guthaben, keine Pensionskasse mit laufenden Beiträgen.',
-      pkOhneGeburtsdatum: 'Pensionskasse: Alterssparen ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7) — dafür fehlt das Geburtsdatum.',
-      nbuUnter8: 'Unter 8 Stunden pro Woche beim selben Arbeitgeber sind Freizeitunfälle nicht versichert; der Arbeitsweg gilt als Berufsunfall (UVG Art. 8 Abs. 2, UVV Art. 13).',
+      pkOhneGeburtsdatum: 'Pensionskasse: Alterssparen ab dem 1. Januar nach dem 24. Geburtstag — dafür fehlt das Geburtsdatum (BVG Art. 7).',
+      nbuUnter8: 'Unter 8 Stunden pro Woche bei derselben Arbeitgeberin oder demselben Arbeitgeber sind Freizeitunfälle nicht versichert; der Arbeitsweg gilt als Berufsunfall (UVG Art. 8 Abs. 2, UVV Art. 13).',
       unfallArbeitslos: 'Bei Arbeitslosigkeit gilt: Wer die Voraussetzungen nach AVIG Art. 8 erfüllt oder Entschädigungen nach AVIG Art. 29 bezieht, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).', // TODO(rm): provisorisch
     },
     satz: { sie: 'Vossas assicuranzas en ina survista — sin basa da Vossas indicaziuns.', du: 'Tias assicuranzas en ina survista — sin basa da tias indicaziuns.' },
@@ -5757,7 +5806,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptSaving: { sie: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnais Vus var CHF {saving}/onn da premias.', du: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    franchiseOptReserve: { sie: 'En picada portais Vus en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas Vus pudair metter da maun.', du: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas ti pudair metter da maun.' },
+    franchiseOptReserve: { sie: 'En picada portais Vus en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Per ina dimora en l’ospital vegnan vitiers CHF 15 per di, senza limita; uffants, giuvens creschids en scolaziun e dunnas en cas da maternitad na pajan betg questa contribuziun (KVG Art. 64 Abs. 5, KVV Art. 104). Quest cussin stuessas Vus pudair metter da maun.', du: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Per ina dimora en l’ospital vegnan vitiers CHF 15 per di, senza limita; uffants, giuvens creschids en scolaziun e dunnas en cas da maternitad na pajan betg questa contribuziun (KVG Art. 64 Abs. 5, KVV Art. 104). Quest cussin stuessas ti pudair metter da maun.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF {breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
@@ -5792,17 +5841,18 @@ export default {
     reserveCheck_ok: { sie: 'Vossa reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.', du: 'Tia reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     reserveCheck_low: { sie: "Vossa reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa As dat dapli segirezza fin ch'il cussin è là.", du: "Tia reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa ta dat dapli segirezza fin ch'il cussin è là." },
-    reserveCheck_none: 'Avant che tscherner la franchisa pli auta: metta sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.',
+    reserveCheck_none: { sie: 'Avant che tscherner la franchisa pli auta: mettai sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.', du: 'Avant che tscherner la franchisa pli auta: metta sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.' },
     reserveCheckLink: 'Reserva en il chapitel «Finanzas & daners»',
     franchiseOptSource: 'Funtauna: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · quota-part 10% / max. CHF 700 (creschids), CHF 350 (uffants).',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     pickFranchiseHint: { sie: 'Tutgai ina franchisa per cumparegliar las cassas a quel nivel.', du: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    wunschkasseWaehlen: '{kasse}, {variante}, CHF {betrag}: tscherner sco cassa giavischada',
     chooseByPrice: { sie: 'Tutgai in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.', du: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.' },
     unfallLabel: 'Cuvrida d’accident',
     mitUnfall: 'Cun accident',
     ohneUnfall: 'Senza accident',
-    unfallSaving: 'Senza cuvrida d’accident: CHF {diff}/mais damain — deselecziunabel sco emploià (cuvert tras il patrun).',
+    unfallSaving: 'Senza cuvrida d’accident: CHF {diff}/mais damain. Mo deselecziunar, sch’ina plazza d’almain 8 uras l’emna assicurescha er en il temp liber.',
     title: 'Survista da las assicuranzas',
     plzLabel: 'Numer postal',
     selectGemeinde: 'Pliras vischnancas — per plaschair tscherner:',
@@ -6586,6 +6636,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'Taste «/» öffnet die Suche', // TODO(rm): übersetzen
     title: 'Tschertgar',
     placeholder: 'Tschertgar utensils e chapitels…',
     emptyTitle: 'Nagins resultats',
@@ -6644,11 +6695,14 @@ export default {
     spiegelLink: 'Context en Assicuranzas',
   },
   uvgHint: {
-    title: 'Cuvrida d’accident: spargnar sco emploià',
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    body: { sie: 'Sco emploià·da essas Vus assicurà·da cunter accidents tras Voss patrun — inclus accidents na professiunals a partir da 8 uras/emna. Vus pudais deselecziunar la cuvrida d’accident tar Vossa cassa da malsauns; quai diminuescha Vossa premia notablamain.', du: 'Sco emploià·da es ti assicurà·da cunter accidents tras tes patrun — inclus accidents na professiunals a partir da 8 uras/emna. Ti pos deselecziunar la cuvrida d’accident tar tia cassa da malsauns; quai diminuescha tia premia notablamain.' },
-    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    fieldSuggest: { sie: 'Sco emploià·da essas Vus per regla cuvert·a tras Voss patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.', du: 'Sco emploià·da es ti per regla cuvert·a tras tes patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.' },
+    // TODO(rm): provisorisch — Gegenlese (Kapitel 4, V1, 10.11.2026)
+    title: 'Cuvrida d’accident: spargnar cun ina plazza',
+    titleUnter8: 'Tegnair la cuvrida d’accident tar la cassa',
+    body: { sie: 'Tgi che lavura almain 8 uras l’emna per in patrun è assicurà·da tras la plazza er cunter accidents en il temp liber. Lura pudais Vus deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sch’la plazza finescha, annunziai quai a la cassa da malsauns: la protecziun tras la plazza finescha il 31avel di suenter l’ultim di cun dretg sin almain la mesadad dal salari; cun ina assicuranza tenor cunvegna pudais Vus prolungar ella fin 6 mais (art. 13 OAAc, art. 3 LAAc).', du: 'Tgi che lavura almain 8 uras l’emna per in patrun è assicurà·da tras la plazza er cunter accidents en il temp liber. Lura pos ti deselecziunar la cuvrida d’accident tar la cassa da malsauns; quai diminuescha la premia. Sch’la plazza finescha, annunzia quai a la cassa da malsauns: la protecziun tras la plazza finescha il 31avel di suenter l’ultim di cun dretg sin almain la mesadad dal salari; cun ina assicuranza tenor cunvegna pos ti prolungar ella fin 6 mais (art. 13 OAAc, art. 3 LAAc).' },
+    bodyOffen: { sie: 'Lavurais Vus almain 8 uras l’emna per in patrun? Lura essas Vus assicurà·da tras la plazza er en il temp liber e pudais deselecziunar la cuvrida d’accident da la cassa da malsauns. Cun damain uras tegnai ella (art. 13 OAAc). Inditgai Voss pensum sut «Furmaziun & lavur», lura mussa l’app quai che correspunda.', du: 'Lavuras ti almain 8 uras l’emna per in patrun? Lura es ti assicurà·da tras la plazza er en il temp liber e pos deselecziunar la cuvrida d’accident da la cassa da malsauns. Cun damain uras tegna ella (art. 13 OAAc). Inditgescha tes pensum sut «Furmaziun & lavur», lura mussa l’app quai che correspunda.' },
+    bodyUnter8: { sie: 'Cun damain che 8 uras l’emna tar in patrun essas Vus assicurà·da tras la plazza mo durant la lavur e sin la via a la lavur, betg en il temp liber (art. 13 OAAc). Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Cun damain che 8 uras l’emna tar in patrun es ti assicurà·da tras la plazza mo durant la lavur e sin la via a la lavur, betg en il temp liber (art. 13 OAAc). Tegna la cuvrida d’accident tar la cassa da malsauns.' },
+    fieldSuggest: { sie: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pudais Vus deselecziunar la cuvrida d’accident da la cassa.', du: 'Cun almain 8 uras l’emna tar in patrun cunvegn «Tras l’engaschament»; lura pos ti deselecziunar la cuvrida d’accident da la cassa.' },
+    fieldUnter8: { sie: 'Sut 8 uras l’emna na As assicurescha la plazza betg cunter accidents en il temp liber. Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Sut 8 uras l’emna na t’assicurescha la plazza betg cunter accidents en il temp liber. Tegna la cuvrida d’accident tar la cassa da malsauns.' },
   },
   mietzins: {
     title: 'Contribuziuns a la fittanza:',
@@ -7273,6 +7327,8 @@ export default {
     vorausZimmerZGZuViel: { sie: 'Ihre Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.', du: 'Deine Wohnung hat {zimmer} Zimmer bei {personen} Personen. Zug unterstützt nur Wohnungen mit höchstens zwei Zimmern mehr als Personen.' }, // TODO(rm): übersetzen
   },
   calendar: {
+    // TODO(rm): Gegenlese — Gruppe B Gestaltung C (11.11.2026)
+    reiterTermine: 'Termins',
     // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
     nicelyDone: 'Fatg',
     // rm ungeprüft F5
@@ -7431,7 +7487,7 @@ export default {
     intro: { sie: "Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che Vus endatais — da la plantina fin a l'arbre plain. Tutgai per avrir il sectur.", du: "Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l'arbre plain. Tutga per avrir il sectur." },
     link: 'Mes iert da fritgs',
     ctaSub: 'Mintga sectur da vita sco in agen arbulet — sper l\'arbre survart.',
-    legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils quatter arbulets ils pli giuvens vegnan pli tard.',
+    legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils trais arbulets ils pli giuvens vegnan pli tard.',
     future: 'vegn pli tard',
     stage1: 'plantina',
     stage2: 'crescha',
@@ -7470,7 +7526,7 @@ export default {
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Daners & taglias' },
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026) — nur w.selbstmahnen
-    w: { digitaleordnung: 'Digitale Ordnung', selbstmahnen: 'Insatgi ma debita daners', bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
+    w: { digitaleordnung: 'Digitale Ordnung', selbstmahnen: 'Insatgi ma debita daners', bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Zahlungsbefehl erhalten', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -7713,7 +7769,7 @@ export default {
     altersKostenK5: 'Taglias — er la renta vegn tributada; sin il prelevament en chapital vegn applitgada ina taglia unica (guarda sutvart).',
     zukunftRente: 'Renta mensila spetgada',
     zukunftRenteAufteilung: 'Tut ils quatter pitgas sco entrada mensila — AVS e LPP sco rentas, 3a e 3b (chapital) convertids en in import mensil.',
-    zukunftRenteKapitalHinweis: 'Las pitgas 3a e 3b èn chapital — qua mussadas sco import mensil simplifitgà (repartì fin {le} onns). Ti sez decidas il pajament effectiv.',
+    zukunftRenteKapitalHinweis: { sie: 'Las pitgas 3a e 3b èn chapital — qua mussadas sco import mensil simplifitgà (repartì fin {le} onns). Vus sezs decidais il pajament effectiv.', du: 'Las pitgas 3a e 3b èn chapital — qua mussadas sco import mensil simplifitgà (repartì fin {le} onns). Ti sez decidas il pajament effectiv.' },
     lebenserwartung: 'Spetgativa da vita',
     lebenserwartungHint: 'Statistica, dals 65 (UST). Prefullida, adattabla.',
     zukunftRenteHinweis: 'La 2. pitga cunta u sco chapital (survart) u sco renta mensila (qua) — betg omadus.',
@@ -7734,6 +7790,10 @@ export default {
     zukunftSzenarioAhvAufschub: 'AVS spustada fin {alter} onns: {pct} durant l’entira vita.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioBridge: { sie: 'Ils onns da {von} fin 63 surpassais Vus senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.', du: 'Ils onns da {von} fin 63 surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.' },
+    // TODO(rm): provisorisch — Gegenlese (Bugsuche-Texte 10.11.2026)
+    zukunftIkHochgerechnet: { sie: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF {eink} — ils onns futurs cun Vossas entradas actualas.', du: 'Calculà enfin a la vegliadetgna da referenza: {jahre} onns da contribuziun, medi CHF {eink} — ils onns futurs cun tias entradas actualas.' },
+    // TODO(rm): provisorisch — Gegenlese (Bugsuche-Texte 10.11.2026)
+    zukunftAhvAnnahme: { sie: 'Supposiziun: Vus retragais l’AVS uschè baud sco pussaivel e pajais fin a la vegliadetgna da referenza contribuziuns sco persuna senza activitad da gudogn. Questas contribuziuns dependan da la facultad e da las entradas da renta; l’estimaziun quinta simplifitgadamain vinavant cun las entradas da fin ussa.', du: 'Supposiziun: Ti retiras l’AVS uschè baud sco pussaivel e pajas fin a la vegliadetgna da referenza contribuziuns sco persuna senza activitad da gudogn. Questas contribuziuns dependan da la facultad e da las entradas da renta; l’estimaziun quinta simplifitgadamain vinavant cun las entradas da fin ussa.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     zukunftSzenarioSaeulen: { sie: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da Vossa cassa da pensiun.', du: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da tia cassa da pensiun.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -7787,7 +7847,13 @@ export default {
     abAlterKurz: 'a partir da {alter}: CHF {betrag}',
     vorbezug: 'Reducziun (retschavida anticipada)',
     // rm ungeprüft F5
-    vorbezugFrauenUebergang: 'Per dunnas da las annadas 1961–1969 valan quotas da reducziun pli bassas che na vegnan betg mussadas qua (fegl d’infurmaziun AVS 3.04). Per plaschair verifitgar tar la cassa da cumpensaziun.',
+    vorbezugFrauenUebergang: 'Per dunnas da las annadas 1961–1969 valan quotas da reducziun pli bassas che na vegnan betg mussadas qua (fegl d’infurmaziun AVS 3.04). Tgi che retira anticipadamain perda ultra da quai il supplement da renta (art. 34bis LAVS). Per plaschair verifitgar tar la cassa da cumpensaziun.',
+    bezugAlterFrueh: { sie: 'L’app quinta l’AVS il pli baud a partir da {frueh}. Cun ina pensiun pli baud finanziais Vus ils onns fin lura cun auters meds.', du: 'L’app quinta l’AVS il pli baud a partir da {frueh}. Cun ina pensiun pli baud finanzieschas ti ils onns fin lura cun auters meds.' },
+    bezugAlterUebergang: 'Dunnas da las annadas 1961–1969 pon retrair l’AVS anticipadamain gia a partir da 62 onns. Cun tge quota che vegn reducì, na quinta l’app betg (fegl d’infurmaziun AVS 3.04).',
+    rentenzuschlag: 'Supplement da renta per la generaziun da transiziun: + CHF {betrag} / mais, mo senza retratga anticipada (art. 34bis LAVS). Stimaziun; las tabellas da l’UFAS èn decisivas.',
+    rentenzuschlagSplitting: 'Per persunas maridadas, divorziadas u vieuas quinta l’entrada partida dals dus conjugals (fegl d’infurmaziun 3.01); il stgalim po perquai esser pli bass.',
+    umwandlungssatzVorReferenzalter: { sie: 'Cun ina pensiun avant {referenzalter} po Vossa cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8 % mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgai la quota da Voss attest.', du: 'Cun ina pensiun avant {referenzalter} po tia cassa da pensiun reducir la quota da conversiun: la lescha fixescha 6,8 % mo per la vegliadetgna da referenza (art. 14 al. 2 LPP). Inditgescha la quota da tes attest.' },
+    saeule3aGekappt: 'Quintà cun il import maximal da CHF {max} per onn; dapli na po betg vegnir deducì en il pilaster 3a (art. 7 OPP 3).',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",
     plafoniert: 'Plafonament pèr da maridads',
@@ -7828,7 +7894,7 @@ export default {
     fzScenarioJob: 'Nova plazza entaifer 30 dis',
     fzScenarioJobText: { sie: "Voss avair vegn transferì automaticamain a la nova cassa da pensiun. Vus na stuais far nagut — la nova CP s'annunzia tar la veglia.", du: "Tes avair vegn transferì automaticamain a la nova cassa da pensiun. Ti na stos far nagut — la nova CP s'annunzia tar la veglia." },
     fzScenarioGap: 'Intermissiun tranter duas plazzas',
-    fzScenarioGapText: { sie: "Voss avair va sin in conto da liber passadi (banca u assicuranza). Vus tschernais il purschider. Suenter 6 mais senza communicaziun transferescha la CP a l'instituziun suppletiva.", du: "Tes avair va sin in conto da liber passadi (banca u assicuranza). Ti tschernas il purschider. Suenter 6 mais senza communicaziun transferescha la CP a l'instituziun suppletiva." },
+    fzScenarioGapText: { sie: 'Voss avair va sin in conto da liber passadi (banca u assicuranza). Vus tschernais il purschider. Sche Vus na communitgais nagut, transferescha la cassa da pensiun l’avair a l’instituziun suppletiva il pli baud suenter 6 mais, il pli tard suenter 2 onns (FZG Art. 4 Abs. 2).', du: 'Tes avair va sin in conto da liber passadi (banca u assicuranza). Ti tschernas il purschider. Sche ti na communitgeschas nagut, transferescha la cassa da pensiun l’avair a l’instituziun suppletiva il pli baud suenter 6 mais, il pli tard suenter 2 onns (FZG Art. 4 Abs. 2).' },
     fzScenarioSelf: 'Independenza',
     fzScenarioSelfText: { sie: "Vus pudais retschaiver Voss avair en barguotta entaifer 1 onn — ma mo cun cumprova da l'independenza (conferma SVA).", du: "Ti pos retschaiver Tes avair en barguotta entaifer 1 onn — ma mo cun cumprova da l'independenza (conferma SVA)." },
     fzScenarioAbroad: 'Emigraziun',
@@ -7884,11 +7950,12 @@ export default {
     kbStaffelResult: 'CHF {total} enstagl da CHF {einmal} — spargn da var CHF {ersparnis}.',
     kbStaffelNone: 'Per quest import gida la repartiziun bunamain nagut.',
     kbStaffelHint: 'Perquai che la tariffa è progressiva, reducescha la repartiziun dal prelevament sur plirs onns da taglia la taglia — p. ex. cun plirs contos 3a, u cun prelevar la 2. colonna e la 3a en onns differents. Limitas: per ordinari èn mo paucs contos senmisads, e singuls chantuns quintan ensemen ils prelevaments dal medem onn (er quels dal conjugal).',
+    kbEinkaufSperre: { sie: 'Sche Vus avais fatg ina cumpra en la cassa da pensiun, na dastgais Vus betg retrair las prestaziuns che resultan da quai durant ils proxims trais onns sco chapital (art. 79b al. 3 LPP).', du: 'Sche ti has fatg ina cumpra en la cassa da pensiun, na dastgas ti betg retrair las prestaziuns che resultan da quai durant ils proxims trais onns sco chapital (art. 79b al. 3 LPP).' },
     kbDisclaimer: 'Orientaziun grossa, nagin quint obligatoric. Decisiv è il quntader da taglias uffizial dal chantun.',
     kbOfficialLink: 'Quntader da taglias uffizial da l\'AFC',
     kbSource: 'Part federala exacta tenor [[LIFD art. 38|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de]] (in tschintgavel da la tariffa). Valurs chantunalas: cumparegliaziun finpension da la taglia sin prelevaments da chapital 2026, chapoluog, approximativ. Stadi 2026.',
     intlTitle: "L'AVS cun referenza internaziunala",
-    intlIntro: "Has ti lavurà u vivì a l'exteriur, bandunas ti la Svizra, u has ti pajà l'AVS qua e ta n'es ì? Ils cas internaziunals da la 1. colonna vegnan tractads da la Centrala da cumpensaziun (ZAS) e da la Cassa svizra da cumpensaziun (SAK) a Genevra. Quai è ina orientaziun — la SAK clerescha tes cas concret.",
+    intlIntro: { sie: 'Avais Vus lavurà u vivì a l’exteriur, bandunais Vus la Svizra, u avais Vus pajà l’AVS qua ed essas ids davent? Ils cas internaziunals da la 1. colonna vegnan tractads da la Centrala da cumpensaziun (ZAS) e da la Cassa svizra da cumpensaziun (SAK) a Genevra. Quai è ina orientaziun — la SAK clerescha Voss cas concret.', du: 'Has ti lavurà u vivì a l’exteriur, bandunas ti la Svizra, u has ti pajà l’AVS qua e ta n’es ì? Ils cas internaziunals da la 1. colonna vegnan tractads da la Centrala da cumpensaziun (ZAS) e da la Cassa svizra da cumpensaziun (SAK) a Genevra. Quai è ina orientaziun — la SAK clerescha tes cas concret.' },
     intlLeavingTitle: "Bandunar la Svizra",
     intlLeavingText: "Ina renta AVS po vegnir pajada a l'exteriur. Burgais svizzers mantegnan lur dretg; per persunas estras dependa quai d'ina cunvegna da segirezza sociala tranter la Svizra e lur pajais.",
     intlVoluntaryTitle: "AVS/AI facultativa",

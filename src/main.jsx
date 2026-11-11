@@ -1051,6 +1051,23 @@ const AppInner = ({ demo }) => {
     });
   };
 
+  // ─── Suche per Taste (10.11.2026) ────────────────────────
+  // «/» und ⌘K bzw. Strg+K öffnen die Lupe. Zuhörer und Fokus stehen in utils/suchTaste.js, das
+  // NACHGELADEN wird (eingebaut lag das Startbündel über seiner Grenze). Hier nur das Öffnen —
+  // über eine Ref, damit der einmal angemeldete Zuhörer immer den aktuellen Stand sieht. Vor der
+  // Einführungs-Weiche, weil ein Hook nicht hinter einem frühen return stehen darf.
+  const zurSuche = React.useRef(null);
+  zurSuche.current = () => {
+    if (!onboardingDone) return false;
+    if (view !== 'search') handleNavigate('search');
+    return true;
+  };
+  useEffect(() => {
+    let abmelden = null, weg = false;
+    import('./utils/suchTaste.js').then((m) => { if (!weg) abmelden = m.suchTasteAnmelden(() => zurSuche.current()); }).catch(() => {});
+    return () => { weg = true; if (abmelden) abmelden(); };
+  }, []);
+
   // ─── Onboarding gate ─────────────────────────────────────
   if (!onboardingDone) {
     return React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
@@ -1339,7 +1356,10 @@ const AppInner = ({ demo }) => {
         React.createElement('button', {
           key: 'search',
           'aria-label': t('nav.search'),
-          title: isMobile ? undefined : t('nav.search'),
+          // Am Desktop nennt der Hinweis die Taste (Suche per Taste, 10.11.2026); Vorleseprogramme
+          // erfahren alle drei über aria-keyshortcuts. Am Handy keine Taste, kein Hinweis.
+          title: isMobile ? undefined : t('nav.search') + ' (/)',
+          'aria-keyshortcuts': isMobile ? undefined : '/ Control+K Meta+K',
           'aria-current': view === 'search' ? 'page' : undefined,
           onClick: () => handleNavigate('search'),
           style: { padding: '8px 12px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
@@ -1523,11 +1543,12 @@ const AppInner = ({ demo }) => {
           // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
           // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
           hatDokumente: (docs || []).length > 0,
-          installKarte: (klein) => React.createElement(React.Suspense, { fallback: null },
+          // Gruppe A D (11.11.2026): erst der Rundgang, dann die Karte — nie beide zugleich auf dem Bild.
+          installKarte: !tourOpen && ((klein) => React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstallHinweis, {
               palette, t, onNavigate: handleNavigate, installPrompt, klein,
               onPromptWeg: () => setInstallPrompt(null),
-            })),
+            }))),
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
           completion: calculateCompletion(),

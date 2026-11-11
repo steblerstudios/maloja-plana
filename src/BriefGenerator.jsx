@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
-import { istVorbei } from './utils/fristen.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b, brauchtZustimmungFamilienwohnung } from './briefGenerator.js';
+import { istVorbei, heuteIso } from './utils/fristen.js';
+import { kvgKuendigungsTermin } from './utils/festeFristen.js';
 import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
@@ -55,7 +56,7 @@ const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElemen
     zeilen.filter((z) => z && z.stark).map((z) => z.text).join(' ')),
 );
 
-function lebensereignisHinweis(selected, a, palette, t) {
+function lebensereignisHinweis(selected, a, palette, t, data) {
   if (selected === 'debtObjection') {
     const k = 'briefe.debtObjection.frist.';
     const frist = rechtsvorschlagFrist(a.zustelldatum);
@@ -98,6 +99,24 @@ function lebensereignisHinweis(selected, a, palette, t) {
   if (selected === 'paymentReminder') {
     const k = 'briefe.paymentReminder.hinweis.';
     return hinweisBox(palette, t(k + 'title'), [t(k + 'text')]);
+  }
+  // Gruppe B L1 (11.11.2026): Zustimmung zur Kündigung der Familienwohnung, eigenhändig und eingeschrieben.
+  if (selected === 'leaseTermination') {
+    const k = 'briefe.leaseTermination.hinweis.';
+    return hinweisBox(palette, t(k + 'title'), [brauchtZustimmungFamilienwohnung(data) && { text: t(k + 'zustimmung'), stark: true }, t(k + 'form')]);
+  }
+  // Gruppe B L2/L3 (11.11.2026): Frist mit Jahr, nach dem Stichtag das nächste Jahr; Anmeldung und Ausstände zuerst.
+  if (selected === 'insuranceSwitch') {
+    const k = 'briefe.insuranceSwitch.hinweis.';
+    const tm = kvgKuendigungsTermin(heuteIso());
+    const p = { jahr: tm.jahr, frist: formatDE(tm.frist), verpasstJahr: tm.verpasstJahr, verpasstFrist: formatDE(tm.verpasstFrist) };
+    return hinweisBox(palette, t(k + 'title'), [
+      { text: t(tm.nachFrist ? k + 'nachFrist' : k + 'frist', p), stark: true },
+      tm.nachFrist && t(k + 'semester'), t(k + 'anmelden'), t(k + 'ausstaende'),
+    ], 'calendar');
+  }
+  if (selected === 'taxExtension') {
+    return hinweisBox(palette, t('briefe.taxExtension.hinweis.title'), [t('briefe.taxExtension.hinweis.text')]);
   }
   if (selected === 'workReference') {
     return hinweisBox(palette, t('briefe.workReference.title'), [t('briefe.workReference.hinweis')]);
@@ -215,8 +234,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   // `handleNavigate` im nächsten Frame noch ganz nach oben scrollt. Eigene Wahl per Karte
   // springt NICHT — dort hat die Person selbst geklickt und sieht, was aufgeht.
   const formAnfangRef = useRef(null);
+  // Gruppe B Gestaltung A (11.11.2026): auch die eigene Wahl per Karte springt — auf dem Handy stand das Formular
+  // rund 3700 px unter der Liste, und nach dem Antippen geschah sichtbar nichts. Bis dahin sprang nur die Vorwahl.
+  const [sprung, setSprung] = useState(0);
   useEffect(() => {
-    if (!initialTemplate) return undefined;
+    if (!initialTemplate && !sprung) return undefined;
     let id2;
     const id1 = requestAnimationFrame(() => {
       id2 = requestAnimationFrame(() => {
@@ -228,12 +250,12 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
         // Deploy-Gate 27.09.2026 (a11y): der Fokus folgt dem Sprung — sonst begann ein
         // Screenreader weiter oben bei der Vorlagen-Liste.
-        const hinweis = document.getElementById('brief-hinweis');
+        const hinweis = document.getElementById('brief-hinweis') || document.getElementById('brief-form-titel');
         if (hinweis) hinweis.focus({ preventScroll: true });
       });
     });
     return () => { cancelAnimationFrame(id1); if (id2) cancelAnimationFrame(id2); };
-  }, [initialTemplate]);
+  }, [initialTemplate, sprung]);
 
   // Vorlagenwechsel setzt die Anstellungs-Wahl zurück — sonst trüge ein neuer Brief
   // stillschweigend die Wahl des vorherigen.
@@ -311,7 +333,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); setSprung((n) => n + 1); },
+        'aria-pressed': selected === tmpl.key,
         style: {
           padding: '16px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           // Fassung 9: gewählt in Sand (Auswahl), nicht mehr Salbei; Rundung KNOPF_RADIUS.
@@ -342,6 +365,11 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // Sprungziel für die Vorwahl aus einem Ablauf (siehe `formAnfangRef`). Der Abstand zur
     // klebenden Kopfzeile kommt aus tokens.css (wie in Lebenssituationen).
     React.createElement('div', { ref: formAnfangRef, 'aria-hidden': 'true', style: { scrollMarginTop: 'var(--mp-sprungabstand)' } }),
+    // Gestaltung A: über dem Formular steht, zu welchem Brief es gehört — Sprungziel für den Fokus.
+    selected && React.createElement('h3', {
+      id: 'brief-form-titel', tabIndex: -1,
+      style: { fontSize: textTokens.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px', outline: 'none' },
+    }, t('briefe.formTitel', { name: (templates.find((x) => x.key === selected) || {}).title || '' })),
 
     // Anstellungs-Auswahl — erscheint NUR, wenn wirklich ein Nebenerwerb erfasst ist.
     // Wer einen Job hat, sieht hier nichts: kein Klick für die Mehrheit. Die Wahl steuert
@@ -379,7 +407,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     ),
 
     // Lebensereignis-Briefe: erst der Hinweis (Frist / Erbschaft), dann die Angaben.
-    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t),
+    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t, data),
     briefDeutsch && React.createElement('p', {
       style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px' },
     }, t('briefe.angaben.rmDeutsch')),

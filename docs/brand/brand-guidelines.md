@@ -343,6 +343,15 @@ Wächter: `src/__tests__/knopfarten.test.js`.
   Ansicht springen («Heute» im Kalender), sind **Auswahl**. Wächter: `knopfarten.test.js`
   («Öffner sind nie Hauptknopf»). Herleitung: `docs/design/gesamtbild-2026-11/GESAMTBILD.md` §3b.
 - Kleine × zum Löschen in Listen bleiben graue Symbole mit Ansage (`aria-label`).
+  Ihre Tippfläche ist trotzdem 44 × 44 (Polster um das Zeichen, nicht ein grösseres Zeichen).
+- **Löschen fragt nie, es lässt sich zurücknehmen** (10.11.2026): Der Eintrag ist sofort weg,
+  darunter steht «Entfernt · ‹Name›» mit dem Nebenknopf «Rückgängig», der ihn an dieselbe Stelle
+  zurücklegt. Die Meldung hat keine Zeitgrenze (seit 11.11.2026, WCAG 2.2.1; vorher fünf Sekunden): Sie
+  bleibt bis zum nächsten Löschen oder Ansichtswechsel. Nach «Rückgängig» bleibt der Fokus in der Meldung. Kein «Wirklich löschen?», keine Browser-Dialoge. Leere Eingabezeilen
+  gehen ohne Meldung. Baustein: `hooks/useRueckgaengig.js` + `components/RueckgaengigMeldung.jsx`;
+  Wächter: `rueckgaengig.test.js` (Liste aller Lösch-Listen — eine neue gehört dort hinein).
+  Ausgenommen sind ganze Bestände (Daten löschen, Sicherung zurückspielen): die haben ihren eigenen,
+  ausdrücklichen Weg.
 
 Entschieden von Stebler Studios am 05.11.2026 (Knopf-Inventur, 20 Entscheide, «setze alle
 Empfehlungen um und beachte die Rundungen der Knöpfe»).
