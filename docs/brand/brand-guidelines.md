@@ -327,6 +327,11 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   Drittel-Linie quer über die Strasse entfällt; Satz und aria-Label bleiben. Ohne Einkommen bleibt Ihr Haus gefüllt
   wie bisher. Gilt in Kapitel, Mietzins, Budget und Kachel (`drittel` = `wohnkostenRechnung`). Wächter:
   `wohnenStrasse.test.js`.
+  **Die Nachbarn** (11.11.2026, Skizze B «A + Beträge»): Gross (Kapitel, 256) ist das Regionshaus das Haus Ihres
+  Kantons von der Mietbeiträge-Karte, hellgrün mit Kürzel. Das Dach behält die Lage-Farbe. Das Schweizer Haus trägt
+  gestrichelt «CH». Die Beträge stehen direkt unter den Häusern («erst sehen, dann lesen»), die Legenden-Zeilen
+  entfallen dort. Mittel (Mietzins, Budget) bleibt bei den Legenden-Zeilen, weil Kürzel und Beträge dort unter 13 px
+  bzw. zu eng wären.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.

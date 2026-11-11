@@ -229,10 +229,11 @@ describe('Kapitel Wohnen · Nachzug Fachprüfung', () => {
     expect(i18nIt.po.regionalCompare.rent.source).toMatch(/rilevazione strutturale sugli affitti/);
   });
 
-  it('Barometer-Legende: Einträge brechen nicht in sich um', () => {
+  // Seit 11.11.2026 (Skizze B) stehen im Kapitel die Beträge direkt unter den Häusern statt in Legenden-Zeilen.
+  it('Beträge unter den Häusern brechen nicht in sich um', () => {
     const html = render(profil().wohnen, profil());
-    expect(html).toMatch(/white-space:nowrap[^>]*>.*po\.regionalCompare\.nationalVal/);
-    expect(html).toMatch(/white-space:nowrap[^>]*>.*po\.regionalCompare\.regionalVal/);
+    const b = html.slice(html.indexOf('data-teil="strasse-betraege"'));
+    expect((b.match(/white-space:nowrap/g) || []).length).toBeGreaterThanOrEqual(3);
   });
 });
 

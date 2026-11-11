@@ -4709,6 +4709,8 @@ export default {
     fieldUnter8: { sie: 'Sous 8 heures par semaine, l’emploi ne vous assure pas contre les accidents pendant les loisirs. Gardez la couverture accidents auprès de la caisse maladie.', du: 'Sous 8 heures par semaine, l’emploi ne t’assure pas contre les accidents pendant les loisirs. Garde la couverture accidents auprès de la caisse maladie.' },
   },
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: { sie: 'vous', du: 'toi' }, ausprobiert: 'essai', region: 'région', regionKanton: 'région {kanton}', schweiz: 'Suisse' },
   mietzinsSzene: {
     titel: 'Aides au loyer',
     beitragLegende: 'en pointillé : ce que le canton pourrait prendre en charge au maximum, jusqu’à CHF {betrag} par mois. Le montant effectif est calculé par le canton.',

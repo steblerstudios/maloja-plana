@@ -6664,6 +6664,8 @@ export default {
     fieldUnter8: { sie: 'Sut 8 uras l’emna na As assicurescha la plazza betg cunter accidents en il temp liber. Tegnai la cuvrida d’accident tar la cassa da malsauns.', du: 'Sut 8 uras l’emna na t’assicurescha la plazza betg cunter accidents en il temp liber. Tegna la cuvrida d’accident tar la cassa da malsauns.' },
   },
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: { sie: 'Vus', du: 'ti' }, ausprobiert: 'empruvà', region: 'regiun', regionKanton: 'regiun {kanton}', schweiz: 'Svizra' },
   mietzinsSzene: {
     titel: 'Contribuziuns al fitg',
     beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF {betrag} il mais. L'import effectiv quinta il chantun.",

@@ -47,3 +47,36 @@ describe('Ihr Haus in der Strasse', () => {
     expect(quelle('../components/InstrumentePanel.jsx')).toMatch(/h\(HaeuserzeileKlein, \{[^}]*drittel: wohnR \}/);
   });
 });
+
+describe('Nachbarhäuser (Skizze B, Stebler Studios 11.11.2026)', () => {
+  const gross = (p) => zeile({ drittel: { anteil: 30 }, maxBreite: 256, kanton: 'ZG', ...p });
+  it('gross: Kanton-Kürzel im Regionshaus, «CH» im Schweizer Haus, Regionshaus hellgrün', () => {
+    const h = gross();
+    expect(h).toMatch(/<text data-teil="strasse-kuerzel"[^>]*>ZG<\/text>/);
+    expect(h).toMatch(/>CH<\/text>/);
+    expect(h).toMatch(/fill="#7a5" fill-opacity="0.18"/);
+  });
+  it('gross: Beträge direkt unter den Häusern, die Legenden-Zeilen entfallen', () => {
+    const h = gross();
+    const b = h.slice(h.indexOf('data-teil="strasse-betraege"'));
+    expect(b).toContain('1’900');
+    expect(b).toContain('1’732');
+    expect(b).toContain('1’446');
+    expect(b).toContain('strasse.regionKanton{&quot;kanton&quot;:&quot;ZG&quot;}');
+    // sichtbar keine Legenden-Zeilen mehr (im aria-Label stehen die Werte weiter)
+    expect(h).not.toMatch(/>po\.regionalCompare\.nationalVal/);
+    expect(h).not.toMatch(/(>|svg>)po\.regionalCompare\.rent\.yourVal/);
+    expect(h).toMatch(/aria-label="[^"]*po\.regionalCompare\.rent\.yourVal/);
+  });
+  it('mittel (Mietzins, Budget): keine Kürzel, die Legenden-Zeilen bleiben (sonst unter 13 px)', () => {
+    const h = zeile({ drittel: { anteil: 30 }, kanton: 'ZG' });
+    expect(h).not.toContain('strasse-kuerzel');
+    expect(h).not.toContain('strasse-betraege');
+    expect(h).toMatch(/>po\.regionalCompare\.nationalVal/);
+  });
+  it('Kürzel bei 256 px mindestens 13 px', () => {
+    const h = gross();
+    const s = Number(h.match(/data-teil="strasse-kuerzel"[^>]*font-size="([\d.]+)"/)[1]);
+    expect(s * 256 / 132).toBeGreaterThanOrEqual(13);
+  });
+});

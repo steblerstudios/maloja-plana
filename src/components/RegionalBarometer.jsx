@@ -64,7 +64,7 @@ const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, n
 // sind dieselben — nur das Bild wechselt. `maxBreite`: Instrument-Grösse (Brand Book §7b), Standard mittel.
 // `drittel` (11.11.2026): die Wohnkosten-Rechnung (wohnkostenRechnung) — dann ist Ihr Haus in der Häuserzeile das
 // Drittel-Haus klein, und die Drittel-Linie quer über die Strasse entfällt.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel }) => {
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel, kanton }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year, roomKey } = comparison;
   const ns = 'po.regionalCompare.';
@@ -128,6 +128,10 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     regional: regional.toFixed(0), national: national.toFixed(0), diff: diffText,
   });
   const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: zahl(userValue) })) : null;
+  // Strasse gross (Kapitel Wohnen, 256): Kürzel in den Häusern, Beträge direkt darunter statt der Legenden-Zeilen
+  // (Stebler Studios 11.11.2026, Skizze B). In mittel (Mietzins, Budget) wären Kürzel und Beträge unter 13 px bzw.
+  // zu eng — dort bleiben die Legenden-Zeilen.
+  const strasseGross = form === 'haeuser' && (maxBreite || 0) >= INSTRUMENT_GROESSE.gross;
   if (hasUser) ariaLabel += ' ' + userText;
   // Eigener Wert gegen Region, gleiche Schwelle (±2 %) wie die Farbe des Regions-Punkts.
   const lage = hasUser ? lageZurRegion(userValue, regional) : null;
@@ -150,7 +154,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', fontSize: text.sm },
     }, t(k + 'title')),
 
-    form === 'haeuser' ? haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel }) :
+    form === 'haeuser' ? haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel, gross: strasseGross, kanton, userLabel, fillColor }) :
     // Balken: Füllung (eigener Wert) + Punkt (Region) + Strich (Schweizer Schnitt)
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
@@ -214,7 +218,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Fassung 6 (Feinschliff «Barometer-Beschriftungen kurz, kein Umbruch»): bei 375 px brach
     // «Schweizer Schnitt: CHF / 1327» (Werte Stand 2020) mitten im Eintrag. Jetzt bleibt jeder Eintrag ganz und rückt
     // bei Platzmangel als Ganzes in die nächste Zeile.
-    React.createElement('div', {
+    !strasseGross && React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.xs, color: palette.mid },
     },
       // Strich verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
@@ -227,7 +231,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
         React.createElement(LegendenMarke, { form: form === 'haeuser' ? 'hausDach' : 'punkt', color: dotColor, palette }),
         t(ns + 'regionalVal', { amount: zahl(regional) })),
     ),
-    hasUser && React.createElement('div', {
+    hasUser && !strasseGross && React.createElement('div', {
       style: { fontSize: text.xs, color: fillColor ? palette.text : palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
     },
       // Füllung in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
@@ -291,6 +295,9 @@ const BODEN = 84;
 const HOEHE = 58;
 const DACH = 12;
 const STRICH = { vectorEffect: 'non-scaling-stroke' };
+// Kürzel im Haus nur gross: bei 256 px genau text.xs (Regel H) — viewBox 132 breit.
+const KUERZEL_SCHRIFT = Math.ceil(13 * 132 / 256 * 100) / 100;
+const KUERZEL_Y = 10;
 // Ein Haus: Körper ab `y` bis zum Boden, Dach darüber.
 const hausForm = (x, y, koerper, dach) => React.createElement('g', null,
   React.createElement('rect', { x, y, width: HAUS_B, height: BODEN - y, ...koerper, ...STRICH }),
@@ -313,7 +320,7 @@ const sieDrittelHaus = (x, y, drittel, palette, fuell) => {
   );
 };
 
-function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel }) {
+function haeuserzeile({ palette, t, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel, gross, kanton, userLabel, fillColor }) {
   const h = React.createElement;
   const oben = (v) => BODEN - Math.max(4, (pct(v) / 100) * HOEHE);
   const strich = STRICH;
@@ -326,8 +333,11 @@ function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, nation
     h('svg', { viewBox: '0 0 132 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', style: { display: 'block', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', height: 'auto', overflow: 'visible' } },
       // Schweiz: gestrichelt, neutral (= Strich)
       haus(HAUS_X.schweiz, national, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
-      // Region: Umriss, Dach in der Farbe des Punkts (= Ihre Lage zur Region)
-      haus(HAUS_X.region, regional, { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dotColor, stroke: palette.surface, strokeWidth: 1 }),
+      // Region: Umriss, Dach in der Farbe des Punkts (= Ihre Lage zur Region). Gross: das Haus Ihres Kantons wie auf der
+      // Mietbeiträge-Karte — hellgrün, mit Kürzel (Skizze A); die Schweiz trägt «CH».
+      haus(HAUS_X.region, regional, { fill: gross && fillColor ? fillColor : 'none', fillOpacity: gross && fillColor ? 0.18 : undefined, stroke: palette.text, strokeWidth: 1.5 }, { fill: dotColor, stroke: palette.surface, strokeWidth: 1 }),
+      gross && kanton && h('text', { 'data-teil': 'strasse-kuerzel', x: HAUS_X.region + HAUS_B / 2, y: oben(regional) + KUERZEL_Y, textAnchor: 'middle', fontSize: KUERZEL_SCHRIFT, fill: palette.text }, kanton),
+      gross && h('text', { x: HAUS_X.schweiz + HAUS_B / 2, y: oben(national) + KUERZEL_Y, textAnchor: 'middle', fontSize: KUERZEL_SCHRIFT, fill: palette.mid }, 'CH'),
       // Sie: das Drittel-Haus klein, wo die Wohnkosten-Rechnung mitkommt; sonst gefüllt (= Füllung)
       hasUser && (mitDrittel ? sieDrittelHaus(HAUS_X.sie, oben(userValue), drittel, palette, barFill) : haus(HAUS_X.sie, userValue, { fill: barFill }, { fill: barFill })),
       h('line', { x1: 0, x2: 120, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...strich }),
@@ -336,6 +346,15 @@ function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, nation
       hasThreshold && !mitDrittel && h('line', { 'data-teil': 'drittel-linie', x1: 0, x2: 120, y1: linieY, y2: linieY, stroke: schwelleFarbe, strokeWidth: 1.5, strokeDasharray: '5 3', ...strich }),
       hasThreshold && !mitDrittel && h('text', { x: 128, y: linieY + 5, textAnchor: 'middle', fontSize: 15, fontWeight: 700, fill: schwelleFarbe }, '!'),
     ),
+    // Skizze B: die Beträge direkt unter den Häusern (erst sehen, dann lesen). Spalten genau unter den Häusern.
+    gross && h('div', { 'data-teil': 'strasse-betraege', 'aria-hidden': 'true', style: { position: 'relative', height: '40px', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', marginTop: space.xs + 'px' } },
+      [[HAUS_X.sie, hasUser ? userValue : null, userLabel ? t('strasse.ausprobiert') : t('strasse.eigen'), palette.text],
+        [HAUS_X.region, regional, kanton ? t('strasse.regionKanton', { kanton }) : t('strasse.region'), palette.text],
+        [HAUS_X.schweiz, national, t('strasse.schweiz'), palette.mid]]
+        .filter(([, wert]) => wert > 0)
+        .map(([x, wert, name, farbe]) => h('div', { key: x, style: { position: 'absolute', left: ((x + HAUS_B / 2) / 132 * 100) + '%', transform: 'translateX(-50%)', textAlign: 'center', whiteSpace: 'nowrap', lineHeight: 1.25 } },
+          h('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: farbe } }, zahl(wert)),
+          h('div', { style: { fontSize: text.xs, color: palette.mid } }, name)))),
   );
 }
 

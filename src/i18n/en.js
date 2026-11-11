@@ -4782,6 +4782,8 @@ export default {
     fieldUnter8: 'Under 8 hours a week, the job does not insure you against accidents in your free time. Keep accident cover with your health insurer.',
   },
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: 'you', ausprobiert: 'tried', region: 'region', regionKanton: 'region {kanton}', schweiz: 'Switzerland' },
   mietzinsSzene: {
     titel: 'Rent contributions',
     beitragLegende: 'dashed: the most the canton could cover, up to CHF {betrag} a month. The canton calculates the actual amount.',

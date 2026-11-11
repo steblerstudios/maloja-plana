@@ -4761,6 +4761,8 @@ export default {
     fieldUnter8: { sie: 'Unter 8 Stunden pro Woche sind Sie über die Stelle in der Freizeit nicht unfallversichert. Behalten Sie die Unfalldeckung bei der Krankenkasse.', du: 'Unter 8 Stunden pro Woche bist du über die Stelle in der Freizeit nicht unfallversichert. Behalte die Unfalldeckung bei der Krankenkasse.' },
   },
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: { sie: 'Sie', du: 'du' }, ausprobiert: 'ausprobiert', region: 'Region', regionKanton: 'Region {kanton}', schweiz: 'Schweiz' },
   mietzinsSzene: {
     titel: 'Mietbeiträge',
     beitragLegende: 'gestrichelt: so viel könnte der Kanton höchstens übernehmen, bis zu CHF {betrag} im Monat. Wie viel wirklich kommt, rechnet der Kanton.',

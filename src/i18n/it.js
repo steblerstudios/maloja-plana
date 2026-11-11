@@ -4683,6 +4683,8 @@ export default {
     fieldUnter8: { sie: 'Sotto le 8 ore alla settimana l’impiego non La assicura contro gli infortuni nel tempo libero. Mantenga la copertura infortuni presso la cassa malati.', du: 'Sotto le 8 ore alla settimana l’impiego non ti assicura contro gli infortuni nel tempo libero. Mantieni la copertura infortuni presso la cassa malati.' },
   },
   // Mietzinsbeiträge als Szene im Kapitel Wohnen und im Werkzeug (11.11.2026).
+  // Häuserzeile gross: Namen unter den Häusern (11.11.2026).
+  strasse: { eigen: { sie: 'Lei', du: 'tu' }, ausprobiert: 'prova', region: 'regione', regionKanton: 'regione {kanton}', schweiz: 'Svizzera' },
   mietzinsSzene: {
     titel: 'Contributi all’affitto',
     beitragLegende: 'tratteggiato: quanto il Cantone potrebbe assumere al massimo, fino a CHF {betrag} al mese. L’importo effettivo lo calcola il Cantone.',
