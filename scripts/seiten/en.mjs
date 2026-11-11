@@ -68,7 +68,7 @@ export const SEITEN = [
       {
         frage: 'Do I have to apply everywhere myself?',
         antwort:
-          'That varies by benefit and by canton. For some benefits the offices get in touch on their own; for others nothing happens without an application. When in doubt: asking costs nothing, and an application that is never made is never approved.',
+          'That varies by benefit and by canton. For some benefits the offices get in touch on their own; for others nothing happens without an application. When in doubt: asking costs nothing, and an application that is never made is never approved. Without a Swiss passport, there is one exception for social assistance: receiving it can affect your residence permit; get advice before applying (more on the Social assistance page).',
       },
       {
         frage: 'What does Maloja Plana cost?',
@@ -93,6 +93,7 @@ export const SEITEN = [
         titel: 'What the federal government prescribes and what the canton decides',
         absaetze: [
           'The federal government prescribes <em>that</em> there must be a premium reduction, sets minimum requirements for it and contributes to its funding. Within these requirements, the canton decides who receives it and how much.',
+          'Three requirements apply everywhere. For lower and middle incomes, the cantons reduce children’s premiums by at least 80 percent and those of young adults in education by at least 50 percent (Art. 65 para. 1bis KVG). Each canton sets the maximum share of disposable income that the premium may make up (Art. 65 para. 1ter KVG). And once entitlement is established, payment must be made so that you do not have to advance the premium (Art. 65 para. 3 KVG).',
           'Specifically, these differ from canton to canton: the income and asset limits, how the relevant income is calculated in the first place, whether you have to apply or are contacted, and the deadlines.',
           'By contrast, what is the same everywhere is <strong>where the money goes</strong>. The canton pays the contribution directly to the health insurer, not to the insured person. This is set out in the Health Insurance Act and is not within cantonal discretion.',
           'That is why the sentence “here you get it from an income of X” rarely helps. At best it is true for one canton, and there only for one year.',
@@ -117,7 +118,7 @@ export const SEITEN = [
       {
         frage: 'Am I entitled to premium reduction?',
         antwort:
-          'That depends on your canton of residence, on the relevant income and assets and on the size of your household — all three are weighted differently from canton to canton. There is no limit that applies everywhere. The competent office decides bindingly: usually the cantonal social insurance institution or the compensation office, in some cantons the tax administration or the municipality of residence.',
+          'That depends on your canton of residence, on the relevant income and assets and on the size of your household — all three are weighted differently from canton to canton. There is no limit that applies everywhere. The competent office decides bindingly: usually the cantonal social insurance institution or the compensation office, in some cantons the tax administration or the municipality of residence. An exception applies in the asylum field: with an N or S permit, the entitlement is suspended while social assistance is received in full or in part (Art. 82a para. 7 AsylG). The same applies with an F permit, unless entry was more than seven years ago (Art. 86 para. 2 AIG, Art. 5b AsylV 2). Different rules may apply to provisionally admitted refugees; the cantonal office will clarify this.',
       },
       {
         frage: 'Do I have to apply?',
@@ -153,6 +154,7 @@ export const SEITEN = [
         absaetze: [
           'Social assistance is <strong>subsidiary</strong>. Before it comes into question, other entitlements are examined: wages, unemployment benefits, pensions, supplementary benefits (Ergänzungsleistungen, EL), premium reduction, maintenance payments, education grants (Stipendien). Your own assets are also taken into account, although the cantons allow an exempt amount whose level differs.',
           'That is why an application often begins with many questions about quite different benefits. It is not about mistrust, but about the order laid down by law.',
+          'Without a Swiss passport, receiving social assistance can affect your residence. With a residence or short-term permit (B, L), it can be grounds for revoking the permit; with a settlement permit (C), if assistance is received long-term and to a considerable extent (Art. 62 para. 1 let. e and Art. 63 para. 1 let. c AIG). With an F permit, it can make a later application for family reunification or a residence permit more difficult. Get advice beforehand from a counselling service or the social services office. The right to assistance in situations of need (further down) applies regardless.',
         ],
       },
       {
@@ -198,6 +200,16 @@ export const SEITEN = [
         antwort:
           'Supplementary benefits (Ergänzungsleistungen, EL) belong to the first pillar and generally come into question when a benefit from old-age or disability insurance (AHV/IV) does not cover subsistence needs. They are governed by federal law and are not social assistance. An entitlement to supplementary benefits takes precedence over social assistance.',
       },
+      {
+        frage: 'Does social assistance affect my residence permit?',
+        antwort:
+          'Without a Swiss passport, it can. With a B or L permit, receiving it can be grounds for revoking the permit, with a C permit if it is received long-term and to a considerable extent (Art. 62 para. 1 let. e and Art. 63 para. 1 let. c AIG). With an F permit, it can make a later application for family reunification or a residence permit more difficult. With an N, S or F permit, premium reduction is also suspended while social assistance is received (exceptions: see the Premium reduction page). Get advice beforehand from a counselling service or the social services office.',
+      },
+      {
+        frage: 'Do I have to repay social assistance?',
+        antwort:
+          'Whether and when is regulated by the canton — for example if an inheritance or larger assets come later. In addition, relatives in direct line, meaning parents, children, grandparents and grandchildren, can be obliged to provide support if they live in comfortable circumstances (Art. 328 para. 1 Civil Code). The responsible office will tell you what applies in your case.',
+      },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
   },
@@ -217,6 +229,7 @@ export const SEITEN = [
         absaetze: [
           'Direct federal tax is governed by the Federal Act on Direct Federal Taxation (DBG) and applies the same rate schedule throughout Switzerland. It distinguishes by marital status and household, but not by place of residence.',
           'It is nevertheless levied by the canton — you file one tax return for both.',
+          'It is different with <strong>tax at source</strong>: if you work in Switzerland without a settlement permit, for example with a B permit, your employer deducts the tax directly from your wages; there is then usually no tax return. Further deductions, for example for pillar 3a, are only possible through a subsequent ordinary assessment, which must be requested by 31 March of the following year (Art. 89a DBG).',
         ],
       },
       {

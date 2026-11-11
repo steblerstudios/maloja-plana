@@ -127,7 +127,8 @@ const stil = `
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -328,7 +329,8 @@ function seiteBauen(seite, sprache) {
     <main>
 ${hinweisOben(sprache)}      <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
-${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}</p>` : ''}
+${istErklaerseite ? `      <p class="hinweis">${esc(R.kurzhinweis)}${sprache.geprueft
+        ? `<br>\n      <strong class="stand">${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>` : ''}</p>` : ''}
 
 ${abschnitte}${kantonsBlock}
 
@@ -347,7 +349,7 @@ ${istErklaerseite ? `      <div class="karte">
       <ul>
 ${quellen}
       </ul>
-      <p class="leise">${esc(R.quellenLeise)}</p>` : ''}
+      <p class="leise">${esc((!seite.quellen.some((s) => s.startsWith('skos')) && R.quellenLeiseOhneSkos) || R.quellenLeise)}</p>` : ''}
 
 ${istErklaerseite ? `      <p class="vorbehalt">${R.vorbehalt}${sprache.geprueft
         ? `<br>\n      <strong>${esc(R.geprueftLabel)}: ${esc(sprache.geprueft)}.</strong>${R.originalGeprueft ? ` ${esc(R.originalGeprueft)}` : ''}` : ''}</p>` : ''}
@@ -534,9 +536,10 @@ const stilHintergrund = `
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -1048,7 +1051,11 @@ const stilBewegt = `
     .iso-stage{ outline-offset:4px } .iso-stage:focus-visible{ outline:2px solid var(--text); border-radius:10px }
     .iso-stage svg{ display:block; width:100%; height:auto }
     /* Im Rahmen der Hauptseite (rahmen.js): Hinweise stehen dort, hier nur Bild und Regler. */
-    .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }`;
+    .im-rahmen main{ padding:0 } .im-rahmen .nur-allein{ display:none }
+    /* Gruppe D, Gestaltung B (11.11.2026): allein geöffnet im selben Rahmen wie die Hauptseite
+       (Kopf, Brotkrume, Fusszeile mit Impressum); in der Hauptseite eingebettet ohne. */
+    .im-rahmen .rahmen{ max-width:none; padding:0 } .im-rahmen header, .im-rahmen footer{ display:none }
+    .hinweis-b a{ display:inline-block; padding:12px 0; margin:-12px 0 }`;
 
 function bewegtSeiteBauen(name) {
   const b = BEWEGT[name];
@@ -1085,14 +1092,20 @@ function bewegtSeiteBauen(name) {
   </style>
 </head>
 <body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="${esc(RAHMEN.de.krumeLabel)}">
+        <a href="/">${esc(RAHMEN.de.start)}</a> › <a href="/krankenkasse/">Krankenkasse erklärt</a> › ${esc(b.titel)}
+      </nav>
+    </header>
   <main>
     <p class="zurueck-b nur-allein"><a href="/krankenkasse/#abb-${name}">Zurück zu «Warum die Krankenkasse so viel kostet»</a></p>
     <h1 class="titel-b nur-allein">${esc(b.titel)}</h1>${buehne}
     <p class="hinweis-b nur-allein">Teil der Seite ${zurueck} · Maloja Plana</p>
   </main>
 ${pfade.map((pf) => `  <script src="/krankenkasse/bewegt/${pf}"></script>`).join('\n')}
-</body>
-</html>
+${fuss(SPRACHEN.find((s) => s.code === 'de'), esc(RAHMEN.de.nurDeutsch))}
 `;
 }
 

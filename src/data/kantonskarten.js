@@ -798,7 +798,7 @@ export const KARTEN = {
   "einheit": "% der Bevölkerung",
   "anker": "karte-sozialhilfe",
   "frucht": "zwetschge",
-  "legende": "Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe bezog.",
+  "legende": "Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog.",
   "quellen": [
    {
     "text": "Bundesamt für Statistik, Sozialhilfestatistik: wirtschaftliche Sozialhilfe, 2025, publiziert 27.10.2026",
