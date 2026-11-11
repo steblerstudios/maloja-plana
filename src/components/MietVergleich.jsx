@@ -4,8 +4,8 @@ import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
-import { zahl } from '../utils/geld.js';
-import { wohnkostenRechnung, drittelGrenzeMiete } from './WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
+import { zahl, betrag } from '../utils/geld.js';
+import { wohnkostenRechnung, drittelGrenzeMiete, wohnkostenSatzKey } from './WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
 
 // „Wo steht Ihre Miete?" — regionaler BFS-Vergleich + Wohnkostenquote.
 // Bewusst EIN Bauteil für die beiden Orte, die auf den KAPITEL-Daten rechnen
@@ -51,8 +51,9 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
 
   if (!rentComparison && rentSharePct == null) return null;
 
-  // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): die Hauptzahl gross wie auf der Kachel und im Kapitel,
-  // direkt unter den Häusern (mit Häuserzeile) oder oben in der Karte (ohne).
+  // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): zwei Instrumente, je ihre Hauptzahl gross unter ihrem Bild.
+  // Unter den Häusern die Lage der Miete (lageGross), unten der Wohnkosten-Anteil mit demselben Satz wie die Kachel.
+  // (Vorher-nachher 11.11.2026: die 33 % unter den Miet-Häusern las sich als Zahl zum Mietvergleich.)
   const hauptzahl = rentSharePct != null && React.createElement('div', { 'data-instrument-zahl': 'wohnkosten', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
     // Gleiche Schreibweise wie Kachel und Kapitel: knapp über einem Drittel eine Stelle, sonst ganz.
     zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 }) + ' %');
@@ -68,15 +69,15 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
       fillColor: bereichFillColor('wohnen', isDarkMode),
       thresholdValue: drittelGrenzeMiete(r),
       drittel: r,
-      unterBild: hauptzahl,
+      lageGross: true,
     }),
 
     rentSharePct != null && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
-      !rentComparison && hauptzahl,
+      hauptzahl,
       // Kein inline-„!" — das sitzt auf dem Balken. Hier nur die lesbare Deep-Variante.
       React.createElement('div', {
         style: { fontSize: text.sm, color: r.ueberDrittel && !r.mitPartner ? palette.goldDeep : palette.text, lineHeight: leading.normal },
-      }, t('mietzinsView.rentShare', { pct: rentSharePct })),
+      }, t(wohnkostenSatzKey(r)) + ' (' + betrag(r.einkommen) + ')'),
       // Mit Partner/in derselbe Satz wie im Kapitel: gerechnet ist nur das eigene Einkommen.
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '2px' },

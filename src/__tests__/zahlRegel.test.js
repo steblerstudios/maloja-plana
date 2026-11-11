@@ -48,15 +48,27 @@ describe('Regel «Zahl» · Werkzeug Mietzins (mittel)', () => {
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
     expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30 %</);
   });
-  it('direkt unter den Häusern, vor Legenden und Sätzen', () => {
+  it('unter den Häusern die Lage der Miete gross, der Anteil erst beim Wohnkosten-Satz', () => {
     const d = { basis: { canton: 'ZH' }, finanzen: { monthlyIncome: '6200' }, wohnen: { rentAmount: '1650', utilities: '180' } };
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: d }));
     const bild = html.indexOf('data-form="haeuser"');
-    const zahl = html.indexOf('data-instrument-zahl="wohnkosten"');
+    const lage = html.indexOf('data-instrument-zahl="miete"');
+    const anteil = html.indexOf('data-instrument-zahl="wohnkosten"');
     expect(bild).toBeGreaterThan(-1);
-    expect(zahl).toBeGreaterThan(bild);
-    expect(zahl).toBeLessThan(html.indexOf('po.regionalCompare.nationalVal'));
-    expect(zahl).toBeLessThan(html.indexOf('po.regionalCompare.rent.source'));
+    expect(lage).toBeGreaterThan(bild);
+    expect(lage).toBeLessThan(html.indexOf('po.regionalCompare.nationalVal'));
+    expect(html).toMatch(/data-instrument-zahl="miete"[^>]*>[−+≈][^<]* %</);
+    expect(anteil).toBeGreaterThan(html.indexOf('po.regionalCompare.rent.source'));
+    // derselbe Satz wie Kachel und Kapitel, die Zahl nicht doppelt, Einkommen über betrag()
+    expect(html).toContain('instrumente.wohnkostenSatz (CHF 6’200)');
+    expect(html).not.toContain('mietzinsView.rentShare(');
+  });
+});
+
+describe('Regel «Zahl» · Kapitel ohne doppelte Zahl', () => {
+  it('unter der grossen Zahl der Kachel-Satz mit Einkommen, nicht nochmals «… %»', () => {
+    const html = kapitel(profil());
+    expect(html).toMatch(/data-teil="wohnkosten-satz"[^>]*>instrumente\.wohnkostenSatz \(CHF 6’000\)</);
   });
 });
 

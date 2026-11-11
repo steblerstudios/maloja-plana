@@ -91,7 +91,7 @@ describe('Kapitel Wohnen · Rechnung aus der einen Monatsrechnung', () => {
     const html = render(p.wohnen, p);
     expect(html).toContain('budgetSync.availableNeedsNetto');
     expect(html).not.toContain('wohnenInstrument.freiDanach');
-    expect(html).toContain('wohnenInstrument.anteilBrutto');
+    expect(html).toContain('instrumente.wohnkostenSatzBrutto');
   });
 });
 
@@ -158,7 +158,7 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.mitPartner).toBe(true);
     expect(r.einkommen).toBe(4000);
     const html = render(p.wohnen, p);
-    expect(html).toContain('wohnenInstrument.anteilEigen');
+    expect(html).toContain('instrumente.wohnkostenSatzEigen');
     expect(html).toContain('wohnenInstrument.mitPartner');
     expect(html).not.toContain('wohnenInstrument.mehrAlsDrittel');
   });
@@ -170,15 +170,15 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(r.haushalt).toBe(true);
     expect(r.einkommen).toBe(8000);
     const html = render(p.wohnen, p);
-    expect(html).toContain('wohnenInstrument.anteilHaushalt');
+    expect(html).toContain('instrumente.wohnkostenSatzHaushalt');
     expect(html).not.toContain('wohnenInstrument.mitPartner');
   });
 
   it('nur der Nebenerwerb brutto: «teils brutto», nicht «des Bruttoeinkommens»', () => {
     const p = profil({ monthlyIncome: '4000', sideIncome: '800', sideIncomeType: 'brutto' });
     const html = render(p.wohnen, p);
-    expect(html).toContain('wohnenInstrument.anteilTeilsBrutto');
-    expect(html).not.toContain('wohnenInstrument.anteilBrutto(');
+    expect(html).toContain('instrumente.wohnkostenSatzTeilsBrutto');
+    expect(html).not.toContain('instrumente.wohnkostenSatzBrutto (');
   });
 
   it('Eigentum mit Hypothek: Hypothek und Gebäudeversicherung zählen, kein Regler', () => {

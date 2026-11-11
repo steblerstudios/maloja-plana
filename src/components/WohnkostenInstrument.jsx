@@ -144,14 +144,11 @@ const BeitragLegende = ({ palette, t, beitrag }) => React.createElement('p', {
     React.createElement('rect', { x: 0.75, y: 0.75, width: 12.5, height: 8.5, fill: 'none', stroke: beitrag.farbe, strokeWidth: 1.5, strokeDasharray: '3 2' })),
   t('mietzinsSzene.beitragLegende', { betrag: zahl(beitrag.hoechst) }));
 
-// Welcher Text unter «… % des Einkommens» steht.
-// Partner-Haus (11.11.2026): mit dem Haushalt gerechnet → «der Netto-Einnahmen Ihres Haushalts».
-const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteilTeilsBrutto')
-  : r.haushalt ? 'wohnenInstrument.anteilHaushalt' : r.mitPartner ? 'wohnenInstrument.anteilEigen' : 'wohnenInstrument.anteil';
 const satzKey = (r) => r.partnerOffen ? 'wohnenInstrument.partnerOffen' : r.mitPartner ? 'wohnenInstrument.mitPartner'
   : r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel';
 
-// Kurzer Satz für die Instrument-Kachel: wessen Einkommen gemeint ist (dieselben Fälle wie anteilKey).
+// Satz für Kachel und Kapitel (seit 11.11.2026, Regel «Zahl»): wessen Einkommen gemeint ist — netto, eigenes,
+// Haushalt (Partner-Haus), brutto, teils brutto.
 export const wohnkostenSatzKey = (r) => r.brutto ? (r.ganzBrutto ? 'instrumente.wohnkostenSatzBrutto' : 'instrumente.wohnkostenSatzTeilsBrutto')
   : r.haushalt ? 'instrumente.wohnkostenSatzHaushalt' : r.mitPartner ? 'instrumente.wohnkostenSatzEigen' : 'instrumente.wohnkostenSatz';
 
@@ -200,8 +197,10 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
       React.createElement('div', { 'data-instrument-zahl': 'wohnkosten', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, pct + ' %'),
       React.createElement('div', { 'data-teil': 'wohnkosten-franken', style: { fontSize: text.sm, color: palette.mid, margin: '2px 0 0' } },
         t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel') + ': ' + betrag(r.kosten)),
+      // Derselbe Satz wie auf der Kachel, ohne die Zahl ein zweites Mal (Vorher-nachher 11.11.2026: «33 %» stand doppelt).
+      // Das Einkommen in Klammern über betrag() (Sichtschutz).
       React.createElement('p', { 'data-teil': 'wohnkosten-satz', style: { ...klein, margin: space.xs + 'px 0 ' + space.sm + 'px', color: palette.text } },
-        t(anteilKey(r), { pct, einkommen: zahl(r.einkommen) })),
+        t(wohnkostenSatzKey(r)) + ' (' + betrag(r.einkommen) + ')'),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: r.ueberDrittel && !r.mitPartner ? palette.roseDeep : palette.text, palette }), t('wohnenInstrument.drittel')),
         // C · Viertel-Strich mit Quelle (nur wo er im Haus steht: netto, mit Urteil).
