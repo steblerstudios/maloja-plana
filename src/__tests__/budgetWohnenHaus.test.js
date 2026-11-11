@@ -53,3 +53,28 @@ describe('Budget · Drittel-Haus in der Gruppe «Wohnen»', () => {
     expect(fs.readFileSync(path.join(SRC, 'budgetSync.js'), 'utf8')).not.toMatch(/rentPercentage|> 40\b/);
   });
 });
+
+describe('Budget · Richtwert als zwei Häuser', () => {
+  it('Ihr Haus gefüllt, Vergleichshaus mit Dach in der Farbe Ihrer Lage, Höhe = Betrag', async () => {
+    const React = (await import('react')).default;
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { HaeuserVergleich, lageFarbe } = await import('../components/RegionalBarometer.jsx');
+    const P = { text: '#111', mid: '#666', gold: '#B8955A', sage: '#5F7F68', surface: '#FFF' };
+    const bild = (sie, vergleich) => renderToStaticMarkup(React.createElement(HaeuserVergleich, { palette: P, sie, vergleich, fuell: '#6C8343' }));
+    expect(bild(1800, 1277)).toContain('fill="#B8955A"'); // darüber: gold
+    expect(bild(1000, 1277)).toContain('fill="#5F7F68"'); // darunter: salbei
+    expect(lageFarbe(P, 1280, 1277)).toBe('#666'); // ±2 %: neutral
+    expect(bild(1800, 1277)).toContain('aria-hidden="true"');
+    expect(bild(0, 1277)).toBe('');
+    const hoehe = (html) => [...html.matchAll(/<rect [^>]*height="([\d.]+)"/g)].map((m) => Number(m[1]));
+    const [vergleich, sie] = hoehe(bild(1800, 1277));
+    expect(sie / vergleich).toBeCloseTo(1800 / 1277, 6);
+  });
+
+  it('steht aufgeklappt in der Gruppe «Wohnen», der Richtwert-Satz mit Quelle bleibt', () => {
+    const q = fs.readFileSync(path.join(SRC, 'BudgetSync.jsx'), 'utf8');
+    expect(q).toMatch(/open && group\.key === 'housing' && groupBm && React\.createElement\('div', \{ 'data-teil': 'budget-richtwert-haeuser'/);
+    expect(q).toMatch(/React\.createElement\(HaeuserVergleich, \{ palette, sie: group\.total, vergleich: groupBm,/);
+    expect(q).toMatch(/open && groupBm && renderBenchmarkLine\(groupBm, group\.key, true\)/);
+  });
+});

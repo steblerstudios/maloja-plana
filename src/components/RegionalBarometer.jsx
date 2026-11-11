@@ -268,17 +268,17 @@ const HAUS_X = { sie: 6, region: 44, schweiz: 82 };
 const BODEN = 84;
 const HOEHE = 58;
 const DACH = 12;
+const STRICH = { vectorEffect: 'non-scaling-stroke' };
+// Ein Haus: Körper ab `y` bis zum Boden, Dach darüber.
+const hausForm = (x, y, koerper, dach) => React.createElement('g', null,
+  React.createElement('rect', { x, y, width: HAUS_B, height: BODEN - y, ...koerper, ...STRICH }),
+  React.createElement('path', { d: 'M' + (x - 3) + ' ' + y + 'L' + (x + HAUS_B / 2) + ' ' + (y - DACH) + 'L' + (x + HAUS_B + 3) + ' ' + y + 'Z', ...dach, ...STRICH }),
+);
 function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite }) {
   const h = React.createElement;
   const oben = (v) => BODEN - Math.max(4, (pct(v) / 100) * HOEHE);
-  const strich = { vectorEffect: 'non-scaling-stroke' };
-  const haus = (x, v, koerper, dach) => {
-    const y = oben(v);
-    return h('g', null,
-      h('rect', { x, y, width: HAUS_B, height: BODEN - y, ...koerper, ...strich }),
-      h('path', { d: 'M' + (x - 3) + ' ' + y + 'L' + (x + HAUS_B / 2) + ' ' + (y - DACH) + 'L' + (x + HAUS_B + 3) + ' ' + y + 'Z', ...dach, ...strich }),
-    );
-  };
+  const strich = STRICH;
+  const haus = (x, v, koerper, dach) => hausForm(x, oben(v), koerper, dach);
   const linieY = hasThreshold ? BODEN - (pct(thresholdValue) / 100) * HOEHE : null;
   const schwelleFarbe = thresholdBreached ? palette.roseDeep : palette.text;
   return h('div', { role: 'img', 'aria-label': ariaLabel, 'data-form': 'haeuser', style: { marginBottom: space.sm + 'px' } },
@@ -296,5 +296,26 @@ function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, nation
     ),
   );
 }
+
+// Zwei Häuser (Budget, Gruppe «Wohnen», 11.11.2026, Stebler Studios «Richtwert als Häuserzeile»): Ihre
+// Wohnkosten gegen den BFS-Richtwert eines vergleichbaren Haushalts. Dieselben Marken wie die Häuserzeile:
+// Ihr Haus gefüllt (= Füllung), das Vergleichshaus mit Dach in der Farbe Ihrer Lage (gold = Sie darüber,
+// salbei = darunter, ±2 % neutral — wie der Punkt). Rein Bild (aria-hidden): Betrag und Richtwert stehen im
+// Text daneben. Keine neue Aussage — der Richtwert-Satz mit Quelle bleibt.
+export function lageFarbe(palette, wert, vergleich) {
+  if (!(wert > 0) || !(vergleich > 0)) return palette.mid;
+  return wert > vergleich * 1.02 ? palette.gold : wert < vergleich * 0.98 ? palette.sage : palette.mid;
+}
+export const HaeuserVergleich = ({ palette, sie, vergleich, fuell, maxBreite }) => {
+  if (!(sie > 0) || !(vergleich > 0)) return null;
+  const h = React.createElement;
+  const skala = Math.max(sie, vergleich) * 1.15;
+  const oben = (v) => BODEN - Math.max(4, (v / skala) * HOEHE);
+  return h('svg', { viewBox: '0 0 84 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-vergleich', style: { display: 'block', maxWidth: (maxBreite || INSTRUMENT_GROESSE.klein) + 'px', height: 'auto', overflow: 'visible' } },
+    hausForm(HAUS_X.region, oben(vergleich), { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: lageFarbe(palette, sie, vergleich), stroke: palette.surface, strokeWidth: 1 }),
+    hausForm(HAUS_X.sie, oben(sie), { fill: fuell }, { fill: fuell }),
+    h('line', { x1: 0, x2: 82, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
+  );
+};
 
 export default RegionalBarometer;
