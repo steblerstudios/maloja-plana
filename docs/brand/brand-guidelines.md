@@ -341,7 +341,15 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
     als blaue Strichlinie. Ohne Programm ist es eine schlichte Tür. Im Kapitel gibt es danach keine eigene Tonne mehr.
   - **Der Wegweiser «möglich»** steht unter der Tür, der Pfosten zeigt hinauf.
   - **Unter den Häusern** steht nur noch Ihr Betrag.
-  - Europa und das Ausland folgen erst nach der Quellenprüfung, als Schild rechts mit Fähnchen.
+  - **EU als Stock** (gepunktet blau, Fahne «EU −53 %»): abgeleitet aus dem Schweizer Schnitt und dem Eurostat-
+    Preisniveau für Wohnen und Energie (prc_ppp_ind_1, A0104, 2025; `data/wohnenInternational.js`). Die Fahne zeigt
+    Prozent, nie Franken. Der Satz unter der Strasse sagt «abgeleitet, keine gemessenen Wohnungspreise» und nennt die
+    Nachbarländer.
+  - **Fahne am Kanton-Stock** («Sie −20 %», aus `lageZurRegion`, Rand in der Lage-Farbe), aussen rechts. Läge sie im
+    Weg des Wegweisers, rückt sie ins Haus.
+  - **Der Wegweiser «möglich ›» steht in der Strasse** rechts vom Vergleichshaus, Pfosten auf dem Boden, auch auf dem
+    Handy; der ganze Satz steht im Vorlesetext. Die Tür sitzt rechts im Haus.
+  - Die Strasse gross ist 170 Einheiten breit (330 px), die Schrift 7 Einheiten: 13 px auch bei 375 px Bildschirm.
   - Mittel (Mietzins, Budget) bleibt bei drei kleinen Häusern.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
