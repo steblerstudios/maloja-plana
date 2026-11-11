@@ -470,7 +470,8 @@ Frage-Art, Form, Rechnung und Zuhause. Der Wächter `src/__tests__/instrumenteFo
 Bekannte Abweichungen stehen im Register unter `offen`, mit einer **Sperrklinke**: Die Listen dürfen nur kürzer
 werden. Stand 11.11.:
 - 5 Formen weichen ab: Dienstjahre, Ferien, Pensum, Steuer-Säule (B-F4), Mini-Kreuz (B-F5).
-- 2 Instrumente rechnen noch inline: Ferien, Pensum.
+- ~~2 Instrumente rechnen noch inline: Ferien, Pensum.~~ Seit 11.11. keines mehr: `ferienLage` und `pensumLage`
+  in `src/utils/arbeitsverhaeltnis.js`, mit Test (Sperrklinke `ohneRechnung` auf 0).
 - 1 Zuhause zeigt ein anderes Bild als die Kachel: Bereit (B-F1).
 - 9 Instrumente haben kein Zuhause.
 
@@ -522,7 +523,8 @@ werden. Stand 11.11.:
   zeigt: `lohnLage`), Dienstjahre (Jahresringe · «7 Jahre» · gesetzliche Kündigungsfrist nach OR 335c, Probezeit 335b,
   Lehrvertrag 344a/346 — am Fedlex-Volltext geprüft), Ferien (Sonne · «12 Tage» offen · Mindestanspruch OR 329a; neue
   Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr · «42 Std.» · gemessen an 40 Std., der Rechenbasis
-  des Lohnvergleichs, ab 40 «Vollzeit»). Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
+  des Lohnvergleichs, ab 40 «Vollzeit»). Rechnungen: `dienstLage`, `ferienLage`, `pensumLage`
+  (`src/utils/arbeitsverhaeltnis.js`), nie inline in der Anzeige. Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
   Lohn-Barometer; ein Klick dort springt zum Formular statt ins eigene Kapitel.
   **Basis** (drei, Stebler Studios «alle drei»): Ausweis (Kalenderblatt des frühesten Ablaufdatums der Ausweis-
   Dokumente im Lebensordner · «4 Jahre» · «So lange ist Ihr Ausweis noch gültig»; abgelaufen rot), Referenzalter
