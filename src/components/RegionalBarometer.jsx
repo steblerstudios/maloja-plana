@@ -330,11 +330,11 @@ export const HaeuserzeileKlein = ({ palette, comparison, userValue, fillColor })
   const lage = lageZurRegion(userValue, regional);
   const dach = !lage ? palette.mid : lage.richtung === 'Above' ? palette.gold : lage.richtung === 'Below' ? palette.sage : palette.mid;
   const fuell = fillColor || palette.sky;
-  return h('svg', { viewBox: '0 0 120 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-klein', style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', overflow: 'visible' } },
+  return h('svg', { viewBox: '2 12 114 74', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-klein', style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', overflow: 'visible' } },
     hausForm(HAUS_X.schweiz, oben(national), { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
     hausForm(HAUS_X.region, oben(regional), { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dach, stroke: palette.surface, strokeWidth: 1 }),
     userValue > 0 && hausForm(HAUS_X.sie, oben(userValue), { fill: fuell }, { fill: fuell }),
-    h('line', { x1: 0, x2: 120, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
+    h('line', { x1: 2, x2: 116, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
   );
 };
 
