@@ -202,6 +202,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
       React.createElement(RegionalBarometer, {
         palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell, imKapitel: true,
         form: 'haeuser', maxBreite: INSTRUMENT_GROESSE.gross, drittel: r, kanton: canton,
+        kantonProgramm: PROGRAMM_KANTONE.includes(canton), tuerFarbe: bereichFillColor('behoerden', isDarkMode),
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       })
     ),

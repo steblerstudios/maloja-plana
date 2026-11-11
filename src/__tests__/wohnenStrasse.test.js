@@ -80,3 +80,30 @@ describe('Nachbarhäuser (Skizze B, Stebler Studios 11.11.2026)', () => {
     expect(s * 256 / 132).toBeGreaterThanOrEqual(13);
   });
 });
+
+describe('Kantonshaus gross: Mischung A–C (Stebler Studios 11.11.2026, «eine Mischung aller»)', () => {
+  const gross = (p) => zeile({ drittel: { anteil: 30 }, maxBreite: 256, kanton: 'ZG', ...p });
+  it('C: die Form der Karte — ein Umriss mit flachem Dach, hellgrün', () => {
+    const h = gross();
+    expect(h).toMatch(/<g data-teil="kanton-haus"><path d="M44 84V[\d.]+L58 [\d.]+L72 [\d.]+V84Z" fill="#7a5" fill-opacity="0.18"/);
+  });
+  it('A: Fahne mit Prozent aus lageZurRegion, Rand in der Lage-Farbe', () => {
+    const ueber = gross({ userValue: 1900 });   // 1900 gegen 1732 → +10 %, gold
+    expect(ueber).toMatch(/data-teil="kanton-fahne"[\s\S]*stroke="#b80"[\s\S]*>\+10 %<\/text>/);
+    const unter = gross({ userValue: 1500 });   // −13 %, salbei
+    expect(unter).toMatch(/data-teil="kanton-fahne"[\s\S]*stroke="#6a6"[\s\S]*>−13 %<\/text>/);
+    expect(gross({ userValue: 1740 })).toMatch(/>≈ 0 %<\/text>/);
+  });
+  it('B: Tür in Behörden-Grau nur mit Programm', () => {
+    expect(gross({ kantonProgramm: true, tuerFarbe: '#5A6472' })).toMatch(/data-teil="kanton-tuer"[^>]*fill="#5A6472"/);
+    expect(gross({ kantonProgramm: false })).not.toContain('kanton-tuer');
+  });
+  it('mittel bleibt das bisherige Regionshaus (Dach in der Lage-Farbe, ohne Fahne)', () => {
+    const h = zeile({ drittel: { anteil: 30 }, kanton: 'ZG' });
+    expect(h).not.toContain('kanton-haus');
+    expect(h).not.toContain('kanton-fahne');
+  });
+  it('Kapitel gibt Programm und Behörden-Farbe mit', () => {
+    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/kantonProgramm: PROGRAMM_KANTONE\.includes\(canton\), tuerFarbe: bereichFillColor\('behoerden', isDarkMode\)/);
+  });
+});

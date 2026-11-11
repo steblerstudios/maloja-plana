@@ -332,6 +332,12 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   gestrichelt «CH». Die Beträge stehen direkt unter den Häusern («erst sehen, dann lesen»), die Legenden-Zeilen
   entfallen dort. Mittel (Mietzins, Budget) bleibt bei den Legenden-Zeilen, weil Kürzel und Beträge dort unter 13 px
   bzw. zu eng wären.
+  **Das Kantonshaus, gross** (11.11.2026, Stebler Studios «eine Mischung aller» zu Skizzen A–C):
+  - **Form der Karte:** ein Umriss mit flachem Dach, hellgrün, Kürzel im Haus.
+  - **Fahne auf dem First:** «−20 %», «+20 %» oder «≈ 0 %» aus `lageZurRegion`. Der Rand hat die Lage-Farbe
+    (salbei/gold), die Zahl die Deep-Variante. Die Fahne ersetzt die Dachfarbe.
+  - **Tür in Behörden-Grau:** nur, wenn die App für den Kanton ein Mietbeiträge-Programm kennt.
+  - Mittel bleibt beim Dach in der Lage-Farbe.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.
