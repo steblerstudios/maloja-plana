@@ -183,7 +183,9 @@ const syncBudgetFromChapters = (data) => {
   return budget;
 };
 
-export const calculateMonthlyBudget = (data, t) => {
+// `wohnen` (optional, 11.11.2026): `{ ueberDrittel }` aus der einen Wohnkosten-Rechnung (data/wohnkosten.js),
+// vom Budget-Bildschirm mitgegeben. Ohne Angabe kein Wohn-Hinweis — keine eigene Schwelle hier.
+export const calculateMonthlyBudget = (data, t, wohnen) => {
   const budget = syncBudgetFromChapters(data);
 
   return {
@@ -195,15 +197,17 @@ export const calculateMonthlyBudget = (data, t) => {
       insurance: budget.income > 0 ? (((budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0)) / budget.income) * 100).toFixed(1) : 0,
       savings: budget.income > 0 ? ((budget.remaining / budget.income) * 100).toFixed(1) : 0
     },
-    recommendations: getBudgetRecommendations(budget, t)
+    recommendations: getBudgetRecommendations(budget, t, wohnen)
   };
 };
 
-const getBudgetRecommendations = (budget, t) => {
+const getBudgetRecommendations = (budget, t, wohnen) => {
   const recommendations = [];
 
-  const rentPercentage = budget.income > 0 ? (budget.expenses.rent / budget.income) * 100 : 0;
-  if (rentPercentage > 40) {
+  // Wohnkosten: dieselbe Regel wie Kapitel Wohnen, Mietzins und Drittel-Haus (data/wohnkosten.js) —
+  // mehr als ein Drittel der eigenen Einnahmen, mit Partner/in kein Urteil. Bis 11.11.2026 stand hier eine
+  // vierte Regel: nur die Miete ÷ Haushaltseinkommen, Schwelle 40 %.
+  if (wohnen?.ueberDrittel) {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.rentInfo') : 'Your housing costs make up a large part of your budget. This is not uncommon in many Swiss cities.'
