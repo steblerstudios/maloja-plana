@@ -11,7 +11,7 @@ import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { NetzSchild, betragText } from './NetzSchild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
-import { KKLastEinordnung, VERGLEICHSMARKE, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
+import { KKLastEinordnung, VERGLEICHSMARKE, kkLastAnteil, kkLastBasisKey, kkLastIpv } from '../KKLastCard.jsx';
 import { istAngestellt } from '../utils/anstellung.js';
 
 // Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Stebler Studios 24.10.2026,
@@ -82,13 +82,12 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const f = daten.finanzen || {};
   const pk = Number(v.bvgContribution) > 0 && istAngestellt(f) && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
 
-  // KK-Last wie KKLastCard: Grundversicherungs-Prämie ÷ monatliches Einkommen.
-  const kkPraemie = Number(v.kkPremium) || 0;
-  const einkommen = Number(daten.finanzen?.monthlyIncome) || 0;
-  const anteil = kkPraemie > 0 && einkommen > 0 ? (kkPraemie / einkommen) * 100 : null;
+  // KK-Last: dieselbe Rechnung wie KKLastCard und KKLastSpiegel (kkLastAnteil, B-R4).
+  const last = kkLastAnteil(daten);
+  const anteil = last ? last.anteil : null;
   const skala = anteil == null ? 15 : Math.max(15, Math.ceil(anteil / 5) * 5);
   // IPV-Stand wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
-  const kkStand = anteil != null ? kkLastIpv(daten, kkPraemie, einkommen) : null;
+  const kkStand = last ? kkLastIpv(daten, last.praemie, last.einkommen) : null;
 
   const schildDa = schildState(v, schildOptionen(daten)).touched;
 
