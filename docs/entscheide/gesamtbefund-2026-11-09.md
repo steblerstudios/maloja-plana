@@ -197,6 +197,28 @@ siebenmal neu entschieden werden:
    swiss-precision-pruefer am Volltext, Blocker behoben) · Inhalt, Gestaltung, Sprache → Entwurfs-PR #812, gestapelt auf #806
    (rechts-pruefer, fünf Sätze nachgeschärft). Zusammen 9301 Tests grün. Zwei Gestaltungs-Fehlbefunde im Blatt berichtigt.
    Offen: Lektüre fr/it/en, rm, Zuschlag in der 13. Rente (BSV), Witwen-Satz nach EGMR, Absätze teilen (S4).
+   **Kapitel 5 · Ausbildung & Arbeit** (10.11.): Bild [kapitel-5-ausbildung.html](../design/kapitel-5-ausbildung.html). Hoch: L1
+   ALV-Rechner ohne Alter 400 statt 200 Taggelder (AVIG Art. 27 Abs. 5bis). Mittel: L2–L7 (Betrag ohne Beitragszeit, brutto,
+   Kinder ab 18, Einstelltage, Abredeversicherung-Frist), A1 AHV-Akonto für Selbständige, A2 Probezeit-Verlängerung. Gestaltung
+   A–C (Zahlen-Platzhalter, langer Absatz, «Noch eine Angabe nötig» ohne Namen), Sprache S1–S7. Stundenlohn mit #802 erledigt.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles»). Zweig `feat/kapitel-5-ausbildung` (von `main`).
+   ✅ **Gebaut** → Entwurfs-PR #814: ALV-Rechner mit Alter (Spanne aus Beitragsmonaten), kein Betrag unter 12 Monaten,
+   brutto, Kinder ab 18 nur in Ausbildung, A–C; L5–L7, A1 (Jahrestabelle `selbstaendigAhv.js`), A2, Teile von K;
+   Überschriftenstufen; Sprache S2/S5/S6/S7 in den berührten Texten. rechts-pruefer mit Volltext eingearbeitet,
+   9396 Tests grün. Offen: Sprung zum Feld (C), rm-Übersetzung (S1), übrige K-Punkte, AHV-Werte 2027 für Selbständige.
+   ✅ **10.11. Nachzug** (gleicher PR #814): C «Noch nötig: …» mit Sprung zum Feld (app-weit, `data/angabeZiele.js`,
+   5 Rechner); Lebenslauf: Geburtsdatum/Nationalität/Zivilstand abwählbar; «Drei Wege»; ALV-Randfälle (Wartetage nach
+   Jahresverdienst, 80 % nach vollem Taggeld ≤ 140 Fr.); Lohnbasis 6/12 Monate und 13. Monatslohn; Zwischenverdienst;
+   Sperrfrist verschiebt RAV-Datum; AHV je Kalenderjahr und 3a nach Aussteuerung; Quellensteuer genauer; S3/S4 in Lehre
+   und Ausgesteuert (de, en; rm-Rückfall nachgezogen). rechts-pruefer am Volltext eingearbeitet. Offen: Mindestlohn-Hinweis
+   «angenommen» (hängt an `arbeitsKanton` aus #802, noch nicht gemergt), Mindestlohn-Ausnahmen GE/TI/JU, S3 in fr/it,
+   rm-Übersetzung, AHV-Werte 2027 Selbständige.
+   ✅ **10.11. Nachzug 2**: S3 in fr/it (Lehre, Ausgesteuert), Geburtsdatum TT.MM.JJJJ im Lebenslauf. AHV 2027 für
+   Selbständige nur teilweise belegt (AHVV Art. 21: Skala bis 61 500; Art. 28: AHV-Mindestbeitrag 444), Gesamt-
+   Mindestbeitrag AHV+IV+EO nicht → bleibt ohne Eintrag. Weiter offen: Mindestlohn «angenommen» (#802), GE/TI/JU, rm.
+   ✅ **10.11. Nachzug 3**: Mindestlohn-Ausnahmen an BS MiLoG § 2 und NE LEmpl Art. 32a–e gelesen. «Lehre, Praktikum,
+   unter 18 ausgenommen» galt nicht überall (BS: unter 18 nur Ferienjob; NE: per Staatsrat, Erlass nicht gefunden) →
+   `lohnCheck.ausnahmen` sagt jetzt «jeder Kanton legt fest», mit belegten Beispielen. Offen: NE-Erlass, #802, rm.
 5. **Die übrigen Seiten** (11.11.), im selben Verfahren wie die Kapitel. Inventar aus `ansichtenRegister.js`,
    `werkzeugRegister.js`, den `view === '…'`-Zweigen in `main.jsx`, den Umleitungen in `hashRouter.js` und `public/`;
    abgezogen, was die Blätter zu Kapitel 1–7 abdecken. Fünf Gruppen, Reihenfolge A → E. ✅ **11.11.: so** (Stebler
