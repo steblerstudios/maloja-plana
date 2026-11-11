@@ -2568,8 +2568,10 @@ export default {
     zurueck: 'Zurück auf die heutige Miete',
     ausprobierteMiete: 'Ausprobierte Miete: CHF {amount}',
     anteilEigen: { sie: '{pct} % Ihres eigenen Einkommens (CHF {einkommen})', du: '{pct} % deines eigenen Einkommens (CHF {einkommen})' },
+    anteilHaushalt: { sie: '{pct} % der Netto-Einnahmen Ihres Haushalts (Sie und Partner/in, CHF {einkommen})', du: '{pct} % der Netto-Einnahmen deines Haushalts (du und Partner/in, CHF {einkommen})' },
     anteilTeilsBrutto: '{pct} % des erfassten Einkommens (CHF {einkommen}, teils brutto)',
     mitPartner: 'Die Wohnkosten gelten für den Haushalt, gerechnet ist hier nur das eigene Einkommen. Mit Partnerin oder Partner zusammen ist der Anteil kleiner.',
+    partnerOffen: { sie: 'Die Wohnkosten gelten für den Haushalt. Tragen Sie im Kapitel «Persönliche Basis» den Nettolohn der zweiten Person ein (0, wenn sie keinen hat), dann rechnet das Haus mit dem ganzen Haushalt.', du: 'Die Wohnkosten gelten für den Haushalt. Trag im Kapitel «Persönliche Basis» den Nettolohn der zweiten Person ein (0, wenn sie keinen hat), dann rechnet das Haus mit dem ganzen Haushalt.' },
     fehltDanach: 'Es fehlen danach',
   },
 
@@ -6538,6 +6540,7 @@ export default {
     wohnkosten: 'Wohnkosten-Anteil',
     wohnkostenSatz: { sie: 'So viel Ihres Nettoeinkommens geht ans Wohnen', du: 'So viel deines Nettoeinkommens geht ans Wohnen' },
     wohnkostenSatzEigen: { sie: 'So viel Ihres eigenen Einkommens geht ans Wohnen', du: 'So viel deines eigenen Einkommens geht ans Wohnen' },
+    wohnkostenSatzHaushalt: { sie: 'So viel der Netto-Einnahmen Ihres Haushalts geht ans Wohnen', du: 'So viel der Netto-Einnahmen deines Haushalts geht ans Wohnen' },
     wohnkostenSatzBrutto: 'So viel des Bruttoeinkommens geht ans Wohnen',
     wohnkostenSatzTeilsBrutto: 'So viel des erfassten Einkommens (teils brutto) geht ans Wohnen',
     wohnkostenDrittel: 'Strich: ein Drittel — eine Faustregel, keine Vorschrift.',

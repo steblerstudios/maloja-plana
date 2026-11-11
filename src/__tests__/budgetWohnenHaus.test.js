@@ -39,6 +39,16 @@ describe('Budget · Wohn-Hinweis nach der einen Regel', () => {
     const r = wohnkostenRechnung(p.wohnen, p);
     expect(Math.round((wohnen / b.income) * 100)).toBe(Math.round(r.anteil));
   });
+
+  it('Partner-Haus (11.11.2026): mit Partner/in, zwei Erwachsene, netto — dieselbe Prozentzahl wie das Haus', () => {
+    const p = profil({ monthlyIncome: '5200' }, {}, { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '3800' } });
+    const b = calculateMonthlyBudget(p, t);
+    const e = b.expenses;
+    const r = wohnkostenRechnung(p.wohnen, p);
+    expect(r.haushalt).toBe(true);
+    expect(r.einkommen).toBe(b.income);
+    expect(Math.round(((e.rent + e.utilities) / b.income) * 100)).toBe(Math.round(r.anteil));
+  });
 });
 
 describe('Budget · Drittel-Haus in der Gruppe «Wohnen»', () => {

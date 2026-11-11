@@ -46,8 +46,10 @@ describe('Wohnkosten · eine Rechnung', () => {
     expect(drittelGrenzeMiete(r)).toBeCloseTo(4000 / 3 - 1200, 6);
   });
 
-  it('mit Partner/in kein Urteil: die Miete gilt für den Haushalt, gerechnet ist das eigene Einkommen', () => {
-    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '5000' } });
+  // Seit 11.11.2026 (Partner-Haus): mit genau zwei Erwachsenen rechnet das Drittel mit dem Haushalt
+  // (wohnenPartnerHaus.test.js). Ohne Urteil bleibt es, wo die Summe nicht trägt — z. B. drei Erwachsene.
+  it('Partner/in und weitere Erwachsene: kein Urteil, die Miete gilt für den ganzen Haushalt', () => {
+    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 3, children: [], partnerIncome: '5000' } });
     const r = wohnkostenRechnung(p.wohnen, p);
     expect(r.mitPartner).toBe(true);
     expect(drittelGrenzeMiete(r)).toBe(0);
@@ -72,8 +74,8 @@ describe('Wohnkosten · Mietzins-Werkzeug zeigt dieselbe Zahl wie das Kapitel', 
     expect(Math.round(r.anteil)).toBe(33); // 1830 ÷ 5500; vorher 1830 ÷ 4000 = 46 %
   });
 
-  it('mit Partner/in der Satz aus dem Kapitel statt der Faustregel', () => {
-    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '5000' } });
+  it('ohne Urteil (Partner/in und weitere Erwachsene) der Satz aus dem Kapitel statt der Faustregel', () => {
+    const p = profil({}, {}, { maritalStatus: 'married', household: { adults: 3, children: [], partnerIncome: '5000' } });
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: p, isDarkMode: false }));
     expect(html).toContain('wohnenInstrument.mitPartner');
     expect(html).not.toContain('mietzinsView.rentShareGuide');

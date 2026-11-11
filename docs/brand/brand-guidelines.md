@@ -274,7 +274,7 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   Ein Bild aus dem Lebensbereich, wo die Frage typisch für den Bereich ist (wie das Netz-Schild):
   **A Drittel-Haus** für «Wie viel vom Einkommen geht ans Wohnen?» — das Haus ist das Einkommen, drei gleiche
   Stockwerke, die feste Linie über dem Erdgeschoss ist **ein Drittel**; die Wohnkosten füllen es von unten (Birne,
-  über einem Drittel Sand; mit Partner/in immer Birne, kein Urteil). **B Häuserzeile** für «Wo steht meine Miete?» —
+  über einem Drittel Sand; mit Partner/in siehe «Partner-Haus» unten). **B Häuserzeile** für «Wo steht meine Miete?» —
   dieselben Marken wie das Barometer als Häuser: Ihr Haus gefüllt (= Füllung), Region mit Dach in der Farbe des
   Punkts (= Ihre Lage), Schweiz gestrichelt (= Strich), das Drittel als Linie quer über die Strasse mit «!» (= Schwelle,
   nur wo A fehlt: Mietzins, Budget). Kapitel Wohnen: A + B gross 256; Mietzins und Budget: B mittel 128; Übersicht:
@@ -283,6 +283,12 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   **Budget** (11.11.2026): Gruppe «Wohnen» aufgeklappt mit Drittel-Haus mittel (nur ohne Partner/in, dann gleich der
   Gruppen-Prozentzahl) und dem BFS-Richtwert als zwei Häuser klein (`HaeuserVergleich`: Sie gefüllt, vergleichbarer
   Haushalt mit Dach in der Farbe Ihrer Lage); der Wohn-Hinweis folgt dem Drittel. Wächter: `budgetWohnenHaus.test.js`.
+  **Partner-Haus** (11.11.2026, Stebler Studios «Partner-Haus», Fachprüfung swiss-precision-pruefer): Ist der Nettolohn
+  der zweiten Person erfasst, sind es genau zwei Erwachsene und ist kein Lohn brutto erfasst, ist das Haus das
+  **Netto-Einkommen des Haushalts** (`haushaltsEinnahmen`, dieselbe Summe wie im Budget). Das Drittel-Urteil gilt dann
+  wie allein. Ohne Urteil (Birne) bleibt es bei weiteren Erwachsenen, bei Bruttolohn und, neu, bei leerem Feld der
+  zweiten Person. Bis dahin stand dort die Haushaltsmiete gegen das eigene Einkommen. «0» heisst: kein Einkommen der
+  zweiten Person. Wächter: `wohnenPartnerHaus.test.js`.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.

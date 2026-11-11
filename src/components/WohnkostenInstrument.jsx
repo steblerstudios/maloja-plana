@@ -71,13 +71,15 @@ export const DrittelHaus = ({ palette, anteil, ueberDrittel, mitPartner, fuell, 
 };
 
 // Welcher Text unter «… % des Einkommens» steht.
+// Partner-Haus (11.11.2026): mit dem Haushalt gerechnet → «der Netto-Einnahmen Ihres Haushalts».
 const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteilTeilsBrutto')
-  : r.mitPartner ? 'wohnenInstrument.anteilEigen' : 'wohnenInstrument.anteil';
-const satzKey = (r) => r.mitPartner ? 'wohnenInstrument.mitPartner' : r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel';
+  : r.haushalt ? 'wohnenInstrument.anteilHaushalt' : r.mitPartner ? 'wohnenInstrument.anteilEigen' : 'wohnenInstrument.anteil';
+const satzKey = (r) => r.partnerOffen ? 'wohnenInstrument.partnerOffen' : r.mitPartner ? 'wohnenInstrument.mitPartner'
+  : r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel';
 
 // Kurzer Satz für die Instrument-Kachel: wessen Einkommen gemeint ist (dieselben Fälle wie anteilKey).
 export const wohnkostenSatzKey = (r) => r.brutto ? (r.ganzBrutto ? 'instrumente.wohnkostenSatzBrutto' : 'instrumente.wohnkostenSatzTeilsBrutto')
-  : r.mitPartner ? 'instrumente.wohnkostenSatzEigen' : 'instrumente.wohnkostenSatz';
+  : r.haushalt ? 'instrumente.wohnkostenSatzHaushalt' : r.mitPartner ? 'instrumente.wohnkostenSatzEigen' : 'instrumente.wohnkostenSatz';
 
 export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }) => {
   const [probe, setProbe] = useState(null);

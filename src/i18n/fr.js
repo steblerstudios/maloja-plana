@@ -2554,8 +2554,10 @@ export default {
     zurueck: 'Revenir au loyer actuel',
     ausprobierteMiete: 'Loyer essayé : CHF {amount}',
     anteilEigen: { sie: '{pct} % de votre propre revenu (CHF {einkommen})', du: '{pct} % de ton propre revenu (CHF {einkommen})' },
+    anteilHaushalt: { sie: '{pct} % des revenus nets de votre ménage (vous et votre partenaire, CHF {einkommen})', du: '{pct} % des revenus nets de ton ménage (toi et ton ou ta partenaire, CHF {einkommen})' },
     anteilTeilsBrutto: '{pct} % du revenu saisi (CHF {einkommen}, en partie brut)',
     mitPartner: 'Les frais de logement valent pour le ménage, mais seul le revenu propre est compté ici. Avec celui du ou de la partenaire, la part est plus petite.',
+    partnerOffen: { sie: 'Les frais de logement valent pour le ménage. Indiquez dans le chapitre « Données personnelles » le salaire net de la deuxième personne (0 si elle n’en a pas) : la maison calculera alors avec tout le ménage.', du: 'Les frais de logement valent pour le ménage. Indique dans le chapitre « Données personnelles » le salaire net de la deuxième personne (0 si elle n’en a pas) : la maison calculera alors avec tout le ménage.' },
     fehltDanach: 'Manque ensuite',
   },
 
@@ -6456,6 +6458,7 @@ export default {
     wohnkosten: 'Part du logement',
     wohnkostenSatz: { sie: 'Part de votre revenu net consacrée au logement', du: 'Part de ton revenu net consacrée au logement' },
     wohnkostenSatzEigen: { sie: 'Part de votre propre revenu consacrée au logement', du: 'Part de ton propre revenu consacrée au logement' },
+    wohnkostenSatzHaushalt: { sie: 'Part des revenus nets de votre ménage consacrée au logement', du: 'Part des revenus nets de ton ménage consacrée au logement' },
     wohnkostenSatzBrutto: 'Part du revenu brut consacrée au logement',
     wohnkostenSatzTeilsBrutto: 'Part du revenu saisi (en partie brut) consacrée au logement',
     wohnkostenDrittel: 'Trait : un tiers — une règle empirique, pas une obligation.',
