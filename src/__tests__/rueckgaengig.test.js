@@ -134,6 +134,28 @@ describe('RueckgaengigMeldung — Fokus nach Rückgängig', () => {
     expect(quelle).toMatch(/onRueckgaengig\(\);\s*if \(rahmen\.current && rahmen\.current\.focus\) rahmen\.current\.focus\(\);/);
     expect(quelle).toContain("onClick: zurueck");
   });
+
+  // a11y-Prüfung 11.11.2026: der Fokus soll nicht auf einem leeren Rahmen liegen.
+  it('danach steht «Zurückgeholt · Name» im Rahmen — angesagt und fokussierbar', () => {
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const zeichne = (zurueckgeholt, entfernt = null) => {
+      zustand.slots = [{ current: null }, zurueckgeholt]; zustand.i = 0;
+      return renderToStaticMarkup(React.createElement(RueckgaengigMeldung, { palette, t: (k) => k, entfernt, onRueckgaengig: () => {} }));
+    };
+    const html = zeichne('Zahnarzt');
+    expect(html).toMatch(/^<div tabindex="-1" role="status" aria-live="polite"><div data-zurueckgeholt="true"/);
+    expect(html).toContain('common.zurueckgeholt · Zahnarzt');
+    // Eine neue Löschung geht vor: dann wieder «Entfernt» mit Knopf.
+    expect(zeichne('Zahnarzt', { item: {}, index: 0, text: 'Bank' })).toContain('common.entfernt · Bank');
+    expect(zeichne('Zahnarzt', { item: {}, index: 0, text: 'Bank' })).not.toContain('zurueckgeholt');
+  });
+
+  it('«Zurückgeholt» gibt es in allen Sprachen', async () => {
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const t = (await import(`../i18n/${l}.js`)).default;
+      expect(t.common.zurueckgeholt, l).toBeTruthy();
+    }
+  });
 });
 
 describe('alle Lösch-Listen haben Rückgängig', () => {

@@ -1381,6 +1381,7 @@ export default {
     delete: 'Rimuovi',
     entfernt: 'Rimosso',
     rueckgaengig: 'Annulla',
+    zurueckgeholt: 'Ripristinato',
     pickDate: 'Scegli una data',
     simpleView: 'Vista semplice',
     grayscale: 'Scala di grigi',

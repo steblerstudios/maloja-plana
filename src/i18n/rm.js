@@ -1677,6 +1677,7 @@ export default {
     delete: 'Allontanar',
     entfernt: 'Allontanà',
     rueckgaengig: 'Revocar',
+    zurueckgeholt: 'Zurückgeholt', // TODO(rm): übersetzen
     pickDate: 'Tscherner ina data',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
