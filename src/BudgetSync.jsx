@@ -284,7 +284,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         'data-teil': 'budget-drittel-haus', style: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-end', padding: '4px 0 ' + space.sm + 'px' },
       },
         React.createElement('div', { style: { width: INSTRUMENT_GROESSE.mittel + 'px', flexShrink: 0 } },
-          React.createElement(DrittelHaus, { palette, anteil: wohn.anteil, ueberDrittel: wohn.ueberDrittel, mitPartner: false, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'mittel' })),
+          React.createElement(DrittelHaus, { palette, anteil: wohn.anteil, ueberDrittel: wohn.ueberDrittel, mitPartner: false, brutto: wohn.brutto, fuell: bereichFillColor('wohnen', isDarkMode), groesse: 'mittel' })),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
           t(wohn.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel'))
       ),

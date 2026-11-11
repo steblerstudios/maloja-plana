@@ -289,6 +289,18 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   wie allein. Ohne Urteil (Birne) bleibt es bei weiteren Erwachsenen, bei Bruttolohn und, neu, bei leerem Feld der
   zweiten Person. Bis dahin stand dort die Haushaltsmiete gegen das eigene Einkommen. «0» heisst: kein Einkommen der
   zweiten Person. Wächter: `wohnenPartnerHaus.test.js`.
+  **Ausgebaut nach Grösse** (11.11.2026, Stebler Studios nach Skizze A–E: «Ja, so bauen»):
+  - Das **«!» an der Drittel-Linie** (A) ist graphit und wird Rosé (`roseDeep`), sobald die Füllung über einem
+    Drittel liegt. Linie und Legenden-Strich färben mit. Ohne Urteil gibt es kein «!». Damit hat auch das
+    Kapitel sein «!» wieder.
+  - Die **Füllung steigt** (B) beim Erscheinen in `duration.slow` (`mp-steigen`, abbremsend) und folgt dem
+    Regler (`scaleY`). «Weniger Bewegung» stellt beides still, mit beiden Schaltern.
+  - Der **Viertel-Strich** (C) ist eine feine Punktlinie: Budgetberatung Schweiz, «nicht mehr als ein Viertel der
+    Nettoeinnahmen», geprüft 11.11.2026. Er steht nur netto und mit Urteil, und im Kapitel mit Legende und Quelle.
+  - **«alles andere»** (D) steht im obersten Stock.
+  - Das **Partner-Haus ist geteilt** (E): ein feiner Strich nach den Netto-Einnahmen, darunter «Sie | Partner/in».
+  - Nach Grösse: **gross** A–E, **mittel** A + B + C, **klein** A + B. Schrift im Bild nur gross, bei 256 px genau
+    13 px (Regel H). Wächter: `drittelHausAusbau.test.js`.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.

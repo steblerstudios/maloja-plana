@@ -35,7 +35,8 @@ describe('kleine Bilder: 64 px, keine Wörter, dasselbe Bild wie im Kapitel', ()
     const html = renderToStaticMarkup(React.createElement(DrittelHaus, { palette, anteil: 30, ueberDrittel: false, fuell: '#9a6', groesse: 'klein' }));
     expect(html).toContain('data-teil="drittel-haus"');
     expect(html).toContain('max-width:64px');
-    expect(html).not.toMatch(/<text/);
+    // Klein nur das «!» (A) — keine Wörter, kein Viertel (drittelHausAusbau.test.js).
+    expect([...html.matchAll(/<text[^>]*>([^<]*)</g)].map((m) => m[1])).toEqual(['!']);
   });
   it('Häuserzeile klein: Sie gefüllt, Region mit Dach in der Lage-Farbe, Schweiz gestrichelt', () => {
     const html = renderToStaticMarkup(React.createElement(HaeuserzeileKlein, { palette, comparison: { regional: 1732, national: 1446 }, userValue: 1900, fillColor: '#9a6' }));

@@ -50,7 +50,7 @@ export function wohnkostenRechnung(wohnen, allData, miete) {
   const profil = { ...(allData || {}), wohnen: { ...(wohnen || {}), rentAmount: netto } };
   // «Frei verfügbar» bleibt beim eigenen Einkommen wie bisher (Monatsrechnung im Kapitel Finanzen).
   const frei = eigenes > 0 && !brutto ? eigenes - sumAllExpenses(allData?.finanzen, profil) : null;
-  return { heute, nk, netto, kosten, eigentum, einkommen, brutto, ganzBrutto, mitPartner, haushalt, partnerOffen, anteil, ueberDrittel: anteil != null && anteil > 100 / 3, frei };
+  return { heute, nk, netto, kosten, eigentum, einkommen, brutto, ganzBrutto, mitPartner, haushalt, partnerOffen, partnerEinkommen: haushalt ? partner : 0, anteil, ueberDrittel: anteil != null && anteil > 100 / 3, frei };
 }
 
 // Die «!»-Marke auf dem Miet-Balken (RegionalBarometer zeigt die NETTOMIETE): die Nettomiete, ab der

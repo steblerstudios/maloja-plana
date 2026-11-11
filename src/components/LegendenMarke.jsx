@@ -26,6 +26,8 @@ const shapes = {
   hausDach: (color, palette) => React.createElement(React.Fragment, null,
     React.createElement('path', { d: 'M3 10V5.5H11V10Z', fill: 'none', stroke: palette.text, strokeWidth: 1.2 }),
     React.createElement('path', { d: 'M2 5.5L7 1.2L12 5.5Z', fill: color })),
+  // Drittel-Haus (11.11.2026): der Viertel-Strich als feine Punktlinie, wie im Haus.
+  punktlinie: (color) => React.createElement('path', { d: 'M1 5H13', fill: 'none', stroke: color, strokeWidth: 1.5, strokeDasharray: '1 3', strokeLinecap: 'round' }),
   hausStrich: (color) => React.createElement('path', { d: 'M3 10V5L7 1.5L11 5V10Z', fill: 'none', stroke: color, strokeWidth: 1.2, strokeDasharray: '2 1.5' }),
 };
 

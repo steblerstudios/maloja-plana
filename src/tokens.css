@@ -451,6 +451,9 @@ html.mp-readable body {
 }
 
 /* ─── Micro-feedback animations ────────────────────────── */
+/* Drittel-Haus (11.11.2026): die Füllung steigt beim Erscheinen. Still bei «weniger Bewegung» (Block unten). */
+@keyframes mp-steigen { from { transform: scaleY(0); } }
+
 @keyframes mp-stamp {
   0% { transform: scale(1.04); opacity: 0.6; }
   60% { transform: scale(0.98); opacity: 1; }

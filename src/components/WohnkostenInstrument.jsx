@@ -50,23 +50,59 @@ export { wohnkostenRechnung, drittelGrenzeMiete };
 // es Birne — kein Urteil, wie der Satz. Rein Bild: die Zahl und der Satz stehen daneben (aria-hidden).
 // Grösse nach Brand Book §7b: gross 256 im Kapitel, klein 64 in der Übersicht.
 const HAUS = { x: 12, oben: 44, b: 96, stock: 24 };
-export const DrittelHaus = ({ palette, anteil, ueberDrittel, mitPartner, fuell, groesse = 'gross' }) => {
+// Ausgebaut 11.11.2026 (Stebler Studios, Kombination A–E nach Grösse: «Ja, so bauen»; Wächter drittelHausAusbau.test.js):
+//   A «!» an der Drittel-Linie: graphit, Rosé (roseDeep) erst darüber — Linie und «!» zusammen. Ohne Urteil kein «!».
+//   B Die Füllung ist das ganze Haus, gestaucht auf den Anteil (scaleY): sie steigt beim Erscheinen (mp-steigen) und
+//     folgt dem Regler mit demselben Übergang. «Weniger Bewegung» stellt beides still (tokens.css, beide Schalter).
+//   C Viertel-Strich, gross + mittel, nur netto und mit Urteil: Budgetberatung Schweiz (budgetberatung.ch/wohnen,
+//     geprüft 11.11.2026): «Der Dachverband empfiehlt, dass die Wohnkosten nicht mehr als ein Viertel der
+//     Nettoeinnahmen betragen.»
+//   D «alles andere» im oberen Teil, nur gross.  E Partner-Haus geteilt (Sie | Partner/in), nur gross.
+// Klein 64 zeigt nur A und B — nichts Feines (§7b).
+export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brutto, teile, fuell, groesse = 'gross' }) => {
   const h = React.createElement;
+  const gross = groesse === 'gross';
+  const klein = groesse === 'klein';
   const koerper = HAUS.stock * 3;
   const boden = HAUS.oben + koerper;
-  const voll = Math.max(0, Math.min(100, anteil || 0)) / 100 * koerper;
-  const farbe = ueberDrittel && !mitPartner ? palette.sand : fuell;
+  const anteil01 = Math.max(0, Math.min(100, anteil || 0)) / 100;
+  const urteil = !mitPartner && anteil != null;
+  const darueber = urteil && ueberDrittel;
+  const farbe = darueber ? palette.sand : fuell;
+  const drittelFarbe = darueber ? palette.roseDeep : palette.text;
   const linie = { vectorEffect: 'non-scaling-stroke' };
+  const strich = klein ? 2.5 : 1.5;
+  const drittelY = boden - HAUS.stock;
+  const viertelY = boden - koerper / 4;
+  const geteilt = gross && teile && teile.sie > 0 && teile.partner > 0;
+  const teilX = geteilt ? Math.round((HAUS.x + HAUS.b * teile.sie / (teile.sie + teile.partner)) * 10) / 10 : null;
+  // Wörter nur gross: die Schrift ist so gesetzt, dass sie bei 256 px genau text.xs (13 px) misst (Regel H).
+  const schrift = { fontSize: Math.ceil(text.xs * 120 / INSTRUMENT_GROESSE.gross * 100) / 100, fill: palette.mid, textAnchor: 'middle' };
+  const hoehe = boden + (geteilt ? 14 : 4);
   return h('svg', {
-    viewBox: '0 0 120 ' + (boden + 4), width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'drittel-haus',
-    style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto' },
+    viewBox: '0 0 120 ' + hoehe, width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'drittel-haus',
+    style: { display: 'block', maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', overflow: 'visible' },
   },
-    voll > 0 && h('rect', { 'data-teil': 'drittel-haus-fuellung', x: HAUS.x, y: boden - voll, width: HAUS.b, height: voll, fill: farbe }),
-    // Zwischen 1. und 2. Stock nur fein, über dem Erdgeschoss die feste Linie: das Drittel.
-    h('line', { x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: HAUS.oben + HAUS.stock, y2: HAUS.oben + HAUS.stock, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '3 3', ...linie }),
-    h('line', { 'data-teil': 'drittel-haus-drittel', x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: boden - HAUS.stock, y2: boden - HAUS.stock, stroke: palette.text, strokeWidth: 2, ...linie }),
-    h('rect', { x: HAUS.x, y: HAUS.oben, width: HAUS.b, height: koerper, fill: 'none', stroke: palette.text, strokeWidth: 1.5, ...linie }),
-    h('path', { d: 'M' + (HAUS.x - 8) + ' ' + HAUS.oben + 'L60 6L' + (HAUS.x + HAUS.b + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: 1.5, strokeLinejoin: 'round', ...linie }),
+    anteil01 > 0 && h('rect', {
+      'data-teil': 'drittel-haus-fuellung', x: HAUS.x, y: HAUS.oben, width: HAUS.b, height: koerper, fill: farbe,
+      style: {
+        transform: 'scaleY(' + anteil01 + ')', transformBox: 'fill-box', transformOrigin: 'bottom',
+        transition: 'transform ' + duration.slow + 'ms ' + ease + ', fill ' + duration.slow + 'ms ' + ease,
+        animation: 'mp-steigen ' + duration.slow + 'ms ' + ease,
+      },
+    }),
+    !klein && h('line', { x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: HAUS.oben + HAUS.stock, y2: HAUS.oben + HAUS.stock, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '3 3', ...linie }),
+    !klein && urteil && !brutto && h('line', { 'data-teil': 'drittel-haus-viertel', x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: viertelY, y2: viertelY, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '1 3', strokeLinecap: 'round', ...linie }),
+    geteilt && h('line', { 'data-teil': 'drittel-haus-teilung', x1: teilX, x2: teilX, y1: HAUS.oben + HAUS.stock, y2: boden, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2', ...linie }),
+    // Kante in der Flächenfarbe unter der Drittel-Linie: Rosé auf Sand allein trägt zu wenig (Vorschaubild 11.11.).
+    anteil01 > 0.29 && h('line', { x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: drittelY, y2: drittelY, stroke: palette.surface, strokeWidth: klein ? 5 : 4, ...linie }),
+    h('line', { 'data-teil': 'drittel-haus-drittel', x1: HAUS.x, x2: HAUS.x + HAUS.b, y1: drittelY, y2: drittelY, stroke: drittelFarbe, strokeWidth: klein ? 3 : 2, ...linie }),
+    h('rect', { x: HAUS.x, y: HAUS.oben, width: HAUS.b, height: koerper, fill: 'none', stroke: palette.text, strokeWidth: strich, ...linie }),
+    h('path', { d: 'M' + (HAUS.x - 8) + ' ' + HAUS.oben + 'L60 6L' + (HAUS.x + HAUS.b + 8) + ' ' + HAUS.oben + 'Z', fill: 'none', stroke: palette.text, strokeWidth: strich, strokeLinejoin: 'round', ...linie }),
+    urteil && h('text', { 'data-teil': 'drittel-ausrufe', x: HAUS.x + HAUS.b + 6, y: drittelY + (klein ? 8 : 6), fontSize: klein ? 24 : 16, fontWeight: 700, fill: drittelFarbe }, '!'),
+    gross && t && h('text', { x: 60, y: HAUS.oben + HAUS.stock - 9, ...schrift }, t('wohnenInstrument.hausRest')),
+    geteilt && t && h('text', { x: (HAUS.x + teilX) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausSie')),
+    geteilt && t && h('text', { x: (teilX + HAUS.x + HAUS.b) / 2, y: boden + 11, ...schrift }, t('wohnenInstrument.hausPartner')),
   );
 };
 
@@ -110,10 +146,12 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
     // Anteil am Einkommen im Drittel-Haus. Das Haus wiederholt die Zahl daneben — für Screenreader stumm.
     r.anteil != null && React.createElement(React.Fragment, null,
       React.createElement('div', { style: { margin: space.md + 'px 0 ' + space.sm + 'px' } },
-        React.createElement(DrittelHaus, { palette, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, fuell })),
+        React.createElement(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, teile: r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null, fuell })),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, t(anteilKey(r), { pct, einkommen: zahl(r.einkommen) })),
-        React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('wohnenInstrument.drittel'))
+        React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: r.ueberDrittel && !r.mitPartner ? palette.roseDeep : palette.text, palette }), t('wohnenInstrument.drittel')),
+        // C · Viertel-Strich mit Quelle (nur wo er im Haus steht: netto, mit Urteil).
+        !r.mitPartner && !r.brutto && React.createElement('span', { 'data-teil': 'viertel-legende' }, React.createElement(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel'))
       ),
       React.createElement('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: r.ueberDrittel ? palette.text : palette.mid } },
         t(satzKey(r)))

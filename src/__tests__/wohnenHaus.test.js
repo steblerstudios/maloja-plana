@@ -15,7 +15,11 @@ const P = { text: '#111111', mid: '#666666', sand: '#C9A86A', surface: '#FFFFFF'
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const SRC = path.resolve(__dirname, '..');
 const lies = (p) => fs.readFileSync(path.join(SRC, p), 'utf8');
-const hoehe = (html) => Number(html.match(/data-teil="drittel-haus-fuellung"[^>]*height="([\d.]+)"/)?.[1] || 0);
+// Seit 11.11.2026 (B · Füllung steigt) ist die Füllung das ganze Haus (72), gestaucht mit scaleY auf den Anteil.
+const hoehe = (html) => {
+  const f = html.match(/<[^>]*data-teil="drittel-haus-fuellung"[^>]*>/)?.[0] || '';
+  return Number(f.match(/height="([\d.]+)"/)?.[1] || 0) * Number(f.match(/scaleY\(([\d.]+)\)/)?.[1] || 0);
+};
 
 describe('Drittel-Haus', () => {
   const haus = (props) => renderToStaticMarkup(React.createElement(DrittelHaus, { palette: P, fuell: '#6C8343', ...props }));
