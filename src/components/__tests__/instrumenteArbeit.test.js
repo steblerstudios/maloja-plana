@@ -116,3 +116,77 @@ describe('Kapitel Arbeit: die Instrumente unter dem Lohn-Barometer («… wo wir
     expect(kapitel).toMatch(/querySelector\('\[data-teil="angaben-liste"\]'\)/);
   });
 });
+
+// Bilder Arbeit (Stebler Studios 11.11.2026, Skizzen A–C: «pensum und die uhr … ferien mit der sonne von b … mit den
+// dienstjahren … die ringe»). Alle drei sind Bilder aus dem Lebensbereich und müssen die Zahl tragen, nicht nur zeigen.
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { InstrumentePanel } from '../InstrumentePanel.jsx';
+import { LIGHT_PALETTE } from '../../config/constants.js';
+import { createT } from '../../i18n/index.js';
+
+const tt = createT({ de: deTexte }, 'de', 'sie');
+const vorJahren = (n) => { const d = new Date(); d.setFullYear(d.getFullYear() - n); d.setMonth(d.getMonth() - 1); return d.toISOString().slice(0, 10); };
+const zeichne = (ausbildung, props = {}) => renderToStaticMarkup(React.createElement(InstrumentePanel, {
+  palette: LIGHT_PALETTE, t: tt, data: { ausbildung }, onNavigate: () => {}, nur: ['dienst', 'ferien', 'pensum'], ...props,
+}));
+const svgVon = (html, key) => (html.match(new RegExp('<svg[^>]*data-' + key + '="[a-z]+"[\\s\\S]*?</svg>')) || [''])[0];
+const zaehle = (s, re) => (s.match(re) || []).length;
+const arbeit = { employmentStart: vorJahren(7), ferienTageJahr: '25', ferienTageBezogen: '13', workHoursPerWeek: '32' };
+
+describe('Dienstjahre: ein Ring je volles Dienstjahr, die Fristwechsel als dicke Ringe', () => {
+  it('7 Jahre → 7 Ringe; Ring 1 erreicht, Ring 9 nur als Hinweis, wo die Frist wechselt', () => {
+    const svg = svgVon(zeichne(arbeit), 'dienst');
+    expect(zaehle(svg, /data-ring="\d+"/g)).toBe(7);
+    expect(svg).toMatch(/data-fristwechsel="1" data-erreicht="ja"/);
+    expect(svg).toMatch(/data-fristwechsel="9" data-erreicht="nein"/);
+  });
+  it('2 Jahre und 12 Jahre: verschieden viele Ringe (heute ab 5 Jahren alle gleich), höchstens 10', () => {
+    const zwei = zaehle(svgVon(zeichne({ ...arbeit, employmentStart: vorJahren(2) }), 'dienst'), /data-ring="\d+"/g);
+    const zwoelf = svgVon(zeichne({ ...arbeit, employmentStart: vorJahren(12) }), 'dienst');
+    expect(zwei).toBe(2);
+    expect(zaehle(zwoelf, /data-ring="\d+"/g)).toBe(10);
+    expect(zwoelf).toMatch(/data-fristwechsel="9" data-erreicht="ja"/);
+  });
+});
+
+describe('Ferien: Sonne mit 12 Strahlen, bezogene grau', () => {
+  it('13 von 25 bezogen → 6 von 12 Strahlen grau', () => {
+    const svg = svgVon(zeichne(arbeit), 'ferien');
+    expect(zaehle(svg, /data-strahl="\d+"/g)).toBe(12);
+    expect(zaehle(svg, /data-bezogen="ja"/g)).toBe(6);
+  });
+  it('ohne erfassten Bezug: kein Strahl grau (kein erfundener Stand)', () => {
+    const svg = svgVon(zeichne({ ...arbeit, ferienTageBezogen: '' }), 'ferien');
+    expect(zaehle(svg, /data-bezogen="ja"/g)).toBe(0);
+  });
+  it('alles bezogen: alle grau', () => {
+    expect(zaehle(svgVon(zeichne({ ...arbeit, ferienTageBezogen: '25' }), 'ferien'), /data-bezogen="ja"/g)).toBe(12);
+  });
+});
+
+describe('Pensum: Uhr mit Zifferblatt, Füllung = Stunden ÷ 40', () => {
+  it('Uhr hat Stundenstriche und eine Füllung', () => {
+    const svg = svgVon(zeichne(arbeit), 'pensum');
+    expect(zaehle(svg, /data-stundenstrich/g)).toBe(4);
+    expect(svg).toMatch(/data-pensum-anteil="0\.8"/);
+  });
+});
+
+describe('Zuhause Arbeit: dieselben Bilder gross (256), Kachel klein (64)', () => {
+  const breite = (svg) => Number((svg.match(/max-width:(\d+)px/) || [])[1]);
+  it('ohne «zuhause» klein', () => {
+    const html = zeichne(arbeit);
+    for (const k of ['dienst', 'ferien', 'pensum']) expect(breite(svgVon(html, k)), k).toBe(64);
+  });
+  it('mit «zuhause» gross, je eine ganze Zeile', () => {
+    const html = zeichne(arbeit, { zuhause: true });
+    for (const k of ['dienst', 'ferien', 'pensum']) {
+      expect(svgVon(html, k), k).toMatch(new RegExp('data-' + k + '="gross"'));
+      expect(breite(svgVon(html, k)), k).toBe(256);
+    }
+  });
+  it('das Kapitel Arbeit zeigt das Zuhause', () => {
+    expect(quelle('../../ChapterView.jsx')).toMatch(/nur: \['dienst', 'ferien', 'pensum'\], zuhause: true/);
+  });
+});

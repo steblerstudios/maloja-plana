@@ -451,7 +451,9 @@ Stebler Studios 11.11.2026 («und die instrumenten logik»), aus der Matrix vom 
 
 3. **Ein Bild aus dem Lebensbereich**, wo die Frage typisch für den Bereich ist; **die gemeinsame Form**, wo die
    Frage überall gleich ist. Beispiele für Bereichsbilder: Netz-Schild (Teile), Drittel-Haus (Anteil),
-   Häuserzeile (Lage, mit denselben Marken wie das Barometer), Tank (Vorrat).
+   Häuserzeile (Lage, mit denselben Marken wie das Barometer), Tank (Vorrat), und für Arbeit (11.11.) Jahresringe
+   (Dauer), Sonne (Verbrauch), Uhr (Anteil). Ein Bereichsbild muss die Zahl **tragen**, nicht nur zeigen: die Ringe
+   zählen die Jahre und machen die Fristwechsel sichtbar, die Strahlen zählen den Bezug, die Uhr füllt die Stunden.
 4. **Ein Bild, eine Bedeutung.** Eine Form trägt nie zwei Frage-Arten.
 5. **Eine Rechnung je Wahrheit.** Jedes Instrument nennt eine Rechenfunktion, und Kachel, Kapitel und Werkzeug
    rufen sie auf.
@@ -469,11 +471,12 @@ Frage-Art, Form, Rechnung und Zuhause. Der Wächter `src/__tests__/instrumenteFo
 
 Bekannte Abweichungen stehen im Register unter `offen`, mit einer **Sperrklinke**: Die Listen dürfen nur kürzer
 werden. Stand 11.11.:
-- 5 Formen weichen ab: Dienstjahre, Ferien, Pensum, Steuer-Säule (B-F4), Mini-Kreuz (B-F5).
+- ~~5~~ 2 Formen weichen ab: Steuer-Säule (B-F4), Mini-Kreuz (B-F5). Dienstjahre, Ferien, Pensum seit 11.11. als
+  Bereichsbilder, die messen.
 - ~~2 Instrumente rechnen noch inline: Ferien, Pensum.~~ Seit 11.11. keines mehr: `ferienLage` und `pensumLage`
   in `src/utils/arbeitsverhaeltnis.js`, mit Test (Sperrklinke `ohneRechnung` auf 0).
 - 1 Zuhause zeigt ein anderes Bild als die Kachel: Bereit (B-F1).
-- 9 Instrumente haben kein Zuhause.
+- ~~9~~ 6 Instrumente haben kein Zuhause (Arbeit seit 11.11. gross im Kapitel).
 
 ## 8. Calm-UX-Prinzipien
 
@@ -520,12 +523,13 @@ werden. Stand 11.11.:
   der Franchise-Tracker; Klick öffnet dessen Reiter). Ohne erfasste Franchise keine Zahl.
   **Arbeit** (vier statt zwei, Stebler Studios «brauchen wir ja eh alles»): Lohn (kleines Lohn-Barometer · «−8 %» ·
   «… im Vergleich zum Schweizer Median (BFS, Vollzeit, brutto)», Zahl nur, wenn auch der grosse Balken eine Lage
-  zeigt: `lohnLage`), Dienstjahre (Jahresringe · «7 Jahre» · gesetzliche Kündigungsfrist nach OR 335c, Probezeit 335b,
-  Lehrvertrag 344a/346 — am Fedlex-Volltext geprüft), Ferien (Sonne · «12 Tage» offen · Mindestanspruch OR 329a; neue
-  Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr · «42 Std.» · gemessen an 40 Std., der Rechenbasis
+  zeigt: `lohnLage`), Dienstjahre (Jahresringe: ein Ring je volles Dienstjahr, höchstens 10, dick nach dem 1. und 9.
+  Dienstjahr, wo die Frist wechselt; noch nicht erreicht gestrichelt · «7 Jahre» · gesetzliche Kündigungsfrist nach OR 335c, Probezeit 335b,
+  Lehrvertrag 344a/346 — am Fedlex-Volltext geprüft), Ferien (Sonne mit 12 Strahlen, bezogene grau; ohne erfassten Bezug keiner grau · «12 Tage» offen · Mindestanspruch OR 329a; neue
+  Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr mit vier Stundenstrichen · «42 Std.» · gemessen an 40 Std., der Rechenbasis
   des Lohnvergleichs, ab 40 «Vollzeit»). Rechnungen: `dienstLage`, `ferienLage`, `pensumLage`
   (`src/utils/arbeitsverhaeltnis.js`), nie inline in der Anzeige. Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
-  Lohn-Barometer; ein Klick dort springt zum Formular statt ins eigene Kapitel.
+  Lohn-Barometer, als **Zuhause gross 256**, je eine Zeile (`zuhause: true`); ein Klick dort springt zum Formular statt ins eigene Kapitel.
   **Basis** (drei, Stebler Studios «alle drei»): Ausweis (Kalenderblatt des frühesten Ablaufdatums der Ausweis-
   Dokumente im Lebensordner · «4 Jahre» · «So lange ist Ihr Ausweis noch gültig»; abgelaufen rot), Referenzalter
   (Lebensweg · «30 Jahre» · «So lange bis zum AHV-Referenzalter (65)», Regel `referenzalterMonate`, AHV 21; ohne

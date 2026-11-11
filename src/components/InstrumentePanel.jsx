@@ -51,37 +51,60 @@ const miniFranchise = (palette, anteil) => {
     h('line', { x1: 57, y1: 4, x2: 57, y2: 36, stroke: palette.text, strokeWidth: 2.5 }));
 };
 
-// Dienstjahre klein (10.11.2026): Jahresringe wie im Baum — ein Ring je Dienstjahr, höchstens sechs. Nur das Bild.
-const miniJahresringe = (palette, jahre) => {
+// Bilder Arbeit (Stebler Studios 11.11.2026, Skizzen A–C: Ringe, Sonne und Uhr aus B). Alle drei sind Bilder aus dem
+// Lebensbereich und tragen die Zahl: klein (Kachel 64) und gross (Zuhause im Kapitel 256), dasselbe Bild.
+const arbeitSvg = (key, groesse, kinder, extra = {}) => React.createElement('svg', {
+  viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, ['data-' + key]: groesse, ...extra,
+  style: { maxWidth: INSTRUMENT_GROESSE[groesse] + 'px', height: 'auto', display: 'block', overflow: 'visible' },
+}, ...kinder);
+
+// Dienstjahre: ein Ring je volles Dienstjahr um einen Kern, höchstens 10 (die Zahl daneben trägt mehr). Dick die zwei
+// Ringe, nach denen die gesetzliche Kündigungsfrist wechselt (OR 335c: nach dem 1. und dem 9. Dienstjahr). Noch nicht
+// erreicht: nur gestrichelt als Hinweis, wo der Wechsel kommt.
+const ARBEIT_GROSS = ['dienst', 'ferien', 'pensum'];
+const DIENST_RINGE_HOECHSTENS = 10;
+const DIENST_FRISTWECHSEL = [1, 9];
+const miniJahresringe = (palette, jahre, groesse = 'klein') => {
   const h = React.createElement;
-  const n = Math.max(1, Math.min(6, jahre + 1));
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-dienst': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    Array.from({ length: n }, (_, i) => h('circle', { key: i, cx: 30, cy: 20, r: 3 + i * 3, fill: i === 0 ? palette.sand : 'none', stroke: palette.sand, strokeWidth: 1.5 })));
+  const n = Math.max(0, Math.min(DIENST_RINGE_HOECHSTENS, jahre));
+  const r = (i) => 1.8 + i * 1.65;
+  const ringe = Array.from({ length: n }, (_, k) => {
+    const i = k + 1, wechsel = DIENST_FRISTWECHSEL.includes(i);
+    return h('circle', { key: 'r' + i, 'data-ring': i, ...(wechsel ? { 'data-fristwechsel': i, 'data-erreicht': 'ja' } : {}), cx: 30, cy: 20, r: r(i), fill: 'none', stroke: palette.sand, strokeWidth: wechsel ? 2.2 : 0.9 });
+  });
+  const hinweise = DIENST_FRISTWECHSEL.filter((i) => i > n).map((i) =>
+    h('circle', { key: 'h' + i, 'data-fristwechsel': i, 'data-erreicht': 'nein', cx: 30, cy: 20, r: r(i), fill: 'none', stroke: palette.border, strokeWidth: 1.2, strokeDasharray: '1.6 1.6' }));
+  return arbeitSvg('dienst', groesse, [...hinweise, h('circle', { key: 'kern', cx: 30, cy: 20, r: 1.8, fill: palette.sand }), ...ringe]);
 };
 
-// Pensum klein (10.11.2026): Viertelkreis-Uhr, gefüllt im Verhältnis zur Vollzeit-Basis des Lohnvergleichs. Nur das Bild.
-const miniPensum = (palette, anteil) => {
+// Pensum: Uhr mit vier Stundenstrichen, gefüllt im Verhältnis zur Vollzeit-Basis des Lohnvergleichs (pensumLage).
+const miniPensum = (palette, anteil, groesse = 'klein') => {
   const h = React.createElement;
   const a = Math.max(0, Math.min(1, anteil));
   const w = a * 2 * Math.PI, x = 30 + 15 * Math.sin(w), y = 20 - 15 * Math.cos(w);
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-pensum': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    h('circle', { cx: 30, cy: 20, r: 15, fill: palette.border }),
-    a >= 1 ? h('circle', { cx: 30, cy: 20, r: 15, fill: palette.sand })
-      : a > 0 && h('path', { d: 'M30 20 L30 5 A15 15 0 ' + (a > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: palette.sand }));
+  const striche = [0, 1, 2, 3].map((q) => {
+    const c = Math.cos(q * Math.PI / 2), sn = Math.sin(q * Math.PI / 2);
+    return h('line', { key: 'st' + q, 'data-stundenstrich': q, x1: 30 + 16.5 * sn, y1: 20 - 16.5 * c, x2: 30 + 19 * sn, y2: 20 - 19 * c, stroke: palette.text, strokeWidth: 1.4, strokeLinecap: 'round' });
+  });
+  return arbeitSvg('pensum', groesse, [
+    h('circle', { key: 'blatt', cx: 30, cy: 20, r: 15, fill: palette.border }),
+    a >= 1 ? h('circle', { key: 'voll', cx: 30, cy: 20, r: 15, fill: palette.sand })
+      : a > 0 && h('path', { key: 'teil', d: 'M30 20 L30 5 A15 15 0 ' + (a > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: palette.sand }),
+    ...striche,
+  ], { 'data-pensum-anteil': String(Math.round(a * 100) / 100) });
 };
 
-// Ferien klein (10.11.2026): Sonne mit Strahlen, gefüllt im Verhältnis der offenen Tage zum Anspruch. Nur das Bild.
-const miniFerien = (palette, anteil) => {
+// Ferien: Sonne mit 12 Strahlen. Bezogene Tage färben die Strahlen grau, von oben im Uhrzeigersinn (ferienLage).
+// Ohne erfassten Bezug bleiben alle Strahlen hell — kein erfundener Stand.
+const FERIEN_STRAHLEN = 12;
+const miniFerien = (palette, anteilBezogen, groesse = 'klein') => {
   const h = React.createElement;
-  const a = Math.max(0, Math.min(1, anteil));
-  const strahlen = Array.from({ length: 8 }, (_, i) => {
-    const w = i * Math.PI / 4, c = Math.cos(w), sn = Math.sin(w);
-    return h('line', { key: 's' + i, x1: 30 + 13 * c, y1: 20 + 13 * sn, x2: 30 + 17 * c, y2: 20 + 17 * sn, stroke: palette.sand, strokeWidth: 1.8, strokeLinecap: 'round' });
+  const grau = anteilBezogen == null ? 0 : Math.round(Math.max(0, Math.min(1, anteilBezogen)) * FERIEN_STRAHLEN);
+  const strahlen = Array.from({ length: FERIEN_STRAHLEN }, (_, i) => {
+    const w = -Math.PI / 2 + i * 2 * Math.PI / FERIEN_STRAHLEN, c = Math.cos(w), sn = Math.sin(w), bezogen = i < grau;
+    return h('line', { key: 's' + i, 'data-strahl': i, 'data-bezogen': bezogen ? 'ja' : 'nein', x1: 30 + 11 * c, y1: 20 + 11 * sn, x2: 30 + 17 * c, y2: 20 + 17 * sn, stroke: bezogen ? palette.border : palette.sand, strokeWidth: 2, strokeLinecap: 'round' });
   });
-  return h('svg', { viewBox: '0 0 60 40', width: '100%', 'aria-hidden': true, 'data-ferien': 'klein', style: { maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', display: 'block', overflow: 'visible' } },
-    ...strahlen,
-    h('circle', { cx: 30, cy: 20, r: 9, fill: palette.border }),
-    a > 0 && h('circle', { cx: 30, cy: 20, r: 9 * Math.sqrt(a), fill: palette.sand }));
+  return arbeitSvg('ferien', groesse, [...strahlen, h('circle', { key: 'kern', cx: 30, cy: 20, r: 8, fill: palette.sand })]);
 };
 
 // Referenzalter klein (10.11.2026): ein Lebensweg von der Geburt bis zum Referenzalter, Punkt = heute, Fahne am Ziel.
@@ -155,7 +178,9 @@ const miniKreuz = (palette) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, dokumente = [], grundordnungStand = null }) => {
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, zuhause = false, dokumente = [], grundordnungStand = null }) => {
+  // Zuhause (Kapitel Arbeit, 11.11.2026): die Arbeit-Bilder gross 256, je eine ganze Zeile. Nur diese drei kennen die Grösse.
+  const arbeitGroesse = zuhause ? 'gross' : 'klein';
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -355,7 +380,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
             ...(dienst.monate < 3 ? [t('instrumente.dienstProbezeitLaenger')] : [])],
       } : {}),
       sub: setup,
-      glyph: dienst ? miniJahresringe(palette, dienst.jahre) : null,
+      glyph: dienst ? miniJahresringe(palette, dienst.jahre, arbeitGroesse) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
@@ -369,7 +394,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
           : t('instrumente.pensumAnteil', { pct: pensum.prozent, basis: pensum.basis })],
       } : {}),
       sub: setup,
-      glyph: pensum ? miniPensum(palette, pensum.anteil) : null,
+      glyph: pensum ? miniPensum(palette, pensum.anteil, arbeitGroesse) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
@@ -382,7 +407,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         mehr: [t('instrumente.ferienMinimum')],
       } : {}),
       sub: setup,
-      glyph: ferien ? miniFerien(palette, ferien.anteilOffen ?? 1) : null,
+      glyph: ferien ? miniFerien(palette, ferien.anteilBezogen, arbeitGroesse) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
@@ -502,7 +527,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         ...(tile.zahl ? { 'aria-label': tile.name + ': ' + tile.zahl.wert + (tile.zahl.einheit ? ' ' + tile.zahl.einheit : '') + '. ' + tile.satz + (tile.mehr && tile.mehr.length ? '. ' + tile.mehr.join(' ') : ''), title: tile.name } : {}),
         style: {
           // Die Säule trägt mehrere Sätze: In der Finanzen-Zeile hat jede Kachel die ganze Breite, sonst brechen sie auf dem Handy in viele kurze Zeilen.
-          ...(nur?.includes('steuer') ? { gridColumn: '1 / -1' } : {}),
+          ...(nur?.includes('steuer') || (zuhause && ARBEIT_GROSS.includes(tile.key)) ? { gridColumn: '1 / -1' } : {}),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
           padding: space.md + 'px', background: 'transparent', color: palette.text,
           border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
@@ -513,7 +538,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
       },
         // Spiegel Startseite: ein Behälter, eine Breite für alle Instrumente (INSTRUMENT_GROESSE.klein, Brand Book «Instrumente»).
-        h('div', { 'data-instrument-glyph': tile.key, style: { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
+        h('div', { 'data-instrument-glyph': tile.key, style: zuhause && ARBEIT_GROSS.includes(tile.key)
+          ? { width: '100%', maxWidth: INSTRUMENT_GROESSE.gross + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          : { width: INSTRUMENT_GROESSE.klein + 'px', minHeight: INSTRUMENT_GROESSE.klein + 'px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, tile.glyph),
         // Grosse Zahl (10.11.2026, zuerst beim Tank): eine Stufe unter der Karte zuoberst (2xl statt 3xl),
         // damit dort die lauteste Stelle bleibt. Mit Zahl entfällt der kleine Satz — er sagte dasselbe.
         tile.zahl && h('div', { 'data-instrument-zahl': tile.key, style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: space.xs + 'px', flexWrap: 'wrap' } },
