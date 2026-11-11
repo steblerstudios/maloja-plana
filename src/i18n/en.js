@@ -94,7 +94,7 @@ export default {
     frischZugezogen: {
       label: 'Newly arrived in Switzerland',
       frage: 'Recently moved to Switzerland from abroad?',
-      intro: 'The first weeks come with quiet deadlines and rights that are easy to miss — a few steps taken early save trouble later.',
+      intro: 'The first weeks come with quiet deadlines and rights that are easy to miss — here are the main ones, in order.',
       berechtigungen: {
         kkErst: { titel: 'Register for health insurance', text: 'Basic health insurance is mandatory and must be arranged within three months of arrival — cover then applies retroactively from day one.' },
         bewilligung: { titel: 'Registration & residence permit', text: 'Register at your commune within 14 days of arrival — before your first working day if you need a permit and work here. The residence permit follows. Deadlines and documents differ by nationality and canton.' },
@@ -143,8 +143,8 @@ export default {
       frage: 'Unemployed, between jobs, or your benefits have run out?',
       intro: 'Being out of work opens support that isn’t automatic — and after unemployment benefits end, further help exists.',
       berechtigungen: {
-        rav: { titel: 'Register with the RAV in time', text: 'The RAV registration is the most important deadline — ideally on your first day without work, before you claim benefits. Every late day costs allowance. The guided flow shows the steps and saves the deadline to your calendar.' },
-        alv: { titel: 'Unemployment benefits (ALV)', text: 'Register with the RAV as early as possible — daily allowances depend on your contribution months, and registering late costs days of cover.' },
+        rav: { titel: 'Register with the RAV in time', text: 'The RAV registration is the most important deadline — ideally on your first day without work, before you claim benefits. The guided flow shows the steps and saves the deadline to your calendar.' },
+        alv: { titel: 'Unemployment benefits (ALV)', text: 'Register with the RAV as early as possible — daily allowances depend on your contribution months.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'A lower income often means a new entitlement to help with health-insurance premiums — worth reapplying to the canton, not waiting.' },
         sozialhilfe: { titel: 'Social assistance (also after benefits end)', text: 'When unemployment benefits are exhausted, social assistance can bridge the gap. It is a right, not a favour — and separate from the RAV.' },
         franchise: { titel: 'Check your deductible', text: 'On a lower income a lower deductible can be safer, a higher one cheaper if you rarely see a doctor — worth reviewing each autumn.' },
@@ -154,10 +154,10 @@ export default {
     verschuldet: {
       label: 'In debt or facing debt collection',
       frage: 'Struggling with debts or a debt-collection (Betreibung)?',
-      intro: 'Debt feels isolating, yet clear rights and free help exist — the earlier you reach for them, the more room there is to breathe.',
+      intro: 'Debt feels isolating, yet clear rights and free help exist — both are open to everyone.',
       berechtigungen: {
         schuldenberatung: { titel: 'Free debt counselling', text: 'A recognised debt counselling service helps free of charge and confidentially — there is an office in every canton. Going early keeps more options open.' },
-        mahnung: { titel: 'Payment reminder received', text: 'A reminder is not yet debt collection — now you have the most room to act: check, dispute or propose instalments.' },
+        mahnung: { titel: 'Payment reminder received', text: 'A reminder is not yet debt collection — there are several options: check, dispute or propose instalments.' },
         betreibung: { titel: 'Understanding debt collection', text: 'A Betreibung is a process with clear steps and deadlines — knowing them calmly turns fear into something you can act on.' },
         existenzminimum: { titel: 'Protecting your minimum for living', text: 'During a wage seizure the minimum subsistence level under debt enforcement law remains protected; the debt enforcement office sets it. A clear budget helps you know your own fixed costs.' },
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income no longer covers the basics, social assistance can top it up — a right, not a favour, and independent of the debt itself.' },
@@ -1960,7 +1960,7 @@ export default {
     tagline: 'Your personal Swiss life organizer — stored locally, works offline, free.',
     taglineBenefit: 'Tax calculator, premium subsidies, social assistance, emergency card — no sign-up needed.',
     progress: 'Your progress',
-    progressComplete: 'Your life folder is in place. Peace of mind.',
+    progressComplete: 'Your life folder is in place.',
     progressStart: 'Your path begins here',
     progressEarly: 'You have taken the first steps',
     progressMid: 'Your life folder is taking shape',
@@ -2006,7 +2006,7 @@ export default {
     openChapter: 'Open',
     fieldsCount: '{filled}/{total} fields',
     highlightFinanz: 'Finances',
-    highlightFinanzSub: 'Tax, premium reduction, social assistance, EL — all at a glance.',
+    highlightFinanzSub: 'Tax, premium reduction, social assistance, supplementary benefits — all at a glance.',
     highlightIpv: 'Check premium reduction',
     highlightIpvSub: 'Depends on canton and income — enter both right here in the calculator.',
     highlightSozialhilfe: 'Social assistance overview',
@@ -4633,7 +4633,7 @@ export default {
     next: 'Next', back: 'Back', skip: 'Skip', later: 'Later', done: 'Done',
     welcome: { title: 'Welcome to Maloja Plana', text: 'Your calm place for everything Swiss — papers, budget, insurance, deadlines. A short tour, skippable anytime.' },
     berge: { title: 'Your progress', text: 'The mountains quietly show how far your life organizer is set up — no pressure, no chasing percentages.' },
-    anspruch: { title: 'What you\'re entitled to', text: 'Here Maloja surfaces what you might be entitled to — based on what you picked at the start.' },
+    anspruch: { title: 'What am I entitled to?', text: 'Here Maloja surfaces what you might be entitled to — based on what you picked at the start.' },
     privacy: { title: 'Everything stays with you', text: 'Your data stays on this device. No account, no cloud, no tracking.' },
     start: { title: 'Start here', text: 'There is always exactly one next step here. Everything else can wait.' },
     startAction: 'Start with "{name}"',
@@ -4710,10 +4710,10 @@ export default {
   },
 
   overdue: {
-    ariaLabel: '{count} reminders need attention',
+    ariaLabel: 'Reminders dated today or earlier: {count}',
     overdueCount: '{count} overdue',
     dueTodayCount: '{count} due today',
-    notificationTitle: '{count} overdue reminder(s)',
+    notificationTitle: 'Reminders with a past date: {count}',
     notificationBody: 'Open Maloja Plana to review your reminders.',
   },
 

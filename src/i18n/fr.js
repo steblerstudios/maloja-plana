@@ -92,9 +92,9 @@ export default {
       },
     },
     frischZugezogen: {
-      label: 'Nouvel arrivant en Suisse',
+      label: 'Arrivée récente en Suisse',
       frage: 'Récemment arrivé en Suisse depuis l’étranger ?',
-      intro: 'Les premières semaines s’accompagnent de délais discrets et de droits faciles à manquer — quelques démarches faites tôt évitent des ennuis plus tard.',
+      intro: 'Les premières semaines s’accompagnent de délais discrets et de droits faciles à manquer — voici les principaux, dans l’ordre.',
       berechtigungen: {
         kkErst: { titel: 'S’affilier à l’assurance-maladie', text: 'L’assurance de base est obligatoire et doit être conclue dans les trois mois suivant l’arrivée — la couverture s’applique alors rétroactivement dès le premier jour.' },
         bewilligung: { titel: 'Annonce & autorisation de séjour', text: 'S’annoncer à la commune dans les 14 jours suivant l’arrivée — avant le premier jour de travail pour qui a besoin d’une autorisation et travaille ici. L’autorisation de séjour suit. Les délais et documents varient selon la nationalité et le canton.' },
@@ -116,7 +116,7 @@ export default {
       },
     },
     asylsuchend: {
-      label: 'Demandeur d’asile ou statut de protection',
+      label: 'Procédure d’asile ou statut de protection',
       frage: 'Dans la procédure d’asile ou avec le statut de protection S ?',
       intro: 'De l’extérieur, le système est difficile à comprendre. Ces repères donnent une orientation — pour les droits précis, un service de conseil ou le SEM est le bon interlocuteur.',
       berechtigungen: {
@@ -126,7 +126,7 @@ export default {
       },
     },
     rentnerin: {
-      label: 'Retraité / à l’âge AVS',
+      label: 'À la retraite / à l’âge AVS',
       frage: { sie: 'Vous touchez une rente AVS ou en êtes proche ?', du: 'Tu touches une rente AVS ou tu en es proche ?' },
       intro: 'À la retraite, certains droits doivent être demandés — par exemple les prestations complémentaires. Beaucoup relèvent d’un droit, pas d’une faveur.',
       berechtigungen: {
@@ -143,8 +143,8 @@ export default {
       frage: 'Au chômage, entre deux emplois ou en fin de droits ?',
       intro: 'Sans emploi, des aides existent qui ne viennent pas d’elles-mêmes — et après la fin des droits, d’autres soutiens existent.',
       berechtigungen: {
-        rav: { titel: 'S’inscrire à temps à l’ORP', text: { sie: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Chaque jour de retard coûte des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans votre calendrier.', du: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Chaque jour de retard coûte des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans ton calendrier.' } },
-        alv: { titel: 'Indemnités de chômage (AC)', text: { sie: 'Inscrivez-vous à l’ORP le plus tôt possible — les indemnités dépendent de vos mois de cotisation, et une inscription tardive coûte des jours.', du: 'Inscris-toi à l’ORP le plus tôt possible — les indemnités dépendent de tes mois de cotisation, et une inscription tardive coûte des jours.' } },
+        rav: { titel: 'S’inscrire à temps à l’ORP', text: { sie: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans votre calendrier.', du: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans ton calendrier.' } },
+        alv: { titel: 'Indemnités de chômage (AC)', text: { sie: 'Inscrivez-vous à l’ORP le plus tôt possible — les indemnités dépendent de vos mois de cotisation.', du: 'Inscris-toi à l’ORP le plus tôt possible — les indemnités dépendent de tes mois de cotisation.' } },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Un revenu plus bas ouvre souvent un nouveau droit à l’aide pour les primes d’assurance-maladie — à redemander au canton, sans attendre.' },
         sozialhilfe: { titel: 'Aide sociale (aussi en fin de droits)', text: 'Une fois les indemnités épuisées, l’aide sociale peut combler l’écart. Un droit, pas une faveur — et distinct de l’ORP.' },
         franchise: { titel: 'Vérifier la franchise', text: 'Avec un revenu plus bas, une franchise basse peut être plus sûre, une haute plus avantageuse si l’on consulte peu — à revoir chaque automne.' },
@@ -152,12 +152,12 @@ export default {
       },
     },
     verschuldet: {
-      label: 'Endetté ou en poursuite',
+      label: 'Dettes ou poursuite',
       frage: { sie: 'Des dettes ou une poursuite (Betreibung) vous pèsent ?', du: 'Des dettes ou une poursuite (Betreibung) te pèsent ?' },
-      intro: 'La dette isole, pourtant des droits clairs et une aide gratuite existent — plus tôt on y recourt, plus il reste de marge pour respirer.',
+      intro: 'La dette isole, pourtant des droits clairs et une aide gratuite existent — les deux sont ouverts à toutes et tous.',
       berechtigungen: {
         schuldenberatung: { titel: 'Conseil en désendettement gratuit', text: 'Un service reconnu de désendettement aide gratuitement et en toute confidentialité — il y a un bureau dans chaque canton. Y aller tôt garde plus d’options ouvertes.' },
-        mahnung: { titel: 'Rappel reçu', text: 'Un rappel n’est pas encore une poursuite — c’est maintenant que la marge de manœuvre est la plus grande : vérifier, contester ou proposer des acomptes.' },
+        mahnung: { titel: 'Rappel reçu', text: 'Un rappel n’est pas encore une poursuite — plusieurs voies sont possibles : vérifier, contester ou proposer des acomptes.' },
         betreibung: { titel: 'Comprendre la poursuite', text: 'Une poursuite est une procédure avec des étapes et des délais clairs — les connaître calmement transforme la peur en quelque chose sur quoi agir.' },
         existenzminimum: { titel: 'Protéger le minimum vital', text: 'Lors d’une saisie de salaire, le minimum vital au sens du droit des poursuites reste protégé ; c’est l’office des poursuites qui le fixe. Un budget clair aide à connaître ses propres frais fixes.' },
         sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre plus l’essentiel, l’aide sociale peut compléter — un droit, pas une faveur, et indépendant des dettes elles-mêmes.' },
@@ -1445,7 +1445,7 @@ export default {
     kreditkarte: 'Carte de crédit : rentable ?',
     stundenlohn: 'Salaire horaire : à quoi ai-je droit ?',
     zurueckZu: 'Retour à {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
-    dashboard: 'Tableau de bord',
+    dashboard: 'Aperçu',
     tools: 'Outils',
     advanced: 'Avancé',
     tresor: 'Classeur documents',
@@ -1960,7 +1960,7 @@ export default {
     tagline: { sie: 'Votre organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.' },
     taglineBenefit: 'Calculateur d\'impôts, réduction de primes, aide sociale, carte d\'urgence — sans inscription.',
     progress: { sie: 'Votre progression', du: 'Ta progression' },
-    progressComplete: { sie: 'Votre dossier de vie est en place. Sérénité.', du: 'Ton dossier de vie est en place. Sérénité.' },
+    progressComplete: { sie: 'Votre dossier de vie est en place.', du: 'Ton dossier de vie est en place.' },
     progressStart: { sie: 'Votre chemin commence ici', du: 'Ton chemin commence ici' },
     progressEarly: { sie: 'Vous avez fait les premiers pas', du: 'Tu as fait les premiers pas' },
     progressMid: { sie: 'Votre dossier de vie prend forme', du: 'Ton dossier de vie prend forme' },
@@ -2006,7 +2006,7 @@ export default {
     openChapter: 'Ouvrir',
     fieldsCount: '{filled}/{total} champs',
     highlightFinanz: 'Finances',
-    highlightFinanzSub: 'Impôts, RDP, aide sociale, PC — tout en un coup d\'œil.',
+    highlightFinanzSub: 'Impôts, réduction des primes, aide sociale, prestations complémentaires — tout en un coup d’œil.',
     highlightIpv: 'Vérifier la réduction de primes',
     highlightIpvSub: { sie: 'Dépend du canton et du revenu — vous saisissez les deux directement dans le calculateur.', du: 'Dépend du canton et du revenu — tu saisis les deux directement dans le calculateur.' },
     highlightSozialhilfe: 'Orientation aide sociale',
@@ -4637,10 +4637,10 @@ export default {
   },
 
   overdue: {
-    ariaLabel: '{count} rappels demandent de l’attention',
+    ariaLabel: 'Rappels datés d’aujourd’hui ou avant : {count}',
     overdueCount: '{count} en retard',
     dueTodayCount: '{count} à faire aujourd\'hui',
-    notificationTitle: '{count} rappel(s) en retard',
+    notificationTitle: 'Rappels à date passée : {count}',
     notificationBody: { sie: 'Ouvrez Maloja Plana pour consulter vos rappels.', du: 'Ouvre Maloja Plana pour consulter tes rappels.' },
   },
 
@@ -5399,7 +5399,7 @@ export default {
     next: 'Suivant', back: 'Retour', skip: 'Passer', later: 'Plus tard', done: 'Terminé',
     welcome: { title: 'Bienvenue sur Maloja Plana', text: { sie: 'Votre lieu calme pour tout ce qui est suisse — papiers, budget, assurances, délais. Une courte visite, que vous pouvez passer à tout moment.', du: 'Ton lieu calme pour tout ce qui est suisse — papiers, budget, assurances, délais. Une courte visite, que tu peux passer à tout moment.' } },
     berge: { title: 'La progression', text: { sie: 'Les montagnes montrent calmement où en est votre classeur de vie — sans pression, sans course aux pourcentages.', du: 'Les montagnes montrent calmement où en est ton classeur de vie — sans pression, sans course aux pourcentages.' } },
-    anspruch: { title: 'Droits possibles', text: { sie: 'Ici, Maloja révèle ce à quoi vous pourriez avoir droit — selon ce que vous avez choisi au début.', du: 'Ici, Maloja révèle ce à quoi tu pourrais avoir droit — selon ce que tu as choisi au début.' } },
+    anspruch: { title: 'À quoi ai-je droit ?', text: { sie: 'Ici, Maloja révèle ce à quoi vous pourriez avoir droit — selon ce que vous avez choisi au début.', du: 'Ici, Maloja révèle ce à quoi tu pourrais avoir droit — selon ce que tu as choisi au début.' } },
     privacy: { title: 'Tout reste sur l\'appareil', text: { sie: 'Vos données restent sur cet appareil. Pas de compte, pas de cloud, pas de suivi.', du: 'Tes données restent sur cet appareil. Pas de compte, pas de cloud, pas de suivi.' } },
     start: { title: { sie: 'Commencez ici', du: 'Commence ici' }, text: 'Ici, il y a toujours une seule prochaine étape. Le reste peut attendre.' },
     startAction: 'Commencer par « {name} »',

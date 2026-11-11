@@ -177,3 +177,25 @@ describe('Kleines', () => {
     for (const z of LEBENSZUSTAENDE) for (const b of z.berechtigungen) expect(Number(b.stand), z.key + '.' + b.key).toBeGreaterThanOrEqual(jahr);
   });
 });
+
+describe('Sprache S1–S7 (nur Schlüssel der Gruppe-A-Seiten)', () => {
+  it('S1 der Rundgang nennt die Seite wie die Seite, in allen Sprachen', async () => {
+    for (const l of alleSprachen) {
+      const m = (await import(`../i18n/${l}.js`)).default;
+      expect(m.tour.anspruch.title).toBe(m.dashboard.anspruchTitle);
+    }
+  });
+  it('S2 Italienisch: kein du-Befehl in Knöpfen ohne Sie/du-Paar', async () => {
+    const it_ = (await import('../i18n/it.js')).default;
+    for (const v of [it_.dashboard.nextUpWeiter, it_.dashboard.quickCheckMore, it_.nav.zurueckZu, it_.onboarding.skipForNow, it_.tour.skip]) {
+      expect(v).not.toMatch(/^(Continua|Vai|Torna|Salta)\b/);
+    }
+  });
+  it('S4 kein Druck: «Jeder zu späte Tag», «erspart später Ärger», «Erinnerung(en)» sind weg', () => {
+    const s = JSON.stringify([lz, de.overdue]);
+    expect(s).not.toMatch(/Jeder zu späte Tag|erspart später Ärger|Spielraum am grössten|Erinnerung\(en\)/);
+  });
+  it('S7 Schweizer Anführungszeichen in der Suche', () => {
+    expect(de.search.empty.sie).toContain('«{query}»');
+  });
+});
