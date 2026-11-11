@@ -5260,6 +5260,18 @@ export default {
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung des Ehegatten bzw. der eingetragenen Partnerin oder des eingetragenen Partners (OR Art. 266m). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it; OR-266m-Satz deutscher Rückfall nach Fachkorrektur 25.09.2026)
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungTitel: 'Zustimmung zur Kündigung der Familienwohnung (OR Art. 266m)',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungText: 'Dient die Wohnung der Familie, stimme ich als Ehegattin, Ehegatte oder eingetragene Partnerin, eingetragener Partner dieser Kündigung ausdrücklich zu.',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      zustimmungUnterschrift: 'Name, Ort, Datum und Unterschrift',
+        // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor dem Versand',
+        zustimmung: { sie: 'Sind Sie verheiratet oder leben Sie in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift.', du: 'Bist du verheiratet oder lebst du in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift.' },
+        form: 'Von Hand unterschreiben und eingeschrieben senden: Die Kündigung muss vor Beginn der Kündigungsfrist bei der Vermieterschaft eingehen (OR Art. 266l Abs. 1, 266c).',
+      },
     },
     taxExtension: {
       title: 'Prolungaziun dal termin da taglia',
@@ -5275,11 +5287,20 @@ export default {
       description: "Disditga da l'assicuranza da basa obligatorica per midar a fin d'onn.",
       subject: "Disditga da l'assicuranza obligatorica da las tgiras da malsauns (OKP)",
       salutation: 'Stimadas dunnas e stimads signurs,',
-      body1: "cun quai disdi jau mia assicuranza obligatorica da las tgiras da malsauns tar {insurer} per ils 31 da december da l'onn current.",
+      body1: "cun quai disdi jau mia assicuranza obligatorica da las tgiras da malsauns tar {insurer} per ils 31 da december {jahr}.",
       policyRef: 'Numer da polizza: {number}',
       body2: 'Jau As rog da ma trametter ina conferma scritta da la disditga.',
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: La disditga da l'assicuranza da basa per la fin da l'onn sto tenor LAMal art. 7 al. 2 arrivar tar l'assicurader il pli tard ils 30 da november. Recumandà: trametter per posta recumandada.", // TODO(rm): Gegenlese Muttersprache (al. 2 + Einschreiben ergänzt 15.09.2026)
+        // TODO(rm): provisorisch — deutsch, Gruppe B L2/L3 (11.11.2026), Übersetzung offen
+      hinweis: {
+        title: 'Vor der Kündigung',
+        frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen (KVG Art. 7 Abs. 2).',
+        nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen.',
+        semester: 'Im Grundmodell mit der ordentlichen Franchise von 300 Franken ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Bei einem Hausarzt- oder Telmed-Modell oder einer höheren Franchise nur auf Ende Jahr.',
+        anmelden: 'Zuerst bei der neuen Kasse anmelden: Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5).',
+        ausstaende: 'Sind Prämien, Kostenbeteiligungen, Verzugszinse oder Betreibungskosten offen, ist ein Wechsel erst möglich, wenn alles bezahlt ist (KVG Art. 64a Abs. 6).',
+      },
     },
     kkReklamation: {
       title: 'Cassa da malsauns: contestar in quint',

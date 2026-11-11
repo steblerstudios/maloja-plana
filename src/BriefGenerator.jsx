@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
-import { istVorbei } from './utils/fristen.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b, brauchtZustimmungFamilienwohnung } from './briefGenerator.js';
+import { istVorbei, heuteIso } from './utils/fristen.js';
+import { kvgKuendigungsTermin } from './utils/festeFristen.js';
 import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
@@ -55,7 +56,7 @@ const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElemen
     zeilen.filter((z) => z && z.stark).map((z) => z.text).join(' ')),
 );
 
-function lebensereignisHinweis(selected, a, palette, t) {
+function lebensereignisHinweis(selected, a, palette, t, data) {
   if (selected === 'debtObjection') {
     const k = 'briefe.debtObjection.frist.';
     const frist = rechtsvorschlagFrist(a.zustelldatum);
@@ -98,6 +99,21 @@ function lebensereignisHinweis(selected, a, palette, t) {
   if (selected === 'paymentReminder') {
     const k = 'briefe.paymentReminder.hinweis.';
     return hinweisBox(palette, t(k + 'title'), [t(k + 'text')]);
+  }
+  // Gruppe B L1 (11.11.2026): Zustimmung zur Kündigung der Familienwohnung, eigenhändig und eingeschrieben.
+  if (selected === 'leaseTermination') {
+    const k = 'briefe.leaseTermination.hinweis.';
+    return hinweisBox(palette, t(k + 'title'), [brauchtZustimmungFamilienwohnung(data) && { text: t(k + 'zustimmung'), stark: true }, t(k + 'form')]);
+  }
+  // Gruppe B L2/L3 (11.11.2026): Frist mit Jahr, nach dem Stichtag das nächste Jahr; Anmeldung und Ausstände zuerst.
+  if (selected === 'insuranceSwitch') {
+    const k = 'briefe.insuranceSwitch.hinweis.';
+    const tm = kvgKuendigungsTermin(heuteIso());
+    const p = { jahr: tm.jahr, frist: formatDE(tm.frist), verpasstJahr: tm.verpasstJahr, verpasstFrist: formatDE(tm.verpasstFrist) };
+    return hinweisBox(palette, t(k + 'title'), [
+      { text: t(tm.nachFrist ? k + 'nachFrist' : k + 'frist', p), stark: true },
+      tm.nachFrist && t(k + 'semester'), t(k + 'anmelden'), t(k + 'ausstaende'),
+    ], 'calendar');
   }
   if (selected === 'workReference') {
     return hinweisBox(palette, t('briefe.workReference.title'), [t('briefe.workReference.hinweis')]);
@@ -379,7 +395,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     ),
 
     // Lebensereignis-Briefe: erst der Hinweis (Frist / Erbschaft), dann die Angaben.
-    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t),
+    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t, data),
     briefDeutsch && React.createElement('p', {
       style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px' },
     }, t('briefe.angaben.rmDeutsch')),
