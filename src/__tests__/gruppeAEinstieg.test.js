@@ -199,3 +199,14 @@ describe('Sprache S1–S7 (nur Schlüssel der Gruppe-A-Seiten)', () => {
     expect(de.search.empty.sie).toContain('«{query}»');
   });
 });
+
+describe('Gestaltung D: eine Ebene nach der anderen auf dem ersten Bildschirm', () => {
+  it('die Startbildschirm-Karte erscheint nicht, solange der Rundgang offen ist', () => {
+    expect(quelle('main.jsx')).toMatch(/installKarte: !tourOpen && \(\(klein\) =>/);
+  });
+  it('«Frühe Version» ist eine ruhige Zeile, keine Karte (kein Grund, kein Rand, kein Schatten)', () => {
+    const s = quelle('Dashboard.jsx');
+    const banner = s.slice(s.indexOf('const AlphaBanner'), s.indexOf("'data-alpha-banner': true") + 300);
+    expect(banner).not.toMatch(/background: palette\.up|boxShadow|border: '1px solid/);
+  });
+});

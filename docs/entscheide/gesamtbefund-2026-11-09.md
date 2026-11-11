@@ -219,5 +219,12 @@ siebenmal neu entschieden werden:
    IPV-Sätze, B vier Ordnungen (Kapitel, Werkzeug-Gruppen, Rucksack, Obstgarten) mit verschiedenen Zahlen, C zwei
    Fortschrittszahlen (62 % / 72 %), D drei Ebenen auf dem ersten Bildschirm. Sprache S1–S7. Onboarding nur am Code
    (Beta-Tor). Zweig `befund/gruppe-a-einstieg` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **11.11.: Inhalt und Sprache, dazu D** (Stebler Studios: «Nur Inhalt und Sprache», dann «d aus gestaltung darfst
+   du auch gerne noch dazu machen bitte (a, b & c mal notieren bitte damit wirs nochmals anschauen aber weiter machen
+   können)»). Gebaut im selben Zweig: L1 Satz zur Bewilligung an allen Sozialhilfe-Karten und -Wegen (ohne Schweizer
+   Pass), L2 «IPV ruht» für F/N/S, L3–L9, das Kleine, S1–S7, D (Startbildschirm-Karte erst nach dem Rundgang,
+   «Frühe Version» als Zeile). Test `gruppeAEinstieg.test.js`, Startbündel 64 979 / 65 000 Bytes.
+   **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
+   Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
