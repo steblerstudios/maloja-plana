@@ -108,3 +108,72 @@ describe('L7: Schritt 3 mit Hinweis', () => {
     expect(quelle('AnspruchCheck.jsx')).toMatch(/hinweis\('fuss', t\('anspruch\.footNote'\)\)/);
   });
 });
+
+// ─── L3–L9 und Kleines: die Sätze am Volltext (Befund-Blatt, Tabelle «Inhalt») ───
+const lz = de.lebenszustaende;
+const alleSprachen = ['de', 'fr', 'it', 'en'];
+describe('L3–L9: Voraussetzungen stehen im Text', () => {
+  it('L3 Familien-EL: Wohnsitzdauer und Aufenthaltsstatus (GE, SO, VD, TI)', () => {
+    for (const z of ['tiefesEinkommen', 'alleinerziehend']) {
+      expect(lz[z].berechtigungen.familienEL.text.sie).toMatch(/Wohnsitzdauer im Kanton und vom Aufenthaltsstatus/);
+    }
+  });
+  it('L4 EL: weitere Bedingungen (ELG Art. 4, 5, 9a)', () => {
+    for (const z of ['beeintraechtigung', 'rentnerin', 'halbwaise']) expect(lz[z].berechtigungen.el.text).toMatch(/Vermögen, Aufenthaltsdauer/);
+  });
+  it('L5 Reka: Alleinerziehende, keine Anreise, keine KulturLegi, nur mit Kindern', async () => {
+    const tx = lz.tiefesEinkommen.berechtigungen.rekaFerien.text;
+    expect(tx).toMatch(/Alleinerziehenden/);
+    expect(tx).not.toMatch(/Alleinstehend|Anreise|KulturLegi/);
+    const { LEBENSZUSTAENDE } = await import('../data/lebenszustaende.js');
+    const reka = LEBENSZUSTAENDE.find((z) => z.key === 'tiefesEinkommen').berechtigungen.find((b) => b.key === 'rekaFerien');
+    expect(reka.nurMitKindern).toBe(true);
+  });
+  it('L6 kein Versprechen: «zustehen könnte»', () => {
+    expect(de.onboarding.needsSubtitle.sie).toMatch(/was Ihnen zustehen könnte/);
+    expect(de.anspruchCheck.resultEmptyIncome.sie).toMatch(/was zustehen könnte/);
+  });
+  it('L8 kein «sicher» bei der Ablage', () => {
+    expect(de.guidedStart.documents).not.toMatch(/sicher/i);
+    expect(de.nav.sub.tresor).not.toMatch(/sicher/i);
+  });
+  it('L9 AHV-Mindestbeitrag nur bis 25 (AHVG Art. 10 Abs. 2 Bst. a)', () => {
+    expect(lz.inAusbildung.berechtigungen.ahv.text).toMatch(/bis zum Jahr, in dem sie 25 werden/);
+  });
+  it('die Sätze gibt es in fr, it, en ebenso (keine Lücke)', async () => {
+    for (const l of alleSprachen) {
+      const m = (await import(`../i18n/${l}.js`)).default;
+      expect(typeof m.wasStehtMirZu.sozBewilligung === 'string' ? m.wasStehtMirZu.sozBewilligung : m.wasStehtMirZu.sozBewilligung.sie).toMatch(/(Pass|passeport|passaporto|passport)/);
+      expect(JSON.stringify(m.lebenszustaende.inAusbildung.berechtigungen.ahv.text)).toMatch(/25/);
+    }
+  });
+});
+
+describe('Kleines', () => {
+  it('SERAFE: auf Gesuch, höchstens fünf Jahre zurück (RTVG Art. 69b)', () => {
+    for (const z of ['beeintraechtigung', 'rentnerin']) expect(lz[z].berechtigungen.serafe.text).toMatch(/höchstens fünf Jahre vor dem Gesuch/);
+  });
+  it('Halbwaise: Frage wie die Karte — unter 18, in Ausbildung unter 25', () => {
+    expect(lz.halbwaise.frage.sie).toMatch(/unter 18, oder in Ausbildung unter 25/);
+  });
+  it('Quellensteuer: «endgültig» mit QStV Art. 10 Abs. 1', () => {
+    expect(lz.frischZugezogen.berechtigungen.quellensteuer.text).toMatch(/endgültig \(QStV Art\. 10 Abs\. 1\)/);
+  });
+  it('Obstgarten: es sind drei Bäumchen, die später kommen', () => {
+    expect(de.obstgarten.legend).toMatch(/drei jüngsten/);
+  });
+  it('Mutterschaftsbeihilfe nur mit einem Kind unter einem Jahr oder unbekanntem Alter', async () => {
+    const { kleinkindUnterEinemJahr } = await import('../data/familienEL.js');
+    const heute = new Date(2026, 10, 11);
+    expect(kleinkindUnterEinemJahr([{ birthDate: '2026-03-01' }], heute)).toBe(true);
+    expect(kleinkindUnterEinemJahr([{ birthDate: '2020-03-01' }], heute)).toBe(false);
+    expect(kleinkindUnterEinemJahr([{ age: 0 }], heute)).toBe(true);
+    expect(kleinkindUnterEinemJahr([], heute)).toBe(true);
+    expect(quelle('Lebenssituationen.jsx')).toMatch(/!b\.mutterschaftsbeihilfe \|\| kleinkindUnterEinemJahr\(/);
+  });
+  it('«Stand» der Lebenslagen ist nicht älter als das laufende Jahr (rot ab 1.1.2027 ohne Durchgang)', async () => {
+    const { LEBENSZUSTAENDE } = await import('../data/lebenszustaende.js');
+    const jahr = new Date().getFullYear();
+    for (const z of LEBENSZUSTAENDE) for (const b of z.berechtigungen) expect(Number(b.stand), z.key + '.' + b.key).toBeGreaterThanOrEqual(jahr);
+  });
+});

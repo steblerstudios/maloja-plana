@@ -55,12 +55,13 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite deines Kantons nennt sie.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — Vossa KulturLegi chantunala mussa tge che vala tar Vus.', du: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' } },
-        rekaFerien: { titel: 'Vacanzas Reka per 200.–', text: 'Cun la KulturLegi pussibilitescha la Fundaziun Reka a famiglias e persunas sulettas pertutgadas da la povradad ina emna da vacanzas per circa 200 francs — abitaziun e viadi cun il traffic public inclus.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Die Reka-Stiftung ermöglicht Familien mit minderjährigen Kindern und Alleinerziehenden mit knappem Budget eine Ferienwoche in einer Reka-Ferienwohnung oder Jugendherberge, für einen Beitrag von 200 Franken.' },
       },
     },
     alleinerziehend: {
@@ -75,7 +76,7 @@ export default {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder und vom Einkommen. Die offizielle Seite deines Kantons nennt sie.' } },
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Ihr Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel Sie erhalten, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite Ihres Kantons nennt sie.', du: 'Dein Wohnkanton kennt Ergänzungsleistungen für Familien mit knappem Einkommen. Ob und wie viel du erhältst, hängt von den Bedingungen des Kantons ab, etwa vom Alter der Kinder, vom Einkommen, von der Wohnsitzdauer im Kanton und vom Aufenthaltsstatus. Die offizielle Seite deines Kantons nennt sie.' } },
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital.' } },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
@@ -91,7 +92,8 @@ export default {
         iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
         // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav.' } },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Das ist ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
         serafe: { titel: 'Exoneraziun da la taxa da radio/televisiun', text: 'Tgi che survegn prestaziuns cumplementaras (PC) è exonerà da la taxa SERAFE sin dumonda — recuperabel retroactivamain.' },
@@ -136,7 +138,8 @@ export default {
         stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: { sie: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor Vossa entrada e quella da Voss geniturs, cun termins d’annunzia.', du: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' } },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
         franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
-        ahv: { titel: 'Contribuziuns AVS & largias', text: 'Dapi l’onn suenter ils 20 onns èn ils contribuziuns AVS debitas era senza lavur — students senza activitad pajan il contribut minimal. Onns che mancan reduceschan la renta futura.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen bis zum Jahr, in dem sie 25 werden, den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
         waisenrente: { titel: 'Renta d’orfen en furmaziun', text: 'Sch’in genitur è mort, cuntinuescha la renta d’orfen durant la furmaziun — fin 25 onns. I va facilmain emblidà ch’ella na finescha betg simplamain cun 18.' },
       },
     },
@@ -158,7 +161,8 @@ export default {
       berechtigungen: {
         // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
         pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella. In dretg, betg carezza.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Ein Recht, kein Entgegenkommen.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC.' },
         steuern: { titel: 'Deducziuns en la vegliadetgna', text: 'Cuosts da malsogna, tgira ed impediment pon vegnir deducids da l’entrada taxabla — igl è utigl da tegnair las quittanzas durant l’onn.' },
@@ -204,7 +208,8 @@ export default {
       intro: 'Suenter la mort d’in genitur han ils uffants dretgs clers che van facilmain a perder en in temp grev — ina renta d’orfen, e sustegn cumplementar sch’ella na tanscha betg.',
       berechtigungen: {
         waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun.' },
-        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta d’orfen na cuvra betg ils cuosts da viver, pon las PC cumplettar — era per uffants e giuvenils en furmaziun. In dretg, betg carezza.' },
+        // TODO(rm): provisorisch — deutsch, Gruppe A Fachkorrektur (11.11.2026), Übersetzung offen
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung, unter weiteren Bedingungen (Vermögen, Aufenthaltsdauer). Ein Recht, kein Entgegenkommen.' },
         stipendien: { titel: 'Stipendis', text: 'Ultra da la renta d’orfen pon stipendis chantunals sustegnair ina furmaziun u studi — controllar en parallel, cun agens termins.' },
         steuern: { titel: 'Facilitaziun fiscala', text: 'Il genitur survivent po far valair la tarifa parentala e las deducziuns per uffants; era tscherts cuosts en connex cun la mort pon sbassar la taglia.' },
       },
@@ -7438,7 +7443,7 @@ export default {
     intro: { sie: "Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che Vus endatais — da la plantina fin a l'arbre plain. Tutgai per avrir il sectur.", du: "Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l'arbre plain. Tutga per avrir il sectur." },
     link: 'Mes iert da fritgs',
     ctaSub: 'Mintga sectur da vita sco in agen arbulet — sper l\'arbre survart.',
-    legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils quatter arbulets ils pli giuvens vegnan pli tard.',
+    legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils trais arbulets ils pli giuvens vegnan pli tard.',
     future: 'vegn pli tard',
     stage1: 'plantina',
     stage2: 'crescha',
