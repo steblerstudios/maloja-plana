@@ -5,8 +5,9 @@ import { hatAusweisFNS } from '../data/ausweis.js';
 import { text, weight, leading, space, radius, ease, duration } from '../config/tokens.js';
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
-import { kompassBearing } from '../data/leistungsKompass.js';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf, ladeIPVModelle } from '../config/cantonalData.js';
+import { wegeAusProbe, leistungsKompass } from '../data/anspruchWege.js';
+import { sozialhilfePegelState } from '../data/pegel.js';
+import { calculateIPV, calculateSozialhilfe, ipvJahreseinkommen, getGrundbedarf, ladeIPVModelle } from '../config/cantonalData.js';
 import { zahl, betrag } from '../utils/geld.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 import { gblStand } from '../data/skosGrundbedarf.js';
@@ -44,12 +45,18 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   let sozPegel = null;
   let knappSoz = false;
   let ipvLage = null;
+  // Welche Wege es gibt, entscheidet EINE Rechnung für Übersicht, Schnellcheck und Lebenssituationen
+  // (data/anspruchWege.js, Behörden-Durchgang 11.11.2026, Matrix B-R2). Hier stehen nur noch die Sätze dazu.
+  // Bis dahin prüfte diese Liste die Gates selbst nach, und die Kompass-Nadel konnte hier anders zeigen als im
+  // Schnellcheck (EL bei offener Einkommensart).
+  const { wege } = wegeAusProbe(probe);
+  const weg = (key) => wege.some((w) => w.key === key);
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (erfasst && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
     // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
-    if (ipv && ipv.anspruchMoeglich) found.ipv = {
+    if (ipv && weg('ipv')) found.ipv = {
       // Übergabe nur mit einer eingetippten Netto-Zahl — eine aus brutto geschätzte gehört nicht
       // in den Rechner (und von dort womöglich ins Profil).
       uebergabe: e.geschaetzt ? undefined : { schnellcheck: { monthlyIncome: income } },
@@ -77,8 +84,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       knappSoz = e.geschaetzt && istKnapp(sh, e.ohneAlter);
       // Rente oder Einkommen nicht erfasst: kein Betrag, nur der Grund (wie data/anspruchWege.js).
       if (sh?.einkommenFehlt) {
-        if (sh.wegOhneBetrag) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
-      } else if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
+        if (weg('soz')) found.soz = { monthly: 0, detail: t(sh.renteFehlt ? 'sozialhilfe.renteNichtErfasst' : 'sozialhilfe.einkommenNichtErfasst') };
+      } else if (weg('soz')) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
         detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
@@ -92,17 +99,20 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem
       // etwas zusteht»), sachlich statt als Urteil: Einkommen gegen SKOS-Bedarf, als Pegel.
       // Texte aus dem Pegel-Werkzeug (pegel.*), dieselbe Engine wie der Rechner.
-      else if (sh) sozPegel = {
-        bedarf: sh.totalBedarf, einkommen: sh.income,
+      // Strich und Linie lesen dieselben zwei Zahlen wie das Glas in Schnellcheck und Lebenssituationen
+      // (data/pegel.js, Matrix B-R6): bei einer Lücke das angerechnete Einkommen, sonst das ganze.
+      const glas = (sh && !sh.einkommenFehlt && !weg('soz')) ? sozialhilfePegelState(probe) : null;
+      if (glas) sozPegel = {
+        bedarf: glas.bedarf, einkommen: glas.income,
         // Freibetrag-Fall: offen statt «keine Aufstockung nötig» (wie pegel.js, Predeploy 25.09.2026).
         detail: (sh.eligible ? t('pegel.vermoegen') : sh.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : sh.anspruchOffen ? t(sh.offenText) + (sh.hinweise?.includes('pegel.vermoegen') ? ' ' + t('pegel.vermoegen') : '') : t('pegel.covered')) + (sh.ansatzTiefer ? ' ' + t('pegel.ansatzTiefer') : '') + (sh.ohneFreibetrag ? ' ' + t('pegel.ohneFreibetrag') : '') + (sh.vorBeitraegen ? ' ' + t('pegel.vorBeitraegen') : ''),
       };
     }
     // EL (Predeploy 25.09.2026): nur im AHV-/IV-Renten-Kontext, qualitativ ohne Betrag — wie im
-    // vollen Schnellcheck. Bis dahin fehlte sie hier, und der Kompass zählte anders als der Schnellcheck.
-    // Nicht, solange die Einkommensart offen ist (sonst zählte ein leeres Feld als 0 Einkommen).
-    // Seit 03.11.2026 ohne errechneten Anspruch: der Rentenbezug genügt, wie in data/anspruchWege.js.
-    if (!e.offen && checkELEligibility(probe)?.elPruefen) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
+    // vollen Schnellcheck. Seit 03.11.2026 genügt der Rentenbezug (checkELEligibility), das Einkommen spielt
+    // keine Rolle mehr. Die frühere Sperre «nicht, solange die Einkommensart offen ist» stammte aus der Zeit,
+    // als die EL am Einkommen hing; sie liess die Nadel hier nach Süden zeigen, im Schnellcheck nach Norden.
+    if (weg('el')) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
   } catch { /* Orientierung, nie blockierend */ }
 
   // Wie der volle Schnellcheck (Schnellcheck.jsx): bei Sozialhilfe steckt die IPV schon
@@ -113,9 +123,9 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const totalMonthly = counted.reduce((sum, k) => sum + found[k].monthly, 0);
   const maxMonthly = Math.max(0, ...counted.map(k => found[k].monthly));
 
-  // Kompass-Peilung aus derselben Liste: was hier gefunden wird, zählt.
-  const anzahlGefunden = Object.keys(found).length;
-  const kompass = kompassBearing({ hasIncome: erfasst, benefitCount: anzahlGefunden });
+  // Kompass-Peilung: dieselbe Funktion wie im Schnellcheck (data/anspruchWege.js leistungsKompass).
+  const kompass = leistungsKompass(probe, wege);
+  const anzahlGefunden = kompass.anzahl;
 
   const leistungen = [
     { key: 'ipv', label: t('dashboard.quickCheckIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
@@ -163,8 +173,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
             t('pegel.bedarf') + ' ≈ ' + betrag(Math.round(sozPegel.bedarf))),
           React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '4px', borderRadius: radius.full + 'px', background: palette.up } },
-            React.createElement('div', { style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: radius.full + 'px' } }),
-            React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
+            React.createElement('div', { 'data-teil': 'soz-strich-einkommen', style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: radius.full + 'px' } }),
+            React.createElement('div', { 'data-teil': 'soz-strich-bedarf', style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
       })(),
       zaehlt && React.createElement('div', { style: { flexShrink: 0, width: '116px', textAlign: 'right' } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, '≈ CHF ' + fmt(f.monthly)),
