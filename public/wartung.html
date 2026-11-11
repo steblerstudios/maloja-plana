@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
   <title>Kurze Wartung — Maloja Plana</title>
+  <!-- Gruppe E (11.11.2026), Inhalt und Sprache: Sie-Form, keine Zeitzusage («in wenigen Minuten»), der Satz zu den
+       Daten in allen Sprachen, lang je Sprache, Schrift Lexend vom eigenen Server (vorher 'DM Sans' ohne
+       @font-face), Leise-Ton #575B61 statt #A29E97 (2,67:1 → 6,83:1 auf Weiss). Ein- und Ausschalten: RELEASE.md,
+       Abschnitt «Wartungsseite». Gestaltung nach dem Rahmen ist ein eigener Entscheid (Gruppe E, A). -->
   <style>
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-500-normal.woff2') format('woff2');
+      font-weight:500; font-display:swap }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       -webkit-font-smoothing: antialiased;
       background: #F8F7F5;
       color: #2C2A26;
@@ -30,18 +38,14 @@
       font-size: 20px;
       font-weight: 500;
       margin-bottom: 12px;
-      letter-spacing: 0.3px;
     }
     p {
       font-size: 15px;
-      color: #7A7670;
+      color: #575B61;
       line-height: 1.6;
     }
     .lead { margin-bottom: 20px; }
     .note {
-      font-size: 14px;
-      color: #7A7670;
-      line-height: 1.6;
       background: #F8F7F5;
       border: 1px solid #E0DDD8;
       border-radius: 8px;
@@ -50,25 +54,24 @@
     }
     .langs {
       font-size: 13px;
-      color: #A29E97;
       line-height: 1.7;
       border-top: 1px solid #EFEDEA;
       padding-top: 20px;
     }
-    .langs span { display: block; }
+    .langs span { display: block; margin-bottom: 8px; }
   </style>
 </head>
 <body>
-  <div class="card">
+  <main class="card">
     <h1>Maloja Plana</h1>
-    <p class="lead">Wir pflegen gerade kurz die Seite. In wenigen Minuten ist alles wieder da.</p>
-    <p class="note">Deine Daten bleiben unberührt — sie liegen lokal auf deinem Gerät, nicht auf dieser Seite. Eine Wartung ändert nichts daran.</p>
+    <p class="lead">Wir pflegen gerade die Seite. Bitte versuchen Sie es etwas später erneut.</p>
+    <p class="note">Ihre Daten bleiben unberührt: Sie liegen auf Ihrem Gerät, nicht auf dieser Seite. Eine Wartung ändert daran nichts.</p>
     <!-- RM (Rumantsch) folgt nach Muttersprachler-Gegenlese — bewusst noch nicht gezeigt (Wahrheits-Disziplin). -->
-    <div class="langs">
-      <span>Nous effectuons une brève maintenance. Tout revient dans quelques minutes.</span>
-      <span>Stiamo eseguendo una breve manutenzione. Tutto tornerà tra pochi minuti.</span>
-      <span>We're doing a short maintenance. Everything will be back in a few minutes.</span>
-    </div>
-  </div>
+    <p class="langs">
+      <span lang="fr">Nous effectuons une maintenance. Veuillez réessayer un peu plus tard. Vos données restent sur votre appareil, la maintenance n’y change rien.</span>
+      <span lang="it">Stiamo eseguendo una manutenzione. La preghiamo di riprovare più tardi. I Suoi dati restano sul Suo dispositivo, la manutenzione non cambia nulla.</span>
+      <span lang="en">We are carrying out maintenance. Please try again a little later. Your data stays on your device; maintenance does not change that.</span>
+    </p>
+  </main>
 </body>
 </html>

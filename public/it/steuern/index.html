@@ -168,6 +168,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -229,7 +233,7 @@
 
       <div class="karte">
         <p><strong>Maloja Plana esegue il calcolo per la sua situazione.</strong></p>
-        <p>Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.</p>
+        <p>Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.</p>
         <p>L’applicazione è attualmente in <strong>beta chiusa</strong> e richiede un codice d’accesso. <strong>Senza codice è possibile consultare un esempio</strong> — con dati fittizi, non viene salvato nulla.</p>
         <p><a class="knopf" href="/app/?beispiel#/tax">Guardare l’esempio — senza codice d’accesso</a></p>
       </div>
@@ -264,7 +268,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Segnalare%20un%20problema">Segnalare un problema</a></p>
-      <p class="sprachen">Lingua: <a href="/steuern/" hreflang="de">Deutsch</a> · <a href="/fr/steuern/" hreflang="fr">Français</a> · <span aria-current="true">Italiano</span> · <a href="/en/steuern/" hreflang="en">English</a> · <a href="/rm/steuern/" hreflang="rm">Rumantsch</a></p>
+      <p class="sprachen">Lingua: <a href="/steuern/" hreflang="de" lang="de">Deutsch</a> · <a href="/fr/steuern/" hreflang="fr" lang="fr">Français</a> · <span aria-current="true">Italiano</span> · <a href="/en/steuern/" hreflang="en" lang="en">English</a> · <a href="/rm/steuern/" hreflang="rm" lang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>

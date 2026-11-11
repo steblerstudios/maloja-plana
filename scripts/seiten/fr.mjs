@@ -288,13 +288,13 @@ export const SONDERSEITEN = [
         absaetze: [
           'Maloja Plana est un <strong>outil d’orientation</strong>. Les calculateurs et les aperçus se fondent sur des bases légales accessibles au public et servent exclusivement à l’information personnelle.',
           '<strong>Maloja Plana ne remplace pas un conseil juridique, fiscal, financier ou en assurances.</strong>',
-          'L’éditrice n’assume aucune garantie quant à l’exactitude, à l’exhaustivité ou à l’actualité des calculs, quant à l’adéquation des résultats à des décisions individuelles, ni pour les dommages résultant de leur utilisation. Seuls les lois en vigueur et les autorités compétentes font foi.',
+          'L’éditrice n’assume aucune garantie quant à l’exactitude, à l’exhaustivité ou à l’actualité des calculs, quant à l’adéquation des résultats à des décisions individuelles, ni pour les dommages résultant de leur utilisation. La responsabilité pour les dommages causés intentionnellement ou par négligence grave demeure réservée. Seuls les lois en vigueur et les autorités compétentes font foi.',
         ],
       },
       {
         titel: 'Protection des données sur ces pages',
         absaetze: [
-          'Les pages d’explication sont du HTML statique. Elles ne chargent <strong>aucun script, aucun cookie et aucune ressource de tiers</strong> ; les polices de caractères se trouvent sur le même serveur. Il n’y a ni traçage, ni analyse, ni publicité.',
+          'Les pages d’explication sont du HTML statique. Elles ne chargent <strong>aucun script, aucun cookie et aucune ressource de tiers</strong> ; les polices de caractères se trouvent sur le même serveur. La page d’accueil charge en plus de petits scripts propres, depuis le même serveur : l’un redirige les anciennes adresses de l’application vers /app/, l’autre anime les images du parcours. Les personnes qui utilisaient auparavant l’application à l’adresse principale en reçoivent une fois un troisième lors de leur prochaine visite de l’une de ces pages : il vide l’ancienne mémoire cache de l’application dans le navigateur, se désinscrit, puis recharge la page une fois ; il ne touche pas aux données sur votre appareil. Ces scripts ne déposent aucun cookie et n’envoient aucune donnée. Il n’y a ni traçage, ni analyse, ni publicité.',
           'Lors de la consultation, des données techniques sont néanmoins collectées chez l’hébergeur — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genève, avec des centres de calcul en Suisse : adresse IP dans les journaux du serveur, type de navigateur, système d’exploitation et moment de l’accès. Cela est techniquement nécessaire à la livraison et à la sécurité de l’exploitation. Infomaniak agit à ce titre en qualité de sous-traitante (art. 9 nLPD). Selon les indications du prestataire, les journaux d’accès et d’erreur sont conservés au moins 7 jours (FAQ de support Infomaniak 1926, consultée le 23 septembre 2026).',
           'Il n’y a pas d’autres destinataires : aucun service d’analyse, aucune intégration de réseaux sociaux, aucune transmission et aucune vente de données.',
         ],

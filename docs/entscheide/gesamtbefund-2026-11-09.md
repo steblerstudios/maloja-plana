@@ -221,3 +221,17 @@ gesperrt bis zur Lektüre (gewollt), rm `noindex` ✔; mit der Freigabe zusammen
 verlinkt keine Sprach-Startseite (E2); E3 Titel der Sprach-Startseiten; E4 `dateModified`. Zweig `befund/gruppe-e-website`
 (von `main`), nur Befund, gebaut ist nichts. Vorschlag: Zweig 1 Inhalt/Recht/Sprache (ohne `vorstellung.mjs`), Zweig 2
 Gestaltung A–D erst nach Ja; L7, U6/U7, S8, E2 in den Startseiten-Stapel, nicht hier.
+✅ **11.11.: Zweig 1 gebaut** (Stebler Studios: «Zweig 1 bauen»), im selben Zweig, Entwurfs-PR #847. H1 Knopf der
+Sprach-Startseiten auf `/app/?lang=xx&beispiel` (Adresse in `scripts/seiten-ziele.mjs`) · H2/S1/S3/S4 404 und Wartung:
+Sie-Form, klarer Satz, keine Zeitzusage, Datensatz in allen Sprachen, `lang` je Zeile, Lexend statt der nie geladenen
+DM Sans, Leise-Ton 6,83:1, 404-Link unterstrichen und 44 px · L2 Vorbehalt für Vorsatz und grobe Fahrlässigkeit (Satz
+aus den Nutzungsbedingungen Ziff. 6, auch in `docs/legal/impressum.md` und fr/it/en) · L4/L5 Abschieds-Service-Worker
+in der Skriptliste, Startseiten-Satz in fr/it/en · L6 Stand-Datum · L8 Manifest deutsch · U5 `lang` im Sprachumschalter
+· U8 Fuss- und Krumen-Links 44 px · S2 Karte der Sprach-Startseite ohne «rechnet das durch» · S5/S6 Rechtliches-Text ·
+S9 «scheda d’emergenza» · S10 rm-Verbindlichkeitssatz · E3 Titel der Sprach-Startseiten · W1 RELEASE.md, Abschnitt
+Wartungsseite (Panel-Kopie). Test `gruppeEWebsite.test.js`, Mutationsprobe H1 rot aus dem richtigen Grund. rechts-pruefer: OR Art. 100 Abs. 1
+am Fedlex-Volltext (Stand 1.10.2026) bestätigt, vier Präzisierungen übernommen.
+**Nicht gebaut:** L1 (Entscheid Stebler Studios) · L3 Gerichtsstand, liegt als F2a bei der Juristin · L2 und L5 für rm (die
+rm-Rechtsseite sagt damit vorerst weniger als die anderen vier; neue Sätze erst mit Muttersprachler-Lektüre) · S9 «aiuto sociale» bleibt, die App sagt es 69-mal (Befund berichtigt) ·
+Gestaltung A–D (Zweig 2) · L7, U6/U7, S8, E2 (Startseiten-Stapel) · E1 (mit der Sprachfreigabe).
+🛑 **Nach dem Deploy von Hand:** den neuen Text von `public/wartung.html` ins Infomaniak-Panel kopieren.

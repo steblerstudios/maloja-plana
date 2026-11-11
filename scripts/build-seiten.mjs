@@ -31,7 +31,7 @@ import { zahlen, einsetzen, BLOECKE as BLOECKE_FIGUREN, BEWEGT, bewegtSkripte, b
 import { vergleichZahlen, BLOECKE_VERGLEICH } from './seiten-vergleich.mjs';
 import { vorstellungBauen } from './seiten/vorstellung.mjs';
 import { karteBild } from './seiten/kantonsatlas.mjs';
-import { appBeispiel } from './seiten-ziele.mjs';
+import { appBeispiel, appBeispielSprache } from './seiten-ziele.mjs';
 import { KANTONSSEITEN, WEGE, KANTON_HINWEIS } from './seiten/praemienverbilligung-kantone.mjs';
 
 // Tabellen und Bilder aller Hintergrundseiten, an <!--FIG:…--> / <!--TAB:…-->.
@@ -87,8 +87,14 @@ function hreflangRing(pfad) {
 function sprachWaehler(pfad, aktiv) {
   const glieder = SPRACHEN.map((s) => (s.code === aktiv.code
     ? `<span aria-current="true">${SPRACHNAME[s.code]}</span>`
-    : `<a href="${pfadIntern(pfad, s)}" hreflang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`));
+    : sprachLink(pfadIntern(pfad, s), s)));
   return glieder.join(' · ');
+}
+
+// Ein Link im Sprachumschalter. `lang` gehört dazu (Gruppe E, U5): `hreflang` sagt nur, in welcher
+// Sprache das Ziel ist; vorgelesen wird der Name «Français» erst mit `lang="fr"` französisch.
+function sprachLink(href, s) {
+  return `<a href="${href}" hreflang="${s.htmlLang}" lang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`;
 }
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -153,6 +159,10 @@ const stil = `
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -367,20 +377,22 @@ ${fuss(sprache, `${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}`)
 // Gesamtbefund S6). Die Server-.htaccess geht nicht mit dem Deploy, darum hier eine Seite,
 // die mit den Erklärseiten ausgeliefert wird. Sie bringt KEINEN neuen Text: Titel, Liste und
 // Karte kommen aus RAHMEN und den Seiten der Sprache, die schon übersetzt sind. Der Knopf
-// führt in die App in derselben Sprache (/?lang=xx). Freigabe wie jede Seite der Sprache:
+// führt ins Beispiel in derselben Sprache (/app/?lang=xx&beispiel, seit Gruppe E). Die Kartenzeile
+// «… rechnet das für Ihre Situation durch» steht hier nicht: ohne Erklärtext davor fehlt ihr der Bezug (S2). Freigabe wie jede Seite der Sprache:
 // gesperrt → noindex und nicht in der Sitemap.
 function sprachStartBauen(sprache) {
   const R = RAHMEN[sprache.code];
   const inhalt = inhaltFuer(sprache.code);
   const seitenUrl = `${BASIS}/${sprache.praefix}`;
-  // Titel «Accueil — Maloja Plana», Brotkrume «Accueil › Français»: beides aus vorhandenen Wörtern.
-  const seite = { titel: R.start, brotkrume: SPRACHNAME[sprache.code], beschreibung: R.karteText };
+  // Titel «Un classeur de vie suisse — Maloja Plana» (Gruppe E, E3; vorher «Accueil», sagt der Suche nichts),
+  // Brotkrume «Accueil › Français»: alles aus vorhandenen Wörtern, der Titel ist der Anfang von karteText.
+  const seite = { titel: R.karteText.split(' — ')[0], brotkrume: SPRACHNAME[sprache.code], beschreibung: R.karteText };
   const liste = inhalt.seiten.map((s) =>
     `          <li><a href="${pfadIntern(s.pfad, sprache)}">${esc(s.brotkrume)}</a>` +
     `<span>${esc(s.beschreibung)}</span></li>`).join('\n');
   const waehler = SPRACHEN.map((s) => (s.code === sprache.code
     ? `<span aria-current="true">${SPRACHNAME[s.code]}</span>`
-    : `<a href="/${s.praefix}" hreflang="${s.htmlLang}">${SPRACHNAME[s.code]}</a>`)).join(' · ');
+    : sprachLink(`/${s.praefix}`, s))).join(' · ');
   const ld = {
     '@context': 'https://schema.org',
     '@graph': [{
@@ -400,9 +412,8 @@ ${liste}
       </ul>
 
       <div class="karte">
-        <p><strong>${esc(R.karteTitel)}</strong></p>
         <p>${R.karteBeta}</p>
-        <p><a class="knopf" href="/?lang=${sprache.code}">${esc(R.karteKnopf)}</a></p>
+        <p><a class="knopf" href="${esc(appBeispielSprache(sprache.code))}">${esc(R.karteKnopf)}</a></p>
       </div>
 
       <ul>

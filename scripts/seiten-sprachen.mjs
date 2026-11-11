@@ -217,7 +217,7 @@ export const RAHMEN = {
     karteTitel: 'Maloja Plana esegue il calcolo per la sua situazione.',
     karteText:
       'Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, ' +
-      'previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: ' +
+      'previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: ' +
       'nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.',
     karteBeta:
       'L’applicazione è attualmente in <strong>beta chiusa</strong> e richiede un codice d’accesso. ' +
@@ -329,6 +329,9 @@ export const RAHMEN = {
     spracheLabel: 'Lingua',
     entwurfBanner:
       'Questa translaziun n’è anc betg vegnida legida d’ina persuna. Decisiv è il text tudestg.',
+    // Gruppe E, S10: ohne diesen Satz fiele bei der Freigabe «Deutsch gilt» ganz weg. Nur aus Wörtern des
+    // Banners gebaut; vor der Freigabe muttersprachlich lesen lassen wie den ganzen rm-Rahmen.
+    verbindlich: 'Translaziun. Decisiv è il text tudestg.',
   },
 };
 

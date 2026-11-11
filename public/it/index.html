@@ -18,20 +18,20 @@
   <meta name="robots" content="noindex, follow">
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
-  <title>Inizio — Maloja Plana</title>
-  <meta name="description" content="Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.">
+  <title>Un raccoglitore di vita svizzero — Maloja Plana</title>
+  <meta name="description" content="Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.">
   <link rel="canonical" href="https://malojaplana.ch/it/">
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Inizio">
-  <meta property="og:description" content="Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.">
+  <meta property="og:title" content="Un raccoglitore di vita svizzero">
+  <meta property="og:description" content="Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.">
   <meta property="og:url" content="https://malojaplana.ch/it/">
   <meta property="og:image" content="https://malojaplana.ch/og-image.png">
   <meta property="og:locale" content="it_CH">
   <meta property="og:site_name" content="Maloja Plana">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Inizio">
-  <meta name="twitter:description" content="Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.">
+  <meta name="twitter:title" content="Un raccoglitore di vita svizzero">
+  <meta name="twitter:description" content="Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.">
   <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -45,8 +45,8 @@
         "@type": "WebPage",
         "@id": "https://malojaplana.ch/it/#webpage",
         "url": "https://malojaplana.ch/it/",
-        "name": "Inizio",
-        "description": "Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.",
+        "name": "Un raccoglitore di vita svizzero",
+        "description": "Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.",
         "inLanguage": "it-CH",
         "isPartOf": {
           "@id": "https://malojaplana.ch/#website"
@@ -109,6 +109,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -138,7 +142,7 @@
     <main>
       <p class="entwurf" role="note">Questa traduzione non è ancora stata riletta da una persona. Fa fede il testo tedesco.</p>
       <h1>Maloja Plana</h1>
-      <p class="vorspann">Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e carta d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.</p>
+      <p class="vorspann">Un raccoglitore di vita svizzero — imposte, riduzione dei premi, aiuto sociale, salario minimo, previdenza e scheda d’emergenza in un unico posto. Tutti i dati restano sul suo dispositivo: nessun account, nessuna trasmissione a un server, nessun tracciamento. Gratuito e open source.</p>
 
       <ul class="weiter">
           <li><a href="/it/was-steht-mir-zu/">A che cosa ho diritto?</a><span>In Svizzera il sostegno è ripartito tra Confederazione, Cantoni e Comuni — molto resta inutilizzato perché non se ne conosce l’esistenza. Una panoramica, tema per tema.</span></li>
@@ -148,9 +152,8 @@
       </ul>
 
       <div class="karte">
-        <p><strong>Maloja Plana esegue il calcolo per la sua situazione.</strong></p>
         <p>L’applicazione è attualmente in <strong>beta chiusa</strong> e richiede un codice d’accesso. <strong>Senza codice è possibile consultare un esempio</strong> — con dati fittizi, non viene salvato nulla.</p>
-        <p><a class="knopf" href="/?lang=it">Guardare l’esempio — senza codice d’accesso</a></p>
+        <p><a class="knopf" href="/app/?lang=it&amp;beispiel">Guardare l’esempio — senza codice d’accesso</a></p>
       </div>
 
       <ul>
@@ -171,7 +174,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Segnalare%20un%20problema">Segnalare un problema</a></p>
-      <p class="sprachen">Lingua: <a href="/" hreflang="de">Deutsch</a> · <a href="/fr/" hreflang="fr">Français</a> · <span aria-current="true">Italiano</span> · <a href="/en/" hreflang="en">English</a> · <a href="/rm/" hreflang="rm">Rumantsch</a></p>
+      <p class="sprachen">Lingua: <a href="/" hreflang="de" lang="de">Deutsch</a> · <a href="/fr/" hreflang="fr" lang="fr">Français</a> · <span aria-current="true">Italiano</span> · <a href="/en/" hreflang="en" lang="en">English</a> · <a href="/rm/" hreflang="rm" lang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>

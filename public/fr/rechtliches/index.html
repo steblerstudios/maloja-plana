@@ -127,6 +127,10 @@
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
+    /* Tippziele 44 px ohne neue Zeilenhöhe (Gruppe E, U8): Polster an Inline-Links verändert die Zeile nicht,
+       vergrössert aber die Fläche. 13 px Schrift × 1.65 ≈ 21 px + 2 × 12 px = 45 px. Wie footer a der Startseite. */
+    footer a, nav.krume a{ padding:12px 2px }
+    .marke{ padding:12px 0; margin:-12px 0 }
     footer p{ margin-bottom:6px }
     /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
     footer .sprachen{ margin-top:14px }
@@ -167,10 +171,10 @@
         <h2>Clause de non-responsabilité</h2>
         <p>Maloja Plana est un <strong>outil d’orientation</strong>. Les calculateurs et les aperçus se fondent sur des bases légales accessibles au public et servent exclusivement à l’information personnelle.</p>
         <p><strong>Maloja Plana ne remplace pas un conseil juridique, fiscal, financier ou en assurances.</strong></p>
-        <p>L’éditrice n’assume aucune garantie quant à l’exactitude, à l’exhaustivité ou à l’actualité des calculs, quant à l’adéquation des résultats à des décisions individuelles, ni pour les dommages résultant de leur utilisation. Seuls les lois en vigueur et les autorités compétentes font foi.</p>
+        <p>L’éditrice n’assume aucune garantie quant à l’exactitude, à l’exhaustivité ou à l’actualité des calculs, quant à l’adéquation des résultats à des décisions individuelles, ni pour les dommages résultant de leur utilisation. La responsabilité pour les dommages causés intentionnellement ou par négligence grave demeure réservée. Seuls les lois en vigueur et les autorités compétentes font foi.</p>
 
         <h2>Protection des données sur ces pages</h2>
-        <p>Les pages d’explication sont du HTML statique. Elles ne chargent <strong>aucun script, aucun cookie et aucune ressource de tiers</strong> ; les polices de caractères se trouvent sur le même serveur. Il n’y a ni traçage, ni analyse, ni publicité.</p>
+        <p>Les pages d’explication sont du HTML statique. Elles ne chargent <strong>aucun script, aucun cookie et aucune ressource de tiers</strong> ; les polices de caractères se trouvent sur le même serveur. La page d’accueil charge en plus de petits scripts propres, depuis le même serveur : l’un redirige les anciennes adresses de l’application vers /app/, l’autre anime les images du parcours. Les personnes qui utilisaient auparavant l’application à l’adresse principale en reçoivent une fois un troisième lors de leur prochaine visite de l’une de ces pages : il vide l’ancienne mémoire cache de l’application dans le navigateur, se désinscrit, puis recharge la page une fois ; il ne touche pas aux données sur votre appareil. Ces scripts ne déposent aucun cookie et n’envoient aucune donnée. Il n’y a ni traçage, ni analyse, ni publicité.</p>
         <p>Lors de la consultation, des données techniques sont néanmoins collectées chez l’hébergeur — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genève, avec des centres de calcul en Suisse : adresse IP dans les journaux du serveur, type de navigateur, système d’exploitation et moment de l’accès. Cela est techniquement nécessaire à la livraison et à la sécurité de l’exploitation. Infomaniak agit à ce titre en qualité de sous-traitante (art. 9 nLPD). Selon les indications du prestataire, les journaux d’accès et d’erreur sont conservés au moins 7 jours (FAQ de support Infomaniak 1926, consultée le 23 septembre 2026).</p>
         <p>Il n’y a pas d’autres destinataires : aucun service d’analyse, aucune intégration de réseaux sociaux, aucune transmission et aucune vente de données.</p>
 
@@ -218,7 +222,7 @@
            zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
            Datenabfluss und widerspricht local-first / CSP self-only. -->
       <p><a href="mailto:info@malojaplana.ch?subject=Maloja%20Plana%3A%20Signaler%20un%20probl%C3%A8me">Signaler un problème</a></p>
-      <p class="sprachen">Langue: <a href="/rechtliches/" hreflang="de">Deutsch</a> · <span aria-current="true">Français</span> · <a href="/it/rechtliches/" hreflang="it">Italiano</a> · <a href="/en/rechtliches/" hreflang="en">English</a> · <a href="/rm/rechtliches/" hreflang="rm">Rumantsch</a></p>
+      <p class="sprachen">Langue: <a href="/rechtliches/" hreflang="de" lang="de">Deutsch</a> · <span aria-current="true">Français</span> · <a href="/it/rechtliches/" hreflang="it" lang="it">Italiano</a> · <a href="/en/rechtliches/" hreflang="en" lang="en">English</a> · <a href="/rm/rechtliches/" hreflang="rm" lang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>
