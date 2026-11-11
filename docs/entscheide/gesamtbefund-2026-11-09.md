@@ -199,3 +199,25 @@ siebenmal neu entschieden werden:
    Offen: Lektüre fr/it/en, rm, Zuschlag in der 13. Rente (BSV), Witwen-Satz nach EGMR, Absätze teilen (S4).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
+
+---
+
+**Gruppe E · Website & Rahmen** (11.11., zum Punkt 5 «Die übrigen Seiten»): Bild
+[gruppe-e-website.html](../design/gruppe-e-website.html). Gemessen auf `main` `c865f518`; für alle Dateien dieser Gruppe
+ist `main` gleich live `73caaf6e` (`git diff` leer). Startseite, Sprach-Startseiten, Rechtliches statisch, 404, Wartung,
+Manifest, Sitemap. Prüfer: rechts-pruefer, polygrafin, a11y-pruefer, copy-pruefer, link-checker; Kernstellen von Hand
+nachgeprüft. Die Startseite ist gegen den Kopf des Stapels #825 → #833 → #837 → #843 (`6f8b6f39`) abgeglichen, je Punkt
+steht, ob ein PR die Stelle schon berührt. Gut: Datenaussagen stimmen am Code, 140 Links ohne Fehler, Sitemap 36 URLs
+alle 200, `/fr/` usw. antworten 200 (S6 erledigt). Hoch: **H1** der Knopf «Beispiel ansehen — ohne Zugangscode» der vier
+Sprach-Startseiten führt auf `/?lang=xx` und damit vor das Beta-Tor (`build-seiten.mjs:405`, ohne `beispiel`) · **H2** 404
+und Wartung duzen, laden ihre Schrift nicht, haben eigene Farben, keinen Dunkelmodus, Wartung-Fremdsprachen 2,67:1, der
+404-Link ist nicht als Link erkennbar. Mittel/klein: L1 Impressum ohne Postanschrift (UWG Art. 3 Abs. 1 Bst. s Ziff. 1,
+Entscheid Stebler Studios) · L2 Haftung ohne «soweit gesetzlich zulässig» (OR Art. 100 Abs. 1) · L3 Gerichtsstand (ZPO
+Art. 32, 35) · L4/L5 `sw-abschied.js` fehlt in der Skriptliste, fr/it/en/rm ohne den Startseiten-Satz · L6 kein
+Stand-Datum · L7 Atlas-Karte ohne BFS-Quelle · L8 Manifest halb englisch · U5–U8 · W1 kein Schalter für die Wartung im
+Repo. Gestaltung des Rahmens A 404/Wartung aus dem Generator · B eine Schriftordnung (G10 bestätigt) · C ein Kopf, ein
+Gold, ein Leise-Ton · D Knopf 10 / Karte 12 / Luft §7a. Sprache S1–S10 (S7 entfällt mit #833). SEO: fr/it/en weiter
+gesperrt bis zur Lektüre (gewollt), rm `noindex` ✔; mit der Freigabe zusammen hreflang und Sitemap (E1); die Startseite
+verlinkt keine Sprach-Startseite (E2); E3 Titel der Sprach-Startseiten; E4 `dateModified`. Zweig `befund/gruppe-e-website`
+(von `main`), nur Befund, gebaut ist nichts. Vorschlag: Zweig 1 Inhalt/Recht/Sprache (ohne `vorstellung.mjs`), Zweig 2
+Gestaltung A–D erst nach Ja; L7, U6/U7, S8, E2 in den Startseiten-Stapel, nicht hier.

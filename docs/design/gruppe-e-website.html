@@ -1,0 +1,113 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Gruppe E Website</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--line:#e5e0d6;--gold:#B08A3E;--rot:#C0392B;--gruen:#4E7A55}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a18;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--line:#44423d;--gold:#D6B46A;--gruen:#8FBF95}}
+body{font:15px/1.5 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:980px}
+h1{font-size:21px;margin:0 0 6px}h2{font-size:18px;margin:32px 0 8px}p{margin:4px 0 10px}.leise{color:var(--soft)}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;overflow:hidden;font-size:14px}
+td,th{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+tr.hoch td:first-child{border-left:4px solid var(--rot)}
+.pr{font-size:12px;white-space:nowrap;padding:1px 6px;border-radius:6px;border:1px solid var(--line)}
+.pr.frei{color:var(--gruen);border-color:var(--gruen)}.pr.ber{color:var(--gold);border-color:var(--gold)}
+.box{background:var(--card);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin:12px 0}
+.paar{display:grid;grid-template-columns:minmax(0,360px) 1fr;gap:16px;align-items:start;margin-bottom:16px}@media(max-width:700px){.paar{grid-template-columns:1fr}}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.skizze{position:relative;border-radius:12px;padding:14px;font-size:12px;min-height:150px}
+.skizze .t{font-size:10px;text-transform:uppercase;letter-spacing:.05em;opacity:.7;margin-bottom:6px}
+.kasten{position:absolute;border:3px solid var(--rot);border-radius:8px}
+.kasten b{position:absolute;left:-14px;top:-14px;width:26px;height:26px;border-radius:50%;background:var(--rot);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+.erkl{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 10px}
+.erkl .l{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--rot);color:#fff;align-items:center;justify-content:center;margin-right:6px;font-weight:600;font-size:13px}
+/* Skizzen: heutige 404/Wartung (DM-Sans-Karte) gegen Rahmen der Erklärseiten */
+.alt{background:#F8F7F5;color:#2C2A26;font-family:-apple-system,system-ui}
+.alt .karte{background:#fff;border:1px solid #E0DDD8;border-radius:12px;padding:16px 12px;text-align:center}
+.alt .k1{font-size:14px;font-weight:500}.alt .k2{color:#7A7670;margin:6px 0}.alt .k3{color:#7A7670;border-bottom:1px solid #E0DDD8;display:inline-block}
+.alt .k4{color:#A29E97;font-size:10px;margin-top:8px;border-top:1px solid #EFEDEA;padding-top:6px}
+.neu{background:#F2F2F0;color:#2A2D31}
+.neu .kopf{display:flex;gap:6px;align-items:center;font-weight:600;font-size:12px}.neu .kopf i{width:14px;height:14px;border-radius:4px;background:#C4A06A;display:inline-block}
+.neu .h{font-family:Georgia,serif;font-size:17px;font-weight:700;margin:10px 0 4px}
+.neu .knopf{display:inline-block;background:#C4A06A;color:#2A2620;border-radius:6px;padding:6px 10px;margin:6px 0}
+.neu .fuss{border-top:1px solid #d9d9d5;margin-top:10px;padding-top:6px;color:#575B61;font-size:10px}
+code{font-size:13px}
+</style>
+<h1>Gruppe E · Website &amp; Rahmen</h1>
+<p class=leise>Durchgang 11.11.2026 auf <code>main</code> <code>c865f518</code>. Für alle Dateien dieser Gruppe ist <code>main</code> gleich dem Live-Stand <code>73caaf6e</code> (<code>git diff 73caaf6e origin/main</code> über <code>website/</code>, <code>scripts/seiten/</code>, 404, Wartung, Rechtliches, Sprach-Startseiten: leer). Fünfte und letzte Gruppe der übrigen Seiten (Gesamtbefund, Abschnitt 5, Punkt 5): Startseite <code>/</code>, Sprach-Startseiten <code>/fr/ /it/ /en/ /rm/</code>, Rechtliches statisch <code>/rechtliches/</code> (dazu die Sprachfassungen nur auf Abweichungen im Rechtsgehalt), <code>404.html</code>, <code>wartung.html</code>, <code>manifest.json</code>, Sitemap und robots. Live gemessen mit <code>curl</code>; kein Browser-Lauf, die Skizzen unten sind gezeichnet, nicht fotografiert. Prüfer, nur lesend: rechts-pruefer, polygrafin, a11y-pruefer, copy-pruefer, link-checker; die Kernstellen von Hand nachgeprüft (✔). Gebaut ist nichts.</p>
+<div class=box><b>Startseite und die vier offenen Entwurfs-PRs.</b> Auf der Startseite liegen gestapelt #825 (Höhenlinien) → #833 (Design-Durchgang A–P) → #837 (Vorbilder A–D) → #843 («Stardust»), Kopf <code>6f8b6f39</code>. Befund gegen <code>main</code>, dann je Punkt am Kopf von #843 nachgesehen: <span class="pr frei">frei</span> = kein PR berührt die Stelle, kann gebaut werden · <span class="pr ber">#8xx</span> = ein PR ändert die Stelle schon, dort mitnehmen oder lassen · <span class=pr>weg mit #833</span> = der Text entfällt dort. Nichts davon wird in diese PRs geschrieben.</div>
+
+<p><b>Gut:</b> Was die Website über Daten sagt, stimmt am Code: CSP der Startseite nur <code>'self'</code>, kein Formular (<code>form-action 'none'</code>), <code>weiterleitung.js</code> und <code>reise.js</code> speichern und senden nichts, die 13 Erklärseiten laden kein Skript. Hoster, Rechenzentren in der Schweiz, Rolle als Auftragsbearbeiterin (DSG Art. 9) und Log-Dauer mit Quelle stehen im Impressum. Besonders schützenswerte Daten (DSG Art. 5 Bst. c) und unverschlüsselte Sicherungen offen benannt. KI-Bilder am Bild, für Screenreader und im Fuss gekennzeichnet. AGPL-3.0 überall gleich. Startseite: Skip-Link, Landmarks, Überschriftenfolge, Fokusring 5,34:1, Tippziele 44 px, «weniger Bewegung» abgedeckt, ohne Skript nutzbar. Links: 140 geprüft, 0 Fehler; Sitemap 36 URLs, alle live 200, canonical = Adresse, keine noindex-Seite darin; erfundene Adresse → 404. Siezen, Schweizer Schreibweise, kein ß.</p>
+
+<h2>Hoch: was jemanden falsch handeln lässt</h2>
+<table><thead><tr><th>#</th><th>Seite</th><th>Befund</th><th>Empfehlung</th><th>PRs</th></tr></thead><tbody>
+<tr class=hoch><td>H1</td><td>Sprach-Startseiten fr/it/en/rm</td><td>✔ Der Hauptknopf heisst «Voir l’exemple — sans code d’accès» (it/en/rm gleich, <code>seiten-sprachen.mjs:180,226,268,311</code>), führt aber auf <code>/?lang=fr</code> (<code>build-seiten.mjs:405</code>). <code>weiterleitung.js</code> schickt das nach <code>/app/?lang=fr</code> — ohne <code>?beispiel</code>. Dort verlangt das Beta-Tor den Code (<code>BetaGate.jsx:66-70</code>: nur <code>beispiel</code> öffnet). Der Knopf verspricht genau das, was er nicht hält, auf allen vier Seiten. Die Erklärseiten machen es richtig (<code>beispielZiel</code>, <code>:67</code>).</td><td><code>/app/?lang=xx&amp;beispiel</code>, mit Test, dass jeder Knopf «ohne Zugangscode» <code>beispiel</code> trägt.</td><td><span class="pr frei">frei</span></td></tr>
+<tr class=hoch><td>H2</td><td>404, Wartung</td><td>Die zwei Seiten stammen vom Juni/Juli und sind nie nachgezogen (im Oktober-Audit schon als T7 notiert): ✔ duzen («deines Lebensordners», «Deine Daten»), Schrift <code>'DM Sans'</code> ohne <code>@font-face</code> (es greift die Systemschrift), eigene Hex-Farben, kein Dunkelmodus, nur Deutsch. Wartung: die fr/it/en-Zeilen in <code>#A29E97</code> auf Weiss = <b>2,67:1</b> (WCAG 1.4.3), «Deine Daten bleiben unberührt» 4,22:1, Sätze ohne <code>lang</code> (3.1.2), Zeitzusage «in wenigen Minuten». 404: der einzige Link hat die Farbe des Fliesstexts, die Linie 1,35:1 (1.4.1/1.4.11), Ziel ~20 px, Text «nicht Teil deines Lebensordners» beim ersten Lesen unklar.</td><td>Beide aus dem Rahmen der Erklärseiten erzeugen (<code>build-seiten.mjs</code>), Sie-Form, vier Sprachen mit <code>lang</code>. Gestaltung siehe A.</td><td><span class="pr frei">frei</span></td></tr>
+</tbody></table>
+
+<h2>Mittel und klein: Recht (L), Barrierefreiheit (U), Technik</h2>
+<table><thead><tr><th>#</th><th>Ort</th><th>Befund</th><th>Empfehlung</th><th>PRs</th></tr></thead><tbody>
+<tr><td>L1</td><td><code>rechtliches:162-164</code></td><td>✔ Impressum ohne Postanschrift, nur «Basel, Schweiz» und E-Mail. Die Seite schreibt selbst «ob zusätzlich eine Postanschrift geschuldet ist, wird abgeklärt» — seit September. UWG Art. 3 Abs. 1 Bst. s Ziff. 1 verlangt «Kontaktadresse einschliesslich derjenigen der elektronischen Post». Ob das eine Postanschrift meint, ist verbreitete Lesart, amtlich nicht belegt.</td><td><b>Entscheid Stebler Studios:</b> Zustelladresse (z. B. Postfach) eintragen oder die Abklärung abschliessen und den Satz streichen. Nicht von mir zu entscheiden.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>L2</td><td><code>rechtliches:169</code></td><td>Haftungsausschluss ohne Grenze («keine Gewähr … und für Schäden»). Für Vorsatz und grobe Fahrlässigkeit nichtig (OR Art. 100 Abs. 1), wirkt so überzogen.</td><td>«… soweit gesetzlich zulässig». Wortlaut vor dem Bau am Fedlex-Volltext.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>L3</td><td><code>rechtliches:189</code></td><td>Gerichtsstand Basel-Stadt einseitig erklärt; gegenüber Konsumenten wäre eine Vorab-Wahl unwirksam (ZPO Art. 32, 35 Abs. 1 Bst. a). Ob eine kostenlose App ein Konsumentenvertrag ist, nicht belegt.</td><td>«… soweit gesetzlich zulässig».</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>L4</td><td><code>rechtliches:172</code></td><td>Die Liste der Startseiten-Skripte nennt zwei, der Abschieds-Service-Worker <code>sw-abschied.js</code> fehlt (löscht alte Caches, sendet nichts). «Senden keine Daten» bleibt wahr.</td><td>Dritten Satzteil ergänzen.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>L5</td><td><code>fr|it|en|rm/rechtliches</code></td><td>Der Satz über die Skripte der Startseite fehlt in allen vier Fassungen. «Le texte allemand fait foi» entschärft, behebt aber nicht.</td><td>Mit L4 nachziehen (Text gelb markieren für die Lektüre).</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>L6</td><td><code>rechtliches</code></td><td>Kein Stand-Datum. Nicht verlangt, aber ohne Datum lässt sich nicht zeigen, welche Fassung galt.</td><td>«Stand: …» aus dem Bau-Datum der Quelle.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>L7</td><td>Startseite, Atlas-Karte (<code>vorstellung.mjs</code>, Ausgabe <code>:748</code>)</td><td>✔ Bildunterschrift «Werte und Quelle stehen im Kantonsatlas», keine Quelle am Bild. Der Kantonsatlas nennt BFS, GEOSTAT; das BFS verlangt eine Quellenangabe (Nutzungsbedingungen, Wortlaut nicht geprüft).</td><td>«Karte: BFS, GEOSTAT» in die Bildunterschrift.</td><td><span class="pr ber">#833/#837 bauen den Atlas-Abschnitt um, Satz unverändert</span> → dort mitnehmen</td></tr>
+<tr><td>L8</td><td><code>manifest.json:4</code></td><td>Beschreibung halb Deutsch, halb Englisch («Alles Wichtige an einem Ort. Your Swiss life organizer …»).</td><td>Deutsch.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>U5</td><td>Sprachwahl im Fuss (<code>fr…/index.html:174</code>, <code>rechtliches:220</code>)</td><td>«Deutsch», «Français» … tragen <code>hreflang</code>, aber kein <code>lang</code>; vorgelesen in der Sprache der Seite (WCAG 3.1.2).</td><td><code>lang</code> je Link im Generator.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>U6</td><td>Startseite «Bildfolge anhalten»</td><td>Ziel ~41 px statt 44. Ist die Pausensteuerung nach 2.2.2.</td><td><code>min-height:44px</code>.</td><td><span class="pr ber">#843 unverändert</span> → frei, aber Datei im Stapel</td></tr>
+<tr><td>U7</td><td>Startseite Wolken (80 s Schleife)</td><td>Dekorativ, bei «weniger Bewegung» aus, sonst ohne Halt (2.2.2).</td><td>An «Bildfolge anhalten» koppeln.</td><td><span class="pr ber">#843 fügt «Luft je Höhe» dazu</span> → dort mitnehmen</td></tr>
+<tr><td>U8</td><td>Fuss der Sprach-Startseiten und von Rechtliches</td><td>Links 13 px ohne 44-px-Ziel; die Startseite hat es gelöst (<code>footer a{padding:10px 2px}</code>).</td><td>Gleiche Regel im Rahmen.</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>W1</td><td><code>wartung.html</code></td><td>Kein Schalter im Repo: weder <code>public/.htaccess</code> noch <code>deploy.sh</code> nennen die Seite. Wie sie im Ernstfall eingeschaltet wird, ist nicht belegt (Server-<code>.htaccess</code> pflegt Stebler Studios von Hand).</td><td>Eine Zeile in <code>RELEASE.md</code>, wie die Wartung ein- und ausgeht.</td><td><span class="pr frei">frei</span></td></tr>
+</tbody></table>
+
+<h2>Gestaltung</h2>
+<p class=leise>Nur der <b>Rahmen</b> — die Startseite selbst hat ihren eigenen Gestaltungsstapel (#825 → #843). Abgeleitet aus Brand Book §3 (Hanken für Titel), §7a (Skala 13/15/16/19/23/28/36, Luft ×1.5, Knopf 10 px «überholt 6 px am 06.11.»).</p>
+<div class=paar>
+ <div class=zwei>
+  <div class="skizze alt"><div class=t>heute: 404</div><div class=karte><div class=k1>Maloja Plana</div><div class=k2>Diese Seite ist nicht Teil deines Lebensordners.</div><div class=k3>Zur Startseite</div></div><div class=kasten style="left:6%;top:24%;width:88%;height:66%"><b>A</b></div></div>
+  <div class="skizze neu"><div class=t>A: aus dem Rahmen</div><div class=kopf><i></i>Maloja Plana</div><div class=h>Diese Adresse gibt es nicht.</div><div>Vielleicht wurde die Seite verschoben.</div><span class=knopf>Zur Startseite</span><div class=fuss>Deutsch · Français · Italiano · English · Rumantsch</div></div>
+ </div>
+ <div><div class=erkl><span class=l>A</span><b>404 und Wartung sehen aus wie ein fremdes Produkt.</b> Weisse Karte mit Rand und 12 px Ecke auf <code>#F8F7F5</code>, Systemschrift (DM Sans wird nie geladen), Grau-Braun-Töne, die sonst nirgends vorkommen, kein Kopf, kein Fuss, kein Dunkelmodus (<code>404.html:11-44</code>, <code>wartung.html:11-57</code>). → Beide Seiten vom Generator erzeugen lassen, mit denselben Token wie die Erklärseiten (<code>--bg</code>, <code>--text</code>, <code>--leise</code>, Dunkelmodus), Kopf mit Bildmarke, Text frei auf dem Papier statt in der Karte, Grössen nur von der Skala (Titel 28, Text 16, Sprachzeile 13 in <code>--leise</code>, damit sie 4,5:1 hält), ein Knopf im Gold mit 10 px Ecke. Wartung bekommt «Seite neu laden», die 404 die vier Sprachen. Behebt H2 gleich mit.</div></div>
+</div>
+<div class=paar>
+ <div class=zwei>
+  <div class="skizze neu"><div class=t>Startseite</div><div class=h style="font-size:20px">Titel Hanken 36</div><div>Text 16 · Link <span style="color:#7A5F30;text-decoration:underline">Gold</span></div><div style="margin-top:6px">Knopf <span class=knopf style="border-radius:10px">10 px</span></div></div>
+  <div class="skizze neu" style="position:relative"><div class=t>Rahmen (Sprach-Start, Rechtliches)</div><div style="font-size:17px;font-weight:600;margin:10px 0 4px">Titel Lexend 32</div><div>Vorspann 18 · Link <span style="text-decoration:underline">Textfarbe</span></div><div style="margin-top:6px">Knopf <span class=knopf>6 px</span></div>
+   <div class=kasten style="left:4%;top:26%;width:92%;height:22%"><b>B</b></div><div class=kasten style="left:4%;top:52%;width:92%;height:18%"><b>C</b></div><div class=kasten style="left:4%;top:74%;width:92%;height:22%"><b>D</b></div></div>
+ </div>
+ <div>
+  <div class=erkl><span class=l>B</span><b>Zwei Schriftordnungen.</b> Startseite: Titel Hanken Grotesk, h2 36, h3 19 (<code>website/index.html:147</code>). Rahmen: alles Lexend, h1 32 / 26 am Handy, Vorspann 18 / 17, h2 20, sechsmal 14 (<code>build-seiten.mjs:108-170</code>). Das ist G10/D3 aus dem Gesamtbefund, hier an den Rahmenseiten bestätigt. → Titel im Rahmen in Hanken (die Datei liegt schon auf dem Server), Grössen auf die Skala: h1 36 / 28, Vorspann 19, h2 23, 14 wird 13 oder 15 nach Rolle. Wirkt auf alle Erklärseiten, nicht nur auf Gruppe E.</div>
+  <div class=erkl><span class=l>C</span><b>Kopf und Link-Ton stimmen nicht.</b> Startseite: Bildmarke im Kopf, Links Gold <code>--sand-tief</code>, <code>--leise #575B61</code>, <code>--sand #C4A06A</code>. Rahmen: nur das Wort «Maloja Plana», Links in Textfarbe, <code>--leise #6A6E74</code>, <code>--gold #C4A870</code> — zwei Töne desselben Golds. Die Startseite hat keine Sprachwahl, die Sprach-Startseiten schon. → Im Rahmen dieselbe Bildmarke (28 px), Links in <code>--sand-tief</code>, ein Gold, ein Leise-Ton. Lesebreite 680 bleibt (Zeilenmass).</div>
+  <div class=erkl><span class=l>D</span><b>Ecken und Luft nach überholten Werten.</b> Knopf 6 px (<code>build-seiten.mjs:148</code>), Karte 10, Abstände 8/14/28/40. Brand Book §7a: Knopf 10, Karte 12, Luft 12 · 16 · 24 · 32 · 48 · 64 · 96. → Knopf 10, Karte 12, Abschnitt 48, Karte innen 32. Hinweisstreifen 6 bleibt (kleinste Rolle).</div>
+ </div>
+</div>
+
+<h2>Sprache</h2>
+<table><thead><tr><th>#</th><th>Ort</th><th>Ist</th><th>Vorschlag</th><th>PRs</th></tr></thead><tbody>
+<tr><td>S1</td><td>404, Wartung</td><td>«deines», «Deine Daten», «deinem Gerät»</td><td>Sie-Form (→ H2)</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S2</td><td>Sprach-Startseiten, Karte (<code>seiten-sprachen.mjs:134</code> u. a.)</td><td>«Maloja Plana rechnet <b>das</b> für Ihre Situation durch» — auf der Startseite fehlt der Bezug, «durchrechnen» verspricht mehr als «grobe Einschätzung»</td><td>Eigener Titel für die Sprach-Startseite, z. B. «Mit Ihren Angaben einschätzen»</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S3</td><td>Wartung</td><td>«In wenigen Minuten ist alles wieder da.»; fr/it/en ohne den Datensatz; en «a short maintenance»</td><td>«Bitte versuchen Sie es später erneut.»; Datensatz in allen Sprachen; «We are carrying out brief maintenance»</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S4</td><td>404</td><td>«nicht Teil deines Lebensordners»</td><td>«Diese Adresse gibt es nicht. Vielleicht wurde die Seite verschoben.»</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S5</td><td>Rechtliches (<code>seiten-inhalt.mjs:705-706</code>)</td><td>«Schreiben Sie an info@…, bearbeiten wir …» — liest sich als Befehl</td><td>«Wenn Sie an … schreiben, bearbeiten wir …»; Warteliste ebenso</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S6</td><td>Rechtliches</td><td>Vorspann mit Insiderhinweis auf <code>docs/legal</code>; «Hoster», «Dual Licensing»</td><td>Zwei Sätze; «Hosting-Anbieterin», «Doppellizenz»</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S7</td><td>Startseite</td><td>«So fühlt sich Ordnung an.» · «Wenn es darauf ankommt, liegt alles bereit.» · «Hausarzt» (einziges generisches Maskulinum)</td><td>—</td><td><span class=pr>weg mit #833</span> («Ein Blick hinein» entfällt)</td></tr>
+<tr><td>S8</td><td>Startseite</td><td>«… holen — in einer Minute.» (Zeitzusage) · «Beginnen Sie mit einem kleinen Schritt.» · Warteliste «falls es sie gibt» (Bezug unklar)</td><td>«Maloja Plana auf dem Gerät ablegen» · «falls es dazu kommt» wie auf Rechtliches</td><td><span class="pr ber">#833 setzt den Schlusssatz auf die Karte</span> → dort entscheiden</td></tr>
+<tr><td>S9</td><td>it, Sprach-Startseite</td><td>«carta d’emergenza», «aiuto sociale»; die App sagt «scheda d’emergenza», «assistenza sociale»</td><td>Einen Begriff, an der App ausrichten; für die Lektüre gelb</td><td><span class="pr frei">frei</span></td></tr>
+<tr><td>S10</td><td>rm-Rahmen (<code>seiten-sprachen.mjs:299-345</code>)</td><td>Kein <code>verbindlich</code>: wird rm freigegeben, fällt «Deutsch gilt» weg; «nagin traçar», «classeur» französisch</td><td><code>verbindlich</code> jetzt ergänzen; Wörter vor der Freigabe muttersprachlich prüfen</td><td><span class="pr frei">frei</span></td></tr>
+</tbody></table>
+
+<h2>SEO-Stand</h2>
+<table><tbody>
+<tr><td>✅</td><td>Startseite <code>index, follow</code>, Titel «Maloja Plana — Schweizer Lebensordner», Beschreibung 140 Zeichen, eine H1, canonical, JSON-LD <code>inLanguage: de</code> (G-S9 erledigt), og-Bild. Rechtliches <code>index</code>. Sitemap 36 URLs, alle 200.</td></tr>
+<tr><td>✅</td><td><code>/fr/ /it/ /en/ /rm/</code> antworten 200 (S6 aus dem Gesamtbefund erledigt durch die Sprach-Startseiten), <code>lang</code> richtig, je <code>noindex, follow</code>, nicht in der Sitemap.</td></tr>
+<tr><td>⏸️</td><td><b>fr/it/en sollen frei, rm nicht</b> (05.11.). Im Code weiter gesperrt (<code>seiten-sprachen.mjs:65-92</code> <code>freigegeben: false</code>) — gewollt, bis ein Mensch gelesen hat (Berichtigung im Gesamtbefund, Punkt 3). Offen bei Stebler Studios: Lektüre en (Lesebogen liegt), wer fr und it liest, drei Gesetzeszitate am Fedlex-Text. rm bleibt <code>noindex</code> ✔.</td></tr>
+<tr><td>E1</td><td>Mit der Freigabe zusammen, nicht vorher: <code>rel="alternate" hreflang</code> auf der Startseite und den Sprach-Startseiten (heute 0 bzw. nur der Sprachwähler im Fuss), <code>hreflang</code> in der Sitemap (Namespace ist deklariert, Einträge fehlen), Sitemap und <code>noindex</code> in einem Schritt. <span class="pr frei">frei</span></td></tr>
+<tr><td>E2</td><td>Die Startseite verlinkt keine Sprach-Startseite (U9). Sie sagt «Diese Seite gibt es auf Deutsch», aber wer Französisch sucht, kommt nur über die Erklärseiten nach <code>/fr/</code>. Vorschlag: im Fuss dieselbe Sprachzeile wie im Rahmen. <span class="pr frei">frei</span> (am Kopf von #843 unverändert)</td></tr>
+<tr><td>E3</td><td>Sprach-Startseiten: Titel «Accueil — Maloja Plana», H1 nur «Maloja Plana». Für die Freigabe besser «Maloja Plana — réduction des primes, impôts, aide sociale» (wie die deutsche App-Seite). <span class="pr frei">frei</span></td></tr>
+<tr><td>E4</td><td>JSON-LD ohne <code>dateModified</code> (S8 aus dem Gesamtbefund, weiter offen). Klein. <span class="pr frei">frei</span></td></tr>
+<tr><td>–</td><td><code>/vorstellung/</code> antwortet 403 «Access forbidden»: das ist nur der Bilderordner, nirgends verlinkt. Kein Handlungsbedarf.</td></tr>
+</tbody></table>
+
+<h2>Vorschlag</h2>
+<div class=box>Zwei Zweige, beide von <code>main</code>, keiner berührt <code>vorstellung.mjs</code> (also nichts doppelt zum Stapel #825–#843):<br>
+<b>1 · Inhalt, Recht, Sprache:</b> H1 Knopf ins Beispiel, H2 + S1–S4 404 und Wartung (Text, Sie-Form, vier Sprachen, Kontrast), L2–L6, L8, U5, U8, S5, S6, S9, S10, W1, E3. L2/L3 vorher am Fedlex-Volltext (rechts-pruefer). Mit Test.<br>
+<b>2 · Gestaltung Rahmen A–D:</b> wirkt auf alle Erklärseiten — darum getrennt und erst nach Ja.<br>
+<b>Bei Stebler Studios:</b> L1 Postanschrift (Ihre Entscheidung). <b>In den Stapel mitnehmen, nicht hier:</b> L7 Quelle an der Atlas-Karte, U6/U7 Pause für Wolken und Luft, S8, E2 Sprachzeile auf der Startseite. <b>Mit der Sprachfreigabe:</b> E1.</div>
