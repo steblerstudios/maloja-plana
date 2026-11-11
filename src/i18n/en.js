@@ -4717,6 +4717,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'The “/” key opens search',
     title: 'Search',
     placeholder: 'Search tools and chapters…',
     emptyTitle: 'No matches',

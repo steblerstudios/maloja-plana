@@ -6588,6 +6588,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'Taste «/» öffnet die Suche', // TODO(rm): übersetzen
     title: 'Tschertgar',
     placeholder: 'Tschertgar utensils e chapitels…',
     emptyTitle: 'Nagins resultats',

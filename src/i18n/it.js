@@ -7239,6 +7239,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'Il tasto «/» apre la ricerca',
     title: 'Cerca',
     placeholder: 'Cerca strumenti e capitoli…',
     emptyTitle: 'Nessun risultato',

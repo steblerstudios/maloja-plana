@@ -4644,6 +4644,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'La touche « / » ouvre la recherche',
     title: 'Recherche',
     placeholder: 'Rechercher outils et chapitres…',
     emptyTitle: 'Aucun résultat',

@@ -7357,6 +7357,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'Taste «/» öffnet die Suche',
     title: 'Suche',
     placeholder: 'Werkzeuge und Kapitel durchsuchen…',
     emptyTitle: 'Keine Treffer',
