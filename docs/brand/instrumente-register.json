@@ -34,6 +34,7 @@
     "steuer":       { "kapitel": "finanzen",       "frage": "zusammensetzung", "form": "saeule",             "rechnung": "src/data/kantonaleSteuerdaten.js#steuernFuerProfil", "zuhause": null },
     "tank":         { "kapitel": "finanzen",       "frage": "vorrat",          "form": "tank",               "rechnung": "src/data/reserveTank.js#reserveTankState",           "zuhause": "finanzen" },
     "schild":       { "kapitel": "versicherungen", "frage": "teile",           "form": "netz-schild",        "rechnung": "src/data/netzSchild.js#netzSchildTeile",             "zuhause": "versicherungen" },
+    "wechselfrist": { "kapitel": "versicherungen", "frage": "termin",          "form": "kalenderblatt",      "rechnung": "src/data/franchiseTacho.js#kvgWechselfrist",         "zuhause": "versicherungen" },
     "tacho":        { "kapitel": "versicherungen", "frage": "entscheid",       "form": "mini-kreuz",         "rechnung": "src/data/franchiseTacho.js#franchiseVorschlag",      "zuhause": "versicherungen" },
     "steuerfrist":  { "kapitel": "behoerden",      "frage": "termin",          "form": "kalenderblatt",      "rechnung": "src/utils/steuerfrist.js#steuerfristVorbei",         "zuhause": "behoerden" },
     "gaenge":       { "kapitel": "behoerden",      "frage": "teile",           "form": "akten",              "rechnung": "src/utils/behoerdenGaenge.js#gangErledigt",          "zuhause": null },
