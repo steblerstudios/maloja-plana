@@ -197,5 +197,23 @@ siebenmal neu entschieden werden:
    swiss-precision-pruefer am Volltext, Blocker behoben) · Inhalt, Gestaltung, Sprache → Entwurfs-PR #812, gestapelt auf #806
    (rechts-pruefer, fünf Sätze nachgeschärft). Zusammen 9301 Tests grün. Zwei Gestaltungs-Fehlbefunde im Blatt berichtigt.
    Offen: Lektüre fr/it/en, rm, Zuschlag in der 13. Rente (BSV), Witwen-Satz nach EGMR, Absätze teilen (S4).
+   *(Punkt 5 «Die übrigen Seiten» und der Block Gruppe A stehen im Zweig `befund/gruppe-a-einstieg`. Dieser Zweig
+   geht wie A von `main` ab; beim Zusammenführen gehört der folgende Block unter Gruppe A und B.)*
+   **Gruppe C · Einstellungen & Vertrauen** (11.11.): Bild [gruppe-c-vertrauen.html](../design/gruppe-c-vertrauen.html).
+   Gut: Datenschutz-Aussagen stimmen am Code (kein `fetch`/`sendBeacon`, CSP nur `'self'`, Beispiel speichert nichts),
+   Sicherung standardmässig AES-256-GCM, Import geprüft und ganz oder gar nicht, «Alle Daten löschen» vorbildlich,
+   App-Text und statische Rechtsseite gleich. Hoch: L1 vier Benachrichtigungs-Schalter, drei davon («30 Tage vor
+   Ablauf», Gesundheit, Bewilligung/Steuer/RAV) tut kein Code, der vierte prüft nur beim Öffnen und ignoriert den
+   Schalter · L2 die goldenen Knöpfe JSON/CSV/Manifest ganz oben sind keine Sicherung (ohne Dokumente, Erinnerungen,
+   Kontakte, Merkliste, unverschlüsselt), lassen sich aber einspielen. Mittel: L3 Installieren zeigt auf
+   `malojaplana.ch` statt `/app/` (Website ohne Manifest, live gemessen), L4 iCloud/OneDrive-Download, L5 was in der
+   unverschlüsselten Datei steht, L6 Weg «Werkzeuge → Export» gibt es nicht, L7 «Exportieren, um Platz zu schaffen»,
+   L8 «sicher» in der Ablage. Sicherheit: T1 Teilen-Empfang nimmt POST von fremden Seiten an (erst am echten
+   Android-Teilen messen), T2 Beta-Code im Klartext in einer Doku des öffentlichen Repos (Entscheid K105 offen), T3
+   PBKDF2 100 000 statt 600 000, T4 Kleines. Gestaltung A Schalter zeigen ihren Zustand nicht («Hell» = Handlung),
+   B Benachrichtigungen lang und Schalter kaum sichtbar, C auf der Sicherungsseite ist der unsichere Weg am lautesten,
+   D Beta-Tor hell im Dunkelmodus und ohne Weg zum Code. Sprache S1–S10. Rechtsartikel (nDSG Art. 25, 28; UWG Art. 3
+   Abs. 1 Bst. s) nicht am Fedlex-Volltext geprüft; Impressum-Anschrift bleibt offen und unverändert. Zweig
+   `befund/gruppe-c-vertrauen` (von `main`), nur Befund, gebaut ist nichts.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
