@@ -2295,7 +2295,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             return;
           }
           onNavigate && onNavigate(ziel, idx);
-        }, nur: ['dienst', 'ferien', 'pensum'] })
+        }, nur: ['dienst', 'ferien', 'pensum'], zuhause: true })
       ),
       React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
     ),

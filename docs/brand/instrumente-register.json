@@ -15,7 +15,9 @@
   },
   "bereichsbilder": {
     "teile": ["netz-schild", "grundmauer", "akten"],
-    "anteil": ["drittel-haus"],
+    "anteil": ["drittel-haus", "uhr"],
+    "dauer": ["jahresringe"],
+    "verbrauch": ["sonne"],
     "lage": ["haeuserzeile"],
     "vorrat": ["tank", "glas"]
   },
@@ -26,9 +28,9 @@
     "wohnkosten":   { "kapitel": "wohnen",         "frage": "anteil",          "form": "drittel-haus",       "rechnung": "src/data/wohnkosten.js#wohnkostenRechnung",          "zuhause": "wohnen" },
     "miete":        { "kapitel": "wohnen",         "frage": "lage",            "form": "haeuserzeile",       "rechnung": "src/components/RegionalBarometer.jsx#lageZurRegion", "zuhause": "wohnen" },
     "lohn":         { "kapitel": "ausbildung",     "frage": "lage",            "form": "barometer",          "rechnung": "src/components/LohnEinordnung.jsx#lohnLage",         "zuhause": "ausbildung" },
-    "dienst":       { "kapitel": "ausbildung",     "frage": "dauer",           "form": "jahresringe",        "rechnung": "src/utils/arbeitsverhaeltnis.js#dienstLage",         "zuhause": null },
-    "ferien":       { "kapitel": "ausbildung",     "frage": "verbrauch",       "form": "sonne",              "rechnung": "src/utils/arbeitsverhaeltnis.js#ferienLage",         "zuhause": null },
-    "pensum":       { "kapitel": "ausbildung",     "frage": "anteil",          "form": "uhr",                "rechnung": "src/utils/arbeitsverhaeltnis.js#pensumLage",         "zuhause": null },
+    "dienst":       { "kapitel": "ausbildung",     "frage": "dauer",           "form": "jahresringe",        "rechnung": "src/utils/arbeitsverhaeltnis.js#dienstLage",         "zuhause": "ausbildung" },
+    "ferien":       { "kapitel": "ausbildung",     "frage": "verbrauch",       "form": "sonne",              "rechnung": "src/utils/arbeitsverhaeltnis.js#ferienLage",         "zuhause": "ausbildung" },
+    "pensum":       { "kapitel": "ausbildung",     "frage": "anteil",          "form": "uhr",                "rechnung": "src/utils/arbeitsverhaeltnis.js#pensumLage",         "zuhause": "ausbildung" },
     "steuer":       { "kapitel": "finanzen",       "frage": "zusammensetzung", "form": "saeule",             "rechnung": "src/data/kantonaleSteuerdaten.js#steuernFuerProfil", "zuhause": null },
     "tank":         { "kapitel": "finanzen",       "frage": "vorrat",          "form": "tank",               "rechnung": "src/data/reserveTank.js#reserveTankState",           "zuhause": "finanzen" },
     "schild":       { "kapitel": "versicherungen", "frage": "teile",           "form": "netz-schild",        "rechnung": "src/data/netzSchild.js#netzSchildTeile",             "zuhause": "versicherungen" },
@@ -41,9 +43,6 @@
   "_offen": "Sperrklinke: diese Listen dürfen nur kürzer werden. Wer eine Abweichung behebt, streicht sie hier; der Wächter wird rot, wenn eine neue dazukommt.",
   "offen": {
     "formAbweichung": {
-      "dienst": "Dauer als Jahresringe statt Weg mit Marke (Matrix §6 Regel 2)",
-      "ferien": "Verbrauch als Sonne (Symbol, nicht Mass)",
-      "pensum": "Anteil als Uhr statt Ring",
       "steuer": "B-F4: Säule trägt zwei Bedeutungen; Steuer-Bild in Arbeit (Skizzen A–C, 11.11.2026)",
       "tacho": "B-F5: Mini-Kreuz ohne Daten; Spiegel soll ein Barometer «Ihre Kosten» werden"
     },
@@ -55,9 +54,6 @@
       "ausweis": "Zuhause Basis fehlt (Matrix §4c)",
       "referenz": "Zuhause Basis fehlt",
       "grundordnung": "Zuhause Basis fehlt",
-      "dienst": "im Kapitel nur die 64-px-Kachel",
-      "ferien": "im Kapitel nur die 64-px-Kachel",
-      "pensum": "im Kapitel nur die 64-px-Kachel",
       "steuer": "Kapitel Finanzen: nur Text-Karte (Steuer-Bild in Arbeit)",
       "gaenge": "Zuhause Behörden-Gänge fehlt",
       "franchise": "Franchise-Stand ohne Zuhause"
