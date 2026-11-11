@@ -2123,15 +2123,28 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         weg('stelleverloren', { sub: P('stelleverlorenSub') }), weg('stundenlohn', { titel: P('stundenlohn'), sub: P('stundenlohnSub') }),
         ablage('chapterView.passend.ablageAusbildung'),
       ];
-      case 'behoerden': return [
+      case 'behoerden': {
+        // Kapitel 6 · A (Befund und Entscheid Stebler Studios 10.11.2026): die Abläufe dieses Kapitels stehen hier. Vorher
+        // zeigte «Passend» nur Seiten aus Finanzen; sieben der neun Abläufe waren von der Kapitelseite aus nicht erreichbar.
+        // Bewilligung, Einbürgerung, Neu in der Schweiz und Asyl nicht mit Schweizer Pass (wie Kapitel 1); Dienst nicht,
+        // wenn das Geburtsdatum ausserhalb der Jahre der Dienst- und Ersatzpflicht liegt (Jahr des 17. bis 37. Geburtstags).
+        const jahrgang = /^(\d{4})-/.exec(String(b.dateOfBirth || ''));
+        const alterImJahr = jahrgang ? new Date().getFullYear() - Number(jahrgang[1]) : null;
+        const dienstPasst = alterImJahr == null || (alterImJahr >= 17 && alterImJahr <= 37);
+        const auslaendisch = b.nationality !== 'swiss';
+        return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
+        ...(auslaendisch ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug'), weg('asyl')] : []),
+        weg('ausweis'), weg('fuehrerausweis'), weg('wegzug'),
+        ...(dienstPasst ? [weg('dienst')] : []),
         weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
         weg('selbstmahnen'),
         weg('briefe', { sub: P('briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
+      }
       // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum
       // Werkzeug. F7-K5-2 und F7-L1 (31.10.2026): der Ablauf «Vorsorgeauftrag & Patientenverfügung» kommt aus Behörden
       // hierher, Organspende bekommt hier ihren Eingang aus einem Kapitel.
