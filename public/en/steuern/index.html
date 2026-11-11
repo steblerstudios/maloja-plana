@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -207,6 +208,7 @@
         <h2>Direct federal tax is the same everywhere</h2>
         <p>Direct federal tax is governed by the Federal Act on Direct Federal Taxation (DBG) and applies the same rate schedule throughout Switzerland. It distinguishes by marital status and household, but not by place of residence.</p>
         <p>It is nevertheless levied by the canton — you file one tax return for both.</p>
+        <p>It is different with <strong>tax at source</strong>: if you work in Switzerland without a settlement permit, for example with a B permit, your employer deducts the tax directly from your wages (Art. 83 DBG). If your gross wage is below a statutory threshold, there is usually no tax return. Further deductions, for example for pillar 3a, are then only possible through a subsequent ordinary assessment; it must be requested by 31 March of the following year, or by deregistration if you leave (Art. 89a para. 3 DBG). Above it, an ordinary assessment is carried out automatically (Art. 89 DBG, Art. 9 QStV).</p>
 
         <h2>Canton and municipality: rate schedule times multiplier</h2>
         <p>At cantonal and municipal level two quantities come together. The <strong>rate schedule</strong> determines how much tax a given taxable income triggers — this gives what is known as the basic tax (einfache Steuer). The <strong>tax multiplier</strong> (Steuerfuss) is a factor applied to it, usually expressed as a percentage, which the canton and the municipality each set for themselves and can adjust annually.</p>

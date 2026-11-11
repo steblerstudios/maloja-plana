@@ -71,12 +71,12 @@ export const STIPENDIEN_PRIVATE = [
   },
   {
     id: 'culturalpromotion',
-    url: 'https://www.culturalpromotion.ch',
+    url: 'https://www.kulturfoerderung.ch/de/', // Gruppe D (11.11.2026): culturalpromotion.ch leitet hierher um
     cost: 'free',     // Bundesamt für Kultur + Migros-Kulturprozent
   },
   {
     id: 'fundraiso',
-    url: 'https://www.fundraiso.ch',
+    url: 'https://www.fundraiso.ch/de', // Gruppe D: leitet auf /de um
     cost: 'freemium', // Basis gratis, Pro CHF 290/Jahr
   },
   {

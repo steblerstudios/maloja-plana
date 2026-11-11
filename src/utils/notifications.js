@@ -132,6 +132,8 @@ export const showLocalNotification = (title, body, tag) => {
 // if the user has opted in. No background polling, no server calls.
 export const checkOverdueReminders = (t) => {
   if (getNotificationPermission() !== 'granted') return;
+  // Gruppe C, L1 (11.11.2026): der einzige Schalter in den Einstellungen wirkt hier. Voreinstellung an.
+  if (getNotificationPrefs().overdueReminders === false) return;
 
   try {
     const reminders = JSON.parse(localStorage.getItem('or5_reminders') || '[]');

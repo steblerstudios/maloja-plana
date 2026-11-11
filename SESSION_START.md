@@ -17,6 +17,18 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 11.11.2026, 22:50 — `e4017538` ist LIVE** (0.1.49-beta, gebaut 22:45:11, Deploy Stebler Studios 22:46). Überholt alle Stände darunter.
+> - Neu live: 3a-Grenze als eine Regel (#857: `saeule3aGrenzePerson`, `istSelbstaendig`, Jahr am Tarif), Nichtberufsunfall mit Nebenerwerb «offen», Weiterbildungsabzug mit Quelle (DBG Art. 33 Abs. 1 Bst. j), SchKG-Zitate im Zahlungsbefehl · a11y (#860): «/» abschaltbar, Rückgängig ohne Zeitgrenze, «Zurückgeholt» + Fokus · Unfall bei Arbeitslosigkeit (#862: UVG Art. 1a, 66 Abs. 3bis, 3 Abs. 2) · Gruppe A Einstieg (#845) · Gruppe B Unterlagen (#859).
+> - Vortor auf `86e30cd1`, Nachzug für #859 auf `e4017538` (Marke = main = Checkout). 🛑 Zweimal kam ein Merge einer parallelen Sitzung *während* des Vortors (#845, #859) — `deploy.sh` brach richtig ab. Vor dem nächsten Vortor alle Maloja-Sitzungen um Merge-Pause bitten.
+> - Live gegengeprüft: `version.json`, `/` und `/app/` 200, erfundene Adresse 404, 147 Dateien, neue Texte in `de-rest`. Browser, Konsole, Handy nicht geprüft.
+> - Offen: ⚠️ aus #845 (Mutterschaftsbeihilfe bei älteren Kindern + Baby unterwegs, Bewilligungs-Hinweis bei leerem Profil) und #859 («ausstaende» = gemahnte Beträge, «letzter Werktag im November» als Praxis kennzeichnen, `nachFrist` ohne Du-Fassung, Steuerfrist `yearly`, PartG Art. 14 Abs. 2) · Angestellte ohne BVG im Steuer-Rechner · `aria-keyshortcuts` nennt «/» auch abgeschaltet · rm: neue Texte deutsch · Startbündel 64 975 / 65 000 B · Version/Tag.
+>
+> 🧾 **Nachtrag 11.11.2026, 13:10 — `c865f518` ist LIVE** (0.1.49-beta, gebaut 12:58:43, Deploy Stebler Studios 13:00). Überholt alle Stände darunter.
+> - Neu live: Kapitel 3 Finanzen (#802), Kapitel 4 Versicherungen/Vorsorge (#806 #811 #812), Rückgängig beim Löschen (#818), Suche per «/» (#820), Wisch-Schliessen (#822), Beta-Codefeld (#824), rm-Fix (#829).
+> - Vortor 10.11. abends auf genau diesem Commit, Marke = main = Checkout, Lockfile seit `73caaf6e` unverändert.
+> - Live gegengeprüft: `version.json`, `/` und `/app/` 200, erfundene Adresse 404, 136 Dateien erreichbar, neue Texte in `de-kern` und `de-rest`. 🛑 `scripts/check-deploy.sh` listet nachgeladene Sprachteile wie `de-rest` nicht — eigens abrufen. Browser, Konsole, Handy nicht geprüft.
+> - Offen: ⚠️-Liste (3a-Grenze `VorsorgeRechner.jsx`/`TaxCalculator.jsx`, Nichtberufsunfall bei mehreren Stellen, Weiterbildung 13 000 ohne Quelle, SchKG-Zitate `betreibung.step2Text`, «/» abschaltbar + Rückgängig-Zeit, 3a-Jahr vor 1.1.2027) · Startbündel 65,00/65 kB voll · Version/Tag.
+>
 > 🧾 **Nachtrag 10.11.2026, 17:10 — `73caaf6e` ist LIVE: Website auf `/`, App unter `/app/`** (0.1.49-beta, gebaut 17:01:49, Deploy Stebler Studios). Überholt alle Stände darunter.
 > - Dazwischen live: `a1e0b59d` (14:48/14:53: UVG-Satz #817, Sozialhilfe 2025 #819, `.htaccess`-Abschrift #816). `deploy.sh` prüft die Freigabe-Marke seit #821 selbst.
 > - Stapel #776 #779 #790 #804 #809 als #823 zusammengeführt (Entscheid «heute ganz live» hob den 26.10.-Entscheid auf). Umzug belegt: lokal im Browser (alter SW weg, Angaben/IndexedDB/Teilen-Cache/Beta-Zugang bleiben), auf Stage mit iPhone, und live auf dem echten iPhone (Angaben da).

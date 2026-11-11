@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -207,6 +208,7 @@
         <h2>L’impôt fédéral direct est partout le même</h2>
         <p>L’impôt fédéral direct se fonde sur la loi fédérale sur l’impôt fédéral direct (LIFD) et connaît le même barème pour toute la Suisse. Il distingue selon l’état civil et le ménage, mais pas selon le lieu de domicile.</p>
         <p>Il est néanmoins perçu par le canton — la déclaration d’impôt est la même.</p>
+        <p>Il en va autrement de l’<strong>impôt à la source</strong> : si vous travaillez en Suisse sans autorisation d’établissement, par exemple avec un permis B, l’employeur déduit l’impôt directement du salaire (art. 83 LIFD). Si le salaire brut est inférieur à une limite légale, il n’y a en règle générale pas de déclaration d’impôt. D’autres déductions, par exemple pour le pilier 3a, ne sont alors possibles que par une taxation ordinaire ultérieure ; elle doit être demandée jusqu’au 31 mars de l’année suivante, en cas de départ jusqu’au départ (art. 89a, al. 3, LIFD). Au-delà, la taxation ordinaire a lieu d’office (art. 89 LIFD, art. 9 OIS).</p>
 
         <h2>Canton et commune : barème multiplié par le coefficient</h2>
         <p>Aux niveaux cantonal et communal, deux grandeurs se combinent. Le <strong>barème</strong> détermine l’impôt qu’un revenu imposable donné déclenche — cela donne ce qu’on appelle l’impôt simple. Le <strong>coefficient d’impôt</strong> est un facteur appliqué à celui-ci, généralement exprimé en pourcentage, que le canton et la commune fixent chacun pour soi et peuvent adapter chaque année.</p>

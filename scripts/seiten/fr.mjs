@@ -72,7 +72,7 @@ export const SEITEN = [
       {
         frage: 'Dois-je faire une demande partout moi-même ?',
         antwort:
-          'Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée.',
+          'Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée. Sans passeport suisse, une exception s’applique pour l’aide sociale : la percevoir peut avoir des conséquences sur l’autorisation de séjour ; faites-vous conseiller avant la demande (plus de détails sur la page Aide sociale).',
       },
       {
         frage: 'Combien coûte Maloja Plana ?',
@@ -97,6 +97,7 @@ export const SEITEN = [
         titel: 'Ce que prescrit la Confédération et ce que décide le canton',
         absaetze: [
           'La Confédération prescrit <em>qu’il doit y avoir</em> une réduction des primes, fixe pour cela des exigences minimales et participe à son financement. Dans le cadre de ces exigences, le canton décide qui la reçoit et pour quel montant.',
+          'Trois exigences s’appliquent partout. Pour les revenus bas et moyens, les cantons réduisent les primes des enfants d’au moins 80 pour cent et celles des jeunes adultes en formation d’au moins 50 pour cent (art. 65, al. 1bis, LAMal). Chaque canton fixe la part maximale que la prime peut représenter dans le revenu disponible (art. 65, al. 1ter, LAMal). Et une fois le droit établi, le versement doit être organisé de manière à ce que vous n’ayez pas à avancer la prime (art. 65, al. 3, LAMal).',
           'Concrètement, ce qui diffère d’un canton à l’autre : les limites de revenu et de fortune, la manière même dont le revenu déterminant est calculé, le fait de devoir déposer une demande ou d’être contacté, et les délais.',
           'Est en revanche partout identique : <strong>où va l’argent</strong>. Le canton verse la contribution directement à la caisse-maladie, et non à la personne assurée. Cela figure dans la LAMal et ne relève pas de la marge de manœuvre cantonale.',
           'C’est pourquoi la phrase « chez nous, on y a droit à partir d’un revenu de X » mène rarement loin. Elle vaut au mieux pour un canton, et là encore pour une seule année.',
@@ -121,7 +122,7 @@ export const SEITEN = [
       {
         frage: 'Ai-je droit à la réduction des primes ?',
         antwort:
-          'Cela dépend du canton de domicile, du revenu et de la fortune déterminants et de la taille du ménage — les trois étant pondérés différemment selon le canton. Il n’existe pas de limite valable partout. Seul l’organe compétent décide de manière contraignante : le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, dans certains cantons l’administration fiscale ou la commune de domicile.',
+          'Cela dépend du canton de domicile, du revenu et de la fortune déterminants et de la taille du ménage — les trois étant pondérés différemment selon le canton. Il n’existe pas de limite valable partout. Seul l’organe compétent décide de manière contraignante : le plus souvent la caisse cantonale de compensation ou l’établissement cantonal d’assurances sociales, dans certains cantons l’administration fiscale ou la commune de domicile. Une exception s’applique dans le domaine de l’asile : avec un permis N ou S, le droit est suspendu tant que l’aide sociale est perçue en tout ou en partie (art. 82a, al. 7, LAsi). Il en va de même avec un permis F, sauf si l’entrée remonte à plus de sept ans (art. 86, al. 2, LEI, art. 5b OA 2). Pour les réfugiés admis à titre provisoire, d’autres règles peuvent s’appliquer ; le service cantonal le clarifie.',
       },
       {
         frage: 'Dois-je déposer une demande ?',
@@ -157,6 +158,7 @@ export const SEITEN = [
         absaetze: [
           'L’aide sociale est <strong>subsidiaire</strong>. Avant qu’elle entre en ligne de compte, d’autres droits sont examinés : salaire, indemnités de chômage, rentes, prestations complémentaires, réduction des primes, contributions d’entretien, bourses d’études. La fortune propre est également prise en compte, les cantons connaissant une franchise dont le montant diffère.',
           'C’est la raison pour laquelle une demande commence souvent par beaucoup de questions portant sur de tout autres prestations. Il ne s’agit pas de méfiance, mais de l’ordre prévu par la loi.',
+          'Sans passeport suisse, percevoir l’aide sociale peut avoir des conséquences sur le séjour. Avec une autorisation de séjour ou de courte durée (B, L), cela peut être un motif de révocation de l’autorisation ; avec une autorisation d’établissement (C), si l’aide est perçue durablement et dans une large mesure (art. 62, al. 1, let. e, et art. 63, al. 1, let. c, LEI). Avec un permis F, cela peut compliquer une future demande de regroupement familial ou d’autorisation de séjour (art. 85c, al. 1, let. c, et art. 84, al. 5, LEI). Pour les ressortissants des États de l’UE/AELE, d’autres règles s’appliquent en partie. Faites-vous conseiller au préalable par un service de conseil ou par le service social. Quel que soit votre statut de séjour, vous avez droit, en situation de détresse, au minimum vital (art. 12 Cst., plus bas).',
         ],
       },
       {
@@ -202,6 +204,16 @@ export const SEITEN = [
         antwort:
           'Les prestations complémentaires (PC) relèvent du premier pilier et entrent en règle générale en ligne de compte lorsqu’une prestation de l’AVS ou de l’AI ne couvre pas les besoins vitaux. Elles sont réglées par le droit fédéral et ne sont pas de l’aide sociale. Un droit aux PC prime l’aide sociale.',
       },
+      {
+        frage: 'L’aide sociale a-t-elle des conséquences sur mon autorisation de séjour ?',
+        antwort:
+          'Sans passeport suisse, cela peut être le cas. Avec un permis B ou L, la perception peut être un motif de révocation de l’autorisation, avec un permis C en cas de perception durable et dans une large mesure (art. 62, al. 1, let. e, et art. 63, al. 1, let. c, LEI). Avec un permis F, elle peut compliquer une future demande de regroupement familial ou d’autorisation de séjour (art. 85c, al. 1, let. c, et art. 84, al. 5, LEI). Avec un permis N ou S, et avec un permis F durant les sept premières années après l’entrée, la réduction des primes est en outre suspendue tant que l’aide sociale est perçue (art. 82a, al. 7, LAsi, art. 5b OA 2). Faites-vous conseiller au préalable par un service de conseil ou par le service social.',
+      },
+      {
+        frage: 'Dois-je rembourser l’aide sociale ?',
+        antwort:
+          'C’est le canton qui règle si et quand — par exemple lorsqu’un héritage ou une fortune plus importante s’ajoute plus tard. En outre, les parents en ligne directe, par exemple les parents, les enfants, les grands-parents et les petits-enfants, peuvent être tenus de fournir une aide s’ils vivent dans l’aisance (art. 328, al. 1, CC). Ce qui s’applique dans votre cas, le service compétent vous le dira.',
+      },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
   },
@@ -221,6 +233,7 @@ export const SEITEN = [
         absaetze: [
           'L’impôt fédéral direct se fonde sur la loi fédérale sur l’impôt fédéral direct (LIFD) et connaît le même barème pour toute la Suisse. Il distingue selon l’état civil et le ménage, mais pas selon le lieu de domicile.',
           'Il est néanmoins perçu par le canton — la déclaration d’impôt est la même.',
+          'Il en va autrement de l’<strong>impôt à la source</strong> : si vous travaillez en Suisse sans autorisation d’établissement, par exemple avec un permis B, l’employeur déduit l’impôt directement du salaire (art. 83 LIFD). Si le salaire brut est inférieur à une limite légale, il n’y a en règle générale pas de déclaration d’impôt. D’autres déductions, par exemple pour le pilier 3a, ne sont alors possibles que par une taxation ordinaire ultérieure ; elle doit être demandée jusqu’au 31 mars de l’année suivante, en cas de départ jusqu’au départ (art. 89a, al. 3, LIFD). Au-delà, la taxation ordinaire a lieu d’office (art. 89 LIFD, art. 9 OIS).',
         ],
       },
       {

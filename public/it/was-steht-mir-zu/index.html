@@ -104,7 +104,7 @@
             "name": "Devo sempre presentare personalmente una domanda?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta."
+              "text": "Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta. Senza passaporto svizzero vale un’eccezione per l’aiuto sociale: riceverlo può avere conseguenze per il permesso di soggiorno; si faccia consigliare prima della domanda (maggiori dettagli alla pagina Aiuto sociale)."
             }
           },
           {
@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -230,7 +231,7 @@
         <p>Perché per molte prestazioni la Confederazione fissa deliberatamente soltanto il quadro e i Cantoni lo riempiono. Essi stabiliscono limiti di reddito, procedure e termini propri. Un trasloco oltre il confine cantonale può quindi modificare il diritto, anche se nient’altro è cambiato.</p>
 
         <h3>Devo sempre presentare personalmente una domanda?</h3>
-        <p>Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta.</p>
+        <p>Varia a seconda della prestazione e del Cantone. Per alcune prestazioni i servizi la contattano di propria iniziativa, per altre senza domanda non succede nulla. Nel dubbio vale: informarsi non costa nulla, e una domanda non presentata non viene mai accolta. Senza passaporto svizzero vale un’eccezione per l’aiuto sociale: riceverlo può avere conseguenze per il permesso di soggiorno; si faccia consigliare prima della domanda (maggiori dettagli alla pagina Aiuto sociale).</p>
 
         <h3>Quanto costa Maloja Plana?</h3>
         <p>Nulla. Maloja Plana è gratuito e open source. Non c’è alcun account, alcuna pubblicità e alcun tracciamento; tutti i dati restano sul proprio dispositivo.</p>
@@ -246,7 +247,7 @@
       <h2>Fonti e calcolatori</h2>
       <ul>
           <li><a href="https://www.bwo.admin.ch/it/aiuti-cantonali" rel="noopener">Aiuti cantonali, panoramica dell’Ufficio federale delle abitazioni</a></li>
-          <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Prestazioni complementari, Ufficio federale delle assicurazioni sociali</a> <span class="leise">(disponibile solo in tedesco)</span></li>
+          <li><a href="https://www.bsv.admin.ch/de/el" rel="noopener">Prestazioni complementari, Ufficio federale delle assicurazioni sociali</a> <span class="leise">(disponibile solo in tedesco)</span></li>
           <li><a href="https://www.ahv-iv.ch/p/3.01.i" rel="noopener">Promemoria 3.01 «Rendite di vecchiaia e assegni per grandi invalidi dell’AVS»</a></li>
       </ul>
       <p class="leise">Maloja Plana non ha alcun legame con questi enti. Il collegamento non implica collaborazione né approvazione. Non tutti sono autorità — la COSAS, ad esempio, è un’associazione di settore; le sue direttive sono raccomandazioni.</p>

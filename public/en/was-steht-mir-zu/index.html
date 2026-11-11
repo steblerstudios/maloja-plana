@@ -104,7 +104,7 @@
             "name": "Do I have to apply everywhere myself?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "That varies by benefit and by canton. For some benefits the offices get in touch on their own; for others nothing happens without an application. When in doubt: asking costs nothing, and an application that is never made is never approved."
+              "text": "That varies by benefit and by canton. For some benefits the offices get in touch on their own; for others nothing happens without an application. When in doubt: asking costs nothing, and an application that is never made is never approved. Without a Swiss passport, there is one exception for social assistance: receiving it can affect your residence permit; get advice before applying (more on the Social assistance page)."
             }
           },
           {
@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -230,7 +231,7 @@
         <p>Because for many benefits the federal government deliberately sets only the framework and the cantons fill it in. They set their own income limits, procedures and deadlines. Moving across a cantonal border can therefore change your entitlement, even if nothing else has changed.</p>
 
         <h3>Do I have to apply everywhere myself?</h3>
-        <p>That varies by benefit and by canton. For some benefits the offices get in touch on their own; for others nothing happens without an application. When in doubt: asking costs nothing, and an application that is never made is never approved.</p>
+        <p>That varies by benefit and by canton. For some benefits the offices get in touch on their own; for others nothing happens without an application. When in doubt: asking costs nothing, and an application that is never made is never approved. Without a Swiss passport, there is one exception for social assistance: receiving it can affect your residence permit; get advice before applying (more on the Social assistance page).</p>
 
         <h3>What does Maloja Plana cost?</h3>
         <p>Nothing. Maloja Plana is free and open source. There is no account, no advertising and no tracking; all entries stay on your own device.</p>
@@ -246,7 +247,7 @@
       <h2>Sources and calculators</h2>
       <ul>
           <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Cantonal assistance, overview of the Federal Housing Office</a> <span class="leise">(available in German only)</span></li>
-          <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Supplementary benefits, Federal Social Insurance Office</a> <span class="leise">(available in German only)</span></li>
+          <li><a href="https://www.bsv.admin.ch/de/el" rel="noopener">Supplementary benefits, Federal Social Insurance Office</a> <span class="leise">(available in German only)</span></li>
           <li><a href="https://www.ahv-iv.ch/p/3.01.e" rel="noopener">Leaflet 3.01 “Old-age pensions and helplessness allowances of the AHV”</a></li>
       </ul>
       <p class="leise">Maloja Plana has no connection with these organisations. Linking to them implies neither cooperation nor endorsement. Not all of them are authorities — SKOS, for instance, is a professional association, and its guidelines are recommendations.</p>

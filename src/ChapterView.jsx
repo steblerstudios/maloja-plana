@@ -2123,21 +2123,42 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         weg('stelleverloren', { sub: P('stelleverlorenSub') }), weg('stundenlohn', { titel: P('stundenlohn'), sub: P('stundenlohnSub') }),
         ablage('chapterView.passend.ablageAusbildung'),
       ];
-      case 'behoerden': return [
+      case 'behoerden': {
+        // Kapitel 6 · A (Befund und Entscheid Stebler Studios 10.11.2026): die Abläufe dieses Kapitels stehen hier. Vorher
+        // zeigte «Passend» nur Seiten aus Finanzen; sieben der neun Abläufe waren von der Kapitelseite aus nicht erreichbar.
+        // Bewilligung, Einbürgerung, Neu in der Schweiz und Asyl nicht mit Schweizer Pass (wie Kapitel 1); Dienst nicht,
+        // wenn das Geburtsdatum ausserhalb der Jahre der Dienst- und Ersatzpflicht liegt (Jahr des 17. bis 37. Geburtstags).
+        const jahrgang = /^(\d{4})-/.exec(String(b.dateOfBirth || ''));
+        const alterImJahr = jahrgang ? new Date().getFullYear() - Number(jahrgang[1]) : null;
+        const dienstPasst = alterImJahr == null || (alterImJahr >= 17 && alterImJahr <= 37);
+        const auslaendisch = b.nationality !== 'swiss';
+        return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
+        ...(auslaendisch ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug'), weg('asyl')] : []),
+        weg('ausweis'), weg('fuehrerausweis'), weg('wegzug'),
+        ...(dienstPasst ? [weg('dienst')] : []),
         weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
         weg('selbstmahnen'),
         weg('briefe', { sub: P('briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
+      }
       // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen aus «Vorsorge» oben selbst zum
       // Werkzeug. F7-K5-2 und F7-L1 (31.10.2026): der Ablauf «Vorsorgeauftrag & Patientenverfügung» kommt aus Behörden
       // hierher, Organspende bekommt hier ihren Eingang aus einem Kapitel.
+      // Kapitel 7, Gestaltung A (10.11.2026): Gesundheit hatte zwei Orte — die Seiten zu Krankenkasse, Unfall, IV
+      // und Pflege hingen nur am Arztkoffer, der seinerseits nicht zum Kapitel führte. Jetzt stehen sie hier, in
+      // zwei Gruppen wie die Familie im Kapitel Basis. Die Erklärseite Krankenkasse bleibt bei Versicherungen
+      // (Organigramm 07.11.2026, ZUM_VERSTEHEN); hier stehen nur Ziele in der App.
       case 'notfall': return [
         weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('organ'),
         ablage('chapterView.passend.ablageDokumente'),
+        { key: 'gruppe-krankenkasse', ueberschrift: P('gruppeKrankenkasse') },
+        weg('kvg'), weg('kk'), weg('gesundheit'),
+        { key: 'gruppe-passiert', ueberschrift: P('gruppePassiert') },
+        weg('unfallkrankheit'), weg('iv'), weg('pflege'),
       ];
       default: return [
         // F7-L9 (01.11.2026): «Neue Stelle» und Stundenlohn hängen an Ausbildung & Arbeit, nicht mehr hier.
@@ -2194,11 +2215,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Muster M5 (Fassung 6, Stebler Studios 25.10.2026): Kopf wie im Entwurf — Landschaftsband in der
   // Bereichsfarbe, darauf die Brotkrume «Übersicht › Kapitel», darunter das Symbol in einer Kachel
   // und der Titel. Keine Karte mehr um das Kapitel (vorher Kopf und Inhalt in einer Karte, die Seite
-  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich).
+  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich) —
+  // genau 20, nicht die Voreinstellung −24 px: sonst ist die Seite 379 px breit (Quer Q1, 11.11.2026).
   const kachelGrund = bereichsfarbe ? bereichsfarbe.grund : palette.up;
   return React.createElement('div', { 'data-kapitel': chapter.key },
     React.createElement('div', { 'data-kapitelkopf': 'band', style: { textAlign: 'left', marginBottom: space.lg + 'px' } },
-      React.createElement(Landschaftsband, { palette, grund: kachelGrund }),
+      React.createElement(Landschaftsband, { palette, grund: kachelGrund, margin: '0 -20px' }),
       React.createElement('nav', { 'aria-label': tr('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
         React.createElement('ol', { style: { listStyle: 'none', margin: 0, ...pfadPilleStil(palette), fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {

@@ -153,7 +153,9 @@ describe('Nichts wird unerreichbar', () => {
   it('die Einstellungen bieten wirklich Export und Benachrichtigungen an', () => {
     expect([...inEinstellungen()].sort()).toEqual(['export', 'notifications']);
     const quelle = readFileSync(new URL('../SettingsView.jsx', import.meta.url), 'utf8');
-    expect(quelle).toContain("t('nav.export')");
+    // Seit Gruppe C (11.11.2026) heisst der Knopf «Sicherung anlegen» und nennt das letzte Datum.
+    expect(quelle).toContain("t('common.sicherungAnlegen')");
+    expect(quelle).toMatch(/onClick: onExport/);
     // Seit 05.11.2026 (Seitenlandkarte Z2) stehen die Benachrichtigungen als Abschnitt auf der Seite selbst.
     expect(quelle).toContain('React.createElement(NotificationSettings, { palette, t })');
   });

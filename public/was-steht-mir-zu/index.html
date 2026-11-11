@@ -85,10 +85,10 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Wie finde ich heraus, was mir zusteht?",
+            "name": "Wie finde ich heraus, was mir zustehen könnte?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Der zuverlässigste Weg führt über die Stelle, die tatsächlich entscheidet — also über den eigenen Kanton beziehungsweise die eigene Gemeinde. Rechner und Übersichten wie die hier verlinkten geben eine erste Orientierung, ob sich ein Antrag lohnt. Verbindlich ist immer erst die Verfügung der zuständigen Stelle."
+              "text": "Der zuverlässigste Weg führt über die Stelle, die tatsächlich entscheidet — also über Ihren Kanton beziehungsweise Ihre Gemeinde. Rechner und Übersichten wie die hier verlinkten geben eine erste Orientierung, ob ein Antrag infrage kommt. Verbindlich ist immer erst die Verfügung der zuständigen Stelle."
             }
           },
           {
@@ -104,7 +104,7 @@
             "name": "Muss ich überall selbst einen Antrag stellen?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Das ist je nach Leistung und Kanton unterschiedlich. Bei manchen Leistungen melden sich die Stellen von sich aus, bei anderen passiert ohne Antrag nichts. Im Zweifel gilt: nachfragen kostet nichts, und ein nicht gestellter Antrag wird nie bewilligt."
+              "text": "Das ist je nach Leistung und Kanton unterschiedlich. Bei manchen Leistungen melden sich die Stellen von sich aus, bei anderen passiert ohne Antrag nichts. Im Zweifel fragen Sie bei der Stelle nach — ein nicht gestellter Antrag wird nie bewilligt. Ohne Schweizer Pass gilt für die Sozialhilfe eine Ausnahme: Der Bezug kann Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vor dem Antrag beraten (mehr dazu auf der Seite Sozialhilfe)."
             }
           },
           {
@@ -112,7 +112,7 @@
             "name": "Was kostet Maloja Plana?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf dem eigenen Gerät."
+              "text": "Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf Ihrem Gerät."
             }
           }
         ]
@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -238,8 +239,9 @@
 
     <main>
       <h1>Was steht mir zu? Überblick für die Schweiz</h1>
-      <p class="vorspann">Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Der häufigste Grund, warum Leistungen nicht bezogen werden, ist nicht ein fehlender Anspruch. Es ist fehlendes Wissen, dass es sie gibt.</p>
-      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
+      <p class="vorspann">Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Wird eine Leistung nicht bezogen, liegt das nicht immer am fehlenden Anspruch — manchmal weiss man schlicht nicht, dass es sie gibt.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.<br>
+      <strong class="stand">Inhaltlich geprüft: November 2026.</strong></p>
 
         <h2 id="ebenen">Drei Ebenen, die sich nicht abstimmen</h2>
         <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Wer was tut">
@@ -251,13 +253,13 @@
         <details class="schicht-mehr">
           <summary>Ausführlich lesen</summary>
           <p>Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung weitgehend den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.</p>
-          <p>Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Das ist kein Fehler im System, das ist das System.</p>
-          <p>Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der man tatsächlich zu tun hat.</p>
+          <p>Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Der Föderalismus lässt diese Unterschiede bewusst zu.</p>
+          <p>Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der Sie tatsächlich zu tun haben.</p>
         </details>
         <nav class="wege" aria-label="Weiter von: Drei Ebenen, die sich nicht abstimmen"><a class="weg" href="/kantone-im-vergleich/"><span aria-hidden="true">→</span> Kantone im Vergleich</a><a class="weg" href="/politsystem/"><span aria-hidden="true">→</span> Politik erklärt</a></nav>
 
         <h2 id="themen">Die Themen im Einzelnen</h2>
-        <p class="schicht-kurz">Drei Bereiche betreffen die meisten Menschen, und bei allen dreien lohnt sich der Blick auch dann, wenn man meint, es treffe einen nicht zu:</p>
+        <p class="schicht-kurz">Drei Bereiche betreffen die meisten Menschen. Bei allen dreien kann sich der Blick auch dann lohnen, wenn Sie meinen, es treffe Sie nicht:</p>
         <div class="schicht-bild"><ul class="weiter">
           <li><a href="/praemienverbilligung/">Prämienverbilligung</a><span>Die Prämienverbilligung (IPV) ist ein Beitrag an die Krankenkassenprämie. Der Bund setzt den Rahmen, die Kantone entscheiden — was das für Sie bedeutet.</span></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a><span>Wer über Sozialhilfe entscheidet, woraus sie sich zusammensetzt und warum die SKOS-Richtlinien nicht automatisch Gesetz sind. Eine Einordnung ohne Zahlen.</span></li>
@@ -266,7 +268,7 @@
 
         <h2 id="liegen">Warum so vieles liegen bleibt</h2>
         <div class="schicht-bild"><div class="kern">
-          <p class="unter" id="huerden">Was Menschen vom Antrag abhält, ohne am Anspruch etwas zu ändern:</p>
+          <p class="unter" id="huerden">Was Menschen von einem Antrag abhalten kann:</p>
           <ul class="chips" role="list" aria-labelledby="huerden">
             <li>nicht wissen, dass es die Leistung gibt</li>
             <li>Formulare in einer fremden Sprache</li>
@@ -275,7 +277,7 @@
             <li>«Unterstützung ist etwas für andere»</li>
           </ul>
         </div></div>
-        <p class="schicht-kurz">Nichts davon ändert etwas am Anspruch. Aber alles davon führt dazu, dass er nicht geltend gemacht wird.</p>
+        <p class="schicht-kurz">An den Voraussetzungen einer Leistung ändert nichts davon etwas. Aber jede dieser Hürden kann dazu führen, dass ein Antrag gar nicht erst gestellt wird.</p>
         <details class="schicht-mehr">
           <summary>Ausführlich lesen</summary>
           <p>Ein Anspruch, von dem niemand weiss, wird nicht bezogen. Dazu kommen Hürden, die mit dem Anspruch selbst nichts zu tun haben: Formulare in einer Sprache, die man erst lernen muss. Fristen, die nirgends zusammen stehen. Die Sorge, etwas falsch zu machen. Und die verbreitete Annahme, Unterstützung sei etwas für andere.</p>
@@ -283,21 +285,21 @@
         <nav class="wege" aria-label="Weiter von: Warum so vieles liegen bleibt"><a class="weg" href="/praemienverbilligung/"><span aria-hidden="true">→</span> Prämienverbilligung</a></nav>
 
       <h2>Häufige Fragen</h2>
-        <h3>Wie finde ich heraus, was mir zusteht?</h3>
-        <p>Der zuverlässigste Weg führt über die Stelle, die tatsächlich entscheidet — also über den eigenen Kanton beziehungsweise die eigene Gemeinde. Rechner und Übersichten wie die hier verlinkten geben eine erste Orientierung, ob sich ein Antrag lohnt. Verbindlich ist immer erst die Verfügung der zuständigen Stelle.</p>
+        <h3>Wie finde ich heraus, was mir zustehen könnte?</h3>
+        <p>Der zuverlässigste Weg führt über die Stelle, die tatsächlich entscheidet — also über Ihren Kanton beziehungsweise Ihre Gemeinde. Rechner und Übersichten wie die hier verlinkten geben eine erste Orientierung, ob ein Antrag infrage kommt. Verbindlich ist immer erst die Verfügung der zuständigen Stelle.</p>
 
         <h3>Warum ist es je nach Kanton anders?</h3>
         <p>Weil der Bund bei vielen Leistungen bewusst nur den Rahmen setzt und die Kantone ihn ausfüllen. Sie legen eigene Einkommensgrenzen, Verfahren und Fristen fest. Ein Umzug über die Kantonsgrenze kann den Anspruch deshalb verändern, auch wenn sich sonst nichts geändert hat.</p>
 
         <h3>Muss ich überall selbst einen Antrag stellen?</h3>
-        <p>Das ist je nach Leistung und Kanton unterschiedlich. Bei manchen Leistungen melden sich die Stellen von sich aus, bei anderen passiert ohne Antrag nichts. Im Zweifel gilt: nachfragen kostet nichts, und ein nicht gestellter Antrag wird nie bewilligt.</p>
+        <p>Das ist je nach Leistung und Kanton unterschiedlich. Bei manchen Leistungen melden sich die Stellen von sich aus, bei anderen passiert ohne Antrag nichts. Im Zweifel fragen Sie bei der Stelle nach — ein nicht gestellter Antrag wird nie bewilligt. Ohne Schweizer Pass gilt für die Sozialhilfe eine Ausnahme: Der Bezug kann Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vor dem Antrag beraten (mehr dazu auf der Seite Sozialhilfe).</p>
 
         <h3>Was kostet Maloja Plana?</h3>
-        <p>Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf dem eigenen Gerät.</p>
+        <p>Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf Ihrem Gerät.</p>
 
 
       <div class="karte">
-        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/app/?beispiel#/situationen">Beispiel ansehen — ohne Zugangscode</a></p>
@@ -306,13 +308,13 @@
       <h2>Quellen und Rechner</h2>
       <ul>
           <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen</a></li>
-          <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Ergänzungsleistungen, Bundesamt für Sozialversicherungen</a></li>
+          <li><a href="https://www.bsv.admin.ch/de/el" rel="noopener">Ergänzungsleistungen, Bundesamt für Sozialversicherungen</a></li>
           <li><a href="https://www.ahv-iv.ch/p/3.01.d" rel="noopener">Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»</a></li>
       </ul>
-      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind Empfehlungen.</p>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
 
       <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal verschieden und ändern regelmässig. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.<br>
-      <strong>Inhaltlich geprüft: September 2026.</strong></p>
+      <strong>Inhaltlich geprüft: November 2026.</strong></p>
 
       <h2>Weiterlesen</h2>
       <ul>

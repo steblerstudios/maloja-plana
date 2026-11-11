@@ -101,7 +101,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -175,9 +176,10 @@
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -589,7 +591,7 @@
       <nav class="wege" aria-label="Weiter von: Was können Sie selbst tun?"><a class="weg" href="#weg"><span aria-hidden="true">→</span> Welchen Weg nimmt ein Gesetz?</a></nav>
 
       <div class="karte">
-        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/app/?beispiel">Beispiel ansehen — ohne Zugangscode</a></p>

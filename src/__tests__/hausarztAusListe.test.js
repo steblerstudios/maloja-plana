@@ -94,6 +94,6 @@ describe('Ausgänge lesen den Hausarzt aus der Liste', () => {
   it('Satz oben im Kapitel nennt den Hausarzt', () => {
     const t = createT({ de }, 'de');
     const html = renderToStaticMarkup(React.createElement(MirrorCards, { chapterKey: 'notfall', data: nurListe, allData: {}, palette: {}, t }));
-    expect(html).toContain('Ein Hausarzt ist eingetragen');
+    expect(html).toContain('Die Hausarztpraxis ist eingetragen');
   });
 });

@@ -40,6 +40,9 @@ export const APP_DATENBANKEN = ['maloja-plana-documents', 'maloja-plana-backups'
 
 export const LOESCH_SIGNAL = 'or5_loeschsignal';
 
+// Schlüssel ohne or5_-Präfix, die trotzdem Eingaben tragen.
+export const ANDERE_SCHLUESSEL = ['mp_suche'];
+
 const g = typeof globalThis !== 'undefined' ? globalThis : {};
 const sicher = (fn) => { try { return fn(); } catch { return null; } };
 
@@ -48,7 +51,9 @@ const schluesselLeeren = (s) => {
   const weg = [];
   for (let i = 0; i < s.length; i++) {
     const k = s.key(i);
-    if (k && k.startsWith('or5_') && !BEHALTEN.includes(k)) weg.push(k);
+    // `mp_suche` (Suchbegriff, SearchView.jsx) trägt kein or5_-Präfix, kann aber «IV» oder ein
+    // Medikament enthalten — gehört mit weg (Gruppe C, K, 11.11.2026).
+    if (k && (k.startsWith('or5_') || ANDERE_SCHLUESSEL.includes(k)) && !BEHALTEN.includes(k)) weg.push(k);
   }
   weg.forEach((k) => s.removeItem(k));
 };

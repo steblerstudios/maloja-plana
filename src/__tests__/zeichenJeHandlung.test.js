@@ -99,7 +99,8 @@ describe('Ein Thema, ein Zeichen', () => {
   });
   it('die Sicherung trägt das Sicherungs-Zeichen, nicht «herunterladen»', () => {
     expect(WERKZEUGE.find((w) => w.view === 'export').icon).toBe('sicherung');
-    const knopf = lesen('SettingsView.jsx').match(/nav\.export[\s\S]{0,40}|[\s\S]{0,400}nav\.export/)[0];
+    // Seit Gruppe C (11.11.2026) heisst der Knopf «Sicherung anlegen» (common.sicherungAnlegen), mit Datum darunter.
+    const knopf = lesen('SettingsView.jsx').match(/common\.sicherungAnlegen[\s\S]{0,40}|[\s\S]{0,400}common\.sicherungAnlegen/)[0];
     expect(knopf).not.toMatch(/name: 'download'/);
   });
   it('Budget-Übersicht ist das Portemonnaie, nicht das Blatt «rechner»', () => {

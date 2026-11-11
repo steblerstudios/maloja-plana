@@ -104,7 +104,7 @@
             "name": "Dois-je faire une demande partout moi-même ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée."
+              "text": "Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée. Sans passeport suisse, une exception s’applique pour l’aide sociale : la percevoir peut avoir des conséquences sur l’autorisation de séjour ; faites-vous conseiller avant la demande (plus de détails sur la page Aide sociale)."
             }
           },
           {
@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -230,7 +231,7 @@
         <p>Parce que, pour beaucoup de prestations, la Confédération ne fixe délibérément que le cadre et que les cantons le remplissent. Ils déterminent leurs propres limites de revenu, procédures et délais. Un déménagement au-delà de la frontière cantonale peut donc modifier le droit, même si rien d’autre n’a changé.</p>
 
         <h3>Dois-je faire une demande partout moi-même ?</h3>
-        <p>Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée.</p>
+        <p>Cela varie selon la prestation et le canton. Pour certaines prestations, les organes prennent contact d’office ; pour d’autres, rien ne se passe sans demande. En cas de doute : se renseigner ne coûte rien, et une demande qui n’est pas déposée n’est jamais accordée. Sans passeport suisse, une exception s’applique pour l’aide sociale : la percevoir peut avoir des conséquences sur l’autorisation de séjour ; faites-vous conseiller avant la demande (plus de détails sur la page Aide sociale).</p>
 
         <h3>Combien coûte Maloja Plana ?</h3>
         <p>Rien. Maloja Plana est gratuit et à code source ouvert. Il n’y a pas de compte, pas de publicité et pas de traçage ; toutes les données restent sur l’appareil.</p>
@@ -246,7 +247,7 @@
       <h2>Sources et calculateurs</h2>
       <ul>
           <li><a href="https://www.bwo.admin.ch/fr/aides-cantonales" rel="noopener">Aides cantonales, aperçu de l’Office fédéral du logement</a></li>
-          <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Prestations complémentaires, Office fédéral des assurances sociales</a> <span class="leise">(disponible uniquement en allemand)</span></li>
+          <li><a href="https://www.bsv.admin.ch/de/el" rel="noopener">Prestations complémentaires, Office fédéral des assurances sociales</a> <span class="leise">(disponible uniquement en allemand)</span></li>
           <li><a href="https://www.ahv-iv.ch/p/3.01.f" rel="noopener">Mémento 3.01 « Rentes de vieillesse et allocations pour impotent de l’AVS »</a></li>
       </ul>
       <p class="leise">Maloja Plana n’a aucun lien avec ces organismes. Le lien hypertexte n’implique ni collaboration ni approbation. Tous ne sont pas des autorités — la CSIAS, par exemple, est une association professionnelle ; ses normes sont des recommandations.</p>
