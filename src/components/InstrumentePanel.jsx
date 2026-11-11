@@ -28,7 +28,7 @@ import { steuerfristVorbei } from '../utils/steuerfrist.js';
 import { fristAbstand } from '../utils/fristAbstand.js';
 import { heuteIso } from '../utils/fristen.js';
 import { CHAPTER_KEYS, DARK_PALETTE } from '../config/constants.js';
-import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState } from '../data/franchiseTacho.js';
+import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise, kreuzState, kvgWechselfrist } from '../data/franchiseTacho.js';
 import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
@@ -161,7 +161,8 @@ export const KreuzKlein = ({ palette, st }) => {
 
 // eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
 // Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
-export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, dokumente = [], grundordnungStand = null }) => {
+// `jetzt`: nur für Tests (Wechselzeit); sonst heute.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, dokumente = [], grundordnungStand = null, jetzt = null }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -247,6 +248,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const fristIso = bh.taxFilingDeadline ? String(bh.taxFilingDeadline).slice(0, 10) : null;
   const fristVorbei = !!fristIso && steuerfristVorbei(bh, heute);
   const fristAb = fristIso ? fristAbstand(fristIso) : null;
+  // Versicherungen (11.11.2026): Wechselfrist der Krankenkasse als Kalenderblatt, nur in der Wechselzeit (kvgWechselfrist).
+  const wechsel = kvgWechselfrist(jetzt || new Date());
+  const wechselAb = wechsel.zeigen ? fristAbstand(wechsel.iso, (jetzt || new Date()).getTime()) : null;
   // Zahl nur, wenn die Frist noch kommt oder verpasst ist und noch etwas offen sein kann — eine erledigte alte Frist ist Geschichte.
   const fristZeigen = fristAb && (!fristAb.vorbei || fristVorbei);
   const erledigteGaenge = GAENGE.filter((g) => gangErledigt(g.id, gespeicherteHaken(), bh)).length;
@@ -301,6 +305,16 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       glyph: kreuzKlein ? h(KreuzKlein, { palette, st: kreuzKlein }) : null,
       onClick: () => onNavigate('praemien'),
     },
+    // Nur in der Wechselzeit eine Kachel; sonst fehlt sie ganz (kein Druck ohne Anlass).
+    ...(wechselAb ? [{
+      key: 'wechselfrist', name: t('instrumente.wechselfrist'),
+      zahl: wechselAb.tage === 0 ? { wert: t('behördenStatus.today'), einheit: '' }
+        : { wert: String(wechselAb.n), einheit: t('instrumente.' + wechselAb.einheit + (wechselAb.n === 1 ? 'Eins' : '')) },
+      satz: t('instrumente.wechselfristSatz'),
+      sub: t('instrumente.wechselfristSatz'),
+      glyph: h(Kalenderblatt, { iso: wechsel.iso, palette, locale: blattLocale }),
+      onClick: () => onNavigate('kvgwechsel'),
+    }] : []),
     {
       key: 'steuerfrist', name: t('instrumente.steuerfrist'),
       ...(fristZeigen ? {
