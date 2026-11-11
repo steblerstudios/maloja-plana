@@ -3,15 +3,12 @@ import { RechnerForm } from './components/RechnerForm.jsx';
 import { hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
-import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt, istJungErwachsen } from './data/mietzinsbeitraege.js';
-import { getCantonName, getHouseholdInfo } from './config/cantonalData.js';
+import { mietzinsErgebnis, istJungErwachsen, mietzinsEinschaetzung } from './data/mietzinsbeitraege.js';
+import { getCantonName } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
-import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
-import { giltAlsVerheiratet } from './utils/zivilstand.js';
-import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { linkStil } from './components/PrimaryButton.jsx';
 import { Belege } from './components/Belege.jsx';
@@ -34,61 +31,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     return gem && gem.length ? gem[0].kanton : '';
   })();
 
-  const info = canton ? getMietzinsbeitraege(canton) : null;
-  const hasProgram = !!info && info.state === 'has';
-
-  const hh = getHouseholdInfo(data) || {};
-  const householdSize = hh.householdSize || 1;
-  const childrenCount = hh.childrenCount || 0;
-
-  const monthlyIncome = parseFloat(data?.finanzen?.monthlyIncome) || 0;
-  // 13. Monatslohn: dieselbe Regel wie Steuer und IPV (utils/dreizehnter.js). Vorher immer ×12 —
-  // mit 13. lag das Jahreseinkommen 8,3 % zu tief, die Einschätzung zu grosszügig.
-  // Massgebend ist in allen vier Programmen das HAUSHALTSeinkommen (Fachprüfung 25.09.2026:
-  // BS «Summe aller Einkünfte des Haushalts», bs.ch · BL MBG § 8 Abs. 1 «Nettoeinkommen aller im
-  // Haushalt lebenden … Personen» · ZG Merkblatt Sept. 2025 «Haushaltseinkommen nach direkter
-  // Bundessteuer» · GE LRDU). Darum: Nebenerwerb ×12 immer; Partnereinkommen bei Ehe/eingetragener
-  // Partnerschaft. Im Konkubinat hängt es an Dauer und gemeinsamen Kindern (BS: mit Kindern oder nach
-  // fünf Jahren · BL: «gefestigtes Konkubinat» § 4 Abs. 2 lit. b MBG · ZG: nicht belegt) — dort NICHT
-  // eingerechnet, aber die Zahl mit ihm genannt. Vorher zählte nur der Hauptlohn: zu grosszügig.
-  const partnerMonat = hh.partnerIncome || 0;
-  const partnerZaehlt = giltAlsVerheiratet(data?.basis?.maritalStatus);
-  const eigenesJahr = Math.round(monthlyIncome * hauptlohnMonate(data?.finanzen?.dreizehnter)
-    + (parseFloat(data?.finanzen?.sideIncome) || 0) * 12);
-  const annualIncome = eigenesJahr + (partnerZaehlt ? Math.round(partnerMonat * 12) : 0);
-  // Nicht verheiratet, aber eine zweite Person mit Einkommen im Haushalt (Konkubinat, ohne Zivilstand,
-  // Wohngemeinschaft): nicht eingerechnet, die Zahl mit ihr steht daneben (Abschluss-Prüfung 25.09.2026 —
-  // vorher nur bei «cohabiting», sonst fiel sie still weg).
-  const konkubinatMitPartner = !partnerZaehlt && partnerMonat > 0
-    ? eigenesJahr + Math.round(partnerMonat * 12) : null;
-  // Verheiratet, Partnereinkommen nicht beantwortet: gerechnet ohne — wie «Alleinverdiener» bei der Steuer.
-  const partnerRoh = partnerEinkommenRoh(data?.basis);
-  const partnerOffen = partnerZaehlt && (partnerRoh === undefined || partnerRoh === null || String(partnerRoh).trim() === '');
-  const ohneDreizehnten = monthlyIncome > 0 && dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen';
-  const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
-  // BS ohne Ehe: die zweite erwachsene Person gehört (noch) nicht zur Haushaltseinheit — Grenze ohne sie,
-  // passend zum Einkommen ohne sie; die Grenze mit ihr nennt der Hinweis (vorher bis 2'250 zu grosszügig).
-  const ohneZweitePerson = info?.limitFormel === 'bs' && !partnerZaehlt && (hh.adults || 1) >= 2 ? 1 : 0;
-  const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize - ohneZweitePerson, childrenCount, hh.children || []) : null;
-  const grenzeMitPartner = ohneZweitePerson && hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount, hh.children || []) : null;
-  // BS: jemand zwischen 18 und 24 im Haushalt — ob in Erstausbildung, entscheidet, ob er zählt.
-  const bsJungOffen = info?.limitFormel === 'bs' && bsHaushalt(householdSize - ohneZweitePerson - childrenCount, hh.children || []).offen;
-
-  // ZG: gilt nur für WFG-Wohnungen — die Antwort steht in wohnen.wfgWohnung (Frage unten im Schnellcheck).
-  const wfg = data?.wohnen?.wfgWohnung;
-
-  // Einschätzung aus erfassten Beträgen + Kanton-Eckwerten (nie verbindlich).
-  const assessment = (() => {
-    if (!hasProgram) return null;
-    if (info.group === 'families' && childrenCount === 0) return { key: 'familiesOnly', tone: 'soft' };
-    if (info.wfgFrage && wfg === 'nein') return { key: 'wfgNein', tone: 'soft' };
-    // GE: mietabhängiges barème · BL: Grenze je Haushalt, von der Gemeinde festgesetzt (§ 6/§ 10 MBG).
-    // BS: Haushaltstyp, den die Beitragstabelle nicht führt (drei und mehr Erwachsene ohne Kind).
-    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : bsJungOffen ? 'jungeErwachseneOffen' : info.limitFormel ? 'tableLimit' : 'effortBased', tone: 'neutral' };
-    if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
-    if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
-    return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
-  })();
+  const { info, hasProgram, hh, householdSize, childrenCount, annualIncome, konkubinatMitPartner, partnerOffen,
+    ohneDreizehnten, rentMonthly, grenzeMitPartner, wfg, assessment } = mietzinsEinschaetzung(data, canton);
   // Grosser Ergebnis-Satz (Form X): «gut» in sageDeep, sonst Textfarbe — soft wäre als Hauptsatz zu blass.
   const toneColor = (tone) => tone === 'good' ? (palette.sageDeep || palette.text) : palette.text;
   // O3: die Art des Ergebnisses, abgeleitet aus der Einschätzung oben (data/mietzinsbeitraege.js).
