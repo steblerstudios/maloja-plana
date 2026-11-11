@@ -216,7 +216,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
         tuer: strassenTuer,
         ausland: auslandStoecke(vergleich.national),
         // Der blaue Wegweiser «möglich» steht rechts neben dem Vergleichshaus, sein Pfosten auf der Strasse.
-        daneben: strassenTuer && strassenTuer.schild ? React.createElement('div', { 'data-teil': 'wegweiser-neben-haus', style: { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: Math.round(INSTRUMENT_GROESSE.gross * BODEN_ANTEIL) + 'px', marginTop: space.lg + 'px' } }, strassenTuer.schild) : null,
+        daneben: strassenTuer && strassenTuer.schild ? React.createElement('div', { 'data-teil': 'wegweiser-neben-haus', style: { alignSelf: 'flex-end', marginBottom: UNTER_BODEN + 'px' } }, strassenTuer.schild) : null,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       }),
       React.createElement(InternationalHinweis, { palette, t })
@@ -267,8 +267,10 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
   );
 };
 
-// Boden der Strasse im Bild (BODEN 84 von 132 Breite, RegionalBarometer): dort steht der Pfosten des Wegweisers.
-const BODEN_ANTEIL = 84 / 132;
+// Der Pfosten des Wegweisers endet auf dem Boden der Strasse: unter dem Boden liegen noch der Bildrand (90 − 84 von 132
+// bei 256 px), die Betrags-Zeile (4 + 40) und der Abstand der Strasse (8). Steht der Wegweiser darunter (schmal), gibt
+// es keine Lücke, weil die Spalte keine feste Höhe hat.
+const UNTER_BODEN = Math.round((90 - 84) / 132 * INSTRUMENT_GROESSE.gross + space.xs + 40 + space.sm);
 // Der Satz und die Quelle zum EU-Stock stehen unter der Strasse: abgeleitet, keine gemessenen Preise in Franken.
 export const InternationalHinweis = ({ palette, t }) => React.createElement('div', { 'data-teil': 'international-hinweis', style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: space.xs + 'px 0 ' + space.sm + 'px' } },
   React.createElement('p', { style: { margin: 0 } }, t('wohnenInternational.satz', Object.fromEntries(['DE', 'AT', 'FR', 'IT'].map((c) => {
