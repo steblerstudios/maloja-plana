@@ -83,14 +83,16 @@ describe('Vergleichshaus gross (Stebler Studios 11.11.2026: Kanton, Schweiz «zu
     expect(bild).not.toContain('id="weg"');
     expect(h).toMatch(/padding-bottom:49\.4\d*%/);   // Boden 84 von 170
   });
-  it('C · Fahne am Kanton-Stock: «Sie −13 %» aus lageZurRegion, aussen rechts, Rand in der Lage-Farbe', () => {
-    const h = gross({ userValue: 1500 });   // 1500 gegen 1732 → −13 %, salbei
-    const f = h.slice(h.indexOf('data-teil="fahne-abstand"'));
-    expect(h).toMatch(/data-teil="fahne-abstand" data-ort="aussen"/);
-    expect(f).toMatch(/stroke="#6a6"/);
-    expect(f).toMatch(/>Sie −13 %</);
-    expect(gross({ userValue: 1740 })).toMatch(/>Sie ≈ 0 %</);
-    expect(gross({ userValue: 1900 })).toMatch(/data-teil="fahne-abstand"[\s\S]*>Sie \+10 %</);
+  it('Regel «Zahl» (Matrix §10): keine Fahne «Sie» im Haus, die Lage steht gross unter dem Bild (lageZurRegion)', () => {
+    const h = gross({ userValue: 1500 });   // 1500 gegen 1732 → −13 %
+    expect(h).not.toContain('fahne-abstand');
+    expect(h).not.toMatch(/>Sie [−+≈]/);
+    expect(h).toMatch(/data-teil="strasse-hauptzahl"[\s\S]*data-instrument-zahl="miete"[^>]*font-size:[^;"]+[^>]*>−13 %</);
+    expect(gross({ userValue: 1740 })).toMatch(/data-instrument-zahl="miete"[^>]*>≈ 0 %</);
+    expect(gross({ userValue: 1900 })).toMatch(/data-instrument-zahl="miete"[^>]*>\+10 %</);
+    // Fahnen tragen nur Vergleichswerte
+    expect(h).toContain('data-teil="fahne-kanton"');
+    expect(h).toContain('data-teil="fahne-schweiz"');
   });
   it('Schrift der Strasse auch bei 375 px Bildschirm (Strasse ~319 px) mindestens 13 px', () => {
     const h = gross();
@@ -105,10 +107,11 @@ describe('Vergleichshaus gross (Stebler Studios 11.11.2026: Kanton, Schweiz «zu
     const yE = Number(h.match(/data-teil="stock-eu"[^>]*y1="([\d.]+)"/)[1]);
     expect(yE).toBeGreaterThan(yN);
   });
-  it('unter den Häusern nur noch Ihr Betrag; die Legenden-Zeilen entfallen (aria-Label bleibt)', () => {
+  it('unter dem Bild klein Ihr Betrag; die Legenden-Zeilen entfallen (aria-Label bleibt)', () => {
     const h = gross();
-    const b = h.slice(h.indexOf('data-teil="strasse-betraege"'));
-    expect(b).toContain('1’900');
+    const b = h.slice(h.indexOf('data-teil="strasse-betrag"'));
+    // Eigene Franken über betrag() (Sichtschutz), nicht über zahl() — Matrix §10.
+    expect(b).toContain('CHF 1’900');
     expect(b).not.toContain('strasse.regionKanton');
     expect(h).not.toMatch(/>po\.regionalCompare\.nationalVal/);
     expect(h).toMatch(/aria-label="[^"]*po\.regionalCompare\.rent\.yourVal/);

@@ -10,7 +10,7 @@ import { Kalenderblatt } from './Kalenderblatt.jsx';
 import { GaengeKlein } from './BehoerdenInstrument.jsx';
 import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaenge.js';
 import { bereitschaft, BereitRingKlein } from './NotfallImKapitel.jsx';
-import { lohnLage, LohnKlein } from './LohnEinordnung.jsx';
+import { lohnLage, LohnKlein, lohnLageWert } from './LohnEinordnung.jsx';
 import { LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../data/branchenLohn.js';
 import { wochenstundenUnplausibel } from '../data/lohnCheck.js';
@@ -254,7 +254,6 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   // Arbeit (10.11.2026): dieselbe Lage wie das Lohn-Barometer (lohnLage) — Zahl nur, wenn auch der Balken eine Lage zeigt.
   const lohn = lohnLage(data);
   const ls = lohn.state;
-  const lohnVorzeichen = ls.delta > 0 ? '+' : ls.delta < 0 ? '−' : '';
   const lohnHinweise = lohn.vergleichbar ? [
     ls.geschaetzt ? t('instrumente.lohnGeschaetzt') : null,
     ls.partTime ? t('lohnEinordnung.fulltimeNote') : null,
@@ -338,7 +337,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     {
       key: 'lohn', name: t('instrumente.lohn'),
       ...(lohn.vergleichbar ? {
-        zahl: { wert: (ls.rel === 'near' ? '≈ ' : '') + (ls.pct === 0 ? '' : lohnVorzeichen) + ls.pct + ' %', einheit: '' },
+        zahl: { wert: lohnLageWert(ls), einheit: '' },
         satz: t('instrumente.lohnSatz', { jahr: LOHN_REFERENZ.jahr }),
         mehr: lohnHinweise,
       } : {}),

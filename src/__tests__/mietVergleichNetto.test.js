@@ -23,12 +23,12 @@ describe('MietVergleich: Nettomiete gegen Nettomiete', () => {
     expect(html).not.toContain('yourVal(1’830)');
   });
   it('die Wohnkosten-Zeile zählt die Nebenkosten weiter mit (1830 / 6200 = 30 %)', () => {
-    expect(miete({ rentAmount: '1650', utilities: '180' })).toContain('mietzinsView.rentShare(30)');
+    expect(miete({ rentAmount: '1650', utilities: '180' })).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>30 %</);
   });
   it('nur Nebenkosten, keine Miete (z. B. Eigentum): kein Miet-Balken, Wohnkosten-Zeile bleibt', () => {
     const html = miete({ rentAmount: '', utilities: '300' });
     expect(html).not.toContain('yourVal');
-    expect(html).toContain('mietzinsView.rentShare(5)');
+    expect(html).toMatch(/data-instrument-zahl="wohnkosten"[^>]*>5 %</);
   });
   it('Gegenprobe: ohne Nebenkosten ändert sich nichts', () => {
     expect(miete({ rentAmount: '1650' })).toContain('po.regionalCompare.rent.yourVal(1’650)');

@@ -75,7 +75,7 @@ describe('Partner-Haus: Texte sagen, wessen Einnahmen gemeint sind', () => {
   const quelle = (rel) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
   it('Kapitel und Kachel nennen den Haushalt, offenes Feld führt zum Eintragen', () => {
     const w = quelle('../components/WohnkostenInstrument.jsx');
-    expect(w).toMatch(/r\.haushalt \? 'wohnenInstrument\.anteilHaushalt'/);
+    expect(w).toMatch(/r\.haushalt \? 'instrumente\.wohnkostenSatzHaushalt'/);
     expect(w).toMatch(/r\.partnerOffen \? 'wohnenInstrument\.partnerOffen'/);
     expect(w).toMatch(/r\.haushalt \? 'instrumente\.wohnkostenSatzHaushalt'/);
   });

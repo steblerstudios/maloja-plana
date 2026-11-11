@@ -70,7 +70,8 @@ describe('Wohnkosten · Mietzins-Werkzeug zeigt dieselbe Zahl wie das Kapitel', 
     const p = profil({ sideIncome: '1500', sideIncomeType: 'netto' });
     const html = renderToStaticMarkup(React.createElement(MietVergleich, { palette, t, data: p, isDarkMode: false }));
     const r = wohnkostenRechnung(p.wohnen, p);
-    expect(html).toContain('mietzinsView.rentShare(' + Math.round(r.anteil) + ')');
+    expect(html).toContain('data-instrument-zahl="wohnkosten"');
+    expect(html).toContain('>' + Math.round(r.anteil) + ' %<');
     expect(Math.round(r.anteil)).toBe(33); // 1830 ÷ 5500; vorher 1830 ÷ 4000 = 46 %
   });
 

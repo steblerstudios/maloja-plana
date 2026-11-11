@@ -144,14 +144,11 @@ const BeitragLegende = ({ palette, t, beitrag }) => React.createElement('p', {
     React.createElement('rect', { x: 0.75, y: 0.75, width: 12.5, height: 8.5, fill: 'none', stroke: beitrag.farbe, strokeWidth: 1.5, strokeDasharray: '3 2' })),
   t('mietzinsSzene.beitragLegende', { betrag: zahl(beitrag.hoechst) }));
 
-// Welcher Text unter «… % des Einkommens» steht.
-// Partner-Haus (11.11.2026): mit dem Haushalt gerechnet → «der Netto-Einnahmen Ihres Haushalts».
-const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteilTeilsBrutto')
-  : r.haushalt ? 'wohnenInstrument.anteilHaushalt' : r.mitPartner ? 'wohnenInstrument.anteilEigen' : 'wohnenInstrument.anteil';
 const satzKey = (r) => r.partnerOffen ? 'wohnenInstrument.partnerOffen' : r.mitPartner ? 'wohnenInstrument.mitPartner'
   : r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel';
 
-// Kurzer Satz für die Instrument-Kachel: wessen Einkommen gemeint ist (dieselben Fälle wie anteilKey).
+// Satz für Kachel und Kapitel (seit 11.11.2026, Regel «Zahl»): wessen Einkommen gemeint ist — netto, eigenes,
+// Haushalt (Partner-Haus), brutto, teils brutto.
 export const wohnkostenSatzKey = (r) => r.brutto ? (r.ganzBrutto ? 'instrumente.wohnkostenSatzBrutto' : 'instrumente.wohnkostenSatzTeilsBrutto')
   : r.haushalt ? 'instrumente.wohnkostenSatzHaushalt' : r.mitPartner ? 'instrumente.wohnkostenSatzEigen' : 'instrumente.wohnkostenSatz';
 
@@ -187,16 +184,24 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, 
   const kapH = { margin: space.lg + 'px 0 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
 
   return React.createElement('section', { 'data-teil': 'wohnkosten', style: { marginBottom: space.lg + 'px' } },
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } },
+    // Ohne Einkommen kein Anteil: dann bleiben die Franken die Hauptzahl, oben wie bisher.
+    r.anteil == null && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } },
       t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel')),
-    React.createElement('div', { 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(r.kosten)),
+    r.anteil == null && React.createElement('div', { 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2 } }, betrag(r.kosten)),
 
-    // Anteil am Einkommen im Drittel-Haus. Das Haus wiederholt die Zahl daneben — für Screenreader stumm.
+    // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): wie die Kachel, nur grösser — Bild, darunter die eine
+    // Hauptzahl gross (Anteil in %), darunter klein die Franken, dann derselbe Satz wie auf der Kachel.
     r.anteil != null && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: { margin: space.md + 'px 0 ' + space.sm + 'px' } },
+      React.createElement('div', { style: { margin: '0 0 ' + space.sm + 'px' } },
         React.createElement(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, teile: r.haushalt ? { sie: r.einkommen - r.partnerEinkommen, partner: r.partnerEinkommen } : null, beitrag: imHaus, fuell })),
+      React.createElement('div', { 'data-instrument-zahl': 'wohnkosten', 'aria-live': 'polite', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, pct + ' %'),
+      React.createElement('div', { 'data-teil': 'wohnkosten-franken', style: { fontSize: text.sm, color: palette.mid, margin: '2px 0 0' } },
+        t(ausprobiert ? 'wohnenInstrument.titelAusprobiert' : 'wohnenInstrument.titel') + ': ' + betrag(r.kosten)),
+      // Derselbe Satz wie auf der Kachel, ohne die Zahl ein zweites Mal (Vorher-nachher 11.11.2026: «33 %» stand doppelt).
+      // Das Einkommen in Klammern über betrag() (Sichtschutz).
+      React.createElement('p', { 'data-teil': 'wohnkosten-satz', style: { ...klein, margin: space.xs + 'px 0 ' + space.sm + 'px', color: palette.text } },
+        t(wohnkostenSatzKey(r)) + ' (' + betrag(r.einkommen) + ')'),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
-        React.createElement('span', null, t(anteilKey(r), { pct, einkommen: zahl(r.einkommen) })),
         React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: r.ueberDrittel && !r.mitPartner ? palette.roseDeep : palette.text, palette }), t('wohnenInstrument.drittel')),
         // C · Viertel-Strich mit Quelle (nur wo er im Haus steht: netto, mit Urteil).
         !r.mitPartner && !r.brutto && React.createElement('span', { 'data-teil': 'viertel-legende' }, React.createElement(LegendenMarke, { form: 'punktlinie', color: palette.mid, palette }), t('wohnenInstrument.viertel'))
