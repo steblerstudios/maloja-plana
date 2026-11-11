@@ -1381,6 +1381,7 @@ export default {
     delete: 'Remove',
     entfernt: 'Removed',
     rueckgaengig: 'Undo',
+    zurueckgeholt: 'Restored',
     pickDate: 'Pick a date',
     simpleView: 'Simple view',
     grayscale: 'Grayscale',
@@ -4717,6 +4718,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'The “/” key opens search',
     title: 'Search',
     placeholder: 'Search tools and chapters…',
     emptyTitle: 'No matches',

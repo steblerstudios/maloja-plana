@@ -1677,6 +1677,7 @@ export default {
     delete: 'Allontanar',
     entfernt: 'Allontanà',
     rueckgaengig: 'Revocar',
+    zurueckgeholt: 'Zurückgeholt', // TODO(rm): übersetzen
     pickDate: 'Tscherner ina data',
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
@@ -6588,6 +6589,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'Taste «/» öffnet die Suche', // TODO(rm): übersetzen
     title: 'Tschertgar',
     placeholder: 'Tschertgar utensils e chapitels…',
     emptyTitle: 'Nagins resultats',

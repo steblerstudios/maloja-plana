@@ -1381,6 +1381,7 @@ export default {
     delete: 'Rimuovi',
     entfernt: 'Rimosso',
     rueckgaengig: 'Annulla',
+    zurueckgeholt: 'Ripristinato',
     pickDate: 'Scegli una data',
     simpleView: 'Vista semplice',
     grayscale: 'Scala di grigi',
@@ -7239,6 +7240,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'Il tasto «/» apre la ricerca',
     title: 'Cerca',
     placeholder: 'Cerca strumenti e capitoli…',
     emptyTitle: 'Nessun risultato',

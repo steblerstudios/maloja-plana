@@ -1381,6 +1381,7 @@ export default {
     delete: 'Retirer',
     entfernt: 'Retiré',
     rueckgaengig: 'Annuler',
+    zurueckgeholt: 'Rétabli',
     pickDate: 'Choisir une date',
     simpleView: 'Vue simplifiée',
     grayscale: 'Niveaux de gris',
@@ -4644,6 +4645,7 @@ export default {
   },
 
   search: {
+    tasteSchalter: 'La touche « / » ouvre la recherche',
     title: 'Recherche',
     placeholder: 'Rechercher outils et chapitres…',
     emptyTitle: 'Aucun résultat',
