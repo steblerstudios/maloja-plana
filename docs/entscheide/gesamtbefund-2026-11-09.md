@@ -214,5 +214,10 @@ siebenmal neu entschieden werden:
    Seiten im Seitenrahmen, C Stipendien ohne doppelte Listen, D Trefferflächen; fr/it/en/rm mitgezogen (Gegenlesung
    #692, rm vorläufig). Test `gruppeDFachseiten.test.js`. Zwei Gestaltungs-Fehlbefunde (B Hintergrund, D `h1`) im Blatt
    berichtigt. Offen: IPV-Zahlen 2025, Preisüberwacher-Link, Konkordat am Volltext. Nichts im Startbündel.
+   ⏸️ **Restrunde 11.11. abends: nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst mal so
+   fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). Empfohlen und dort wieder aufzunehmen: IPV-Zahlen
+   erst mit der Statistik 2025 (Nachprüfung 16.12.2026); Preisüberwacher-Newsletter-Adresse an der Quelle suchen,
+   mit Gegenprobe; Stipendien-Konkordat nochmals am Volltext versuchen.
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
