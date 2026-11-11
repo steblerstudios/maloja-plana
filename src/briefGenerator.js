@@ -20,6 +20,7 @@ import { escapeHtml as esc } from './utils/helpers.js';
 import { htmlSprache } from './utils/htmlSprache.js';
 import { zahl } from './utils/geld.js';
 import { plusTage, heuteIso } from './utils/fristen.js';
+import { kvgKuendigungsTermin } from './utils/festeFristen.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
 // (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
@@ -193,7 +194,8 @@ export function getLetterTemplates(t, data) {
       title: t('briefe.kkReklamation.title'),
       description: t('briefe.kkReklamation.description'),
       icon: 'health',
-      legalRef: 'ATSG Art. 52',
+      // Gruppe B L6 (11.11.2026): erst eine Verfügung (ATSG Art. 49, 51), dann die Einsprache (Art. 52).
+      legalRef: 'ATSG Art. 49, 51',
       chapter: 'versicherungen',
     },
     {
@@ -392,6 +394,8 @@ const LETTER_CSS = `
   .body-text { margin-bottom: 6mm; }
   .body-text p { margin-bottom: 4mm; }
   .signature { margin-top: 15mm; }
+  .zustimmung { margin-top: 12mm; font-size: 10pt; }
+  .zustimmung-linie { margin-top: 14mm; border-top: 1px solid #000; padding-top: 1mm; width: 80mm; font-size: 9pt; }
   .legal-note { margin-top: 10mm; font-size: 9pt; color: #666; border-top: 1px solid #ddd; padding-top: 4mm; }
   .fill-hint { background: #FFFDE7; padding: 2px 6px; border-radius: 3px; font-style: italic; }
   /* Die legal-note ist ein Wegweiser für die NUTZERIN, nicht für den Empfänger — sie
@@ -420,6 +424,12 @@ function fillHint(t) {
   return `<span class="fill-hint">${esc(t('briefe.fillIn'))}</span>`;
 }
 
+// Gruppe B L1 (11.11.2026): Familienwohnung — ohne Zustimmung der Ehegattin, des Ehegatten oder der eingetragenen Person
+// ist die Kündigung nichtig (OR Art. 266m, 266o). Die zweite Unterschrift fehlt nur, wenn der Zivilstand eine Ehe oder
+// eingetragene Partnerschaft ausschliesst; ohne Angabe steht sie im Brief.
+const OHNE_EHE = ['single', 'cohabiting', 'divorced', 'widowed', 'dissolvedPartnership'];
+export const brauchtZustimmungFamilienwohnung = (data) => !OHNE_EHE.includes(data?.basis?.maritalStatus);
+
 function generateLeaseTermination(data, t) {
   const f = getLeaseTerminationFields(data, t);
   const dateStr = today();
@@ -438,6 +448,7 @@ function generateLeaseTermination(data, t) {
       <p>${esc(t('briefe.leaseTermination.closing'))}</p>
     </div>
     <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
+    ${brauchtZustimmungFamilienwohnung(data) ? `<div class="zustimmung"><strong>${esc(t('briefe.leaseTermination.zustimmungTitel'))}</strong><p>${esc(t('briefe.leaseTermination.zustimmungText'))}</p><div class="zustimmung-linie">${esc(t('briefe.leaseTermination.zustimmungUnterschrift'))}</div></div>` : ''}
     <div class="legal-note">${esc(t('briefe.leaseTermination.legalNote'))}</div>
   `, t);
 }
@@ -501,8 +512,10 @@ function generateTaxExtension(data, t) {
   `, t);
 }
 
-function generateInsuranceSwitch(data, t) {
+function generateInsuranceSwitch(data, t, options = {}) {
   const f = getInsuranceSwitchFields(data, t);
+  // Gruppe B L2: das Jahr steht im Brief; nach der Frist das nächste (utils/festeFristen.js).
+  const termin = kvgKuendigungsTermin(options.heute || heuteIso());
   const dateStr = today();
   const cityDate = f.city ? `${esc(f.city)}, ${dateStr}` : dateStr;
   // Klartext für t()-Interpolation — die Werte landen in einem ${esc(t(...))} und
@@ -518,7 +531,7 @@ function generateInsuranceSwitch(data, t) {
     <div class="subject">${esc(t('briefe.insuranceSwitch.subject'))}</div>
     <div class="body-text">
       <p>${esc(t('briefe.insuranceSwitch.salutation'))}</p>
-      <p>${esc(t('briefe.insuranceSwitch.body1', { insurer: insurerLine }))}</p>
+      <p>${esc(t('briefe.insuranceSwitch.body1', { insurer: insurerLine, jahr: String(termin.jahr) }))}</p>
       ${policyLine ? `<p>${esc(t('briefe.insuranceSwitch.policyRef', { number: policyLine }))}</p>` : ''}
       <p>${esc(t('briefe.insuranceSwitch.body2'))}</p>
       <p>${esc(t('briefe.insuranceSwitch.closing'))}</p>

@@ -300,7 +300,8 @@ export const DocumentTresor = ({
   return React.createElement('div', {
     style: { maxWidth: '720px', background: palette.surface, padding: '24px', borderRadius: radius.lg, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('tresor.title')),
+    // Gruppe B D (11.11.2026): manuelle Trennung — sonst trennt der Browser «Dokumen-tenablage» statt am weichen Strich.
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.xs + 'px' } }, React.createElement('span', { style: { hyphens: 'manual', WebkitHyphens: 'manual' } }, t('tresor.title'))),
     satz && React.createElement('p', { style: { color: palette.mid, fontSize: text.sm, margin: '0 0 ' + space.lg + 'px' } }, satz),
 
     // Über «Teilen …» angekommene Dateien warten hier, bis sie eingeordnet oder verworfen sind.
