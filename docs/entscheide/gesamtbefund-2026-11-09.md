@@ -231,6 +231,20 @@ siebenmal neu entschieden werden:
    Familienzulagen ATSG Art. 24 (fünf Jahre) und ohne EL, Mutterschaftsbeihilfe «teils» und Kind unter zwei Jahren,
    EL bei Beeinträchtigung mit IV-Rente oder Hilflosenentschädigung, Reka 200 Franken nur Familienferien,
    `kompassIdle`. Vorgemerkt: S-Ausweise mit Anspruch auf Bewilligung ab März 2027 (AsylG Art. 74 Abs. 2).
+   Entwurfs-PR #845.
+   **Gruppe B · Ordnen & Unterlagen** (11.11.): Bild [gruppe-b-unterlagen.html](../design/gruppe-b-unterlagen.html).
+   Ablage, Was ansteht, Merkliste, Unterlagen drucken (Lebensmappe, Behörden-, Notfall-Dossier), 13 Briefvorlagen,
+   Offizielle Links. Gut: Rechtsvorschlag, Einsprache gegen die Kündigung, Mahnung, Todesfall wörtlich am Gesetz; keine
+   erfundenen Aufbewahrungsfristen; 127 Links, keiner tot. Hoch: L1 Mietkündigung ohne Zustimmung des Ehegatten bzw. der
+   eingetragenen Partnerin oder des Partners bei der Familienwohnung — ohne sie nichtig (OR Art. 266m, 266o); der Hinweis
+   wird beim Drucken ausgeblendet. Mittel: L2 Kassenwechsel-Brief kündigt ab 1.12. auf einen unmöglichen Termin
+   (KVG Art. 7 Abs. 2) — vor dem 1. Dezember bauen, L3 Ausstände und Art. 7 Abs. 5 fehlen, L4 Kalender-Vorlage
+   «Steuererklärung Frist» auf heute + 120 Tage, L5 Kassen-Vorlage ohne Werktag, L6 «Rechnung beanstanden» ohne
+   Verfügung (ATSG Art. 49, 51), L7 «sicher» in der Ablage, L8 Organspende-Register gibt es noch nicht. Gestaltung A
+   Brief antippen: nichts geschieht (Formular 3700 px tiefer), B Bücherregal mit senkrechter Schrift, Kantonslinks erst
+   bei 1250 px, C Was ansteht 4 px zu breit, Löschen über den Tagesstreifen, D Ablage-Titel bricht falsch. Sprache S1–S7
+   (it-Links deutsch). Frage zu den Herzensempfehlungen. Zweig `befund/gruppe-b-unterlagen`, gestapelt auf #845, nur
+   Befund, gebaut ist nichts.
    **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
    Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
 
