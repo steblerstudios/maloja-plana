@@ -219,6 +219,28 @@ siebenmal neu entschieden werden:
    ✅ **10.11. Nachzug 3**: Mindestlohn-Ausnahmen an BS MiLoG § 2 und NE LEmpl Art. 32a–e gelesen. «Lehre, Praktikum,
    unter 18 ausgenommen» galt nicht überall (BS: unter 18 nur Ferienjob; NE: per Staatsrat, Erlass nicht gefunden) →
    `lohnCheck.ausnahmen` sagt jetzt «jeder Kanton legt fest», mit belegten Beispielen. Offen: NE-Erlass, #802, rm.
+   **Kapitel 6 · Behörden & Rechtliches** (10.11.): Bild [kapitel-6-behoerden.html](../design/kapitel-6-behoerden.html). Kapitelseite
+   und neun Abläufe (Bewilligung, Neu in der Schweiz, Einbürgerung, Wegzug, Asyl, Pass/ID, Führerausweis, Betreibungsauszug,
+   Dienst), Fachprüfung am Fedlex-Volltext (swiss-precision- und rechts-pruefer). Hoch: L1 Wegzug mit Ausländerausweis ohne
+   Abmeldefrist 14 Tage vor Ausreise und ohne «Bewilligung erlischt, C vorher aufrechterhalten» (VZAE Art. 15, AIG Art. 61) ·
+   L2 Asyl: Rechtsvertretung kann das Mandat bei Aussichtslosigkeit beenden, die Frist läuft weiter (AsylG Art. 102h). Mittel:
+   L3 Pass/ID überholt seit 1.11.2026 (Fingerabdrücke bei ID mit Chip, Notpass), L4 Einsprache Wehrpflichtersatz klingt nach
+   Arbeitstagen, L5 Quellensteuer-Rückforderung nur mit DBA, L6 EU/EFTA nicht unterschieden, L7 Jahre mit L/N/S zählen nicht
+   zur Einbürgerung, L8 «nicht mehr fahren» fehlt zweimal, L9 F-Flüchtlinge reisen anders, A1 freiwillige AHV 888 Fr. ab 2027,
+   A2 Erinnerung ab 75 ab Klick gerechnet. Gestaltung A Abläufe fehlen auf der Kapitelseite (7 von 9), B Überschriften 2 → 4,
+   C drei Einleitungen. Sprache S1–S7 (rm 146 Texte deutsch, «ruhiger Überblick» in allen neun Intros). Zweig
+   `feat/kapitel-6-behoerden` (von `main`), nur Befund, gebaut ist nichts.
+   ✅ **10.11.: alles wie empfohlen** (Stebler Studios: «Ja, alles bauen»). Bau im selben Zweig.
+   ✅ **Gebaut** (Zweig `feat/kapitel-6-behoerden`): L1 Wegzug mit Ausländerausweis (Frist 14 Tage vor Ausreise aus
+   demselben Wegzugsdatum wie die AHV-Frist; Bewilligung erlischt, C-Gesuch innert sechs Monaten, VZAE Art. 79) · L2
+   Asyl-Mandat · L3 Ausweis nach VAwG 1.11.2026 · L4 30 Kalendertage · L5 DBA-Bedingung · L6 EU/EFTA, L-Grenze · L7
+   L/N/S · L8 «nicht mehr fahren» · L9 F-Flüchtlinge · A1 Jahrestabelle `data/freiwilligeAhv.js` (870/888) · A2
+   Kontrolluntersuchung ab der letzten Untersuchung · Gestaltung A (Abläufe unter «Passend», mit Pass/Alter gefiltert),
+   B (Stufe 3), C (Intro weg) · K: Steuerjahr bei verlängerter Frist, Betreibungsamt-Feld, Asyl-Quellen, KVV Bst. ebis,
+   DBG Art. 4, BZG Art. 41, OR 324b, Kontrollfahrt, BüG Art. 11 · S5 «ruhig» aus neun Intros, S6 Dokumentenablage.
+   rechts-pruefer am Volltext nach dem Bau eingearbeitet (Blocker: Kontrolluntersuchung nicht ab dem 75. Geburtstag
+   rechnen). Test `kapitel6Behoerden.test.js`. Offen: rm-Übersetzung (S1, auch L2 nur de/fr/it/en), S2 Maskulin in
+   unberührten Texten, S3 Gesetzesangaben ans Satzende, S4 Kürzel ausschreiben, Notpass-Zuschläge.
 5. **Die übrigen Seiten** (11.11.), im selben Verfahren wie die Kapitel. Inventar aus `ansichtenRegister.js`,
    `werkzeugRegister.js`, den `view === '…'`-Zweigen in `main.jsx`, den Umleitungen in `hashRouter.js` und `public/`;
    abgezogen, was die Blätter zu Kapitel 1–7 abdecken. Fünf Gruppen, Reihenfolge A → E. ✅ **11.11.: so** (Stebler
