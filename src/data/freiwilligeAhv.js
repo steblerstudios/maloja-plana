@@ -8,9 +8,19 @@
 //     https://www.fedlex.admin.ch/eli/cc/63/837_843_843/20270101/de: «den Mindestbeitrag von 888 Franken im Jahr».
 import { werteFuerStichtag } from './jahrestabelle.js';
 
+//
+// Vortor 12.11.2026: Der Mindestbeitrag der freiwilligen Versicherung ist AHV + IV. Bisher stand nur der AHV-Anteil.
+//   • IV: IVG Art. 3 Abs. 1bis (Fassung 1.1.2026 und 1.1.2027): «140 Franken, wenn sie freiwillig nach Artikel 2 AHVG
+//     versichert sind», Fussnote 19: «Beitrag gemäss Art. 6 der V vom 28. Aug. 2024» (AS 2024 463).
+//   • 2027: V vom 2.10.2026 (AS 2026 542) Art. 2 Abs. 2 «In der freiwilligen Versicherung beträgt er … 888 Franken» und
+//     Art. 6 «für freiwillig versicherte Nichterwerbstätige auf 142 Franken».
+//   • Merkblatt 10.02 (Stand 1.1.2025), Ziff. 4: Nichterwerbstätige zahlen «zwischen 1 010 Franken und 25 250 Franken»;
+//     Ziff. 3: Erwerbstätige 10,1 % (AHV 8,7 % + IV 1,4 %). Dazu 5 % Verwaltungskosten (Ziff. 3).
+const jahr = (ahv, iv) => Object.freeze({ mindestbeitragAhv: ahv, mindestbeitragIv: iv, mindestbeitrag: ahv + iv });
+
 export const FREIWILLIGE_AHV_JE_JAHR = Object.freeze({
-  2026: Object.freeze({ mindestbeitrag: 870 }),
-  2027: Object.freeze({ mindestbeitrag: 888 }),
+  2026: jahr(870, 140),
+  2027: jahr(888, 142),
 });
 
 export function freiwilligeAhv(stichtag) {

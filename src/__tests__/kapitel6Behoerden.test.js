@@ -61,9 +61,18 @@ describe('L5 · Rückforderung der Quellensteuer nur mit Doppelbesteuerungsabkom
 });
 
 describe('A1 · Mindestbeitrag freiwillige AHV aus der Jahrestabelle', () => {
-  it('2026: 870 Fr., 2027: 888 Fr. (AHVG Art. 2, Fassung 1.1.2027)', () => {
-    expect(freiwilligeAhv(2026).mindestbeitrag).toBe(870);
-    expect(freiwilligeAhv('2027-01-01').mindestbeitrag).toBe(888);
+  // Vortor 12.11.2026: 870/888 war nur der AHV-Anteil. Der Mindestbeitrag der freiwilligen Versicherung ist AHV + IV
+  // (AHVG Art. 2 Abs. 4/5, IVG Art. 3 Abs. 1bis; Beträge aus V vom 28.8.2024 Art. 2 Abs. 2 und Art. 6, ab 2027
+  // V vom 2.10.2026 Art. 2 Abs. 2 und Art. 6; Merkblatt 10.02: «zwischen 1 010 Franken und …», Stand 2025).
+  it('2026: AHV 870 + IV 140 = 1 010 Fr.; 2027: AHV 888 + IV 142 = 1 030 Fr.', () => {
+    const a = freiwilligeAhv(2026), b = freiwilligeAhv('2027-01-01');
+    expect([a.mindestbeitragAhv, a.mindestbeitragIv, a.mindestbeitrag]).toEqual([870, 140, 1010]);
+    expect([b.mindestbeitragAhv, b.mindestbeitragIv, b.mindestbeitrag]).toEqual([888, 142, 1030]);
+  });
+  it('der Text nennt AHV und IV, nicht nur die AHV', () => {
+    for (const [l, d] of Object.entries(SPRACHEN)) {
+      for (const ph of ['{min}', '{ahv}', '{iv}']) expect(d.wegzug.step3Text, l).toContain(ph);
+    }
   });
   it('kein fester Betrag mehr im Text, in keiner Sprache', () => {
     for (const [l, d] of Object.entries(SPRACHEN)) {

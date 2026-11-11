@@ -44,7 +44,7 @@ export const Wegzug = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('wegzug.step2LinkZusatz'), onClick: () => onNavigate('zusatzwechsel') })
     ),
     React.createElement(AblaufStep, { palette, title: t('wegzug.step3Title') },
-      React.createElement('p', { style: s.stepText }, t('wegzug.step3Text', { min: ahv.mindestbeitrag, jahr: ahv.jahr })),
+      React.createElement('p', { style: s.stepText }, t('wegzug.step3Text', { min: ahv.mindestbeitrag, ahv: ahv.mindestbeitragAhv, iv: ahv.mindestbeitragIv, jahr: ahv.jahr })),
       React.createElement(EreignisFrist, {
         palette, t, onNavigate, id: 'wegzug-frist', frist: (d) => plusTage(plusMonate(d, 12), -1), wert: wegzug, onWert: setWegzug, ohneFeld: true,
         labelKey: 'wegzug.fristLabel', hinweisKey: 'wegzug.fristHinweis', vorbeiKey: 'wegzug.fristVorbei',
