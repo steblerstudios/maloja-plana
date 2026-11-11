@@ -58,15 +58,16 @@ describe('K53 · gesperrter Export-Knopf', () => {
     });
   }
 
-  it('ohne Passphrase: gesperrt, gestrichelt, Sperr-Cursor, Text in mid', () => {
+  // Gruppe C, Gestaltung C / a11y C9 (11.11.2026): Der Knopf bleibt antippbar. Ein grauer Knopf ohne
+  // Grund liess die Meldungen «zu kurz» und «stimmt nicht überein» nie erscheinen; jetzt kommt die
+  // Meldung beim Antippen gleich unter dem Knopf. Er ist der einzige goldene Knopf der Seite.
+  it('ohne Passphrase: antippbar, goldener Hauptknopf, nicht gestrichelt', () => {
     const html = renderToStaticMarkup(React.createElement(ZipExport, {
       palette: LIGHT_PALETTE, t, data: { basis: {} }, documents: [], demoMode: false,
     }));
     const b = knopf(html, t('backup.exportEncrypted'));
-    expect(b).toContain('disabled=""');
-    expect(b).toContain('cursor:not-allowed');
-    expect(b).toContain('border:1px dashed ' + LIGHT_PALETTE.mid);
-    expect(b).toContain('background:' + LIGHT_PALETTE.up);
-    expect(b).toContain('color:' + LIGHT_PALETTE.mid);
+    expect(b).not.toContain('disabled=""');
+    expect(b).not.toContain('dashed');
+    expect(b).toContain('background:' + LIGHT_PALETTE.sand);
   });
 });

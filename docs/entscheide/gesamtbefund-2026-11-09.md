@@ -369,5 +369,35 @@ siebenmal neu entschieden werden:
    aufgerufen, und kein Satz zur Ablage sagt in einer der fünf Sprachen Verschlüsselung zu (Erlaubnisliste der
    gelesenen Sätze). Test `querBandTresor.test.js`, Mutationsprobe beider Teile rot aus dem richtigen Grund. Q3 Test
    «Stand der Lebenslagen» (`gruppeAEinstieg.test.js`) bleibt: er wird am 1.1.2027 rot, das ist der Wecker; Nachprüfung 16.12.2026.
+   **Gruppe C · Einstellungen & Vertrauen** (11.11.): Bild [gruppe-c-vertrauen.html](../design/gruppe-c-vertrauen.html).
+   Gut: Datenschutz-Aussagen stimmen am Code (kein `fetch`/`sendBeacon`, CSP nur `'self'`, Beispiel speichert nichts),
+   Sicherung standardmässig AES-256-GCM, Import geprüft und ganz oder gar nicht, «Alle Daten löschen» vorbildlich,
+   App-Text und statische Rechtsseite gleich. Hoch: L1 vier Benachrichtigungs-Schalter, drei davon («30 Tage vor
+   Ablauf», Gesundheit, Bewilligung/Steuer/RAV) tut kein Code, der vierte prüft nur beim Öffnen und ignoriert den
+   Schalter · L2 die goldenen Knöpfe JSON/CSV/Manifest ganz oben sind keine Sicherung (ohne Dokumente, Erinnerungen,
+   Kontakte, Merkliste, unverschlüsselt), lassen sich aber einspielen. Mittel: L3 Installieren zeigt auf
+   `malojaplana.ch` statt `/app/` (Website ohne Manifest, live gemessen), L4 iCloud/OneDrive-Download, L5 was in der
+   unverschlüsselten Datei steht, L6 Weg «Werkzeuge → Export» gibt es nicht, L7 «Exportieren, um Platz zu schaffen»,
+   L8 «sicher» in der Ablage. Sicherheit: T1 Teilen-Empfang nimmt POST von fremden Seiten an (erst am echten
+   Android-Teilen messen), T2 Beta-Code im Klartext in einer Doku des öffentlichen Repos (Entscheid K105 offen), T3
+   PBKDF2 100 000 statt 600 000, T4 Kleines. Gestaltung A Schalter zeigen ihren Zustand nicht («Hell» = Handlung),
+   B Benachrichtigungen lang und Schalter kaum sichtbar, C auf der Sicherungsseite ist der unsichere Weg am lautesten,
+   D Beta-Tor hell im Dunkelmodus und ohne Weg zum Code. Sprache S1–S10. Rechtsartikel (nDSG Art. 25, 28; UWG Art. 3
+   Abs. 1 Bst. s) nicht am Fedlex-Volltext geprüft; Impressum-Anschrift bleibt offen und unverändert. Zweig
+   `befund/gruppe-c-vertrauen` (von `main`), Entwurfs-PR #846.
+   ✅ **11.11.: Sprache, Inhalt und Gestaltung** (Stebler Studios: «hier sprache inhalt und gestaltung»), dazu beim
+   Beta-Tor «Zeile raus, Code wechseln». Gebaut im selben Zweig: L1–L8 und das Kleine, S1–S10, Gestaltung A–D, die
+   Doku-Zeile mit dem alten Code entfernt. Den neuen Code wählt Stebler Studios; im Repo steht nur sein Fingerabdruck.
+   **Notiert, nicht gebaut:** T1 Teilen-Empfang (erst am echten Android-Teilen messen), T3 Runden der Ableitung
+   (neues Dateiformat), T4 Kleines; Impressum-Anschrift bleibt offen.
+   Wächter `gruppeCVertrauen.test.js`, rechts-pruefer mit DSG-Volltext (Art. 25, Fassung 1.9.2023). Nicht im Browser
+   angesehen (alle Server-Plätze belegt). **Offen bei Stebler Studios:** neuen Beta-Code wählen (der alte steht in
+   der git-Historie), Deploy.
+   ⏸️ **Restrunde 11.11. abends: nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst mal so
+   fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). Empfohlen und dort wieder aufzunehmen: den neuen
+   Beta-Code setzt Stebler Studios selbst (nur der Fingerabdruck ins Repo, der Code nie in einen Chat); T1
+   Teilen-Empfang am echten Android-Teilen messen und T3 Ableitung (neues Dateiformat, alte Sicherungen lesbar)
+   später; Impressum-Anschrift — Postfach eintragen oder bis zur Antwort auf F2a warten (gleich wie Gruppe E, L1).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
