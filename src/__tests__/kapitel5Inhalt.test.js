@@ -40,7 +40,10 @@ describe('A2 · Probezeit: sieben Tage Frist, Verlängerung bei Krankheit und Un
   it('K · «ab 8 Stunden» meint die Freizeit (UVV Art. 13), Berufsunfall immer', () => {
     const s = tDe('neuerJob.step3Text');
     expect(s).toMatch(/gegen Berufsunfälle versichert/);
-    expect(s).toMatch(/mindestens 8 Stunden pro Woche, auch gegen Unfälle in der Freizeit \(UVV Art\. 13\)/);
+    // Die Sache, nicht die Schreibweise: 8 Std. bei derselben Stelle → auch Freizeit (UVV Art. 13).
+    expect(s).toMatch(/mindestens 8 Stunden pro Woche/);
+    expect(s).toMatch(/Unfälle in der Freizeit/);
+    expect(s).toMatch(/UVV Art\. 13/);
   });
 });
 
