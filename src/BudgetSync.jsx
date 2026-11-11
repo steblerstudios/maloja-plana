@@ -8,7 +8,7 @@ import { calculateSozialhilfe } from './config/cantonalData.js';
 import { getRegionalComparison } from './data/praemienRegionen.js';
 import { getRentComparison } from './data/mietpreise.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
-import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { RegionalBarometer, HaeuserVergleich } from './components/RegionalBarometer.jsx';
 import { wohnkostenRechnung, drittelGrenzeMiete, DrittelHaus } from './components/WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
 import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
@@ -287,6 +287,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate, onImport }
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
           t(wohn.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel'))
       ),
+      // Wohnen: Ihre Wohnkosten gegen den BFS-Richtwert als zwei Häuser (11.11.2026), darunter der Richtwert-Satz.
+      open && group.key === 'housing' && groupBm && React.createElement('div', { 'data-teil': 'budget-richtwert-haeuser', style: { width: INSTRUMENT_GROESSE.klein + 'px', padding: '4px 0' } },
+        React.createElement(HaeuserVergleich, { palette, sie: group.total, vergleich: groupBm, fuell: bereichFillColor('wohnen', isDarkMode) })),
       // BFS group-level benchmark (e.g. Housing, Mobility) — only when expanded
       open && groupBm && renderBenchmarkLine(groupBm, group.key, true),
       // BFS group-level price trend since the index base (e.g. Housing +14%)
