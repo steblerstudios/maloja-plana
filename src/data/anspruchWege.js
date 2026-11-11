@@ -7,6 +7,7 @@ import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../confi
 import { pegelState, sozialhilfePegelState } from './pegel.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from './ipvAbzug.js';
 import { einnahmenErfasst } from '../utils/unterstuetzungseinheit.js';
+import { kompassBearing } from './leistungsKompass.js';
 
 // Die möglichen Wege aus einem Satz Angaben (`probe`: Profil mit den hier angepassten Zahlen).
 // Nur POSITIVE Hinweise, nie ein «Nein»-Verdikt. Wirft eine Rechnung, bleibt die Liste leer
@@ -46,6 +47,16 @@ export function wegeAusProbe(probe) {
   const ipvSubsumed = monetaer.some((w) => w.key === 'soz');
   const ipvAmount = (monetaer.find((w) => w.key === 'ipv') || {}).monthly || 0;
   return { wege, monetaer, ipvSubsumed, ipvAmount };
+}
+
+// Leistungs-Kompass: EINE Peilung für die Übersicht («Was steht mir zu?», components/Leistungsliste.jsx) und den
+// Schnellcheck (Schnellcheck.jsx). Behörden-Durchgang 11.11.2026, Matrix B-R2: bis dahin zählte die Übersicht ihre
+// Wege selbst und konnte anders zeigen als der Schnellcheck. Gezählt wird jeder Weg aus wegeAusProbe, auch die
+// subsidiäre IPV (sie ist ein Weg, nur kein zusätzlicher Betrag). `wege` darf mitgegeben werden, wo der Ort sie
+// schon gerechnet hat; es sind dieselben.
+export function leistungsKompass(probe, wege = wegeAusProbe(probe).wege) {
+  const anzahl = wege.length;
+  return { ...kompassBearing({ hasIncome: einnahmenErfasst(probe?.finanzen), benefitCount: anzahl }), anzahl };
 }
 
 // Was der IPV-Pegel zeigen darf. Der Pegel (pegelState) misst das rohe Jahreseinkommen an der

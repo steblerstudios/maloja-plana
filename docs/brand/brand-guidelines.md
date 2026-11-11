@@ -265,6 +265,10 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
 - **Ein Bild, eine Bedeutung.** Das **Netz-Schild** ist *das* Schild (F7-K3-6). Das alte Schild «Pflicht /
   Empfohlen» ist seit 09.11. von Startseite und Prämien-Übersicht entfernt.
 - Spiegel rechnen **dieselbe Zahl** wie das Zuhause (Startseite: «5/5 eingetragen» aus `netzSchildTeile`).
+  - *Behörden · Leistungen (11.11.2026):* Die Kompass-Nadel zählt in Übersicht und Schnellcheck mit **einer**
+    Funktion, `leistungsKompass` in `src/data/anspruchWege.js` (Matrix B-R2). Der Sozialhilfe-Strich der Übersicht
+    liest Bedarf und Einkommen aus dem Glas (`sozialhilfePegelState`, B-R6). Wächter:
+    `src/__tests__/leistungenEineRechnung.test.js`.
 - Wächter: `src/__tests__/instrumenteZuhauseSpiegel.test.js`.
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Reserve-Tank 280 → 256, Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
