@@ -137,7 +137,7 @@ de   k=cantoneOfTaxation type="select" mvo=true section~a3dcb96b orientation~23d
 de   k=taxId type="text" label~05fb1ebf
 de   k=taxFilingDeadline type="date" label~90bd9dbf
 de   k=pendingTaxReturns type="text" label~9eebcd73
-de   k=registryOffice type="text" section~dddc3925 orientation~a4568872 label~30c4b117 sectionIntro~ddcd3275
+de   k=registryOffice type="text" section~dddc3925 label~30c4b117 sectionIntro~ddcd3275
 de   k=betreibungsStatus type="select" orientation~e6595be7 label~c61133fe options=3 optWerte~13bd59f1 optLabels~541b5dfe
 de   k=courtCases type="select" label~bd0cc30a options=2 optWerte~2bfd19fd optLabels~b50f42dc
 de   k=legalRepresentative type="text" section~5dca6923 label~70fd3696 sectionIntro~c8e6925b
@@ -154,10 +154,10 @@ de   k=bloodType type="select" section~43769dba label~08bc5ed1 sectionIntro~fde5
 de   k=allergies type="textarea" label~5c4713d0
 de   k=medications type="textarea" naOk=true label~7f167c9e
 de   k=chronicDiseases type="textarea" label~a2e0f5ce
-de   k=doctor type="text" section~3a28348b label~5bf93fcf sectionIntro~fae0cb62
-de   k=doctorPhone type="tel" label~b805a4e9
+de   k=doctor type="text" section~3a28348b label~294964cf sectionIntro~97238f14
+de   k=doctorPhone type="tel" label~2a2866d6
 de   k=hospital type="text" label~28a433c8
-de   k=organDonor type="select" section~7074ad60 label~59c6fcb5 sectionIntro~76157cc4 options=5 optWerte~7020aec1 optLabels~a5728f00 weitere=secondary
+de   k=organDonor type="select" section~76728ac0 label~59c6fcb5 sectionIntro~76157cc4 options=5 optWerte~7020aec1 optLabels~a5728f00 weitere=secondary
 de   k=patientenverfuegung type="select" orientation~d5934d33 link~3fad1fbd hint~3420c2e1 label~1f306ca3 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=nurImBlock+secondary
 de   k=vorsorgeauftrag type="select" orientation~e17779e7 hint~af5a3360 label~9bf8b758 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
 de   k=bestattungswuensche type="select" hint~188d6096 label~6d81a204 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
@@ -303,7 +303,7 @@ fr   k=cantoneOfTaxation type="select" mvo=true section~b3e26776 orientation~99f
 fr   k=taxId type="text" label~81b0177d
 fr   k=taxFilingDeadline type="date" label~3e1f4c64
 fr   k=pendingTaxReturns type="text" label~5c9de4f2
-fr   k=registryOffice type="text" section~cfd75909 orientation~f2006eae label~385531fc sectionIntro~ede0eeed
+fr   k=registryOffice type="text" section~cfd75909 label~385531fc sectionIntro~ede0eeed
 fr   k=betreibungsStatus type="select" orientation~b0ad3f5c label~c62055f5 options=3 optWerte~13bd59f1 optLabels~33d2ffb9
 fr   k=courtCases type="select" label~20b9d4a7 options=2 optWerte~2bfd19fd optLabels~b74e5823
 fr   k=legalRepresentative type="text" section~47681fdc label~43eca758 sectionIntro~3196baa2
@@ -469,7 +469,7 @@ it   k=cantoneOfTaxation type="select" mvo=true section~64420548 orientation~5cf
 it   k=taxId type="text" label~1cb159bc
 it   k=taxFilingDeadline type="date" label~5897c933
 it   k=pendingTaxReturns type="text" label~5d2dd82d
-it   k=registryOffice type="text" section~4d9c8658 orientation~cbe79139 label~412f5a42 sectionIntro~ed29e19b
+it   k=registryOffice type="text" section~4d9c8658 label~412f5a42 sectionIntro~ed29e19b
 it   k=betreibungsStatus type="select" orientation~006a04a4 label~baffea7a options=3 optWerte~13bd59f1 optLabels~48be9981
 it   k=courtCases type="select" label~9a2ca8f9 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=legalRepresentative type="text" section~5a3eab11 label~1e82eb05 sectionIntro~c1f06288
@@ -635,7 +635,7 @@ en   k=cantoneOfTaxation type="select" mvo=true section~0d438a7a orientation~df8
 en   k=taxId type="text" label~3acd429b
 en   k=taxFilingDeadline type="date" label~6d68c60c
 en   k=pendingTaxReturns type="text" label~a5ea5836
-en   k=registryOffice type="text" section~de7530aa orientation~bbc8cbfb label~71136ec8 sectionIntro~e5cd866a
+en   k=registryOffice type="text" section~de7530aa label~71136ec8 sectionIntro~e5cd866a
 en   k=betreibungsStatus type="select" orientation~7c8e1bd0 label~905897fd options=3 optWerte~13bd59f1 optLabels~393e2723
 en   k=courtCases type="select" label~b9e95469 options=2 optWerte~2bfd19fd optLabels~ea0983bd
 en   k=legalRepresentative type="text" section~587e9830 label~15b541c3 sectionIntro~6ce32e48
@@ -801,7 +801,7 @@ rm   k=cantoneOfTaxation type="select" mvo=true section~fda928f7 orientation~7cf
 rm   k=taxId type="text" label~a398d9f7
 rm   k=taxFilingDeadline type="date" label~91e2c20e
 rm   k=pendingTaxReturns type="text" label~20d6ba57
-rm   k=registryOffice type="text" section~5165a563 orientation~ee400a84 label~cc446faa sectionIntro~63c171ce
+rm   k=registryOffice type="text" section~5165a563 label~cc446faa sectionIntro~63c171ce
 rm   k=betreibungsStatus type="select" orientation~8fb40474 label~00044cb2 options=6 optWerte~a05dcace optLabels~15ed2fd0
 rm   k=courtCases type="select" label~ecccbeb4 options=2 optWerte~2bfd19fd optLabels~1534032f
 rm   k=legalRepresentative type="text" section~2fc92f34 label~c55bf97d sectionIntro~130b06d6

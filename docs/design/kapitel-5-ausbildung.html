@@ -1,0 +1,61 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Kapitel 5 Ausbildung</title><style>
+:root{--bg:#F7F4EE;--card:#fff;--ink:#2E3A2F;--soft:#666;--line:#e5e0d6;--gold:#B08A3E;--rot:#C0392B}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a18;--card:#2E2D2A;--ink:#E8E4DC;--soft:#A8A39A;--line:#44423d;--gold:#D6B46A}}
+body{font:15px/1.5 system-ui;background:var(--bg);color:var(--ink);margin:16px;max-width:980px}
+h1{font-size:21px;margin:0 0 6px}h2{font-size:18px;margin:32px 0 8px}p{margin:4px 0 10px}.leise{color:var(--soft)}
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:10px;overflow:hidden;font-size:14px}
+td,th{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+tr.hoch td:first-child{border-left:4px solid var(--rot)}
+.box{background:var(--card);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin:12px 0}
+.paar{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:16px;align-items:start}@media(max-width:700px){.paar{grid-template-columns:1fr}}
+.bild{position:relative}.bild img{width:100%;display:block;border-radius:12px}
+.kasten{position:absolute;border:3px solid var(--rot);border-radius:8px}
+.kasten b{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:var(--rot);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+.erkl{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 10px}
+.erkl .l{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--rot);color:#fff;align-items:center;justify-content:center;margin-right:6px;font-weight:600;font-size:13px}
+code{font-size:13px}
+</style>
+<h1>Kapitel 5 · Ausbildung &amp; Arbeit</h1>
+<p class=leise>Durchgang 10.11.2026 auf <code>main</code> <code>ad40cd22</code>. Neun Seiten: Kapitelseite mit Lohn-Barometer, Lebenslauf, Neue Stelle, Lehre beginnen, Selbständig werden, Stelle verloren, Ausgesteuert, Stundenlohn, ALV-Rechner. Im Browser auf einem eigenen Server mit diesem Stand gemessen (375 px, Beispiel «Maria Muster»; Lehre aus Kapitel 4: nicht auf fremdem Server). Fachprüfung in zwei Teilen mit Netz (Fedlex-Volltexte OR, FamZG, BBG, BBV, MWSTG, AVIG, AVIV, UVG, UVV, KVG, BVG, ÜLG; AHV-Merkblatt 2.02), Rechner mit Node nachgerechnet, Textprüfung über 300 Texte. Kernstelle L1 von Hand im Code bestätigt (<code>alvRechner.js:87</code>). Gebaut ist nichts.</p>
+<p><b>Gut:</b> ALV-Taggeld, Höchstverdienst, Wartetage und Anspruchsdauer rechnen nach Gesetz; RAV-Frist «spätestens am ersten Tag» stimmt; die Lehre-Seite stimmt am Volltext (Probezeit, Genehmigung ohne Gebühren, Ausbildungszulage 268 Fr.); Stundenlohn-Zuschläge 8,33 / 10,64 / 13,04 % und die vorsichtige Mindestlohn-Prüfung stimmen. Ab 1.1.2027 zeigt die Lohn-Prüfung bewusst «Werte nicht belegt», bis die neuen Mindestlöhne eingetragen sind.</p>
+
+<h2>Inhalt: was jemanden falsch handeln lassen kann</h2>
+<table><thead><tr><th>#</th><th>Seite</th><th>Befund</th><th>Empfehlung</th></tr></thead><tbody>
+<tr class=hoch><td>L1</td><td>ALV-Rechner</td><td>Ohne Geburtsdatum im Profil rechnet der Rechner mit <b>400 Taggeldern</b>. Unter 25 ohne Kinder sind es <b>200</b>, ab 55 mit 22 Beitragsmonaten 520 (AVIG Art. 27 Abs. 5bis). Wer jung ist, plant mit doppelt so viel Zeit. Die Anzeige sagt nur «Noch eine Angabe nötig», nicht welche.</td><td>Feld «Alter» im Rechner; ohne Alter keine Anspruchsdauer, sondern «200 bis 520 Taggelder, je nach Alter».</td></tr>
+<tr><td>L2</td><td>ALV-Rechner</td><td>Der Betrag steht gross da, auch bei weniger als 12 oder gar keinen Beitragsmonaten. Für Befreite gilt ein Pauschalansatz, nicht der Lohn (AVIG Art. 13, Art. 23 Abs. 2).</td><td>Unter 12 Monaten kein Betrag, sondern der Weg zur Befreiung.</td></tr>
+<tr><td>L3</td><td>ALV-Rechner</td><td>«Geschätzt pro Monat» ist brutto; AHV/IV/EO, Nichtberufsunfall und der BVG-Risikobeitrag gehen noch ab (AVIG Art. 22a).</td><td>«brutto, vor Abzügen» ins Label.</td></tr>
+<tr><td>L4</td><td>ALV-Rechner</td><td>«Kinder» wird aus allen Haushaltskindern unter 25 vorbefüllt. Volljährige zählen nur in Ausbildung (ZGB Art. 277). Ein arbeitendes 22-jähriges Kind hebt 70 % auf 80 % (bei 6 000: 4 200 → 4 800).</td><td>Kinder über 18 nicht vorbefüllen, Hinweis «ab 18 nur in Ausbildung».</td></tr>
+<tr><td>L5</td><td>Stelle verloren</td><td>«… kann das RAV Einstelltage verhängen»: Das Gesetz sagt «ist einzustellen», bei Verschulden verfügt die Kasse. Es fehlt: Selbst kündigen ohne neue Stelle gibt 31–60 Tage, und Einstelltage gehen von den Taggeldern ab (AVIG Art. 30, AVIV Art. 45).</td><td>Text an diese Artikel anpassen.</td></tr>
+<tr><td>L6</td><td>Stelle verloren</td><td>«Schon während der Kündigungsfrist sollten Sie sich bewerben»: Die Folge fehlt, fehlende Bemühungen sind ein Einstellgrund (AVIG Art. 17 Abs. 1, Art. 30 Abs. 1 Bst. c).</td><td>«sonst drohen Einstelltage».</td></tr>
+<tr><td>L7</td><td>Stelle verloren</td><td>Abredeversicherung ohne Frist: Sie muss <b>vor</b> dem Ende der Unfalldeckung abgeschlossen sein (UVV Art. 8).</td><td>«bis spätestens {Datum}» — das Datum rechnet die Seite schon.</td></tr>
+<tr><td>A1</td><td>Selbständig werden</td><td>«Steuern &amp; MwSt zurücklegen»: Die <b>AHV-Akontobeiträge</b> fehlen (bis 10 % des Einkommens, Mindestbeitrag 530 Fr., vierteljährlich, Verzugszins 5 %; Merkblatt 2.02, Stand 2026). Wer nur danach plant, legt zu wenig zurück.</td><td>Ein Satz mit diesen Werten, Werte in die Jahrestabelle.</td></tr>
+<tr><td>A2</td><td>Neue Stelle</td><td>Probezeit-Ende ohne Verlängerung: Bei Krankheit und Unfall verlängert sie sich, die Kündigungsfrist darin ist 7 Tage (OR Art. 335b Abs. 1, 3). Wer krank war, hält sich zu früh für geschützt.</td><td>Hinweis und Erinnerung ergänzen.</td></tr>
+<tr><td>K</td><td>verschiedene</td><td>Kleiner: Mindestlohn nach Wohn- statt Arbeitskanton auch auf dieser Kapitelseite (mit #802 erledigt, nur der Hinweis «angenommen» fehlt hier) · Probezeit-Ende bei Antritt am Monatsende einen Tag früh (31.01. → 27.02.) · «ab 8 Std. unfallversichert» meint nur Freizeit · grosse Säule 3a für Selbständige ohne Kasse · «nicht mehr an der Quelle besteuert» (Schweizer hatten nie Quellensteuer), MWST zählt In- und Ausland · ein Auftraggeber = meist unselbständig · Lebenslauf druckt Geburtsdatum, Nationalität, Zivilstand immer (freiwillig, abwählbar machen) · «Vier Wege», es sind drei · Mindestlohn-Ausnahmen nur für GE/TI/JU belegt · ALV-Randfälle bei 10 416 und 3 797.50 · Lohnbasis 12 Monate, 13. Monatslohn · Zwischenverdienst, 3a nach Aussteuerung, Sperrfrist verschiebt das RAV-Datum · Quellensteuer-Rückforderung genauer · AHV nach Aussteuerung je Kalenderjahr.</td><td>Ergänzen oder belegen.</td></tr>
+</tbody></table>
+
+<h2>Gestaltung</h2>
+<div class=paar>
+ <div class=bild><img src="kapitel-5/alv.jpg" alt="ALV-Rechner auf dem Handy">
+  <div class=kasten style="left:4%;top:9.5%;width:92%;height:28.5%"><b>B</b></div>
+  <div class=kasten style="left:4%;top:50%;width:55%;height:3%"><b>C</b></div>
+  <div class=kasten style="left:5%;top:83.6%;width:49%;height:5.6%"><b>A</b></div></div>
+ <div>
+  <div class=erkl><span class=l>A</span><b>Beispielzahl sieht aus wie eine Eingabe.</b> «Beitragsmonate» ist leer, zeigt aber grau «12» — genau die Angabe, die fehlt. Dasselbe beim Lohn mit «6000». → Kein Zahlen-Platzhalter, wie in Kapitel 4 (D).</div>
+  <div class=erkl><span class=l>B</span><b>Langer Absatz vor dem Formular.</b> Die Ausnahmen zur Beitragszeit (rund 80 Wörter) stehen im Ergebnisbereich, bevor man etwas eingegeben hat. → In einen aufklappbaren Teil «Weniger als 12 Monate gearbeitet?».</div>
+  <div class=erkl><span class=l>C</span><b>Welche Angabe fehlt?</b> «Noch eine Angabe nötig.» nennt sie nicht. Der Satz kommt aus dem gemeinsamen Rechner-Baustein und steht so in allen Rechnern. → «Noch nötig: Beitragsmonate» mit Sprung zum Feld (app-weit).</div>
+  <div class=erkl><b>Dazu:</b> Kapitelseite: Überschrift springt von Stufe 2 auf 4 («Ihr Lebenslauf — Vorschau»), Lebenslauf-Seite ebenso unter «Maria Muster» → eine Stufe tiefer. Stundenlohn: Felder 37–39 px und Sprung 2 → 4 — <b>mit #802 schon gebaut</b>. Ohne Befund: Neue Stelle, Lehre, Selbständigkeit, Stelle verloren, Ausgesteuert (ausser den app-weiten ⓘ-Knöpfen 31–35 px). Grafik-Beschriftungen 10–11 px im Lohn-Barometer: Querschnitt 1 (#770).</div>
+ </div>
+</div>
+
+<h2>Sprache</h2>
+<table><thead><tr><th>#</th><th>Befund</th><th>Empfehlung</th></tr></thead><tbody>
+<tr><td>S1</td><td>Rätoromanisch: vier Abläufe fast ganz deutsch (Neue Stelle, Lehre, Stelle verloren, Ausgesteuert, rund 105 Texte), zwei Fusszeilen halb rm, halb de; eine rm-Fassung nur in du.</td><td>Halbe Sätze und die Sie-Fassung korrigieren; die Übersetzung braucht eine Person, die Romanisch schreibt.</td></tr>
+<tr><td>S2</td><td>Generisches Maskulin: «Arbeitgeber» 15×, «Lehrlingslohn», it «datore di lavoro», fr «Devenir indépendant». Drei Schreibweisen (Doppelpunkt, Doppelform, Schrägstrich).</td><td>Doppelform bzw. «Lernendenlohn», «Selbständig werden» (fr «Se mettre à son compte»); eine Schreibweise.</td></tr>
+<tr><td>S3</td><td>Gesetzesangaben mitten im Satz: rund 160 Verweise in 43 Texten, oft mit Abs./Bst. in jedem Satz.</td><td>Wie Kapitel 1–4: ans Satzende, höchstens einer je Satz.</td></tr>
+<tr><td>S4</td><td>Kürzel unerklärt: RAV 19×, ALV, WBF, MwSt; en lässt alle deutschen Kürzel stehen.</td><td>Beim ersten Vorkommen ausschreiben.</td></tr>
+<tr><td>S5</td><td>Beschwichtigen: «kein Ende der Unterstützung», «stehen Sie nicht ohne Unterstützung da», «bringt Freiheit», «ruhige Überblick» in 5 Intros.</td><td>Streichen, die Tatsache nennen.</td></tr>
+<tr><td>S6</td><td>Mehrere Namen: «Neuer Job» / «Neue Stelle»; Taggeld / Arbeitslosentaggeld / Arbeitslosenentschädigung; Arbeitslosenkasse / ALV; Lehre / Ausbildung / Berufsbildung.</td><td>Je ein Name: «Neue Stelle», «Taggeld», «Arbeitslosenkasse», «Lehre».</td></tr>
+<tr><td>S7</td><td>Klein: Anrede kippt in Infinitiv («Sonst den Unfall … einschliessen»); Typo «Deine» in der du-Fassung; «Was steht mir im Stundenlohn zu?» als einziger Ich-Titel; Absätze bis 1 600 Zeichen (Ausgesteuert); fr/it holprig (z. B. «Votre employeur vous annonce»), en «Mandatory school».</td><td>Anrede durchhalten, Typo, Absätze teilen; Ich-Titel bleibt (Frage der Person).</td></tr>
+</tbody></table>
+
+<div class=box><b>Vorschlag:</b> alles wie empfohlen, in einem Zweig von <code>main</code>. L1 zuerst, mit rotem Test (Alter fehlt → keine 400). A und C gehen mit; C ändert den gemeinsamen Rechner-Baustein und wirkt in allen Rechnern. Jeder neue Fachsatz vor «fertig» durch den rechts-pruefer am Volltext. Der Stundenlohn bleibt wegen #802 unangetastet. Rätoromanisch: nur die halben Sätze und die fehlende Sie-Fassung.</div>

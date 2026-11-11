@@ -45,8 +45,8 @@ export const BASIS = 'https://malojaplana.ch';
 // Sichtbares Stand-Datum. <lastmod> in der Sitemap ist für Leser:innen unsichtbar
 // und wird beim Deploy ohnehin neu gesetzt — auch wenn inhaltlich nichts geprüft
 // wurde. Dieses Datum ändert nur von Hand, wenn jemand den Inhalt wirklich
-// gegengelesen hat. Zuletzt: Fachprüfung + Rechtsprüfung am 20.09.2026.
-export const GEPRUEFT = 'September 2026';
+// gegengelesen hat. Zuletzt: Fachprüfung + Rechtsprüfung am 20.09.2026; Gruppe D am 11.11.2026.
+export const GEPRUEFT = 'November 2026';
 
 // Geprüfte amtliche Quellen. Beim Ergänzen: erst Gegenprobe, dann eintragen.
 //
@@ -187,7 +187,7 @@ export const QUELLEN = {
     },
   },
   bsvEL: {
-    url: 'https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html',
+    url: 'https://www.bsv.admin.ch/de/el', // Gruppe D (11.11.2026): alte Adresse leitete hierher um
     text: 'Ergänzungsleistungen, Bundesamt für Sozialversicherungen',
     sprachen: {},
     texte: {
@@ -240,7 +240,7 @@ export const SEITEN = [
       'Unterstützung in der Schweiz ist auf Bund, Kantone und Gemeinden verteilt — vieles bleibt ungenutzt, weil man es nicht kennt. Ein Überblick, Thema für Thema.',
     brotkrume: 'Was steht mir zu?',
     vorspann:
-      'Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Der häufigste Grund, warum Leistungen nicht bezogen werden, ist nicht ein fehlender Anspruch. Es ist fehlendes Wissen, dass es sie gibt.',
+      'Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Wird eine Leistung nicht bezogen, liegt das nicht immer am fehlenden Anspruch — manchmal weiss man schlicht nicht, dass es sie gibt.',
     // Drei Schichten (Brand Book §8, 09.11.2026), vorerst nur Deutsch.
     schichten: true,
     abschnitte: [
@@ -256,8 +256,8 @@ export const SEITEN = [
         titel: 'Drei Ebenen, die sich nicht abstimmen',
         absaetze: [
           'Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung weitgehend den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.',
-          'Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Das ist kein Fehler im System, das ist das System.',
-          'Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der man tatsächlich zu tun hat.',
+          'Die <strong>Kantone</strong> füllen diesen Rahmen aus — mit eigenen Grenzen, eigenen Formularen, eigenen Fristen. Zwei Haushalte mit identischen Zahlen können in zwei Kantonen unterschiedlich behandelt werden. Der Föderalismus lässt diese Unterschiede bewusst zu.',
+          'Die <strong>Gemeinden</strong> führen in mehreren Bereichen aus, was der Kanton beschliesst — in der Sozialhilfe sind sie oft die Stelle, mit der Sie tatsächlich zu tun haben.',
           'Praktisch heisst das: Eine allgemeine Antwort auf «steht mir das zu?» gibt es nicht. Es gibt nur die Antwort für Ihren Wohnort, Ihre Situation und Ihr Jahr.',
         ],
       },
@@ -266,14 +266,14 @@ export const SEITEN = [
         kurzAbsatz: 0,
         titel: 'Die Themen im Einzelnen',
         absaetze: [
-          'Drei Bereiche betreffen die meisten Menschen, und bei allen dreien lohnt sich der Blick auch dann, wenn man meint, es treffe einen nicht zu:',
+          'Drei Bereiche betreffen die meisten Menschen. Bei allen dreien kann sich der Blick auch dann lohnen, wenn Sie meinen, es treffe Sie nicht:',
         ],
         verweise: ['praemienverbilligung', 'sozialhilfe', 'steuern'],
       },
       {
         id: 'liegen',
         bild: `<div class="kern">
-          <p class="unter" id="huerden">Was Menschen vom Antrag abhält, ohne am Anspruch etwas zu ändern:</p>
+          <p class="unter" id="huerden">Was Menschen von einem Antrag abhalten kann:</p>
           <ul class="chips" role="list" aria-labelledby="huerden">
             <li>nicht wissen, dass es die Leistung gibt</li>
             <li>Formulare in einer fremden Sprache</li>
@@ -287,15 +287,15 @@ export const SEITEN = [
         titel: 'Warum so vieles liegen bleibt',
         absaetze: [
           'Ein Anspruch, von dem niemand weiss, wird nicht bezogen. Dazu kommen Hürden, die mit dem Anspruch selbst nichts zu tun haben: Formulare in einer Sprache, die man erst lernen muss. Fristen, die nirgends zusammen stehen. Die Sorge, etwas falsch zu machen. Und die verbreitete Annahme, Unterstützung sei etwas für andere.',
-          'Nichts davon ändert etwas am Anspruch. Aber alles davon führt dazu, dass er nicht geltend gemacht wird.',
+          'An den Voraussetzungen einer Leistung ändert nichts davon etwas. Aber jede dieser Hürden kann dazu führen, dass ein Antrag gar nicht erst gestellt wird.',
         ],
       },
     ],
     faq: [
       {
-        frage: 'Wie finde ich heraus, was mir zusteht?',
+        frage: 'Wie finde ich heraus, was mir zustehen könnte?',
         antwort:
-          'Der zuverlässigste Weg führt über die Stelle, die tatsächlich entscheidet — also über den eigenen Kanton beziehungsweise die eigene Gemeinde. Rechner und Übersichten wie die hier verlinkten geben eine erste Orientierung, ob sich ein Antrag lohnt. Verbindlich ist immer erst die Verfügung der zuständigen Stelle.',
+          'Der zuverlässigste Weg führt über die Stelle, die tatsächlich entscheidet — also über Ihren Kanton beziehungsweise Ihre Gemeinde. Rechner und Übersichten wie die hier verlinkten geben eine erste Orientierung, ob ein Antrag infrage kommt. Verbindlich ist immer erst die Verfügung der zuständigen Stelle.',
       },
       {
         frage: 'Warum ist es je nach Kanton anders?',
@@ -305,12 +305,12 @@ export const SEITEN = [
       {
         frage: 'Muss ich überall selbst einen Antrag stellen?',
         antwort:
-          'Das ist je nach Leistung und Kanton unterschiedlich. Bei manchen Leistungen melden sich die Stellen von sich aus, bei anderen passiert ohne Antrag nichts. Im Zweifel gilt: nachfragen kostet nichts, und ein nicht gestellter Antrag wird nie bewilligt.',
+          'Das ist je nach Leistung und Kanton unterschiedlich. Bei manchen Leistungen melden sich die Stellen von sich aus, bei anderen passiert ohne Antrag nichts. Im Zweifel fragen Sie bei der Stelle nach — ein nicht gestellter Antrag wird nie bewilligt. Ohne Schweizer Pass gilt für die Sozialhilfe eine Ausnahme: Der Bezug kann Folgen für die Aufenthaltsbewilligung haben; lassen Sie sich vor dem Antrag beraten (mehr dazu auf der Seite Sozialhilfe).',
       },
       {
         frage: 'Was kostet Maloja Plana?',
         antwort:
-          'Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf dem eigenen Gerät.',
+          'Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf Ihrem Gerät.',
       },
     ],
     quellen: ['bwoKantone', 'bsvEL', 'ahvMerkblatt'],
@@ -322,7 +322,7 @@ export const SEITEN = [
   // ─── Prämienverbilligung ──────────────────────────────────────────────────
   {
     pfad: 'praemienverbilligung',
-    titel: 'Prämienverbilligung: wer Anspruch hat',
+    titel: 'Prämienverbilligung: wer sie bekommen kann',
     beschreibung:
       'Die Prämienverbilligung (IPV) ist ein Beitrag an die Krankenkassenprämie. Der Bund setzt den Rahmen, die Kantone entscheiden — was das für Sie bedeutet.',
     brotkrume: 'Prämienverbilligung',
@@ -343,7 +343,8 @@ export const SEITEN = [
         titel: 'Was der Bund vorgibt und was der Kanton entscheidet',
         absaetze: [
           'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, setzt dafür Mindestvorgaben und beteiligt sich an der Finanzierung. Im Rahmen dieser Vorgaben entscheidet der Kanton, wer sie bekommt und wie viel.',
-          'Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.',
+          'Drei Vorgaben gelten überall. Bei unteren und mittleren Einkommen verbilligen die Kantone die Prämien der Kinder um mindestens 80 Prozent und die der jungen Erwachsenen in Ausbildung um mindestens 50 Prozent (Art. 65 Abs. 1bis KVG). Jeder Kanton legt fest, welchen Anteil die Prämie am verfügbaren Einkommen höchstens ausmachen darf (Art. 65 Abs. 1ter KVG). Und ist der Anspruch festgestellt, muss die Auszahlung so erfolgen, dass Sie die Prämie nicht vorschiessen müssen (Art. 65 Abs. 3 KVG).',
+          'Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob Sie einen Antrag stellen müssen oder angeschrieben werden, und die Fristen.',
           'Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.',
           'Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.',
         ],
@@ -362,22 +363,22 @@ export const SEITEN = [
         wege: ['steuern'],
         titel: 'Welche Zahlen zählen',
         absaetze: [
-          'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.',
+          'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Verdienen Sie dieses Jahr deutlich weniger, wird das in vielen Kantonen nicht automatisch berücksichtigt. Andere rechnen es erst mit der späteren definitiven Abrechnung nach.',
           'Das KVG verlangt jedoch, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Auskunft gibt die zuständige Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.',
         ],
       },
       {
         id: 'irrtum',
         bild: `<ul class="irrtum" role="list">
-          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Mit einem Erwerbseinkommen bekommt man grundsätzlich nichts.</span><span class="richtig"><span class="sr-only">Richtig: </span>Trifft nicht zu: Auch mit Lohn kann ein Anspruch bestehen.</span></li>
-          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Ein abgelehnter Antrag gilt für immer.</span><span class="richtig"><span class="sr-only">Richtig: </span>Er betrifft in der Regel ein Jahr. Ändert sich Ihre Lage, lohnt sich eine neue Anfrage.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Mit einem Erwerbseinkommen bekommt man grundsätzlich nichts.</span><span class="richtig"><span class="sr-only">Richtig: </span>Auch mit Lohn kann ein Anspruch bestehen.</span></li>
+          <li><span class="falsch"><span class="sr-only">Irrtum: </span>Ein abgelehnter Antrag gilt für immer.</span><span class="richtig"><span class="sr-only">Richtig: </span>Er betrifft in der Regel ein Jahr. Ändert sich Ihre Lage, ist eine neue Anfrage möglich.</span></li>
         </ul>`,
         kurzAbsatz: 0,
         wege: ['was-steht-mir-zu'],
-        titel: 'Der häufigste Irrtum',
+        titel: 'Zwei häufige Irrtümer',
         absaetze: [
-          'Viele gehen davon aus, dass man mit einem Erwerbseinkommen grundsätzlich nichts bekommt. Das trifft nicht zu: Prämienverbilligung ist keine Leistung nur für Menschen ohne Arbeit. Familien mit Kindern, Personen in Ausbildung und Haushalte mit mittlerem Einkommen fallen in vielen Kantonen darunter.',
-          'Der zweite häufige Irrtum ist, dass ein einmal abgelehnter Antrag für immer gilt. Er gilt für sein Jahr. Ändern sich Einkommen, Haushalt oder Wohnkanton, ist es eine neue Frage.',
+          'Viele gehen davon aus, dass es mit einem Erwerbseinkommen grundsätzlich nichts gibt. Das trifft nicht zu: Prämienverbilligung ist keine Leistung nur für Menschen ohne Arbeit. Familien mit Kindern, Personen in Ausbildung und Haushalte mit mittlerem Einkommen fallen in vielen Kantonen darunter.',
+          'Der zweite Irrtum ist, dass ein einmal abgelehnter Antrag für immer gilt. Er gilt für sein Jahr. Ändern sich Einkommen, Haushalt oder Wohnkanton, ist es eine neue Frage.',
         ],
       },
     ],
@@ -385,12 +386,12 @@ export const SEITEN = [
       {
         frage: 'Habe ich Anspruch auf Prämienverbilligung?',
         antwort:
-          'Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die zuständige Stelle: meist die kantonale Sozialversicherungsanstalt oder die Ausgleichskasse, in einzelnen Kantonen die Steuerverwaltung oder die Wohngemeinde.',
+          'Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die zuständige Stelle: meist die kantonale Sozialversicherungsanstalt oder die Ausgleichskasse, in einzelnen Kantonen die Steuerverwaltung oder die Wohngemeinde. Eine Ausnahme gilt im Asylbereich: Mit Ausweis N oder S ist der Anspruch sistiert, solange ganz oder teilweise Sozialhilfe bezogen wird (AsylG Art. 82a Abs. 7). Mit Ausweis F gilt das ebenso, ausser die Einreise liegt mehr als sieben Jahre zurück (AIG Art. 86 Abs. 2, AsylV 2 Art. 5b). Für vorläufig aufgenommene Flüchtlinge kann anderes gelten; das klärt die kantonale Stelle.',
       },
       {
         frage: 'Muss ich einen Antrag stellen?',
         antwort:
-          'In manchen Kantonen werden Berechtigte von sich aus angeschrieben, in anderen muss der Antrag selbst eingereicht werden. Weil das kantonal geregelt ist und sich ändern kann, lohnt sich die Nachfrage bei der eigenen kantonalen Stelle — auch dann, wenn man in einem früheren Jahr schon einmal etwas erhalten hat.',
+          'In manchen Kantonen werden Berechtigte von sich aus angeschrieben, in anderen muss der Antrag selbst eingereicht werden. Weil das kantonal geregelt ist und sich ändern kann, ist eine Nachfrage bei Ihrer kantonalen Stelle sinnvoll — auch dann, wenn Sie in einem früheren Jahr schon einmal etwas erhalten haben.',
       },
       {
         frage: 'Welches Einkommen wird gerechnet?',
@@ -400,7 +401,7 @@ export const SEITEN = [
       {
         frage: 'Was, wenn mein Einkommen stark gesunken ist?',
         antwort:
-          'Dann lohnt sich die Nachfrage besonders. Das KVG verlangt, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Fragen Sie bei der zuständigen Stelle nach, auch wenn die massgebende Veranlagung noch ein höheres Einkommen ausweist.',
+          'Dann kann es sich lohnen, nachzufragen. Das KVG verlangt, dass die Kantone bei der Überprüfung des Anspruchs die aktuellsten Einkommens- und Familienverhältnisse berücksichtigen, insbesondere auf Antrag (Art. 65 Abs. 3 KVG). Das Nähere, etwa Bedingungen, Nachweise, Fristen und Beginn der Wirkung, regelt Ihr Kanton. Ein Anspruch auf Verbilligung folgt daraus nicht von selbst. Fragen Sie bei der zuständigen Stelle nach, auch wenn die massgebende Veranlagung noch ein höheres Einkommen ausweist.',
       },
     ],
     quellen: ['priminfo', 'fedlexKvgArt65'],
@@ -428,6 +429,7 @@ export const SEITEN = [
             <li>Prämienverbilligung</li><li>Unterhaltsbeiträge</li><li>Stipendien</li><li>eigenes Vermögen, mit Freibetrag</li>
           </ul>
           <p class="dann">Reicht das nicht, kommt Sozialhilfe in Frage.</p>
+          <p class="unter">Ohne Schweizer Pass: vorher beraten lassen, der Bezug kann Folgen für die Bewilligung haben.</p>
         </div>`,
         kurzAbsatz: 1,
         wege: ['praemienverbilligung', 'was-steht-mir-zu'],
@@ -435,6 +437,7 @@ export const SEITEN = [
         absaetze: [
           'Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.',
           'Das ist der Grund, warum eine Anmeldung oft mit vielen Fragen zu ganz anderen Leistungen beginnt. Es geht nicht um Misstrauen, sondern um die gesetzliche Reihenfolge.',
+          'Ohne Schweizer Pass kann der Bezug von Sozialhilfe Folgen für den Aufenthalt haben. Mit einer Aufenthalts- oder Kurzaufenthaltsbewilligung (B, L) kann er ein Grund sein, die Bewilligung zu widerrufen; mit einer Niederlassungsbewilligung (C), wenn der Bezug dauerhaft und in erheblichem Mass erfolgt (AIG Art. 62 Abs. 1 Bst. e, Art. 63 Abs. 1 Bst. c). Mit Ausweis F kann er ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren (AIG Art. 85c Abs. 1 Bst. c, Art. 84 Abs. 5). Für Staatsangehörige von EU/EFTA-Staaten gelten zum Teil andere Regeln. Lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten. Unabhängig vom Aufenthaltsstatus haben Sie in einer Notlage Anspruch auf das Nötigste zum Leben (BV Art. 12, weiter unten).',
         ],
       },
       {
@@ -442,13 +445,13 @@ export const SEITEN = [
         bild: `<ol class="zeit kern" role="list" aria-label="Was gilt">
           <li><span class="jahr">SKOS-Richtlinien</span><span class="was">Empfehlungen</span></li>
           <li><span class="jahr">Kantonales Recht</span><span class="was">macht sie verbindlich, soweit es sie übernimmt</span></li>
-          <li><span class="jahr">Verfügung</span><span class="was">was in Ihrem Fall gilt</span></li>
+          <li><span class="jahr">Verfügung</span><span class="was">der schriftliche Entscheid: was in Ihrem Fall gilt</span></li>
         </ol>`,
         kurzAbsatz: 1,
         wege: ['kantone-im-vergleich'],
         titel: 'Die SKOS-Richtlinien sind Empfehlungen, nicht Gesetz',
         absaetze: [
-          'Das ist der meistübersehene Punkt. Die Richtlinien der Schweizerischen Konferenz für Sozialhilfe (SKOS) sind <strong>Empfehlungen</strong>. Verbindlich werden sie erst, soweit ein Kanton sie in sein eigenes Recht übernimmt — und das tun die Kantone in unterschiedlichem Umfang.',
+          'Dieser Punkt wird oft verwechselt. Die Richtlinien der Schweizerischen Konferenz für Sozialhilfe (SKOS) sind <strong>Empfehlungen</strong>. Verbindlich werden sie erst, soweit ein Kanton sie in sein eigenes Recht übernimmt — und das tun die Kantone in unterschiedlichem Umfang.',
           'Praktisch bedeutet das: Ein SKOS-Rechner gibt eine gute erste Orientierung, aber er ist keine Zusage. Was in Ihrem Fall gilt, steht im kantonalen Sozialhilfegesetz und in der Verfügung der zuständigen Stelle.',
         ],
       },
@@ -485,7 +488,7 @@ export const SEITEN = [
     ],
     faq: [
       {
-        frage: 'Wie viel Sozialhilfe steht mir zu?',
+        frage: 'Wie wird Sozialhilfe bemessen?',
         antwort:
           'Das bemisst sich nach Wohnort, Haushaltsgrösse, Einkommen, Vermögen und den tatsächlichen Wohn- und Gesundheitskosten — und es richtet sich nach kantonalem Recht. Eine allgemein gültige Zahl gibt es nicht. Eine provisorische Orientierung geben Sozialhilferechner; verbindlich ist die Verfügung der zuständigen Stelle.',
       },
@@ -502,7 +505,17 @@ export const SEITEN = [
       {
         frage: 'Was ist der Unterschied zu Ergänzungsleistungen?',
         antwort:
-          'Ergänzungsleistungen (EL) gehören zur ersten Säule und kommen in der Regel dann in Frage, wenn eine Leistung der AHV oder IV den Existenzbedarf nicht deckt. Sie sind bundesrechtlich geregelt und keine Sozialhilfe. Ein Anspruch auf EL geht der Sozialhilfe vor.',
+          'Ergänzungsleistungen (EL) gehören zur ersten Säule und kommen in der Regel dann in Frage, wenn eine Leistung der AHV oder IV den Existenzbedarf, also das Nötigste zum Leben, nicht deckt. Sie sind bundesrechtlich geregelt und keine Sozialhilfe. Ein Anspruch auf EL geht der Sozialhilfe vor.',
+      },
+      {
+        frage: 'Hat Sozialhilfe Folgen für meine Aufenthaltsbewilligung?',
+        antwort:
+          'Ohne Schweizer Pass kann sie welche haben. Mit Ausweis B oder L kann der Bezug ein Grund sein, die Bewilligung zu widerrufen, mit Ausweis C bei dauerhaftem Bezug in erheblichem Mass (AIG Art. 62 Abs. 1 Bst. e, Art. 63 Abs. 1 Bst. c). Mit Ausweis F kann er ein späteres Gesuch um Familiennachzug oder um eine Aufenthaltsbewilligung erschweren (AIG Art. 85c Abs. 1 Bst. c, Art. 84 Abs. 5). Mit Ausweis N oder S und mit Ausweis F in den ersten sieben Jahren nach der Einreise ruht zudem die Prämienverbilligung, solange Sozialhilfe bezogen wird (AsylG Art. 82a Abs. 7, AsylV 2 Art. 5b). Lassen Sie sich vorher bei einer Beratungsstelle oder beim Sozialdienst beraten.',
+      },
+      {
+        frage: 'Muss ich Sozialhilfe zurückzahlen?',
+        antwort:
+          'Ob und wann, regelt der Kanton — etwa wenn später eine Erbschaft oder ein grösseres Vermögen dazukommt. Ausserdem können Verwandte in gerader Linie, etwa Eltern, Kinder, Grosseltern und Enkel, zur Unterstützung verpflichtet werden, wenn sie in günstigen Verhältnissen leben (ZGB Art. 328 Abs. 1). Was in Ihrem Fall gilt, sagt die zuständige Stelle.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -534,6 +547,7 @@ export const SEITEN = [
         absaetze: [
           'Die direkte Bundessteuer richtet sich nach dem Bundesgesetz über die direkte Bundessteuer (DBG) und kennt für die ganze Schweiz denselben Tarif. Sie unterscheidet nach Zivilstand und Haushalt, aber nicht nach Wohnort.',
           'Erhoben wird sie trotzdem vom Kanton — die Steuererklärung ist dieselbe.',
+          'Anders bei der <strong>Quellensteuer</strong>: Wer ohne Niederlassungsbewilligung in der Schweiz arbeitet, etwa mit Ausweis B, dem zieht der Arbeitgeber die Steuer direkt vom Lohn ab (DBG Art. 83). Liegt der Bruttolohn unter einer gesetzlichen Grenze, gibt es in der Regel keine Steuererklärung. Weitere Abzüge, etwa für die Säule 3a, gibt es dann nur über eine nachträgliche ordentliche Veranlagung; sie muss bis zum 31. März des Folgejahres beantragt werden, beim Wegzug bis zur Abmeldung (DBG Art. 89a Abs. 3). Liegt er darüber, wird von Amtes wegen ordentlich veranlagt (DBG Art. 89, QStV Art. 9).',
         ],
       },
       {
@@ -570,7 +584,7 @@ export const SEITEN = [
         titel: 'Was vom Einkommen abgezogen wird',
         absaetze: [
           'Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.',
-          'Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Hier geht oft Geld verloren — nicht durch falsche Angaben, sondern durch Abzüge, die niemand eingetragen hat.',
+          'Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Welche Abzüge möglich sind und welche Belege es braucht, steht in der Wegleitung Ihres Kantons.',
         ],
       },
     ],

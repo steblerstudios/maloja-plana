@@ -10,9 +10,11 @@
 //   · Gewählte Bereiche erscheinen als Sätze (Art. 360 Abs. 2); ohne Bereich eine Lücke.
 //   · Entschädigung wie Art. 366: unentgeltlich (Spesen werden ohnehin ersetzt) oder angemessen.
 //   · Nichts erfunden: fehlende Angaben werden zu Lücken, kein Datum vorbelegt.
+//   · Keine Linien für Ort, Datum und Unterschrift (Kapitel 7, L1, 10.11.2026): Ein unterschriebener Ausdruck wäre
+//     formungültig (Art. 361 Abs. 2). Statt der Linien ein Satz: von Hand auf die Abschrift, nicht auf dieses Blatt.
 
 import { escapeHtml as esc } from '../utils/helpers.js';
-import { OFFEN, LUECKE, leer, datumCH, druckSeite, druckLinie } from './patientenverfuegung.js';
+import { OFFEN, LUECKE, leer, datumCH, druckSeite } from './patientenverfuegung.js';
 
 const PERSON_FELDER = ['name', 'beziehung', 'geburt', 'adresse'];
 
@@ -78,8 +80,7 @@ export function vorlageHtml(antworten, daten, t, lang = 'de') {
 <div class="va-abschreiben">
 <h1>${esc(t('va.doc.titel'))}</h1>
 ${v.saetze.map((s) => `<p>${esc(s)}</p>`).join('\n')}
-<div class="pv-linien">${druckLinie(t('va.doc.ortDatum'))}</div>
-<div class="pv-linien">${druckLinie(t('va.doc.unterschrift'))}</div>
+<p class="va-hand">${esc(t('va.doc.handschrift'))}</p>
 </div>
 </div>`;
   return druckSeite({
