@@ -235,3 +235,7 @@ am Fedlex-Volltext (Stand 1.10.2026) bestätigt, vier Präzisierungen übernomme
 rm-Rechtsseite sagt damit vorerst weniger als die anderen vier; neue Sätze erst mit Muttersprachler-Lektüre) · S9 «aiuto sociale» bleibt, die App sagt es 69-mal (Befund berichtigt) ·
 Gestaltung A–D (Zweig 2) · L7, U6/U7, S8, E2 (Startseiten-Stapel) · E1 (mit der Sprachfreigabe).
 🛑 **Nach dem Deploy von Hand:** den neuen Text von `public/wartung.html` ins Infomaniak-Panel kopieren.
+⏸️ **11.11.: Zweig 2 (Gestaltung A–D des Rahmens) wartet** (Stebler Studios: «Nach Merge #847/#848»). Grund: #847 und
+#848 (Gruppe D) ändern dieselben drei Generator-Dateien (`build-seiten.mjs`, `seiten-inhalt.mjs`, `seiten-sprachen.mjs`),
+A–D greift in deren gemeinsamen Stil-Block. Nach beiden Merges frisch von `main` bauen, vorher im Browser ansehen, Brand
+Book im selben Zweig nachführen. Auslöser: Stebler Studios meldet die Merges.
