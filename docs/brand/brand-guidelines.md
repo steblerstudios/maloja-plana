@@ -425,6 +425,55 @@ Richtung «Stationen sammeln» (Vorbild «Collecting Stamps on Mt. Fuji»): nur 
 
 Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Punkte A–E nach Skizze; danach «Ja, alles so» zu A–F: Hero und Reise vereint, Laptop + Telefon, Drehen statt Zoom, Pinselstrich quer, Brand Book auf der ganzen Seite; dann «Alle, A bis E» zu Kopf, Leiste und Fuss nach der Durchsicht der eigenen Projekte, `stebler-studios/analysen/maloja-startseite-abschauen-2026-11-10.md`).
 
+### 7f. Formenlehre — die Frage wählt die Form *(11.11.2026)*
+
+Stebler Studios 11.11.2026 («und die instrumenten logik»), aus der Matrix vom 10.11.
+(`stebler-studios/analysen/2026-11-10-instrumente-matrix-konzept.md` §6). Gilt für alle Instrumente.
+
+1. **Zwei Familien.** Ein **Instrument** zeigt einen Stand: eine Zahl und ihre Lage. Es gibt es in drei Grössen
+   (64 / 128 / 256, §7b). Ein **Diagramm** zeigt einen Zusammenhang. Es steht in voller Breite, und sein Spiegel
+   ist ein Instrument aus derselben Rechnung.
+2. **Die Frage wählt die Form, der Ort nur die Grösse.**
+
+   | Frage-Art | Form |
+   |---|---|
+   | Teile | Teile-Bild |
+   | Anteil | Ring |
+   | Vorrat | Gefäss |
+   | Verbrauch bis Grenze | Balken mit Endstrich |
+   | Lage | Barometer |
+   | Termin | Kalenderblatt |
+   | Dauer | Weg mit Marke |
+   | Zusammensetzung | gestapelter Balken |
+   | Entscheid | Kreuz |
+   | Richtung | Kompass |
+   | Ort | Karte |
+
+3. **Ein Bild aus dem Lebensbereich**, wo die Frage typisch für den Bereich ist; **die gemeinsame Form**, wo die
+   Frage überall gleich ist. Beispiele für Bereichsbilder: Netz-Schild (Teile), Drittel-Haus (Anteil),
+   Häuserzeile (Lage, mit denselben Marken wie das Barometer), Tank (Vorrat).
+4. **Ein Bild, eine Bedeutung.** Eine Form trägt nie zwei Frage-Arten.
+5. **Eine Rechnung je Wahrheit.** Jedes Instrument nennt eine Rechenfunktion, und Kachel, Kapitel und Werkzeug
+   rufen sie auf.
+6. **Jedes Instrument hat ein Zuhause:** das eigene Kapitel, gross.
+7. **Ruhig.** Keine Ampel. Die Farbe ist die des Lebensbereichs, Rosé gibt es nur für das «!» an einer harten
+   Schwelle.
+
+**Register und Wächter.** `docs/brand/instrumente-register.json` nennt für jedes Instrument der Kapitelzeile:
+Frage-Art, Form, Rechnung und Zuhause. Der Wächter `src/__tests__/instrumenteFormenlehre.test.js` liest
+`INSTRUMENTE_JE_KAPITEL` aus dem Code. Er wird rot,
+- wenn ein Instrument keinen Eintrag hat,
+- wenn eine Form nicht zur Frage passt,
+- wenn eine Form zwei Frage-Arten trägt,
+- wenn eine genannte Rechnung fehlt oder die Kachel sie nicht aufruft.
+
+Bekannte Abweichungen stehen im Register unter `offen`, mit einer **Sperrklinke**: Die Listen dürfen nur kürzer
+werden. Stand 11.11.:
+- 5 Formen weichen ab: Dienstjahre, Ferien, Pensum, Steuer-Säule (B-F4), Mini-Kreuz (B-F5).
+- 2 Instrumente rechnen noch inline: Ferien, Pensum.
+- 1 Zuhause zeigt ein anderes Bild als die Kachel: Bereit (B-F1).
+- 9 Instrumente haben kein Zuhause.
+
 ## 8. Calm-UX-Prinzipien
 
 - **Entschlacken via Disclosure/Dropdown — nie löschen.** Die Bergketten-Landkarte ist Identität;
