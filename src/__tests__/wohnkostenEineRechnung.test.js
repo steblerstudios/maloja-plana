@@ -102,7 +102,7 @@ describe('Wohnkosten · Wächter: keine zweite Drittel-Rechnung', () => {
       const q = lies(f);
       // Über das Bauteil des Kapitels (re-export aus data/wohnkosten.js), damit kein eigener Baustein
       // entsteht, dessen Name im Startbündel stünde.
-      expect(q).toMatch(/import \{ wohnkostenRechnung, drittelGrenzeMiete \} from '\.\.?\/(components\/)?WohnkostenInstrument\.jsx'/);
+      expect(q).toMatch(/import \{ wohnkostenRechnung, drittelGrenzeMiete[^}]*\} from '\.\.?\/(components\/)?WohnkostenInstrument\.jsx'/);
       expect(q).toMatch(/thresholdValue: drittelGrenzeMiete\(/);
     }
   });
