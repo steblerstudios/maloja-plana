@@ -60,6 +60,7 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
       // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
       fillColor: bereichFillColor('wohnen', isDarkMode),
       thresholdValue: drittelGrenzeMiete(r),
+      drittel: r,
     }),
 
     rentSharePct != null && React.createElement('div', { style: { marginTop: space.sm + 'px' } },

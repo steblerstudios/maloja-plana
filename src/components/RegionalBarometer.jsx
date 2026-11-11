@@ -62,7 +62,9 @@ const skala = (regional, national, userValue) => Math.ceil((Math.max(regional, n
 // gestrichelt (= Strich), das Drittel als Linie quer über die Strasse mit «!» (= Schwelle). Höhe = Betrag.
 // Nur für die Miete (Wohnen); Lohn und Prämie bleiben Balken. Texte, Vorlesetext, Farben und Rechnung
 // sind dieselben — nur das Bild wechselt. `maxBreite`: Instrument-Grösse (Brand Book §7b), Standard mittel.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite }) => {
+// `drittel` (11.11.2026): die Wohnkosten-Rechnung (wohnkostenRechnung) — dann ist Ihr Haus in der Häuserzeile das
+// Drittel-Haus klein, und die Drittel-Linie quer über die Strasse entfällt.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel, form, maxBreite, drittel }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year, roomKey } = comparison;
   const ns = 'po.regionalCompare.';
@@ -148,7 +150,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', fontSize: text.sm },
     }, t(k + 'title')),
 
-    form === 'haeuser' ? haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite }) :
+    form === 'haeuser' ? haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel }) :
     // Balken: Füllung (eigener Wert) + Punkt (Region) + Strich (Schweizer Schnitt)
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
@@ -230,7 +232,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     },
       // Füllung in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
       // klar ist: die FÜLLUNG ist dein Wert, der Strich ist der Schweizer Schnitt.
-      React.createElement(LegendenMarke, { form: form === 'haeuser' ? 'haus' : 'fuellung', color: barFill, palette }),
+      React.createElement(LegendenMarke, { form: form === 'haeuser' ? (drittel && drittel.anteil != null ? 'drittelHaus' : 'haus') : 'fuellung', color: barFill, palette }),
       userText
     ),
 
@@ -294,25 +296,45 @@ const hausForm = (x, y, koerper, dach) => React.createElement('g', null,
   React.createElement('rect', { x, y, width: HAUS_B, height: BODEN - y, ...koerper, ...STRICH }),
   React.createElement('path', { d: 'M' + (x - 3) + ' ' + y + 'L' + (x + HAUS_B / 2) + ' ' + (y - DACH) + 'L' + (x + HAUS_B + 3) + ' ' + y + 'Z', ...dach, ...STRICH }),
 );
-function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite }) {
+// Ihr Haus in der Strasse = das Drittel-Haus klein (Stebler Studios 11.11.2026: «dieses Haus in die Stadt … das was
+// heute Ihre Miete ist ersetzen»). Höhe = Ihre Miete (wie bisher), darin die Füllung = Anteil der Wohnkosten am
+// Einkommen und die Drittel-Linie, Rosé nur darüber und nur mit Urteil — dieselbe Rechnung wie das grosse Haus
+// (`drittel` = wohnkostenRechnung). Ohne «!»: zwischen den Häusern ist kein Platz, das «!» steht im grossen Haus.
+const sieDrittelHaus = (x, y, drittel, palette, fuell) => {
+  const h = React.createElement;
+  const hoehe = BODEN - y;
+  const anteil = drittel && drittel.anteil != null ? Math.max(0, Math.min(100, drittel.anteil)) / 100 : null;
+  const urteil = drittel && drittel.anteil != null && !drittel.mitPartner;
+  const linie = urteil && drittel.ueberDrittel ? palette.roseDeep : palette.text;
+  return h('g', { 'data-teil': 'sie-drittel-haus' },
+    anteil > 0 && h('rect', { 'data-teil': 'sie-drittel-fuellung', x, y: BODEN - hoehe * anteil, width: HAUS_B, height: hoehe * anteil, fill: fuell }),
+    anteil != null && h('line', { 'data-teil': 'sie-drittel-linie', x1: x, x2: x + HAUS_B, y1: BODEN - hoehe / 3, y2: BODEN - hoehe / 3, stroke: linie, strokeWidth: 1.5, ...STRICH }),
+    hausForm(x, y, { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: 'none', stroke: palette.text, strokeWidth: 1.5, strokeLinejoin: 'round' }),
+  );
+};
+
+function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, national, pct, barFill, dotColor, hasThreshold, thresholdValue, thresholdBreached, maxBreite, drittel }) {
   const h = React.createElement;
   const oben = (v) => BODEN - Math.max(4, (pct(v) / 100) * HOEHE);
   const strich = STRICH;
   const haus = (x, v, koerper, dach) => hausForm(x, oben(v), koerper, dach);
   const linieY = hasThreshold ? BODEN - (pct(thresholdValue) / 100) * HOEHE : null;
   const schwelleFarbe = thresholdBreached ? palette.roseDeep : palette.text;
+  // Ohne Einkommen kein Anteil: dann bleibt Ihr Haus gefüllt wie bisher (kein leeres Drittel-Haus).
+  const mitDrittel = !!drittel && drittel.anteil != null;
   return h('div', { role: 'img', 'aria-label': ariaLabel, 'data-form': 'haeuser', style: { marginBottom: space.sm + 'px' } },
     h('svg', { viewBox: '0 0 132 90', width: '100%', 'aria-hidden': 'true', focusable: 'false', style: { display: 'block', maxWidth: (maxBreite || INSTRUMENT_GROESSE.mittel) + 'px', height: 'auto', overflow: 'visible' } },
       // Schweiz: gestrichelt, neutral (= Strich)
       haus(HAUS_X.schweiz, national, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
       // Region: Umriss, Dach in der Farbe des Punkts (= Ihre Lage zur Region)
       haus(HAUS_X.region, regional, { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dotColor, stroke: palette.surface, strokeWidth: 1 }),
-      // Sie: gefüllt (= Füllung)
-      hasUser && haus(HAUS_X.sie, userValue, { fill: barFill }, { fill: barFill }),
+      // Sie: das Drittel-Haus klein, wo die Wohnkosten-Rechnung mitkommt; sonst gefüllt (= Füllung)
+      hasUser && (mitDrittel ? sieDrittelHaus(HAUS_X.sie, oben(userValue), drittel, palette, barFill) : haus(HAUS_X.sie, userValue, { fill: barFill }, { fill: barFill })),
       h('line', { x1: 0, x2: 120, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...strich }),
-      // Drittel: Linie quer über die Strasse, «!» am Ende — rose nur, wenn Ihr Haus darüber ragt
-      hasThreshold && h('line', { 'data-teil': 'drittel-linie', x1: 0, x2: 120, y1: linieY, y2: linieY, stroke: schwelleFarbe, strokeWidth: 1.5, strokeDasharray: '5 3', ...strich }),
-      hasThreshold && h('text', { x: 128, y: linieY + 5, textAnchor: 'middle', fontSize: 15, fontWeight: 700, fill: schwelleFarbe }, '!'),
+      // Drittel: Linie quer über die Strasse, «!» am Ende — rose nur, wenn Ihr Haus darüber ragt. Trägt Ihr Haus das
+      // Drittel selbst (`drittel`), fällt die Linie weg; der Satz und das aria-Label bleiben.
+      hasThreshold && !mitDrittel && h('line', { 'data-teil': 'drittel-linie', x1: 0, x2: 120, y1: linieY, y2: linieY, stroke: schwelleFarbe, strokeWidth: 1.5, strokeDasharray: '5 3', ...strich }),
+      hasThreshold && !mitDrittel && h('text', { x: 128, y: linieY + 5, textAnchor: 'middle', fontSize: 15, fontWeight: 700, fill: schwelleFarbe }, '!'),
     ),
   );
 }
@@ -321,7 +343,7 @@ function haeuserzeile({ palette, ariaLabel, hasUser, userValue, regional, nation
 // Wohnen»): dieselben drei Häuser wie im Kapitel — Ihr Haus gefüllt, die Region mit Dach in der Farbe Ihrer
 // Lage (lageZurRegion, wie der Punkt), die Schweiz gestrichelt. Ohne Drittel-Linie: das Drittel trägt die
 // Nachbarkachel (Drittel-Haus). Keine Wörter, die Zahl steht daneben. Ersetzt das kleine Barometer.
-export const HaeuserzeileKlein = ({ palette, comparison, userValue, fillColor }) => {
+export const HaeuserzeileKlein = ({ palette, comparison, userValue, fillColor, drittel }) => {
   if (!comparison) return null;
   const h = React.createElement;
   const { regional, national } = comparison;
@@ -333,7 +355,7 @@ export const HaeuserzeileKlein = ({ palette, comparison, userValue, fillColor })
   return h('svg', { viewBox: '2 12 114 74', width: '100%', 'aria-hidden': 'true', focusable: 'false', 'data-form': 'haeuser-klein', style: { display: 'block', maxWidth: INSTRUMENT_GROESSE.klein + 'px', height: 'auto', overflow: 'visible' } },
     hausForm(HAUS_X.schweiz, oben(national), { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }, { fill: 'none', stroke: palette.mid, strokeWidth: 1.5, strokeDasharray: '3 2' }),
     hausForm(HAUS_X.region, oben(regional), { fill: 'none', stroke: palette.text, strokeWidth: 1.5 }, { fill: dach, stroke: palette.surface, strokeWidth: 1 }),
-    userValue > 0 && hausForm(HAUS_X.sie, oben(userValue), { fill: fuell }, { fill: fuell }),
+    userValue > 0 && (drittel && drittel.anteil != null ? sieDrittelHaus(HAUS_X.sie, oben(userValue), drittel, palette, fuell) : hausForm(HAUS_X.sie, oben(userValue), { fill: fuell }, { fill: fuell })),
     h('line', { x1: 2, x2: 116, y1: BODEN, y2: BODEN, stroke: palette.mid, strokeWidth: 1, ...STRICH }),
   );
 };

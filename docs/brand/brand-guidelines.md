@@ -321,6 +321,12 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
     «einzelne kleine Häuser»). Gefüllt heisst Programm erfasst, leer heisst unklar, nie «gibt es nicht».
   - Eine Rechnung: `mietzinsEinschaetzung`. Kapitel Wohnen gross, Werkzeug «Mietzins» mittel. Wächter:
     `wohnenMietzinsSzene.test.js`.
+  **Ihr Haus in der Strasse** (11.11.2026, Stebler Studios «dieses Haus in die Stadt … das was heute Ihre Miete ist
+  ersetzen», «ja genau»): In der Häuserzeile ist Ihr Haus das **Drittel-Haus klein**. Die Höhe ist Ihre Miete gegen
+  Region und Schweiz, darin die Füllung (Anteil am Einkommen) und die Drittel-Linie, Rosé darüber, ohne «!». Die
+  Drittel-Linie quer über die Strasse entfällt; Satz und aria-Label bleiben. Ohne Einkommen bleibt Ihr Haus gefüllt
+  wie bisher. Gilt in Kapitel, Mietzins, Budget und Kachel (`drittel` = `wohnkostenRechnung`). Wächter:
+  `wohnenStrasse.test.js`.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder
   klein — `DrittelHaus` mit `groesse: 'klein'` und `HaeuserzeileKlein` (drei Häuser ohne Drittel-Linie; das Drittel
   trägt die Nachbarkachel). Der Drittel-Balken klein und das Barometer klein fallen weg. Wächter: `instrumenteWohnen.test.js`.

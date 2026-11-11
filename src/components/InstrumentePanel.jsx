@@ -471,7 +471,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         mehr: mietHinweise,
       } : {}),
       sub: wohnR.eigentum ? t('instrumente.mieteEigentum') : setup,
-      glyph: mietVergleich ? h(HaeuserzeileKlein, { palette, comparison: mietVergleich, userValue: wohnR.netto, fillColor: wohnFarbe }) : null,
+      glyph: mietVergleich ? h(HaeuserzeileKlein, { palette, comparison: mietVergleich, userValue: wohnR.netto, fillColor: wohnFarbe, drittel: wohnR }) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('wohnen')),
     },
     {
