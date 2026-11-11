@@ -529,7 +529,8 @@ werden. Stand 11.11.:
   Felder `ferienTageJahr`, `ferienTageBezogen`) und Pensum (Uhr mit vier Stundenstrichen · «42 Std.» · gemessen an 40 Std., der Rechenbasis
   des Lohnvergleichs, ab 40 «Vollzeit»). Rechnungen: `dienstLage`, `ferienLage`, `pensumLage`
   (`src/utils/arbeitsverhaeltnis.js`), nie inline in der Anzeige. Im **Kapitel Arbeit** stehen Dienstjahre, Ferien und Pensum direkt unter dem
-  Lohn-Barometer, als **Zuhause gross 256**, je eine Zeile (`zuhause: true`); ein Klick dort springt zum Formular statt ins eigene Kapitel.
+  Lohn-Barometer, als **Zuhause gross 256**, je eine Zeile (`zuhause: true`). Ringe, Sonne und Uhr tragen wie das
+  Lohn-Barometer die Farbe des Lebensbereichs Arbeit (Haselnuss, `bereichFillColor('arbeit')`), nicht Sand; ein Klick dort springt zum Formular statt ins eigene Kapitel.
   **Basis** (drei, Stebler Studios «alle drei»): Ausweis (Kalenderblatt des frühesten Ablaufdatums der Ausweis-
   Dokumente im Lebensordner · «4 Jahre» · «So lange ist Ihr Ausweis noch gültig»; abgelaufen rot), Referenzalter
   (Lebensweg · «30 Jahre» · «So lange bis zum AHV-Referenzalter (65)», Regel `referenzalterMonate`, AHV 21; ohne

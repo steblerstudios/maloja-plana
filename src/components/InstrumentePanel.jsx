@@ -64,21 +64,21 @@ const arbeitSvg = (key, groesse, kinder, extra = {}) => React.createElement('svg
 const ARBEIT_GROSS = ['dienst', 'ferien', 'pensum'];
 const DIENST_RINGE_HOECHSTENS = 10;
 const DIENST_FRISTWECHSEL = [1, 9];
-const miniJahresringe = (palette, jahre, groesse = 'klein') => {
+const miniJahresringe = (palette, jahre, groesse = 'klein', fill = palette.sand) => {
   const h = React.createElement;
   const n = Math.max(0, Math.min(DIENST_RINGE_HOECHSTENS, jahre));
   const r = (i) => 1.8 + i * 1.65;
   const ringe = Array.from({ length: n }, (_, k) => {
     const i = k + 1, wechsel = DIENST_FRISTWECHSEL.includes(i);
-    return h('circle', { key: 'r' + i, 'data-ring': i, ...(wechsel ? { 'data-fristwechsel': i, 'data-erreicht': 'ja' } : {}), cx: 30, cy: 20, r: r(i), fill: 'none', stroke: palette.sand, strokeWidth: wechsel ? 2.2 : 0.9 });
+    return h('circle', { key: 'r' + i, 'data-ring': i, ...(wechsel ? { 'data-fristwechsel': i, 'data-erreicht': 'ja' } : {}), cx: 30, cy: 20, r: r(i), fill: 'none', stroke: fill, strokeWidth: wechsel ? 2.2 : 0.9 });
   });
   const hinweise = DIENST_FRISTWECHSEL.filter((i) => i > n).map((i) =>
     h('circle', { key: 'h' + i, 'data-fristwechsel': i, 'data-erreicht': 'nein', cx: 30, cy: 20, r: r(i), fill: 'none', stroke: palette.border, strokeWidth: 1.2, strokeDasharray: '1.6 1.6' }));
-  return arbeitSvg('dienst', groesse, [...hinweise, h('circle', { key: 'kern', cx: 30, cy: 20, r: 1.8, fill: palette.sand }), ...ringe]);
+  return arbeitSvg('dienst', groesse, [...hinweise, h('circle', { key: 'kern', cx: 30, cy: 20, r: 1.8, fill: fill }), ...ringe]);
 };
 
 // Pensum: Uhr mit vier Stundenstrichen, gefüllt im Verhältnis zur Vollzeit-Basis des Lohnvergleichs (pensumLage).
-const miniPensum = (palette, anteil, groesse = 'klein') => {
+const miniPensum = (palette, anteil, groesse = 'klein', fill = palette.sand) => {
   const h = React.createElement;
   const a = Math.max(0, Math.min(1, anteil));
   const w = a * 2 * Math.PI, x = 30 + 15 * Math.sin(w), y = 20 - 15 * Math.cos(w);
@@ -88,8 +88,8 @@ const miniPensum = (palette, anteil, groesse = 'klein') => {
   });
   return arbeitSvg('pensum', groesse, [
     h('circle', { key: 'blatt', cx: 30, cy: 20, r: 15, fill: palette.border }),
-    a >= 1 ? h('circle', { key: 'voll', cx: 30, cy: 20, r: 15, fill: palette.sand })
-      : a > 0 && h('path', { key: 'teil', d: 'M30 20 L30 5 A15 15 0 ' + (a > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: palette.sand }),
+    a >= 1 ? h('circle', { key: 'voll', cx: 30, cy: 20, r: 15, fill: fill })
+      : a > 0 && h('path', { key: 'teil', d: 'M30 20 L30 5 A15 15 0 ' + (a > 0.5 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Z', fill: fill }),
     ...striche,
   ], { 'data-pensum-anteil': String(Math.round(a * 100) / 100) });
 };
@@ -97,14 +97,14 @@ const miniPensum = (palette, anteil, groesse = 'klein') => {
 // Ferien: Sonne mit 12 Strahlen. Bezogene Tage färben die Strahlen grau, von oben im Uhrzeigersinn (ferienLage).
 // Ohne erfassten Bezug bleiben alle Strahlen hell — kein erfundener Stand.
 const FERIEN_STRAHLEN = 12;
-const miniFerien = (palette, anteilBezogen, groesse = 'klein') => {
+const miniFerien = (palette, anteilBezogen, groesse = 'klein', fill = palette.sand) => {
   const h = React.createElement;
   const grau = anteilBezogen == null ? 0 : Math.round(Math.max(0, Math.min(1, anteilBezogen)) * FERIEN_STRAHLEN);
   const strahlen = Array.from({ length: FERIEN_STRAHLEN }, (_, i) => {
     const w = -Math.PI / 2 + i * 2 * Math.PI / FERIEN_STRAHLEN, c = Math.cos(w), sn = Math.sin(w), bezogen = i < grau;
-    return h('line', { key: 's' + i, 'data-strahl': i, 'data-bezogen': bezogen ? 'ja' : 'nein', x1: 30 + 11 * c, y1: 20 + 11 * sn, x2: 30 + 17 * c, y2: 20 + 17 * sn, stroke: bezogen ? palette.border : palette.sand, strokeWidth: 2, strokeLinecap: 'round' });
+    return h('line', { key: 's' + i, 'data-strahl': i, 'data-bezogen': bezogen ? 'ja' : 'nein', x1: 30 + 11 * c, y1: 20 + 11 * sn, x2: 30 + 17 * c, y2: 20 + 17 * sn, stroke: bezogen ? palette.border : fill, strokeWidth: 2, strokeLinecap: 'round' });
   });
-  return arbeitSvg('ferien', groesse, [...strahlen, h('circle', { key: 'kern', cx: 30, cy: 20, r: 8, fill: palette.sand })]);
+  return arbeitSvg('ferien', groesse, [...strahlen, h('circle', { key: 'kern', cx: 30, cy: 20, r: 8, fill: fill })]);
 };
 
 // Referenzalter klein (10.11.2026): ein Lebensweg von der Geburt bis zum Referenzalter, Punkt = heute, Fahne am Ziel.
@@ -181,6 +181,8 @@ const miniKreuz = (palette) => {
 export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false, nur = null, zuhause = false, dokumente = [], grundordnungStand = null }) => {
   // Zuhause (Kapitel Arbeit, 11.11.2026): die Arbeit-Bilder gross 256, je eine ganze Zeile. Nur diese drei kennen die Grösse.
   const arbeitGroesse = zuhause ? 'gross' : 'klein';
+  // Farbe = Lebensbereich Arbeit (Haselnuss), wie das Lohn-Barometer; vorher Sand (Stebler Studios 11.11.: «andere farb»).
+  const arbeitFarbe = bereichFillColor('arbeit', palette.bg === DARK_PALETTE.bg) || palette.sand;
   const h = React.createElement;
   const v = data?.versicherungen || {};
   // Dieselbe Rechnung wie das Netz-Schild im Kapitel: eingetragen = Summe der gefüllten Stufen über alle Teile.
@@ -380,7 +382,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
             ...(dienst.monate < 3 ? [t('instrumente.dienstProbezeitLaenger')] : [])],
       } : {}),
       sub: setup,
-      glyph: dienst ? miniJahresringe(palette, dienst.jahre, arbeitGroesse) : null,
+      glyph: dienst ? miniJahresringe(palette, dienst.jahre, arbeitGroesse, arbeitFarbe) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
@@ -394,7 +396,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
           : t('instrumente.pensumAnteil', { pct: pensum.prozent, basis: pensum.basis })],
       } : {}),
       sub: setup,
-      glyph: pensum ? miniPensum(palette, pensum.anteil, arbeitGroesse) : null,
+      glyph: pensum ? miniPensum(palette, pensum.anteil, arbeitGroesse, arbeitFarbe) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
@@ -407,7 +409,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
         mehr: [t('instrumente.ferienMinimum')],
       } : {}),
       sub: setup,
-      glyph: ferien ? miniFerien(palette, ferien.anteilBezogen, arbeitGroesse) : null,
+      glyph: ferien ? miniFerien(palette, ferien.anteilBezogen, arbeitGroesse, arbeitFarbe) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {

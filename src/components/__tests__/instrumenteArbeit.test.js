@@ -190,3 +190,16 @@ describe('Zuhause Arbeit: dieselben Bilder gross (256), Kachel klein (64)', () =
     expect(quelle('../../ChapterView.jsx')).toMatch(/nur: \['dienst', 'ferien', 'pensum'\], zuhause: true/);
   });
 });
+
+describe('Farbe: Ringe, Sonne und Uhr in der Farbe des Lebensbereichs Arbeit (Haselnuss), wie das Lohn-Barometer', () => {
+  it('hell: Haselnuss, kein Sand', async () => {
+    const { bereichFillColor } = await import('../../data/lebensbereiche.js');
+    const haselnuss = bereichFillColor('arbeit', false);
+    const html = zeichne(arbeit);
+    for (const k of ['dienst', 'ferien', 'pensum']) {
+      const svg = svgVon(html, k);
+      expect(svg, k).toContain(haselnuss);
+      expect(svg, k).not.toContain(LIGHT_PALETTE.sand);
+    }
+  });
+});
