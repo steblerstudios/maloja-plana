@@ -12,9 +12,7 @@ import { GAENGE, gangErledigt, gespeicherteHaken } from '../utils/behoerdenGaeng
 import { bereitschaft, BereitRingKlein } from './NotfallImKapitel.jsx';
 import { lohnLage, LohnKlein } from './LohnEinordnung.jsx';
 import { LOHN_REFERENZ } from '../data/lohnEinordnung.js';
-import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../data/branchenLohn.js';
-import { wochenstundenUnplausibel } from '../data/lohnCheck.js';
-import { dienstLage } from '../utils/arbeitsverhaeltnis.js';
+import { dienstLage, ferienLage, pensumLage } from '../utils/arbeitsverhaeltnis.js';
 import { bisReferenzalter } from '../utils/referenzalterAbstand.js';
 import { istLernend } from '../utils/anstellung.js';
 import { berechneFranchise } from '../data/kvgLeistungen.js';
@@ -264,13 +262,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   // Arbeit — Dienstjahre (OR 335b/335c, utils/arbeitsverhaeltnis.js) und Pensum (Wochenstunden wie das Lohn-Barometer).
   const arbeit = data?.ausbildung || {};
   const dienst = dienstLage(arbeit.employmentStart);
-  const stunden = Number(String(arbeit.workHoursPerWeek ?? '').replace(',', '.'));
-  const stundenOk = stunden > 0 && !wochenstundenUnplausibel(stunden);
-  // Ferien (neue Felder 10.11.2026): Anspruch pro Jahr und im laufenden Jahr bezogen.
-  const tageZahl = (v) => { const n = Number(String(v ?? '').replace(',', '.').trim()); return String(v ?? '').trim() !== '' && Number.isFinite(n) && n >= 0 ? n : null; };
-  const ferienJahr = tageZahl(arbeit.ferienTageJahr);
-  const ferienBezogen = tageZahl(arbeit.ferienTageBezogen);
-  const ferienOffen = ferienJahr > 0 && ferienBezogen != null ? Math.max(0, ferienJahr - ferienBezogen) : null;
+  // Pensum und Ferien (neue Felder 10.11.2026): je eine Rechnung in utils/arbeitsverhaeltnis.js (11.11.2026).
+  const pensum = pensumLage(arbeit.workHoursPerWeek);
+  const ferien = ferienLage(arbeit.ferienTageJahr, arbeit.ferienTageBezogen);
 
   // Basis (10.11.2026, Stebler Studios «alle drei»): Ausweis aus dem Lebensordner (Dokument type 'id' mit Ablaufdatum),
   // Referenzalter aus dem Geburtsdatum (referenzalterMonate, AHV 21), Grundordnung wie die Fortschritts-Karte (grundordnung).
@@ -366,29 +360,29 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
     {
       key: 'pensum', name: t('instrumente.pensum'),
-      ...(stundenOk ? {
-        zahl: { wert: zahl(stunden, { hoechstens: 1 }), einheit: t('instrumente.stunden') },
+      ...(pensum ? {
+        zahl: { wert: zahl(pensum.stunden, { hoechstens: 1 }), einheit: t('instrumente.stunden') },
         satz: t('instrumente.pensumSatz'),
         // Fachprüfung 10.11.2026: 40 Std. ist die Rechenbasis des Lohnvergleichs (BFS), nicht «die» Vollzeit — ab 100 % «Vollzeit».
-        mehr: [stunden >= LSE_VOLLZEIT_STUNDEN_WOCHE
-          ? t('instrumente.pensumVollzeit', { basis: LSE_VOLLZEIT_STUNDEN_WOCHE })
-          : t('instrumente.pensumAnteil', { pct: Math.round(stunden / LSE_VOLLZEIT_STUNDEN_WOCHE * 100), basis: LSE_VOLLZEIT_STUNDEN_WOCHE })],
+        mehr: [pensum.vollzeit
+          ? t('instrumente.pensumVollzeit', { basis: pensum.basis })
+          : t('instrumente.pensumAnteil', { pct: pensum.prozent, basis: pensum.basis })],
       } : {}),
       sub: setup,
-      glyph: stundenOk ? miniPensum(palette, stunden / LSE_VOLLZEIT_STUNDEN_WOCHE) : null,
+      glyph: pensum ? miniPensum(palette, pensum.anteil) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
       key: 'ferien', name: t('instrumente.ferien'),
-      ...(ferienJahr > 0 ? {
-        zahl: ferienOffen != null
-          ? { wert: zahl(ferienOffen, { hoechstens: 1 }), einheit: t(ferienOffen === 1 ? 'instrumente.tageEins' : 'instrumente.tage') }
-          : { wert: zahl(ferienJahr, { hoechstens: 1 }), einheit: t('instrumente.tage') },
-        satz: t(ferienOffen != null ? 'instrumente.ferienOffenSatz' : 'instrumente.ferienJahrSatz'),
+      ...(ferien ? {
+        zahl: ferien.offen != null
+          ? { wert: zahl(ferien.offen, { hoechstens: 1 }), einheit: t(ferien.offen === 1 ? 'instrumente.tageEins' : 'instrumente.tage') }
+          : { wert: zahl(ferien.jahr, { hoechstens: 1 }), einheit: t('instrumente.tage') },
+        satz: t(ferien.offen != null ? 'instrumente.ferienOffenSatz' : 'instrumente.ferienJahrSatz'),
         mehr: [t('instrumente.ferienMinimum')],
       } : {}),
       sub: setup,
-      glyph: ferienJahr > 0 ? miniFerien(palette, ferienOffen != null ? ferienOffen / ferienJahr : 1) : null,
+      glyph: ferien ? miniFerien(palette, ferien.anteilOffen ?? 1) : null,
       onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('ausbildung')),
     },
     {
