@@ -223,5 +223,11 @@ siebenmal neu entschieden werden:
    Wächter `gruppeCVertrauen.test.js`, rechts-pruefer mit DSG-Volltext (Art. 25, Fassung 1.9.2023). Nicht im Browser
    angesehen (alle Server-Plätze belegt). **Offen bei Stebler Studios:** neuen Beta-Code wählen (der alte steht in
    der git-Historie), Deploy.
+   ⏸️ **Restrunde 11.11. abends: nach dem nächsten Deploy** (Stebler Studios: «halte diese situation zu erst mal so
+   fest … nach dem nächsten deploy wieder auf dieses dokument zurück»; Entscheidblatt
+   `stebler-studios/analysen/maloja-gruppen-rest-2026-11-11/`). Empfohlen und dort wieder aufzunehmen: den neuen
+   Beta-Code setzt Stebler Studios selbst (nur der Fingerabdruck ins Repo, der Code nie in einen Chat); T1
+   Teilen-Empfang am echten Android-Teilen messen und T3 Ableitung (neues Dateiformat, alte Sicherungen lesbar)
+   später; Impressum-Anschrift — Postfach eintragen oder bis zur Antwort auf F2a warten (gleich wie Gruppe E, L1).
 
 Was technisch nur aufräumt (G9, A2–A9, T4), kann gebündelt in einem eigenen Zweig laufen, ohne Gestaltungsentscheid.
