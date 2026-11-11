@@ -4,6 +4,7 @@ import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
+import { zahl } from '../utils/geld.js';
 import { wohnkostenRechnung, drittelGrenzeMiete } from './WohnkostenInstrument.jsx'; // Quelle: data/wohnkosten.js
 
 // „Wo steht Ihre Miete?" — regionaler BFS-Vergleich + Wohnkostenquote.
@@ -64,6 +65,10 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
     }),
 
     rentSharePct != null && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+      // Regel «Zahl» (Stebler Studios 11.11.2026, Matrix §10): die Hauptzahl gross wie auf der Kachel und im Kapitel.
+      React.createElement('div', { 'data-instrument-zahl': 'wohnkosten', style: { fontSize: text['2xl'], fontWeight: weight.semi, lineHeight: 1.1, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+        // Gleiche Schreibweise wie Kachel und Kapitel: knapp über einem Drittel eine Stelle, sonst ganz.
+        zahl(r.anteil, { hoechstens: r.ueberDrittel && Math.round(r.anteil) === 33 ? 1 : 0 }) + ' %'),
       // Kein inline-„!" — das sitzt auf dem Balken. Hier nur die lesbare Deep-Variante.
       React.createElement('div', {
         style: { fontSize: text.sm, color: r.ueberDrittel && !r.mitPartner ? palette.goldDeep : palette.text, lineHeight: leading.normal },

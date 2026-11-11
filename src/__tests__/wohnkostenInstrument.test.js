@@ -229,11 +229,10 @@ describe('Kapitel Wohnen · Nachzug Fachprüfung', () => {
     expect(i18nIt.po.regionalCompare.rent.source).toMatch(/rilevazione strutturale sugli affitti/);
   });
 
-  // Seit 11.11.2026 (Skizze B) stehen im Kapitel die Beträge direkt unter den Häusern statt in Legenden-Zeilen.
-  it('Beträge unter den Häusern brechen nicht in sich um', () => {
+  // Seit 11.11.2026 (Matrix §10, Regel «Zahl»): unter dem Vergleichshaus die Lage gross, darunter Ihr Betrag in einer Zeile.
+  it('Ihr Betrag unter dem Vergleichshaus bricht nicht in sich um', () => {
     const html = render(profil().wohnen, profil());
-    const b = html.slice(html.indexOf('data-teil="strasse-betraege"'));
-    expect((b.match(/white-space:nowrap/g) || []).length).toBeGreaterThanOrEqual(3);
+    expect(html).toMatch(/data-teil="strasse-betrag"[^>]*white-space:nowrap/);
   });
 });
 
