@@ -6434,6 +6434,11 @@ export default {
     objSub: { wohnen: 'Arriving & living', arbeit: 'Work & income', familie: 'Family & relationship', gesundheit: 'Health & insurance', alter: 'Age & pension', abschied: 'Farewell', geld: 'Money & taxes' },
     w: { digitaleordnung: 'Digital order', selbstmahnen: 'Someone owes me money', bestattung: 'Record funeral wishes', mahnung: 'Payment reminder received', dienst: 'Military or civilian service', volljaehrig: 'Turning 18', lehre: 'Starting an apprenticeship', betreibungsauszug: 'Ordering a debt enforcement extract', ausweis: 'Passport or identity card', wegzug: 'Moving abroad', adoption: 'Adoption', zusammenziehen: 'Moving in together unmarried', ergaenzungsleistungen: 'Applying for supplementary benefits', vorsorgeauftrag: 'Advance care directive & patient decree', einbuergerung: 'Naturalisation', aussteuerung: 'Benefits exhausted', quellensteuer: 'Withholding tax', wohnunggekuendigt: 'Flat notice received', umzug: 'Moving', neuch: 'New to Switzerland', bewilligung: 'Residence & permit', mietzins: 'Check rent subsidies', fuehrerausweis: 'Driving licence', asyl: 'Asylum & protection', job: 'First job', stelleweg: 'Job loss', selbst: 'Becoming self-employed', betreibung: 'Payment order received', stipendien: 'Education & grants', heirat: 'Marriage', geburt: 'Birth', trennung: 'Separation', unfall: 'Illness or accident', kkwechsel: 'Changing health insurer', kkerst: 'Health insurance for the first time', zusatz: 'Switch supplementary insurance', iv: 'Disability (IV)', pension: 'Retirement', pflege: 'When care is needed', todesfall: 'Death of a loved one', organ: 'Organ donation' },
   },
+  // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
+  thermometer: {
+    franchise: 'Deductible',
+    selbstbehalt: 'Co-payment',
+  },
   instrumente: {
     title: 'Your instruments',
     intro: 'Four calm self-checks at a glance — tap one.',

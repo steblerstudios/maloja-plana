@@ -6408,6 +6408,11 @@ export default {
     objSub: { wohnen: 'Arrivare & abitare', arbeit: 'Lavoro & reddito', familie: 'Famiglia & relazione', gesundheit: 'Salute & assicurazione', alter: 'Età & previdenza', abschied: 'Congedo', geld: 'Denaro & imposte' },
     w: { digitaleordnung: 'Ordine digitale', selbstmahnen: 'Qualcuno mi deve dei soldi', bestattung: 'Mettere per iscritto i desideri funebri', mahnung: 'Sollecito ricevuto', dienst: 'Servizio militare o civile', volljaehrig: 'Compiere 18 anni', lehre: 'Iniziare un tirocinio', betreibungsauszug: 'Ordinare un estratto esecuzioni', ausweis: 'Passaporto o carta d’identità', wegzug: 'Partenza all’estero', adoption: 'Adozione', zusammenziehen: 'Andare a vivere insieme senza essere sposati', ergaenzungsleistungen: 'Chiedere le prestazioni complementari', vorsorgeauftrag: 'Mandato precauzionale e direttive del paziente', einbuergerung: 'Naturalizzazione', aussteuerung: 'Esaurimento del diritto', quellensteuer: 'Imposta alla fonte', wohnunggekuendigt: 'Disdetta dell’appartamento', umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', mietzins: 'Verificare i sussidi per l’affitto', fuehrerausweis: 'Licenza di condurre', asyl: 'Asilo e protezione', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', betreibung: 'Precetto esecutivo ricevuto', stipendien: 'Formazione & borse di studio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', kkerst: 'Cassa malati per la prima volta', zusatz: 'Cambiare assicurazione complementare', iv: 'Invalidità (AI)', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso', organ: 'Donazione di organi' },
   },
+  // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
+  thermometer: {
+    franchise: 'Franchigia',
+    selbstbehalt: 'Aliquota',
+  },
   instrumente: {
     title: { sie: 'I Suoi strumenti', du: 'I tuoi strumenti' },
     intro: { sie: 'Quattro controlli tranquilli a colpo d\'occhio — ne tocchi uno.', du: 'Quattro controlli tranquilli a colpo d\'occhio — toccane uno.' },

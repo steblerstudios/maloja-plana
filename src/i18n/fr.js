@@ -6433,6 +6433,11 @@ export default {
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Argent & impôts' },
     w: { digitaleordnung: 'Ordre numérique', selbstmahnen: 'On me doit de l’argent', bestattung: 'Consigner ses souhaits funéraires', mahnung: 'Rappel reçu', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier les aides au loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer reçu', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
+  // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
+  thermometer: {
+    franchise: 'Franchise',
+    selbstbehalt: 'Quote-part',
+  },
   instrumente: {
     title: { sie: 'Vos instruments', du: 'Tes instruments' },
     intro: { sie: 'Quatre auto-vérifications en un coup d\'œil — touchez-en une.', du: 'Quatre auto-vérifications en un coup d\'œil — touches-en une.' },

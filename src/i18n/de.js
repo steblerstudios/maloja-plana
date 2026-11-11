@@ -6515,6 +6515,11 @@ export default {
     objSub: { wohnen: 'Ankommen & Wohnen', arbeit: 'Arbeit & Einkommen', familie: 'Familie & Beziehung', gesundheit: 'Gesundheit & Kasse', alter: 'Alter & Vorsorge', abschied: 'Abschied', geld: 'Geld & Steuern' },
     w: { digitaleordnung: 'Digitale Ordnung', selbstmahnen: 'Jemand schuldet mir Geld', bestattung: 'Bestattungswünsche festhalten', mahnung: 'Mahnung erhalten', dienst: 'Militär- oder Zivildienst', volljaehrig: '18 werden', lehre: 'Lehre beginnen', betreibungsauszug: 'Betreibungsauszug bestellen', ausweis: 'Pass oder Identitätskarte', wegzug: 'Wegzug ins Ausland', adoption: 'Adoption', zusammenziehen: 'Zusammenziehen ohne Trauschein', ergaenzungsleistungen: 'Ergänzungsleistungen beantragen', vorsorgeauftrag: 'Vorsorgeauftrag & Patientenverfügung', einbuergerung: 'Einbürgerung', aussteuerung: 'Ausgesteuert', quellensteuer: 'Quellensteuer', wohnunggekuendigt: 'Wohnung gekündigt', umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', mietzins: 'Mietbeiträge prüfen', fuehrerausweis: 'Führerausweis', asyl: 'Asyl & Schutz', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', betreibung: 'Zahlungsbefehl erhalten', stipendien: 'Ausbildung & Stipendien', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', kkerst: 'Krankenkasse zum ersten Mal', zusatz: 'Zusatzversicherung wechseln', iv: 'Invalidität (IV)', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall', organ: 'Organspende' },
   },
+  // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
+  thermometer: {
+    franchise: 'Franchise',
+    selbstbehalt: 'Selbstbehalt',
+  },
   instrumente: {
     title: { sie: 'Ihre Instrumente', du: 'Deine Instrumente' },
     intro: { sie: 'Vier ruhige Selbstchecks auf einen Blick — tippen Sie eines an.', du: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.' },

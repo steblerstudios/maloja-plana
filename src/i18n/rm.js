@@ -7479,6 +7479,11 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (F7, 27.10.2026) — nur w.selbstmahnen
     w: { digitaleordnung: 'Digitale Ordnung', selbstmahnen: 'Insatgi ma debita daners', bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Zahlungsbefehl erhalten', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
+  // Ablesewörter am Fieberthermometer, gross (11.11.2026). Wortlaut wie im KVG-Reiter.
+  thermometer: {
+    franchise: 'Franschisa',
+    selbstbehalt: 'Quota da participaziun',
+  },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     title: { sie: 'Voss instruments', du: 'Tes instruments' },

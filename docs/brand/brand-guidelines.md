@@ -273,7 +273,12 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   bezahlt und offen): Kachel Franchise-Stand, Kreuz, KVG-Reiter, Prämien-Übersicht. **Bezahlte Gesundheitskosten**
   (mit nicht gedecktem Anteil, offene Forderungen nicht doppelt): Finanzen-Karte, ohne «(KVG)» im Titel, weil sie
   auch Nicht-Gedecktes zählt. Wächter: `src/__tests__/gesundheitsbelegeEineRechnung.test.js`. Bild für den
-  Franchise-Stand: **Fieberthermometer** (entschieden, Bau folgt).
+  Franchise-Stand: **Fieberthermometer** (Stebler Studios 11.11.2026, «Ja, Thermometer + Rechnung A»;
+  «A · Franchise»: das Thermometer trägt nur diese Bedeutung, das geplante Fieber-Fach im Arztkoffer heisst später
+  «Fiebertagebuch»). Ein Bauteil `components/FranchiseThermometer.jsx`: **klein 64** liegend (Kachel), **mittel 128**
+  liegend mit Selbstbehalt als gestrichelter zweiter Strecke (KVG-Reiter, ersetzt die zwei 8-px-Balken), **gross 256**
+  stehend mit Ablesewörtern (Zuhause noch nicht entschieden, darum noch nirgends eingesetzt). Eine Farbe, keine Ampel.
+  Regel «Zahl»: darunter gross die verbrauchte Franchise. Wächter: `src/__tests__/franchiseThermometer.test.js`.
 - Noch nicht nachgezogen: Steuer-Säule im Kapitel Finanzen (fehlt), Netz-Schild auf
   KVG/Unfall/IV (mittel); Franchise-Kreuz ist ein Diagramm, keine Bildgrösse — eigener Entscheid.
 
@@ -455,7 +460,7 @@ Entschieden von Stebler Studios am 10.11.2026 («näher an Fuji», alle fünf Pu
   keine Zahl) und Behördengänge (ein Kästchen je Gang · «1/5» · «So viele Behördengänge sind erledigt»).
   Dieselben Regeln wie im Kapitel (`fristAbstand`, `steuerfristVorbei`, `gangErledigt`).
   **Gesundheit:** Bereit für den Ernstfall (Ring in der Notfall-Farbe · «19/20» · «So viele Notfall-Angaben sind
-  bereit», Rechnung `bereitschaft` wie im Kapitel) und Franchise-Stand (Balken bis zur Franchise · «CHF 420» «von
+  bereit», Rechnung `bereitschaft` wie im Kapitel) und Franchise-Stand (Fieberthermometer klein, seit 11.11. statt Balken · «CHF 420» «von
   CHF 1’500» · «So viel der Franchise ist 2026 erreicht, nach erfassten Belegen», Rechnung `berechneFranchise` wie
   der Franchise-Tracker; Klick öffnet dessen Reiter). Ohne erfasste Franchise keine Zahl.
   **Arbeit** (vier statt zwei, Stebler Studios «brauchen wir ja eh alles»): Lohn (kleines Lohn-Barometer · «−8 %» ·
