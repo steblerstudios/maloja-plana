@@ -15,7 +15,10 @@ import { werteFuerStichtag } from './jahrestabelle.js';
 //   • 2027: V vom 2.10.2026 (AS 2026 542) Art. 2 Abs. 2 «In der freiwilligen Versicherung beträgt er … 888 Franken» und
 //     Art. 6 «für freiwillig versicherte Nichterwerbstätige auf 142 Franken».
 //   • Merkblatt 10.02 (Stand 1.1.2025), Ziff. 4: Nichterwerbstätige zahlen «zwischen 1 010 Franken und 25 250 Franken»;
-//     Ziff. 3: Erwerbstätige 10,1 % (AHV 8,7 % + IV 1,4 %). Dazu 5 % Verwaltungskosten (Ziff. 3).
+//     Ziff. 3: Erwerbstätige 10,1 % (AHV 8,7 % + IV 1,4 %).
+//   • VFV Art. 13b Abs. 1 (Fassung 1.1.2027): Erwerbstätige «mindestens den Mindestbetrag von 1030 Franken», Abs. 2
+//     Nichterwerbstätige «zwischen 1030 und 25 750 Franken» (Fassung 2025: 1010) — gilt also für alle freiwillig Versicherten.
+//   • 5 % Verwaltungskosten für alle: VFV Art. 18a Abs. 1 mit V EDI SR 831.143.41 Art. 1 (rechts-pruefer 12.11.2026).
 const jahr = (ahv, iv) => Object.freeze({ mindestbeitragAhv: ahv, mindestbeitragIv: iv, mindestbeitrag: ahv + iv });
 
 export const FREIWILLIGE_AHV_JE_JAHR = Object.freeze({
