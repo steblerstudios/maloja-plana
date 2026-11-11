@@ -8271,11 +8271,15 @@ export default {
     checkStatusQ: { sie: "Voss status da dimora", du: "Tes status da dimora" },
     checkScopeQ: { sie: "Vossa furmaziun", du: "Tia furmaziun" },
     checkStatusOnlyEducation: "En Svizra mo per la furmaziun",
+    // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+    checkStatusOther: "Auter status (p.ex. permiss F auter che fugitivs renconuschids, permiss B dapi main che 5 onns)",
     checkScopeOther: "Auter / furmaziun cuntinuanta",
-    resultEligible: { sie: "Vus accompleschais las premissas da basa harmonisadas. Inoltrai la dumonda tar il chantun cumpetent, per regla il chantun da domicil da Voss geniturs — il chantun fixescha ils imports e las limitas exactas.", du: "Ti accompleschas las premissas da basa harmonisadas. Inoltrescha la dumonda tar il chantun cumpetent, per regla il chantun da domicil da tes geniturs — il chantun fixescha ils imports e las limitas exactas." },
+    // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+    resultEligible: { sie: "Tenor las reglas minimalas dal concordat da stipendis pudessas Vus avair dretg. Sche Voss chantun è sa participà al concordat, tge limitas valan e sche Vus avais dretg, decida l’uffizi da stipendis. Inoltrai la dumonda tar il chantun cumpetent, per regla il chantun da domicil da Voss geniturs.", du: "Tenor las reglas minimalas dal concordat da stipendis pudessas ti avair dretg. Sche tes chantun è sa participà al concordat, tge limitas valan e sche ti has dretg, decida l’uffizi da stipendis. Inoltrescha la dumonda tar il chantun cumpetent, per regla il chantun da domicil da tes geniturs." },
     resultNotEligible: "Persunas che sa trategnan en Svizra mo per lur furmaziun n'han per ordinari nagin dretg sin stipendis chantunals. Il register privat sutvart po esser in'alternativa.",
     resultScopeOther: { sie: "Per segundas furmaziuns e furmaziun cuntinuanta valan reglas pli strictas. Clerai Voss cas directamain cun l'uffizi chantunal da stipendis.", du: "Per segundas furmaziuns e furmaziun cuntinuanta valan reglas pli strictas. Clerescha tes cas directamain cun l'uffizi chantunal da stipendis." },
-    resultUnclear: { sie: "Voss dretg n'è betg cler. Clerai el cun l'uffizi chantunal da stipendis — l'emprima examinaziun è gratuita.", du: "Tes dretg n'è betg cler. Clerescha el cun l'uffizi chantunal da stipendis — l'emprima examinaziun è gratuita." },
+    // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+    resultUnclear: { sie: "Voss dretg n’è betg cler. Clerai el cun l’uffizi chantunal da stipendis.", du: "Tes dretg n’è betg cler. Clerescha el cun l’uffizi chantunal da stipendis." },
     title: 'Stipendis & contribuziuns da furmaziun',
     intro: 'Contribuziuns da furmaziun (stipendis e mutgs) gidan a finanziar ina furmaziun. Ellas èn regladas chantunalmain — questa survista dat orientaziun, betg ina garanzia.',
     eligibilityTitle: 'Tgi po far dumonda?',
@@ -8307,12 +8311,15 @@ export default {
     private: {
       eth: 'Register da fundaziuns da l’ETH — passa 150 fundaziuns (PDF)',
       culturalpromotion: 'Uffizi federal da cultura & Pertschient culturala Migros',
-      fundraiso: 'Banca da datas da fundaziuns (Pro CHF 290/onn)',
-      stipendiumch: 'Agid persunal da tschertgar (CHF 78 per dumonda)',
+      // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+      fundraiso: "Banca da datas da fundaziuns",
+      // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+      stipendiumch: "Agid persunal da tschertgar",
     },
     checklistTitle: 'Glista da controlla en cas d’ina refusa chantunala',
     checklist1: 'Chapir il motiv — limita d’entrada, gener da furmaziun u termin?',
-    checklist2: 'Controllar il termin d’opposiziun — per ordinari 30 dis suenter la decisiun',
+    // TODO(rm): provisorisch — Gegenlese (Gruppe D, 11.11.2026)
+    checklist2: "Controllar il termin da recurs — el stat a la fin da la decisiun e po esser curt",
     checklist3: 'Tschertgar fundaziuns privatas adattadas a la furmaziun e situaziun',
     checklist4: 'Postular baud — fundaziuns han lur agens termins',
     source: 'Funtaunas: [[CDEP|edk.ch]], concordat da stipendis, [[ch.ch|ch.ch]], [[SEFRI|sbfi.admin.ch]].',

@@ -101,7 +101,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -171,9 +172,10 @@
     nav.inhalt{ background:var(--flaeche); border:1px solid var(--rand); border-radius:16px; padding:18px 20px; margin:24px 0 8px }
     nav.inhalt p{ margin:0 0 8px; font-size:13px; font-weight:600; color:var(--leise) }
     nav.inhalt ol{ list-style:none; margin:0; padding:0; counter-reset:frage; columns:2 260px; column-gap:24px }
-    nav.inhalt li{ counter-increment:frage; margin:0 0 6px; break-inside:avoid; display:flex; gap:10px; font-size:15px }
+    nav.inhalt li{ counter-increment:frage; margin:0; break-inside:avoid; display:flex; align-items:center; gap:10px; font-size:15px }
     nav.inhalt li::before{ content:counter(frage); color:var(--heidel-text); font-weight:600; min-width:1em }
-    nav.inhalt a{ text-decoration:none } nav.inhalt a:hover{ text-decoration:underline }
+    /* Gruppe D: Einträge ≥ 44 px Trefferfläche (vorher 25 px). */
+    nav.inhalt a{ text-decoration:none; display:inline-flex; align-items:center; min-height:44px } nav.inhalt a:hover{ text-decoration:underline }
 
     .merke{ background:var(--heidel-hauch); border-radius:10px; padding:14px 18px; margin:22px 0 }
 
@@ -404,7 +406,7 @@
       <p class="kicker">Kantonsatlas</p>
       <h1>Kantonsatlas: die 26 Kantone auf der Karte</h1>
       <p class="vorspann">Wie hoch ist die Prämie, wie viel kostet eine Wohnung, wie viele Menschen beziehen Unterstützung? Das hängt in der Schweiz oft vom Kanton ab. Dieser Atlas zeigt die Zahlen als Karten, damit sichtbar wird, wo sich etwas ähnelt und wo nicht. Die genauen Werte stehen zu jeder Karte in einer aufklappbaren Tabelle.</p>
-      <p class="stand"><strong>Stand der Zahlen:</strong> Prämien 2027 (BAG, September 2026); Prämienlast mit Prämie 2026, Einkommen 2022 (ESTV) und Verbilligung 2025 (BAG); Steuern 2026; Mieten und Löhne 2024; Sozialhilfe 2024; EL Dezember 2025; Leerwohnungen Juni 2026; Arbeitslosigkeit September 2026; Familienzulagen 2026; Kita-Abzug Steuerjahr 2026.</p>
+      <p class="stand"><strong>Stand der Zahlen:</strong> Prämien 2027 (BAG, September 2026); Prämienlast mit Prämie 2026, Einkommen 2022 (ESTV) und Verbilligung 2025 (BAG); Steuern 2026; Mieten und Löhne 2024; Sozialhilfe 2025; EL Dezember 2025; Leerwohnungen Juni 2026; Arbeitslosigkeit September 2026; Familienzulagen 2026; Kita-Abzug Steuerjahr 2026.</p>
       <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung. Eine Karte zeigt einen Wert je Kanton; für einen einzelnen Haushalt kann es ganz anders aussehen.</p>
       <nav class="inhalt" aria-label="Inhalt dieser Seite">
         <p>Inhalt</p>
@@ -865,7 +867,7 @@
             <ul class="atlas-legende" role="list"><li><i class="k1" aria-hidden="true"></i><span class="sr-only">Stufe 1 von 4, tiefste Zahlen: </span>0,8 % bis 1,3 %</li><li><i class="k2" aria-hidden="true"></i><span class="sr-only">Stufe 2 von 4: </span>1,5 % bis 2,0 %</li><li><i class="k3" aria-hidden="true"></i><span class="sr-only">Stufe 3 von 4: </span>2,1 % bis 3,3 %</li><li><i class="k4" aria-hidden="true"></i><span class="sr-only">Stufe 4 von 4, höchste Zahlen: </span>3,4 % bis 7,6 %</li></ul>
             <p class="abb-fuss"><span class="abb-wert">Ganze Schweiz: 2,9 %</span></p>
           </div>
-          <figcaption><strong>Abb. 9.</strong> Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe bezog.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 13">13</a></sup></figcaption>
+          <figcaption><strong>Abb. 9.</strong> Anteil der Bevölkerung, der 2025 wirtschaftliche Sozialhilfe, also Geld vom Sozialdienst, bezog.<sup class="beleg"><a href="#quelle-bfsSozialhilfe" id="beleg-bfsSozialhilfe-1" aria-label="Quelle 13">13</a></sup></figcaption>
           <p class="atlas-weiter"><a href="/app/?beispiel#/sozialhilfe">Mit Ihren Angaben rechnen: Sozialhilfe</a> <span>Ohne Zugangscode öffnet sich das Beispiel.</span></p>
         </figure>
 
@@ -941,7 +943,7 @@
         </article>
 
       <div class="karte">
-        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/app/?beispiel#/praemien">Beispiel ansehen — ohne Zugangscode</a></p>

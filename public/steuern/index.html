@@ -142,7 +142,8 @@
        Die Rückmeldung kommt jetzt über die dickere Unterstreichung, die Schrift bleibt in --text. */
     a:hover{ text-decoration-thickness:2px }
     header{ padding:28px 0 0 }
-    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    /* Gruppe D (11.11.2026): Trefferfläche ≥ 44 px, vorher 25 px hoch. */
+    .marke{ display:inline-flex; align-items:center; min-height:44px; font-weight:600; text-decoration:none; font-size:15px }
     nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
     main{ padding:8px 0 16px }
     h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
@@ -235,7 +236,8 @@
     <main>
       <h1>Steuern in der Schweiz: Bund, Kanton, Gemeinde</h1>
       <p class="vorspann">Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie in der Regel an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn an zwei Wohnorten zu spürbar verschiedenen Rechnungen führt.</p>
-      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.<br>
+      <strong class="stand">Inhaltlich geprüft: November 2026.</strong></p>
 
         <h2 id="ebenen">Die direkte Bundessteuer ist überall dieselbe</h2>
         <div class="schicht-bild"><ol class="zeit kern" role="list" aria-label="Drei Stellen, an die Sie Steuern zahlen">
@@ -247,6 +249,7 @@
         <details class="schicht-mehr">
           <summary>Ausführlich lesen</summary>
           <p>Erhoben wird sie trotzdem vom Kanton — die Steuererklärung ist dieselbe.</p>
+          <p>Anders bei der <strong>Quellensteuer</strong>: Wer ohne Niederlassungsbewilligung in der Schweiz arbeitet, etwa mit Ausweis B, dem zieht der Arbeitgeber die Steuer direkt vom Lohn ab (DBG Art. 83). Liegt der Bruttolohn unter einer gesetzlichen Grenze, gibt es in der Regel keine Steuererklärung. Weitere Abzüge, etwa für die Säule 3a, gibt es dann nur über eine nachträgliche ordentliche Veranlagung; sie muss bis zum 31. März des Folgejahres beantragt werden, beim Wegzug bis zur Abmeldung (DBG Art. 89a Abs. 3). Liegt er darüber, wird von Amtes wegen ordentlich veranlagt (DBG Art. 89, QStV Art. 9).</p>
         </details>
 
         <h2 id="steuerfuss">Kanton und Gemeinde: Tarif mal Steuerfuss</h2>
@@ -275,7 +278,7 @@
             <li>Berufsauslagen</li><li>Beiträge an die Säule 3a</li><li>Krankheitskosten über einer Schwelle</li><li>Kinder- und Betreuungsabzüge</li><li>weitere</li>
           </ul>
         </div></div>
-        <p class="schicht-kurz">Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Hier geht oft Geld verloren — nicht durch falsche Angaben, sondern durch Abzüge, die niemand eingetragen hat.</p>
+        <p class="schicht-kurz">Welche Abzüge in welcher Höhe zulässig sind, unterscheidet sich zwischen Bund und Kanton und zwischen den Kantonen. Welche Abzüge möglich sind und welche Belege es braucht, steht in der Wegleitung Ihres Kantons.</p>
         <details class="schicht-mehr">
           <summary>Ausführlich lesen</summary>
           <p>Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.</p>
@@ -297,7 +300,7 @@
 
 
       <div class="karte">
-        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p><strong>Mit Ihren Angaben lässt sich das in der App durchrechnen.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
         <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/app/?beispiel#/tax">Beispiel ansehen — ohne Zugangscode</a></p>
@@ -307,10 +310,10 @@
       <ul>
           <li><a href="https://www.estv.admin.ch/de/steuerrechner-steuern-berechnen" rel="noopener">Steuerrechner der Eidgenössischen Steuerverwaltung</a></li>
       </ul>
-      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind Empfehlungen.</p>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung.</p>
 
       <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal verschieden und ändern regelmässig. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.<br>
-      <strong>Inhaltlich geprüft: September 2026.</strong></p>
+      <strong>Inhaltlich geprüft: November 2026.</strong></p>
 
       <h2>Weiterlesen</h2>
       <ul>
