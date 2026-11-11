@@ -291,7 +291,8 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   zweiten Person. Wächter: `wohnenPartnerHaus.test.js`.
   **Ausgebaut nach Grösse** (11.11.2026, Stebler Studios nach Skizze A–E: «Ja, so bauen»):
   - Das **«!» an der Drittel-Linie** (A) ist graphit und wird Rosé (`roseDeep`), sobald die Füllung über einem
-    Drittel liegt. Linie und Legenden-Strich färben mit. Ohne Urteil gibt es kein «!». Damit hat auch das
+    Drittel liegt. **Die Füllung bleibt immer grün** (Birne): Stebler Studios 11.11.2026, «darf grün gefüllt werden und
+    nicht golden». Die Warnung tragen Linie und «!», nicht die Fläche. Linie und Legenden-Strich färben mit. Ohne Urteil gibt es kein «!». Damit hat auch das
     Kapitel sein «!» wieder.
   - Die **Füllung steigt** (B) beim Erscheinen in `duration.slow` (`mp-steigen`, abbremsend) und folgt dem
     Regler (`scaleY`). «Weniger Bewegung» stellt beides still, mit beiden Schaltern.
@@ -309,9 +310,12 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
     2 Zimmern kommt auf 929, nicht auf 1'060. GE (Jahreswert, keine Grenze), ZG und BL: keine Zahl im Haus.
   - Daneben das **Glas der IPV** (`Pegel`, `nurGlas`) für Einkommen gegen Grenze, nur wo die Grenze eine Zahl ist.
     Dieselbe Frage bekommt dieselbe Form, also kein neues Haus.
-  - Das **Schild «möglich»** steht nur, wenn das Einkommen unter der Grenze liegt. Es sagt nie «Anspruch».
-  - Darunter die **Kachelkarte** der 26 Kantone (Matrix §5, C3): gefüllt heisst Programm erfasst, leer heisst
-    unklar, nie «gibt es nicht».
+  - Die **Tonne ist grau gefüllt** (Behörden-Zwetschge, `Pegel` mit `fuellFarbe`). Stebler Studios: «grau gefüllt».
+  - **«möglich» ist ein Knopf mit Zeichen** (Nebenknopf, Zeichen des Werkzeugs «Mietzins»). Im Kapitel führt er ins
+    Werkzeug, im Werkzeug zur kantonalen Stelle. Er steht nur, wenn das Einkommen unter der Grenze liegt, und sagt nie
+    «Anspruch».
+  - Darunter die **Kachelkarte** der 26 Kantone, **jeder Kanton ein kleines Haus** (Matrix §5, C3; Stebler Studios:
+    «einzelne kleine Häuser»). Gefüllt heisst Programm erfasst, leer heisst unklar, nie «gibt es nicht».
   - Eine Rechnung: `mietzinsEinschaetzung`. Kapitel Wohnen gross, Werkzeug «Mietzins» mittel. Wächter:
     `wohnenMietzinsSzene.test.js`.
   **Übersicht 64** (11.11.2026, Stebler Studios «Kacheln 64 Wohnen»): die zwei Wohnen-Kacheln zeigen dieselben Bilder

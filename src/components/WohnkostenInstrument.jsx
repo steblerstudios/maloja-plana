@@ -8,6 +8,9 @@ import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { Pegel } from './Pegel.jsx';
+import { Icon } from '../IconSystem.jsx';
+import { ansichtIkon } from '../config/ansichtenRegister.js';
+import { ExternerLink } from './ExternerLink.jsx';
 import { mietzinsEinschaetzung, beitragHoechstMonat, PROGRAMM_KANTONE, KACHELKARTE_LAGE } from '../data/mietzinsbeitraege.js';
 import { mietzinsPegelState } from '../data/pegel.js';
 import { knopfStil } from './PrimaryButton.jsx';
@@ -74,7 +77,9 @@ export const DrittelHaus = ({ palette, t, anteil, ueberDrittel, mitPartner, brut
   const anteil01 = Math.max(0, Math.min(100, anteil || 0)) / 100;
   const urteil = !mitPartner && anteil != null;
   const darueber = urteil && ueberDrittel;
-  const farbe = darueber ? palette.sand : fuell;
+  // Die Füllung bleibt immer grün (Wohnen): die Warnung tragen Linie und «!» (Stebler Studios 11.11.2026, «darf grün
+  // gefüllt werden und nicht golden»). Bis dahin wurde sie über einem Drittel Sand.
+  const farbe = fuell;
   const drittelFarbe = darueber ? palette.roseDeep : palette.text;
   const linie = { vectorEffect: 'non-scaling-stroke' };
   const strich = klein ? 2.5 : 1.5;
@@ -148,7 +153,7 @@ const satzKey = (r) => r.partnerOffen ? 'wohnenInstrument.partnerOffen' : r.mitP
 export const wohnkostenSatzKey = (r) => r.brutto ? (r.ganzBrutto ? 'instrumente.wohnkostenSatzBrutto' : 'instrumente.wohnkostenSatzTeilsBrutto')
   : r.haushalt ? 'instrumente.wohnkostenSatzHaushalt' : r.mitPartner ? 'instrumente.wohnkostenSatzEigen' : 'instrumente.wohnkostenSatz';
 
-export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }) => {
+export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode, onNavigate }) => {
   const [probe, setProbe] = useState(null);
   const [offen, setOffen] = useState(false);
   const r = wohnkostenRechnung(wohnen, allData, probe);
@@ -202,7 +207,7 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
     ),
 
     // Mietzinsbeiträge (11.11.2026): Glas, Schild, Kachelkarte — der Beitrag selbst steht schon im Haus oben.
-    React.createElement(MietzinsSzene, { palette, t, data: allData, isDarkMode }),
+    React.createElement(MietzinsSzene, { palette, t, data: allData, isDarkMode, onNavigate }),
 
     // Ausprobieren: andere Miete — nur hier, nichts wird gespeichert. Nicht bei Eigentum (siehe oben).
     // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar).
@@ -252,11 +257,14 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
 //   Glas: der Pegel der IPV, Lesart «Luft» (Einkommen gegen Grenze) — nur, wo die Grenze eine Zahl ist.
 //   Schild «möglich»: nur, wenn das Einkommen unter der Grenze liegt. Nie «Anspruch»: der Kanton entscheidet.
 //   Kachelkarte: die 26 Kantone, gefüllt = Programm in der App erfasst, leer = unklar (nie «gibt es nicht»).
-const KACHEL = { b: 26, h: 20, abstand: 2 };
+// Jeder Kanton ein kleines Haus (Stebler Studios 11.11.2026, «einzelne kleine Häuser, jeder Kanton»): Körper mit dem
+// Kürzel, Dach darüber — die Häuserstrasse der Wohnen-Bilder als Karte.
+const KACHEL = { b: 26, h: 18, dach: 7, abstand: 3 };
 export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
   const h = React.createElement;
-  const breite = 8 * (KACHEL.b + KACHEL.abstand);
-  const hoehe = 6 * (KACHEL.h + KACHEL.abstand);
+  const zelleB = KACHEL.b + KACHEL.abstand, zelleH = KACHEL.h + KACHEL.dach + KACHEL.abstand;
+  const breite = 8 * zelleB;
+  const hoehe = 6 * zelleH;
   const frucht = bereichFillColor('wohnen', isDarkMode) || palette.sage;
   // Schrift bei 256 px genau text.xs (Regel H), die Karte wird nie breiter als gross.
   const schrift = Math.ceil(text.xs * breite / INSTRUMENT_GROESSE.gross * 100) / 100;
@@ -268,25 +276,27 @@ export const Kachelkarte = ({ palette, t, kanton, gefuellt, isDarkMode }) => {
     Object.entries(KACHELKARTE_LAGE).map(([k, [zeile, spalte]]) => {
       const voll = gefuellt.includes(k);
       const ihr = k === kanton;
-      const x = spalte * (KACHEL.b + KACHEL.abstand), y = zeile * (KACHEL.h + KACHEL.abstand);
+      const x = spalte * zelleB + 1, oben = zeile * zelleH + KACHEL.dach + 1;
+      const rand = { stroke: ihr ? palette.text : voll ? frucht : palette.border, strokeWidth: ihr ? 2.5 : 1, strokeLinejoin: 'round' };
       return h('g', { key: k, 'data-kanton': k, 'data-programm': voll ? 'ja' : 'nein', ...(ihr ? { 'data-ihr': 'ja' } : {}), 'aria-hidden': 'true' },
-        h('rect', { x: x + 1, y: y + 1, width: KACHEL.b - 2, height: KACHEL.h - 2, rx: 3,
-          fill: voll ? frucht : 'none', fillOpacity: voll ? 0.45 : 0,
-          stroke: ihr ? palette.text : palette.border, strokeWidth: ihr ? 2.5 : 1 }),
-        h('text', { x: x + KACHEL.b / 2, y: y + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift, fill: voll || ihr ? palette.text : palette.mid }, k));
+        h('path', { 'data-form': 'haus', d: 'M' + x + ' ' + (oben + KACHEL.h) + 'V' + oben + 'L' + (x + KACHEL.b / 2) + ' ' + (oben - KACHEL.dach) + 'L' + (x + KACHEL.b) + ' ' + oben + 'V' + (oben + KACHEL.h) + 'Z',
+          fill: voll ? frucht : 'none', fillOpacity: voll ? 0.45 : 0, ...rand }),
+        h('text', { x: x + KACHEL.b / 2, y: oben + KACHEL.h / 2 + schrift * 0.35, textAnchor: 'middle', fontSize: schrift, fill: voll || ihr ? palette.text : palette.mid }, k));
     }));
 };
 
-const SchildMoeglich = ({ palette, t }) => {
+// «möglich» als Knopf mit Zeichen (Stebler Studios 11.11.2026, «ein CTA mit Icon und Verlinkung»): im Kapitel führt er
+// ins Werkzeug «Mietzins», im Werkzeug zur kantonalen Stelle. Erscheint nur unter der Grenze; sagt nie «Anspruch».
+const MoeglichKnopf = ({ palette, t, onNavigate, url }) => {
   const h = React.createElement;
-  return h('svg', { viewBox: '0 0 84 90', width: 84, 'aria-hidden': 'true', focusable: 'false', 'data-teil': 'mietzins-schild',
-    style: { display: 'block', overflow: 'visible', animation: 'fadeIn ' + duration.slow + 'ms ' + ease } },
-    h('line', { x1: 24, x2: 24, y1: 30, y2: 88, stroke: palette.text, strokeWidth: 1.5 }),
-    h('path', { d: 'M4 10H66L76 22L66 34H4Z', fill: palette.up || palette.surface, stroke: palette.sky, strokeWidth: 1.5 }),
-    h('text', { x: 38, y: 27, textAnchor: 'middle', fontSize: text.xs, fill: palette.skyDeep || palette.text }, t('mietzinsSzene.schild')));
+  const stil = { ...knopfStil(palette, 'neben'), textDecoration: 'none', animation: 'fadeIn ' + duration.slow + 'ms ' + ease };
+  const inhalt = [h(Icon, { key: 'i', name: ansichtIkon('mietzins'), size: 18 }), h('span', { key: 't' }, onNavigate ? t('mietzinsSzene.cta') : t('mietzins.linkCanton'))];
+  if (onNavigate) return h('button', { type: 'button', 'data-teil': 'mietzins-cta', onClick: () => onNavigate('mietzins'), style: stil }, inhalt);
+  if (url) return h(ExternerLink, { t, href: url, 'data-teil': 'mietzins-cta', style: stil }, inhalt);
+  return null;
 };
 
-export const MietzinsSzene = ({ palette, t, data, isDarkMode, kanton: kantonVorgabe, groesse = 'gross', mitHaus = false, ohneSatz = false }) => {
+export const MietzinsSzene = ({ palette, t, data, isDarkMode, onNavigate, kanton: kantonVorgabe, groesse = 'gross', mitHaus = false, ohneSatz = false }) => {
   const h = React.createElement;
   const kanton = kantonVorgabe || data?.basis?.canton || '';
   if (!kanton) return null;
@@ -303,8 +313,8 @@ export const MietzinsSzene = ({ palette, t, data, isDarkMode, kanton: kantonVorg
     (zeigtHaus || glas || moeglich) && h('div', { style: { display: 'flex', alignItems: 'flex-end', gap: space.md + 'px', flexWrap: 'wrap' } },
       zeigtHaus && h('div', { style: { flex: '0 1 ' + INSTRUMENT_GROESSE[groesse] + 'px' } },
         h(DrittelHaus, { palette, t, anteil: r.anteil, ueberDrittel: r.ueberDrittel, mitPartner: r.mitPartner, brutto: r.brutto, beitrag, fuell: bereichFillColor('wohnen', isDarkMode) || palette.sage, groesse })),
-      glas && h('div', { 'data-teil': 'mietzins-glas' }, h(Pegel, { palette, t, state: glas, nurGlas: true })),
-      moeglich && h(SchildMoeglich, { palette, t })),
+      glas && h('div', { 'data-teil': 'mietzins-glas' }, h(Pegel, { palette, t, state: glas, nurGlas: true, fuellFarbe: bereichFillColor('behoerden', isDarkMode) || palette.mid })),
+      moeglich && h(MoeglichKnopf, { palette, t, onNavigate, url: e.info?.url })),
     beitrag && h(BeitragLegende, { palette, t, beitrag }),
     !ohneSatz && h('p', { style: { margin: space.sm + 'px 0', fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, satz),
     h(Kachelkarte, { palette, t, kanton, gefuellt: PROGRAMM_KANTONE, isDarkMode }),

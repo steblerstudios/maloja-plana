@@ -4687,6 +4687,7 @@ export default {
     titel: 'Contributi all’affitto',
     beitragLegende: 'tratteggiato: quanto il Cantone potrebbe assumere al massimo, fino a CHF {betrag} al mese. L’importo effettivo lo calcola il Cantone.',
     schild: 'possibile',
+    cta: 'Verificare i contributi all’affitto',
     karteAria: { sie: 'Cantoni con un programma noto: {liste}. Il Suo Cantone: {kanton}.', du: 'Cantoni con un programma noto: {liste}. Il tuo Cantone: {kanton}.' },
     karteLegende: { sie: 'pieno: programma noto · vuoto: incerto, da verificare · bordo spesso: il Suo Cantone', du: 'pieno: programma noto · vuoto: incerto, da verificare · bordo spesso: il tuo Cantone' },
   },

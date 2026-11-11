@@ -32,10 +32,14 @@ describe('Drittel-Haus', () => {
     expect(haus({ anteil: 0 })).not.toContain('drittel-haus-fuellung');
   });
 
-  it('über einem Drittel Sand, sonst Birne; mit Partner/in immer Birne (kein Urteil)', () => {
-    expect(haus({ anteil: 40, ueberDrittel: true })).toContain('fill="#C9A86A"');
-    expect(haus({ anteil: 20, ueberDrittel: false })).toContain('fill="#6C8343"');
-    expect(haus({ anteil: 40, ueberDrittel: true, mitPartner: true })).not.toContain('fill="#C9A86A"');
+  // Seit 11.11.2026 (Stebler Studios «darf grün gefüllt werden und nicht golden»): die Füllung bleibt Birne,
+  // die Warnung tragen Linie und «!» (drittelHausAusbau.test.js).
+  it('die Füllung ist immer Birne, auch über einem Drittel und mit Partner/in', () => {
+    const fuellung = (p) => (haus(p).match(/<rect[^>]*data-teil="drittel-haus-fuellung"[^>]*>/) || [''])[0];
+    expect(fuellung({ anteil: 40, ueberDrittel: true })).toContain('fill="#6C8343"');
+    expect(fuellung({ anteil: 20, ueberDrittel: false })).toContain('fill="#6C8343"');
+    expect(fuellung({ anteil: 40, ueberDrittel: true, mitPartner: true })).toContain('fill="#6C8343"');
+    expect(haus({ anteil: 40, ueberDrittel: true })).not.toContain('#C9A86A');
   });
 
   it('Grösse aus der Instrument-Stufe, fürs Vorlesen stumm', () => {

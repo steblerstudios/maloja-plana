@@ -23,7 +23,9 @@ const fmtCHF = (n) => betrag(n || 0);
 
 // `nurGlas` (11.11.2026, Mietzinsbeiträge im Kapitel Wohnen): nur das Gefäss, ohne Ablesung — dieselbe Form an
 // einem anderen Ort, die Sätze stehen dort daneben.
-export const Pegel = ({ palette, t, state, nurGlas = false }) => {
+// `fuellFarbe` (11.11.2026): die Farbe des Wassers, wo das Glas in einem anderen Bereich steht — Mietbeiträge grau
+// (Behörden-Zwetschge, Stebler Studios «grau gefüllt»). Ohne Angabe Salbei wie bei IPV und Sozialhilfe.
+export const Pegel = ({ palette, t, state, nurGlas = false, fuellFarbe }) => {
   const h = React.createElement;
   if (!state || !state.show) return null;
   const variant = state.variant || 'luft';
@@ -59,7 +61,7 @@ export const Pegel = ({ palette, t, state, nurGlas = false }) => {
       // aufstockung: schraffierte Aufstockung von der Linie bis zur Wasser-Oberkante
       showSupport && h('rect', { x: 33, y: LINE_Y, width: 62, height: waterTopY - LINE_Y, fill: 'url(#' + uid + '-hatch)' }),
       // Einkommen (sage)
-      h('rect', { x: 33, y: sageTopY, width: 62, height: INNER_BOTTOM - sageTopY + 2, fill: palette.sage, opacity: 0.82 }),
+      h('rect', { x: 33, y: sageTopY, width: 62, height: INNER_BOTTOM - sageTopY + 2, fill: fuellFarbe || palette.sage, opacity: 0.82 }),
       // Meniskus
       h('rect', { x: 33, y: waterTopY - 1.5, width: 62, height: 3, fill: palette.surface, opacity: 0.3 })
     ),

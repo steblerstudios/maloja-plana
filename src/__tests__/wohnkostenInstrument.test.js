@@ -32,7 +32,7 @@ describe('Kapitel Wohnen · Ort im Kapitel', () => {
   it('erst bei Bedarf geladen und nur im Kapitel Wohnen, mit dem ganzen Profil', () => {
     expect(QUELLE).toMatch(/const WohnkostenInstrument = React\.lazy\(\(\) => import\('\.\/components\/WohnkostenInstrument\.jsx'\)/);
     expect(QUELLE).toMatch(/chapter\.key === 'wohnen' && allData && React\.createElement\(React\.Suspense, \{ key: 'wohnkosten'/);
-    expect(QUELLE).toMatch(/React\.createElement\(WohnkostenInstrument, \{ palette, t: tr, wohnen: data, allData, isDarkMode \}\)/);
+    expect(QUELLE).toMatch(/React\.createElement\(WohnkostenInstrument, \{ palette, t: tr, wohnen: data, allData, isDarkMode, onNavigate \}\)/);
   });
 
   it('oben, gleich nach der ruhigen Zusammenfassung', () => {

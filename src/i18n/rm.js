@@ -6668,6 +6668,7 @@ export default {
     titel: 'Contribuziuns al fitg',
     beitragLegende: "puntignà: quai che il chantun pudess surpigliar al maximum, fin CHF {betrag} il mais. L'import effectiv quinta il chantun.",
     schild: 'pussaivel',
+    cta: 'Verifitgar las contribuziuns al fitg',
     karteAria: { sie: 'Chantuns cun in program enconuschent: {liste}. Voss chantun: {kanton}.', du: 'Chantuns cun in program enconuschent: {liste}. Tes chantun: {kanton}.' },
     karteLegende: { sie: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: Voss chantun', du: 'emplenì: program enconuschent · vid: nunclera, per plaschair verifitgar · ur gross: tes chantun' },
   },

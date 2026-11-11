@@ -4713,6 +4713,7 @@ export default {
     titel: 'Aides au loyer',
     beitragLegende: 'en pointillé : ce que le canton pourrait prendre en charge au maximum, jusqu’à CHF {betrag} par mois. Le montant effectif est calculé par le canton.',
     schild: 'possible',
+    cta: 'Vérifier les aides au loyer',
     karteAria: { sie: 'Cantons avec un programme connu : {liste}. Votre canton : {kanton}.', du: 'Cantons avec un programme connu : {liste}. Ton canton : {kanton}.' },
     karteLegende: { sie: 'plein : programme connu · vide : incertain, à vérifier · bord épais : votre canton', du: 'plein : programme connu · vide : incertain, à vérifier · bord épais : ton canton' },
   },

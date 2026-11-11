@@ -4765,6 +4765,7 @@ export default {
     titel: 'Mietbeiträge',
     beitragLegende: 'gestrichelt: so viel könnte der Kanton höchstens übernehmen, bis zu CHF {betrag} im Monat. Wie viel wirklich kommt, rechnet der Kanton.',
     schild: 'möglich',
+    cta: 'Mietbeiträge prüfen',
     karteAria: { sie: 'Kantone mit bekanntem Programm: {liste}. Ihr Kanton: {kanton}.', du: 'Kantone mit bekanntem Programm: {liste}. Dein Kanton: {kanton}.' },
     karteLegende: { sie: 'gefüllt: Programm bekannt · leer: unklar, bitte prüfen · dicker Rand: Ihr Kanton', du: 'gefüllt: Programm bekannt · leer: unklar, bitte prüfen · dicker Rand: dein Kanton' },
   },

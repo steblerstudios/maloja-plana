@@ -31,7 +31,7 @@ describe('eine Rechnung', () => {
   it('die Szene steht im Kapitel Wohnen (Beitrag im grossen Haus) und im Werkzeug «Mietzins» (mittel, mit Haus)', () => {
     const w = quelle('../components/WohnkostenInstrument.jsx');
     expect(w).toMatch(/beitrag: imHaus, fuell \}/);
-    expect(w).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data: allData, isDarkMode \}\)/);
+    expect(w).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data: allData, isDarkMode, onNavigate \}\)/);
     expect(quelle('../MietzinsOrientierung.jsx')).toMatch(/React\.createElement\(MietzinsSzene, \{ palette, t, data, isDarkMode, kanton: canton, groesse: 'mittel', mitHaus: true, ohneSatz: true \}\)/);
   });
   it('die Einschätzung: unter der Grenze «likely», darüber «incomeHigh», ohne Programm keine', () => {
@@ -55,23 +55,45 @@ describe('Szene je Zustand', () => {
   it('Programm, unter der Grenze (ZG): Glas und Schild', () => {
     const h = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
     expect(h).toContain('data-teil="mietzins-glas"');
-    expect(h).toContain('data-teil="mietzins-schild"');
+    expect(h).toContain('data-teil="mietzins-cta"');
     expect(h).toContain('data-teil="kachelkarte"');
   });
   it('Programm, über der Grenze: Glas ohne Schild', () => {
     const h = szene(profil('ZG', 9000, { wfgWohnung: 'ja' }));
     expect(h).toContain('data-teil="mietzins-glas"');
-    expect(h).not.toContain('data-teil="mietzins-schild"');
+    expect(h).not.toContain('data-teil="mietzins-cta"');
   });
   it('Kanton unklar: kein Glas, kein Schild, der Satz «bitte prüfen», die Karte bleibt', () => {
     const h = szene(profil('ZH'));
     expect(h).not.toContain('data-teil="mietzins-glas"');
-    expect(h).not.toContain('data-teil="mietzins-schild"');
+    expect(h).not.toContain('data-teil="mietzins-cta"');
     expect(h).toContain(t('mietzins.check').slice(0, 30));
     expect(h).toContain('data-teil="kachelkarte"');
   });
   it('ohne Kanton: nichts', () => {
     expect(szene(profil(''))).toBe('');
+  });
+});
+
+describe('Stebler Studios 11.11.2026: Häuser, grau, Knopf', () => {
+  it('jeder Kanton ist ein kleines Haus', () => {
+    expect((szene(profil('ZH')).match(/data-form="haus"/g) || []).length).toBe(26);
+  });
+  it('die Tonne ist grau gefüllt (Behörden-Zwetschge), nicht Salbei', () => {
+    const h = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
+    const glas = h.slice(h.indexOf('data-teil="mietzins-glas"'));
+    expect(glas).toContain('fill="' + bereichFillColor('behoerden', false) + '"');
+    expect(glas.slice(0, glas.indexOf('</svg>'))).not.toContain('fill="' + LIGHT_PALETTE.sage + '"');
+  });
+  it('«möglich» ist ein Knopf mit Zeichen: im Kapitel ins Werkzeug «Mietzins», im Werkzeug zur kantonalen Stelle', () => {
+    const ziele = [];
+    const kapitel = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }), { onNavigate: (v) => ziele.push(v) });
+    expect(kapitel).toMatch(/<button type="button" data-teil="mietzins-cta"/);
+    expect(kapitel).toContain(t('mietzinsSzene.cta'));
+    expect(kapitel).toMatch(/data-teil="mietzins-cta"[^>]*><span aria-hidden="true" role="img"[^>]*><svg/); // das Zeichen ist wirklich da
+    const werkzeug = szene(profil('ZG', 3000, { wfgWohnung: 'ja' }));
+    expect(werkzeug).toMatch(/<a [^>]*href="https:\/\/zg\.ch[^"]*"[^>]*data-teil="mietzins-cta"|<a [^>]*data-teil="mietzins-cta"[^>]*href="https:\/\/zg\.ch/);
+    expect(quelle('../components/WohnkostenInstrument.jsx')).toMatch(/onClick: \(\) => onNavigate\('mietzins'\)/);
   });
 });
 
