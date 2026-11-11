@@ -100,17 +100,20 @@ describe('L6–L8 und Kleines', () => {
     expect(de.briefe.kkReklamation.body3).toMatch(/anfechtbare Verfügung \(Art\. 49 Abs\. 1 und 51 Abs\. 2 ATSG\)/);
     expect(quelle('briefGenerator.js')).toMatch(/legalRef: 'ATSG Art\. 49, 51'/);
   });
-  it('L7 Ablage: kein «sicher» ohne Tresor-Sperre', () => {
-    expect(de.tresor.noDocumentsHint.sie).not.toMatch(/sicher\b/);
-    expect(de.tresor.noDocumentsHint.sie).toMatch(/Tresor-Sperre zusätzlich verschlüsselt/);
+  // rechts-pruefer nach dem Bau (Blocker): eine Tresor-Sperre ist nicht eingebaut (activateTresor wird nirgends aufgerufen,
+  // LockScreen nur im Entwicklungsmodus) — der Satz darf keine Verschlüsselung versprechen.
+  it('L7 Ablage: kein «sicher», keine versprochene Verschlüsselung, ehrlich «unverschlüsselt»', () => {
+    for (const l of [de, fr, itTranslations]) expect(JSON.stringify(l.tresor.noDocumentsHint)).not.toMatch(/sicher\b|Tresor-Sperre|chiffré\.|è anche cifrato|verrouillage/);
+    expect(de.tresor.noDocumentsHint.sie).toMatch(/im Browser-Speicher unverschlüsselt/);
+    expect(en.tresor.noDocumentsHint).toMatch(/unencrypted/);
   });
   it('L8 Organspende: kein Register als Antragsstelle; Links korrigiert', async () => {
     const s = quelle('data/direktLinks.js');
     expect(s).not.toMatch(/Organspende-Register/);
     expect(s).not.toMatch(/ge\.ch\/tax\/|taxme\.ch|Kantonale AHV-Zweigstelle|ältere Arbeitslose ab 60/);
   });
-  it('Lohnmahnung: Gericht am Arbeitsort oder am Sitz des Arbeitgebers (ZPO Art. 34)', () => {
-    expect(de.briefe.unpaidWage.legalNote).toMatch(/am Arbeitsort oder am Sitz des Arbeitgebers/);
+  it('Lohnmahnung: Gericht am gewöhnlichen Arbeitsort oder am Wohnsitz/Sitz des Arbeitgebers (ZPO Art. 34 Abs. 1)', () => {
+    expect(de.briefe.unpaidWage.legalNote).toMatch(/am Ort, an dem Sie gewöhnlich arbeiten, oder am Wohnsitz bzw\. Sitz des Arbeitgebers \(ZPO Art\. 34 Abs\. 1\)/);
   });
   it('Lebensmappe und Behörden-Dossier nennen die persönlichen Angaben', () => {
     expect(de.lebensmappe.footerPrivacy).toMatch(/AHV-Nummer/);
@@ -157,11 +160,11 @@ describe('Sprache S1–S7 (Schlüssel der B-Seiten)', () => {
     expect(de.briefe.installmentRequest.hinweis.budget.sie).toMatch(/^Die Gläubigerin oder der Gläubiger muss nicht zustimmen\./);
     expect(de.briefe.leaseTermination.legalNote).toMatch(/Zustimmung der Ehegattin, des Ehegatten/);
   });
-  it('S7: der lange Satz zur Einmischung in die Erbschaft ist geteilt, der Inhalt bleibt (ZGB Art. 571 Abs. 2)', () => {
+  it('S7: der lange Satz ist geteilt, die drei Fälle von ZGB Art. 571 Abs. 2 bleiben gleichrangig', () => {
     const tx = de.briefe.deathNotice.erbe.text;
-    expect(tx).toMatch(/kann sie nicht mehr ausschlagen \(ZGB Art\. 571 Abs\. 2\)\. Dazu zählen/);
+    expect(tx).toMatch(/einmischt, Handlungen vornimmt, die über die blosse Verwaltung hinausgehen, oder Erbschaftssachen an sich nimmt oder verheimlicht \(ZGB Art\. 571 Abs\. 2\)\. Das ist zum Beispiel/);
     expect(tx).toMatch(/zum Beispiel/);
     expect(tx).toMatch(/blosse Verwaltung/);
-    expect(tx).toMatch(/Schulden aus dem Nachlass bezahlen, Forderungen anerkennen/);
+    expect(tx).toMatch(/Schulden aus dem Nachlass bezahlt, Forderungen anerkennt/);
   });
 });

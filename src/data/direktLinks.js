@@ -59,7 +59,7 @@ export const DIREKTLINKS = [
     id: 'ueberbrueckungsleistungen',
     kategorie: 'arbeit',
     name: { de: 'Überbrückungsleistungen (ÜL)', en: 'Bridge benefits', fr: 'Prestations transitoires', it: 'Prestazioni transitorie (PT)' },
-    // Gruppe B K (11.11.2026): ÜLG Art. 3 — ausgesteuert frühestens im Monat des 60. Geburtstags, nicht «arbeitslos ab 60».
+    // Gruppe B K (11.11.2026): ÜLG Art. 5 Abs. 1 Bst. a — ausgesteuert frühestens im Monat des 60. Geburtstags, nicht «arbeitslos ab 60».
     beschreibung: { de: 'Für Personen, die mit 60 oder später ausgesteuert werden', en: 'For people whose unemployment benefits run out at 60 or later', fr: 'Pour les personnes arrivées en fin de droits à 60 ans ou plus', it: 'Per persone che esauriscono il diritto all’indennità a 60 anni o più tardi' },
     url: 'https://www.bsv.admin.ch/de/uel',
     // ÜLG Art. 19: zuständig sind die EL-Stellen des Wohnkantons (ELG Art. 21 Abs. 2),

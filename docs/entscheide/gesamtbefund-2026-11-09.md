@@ -245,6 +245,14 @@ siebenmal neu entschieden werden:
    bei 1250 px, C Was ansteht 4 px zu breit, Löschen über den Tagesstreifen, D Ablage-Titel bricht falsch. Sprache S1–S7
    (it-Links deutsch). Frage zu den Herzensempfehlungen. Zweig `befund/gruppe-b-unterlagen`, gestapelt auf #845, nur
    Befund, gebaut ist nichts.
+   ✅ **11.11.: alles ausser dem Bücherregal** (Stebler Studios: «alles so bauen bis aufs bücherregal das müssen wir
+   nochbesprechen»). Gebaut im selben Zweig: L1 zweite Unterschrift «Zustimmung … (OR Art. 266m)» je nach Zivilstand,
+   L2 Kassenwechsel nennt das Jahr und springt nach der Frist aufs nächste, L3–L8, Kleines, Gestaltung A (Brief antippen
+   springt zum Formular), C (375 px, Löschen am Eintrag mit Rückgängig — ändert Entwurf G vom 27.10., Reiter «Termine»),
+   D («Dokumenten-ablage»), Sprache S1–S7 (it-Links, Grussformeln, «so früh wie möglich»). rechts-pruefer nach dem Bau:
+   **Blocker** — der Ablage-Satz versprach eine Tresor-Sperre, die nicht eingebaut ist → «im Browser-Speicher
+   unverschlüsselt»; dazu sieben Nachschärfungen. Test `gruppeBUnterlagen.test.js`. **Zum Besprechen:** Bücherregal (B).
+   Nebenbefund: Landschaftsband der Kapitelseiten −24 px, vermutlich 4 px Überbreite.
    **Notiert, nicht gebaut — gemeinsam ansehen:** A ein Eingang zu «Was steht mir zu?» und ein IPV-Satz · B vier
    Ordnungen (angleichen oder den 7 Kapiteln folgen) · C eine Fortschrittszahl · Suchwörter (Register im Startbündel).
 

@@ -5265,14 +5265,14 @@ export default {
         // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
       zustimmungTitel: 'Zustimmung zur Kündigung der Familienwohnung (OR Art. 266m)',
         // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
-      zustimmungText: 'Dient die Wohnung der Familie, stimme ich als Ehegattin, Ehegatte oder eingetragene Partnerin, eingetragener Partner dieser Kündigung ausdrücklich zu.',
+      zustimmungText: 'Ich stimme dieser Kündigung als Ehegattin, Ehegatte, eingetragene Partnerin oder eingetragener Partner ausdrücklich zu (OR Art. 266m).',
         // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
       zustimmungUnterschrift: 'Name, Ort, Datum und Unterschrift',
         // TODO(rm): provisorisch — deutsch, Gruppe B L1 (11.11.2026), Übersetzung offen
       hinweis: {
         title: 'Vor dem Versand',
-        zustimmung: { sie: 'Sind Sie verheiratet oder leben Sie in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift.', du: 'Bist du verheiratet oder lebst du in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift.' },
-        form: 'Von Hand unterschreiben und eingeschrieben senden: Die Kündigung muss vor Beginn der Kündigungsfrist bei der Vermieterschaft eingehen (OR Art. 266l Abs. 1, 266c).',
+        zustimmung: { sie: 'Sind Sie verheiratet oder leben Sie in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).', du: 'Bist du verheiratet oder lebst du in eingetragener Partnerschaft und dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung der anderen Person; ohne sie ist sie nichtig (OR Art. 266m, 266o). Der Brief hat dafür eine zweite Unterschrift. Ist die Zustimmung nicht erhältlich oder wird sie ohne triftigen Grund verweigert, kann das Gericht angerufen werden (OR Art. 266m Abs. 2, ZGB Art. 169 Abs. 2).' },
+        form: 'Von Hand unterschreiben (OR Art. 266l Abs. 1, Art. 14 Abs. 1) und eingeschrieben senden. Die Kündigung muss vor Beginn der Kündigungsfrist bei der Vermieterschaft sein (Frist: OR Art. 266c, oder länger laut Vertrag).',
       },
     },
     taxExtension: {
@@ -5286,7 +5286,7 @@ export default {
       // TODO(rm): provisorisch — deutsch, Gruppe B K (11.11.2026), Übersetzung offen
       hinweis: {
         title: 'Vor dem Versand',
-        text: 'Die Verlängerung vor Ablauf der Frist beantragen. Viele Kantone bieten dafür ein Online-Formular an, manche verlangen eine Gebühr — beim kantonalen Steueramt nachsehen.',
+        text: 'Die Verlängerung vor Ablauf der Frist beantragen. Viele Kantone bieten dafür ein Online-Formular an, die Verlängerung kann Gebühren kosten — beim kantonalen Steueramt nachsehen.',
       },
     },
     insuranceSwitch: {
@@ -5303,10 +5303,10 @@ export default {
       hinweis: {
         title: 'Vor der Kündigung',
         frist: 'Die Kündigung muss bis am {frist} bei der Kasse eingehen (KVG Art. 7 Abs. 2).',
-        nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen.',
-        semester: 'Im Grundmodell mit der ordentlichen Franchise von 300 Franken ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Bei einem Hausarzt- oder Telmed-Modell oder einer höheren Franchise nur auf Ende Jahr.',
+        nachFrist: 'Für einen Wechsel auf Ende {verpasstJahr} ist die Frist am {verpasstFrist} abgelaufen. Der Brief kündigt darum auf Ende {jahr}; er muss bis am {frist} bei der Kasse eingehen. Sie können auch bis zur Prämienmitteilung im Herbst warten.',
+        semester: 'Im Grundmodell mit ordentlicher Franchise (Erwachsene 300 Franken, Kinder keine) ist auch ein Wechsel auf Ende Juni möglich: Eingang bis 31. März (KVG Art. 7 Abs. 1). Mit Hausarzt-, HMO- oder Telmed-Modell, Bonusversicherung oder wählbarer Franchise nur auf Ende Jahr (KVV Art. 94 Abs. 2, 100 Abs. 3).',
         anmelden: 'Zuerst bei der neuen Kasse anmelden: Die bisherige Versicherung endet erst, wenn die neue Kasse die Aufnahme gemeldet hat (KVG Art. 7 Abs. 5).',
-        ausstaende: 'Sind Prämien, Kostenbeteiligungen, Verzugszinse oder Betreibungskosten offen, ist ein Wechsel erst möglich, wenn alles bezahlt ist (KVG Art. 64a Abs. 6).',
+        ausstaende: 'Sind Prämien, Kostenbeteiligungen, Verzugszinse oder Betreibungskosten offen, ist ein Wechsel nur möglich, wenn alles bis zum Ablauf der Kündigungsfrist bezahlt ist (KVG Art. 64a Abs. 6, KVV Art. 105l).',
       },
     },
     kkReklamation: {
