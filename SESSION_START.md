@@ -17,6 +17,12 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 12.11.2026, 00:40 — `d439855d` ist LIVE** (0.1.49-beta, gebaut 00:34:53, Deploy Stebler Studios). Überholt alle Stände darunter.
+> - Neu live: Kapitel 5 Ausbildung (#814) · Kapitel 6 Behörden (#828) · Kapitel 7 Gesundheit (#838) · Gruppe C Vertrauen (#846) · Gruppe D Fachseiten (#848) · Gruppe E Website (#847) · 3a-Hinweis unter der BVG-Schwelle im Steuer-Rechner (#868) · Doku (#866).
+> - Vortor auf `d439855d` in eigener Kopie, vorher Merge-Pause bei allen Maloja-Sitzungen → kein Merge während des Vortors, Marke beim ersten Anlauf gültig. 591 Testdateien, Lint 0 Fehler, SEO 0, 64 974 / 65 000 B, PII sauber, ESTV 156/156, SL-Preise 06.10.; swiss-precision, rechts, sicherheits, a11y, qualitaets ohne Blocker. Darmkrebs «50 bis 74» an KLV Art. 12e Bst. d belegt.
+> - Live gegengeprüft: `version.json`, `/` und `/app/` 200, erfundene Adresse 404, 143 Dateien, `index-BttkkrO9.js` und `de-rest-aMGLB41l.js` = geprüfter Build, neue Texte in `de-rest`. `"sauber": false` kommt von ungetrackten Ordnern anderer Sitzungen im Haupt-Checkout. Browser, Konsole, Handy nicht geprüft.
+> - Offen: freiwillige AHV nannte nur den AHV-Anteil (870) → Entwurf #869 (AHV + IV = 1 010 / 1 030) · Selbstbehalt ohne Medikamenten-Ausnahme (KLV 38a) · fr/it/en/rm-Quellenzeilen kürzer als de · rm-Rechtsseite und App-Disclaimer ohne OR-100-Vorbehalt · 3a-Übernahmeknopf unter 44 px · Version/Tag. Liste: `stebler-studios/_handoffs/2026-11-10-maloja-deploy-tag.md`.
+>
 > 🧾 **Nachtrag 11.11.2026, 22:50 — `e4017538` ist LIVE** (0.1.49-beta, gebaut 22:45:11, Deploy Stebler Studios 22:46). Überholt alle Stände darunter.
 > - Neu live: 3a-Grenze als eine Regel (#857: `saeule3aGrenzePerson`, `istSelbstaendig`, Jahr am Tarif), Nichtberufsunfall mit Nebenerwerb «offen», Weiterbildungsabzug mit Quelle (DBG Art. 33 Abs. 1 Bst. j), SchKG-Zitate im Zahlungsbefehl · a11y (#860): «/» abschaltbar, Rückgängig ohne Zeitgrenze, «Zurückgeholt» + Fokus · Unfall bei Arbeitslosigkeit (#862: UVG Art. 1a, 66 Abs. 3bis, 3 Abs. 2) · Gruppe A Einstieg (#845) · Gruppe B Unterlagen (#859).
 > - Vortor auf `86e30cd1`, Nachzug für #859 auf `e4017538` (Marke = main = Checkout). 🛑 Zweimal kam ein Merge einer parallelen Sitzung *während* des Vortors (#845, #859) — `deploy.sh` brach richtig ab. Vor dem nächsten Vortor alle Maloja-Sitzungen um Merge-Pause bitten.
