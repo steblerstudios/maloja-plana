@@ -274,6 +274,9 @@ das Schild fehlte im eigenen Kapitel. Quelle der Grössen: `INSTRUMENT_GROESSE` 
   `kkLastAnteil` (`src/KKLastCard.jsx`); Karte, Spiegel in Finanzen und Kapitel rufen sie (B-R4, Wächter
   `kkLastAnteil.test.js`). Der Weg ins Kapitel folgt `CHAPTER_KEYS`, nie einer festen Zahl. Das alte Schild liegt
   in `components/_archiv/` mit `_WAS-IST-DAS.md`; `data/schutzschild.js` rechnet weiter.
+- **Franchise-Kreuz klein, 11.11.2026 (B-F5):** die Kachel zeichnet das Kreuz aus `kreuzState` — dieselben zwei
+  Linien wie das Werkzeug, Strich «bisher» bei den eigenen Kosten (`KreuzKlein`). Ohne geladene Prämien kein Bild,
+  nur Name und Satz. Das Kreuz bleibt Diagramm; die Kachel ist sein Spiegel mit echter Zahl (Franchise in CHF).
 
 **Drei weitere Regeln, seit 09.11.2026** (Querschnitt 1, Gesamtbefund; Stebler Studios: «c finde ich gut»,
 «Ja, A und B»). Wächter: `src/__tests__/querschnittGestaltung.test.js`.
