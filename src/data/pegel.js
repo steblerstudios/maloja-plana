@@ -15,9 +15,9 @@ import { calculateIPV, calculateSozialhilfe, getHouseholdInfo, ipvJahreseinkomme
 // „über der Grenze"-Zustand sichtbar wird (sonst wäre die Grenze der Rand).
 export const PEGEL_SCALE = 1.25;
 
-// Hinweis: Aktuell NICHT verdrahtet — das IPV-Instrument ist der Prämien-Beleg
-// (Nachbarschafts-Unterscheidung zum Sozialhilfe-Pegel). pegelState(variant 'luft')
-// bleibt bewusst erhalten für die Wiederverwendung in einem anderen Kontext.
+// IPV-Glas: verdrahtet über data/anspruchWege.js (ipvAnzeige) in den Lebenssituationen. Im Schnellcheck ist
+// das IPV-Bild noch der Prämien-Beleg (PraemienBeleg.jsx); die Matrix vom 10.11.2026 (B-F2) führt das als
+// offen. Hier stand bis 11.11.2026 «aktuell NICHT verdrahtet», das stimmte seit dem 27.10.2026 (f87780e3) nicht mehr.
 export function pegelState(data) {
   const canton = data?.basis?.canton || '';
   const hh = getHouseholdInfo(data);

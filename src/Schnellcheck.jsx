@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { einnahmenErfasst } from './utils/unterstuetzungseinheit.js';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateSozialhilfe, getCantonName, getHouseholdInfo, ladeIPVModelle } from './config/cantonalData.js';
-import { wegeAusProbe } from './data/anspruchWege.js';
+import { wegeAusProbe, leistungsKompass } from './data/anspruchWege.js';
 import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { Pegel } from './components/Pegel.jsx';
@@ -70,7 +70,10 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // B-1/E22: die hier eingetippten Zahlen gehen beim Klick an den IPV-Rechner mit.
   // Eine aus brutto GESCHÄTZTE Zahl geht nicht mit — nur eingetippte (25.09.2026).
   const uebergabe = uebergabeAusProbe(e.geschaetzt ? { ...probe, finanzen: { ...probe.finanzen, monthlyIncome: 0 } } : probe);
-  const benefits = wegeAusProbe(probe).wege.map((w) => (
+  const { wege } = wegeAusProbe(probe);
+  // Peilung: dieselbe Funktion wie in der Übersicht (B-R2, 11.11.2026).
+  const kompass = leistungsKompass(probe, wege);
+  const benefits = wege.map((w) => (
     w.key === 'ipv' ? {
       key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep, uebergabe,
       label: t('schnellcheck.ipv'), monthly: w.monthly, qualitative: w.qualitative,
@@ -239,7 +242,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
 
     // Leistungs-Kompass: Peilung über dem Ergebnis (Instrument über derselben Logik)
     React.createElement(LeistungsKompass, {
-      palette, t, benefitCount: benefits.length, topLabel, hasIncome: erfasst,
+      palette, t, kompass, topLabel,
     }),
 
     // IPV-Instrument: Prämien-Beleg (Papier) — bewusst anderes Material als der
