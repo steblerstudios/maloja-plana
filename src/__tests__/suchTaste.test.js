@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { istSuchTaste, istEingabeFeld, suchTasteAnmelden, slashAn, slashSetzen } from '../utils/suchTaste.js';
+import { istSuchTaste, istEingabeFeld, suchTasteAnmelden, slashAn, slashSetzen, SLASH_SCHLUESSEL } from '../utils/suchTaste.js';
 
 const taste = (key, mehr = {}) => ({ key, metaKey: false, ctrlKey: false, shiftKey: false, altKey: false, target: { tagName: 'BODY' }, ...mehr });
 const feld = (tagName, extra = {}) => ({ tagName, ...extra });
@@ -190,6 +190,11 @@ describe('«/» abschaltbar', () => {
     const quelle = fs.readFileSync(path.join(__dirname, '..', 'SettingsView.jsx'), 'utf8');
     expect(quelle).toMatch(/g\.key === 'a11y' \? \{ \.\.\.g, controls: \[\.\.\.g\.controls, slashKnopf\] \}/);
     expect(quelle).toContain("'aria-pressed': slash");
+    // Die Einstellungs-Seite liest und schreibt denselben Schlüssel, ohne suchTaste.js zu importieren
+    // (der Import kostete Platz im Startbündel, Vorlade-Liste).
+    expect(SLASH_SCHLUESSEL).toBe('or5_suchtaste');
+    expect(quelle.match(/'or5_suchtaste'/g)).toHaveLength(2);
+    expect(quelle).not.toMatch(/from '\.\/utils\/suchTaste\.js'/);
     for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
       const t = (await import(`../i18n/${l}.js`)).default;
       expect(t.search.tasteSchalter, l).toMatch(/\//);

@@ -6,7 +6,6 @@ import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { DatenLoeschen } from './components/DatenLoeschen.jsx';
 import { NotificationSettings } from './NotificationSettings.jsx';
 import { KNOPF_RADIUS } from './components/PrimaryButton.jsx';
-import { slashAn, slashSetzen } from './utils/suchTaste.js';
 
 // Zentraler Einstellungen-Bereich: bündelt die App-Bedienelemente mit
 // beschrifteten Zeilen (zugänglicher als die reinen Icon-Knöpfe in der
@@ -30,11 +29,13 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
   // «/» öffnet die Suche — abschaltbar (WCAG 2.1.4, Entscheid Stebler Studios 11.11.2026). Steht nur hier und nicht
   // in der Schublade: deren Knöpfe kommen aus main.jsx, und das Startbündel hat keinen Platz mehr. Wer am Gerät
   // eine Tastatur hat, findet die Seite. Gleiches Aussehen wie die übrigen Schalter (main.jsx `ctrlBtn`).
-  const [slash, setSlash] = React.useState(() => slashAn());
+  // Schlüssel und Regel wie `slashAn`/`slashSetzen` in utils/suchTaste.js (suchTaste.test.js hält beide gleich).
+  // Bewusst nicht importiert: der Import setzte suchTaste.js auf die Vorlade-Liste im Startbündel.
+  const [slash, setSlash] = React.useState(() => { try { return localStorage.getItem('or5_suchtaste') !== '0'; } catch { return true; } });
   const slashKnopf = React.createElement('button', {
     key: 'slashsearch', type: 'button',
     'aria-label': t('search.tasteSchalter'), 'aria-pressed': slash, title: t('search.tasteSchalter'),
-    onClick: () => setSlash((an) => { slashSetzen(!an); return !an; }),
+    onClick: () => setSlash((an) => { try { localStorage.setItem('or5_suchtaste', an ? '0' : '1'); } catch { /* ohne Speicher */ } return !an; }),
     style: {
       padding: '8px 8px', minHeight: '44px', minWidth: '44px', lineHeight: 1,
       background: slash ? palette.sand + '30' : 'transparent',
